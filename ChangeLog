@@ -1,3 +1,15 @@
+Fri May 28 15:54:26 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/MT_Reference_Counted_Event_Handler_Test.cpp: In
+	  Close_Socket_Thread::svc(), do a ACE_OS::shutdown() before closing
+	  the socket. This is enough to pop another thread off a blocked
+	  read/write on platforms that block the close() until an in-progress
+	  operation completes, such as AIX and Linux. With this, remove the
+	  #if linux checks that disabled some types of test.
+	  It could be argued that the shutdown() should be done as part of
+	  ACE_OS::closesocket() (it already does this for HP-UX), but I
+	  hesitate to rock the boat here...
+
 Thu May 27 19:02:18 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Timer_Hash_T.cpp (schedule_i): For Win64, reinterpret_cast from
