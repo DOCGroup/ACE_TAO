@@ -25,7 +25,6 @@
 
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
-#include "tao/Environment.h"
 #include "ace/CORBA_macros.h"
 
 
