@@ -1,44 +1,51 @@
+Tue Aug 19 06:04:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Makefile.bor:
+          Added Condition.cpp to INCLUDES to let it be installed because
+          it contains template code. Thanks to Charlie Frasch
+          <charlie.frasch@navy.mil> for reporting this.
+
 Mon Aug 18 14:33:45 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tao/RTScheduling/Request_Interceptor.cpp : 
+	* tao/RTScheduling/Request_Interceptor.cpp :
 
 	  Added return from Server_Request::receive_request method when an
 	  invalid service request is received.
 
-	* tests/RTScheduling/DT_Spawn/test.cpp: 
-	  
+	* tests/RTScheduling/DT_Spawn/test.cpp:
+
 	  Changed a debug statement to include "Expected Exception".
-	
-	* tests/RTScheduling/Scheduling_Interceptor/test_client.cpp: 
+
+	* tests/RTScheduling/Scheduling_Interceptor/test_client.cpp:
 
 	  Replaced ACE_PRINT_EXCEPTION with ACE_DEBUG messages so the
 	  builds will not report errors for expected exceptions.
-	  
+
 	* tests/RTScheduling/Scheduling_Interceptor/Makefile:
 	* tests/RTScheduling/Scheduling_Interceptor/run_test.pl:
-	* tests/RTScheduling/Thread_Cancel/Makefile: 
-	* tests/RTScheduling/Thread_Cancel/run_test.pl: 
-	* tests/RTScheduling/DT_Spawn/Makefile: 
-	* tests/RTScheduling/DT_Spawn/run_test.pl: 	
-	* tests/RTScheduling/Current/Makefile: 
-	* tests/RTScheduling/Current/run_test.pl: 
-	* tests/RTScheduling/VoidData/Makefile: 
-	* tests/RTScheduling/VoidData/run_test.pl: 	
+	* tests/RTScheduling/Thread_Cancel/Makefile:
+	* tests/RTScheduling/Thread_Cancel/run_test.pl:
+	* tests/RTScheduling/DT_Spawn/Makefile:
+	* tests/RTScheduling/DT_Spawn/run_test.pl:
+	* tests/RTScheduling/Current/Makefile:
+	* tests/RTScheduling/Current/run_test.pl:
+	* tests/RTScheduling/VoidData/Makefile:
+	* tests/RTScheduling/VoidData/run_test.pl:
 
 	  Changed the names of the executables created. This along with
 	  the following changes to the windows project files should fix
 	  the run-time errors on Windows.
 
-	* tests/RTScheduling/VoidData/VoidData.dsp: 
-	* tests/RTScheduling/Thread_Cancel/Thread_Cancel.dsp: 
-	* tests/RTScheduling/DT_Spawn/DT_Spawn.dsp: 
-	* tests/RTScheduling/Current/Current.dsp: 
-	* tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Client.dsp: 
-	* tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Server.dsp: 	
+	* tests/RTScheduling/VoidData/VoidData.dsp:
+	* tests/RTScheduling/Thread_Cancel/Thread_Cancel.dsp:
+	* tests/RTScheduling/DT_Spawn/DT_Spawn.dsp:
+	* tests/RTScheduling/Current/Current.dsp:
+	* tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Client.dsp:
+	* tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Server.dsp:
 
 	  Changed the project files so they do not create executables in
 	  the Debug dirs.
-	
+
 Mon Aug 18 14:24:45 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tao/ORB.h:
