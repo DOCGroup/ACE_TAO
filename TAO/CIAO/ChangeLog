@@ -1,3 +1,9 @@
+Fri Oct 22 08:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCCM/DiffServ/Controller/Controller.mpc:
+          Added DiffServ_Stub to the libs part, this should fix the link errors
+          in the CBX Static Release build
+
 Fri Oct 22 07:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/IDL3_to_IDL2/TAO_IDL3_TO_IDL2_BE_Export.h:
