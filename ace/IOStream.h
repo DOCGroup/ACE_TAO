@@ -287,7 +287,7 @@ protected:
 
   virtual ACE_HANDLE get_handle (void);
 
-#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
+#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0) && !defined (ACE_USES_OLD_IOSTREAMS)
   char *base (void) const
     {
       return cur_mode_ == get_mode_ ? eback_saved_

@@ -33,6 +33,10 @@
 #pragma warning(disable: 4663 4664 4665 4511 4512)
 #endif /* _MSC_VER */
 
+#if defined (ACE_USES_OLD_IOSTREAMS)
+#include <iostream.h>
+#include <fstream.h>
+#else
 #include /**/ <iomanip>
 #include /**/ <ios>
 #include /**/ <iostream>
@@ -40,10 +44,12 @@
 #include /**/ <ostream>
 #include /**/ <fstream>
 #include /**/ <streambuf>
+#endif /* ACE_USES_OLD_IOSTREAMS */
 
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
             (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
 
+#if !defined (ACE_USES_OLD_IOSTREAMS)
 // Make these available in the global name space
 using std::ios;
 using std::streambuf;
@@ -75,6 +81,7 @@ using std::setw;
 using std::dec;
 using std::hex;
 using std::oct;
+#endif /* ! ACE_USES_OLD_IOSTREAMS */
 
 #endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 
