@@ -1,3 +1,6 @@
+//  -*- MPC -*-
+// $Id$
+
 project(Transcoder_Test): aceexe, acexml {
   Source_Files {
     Transcoder_Test.cpp

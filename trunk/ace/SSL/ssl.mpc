@@ -1,3 +1,6 @@
+//  -*- MPC -*-
+// $Id$
+
 project(SSL) : acelib, core, openssl {
   requires    += ssl
   sharedname   = ACE_SSL

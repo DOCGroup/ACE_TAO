@@ -1,3 +1,6 @@
+//  -*- MPC -*-
+// $Id$
+
 project(ACEXML_Parser): acelib {
   sharedname    = ACEXML_Parser
   after        += ACEXML
