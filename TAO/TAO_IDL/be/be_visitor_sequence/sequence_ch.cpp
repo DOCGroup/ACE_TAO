@@ -351,7 +351,14 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
     }
 
   *os << "class " << node->local_name () << ";" << be_nl;
-  *os << "class " << node->local_name () << "_var;" << be_nl << be_nl;
+
+  // No _var class for anonymous sequences.
+  if (this->ctx_->tdef () != 0)
+    {
+      *os << "class " << node->local_name () << "_var;" << be_nl;
+    }
+
+  *os << be_nl;
 
   *os << "// *************************************************************"
       << be_nl
