@@ -1,5 +1,11 @@
 Wed Nov 19 05:53:42 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
+	* tests/Cubit/TAO/DII_Cubit/clnt.cpp: 
+	* tests/Cubit/TAO/DII_Cubit/clnt.h: 
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 	
+	* tests/Cubit/TAO/IDL_Cubit/clnt.h: Changed code to add loop
+ 	around all cube calls, and make output more consistent.
+
 	* orbsvcs/tests/Logger/Makefile: 
 	* orbsvcs/tests/Logger/ior_multicast.cpp:
 	* orbsvcs/tests/Logger/ior_multicast.h: Removed unneeded

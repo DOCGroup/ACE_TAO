@@ -62,6 +62,9 @@ private:
   int parse_args (void);
   // Parses the arguments passed on the command line.
 
+  void print_stats (const char *call_name, ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
+  // prints the time stats
+
   void cube_union_stub (void);
   // Exercise the union.  Cube a union.
   

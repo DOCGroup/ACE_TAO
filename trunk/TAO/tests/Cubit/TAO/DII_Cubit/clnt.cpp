@@ -487,6 +487,7 @@ Cubit_Client::cube_struct_dii (void)
 
   // Make the invocation, verify the result
 
+  this->call_count_++;
   req->invoke ();
 
   if (req->env ()->exception () != 0) 
@@ -504,6 +505,52 @@ Cubit_Client::cube_struct_dii (void)
     dmsg ("DII cube_struct ... success!!");
        
   CORBA::release (req);
+}
+
+// prints time statistics
+
+void
+Cubit_Client::print_stats (const char *call_name, ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time)
+{
+  double tmp;
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "%s:\n",
+	      call_name));
+  
+  if (this->call_count_ > 0  &&  this->error_count_ == 0)
+    {
+      tmp = 1000 / elapsed_time.real_time;
+
+      elapsed_time.real_time *= ACE_ONE_SECOND_IN_MSECS;
+      elapsed_time.user_time *= ACE_ONE_SECOND_IN_MSECS;
+      elapsed_time.system_time *= ACE_ONE_SECOND_IN_MSECS;
+
+      elapsed_time.real_time /= this->call_count_;
+      elapsed_time.user_time /= this->call_count_;
+      elapsed_time.system_time /= this->call_count_;
+
+      tmp = 1000 / elapsed_time.real_time;
+
+      ACE_DEBUG ((LM_DEBUG,
+		  "\treal_time\t= %0.06f ms, \n\t"
+		  "user_time\t= %0.06f ms, \n\t"
+		  "system_time\t= %0.06f ms\n"
+		  "\t%0.00f calls/second\n",
+		  elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
+		  elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
+		  elapsed_time.system_time < 0.0? 0.0:elapsed_time.system_time,
+		  tmp < 0.0? 0.0 : tmp));
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR, "\tNo time stats printed.  Call count zero or error ocurred.\n"));
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "\t%d calls, %d errors\n",
+	      this->call_count_,
+	      this->error_count_));
 }
 
 // Execute client example code.
@@ -525,106 +572,65 @@ Cubit_Client::run (void)
   for (i = 0; i < this->loop_count_; i++)
     {
       this->cube_short (i);
-
       this->cube_octet (i);
-
       this->cube_long (i);
-
       this->cube_struct (i);
     }
 
   // stop the timer.
   timer.stop ();
 
+  timer.elapsed_time (elapsed_time);  
   // compute call average call time.
-  if (this->call_count_ > 0)
-    {
-      if (this->error_count_ == 0)
-        {
-	  timer.elapsed_time (elapsed_time);
-	  double tmp;
-
-	  elapsed_time.real_time *= ACE_ONE_SECOND_IN_MSECS;
-	  elapsed_time.user_time *= ACE_ONE_SECOND_IN_MSECS;
-	  elapsed_time.system_time *= ACE_ONE_SECOND_IN_MSECS;
-
-	  elapsed_time.real_time /= this->call_count_;
-	  elapsed_time.user_time /= this->call_count_;
-	  elapsed_time.system_time /= this->call_count_;
-
-	  tmp = 1000 / elapsed_time.real_time;
-
-	  ACE_DEBUG ((LM_DEBUG,
-		      "cube average call:\n\treal_time\t= %0.06f ms, \n\t"
-		      "user_time\t= %0.06f ms, \n\t"
-		      "system_time\t= %0.06f ms\n"
-		      "\t%0.00f calls/second\n",
-		      elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
-		      elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
-		      elapsed_time.system_time < 0.0? 0.0:elapsed_time.system_time,
-		      tmp < 0.0? 0.0 : tmp));
-
-        }
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "\t%d calls, %d errors\n",
-                  this->call_count_,
-                  this->error_count_));
-    }
+  this->print_stats ("cube average call", elapsed_time);
 
   // Simple test for DII: call "cube_struct". (It's not timed since
   // the copious mallocation of DII would bias numbers against typical
   // stub-based calls).
-  timer.start ();
-  this->cube_struct_dii ();
-  timer.stop ();
-
-  timer.elapsed_time (elapsed_time);
-  elapsed_time.real_time *= ACE_ONE_SECOND_IN_MSECS;
-  elapsed_time.user_time *= ACE_ONE_SECOND_IN_MSECS;
-  elapsed_time.system_time *= ACE_ONE_SECOND_IN_MSECS;
-
-  ACE_DEBUG ((LM_DEBUG,
-	      "cube_struct_dii() call:\n\treal_time\t= %0.06f ms, \n\t"
-	      "user_time\t= %0.06f ms, \n\t"
-	      "system_time\t= %f ms\n",
-	      elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
-	      elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
-	      elapsed_time.system_time < 0.0? 0.0:elapsed_time.system_time));
+  this->call_count_ = 0;
+  this->error_count_ = 0;
 
   timer.start ();
-  this->cube_union_stub ();
+  // Make the calls in a loop.
+  for (i = 0; i < this->loop_count_; i++)
+    {
+      this->cube_struct_dii ();
+    }
   timer.stop ();
 
-  timer.elapsed_time (elapsed_time);
-  elapsed_time.real_time *= ACE_ONE_SECOND_IN_MSECS;
-  elapsed_time.user_time *= ACE_ONE_SECOND_IN_MSECS;
-  elapsed_time.system_time *= ACE_ONE_SECOND_IN_MSECS;
+  timer.elapsed_time (elapsed_time);  
+  // compute call average call time.
+  this->print_stats ("cube_struct_dii call", elapsed_time);
 
-  ACE_DEBUG ((LM_DEBUG,
-	      "cube_union_stub() call:\n\treal_time\t= %0.06f ms, \n\t"
-	      "user_time\t= %0.06f ms, \n\t"
-	      "system_time\t= %0.06f ms\n",
-	      elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
-	      elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
-	      elapsed_time.system_time < 0.0? 0.0:elapsed_time.system_time));
+  this->call_count_ = 0;
+  this->error_count_ = 0;
 
   timer.start ();
-  this->cube_union_dii ();
+  // Make the calls in a loop.
+  for (i = 0; i < this->loop_count_; i++)
+    {
+      this->cube_union_stub ();
+    }
   timer.stop ();
 
-  timer.elapsed_time (elapsed_time);
-  elapsed_time.real_time *= ACE_ONE_SECOND_IN_MSECS;
-  elapsed_time.user_time *= ACE_ONE_SECOND_IN_MSECS;
-  elapsed_time.system_time *= ACE_ONE_SECOND_IN_MSECS;
+  timer.elapsed_time (elapsed_time);  
+  // compute call average call time.
+  this->print_stats ("cube_union_stub call", elapsed_time);
 
-  ACE_DEBUG ((LM_DEBUG,
-	      "cube_union_dii() call:\n\treal_time\t= %0.06f ms, \n\t"
-	      "user_time\t= %0.06f ms, \n\t"
-	      "system_time\t= %0.06f ms\n",
-	      elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
-	      elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
-	      elapsed_time.system_time < 0.0? 0.0:elapsed_time.system_time));
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+
+  timer.start ();
+  // Make the calls in a loop.
+  for (i = 0; i < this->loop_count_; i++)
+    {
+      this->cube_union_dii ();
+    }
+  timer.stop ();
+
+  timer.elapsed_time (elapsed_time);  
+  // compute call average call time.
+  this->print_stats ("cube_union_dii call", elapsed_time);
 
   if (this->exit_later_)
     {

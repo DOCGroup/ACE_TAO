@@ -449,6 +449,10 @@ Cubit_Client::print_stats (const char *call_name, ACE_Profile_Timer::ACE_Elapsed
 {
   double tmp;
 
+  ACE_DEBUG ((LM_DEBUG,
+	      "%s:\n",
+	      call_name));
+  
   if (this->call_count_ > 0  &&  this->error_count_ == 0)
     {
       tmp = 1000 / elapsed_time.real_time;
@@ -464,11 +468,10 @@ Cubit_Client::print_stats (const char *call_name, ACE_Profile_Timer::ACE_Elapsed
       tmp = 1000 / elapsed_time.real_time;
 
       ACE_DEBUG ((LM_DEBUG,
-		  "%s:\n\treal_time\t= %0.06f ms, \n\t"
+		  "\treal_time\t= %0.06f ms, \n\t"
 		  "user_time\t= %0.06f ms, \n\t"
 		  "system_time\t= %0.06f ms\n"
 		  "\t%0.00f calls/second\n",
-		  call_name,
 		  elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
 		  elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
 		  elapsed_time.system_time < 0.0? 0.0:elapsed_time.system_time,
@@ -476,7 +479,7 @@ Cubit_Client::print_stats (const char *call_name, ACE_Profile_Timer::ACE_Elapsed
     }
   else
     {
-      ACE_ERROR ((LM_ERROR, "No time stats printed.  Call count zero or error ocurred.\n"));
+      ACE_ERROR ((LM_ERROR, "\tNo time stats printed.\n\tCall count zero or error ocurred.\n"));
     }
 
   ACE_DEBUG ((LM_DEBUG,
