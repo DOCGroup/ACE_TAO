@@ -162,8 +162,8 @@ int main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "(%t) main thread starting\n"));
 
-  if (thr_mgr.spawn_n (n_readers, reader, 0, THR_NEW_LWP) == -1 ||
-      thr_mgr.spawn_n (n_writers, writer, 0, THR_NEW_LWP) == -1)
+  if (thr_mgr.spawn_n (n_readers, (ACE_THR_FUNC) reader, 0, THR_NEW_LWP) == -1 ||
+      thr_mgr.spawn_n (n_writers, (ACE_THR_FUNC) writer, 0, THR_NEW_LWP) == -1)
      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
   thr_mgr.wait ();

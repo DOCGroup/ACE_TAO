@@ -86,7 +86,7 @@ main (int argc, char **argv)
   Pseudo_Barrier barrier (n_threads);
 
   // create workers
-  if (tm.spawn_n (n_threads, worker, &barrier) == -1)
+  if (tm.spawn_n (n_threads, (ACE_THR_FUNC) worker, &barrier) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "thread creates for worker failed"), -1);
 
   // wait for all workers to exit
