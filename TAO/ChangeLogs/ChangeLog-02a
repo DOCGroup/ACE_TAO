@@ -1,3 +1,40 @@
+Thu Feb  1 20:54:11 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/Makefile:
+	* tao/RTCORBA.pidl:
+	* tao/RTCORBAC.cpp:
+	* tao/RTCORBAC.h:
+	* tao/RTCORBAC.i:
+	* tao/RTCORBAS.cpp:
+	* tao/RTCORBAS.h:
+	* tao/RTCORBAS.i:
+	* tao/RTCORBAS_T.cpp:
+	* tao/RTCORBAS_T.h:
+	* tao/RTCORBAS_T.i:
+	* tao/RT_Mutex.cpp:
+	* tao/RT_Mutex.h:
+	* tao/RT_ORB.cpp:
+	* tao/RT_ORB.h:
+	* tao/diffs/RTCORBAC.cpp.diff:
+	* tao/diffs/RTCORBAC.h.diff:
+	* tao/diffs/RTCORBAC.i.diff:
+	* tao/diffs/RTCORBAS.h.diff:
+	* tao/diffs/RTCORBAS.cpp.diff:
+	* tests/RTCORBA/Makefile:
+	* tests/RTCORBA/Makefile.bor:
+	* tests/RTCORBA/README:
+	* tests/RTCORBA/RTCORBA_tests.dsw:
+	* tests/RTCORBA/RTMutex/Makefile:
+	* tests/RTCORBA/RTMutex/Makefile.bor:
+	* tests/RTCORBA/RTMutex/README:
+	* tests/RTCORBA/RTMutex/RTMutex.dsw:
+	* tests/RTCORBA/RTMutex/run_test.pl:
+	* tests/RTCORBA/RTMutex/server.bor:
+	* tests/RTCORBA/RTMutex/server.cpp:
+	* tests/RTCORBA/RTMutex/server.dsp:
+
+	Added RT Mutex implementation and unit tests.
+
 Thu Feb  1 20:29:54 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/orbconf.h:

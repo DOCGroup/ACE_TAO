@@ -5,7 +5,7 @@
  *
  *  $Id$
  *
- *  @author Marina Spivak (marina@cs.wustl.edu)
+ *  @author Frank Hunleth (fhunleth@cs.wustl.edu)
  */
 //=============================================================================
 
@@ -32,16 +32,21 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @class TAO_RT_Mutex
+ *
+ * @brief  Abstract base class for the TAO RT Mutex implementations
+ *
+ * This class just serves as a base class for any of the TAO
+ * RT Mutex implementations.  Instances of these classes should
+ * be created using the RTCORBA::create_mutex() method.
+ *
+ */
+
 class TAO_Export TAO_RT_Mutex :
   public RTCORBA::Mutex,
   public TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //   RTCORBA::Mutex implementation.
-  //
-  // = DESCRIPTION
-  //   Placeholder for mutex implementation.
-  //
 public:
   /// Constructor.
   TAO_RT_Mutex (void);
@@ -61,11 +66,42 @@ public:
                                    CORBA::Environment &ACE_TRY_ENV =
                                    TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+protected:
+  TAO_SYNCH_MUTEX mu_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "tao/RT_Mutex.i"
-#endif /* __ACE_INLINE__ */
+// Forward reference for the TAO_Named_RT_Mutex class
+class TAO_Named_RT_Mutex_Manager;
+
+/**
+ * @class TAO_Named_RT_Mutex
+ *
+ * @brief Extension to TAO_RT_Mutex to support named mutexes
+ *
+ */
+
+class TAO_Export TAO_Named_RT_Mutex :
+  public TAO_RT_Mutex
+{
+public:
+  /// Constructor.
+  TAO_Named_RT_Mutex (const char *name, TAO_Named_RT_Mutex_Manager &mutex_mgr);
+
+  /// Destructor.
+  virtual ~TAO_Named_RT_Mutex (void);
+
+protected:
+
+  // Don't allow unnamed named mutexes
+  TAO_Named_RT_Mutex (void);
+
+  char *name_;
+
+  TAO_Named_RT_Mutex_Manager &mutex_mgr_;
+};
+
+
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)

@@ -52,3 +52,8 @@ includes the following:
           Current-level overrides] concurrently making invocations on
           one object reference, which has a CLIENT_PROPAGATED priority
           model.
+
+        . RTMutex
+
+          Tests RTCORBA::Mutex.
+
