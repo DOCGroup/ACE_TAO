@@ -19,7 +19,7 @@
 #include "tao/any.h"      
 
 // Prototypes
-void printAny (CORBA::Any_var anyval);
+void printAny (CORBA::Any anyval);
 
 int 
 main (int argc, char *argv []) 
@@ -75,8 +75,12 @@ main (int argc, char *argv [])
       ACE_DEBUG ( (LM_DEBUG, "\n Main :  Number of props : %d \n", propSet.get_number_of_properties (TAO_TRY_ENV)) );
       
       // Let us try to "get" back those values
-      //CORBA::Any_ptr anyptr;
-      //anyptr = propSet.get_property_value ("float_property", TAO_TRY_ENV);
+      CORBA::Any_ptr anyptr;
+      anyptr = propSet.get_property_value ("float_property", TAO_TRY_ENV);
+      if (anyptr->type () == CORBA::_tc_float) 
+        {
+          ACE_DEBUG ( (LM_DEBUG, "Main : Float = %f \n", (*(CORBA::Float *)anyptr->value ())) );
+        }
       //CORBA::Any_var anyvar (anyptr);
       //printAny (anyvar.in ());
     }
@@ -96,7 +100,7 @@ main (int argc, char *argv [])
 }  
 
 void
-printAny (CORBA::Any_var anyval)
+printAny (CORBA::Any anyval)
 {
   /*
   switch (anyval->type ())
@@ -116,12 +120,13 @@ printAny (CORBA::Any_var anyval)
     default:
       ACE_DEBUG ((LM_DEBUG, "I don't know this typecode"));
     }
-    */
-
-  if (anyval->type () == CORBA::_tc_short) 
+    
+    /*
+    if (anyval.type () == CORBA::_tc_short) 
     {
-      ACE_DEBUG ( (LM_DEBUG, "Main : Short = %d \n", ( *(short *)anyval->value ())) );
+      ACE_DEBUG ( (LM_DEBUG, "Main : Short = %d \n", ( *(short *)anyval.value ())) );
     }
+    */
 }
 
 
