@@ -1,3 +1,9 @@
+Mon Sep  3 07:54:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/OS_String.cpp: Fixed compile errors in win32 builds. Thanks
+	  to Johnny Willemsen for sending in patches for replacing L with
+	  ACE_TEXT_WIDE.
+
 Sun Sep  2 19:33:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Select_Reactor_Base.cpp: Fixed a small problem with the

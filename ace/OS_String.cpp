@@ -246,7 +246,7 @@ ACE_OS_String::strecpy (wchar_t *s, const wchar_t *t)
   register wchar_t *dscan = s;
   register const wchar_t *sscan = t;
 
-  while ((*dscan++ = *sscan++) != L'\0')
+  while ((*dscan++ = *sscan++) != ACE_TEXT_WIDE ('\0'))
     continue;
 
   return dscan;
@@ -1020,10 +1020,10 @@ ACE_OS_String::strsncpy (wchar_t *dst, const wchar_t *src, size_t maxlen)
 
   if (rmaxlen > 0)
     {
-      *rdst = L'\0'; 
+      *rdst = ACW_TEXT_WIDE ('\0'); 
       if (rsrc != 0)
         strncat (rdst, rsrc ,--rmaxlen);  
     }
-  retur dst;
-};
+  return dst;
+}
 #endif /* ACE_HAS_WCHAR */
