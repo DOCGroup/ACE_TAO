@@ -107,7 +107,7 @@ be_union_branch::gen_label_value (TAO_OutStream *os, unsigned long index)
   be_decl* decl =
     scope->decl ();
 
-  *os << decl->full_name () << "::" << e->n ();
+  *os << decl->full_name () << "::" << e->n ()->last_component ();
   return 0;
 }
 
