@@ -31,7 +31,7 @@
 
 // Note: the new, improved versions...
 #include <orbsvcs/PortableGroup/PG_Object_Group_Map.h>
-#include <orbsvcs/PortableGroup/PG_Typeid_Properties_Map.h>
+#include <orbsvcs/PortableGroup/PG_Properties_Support.h>
 
 namespace TAO
 {
@@ -471,10 +471,7 @@ namespace TAO
     /// A container for our object group information
     TAO::PG_Object_Group_Map object_group_map_;
 
-    TAO_PG::Properties_Decoder default_properties_;
-
-    TAO::PG_Typeid_Properties_Map typeid_properties_map_;
-
+    TAO::PG_Properties_Support properties_support_;
 
     /// The fault notifier.
     FT::FaultNotifier_var fault_notifier_;

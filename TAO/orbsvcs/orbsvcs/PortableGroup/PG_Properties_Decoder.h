@@ -8,6 +8,9 @@
  *  This file declares classes to help manage the Properties
  *  defined in the Portable Object Group.
  *
+ *  Note: this started as a simple helper class to make decoding sets of properties
+ *  easier, but expanded to provide more general support for managing sets of properties.
+ *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
@@ -113,6 +116,8 @@ namespace TAO_PG
      */
     void export_properties(PortableGroup::Properties & property_set) const;
 
+    /////////////////////////
+    // Implementation Methods
  private:
     /**
      * populate a ValueMap with the properties known to this decoder
@@ -120,11 +125,21 @@ namespace TAO_PG
      */
     void merge_properties (ValueMap & merged_values) const;
 
+    ////////////////////
+    // Forbidden methods
   private:
     Properties_Decoder(const Properties_Decoder & rhs);
     Properties_Decoder & operator = (const Properties_Decoder & rhs);
 
+    ///////////////
+    // Data Members
   private:
+    /**
+     * Protect internal state.
+     */
+    TAO_SYNCH_MUTEX internals_;
+    typedef ACE_Guard<TAO_SYNCH_MUTEX> InternalGuard;
+
     ValueMap values_;
     /**
      * a parent to another property decoder that provides default values

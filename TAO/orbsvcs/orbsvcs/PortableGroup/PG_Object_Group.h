@@ -114,7 +114,7 @@ namespace TAO
       CORBA::Object_ptr empty_group,
       const PortableGroup::TagGroupTaggedComponent & tag_component,
       const char * type_id,
-      PortableGroup::Criteria the_criteria,
+      const PortableGroup::Criteria & the_criteria,
       TAO_PG::Properties_Decoder * type_properties);
 
   public:
@@ -125,7 +125,7 @@ namespace TAO
       CORBA::ORB_ptr orb,
       CORBA::Object_ptr empty_group, // empty group as created by ObjectManager
       const char * type_id,
-      PortableGroup::Criteria the_criteria,
+      const PortableGroup::Criteria & the_criteria,
       TAO_PG::Properties_Decoder * type_properties
       ACE_ENV_ARG_DECL);
 
@@ -264,8 +264,6 @@ namespace TAO
 
     /**
      * Protect internal state.
-     * Implementation methods should assume the mutex is
-     * locked if necessary.
      */
     TAO_SYNCH_MUTEX internals_;
     typedef ACE_Guard<TAO_SYNCH_MUTEX> InternalGuard;
