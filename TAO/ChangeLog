@@ -1,3 +1,13 @@
+Fri Nov  5 07:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_global.cpp:
+          When -o is specified we try to create the directory passed, the
+          result is checked for errors, and EEXIST is ignored as error, but
+          the Borland RTL doesn't have EEXIST, it gives EACCES in case of
+          error, so just for Borland, also ignore EACCES, this is reported
+          to Borland as QC 9495. This fixes the problems in our daily
+          Borland builds.
+
 Thu Nov  4 22:20:19 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO/TAOACE.mwc:
