@@ -14,7 +14,7 @@ int yyerrno = 0;
 
 // Used to parse service configurator directives from a string rather
 // than from a svc.conf file.
-char *yydirective = 0;
+const ASYS_TCHAR *yydirective = 0;
 
 #define token(x)  x
 %}

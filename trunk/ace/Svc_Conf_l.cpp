@@ -504,7 +504,7 @@ int ace_yyerrno = 0;
 
 // Used to parse service configurator directives from a string rather
 // than from a svc.conf file.
-char *ace_yydirective = 0;
+const ASYS_TCHAR *ace_yydirective = 0;
 
 #define token(x)  x
 
