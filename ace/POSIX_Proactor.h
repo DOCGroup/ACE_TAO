@@ -358,10 +358,8 @@ protected:
   /// To maintain the current size of the array (list).
   size_t aiocb_list_cur_size_;
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Mutex to protect work with lists.
-  ACE_Thread_Mutex mutex_;
-#endif /* ACE_MT_SAFE */
+  ACE_SYNCH_MUTEX mutex_;
 
   /// The purpose of this member is only to identify asynchronous request
   /// from NotifyManager. We will reserve for it always slot 0
