@@ -46,6 +46,15 @@ public:
 
   virtual int visit_field (be_field *node);
   // visit field
+
+  virtual int visit_enum (be_enum *node);
+  // visit field
+
+  virtual int visit_structure (be_structure *node);
+  // visit field
+
+  virtual int visit_union (be_union *node);
+  // visit field
 };
 
 #endif /* _BE_VISITOR_EXCEPTION_ANY_OP_CH_H_ */

@@ -286,3 +286,50 @@ be_visitor_union_any_op_cs::visit_union_branch (be_union_branch *node)
 
   return 0;
 }
+
+int
+be_visitor_union_any_op_cs::visit_enum (be_enum *node)
+{
+  if (node->cli_hdr_any_op_gen ()
+      || node->imported ())
+    {
+      return 0;
+    }
+
+  be_visitor_enum_any_op_cs visitor (this->ctx_);
+
+  if (node->accept (&visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_any_op_cs::"
+                         "visit_enum - "
+                         "codegen for field type failed\n"), 
+                        -1);
+    }
+
+  return 0;
+}
+
+int
+be_visitor_union_any_op_cs::visit_structure (be_structure *node)
+{
+  if (node->cli_hdr_any_op_gen ()
+      || node->imported ())
+    {
+      return 0;
+    }
+
+  be_visitor_structure_any_op_cs visitor (this->ctx_);
+
+  if (node->accept (&visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_any_op_cs::"
+                         "visit_structure - "
+                         "codegen for field type failed\n"), 
+                        -1);
+    }
+
+  return 0;
+}
+

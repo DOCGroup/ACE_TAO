@@ -24,6 +24,8 @@
 
 #include "be_visitor.h"
 #include "be_visitor_scope.h"
+#include "be_visitor_enum.h"
+#include "be_visitor_structure.h"
 
 // generic visitor
 #include "be_visitor_union/union.h"
