@@ -43,7 +43,7 @@ these files:) <P>
   <LI> <B><EM>Server skeletons</EM></B>, <EM>i.e.</EM>,  <tt>*S.h</tt>, <tt>*S.inl</tt>, and
       <tt>*S.cpp</tt>.  Servers need to <code>#include</code> and link
       with these files.
-  <LI> <B><EM>Server skeleton templates</EM></B>, <EM>i.e.</EM>, <tt>*S_T.h</tt>, <tt>S_T.i</tt>,
+  <LI> <B><EM>Server skeleton templates</EM></B>, <EM>i.e.</EM>, <tt>*S_T.h</tt>, <tt>S_T.inl</tt>,
       and <tt>*S_T.cpp</tt>.  Some C++ compilers do not like template
       and non-template code in the same files, so TAO's IDL compiler
       generates these files separately.
@@ -490,7 +490,7 @@ also receives other options that are specific to it. <p>
   <tr><a name="ci">
     <td><tt>-ci</tt></td>
 
-    <td>Client inline file name ending. Default is "C.i".</td>
+    <td>Client inline file name ending. Default is "C.inl".</td>
     <td>&nbsp;</td>
   </tr>
 
@@ -511,14 +511,14 @@ also receives other options that are specific to it. <p>
   <tr><a name="si">
     <td><tt>-si</tt></td>
 
-    <td>Server inline skeleton file name ending. Default is "S.i".</td>
+    <td>Server inline skeleton file name ending. Default is "S.inl".</td>
     <td>&nbsp;</td>
   </tr>
 
   <tr><a name="st">
     <td><tt>-st</tt></td>
 
-    <td>Server's template inline file name ending. Default is "S_T.i".</td>
+    <td>Server's template inline file name ending. Default is "S_T.inl".</td>
     <td>&nbsp;</td>
   </tr>
 
