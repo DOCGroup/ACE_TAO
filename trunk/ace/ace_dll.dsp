@@ -18,18 +18,25 @@ CFG=ACE dynamic library - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ACE dynamic library - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Unicode Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Unicode Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Unicode Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Unicode Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Debug" (based on\
+ "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Release" (based on\
+ "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Unicode Debug" (based on\
+ "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Unicode Release" (based on\
+ "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Alpha Debug" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Alpha Release" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Alpha Unicode Debug" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Alpha Unicode Release" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
 
@@ -176,7 +183,7 @@ MTL=midl.exe
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
 CPP=cl.exe
 # ADD BASE CPP /Gt0 nologo Gt0 W3 GX Zi Od Gy I "..\\ /D " WIN32" D "_DEBUG" D "_WINDOWS" D ACE_HAS_DLL=1 FD MTd c
-# ADD CPP /nologo /MDd /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "_DEBUG" /FD /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "_DEBUG" /FD /MDd /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -240,7 +247,7 @@ MTL=midl.exe
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
 CPP=cl.exe
 # ADD BASE CPP /Gt0 nologo Gt0 W3 GX Zi Od Gy I "..\\ /D " WIN32" D "_DEBUG" D "_WINDOWS" D ACE_HAS_DLL=1 D "UNICODE" FD MTd c
-# ADD CPP /nologo /MTd /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MTd /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -4096,7 +4103,27 @@ SOURCE=.\Basic_Types.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cache_Map_Manager_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cached_Connect_Strategy_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Caching_Strategies_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Caching_Strategy_Utility_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\CDR_Stream.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cleanup_Strategies_T.h
 # End Source File
 # Begin Source File
 
@@ -4237,6 +4264,10 @@ SOURCE=.\Get_Opt.h
 # Begin Source File
 
 SOURCE=.\Handle_Set.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Hash_Cache_Map_Manager_T.h
 # End Source File
 # Begin Source File
 
@@ -4900,7 +4931,27 @@ SOURCE=.\Basic_Types.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cache_Map_Manager_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cached_Connect_Strategy_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Caching_Strategies_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Caching_Strategy_Utility_T.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\CDR_Stream.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cleanup_Strategies_T.i
 # End Source File
 # Begin Source File
 
@@ -4997,6 +5048,10 @@ SOURCE=.\Get_Opt.i
 # Begin Source File
 
 SOURCE=.\Handle_Set.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Hash_Cache_Map_Manager_T.i
 # End Source File
 # Begin Source File
 
@@ -5511,6 +5566,121 @@ SOURCE=.\Auto_Ptr.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cache_Map_Manager_T.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cached_Connect_Strategy_T.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Caching_Strategies_T.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Caching_Strategy_Utility_T.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cleanup_Strategies_T.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connector.cpp
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
@@ -5597,6 +5767,29 @@ SOURCE=.\Functor_T.cpp
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Hash_Cache_Map_Manager_T.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
 !ENDIF 
 
