@@ -162,10 +162,13 @@ sub write_comps {
       }
     }
     print $fh $crlf,
-              "REMAINING_TARGETS := \$(subst all, , \$(TARGETS_NESTED:.nested=))$crlf",
+              'REMAINING_TARGETS := ',
+              '$(subst all, , $(TARGETS_NESTED:.nested=)) $(CUSTOM_TARGETS)',
+              $crlf;
   }
   else {
-    print $fh "REMAINING_TARGETS := \$(TARGETS_NESTED:.nested=)$crlf",
+    print $fh 'REMAINING_TARGETS := $(TARGETS_NESTED:.nested=) ',
+              '$(CUSTOM_TARGETS)', $crlf;
   }
 
   ## Print out the remaing targets.
