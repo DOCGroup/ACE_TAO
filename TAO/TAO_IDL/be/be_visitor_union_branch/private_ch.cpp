@@ -245,7 +245,7 @@ be_visitor_union_branch_private_ch::visit_predefined_type (be_predefined_type *n
       if (!ACE_OS::strcmp (bt->local_name ()->get_string (), "Object"))
         {
           *os << "TAO_Object_Field_T<CORBA::Object> *" << ub->local_name () 
-              << "_\n";;
+              << "_;\n";
         }
       else
         *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name () 
