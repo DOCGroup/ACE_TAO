@@ -13,6 +13,7 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
 #include "ace/Strategies_T.h"
+#include "ace/SOCK_Connector.h"
 
 ACE_RCSID (TAO,
            IIOP_Connector,
