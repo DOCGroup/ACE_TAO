@@ -34,8 +34,14 @@ main (int argc, char **argv)
     }
 
   // Obtain the object reference to the RootPOA.
-  CORBA::Object_var obj =
-    orb->resolve_initial_references ("RootPOA");
+  TAO_POA_Policies root_poa_policies;
+  root_poa_policies.implicit_activation (PortableServer::IMPLICIT_ACTIVATION);
+  root_poa_policies.lifespan (PortableServer::PERSISTENT);
+  root_poa_policies.TAO_POA_locking (PortableServer::USE_NULL_LOCK);
+
+  CORBA::Object_var obj = orb->resolve_poa ("RootPOA",
+                                            0, 
+                                            &root_poa_policies);
 
   // _narrow () the Object to get the POA object, i.e., the root_poa.
   PortableServer::POA_var root_poa =

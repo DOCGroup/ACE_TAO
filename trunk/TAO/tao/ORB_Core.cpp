@@ -818,29 +818,57 @@ TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core *p)
 }
 
 void
-TAO_ORB_Core::create_and_set_root_poa (void)
+TAO_ORB_Core::create_and_set_root_poa (const char *adapter_name,
+                                       TAO_POA_Manager *poa_manager,
+                                       const TAO_POA_Policies *policies,
+                                       TAO_Object_Table *active_object_map)
 {
   CORBA::Environment env;
-  TAO_POA *poa;
+  TAO_POA *poa = 0;
+  int delete_policies = 0;
 
   // Need to do double-checked locking here to cover the case of
   // multiple threads using a global resource policy.
-  TAO_POA_Manager *manager = new TAO_POA_Manager;
-  TAO_POA_Policies root_poa_policies;
-  root_poa_policies.implicit_activation (PortableServer::IMPLICIT_ACTIVATION);
+  if (poa_manager == 0)
+    poa_manager = new TAO_POA_Manager;
 
-  // Construct a new POA
-  poa = new TAO_POA ("",
-                     *manager,
-                     root_poa_policies,
-                     0,
-                     env);
+  TAO_POA_Policies *root_poa_policies = 0;
+  if (policies == 0)
+    {
+      root_poa_policies = new TAO_POA_Policies;
+      // RootPOA policies defined in spec
+      root_poa_policies->implicit_activation (PortableServer::IMPLICIT_ACTIVATION);
 
-  if (env.exception () != 0)
-    return;
+      delete_policies = 1;
+      policies = root_poa_policies;
+    }
 
-  // set the poa in the orbcore instance
-  this->root_poa (poa);
+  if (active_object_map == 0)
+    {
+      // Construct a new POA without passing active object map
+      poa = new TAO_POA (adapter_name,
+                         *poa_manager,
+                         *policies,
+                         0,
+                         env);
+    }
+  else
+    {
+      // Construct a new POA passing active object map
+      poa = new TAO_POA (adapter_name,
+                         *poa_manager,
+                         *policies,
+                         0,
+                         *active_object_map,
+                         env);
+    }
+
+  if (delete_policies)
+    delete root_poa_policies;
+
+  if (env.exception () == 0)
+    // set the poa in the orbcore instance
+    this->root_poa (poa);
 }
 
 int
