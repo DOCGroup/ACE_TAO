@@ -6,7 +6,7 @@ TAO_POA_Current::TAO_POA_Current (void)
 {
 }
 
-ACE_INLINE TAO_POA_Policy_Validator &
+ACE_INLINE TAO_Policy_Validator &
 TAO_Object_Adapter::validator (void)
 {
   return this->default_validator_;

@@ -8,7 +8,7 @@ ACE_RCSID(tao, POA, "$Id$")
 
 
 TAO_POA_Default_Policy_Validator::TAO_POA_Default_Policy_Validator (TAO_ORB_Core &orb_core)
-  : TAO_POA_Policy_Validator (orb_core)
+  : TAO_Policy_Validator (orb_core)
 {
 }
 

@@ -245,6 +245,7 @@ public:
   /// Call the establish components.
   void tao_establish_components (TAO_ENV_SINGLE_ARG_DECL);
 
+
   /// Give each registered IOR interceptor the opportunity to add
   /// tagged components to profiles of each created servant.
   void establish_components (PortableInterceptor::IORInfo *info

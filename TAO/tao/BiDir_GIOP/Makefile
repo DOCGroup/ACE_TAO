@@ -26,7 +26,8 @@ CPP_SRCS += \
 	BiDirPolicyC \
 	BiDir_ORBInitializer \
 	BiDir_PolicyFactory \
-	BiDir_Policy_i 
+	BiDir_Policy_i \
+	BiDirPolicy_Validator
 
 IDL_SRC = \
         $(addsuffix S.cpp, $(IDL_FILES)) \

@@ -979,6 +979,8 @@ enum TAO_Cached_Policy_Type
   TAO_CACHED_POLICY_BUFFERING_CONSTRAINT,
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
+  TAO_CACHED_POLICY_BIDIRECTIONAL_GIOP,
+
   TAO_CACHED_POLICY_MAX_CACHED
 };
 
@@ -1047,7 +1049,7 @@ enum TAO_Policy_Scope
 
 // This is the version of the MIOP spec that TAO supports. The
 // exact usage of the version has not been emphasized. But TAO should
-// get a TaggedComponents for a group with this version number. So, for 
+// get a TaggedComponents for a group with this version number. So, for
 // the present, we do a sanity check for our version and raise an error on
 // a mismatch.
 

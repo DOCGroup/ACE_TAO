@@ -78,6 +78,7 @@ public:
   virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 private:
 
   /// The attribute
