@@ -1,3 +1,10 @@
+Thu May  2 00:18:34 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Connection_Timeout/client.cpp: Grr! The piece of code that
+	  sets the policy had been commented out. The policy needs to be
+	  applied for the test to work. This should fix the errors in the
+	  builds. 
+
 Thu May 02 00:23:08 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/TAO.dsp:
