@@ -91,7 +91,7 @@ My_Handler::handle_input (ACE_HANDLE)
                 buf));
 
   throw_exception ();
-  ACE_NOTREACHED (return 0);
+  return 0;
 }
 
 class My_Reactor : public ACE_Reactor
@@ -106,7 +106,7 @@ public:
       }
     catch (...)
       {
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     " (%t) catch exception\n"));
         ret = -1;
         // do your thing, etc.
@@ -184,7 +184,7 @@ main (int argc, char *argv[])
   handler.close ();
   dgram.close ();
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               " (%t) exiting main\n"));
 #else
   ACE_UNUSED_ARG (argc);
