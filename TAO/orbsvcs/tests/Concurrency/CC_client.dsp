@@ -44,7 +44,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 advapi32.lib user32.lib TAO_CosNaming.lib TAO_Svc_Utils.lib TAO_IORTable.lib TAO_CosConcurrency.lib TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_Valuetype.lib TAO_ObjRefTemplate.lib TAO.lib ACE.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\lib" /libpath:"..\..\..\tao\IORTable" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\Valuetype" /libpath:"..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao\ObjrefTemplate" /version:1.3.4
+# ADD LINK32 advapi32.lib user32.lib TAO_CosNaming.lib TAO_Svc_Utils.lib TAO_IORTable.lib TAO_CosConcurrency.lib TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_Valuetype.lib TAO_ObjRefTemplate.lib TAO.lib ACE.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\lib" /libpath:"..\..\..\tao\IORTable" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\Valuetype" /libpath:"..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao\ObjrefTemplate ..\..\..\tao\orbsvcs\orbsvcs" /version:1.3.4
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "CC_client - Win32 Debug"
