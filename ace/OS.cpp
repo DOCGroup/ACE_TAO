@@ -1928,7 +1928,7 @@ ACE_Thread_Adapter::invoke (void)
   // above ACE_Thread_Exit::instance ().  With the Xavier Pthreads
   // package, the exit_hook in TSS causes a seg fault.  So, this
   // works around that by creating exit_hook on the stack.
-# if (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) && ! defined (ACE_HAS_PTHREAD_SIGMASK)
+# if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)
   // Obtain our thread-specific exit hook and make sure that it
   // knows how to clean us up!  Note that we never use this
   // pointer directly (it's stored in thread-specific storage), so
@@ -1950,7 +1950,7 @@ ACE_Thread_Adapter::invoke (void)
   // should return from <svc>.
   ACE_Thread_Exit exit_hook;
   exit_hook.thr_mgr (this->thr_mgr ());
-# endif /* (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) && ! ACE_HAS_PTHREAD_SIGMASK */
+# endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 
 #endif
 
