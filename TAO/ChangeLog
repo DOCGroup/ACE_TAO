@@ -1,3 +1,13 @@
+Fri Mar 11 11:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+          Added include of ImR_Client_Adapter_Impl to force the link of the
+          ImR_Client in a static build
+
+        * orbsvcs/tests/ImplRepo/ImplRepo.mpc:
+          Added imr_client as base project of the servers
+
 Fri Mar 11 11:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/ImplRepo/scale/scaletest.mpc:
