@@ -1,3 +1,9 @@
+Tue Jul 28 12:36:18 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Service_Config.cpp (~ACE_Service_Config): Removed the call
+ 	  to ACE_Service_Config::close () from the destructor.  This will
+ 	  be called by the Object Manager upon destruction.
+
 Tue Jul 28 14:49:52 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* TAO/TAO-INSTALL.html (HREF): The paragraph "A note on Make" was
