@@ -1,3 +1,9 @@
+Mon Aug  9 09:56:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
+
+        * examples/APG/Processes/Spawn.cpp:
+          Changed the check of the result of spawn, use ACE_INVALID_PID
+          instead of -1.
+
 Mon Aug  9 08:55:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
 
         * ace/OS_NS_unistd.inl (chdir):
