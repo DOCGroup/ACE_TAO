@@ -1,5 +1,8 @@
 Mon Nov 02 11:22:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* tests/Thread_Pool_Reactor_Test.cpp: Renamed Acceptor_Handler to
+	  Request_Handler to better reflect what the class actually does.
+
 	* docs/ACE-categories.html: Fixed erroneous html tags.  Thanks to
 	  Rainer Blome <rainer_blome@de.ibm.com> for reporting this.
 
