@@ -103,10 +103,42 @@ class AboutFrame extends Frame
 
     Panel okButtonPanel = new Panel ();
     okButtonPanel.add (this.okButton_);
-    
+    AboutFrameTextPanel textPanel = new AboutFrameTextPanel ();
+
+    this.add ("Center", textPanel);    
     this.add ("South", okButtonPanel);
   }
 
+  // Handle window destroy events
+  public boolean handleEvent (Event evt)
+  {
+    if (evt.id == Event.WINDOW_DESTROY)
+      {
+	this.dispose ();
+	return true;
+      }
+    return super.handleEvent (evt);
+  }
+
+  // Handle all action events
+  public boolean action (Event e, Object arg)
+  {
+    if (e.target instanceof Button)
+      {
+	if (e.target == this.okButton_)
+	  {
+	    this.dispose ();
+	  }
+	return true;
+      }
+    else
+      return false;
+  }
+  private Button okButton_ = new Button (" ok ");
+}
+
+class AboutFrameTextPanel extends Panel
+{
   public void paint (Graphics g)
   {
     int width = this.size ().width;
@@ -144,40 +176,12 @@ class AboutFrame extends Frame
     x = (width - fontMetrics.stringWidth (info_))/2;
     y += 50;
     g.drawString(info_, x, y);
-
-  }
-
-  // Handle window destroy events
-  public boolean handleEvent (Event evt)
-  {
-    if (evt.id == Event.WINDOW_DESTROY)
-      {
-	this.dispose ();
-	return true;
-      }
-    return super.handleEvent (evt);
-  }
-
-  // Handle all action events
-  public boolean action (Event e, Object arg)
-  {
-    if (e.target instanceof Button)
-      {
-	if (e.target == this.okButton_)
-	  {
-	    this.dispose ();
-	  }
-	return true;
-      }
-    else
-      return false;
   }
 
   private String title_ = "MedJava";
   private String by_ = "by";
   private String author_ = "Prashant Jain";
   private String info_ = "Version 1.0";
-  private Button okButton_ = new Button (" ok ");
 }
 
 class HelpFrame extends Frame
