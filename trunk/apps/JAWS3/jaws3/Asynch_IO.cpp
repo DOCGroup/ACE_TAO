@@ -139,7 +139,7 @@ JAWS_EC_AH_Adapter
                                    );
   // More useful diagnostics not implemented yet.
 
-  void *act = ACE_const_cast (void *, result.act ());
+  void *act = const_cast<void *> (result.act ());
 
   this->completer_->input_complete (io_result, act);
   delete this;
@@ -157,7 +157,7 @@ JAWS_EC_AH_Adapter
                                    );
   // More useful diagnostics not implemented yet.
 
-  void *act = ACE_const_cast (void *, result.act ());
+  void *act = const_cast<void *> (result.act ());
 
   this->completer_->output_complete (io_result, act);
   delete this;
@@ -176,7 +176,7 @@ JAWS_EC_AH_Adapter
   // More useful diagnostics not implemented yet.
   // Watch out for files not opened in overlapped IO mode.
 
-  void *act = ACE_const_cast (void *, result.act ());
+  void *act = const_cast<void *> (result.act ());
 
   this->completer_->output_complete (io_result, act);
   delete this;

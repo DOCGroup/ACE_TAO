@@ -32,7 +32,7 @@ private:                                                         \
                                                                  \
   int service (JAWS_Event_Completer *ec, void *d)                \
   {                                                              \
-    JAWS_HTTP_Data *hd = ACE_static_cast (JAWS_HTTP_Data *, d);  \
+    JAWS_HTTP_Data *hd = static_cast<JAWS_HTTP_Data *> (d);  \
     return this->service (ec, hd);                               \
   }                                                              \
                                                                  \
@@ -41,7 +41,7 @@ private:                                                         \
                                    , void a*                     \
                                    )                             \
   {                                                              \
-    JAWS_HTTP_Data *hd = ACE_static_cast (JAWS_HTTP_Data *, d);  \
+    JAWS_HTTP_Data *hd = static_cast<JAWS_HTTP_Data *> (d);  \
     return this->transition (r, hd, a);                          \
   }                                                              \
                                                                  \

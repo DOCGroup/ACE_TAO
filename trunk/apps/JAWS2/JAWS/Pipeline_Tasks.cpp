@@ -23,7 +23,7 @@ JAWS_Pipeline_Handler::~JAWS_Pipeline_Handler (void)
 int
 JAWS_Pipeline_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 {
-  JAWS_Data_Block *db = ACE_dynamic_cast (JAWS_Data_Block *, mb);
+  JAWS_Data_Block *db = dynamic_cast<JAWS_Data_Block *> (mb);
   JAWS_IO_Handler *ioh = db->io_handler ();
 
   // guarantee the handler remains for the duration of this call
@@ -35,7 +35,7 @@ JAWS_Pipeline_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
     {
       JAWS_Pipeline_Handler *task = ioh->task ();
       JAWS_Pipeline_Handler *next
-        = ACE_dynamic_cast (JAWS_Pipeline_Handler *, task->next ());
+        = dynamic_cast<JAWS_Pipeline_Handler *> (task->next ());
 
       ioh->task (next);
     }
@@ -60,11 +60,11 @@ JAWS_Pipeline_Handler::policy (JAWS_Dispatch_Policy *policy)
 int
 JAWS_Pipeline_Accept_Task::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 {
-  JAWS_Data_Block *db = ACE_dynamic_cast (JAWS_Data_Block *, mb);
+  JAWS_Data_Block *db = dynamic_cast<JAWS_Data_Block *> (mb);
 
   JAWS_Pipeline_Handler *task = db->task ();
   JAWS_Pipeline_Handler *next
-    = ACE_dynamic_cast (JAWS_Pipeline_Handler *, task->next ());
+    = dynamic_cast<JAWS_Pipeline_Handler *> (task->next ());
 
   JAWS_IO_Handler *ioh = this->new_handler (db);
   if (ioh == 0)
@@ -178,7 +178,7 @@ JAWS_Pipeline_Done_Task::put (ACE_Message_Block *mb, ACE_Time_Value *)
 {
   JAWS_TRACE ("JAWS_Pipeline_Done_Task::put");
 
-  JAWS_Data_Block *data = ACE_dynamic_cast (JAWS_Data_Block *, mb);
+  JAWS_Data_Block *data = dynamic_cast<JAWS_Data_Block *> (mb);
 
   JAWS_IO_Handler *handler = data->io_handler ();
   JAWS_Dispatch_Policy *policy = this->policy ();
