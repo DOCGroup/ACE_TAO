@@ -30,6 +30,7 @@ extern "C" {
 
 #ifndef PACE_CLOCKID_T
 #define PACE_CLOCKID_T
+  typedef int clockid_t;
   typedef clockid_t pace_clockid_t;
 #endif /* PACE_CLOCKID_T */
 
@@ -45,6 +46,7 @@ extern "C" {
 
 #ifndef PACE_TIMER_T
 #define PACE_TIMER_T
+  typedef long timer_t;
   typedef timer_t pace_timer_t;
 #endif /* PACE_TIMER_T */
 
@@ -67,6 +69,26 @@ extern "C" {
 #define PACE_ITIMERSPEC
   typedef struct itimerspec pace_itimerspec;
 #endif /* PACE_ITIMERSPEC */
+
+#ifndef PACE_SIGVAL
+#define PACE_SIGVAL
+  typedef union sigval {
+    int sival_int;                 /* integer value */
+    void * sival_ptr;              /* pointer value */
+} pace_sigval;
+#endif  /* PACE_SIGVAL */
+
+#ifndef PACE_SIGEVENT
+#define PACE_SIGEVENT
+  typedef struct sigevent {
+    int sigev_notify;             /* notification mode */
+    int sigev_signo;              /* signal number */
+    union sigval sigev_value;     /* signal value */
+    void (*sigev_notify_function)(union sigval);
+    pace_pthread_attr_t * sigev_notify_attributes;
+    int __sigev_pad2;
+  } pace_sigevent;
+#endif /* PACE_SIGEVENT */
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }

@@ -1,14 +1,24 @@
+Wed Jul 12 14:15:10 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/signal.h: 
+	* pace/win32/time.h: 
+
+	  Added types to help win32 along.
+
 Wed Jul 12 12:10:55 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * pace/config/platform.h: added OSF1 support.
 
 Wed Jul 12 11:51:52 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-        * pace/win32/errno.h:
+	* pace/win32/errno.h:
 
-          Added to repository.
-          Added to pace_dll.dsp.
-          Added to pace_lib.dsp.
+	  Added to repository.	
+	
+	* pace/win32/pace_dll.dsp:
+	* pace/win32/pace_lib.dsp:
+
+	  Modified to include the new file.
 
 Wed Jul 12 11:45:34 2000  David L. Levine  <levine@cs.wustl.edu>
 
