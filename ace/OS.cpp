@@ -91,6 +91,20 @@ ACE_Cleanup_Info::ACE_Cleanup_Info (void)
 {
 }
 
+int 
+ACE_Cleanup_Info::operator== (const struct ACE_Cleanup_Info &o) const
+{
+  return o.object_ == this->object_ 
+    && o.cleanup_hook_ == this->cleanup_hook_
+    && o.param_ == this->param_;
+}
+
+int 
+ACE_Cleanup_Info::operator!= (const struct ACE_Cleanup_Info &o) const
+{
+  return !(*this == o);
+}
+
 void
 ACE_Time_Value::dump (void) const
 {
