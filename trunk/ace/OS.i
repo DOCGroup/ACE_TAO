@@ -3358,10 +3358,10 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
   ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
 #else /* NT, POSIX, and VxWorks don't support this natively. */
+#if 0
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
 #endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
-#if 0
   int result = 0;
 
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
