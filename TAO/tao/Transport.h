@@ -46,7 +46,7 @@ struct iovec;
 namespace TAO
 {
   /**
-   * @NOTE: Should this be in TAO namespace. Seems like a candidate
+   * @note Should this be in TAO namespace. Seems like a candidate
    * that should be in the transport
    */
   enum Connection_Role

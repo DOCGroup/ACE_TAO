@@ -1,3 +1,9 @@
+Sun Feb 13 13:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.h:
+        * tao/Wait_Strategy.h:
+          Doxygen improvements
+
 Fri Feb 11 11:12:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Valuetype/ValueBase.inl (is_end_tag):
