@@ -18,12 +18,10 @@ SUBDIRS = \
         Concurrency \
         CosEC_Basic \
         CosEC_Multiple \
-        EC_Basic \
         EC_Custom_Marshal \
         EC_Mcast \
         EC_Multiple \
         EC_Throughput \
-        Event_Latency \
         ImplRepo \
         Logger \
         Property \

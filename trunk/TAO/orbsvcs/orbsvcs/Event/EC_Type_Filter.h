@@ -64,6 +64,11 @@ private:
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_Type_Filter& operator=
                               (const TAO_EC_Type_Filter&))
 
+  /// Filter an EventSet that contains more than one event.
+  int filter_set (const RtecEventComm::EventSet& event,
+                  TAO_EC_QOS_Info& qos_info
+                  TAO_ENV_ARG_DECL);
+
 private:
   /// Encapsulate the type/source that we must match.
   RtecEventComm::EventHeader header_;

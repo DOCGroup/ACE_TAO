@@ -24,20 +24,6 @@ TAO_ECG_UDP_Out_Endpoint::next_request_id (void)
 
 // ****************************************************************
 
-ACE_INLINE ACE_SOCK_Dgram&
-TAO_ECG_UDP_Sender::dgram (void)
-{
-  return this->endpoint_->dgram ();
-}
-
-ACE_INLINE CORBA::ULong
-TAO_ECG_UDP_Sender::mtu (void) const
-{
-  return this->mtu_;
-}
-
-// ****************************************************************
-
 ACE_INLINE
 TAO_ECG_UDP_Request_Index::TAO_ECG_UDP_Request_Index (void)
   : request_id (0)

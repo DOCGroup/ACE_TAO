@@ -57,8 +57,12 @@ public:
   virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier
                              TAO_ENV_ARG_DECL);
   virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL);
-  virtual void push (const RtecEventComm::EventSet& event
+  virtual void push (const RtecEventComm::EventSet& event,
+                     TAO_EC_ProxyPushConsumer *consumer
                      TAO_ENV_ARG_DECL_NOT_USED);
+  virtual void push_scheduled_event (RtecEventComm::EventSet &event,
+                                     const TAO_EC_QOS_Info &event_info
+                                     TAO_ENV_ARG_DECL);
   virtual CORBA::ULong _decr_refcnt (void);
   virtual CORBA::ULong _incr_refcnt (void);
 

@@ -328,7 +328,7 @@ TAO_EC_ProxyPushConsumer::push (const RtecEventComm::EventSet& event
 
   // No need to keep the lock, the filter_ class is supposed to be
   // thread safe....
-  ace_mon.filter->push (event TAO_ENV_ARG_PARAMETER);
+  ace_mon.filter->push (event, this TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 

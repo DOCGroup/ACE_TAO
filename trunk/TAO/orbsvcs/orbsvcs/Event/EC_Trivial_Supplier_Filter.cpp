@@ -5,6 +5,7 @@
 #include "EC_ConsumerAdmin.h"
 #include "EC_ProxySupplier.h"
 #include "EC_QOS_Info.h"
+#include "EC_Scheduling_Strategy.h"
 #include "EC_ProxyConsumer.h" // @@ MSVC 6 bug
 
 #if ! defined (__ACE_INLINE__)
@@ -55,25 +56,26 @@ TAO_EC_Trivial_Supplier_Filter::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_EC_Trivial_Supplier_Filter::push (const RtecEventComm::EventSet& event
+TAO_EC_Trivial_Supplier_Filter::push (const RtecEventComm::EventSet& event,
+                                      TAO_EC_ProxyPushConsumer *consumer
                                       TAO_ENV_ARG_DECL)
 {
-  TAO_EC_ConsumerAdmin* consumer_admin =
-    this->event_channel_->consumer_admin ();
+  TAO_EC_Scheduling_Strategy* scheduling_strategy =
+    this->event_channel_->scheduling_strategy ();
+  scheduling_strategy->schedule_event (event,
+                                       consumer,
+                                       this
+                                       TAO_ENV_ARG_PARAMETER);
+}
 
-  for (CORBA::ULong j = 0; j < event.length (); ++j)
-    {
-      const RtecEventComm::Event& e = event[j];
-      RtecEventComm::Event* buffer =
-        ACE_const_cast(RtecEventComm::Event*, &e);
-      RtecEventComm::EventSet single_event (1, 1, buffer, 0);
-
-      TAO_EC_QOS_Info qos_info;
-
-      TAO_EC_Filter_Worker worker (single_event, qos_info);
-      consumer_admin->for_each (&worker TAO_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
+void
+TAO_EC_Trivial_Supplier_Filter::push_scheduled_event (RtecEventComm::EventSet &event,
+                                                      const TAO_EC_QOS_Info &event_info
+                                                      TAO_ENV_ARG_DECL)
+{
+  TAO_EC_Filter_Worker worker (event, event_info);
+  this->event_channel_->consumer_admin ()->for_each (&worker
+                                                     TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::ULong
