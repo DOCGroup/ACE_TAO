@@ -130,66 +130,9 @@ typedef struct
   char name_[4];
 } ACE_sema_t;
 
-typedef int ACE_exitcode;
-
 #   define ACE_SEH_TRY if (1)
 #   define ACE_SEH_EXCEPT(X) while (0)
 #   define ACE_SEH_FINALLY if (1)
-
-#   if !defined (LPSECURITY_ATTRIBUTES)
-#     define LPSECURITY_ATTRIBUTES int
-#   endif /* !defined LPSECURITY_ATTRIBUTES */
-#   if !defined (GENERIC_READ)
-#     define GENERIC_READ 0
-#   endif /* !defined GENERIC_READ */
-#   if !defined (FILE_SHARE_READ)
-#     define FILE_SHARE_READ 0
-#   endif /* !defined FILE_SHARE_READ */
-#   if !defined (OPEN_EXISTING)
-#     define OPEN_EXISTING 0
-#   endif /* !defined OPEN_EXISTING */
-#   if !defined (FILE_ATTRIBUTE_NORMAL)
-#     define FILE_ATTRIBUTE_NORMAL 0
-#   endif /* !defined FILE_ATTRIBUTE_NORMAL */
-#   if !defined (MAXIMUM_WAIT_OBJECTS)
-#     define MAXIMUM_WAIT_OBJECTS 0
-#   endif /* !defined MAXIMUM_WAIT_OBJECTS */
-#   if !defined (FILE_FLAG_OVERLAPPED)
-#     define FILE_FLAG_OVERLAPPED 0
-#   endif /* !defined FILE_FLAG_OVERLAPPED */
-#   if !defined (FILE_FLAG_SEQUENTIAL_SCAN)
-#     define FILE_FLAG_SEQUENTIAL_SCAN 0
-#   endif /* !defined FILE_FLAG_SEQUENTIAL_SCAN */
-#   if !defined(FILE_FLAG_WRITE_THROUGH)
-#     define FILE_FLAG_WRITE_THROUGH 0
-#   endif /* !defined FILE_FLAG_WRITE_THROUGH */
-#   if !defined(PIPE_WAIT)
-#     define PIPE_WAIT 0
-#   endif /* !defined PIPE_WAIT */
-#   if !defined(PIPE_NOWAIT)
-#     define PIPE_NOWAIT 0
-#   endif /* !defined PIPE_WAIT */
-#   if !defined(PIPE_READMODE_BYTE)
-#     define PIPE_READMODE_BYTE 0
-#   endif /* !defined PIPE_READMODE_BYTE */
-#   if !defined(PIPE_READMODE_MESSAGE)
-#     define PIPE_READMODE_MESSAGE 0
-#   endif /* !defined PIPE_READMODE_MESSAGE */
-#   if !defined(PIPE_TYPE_BYTE)
-#     define PIPE_TYPE_BYTE 0
-#   endif /* !defined PIPE_TYPE_BYTE */
-#   if !defined(PIPE_TYPE_MESSAGE)
-#     define PIPE_TYPE_MESSAGE 0
-#   endif /* !defined PIPE_TYPE_MESSAGE */
-
-struct ACE_OVERLAPPED
-{
-  u_long Internal;
-  u_long InternalHigh;
-  u_long Offset;
-  u_long OffsetHigh;
-  ACE_HANDLE hEvent;
-};
 
 #if defined (ACE_PSOS_HAS_TIME)
 
@@ -1298,7 +1241,6 @@ static const ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000U;
 typedef DWORD ACE_thread_t;
 typedef HANDLE ACE_hthread_t;
 
-#define ACE_INVALID_PID ((pid_t) -1)
 #   if defined (ACE_HAS_TSS_EMULATION)
       typedef DWORD ACE_OS_thread_key_t;
       typedef u_int ACE_thread_key_t;
@@ -1333,7 +1275,6 @@ typedef ACE_UINT64 ACE_hrtime_t;
 #     endif
 #   endif /* ACE_HAS_WINCE */
 
-typedef DWORD ACE_exitcode;
 #   define ACE_SYSCALL_FAILED 0xFFFFFFFF
 
 // Needed to map calls to NT transparently.
@@ -1359,17 +1300,12 @@ typedef ACE_UINT64 ACE_hrtime_t;
 #   endif  /*  m88k */
 
 // Be consistent with Winsock naming
-typedef int ACE_exitcode;
 #   define ACE_INVALID_HANDLE -1
 #   define ACE_SYSCALL_FAILED -1
 
 #   define ACE_SEH_TRY if (1)
 #   define ACE_SEH_EXCEPT(X) while (0)
 #   define ACE_SEH_FINALLY if (1)
-
-# if !defined (ACE_INVALID_PID)
-# define ACE_INVALID_PID ((pid_t) -1)
-# endif /* ACE_INVALID_PID */
 
 // The "null" device on UNIX.
 #   define ACE_DEV_NULL "/dev/null"

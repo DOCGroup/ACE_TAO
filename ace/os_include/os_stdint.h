@@ -68,18 +68,6 @@ extern "C"
      typedef unsigned int      uint_t;
      typedef unsigned long     ulong_t;
 #  endif /* 0 */
-     typedef char *            caddr_t;
-#  if defined (ACE_PSOS_DIAB_PPC)
-     // pid_t is defined in sys/types.h
-#    if 0
-       typedef unsigned long pid_t;
-#    endif /* 0 */
-#    define ACE_INVALID_PID ((pid_t) ~0)
-#  else /* !defined (ACE_PSOS_DIAB_PPC) */
-     typedef long pid_t;
-#    define ACE_INVALID_PID ((pid_t) -1)
-#  endif /* defined (ACE_PSOS_DIAB_PPC) */
-//      typedef unsigned char wchar_t;
 #endif /* ACE_PSOS_CANT_USE_SYS_TYPES */
 
 /* Define required types if missing */
