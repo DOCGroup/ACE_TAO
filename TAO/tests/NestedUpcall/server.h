@@ -48,11 +48,11 @@ public:
 
   int init (int argc,
             char **argv,
-	    CORBA::Environment& env);
+            CORBA::Environment& env);
   // Initialize the NestedUpCalls_Server state - parsing arguments and ...
 
   int run (CORBA::Environment& env);
-  // Run the orb 
+  // Run the orb
 
 private:
   int parse_args (void);
@@ -78,7 +78,7 @@ private:
 
   Reactor_i reactor_impl_;
   // Implementation object of the NestedUpCalls reactor.
-       
+
   Reactor_var reactor_;
   // Reactor_var to register with NamingService.
 

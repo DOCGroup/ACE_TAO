@@ -4,17 +4,17 @@
 //
 // = LIBRARY
 //    TAO/tests/IDL_Cubit
-// 
+//
 // = FILENAME
 //    NestedUpCalls_i.h
 //
 // = AUTHOR
 //    Andy Gokhale, Sumedh Mungee and Sergio Flores-Gaitan
-// 
+//
 // ============================================================================
 
 #if !defined (_NESTEDUPCALLS_I_H)
-#define	_NESTEDUPCALLS_I_H
+#define _NESTEDUPCALLS_I_H
 
 //#include "cubitS.h"
 
@@ -62,8 +62,8 @@ public:
   // Cube a union.
 
   virtual void cube_sequence (const Cubit::vector &input,
-			      Cubit::vector_out output,
-			      CORBA::Environment &env);
+                              Cubit::vector_out output,
+                              CORBA::Environment &env);
   // Cube a sequence.
 */
   virtual void shutdown (CORBA::Environment &env);

@@ -9,7 +9,7 @@
 class EventHandler_i : public POA_EventHandler
 {
   // = TITLE
-  //     Servant implementation for the <EventHandler> IDL interface. 
+  //     Servant implementation for the <EventHandler> IDL interface.
 public:
   EventHandler_i (void);
   // Constructor.
