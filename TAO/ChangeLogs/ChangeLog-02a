@@ -1,3 +1,15 @@
+Wed Jun 21 13:00:31 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/PortableServer/POA.cpp:
+	* tao/PortableServer/PAO.h:
+	* tao/PortableServer/PortableServerC.h:
+
+	  Set inheritance from PortableServer::POA in class TAO_POA to be virtual.   
+
+	  Added new method (_tao_poa_downcast) to safely downcast instances of
+	  PortableServer::POA to TAO_POA. This method has to be used instead
+	  of ACE_dynamic_cast for downcasting the POA. 
+	
 Thu Jun 21 12:57:34 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
         * docs/ec_options.html:

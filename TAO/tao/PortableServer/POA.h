@@ -127,8 +127,8 @@ protected:
 class ServerObject_i;
 
 class TAO_PortableServer_Export TAO_POA :
-  public PortableServer::POA ,
-  public TAO_Local_RefCounted_Object
+  public virtual PortableServer::POA ,
+  public virtual TAO_Local_RefCounted_Object
 {
 public:
 
@@ -139,6 +139,12 @@ public:
   friend class TAO_POA_Manager;
 
   typedef ACE_CString String;
+  
+  /**
+   * This method is used to downcast safely an instance of PortableServer::POA
+   * to an instance of TAO_POA when RTTI is not enabled.
+   */
+  virtual TAO_POA* _tao_poa_downcast (void);
 
   PortableServer::POA_ptr create_POA (const char *adapter_name,
                                       PortableServer::POAManager_ptr poa_manager,

@@ -63,6 +63,7 @@ class TAO_ServantBase_var;
 class TAO_RefCountServantBase;
 class TAO_Local_ServantBase;
 class TAO_DynamicImplementation;
+class TAO_POA;
 
 TAO_NAMESPACE  PortableServer
 {
@@ -2253,6 +2254,7 @@ class TAO_PortableServer_Export ServantLocator: public virtual ServantManager
 #if !defined (_PORTABLESERVER_POA_CH_)
 #define _PORTABLESERVER_POA_CH_
 
+
 class TAO_PortableServer_Export POA : public virtual CORBA_Object
   {
   public:
@@ -2278,6 +2280,7 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
         return (POA_ptr)0;
       }
 
+    virtual TAO_POA* _tao_poa_downcast(void) {return 0;}
 
 #if !defined (_PORTABLESERVER_POA_ADAPTERALREADYEXISTS_CH_)
 #define _PORTABLESERVER_POA_ADAPTERALREADYEXISTS_CH_
@@ -2308,6 +2311,7 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
           TAO_InputCDR &,
           CORBA::Environment &
         );
+
 
       static AdapterAlreadyExists *_downcast (CORBA::Exception *);
 
