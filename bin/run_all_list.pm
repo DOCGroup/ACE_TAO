@@ -86,7 +86,7 @@ if ($^O eq "MSWin32") {
       'TAO/tests/POA/Deactivation , run_test.pl',
       'TAO/tests/POA/Destruction , run_test.pl',
       'TAO/tests/IORManipulation , run_test.pl',
-      'TAO/tests/Timeout , run_test.pl',
+# NOT MINIMUM 'TAO/tests/Timeout , run_test.pl',
       'TAO/tests/ORB_init , run_test.pl',
 # NOT MINIMUM 'TAO/examples/POA/Adapter_Activator , run_test.pl',
 # NOT MINIMUM 'TAO/examples/POA/DSI , run_test.pl',
