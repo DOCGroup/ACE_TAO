@@ -1,3 +1,8 @@
+Fri May 30 15:54:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/ciaoversion.mpb: New file having
+	  the version information.
+
 Fri May 30 15:29:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Makefile (APPLY_NEW_TAG): New tags for CIAO.
