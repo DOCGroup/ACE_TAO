@@ -372,22 +372,32 @@ template class Param_Test_Client<Test_Nested_Struct>;
 template class Param_Test_Client<Test_Struct_Sequence>;
 template class Param_Test_Client<Test_Bounded_Struct_Sequence>;
 template class Param_Test_Client<Test_ObjRef>;
+template class Param_Test_Client<Test_ObjRef_Sequence>;
 template class Param_Test_Client<Test_TypeCode>;
 template class Param_Test_Client<Test_Any>;
+template class Param_Test_Client<Test_AnySeq>;
 template class Param_Test_Client<Test_Short_Sequence>;
+template class Param_Test_Client<Test_Bounded_Short_Sequence>;
+template class Param_Test_Client<Test_Long_Sequence>;
+template class Param_Test_Client<Test_Bounded_Long_Sequence>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<Driver, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate Param_Test_Client<Test_Short>
 #pragma instantiate Param_Test_Client<Test_Unbounded_String>
 #pragma instantiate Param_Test_Client<Test_Fixed_Struct>
 #pragma instantiate Param_Test_Client<Test_String_Sequence>
-#pragma instantiate Param_Test_Client<Test_Bounded_String_Sequence>;
+#pragma instantiate Param_Test_Client<Test_Bounded_String_Sequence>
 #pragma instantiate Param_Test_Client<Test_Var_Struct>
 #pragma instantiate Param_Test_Client<Test_Nested_Struct>
 #pragma instantiate Param_Test_Client<Test_Struct_Sequence>
-#pragma instantiate Param_Test_Client<Test_Struct_Sequence>
+#pragma instantiate Param_Test_Client<Test_Bounded_Struct_Sequence>
 #pragma instantiate Param_Test_Client<Test_ObjRef>
+#pragma instantiate Param_Test_Client<Test_ObjRef_Sequence>
 #pragma instantiate Param_Test_Client<Test_TypeCode>
 #pragma instantiate Param_Test_Client<Test_Any>
+#pragma instantiate Param_Test_Client<Test_AnySeq>
 #pragma instantiate Param_Test_Client<Test_Short_Sequence>
+#pragma instantiate Param_Test_Client<Test_Bounded_Short_Sequence>
+#pragma instantiate Param_Test_Client<Test_Long_Sequence>
+#pragma instantiate Param_Test_Client<Test_Bounded_Long_Sequence>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
