@@ -327,6 +327,7 @@ AST_Module::fe_add_interface_fwd (AST_InterfaceFwd *i)
 
           // @@ Redefinition of forward. Type check not implemented.
           i->set_full_definition (itf);   // @@ Memory leak.
+          this->add_to_scope (i);
           return i;
         }
 
