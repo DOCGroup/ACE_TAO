@@ -1,7 +1,3 @@
-Sat Jul 31 10:41:20 2004  Ossama  <ossama@dre.vanderbilt.edu>
-
-        * CIAO version 0.4.2 released.
-
 Fri Jul 30 18:29:54 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ciao/Servant_Impl_T.cpp (get_all_facets, get_all_consumers):
