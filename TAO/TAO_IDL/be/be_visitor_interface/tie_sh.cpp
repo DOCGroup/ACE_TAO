@@ -85,6 +85,11 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
                        node->local_name ());
     }
 
+  if (node->is_nested ())
+    {
+      *os << "#if defined (ACE_HAS_USING_KEYWORD)\n\n";
+    }
+
   // Now generate the class definition.
   os->indent ();
 
@@ -144,6 +149,11 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << tiename << " (const " << tiename << " &);" << be_nl
       << "void operator= (const " << tiename << " &);" << be_uidt_nl
       << "};\n\n";
+
+  if (node->is_nested ())
+    {
+      *os << "#endif /* ACE_HAS_USING_KEYWORD */\n\n";
+    }
 
   return 0;
 }
