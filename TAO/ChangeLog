@@ -1,3 +1,13 @@
+Wed Feb  2 09:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.cpp:
+          Use ACE_OS::strtok instead of strtok directly and replaced usage
+          of NULL with 0
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h:
+          Include SString.h instead of SStringfwd.h to fix compile errors
+          with vc71
+
 Tue Feb  1 20:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IFR_Client/IFR_BaseC.cpp:
