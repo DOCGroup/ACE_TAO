@@ -1,3 +1,12 @@
+Fri Apr 16 13:08:49 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.{h,cpp},ACE.{h,cpp}: (read_n,send_n,write_n): moved
+          from ACE to ACE_OS, so that the uses in OS.cpp could be localized.
+          The ACE versions are now just wrappers over the ACE_OS
+          versions, for backward compatibility.  Thanks to
+          Erik Ivanenko <erik.ivanenko@utoronto.ca> for reporting
+          that OS.cpp used a couple of the ACE static member functions.
+
 Fri Apr 16 10:13:14 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/rules.nested.GNU,ACE-INSTALL.html: added
