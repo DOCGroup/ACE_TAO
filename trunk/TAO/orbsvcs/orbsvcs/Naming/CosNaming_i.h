@@ -20,6 +20,7 @@
 
 #include "orbsvcs/CosNamingS.h"
 #include "Entries.h"
+#include "ace/Synch.h"
   
 class TAO_ORBSVCS_Export NS_NamingContext : public POA_CosNaming::NamingContext
   // = TITLE
