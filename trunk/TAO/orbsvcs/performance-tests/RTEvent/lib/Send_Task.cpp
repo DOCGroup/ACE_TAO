@@ -47,52 +47,72 @@ Send_Task::stop (void)
 int
 Send_Task::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  if (this->barrier_ == 0)
+    return -1;
+
+  this->barrier_->wait ();
+
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) - Thread started, "
+              "iterations = %d, period = %d, event_type = %d\n",
+              this->iterations_, this->period_in_usecs_,
+              this->event_type_));
+
+  int start_i = 0;
+  if (this->iterations_ == 0)
     {
-      if (this->barrier_ == 0)
-        return -1;
+      // Starting from 1 results in an infinite loop (well, so long
+      // that I call it infinite), which is exactly what we want, kind
+      // of hackish, oh well.
+      start_i = 1;
+    }
 
-      this->barrier_->wait ();
+  RtecEventComm::EventSet event (1);
+  event.length (1);
+  event[0].header.type   = this->event_type_;
+  event[0].header.source = this->event_source_;
+  event[0].header.ttl    = 1;
 
-      int start_i = 0;
-      if (this->iterations_ == 0)
+  ACE_DECLARE_NEW_CORBA_ENV;
+  for (int i = start_i; i != this->iterations_; ++i)
+    {
+      if ((i + 1) % 1000 == 0)
         {
-          /// Starting from 1 results in an infinite loop, which is
-          /// exactly what we want, kind of hackish IMHO...
-          start_i = 1;
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) - Thread has sent %d messages\n",
+                      i + 1));
         }
-      for (int i = start_i; i != this->iterations_; ++i)
-        {
-          RtecEventComm::EventSet event (1);
-          event.length (1);
-          event[0].header.type   = this->event_type_;
-          event[0].header.source = this->event_source_;
-          event[0].header.ttl    = 1;
 
-          ACE_Time_Value period (0, this->period_in_usecs_);
+      ACE_Time_Value period (0, this->period_in_usecs_);
 
-          ACE_OS::sleep (period);
+      ACE_OS::sleep (period);
+      {
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
+        if (this->stop_ != 0)
           {
-            ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
-            if (this->stop_)
-              return 0;
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%P|%t) - Thread has been stopped\n"));
+            return 0;
           }
-          ACE_hrtime_t creation = ACE_OS::gethrtime ();
-          ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
-                                         creation);
+      }
+      ACE_hrtime_t creation = ACE_OS::gethrtime ();
+      ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
+                                     creation);
+      ACE_TRY
+        {
           // push one event...
           this->supplier_->push (event ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
+      ACE_CATCHANY
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "Caught exception:");
+        }
+      ACE_ENDTRY;
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
-      return 1;
-    }
-  ACE_ENDTRY;
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) - Thread finished\n"));
   return 0;
 }
 
