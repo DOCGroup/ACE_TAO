@@ -1,7 +1,13 @@
+Fri Mar 20 11:53:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/NestedUpcall/client.cpp: Use EventHandler_vare.in() to
+	  pass in a pointer.  Added explicit template instantiation
+	  codes.
+
 Fri Mar 20 09:46:50 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Memory_Pools.h: 
-	* orbsvcs/orbsvcs/Event/Memory_Pools.cpp: 
+	* orbsvcs/orbsvcs/Event/Memory_Pools.h:
+	* orbsvcs/orbsvcs/Event/Memory_Pools.cpp:
 	  Locks are needed for the memory pool singletons; thanks to
 	  Thomas Venturella <tventurell@mdc.com> for detecting this.
 

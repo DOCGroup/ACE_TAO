@@ -41,7 +41,7 @@ parse_args (int argc_, char* argv_[])
         break;
       case 'f':
         {
-          FILE *ior_file_ = 
+          FILE *ior_file_ =
             ACE_OS::fopen (get_opts.optarg,"r");
 
           if (ior_file_ == 0)
@@ -143,11 +143,11 @@ main (int argc, char *argv[])
                            "%s: %p\n",
                            argv[0], "unable to get the ORB Core to listen"),
                           -1);
-      
+
       // Now, after all that, we can invoke an operation on the remote
       // side.
-      CORBA::Long r = remote_reactor->register_handler (eh, TAO_TRY_ENV);
-      
+      CORBA::Long r = remote_reactor->register_handler (eh.in (), TAO_TRY_ENV);
+
       // We ought to have a result!
       ACE_DEBUG ((LM_DEBUG,
                   "%s: received %d as return from register_handler ()\n",
@@ -156,7 +156,7 @@ main (int argc, char *argv[])
       remote_reactor->set_value (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      remote_reactor->decrement (eh, 5, TAO_TRY_ENV);
+      remote_reactor->decrement (eh.in (), 5, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       remote_reactor->stop (TAO_TRY_ENV);
@@ -172,3 +172,10 @@ main (int argc, char *argv[])
   return 0;
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class auto_ptr<EventHandler_i>;
+template class ACE_Auto_Basic_Ptr<EventHandler_i>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate auto_ptr<EventHandler_i>
+#pragma instantiate ACE_Auto_Basic_Ptr<EventHandler_i>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
