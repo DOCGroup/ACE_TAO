@@ -50,10 +50,10 @@ include $(TAO_ROOT)/taoconfig.mk
 LDFLAGS += -L$(TAO_ROOT)/tao
 
 ifeq ($(CXX),cxx)
-  ifeq ($(findstring ptrepository,$(CCFLAGS)),ptrepository)
-    #### Digital Unix 4.0
-    CCFLAGS += -ptr ../IDL_Cubit/ptrepository
-  endif # CCFLAGS contains ptrepository
+  ifeq (use_ld_input,$(findstring use_ld_input,$(SOFLAGS)))
+    #### Digital Unix 4.0 or later
+    CCFLAGS += -ptr ../IDL_Cubit/cxx_repository
+  endif # DU 4.0 or later
 else
 ifeq (-xildoff,$(findstring -xildoff,$(LDFLAGS)))
   #### Sun CC
@@ -71,6 +71,10 @@ client: $(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
 
 realclean: clean
 	-$(RM) cubitC.* cubitS.* cubitS_T.*
+
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

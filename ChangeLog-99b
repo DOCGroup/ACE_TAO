@@ -1,3 +1,12 @@
+Tue Jul 20 07:06:28 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_osf1_4.0.GNU:
+          removed -ptr ptrepository.  Let the compiler use its
+          default template repository.
+
+        * include/makeinclude/rules.local.GNU (realclean): added
+          cxx_repository, for DU cxx.
+
 Tue Jul 20 07:01:57 1999  Doug Anderson  <doug@clark.net>
 
         * ace/OS.i (sigwait,thr_sigsetmask): added support for
