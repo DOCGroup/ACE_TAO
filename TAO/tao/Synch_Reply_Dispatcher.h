@@ -66,13 +66,6 @@ protected:
   IOP::ServiceContextList &reply_service_info_;
 
 private:
-  //  TAO_GIOP_Message_State message_state_;
-  // All the state required to receive the input...
-  // @@ Having members of type TAO_GIOP* indicates that we
-  // (Reply_despatcher) are aware of the underlying messaging
-  // protocol. But for the present let us close our eyes till we are
-  // able to iterate on a use case - Bala.
-
   /// Flag that indicates the reply  has been received.
   int reply_received_;
 

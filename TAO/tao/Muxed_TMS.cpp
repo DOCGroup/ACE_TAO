@@ -106,28 +106,6 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   // sending the request.
 }
 
-/*TAO_GIOP_Message_State *
-TAO_Muxed_TMS::get_message_state (void)
-{
-  if (this->message_state_ == 0)
-    {
-      // Create the next message state.
-      ACE_NEW_RETURN (this->message_state_,
-                      TAO_GIOP_Message_State
-                      (this->transport_->orb_core ()),
-                      0);
-    }
-
-  return this->message_state_;
-}
-
-void
-TAO_Muxed_TMS::destroy_message_state (TAO_GIOP_Message_State *)
-{
-  delete this->message_state_;
-  this->message_state_ = 0;
-}*/
-
 int
 TAO_Muxed_TMS::idle_after_send (void)
 {

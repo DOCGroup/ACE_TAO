@@ -34,7 +34,7 @@ TAO_Incoming_Message_Queue::is_head_complete (void)
 }
 
 ACE_INLINE size_t
-TAO_Incoming_Message_Queue::missing_data (void) const
+TAO_Incoming_Message_Queue::missing_data_tail (void) const
 {
   if (this->size_ != 0)
     return this->queued_data_->missing_data_;
@@ -51,13 +51,10 @@ TAO_Incoming_Message_Queue::get_node (void)
 }
 
 
-
-ACE_INLINE
-TAO_Queued_Data::~TAO_Queued_Data (void)
-{
-}
-
-
+/************************************************************************/
+// Methods for TAO_Queued_Data
+/************************************************************************/
+/*static*/
 ACE_INLINE TAO_Queued_Data *
 TAO_Queued_Data::get_queued_data (void)
 {
@@ -68,4 +65,14 @@ TAO_Queued_Data::get_queued_data (void)
                   0);
 
   return qd;
+}
+
+/*static*/
+ACE_INLINE void
+TAO_Queued_Data::release (TAO_Queued_Data *qd)
+{
+  ACE_Message_Block::release (qd->msg_block_);
+
+  // @@TODO: Use the global pool for releasing..
+  delete qd;
 }

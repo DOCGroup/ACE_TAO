@@ -867,8 +867,7 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
     }
 
   // Make a node of the message block..
-  TAO_Queued_Data qd;
-  qd.msg_block_ = &message_block;
+  TAO_Queued_Data qd (&message_block);
 
   // Extract the data for the node..
   this->messaging_object ()->get_message_data (&qd);
@@ -946,7 +945,7 @@ TAO_Transport::missing_data (ACE_Message_Block &incoming)
   // much of data is required to get a complete message
   if (this->incoming_message_queue_.is_tail_complete () == 0)
     {
-      return this->incoming_message_queue_.missing_data ();
+      return this->incoming_message_queue_.missing_data_tail ();
     }
 
   return this->messaging_object ()->missing_data (incoming);
@@ -1011,8 +1010,7 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
       return 0;
     }
 
-  TAO_Queued_Data pqd;
-  pqd.msg_block_ = &incoming;
+  TAO_Queued_Data pqd (&incoming);
   pqd.missing_data_ = missing_data;
 
   this->messaging_object ()->get_message_data (&pqd);
@@ -1032,10 +1030,10 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
   // If the queue did not have a complete message put this piece of
   // message in the queue. We kow it did not have a complete
   // message. That is why we are here.
-  size_t n = this->incoming_message_queue_.copy_message (incoming);
+  size_t n = this->incoming_message_queue_.copy_tail (incoming);
 
   // Update the missing data...
-  missing_data = this->incoming_message_queue_.missing_data ();
+  missing_data = this->incoming_message_queue_.missing_data_tail ();
 
   // Move the read pointer of the <incoming> message block to the end
   // of the copied message  and process the remaining portion...
@@ -1317,20 +1315,26 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
             }
 
           // Send a notification to the reactor...
-          // @@ What do we do if the notify to the reactor fails??
-          reactor->notify (eh,
-                           ACE_Event_Handler::READ_MASK);
+          int retval = reactor->notify (eh,
+                                        ACE_Event_Handler::READ_MASK);
+
+          if (retval < 0 && TAO_debug_level > 2)
+            {
+              // @@todo: need to think about what is the action that
+              // we can take when we get here.
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - Transport::process_queue_head ",
+                          "notify to the reactor failed.. \n"));
+            }
+
         }
       // Process the message...
       if (this->process_parsed_messages (qd,
                                          rh) == -1)
         return -1;
 
-      // Delete the message_block
-      // delete qd->msg_block_;
-
       // Delete the Queued_Data..
-      delete qd;
+      TAO_Queued_Data::release (qd);
 
       return 0;
     }
