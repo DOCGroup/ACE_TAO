@@ -6,15 +6,15 @@
 //    cos
 //
 // = FILENAME
-//   Naming_Context.h
+//   Naming_Context_Interface.h
 //
 // = AUTHOR
 //    Marina Spivak <marina@cs.wustl.edu>
 //
 // ============================================================================
 
-#ifndef TAO_NAMING_CONTEXT_H
-#define TAO_NAMING_CONTEXT_H
+#ifndef TAO_NAMING_CONTEXT_INTERFACE_H
+#define TAO_NAMING_CONTEXT_INTERFACE_H
 
 #include "orbsvcs/CosNamingS.h"
 
@@ -291,4 +291,4 @@ public:
 };
 
 
-#endif /* TAO_NAMING_CONTEXT_H */
+#endif /* TAO_NAMING_CONTEXT_INTERFACE_H */

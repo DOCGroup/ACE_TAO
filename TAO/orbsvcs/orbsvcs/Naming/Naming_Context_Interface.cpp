@@ -5,14 +5,14 @@
 //    cos
 //
 // = FILENAME
-//   Naming_Context.cpp
+//   Naming_Context_Interface.cpp
 //
 // = AUTHOR
 //    Marina Spivak <marina@cs.wustl.edu>
 //
 // ============================================================================
 
-#include "Naming_Context.h"
+#include "Naming_Context_Interface.h"
 
 TAO_Naming_Context::TAO_Naming_Context (TAO_Naming_Context_Impl *impl)
   : impl_ (impl)

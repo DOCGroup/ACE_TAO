@@ -16,7 +16,7 @@
 #ifndef TAO_HASH_NAMING_CONTEXT_H
 #define TAO_HASH_NAMING_CONTEXT_H
 
-#include "Naming_Context.h"
+#include "Naming_Context_Interface.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 #if defined (_MSC_VER)

@@ -24,7 +24,7 @@
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/IOR_Multicast.h"
-#include "Naming_Context.h"
+#include "Naming_Context_Interface.h"
 
 // Forward decl;
 class TAO_Persistent_Context_Index;
