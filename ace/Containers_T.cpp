@@ -819,7 +819,7 @@ ACE_Double_Linked_List_Iterator<T>::advance_and_remove (int dont_remove)
     {
       item = this->next ();
       this->do_advance ();
-      dllist_->remove (item);
+      this->dllist_->remove (item);
     }
   return item;
 }
@@ -910,7 +910,7 @@ ACE_Double_Linked_List_Reverse_Iterator<T>::advance_and_remove (int dont_remove)
     {
       item = this->next ();
       this->do_retreat ();
-      dllist_->remove (item);
+      this->dllist_->remove (item);
     }
   return item;
 }
