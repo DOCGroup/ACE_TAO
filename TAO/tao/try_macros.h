@@ -59,7 +59,6 @@
 #define TAO_CHECK_ENV
 #define TAO_CHECK_ENV_EX(LABEL)
 #define TAO_CHECK_ENV_RETURN(X, Y)
-#define TAO_CHECK_CONDITION_ENV_RETURN(X, COND, Y)
 
 #define TAO_TRY_THROW(EXCEPTION) throw EXCEPTION
 #define TAO_TRY_THROW_EX(EXCEPTION,LABEL) throw EXCEPTION
@@ -218,9 +217,6 @@ if (TAO_TRY_ENV.exception () != 0) \
 #define TAO_CHECK_ENV_RETURN(X, Y) \
  if ( X . exception () != 0) return Y
 
-#define TAO_CHECK_CONDITION_ENV_RETURN(X, COND, Y) \
- if ( X . exception () != 0 COND) return Y
-
 #define TAO_THROW(EXCEPTION) \
 do {\
   _env.exception (new EXCEPTION); \
@@ -266,9 +262,6 @@ return RETURN
 
 #define TAO_CHECK_ENV_RETURN_VOID(X) \
  if ( X . exception () != 0) return
-
-#define TAO_CHECK_CONDITION_ENV_RETURN_VOID(X, COND) \
- if ( X . exception () != 0 COND) return
 
 #define TAO_CHECK_ENV_PRINT_RETURN(ENV, PRINT_STRING, RETURN) \
  if (ENV . exception () != 0) \
