@@ -71,6 +71,65 @@ TAO_CORBALOC_Parser::parse_string_count_helper (const char * &corbaloc_name,
   
 }
 
+void 
+TAO_CORBALOC_Parser::parse_string_assign_helper (ACE_Array_Base <char *> &addr,
+                                                 CORBA::ULong &addr_list_length,
+                                                 ACE_CString &key_string,
+                                                 ACE_CString &cloc_name,
+                                                 CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  
+  char *cloc_name_ptr = 0;
+  CORBA::ULong current_addr = 0;
+          
+  // Tokenize using "," as the seperator
+  char *last_addr = 0;
+  cloc_name_ptr = ACE_OS::strtok_r (ACE_const_cast (char *, cloc_name.c_str ()),
+                                    ",",
+                                    &last_addr);
+  
+  const char iiop_prefix[] = "iiop://";
+          
+  while (cloc_name_ptr != 0)
+    {
+      // Allocation of  memory
+      addr [current_addr] = CORBA::string_alloc (addr_list_length +
+                                                 key_string.length ());
+      
+      if (ACE_OS::strncmp (cloc_name_ptr, iiop_prefix,
+                           sizeof (iiop_prefix)-1) != 0)
+        {
+          // If there is no explicit protocol specified, prepend the
+          // default "iiop://"
+          ACE_OS::strcpy (addr [current_addr],
+                          iiop_prefix);
+          
+          ACE_OS::strcat (addr [current_addr],
+                          cloc_name_ptr);
+                  
+        }
+      else
+        {
+          // If the protocol is <iiop:>
+          ACE_OS::strcpy (addr [current_addr], 
+                          cloc_name_ptr);
+          
+        }
+      
+      ACE_OS::strcat (addr [current_addr], 
+                      key_string.c_str ());
+      
+      ++current_addr;
+      // Get the next token.
+      cloc_name_ptr = ACE_OS::strtok_r (NULL, 
+                                        ",",
+                                        &last_addr);
+      
+    }
+}
+
+
 CORBA::Object_ptr
 TAO_CORBALOC_Parser::parse_string_mprofile_helper (ACE_Array_Base <char *>  &addr,
                                                    CORBA::ULong &count_addr,
@@ -90,19 +149,19 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (ACE_Array_Base <char *>  &add
         orb->orb_core ()->connector_registry ()->make_mprofile (addr [j],
                                                                 mprofile,
                                                                 ACE_TRY_ENV);
-        
+      
       ACE_CHECK_RETURN (CORBA::Object::_nil ());   // Return nil.
       
       if (retv != 0)
         {
           ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                                               CORBA_SystemException::_tao_minor_code (
-                                                                                       TAO_DEFAULT_MINOR_CODE,
-                                                                                       EINVAL),
-                                               CORBA::COMPLETED_NO),
+                               CORBA_SystemException::_tao_minor_code (
+                                 TAO_DEFAULT_MINOR_CODE,
+                                 EINVAL),
+                               CORBA::COMPLETED_NO),
                             CORBA::Object::_nil ());
         }
-      
+        
       // Now make the TAO_Stub.
       TAO_Stub *data = 0;
       ACE_NEW_THROW_EX (data,
@@ -110,8 +169,8 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (ACE_Array_Base <char *>  &add
                                   orb->orb_core ()),
                         CORBA::NO_MEMORY (
                                           CORBA_SystemException::_tao_minor_code (
-                                                                                  TAO_DEFAULT_MINOR_CODE,
-                                                                                  ENOMEM),
+                                            TAO_DEFAULT_MINOR_CODE,
+                                            ENOMEM),
                                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
       
@@ -122,7 +181,7 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (ACE_Array_Base <char *>  &add
       TAO_SERVANT_LOCATION servant_location =
         orb->_get_collocated_servant (safe_data.get (),
                                       servant);
-      
+        
       int collocated = 0;
       if (servant_location != TAO_SERVANT_NOT_FOUND)
         collocated = 1;
@@ -135,11 +194,11 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (ACE_Array_Base <char *>  &add
                                       (CORBA::Boolean) collocated),
                         CORBA::NO_MEMORY (
                                           CORBA_SystemException::_tao_minor_code (
-                                                                                  TAO_DEFAULT_MINOR_CODE,
-                                                                                  ENOMEM),
+                                            TAO_DEFAULT_MINOR_CODE,
+                                            ENOMEM),
                                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
-      
+  
       // All is well, so release the stub object from its auto_ptr.
       data = safe_data.release ();
       
@@ -225,98 +284,57 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
 
   ACE_TRY
     {
-
       // No of endpoints
       CORBA::ULong count_addr = 0;
       
       // Length of obj_addr_list
       CORBA::ULong addr_list_length = 0;
       
-
       // If the protocol is "iiop:", 
       if (this->check_prefix (corbaloc_name) == 0)
-        { // Count the length of the obj_addr_list and number of
+        { 
+          // Count the length of the obj_addr_list and number of
           // endpoints in the obj_addr_list
           this->parse_string_count_helper (corbaloc_name, 
                                            addr_list_length, 
                                            count_addr);
           
-          CORBA::String_var key_string = CORBA::string_dup (corbaloc_name + addr_list_length);
+          // Convert corbaloc_name as a ACE_CString
+          ACE_CString corbaloc_name_str (corbaloc_name, 0, 1);
+
+          // Get the key_string which is a substring of corbaloc_name_str
+          ACE_CString key_string = corbaloc_name_str.substring (addr_list_length, -1);
 
           // Copy the <obj_addr_list> to cloc_name.
-          CORBA::String_var cloc_name = CORBA::string_alloc (addr_list_length);
-          ACE_OS::strncpy (cloc_name, corbaloc_name, addr_list_length);
-          cloc_name [addr_list_length] = '\0';
-          
-          ACE_DEBUG ((LM_DEBUG, "The obj_addr_list is %s\n", cloc_name.in ()));
+          ACE_CString cloc_name (corbaloc_name, 
+                                 addr_list_length,
+                                 0, 
+                                 1);
 
-          // @@ Priyanka : Speaking of exception safety.... you may want to use
-          // ACE_CString or something like that for your strings, so they
-          // are all automatically deallocated if an exception is raised.
-          //
+          // Array of <obj_addr>
           ACE_Array_Base<char*> addr (count_addr);
           
-          char *cloc_name_ptr = 0;
-          CORBA::ULong current_addr = 0;
-          
-          // Tokenize using "," as the seperator
-          char *last_addr = 0;
-          cloc_name_ptr = ACE_OS::strtok_r (cloc_name, 
-                                            ",", 
-                                            &last_addr);
-          
-          const char iiop_prefix[] = "iiop://";
-          
-          while (cloc_name_ptr != 0)
-            {
-              // Allocation of  memory
-              addr [current_addr] = CORBA::string_alloc (addr_list_length +
-                                                         ACE_OS::strlen (key_string.in ()));
-              
-              if (ACE_OS::strncmp (cloc_name_ptr, iiop_prefix,
-                                   sizeof (iiop_prefix)-1) != 0)
-                {
-                  // If there is no explicit protocol specified, use the
-                  // default "iiop://"
-                  ACE_OS::strcpy (addr [current_addr],
-                                  iiop_prefix);
-                  
-                  ACE_OS::strcat (addr [current_addr],
-                                  cloc_name_ptr);
-                  
-                }
-              else
-                {
-                  // If the protocol is <iiop:>
-                  ACE_OS::strcpy (addr [current_addr], 
-                                  cloc_name_ptr);
-                  
-                }
-              
-              ACE_OS::strcat (addr [current_addr],
-                              key_string.in ());
-              
-              ++current_addr;
-              cloc_name_ptr = ACE_OS::strtok_r (NULL, 
-                                                ",",
-                                                &last_addr);
-              
-            }
+          // Assign the <obj_addr> to the array elements
+          this->parse_string_assign_helper (addr,
+                                            addr_list_length,
+                                            key_string,
+                                            cloc_name,
+                                            ACE_TRY_ENV);
+          ACE_TRY_CHECK;
           
           // Get the Ptr to the NameService
-          object = parse_string_mprofile_helper (addr, 
-                                                 count_addr, 
-                                                 orb,
-                                                 ACE_TRY_ENV);
+          object = this->parse_string_mprofile_helper (addr,
+                                                       count_addr, 
+                                                       orb,
+                                                       ACE_TRY_ENV);
           ACE_TRY_CHECK;
-
         }
       else 
         {
           // RIR case: 
-          object = parse_string_rir_helper (corbaloc_name,
-                                            orb,
-                                            ACE_TRY_ENV);
+          object = this->parse_string_rir_helper (corbaloc_name,
+                                                  orb,
+                                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
         }
