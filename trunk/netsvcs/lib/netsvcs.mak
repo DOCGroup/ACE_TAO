@@ -33,9 +33,9 @@ NULL=nul
 ################################################################################
 # Begin Project
 # PROP Target_Last_Scanned "netsvcs - Win32 Debug"
-MTL=mktyplib.exe
 RSC=rc.exe
 CPP=cl.exe
+MTL=mktyplib.exe
 
 !IF  "$(CFG)" == "netsvcs - Win32 Release"
 
@@ -52,7 +52,7 @@ CPP=cl.exe
 OUTDIR=.\netsvcs\Release
 INTDIR=.\netsvcs\Release
 
-ALL : "$(OUTDIR)\netsvcs.dll"
+ALL : "$(OUTDIR)\netsvcs.dll" "..\..\ace\netsvcs.dll"
 
 CLEAN : 
 	-@erase "$(INTDIR)\Client_Logging_Handler.obj"
@@ -65,6 +65,7 @@ CLEAN :
 	-@erase "$(OUTDIR)\netsvcs.dll"
 	-@erase "$(OUTDIR)\netsvcs.exp"
 	-@erase "$(OUTDIR)\netsvcs.lib"
+	-@erase "..\..\ace\netsvcs.dll"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
@@ -108,6 +109,15 @@ LINK32_OBJS= \
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
 
+# Begin Custom Build
+InputPath=.\netsvcs\Release\netsvcs.dll
+SOURCE=$(InputPath)
+
+"..\..\ace\netsvcs.dll" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   copy netsvcs.dll ..\..\ace\netsvcs.dll
+
+# End Custom Build
+
 !ELSEIF  "$(CFG)" == "netsvcs - Win32 Debug"
 
 # PROP BASE Use_MFC 0
@@ -123,7 +133,7 @@ LINK32_OBJS= \
 OUTDIR=.\.
 INTDIR=.\debug
 
-ALL : "$(OUTDIR)\netsvcs.dll"
+ALL : "$(OUTDIR)\netsvcs.dll" "..\..\ace\netsvcs.dll"
 
 CLEAN : 
 	-@erase "$(INTDIR)\Client_Logging_Handler.obj"
@@ -140,6 +150,7 @@ CLEAN :
 	-@erase "$(OUTDIR)\netsvcs.ilk"
 	-@erase "$(OUTDIR)\netsvcs.lib"
 	-@erase "$(OUTDIR)\netsvcs.pdb"
+	-@erase "..\..\ace\netsvcs.dll"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
@@ -185,6 +196,15 @@ LINK32_OBJS= \
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
+
+# Begin Custom Build
+InputPath=.\netsvcs.dll
+SOURCE=$(InputPath)
+
+"..\..\ace\netsvcs.dll" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   copy netsvcs.dll ..\..\ace\netsvcs.dll
+
+# End Custom Build
 
 !ENDIF 
 
@@ -233,6 +253,9 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
@@ -242,12 +265,17 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\Dynamic.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
@@ -377,6 +405,9 @@ DEP_CPP_TS_CL=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Connector.cpp"\
@@ -389,12 +420,17 @@ DEP_CPP_TS_CL=\
 	{$(INCLUDE)}"\ace\Dynamic.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
@@ -524,6 +560,9 @@ DEP_CPP_TS_SE=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
@@ -533,12 +572,17 @@ DEP_CPP_TS_SE=\
 	{$(INCLUDE)}"\ace\Dynamic.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
@@ -658,7 +702,12 @@ DEP_CPP_TS_SE=\
 
 SOURCE=.\Server_Logging_Handler.cpp
 DEP_CPP_SERVE=\
+	".\Base_Optimizer.h"\
+	".\Log_Message_Receiver.cpp"\
+	".\Log_Message_Receiver.h"\
 	".\Server_Logging_Handler.h"\
+	".\Server_Logging_Handler_T.cpp"\
+	".\Server_Logging_Handler_T.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -668,6 +717,9 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
@@ -677,12 +729,17 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\Dynamic.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
@@ -817,6 +874,9 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
@@ -826,12 +886,17 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\ace\Dynamic.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
@@ -963,6 +1028,9 @@ DEP_CPP_CLIEN=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Connector.cpp"\
@@ -981,12 +1049,17 @@ DEP_CPP_CLIEN=\
 	{$(INCLUDE)}"\ace\FIFO_Recv.i"\
 	{$(INCLUDE)}"\ace\FIFO_Recv_Msg.h"\
 	{$(INCLUDE)}"\ace\FIFO_Recv_Msg.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
@@ -1108,6 +1181,9 @@ DEP_CPP_LOGGI=\
 	".\Logging_Strategy.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
