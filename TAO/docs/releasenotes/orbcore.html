@@ -32,23 +32,20 @@
 </UL><p>
 
 <b>Known issues:</b>
-<dl>
-  <dt><em>Demarshalling problems with complex types</em></dt>
-      
-  <dd>The current demarshalling scheme may not work in cases of
+<UL>
+  <LI> The current demarshalling scheme may not work in cases of
       complex types such as sequences of unions or anys or object
       references.  The engine has difficulty determining the dynamic
-      type of the objects.</dd><p>
+      type of the objects.
 
-  <dt><em>Object references for objects dynamically created within
+  <LI>Object references for objects dynamically created within
       a server may not have proper host.</em> (See also <a
-      href="#hostfix">recent fix</a>.)</dt>
-
-  <dd>When an object is dynamically created and its object
+      href="#hostfix">recent fix</a>.)
+      When an object is dynamically created and its object
       reference returned, it simply has to "guess" at the host
       information that is returned in the IIOP Profile.  Currently, it
       guesses using the host name, which is a reasonable guess in most
-      cases.<p>
+      cases.
 
       However, if there are multiple interfaces on a machine
       <i>and</i> they have different host names, it is possible that
@@ -58,21 +55,20 @@
       href="../Options.html#-ORBhost"><b>-ORBhost</b> option</a> to
       manually specify that dynamically-created objects bind to a
       specific interface so that their IIOP Profile has the desired
-      hostname.  A more desirable fix is being investigated.</dd><p>
-
-</dl>
+      hostname.  A more desirable fix is being investigated.<p>
+</Ul>
 
 <b>Recently Completed Work:</b>
 
 <UL>
   <li>Making the collocation table configurable.  We can either
       use a global collocation table to share objects among ORBs,
-      or use the per-ORB collocation table.<p>
+      or use the per-ORB collocation table.
 
   <li>Implement the inheritance mechanism in
       Default_Server_Connection_Handler to access the parent's
       POA.  This is necessary when we are using
-      thread-per-connection concurrency model.<p>
+      thread-per-connection concurrency model.
 
   <li>It is often desireable for a server to start up and not have
       to specify the TCP port number on which the ORB will listen,
@@ -81,19 +77,19 @@
       port number used by the server won't be available after the
       server starts listening.  TAO now tries to bind the address
       when <code>-ORBport 0</code> is issued so it can get the
-      actual address to publish the IOR for clients' use.<p>
+      actual address to publish the IOR for clients' use.
       
   <li>Added optimization for collocated objects.  This
       optimization enables TAO to bypass communication layers and
-      talks to collocated objects directly.</li><p>
+      talks to collocated objects directly.</li>
 
   <li>Broke the tight coupling between <code>CORBA_Object</code>
       and <code>IIOP_Object</code> so that multiple
       <code>CORBA_Object</code>s can share a single
       <code>IIOP_Object</code>.  This has a big win in
-      <code>_narrow</code> operations.</li><p>
+      <code>_narrow</code> operations.</li>
       
-  <li>Eliminated substantial memory leaks in servers.</li><p>
+  <li>Eliminated substantial memory leaks in servers.</li>
 
   <li>Added documentation for <a
       href="../Options.html#-ORBpoa"><b>-ORBpoa</b></a>, which
@@ -104,69 +100,69 @@
       and <a
       href="../Options.html#-ORBpoamgrlock"><b>-ORBpoamgrlock</b></a>
       control locking in the POA and POA manager, respectively,
-      according to application needs.</li><p>
+      according to application needs.</li>
       
   <li>Began the process of changing the internals of TAO to use
       the "underbar" namespace mapping.  This should be completed
-      soon.</li><p>
+      soon.</li>
 
   <li>The ORBs manipulation of object keys and object ids is now
       consistent.  Canonically, everything is managed as an opaque
       sequence of octets.  Conversion to/from strings is permitted,
       with non-printables turning into a trigraph <b>\hl</b> where
       <b>h</b> is the high nibble digit in hex, and <b>l</b> is the
-      low nibble in hex.</li><p>
+      low nibble in hex.</li>
 
   <li><code>CORBA_ORB::run()</code> should be able to be called
-      multiply in the same execution path now.</li><p>
+      multiply in the same execution path now.</li>
 
   <li>Fixed the <b>LOCATION_FORWARD</b> capabilities to work as
-      described in the CORBA 2.1 and the POA specification.</li><p>
+      described in the CORBA 2.1 and the POA specification.</li>
 
   <li>Fixed problem in the IDL Cubit example which caused the
       server to dump core when dealing with <code>_out</code> sequence
       types <em>ONLY</em> when compiled with G++.  It seems that G++
       decided to interpret the expression <code>output == 0</code>
       (where <code>output</code> is of type <code>vector_out</code>)
-      differently from Sun's C++ compiler.</li><p>
+      differently from Sun's C++ compiler.</li>
 
   <li>Fixed a slight problem in <a href="#hostfix">other recent
       work</a> where a servant listening on <code>INADDR_ANY</code>
       reported an IOR with address <tt>0.0.0.0</tt>.  It now reports
-      the default hostname instead.</li><p>
+      the default hostname instead.</li>
 
-  <LI>Working version of TAO on VxWorks with VME transport.</li><p>
+  <LI>Working version of TAO on VxWorks with VME transport.</li>
 
   <li>TAO now reacts gracefully in the face of a non-existent
       <code>svc.conf</code> file or simply missing entries in the
       file.  It logs a warning message and uses default values
       versions of items which it would normally obtain from the
-      Service Repository.</li><p>
+      Service Repository.</li>
 
   <li><a name="hostfix"></a>Fixed problem where object references
       for objects dynamically created within a server do not have
       proper host, at least if the desired host was specified using <a
       href="../Options.html#-ORBhost"><b>-ORBhost</b></a> on the
-      command line.</li><p>
+      command line.</li>
 
   <li>Added support for <a
       href="../Options.html#-ORBsndsock"><b>-ORBsndsock</b></a> and <a
       href="../Options.html#-ORBrcvsock"><b>-ORBrcvsock</b></a> ORB
       options.  See <a href="../Options.html">options
-      documentation</a> for details.</li><p>
+      documentation</a> for details.</li>
 
   <li>Added support for pre-established connections using the <a
       href="../Options.html#-ORBpreconnect"><b>-ORBpreconnect</b></a>
       option.  This allows connections to be esablished before any
       CORBA requests are made.  See <a href="../Options.html">options
-      documentation</a> for details.</li><p>
+      documentation</a> for details.</li>
 
   <li>Eliminated deprecated <b>-OAxxx</b> options parsed by the
       Object Adapter <code>init</code> method but no longer used by
-      part of the ORB.</li><p>
+      part of the ORB.</li>
 
   <li>Made argument parsing within the ORB and POA consume the
-      arguments it parses.</li><p>
+      arguments it parses.</li>
 
   <li>Placed an optimization in IIOP::Profile that should speed up
       invocations on the client side rather substantially.  This was
@@ -178,7 +174,7 @@
       Solaris.  This is all because deep down this ends up calling
       <code>gethostbyname()</code>, which can be very costly.  Of
       course, this is platform-dependent, so the improvements may
-      not be as great on a different platform.</li><p>
+      not be as great on a different platform.</li>
       
   <li>Got rid of need to have compile in TSS ORB Core
       (<code>-DTAO_HAS_TSS_ORBCORE</code>).  This is accomplished by
@@ -188,26 +184,26 @@
       return pointers from thread-specific storage, or
       process-global storage.  By doing this, the ORB Core is
       shielded from ever having to know whether or not its resources
-      are global or not.</li><p>
+      are global or not.</li>
 
   <li>Made all command-line like options look like the
       standard-professed options, i.e., <b>-ORBxxx</b> or
-      <b>-OAxxxx</b>.</li><p>
+      <b>-OAxxxx</b>.</li>
       
   <li>Moved ORB option parsing into
       <code>TAO_ORB_Core::init()</code> rather than in
-      <code>ORB_init()</code>.</li><p>
+      <code>ORB_init()</code>.</li>
 
   <li>Define <code>_FAR</code> for all cases as an interim fix
-      for LynxOS.</li><p>
+      for LynxOS.</li>
 
   <li>Fixed TAO so that the default port of 5001 is defined in
       <code>orb_core.h</code> config header somewhere rather than in
       <code>orbobj.cpp</code>, and use <b>MAXHOSTNAMELEN</b> ACE
-      constant for the hostname buffer.</li><p>
+      constant for the hostname buffer.</li>
 
   <li>Eliminated need for <code>CORBA::Object</code> to keep a
-      pointer to its orb sitting around anywhere.</li><p>
+      pointer to its orb sitting around anywhere.</li>
       
   <LI>Tested <code>CORBA_ORB::shutdown()</code> as a manner in
       which a thread of control can request that
@@ -215,10 +211,7 @@
       service requests.  It only honors a
       <em>wait_for_completion</em> argument of <b>FALSE</b> right
       now because we haven't fully explored the issues which
-      surround doing all the completion.</li><p>
-
-  <li>Fixed bugs reported by Steven Wohlever, David Miron,
-      Manojkumar Acharya.</li><p>
+      surround doing all the completion.</li>
 
   <li>Created a brief section in <a
       href="../../TAO-INSTALL.html"><code>$TAO_ROOT/TAO-INSTALL.html</code></a>
@@ -229,34 +222,31 @@
       is linked through Orbix, VisiBroker, or another ORB.  <a
       href="../../ChangeLog">ChangeLog</a> discovery attribution for
       this should go to <em>Steve Wohlever
-      &lt;wohlever@mitre.org&gt;</em>.</li><p>
+      &lt;wohlever@mitre.org&gt;</em>.</li>
 
   <LI>Implemented <code>CORBA_ORB::shutdown()</code> as a manner
       in which a thread of control can request that
       <code>CORBA_ORB::run()</code> should return and no longer
-      service requests.</li><p>
+      service requests.</li>
 
   <LI>Validated movement of Strategy Connector into
-      ORB&nbsp;Core.</LI><p>
-
-  <li>Debated details of <code>Svc_Handler</code> modifications
-      with Irfan.</li><p>
+      ORB&nbsp;Core.</LI>
 
   <li>Tested and commited <code>Connector::connect_n</code>
-      changes to ACE</code>.</li><p>
+      changes to ACE</code>.</li>
 
   <li>ACE & TAO compiling cleanly using Sun's CC on Solaris and
-      G++ on Linux.  Also, the ACE tests run properly.</li><p>
+      G++ on Linux.  Also, the ACE tests run properly.</li>
 
   <li>Use <code>truss</code> to verify for <a
       href="mailto:PAUL.G.WEHLAGE@cdev.com">Paul Wehlage</a> that
       TAO really uses <code>select</code> vs. <code>recv</code> for
-      <b>-R</b> vs. <b>-T</b>.</li><p>
+      <b>-R</b> vs. <b>-T</b>.</li>
 
-  <li>Renamed <code>boa.*</code> to <code>poa.*</code>.</li><p>
+  <li>Renamed <code>boa.*</code> to <code>poa.*</code>.</li>
       
   <LI>Renamed following files:&nbsp;Orb_Core.*&nbsp;->orb_core.*
-      &amp;&nbsp;orbobj.* -> corba_orb.*.</LI><p>
+      &amp;&nbsp;orbobj.* -> corba_orb.*.</LI>
 
   <LI>The lock used in <code>giop.cpp:626</code> originally
       appeared in the IIOP-1.4 code base.  Its purpose was to
@@ -265,7 +255,7 @@
       not used because none of our concurrency models present a
       thread-unsafe condition.  The <a
       href="../../ChangeLog">ChangeLog</a> presents more details
-      on the subject.</li><p>
+      on the subject.</li>
 
   <li>Fixed problems seen by <a
       href="mailto:brian.r.mendel@boeing.com">Brian Mendel</a> of
@@ -279,40 +269,40 @@
       because the change is normally done in configuration files
       parsed by the Service Configurator, and VxWorks requires
       special code in that area which was not tested until Boeing
-      got hold of the code.</li><p>
+      got hold of the code.</li>
       
   <li>Clean up build under g++.  All 'function used before
       declared inline' warnings have been eliminated.  Also, all
       other warnings (except for one that is nearly unavoidable)
       have been eliminated.
-  </li><p>
+  </li>
       
-  <LI>Removed BOA and ROA names from the ORB.</LI><p>
+  <LI>Removed BOA and ROA names from the ORB.</LI>
       
   <LI>Changed <code>CORBA_ORB::open()</code> to return an error
       status (first cut at this already there--needs to be checked
-      out).</LI><p>
+      out).</LI>
       
-  <LI>Added README file to multiCubit test.</li><p>
+  <LI>Added README file to multiCubit test.</li>
 </UL><p>
 
 <b>Ongoing Work:</b>
 
 <UL>
   <LI>Verify ACE & TAO on Linux using g++, Solaris using CC, and
-      Solaris using g++.</LI><p>
+      Solaris using g++.</LI>
       
-  <LI>Use Purify to eliminate straggling problems.</LI><p>
+  <LI>Use Purify to eliminate straggling problems.</LI>
       
   <LI>Clean up the internals and analyze for performance
-      bottlenecks using Quantify.</LI><p>
+      bottlenecks using Quantify.</LI>
       
   <li>Resolve <code>// @@</code> comment blocks.  These are
       questions or comments placed in the code by a reviewer
-      (typically Doug).</li><p>
+      (typically Doug).</li>
       
   <li>Make more and better documentation on the internals of
-      TAO.</li><p>
+      TAO.</li>
 </UL><p>
 
 <b>Current Work:</b>
@@ -324,18 +314,18 @@
       a client and returns an object reference to that client
       within that thread.  This is different from the model that
       Sumedh originally had where the factory was trying to turn
-      out a client in a separate thread/ORB combination.</p>
+      out a client in a separate thread/ORB combination.
       
       <p>There is no application which attempts this at the moment,
       so both a client and a server will need to be manufactured.
       Using existing Cubit-like examples (that poor app is so
       weary) should reduce development time to a couple of
-      hours.</p>
+      hours.
       
       <p>The real strategy/solution is to make
       <code>CORBA::Object</code> not keep a pointer to its orb
       sitting around anywhere.  It should only get it when it needs
-      it.  This should not be difficult to change.</p>
+      it.  This should not be difficult to change.
   </LI>
 </UL><p>
 
