@@ -102,6 +102,7 @@ namespace TAO
           {
             Collocated_Invocation coll_inv (effective_target,
                                             this->target_,
+                                            stub,
                                             details,
                                             this->type_ == TAO_TWOWAY_INVOCATION);
 
@@ -167,10 +168,11 @@ namespace TAO
   }
 
   bool
-  Invocation_Adapter::get_timeout (ACE_Time_Value &timeout)
+  Invocation_Adapter::get_timeout (TAO_Stub *stub,
+                                   ACE_Time_Value &timeout)
   {
     bool has_timeout = false;
-    this->target_->orb_core ()->call_timeout_hook (this->target_->_stubobj (),
+    this->target_->orb_core ()->call_timeout_hook (stub,
                                                    has_timeout,
                                                    timeout);
 
@@ -204,7 +206,8 @@ namespace TAO
   {
     ACE_Time_Value tmp_wait_time;
     bool is_timeout  =
-      this->get_timeout (tmp_wait_time);
+      this->get_timeout (stub,
+                         tmp_wait_time);
 
     if (is_timeout)
       max_wait_time = &tmp_wait_time;

@@ -196,7 +196,8 @@ namespace TAO
 
     /// Helper function that extracts the roundtrip timeout policies
     /// set in the ORB.
-    bool get_timeout (ACE_Time_Value &val);
+    bool get_timeout (TAO_Stub *stub,
+                      ACE_Time_Value &val);
 
     /// Helper method that extracts TAO_Stub from the target object.
     TAO_Stub *get_stub (ACE_ENV_SINGLE_ARG_DECL) const;

@@ -11,7 +11,7 @@ namespace TAO
   ACE_INLINE TAO_Stub *
   Invocation_Base::stub (void) const
   {
-    return this->target_->_stubobj ();
+    return this->stub_;
   }
 
   ACE_INLINE void

@@ -20,6 +20,7 @@ namespace TAO
                                         bool response_expected)
     : Invocation_Base (otarget,
                        resolver.object (),
+                       resolver.stub (),
                        detail,
                        response_expected)
     , resolver_ (resolver)

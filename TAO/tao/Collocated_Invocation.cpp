@@ -10,10 +10,12 @@ namespace TAO
 {
   Collocated_Invocation::Collocated_Invocation (CORBA::Object_ptr et,
                                                 CORBA::Object_ptr t,
+                                                TAO_Stub *stub,
                                                 TAO_Operation_Details &detail,
                                                 bool response_expected)
     : Invocation_Base (et,
                        t,
+                       stub,
                        detail,
                        response_expected)
   {
