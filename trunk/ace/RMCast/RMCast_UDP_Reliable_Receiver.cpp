@@ -2,6 +2,7 @@
 
 #include "RMCast_UDP_Reliable_Receiver.h"
 #include "RMCast_UDP_Event_Handler.h"
+#include "ace/Reactor.h"
 
 #if !defined (__ACE_INLINE__)
 # include "RMCast_UDP_Reliable_Receiver.i"

@@ -1,10 +1,28 @@
+Wed Oct 25 09:50:48 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/RMCast/RMCast_IO_UDP.h:
+        * ace/RMCast/RMCast_IO_UDP.cpp:
+        * ace/RMCast/RMCast_UDP_Reliable_Receiver.h:
+        * ace/RMCast/RMCast_UDP_Reliable_Receiver.i:
+        * ace/RMCast/RMCast_UDP_Reliable_Receiver.cpp:
+        * ace/RMCast/RMCast_UDP_Reliable_Sender.h:
+        * ace/RMCast/RMCast_UDP_Reliable_Sender.i:
+        * examples/RMCast/Send_File/Makefile:
+        * examples/RMCast/Send_File/Sender.cpp:
+        * examples/RMCast/Send_File/Receiver.cpp:
+          Change several open() methods to init() because the base class
+          already has a virtual open() method, but with a different
+          signature, some compilers generate warnings when this happens.
+          Add #include required in platforms that do not define
+          ACE_TEMPLATES_REQUIRE_SOURCE
+
 Wed Oct 25 09:32:10 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Object_Manager.cpp:
 
           Changed to only use the CRT_ERROR disabling under
           ACE_DISABLE_WIN32_ERROR_WINDOWS when _DEBUG is defined,
-          since crtdbg.h is only included by ACE when _DEBUG is 
+          since crtdbg.h is only included by ACE when _DEBUG is
           defined.
 
 Wed Oct 25 10:51:26 2000  Steve Huston  <shuston@riverace.com>

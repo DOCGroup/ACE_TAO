@@ -29,7 +29,7 @@ public:
   virtual ~ACE_RMCast_UDP_Reliable_Sender (void);
 
   /// Open the UDP I/O module.
-  int open (const ACE_INET_Addr &mcast_group);
+  int init (const ACE_INET_Addr &mcast_group);
 
   /// Use the reactor to handle incoming messages
   void reactive_incoming_messages (ACE_Reactor *reactor);

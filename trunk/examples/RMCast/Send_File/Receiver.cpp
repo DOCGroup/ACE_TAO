@@ -16,7 +16,7 @@ public:
   int status (void) const;
 
   /// Initialize the module
-  int open (const char *filename);
+  int init (const char *filename);
 
   int close (void);
   int data (ACE_RMCast::Data &data);
@@ -45,10 +45,10 @@ main (int argc, char *argv[])
   const char *filename = argv[1];
 
   File_Module file_module;
-  if (file_module.open (filename) == -1)
+  if (file_module.init (filename) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Cannot open file module\n"),
+                         "Cannot init file module\n"),
                         1);
     }
 
@@ -63,10 +63,10 @@ main (int argc, char *argv[])
                         1);
     }
 
-  if (receiver.open (mcast_group) == -1)
+  if (receiver.init (mcast_group) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Cannot open UDP I/O at <%s:%d> %p\n",
+                         "Cannot init UDP I/O at <%s:%d> %p\n",
                          mcast_group.get_host_name (),
                          mcast_group.get_port_number (),
                          ""),
@@ -107,7 +107,7 @@ File_Module::status (void) const
 }
 
 int
-File_Module::open (const char * filename)
+File_Module::init (const char * filename)
 {
   ACE_HANDLE handle = ACE_OS::open (filename,
                                     O_WRONLY|O_BINARY|O_CREAT,
