@@ -119,8 +119,11 @@ _tao_start_again:
     if (!(
           (_tao_in >> _tao_retval)
       ))
-#endif
       ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), _tao_retval);
+#else
+      ACE_UNUSED_ARG (_tao_retval);
+      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), _tao_retval);
+#endif
 
   }
   else if (_invoke_status == TAO_GIOP_LOCATION_FORWARD)
