@@ -38,6 +38,8 @@ public:
   typedef BOA::dsi_handler UpcallFunc;
   typedef void (*ForwardFunc)(CORBA_OctetSeq&, CORBA_Object_ptr&, void*, CORBA_Environment&);
 
+  ROA_Parameters();
+
   // = THREAD-RELATED THINGS
   // 
   // Need to add a member function to return a

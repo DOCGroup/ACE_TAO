@@ -421,10 +421,12 @@ ROA::get_request (
       dexc (env, "TCP_OA, block for connection");
       return;
     }
+#if 0
     if (fd == 0) {
       do_exit = CORBA_B_TRUE;
       return;
     }
+#endif
 
     //
     // THREADING NOTE:  This is the last of the need to have the OA
