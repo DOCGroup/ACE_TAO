@@ -150,7 +150,7 @@ class ACE_Export ACE_Service_Repository_Iterator
   //
   // = DESCRIPTION
   //     Make sure not to delete entries as the iteration is going on
-  //     since this class is not designed as a "robust" iterator.
+  //     since this class is not designed as a robust iterator.
 public:
   // = Initialization and termination methods.
   ACE_Service_Repository_Iterator (ACE_Service_Repository &sr,
