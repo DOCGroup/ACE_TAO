@@ -81,9 +81,9 @@ SSL_shutdown (ssl);
    ],
    [
     ace_kerberos_dir=""
-    for ace_kerberos in usr usr/local; do
+    for ace_kerberos in /usr /usr/local; do
      ace_kerberos_dir="${ace_kerberos}/kerberos/include"
-     ace_TLS_CPPFLAGS="-I/${ace_kerberos_dir}"
+     ace_TLS_CPPFLAGS="-I${ace_kerberos_dir}"
 
      CPPFLAGS="$ace_TLS_CPPFLAGS $ace_save_CPPFLAGS"
 
