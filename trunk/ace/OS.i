@@ -10928,12 +10928,14 @@ ACE_OS::mkdir (const ACE_TCHAR *path, mode_t mode)
 #endif /* ACE_HAS_PACE */
 }
 
-#if !defined (ACE_LACKS_ENV)
 ACE_INLINE char *
 ACE_OS::getenv (const char *symbol)
 {
   ACE_OS_TRACE ("ACE_OS::getenv");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_LACKS_ENV)
+  ACE_UNUSED_ARG (symbol);
+  ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_HAS_PACE)
   ACE_OSCALL_RETURN (::pace_getenv (symbol), char*, 0);
 #elif defined (ACE_PSOS)
   ACE_UNUSED_ARG (symbol);
@@ -10955,7 +10957,10 @@ ACE_INLINE int
 ACE_OS::putenv (const ACE_TCHAR *string)
 {
   ACE_OS_TRACE ("ACE_OS::putenv");
-#if defined (ACE_HAS_WINCE) || defined (ACE_PSOS)
+#if defined (ACE_LACKS_ENV)
+  ACE_UNUSED_ARG (strin);
+  ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_HAS_WINCE) || defined (ACE_PSOS)
   // WinCE and pSOS don't have the concept of environment variables.
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (-1);
@@ -10966,7 +10971,6 @@ ACE_OS::putenv (const ACE_TCHAR *string)
   ACE_OSCALL_RETURN (::putenv ((char *) string), int, -1);
 #endif /* ACE_HAS_WINCE */
 }
-#endif /* !ACE_LACKS_ENV */
 
 ACE_INLINE
 ACE_Str_Buf::ACE_Str_Buf (void *b, int l, int max)
@@ -11552,7 +11556,6 @@ ACE_OS::fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode)
 }
 #endif /* ACE_WIN32 */
 
-# if !defined (ACE_LACKS_ENV)
 // Return a dynamically allocated duplicate of <str>, substituting the
 // environment variable if <str[0] == '$'>.  Note that the pointer is
 // allocated with <ACE_OS::malloc> and must be freed by
@@ -11561,7 +11564,10 @@ ACE_OS::fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode)
 ACE_INLINE ACE_TCHAR *
 ACE_OS::strenvdup (const ACE_TCHAR *str)
 {
-#if defined (ACE_HAS_WINCE)
+# if !defined (ACE_LACKS_ENV)
+  ACE_UNUSED_ARG (str);
+  ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_HAS_WINCE)
   // WinCE doesn't have environment variables so we just skip it.
   return ACE_OS::strdup (str);
 #else
@@ -11574,7 +11580,6 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
     return ACE_OS::strdup (str);
 #endif /* ACE_HAS_WINCE */
 }
-#endif /* ACE_LACKS_ENV */
 
 ACE_INLINE int
 ACE_Countdown_Time::start (void)
