@@ -44,7 +44,6 @@ COLLOCATION_OBJS = cubitC.o \
 		   cubitS.o \
 		   Cubit_Server.o \
 		   Cubit_Client.o \
-		   Cubit_Client.o \
 		   Cubit_i.o \
 		   collocation_test.o \
 		   RTI_IO.o \
