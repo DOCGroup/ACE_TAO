@@ -1,22 +1,29 @@
+Wed Jan 28 08:20:59 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+        * bin/MakeProjectCreator/config/ciao_servant.mpb:
+
+          Prefixed cidl with a dot in the inputexts assignment.
+
 Wed Jan 28 06:46:55 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/ACE.h:
-	* ace/config-cygwin32.h:
-	  Moved os_math.h include from config-cygwin32.h to ACE.h. When
-	  ACE_NTRACE is set we got include problems. Cygwin defines log2
-	  as macro and we have ACE::log2. The include of os_math.h is only
-	  done for Cygwin.
+        * ace/ACE.h:
+        * ace/config-cygwin32.h:
+          Moved os_math.h include from config-cygwin32.h to ACE.h. When
+          ACE_NTRACE is set we got include problems. Cygwin defines log2
+          as macro and we have ACE::log2. The include of os_math.h is only
+          done for Cygwin.
 
 Tue Jan 27 20:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/msvc_static_order.lst:
-	  Added ETCL.dsp to the list of projects to build first in a static build.
+        * bin/msvc_static_order.lst:
+          Added ETCL.dsp to the list of projects to build first in a static build.
 
 Mon Jan 26 17:12:38 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_sys_stat.inl (filesize): Declare sb using ACE_stat instead
-	  of struct stat to pick up whatever gets set up for that platform.
-	  Fixes compile error on HP-UX aCC.
+        * ace/OS_NS_sys_stat.inl (filesize): Declare sb using ACE_stat instead
+          of struct stat to pick up whatever gets set up for that platform.
+          Fixes compile error on HP-UX aCC.
 
 Mon Jan 26 15:18:06 2004  Gautam Thaker  <gthaker@atl.lmco.com>
 
