@@ -1,66 +1,74 @@
+Mon May 17 15:25:40 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/Event_Latency/run_tests.sh: replaced
+          hard-coded user name with $login, which is derived using
+          the same logic as in orbsvcs/tests/start_services.
+          Thanks to Lothar Werzinger <lwerzinger@krones.de> for
+          reporting this.
+
 Mon May 17 15:17:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Event/Makefile:
-	* tests/Event/Performance/Connect.cpp:
-	* tests/Event/Performance/Connect.h:
-	* tests/Event/Performance/Makefile:
-	* tests/Event/Performance/Throughput.cpp:
-	* tests/Event/Performance/Throughput.h:
-	* tests/Event/Performance/ec.mt.conf:
-	* tests/Event/Performance/ec.st.conf:
-	* tests/Event/lib/Consumer.h:
-	* tests/Event/lib/Driver.cpp:
-	* tests/Event/lib/Driver.h:
-	* tests/Event/lib/Supplier.h:
-	  Added new test to measure the throughput/latency of the EC and
-	  the time it takes to connect/disconnect from it.
+        * tests/Event/Makefile:
+        * tests/Event/Performance/Connect.cpp:
+        * tests/Event/Performance/Connect.h:
+        * tests/Event/Performance/Makefile:
+        * tests/Event/Performance/Throughput.cpp:
+        * tests/Event/Performance/Throughput.h:
+        * tests/Event/Performance/ec.mt.conf:
+        * tests/Event/Performance/ec.st.conf:
+        * tests/Event/lib/Consumer.h:
+        * tests/Event/lib/Driver.cpp:
+        * tests/Event/lib/Driver.h:
+        * tests/Event/lib/Supplier.h:
+          Added new test to measure the throughput/latency of the EC and
+          the time it takes to connect/disconnect from it.
 
-	* orbsvcs/orbsvcs/Event_Service_Constants.h:
-	* orbsvcs/Event/Event_Channel.cpp:
-	  In some applications we need to use recursive mutexes in the
-	  Event Channel otherwise it dead-locks. Thanks to Mike Mazurek
-	  <mmazurek@std.saic.com> for finding this bug and providing the
-	  fixes.
+        * orbsvcs/orbsvcs/Event_Service_Constants.h:
+        * orbsvcs/Event/Event_Channel.cpp:
+          In some applications we need to use recursive mutexes in the
+          Event Channel otherwise it dead-locks. Thanks to Mike Mazurek
+          <mmazurek@std.saic.com> for finding this bug and providing the
+          fixes.
 
 Mon May 17 14:40:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (init): Removed extra call to
-	  orb_params()->use_dotted_decimal_addresses.
+        * tao/ORB_Core.cpp (init): Removed extra call to
+          orb_params()->use_dotted_decimal_addresses.
 
 Mon May 17 11:31:48 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
-	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
-	Added "ACE_UNUSED_ARG (c_impl);" to avoid DEC compiler warning.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+        Added "ACE_UNUSED_ARG (c_impl);" to avoid DEC compiler warning.
 
 Mon May 17 11:04:02 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/tests/Param_Test/ub_any_seq.cpp:
-	  Changed the logic of check_validity() so that *all* the
-	  elements of the sequence get checked instead of just the
-	  first one (this should also get rid of a DU warning),
-	  added a constant representing the number of possible
-	  types tested in the sequence, and removed some
-	  unnecessary switch cases in init_parameters() and
-	  reset_parameters().
+        * tao/tests/Param_Test/ub_any_seq.cpp:
+          Changed the logic of check_validity() so that *all* the
+          elements of the sequence get checked instead of just the
+          first one (this should also get rid of a DU warning),
+          added a constant representing the number of possible
+          types tested in the sequence, and removed some
+          unnecessary switch cases in init_parameters() and
+          reset_parameters().
 
 Sun May 16 21:07:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* rules.tao.GNU: Merged the stub and skeleton rules for flick
-	  compiler together.
+        * rules.tao.GNU: Merged the stub and skeleton rules for flick
+          compiler together.
 
-	* TAO_IDL/Makefile:
-	* TAO_IDL/fe/Makefile.am: lex.yy.cpp needs to be patched with
-	  lex.yy.cpp.diff.
+        * TAO_IDL/Makefile:
+        * TAO_IDL/fe/Makefile.am: lex.yy.cpp needs to be patched with
+          lex.yy.cpp.diff.
 
-	* TAO_IDL/fe/idl.ll: Applied ACE_NOTREACHED to unreachable
-	  break's.
+        * TAO_IDL/fe/idl.ll: Applied ACE_NOTREACHED to unreachable
+          break's.
 
-	* TAO_IDL/fe/lex.yy.cpp: Patched with lex.yy.cpp.diff.
+        * TAO_IDL/fe/lex.yy.cpp: Patched with lex.yy.cpp.diff.
 
-	* TAO_IDL/fe/lex.yy.cpp.diff: Added this file to preserve patches
-	  that can't be done using 'sed'.  It also prevents me from
-	  throwing tantrums.
+        * TAO_IDL/fe/lex.yy.cpp.diff: Added this file to preserve patches
+          that can't be done using 'sed'.  It also prevents me from
+          throwing tantrums.
 
 Sun May 16 18:47:38 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -68,8 +76,8 @@ Sun May 16 18:47:38 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun May 16 18:25:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
-	  Fixed default concurrency high water mark.
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+          Fixed default concurrency high water mark.
 
 Sun May 16 10:59:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
