@@ -1,3 +1,10 @@
+Wed Jan  2 08:19:18 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/FILE_Connector.h,
+	* ace/OS.h (ACE_OS): Clarified the weak semantics of O_APPEND
+	  on Win32.  Thanks to Eugene Alterman <eugalt@myrealbox.com> for
+ 	  reporting this.
+
 Wed Jan  2 12:43:00 2002  John Aughey  <jha@aughey.com>
 
 	* ace/INET_Addr.h

@@ -5432,6 +5432,13 @@ public:
 #else
 #  define ACE_DEFAULT_OPEN_PERMS 0
 #endif  /* ACE_WIN32 */
+
+  /// The O_APPEND flag is only partly supported on Win32. If you specify
+  /// O_APPEND, then the file pointer will be positioned at the end of
+  /// the file initially during open, but it is not re-positioned at
+  /// the end prior to each write, as specified by POSIX.  This
+  /// is generally good enough for typical situations, but it is ``not
+  /// quite right'' in its semantics.
   static ACE_HANDLE open (const char *filename,
                           int mode,
                           int perms = ACE_DEFAULT_OPEN_PERMS,
