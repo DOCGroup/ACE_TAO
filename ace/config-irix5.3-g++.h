@@ -19,6 +19,7 @@
 
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+#define ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC			
