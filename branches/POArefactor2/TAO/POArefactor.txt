@@ -1,3 +1,19 @@
+Mon Nov 15 16:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/*.h:
+          Cosmetic changes
+
+        * tao/PortableServer/POA.{h,cpp}:
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+          Added is_servant_activation_allowed() to the POA and the POA
+          delegates this to the id_uniqueness strategy. The retain servant
+          retention strategy and the servant acivator request processing
+          strategy just call now the POA instead directly using the
+          id_uniqueness strategy. The strategies should be decoupled from
+          other strategies, this is the first change for that approach, thanks
+          to Bala and Carlos for coming with this approach.
+
 Mon Nov 15 10:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Typecode_types.pidl:
@@ -117,8 +133,8 @@ Thu Nov 11 11:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/PortableServer/RequestProcessingStrategyServantManager.{h,cpp}:
           Added validate_servant_manager
 
-        * tao/PortableSErver/RequestProcessingStrategyServantActivator.cpp:
-        * tao/PortableSErver/RequestProcessingStrategyServantLocator.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantLocator.cpp:
           Use the new validate_servant_manager to check for nil servant
           managers and throw the correct exception
 

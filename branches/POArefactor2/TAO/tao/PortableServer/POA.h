@@ -457,7 +457,16 @@ public:
 
   bool is_poa_generated (CORBA::Object_ptr reference,
                          PortableServer::ObjectId &system_id
-                          ACE_ENV_ARG_DECL);
+                         ACE_ENV_ARG_DECL);
+
+  /*
+   * Validate if the servant may be activated
+   * @retval true This servant may be activated
+   * @retval false This servant may not be activated
+   */
+  bool is_servant_activation_allowed (
+    PortableServer::Servant servant,
+    int &wait_occurred_restart_call);
 
 protected:
 

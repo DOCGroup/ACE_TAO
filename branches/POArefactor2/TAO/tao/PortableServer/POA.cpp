@@ -2611,6 +2611,14 @@ TAO_POA::get_servant (ACE_ENV_SINGLE_ARG_DECL)
     }
 }
 
+bool
+TAO_POA::is_servant_activation_allowed (PortableServer::Servant servant,
+                                        int &wait_occurred_restart_call)
+{
+  return this->active_policy_strategies_.id_uniqueness_strategy()->
+    is_servant_activation_allowed (servant, wait_occurred_restart_call);
+}
+
 void
 TAO_POA::set_servant (PortableServer::Servant servant
                       ACE_ENV_ARG_DECL)

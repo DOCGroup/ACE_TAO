@@ -848,7 +848,7 @@ namespace TAO
         }
 
       bool may_activate =
-        this->poa_->active_policy_strategies().id_uniqueness_strategy()->is_servant_activation_allowed (servant, wait_occurred_restart_call);
+        this->poa_->is_servant_activation_allowed (servant, wait_occurred_restart_call);
 
       if (!may_activate)
         {
@@ -965,7 +965,7 @@ namespace TAO
         }
 
       bool may_activate =
-        this->poa_->active_policy_strategies().id_uniqueness_strategy()->is_servant_activation_allowed (servant, wait_occurred_restart_call);
+        this->poa_->is_servant_activation_allowed (servant, wait_occurred_restart_call);
 
       if (!may_activate)
         {

@@ -23,9 +23,9 @@ namespace TAO
 
     void
     Unique_Id_Uniqueness_Strategy::strategy_init (
-      ServantRetentionStrategy* servant_retention_strategy)
+      ServantRetentionStrategy* srs)
     {
-      servant_retention_strategy_ = servant_retention_strategy;
+      servant_retention_strategy_ = srs;
     }
 
     bool

@@ -13,7 +13,6 @@
 #include "tao/PortableServer/ServantActivatorC.h"
 #include "tao/PortableServer/RequestProcessingStrategyServantActivator.h"
 #include "tao/PortableServer/ServantRetentionStrategy.h"
-#include "tao/PortableServer/IdUniquenessStrategy.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/POA.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
@@ -146,7 +145,7 @@ namespace TAO
       // will raise an OBJ_ADAPTER system exception for the
       // request.
       bool may_activate =
-        this->poa_->active_policy_strategies().id_uniqueness_strategy()->is_servant_activation_allowed (servant, wait_occurred_restart_call);
+        this->poa_->is_servant_activation_allowed (servant, wait_occurred_restart_call);
 
       if (!may_activate)
         {

@@ -31,15 +31,13 @@ namespace TAO
     public:
       virtual ~Multiple_Id_Uniqueness_Strategy (void);
 
-      void strategy_init (ServantRetentionStrategy* servant_retention_strategy);
+      virtual void strategy_init (ServantRetentionStrategy* srs);
 
-      virtual
-      bool is_servant_activation_allowed (
+      virtual bool is_servant_activation_allowed (
         PortableServer::Servant servant,
         int &wait_occurred_restart_call);
 
-      virtual
-      bool allow_multiple_activations (void) const;
+      virtual bool allow_multiple_activations (void) const;
     };
   }
 }
