@@ -1,3 +1,11 @@
+<<<<<<< ChangeLog-96b
+Wed Nov 20 02:38:40 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/UPIPE_SAP_Test.cpp: Disabled this test if we don't have
+ 	  threads and (STREAM Pipes or Win32).  Thanks to Thilo Kielmann's
+ 	  <kielmann@informatik.uni-siegen.de> for this info.
+
+=======
 Tue Nov 19 23:09:08 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
 	* ace/Log_Record.cpp (print): Added a call to ACE_OS::fflush
@@ -6,7 +14,10 @@ Tue Nov 19 23:09:08 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 	  We're unsure of the affects this will have on performance, so we
 	  may change this back in the future.
 
+>>>>>>> 4.30
 Tue Nov 19 00:06:57 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Released a beta version of ACE 4.0.33 for testing.
 
 	* ace/TTY_IO.h: Added the ACE_Export macro before the ACE_TTY_IO
  	  class to make things work correctly for Win32 DLLs.  Thanks
