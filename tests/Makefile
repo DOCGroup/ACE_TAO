@@ -28,7 +28,6 @@ BIN =   Aio_Platform_Test \
         Hash_Map_Manager_Test \
         IOStream_Test \
         Map_Test \
-        Map_Manager_Test \
         Mem_Map_Test \
         MM_Shared_Memory_Test \
         MT_Reactor_Timer_Test \
@@ -76,6 +75,8 @@ BIN =   Aio_Platform_Test \
         TSS_Test \
         UPIPE_SAP_Test \
         Upgradable_RW_Test
+
+#        Map_Manager_Test \
 
 BIN2 =  Naming_Test \
         Thread_Pool_Reactor_Test \

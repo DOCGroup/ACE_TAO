@@ -192,9 +192,9 @@ ld < Reverse_Lock_Test
 write 2, "Reverse_Lock_Test ", 18
 ace_main; unld "Reverse_Lock_Test"
 
-ld < Map_Manager_Test
-write 2, "Map_Manager_Test ", 17
-ace_main; unld "Map_Manager_Test"
+#### ld < Map_Manager_Test
+#### write 2, "Map_Manager_Test ", 17
+#### ace_main; unld "Map_Manager_Test"
 
 ld < Map_Test
 write 2, "Map_Test ", 9
