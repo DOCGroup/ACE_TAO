@@ -3330,7 +3330,6 @@ extern "C"
 #     if defined (ACE_HAS_STL_QUEUE_CONFLICT)
 #       undef queue
 #     endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-#     include /**/ <netdb.h>
 #   endif /* VXWORKS */
 
 // This part if to avoid STL name conflict with the map structure
