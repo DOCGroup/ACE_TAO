@@ -338,7 +338,7 @@ main (int argc, char **argv)
                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Paced_Worker paced_worker (test,
+      Paced_Worker paced_worker (test.in (),
                                  invocation_rate,
                                  iterations);
       paced_worker.run (ACE_ENV_SINGLE_ARG_PARAMETER);
