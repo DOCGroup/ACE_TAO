@@ -1,4 +1,4 @@
-$ mk1$
+$Id$
 
 Documentation for the Simulator
 
@@ -19,7 +19,13 @@ Implementation: A C++ Supplier pushes events containing a
 
 
 Requirements: 
-           C++ compiler, TAO environment, Visibroker 3.1 for JAVA
+           C++ compiler, TAO environment, Visibroker 3.2 for JAVA
+
+!!RELEASE CHANGES: 
+	- Visibroker 3.2 instead of 3.1 (new naming conventions)
+	- No more customization of the RtecEventCommC.h file (bug is fixed)
+        - A different Weapons struct is now used, but it does not influence
+          the functionality.
 
 Files:
      Common:
@@ -37,9 +43,10 @@ Files:
 
 
      Consumer, Simulator:
-        Display.java  - Simulation 
+        Display.java  - Simulation core class 
         Display_Client.java - Main Entry point of the Simulation
-        Display_Consumer.java - Event Consumer
+        Display_Consumer.java - Event Consumer Administrator
+	Display_Push_Consumer.java - Actual Event Consumer
         Display_Object.java - Interface for an Display_Object
         Display_Weapons.java - Implementation of an Display_Object
         Display_Art_Horizon.java - Implementation of an Display_Object
@@ -54,10 +61,12 @@ Files:
 
 
 Compiling:
-    Supplier: (../Simulator/Event_Supplier/.)
+    Supplier: in directory  $TAO_ROOT/orbsvcs/tests/Simulator/Event_Supplier/
+
        cp ../NavWeap.idl .
+
        "make sure that the following definition is in the 
-          $TAO_ROOT/orbsvcs/orbsvcs/RtecEventComm.idl
+          $TAO_ROOT/orbsvcs/orbsvcs/RtecEventComm.idl"
               
            struct EventData {
                 long x;
@@ -65,33 +74,17 @@ Compiling:
                 any any_value;
             };
 
-         compile the $TAO_ROOT/orbsvcs/orbsvcs directory
+       "compile $TAO_ROOT/orbsvcs/orbsvcs"
+       "compile $TAO_ROOT/orbsvcs/Event_Service"
+       "compile $TAO_ROOT/orbsvcs/Naming_Service"
+       "compile $TAO_ROOT/orbsvcs/Scheduling_Service"
 
-         change $TAO_ROOT/orbsvcs/orbsvcs/RtecEventCommC.h to
-             
-
-	  struct EventData
-	{
-	    CORBA::Long x;
-	    CORBA::Long y;
-	    CORBA::Any any_value;
-	  };       ^^^^
-         change $TAO_ROOT/orbsvcs/orbsvcs/RtecEventCommC.cpp to
-             
-         istub->do_call (env, &RtecEventComm_PushConsumer_push_calldata, 0, &data);
-                                                                            ^^^^^
-
-         This was neccessary because of a bug in the IDL compiler
-         compile the $TAO_ROOT/orbsvcs/orbsvcs directory again
-         compile the $TAO_ROOT/orbsvcs/EventService directory"
-
-       tao_idl NavWeap.idl
        make
 
 
 
 
-    Consumer, Simulator: (../Simulator/Sim_Display/.)
+    DOVE Browser: in directory $TAO/orbsvcs/tests/Simulator/Sim_Display/.)
        cp ../NavWeap.idl .
        cp $TAO_ROOT/orbsvcs/orbsvcs/CosNaming.idl .
        cp $TAO_ROOT/orbsvcs/orbsvcs/CosTimeBase.idl . 
@@ -111,8 +104,9 @@ Compiling:
 Starting:
 
      Supplier:
-       Event_Sup -ORBport 10040 -m 100
-       // -m 1000 for 1000 events sent by the supplier
+       Event_Sup -ORBport 10040 -f MLF.dat -m 1000
+		// -m 1000 for 1000 events sent by the supplier
+		// -f MLF.dat to read scheduling data from this file as input 
 
-     Simulation 
+     DOVE Browser:
        vbj Display_Client 

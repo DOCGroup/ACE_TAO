@@ -32,7 +32,8 @@ public class NS_Resolve
   private static final int TAO_DEFAULT_NAME_SERVER_REQUEST_PORT = 10013;
   private static final int MULTICAST_SEND_PORT = 10060;
   private static final int MULTICAST_RECEIVE_PORT = 10061;
-
+  private static final int TAO_SERVICEID_NAMESERVICE = 0;
+  private static final int TAO_SERVICEID_TRADINGSERVICE = 1;
 
   org.omg.CORBA.Object name_service_;
 
@@ -45,6 +46,8 @@ public class NS_Resolve
 	  ByteArrayOutputStream byte_stream_ = new ByteArrayOutputStream ();
       	  byte_stream_.write ((int)((MULTICAST_RECEIVE_PORT&0xff00)>>>8));
 	  byte_stream_.write ((int)(MULTICAST_RECEIVE_PORT&0x00ff));
+      	  byte_stream_.write ((int)((TAO_SERVICEID_NAMESERVICE&0xff00)>>>8));
+	  byte_stream_.write ((int)(TAO_SERVICEID_NAMESERVICE&0x00ff));
 	  byte[] msg = byte_stream_.toByteArray();
 
 

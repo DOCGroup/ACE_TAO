@@ -62,20 +62,20 @@ public class Display_Weapons
 	  switch (i)
 	    {
 	    default:
-	    case 0: weapon = weapons.weapon1.identifier;						      
-	      status = weapons.weapon1.status;
+	    case 0: weapon = weapons.weapon1_identifier;						      
+	      status = weapons.weapon1_status;
 	      break;
-	    case 1: weapon = weapons.weapon2.identifier;						      
-	      status = weapons.weapon2.status;
+	    case 1: weapon = weapons.weapon2_identifier;						      
+	      status = weapons.weapon2_status;
 	      break;
-	    case 2: weapon = weapons.weapon3.identifier;						      
-	      status = weapons.weapon3.status;
+	    case 2: weapon = weapons.weapon3_identifier;						      
+	      status = weapons.weapon3_status;
 	      break;
-	    case 3: weapon = weapons.weapon4.identifier;						      
-	      status = weapons.weapon4.status;
+	    case 3: weapon = weapons.weapon4_identifier;						      
+	      status = weapons.weapon4_status;
 	      break;
-	    case 4: weapon = weapons.weapon5.identifier;						      
-	      status = weapons.weapon5.status;
+	    case 4: weapon = weapons.weapon5_identifier;						      
+	      status = weapons.weapon5_status;
 	      break;
 	    }
 

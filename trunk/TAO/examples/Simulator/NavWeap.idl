@@ -26,18 +26,18 @@ struct Navigation {
 };
 
 
-struct Weapon {
-        string identifier;
-        unsigned long status;
-        };
-
 struct Weapons {
 	unsigned long number_of_weapons;
-	Weapon weapon1;
-	Weapon weapon2;
-	Weapon weapon3;
-	Weapon weapon4;
-	Weapon weapon5;
+	string weapon1_identifier;
+	unsigned long weapon1_status;
+	string weapon2_identifier;
+	unsigned long weapon2_status;
+	string weapon3_identifier;
+	unsigned long weapon3_status;
+	string weapon4_identifier;
+	unsigned long weapon4_status;
+	string weapon5_identifier;
+	unsigned long weapon5_status;
 	// common part
 	double utilitzation;
 	double overhead;

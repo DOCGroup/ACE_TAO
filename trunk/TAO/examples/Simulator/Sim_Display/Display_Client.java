@@ -56,7 +56,7 @@ public class Display_Client // extends java.applet.Applet
     JITTER = "Jitter (ms)",
     OVERHEAD = "Overhead (%)",
     DEADLINES = "Missed Deadlines (#)";
-
+  
   
 public synchronized void paint (Graphics g) {}
 
@@ -107,6 +107,7 @@ public synchronized void paint (Graphics g) {}
 
   public static void main (String[] args)
     {
+      
       Display_Client display_client_ = new Display_Client ();
       display_client_.init ();
     }

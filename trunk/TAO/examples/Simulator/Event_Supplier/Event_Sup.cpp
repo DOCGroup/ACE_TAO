@@ -237,11 +237,10 @@ Demo_Supplier::start_generating_events (void)
               proxy_consumer_->push (events, TAO_TRY_ENV);
               TAO_CHECK_ENV;
 
-              if (total_sent_ < 5)
-                ACE_DEBUG ((LM_DEBUG, "Pushing event data.\n"));
-              else if (total_sent_ == 5)
-                ACE_DEBUG ((LM_DEBUG, "Everything is running. Going to be mute.\n"));
-
+	       if (total_sent_ < 5)
+		 ACE_DEBUG ((LM_DEBUG, "Pushing event data.\n"));
+	       else if (total_sent_ == 5)
+		 ACE_DEBUG ((LM_DEBUG, "Everything is running. Going to be mute.\n"));
       } while (++total_sent_ < total_messages);
 
 
@@ -457,28 +456,28 @@ Demo_Supplier::insert_event_data (
                  (strcmp((*sched_data)->operation_name, "low_5") == 0))
         {
           weapons_.number_of_weapons = 2;
-          weapons_.weapon1.identifier = CORBA::string_alloc (30);
-          strcpy (weapons_.weapon1.identifier,"Photon Torpedoes");
-          weapons_.weapon1.status =(ACE_OS::rand() % 4) == 0 ? 0 : 1 ;
-          weapons_.weapon2.identifier = CORBA::string_alloc (30);
-          strcpy (weapons_.weapon2.identifier,"Quantum Torpedoes");
-          weapons_.weapon2.status = (ACE_OS::rand() % 4) == 0 ? 0 : 1;
-          weapons_.weapon3.identifier = CORBA::string_alloc (1);
-          weapons_.weapon3.identifier[0] = 0;
-          weapons_.weapon3.status = 0;
-          weapons_.weapon4.identifier = CORBA::string_alloc (1);
-          weapons_.weapon4.identifier[0] = 0;
-          weapons_.weapon4.status = 0;
-          weapons_.weapon5.identifier = CORBA::string_alloc (1);
-          weapons_.weapon5.identifier[0] = 0;
-          weapons_.weapon5.status = 0;
+          weapons_.weapon1_identifier = CORBA::string_alloc (30);
+          strcpy (weapons_.weapon1_identifier,"Photon Torpedoes");
+          weapons_.weapon1_status =(ACE_OS::rand() % 4) == 0 ? 0 : 1 ;
+          weapons_.weapon2_identifier = CORBA::string_alloc (30);
+          strcpy (weapons_.weapon2_identifier,"Quantum Torpedoes");
+          weapons_.weapon2_status = (ACE_OS::rand() % 4) == 0 ? 0 : 1;
+          weapons_.weapon3_identifier = CORBA::string_alloc (1);
+          strcpy (weapons_.weapon3_identifier, "");
+          weapons_.weapon3_status = 0;
+          weapons_.weapon4_identifier = CORBA::string_alloc (1);
+          strcpy (weapons_.weapon4_identifier, "");
+          weapons_.weapon4_status = 0;
+          weapons_.weapon5_identifier = CORBA::string_alloc (1);
+          strcpy (weapons_.weapon5_identifier, "");
+          weapons_.weapon5_status = 0;	  
 
-          weapons_.utilitzation =     (*sched_data)->utilitzation;
+	  weapons_.utilitzation =     (*sched_data)->utilitzation;
           weapons_.overhead =         (*sched_data)->overhead;
           weapons_.arrival_time =     (*sched_data)->arrival_time;
           weapons_.deadline_time =    (*sched_data)->deadline_time;
           weapons_.completion_time =  (*sched_data)->completion_time;
-          weapons_.computation_time = (*sched_data)->computation_time;
+          weapons_.computation_time = (*sched_data)->computation_time;	 
 
           data.replace (_tc_Weapons, &weapons_, CORBA::B_TRUE, TAO_TRY_ENV);
         }
@@ -495,11 +494,10 @@ Demo_Supplier::insert_event_data (
 
         if ((*sched_data)->completion_time >= last_completion)
         {
-          ACE_Time_Value pause (0, (*sched_data)->completion_time -
-                                   last_completion);
-          ACE_OS::sleep (pause);
-          last_completion = (*sched_data)->completion_time;
-        }
+	  ACE_Time_Value pause (0, (*sched_data)->completion_time - last_completion);
+	  ACE_OS::sleep (pause);
+	  last_completion = (*sched_data)->completion_time;
+	}
       }
       else
       {
