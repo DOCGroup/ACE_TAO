@@ -4280,32 +4280,29 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
       if (*cp != '\0')
         argc++;
 
-      // Grok quotes....
-      if (*cp == '\'' || *cp == '"')
+      while (*cp != '\0' && !ACE_OS::ace_isspace (*cp)) 
         {
-          ACE_TCHAR quote = *cp;
-
-          // Scan past the string..
-          for (cp++; *cp != '\0' && *cp != quote; cp++)
-            continue;
-
-          // '\0' implies unmatched quote..
-          if (*cp == '\0')
+          // Grok quotes....
+          if (*cp == '\'' || *cp == '"')
             {
-              // The OS layer should not print stuff out.
-              // In fact this functions should go into ACE_ARGV!!
-              // ACE_ERROR ((LM_ERROR,
-              //            ACE_LIB_TEXT ("unmatched %c detected\n"),
-              //            quote));
-              argc--;
-              break;
+              ACE_TCHAR quote = *cp;
+
+              // Scan past the string..
+              for (cp++; *cp != '\0' && *cp != quote; cp++)
+                continue;
+
+              // '\0' implies unmatched quote..
+              if (*cp == '\0')
+                {
+                  argc--;
+                  break;
+                }
+              else
+                cp++;
             }
           else
             cp++;
         }
-      else // Skip over non-whitespace....
-        while (*cp != '\0' && !ACE_OS::ace_isspace (*cp))
-          cp++;
     }
 
   // Second pass: copy arguments.
@@ -4333,55 +4330,50 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
         ptr++;
 
       // Copy next argument and move to next whitespace..
-      if (*ptr == '\'' || *ptr == '"')
-        {
-          ACE_TCHAR quote = *ptr++;
+      cp = argp;
+      while (*ptr != '\0' && !ACE_OS::ace_isspace (*ptr))
+        if (*ptr == '\'' || *ptr == '"')
+          {
+            ACE_TCHAR quote = *ptr++;
+            
+            while (*ptr != '\0' && *ptr != quote) 
+              *cp++ = *ptr++;
 
-          for (cp = argp;
-               *ptr != '\0' && *ptr != quote;
-               ptr++, cp++)
-            {
-              // @@ We can probably remove this since we ensure it's
-              // big enough earlier!
-              // I (coryan) removed it, using asserts in the OS layer
-              // brings down the Log msg stuff
-              // ACE_ASSERT (unsigned (cp - argp) < ACE_DEFAULT_ARGV_BUFSIZ);
-              *cp = *ptr;
-            }
+            if (*ptr == quote)
+              ptr++;
+          }
+        else 
+          *cp++ = *ptr++;
 
-          *cp = '\0';
-          if (*ptr == quote)
-            ptr++;
-        }
-      else
-        {
-          for (cp = arg;
-               *ptr && !ACE_OS::ace_isspace (*ptr);
-               ptr++, cp++)
-            {
-              // @@ We can probably remove this since we ensure it's
-              // big enough earlier!
-              // I (coryan) removed it, using asserts in the OS layer
-              // brings down the Log msg stuff
-              // ACE_ASSERT (u_int (cp - argp) < ACE_DEFAULT_ARGV_BUFSIZ);
-              *cp = *ptr;
-            }
-
-          *cp = '\0';
-        }
+      *cp = '\0';
 
 #if !defined (ACE_LACKS_ENV)
       // Check for environment variable substitution here.
-      if (substitute_env_args)
-        ACE_ALLOCATOR_RETURN (argv[i],
-                              ACE_OS::strenvdup (arg),
-                              -1);
+      if (substitute_env_args) {
+          argv[i] = ACE_OS::strenvdup(argp);
+
+          if (argv[i] == 0) 
+            {
+              if (argp != arg)
+                delete [] argp;
+              errno = ENOMEM;
+              return -1;
+            }
+      }
       else
 #endif /* ACE_LACKS_ENV */
-        ACE_ALLOCATOR_RETURN (argv[i],
-                              ACE_OS::strdup (arg),
-                              -1);
-    }
+        {
+          argv[i] = ACE_OS::strdup(argp);
+
+          if (argv[i] == 0) 
+            {
+              if (argp != arg)
+                delete [] argp;
+              errno = ENOMEM;
+              return -1;
+            }
+      }
+  }
 
   if (argp != arg)
     delete [] argp;
