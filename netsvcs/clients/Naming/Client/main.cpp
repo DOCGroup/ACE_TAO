@@ -13,8 +13,28 @@ int
 main (int argc, char *argv[])
 {
   ACE_Service_Config daemon;
+  ACE_ARGV new_args;
 
-  if (daemon.open (argc, argv) == -1)
+  // Load the existing <argv> into our new one.
+  new_args.add (argv);
+  // Enable loading of static services.
+  new_args.add ("-y"); 
+  // Enable debugging within dynamically linked services.
+  new_args.add ("-d"); 
+
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("argc = %d\n"),
+              ASYS_TEXT (new_args.argc ())));
+
+  // Print the contents of the combined <ACE_ARGV>.
+  for (int i = 0; i < new_args.argc (); i++)
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("(%d) %s\n"),
+                i,
+                new_args.argv ()[i]));
+
+  if (daemon.open (new_args.argc (),
+                   new_args.argv ()) == -1)
     {
       if (errno != ENOENT)
 	ACE_ERROR ((LM_ERROR,

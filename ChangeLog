@@ -1,5 +1,8 @@
 Sat Jan 15 00:41:12 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/ARGV: Added a new add() method that adds an entire argv 
+	  array in one fell swoop.
+
 	* netsvcs/clients/Naming/Client/main.cpp (main): Replaced
 	  the ad hoc use of argc/argv processing with the ACE_ARGV
  	  approach.
