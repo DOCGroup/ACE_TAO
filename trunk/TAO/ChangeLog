@@ -1,3 +1,8 @@
+Wed Mar  3 13:32:52 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.inl:
+          Fix build errors.
+
 Wed Mar  3 12:30:33 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile: 
