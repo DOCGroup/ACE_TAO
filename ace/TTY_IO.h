@@ -26,7 +26,7 @@
 #include "ace/DEV_Connector.h"
 #include "ace/DEV_IO.h"
 
-class ACE_TTY_IO : public ACE_DEV_IO
+class ACE_Export ACE_TTY_IO : public ACE_DEV_IO
   // = TITLE
   //     Class definitions for TTY-specific features.
   //   

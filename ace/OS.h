@@ -562,10 +562,6 @@ typedef pthread_mutex_t ACE_mutex_t;
 typedef pthread_cond_t ACE_cond_t;
 typedef pthread_mutex_t ACE_thread_mutex_t;
 
-#if (!defined (timespec) && !defined (m88k))
-#define timestruc_t struct timespec
-#endif /* timespec */
-
 #if !defined (PTHREAD_CANCEL_DISABLE)
 #define PTHREAD_CANCEL_DISABLE      0
 #endif /* PTHREAD_CANCEL_DISABLE */
@@ -1421,10 +1417,6 @@ extern "C" int sigwait (sigset_t *set);
 #include <tiuser.h> 
 #endif /* ACE_HAS_TIUSER_H */
 
-#if defined (ACE_HAS_BROKEN_T_ERRNO)
-undef t_errno
-#endif /* ACE_HAS_BROKEN_T_ERRNO */
-
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 #include <dlfcn.h>
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
@@ -1434,6 +1426,7 @@ undef t_errno
 #endif /* ACE_HAS_SOCKIO_ */
 
 // There must be a better way to do this...
+#if !defined (RLIMIT_NOFILE)
 #if defined (Linux) || defined (AIX) || defined (SCO)
 #if defined (RLIMIT_OFILE)
 #define RLIMIT_NOFILE RLIMIT_OFILE
@@ -1441,6 +1434,7 @@ undef t_errno
 #define RLIMIT_NOFILE 200
 #endif /* RLIMIT_OFILE */
 #endif /* defined (Linux) || defined (AIX) || defined (SCO) */
+#endif /* RLIMIT_NOFILE */
 
 #if !defined (ACE_HAS_TLI_PROTOTYPES)
 // Define ACE_TLI headers for systems that don't prototype them....
@@ -1802,6 +1796,10 @@ typedef int ucontext_t;
 #elif defined (ACE_HAS_OSF_TIMOD_H)
 #include <tli/timod.h>
 #endif /* ACE_HAS_TIMOD_H */
+
+#if defined (ACE_HAS_BROKEN_T_ERRNO)
+undef t_errno
+#endif /* ACE_HAS_BROKEN_T_ERRNO */
 
 // Type of the extended signal handler.
 typedef void (*ACE_Sig_Handler_Ex) (int, siginfo_t *siginfo, ucontext_t *ucontext);
@@ -2287,7 +2285,12 @@ public:
   static void thr_yield (void);
 
   static ACE_thread_t NULL_thread;
-  // This is necessary to deal with POSIX pthreads insanity...
+  // This is necessary to deal with POSIX pthreads and their use of
+  // structures for thread ids.
+
+  static ACE_hthread_t NULL_hthread;
+  // This is necessary to deal with POSIX pthreads and their use of
+  // structures for thread handles.
 
 #if defined (ACE_WIN32)
   static int socket_initialized_;

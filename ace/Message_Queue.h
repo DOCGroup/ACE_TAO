@@ -243,7 +243,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Message_Queue <ACE_SYNCH_1> &queue_;
+  ACE_Message_Queue <ACE_SYNCH_2> &queue_;
   // Message_Queue we are iterating over.
 
   ACE_Message_Block *curr_;           
@@ -276,7 +276,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Message_Queue <ACE_SYNCH_1> &queue_;
+  ACE_Message_Queue <ACE_SYNCH_2> &queue_;
   // Message_Queue we are iterating over.
 
   ACE_Message_Block *curr_;           

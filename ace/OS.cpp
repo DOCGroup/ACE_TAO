@@ -52,6 +52,7 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
 // guarantees that we've got a "zero'd" thread id even when ACE_thread_t
 // is implemented as a structure...
 ACE_thread_t ACE_OS::NULL_thread;
+ACE_hthread_t ACE_OS::NULL_hthread;
 
 ACE_OS::ACE_OS (void)
 {
@@ -755,7 +756,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 		  int, -1, result);
       ::pthread_attr_delete (&attr);
       if (thr_handle != 0)
-	*thr_handle = (ACE_hthread_t) 0;
+	*thr_handle = ACE_OS::NULL_hthread;
 #else /* !ACE_HAS_SETKIND_NP */
       ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (p_thr, &attr, func, args), 
 				    result),
@@ -769,7 +770,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	*thr_handle = *thr_id;
 #else
       if (thr_handle != 0)
-	thr_handle = (ACE_hthread_t *) 0;
+	*thr_handle = ACE_OS::NULL_hthread;
 #endif /* ACE_HAS_STHREADS */
 #endif /* ACE_HAS_SETKIND_NP */
       return result;
