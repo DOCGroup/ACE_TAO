@@ -165,7 +165,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::schedule (const TYPE &type,
 						  const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::schedule");
-  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
 
   ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *tempnode = this->alloc_node ();
 
@@ -196,7 +196,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::cancel (const TYPE &type,
 						int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::cancel");
-  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
 
   int number_of_cancellations = 0;
 
@@ -238,7 +238,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::cancel (long timer_id,
 						int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::cancel");
-  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
 
   ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *node = (ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *) timer_id;
   

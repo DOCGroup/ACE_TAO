@@ -261,12 +261,24 @@ ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handl
 
   if (this->reactor_ == 0)
     return -1;
+
+  // See if we should enable non-blocking I/O on the <svc_handler>'s
+  // peer.
+  else if (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK) != 0)
+    {
+      if (svc_handler->peer ().enable (ACE_NONBLOCK) == -1)
+	return -1;
+    }
+  // Otherwise, make sure it's disabled by default.
+  else if (svc_handler->peer ().disable (ACE_NONBLOCK) == -1)
+    return -1;
+
+  // Register with the Reactor with the appropriate <mask>.
   else if (this->reactor_->register_handler (svc_handler, this->mask_) == -1)
     return -1;
+
     // Call up to our parent to do the SVC_HANDLER initialization.
-  else if (this->inherited::activate_svc_handler (svc_handler, arg) == -1
-	   || (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK) != 0
-	       && svc_handler->peer ().enable (ACE_NONBLOCK) == -1))
+  else if (this->inherited::activate_svc_handler (svc_handler, arg) == -1)
     {
       // Make sure to remove the <svc_handler> from the <Reactor>.
       this->reactor_->remove_handler (svc_handler, this->mask_);

@@ -21,6 +21,8 @@ ACE_Connector<SH, PR_CO_2>::dump (void) const
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, "\nclosing_ = %d", this->closing_));
+  ACE_DEBUG ((LM_DEBUG, "\nflags_ = %d", this->flags_));
   this->handler_map_.dump ();
   this->connector_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -49,10 +51,22 @@ ACE_Connector<SH, PR_CO_2>::activate_svc_handler (SVC_HANDLER *svc_handler)
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::activate_svc_handler");
 
-  // We are connected now, so try to open things up.
-  if (svc_handler->open ((void *) this) == -1)
+  // See if we should enable non-blocking I/O on the <svc_handler>'s
+  // peer.
+  if (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK) != 0)
     {
-      // Make sure to close down the Channel to avoid descriptor leaks.
+      if (svc_handler->peer ().enable (ACE_NONBLOCK) == -1)
+	return -1;
+    }
+  // Otherwise, make sure it's disabled by default.
+  else if (svc_handler->peer ().disable (ACE_NONBLOCK) == -1)
+    return -1;
+
+  // We are connected now, so try to open things up.
+  else if (svc_handler->open ((void *) this) == -1)
+    {
+      // Make sure to close down the <svc_handler> to avoid descriptor
+      // leaks.
       svc_handler->close (0);
       return -1;
     }
@@ -84,19 +98,20 @@ ACE_Connector<SH, PR_CO_2>::connector (void) const
 }
 
 template <class SH, PR_CO_1> int
-ACE_Connector<SH, PR_CO_2>::open (ACE_Reactor *r)
+ACE_Connector<SH, PR_CO_2>::open (ACE_Reactor *r, int flags)
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::open");
   this->reactor (r);
+  this->flags_ = flags;
   this->closing_ = 0;
   return 0;
 }
 
 template <class SH, PR_CO_1> 
-ACE_Connector<SH, PR_CO_2>::ACE_Connector (ACE_Reactor *r)
+ACE_Connector<SH, PR_CO_2>::ACE_Connector (ACE_Reactor *r, int flags)
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::ACE_Connector");
-  (void) this->open (r);
+  (void) this->open (r, flags);
 }
 
 // Register the SVC_HANDLER with the map of pending connections so
@@ -556,11 +571,16 @@ ACE_Strategy_Connector<SH, PR_CO_2>::open
   (ACE_Reactor *r,
    ACE_Creation_Strategy<SVC_HANDLER> *cre_s,
    ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> *conn_s,
-   ACE_Concurrency_Strategy<SVC_HANDLER> *con_s)
+   ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
+   int flags)
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::open");
 
   this->reactor (r);
+
+  // @@ Not implemented yet.
+  // this->flags_ = flags;
+  ACE_UNUSED_ARG (flags);
 
   // Initialize the creation strategy.
 
@@ -597,7 +617,8 @@ ACE_Strategy_Connector<SH, PR_CO_2>::ACE_Strategy_Connector
   (ACE_Reactor *reactor,
    ACE_Creation_Strategy<SVC_HANDLER> *cre_s,
    ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> *conn_s,
-   ACE_Concurrency_Strategy<SVC_HANDLER> *con_s)
+   ACE_Concurrency_Strategy<SVC_HANDLER> *con_s, 
+   int flags)
     : creation_strategy_ (0),
       delete_creation_strategy_ (0),
       connect_strategy_ (0),
@@ -607,7 +628,7 @@ ACE_Strategy_Connector<SH, PR_CO_2>::ACE_Strategy_Connector
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::ACE_Connector");
 
-  if (this->open (reactor, cre_s, conn_s, con_s) == -1)
+  if (this->open (reactor, cre_s, conn_s, con_s, flags) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Strategy_Connector::ACE_Strategy_Connector"));
 }
 
@@ -648,9 +669,13 @@ ACE_Strategy_Connector<SH, PR_CO_2>::connect_svc_handler
    int flags,
    int perms)
 {
-  return this->connect_strategy_->connect_svc_handler (sh, remote_addr, 
-						       timeout, local_addr,
-						       reuse_addr, flags, perms);
+  return this->connect_strategy_->connect_svc_handler (sh,
+						       remote_addr, 
+						       timeout,
+						       local_addr,
+						       reuse_addr,
+						       flags,
+						       perms);
 }
 
 template <class SH, PR_CO_1> int

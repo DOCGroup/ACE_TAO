@@ -51,10 +51,12 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::get_handle (void) const
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open 
   (const ACE_PEER_ACCEPTOR_ADDR &local_addr, 
-   ACE_Reactor *reactor)
+   ACE_Reactor *reactor,
+   int flags)
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open");
   this->reactor (reactor);
+  this->flags_ = flags;
 
   // Must supply a valid Reactor to Acceptor::open()...
 
@@ -84,10 +86,11 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Acceptor (ACE_Reactor *react
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> 
 ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Acceptor 
   (const ACE_PEER_ACCEPTOR_ADDR &addr, 
-   ACE_Reactor *reactor)
+   ACE_Reactor *reactor,
+   int flags)
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Acceptor");
-  if (this->open (addr, reactor) == -1)
+  if (this->open (addr, reactor, flags) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Acceptor::ACE_Acceptor"));
 }
 
@@ -231,7 +234,18 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler
   (SVC_HANDLER *svc_handler)
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler");
-  if (svc_handler->open ((void *) this) == -1)
+
+  // See if we should enable non-blocking I/O on the <svc_handler>'s
+  // peer.
+  if (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK) != 0)
+    {
+      if (svc_handler->peer ().enable (ACE_NONBLOCK) == -1)
+	return -1;
+    }
+  // Otherwise, make sure it's disabled by default.
+  else if (svc_handler->peer ().disable (ACE_NONBLOCK) == -1)
+    return -1;
+  else if (svc_handler->open ((void *) this) == -1)
     {
       svc_handler->close (0);
       return -1;
