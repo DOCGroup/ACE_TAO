@@ -550,7 +550,7 @@ public:
 protected:
   /// Set this process' <exit_code_>.  ACE_Process_Manager uses this
   /// method to set the <exit_code_> after successfully waiting for
-  /// this proecess to exit.
+  /// this process to exit.
   void exit_code (ACE_exitcode code);
 
 #if defined (ACE_WIN32)
