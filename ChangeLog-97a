@@ -1,24 +1,11 @@
-Tue Jan 28 22:21:15 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+Tue Jan 28 23:32:58 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/test_config.h (ACE_INIT_LOG): Made this UNICODE safe.
+	* ace/SString: Added hash() methods to each ACE String class so
+ 	  that we can use this with the new ACE_Hash_Set implementation of
+ 	  ACE_Map_Manager.
 
-	* tests/Pipe_Test.cpp (main): Added an iteration count to control
-	  the number of children created by the main process.
-
-Tue Jan 28 21:57:45 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* ace/OS.{h,cpp}:  added ACE_OS::set_sched_params ().  It permits
-	  platform-independent setting of thread priorities and priority
-	  classes.  It is currently supported on Solaris, Win32, and VxWorks.
-
-	* ace/Scheduling_Parameters.{h,i,cpp},
-	  ace/Thread_Priority.{h,i,cpp}, ace/Makefile:
-	  Added these two classes to support ACE_OS::set_sched_params ().
-
-	* ace/Memory_Pool.cpp (init_acquire): cast this->minimum_bytes_ to
-	  size_t to avoid compiler warning if size_t is unsigned.
-
-Tue Jan 28 16:49:44 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+	* ace/ACE.h (ACE): Added a UNICODE version of hash_pjw() so that
+ 	  we can use it to hash ACE_WString.
 
 	* ace/OS.i (thr_setprio): Fixed a typo that was left over from a
  	  previous change.  Thanks to Fred LaBar
@@ -53,7 +40,34 @@ Tue Jan 28 16:49:44 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  Solaris.  If some platforms needs this, we'll need to add a
  	  specific #ifdef.
 
+Tue Jan 28 21:57:45 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.{h,cpp}:  added ACE_OS::set_sched_params ().  It permits
+	  platform-independent setting of thread priorities and
+	  priority classes.  It is currently supported on Solaris,
+	  Win32, and VxWorks.
+
+	* ace/Scheduling_Parameters.{h,i,cpp},
+	  ace/Thread_Priority.{h,i,cpp}, ace/Makefile:
+	  Added these two classes to support ACE_OS::set_sched_params ().
+
 Tue Jan 28 12:42:39 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* tests/test_config.h (ACE_INIT_LOG): Made this UNICODE safe.
+
+	* tests/Pipe_Test.cpp (main): Added an iteration count to control
+	  the number of children created by the main process.
+
+	* ace/OS.{h,cpp}:  added ACE_OS::set_sched_params ().  It permits
+	  platform-independent setting of thread priorities and priority
+	  classes.  It is currently supported on Solaris, Win32, and VxWorks.
+
+	* ace/Scheduling_Parameters.{h,i,cpp},
+	  ace/Thread_Priority.{h,i,cpp}, ace/Makefile:
+	  Added these two classes to support ACE_OS::set_sched_params ().
+
+	* ace/Memory_Pool.cpp (init_acquire): cast this->minimum_bytes_ to
+	  size_t to avoid compiler warning if size_t is unsigned.
 
 	* ace/OS.h: Added strncat to the OS class.
 
