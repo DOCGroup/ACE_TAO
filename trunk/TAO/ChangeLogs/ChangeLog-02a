@@ -1,6 +1,6 @@
 Mon Nov 13 18:14:35 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
-        * tests/RTCORBA/Server_Declared/svc.conf:
+        * tests/RTCORBA/Server_Declared/server.conf:
         * tests/RTCORBA/Server_Declared/run_test.pl:
 
         * tests/RTCORBA/Server_Declared/Server.dsp
