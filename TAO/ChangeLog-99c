@@ -1,3 +1,10 @@
+Wed May 26 08:41:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
+          Added several explicit .in() calls to convert from T_var into
+          T_ptr, old g++ cannot handle the implicit conversion. Thanks to
+          David Levine for bringing this up.
+
 Tue May 25 17:00:08 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * examples/Callback_Quoter/Supplier_i.cpp (via_naming_service):
