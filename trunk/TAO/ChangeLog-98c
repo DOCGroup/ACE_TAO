@@ -1,3 +1,19 @@
+Thu Jan 08 00:14:56 1998    <coryan@MILONGA>
+
+	* orbsvcs/orbsvcs.dsw: 
+	* orbsvcs/Dump_Schedule/Dump_Schedule.dsp: 
+	* orbsvcs/Dump_Schedule/Dump_Schedule.dsw: 
+	* orbsvcs/Event_Service/Event_Service.dsp: 
+	* orbsvcs/Event_Service/Event_Service.dsw: 
+	* orbsvcs/Naming_Service/Naming_Service.dsp: 
+	* orbsvcs/Naming_Service/Naming_Service.dsw: 
+	* orbsvcs/Scheduling_Service/Scheduling_Service.dsp: 
+	* orbsvcs/Scheduling_Service/Scheduling_Service.dsw: 
+	* orbsvcs/tests/Event_Latency/Event_Latency.dsp: 
+	* orbsvcs/tests/Event_Latency/Event_Latency.dsw: 
+	  Added preliminar (untested) versions of the project files for
+	  MSVC++ 5.0.
+
 Wed Jan  7 22:41:41 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
 	* tao/corba.h: 
