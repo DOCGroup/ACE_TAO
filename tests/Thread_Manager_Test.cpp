@@ -21,6 +21,7 @@
 
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Hash_Map_Manager.h"
 #include "ace/Signal.h"
 
 ACE_RCSID(tests, Thread_Manager_Test, "$Id$")
@@ -34,10 +35,15 @@ USELIB("..\ace\aced.lib");
 
 #include "Thread_Manager_Test.h"
 
-// Each thread keeps track of whether it has been signaled within a
-// separate TSS entry.  See comment below about why it's allocated
+// Each thread keeps track of whether it has been signalled by using a
+// global hash map.  See comment below about why it's allocated
 // dynamically.
-static ACE_TSS<Signal_Catcher> *signal_catcher = 0;
+typedef ACE_Hash_Map_Manager_Ex<ACE_hthread_t,
+                                int,
+                                ACE_Hash<ACE_hthread_t>,
+                                ACE_Equal_To<ACE_hthread_t>,
+                                ACE_Null_Mutex> SIGNALLED_MAP;
+static SIGNALLED_MAP *signalled = 0;
 
 // Synchronize starts of threads, so that they all start before the
 // main thread cancels them.  To avoid creating a static object, it
@@ -47,11 +53,15 @@ static ACE_Barrier *thread_start;
 extern "C" void
 handler (int signum)
 {
-  if (signal_catcher)
+  if (signalled)
     {
       // No printout here, to be safe.  Signal handlers must not
       // acquire locks, etc.
-      (*signal_catcher)->signaled (ACE_static_cast (sig_atomic_t, signum));
+      ACE_hthread_t t_id;
+      ACE_OS::thr_self (t_id);
+
+      // There's not much we can do if the bind () fails.
+      signalled->bind (t_id, ACE_static_cast (sig_atomic_t, signum));
     }
 }
 
@@ -64,24 +74,15 @@ worker (int iterations)
 #endif /* VXWORKS */
 
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
-  // Cache a pointer to this thread's Signal_Catcher.  That way, we
-  // try to avoid dereferencing signal_catcher below in a thread that
-  // hasn't terminated when main exits.  That shouldn't happen, but it
-  // seems to on Linux and LynxOS.
-  if (!signal_catcher)
+  // Cache this thread's ID.
+  ACE_hthread_t t_id;
+  ACE_OS::thr_self (t_id);
+
+  if (! signalled)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%t) (worker): signal catcher is 0!!!!\n")));
-      return (void *) -1;
-    }
-
-  Signal_Catcher *my_signal_catcher = *signal_catcher;
-
-  if (my_signal_catcher == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%t) (worker): *signal catcher is 0!!!!\n")));
-      return (void *) -1;
+      return ACE_reinterpret_cast (void *, -1);
     }
 
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
@@ -98,11 +99,12 @@ worker (int iterations)
       if ((i % 1000) == 0)
         {
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
-          if (my_signal_catcher->signaled () > 0)
+          sig_atomic_t signum;
+          if (signalled->find (t_id, signum) == 0)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ASYS_TEXT ("(%t) had received signal %d\n"),
-                          (*signal_catcher)->signaled ()));
+                          signum));
 
               // Only test for cancellation after we've been signaled,
               // to avoid race conditions for suspend() and resume().
@@ -128,9 +130,29 @@ static const int DEFAULT_THREADS = ACE_MAX_THREADS;
 static const int DEFAULT_ITERATIONS = 10000;
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_TSS<Signal_Catcher>;
+template class ACE_Hash_Map_Entry<ACE_hthread_t, sig_atomic_t>;
+template class ACE_Hash_Map_Manager_Ex<ACE_hthread_t,
+                                       sig_atomic_t,
+                                       ACE_Hash<ACE_hthread_t>,
+                                       ACE_Equal_To<ACE_hthread_t>,
+                                       ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_hthread_t,
+                                             sig_atomic_t,
+                                             ACE_Hash<ACE_hthread_t>,
+                                             ACE_Equal_To<ACE_hthread_t>,
+                                             ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_TSS<Signal_Catcher>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_hthread_t, sig_atomic_t>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_hthread_t,
+                                            sig_atomic_t,
+                                            ACE_Hash<ACE_hthread_t>,
+                                            ACE_Equal_To<ACE_hthread_t>,
+                                            ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_hthread_t,
+                                                  sig_atomic_t,
+                                                  ACE_Hash<ACE_hthread_t>,
+                                                  ACE_Equal_To<ACE_hthread_t>,
+                                                  ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_HAS_THREADS */
@@ -145,10 +167,10 @@ main (int, ASYS_TCHAR *[])
   int n_threads = DEFAULT_THREADS;
   int n_iterations = DEFAULT_ITERATIONS;
 
-  // Dynamically allocate signal_catcher so that we can control when
-  // it gets deleted.  Specifically, we need to delete it before the
-  // main thread's TSS is cleaned up.
-  ACE_NEW_RETURN (signal_catcher, ACE_TSS<Signal_Catcher>, 1);
+  // Dynamically allocate signalled so that we can control when it
+  // gets deleted.  Specifically, we need to delete it before the main
+  // thread's TSS is cleaned up.
+  ACE_NEW_RETURN (signalled, SIGNALLED_MAP, 1);
 
   // And similarly, dynamically allocate the thread_start barrier.
   ACE_NEW_RETURN (thread_start, ACE_Barrier (n_threads + 1), -1);
@@ -245,7 +267,7 @@ main (int, ASYS_TCHAR *[])
 #endif /* ACE_HAS_WTHREADS */
 
   // Wait for 1 more second and then cancel all the threads.
-  ACE_OS::sleep (ACE_Time_Value (1));
+  ACE_OS::sleep (ACE_Time_Value (2));
 
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) cancelling group\n")));
 
@@ -283,8 +305,8 @@ main (int, ASYS_TCHAR *[])
 
   delete thread_start;
   thread_start = 0;
-  delete signal_catcher;
-  signal_catcher = 0;
+  delete signalled;
+  signalled = 0;
 
 #else
   ACE_ERROR ((LM_INFO,
