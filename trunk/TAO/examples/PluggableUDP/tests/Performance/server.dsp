@@ -187,7 +187,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "server"
 CPP=cl.exe
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD  /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\\" /I "..\..\..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -199,7 +199,7 @@ LINK32=link.exe
 # ADD BASE LINK32 aced.lib TAOd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:IX86 /pdbtype:sept /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao\PortableServer"
 # SUBTRACT BASE LINK32 /incremental:no
 # ADD LINK32 TAOs.lib aces.lib TAO_PortableServers.lib TAO_Strategiess.lib advapi32.lib user32.lib /nologo /subsystem:console /incremental:no /machine:IX86 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\Strategies"
-# SUBTRACT LINK32 /debug /pdbtype:<none>
+# SUBTRACT LINK32 /debug
 
 !ENDIF 
 
@@ -505,7 +505,11 @@ SOURCE=.\UDPC.cpp
 
 !IF  "$(CFG)" == "UDP Performance Server - Win32 Release"
 
+# ADD CPP /GR
+
 !ELSEIF  "$(CFG)" == "UDP Performance Server - Win32 Debug"
+
+# ADD CPP /GR
 
 !ELSEIF  "$(CFG)" == "UDP Performance Server - Win32 Alpha Debug"
 
@@ -513,7 +517,11 @@ SOURCE=.\UDPC.cpp
 
 !ELSEIF  "$(CFG)" == "UDP Performance Server - Win32 Static Debug"
 
+# ADD CPP /GR
+
 !ELSEIF  "$(CFG)" == "UDP Performance Server - Win32 Static Release"
+
+# ADD CPP /GR
 
 !ENDIF 
 

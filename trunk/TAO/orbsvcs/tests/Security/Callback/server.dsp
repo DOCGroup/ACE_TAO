@@ -93,6 +93,8 @@ SOURCE=.\clientC.cpp
 
 !IF  "$(CFG)" == "server - Win32 Release"
 
+# ADD CPP /GR
+
 !ELSEIF  "$(CFG)" == "server - Win32 Debug"
 
 # ADD CPP /GR
@@ -111,6 +113,7 @@ SOURCE=.\server_i.cpp
 # Begin Source File
 
 SOURCE=.\serverC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

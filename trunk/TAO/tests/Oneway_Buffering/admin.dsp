@@ -98,6 +98,7 @@ SOURCE=.\Oneway_Buffering_Admin.cpp
 # Begin Source File
 
 SOURCE=.\TestC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

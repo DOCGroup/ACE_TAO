@@ -101,6 +101,8 @@ SOURCE=.\clientC.cpp
 
 !IF  "$(CFG)" == "client - Win32 Release"
 
+# ADD CPP /GR
+
 !ELSEIF  "$(CFG)" == "client - Win32 Debug"
 
 # ADD CPP /GR
@@ -115,6 +117,7 @@ SOURCE=.\clientS.cpp
 # Begin Source File
 
 SOURCE=.\serverC.cpp
+# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"

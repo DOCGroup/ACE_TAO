@@ -94,6 +94,7 @@ SOURCE=.\INS_test_client.cpp
 # Begin Source File
 
 SOURCE=.\INSC.cpp
+# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"

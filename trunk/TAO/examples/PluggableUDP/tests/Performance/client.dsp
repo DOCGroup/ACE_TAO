@@ -516,7 +516,11 @@ SOURCE=.\UDPC.cpp
 
 !IF  "$(CFG)" == "UDP Performance Client - Win32 Release"
 
+# ADD CPP /GR
+
 !ELSEIF  "$(CFG)" == "UDP Performance Client - Win32 Debug"
+
+# ADD CPP /GR
 
 !ELSEIF  "$(CFG)" == "UDP Performance Client - Win32 Alpha Debug"
 
@@ -524,7 +528,11 @@ SOURCE=.\UDPC.cpp
 
 !ELSEIF  "$(CFG)" == "UDP Performance Client - Win32 Static Debug"
 
+# ADD CPP /GR
+
 !ELSEIF  "$(CFG)" == "UDP Performance Client - Win32 Static Release"
+
+# ADD CPP /GR
 
 !ENDIF 
 
