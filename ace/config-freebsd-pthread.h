@@ -24,6 +24,7 @@
 // Platform specific directives
 // gcc defines __FreeBSD__ automatically for us.
 #define _THREAD_SAFE
+#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_RWLOCK_T
 #define ACE_HAS_SIG_MACROS
