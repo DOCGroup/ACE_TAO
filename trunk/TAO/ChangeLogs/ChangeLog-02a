@@ -1,3 +1,16 @@
+Mon Mar  4 12:11:05 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/RTEvent/lib/SyncScope_Setup.cpp:
+	  Fixed merge problems.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Makefile:
+	  Add missing RTServer_Setup to the library.
+	  Updated dependencies.
+
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile:
+	  Updated dependencies.
+
 Mon Mar 04 11:35:34 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Federated_Roundtrip.dsw:
@@ -131,7 +144,7 @@ Mon Mar 04 11:30:06 2002  Carlos O'Ryan  <coryan@uci.edu>
 Mon Mar  4 09:14:36 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/performance-tests/RTEvent/lib/SyncScope_Setup.inl: Fixed
-	  a fuzz error. 
+	  a fuzz error.
 
 Mon Mar  4 08:32:37 2002  Craig Rodrigues  <crodrigu@bbn.com>
 

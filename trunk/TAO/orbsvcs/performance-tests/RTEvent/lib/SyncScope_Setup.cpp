@@ -16,7 +16,7 @@
 ACE_RCSID(TAO_PERF_RTEC, SyncScope_Setup, "$Id$")
 
 SyncScope_Setup::SyncScope_Setup (CORBA::ORB_ptr orb,
-                                  Messaging::SyncScope /*value*/
+                                  Messaging::SyncScope value
                                   ACE_ENV_ARG_DECL)
 {
   this->init (orb, value
@@ -45,7 +45,7 @@ SyncScope_Setup::init (CORBA::ORB_ptr orb,
   policy_list.length (1);
 
   CORBA::Any sync_scope;
-  sync_scope <<= Messaging::SYNC_WITH_TARGET;
+  sync_scope <<= value;
 
   // @@ We need a helper class that automatically calls the
   //    destroy() method on each policy...
