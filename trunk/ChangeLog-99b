@@ -1,3 +1,9 @@
+Fri Mar 12 16:31:19 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ACE-INSTALL.html (Linux): added note about non-thread safe
+	glibc 2.0 dynamic loader.  The dynamic loader in glibc 2.1 is
+	thread safe.
+
 Fri Mar 12 13:44:54 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/DLL_Test.cpp (main): Fixed the errors on VxWorks and

@@ -249,13 +249,19 @@ make: *** [libACE.so] Error 8
       HREF="http://www.cs.wustl.edu/~cleeland/ace/">Linux</A> on both Intel
       and Alpha platforms.  If you use a RedHat 5.x distribution, it's best
       to use RedHat 5.1 or later.  ACE works without any modifications on
-      RedHat 5.1 and 5.2 on both Intel and Alpha; use the
+      RedHat 5.1, 5.2 and on Debian 2.1 on both Intel and Alpha; use the
       <code>include/makeinclude/platform_linux_lxpthreads.GNU</code>
       and <code>ace/config-linux-lxpthreads.h</code> platform/config
       files.<p>
-                                                                                     The ACE <code>Tokens_Test</code> hangs with egcs 1.1b on
-      Linux.  It runs properly when built with egcs 1.0.2 and egcs
-      1.0.3.  All other ACE tests run properly with both egcs versions.<p>
+
+      The glibc 2.0 dynamic loader isn't thread safe. If you want to use the
+      Invocation API you'll have to set <code>LD_BIND_NOW=true</code>. If you
+      want to use <code>dlopen</code>, you should use <code>RTLD_NOW</code>.
+      The dynamic loader in glibc 2.1 is thread safe.<p>
+
+      The ACE <code>Tokens_Test</code> hangs with egcs 1.1b on   Linux.  It
+      runs properly when built with egcs 1.0.2, egcs 1.0.3 and egcs 1.1.1.
+      All other ACE tests run properly with these egcs versions.<p>
 
       <strong>NOTE:</strong> The TAO NameService uses IP multicasting
       by default, though it is not required.  IP multicast on Linux
@@ -286,10 +292,11 @@ make: *** [libACE.so] Error 8
       are necessary with Alpha CPUs and with some older kernels.  egcs 1.0.1
       can also be used, but it may need patches, described there, as well.<p>
 
-      <strong>NOTE:</strong> Be careful when installing egcs.  If
-      you don't remove your old gcc and libg++ RPMs, it's best to
-      install egcs in a different directory than /usr, such as /usr/local,
-      and set your PATH and LD_LIBRARY_PATH accordingly.<p>
+      <strong>NOTE:</strong> Be careful when installing egcs on RedHat
+      systems.  If you don't remove your old gcc and libg++ RPMs, it's best
+      to install egcs in a different directory than <code>/usr</code>, such as
+      <code>/usr/local</code>, and set your <code>PATH</code> and
+      <code>LD_LIBRARY_PATH</code> accordingly.<p>
 
       Some of the ACE tests fail on older, pre-glibc2 Linux platforms,
       such as RedHat 4.2.  The problems are with threads and thread-specific
