@@ -94,21 +94,6 @@ main (int argc, char *argv[])
                             1);
         }
 
-#if 0
-      Client client (server.in (), niterations);
-      if (client.activate (THR_NEW_LWP | THR_JOINABLE,
-                           nthreads) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate client threads\n"),
-                          1);
-
-      client.thr_mgr ()->wait ();
-
-      ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
-
-      server->shutdown (ACE_TRY_ENV);
-#endif /* 0 */
-      
       CORBA::Long number = 0;
 
       number = server->get_number (ACE_TRY_ENV);
