@@ -101,7 +101,7 @@ public:
   virtual int open (const ACE_HANDLE &socket);
   // Initiate an asynchronous passive connection
 
-  virtual int accept (size_t bytes_to_read = 0);
+  // virtual int accept (size_t bytes_to_read = 0);
   // This initiates a new asynchronous accept through the AcceptEx call.
 
   virtual ACE_HANDLE get_handle (void);

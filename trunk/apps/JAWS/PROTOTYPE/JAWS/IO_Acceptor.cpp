@@ -159,6 +159,7 @@ JAWS_IO_Asynch_Acceptor::open (const ACE_HANDLE &socket)
 #endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS) */
 }
 
+#if 0 /* DEAD CODE? */
 int
 JAWS_IO_Asynch_Acceptor::accept (size_t bytes_to_read)
 {
@@ -170,6 +171,7 @@ JAWS_IO_Asynch_Acceptor::accept (size_t bytes_to_read)
   return -1;
 #endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS) */
 }
+#endif
 
 ACE_HANDLE
 JAWS_IO_Asynch_Acceptor::get_handle (void)
