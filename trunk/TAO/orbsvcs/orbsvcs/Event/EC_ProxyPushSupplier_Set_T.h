@@ -12,9 +12,6 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
-// = DESCRIPTION
-//   Parametric classes related to EC_ProxyPushSupplier_Set
-//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.

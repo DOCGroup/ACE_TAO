@@ -33,6 +33,7 @@
 #include "tao/Object.h"
 #include "tao/Any.h"
 #include "tao/Sequence.h"
+#include "tao/debug.h"
 
 ACE_RCSID(tao, deep_free, "$Id$")
 
@@ -121,16 +122,13 @@ TAO_Marshal_Primitive::deep_free (CORBA::TypeCode_ptr  tc,
 
   if (!tc)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_Primitive::deep_free detected error"));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Primitive::deep_free detected error\n"));
       TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
 
   my_kind = tc->kind (env);
-
-  // @@EXC@@ Don't know how to print the following debug info.
-  //         Anyhow, currently, tc->kind won't throw any exception.
-  // ACE_DEBUG ((LM_DEBUG,"TAO_Marshal_Primitive::deep_free detected error"));
   TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
 
   switch (my_kind)
@@ -153,8 +151,9 @@ TAO_Marshal_Primitive::deep_free (CORBA::TypeCode_ptr  tc,
     case CORBA::tk_boolean:
       break;
     default:
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_Primitive::deep_free detected error"));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Primitive::deep_free detected error\n"));
       TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
@@ -169,8 +168,9 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
 {
   if (!tc)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_Struct::deep_free detected error"));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Struct::deep_free detected error\n"));
       TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
 
@@ -180,10 +180,6 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
 
   // compute the number of fields in the struct
   int member_count = tc->member_count (env);
-
-  // @@EXC@@ Don't know how to print out this error message using
-  //         the TAO_CHECK... macro.  Is it necessary?
-  // ACE_DEBUG((LM_DEBUG,"TAO_Marshal_Struct::deep_free detected error"));
   TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
 
   for (int i = 0; i < member_count && retval ==
@@ -192,17 +188,11 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
       // get the typecode for the ith field
       param = tc->member_type (i, env);
 
-      // @@EXC@@ Don't know how to print out this error message using
-      //         the TAO_CHECK... macro.   Is it necessary?
-      // ACE_DEBUG ((LM_DEBUG,"TAO_Marshal_Struct::deep_free detected error"));
       TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
 
       // get the size of the field
       size = param->size (env);
 
-      // @@EXC@@ Don't know how to print out this error message using
-      //         the TAO_CHECK... macro.   Is it necessary?
-      // ACE_DEBUG ((LM_DEBUG,"TAO_Marshal_Struct::deep_free detected error"));
       TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
 
       switch (param->kind_)
@@ -277,8 +267,9 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
 
   if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_Struct::deep_free detected error"));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Struct::deep_free detected error\n"));
       TAO_THROW_ENV_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
@@ -454,8 +445,9 @@ TAO_Marshal_Array::deep_free (CORBA::TypeCode_ptr  tc,
 
   if (!tc)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_Struct::deep_free detected error"));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Struct::deep_free detected error\n"));
       TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
 
@@ -599,8 +591,9 @@ TAO_Marshal_Array::deep_free (CORBA::TypeCode_ptr  tc,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "marshaling TAO_Marshal_Sequence::deep_free detected error"));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Sequence::deep_free detected error\n"));
       // error exit
       TAO_THROW_ENV_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
@@ -620,8 +613,9 @@ TAO_Marshal_Alias::deep_free (CORBA::TypeCode_ptr  tc,
 
   if (!tc)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_Struct::deep_free detected error"));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Alias::deep_free detected error\n"));
       TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
 
@@ -700,8 +694,9 @@ TAO_Marshal_Alias::deep_free (CORBA::TypeCode_ptr  tc,
   else
     {
       // We should never reach here.
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_Alias::decode detected error"));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Alias::decode detected error\n"));
       TAO_THROW_ENV_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
   ACE_NOTREACHED (return CORBA::TypeCode::TRAVERSE_STOP);
@@ -725,8 +720,9 @@ TAO_Marshal_Except::deep_free (CORBA::TypeCode_ptr  tc,
 
   if (!tc)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_Struct::deep_free detected error"));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Except::deep_free detected error\n"));
       TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
     // XXX: Exceptions are currently leaked because of bugs lurking

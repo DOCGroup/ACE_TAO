@@ -7,7 +7,7 @@
 //   ORBSVCS Real-time Event Channel
 //
 // = FILENAME
-//   EC_Disjunction_Filter
+//   EC_Timeout_Filter
 //
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
@@ -22,8 +22,8 @@
 //
 // ============================================================================
 
-#ifndef TAO_EC_DISJUNCTION_FILTER_H
-#define TAO_EC_DISJUNCTION_FILTER_H
+#ifndef TAO_EC_TIMEOUT_FILTER_H
+#define TAO_EC_TIMEOUT_FILTER_H
 
 #include "EC_Filter.h"
 
@@ -31,26 +31,30 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_ORBSVCS_Export TAO_EC_Disjunction_Filter : public TAO_EC_Filter
+#include "EC_QOS_Info.h"
+
+class TAO_EC_Event_Channel;
+
+class TAO_ORBSVCS_Export TAO_EC_Timeout_Filter : public TAO_EC_Filter
 {
   // = TITLE
-  //   The disjunction filter.
+  //   A filter based on event type/source
   //
   // = DESCRIPTION
-  //   This filter has a set of children (fixed at creation time), if
-  //   any of the children accepts an event then it also does.
-  //
-  // = MEMORY MANAGMENT
-  //   It assumes ownership of the children.
+  //   This filter only accept events with a predefined type/source,
+  //   both the source and the type can be wildcards.
   //
 public:
-  TAO_EC_Disjunction_Filter (TAO_EC_Filter* children[],
-                             size_t n);
-  // Constructor. It assumes ownership of both the array and the
-  // children.
+  TAO_EC_Timeout_Filter (TAO_EC_Event_Channel *event_channel,
+                         const TAO_EC_QOS_Info& qos_info,
+                         RtecEventComm::Time period);
+  // Constructor.
+  
+  virtual ~TAO_EC_Timeout_Filter (void);
+  // Destructor.
 
-  virtual ~TAO_EC_Disjunction_Filter (void);
-  // Destructor
+  const TAO_EC_QOS_Info& qos_info (void) const;
+  // Return the QOS_Info for this Timeout filter.
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
@@ -70,29 +74,26 @@ public:
   virtual CORBA::ULong max_event_size (void) const;
   virtual int can_match (const RtecEventComm::EventHeader& header) const;
 
-  typedef TAO_EC_Filter* value_type;
-  typedef TAO_EC_Filter* const const_value_type;
-  typedef const_value_type* ChildrenIterator;
-  ChildrenIterator begin (void) const;
-  ChildrenIterator end (void) const;
-  // STL-like iterators...
+private:
+  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Timeout_Filter
+                              (const TAO_EC_Timeout_Filter&))
+  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Timeout_Filter& operator=
+                              (const TAO_EC_Timeout_Filter&))
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Disjunction_Filter
-                              (const TAO_EC_Disjunction_Filter&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Disjunction_Filter& operator=
-                              (const TAO_EC_Disjunction_Filter&))
+  TAO_EC_Event_Channel* event_channel_;
+  // The event channel.
 
-private:
-  TAO_EC_Filter** children_;
-  // The children
+  TAO_EC_QOS_Info qos_info_;
+  // Events "generated" by this filter use this QOS_Info.
 
-  size_t n_;
-  // The number of children.
+  int id_;
+  // The ID of the timeout in the Timeout_Generator, for
+  // cancellation.
 };
 
 #if defined (__ACE_INLINE__)
-#include "EC_Disjunction_Filter.i"
+#include "EC_Timeout_Filter.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_EC_DISJUNCTION_FILTER_H */
+#endif /* TAO_EC_TIMEOUT_FILTER_H */

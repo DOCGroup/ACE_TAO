@@ -12,9 +12,6 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
-// = DESCRIPTION
-//   The abstract factory for all the Event Channel components.
-//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.
@@ -46,9 +43,9 @@ class TAO_EC_ConsumerAdmin;
 class TAO_EC_SupplierAdmin;
 class TAO_EC_ProxyPushConsumer;
 class TAO_EC_ProxyPushSupplier;
-class TAO_EC_Timer_Module;
 class TAO_EC_ObserverStrategy;
 class TAO_EC_ProxyPushSupplier_Set;
+class TAO_EC_Timeout_Generator;
 
 class TAO_ORBSVCS_Export TAO_EC_Factory
 {
@@ -104,10 +101,10 @@ public:
       destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer*) = 0;
   // Create and destroy a ProxyPushConsumer
 
-  virtual TAO_EC_Timer_Module*
-      create_timer_module (TAO_EC_Event_Channel*)  = 0;
+  virtual TAO_EC_Timeout_Generator*
+      create_timeout_generator (TAO_EC_Event_Channel*)  = 0;
   virtual void
-      destroy_timer_module (TAO_EC_Timer_Module*) = 0;
+      destroy_timeout_generator (TAO_EC_Timeout_Generator*) = 0;
   // Create and destroy the timer module.
 
   virtual TAO_EC_ObserverStrategy*

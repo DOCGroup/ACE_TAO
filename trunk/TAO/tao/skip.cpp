@@ -24,6 +24,7 @@
 #include "tao/GIOP.h"
 #include "tao/Any.h"
 #include "tao/Environment.h"
+#include "tao/debug.h"
 
 ACE_RCSID(tao, skip, "$Id$")
 
@@ -81,9 +82,10 @@ TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Primitive::skip detected error\n"));
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_Primitive::skip detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -195,9 +197,11 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
         }
       else // bad kind_ value to be decoded
         {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "TAO_Marshal_TypeCode::skip: "
+                        "Bad kind_ value in CDR stream"));
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO_Marshal_TypeCode: Bad kind_ value in CDR stream"));
           return CORBA::TypeCode::TRAVERSE_STOP;
         }
     }
@@ -206,9 +210,10 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_TypeCode::skip detected error\n"));
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_TypeCode::skip detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -238,9 +243,10 @@ TAO_Marshal_Principal::skip (CORBA::TypeCode_ptr,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Principal::skip detected error\n"));
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_Principal::skip detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -323,9 +329,10 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
         if (!str.skip_string ()
             || !str.skip_ushort ())
           {
+            if (TAO_debug_level > 0)
+              ACE_DEBUG ((LM_DEBUG,
+                          "error decoding IIOP host/port"));
             env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-            ACE_DEBUG ((LM_DEBUG,
-                        "error decoding IIOP host/port"));
             return CORBA::TypeCode::TRAVERSE_STOP;
           }
 
@@ -343,8 +350,10 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_ObjRef::skip detected error\n"));
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      ACE_DEBUG ((LM_DEBUG, "marshaling decode_objref detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -383,9 +392,10 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Struct::skip detected error\n"));
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      ACE_DEBUG ((LM_DEBUG,
-                  "marshaling encode_struct detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -595,9 +605,10 @@ TAO_Marshal_String::skip (CORBA::TypeCode_ptr,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_TypeCode::skip detected error"));
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_TypeCode::skip detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -644,9 +655,10 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
         return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
   // error exit
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO_Marshal_Sequence::skip detected error\n"));
   env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  ACE_DEBUG ((LM_DEBUG,
-              "marshaling TAO_Marshal_Sequence::skip detected error"));
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
@@ -682,9 +694,10 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
         } // no exception computing content type
     } // no exception computing bounds
   // error exit
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO_Marshal_Sequence::skip detected error\n"));
   env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  ACE_DEBUG ((LM_DEBUG,
-              "marshaling TAO_Marshal_Sequence::skip detected error"));
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
@@ -716,9 +729,10 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Alias::skip detected error\n"));
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_Alias::skip detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -768,9 +782,10 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr  tc,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_Except::skip detected error\n"));
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_Except detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -805,9 +820,10 @@ TAO_Marshal_WString::skip (CORBA::TypeCode_ptr,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Marshal_WString::skip detected error\n"));
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_Marshal_TypeCode::skip detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }

@@ -12,12 +12,6 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
-// = DESCRIPTION
-//   Implement the RtecEventChannelAdmin::ProxyPushSupplier interface,
-//   remember that this class is used to communicate with a
-//   PushConsumer, so, in effect, this is the ambassador for a
-//   consumer inside the event channel.
-//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.
@@ -47,8 +41,10 @@ class TAO_ORBSVCS_Export TAO_EC_ProxyPushSupplier : public POA_RtecEventChannelA
   //   ProxyPushSupplier
   //
   // = DESCRIPTION
-  //   Implements the ProxyPushSupplier interface, i.e. the object
-  //   used to communicate with a particular consumer.
+  //   Implement the RtecEventChannelAdmin::ProxyPushSupplier interface,
+  //   remember that this class is used to communicate with a
+  //   PushConsumer, so, in effect, this is the ambassador for a
+  //   consumer inside the event channel.
   //
   // = MEMORY MANAGMENT
   //   It does not assume ownership of the TAO_EC_Dispatching object.

@@ -12,12 +12,6 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
-// = DESCRIPTION
-//   The creation of a builder hierarchy is controlled by a
-//   Filter_Builder. The relationship between TAO_EC_Filter and
-//   TAO_EC_Filter_Builder follows the "Builder Pattern" (Gamma et
-//   al.)
-//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.
@@ -45,7 +39,11 @@ class TAO_ORBSVCS_Export TAO_EC_Filter_Builder
   //   Abstract base class for the filter builders.
   //
   // = DESCRIPTION
-  //   Defines the filter builder interface.
+  //   The creation of a builder hierarchy is controlled by a
+  //   Filter_Builder. The relationship between TAO_EC_Filter and
+  //   TAO_EC_Filter_Builder follows the "Builder Pattern" (Gamma et
+  //   al.)
+  //
   //
 public:
   virtual ~TAO_EC_Filter_Builder (void);

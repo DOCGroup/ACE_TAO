@@ -12,11 +12,6 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
-// = DESCRIPTION
-//   Implement the Command objects for the delayed operations in the
-//   manipulation of EC_ProxyPushSupplier and EC_ProxyPushConsumer
-//   sets.
-//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.

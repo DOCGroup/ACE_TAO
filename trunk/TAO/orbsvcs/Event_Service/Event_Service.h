@@ -19,6 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_Module_Factory;
+class TAO_EC_Factory;
 
 class Event_Service : public POA_RtecEventChannelAdmin::EventChannel
 {
@@ -66,6 +67,9 @@ private:
 private:
   TAO_Module_Factory *module_factory_;
   // The module factory for the EC.
+
+  TAO_EC_Factory *factory_;
+  // The factory for the new EC.
 
   POA_RtecScheduler::Scheduler *sched_impl_;
   // The Scheduler implementation.

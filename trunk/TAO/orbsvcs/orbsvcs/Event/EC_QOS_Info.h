@@ -12,10 +12,6 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
-// = DESCRIPTION
-//   Filters compute QOS information for real-time dispatching, this
-//   class encapsulates that information.
-//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.
@@ -41,6 +37,8 @@ class TAO_ORBSVCS_Export TAO_EC_QOS_Info
   //   filters.
   //
   // = DESCRIPTION
+  //   Filters compute QOS information for real-time dispatching, this 
+  //   class encapsulates that information.
   //   This first implementation is just a place-holder.
   //
 public:

@@ -29,8 +29,8 @@ private:
   int debug_;
 };
 
-IR_Helper::IR_Helper (char *server_name, 
-                      PortableServer::POA_ptr poa, 
+IR_Helper::IR_Helper (char *server_name,
+                      PortableServer::POA_ptr poa,
                       CORBA::ORB_ptr orb,
                       int debug)
   : name_ (ACE::strnew (server_name)),
@@ -42,7 +42,7 @@ IR_Helper::IR_Helper (char *server_name,
     orb_ (orb),
     debug_ (debug)
 {
-  
+
   TAO_TRY
     {
       this->read_ir_ior (TAO_TRY_ENV);
@@ -58,7 +58,7 @@ IR_Helper::IR_Helper (char *server_name,
                     "invalid implrepo key <%s>\n",
                     this->ir_key_));
 
-      this->implrepo_ = 
+      this->implrepo_ =
         Implementation_Repository::_narrow (implrepo_object.in(), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -71,7 +71,7 @@ IR_Helper::IR_Helper (char *server_name,
                                            TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      this->ping_ptr_ = 
+      this->ping_ptr_ =
         this->poa_->id_to_reference (ping_id.in (),
                                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -93,18 +93,18 @@ IR_Helper::~IR_Helper ()
 }
 
 int
-IR_Helper::register_server (const char *comm_line, 
-                            const char *environment, 
-                            const char *working_dir, 
+IR_Helper::register_server (const char *comm_line,
+                            const char *environment,
+                            const char *working_dir,
                             CORBA_Environment &TAO_IN_ENV)
 {
-  TAO_TRY 
+  TAO_TRY
     {
       CORBA::Object_var implrepo_object =
         this->orb_->string_to_object (this->ir_key_, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      Implementation_Repository *ImplRepo = 
+      Implementation_Repository *ImplRepo =
         Implementation_Repository::_narrow (implrepo_object.in(), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -135,7 +135,7 @@ int
 IR_Helper::read_ir_ior (CORBA_Environment &TAO_IN_ENV)
 {
   ACE_UNUSED_ARG (TAO_IN_ENV);
-  
+
   // Open the file for reading.
   // @@ Hard-coded name is bad.  Need to fix.
   ACE_HANDLE f_handle_ = ACE_OS::open ("implrepo.ior", 0);
@@ -167,10 +167,10 @@ IR_Helper::notify_startup (CORBA_Environment &TAO_IN_ENV)
   my_ir_addr.port_ = my_addr.get_port_number ();
   my_ir_addr.host_ = CORBA::string_dup (my_addr.get_host_name ());
 
-  TAO_TRY 
+  TAO_TRY
     {
       delete this->ir_addr_;
-      this->ir_addr_ = this->implrepo_->server_is_running (this->name_, 
+      this->ir_addr_ = this->implrepo_->server_is_running (this->name_,
                                                            my_ir_addr,
                                                            this->ping_ptr_,
                                                            TAO_TRY_ENV);
@@ -185,7 +185,7 @@ IR_Helper::notify_startup (CORBA_Environment &TAO_IN_ENV)
 
 
 // Notify the IR that the server has been shut down.
-void 
+void
 IR_Helper::notify_shutdown (CORBA_Environment &TAO_IN_ENV)
 {
   TAO_TRY
@@ -203,20 +203,20 @@ IR_Helper::notify_shutdown (CORBA_Environment &TAO_IN_ENV)
 void
 IR_Helper::change_object (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV)
 {
-  if ( obj 
-    && obj->_stubobj () 
+  if ( obj
+    && obj->_stubobj ()
     && obj->_stubobj ()->profile_in_use ()
-    && this->implrepo_ 
-    && this->implrepo_->_stubobj () 
+    && this->implrepo_
+    && this->implrepo_->_stubobj ()
     && this->implrepo_->_stubobj ()->profile_in_use ()  )
     {
       TAO_IIOP_Profile *implrepo_pfile =
-          ACE_dynamic_cast (TAO_IIOP_Profile *, 
+          ACE_dynamic_cast (TAO_IIOP_Profile *,
                             this->implrepo_->_stubobj ()->profile_in_use ());
       TAO_IIOP_Profile *iiop_pfile =
-          ACE_dynamic_cast (TAO_IIOP_Profile *, 
+          ACE_dynamic_cast (TAO_IIOP_Profile *,
                             obj->_stubobj ()->profile_in_use ());
-    
+
       // @@ Only same host for now
       iiop_pfile->port (implrepo_pfile->port ());
     }

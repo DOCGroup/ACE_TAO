@@ -9,7 +9,7 @@ TAO_EC_ProxyPushConsumer::is_connected (void) const
 ACE_INLINE RtecEventComm::PushSupplier_ptr
 TAO_EC_ProxyPushConsumer::supplier (void) const
 {
-  return RtecEventComm::PushSupplier::_duplicate (this->supplier_);
+  return RtecEventComm::PushSupplier::_duplicate (this->supplier_.in ());
 }
 
 ACE_INLINE const RtecEventChannelAdmin::SupplierQOS&

@@ -33,7 +33,7 @@ TAO_EC_ProxyPushConsumer::set_default_POA (PortableServer::POA_ptr poa)
 PortableServer::POA_ptr
 TAO_EC_ProxyPushConsumer::_default_POA (CORBA::Environment&)
 {
-  return PortableServer::POA::_duplicate (this->default_POA_);
+  return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void

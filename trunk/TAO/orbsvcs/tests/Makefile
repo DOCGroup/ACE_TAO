@@ -17,13 +17,13 @@ DIRS  =	Simple_Naming \
 	EC_Custom_Marshal \
 	EC_Basic \
 	Concurrency \
-	Trading
-
-ifdef av
-## Add the implementation files 
-DIRS += AVStreams\
-	CosPropertyService
-endif
+	Trading \
+	Property \
+	CosEC_Basic \
+	CosEC_Multiple \
+	ImplRepo \
+	Sched_Conf \
+	Time
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
