@@ -1061,7 +1061,8 @@ endif # GHS
  ace_wchar.h \
  ace_wchar.inl
 
-.obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp ACE.h \
+.obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp \
+ ACE.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -2876,6 +2877,9 @@ endif # GHS
  Local_Tokens.i \
  Token_Manager.i \
  Thread_Manager.h \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
  Containers.h \
  Containers.i \
  Containers_T.h \
@@ -3405,6 +3409,9 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
  Synch.h \
  Synch.i \
  Synch_T.h \
@@ -4584,6 +4591,9 @@ endif # GHS
  Log_Msg.h \
  Log_Priority.h \
  Thread_Manager.h \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
  Unbounded_Queue.h \
  Node.h \
  Node.cpp \
@@ -4634,10 +4644,7 @@ endif # GHS
  Dynamic.i \
  Auto_Ptr.h \
  Auto_Ptr.i \
- Auto_Ptr.cpp \
- Thread_Exit.h \
- Thread_Control.h \
- Thread_Control.inl
+ Auto_Ptr.cpp
 
 .obj/Thread_Adapter.o .obj/Thread_Adapter.so .shobj/Thread_Adapter.o .shobj/Thread_Adapter.so: Thread_Adapter.cpp \
  Thread_Adapter.h \
@@ -4681,6 +4688,9 @@ endif # GHS
  Thread_Manager.h \
  Thread.h \
  Thread.i \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
  Synch.h \
  Synch.i \
  Synch_T.h \
@@ -4734,9 +4744,6 @@ endif # GHS
  Framework_Component_T.inl \
  Framework_Component_T.cpp \
  Thread_Manager.i \
- Thread_Exit.h \
- Thread_Control.h \
- Thread_Control.inl \
  Thread_Hook.h
 
 .obj/Thread_Exit.o .obj/Thread_Exit.so .shobj/Thread_Exit.o .shobj/Thread_Exit.so: Thread_Exit.cpp \
@@ -4794,7 +4801,49 @@ endif # GHS
  Object_Manager.h \
  Object_Manager.i \
  Managed_Object.i \
- Managed_Object.cpp
+ Managed_Object.cpp \
+ Thread_Manager.h \
+ Unbounded_Queue.h \
+ Node.h \
+ Node.cpp \
+ Unbounded_Queue.inl \
+ Unbounded_Queue.cpp \
+ Malloc_Base.h \
+ Containers.h \
+ Containers.i \
+ Containers_T.h \
+ Array_Base.h \
+ Array_Base.inl \
+ Array_Base.cpp \
+ Unbounded_Set.h \
+ Unbounded_Set.inl \
+ Unbounded_Set.cpp \
+ Containers_T.i \
+ Containers_T.cpp \
+ Free_List.h \
+ Free_List.i \
+ Free_List.cpp \
+ Singleton.h \
+ Singleton.i \
+ Singleton.cpp \
+ Framework_Component.h \
+ Framework_Component.inl \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
+ Framework_Component_T.h \
+ Framework_Component_T.inl \
+ Framework_Component_T.cpp \
+ Thread_Manager.i
 
 .obj/Thread_Control.o .obj/Thread_Control.so .shobj/Thread_Control.o .shobj/Thread_Control.so: Thread_Control.cpp \
  config-all.h \
@@ -4840,6 +4889,7 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
+ Thread_Exit.h \
  Synch.h \
  Synch.i \
  Synch_T.h \
@@ -5018,6 +5068,9 @@ endif # GHS
  Reactor.i \
  Reactor_Impl.h \
  Thread_Manager.h \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
  Unbounded_Queue.h \
  Node.h \
  Node.cpp \
@@ -5236,6 +5289,9 @@ endif # GHS
  Select_Reactor_T.i \
  Task.h \
  Thread_Manager.h \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
  Containers.h \
  Containers.i \
  Containers_T.h \
@@ -5292,7 +5348,195 @@ endif # GHS
  config-g++-common.h \
  post.h \
  ace_wchar.h \
- ace_wchar.inl
+ ace_wchar.inl \
+ POSIX_Proactor.h \
+ Proactor_Impl.h \
+ OS.h \
+ OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
+ OS_Dirent.inl \
+ OS_String.h \
+ Basic_Types.h \
+ ACE_export.h \
+ Basic_Types.i \
+ OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
+ Default_Constants.h \
+ Global_Macros.h \
+ Min_Max.h \
+ streams.h \
+ Trace.h \
+ OS.i \
+ Asynch_IO.h \
+ Reactor.h \
+ Handle_Set.h \
+ Handle_Set.i \
+ Timer_Queue.h \
+ Synch.h \
+ Synch.i \
+ Synch_T.h \
+ Synch_T.i \
+ Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ OS_Log_Msg_Attributes.h \
+ OS_Log_Msg_Attributes.inl \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
+ Thread.i \
+ Synch_T.cpp \
+ Log_Msg.h \
+ Log_Priority.h \
+ Timer_Queue_T.h \
+ Free_List.h \
+ Free_List.i \
+ Free_List.cpp \
+ Test_and_Set.h \
+ Event_Handler.h \
+ Event_Handler.i \
+ Test_and_Set.i \
+ Test_and_Set.cpp \
+ Timer_Queue_T.i \
+ Timer_Queue_T.cpp \
+ Signal.h \
+ Signal.i \
+ Reactor.i \
+ Reactor_Impl.h \
+ Pipe.h \
+ Pipe.i \
+ POSIX_Asynch_IO.h \
+ Asynch_IO_Impl.h \
+ Asynch_IO_Impl.i \
+ Unbounded_Queue.h \
+ Node.h \
+ Node.cpp \
+ Unbounded_Queue.inl \
+ Unbounded_Queue.cpp \
+ Malloc_Base.h \
+ Map_Manager.h \
+ Map_Manager.i \
+ Map_Manager.cpp \
+ Malloc.h \
+ Malloc.i \
+ Malloc_T.h \
+ Malloc_Allocator.h \
+ Malloc_Allocator.i \
+ Malloc_T.i \
+ Malloc_T.cpp \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
+ Memory_Pool.h \
+ Mem_Map.h \
+ Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
+ Unbounded_Set.h \
+ Unbounded_Set.inl \
+ Unbounded_Set.cpp \
+ Memory_Pool.i \
+ Service_Config.h \
+ Service_Types.h \
+ Service_Object.h \
+ Shared_Object.h \
+ Shared_Object.i \
+ Svc_Conf_Tokens.h \
+ DLL.h \
+ Service_Object.i \
+ Service_Types.i \
+ SString.h \
+ String_Base.h \
+ String_Base_Const.h \
+ String_Base.i \
+ String_Base.cpp \
+ Auto_Ptr.h \
+ Auto_Ptr.i \
+ Auto_Ptr.cpp \
+ SString.i \
+ XML_Svc_Conf.h \
+ Service_Config.i \
+ POSIX_Asynch_IO.i \
+ Asynch_Pseudo_Task.h \
+ Select_Reactor.h \
+ Select_Reactor_T.h \
+ Select_Reactor_Base.h \
+ Token.h \
+ Token.i \
+ Select_Reactor_Base.i \
+ Select_Reactor_T.cpp \
+ Timer_Heap.h \
+ Timer_Heap_T.h \
+ Timer_Heap_T.cpp \
+ Select_Reactor_T.i \
+ Task.h \
+ Thread_Manager.h \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
+ Containers.h \
+ Containers.i \
+ Containers_T.h \
+ Array_Base.h \
+ Array_Base.inl \
+ Array_Base.cpp \
+ Containers_T.i \
+ Containers_T.cpp \
+ Singleton.h \
+ Singleton.i \
+ Singleton.cpp \
+ Object_Manager.h \
+ Object_Manager.i \
+ Managed_Object.h \
+ Managed_Object.i \
+ Managed_Object.cpp \
+ Framework_Component.h \
+ Framework_Component.inl \
+ Framework_Component_T.h \
+ Framework_Component_T.inl \
+ Framework_Component_T.cpp \
+ Thread_Manager.i \
+ Task.i \
+ Task_T.h \
+ Message_Queue.h \
+ Message_Block.h \
+ Message_Block.i \
+ Message_Block_T.h \
+ Message_Block_T.i \
+ Message_Block_T.cpp \
+ IO_Cntl_Msg.h \
+ Message_Queue_T.h \
+ Message_Queue_T.i \
+ Message_Queue_T.cpp \
+ Notification_Strategy.h \
+ Notification_Strategy.inl \
+ Message_Queue.i \
+ Task_T.i \
+ Task_T.cpp \
+ Module.h \
+ Module.i \
+ Module.cpp \
+ Stream_Modules.h \
+ Stream_Modules.cpp \
+ POSIX_Proactor.i \
+ POSIX_CB_Proactor.i
 
 .obj/WIN32_Proactor.o .obj/WIN32_Proactor.so .shobj/WIN32_Proactor.o .shobj/WIN32_Proactor.so: WIN32_Proactor.cpp \
  WIN32_Proactor.h \
@@ -5470,6 +5714,9 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
  Synch.h \
  Synch.i \
  Synch_T.h \
@@ -6061,35 +6308,7 @@ endif # GHS
  Timer_Queue_T.i \
  Timer_Queue_T.cpp \
  Signal.h \
- Signal.i \
- Pipe.h \
- Pipe.i \
- Dev_Poll_Reactor.inl \
- Handle_Set.h \
- Handle_Set.i \
- Reactor.h \
- Reactor.i \
- Timer_Heap.h \
- Timer_Heap_T.h \
- Unbounded_Set.h \
- Node.h \
- Node.cpp \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Malloc_Base.h \
- Timer_Heap_T.cpp \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i
+ Signal.i
 
 .obj/TP_Reactor.o .obj/TP_Reactor.so .shobj/TP_Reactor.o .shobj/TP_Reactor.so: TP_Reactor.cpp \
  TP_Reactor.h \
@@ -6286,6 +6505,9 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
  Synch.h \
  Synch.i \
  Synch_T.h \
@@ -6514,6 +6736,9 @@ endif # GHS
  DLL.h \
  Service_Object.i \
  Thread_Manager.h \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
  Unbounded_Queue.h \
  Unbounded_Queue.inl \
  Unbounded_Queue.cpp \
@@ -6695,6 +6920,9 @@ endif # GHS
  POSIX_Asynch_IO.i \
  Proactor.h \
  Thread_Manager.h \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
  Containers.h \
  Containers.i \
  Containers_T.h \
@@ -7825,14 +8053,10 @@ endif # GHS
  INET_Addr.i \
  SOCK_Dgram.i \
  SOCK_Dgram_Mcast.i \
- ACE.h \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- ACE.i
+ Log_Msg.h \
+ Log_Priority.h \
+ OS_Log_Msg_Attributes.h \
+ OS_Log_Msg_Attributes.inl
 
 .obj/SOCK_IO.o .obj/SOCK_IO.so .shobj/SOCK_IO.o .shobj/SOCK_IO.so: SOCK_IO.cpp \
  SOCK_IO.h \
@@ -8032,7 +8256,8 @@ endif # GHS
  ace_wchar.h \
  ace_wchar.inl
 
-.obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp DEV.h \
+.obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp \
+ DEV.h \
  pre.h \
  IO_SAP.h \
  Flag_Manip.h \
@@ -10133,7 +10358,8 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp TLI.h \
+.obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp \
+ TLI.h \
  pre.h \
  IPC_SAP.h \
  Flag_Manip.h \
@@ -10590,6 +10816,9 @@ endif # GHS
  DLL.h \
  Service_Object.i \
  Thread_Manager.h \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
  Unbounded_Queue.h \
  Node.h \
  Node.cpp \
@@ -10762,6 +10991,9 @@ endif # GHS
  DLL.h \
  Service_Object.i \
  Thread_Manager.h \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
  Unbounded_Queue.h \
  Node.h \
  Node.cpp \
@@ -10932,6 +11164,9 @@ endif # GHS
  DLL.h \
  Service_Object.i \
  Thread_Manager.h \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
  Unbounded_Queue.h \
  Node.h \
  Node.cpp \
@@ -12454,7 +12689,8 @@ endif # GHS
  Signal.i \
  Timer_Wheel_T.cpp
 
-.obj/DLL.o .obj/DLL.so .shobj/DLL.o .shobj/DLL.so: DLL.cpp DLL.h \
+.obj/DLL.o .obj/DLL.so .shobj/DLL.o .shobj/DLL.so: DLL.cpp \
+ DLL.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -12918,6 +13154,9 @@ endif # GHS
  Service_Repository.i \
  Task.h \
  Thread_Manager.h \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
  Containers.h \
  Containers.i \
  Containers_T.h \
@@ -13126,6 +13365,9 @@ endif # GHS
  Service_Repository.h \
  Service_Repository.i \
  Thread_Manager.h \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
  Singleton.h \
  Singleton.i \
  Singleton.cpp \
@@ -13516,6 +13758,9 @@ endif # GHS
  Stream_Modules.h \
  Task.h \
  Thread_Manager.h \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
  Unbounded_Queue.h \
  Node.h \
  Node.cpp \
@@ -13709,6 +13954,9 @@ endif # GHS
  Parse_Node.h \
  Parse_Node.i \
  Thread_Manager.h \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
  Containers.h \
  Containers.i \
  Containers_T.h \
@@ -14097,6 +14345,9 @@ endif # GHS
  Message_Queue.i \
  Task.h \
  Thread_Manager.h \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
  Containers.h \
  Containers.i \
  Containers_T.h \
@@ -14611,6 +14862,9 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
  Synch.h \
  Synch.i \
  Synch_T.h \

@@ -1,3 +1,11 @@
+Sat Nov 16 09:38:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/*/Makefile:
+	* tests/Makefile:
+	* examples/*/Makefile:
+	* performance-tests/*/Makefile: 
+	* ACEXML/*/Makefile: Updated dependencies.
+
 Fri Nov 15 20:33:02 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/SOCK_Dgram_Mcast.h:
