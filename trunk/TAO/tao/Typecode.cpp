@@ -231,22 +231,28 @@ CORBA::TypeCode::TypeCode (CORBA::TCKind kind,
       // length. The extra MAX_ALIGNMENT bytes are necessary to ensure
       // that we will get a properly aligned buffer.
 
+      static const size_t lsize = sizeof (CORBA::ULong);
       ACE_NEW (this->non_aligned_buffer_,
-               char [this->length_ + 4 + 4 + ACE_CDR::MAX_ALIGNMENT]);
+               char [this->length_ + lsize + lsize + ACE_CDR::MAX_ALIGNMENT]);
 
       char* start = ACE_ptr_align_binary (this->non_aligned_buffer_,
                                           ACE_CDR::MAX_ALIGNMENT);
 
-      (void) ACE_OS::memcpy (start, &this->kind_, 4);
-      (void) ACE_OS::memcpy (start + 4, &this->length_, 4);
-      (void) ACE_OS::memcpy (start + 8, buffer, this->length_);
+      // length_ is of size_t which, on 64-bit platforms, is 64 bits.
+      // The value to be copied is expected to be 32-bit.  We will cast
+      // the value down to a CORBA::ULong and copy that.
+      CORBA::ULong length = ACE_static_cast (CORBA::ULong, this->length_);
+
+      (void) ACE_OS::memcpy (start, &this->kind_, lsize);
+      (void) ACE_OS::memcpy (start + lsize, &length, lsize);
+      (void) ACE_OS::memcpy (start + lsize + lsize, buffer, this->length_);
       // we are the topmost level typecode and hence our typecode base is
       // the start whereas the buffer_ which represents the encapsulation
       // is 8 bytes ahead of the typecode base
       this->tc_base_ = start;
       // since we do not have any parents, we are the root
       this->root_tc_base_ = start;
-      this->buffer_ = start + 4 + 4;
+      this->buffer_ = start + lsize + lsize;
     }
   else
     {
