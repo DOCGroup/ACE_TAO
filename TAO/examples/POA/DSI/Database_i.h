@@ -11,17 +11,17 @@ class DatabaseImpl
 {
 public:
 
-  //typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC;
-  typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> MALLOC;
+  //typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> DATABASE_MALLOC;
+  typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> DATABASE_MALLOC;
 
-  class Simpler_Malloc : public MALLOC
+  class Simpler_Database_Malloc : public DATABASE_MALLOC
   {
   public:
-    Simpler_Malloc (void);
-    ~Simpler_Malloc (void);
+    Simpler_Database_Malloc (void);
+    ~Simpler_Database_Malloc (void);
   };
 
-  typedef ACE_Singleton<Simpler_Malloc, ACE_Null_Mutex> DATABASE;
+  typedef ACE_Singleton<Simpler_Database_Malloc, ACE_Null_Mutex> DATABASE;
   //typedef ACE_Malloc_Iterator<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> DATABASE_ITERATOR;
   typedef ACE_Malloc_Iterator<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> DATABASE_ITERATOR;
 
