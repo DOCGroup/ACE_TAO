@@ -53,7 +53,9 @@ be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
   node->compute_full_name (rh_skel_prefix.c_str(), "", buf);
   ACE_CString rh_skel_full_scope_name ("POA_");
   rh_skel_full_scope_name += buf;
-  delete [] buf;
+  // buf was allocated by ACE_OS::strdup, so we need to use free instead
+  // of delete.
+  ACE_OS::free (buf);
 
   ACE_CString rh_skel_class_name_prefix (rh_skel_prefix.c_str ());
 

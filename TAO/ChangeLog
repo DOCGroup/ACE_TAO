@@ -1,25 +1,56 @@
+Thu Oct 28 10:29:56 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/be/be_decl.cpp:
+
+          When assigning a value to name in be_decl::compute_flat_name, use
+          strdup to allocate (as is done elsewhere).  Callers of this method
+          expect memory to be allocated.
+
+        * TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_si.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+
+          Use ACE_OS::free() instead of delete.  The memory was allocated by
+          ACE_OS::strdup() which uses malloc.
+
+        * TAO_IDL/include/ast_decl.h:
+
+          #include "ace/os_include/sys/os_types.h" to ensure that size_t
+          typedef is included (which is used by the DEF_NARROW_METHODS0
+          macro).
+          
+        * TAO_IDL/util/utl_global.cpp:
+
+          Initialize pre_abspath and post_abspath to avoid uninitialized
+          memory reads.  Also added [] to the delete for
+          pre_preproc_includes[j].
+
 Thu Oct 28 14:45:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader.h:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.h:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
 
-	  Thanks to patch from Bill Somerville <bill@classdesign.com>
-	  which allows scoped names (::) for ServiceRepository. The change
-	  does the following 
+          Thanks to patch from Bill Somerville <bill@classdesign.com>
+          which allows scoped names (::) for ServiceRepository. The change
+          does the following
 
-	  (1) Addition of a static function that checks for valid service
-	  type names. 
+          (1) Addition of a static function that checks for valid service
+          type names.
 
-	  (2) Addition of a static function that checks for link names
-	  (this implementation internally calls is_valid_property_name
-	  ()). 
-	  
-	* orbsvcs/tests/Trading/TT_Info.cpp:
+          (2) Addition of a static function that checks for link names
+          (this implementation internally calls is_valid_property_name
+          ()).
 
-	  The test now checks for scoped names. 
+        * orbsvcs/tests/Trading/TT_Info.cpp:
+
+          The test now checks for scoped names.
 
 Thu Oct 28 07:39:15 2004  Chad Elliott  <elliott_c@ociweb.com>
 
