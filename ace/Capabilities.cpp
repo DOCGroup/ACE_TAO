@@ -1,5 +1,7 @@
 // $Id$
 
+#define ACE_BUILD_DLL
+
 #include "ace/Map_Manager.h"
 #include "ace/Capabilities.h"
 
