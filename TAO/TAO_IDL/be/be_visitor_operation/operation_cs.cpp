@@ -742,9 +742,10 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
                         -1);
         
       }
-    os->indent ();
-    *os << "break;" << be_nl;
+
   } // End of if its not a oneway operation
+  os->indent ();
+  *os << "break;" << be_nl;
   *os << be_uidt_nl << "}\n";  
   // Generate exception occurred interceptor code
   *os << "#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
