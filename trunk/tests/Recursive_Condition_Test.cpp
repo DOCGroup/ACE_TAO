@@ -202,10 +202,11 @@ test_4 (void)
                          ACE_TEXT ("recursive acquire")),
                         1);
 
-  if (mutex_.get_nesting_level () != i)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("test 4 nesting level %d;"),
+  int nesting_level = mutex_.get_nesting_level ();
+  if (!(nesting_level == -1 && errno == ENOTSUP) && nesting_level != i)
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("test 4 nesting level %d;")
                        ACE_TEXT (" should be %d\n"),
-                       mutex_.get_nesting_level (), i),
+                       nesting_level, i),
                       1);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) signaling condition...\n")));
@@ -227,8 +228,8 @@ test_4 (void)
   // to wake up, acquire, and release the mutex.
   ACE_Thread_Manager::instance ()->wait ();
 
-  int nesting = mutex_.get_nesting_level ();
-  if (nesting != 0)
+  nesting_level = mutex_.get_nesting_level ();
+  if (!(nesting_level == -1 && errno == ENOTSUP) && nesting_level != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("(%t) nesting level %d; should be 0\n"),
                        nesting),
