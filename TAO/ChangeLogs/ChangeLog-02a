@@ -1,3 +1,8 @@
+Sat Jan 19 11:16:09 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* utils/nslist/nsdel.cpp: 
+	  Fixed (hopefully!!) compile errors.
+
 Sat Jan 19 09:22:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/Transport.cpp: Just swapped a couple of

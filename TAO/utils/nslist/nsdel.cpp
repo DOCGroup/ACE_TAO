@@ -27,6 +27,8 @@ int
 main (int argc, char *argv[])
 {
   TAO_ENV_DECLARE_NEW_ENV;
+
+  int i;
   ACE_TRY
     {
       CORBA::ORB_var orb =
@@ -87,7 +89,7 @@ main (int argc, char *argv[])
             bp = 0; // way strtok works
           }
 
-        for (int i=0; i<ntoks; i++)
+        for (i=0; i<ntoks; i++)
           printf ("%s\n", toks[i]);
 
         // now assign name = toks[ntoks]
