@@ -1,30 +1,43 @@
 2002-09-26  D A Hanvey  <dhanvey@qub.ac.uk>
 
+	* /orbsvcs/tests/Log
+
+	* /orbsvcs/tests/Log/Makefile
+
+	  Added a test of the Basic_Logging_Service to the /tests/ directory.
+
+	* /orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp
+	* /orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.h
+	* /orbsvcs/tests/Log/Basic_Log_Test/Makefile
+	* /orbsvcs/tests/Log/Basic_Log_Test/client.cpp:
+
+2002-09-26  D A Hanvey  <dhanvey@qub.ac.uk>
+
 	* /orbsvcs/Logging_Service
 
 	  Logging_Service extended to include event logging.
 	  4 separate services each in its own directory as below.
 	
-	* Basic_Logging_Service/README
-	* Basic_Logging_Service/Basic_Logging_Service.cpp
-	* Basic_Logging_Service/Basic_Logging_Service.h
-	* Basic_Logging_Service/Makefile:
+	* /orbsvcs/Logging_Service/Basic_Logging_Service/README
+	* /orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp
+	* /orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h
+	* /orbsvcs/Logging_Service/Basic_Logging_Service/Makefile:
 
-	* Event_Logging_Service/Event_Logging_Service.cpp
-	* Event_Logging_Service/Event_Logging_Service.h
-	* Event_Logging_Service/Makefile
-	* Event_Logging_Service/README:
+	* /orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp
+	* /orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h
+	* /orbsvcs/Logging_Service/Event_Logging_Service/Makefile
+	* /orbsvcs/Logging_Service/Event_Logging_Service/README:
 
-	* Notify_Logging_Service/Makefile
-	* Notify_Logging_Service/Notify_Logging_Server.cpp
-	* Notify_Logging_Service/Notify_Logging_Service.cpp
-	* Notify_Logging_Service/Notify_Logging_Service.h
-	* Notify_Logging_Service/README
-	* Notify_Logging_Service/svc.conf:
+	* /orbsvcs/Logging_Service/Notify_Logging_Service/Makefile
+	* /orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp
+	* /orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp
+	* /orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h
+	* /orbsvcs/Logging_Service/Notify_Logging_Service/README
+	* /orbsvcs/Logging_Service/Notify_Logging_Service/svc.conf:
 	
-	* RTEvent_Logging_Service/Makefile
-	* RTEvent_Logging_Service/RTEvent_Logging_Service.cpp
-	* RTEvent_Logging_Service/RTEvent_Logging_Service.h:
+	* /orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile
+	* /orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp
+	* /orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.h:
 
 
 
@@ -36,31 +49,31 @@
 	  Examples of the 4 Logging Services
 
 	* /orbsvcs/examples/Log/Basic
-	* Basic/Makefile 
-	* Basic/TLS_Client.cpp
-	* Basic/TLS_Client.h 
-	* Basic/main.cpp
+	* /orbsvcs/examples/Log/Basic/Makefile 
+	* /orbsvcs/examples/Log/Basic/TLS_Client.cpp
+	* /orbsvcs/examples/Log/Basic/TLS_Client.h 
+	* /orbsvcs/examples/Log/Basic/main.cpp
 
 	* /orbsvcs/examples/Log/Event
-	* Event/Event_Consumer.cpp
-	* Event/Event_Consumer.h
-	* Event/Event_Supplier.cpp
-	* Event/Event_Supplier.h
-	* Event/Makefile
+	* /orbsvcs/examples/Log/Event/Event_Consumer.cpp
+	* /orbsvcs/examples/Log/Event/Event_Consumer.h
+	* /orbsvcs/examples/Log/Event/Event_Supplier.cpp
+	* /orbsvcs/examples/Log/Event/Event_Supplier.h
+	* /orbsvcs/examples/Log/Event/Makefile
 
 	* /orbsvcs/examples/Log/
-	* Notify/Makefile
-	* Notify/Notify_Consumer.cpp
-	* Notify/Notify_Consumer.h
-	* Notify/Notify_Supplier.cpp
-	* Notify/Notify_Supplier.h
+	* /orbsvcs/examples/Log/Notify/Makefile
+	* /orbsvcs/examples/Log/Notify/Notify_Consumer.cpp
+	* /orbsvcs/examples/Log/Notify/Notify_Consumer.h
+	* /orbsvcs/examples/Log/Notify/Notify_Supplier.cpp
+	* /orbsvcs/examples/Log/Notify/Notify_Supplier.h
 
 	* /orbsvcs/examples/Log/RTEvent 
-	* RTEvent/Makefile
-	* RTEvent/RTEvent_Consumer.cpp
-	* RTEvent/RTEvent_Consumer.h
-	* RTEvent/RTEvent_Supplier.cpp
-	* RTEvent/RTEvent_Supplier.h:
+	* /orbsvcs/examples/Log/RTEvent/Makefile
+	* /orbsvcs/examples/Log/RTEvent/RTEvent_Consumer.cpp
+	* /orbsvcs/examples/Log/RTEvent/RTEvent_Consumer.h
+	* /orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.cpp
+	* /orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.h:
 
 Sat Sep 21 12:49:41 2002  Ossama Othman  <ossama@uci.edu>
 
