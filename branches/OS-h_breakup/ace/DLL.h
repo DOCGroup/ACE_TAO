@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/ACE_export.h"
-#include "ace/ace_dlfcn.h"
+#include "ace/os_include/dlfcn.h"
 #include "ace/Global_Macros.h"
 
 /**

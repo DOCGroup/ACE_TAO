@@ -20,7 +20,7 @@
 
 #include "ace/ACE_export.h"
 #include "ace/Basic_Types.h"
-#include "ace/ace_sys_socket.h"
+#include "ace/os_include/sys/socket.h"
 
 // Forward Declarations
 class ACE_INET_Addr;

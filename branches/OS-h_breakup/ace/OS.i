@@ -1,14 +1,15 @@
 // -*- C++ -*-
 // $Id$
 
-#include "ace/ace_unistd.h"
-#include "ace/ace_sys_mman.h"
-# include "ace/ace_sys_msg.h"
-# include "ace/ace_sys_shm.h"
-# include "ace/ace_sys_uio.h"
-# include "ace/ace_string.h"
+#include "ace/os_include/unistd.h"
+#include "ace/os_include/sys/mman.h"
+#include "ace/os_include/sys/msg.h"
+#include "ace/os_include/sys/shm.h"
+#include "ace/os_include/sys/uio.h"
+#include "ace/os_include/string.h"
 #include "ace/Object_Manager_Base.h"
 
+// hmmm, why is this needed, and only for cygwin?
 #if defined (__CYGWIN32__)
 # include /**/ <getopt.h>
 #endif

@@ -35,9 +35,9 @@
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS))
 
 #include "ace/ACE_export.h"
-#include "ace/ace_sys_types.h"
-#include "ace/ace_signal.h"
-#include "ace/ace_sys_socket.h"
+#include "ace/os_include/sys/types.h"
+#include "ace/os_include/signal.h"
+#include "ace/os_include/sys/socket.h"
 #include "ace/Basic_Types.h"
 
 // Forward declarations

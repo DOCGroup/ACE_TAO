@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/Log_Msg.h"
-#include "ace/ace_ctype.h"
+#include "ace/os_include/ctype.h"
 #include "ace/OS_String.h"
 
 #include "Parse_Headers.h"

@@ -1,3 +1,33 @@
+Fri May 10 10:52:50 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/os_include/signal.h:
+
+	  Use extern "C" for typedef of the ACE_Sig_Handler_Ex function
+	  pointer if ACE_HAS_SIG_C_FUNC is defined.  Thanks to Bala for 
+	  helping track this down.
+
+	* ace/*.h: (will fill in the list later..)
+	* apps/gperf/src/Options.h:
+	* apps/gperf/src/Iterator.cpp:
+	* apps/gperf/src/List_Node.cpp:
+	* apps/drwho/Rwho_DB_Manager.h:
+	* apps/drwho/Multicast_Manager.cpp:
+	* apps/JAWS/server/Parse_Headers.cpp:
+
+	  Modified includes to match new structure below.
+	
+	* ace/ace_*.h:
+	* ace/os_include/*.h:
+	* ace/os_include/netinet/in.h:
+	* ace/os_include/sys/*.h:
+
+	  Moved all the new system header wrappers out of the ace
+	  directory and into the new os_include directory.  Also removed
+	  the "ace_", "ace_sys_", and "ace_netinet_" prefixes and used
+	  the standard directory stucture instead.  This should simplify
+	  the use and make it easier to understand/maintain.  Thanks to 
+	  Bala and Nanbor for this suggestion.
+
 Wed May  8 04:51:12 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/ace_signal.h:  

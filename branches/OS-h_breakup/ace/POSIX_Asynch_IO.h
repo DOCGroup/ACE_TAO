@@ -33,7 +33,7 @@
 #include "ace/Select_Reactor.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Task.h"
-#include "ace/ace_aio.h"
+#include "ace/os_include/aio.h"
 
 // Forward declarations
 class ACE_POSIX_SIG_Proactor;

@@ -23,8 +23,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/OS_Export.h"
-#include "ace/ace_sys_types.h"
-#include "ace/ace_sys_socket.h"
+#include "ace/os_include/sys/types.h"
+#include "ace/os_include/sys/socket.h"
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 #if defined (ACE_HAS_WINSOCK2_GQOS)

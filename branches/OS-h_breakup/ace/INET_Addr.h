@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Addr.h"
-#include "ace/ace_sys_socket.h"
+#include "ace/os_include/sys/socket.h"
 #include "ace/Basic_Types.h"
 
 #if defined(VXWORKS)

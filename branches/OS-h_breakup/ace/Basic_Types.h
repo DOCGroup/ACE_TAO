@@ -54,27 +54,23 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 # include "ace/ACE_export.h"
-# include "ace/ace_limits.h"
+# include "ace/os_include/limits.h"
 
 // Pull in definitions
 //# include /**/ <limits.h>   // Integer limits
 # include /**/ <float.h>    // Floating point limits
-# include /**/ <stdlib.h>   // Other types
+//# include /**/ <stdlib.h>   // Other types
+# include "ace/os_include/stdlib.h"
 
 # if defined(ACE_LACKS_LONGLONG_T)
-#   include "ace/ace_stdio.h"
+#   include "ace/os_include/stdio.h"
 # endif  /* ACE_LACKS_LONGLONG_T */
 
 
 
 #if 0
-# if !defined (ACE_LACKS_SYS_TYPES_H)
-#   include "ace/ace_sys_types.h"
-# endif  /* ACE_LACKS_SYS_TYPES_H */
-
-# if !defined (ACE_LACKS_PARAM_H)
-#  include /**/ <sys/param.h>
-# endif /* ACE_LACKS_PARAM_H */
+# include "ace/os_include/sys/types.h"
+# include "ace/os_include/sys/param.h"
 #endif /* 0 */
 
 

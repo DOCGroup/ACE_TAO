@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/OS_Errno.h"
-#include "ace/ace_dirent.h"
+#include "ace/os_include/dirent.h"
 
 // At least compile on some of the platforms without <ACE_DIR> info yet.
 # if !defined (ACE_HAS_DIRENT)

@@ -16,7 +16,7 @@
 
 #include "ace/config-all.h"
 #include "ace/Global_Macros.h"
-#include "ace/ace_sys_types.h"
+#include "ace/os_include/sys/types.h"
 #include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

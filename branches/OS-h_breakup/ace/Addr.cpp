@@ -12,7 +12,7 @@ ACE_RCSID(ace, Addr, "$Id$")
 #include "ace/Log_Msg.h"
 #include "ace/Trace.h"
 #include "ace/Global_Macros.h"
-#include "ace/ace_sys_socket.h"
+#include "ace/os_include/sys/socket.h"
 
 #if defined (ACE_HAS_BROKEN_SAP_ANY)
 #if defined (sap_any)

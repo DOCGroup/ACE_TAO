@@ -24,10 +24,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ace_sys_param.h"      // for MAXPATHLEN
+#include "ace/os_include/sys/param.h"      // for MAXPATHLEN
 #include "ace/Log_Priority.h"       // for ACE_Log_Priority  
 #include "ace/Default_Constants.h"  // for ACE_MAXLOGMSGLEN
-#include "ace/ace_threads.h"        // for ACE_thread_key_t
+#include "ace/os_include/threads.h"        // for ACE_thread_key_t
 #include "ace/ACE_export.h"
 
 // The following ASSERT macro is courtesy of Alexandre Karev

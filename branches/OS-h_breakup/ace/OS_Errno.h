@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ace_errno.h"
+#include "ace/os_include/errno.h"
 
 #if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
 /**

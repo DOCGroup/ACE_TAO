@@ -9,9 +9,9 @@
  */
 //=============================================================================
 
-#include "ace/ace_string.h"
+#include "ace/os_include/string.h"
 
-#include /**/ <ctype.h>
+#include "ace/os_include/ctype.h"
 
 ACE_INLINE const void *
 ACE_OS_String::memchr (const void *s, int c, size_t len)

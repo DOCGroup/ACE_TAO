@@ -25,7 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Protocol_Record.h"
-#include "ace/ace_sys_param.h"
+#include "ace/os_include/sys/param.h"
 
 class RWho_DB_Manager
 {

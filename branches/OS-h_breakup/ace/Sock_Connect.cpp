@@ -12,8 +12,8 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
-#include "ace/ace_netinet_in.h"
-#include "ace/ace_sys_ioctl.h"
+#include "ace/os_include/netinet/in.h"
+#include "ace/os_include/sys/ioctl.h"
 
 #if defined (VXWORKS)
 #include /**/ <inetLib.h>

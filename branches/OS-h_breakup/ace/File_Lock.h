@@ -16,8 +16,8 @@
 
 #include "ace/config-all.h"
 #include "ace/ACE_export.h"
-#include "ace/ace_sys_types.h"
-#include "ace/ace_fcntl.h"
+#include "ace/os_include/sys/types.h"
+#include "ace/os_include/fcntl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

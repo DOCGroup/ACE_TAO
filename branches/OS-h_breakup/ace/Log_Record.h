@@ -26,10 +26,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/ACE_export.h"
-#include "ace/ace_sys_types.h"
+#include "ace/os_include/sys/types.h"
 #include "ace/Basic_Types.h"
 #include "ace/Default_Constants.h"
-#include "ace/ace_stdio.h"
+#include "ace/os_include/stdio.h"
 #include "ace/streams.h"
 
 class ACE_Time_Value;
