@@ -186,32 +186,24 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
       // OS platform).
       else
         {
+#ifdef ACE_WIN32
+          LPTSTR file_component;
+          DWORD pathlen = SearchPath(NULL, searchfilename, dll_suffix,
+                                maxpathnamelen, pathname, &file_component);
+          if(pathlen >= maxpathnamelen)
+          {
+              errno = ENOMEM;
+              return -1;
+          }
+          else if(pathlen > 0)
+              return 0;
+#else
           ACE_TCHAR *ld_path =
 #if defined ACE_DEFAULT_LD_SEARCH_PATH
             ACE_DEFAULT_LD_SEARCH_PATH;
 #else
             ACE_OS::getenv (ACE_LD_SEARCH_PATH);
 #endif /* ACE_DEFAULT_LD_SEARCH_PATH */
-
-#if defined (ACE_WIN32)
-          ACE_TCHAR *ld_path_temp = 0;
-          if (ld_path != 0)
-            {
-              ld_path_temp = (ACE_TCHAR *) ACE_OS::malloc ((ACE_OS::strlen (ld_path) + 2)
-                                                           * sizeof (ACE_TCHAR));
-              if (ld_path_temp != 0)
-                {
-                  ACE_OS::strcpy (ld_path_temp, ACE_LD_SEARCH_PATH_SEPARATOR_STR);
-                  ACE_OS::strcat (ld_path_temp, ld_path);
-                  ld_path = ld_path_temp;
-                }
-              else
-                {
-                  ACE_OS::free ((void *) ld_path_temp);
-                  ld_path = ld_path_temp = 0;
-                }
-            }
-#endif /* ACE_WIN32 */
 
           if (ld_path != 0
               && (ld_path = ACE_OS::strdup (ld_path)) != 0)
@@ -317,16 +309,10 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
                                                          nextholder);
                 }
 
-#if defined (ACE_WIN32)
-              if (ld_path_temp != 0)
-                ACE_OS::free (ld_path_temp);
-#endif /* ACE_WIN32 */
               ACE_OS::free ((void *) ld_path);
-#if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
-              if (result == 0 || tag == 0)
-#endif /* ACE_WIN32 && ACE_LD_DECORATOR_STR && !ACE_DISABLE_DEBUG_DLL_CHECK */
-                return result;
+              return result;
             }
+#endif /* ACE_WIN32 */
         }
 #if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
     }
