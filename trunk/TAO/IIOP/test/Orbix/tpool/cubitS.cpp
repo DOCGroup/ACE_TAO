@@ -2,6 +2,8 @@
 
 #include "cubit.h"
 
+ACE_RCSID(tpool, cubitS, "$Id$")
+
 
 #define Cubit_dispatch_impl
 

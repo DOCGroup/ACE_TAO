@@ -28,6 +28,8 @@
 
 #include	<corba/debug.h>
 
+ACE_RCSID(TAO, clnt, "$Id$")
+
 
 #if !defined (_WIN32)
 extern char 	*optarg;	// missing on some platforms

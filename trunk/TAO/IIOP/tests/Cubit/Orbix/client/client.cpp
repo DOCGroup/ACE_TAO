@@ -13,6 +13,8 @@
 #include "ace/Get_Opt.h"
 #include "cubit.h"
 
+ACE_RCSID(client, client, "$Id$")
+
 int LOOP_COUNT;
 char SERVER_HOST [1024];
 

@@ -18,6 +18,8 @@
 #include "method_db.i"
 #include "iiopobj.h"
 
+ACE_RCSID(test, cubitS, "$Id$")
+
 #if defined(CUBIT_USE_DYNAMIC_HASH)
 TAO_Dynamic_Hash_OpTable tao_cubit_optable(7);  // Dynamic Operation Table
 #else

@@ -2,6 +2,8 @@
 
 #include "tps.h"
 
+ACE_RCSID(tps, tps, "$Id$")
+
 int
 TPS_Filter::inRequestPreMarshal(CORBA::Request &r,  CORBA::Environment& env)
 {

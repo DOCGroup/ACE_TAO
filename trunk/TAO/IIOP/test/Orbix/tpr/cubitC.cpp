@@ -2,6 +2,8 @@
 
 #include "cubit.h"
 
+ACE_RCSID(tpr, cubitC, "$Id$")
+
 Cubit::Cubit (char *IT_OR) {
       m_pptr = new Cubit_dispatch (IT_OR, this,(CORBA::Object*)this);
 } 

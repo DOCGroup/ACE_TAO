@@ -9,6 +9,8 @@
 
 #include	"cubitC.h"		// for stubs ...
 
+ACE_RCSID(TAO, cubitC, "$Id$")
+
 Cubit_ptr Cubit::_duplicate(Cubit_ptr obj)
 {
    if (obj)

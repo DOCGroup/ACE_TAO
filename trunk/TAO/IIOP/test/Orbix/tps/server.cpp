@@ -12,6 +12,8 @@
 
 #include "cubit_impl.h"		// server header file
 
+ACE_RCSID(tps, server, "$Id$")
+
 int 
 main (int , char**)
 {

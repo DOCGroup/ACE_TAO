@@ -2,6 +2,8 @@
 
 #include "tpr.h"
 
+ACE_RCSID(base_server, tpr, "$Id$")
+
 void *
 worker(void *vp)
 {

@@ -21,6 +21,8 @@
 
 #include "cubit_i.h"
 
+ACE_RCSID(test, svr, "$Id$")
+
 extern void
 print_exception (const CORBA_Exception *, const char *, FILE *f=stdout);
 

@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include "ttcpC.h"
 
+ACE_RCSID(Thruput_test, ttcpC, "$Id$")
+
 // constructor
 ttcp_sequence::ttcp_sequence(STUB_Object *refdata)
   : CORBA_Object(refdata)

@@ -2,6 +2,8 @@
 
 #include "Profile_Timer.h"
 
+ACE_RCSID(client, Profile_Timer, "$Id$")
+
 /* Initialize interval timer. */
 
 Profile_Timer::Profile_Timer (void)

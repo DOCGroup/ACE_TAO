@@ -2,6 +2,8 @@
 
 #include "cubit_impl.h"
 
+ACE_RCSID(tps, cubit_impl, "$Id$")
+
 CORBA::Octet Cubit_Impl:: cube_octet (CORBA::Octet o, CORBA::Environment &) throw (CORBA::SystemException) {
   return (CORBA::Octet) (o * o * o); 
 }
