@@ -1,0 +1,11 @@
+TAO tests
+---------
+
+The following tests are provided:
+
+multiCubit - multithreaded Cubit example (without realtime threading suport).
+Thruput_test - Throughput tests for TAO, based on TTCP.
+MT-Cubit - multithreaded real-time Cubit example.
+
+The individual directories contain READMEs on how to run the tests.
+
