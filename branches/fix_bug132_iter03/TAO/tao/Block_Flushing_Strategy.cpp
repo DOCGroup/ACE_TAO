@@ -31,3 +31,15 @@ TAO_Block_Flushing_Strategy::flush_message (TAO_Transport *transport,
     }
   return 0;
 }
+
+int
+TAO_Block_Flushing_Strategy::flush_transport (TAO_Transport *transport)
+{
+  while (!transport->queue_is_empty ())
+    {
+      int result = transport->handle_output ();
+      if (result == -1)
+        return -1;
+    }
+  return 0;
+}

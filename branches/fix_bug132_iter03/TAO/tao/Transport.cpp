@@ -319,6 +319,11 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
 
   size_t byte_count = 0;
   ssize_t n;
+
+  TAO_Flushing_Strategy *flushing_strategy =
+    this->orb_core ()->flushing_strategy ();
+
+  int start_flushing = 1;
   if (try_sending_first)
     {
       // ... in this case we must try to send the message first ...
@@ -365,6 +370,8 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
         }
     }
 
+  (void) flushing_strategy->schedule_output (this);
+
   // ... either the message must be queued or we need to queue it
   // because it was not completely sent out ...
 
@@ -385,9 +392,13 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
 
   // ... if the queue is full we need to activate the output on the
   // queue ...
-  if (this->must_flush_queue_i (stub))
+  if (start_flushing || this->must_flush_queue_i (stub))
     {
-      this->orb_core ()->flushing_strategy ()->schedule_output (this);
+      typedef ACE_Reverse_Lock<TAO_SYNCH_MUTEX> TAO_REVERSE_SYNCH_MUTEX;
+      TAO_REVERSE_SYNCH_MUTEX reverse (this->queue_mutex_);
+
+      ACE_GUARD_RETURN (TAO_REVERSE_SYNCH_MUTEX, ace_mon, reverse, -1);
+      (void) flushing_strategy->flush_transport (this);
     }
 
   // ... in any case, check for timeouts and report them to the
@@ -662,6 +673,13 @@ TAO_Transport::register_for_timer_event (const void* arg,
     return -1;
 
   return this->orb_core_->reactor ()->schedule_timer (eh, arg, delay, interval);
+}
+
+int
+TAO_Transport::queue_is_empty (void)
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->queue_mutex_, 0);
+  return (this->head_ == 0);
 }
 
 int
