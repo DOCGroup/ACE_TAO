@@ -1,3 +1,12 @@
+Mon Nov 03 23:16:06 1997    <nw1@COYOTE>
+
+	* tests/Cubit/TAO/DII_Cubit/svr.cpp:
+	* tests/Cubit/TAO/DII_Cubit/clnt.cpp: Changed to use the new
+	  CORBA_Environment::print_exception.
+
+	* tao/except.h (CORBA_Environment):  Added ACE_Svc_Export to this
+	  class. 
+
 Mon Nov  3 23:25:30 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL Compiler: Files be_sequence.cpp, be_typedef.cpp,
