@@ -8,7 +8,7 @@
 #include "orbsvcs/SSLIOP/SSLIOP_Transport.h"
 
 #if !defined(__ACE_INLINE__)
-#include "test_i.i"
+#include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(MT_Server, test_i, "$Id$")
