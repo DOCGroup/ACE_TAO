@@ -49,9 +49,6 @@ Test_DynUnion::run_test (void)
                  "\t*=*=*=*= %s =*=*=*=*\n",
                  data.labels[12]));
 
-      ACE_DEBUG ((LM_DEBUG,
-                 "testing: constructor(Any)/insert/get\n"));
-
       CORBA::Object_var factory_obj =
         this->orb_->resolve_initial_references ("DynAnyFactory"
                                                 ACE_ENV_ARG_PARAMETER);
@@ -70,6 +67,37 @@ Test_DynUnion::run_test (void)
         }
 
       DynAnyAnalyzer analyzer(this->orb_.in(), dynany_factory.in(), debug_);
+
+      ACE_DEBUG ((LM_DEBUG,
+                 "testing: constructor(Any)/from_any/to_any with string\n"));
+
+      DynAnyTests::test_union tstring;
+      tstring._d (DynAnyTests::TE_THIRD);
+      tstring.str (CORBA::string_dup (data.m_string1));
+      CORBA::Any in_any4;
+      in_any4 <<= tstring;
+      DynamicAny::DynAny_var dp4 =
+        dynany_factory->create_dyn_any (in_any4
+                                        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      DynamicAny::DynUnion_var fa4 =
+        DynamicAny::DynUnion::_narrow (dp4.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      analyzer.analyze(fa4.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CORBA::Any_var out_any5 = fa4->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      DynamicAny::DynAny_var dp5 =
+        dynany_factory->create_dyn_any (out_any5.in()
+                                        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG,
+                 "testing: constructor(Any)/insert/get\n"));
 
       tu._d (DynAnyTests::TE_SECOND);
       tu.tc (data.m_typecode2);
@@ -250,7 +278,6 @@ Test_DynUnion::run_test (void)
         {
           ++this->error_count_;
         }
-
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
