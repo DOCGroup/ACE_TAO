@@ -96,7 +96,6 @@ public:
   ~ACE_Hash_Map_Manager (void);
   // Initialize a <Hash_Map_Manager> with size <length>.
 
-
   int trybind (const EXT_ID &ext_id,
 	       INT_ID &int_id);
   // Associate <ext_id> with <int_id> if and only if <ext_id> is not

@@ -159,9 +159,6 @@ public:
   // the <svc_handler>. It is left up to the caller of <cancel> to
   // decide the fate of the <svc_handler>.
 
-  ACE_PEER_CONNECTOR &connector (void) const;
-  // Return the underlying PEER_CONNECTOR object.
-
   virtual int close (void);
   // Close down the Connector
 
@@ -274,7 +271,8 @@ protected:
 
 private:
   ACE_PEER_CONNECTOR connector_;
-  // Factor that establishes connections actively.
+  // This is the concrete connector factory (it keeps no state so the
+  // <ACE_Connector> is reentrant).
 
   char closing_;
   // Keeps track of whether we are in the process of closing (required

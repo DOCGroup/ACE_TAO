@@ -24,7 +24,6 @@ ACE_Connector<SH, PR_CO_2>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "\nclosing_ = %d", this->closing_));
   ACE_DEBUG ((LM_DEBUG, "\nflags_ = %d", this->flags_));
   this->handler_map_.dump ();
-  this->connector_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -87,17 +86,23 @@ ACE_Connector<SH, PR_CO_2>::connect_svc_handler (SVC_HANDLER *&svc_handler,
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::connect_svc_handler");
 
-  return this->connector_.connect (svc_handler->peer (), remote_addr,
-				   timeout, local_addr,
-				   reuse_addr, flags, perms);
+  return this->connector_.connect (svc_handler->peer (),
+				   remote_addr,
+				   timeout,
+				   local_addr,
+				   reuse_addr,
+				   flags,
+				   perms);
 }
 
+#if 0
 template <class SH, PR_CO_1> ACE_PEER_CONNECTOR &
 ACE_Connector<SH, PR_CO_2>::connector (void) const
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::connector");
   return (ACE_PEER_CONNECTOR &) this->connector_;
 }
+#endif /* 0 */
 
 template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::open (ACE_Reactor *r, int flags)
@@ -123,6 +128,7 @@ template <class SH, PR_CO_1> ACE_HANDLE
 ACE_Connector<SH, PR_CO_2>::get_handle (void) const
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::get_handle");
+  ACE_ASSERT (!"this function shouldn't be called\n");
   return this->connector_.get_handle ();
 }
 
@@ -300,6 +306,7 @@ ACE_Connector<SH, PR_CO_2>::handle_output (ACE_HANDLE handle)
   // Try to find out if the reactor uses event associations for the
   // handles it waits on. If so we need to reset it.
   int reset_new_handle = this->reactor ()->uses_event_associations ();
+
   if (reset_new_handle)
     this->connector_.reset_new_handle (handle);
 
@@ -452,13 +459,17 @@ ACE_Connector<SH, PR_CO_2>::create_AST (SH *sh,
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::create_AST");
   AST *ast;
 
-  ACE_NEW_RETURN (ast, AST (sh, this->get_handle (), synch_options.arg (), -1), -1);
+  ACE_NEW_RETURN (ast,
+		  AST (sh, 
+		       sh->get_handle (),
+		       synch_options.arg (), -1),
+		  -1);
 
   // Register this with the reactor for connection events.
   ACE_Reactor_Mask mask = ACE_Event_Handler::CONNECT_MASK;
 
   // Bind ACE_Svc_Tuple with the ACE_HANDLE we're trying to connect.
-  if (this->handler_map_.bind (this->get_handle (), ast) == -1)
+  if (this->handler_map_.bind (sh->get_handle (), ast) == -1)
     goto fail1;
 
   else if (this->reactor ()->register_handler (this, mask) == -1)
@@ -499,7 +510,7 @@ fail3:
 				    mask | ACE_Event_Handler::DONT_CALL);
   /* FALLTHRU */
 fail2:
-  this->handler_map_.unbind (this->get_handle ());
+  this->handler_map_.unbind (sh->get_handle ());
   /* FALLTHRU */
 fail1:
 
@@ -599,18 +610,10 @@ ACE_Connector<SH, PR_CO_2>::info (char **strp, size_t length) const
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::info");
   char buf[BUFSIZ];
-  char addr_str[BUFSIZ];
-  PR_AD addr;
-
-  if (this->connector ().get_local_addr (addr) == -1)
-    return -1;
-  else if (addr.addr_to_string (addr_str, sizeof addr_str) == -1)
-    return -1;
 
   ACE_OS::sprintf (buf,
-		   "%s\t %s %s", 
+		   "%s\t %s",
 		   "ACE_Connector",
-		   addr_str,
 		   "# connector factory\n");
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)

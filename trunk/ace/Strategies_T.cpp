@@ -494,9 +494,13 @@ ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_svc_handler
 {
   ACE_TRACE ("ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_svc_handler");
 
-  return this->connector_.connect (sh->peer (), remote_addr,
-				   timeout, local_addr,
-				   reuse_addr, flags, perms);
+  return this->connector_.connect (sh->peer (),
+				   remote_addr,
+				   timeout,
+				   local_addr,
+				   reuse_addr,
+				   flags,
+				   perms);
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> ACE_PEER_CONNECTOR &
@@ -784,6 +788,13 @@ ACE_Hash_Addr<ADDR_T,SVC_HANDLER>::operator== (const ACE_Hash_Addr<ADDR_T, SVC_H
       && this->compare_i (addr_, rhs.addr_) == 0;
 }
 
+template <class SVC_HANDLER> int
+ACE_NOOP_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
+{
+  ACE_TRACE ("ACE_NOOP_Creation_Strategy<SVC_HANDLER>::make_svc_handler");
+  return 0;
+}
+
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_svc_handler
   (SVC_HANDLER *&sh,
@@ -799,26 +810,34 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
   // Try to find the addres in the cache.  Only if we don't find it do
   // we create a new <SVC_HANDLER> and connect it with the server.
 
-  if (this->connection_cache_.find (search_addr, sh) == -1)
-    {
-      ACE_NEW_RETURN (sh, SVC_HANDLER, -1);
+  {
+    if (this->connection_cache_.find (search_addr, sh) == -1)
+      {
+	ACE_NEW_RETURN (sh, SVC_HANDLER, -1);
 
-      // Actively establish the connection.  This is a timed blocking
-      // connect.
-      if (ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_svc_handler
-	  (sh, remote_addr, timeout, local_addr, reuse_addr, flags, perms) == -1)
-	return -1;
-      // Insert the new SVC_HANDLER instance into the cache.
-      else
-	{
-	  ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR, SVC_HANDLER> server_addr (remote_addr,sh);
+	// Actively establish the connection.  This is a timed blocking
+	// connect.
+	if (ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect 
+	    (sh->peer (),
+	     remote_addr,
+	     timeout,
+	     local_addr,
+	     reuse_addr,
+	     flags,
+	     perms) == -1)
+	  return -1;
+	// Insert the new SVC_HANDLER instance into the cache.
+	else
+	  {
+	    ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR, SVC_HANDLER> server_addr (remote_addr,
+									     sh);
+	    if (this->connection_cache_.bind (server_addr, sh) == -1)
+	      return -1;
+	  }
+      }
 
-	  if (this->connection_cache_.bind (server_addr, sh) == -1)
-	    return -1;
-	}
-    }
-
-  sh->in_use (1);
+    sh->in_use (1);
+  }
   return 0;
 }
 

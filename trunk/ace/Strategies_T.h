@@ -448,7 +448,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  ACE_PEER_CONNECTOR connector_;     
+  ACE_PEER_CONNECTOR connector_;
   // Factory that establishes connections actively.
 };
 
@@ -505,7 +505,7 @@ class ACE_NOOP_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
   //     connection for a given endpoint.
 {
 public:
-  virtual int make_svc_handler (SVC_HANDLER*&) { return 0; }
+  virtual int make_svc_handler (SVC_HANDLER *&);
   // This is a no-op.
 };
 
