@@ -6,10 +6,15 @@
 #include "ace/Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/sys/os_mman.h"
 
-ACE_RCSID(ace, Mutex, "$Id$")
+
+ACE_RCSID (ace,
+           Mutex,
+           "$Id$")
+
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Mutex)
 
