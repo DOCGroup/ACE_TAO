@@ -19,8 +19,8 @@
 
 #ifdef __cplusplus
 
-#include "ace/OS.h"
-#include "ace/Object_Manager.h"
+#include "ace/OS/OS.h"
+#include "ace/Utils/Object_Manager.h"
 
 /* Use prototypes in function declarations. */
 #define ACE_YY_USE_PROTOS
@@ -506,9 +506,9 @@ ACE_TCHAR *ace_yytext;
 // compiled with FLEX and an ANSI C++ compiler.
 
 // Lexical tokens values defined by YACC.
-#include "ace/Svc_Conf.h"
-#include "ace/Svc_Conf_Tokens.h"
-#include "ace/Svc_Conf_Lexer_Guard.h"
+#include "ace/Svcconf/Svc_Conf.h"
+#include "ace/Svcconf/Svc_Conf_Tokens.h"
+#include "ace/Svcconf/Svc_Conf_Lexer_Guard.h"
 
 ACE_RCSID (ace,
 	   Svc_Conf_l,

@@ -19,14 +19,14 @@
 // Globally visible macros, type decls, and extern var decls for
 // Service Configurator utility.
 
-#include "ace/Obstack.h"
+#include "ace/Memory/Obstack.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Config.h"
-#include "ace/Parse_Node.h"
+#include "ace/Svcconf/Service_Config.h"
+#include "ace/Svcconf/Parse_Node.h"
 
 // Forward declarations.
 struct ace_yy_buffer_state;

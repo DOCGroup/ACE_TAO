@@ -5,7 +5,7 @@
 #include "ace/Utils/Object_Manager.h"
 
 #ifdef ACE_SUBSET_0
-#include "ace/Log_Msg.h"
+#include "ace/Logging/Log_Msg.h"
 #endif
 
 #if !defined (__ACE_INLINE__)

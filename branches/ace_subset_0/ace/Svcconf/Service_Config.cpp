@@ -1,22 +1,22 @@
 // $Id$
 
-#include "ace/Svc_Conf.h"
-#include "ace/Get_Opt.h"
-#include "ace/ARGV.h"
-#include "ace/Malloc.h"
-#include "ace/Service_Manager.h"
-#include "ace/Service_Repository.h"
-#include "ace/Service_Types.h"
-#include "ace/Containers.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Reactor.h"
-#include "ace/Proactor.h"
-#include "ace/Thread_Manager.h"
+#include "ace/Svcconf/Svc_Conf.h"
+#include "ace/Utils/Get_Opt.h"
+#include "ace/Utils/ARGV.h"
+#include "ace/Memory/Malloc.h"
+#include "ace/Svcconf/Service_Manager.h"
+#include "ace/Svcconf/Service_Repository.h"
+#include "ace/Svcconf/Service_Types.h"
+#include "ace/Utils/Containers.h"
+#include "ace/Utils/Templates/Auto_Ptr.h"
+#include "ace/Demux/Reactor.h"
+#include "ace/Demux/Proactor.h"
+#include "ace/Threads/Thread_Manager.h"
 
-#include "ace/Service_Config.h"
+#include "ace/Svcconf/Service_Config.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Service_Config.i"
+#include "ace/Svcconf/Service_Config.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ace,

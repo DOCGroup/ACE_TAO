@@ -1,15 +1,15 @@
 // $Id$
 
-#include "ace/Service_Config.h"
-#include "ace/Service_Repository.h"
-#include "ace/Task.h"
-#include "ace/Parse_Node.h"
+#include "ace/Svcconf/Service_Config.h"
+#include "ace/Svcconf/Service_Repository.h"
+#include "ace/Streams/Task.h"
+#include "ace/Svcconf/Parse_Node.h"
 
 // Provide the class hierarchy that defines the parse tree of Service
 // Nodes.
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Parse_Node.i"
+#include "ace/Svcconf/Parse_Node.i"
 #endif /* ____ */
 
 ACE_RCSID(ace, Parse_Node, "$Id$")

@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/Svcconf/Service_Types.h"
-#include "ace/Svcconf/Stream_Modules.h"
+#include "ace/Streams/Stream_Modules.h"
 #include "ace/Streams/Stream.h"
 
 ACE_RCSID(ace, Service_Types, "$Id$")

@@ -1,8 +1,8 @@
 // -*- C++ -*-
 
-#include "ace/Svc_Conf.h"
+#include "ace/Svcconf/Svc_Conf.h"
 
-#include "ace/Svc_Conf_Lexer_Guard.h"
+#include "ace/Svcconf/Svc_Conf_Lexer_Guard.h"
 
 ACE_RCSID (ace,
            Svc_Conf_Lexer_Guard,

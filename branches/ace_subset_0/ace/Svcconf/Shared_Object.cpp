@@ -1,12 +1,12 @@
 // Shared_Object.cpp
 // $Id$
 
-#include "ace/Shared_Object.h"
+#include "ace/Svcconf/Shared_Object.h"
 /* Provide the abstract base class used to access dynamic linking
    facilities */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Shared_Object.i"
+#include "ace/Svcconf/Shared_Object.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Shared_Object, "$Id$")
