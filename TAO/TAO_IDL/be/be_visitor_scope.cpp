@@ -245,7 +245,7 @@ be_visitor_scope::last_node (be_decl *bd)
 }
 
 idl_bool
-be_visitor_scope::last_inout_or_out_node (be_decl *bd)
+be_visitor_scope::last_inout_or_out_node (be_decl *)
 {
   // Return true if we are the last inout or out argument
   be_decl *next = 0;
