@@ -73,6 +73,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "idl_defines.h"
 #include "nr_extern.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_Memory.h"
 
 ACE_RCSID (ast, 
            ast_type, 

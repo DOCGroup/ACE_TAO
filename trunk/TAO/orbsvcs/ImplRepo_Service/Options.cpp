@@ -13,7 +13,7 @@
 #include "tao/Strategies/advanced_resource.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/ARGV.h"
-
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (ImplRepo_Service,
            Options,

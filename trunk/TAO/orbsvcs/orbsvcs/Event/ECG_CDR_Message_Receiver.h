@@ -24,6 +24,7 @@
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/INET_Addr.h"
+#include "ace/Null_Mutex.h"
 
 /**
  * @class TAO_ECG_CDR_Processor

@@ -7,6 +7,7 @@
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Dgram.h"
+#include "ace/OS_NS_strings.h"
 
 #if !defined(__ACE_INLINE__)
 #include "MCAST_Parser.i"
@@ -394,7 +395,7 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
         }
 
 
-      ACE_OS_String::itoa (trial_port, default_port, 10);
+      ACE_OS::itoa (trial_port, default_port, 10);
 
       this->mcast_port_ = (const char *) default_port;
     }

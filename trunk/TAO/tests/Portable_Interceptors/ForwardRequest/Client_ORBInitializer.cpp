@@ -38,7 +38,7 @@ Client_ORBInitializer::post_init (
   // Extract the last forward reference from the argument list.
   CORBA::ULong args_len = args->length ();
   for (CORBA::ULong i = 0; i < args_len; ++i)
-    if (ACE_OS_String::strcmp ("-k", args[i].in ()) == 0
+    if (ACE_OS::strcmp ("-k", args[i].in ()) == 0
         && i < (args_len - 1))
       forward_str = args[i + 1];
 

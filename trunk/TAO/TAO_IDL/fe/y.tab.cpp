@@ -3119,8 +3119,8 @@ tao_yyreduce:
           UTL_ScopedName n (tao_yyvsp[0].idval,
                             0);
 
-          if (ACE_OS_String::strcmp (tao_yyvsp[0].idval->get_string (),
-                                     "TypeCode") == 0
+          if (ACE_OS::strcmp (tao_yyvsp[0].idval->get_string (),
+                              "TypeCode") == 0
               && !idl_global->in_main_file ())
             {
               AST_PredefinedType *pdt =

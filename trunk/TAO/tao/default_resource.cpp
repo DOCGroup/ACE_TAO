@@ -17,6 +17,7 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Malloc.h"
 #include "ace/Codeset_Registry.h"
+#include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/default_resource.i"
@@ -174,8 +175,8 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                                                       ncs) == 0)
           {
             char **endPtr =0;
-            ncs = ACE_OS_String::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
-                                         endPtr, 0);
+            ncs = ACE_OS::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
+                                  endPtr, 0);
   }
         // Validate the CodesetId
         if (ACE_Codeset_Registry::get_max_bytes(ncs) == 0)
@@ -200,8 +201,8 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                                                       ncs) == 0)
           {
             char **endPtr = 0;
-            ncs = ACE_OS_String::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
-                                         endPtr, 0);
+            ncs = ACE_OS::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
+                                  endPtr, 0);
           }
         // Validate the CodesetId
         int mb = ACE_Codeset_Registry::get_max_bytes(ncs);

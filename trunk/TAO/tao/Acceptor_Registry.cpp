@@ -180,11 +180,11 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       // remaining number of endpoints in the current endpoint
       // specification.
       const char *ep_end =
-        ep->c_str () + ACE_OS_String::strlen (ep->c_str ());
+        ep->c_str () + ACE_OS::strlen (ep->c_str ());
 
-      for (const char *e = ACE_OS_String::strchr (ep->c_str (), ',');
+      for (const char *e = ACE_OS::strchr (ep->c_str (), ',');
            e != 0 && e != ep_end;
-           e = ACE_OS_String::strchr (e, ','))
+           e = ACE_OS::strchr (e, ','))
         {
           ++acceptor_count;
           ++e;

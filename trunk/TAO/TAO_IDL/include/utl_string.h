@@ -69,13 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "TAO_IDL_FE_Export.h"
 #include "idl_bool.h"
-#include "ace/OS.h"
-
-// Needed to recognize ACE_OSTREAM_TYPE, and for BCB it's
-// not included in ace/OS.h, so we include it here.
-#if defined (__BORLANDC__)
-# include "ace/streams.h"
-#endif
+#include "ace/streams.h"
 
 class TAO_IDL_FE_Export UTL_String
 {

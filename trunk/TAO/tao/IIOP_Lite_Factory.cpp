@@ -3,6 +3,7 @@
 #include "tao/IIOP_Lite_Factory.h"
 #include "tao/IIOP_Acceptor.h"
 #include "tao/IIOP_Connector.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (tao, 
            IIOP_Factory, 

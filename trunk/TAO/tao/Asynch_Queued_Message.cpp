@@ -2,7 +2,7 @@
 #include "debug.h"
 
 #include "ace/OS_Memory.h"
-#include "ace/OS_String.h"
+#include "ace/OS_NS_string.h"
 #include "ace/os_include/sys/os_uio.h"
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
@@ -27,9 +27,9 @@ TAO_Asynch_Queued_Message::
        i != 0;
        i = i->cont ())
     {
-      ACE_OS_String::memcpy (this->buffer_ + copy_offset,
-                             i->rd_ptr (),
-                             i->length ());
+      ACE_OS::memcpy (this->buffer_ + copy_offset,
+                      i->rd_ptr (),
+                      i->length ());
       copy_offset += i->length ();
     }
 }
@@ -112,9 +112,9 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
                   char[sz],
                   0);
 
-  ACE_OS_String::memcpy (buf,
-                         this->buffer_ + this->offset_,
-                         sz);
+  ACE_OS::memcpy (buf,
+                  this->buffer_ + this->offset_,
+                  sz);
 
   TAO_Asynch_Queued_Message *qm = 0;
 

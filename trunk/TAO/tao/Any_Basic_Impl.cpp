@@ -6,6 +6,7 @@
 #include "tao/CDR.h"
 
 #include "ace/Auto_Ptr.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (tao,
            Any_Basic_Impl,

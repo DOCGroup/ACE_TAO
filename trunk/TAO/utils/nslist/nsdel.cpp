@@ -19,6 +19,7 @@
 
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
 
 CORBA::ORB_var orb;
 int showIOR = 0;
@@ -41,7 +42,7 @@ main (int argc, char *argv[])
 
       while (argc > 0)
         {
-          if (strcmp (*argv, "--name") == 0)
+          if (ACE_OS::strcmp (*argv, "--name") == 0)
             {
               if (argc == 1)
                 {
@@ -53,7 +54,7 @@ main (int argc, char *argv[])
               argv++;
               name = *argv;
             }
-          else if (strncmp(*argv, "--", 2) == 0)
+          else if (ACE_OS::strncmp(*argv, "--", 2) == 0)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "Usage: %s [ --name <name> ]\n", pname));
@@ -72,13 +73,13 @@ main (int argc, char *argv[])
         // make a copy
 
         char buf[BUFSIZ];
-        strcpy (buf, name);
+        ACE_OS::strcpy (buf, name);
         char *bp = &buf[0];
         char *cp = 0;
         int ntoks = 0;
         char *toks[20];
 
-        while ((cp = strtok (bp, "/")) != 0)
+        while ((cp = ACE_OS::strtok (bp, "/")) != 0)
           {
             toks[ntoks] = cp;
             ntoks++;
@@ -91,24 +92,24 @@ main (int argc, char *argv[])
           }
 
         for (i=0; i<ntoks; i++)
-          printf ("%s\n", toks[i]);
+          ACE_OS::printf ("%s\n", toks[i]);
 
         // now assign name = toks[ntoks]
         char lastname[BUFSIZ];
-        strcpy (lastname, toks[ntoks - 1]);
+        ACE_OS::strcpy (lastname, toks[ntoks - 1]);
 
         // search for '.' in name; if exists then the part after '.' is the kind
-        char *kind = strchr (lastname, '.');
+        char *kind = ACE_OS::strchr (lastname, '.');
 
         if (kind != 0)
           {
             *kind = 0;
             kind++;
-            printf ("name='%s'\n", lastname);
-            printf ( "kind='%s'\n" , kind );
+            ACE_OS::printf ("name='%s'\n", lastname);
+            ACE_OS::printf ( "kind='%s'\n" , kind );
           }
         else
-          printf ("name=%s\n", lastname );
+          ACE_OS::printf ("name=%s\n", lastname );
 
       CORBA::Object_var nc_obj =
         orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);

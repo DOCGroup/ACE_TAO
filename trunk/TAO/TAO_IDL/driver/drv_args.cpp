@@ -72,6 +72,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_global.h"
 #include "be_extern.h"
 #include "ace/Process.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (driver,
            drv_args,

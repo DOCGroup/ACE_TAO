@@ -41,6 +41,8 @@
 #include "CurrentC.i"
 #endif /* !defined INLINE */
 
+#include "ace/OS_NS_string.h"
+
 // TAO_IDL - Generated from
 // be/be_visitor_arg_traits.cpp:60
 

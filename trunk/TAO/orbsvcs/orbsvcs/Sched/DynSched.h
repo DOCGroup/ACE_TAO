@@ -33,6 +33,7 @@
 #include "ace/SString.h"
 #include "SchedEntry.h"
 #include "sched_export.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 class TAO_RTSched_Export ACE_DynScheduler
   // = TITLE

@@ -69,7 +69,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_field.h"
 #include "utl_scoped_name.h"
-#include "ace/OS.h"
 
 class UTL_ExceptList;
 class UTL_NameList;

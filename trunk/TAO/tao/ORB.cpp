@@ -34,7 +34,7 @@ ACE_RCSID (tao,
 #include "ace/Arg_Shifter.h"
 #include "ace/Reactor.h"
 #include "ace/Argv_Type_Converter.h"
-
+#include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ORB.i"
@@ -1059,9 +1059,9 @@ CORBA::ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
 
      char port_char[256];
 
-     ACE_OS_String::itoa (port,
-                          port_char,
-                          10);
+     ACE_OS::itoa (port,
+                   port_char,
+                   10);
 
      CORBA::String_var port_ptr =
        CORBA::string_alloc (ACE_static_cast (CORBA::ULong,

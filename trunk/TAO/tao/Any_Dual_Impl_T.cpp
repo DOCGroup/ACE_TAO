@@ -13,6 +13,7 @@
 
 #include "ace/CORBA_macros.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Any_Dual_Impl_T.inl"

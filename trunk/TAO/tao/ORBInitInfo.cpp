@@ -147,7 +147,7 @@ TAO_ORBInitInfo::register_initial_reference (
 
   if (id == 0)
     ACE_THROW (PortableInterceptor::ORBInitInfo::InvalidName ());
-  else if (ACE_OS_String::strlen (id) == 0)
+  else if (ACE_OS::strlen (id) == 0)
     ACE_THROW (PortableInterceptor::ORBInitInfo::InvalidName ());
 
 
@@ -170,7 +170,7 @@ TAO_ORBInitInfo::resolve_initial_references (
   if (id == 0)
     ACE_THROW_RETURN (PortableInterceptor::ORBInitInfo::InvalidName (),
                       CORBA::Object::_nil ());
-  else if (ACE_OS_String::strlen (id) == 0)
+  else if (ACE_OS::strlen (id) == 0)
     ACE_THROW_RETURN (PortableInterceptor::ORBInitInfo::InvalidName (),
                       CORBA::Object::_nil ());
 

@@ -2,6 +2,7 @@
 
 #include "Batch_Buffering_Strategy.h"
 #include "../Method_Request_Event.h"
+#include "ace/Null_Condition.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Batch_Buffering_Strategy.inl"

@@ -26,7 +26,7 @@ TAO_Notify_POA_Helper::get_unique_id (void)
   static TAO_Notify_ID_Factory poa_id_factory;
 
   char buf[32];
-  ACE_OS_String::itoa (poa_id_factory.id (), buf, 10);
+  ACE_OS::itoa (poa_id_factory.id (), buf, 10);
 
   return ACE_CString (buf);
 }

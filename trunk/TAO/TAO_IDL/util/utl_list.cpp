@@ -73,7 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //	     public virtual inheritance.
 
 #include "utl_list.h"
-#include "ace/OS.h"
+#include "ace/OS_Memory.h"
 
 ACE_RCSID (util, 
            utl_list, 

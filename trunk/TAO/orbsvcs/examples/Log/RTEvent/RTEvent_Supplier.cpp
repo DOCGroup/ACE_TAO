@@ -2,6 +2,7 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "ace/OS_main.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (RTEvent,
            RTEvent_Supplier,

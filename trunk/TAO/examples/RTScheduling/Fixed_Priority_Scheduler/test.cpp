@@ -7,6 +7,7 @@
 #include "../Thread_Task.h"
 #include "../Task_Stats.h"
 #include "../Synch_i.h"
+#include "ace/OS_NS_errno.h"
 
 DT_Test::DT_Test (void)
 {

@@ -3,7 +3,7 @@
 
 #include "tao/debug.h"
 
-#include "ace/OS.h"
+#include "ace/OS_NS_time.h"
 
 
 ACE_RCSID (Time,

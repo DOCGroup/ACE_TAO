@@ -41,7 +41,7 @@ main (int argc, char *argv[])
       int rebind = 0;
       while (argc > 0)
         {
-          if (strcmp (*argv, "--ior") == 0)
+          if (ACE_OS::strcmp (*argv, "--ior") == 0)
             {
               if (argc == 1)
                 {
@@ -53,7 +53,7 @@ main (int argc, char *argv[])
               argv++;
               ior = *argv;
             }
-          else if (strcmp (*argv, "--name") == 0)
+          else if (ACE_OS::strcmp (*argv, "--name") == 0)
             {
               if (argc == 1)
                 {
@@ -65,11 +65,11 @@ main (int argc, char *argv[])
               argv++;
               name = *argv;
             }
-          else if (strcmp (*argv, "--rebind") == 0)
+          else if (ACE_OS::strcmp (*argv, "--rebind") == 0)
             {
               rebind = 1;
             }
-          else if (strncmp (*argv, "--", 2) == 0)
+          else if (ACE_OS::strncmp (*argv, "--", 2) == 0)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "Usage: %s --name <name> "
@@ -106,12 +106,12 @@ main (int argc, char *argv[])
         }
       //printf (" make a copy\n");
       char buf[BUFSIZ];
-      strcpy (buf, name);
+      ACE_OS::strcpy (buf, name);
       char *bp = &buf[0];
       char *cp = 0;
       int ntoks = 0;
       char *toks[20];
-      while ((cp = strtok (bp, "/")) != 0)
+      while ((cp = ACE_OS::strtok (bp, "/")) != 0)
 	{
           toks[ntoks] = cp;
           ntoks++;
@@ -122,9 +122,9 @@ main (int argc, char *argv[])
 
       // now assign name = toks[ntoks]
       char lastname[BUFSIZ];
-      strcpy (lastname, toks[ntoks-1]);
+      ACE_OS::strcpy (lastname, toks[ntoks-1]);
       // search for '.' in name; if exists then the part after '.' is the kind
-      char *kind = strchr (lastname, '.');
+      char *kind = ACE_OS::strchr (lastname, '.');
       if (kind != 0)
 	{
           *kind = 0;

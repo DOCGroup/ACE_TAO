@@ -2,16 +2,16 @@
 
 #include "Sequence.h"
 
+#if !defined (__ACE_INLINE__)
+#include "tao/Sequence.i"
+#endif /* __ACE_INLINE__ */
+
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
 # include "ace/Message_Block.h"
 #endif /* (TAO_NO_COPY_OCTET_SEQUENCES == 1) */
 
 #include "ace/Log_Msg.h"
-#include "ace/OS_String.h"
-
-#if !defined (__ACE_INLINE__)
-#include "tao/Sequence.i"
-#endif /* __ACE_INLINE__ */
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (tao,
            Sequence,
@@ -704,9 +704,9 @@ TAO_Unbounded_Sequence<CORBA::Octet>::TAO_Unbounded_Sequence (
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       if (rhs.mb_ == 0)
         {
-          ACE_OS_String::memcpy (tmp1,
-                                 tmp2,
-                                 this->length_);
+          ACE_OS::memcpy (tmp1,
+                          tmp2,
+                          this->length_);
         }
       else
         {
@@ -714,9 +714,9 @@ TAO_Unbounded_Sequence<CORBA::Octet>::TAO_Unbounded_Sequence (
 
           for (const ACE_Message_Block *i = rhs.mb_; i != 0; i = i->cont ())
             {
-              ACE_OS_String::memcpy (tmp1 + offset,
-                                     i->rd_ptr (),
-                                     i->length ());
+              ACE_OS::memcpy (tmp1 + offset,
+                              i->rd_ptr (),
+                              i->length ());
 
               offset += i->length ();
             }
@@ -790,9 +790,9 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator= (
   // tmp1[i] = tmp2[i];
   if (rhs.mb_ == 0)
     {
-      ACE_OS_String::memcpy (tmp1,
-                             tmp2,
-                             this->length_);
+      ACE_OS::memcpy (tmp1,
+                      tmp2,
+                      this->length_);
     }
   else
     {
@@ -800,9 +800,9 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator= (
 
       for (const ACE_Message_Block *i = rhs.mb_; i != 0; i = i->cont ())
         {
-          ACE_OS_String::memcpy (tmp1 + offset,
-                                 i->rd_ptr (),
-                                 i->length ());
+          ACE_OS::memcpy (tmp1 + offset,
+                          i->rd_ptr (),
+                          i->length ());
           offset += i->length ();
         }
     }
@@ -902,7 +902,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (CORBA::Boolean orphan)
       //   buffer comes from a CDR stream.
       //
       result = TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (this->length_);
-      ACE_OS_String::memcpy (result, this->buffer_, this->length_);
+      ACE_OS::memcpy (result, this->buffer_, this->length_);
     }
   else if (this->release_ != 0)
     {

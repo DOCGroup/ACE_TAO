@@ -88,6 +88,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_identifier.h"
 #include "utl_scope.h"
 #include "utl_err.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (ast, 
            ast_decl, 
@@ -1312,8 +1313,8 @@ AST_Decl::last_referenced_as (UTL_ScopedName *n)
   this->last_referenced_as_ = n;
 
   if (idl_global->in_main_file ()
-      && ACE_OS_String::strcmp (n->last_component ()->get_string (),
-                                "ParameterMode") == 0)
+      && ACE_OS::strcmp (n->last_component ()->get_string (),
+                         "ParameterMode") == 0)
     {
       ACE_SET_BITS (idl_global->decls_seen_info_,
                     idl_global->decls_seen_masks.parametermode_seen_);

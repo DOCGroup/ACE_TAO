@@ -17,6 +17,7 @@ project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
   //OS_Dirent.cpp
   //OS_Memory.cpp
   //OS_String.cpp
+  //Synch.cpp
 
   Source_Files(ACE_COMPONENTS) {
     OS {
@@ -129,7 +130,6 @@ project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
       Atomic_Op.cpp
       Process.cpp
       Process_Manager.cpp
-      //Synch.cpp
       TSS_Adapter.cpp
       Auto_Event.cpp
       Manual_Event.cpp

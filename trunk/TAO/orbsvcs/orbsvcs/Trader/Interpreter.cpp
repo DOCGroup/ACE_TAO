@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Interpreter.h"
+#include "ace/OS_NS_string.h"
 
 TAO_SYNCH_MUTEX TAO_Interpreter::parserMutex__;
 

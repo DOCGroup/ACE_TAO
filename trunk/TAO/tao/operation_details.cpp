@@ -5,6 +5,7 @@
 #include "ORB_Constants.h"
 #include "DynamicC.h"
 #include "Exception_Data.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/operation_details.i"

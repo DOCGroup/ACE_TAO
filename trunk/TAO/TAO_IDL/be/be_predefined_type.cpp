@@ -26,6 +26,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (be, 
            be_predefined_type, 
