@@ -4599,25 +4599,17 @@ ACE_OS::creat (LPCTSTR filename, mode_t mode)
 #endif /* ACE_WIN32 */
 }
 
+#if ! defined (ACE_WIN32) && ! defined (VXWORKS)
+// Don't inline on those platforms because this function contains
+// string literals, and some compilers, e.g., g++, don't handle those
+// efficiently in unused inline functions.
 ACE_INLINE int 
 ACE_OS::uname (struct utsname *name)
 {
   // ACE_TRACE ("ACE_OS::uname");
-#if defined (ACE_WIN32)
-  size_t maxnamelen = sizeof name->nodename;
-  ::strcpy (name->sysname, "Win32");
-  // Any ideas what these should be?
-  ::strcpy (name->release, "???");
-  ::strcpy (name->version, "???");
-  ::strcpy (name->machine, "???");
-
-  return ACE_OS::hostname (name->nodename, maxnamelen);
-#elif defined (VXWORKS)
-  ACE_NOTSUP_RETURN (-1);
-#else
   ACE_OSCALL_RETURN (::uname (name), int, -1);
-#endif /* ACE_WIN32 */
 }
+#endif /* ! ACE_WIN32 && ! VXWORKS */
 
 ACE_INLINE int 
 ACE_OS::hostname (char name[], size_t maxnamelen)
@@ -4626,6 +4618,8 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
 #if defined (ACE_WIN32)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameA (name, LPDWORD (&maxnamelen)), 
 				       ace_result_), int, -1);
+#elif defined (VXWORKS)
+  ACE_OSCALL_RETURN (::gethostname (name, maxnamelen), int, -1);
 #else /* !ACE_WIN32 */
   struct utsname host_info;
   
