@@ -52,6 +52,9 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <a href="#ts">CORBA Time Service</a></li>
 
 <li>
+<a href="#ins">CORBA InterOperable Naming Service</a></li>
+
+<li>
 <a href="#ec">CORBA Event Service</a></li>
 
 <li>
@@ -733,6 +736,22 @@ Implementation of the Timer Event Service.</li>
 For OMG's documentation on the Time Service please read&nbsp; <a href="ftp://ftp.omg.org/pub/docs/formal/97-02-22.pdf">The
 Time Service Specification. (.pdf)</a>
 <p>
+
+<hr WIDTH="100%">
+
+<p><a NAME="ins"></a><b>CORBA InterOperable Naming Service</b>
+<p>Point of contact: <a href="mailto:vishal@cs.wustl.edu">Vishal Kachroo</a>
+<p>This service enables the ORB to support IORs in user-friendly URL formats. The formats to be supported are iioploc and iiopname. It also allows the ORB to be administratively configured to return arbitrary object references from CORBA::ORB::resolve_initial_references for non-locality-constrained objects. In addition to this required implementation-specific configuration, two CORBA::ORB_init arguments are provided to override the ORB initial reference configuration. The service provides an extension to the existing Naming Service to include conversions to and from URL style IORs.
+
+<p>Current status (as of 22nd Feb 1999):
+<ul>
+<li>
+The Naming Service is being used as an agent to understand IIOP request messages from clients and respond with reply messages with a LOCATION_FORWARD status. Work is in progress for the client side lookup tables built through commandline arguments to the ORB,  -ORBInitRef and -ORBDefaultInitRef. The following components of TAO are involved in the implementation : the ORB, ORB Core, ORB parameters and IIOP_ORB.</li>
+</ul>
+For OMG's documentation on the InterOperable Naming Service please read <a href="ftp://ftp.omg.org/pub/docs/orbos/98-10-11.pdf">The
+InterOperable Naming Service. (.pdf)</a>
+<br>
+<br>
 <hr WIDTH="100%">
 <h3>
 <a NAME="ec"></a>CORBA Event Service</h3>
