@@ -1,3 +1,13 @@
+Tue Jul 21 17:29:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Any.cpp: 
+	  The type() method has to return a copy (per the spec).
+	  The replace() method first duplicate its TypeCode arg and *then*
+	  releases the internal TypeCode, this protect us in case both are
+	  the same thing.
+	  We still have to fix some problems in the IDL generated
+	  operator>>=.
+
 Tue Jul 21 16:57:07 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/IIOP_ORB.cpp (iiop_string_to_object): Don't decrement the

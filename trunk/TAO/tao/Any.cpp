@@ -41,7 +41,7 @@
 CORBA::TypeCode_ptr
 CORBA_Any::type (void) const
 {
-  return this->type_;
+  CORBA::TypeCode::_duplicate (this->type_);
 }
 
 // TAO doesn't give any guarantees if the value returned by value can be cast
@@ -250,12 +250,12 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
         }
     }
 
-  // release our current typecode
-  if (this->type_ != 0)
-    CORBA::release (this->type_);
+  // Duplicate tc and then release this->type_, just in case tc and
+  // type_ are the same thing.
+  CORBA::TypeCode_ptr tmp = CORBA::TypeCode::_duplicate (tc);
+  CORBA::release (this->type_);
+  this->type_ = tmp;
 
-  // assign new typecode
-  this->type_ = CORBA::TypeCode::_duplicate (tc);
   this->value_ = (void *) value;
   this->any_owns_data_ = any_owns_data;
   this->cdr_ = 0;
