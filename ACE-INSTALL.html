@@ -119,7 +119,7 @@ For information on TAO's platform coverage and support, please also see
     <td>Maintains ACE on certain platforms required for their TAO
         software and service offerings.
     </td>
-    <td>OCI's <A HREF="http://www.theaceorb.com">web site</A> and
+    <td>OCI's <A HREF="http://www.theaceorb.com/">web site</A> and
         the TAO <A HREF="TAO/TAO-INSTALL.html">install document</A></td>
   </tr>
   <tr>
@@ -1009,7 +1009,7 @@ your applications. The traditional configuration method is still more
 reliable. Any help you can 
 lend to improve the ACE build process using GNU Autoconf would be very much
 appreciated. Please send any fixes to the
-<A HREF="mailto:ace-users@cs.wustl.edu">ACE users</A>mailing list.</P>
+<A HREF="mailto:ace-users@cs.wustl.edu">ACE users</A> mailing list.</P>
 <P>
 The ACE only kit has been bootstrapped so you do not need to install
 the GNU Autotools (autoconf, automake, libtool) unless you want to
@@ -1104,10 +1104,12 @@ Here's what you need to do to build ACE using GNU Make and ACE's traditional
 per-platform configuration method:</P>
 
 <OL>
-  <LI>Install <A HREF="ftp://prep.ai.mit.edu/pub/gnu/make/">GNU make</A>
-  3.79.1 or greater on your system (available via
-      anonymous ftp from prep.ai.mit.edu in the pub/gnu/make/ directory).
-      You <EM>must</EM> use GNU make or ACE won't compile.<P>
+  <LI>Install <A HREF="http://ftp.gnu.org/pub/gnu/make/">GNU make</A>
+  3.79.1 or greater on your system (available via <code>http</code>
+      anonymous <code>ftp</code> from <code>ftp.gnu.org</code> in the
+      <code>pub/gnu/make/</code> directory). 
+      You <EM>must</EM> use GNU make when using ACE's traditional
+	per-platform configuration method or ACE won't compile.<P>
 
   <LI>Add an environment variable called ACE_ROOT that contains the
       name of the root of the directory where you keep the ACE wrapper
@@ -1116,13 +1118,13 @@ per-platform configuration method:</P>
       instance, in my .login file for TSCH/CSH I have the following entry:<P>
 
       <pre><code>
-      % setenv ACE_ROOT /home/cs/faculty/schmidt/ACE_wrappers
+      setenv ACE_ROOT /home/cs/faculty/schmidt/ACE_wrappers
       </code></pre><P>
 
       BTW, if you're running BASH or Bourne Shell you'll need to do the following:
 
       <pre><code>
-      % ACE_ROOT=/home/cs/faculty/schmidt/ACE_wrappers; export ACE_ROOT
+      ACE_ROOT=/home/cs/faculty/schmidt/ACE_wrappers; export ACE_ROOT
       </code></pre><P>
 
       If you're building a number of versions of ACE, however, (e.g., for
@@ -1130,15 +1132,15 @@ per-platform configuration method:</P>
       the following approach (again assuming TCSH/CSH):
 
       <pre><code>
-      % setenv ACE_ROOT $cwd
+      setenv ACE_ROOT $cwd
       </code></pre>
 
   <LI>Create a configuration file, <code>$ACE_ROOT/ace/config.h</code>,
       that includes the appropriate platform/compiler-specific
       header configurations from the ACE source directory. For example:
-<PRE><CODE>
+<BLOCKQUOTE><CODE>
 #include "ace/config-sunos5-sunc++-4.x.h"
-</CODE></PRE>
+</CODE></BLOCKQUOTE>
       The platform/compiler-specific configuration file
       contains the #defines that are used throughout ACE to indicate
       which features your system supports. See the
@@ -1158,9 +1160,9 @@ per-platform configuration method:</P>
       <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code>,
       that contains the appropriate platform/compiler-specific
       Makefile configurations, e.g.,
-<PRE><CODE>
+<BLOCKQUOTE><CODE>
 include $(ACE_ROOT)/include/makeinclude/platform_sunos5_sunc++.GNU
-</CODE></PRE>
+</CODE></BLOCKQUOTE>
       This file contains the compiler and Makefile directives that are
       platform/compiler-specific. If you'd like to add make options, you
       can add them before including the paltform-specific configuration.<P>
@@ -1197,8 +1199,8 @@ include $(ACE_ROOT)/include/makeinclude/platform_sunos5_sunc++.GNU
       HREF="apps/gperf">$ACE_ROOT/apps/gperf/</A>.<P>
 
   <LI>If you need to regenerate the Svc_Conf_y.cpp file, you'll need to
-      get <A HREF="http://www.cs.wustl.edu/~schmidt/byacc.tar.gz">Berkeley
-      YACC</A>.  However, you should rarely, if ever, need to do this.<P>
+      get <A HREF="http://ftp.gnu.org/pub/gnu/bison/">GNU Bison</A>.
+	However, you should rarely, if ever, need to do this.<P>
 
 </OL>
 
@@ -2364,9 +2366,9 @@ Here's what you need to do:<P>
       HREF="netsvcs/servers/main.cpp">$ACE_ROOT/netsvcs/servers/main.cpp</A>
       should also be compiled and ready to run.<P>
 
-  <LI>Set your LD_LIBRARY_PATH environment variable to where the binary
-      version of the ACE netsvcs library.  For example, you probably
-      want to do something like the following<P>
+  <LI>Set your <CODE>LD_LIBRARY_PATH</CODE> environment variable to
+      where the binary version of the ACE netsvcs library.  For
+      example, you probably want to do something like the following<P>
 
       <pre><code>
       % setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$ACE_ROOT/lib:$LD_LIBRARY_PATH
@@ -2746,8 +2748,8 @@ Once this is done, then invoke the top-level Makefile with the
 </pre><P>
 
 This will establish a complete tree of links.  In addition, make sure
-you set your LD_LIBRARY_PATH to
-$ACE_ROOT/ace:$ACE_ROOT/lib:$LD_LIBRARY_PATH on SVR4 UNIX
+you set your <CODE>LD_LIBRARY_PATH</CODE> to
+<CODE>$ACE_ROOT/ace:$ACE_ROOT/lib:$LD_LIBRARY_PATH</CODE> on SVR4 UNIX
 platforms.<P>
 
 When you do a make in the $ACE_ROOT directory you will be producing
@@ -2792,8 +2794,8 @@ precede all operands.  To get around this, you must set a special
 compiler environment variable (_CXX_CCMODE) to 1 which tells the compiler
 to allow options and operands to be interspersed.<P>
 
-Note that the environment variable LD_LIBRARY_PATH is called LIBPATH
-on MVS.<P>
+Note that the environment variable <CODE>LD_LIBRARY_PATH</CODE> is
+called <CODE>LIBPATH</CODE> on MVS.<P>
 
 Shared objects are built a little different on MVS than on
 other UNIX implementations.  This has been accounted for in the makefiles
