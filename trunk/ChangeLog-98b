@@ -81,17 +81,15 @@ Tue Oct 13 22:40:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* ace/Message_Block_T.i: 
 	* ace/Message_Block_T.cpp: 
 	  Added a new variant of the ACE_Data_Block class that holds an
-	  instance of its locking strategy, this is useful because in some
-	  cases the lifetime of the lock is tied to the lifetime of the
-	  Data_Block itself.
-	  The Message_Block class was carefullly modified to support this
-	  new feature, i.e. it does not hold a lock while removing the
-	  data block because the hold may be part of the data block
-	  itself.
-	  Still all the features in the Message_Blocks are supported, for
-	  instance, a complete Message_Block chain ca be destroyed while
-	  holding a single lock, shared by all the Data_Blocks in the
-	  chain.
+ 	  instance of its locking strategy, this is useful because in some
+ 	  cases the lifetime of the lock is tied to the lifetime of the
+ 	  Data_Block itself.  The Message_Block class was carefullly
+ 	  modified to support this new feature, i.e. it does not hold a
+ 	  lock while removing the data block because the hold may be part
+ 	  of the data block itself.  Still all the features in the
+ 	  Message_Blocks are supported, for instance, a complete
+ 	  Message_Block chain ca be destroyed while holding a single lock,
+ 	  shared by all the Data_Blocks in the chain.
 
 Tue Oct 13 22:39:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
