@@ -1,3 +1,8 @@
+Sun Apr  1 09:29:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/tutorials/Quoter/*/Makefile: Updated dependencies. The last
+	  dependency generation did not catch many of them.
+
 Sun Apr  1 09:21:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/MT_Timeout:
