@@ -4,10 +4,6 @@
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 
-#if !defined (__ACEXML_INLINE__)
-# include "Print_Handler.i"
-#endif /* __ACEXML_INLINE__ */
-
 ACEXML_Print_Handler::ACEXML_Print_Handler (ACEXML_Char* fileName)
   : fileName_(ACE::strnew (fileName))
 {
