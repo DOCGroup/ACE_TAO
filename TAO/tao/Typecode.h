@@ -99,7 +99,7 @@ public:
                           TAO_default_environment ()) const;
   // Compares two typecodes. Must be identical in every respect.
 
-  CORBA::Boolean equivalent (CORBA::TypeCode_ptr,
+  CORBA::Boolean equivalent (const CORBA::TypeCode_ptr,
                              CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ()) const;
   // Conforms to CORBA 2.3.1 (99-10-07).
