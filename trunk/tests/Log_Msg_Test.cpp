@@ -91,7 +91,7 @@ Logger::log (ACE_Log_Record &log_record)
   if (!this->verbose_logging_)
     {
       if (use_log_msg)
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     ASYS_TEXT ("Logger::log->%s\n"),
                     log_record.msg_data ()));
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -105,13 +105,13 @@ Logger::log (ACE_Log_Record &log_record)
   else
     {
       char verbose_msg[ACE_Log_Record::MAXVERBOSELOGMSGLEN];
-      int result = log_record.format_msg (ACE_LOG_MSG->local_host (), 
-                                          ACE_LOG_MSG->flags (), 
+      int result = log_record.format_msg (ACE_LOG_MSG->local_host (),
+                                          ACE_LOG_MSG->flags (),
                                           verbose_msg);
       if (result == 0)
         {
           if (use_log_msg)
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         ASYS_TEXT ("Logger::log->%s\n"),
                         verbose_msg));
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -159,21 +159,21 @@ test_callbacks (void)
   // This message should show up via the Logger callback.
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%t) forth message\n")));
-  
+
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
 
   // This message should show up via the Logger callback (somewhat
   // verbosely).
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%t) fifth message\n")));
-  
+
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE);
 
   // This message should show up via the Logger callback (really
   // verbosely).
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%t) sixth message\n")));
-  
+
   logger.verbose (0);
 
   // This message should show up via the Logger callback (not
@@ -303,7 +303,7 @@ test_log_msg_features (const char *program)
   ACE_CLR_BITS (priority_mask, LM_INFO);
   ACE_LOG_MSG->priority_mask (priority_mask,
                               ACE_Log_Msg::PROCESS);
-      
+
   ACE_DEBUG ((LM_INFO,
               ASYS_TEXT ("This LM_INFO message should not print!\n")));
   ACE_DEBUG ((LM_DEBUG,
@@ -328,8 +328,7 @@ test_ostream (void)
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   // Create a persistent store.
   const char *filename = "output";
-  int flags = ios::out | ios::trunc;
-  ofstream myostream (filename, flags);
+  ofstream myostream (filename, ios::out | ios::trunc);
 
   // Check for errors.
   if (myostream.bad ())
@@ -348,14 +347,14 @@ test_ostream (void)
   // Open up the file.
   if (connector.connect (file,
                          ACE_FILE_Addr (filename)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("connect failed for %p\n"),
                        filename),
                       1);
   // Unlink this file right away so that it is automatically removed
   // when the process exits.
   else if (ACE_OS::unlink (filename) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("unlink failed for %p\n"),
                        filename),
                       1);
@@ -405,7 +404,7 @@ test_ostream (void)
 
 // Main function.
 
-int 
+int
 main (int, char *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("Log_Msg_Test"));
