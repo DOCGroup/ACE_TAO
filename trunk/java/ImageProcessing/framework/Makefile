@@ -17,8 +17,7 @@ clean:
 realclean: clean  
 	rm -rf $(JACE_WRAPPER)/classes/imaging/framework
 
-files =	ImageFilterFactory.java \
-	ImageProcessor.java \
+files =	ImageProcessor.java \
 	DialogType.java \
 	URLFrame.java \
 	DialogManager.java \
