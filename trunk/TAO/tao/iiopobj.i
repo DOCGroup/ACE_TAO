@@ -13,7 +13,8 @@ ACE_INLINE
 IIOP::ProfileBody::~ProfileBody (void)
 {
   ACE_OS::free (host);
-  ACE_OS::free (object_key.buffer);
+  //  ACE_OS::free (object_key.buffer);
+  delete [] object_key.buffer;
 }
 
 ACE_INLINE

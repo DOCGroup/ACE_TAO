@@ -265,15 +265,19 @@ TAO_Marshal_TypeCode::decode (CORBA_TypeCode_ptr,
 {
   CORBA_Boolean continue_decoding = CORBA_B_TRUE;
   CDR *stream = (CDR *) context;  // context is the CDR stream
-  CORBA_TypeCode_ptr *tcp;         // typecode to be encoded
-  CORBA_ULong kind;
-  CORBA_TypeCode_ptr parent = (CORBA_TypeCode_ptr) parent_typecode;
-
-  // decode the "kind" field of the typecode
+  CORBA_TypeCode_ptr *tcp;        // typecode to be decoded
+  CORBA_ULong kind;               // typecode kind
+  CORBA_TypeCode_ptr parent = (CORBA_TypeCode_ptr) parent_typecode; // TypeCode
+								    // for the
+								    // parent
+  
+  // decode the "kind" field of the typecode from the stream
   continue_decoding = stream->get_ulong (kind);
+
   if (continue_decoding == CORBA_B_TRUE)
     {
-      tcp = (CORBA_TypeCode_ptr *) data;  // the data has to be a TypeCode_ptr
+      tcp = (CORBA_TypeCode_ptr *) data;  // the data has to be a TypeCode_ptr*
+
       // Typecodes with empty parameter lists all have preallocated
       // constants.  We use those to reduce memory consumption and
       // heap access ... also, to speed things up!
@@ -284,6 +288,7 @@ TAO_Marshal_TypeCode::decode (CORBA_TypeCode_ptr,
         {
           if (kind == ~0 || kind < TC_KIND_COUNT)
             {
+	      // either a non-constant typecode or an indirected typecode
               switch (kind) 
                 {
                   // Need special handling for all kinds of typecodes
@@ -311,9 +316,11 @@ TAO_Marshal_TypeCode::decode (CORBA_TypeCode_ptr,
                           } 
                         else 
                           {
+			    // bounded string. Save the bounds
                             *tcp = new CORBA_TypeCode ((CORBA_TCKind) kind,
-                                                       bound, 0, CORBA_B_FALSE);
-                            (*tcp)->_parent = parent;
+                                                       bound, 0, CORBA_B_FALSE,
+						       parent);
+			    //                            (*tcp)->_parent = parent;
                           }
                       }
                   }
@@ -342,9 +349,20 @@ TAO_Marshal_TypeCode::decode (CORBA_TypeCode_ptr,
 
                     continue_decoding = stream->get_long (offset);
                     if (continue_decoding)
-                      continue_decoding = (offset < 0);
+		      {
+			// Since indirected typecodes cannot occur at the
+			// topmost level, they can occur starting only at the
+			// second and subsequent levels. This means that a
+			// normal encoding of that typecode occurred somewhere
+			// before in the stream. As a result the offset field
+			// must always be negative. See the CORBA spec for details.
+			continue_decoding = (offset < 0);
+		      }
                     if (continue_decoding) 
                       {
+			// the offset must be such that the indir_stream.next
+			// should point to the TypeCode kind value of the
+			// TypeCode to which we are referring to.
                         indir_stream.buffer = indir_stream.next
                           = stream->next + offset;
                         indir_stream.remaining = indir_stream.length = 8;
@@ -364,13 +382,17 @@ TAO_Marshal_TypeCode::decode (CORBA_TypeCode_ptr,
                     CORBA_ULong indir_kind;
                     CORBA_ULong indir_len;
 
+		    // retrieve the typecode kind
                     if (continue_decoding)
-                      continue_decoding = stream->get_ulong (indir_kind);
+                      continue_decoding = indir_stream.get_ulong (indir_kind);
+
                     if (continue_decoding
                         && indir_kind >= TC_KIND_COUNT)
                       continue_decoding = CORBA_B_FALSE;
+
+		    // now retrieve the encapsulation length
                     if (continue_decoding)
-                      continue_decoding = stream->get_ulong (indir_len);
+                      continue_decoding = indir_stream.get_ulong (indir_len);
 
                     // Now construct indirected typecode.  This shares the
                     // typecode octets with the "parent" typecode,
@@ -379,11 +401,15 @@ TAO_Marshal_TypeCode::decode (CORBA_TypeCode_ptr,
                     if (continue_decoding) 
                       {
                         *tcp = new CORBA_TypeCode ((CORBA_TCKind) indir_kind,
-                                                   indir_len,
-                                                   indir_stream.next,
-                                                   CORBA_B_FALSE);
+                                                   indir_len,  // length of encapsulation
+                                                   indir_stream.next, // octet buffer
+                                                   CORBA_B_FALSE, // ORB
+								  // doesn't own
+						   parent); // this is our parent
+#if 0
                         (*tcp)->_parent = parent;
                         parent->AddRef ();
+#endif
                       }
                   }
                 break;
@@ -422,8 +448,9 @@ TAO_Marshal_TypeCode::decode (CORBA_TypeCode_ptr,
                     *tcp = new CORBA_TypeCode ((CORBA_TCKind) kind,
                                                len,
                                                buffer,
-                                               CORBA_B_FALSE);
-                    (*tcp)->_parent = parent;
+                                               CORBA_B_FALSE,
+					       parent);
+		    //                    (*tcp)->_parent = parent;
                   }
                 } // end of switch
             }
@@ -856,14 +883,13 @@ TAO_Marshal_Union::decode (CORBA_TypeCode_ptr  tc,
                                   env.exception (new CORBA_MARSHAL (COMPLETED_MAYBE));
                                   return CORBA_TypeCode::TRAVERSE_STOP;
                                 }
-                              
                             }
                           else
                             {
                               env.exception (new CORBA_MARSHAL (COMPLETED_MAYBE));
                               return CORBA_TypeCode::TRAVERSE_STOP;
                             }
-                        } // end of while
+                        } // end of for loop
                       // we are here only if there was no match
                       if (default_tc)
 			return stream->decode (default_tc, data, data2, env);
@@ -923,16 +949,18 @@ TAO_Marshal_String::decode (CORBA_TypeCode_ptr,
   // but we will accept them when it's clear how to do so.
 
   continue_decoding = stream->get_ulong (len);
+  // note that the encoded length is 1 more than the length of the string
+  // because it also accounts for the terminating NULL character
   *((CORBA_String *) data) = str = new CORBA_Char [(size_t) (len)];
 
   if (len != 0)
-
+    {
     while (continue_decoding != CORBA_B_FALSE && len-- != 0) 
       {
         continue_decoding = stream->get_char (*(CORBA_Char *) str);
         str++;
       }
-
+    }
   if (continue_decoding == CORBA_B_TRUE)
     return CORBA_TypeCode::TRAVERSE_CONTINUE;
   else 

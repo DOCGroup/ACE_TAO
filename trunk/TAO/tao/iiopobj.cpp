@@ -31,7 +31,8 @@ IIOP::ProfileBody::ProfileBody (const IIOP::ProfileBody &src)
 
   object_key.length = object_key.maximum = src.object_key.length;
 
-  object_key.buffer = (CORBA_Octet *) ACE_OS::malloc (object_key.maximum);
+  //  object_key.buffer = (CORBA_Octet *) ACE_OS::malloc (object_key.maximum);
+  object_key.buffer = new CORBA_Octet [object_key.maximum];
 
  (void) ACE_OS::memcpy (object_key.buffer,
                          src.object_key.buffer,
@@ -49,7 +50,8 @@ IIOP::ProfileBody::ProfileBody (const IIOP::Version &v,
   
   object_key.length = object_key.maximum = key.length;
 
-  object_key.buffer = (CORBA_Octet *) ACE_OS::malloc (object_key.maximum);
+  //  object_key.buffer = (CORBA_Octet *) ACE_OS::malloc (object_key.maximum);
+  object_key.buffer = new CORBA_Octet [object_key.maximum];
 
  (void) ACE_OS::memcpy (object_key.buffer, key.buffer,
                          object_key.length);

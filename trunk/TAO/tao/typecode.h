@@ -118,7 +118,10 @@ class ACE_Svc_Export CORBA_TypeCode : public IUnknown
 public:
 
   static CORBA_TypeCode_ptr _duplicate (CORBA_TypeCode_ptr tc);
+  // duplicates i.e., increments ref count
+
   static CORBA_TypeCode_ptr _nil (void);
+  // returns a NULL typecode
 
   CORBA_Boolean equal (const CORBA_TypeCode_ptr, CORBA_Environment &env) const;
   // compares two typecodes
@@ -166,7 +169,7 @@ public:
   // Calculates the padded size of discriminant type
   // TAO Extension
 
-  // Following three are deprecated
+  // =Following three are deprecated
 
   CORBA_ULong param_count (CORBA_Environment &) const;
   // Deprecated, CORBA 1.2, not fully usable. Returns the number of parameters
@@ -189,6 +192,11 @@ public:
   // This constructor is used only for built-in TypeCode constants,
   // with no parameters.
 
+  CORBA_TypeCode (CORBA_TCKind kind,
+                  CORBA_ULong length,
+                  CORBA_Octet *buffer,
+                  CORBA_Boolean orb_owns_tc,
+		  CORBA_TypeCode_ptr parent = 0);
   // This constructor is used both for typecode constants and for
   // heap-allocated TypeCodes.  The two are distinguished by the
   // orb_owns_tc flag passed in by the creator.
@@ -198,20 +206,23 @@ public:
   //
   // For complex param lists, or simple param lists for which the
   // parameter is a string or typecode, length _and_ buffer matter.
+  //
+  // For typecodes that are precomputed from the encapsulation stream of the
+  // parent, even the "parent" argument matters because this implies that all
+  // children will share the octet buffers of its parent
 
-  CORBA_TypeCode (CORBA_TCKind kind,
-                  CORBA_ULong length,
-                  CORBA_Octet *buffer,
-                  CORBA_Boolean orb_owns_tc);
 
   // = Class-specific allocation.
   void *operator new (size_t, void *p);
   void *operator new (size_t s);
 
   virtual ~CORBA_TypeCode (void);
+  // destructor
 
   enum traverse_status { TRAVERSE_STOP, TRAVERSE_CONTINUE };
+  // these are used to indicate the status of marshaling
 
+  // = The following traverse function is unused in TAO.
   typedef traverse_status (_FAR * VisitRoutine) (CORBA_TypeCode_ptr tc,
                                                  const void *value1,
                                                  const void *value2,
@@ -270,8 +281,13 @@ public:
   // format.
 
   CORBA_ULong _length;
+  // length of the encapsulated stream
+
   CORBA_Octet *_buffer;
+  // the encapsulated stream
+
   CORBA_TCKind _kind;
+  // the TypeCode kind
 
   CORBA_TypeCode_ptr _parent;
   // Indirected typecodes share "buffer" with a parent, and hold a
@@ -284,10 +300,6 @@ public:
 
 private:
   // All the private/helper methods
-
-  void child_free (void);
-  // helper to the destructor. Called to traverse children and recursively
-  // delete them
 
   CORBA_Boolean private_equal (CORBA_TypeCode_ptr tc, CORBA_Environment &env) const;
   // compares the typecodes
@@ -353,12 +365,9 @@ private:
   // TAO's approach differs from the SunSoft IIOP. Constant typecodes
   // are owned by the ORB and get freed only when the ORB dies.
 
-  // If "orb_owns" is false, the value is a constant typecode with
-  // both the typecode and the buffer statically allocated; the
-  // typecode is never freed.  Otherwise the typecode and the buffer
-  // are freed when the refcount goes to zero.
-  //
-  // "orb owns" is always set, except for TypeCode constants.
+  // If "orb_owns" is false, the value is a not a constant typecode with
+  // both the typecode and the buffer allocated (typically, this will be
+  // created by the IDL compiler generated code)
 
   TC_Private_State *_private_state;
   // maintains precomputed state. We need a separate class that
@@ -375,16 +384,30 @@ private:
   // Use TypeCode_ptr values, duplicate (), release ().
   CORBA_TypeCode (const CORBA_TypeCode &src);
   CORBA_TypeCode &operator = (const CORBA_TypeCode &src);
+
+  CORBA_Octet *non_aligned_buffer_;
+  // original buffer that may possibly be non-aligned. We still need a handle
+  // to the allocated memory so that all of it can be freed by the destructor
 };
 
 class ACE_Svc_Export TC_Private_State
 // = TITLE
-//   Private state of the TypeCode. Used to store precomputed values
+//  Private state of the TypeCode. 
+// =DESCRIPTION
+//  Used to store precomputed values
+
 {
 public:
-  TC_Private_State (void);
+  TC_Private_State (CORBA_TCKind kind);
+  // constructor
 
-  // data members that indicate if the desired quantify was precomputed or not.
+  ~TC_Private_State (void);
+  // destructor
+
+  CORBA_TCKind  tc_kind_;
+  // our kind that will determine what kind of children we may have
+
+  // =data members that indicate if the desired quantify was precomputed or not.
   CORBA_Boolean tc_id_known_;
   CORBA_Boolean tc_name_known_;
   CORBA_Boolean tc_member_count_known_;
@@ -398,7 +421,7 @@ public:
   CORBA_Boolean tc_alignment_known_;
   CORBA_Boolean tc_discrim_pad_size_known_;
 
-  // These data members store the precomputed values
+  // =These data members store the precomputed values
   CORBA_String  tc_id_;
   CORBA_String  tc_name_;
   CORBA_ULong   tc_member_count_;
@@ -413,7 +436,7 @@ public:
   CORBA_ULong  tc_discrim_pad_size_;
 };
 
-// TypeCode constants, which are always accessible in all ORB runtimes.
+// =TypeCode constants, which are always accessible in all ORB runtimes.
 
 extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Null;
 extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Void;

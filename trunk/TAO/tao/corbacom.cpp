@@ -16,6 +16,7 @@
 ACE_Svc_Export CORBA_String
 CORBA_string_alloc (CORBA_ULong len)
 {
+  // allocate 1 + strlen to accomodate the null terminating character
   return new CORBA_Char [(size_t)(len + 1)];
 }
 
@@ -25,7 +26,9 @@ CORBA_string_copy (const CORBA_Char *const str)
   if (!str)
     return 0;
 
-  CORBA_String	retval = CORBA_string_alloc (strlen (str));
+  CORBA_String	retval = CORBA_string_alloc (ACE_OS::strlen (str));
+  // clear the contents of the allocated string
+  ACE_OS::memset(retval, '\0', ACE_OS::strlen (str));
 
   return ACE_OS::strcpy (retval, str);
 }
@@ -39,7 +42,7 @@ CORBA_string_dup (const CORBA_Char *const str)
 ACE_Svc_Export void
 CORBA_string_free (CORBA_Char *const str)
 {
-  delete str;
+  delete [] str;
 }
 
 // ----------------------------------------------------------------------
@@ -54,7 +57,9 @@ CORBA_String_var::CORBA_String_var (void)
 CORBA_String_var::~CORBA_String_var (void)
 {
   if (this->ptr_ != 0)
-    CORBA_string_free (this->ptr_);
+    {
+      CORBA_string_free (this->ptr_);
+    }
 }
 
 CORBA_String_var::CORBA_String_var (char *p)

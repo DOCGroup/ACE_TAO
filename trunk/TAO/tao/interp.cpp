@@ -332,7 +332,7 @@ calc_nested_size_and_alignment (CORBA_TypeCode_ptr tc,
 	  env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
 	  return 0;
 	}
-      offset -= 4;		// correct for get_long update
+      //      offset -= 4;		// correct for get_long update
 
       indirected_stream.next = original_stream->next + (ptr_arith_t) offset;
       indirected_stream.remaining = (size_t) ULONG_MAX;

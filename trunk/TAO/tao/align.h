@@ -56,8 +56,8 @@ align_binary (const ptr_arith_t value,
   return (value + temp) & ~temp;
 }
 #endif
-#define align_binary(ptr, align_sub_1) \
-             ((ptr + (align_sub_1)) & (~(align_sub_1)))
+#define align_binary(ptr, alignment) \
+    ((ptr + ((ptr_arith_t)((alignment)-1))) & (~((ptr_arith_t)((alignment)-1))))
 
 // Efficiently round "ptr" up to an "alignment" boundary, knowing that
 // all such boundaries are binary powers and that we're using two's
@@ -75,6 +75,6 @@ ptr_align_binary (const u_char *ptr,
 }
 #endif
 #define ptr_align_binary(ptr, alignment) \
-        ((u_char *) align_binary(((ptr_arith_t) (ptr)), ((alignment)-1)))
+        ((u_char *) align_binary(((ptr_arith_t) (ptr)), (alignment)))
 
 #endif /* TAO_ALIGN_H */

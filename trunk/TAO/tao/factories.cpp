@@ -82,6 +82,7 @@ TAO_Server_Factory::object_lookup_strategy (void)
   TAO_OA_Parameters* p = TAO_OA_PARAMS::instance ();
 
   // Since these are dynamically created, when do they get destroyed?
+  // XXXASG: My guess is that these should go when the OA is freed
   switch (p->demux_strategy ())
     {
     case TAO_OA_Parameters::TAO_LINEAR:
@@ -93,8 +94,12 @@ TAO_Server_Factory::object_lookup_strategy (void)
       // it is assumed that the user would have used the hooks to supply a
       // user-defined instance of the object table
       ACE_ASSERT (this->objtable_ != 0);
+      this->objtable_ = p->userdef_lookup_strategy ();
       break;
     case TAO_OA_Parameters::TAO_ACTIVE_DEMUX:
+      ACE_NEW_RETURN (this->objtable_,
+		      TAO_Active_Demux_ObjTable (p->tablesize ()),
+					   0);
       break;
     case TAO_OA_Parameters::TAO_DYNAMIC_HASH:
     default:
