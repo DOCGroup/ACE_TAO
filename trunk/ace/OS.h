@@ -186,9 +186,22 @@ typedef int key_t;
 #include /**/ <vxWorks.h>
 #endif /* VXWORKS */
 
+#if defined (CHORUS)
+#include /**/ <chorus.h>
+#endif /* CHORUS */
+
 // This file should be a link to the platform/compiler-specific
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).  
 #include "ace/config.h"
+
+#if defined (ACE_LACKS_SIGACTION)
+struct sigaction 
+{
+  int sa_flags;
+  ACE_SignalHandlerV sa_handler;
+  sigset_t sa_mask;
+};
+#endif /* ACE_LACKS_SIGACTION */
 
 #if defined (ACE_HAS_CHARPTR_SPRINTF)
 #define ACE_SPRINTF_ADAPTER(X) ::strlen (X)
@@ -493,6 +506,12 @@ private:
 #define ACE_USING
 #endif /* ACE_HAS_USING_KEYWORD */
 
+#if defined (ACE_HAS_TYPENAME_KEYWORD)
+#define ACE_TYPENAME typename
+#else
+#deifne ACE_TYPENAME
+#endif /* ACE_HAS_TYPENAME_KEYWORD */
+
 // The following is necessary since many C++ compilers don't support
 // typedef'd types inside of classes used as formal template
 // arguments... ;-(.  Luckily, using the C++ preprocessor I can hide
@@ -503,26 +522,26 @@ private:
 // Handle ACE_Message_Queue.
 #define ACE_SYNCH_1 class _ACE_SYNCH
 #define ACE_SYNCH_2 _ACE_SYNCH
-#define ACE_SYNCH_MUTEX _ACE_SYNCH::MUTEX
-#define ACE_SYNCH_CONDITION _ACE_SYNCH::CONDITION
+#define ACE_SYNCH_MUTEX ACE_TYPENAME _ACE_SYNCH::MUTEX
+#define ACE_SYNCH_CONDITION ACE_TYPENAME _ACE_SYNCH::CONDITION
 
 // Handle ACE_Malloc*
 #define ACE_MEM_POOL_1 class _ACE_MEM_POOL
 #define ACE_MEM_POOL_2 _ACE_MEM_POOL
 #define ACE_MEM_POOL _ACE_MEM_POOL
-#define ACE_MEM_POOL_OPTIONS _ACE_MEM_POOL::OPTIONS
+#define ACE_MEM_POOL_OPTIONS ACE_TYPENAME _ACE_MEM_POOL::OPTIONS
 
 // Handle ACE_Svc_Handler
 #define ACE_PEER_STREAM_1 class _ACE_PEER_STREAM
 #define ACE_PEER_STREAM_2 _ACE_PEER_STREAM
 #define ACE_PEER_STREAM _ACE_PEER_STREAM
-#define ACE_PEER_STREAM_ADDR _ACE_PEER_STREAM::PEER_ADDR
+#define ACE_PEER_STREAM_ADDR ACE_TYPENAME _ACE_PEER_STREAM::PEER_ADDR
 
 // Handle ACE_Acceptor
 #define ACE_PEER_ACCEPTOR_1 class _ACE_PEER_ACCEPTOR
 #define ACE_PEER_ACCEPTOR_2 _ACE_PEER_ACCEPTOR
 #define ACE_PEER_ACCEPTOR _ACE_PEER_ACCEPTOR
-#define ACE_PEER_ACCEPTOR_ADDR _ACE_PEER_ACCEPTOR::PEER_ADDR
+#define ACE_PEER_ACCEPTOR_ADDR ACE_TYPENAME _ACE_PEER_ACCEPTOR::PEER_ADDR
 
 // Handle ACE_SOCK_*
 #define ACE_SOCK_ACCEPTOR ACE_SOCK_Acceptor
@@ -1215,6 +1234,10 @@ typedef int ACE_thread_key_t;
 #include /**/ <errno.h>
 #include /**/ <stdlib.h>
 
+#if defined (CHORUS)		// This must come after limits.h is included
+#define MAXPATHLEN _POSIX_PATH_MAX
+#endif /* CHORUS */
+
 // This must come after signal.h is #included.
 #if defined (SCO)
 #define SIGIO SIGPOLL
@@ -1557,16 +1580,6 @@ typedef SOCKET ACE_SOCKET;
 #define MAXNAMLEN   _MAX_FNAME
 #define EADDRINUSE WSAEADDRINUSE
 
-// Undefined structs becomes undeclared overloads with MSVC++ 2.0
-// Thus we need to resort to this for unsupported system calls.
-
-struct sigaction 
-{
-  int sa_flags;
-  ACE_SignalHandlerV sa_handler;
-  sigset_t sa_mask;
-};
-
 struct iovec
 {
   char *iov_base; // data to be read/written
@@ -1724,7 +1737,13 @@ extern "C" {
 #else
 #include /**/ <netdb.h>
 #endif /* VXWORKS */
+#if defined (HPUX)
+#define volatile
+#endif /* HPUX */
 #include /**/ <net/if.h>
+#if defined (HPUX)
+#undef volatile
+#endif /* HPUX */
 #include /**/ <netinet/in.h>
 #include /**/ <arpa/inet.h>
 }
@@ -1973,6 +1992,10 @@ typedef fd_set ACE_FD_SET_TYPE;
 #if !defined (SIGHUP)
 #define SIGHUP 1
 #endif /* SIGHUP */
+
+#if !defined (SIGINT)
+#define SIGINT 2
+#endif /* SIGINT */
 
 #if !defined (SIGQUIT)
 #define SIGQUIT 3

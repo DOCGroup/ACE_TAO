@@ -133,7 +133,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name,
 		   backing_store_name, 
 		   (sizeof this->backing_store_name_ / sizeof (TCHAR)));
 
-#if !defined (ACE_WIN32)
+#if !defined (ACE_WIN32) && !defined (CHORUS)
   if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", this->backing_store_name_));
 #endif /* ACE_WIN32 */

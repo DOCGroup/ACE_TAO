@@ -51,7 +51,6 @@ clone:
 RELEASE_FILES = ACE_wrappers/ACE-categories \
 	        ACE_wrappers/ACE-install.sh \
 	        ACE_wrappers/BIBLIOGRAPHY \
-	        ACE_wrappers/ChangeLog \
 	        ACE_wrappers/ChangeLog-97a \
 	        ACE_wrappers/ChangeLog-96b \
 	        ACE_wrappers/ChangeLog-96a \
@@ -76,7 +75,6 @@ RELEASE_FILES = ACE_wrappers/ACE-categories \
 		ACE_wrappers/tests
 
 RELEASE_LIB_FILES = \
-	        ACE_wrappers/ChangeLog \
 		ACE_wrappers/STL \
 		ACE_wrappers/VERSION \
 		ACE_wrappers/ace \

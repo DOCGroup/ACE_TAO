@@ -288,7 +288,7 @@ ACE_Stream_Tail<ACE_SYNCH_2>::fini (void)
   return 0;
 }
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Thru_Task)
+// ACE_ALLOC_HOOK_DEFINE(ACE_Thru_Task)
 
 template <ACE_SYNCH_1> 
 ACE_Thru_Task<ACE_SYNCH_2>::ACE_Thru_Task (void) 

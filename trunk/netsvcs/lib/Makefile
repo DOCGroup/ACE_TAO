@@ -5,7 +5,7 @@
 #----------------------------------------------------------------------------
 
 #LIB	= libnetsvcs.a
-SHLIB	= libnetsvcs.so
+SHLIB	= libnetsvcs.$(SOEXT)
 
 FILES	=  TS_Server_Handler \
 	   TS_Clerk_Handler \

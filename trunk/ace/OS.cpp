@@ -441,7 +441,7 @@ ACE_OS::ace_flock_t::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "\nInternalHigh = %d", this->overlapped_.InternalHigh));
   ACE_DEBUG ((LM_DEBUG, "\nOffsetHigh = %d", this->overlapped_.OffsetHigh));
   ACE_DEBUG ((LM_DEBUG, "\nhEvent = %d", this->overlapped_.hEvent));
-#else
+#elif !defined (CHORUS)
   ACE_DEBUG ((LM_DEBUG, "\nl_whence = %d", this->lock_.l_whence));
   ACE_DEBUG ((LM_DEBUG, "\nl_start = %d", this->lock_.l_start));
   ACE_DEBUG ((LM_DEBUG, "\nl_len = %d", this->lock_.l_len));
@@ -742,6 +742,18 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
   // Set the thread priority on the current thread.
   return ACE_OS::thr_setprio (sched_params.priority ());
 
+#elif defined (CHORUS)
+  int result;
+  struct sched_param param;
+  ACE_thread_t thr_id = ACE_OS::thr_self ();
+
+  param.sched_priority = sched_params.priority ();
+
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id,
+								sched_params.policy (),
+								&param),
+				       result),
+		     int, -1);
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
@@ -1947,6 +1959,8 @@ ACE_OS::fork_exec (char *argv[])
 
   // CreateProcess failed.
   return -1; 
+#elif defined (CHORUS)
+  return -1;			// do it later!!!
 #else
       pid_t result = ACE_OS::fork ();
 
@@ -2197,7 +2211,7 @@ pid_t
 ACE_OS::fork (const char *program_name)
 {
   // ACE_TRACE ("ACE_OS::fork");
-#if defined (ACE_WIN32) || defined (VXWORKS)
+#if defined (ACE_LACKS_EXEC)
   ACE_UNUSED_ARG (program_name);
   ACE_NOTSUP_RETURN (pid_t (-1));
 #else

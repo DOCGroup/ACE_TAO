@@ -250,8 +250,6 @@ class ACE_Process_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
 {
 public:
   // = Intialization and termination methods.
-  ACE_Process_Strategy (void);
-  // "Do-nothing constructor"
 
   ACE_Process_Strategy (int n_processes = 1);
   // Initialize the strategy.

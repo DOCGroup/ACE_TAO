@@ -81,8 +81,11 @@
 // Note, this only works if the flag is set above!
 #define ACE_HAS_GETRUSAGE
 
+#define ACE_HAS_SIGINFO_T
+#define ACE_HAS_UCONTEXT_T
+
 // Platform uses int for select() rather than fd_set.
-#define ACE_SELECT_USES_INT
+// #define ACE_SELECT_USES_INT
 
 // Platform has the XLI version of ACE_TLI.
 // #define ACE_HAS_XLI

@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-/*-*- C++ -*- */
-
 // ============================================================================
 //
 // = LIBRARY
@@ -198,6 +196,9 @@ public:
   virtual void dump_i (void) const;
   // Dump the state of the object
 
+  // = I just know this is going to cause problems on some platform...
+  typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MEM_POOL_2, LOCK> > ALLOCATOR;
+
 private:
 #if defined (ACE_WIN32)
   int remap (EXCEPTION_POINTERS *ep);
@@ -214,9 +215,6 @@ private:
   int create_manager_i (void);
   // Allocate the appropriate type of map manager that stores the
   // key/value binding.
-
-  // = I just know this is going to cause problems on some platform...
-  typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MEM_POOL_2, LOCK> > ALLOCATOR;
 
   ALLOCATOR *allocator_;
   // Pointer to the allocator

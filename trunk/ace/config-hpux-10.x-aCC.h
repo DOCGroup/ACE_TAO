@@ -22,8 +22,11 @@
 // They forgot a const in the prototype of const_timewait...
 #define ACE_LACKS_CONST_TIMESPEC_PTR
 
+#define ACE_HAS_TYPENAME_KEYWORD
+#define ACE_HAS_TEMPLATE_TYPEDEFS
+#define ACE_TEMPLATES_REQUIRE_SOURCE
+
 #define ACE_LACKS_SYSCALL
-#define ACE_LACKS_STRRECVFD
 #define ACE_HAS_POSIX_TIME
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
@@ -57,13 +60,11 @@
 // Compiler/platform defines the sig_atomic_t typedef
 #define ACE_HAS_SIG_ATOMIC_T
 
-// If you don't want to use threads make sure to comment out the
-// folowing block of #defines 
-#define ACE_HAS_THREADS
-#define ACE_HAS_PTHREADS
-#define ACE_LACKS_RWLOCK_T
-#define ACE_MT_SAFE
+// #define ACE_HAS_THREADS
+// #define ACE_HAS_PTHREADS
+// #define ACE_MT_SAFE
 #define ACE_HAS_SIGINFO_T
+#define ACE_HAS_UCONTEXT_T
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 #define ACE_HAS_SETKIND_NP
 #define ACE_LACKS_CONDATTR_PSHARED
@@ -72,10 +73,13 @@
 #define ACE_LACKS_KEYDELETE                     /*  new */
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 #define ACE_LACKS_THREAD_STACK_ADDR
-#define ACE_HAS_THREAD_SPECIFIC_STORAGE
+
+// Compiler/platform has thread-specific storage
+// #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
 // Compiler/platform supports struct strbuf.
 #define ACE_HAS_STRBUF_T
+#include /**/ <stropts.h> /* for struct strbuf */
 
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T
@@ -94,9 +98,6 @@
 
 // Note, this only works if the flag is set above!
 #define ACE_HAS_GETRUSAGE
-
-#define ACE_HAS_SIGINFO_T
-#define ACE_HAS_UCONTEXT_T
 
 // Platform uses int for select() rather than fd_set.
 // #define ACE_SELECT_USES_INT

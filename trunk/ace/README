@@ -149,10 +149,13 @@ ACE_HAS_YIELD_VOID_PTR			Platform requires pthread_yield() to take a NULL.
 ACE_LACKS_CONST_TIMESPEC_PTR		Platform forgot const in cond_timewait (e.g., HP/UX).
 ACE_LACKS_COND_T			Platform lacks condition variables (e.g., Win32 and VxWorks)
 ACE_LACKS_CONDATTR_PSHARED		Platform has no implementation of pthread_condattr_setpshared(), even though it supports pthreads!
+ACE_LACKS_EXEC				Platform lacks the exec() family of system calls (e.g., Win32, VxWorks, Chorus)
+ACE_LACKS_FILELOCKS			Platform lacks file locking mechanism
 ACE_LACKS_IOSTREAM_FX			iostream header does not declare ipfx (), opfx (), etc.
 ACE_LACKS_LINEBUFFERED_STREAMBUF	Platform lacks streambuf "linebuffered ()".
 ACE_LACKS_MADVISE			Platform lacks madvise() (e.g., Linux)
 ACE_LACKS_MALLOC_H			Platform lacks malloc.h
+ACE_LACKS_MEMORY_H			Platform lacks memory.h (e.g., VxWorks and Chorus)
 ACE_LACKS_MKTEMP			ACE has no mktemp()
 ACE_LACKS_MMAP				The platform doesn't have mmap(2) (e.g., SCO UNIX).
 ACE_LACKS_MODE_MASKS			Platform/compiler doesn't have open() mode masks.
@@ -172,7 +175,9 @@ ACE_LACKS_SBRK				Platform lacks a working sbrk() (e.g., Win32 and VxWorks)
 ACE_LACKS_SEMBUF_T			Platform lacks struct sembuf (e.g., Win32 and VxWorks)
 ACE_LACKS_SETDETACH			Platform lacks pthread_attr_setdetachstate() (e.g., HP/UX 10.x)
 ACE_LACKS_SETSCHED			Platform lacks pthread_attr_setsched() (e.g. MVS)
+ACE_LACKS_SIGACTION			Platform lacks struct sigaction (e.g., Win32 and Chorus)
 ACE_LACKS_SIGNED_CHAR			Platform lacks "signed char" type (broken!)
+ACE_LACKS_SIGSET			Platform lacks signal sets (e.g., Chorus and Win32)
 ACE_LACKS_SYS_NERR			Platforms/compiler lacks the sys_nerr variable (e.g., VxWorks and MVS).
 ACE_LACKS_KEYDELETE			Platform lacks TSS keydelete (e.g., HP/UX)
 ACE_LACKS_SENDMSG			Platform lacks sendmsg() (e.g., Linux)
