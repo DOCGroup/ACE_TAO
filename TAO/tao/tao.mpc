@@ -1,9 +1,10 @@
-project : acelib, taoversion {
-  tao        = 1
-  includes  += $(TAO_ROOT) $(TAO_ROOT)/tao
-  sharedname = TAO
-  libflags  += TAO_AS_STATIC_LIBS
-  dllflags   = TAO_BUILD_DLL
+project : acelib, taoversion, core {
+  tao         = 1
+  includes   += $(TAO_ROOT) $(TAO_ROOT)/tao
+  sharedname  = TAO
+  libflags   += TAO_AS_STATIC_LIBS
+  dllflags    = TAO_BUILD_DLL
+  include_dir = tao
 
   // Override the defaults due to the
   // existence of orb.idl
