@@ -1,16 +1,24 @@
+Tue Apr 27 17:12:43 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* TAO_IDL/be/be_visitor_valuetype/valuetype_init_cs.cpp:
+
+	  Fixed a ACE_NEW macros usage. 
+
 Tue Apr 27 16:39:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableInterceptor.pidl:	
  	* tao/Bounds.pidl:
+	* tao/Policy.pidl:
+	* tao/IOP_Codec.pidl:
+
+	  Added documentation about the need to make this change. 
+	
 	* tao/BoundsA.cpp:
 	* tao/BoundsC.cpp:
-	* tao/IOP_Codec.pidl:
 	* tao/IOP_CodecA.cpp:
 	* tao/IOP_CodecC.cpp:
-	* tao/Policy.pidl:
 	* tao/PolicyA.cpp:
 	* tao/PolicyC.cpp:
-
 	* tao/PortableInterceptorA.cpp:
 	* tao/PortableInterceptorC.cpp:
 
