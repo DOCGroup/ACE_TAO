@@ -515,6 +515,10 @@ SOURCE=.\marshal.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\MCAST_Parser.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Messaging_ORBInitializer.h
 # End Source File
 # Begin Source File
@@ -1227,6 +1231,10 @@ SOURCE=.\marshal.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\MCAST_Parser.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Messaging_Policy_i.i
 # End Source File
 # Begin Source File
@@ -1900,6 +1908,10 @@ SOURCE=.\Managed_Types.cpp
 # Begin Source File
 
 SOURCE=.\Marshal.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\MCAST_Parser.cpp
 # End Source File
 # Begin Source File
 

@@ -387,14 +387,6 @@ SOURCE=.\Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\LF_Follower.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Ptr.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Base.cpp
 # End Source File
 # Begin Source File
@@ -535,7 +527,15 @@ SOURCE=.\LF_Event_Loop_Thread_Helper.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Follower.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Follower_Auto_Adder.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Ptr.cpp
 # End Source File
 # Begin Source File
 
@@ -556,6 +556,10 @@ SOURCE=.\Managed_Types.cpp
 # Begin Source File
 
 SOURCE=.\Marshal.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\MCAST_Parser.cpp
 # End Source File
 # Begin Source File
 
@@ -1147,22 +1151,6 @@ SOURCE=.\Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\LF_Follower.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Ptr.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Ptr.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\giop.h
 # End Source File
 # Begin Source File
@@ -1331,11 +1319,27 @@ SOURCE=.\LF_Event_Loop_Thread_Helper.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Follower.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Follower_Auto_Adder.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\LF_Follower_Auto_Adder.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Ptr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Follower_Auto_Ptr.inl
 # End Source File
 # Begin Source File
 
@@ -1364,6 +1368,10 @@ SOURCE=.\Managed_Types.h
 # Begin Source File
 
 SOURCE=.\marshal.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\MCAST_Parser.h
 # End Source File
 # Begin Source File
 
@@ -2080,6 +2088,10 @@ SOURCE=.\Managed_Types.i
 # Begin Source File
 
 SOURCE=.\marshal.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\MCAST_Parser.i
 # End Source File
 # Begin Source File
 
