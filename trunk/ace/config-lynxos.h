@@ -38,6 +38,11 @@
 // System include files are not in sys/, this gets rid of warning.
 #define __NO_INCLUDE_WARN__
 
+// Maximum compensation (10 ms) for early return from timed ::select ().
+#if !defined (ACE_TIMER_SKEW)
+# define ACE_TIMER_SKEW 10 * 1000
+#endif /* ACE_TIMER_SKEW */
+
 #define ACE_LACKS_GETOPT_PROTO
 #define ACE_HAS_SHM_OPEN
 // LynxOS 2.5.0 does not support MAP_PRIVATE, so map it to MAP_SHARED
