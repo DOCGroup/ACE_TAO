@@ -1,3 +1,23 @@
+Mon Mar 31 14:18:23 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+	* orbsvcs/tests/Bug_1393_Regression/Bug_1393_Regression.mpc:
+	* orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.mpc:
+	  Added MPC files that should have been checked in originally.
+
+	* orbsvcs/tests/Bug_1395_Regression/Bug_1395_Client.dsp:
+	* orbsvcs/tests/Bug_1395_Regression/Bug_1395_Server.dsp:
+	  Hand patch correct path for release tao_idl.exe.
+
+	* orbsvcs/tests/Security/MT_IIOP_SSL/server.dsp:
+	  Wrong release link library corrected.
+
+	* performance-tests/Anyop/Anyop.dsp:
+	  Missing release custom build step added.
+
+	* tests/CodeSets/simple/server.dsp:
+	* tests/ORB_init/Portspan/portspan.dsp:
+	  Path in custom build depndecies fixed.
+
 Mon Mar 31 06:57:16 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:

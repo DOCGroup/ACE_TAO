@@ -120,7 +120,7 @@ SOURCE=.\simple.idl
 
 !IF  "$(CFG)" == "Codeset Simple server - Win32 Release"
 
-USERDEP__SIMPL="..\..\..\..\release\bin\tao_idl.exe"	
+USERDEP__SIMPL="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\simple.idl
 InputName=simple
