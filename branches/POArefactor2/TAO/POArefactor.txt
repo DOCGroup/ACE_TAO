@@ -1,3 +1,15 @@
+Wed Oct 27 04:34:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/PortableServer/Activation_Strategy.h:
+	* tao/PortableServer/Id_Assignment_Strategy.cpp:
+	* tao/PortableServer/Id_Uniqueness_Strategy.cpp:
+	* tao/PortableServer/Id_Uniqueness_Strategy.h:
+	* tao/PortableServer/Lifespan_Strategy.h:
+	* tao/PortableServer/Object_Adapter.h:
+
+	  Some warnings fixes and a few comments for Johnny. The most
+	  important commment is going to be over email.
+
 Wed Oct 27 12:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Adapter_Activator.h:
