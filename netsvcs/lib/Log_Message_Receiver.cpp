@@ -40,20 +40,20 @@ ACE_SYNCH_MUTEX_T Log_Message_Receiver_Impl<ACE_SYNCH_USE>::copy_lock_;
 static ACE_SYNCH_MUTEX global_copy_lock_;
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
-template<ACE_SYNCH_DECL> inline
+template<ACE_SYNCH_DECL>
 Log_Message_Receiver_Impl<ACE_SYNCH_USE>::Log_Message_Receiver_Impl (void)
   : count_ (0)
 {
 }
 
-template<ACE_SYNCH_DECL> inline
+template<ACE_SYNCH_DECL>
 Log_Message_Receiver_Impl<ACE_SYNCH_USE> *
 Log_Message_Receiver_Impl<ACE_SYNCH_USE>::create (void)
 {
   return new Log_Message_Receiver_Impl<ACE_SYNCH_USE>;
 }
 
-template<ACE_SYNCH_DECL> inline
+template<ACE_SYNCH_DECL>
 Log_Message_Receiver_Impl<ACE_SYNCH_USE> *
 Log_Message_Receiver_Impl<ACE_SYNCH_USE>::attach (Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body)
 {
@@ -71,7 +71,7 @@ Log_Message_Receiver_Impl<ACE_SYNCH_USE>::attach (Log_Message_Receiver_Impl<ACE_
   return body;
 }
 
-template<ACE_SYNCH_DECL> inline void
+template<ACE_SYNCH_DECL> void
 Log_Message_Receiver_Impl<ACE_SYNCH_USE>::detach(Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body)
 {
   ACE_ASSERT (body != 0);
@@ -89,7 +89,7 @@ Log_Message_Receiver_Impl<ACE_SYNCH_USE>::detach(Log_Message_Receiver_Impl<ACE_S
 }
 
 // Type based log message receiver
-template<ACE_SYNCH_DECL> inline void
+template<ACE_SYNCH_DECL> void
 Log_Message_Receiver_Impl<ACE_SYNCH_USE>::log_record (char const *hostname,
 						    ACE_Log_Record &record)
 {
@@ -109,7 +109,7 @@ Log_Message_Receiver_Impl<ACE_SYNCH_USE>::log_output (char const *hostname,
     }
 }
 
-template<ACE_SYNCH_DECL> inline
+template<ACE_SYNCH_DECL>
 Log_Message_Receiver_Impl<ACE_SYNCH_USE>::~Log_Message_Receiver_Impl (void)
 {
   ACE_ASSERT (count_ == 0 - 1);
