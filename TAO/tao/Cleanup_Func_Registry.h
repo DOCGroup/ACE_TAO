@@ -21,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Array_Base.h"
+#include "ace/OS.h"
 
 /**
  * @class TAO_Cleanup_Func_Registry
