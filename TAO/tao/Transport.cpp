@@ -1042,30 +1042,13 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
                       "queueing up the message \n",
                       this->id ()));
         }
-      // Get an instance of TAO_Queued_Data
-      TAO_Queued_Data *qd = TAO_Queued_Data::get_queued_data ();
+
+      // Get a queued data
+      TAO_Queued_Data *qd =
+        this->make_queued_data (incoming);
 
       // Add the missing data to the queue
       qd->missing_data_ = missing_data;
-
-      // Get the flag for the details of the data block...
-      ACE_Message_Block::Message_Flags flg = incoming.self_flags ();
-
-      if (ACE_BIT_DISABLED (flg,
-                            ACE_Message_Block::DONT_DELETE))
-        {
-          // Duplicate the data block before putting it in the queue.
-          qd->msg_block_ = ACE_Message_Block::duplicate (&incoming);
-        }
-      else
-        {
-          // As we are in CORBA mode, all the data blocks would be aligned
-          // on an 8 byte boundary
-          ACE_Message_Block msgb (incoming,
-                                  ACE_CDR::MAX_ALIGNMENT);
-
-          qd->msg_block_ = ACE_Message_Block::duplicate (&msgb);
-        }
 
       // Get the rest of the messaging data
       this->messaging_object ()->get_message_data (qd);
@@ -1139,6 +1122,27 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
                           "TAO (%P|%t) - .. part of the read message \n"));
             }
           return retval;
+        }
+      else if (retval == 1)
+        {
+          // If the message in the <incoming> message block has only
+          // one message left we need to process that seperately.
+
+          // Get a queued data
+          TAO_Queued_Data *qd = this->make_queued_data (incoming);
+
+          // Get the rest of the message data
+          this->messaging_object ()->get_message_data (qd);
+
+          // Add the missing data to the queue
+          qd->missing_data_ = 0;
+
+          // Add it to the tail of the queue..
+          this->incoming_message_queue_.enqueue_tail (qd);
+
+          // We should surely have a message in queue now. So just
+          // process that.
+          return this->process_queue_head (rh);
         }
 
       // parse_consolidate_messages () would have processed one of the
@@ -1369,6 +1373,46 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd)
 
   // If not, just return back..
   return 0;
+}
+
+TAO_Queued_Data *
+TAO_Transport::make_queued_data (ACE_Message_Block &incoming)
+{
+  // Get an instance of TAO_Queued_Data
+  TAO_Queued_Data *qd = TAO_Queued_Data::get_queued_data ();
+
+  // Get the flag for the details of the data block...
+  ACE_Message_Block::Message_Flags flg = incoming.self_flags ();
+
+  if (ACE_BIT_DISABLED (flg,
+                        ACE_Message_Block::DONT_DELETE))
+    {
+      // Duplicate the data block before putting it in the queue.
+      qd->msg_block_ = ACE_Message_Block::duplicate (&incoming);
+    }
+  else
+    {
+      // As we are in CORBA mode, all the data blocks would be aligned
+      // on an 8 byte boundary
+      ACE_Message_Block msgb (incoming,
+                              ACE_CDR::MAX_ALIGNMENT);
+
+      qd->msg_block_ = ACE_Message_Block::duplicate (&msgb);
+
+      // Get the base pointer of the incoming message block
+      char *start = ACE_ptr_align_binary (incoming.base (),
+                                          ACE_CDR::MAX_ALIGNMENT);
+
+      // Get the read and write displacements in the incoming stream
+      size_t rd_pos = incoming.rd_ptr () - start;
+      size_t wr_pos = incoming.wr_ptr () - start;
+
+      qd->msg_block_->rd_ptr (rd_pos);
+      qd->msg_block_->wr_ptr (rd_pos);
+    }
+
+
+  return qd;
 }
 
 int
