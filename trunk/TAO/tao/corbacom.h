@@ -149,10 +149,11 @@ typedef u_char CORBA_Boolean;
 template <class T> class TAO_Unbounded_Sequence;
 
 template <class T>
-struct CORBA_SEQUENCE
+class CORBA_SEQUENCE
+{
   // = TITLE
   //    Utility template class.
-{
+public:
   // @@ Is there any reason we don't use CORBA::Long here?
 #if ACE_SIZEOF_LONG == 4
   u_long maximum;
@@ -166,14 +167,10 @@ struct CORBA_SEQUENCE
   CORBA_Boolean release; 
   // Only here to make it compliant with IDL-generated layout.
 
-  CORBA_SEQUENCE (void)
-    : maximum (0),
-      length (0),
-      buffer (0),
-      release (0) { }
+  CORBA_SEQUENCE (void);
 
+  ~CORBA_SEQUENCE (void);
   // XXX destructor should free buffer, elements!!
-  ~CORBA_SEQUENCE (void) { }
 };
 
 class TAO_Export CORBA
