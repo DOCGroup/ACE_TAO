@@ -169,10 +169,23 @@ namespace CIAO_GLUE_BasicSP
     ::CORBA::SystemException,
     ::Components::InvalidConnection));
 
+    // START new event code
+    ::Components::Cookie *
+    subscribe_data_available_consumer (
+    ::BasicSP::DataAvailableConsumer_ptr c);
+
+    void
+    create_event_channel (void);
+    // END new event code
+
     protected:
+    // START old event code
+    /*
     ACE_Active_Map_Manager<
     ::BasicSP::DataAvailableConsumer_var>
     ciao_publishes_data_available_map_;
+    */
+    // END old event code
 
     // START new event code
     RtecEventChannelAdmin::ProxyPushConsumer_var
