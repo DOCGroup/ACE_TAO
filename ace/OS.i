@@ -244,11 +244,11 @@ ACE_Time_Value::operator timespec_t () const
   timespec_t tv;
 #if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
   tv.tv_sec = this->tv_.tv_sec;
-  // Convert nanoseconds into microseconds.
+  // Convert microseconds into nanoseconds.
   tv.tv_nsec = this->tv_.tv_usec * 1000;
 #else
   tv.ts_sec = this->tv_.tv_sec;
-  // Convert nanoseconds into microseconds.
+  // Convert microseconds into nanoseconds.
   tv.ts_nsec = this->tv_.tv_usec * 1000;
 #endif /* ACE_HAS_BROKEN_TIMESPEC_MEMBERS */
   return tv;
@@ -7743,10 +7743,10 @@ ACE_OS::nanosleep (const struct timespec *requested,
   // Convert into seconds and microseconds.
 #if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
   ACE_Time_Value tv (requested->tv_sec,
-                     requested->tv_nsec * 1000);
+                     requested->tv_nsec / 1000);
 #else
   ACE_Time_Value tv (requested->ts_sec,
-                     requested->ts_nsec * 1000);
+                     requested->ts_nsec / 1000);
 #endif /* ACE_HAS_BROKEN_TIMESPEC_MEMBERS */
   return ACE_OS::sleep (tv);
 #endif /* ACE_HAS_CLOCK_GETTIME */
