@@ -523,13 +523,27 @@ public:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-
+  // = ORB event loop methods.
 
   int run (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
+  // Instructs the ORB to initialize itself and run its event loop in
+  // the current thread, not returning until the ORB has shut down.
+  // If an error occurs during initialization or a run-time this
+  // method will return -1.
+
   int run (ACE_Time_Value &tv,
            CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
+  // Instructs the ORB to initialize itself and run its event loop in
+  // the current thread, not returning until the ORB has shut down.
+  // If an error occurs during initialization or a run-time this
+  // method will return -1.  If no requests arrive at this thread
+  // before the <tv> "relative" timeout elapses we return to the
+  // caller with a value of 0 (this allows timeouts).  Otherwise, if
+  // we've returned since we've been asked to shut down the value of 1
+  // is returned.
+
   int run (ACE_Time_Value *tv,
            CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -537,10 +551,10 @@ public:
   // the current thread, not returning until the ORB has shut down.
   // If an error occurs during initialization or a run-time this
   // method will return -1.  If <tv> is non-NULL, then if no requests
-  // arrive at this thread before the timeout elapses we return to the
-  // caller with a value of 0 (this allows timeouts).  Otherwise, if
-  // we've returned since we've been asked to shut down the value of 1
-  // is returned.
+  // arrive at this thread before the "relative" timeout elapses we
+  // return to the caller with a value of 0 (this allows timeouts).
+  // Otherwise, if we've returned since we've been asked to shut down
+  // the value of 1 is returned.
 
   void shutdown (CORBA::Boolean wait_for_completion = 0,
                  CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
