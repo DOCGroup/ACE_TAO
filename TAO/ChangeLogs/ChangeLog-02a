@@ -1,3 +1,13 @@
+Fri Nov 24 12:17:59 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/Multiple/Multiple_Impl.cpp:
+	  Fix throw specs.
+
+        * tests/Nested_Event_Loop/server.bor:
+        * tests/Nested_Event_Loop/client.bor:
+          Add the TAO_Strategies library, it is needed to link these two
+          programs.
+
 Fri Nov 24 14:07:13 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
