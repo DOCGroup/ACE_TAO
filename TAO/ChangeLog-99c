@@ -1,3 +1,20 @@
+Fri Jun 11 19:08:45 1999  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* TAO/examples/POA/DSI/run_test.pl:
+	* TAO/examples/POA/Default_Servant/run_test.pl:
+	* TAO/examples/POA/Explicit_Activation/run_test.pl:
+	* TAO/examples/POA/FindPOA/run_test.pl:
+	* TAO/examples/POA/Forwarding/run_test.pl:
+	* TAO/examples/POA/Loader/run_test.pl:
+	* TAO/examples/POA/NewPOA/run_test.pl:
+	* TAO/examples/POA/On_Demand_Activation/run_test.pl:
+	* TAO/examples/POA/On_Demand_Loading/run_test.pl:
+	* TAO/examples/POA/Adapter_Activator/run_test.pl:
+	* TAO/examples/POA/Reference_Counted_Servant/run_test.pl:
+	  Changed all instances where a test would wait
+	  forever to waits which time out after a period
+	  of time.
+
 Fri Jun 11 19:03:49 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/TIE/run_test.pl: Added a new file.
