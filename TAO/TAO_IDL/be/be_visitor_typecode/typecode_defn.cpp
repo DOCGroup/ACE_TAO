@@ -371,9 +371,9 @@ be_visitor_typecode_defn::visit_type (be_type *node)
 //     case AST_Decl::NT_typedef:
 //       *os << "CORBA::tk_alias";
 //       break;
-    case AST_Decl::NT_union:
-      *os << "CORBA::tk_union";
-      break;
+//     case AST_Decl::NT_union:
+//       *os << "CORBA::tk_union";
+//       break;
     default:
       return -1; // error
     }
@@ -1923,336 +1923,336 @@ be_visitor_typecode_defn::gen_encapsulation (be_array *node)
 //   return 0;
 // }
 
-int
-be_visitor_typecode_defn::gen_typecode (be_union *node)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
+// int
+// be_visitor_typecode_defn::gen_typecode (be_union *node)
+// {
+//   TAO_OutStream *os = this->ctx_->stream (); // output stream
 
-  os->indent (); // start from whatever indentation level we were at
+//   os->indent (); // start from whatever indentation level we were at
 
-  // check if we are repeated
-  const be_visitor_typecode_defn::QNode *qnode =
-    this->queue_lookup (this->tc_queue_, node);
+//   // check if we are repeated
+//   const be_visitor_typecode_defn::QNode *qnode =
+//     this->queue_lookup (this->tc_queue_, node);
 
-  ACE_Unbounded_Queue<AST_Type *> list;
+//   ACE_Unbounded_Queue<AST_Type *> list;
 
-  if (qnode && (be_global->opt_tc () || node->in_recursion (list)))
-    {
-      // we are repeated, so we must generate an indirection here
-      *os << "0xffffffff, // indirection" << be_nl;
-      this->tc_offset_ += sizeof (ACE_CDR::ULong);
-      // the offset must point to the tc_kind value of the first occurrence of
-      // this type
-      os->print ("0x%x, // negative offset (%d)\n",
-                 (qnode->offset - this->tc_offset_),
-                 (qnode->offset - this->tc_offset_));
-      this->tc_offset_ += sizeof (ACE_CDR::ULong);
-    }
-  else
-    {
-      // Insert node into tc_queue_ in case the node is involved in
-      // some form of recursion.
-      if (this->queue_insert (this->tc_queue_, node, this->tc_offset_) == 0)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) be_visitor_typecode_defn::"
-                           "visit_type - "
-                           "queue insert failed\n"),
-                          -1);
-      }
+//   if (qnode && (be_global->opt_tc () || node->in_recursion (list)))
+//     {
+//       // we are repeated, so we must generate an indirection here
+//       *os << "0xffffffff, // indirection" << be_nl;
+//       this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//       // the offset must point to the tc_kind value of the first occurrence of
+//       // this type
+//       os->print ("0x%x, // negative offset (%d)\n",
+//                  (qnode->offset - this->tc_offset_),
+//                  (qnode->offset - this->tc_offset_));
+//       this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//     }
+//   else
+//     {
+//       // Insert node into tc_queue_ in case the node is involved in
+//       // some form of recursion.
+//       if (this->queue_insert (this->tc_queue_, node, this->tc_offset_) == 0)
+//       {
+//         ACE_ERROR_RETURN ((LM_ERROR,
+//                            "(%N:%l) be_visitor_typecode_defn::"
+//                            "visit_type - "
+//                            "queue insert failed\n"),
+//                           -1);
+//       }
 
-      *os << "CORBA::tk_union, // typecode kind" << be_nl;
-      // size of the enum
-      this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//       *os << "CORBA::tk_union, // typecode kind" << be_nl;
+//       // size of the enum
+//       this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
-      {
-        Scoped_Compute_Queue_Guard guard (this);
+//       {
+//         Scoped_Compute_Queue_Guard guard (this);
 
-        // emit the encapsulation length
-        this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
+//         // emit the encapsulation length
+//         this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
 
-        if (node->accept (this) == -1)
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%N:%l) - be_visitor_typecode_defn")
-                               ACE_TEXT ("gen_typecode (union) - ")
-                               ACE_TEXT ("Failed to get encap length\n")),
-                              -1);
-          }
-      }
+//         if (node->accept (this) == -1)
+//           {
+//             ACE_ERROR_RETURN ((LM_ERROR,
+//                                ACE_TEXT ("(%N:%l) - be_visitor_typecode_defn")
+//                                ACE_TEXT ("gen_typecode (union) - ")
+//                                ACE_TEXT ("Failed to get encap length\n")),
+//                               -1);
+//           }
+//       }
 
-      *os << this->computed_encap_len_ << ", // encapsulation length"
-          << be_idt << "\n";
-      // size of the encap length
-      this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//       *os << this->computed_encap_len_ << ", // encapsulation length"
+//           << be_idt << "\n";
+//       // size of the encap length
+//       this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
-      // now emit the encapsulation
-      this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION);
+//       // now emit the encapsulation
+//       this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION);
 
-      if (node->accept (this) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                             ACE_TEXT ("::gen_typecode (union) - ")
-                             ACE_TEXT ("failed to generate encapsulation\n")),
-                            -1);
-        }
+//       if (node->accept (this) == -1)
+//         {
+//           ACE_ERROR_RETURN ((LM_ERROR,
+//                              ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+//                              ACE_TEXT ("::gen_typecode (union) - ")
+//                              ACE_TEXT ("failed to generate encapsulation\n")),
+//                             -1);
+//         }
 
-      *os << be_uidt << "\n";
-    }
-  return 0;
-}
+//       *os << be_uidt << "\n";
+//     }
+//   return 0;
+// }
 
-int
-be_visitor_typecode_defn::gen_encapsulation (be_union *node)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-  be_type *discrim;
+// int
+// be_visitor_typecode_defn::gen_encapsulation (be_union *node)
+// {
+//   TAO_OutStream *os = this->ctx_->stream (); // output stream
+//   be_type *discrim;
 
-  os->indent (); // start from whatever indentation level we were at
+//   os->indent (); // start from whatever indentation level we were at
 
-  *os << "TAO_ENCAP_BYTE_ORDER, // byte order" << be_nl;
-  // size of the encapsulation byte order flag. Although it is 1 byte, the
-  // aligned size is 4 bytes
-  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//   *os << "TAO_ENCAP_BYTE_ORDER, // byte order" << be_nl;
+//   // size of the encapsulation byte order flag. Although it is 1 byte, the
+//   // aligned size is 4 bytes
+//   this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
-  // generate repoID
-  this->gen_repoID (node);
+//   // generate repoID
+//   this->gen_repoID (node);
 
-  // generate name
-  this->gen_name (node);
+//   // generate name
+//   this->gen_name (node);
 
-  // generate typecode for discriminant
-  discrim = be_type::narrow_from_decl (node->disc_type ());
-  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
+//   // generate typecode for discriminant
+//   discrim = be_type::narrow_from_decl (node->disc_type ());
+//   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
 
-  if (discrim->accept (this) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "be_union: cannot generate typecode for discriminant\n"));
-      return -1;
-    }
+//   if (discrim->accept (this) == -1)
+//     {
+//       ACE_ERROR ((LM_ERROR, "be_union: cannot generate typecode for discriminant\n"));
+//       return -1;
+//     }
 
-  // generate the default used flag
-  *os << node->default_index () << ", // default used index" << be_nl;
-  // size of the default index used
-  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//   // generate the default used flag
+//   *os << node->default_index () << ", // default used index" << be_nl;
+//   // size of the default index used
+//   this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
-  // generate the member count
-  *os << node->nfields () << ", // member count" << be_nl;
-  // size of the member count
-  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//   // generate the member count
+//   *os << node->nfields () << ", // member count" << be_nl;
+//   // size of the member count
+//   this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
-  // hand over to the scope to generate the typecode for elements
-  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE);
+//   // hand over to the scope to generate the typecode for elements
+//   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE);
 
-  // Set the scope node as "node" in which the code is being
-  // generated so that elements in the node's scope can use it
-  // for code generation.
-  this->ctx_->scope (node);
+//   // Set the scope node as "node" in which the code is being
+//   // generated so that elements in the node's scope can use it
+//   // for code generation.
+//   this->ctx_->scope (node);
 
-  if (node->accept (this) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "be_union: cannot generate code for members\n"));
-      return -1;
-    }
+//   if (node->accept (this) == -1)
+//     {
+//       ACE_ERROR ((LM_ERROR, "be_union: cannot generate code for members\n"));
+//       return -1;
+//     }
 
-  return 0;
-}
+//   return 0;
+// }
 
-int
-be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-  be_type *bt;  // our type node
+// int
+// be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
+// {
+//   TAO_OutStream *os = this->ctx_->stream (); // output stream
+//   be_type *bt;  // our type node
 
-  be_union *ub = this->ctx_->be_scope_as_union ();
+//   be_union *ub = this->ctx_->be_scope_as_union ();
 
-  ACE_UINT32 buf[1];
-  ACE_OS::memset (buf, 0, sizeof (buf));
+//   ACE_UINT32 buf[1];
+//   ACE_OS::memset (buf, 0, sizeof (buf));
 
-  os->indent ();
+//   os->indent ();
 
-  // Emit the case label value. We use only the first value in the
-  // label list even if there are multiple case labels for this node.
-  // The TypeCode class does not have any way of dealing with
-  // any count but member count. We make sure in the generation of
-  // the union's _discriminant(0 function (called by (de)marshaling
-  // code) that the same value is returned that is generated here.
-  if (node->label (0)->label_kind () == AST_UnionLabel::UL_label)
-    {
-      AST_Expression *expression = node->label (0)->label_val ();
-      AST_Expression::AST_ExprValue *ev = expression->ev ();
+//   // Emit the case label value. We use only the first value in the
+//   // label list even if there are multiple case labels for this node.
+//   // The TypeCode class does not have any way of dealing with
+//   // any count but member count. We make sure in the generation of
+//   // the union's _discriminant(0 function (called by (de)marshaling
+//   // code) that the same value is returned that is generated here.
+//   if (node->label (0)->label_kind () == AST_UnionLabel::UL_label)
+//     {
+//       AST_Expression *expression = node->label (0)->label_val ();
+//       AST_Expression::AST_ExprValue *ev = expression->ev ();
 
-      switch (ub->udisc_type ())
-        {
-          case AST_Expression::EV_char:
-            os->print ("ACE_IDL_NCTOHL (0x%02.2x)",
-                       (unsigned char)ev->u.cval);
-            // size of char aligned to 4 bytes
-            this->tc_offset_ += sizeof (ACE_CDR::ULong);
-            break;
+//       switch (ub->udisc_type ())
+//         {
+//           case AST_Expression::EV_char:
+//             os->print ("ACE_IDL_NCTOHL (0x%02.2x)",
+//                        (unsigned char)ev->u.cval);
+//             // size of char aligned to 4 bytes
+//             this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//             break;
 
-          case AST_Expression::EV_bool:
-            os->print ("ACE_IDL_NCTOHL (0x%02.2x)",
-                       (unsigned char)ev->u.bval);
-            // size of bool aligned to 4 bytes
-            this->tc_offset_ += sizeof (ACE_CDR::ULong);
-            break;
+//           case AST_Expression::EV_bool:
+//             os->print ("ACE_IDL_NCTOHL (0x%02.2x)",
+//                        (unsigned char)ev->u.bval);
+//             // size of bool aligned to 4 bytes
+//             this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//             break;
 
-          case AST_Expression::EV_wchar:
-          case AST_Expression::EV_short:
-            os->print ("ACE_IDL_NSTOHL (0x%04.4x)",
-                       (unsigned short)ev->u.sval);
-            // size of short/wchar aligned to 4 bytes
-            this->tc_offset_ += sizeof (ACE_CDR::ULong);
-            break;
+//           case AST_Expression::EV_wchar:
+//           case AST_Expression::EV_short:
+//             os->print ("ACE_IDL_NSTOHL (0x%04.4x)",
+//                        (unsigned short)ev->u.sval);
+//             // size of short/wchar aligned to 4 bytes
+//             this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//             break;
 
-          case AST_Expression::EV_ushort:
-            os->print ("ACE_IDL_NSTOHL (0x%04.4x)",
-                       (unsigned short)ev->u.usval);
-            // size of unsigned short aligned to 4 bytes
-            this->tc_offset_ += sizeof (ACE_CDR::ULong);
-            break;
+//           case AST_Expression::EV_ushort:
+//             os->print ("ACE_IDL_NSTOHL (0x%04.4x)",
+//                        (unsigned short)ev->u.usval);
+//             // size of unsigned short aligned to 4 bytes
+//             this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//             break;
 
-          case AST_Expression::EV_long:
-            os->print ("0x%08.8x", (unsigned long)ev->u.lval);
-            // size of long aligned to 4 bytes
-            this->tc_offset_ += sizeof (ACE_CDR::ULong);
-            break;
+//           case AST_Expression::EV_long:
+//             os->print ("0x%08.8x", (unsigned long)ev->u.lval);
+//             // size of long aligned to 4 bytes
+//             this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//             break;
 
-          case AST_Expression::EV_ulong:
-            os->print ("0x%08.8x", ev->u.ulval);
-            // size of unsigned long aligned to 4 bytes
-            this->tc_offset_ += sizeof (ACE_CDR::ULong);
-            break;
+//           case AST_Expression::EV_ulong:
+//             os->print ("0x%08.8x", ev->u.ulval);
+//             // size of unsigned long aligned to 4 bytes
+//             this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//             break;
 
-          case AST_Expression::EV_enum:
-            // enum
-            os->print ("0x%08.8x", (unsigned long)ev->u.eval);
-            // size of any aligned to 4 bytes
-            this->tc_offset_ += sizeof (ACE_CDR::ULong);
-            break;
+//           case AST_Expression::EV_enum:
+//             // enum
+//             os->print ("0x%08.8x", (unsigned long)ev->u.eval);
+//             // size of any aligned to 4 bytes
+//             this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//             break;
 
-          case AST_Expression::EV_ulonglong:
-          case AST_Expression::EV_longlong:
-            // unimplemented yet
+//           case AST_Expression::EV_ulonglong:
+//           case AST_Expression::EV_longlong:
+//             // unimplemented yet
 
-          default:
-            ACE_ERROR_RETURN ((LM_DEBUG,
-                               "be_union_branch: (%N:%l) Label value "
-                               "type (%d) is invalid\n", ev->et), -1);
-            ACE_NOTREACHED (break;)
-        }
+//           default:
+//             ACE_ERROR_RETURN ((LM_DEBUG,
+//                                "be_union_branch: (%N:%l) Label value "
+//                                "type (%d) is invalid\n", ev->et), -1);
+//             ACE_NOTREACHED (break;)
+//         }
 
-              *os << ", // union case label (evaluated value)" << be_nl;
-    }
-  else
-    {
-      // default case
-      be_union::DefaultValue dv;
+//               *os << ", // union case label (evaluated value)" << be_nl;
+//     }
+//   else
+//     {
+//       // default case
+//       be_union::DefaultValue dv;
 
-      if (ub->default_value (dv) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_typecode::"
-                             "gen_encapsulation (union_branch) - "
-                             "computing default value failed\n"),
-                            -1);
-        }
+//       if (ub->default_value (dv) == -1)
+//         {
+//           ACE_ERROR_RETURN ((LM_ERROR,
+//                              "(%N:%l) be_visitor_typecode::"
+//                              "gen_encapsulation (union_branch) - "
+//                              "computing default value failed\n"),
+//                             -1);
+//         }
 
-      switch (ub->udisc_type ())
-        {
-          case AST_Expression::EV_char:
-            os->print ("ACE_IDL_NCTOHL (0x%02.2x)",
-                       (unsigned char)dv.u.char_val);
-            // size of bool/char aligned to 4 bytes
-            this->tc_offset_ += sizeof (ACE_CDR::ULong);
-            break;
+//       switch (ub->udisc_type ())
+//         {
+//           case AST_Expression::EV_char:
+//             os->print ("ACE_IDL_NCTOHL (0x%02.2x)",
+//                        (unsigned char)dv.u.char_val);
+//             // size of bool/char aligned to 4 bytes
+//             this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//             break;
 
-          case AST_Expression::EV_bool:
-            os->print ("ACE_IDL_NCTOHL (0x%02.2x)",
-                       (unsigned char)dv.u.bool_val);
-            // size of bool/char aligned to 4 bytes
-            this->tc_offset_ += sizeof (ACE_CDR::ULong);
-            break;
+//           case AST_Expression::EV_bool:
+//             os->print ("ACE_IDL_NCTOHL (0x%02.2x)",
+//                        (unsigned char)dv.u.bool_val);
+//             // size of bool/char aligned to 4 bytes
+//             this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//             break;
 
-          case AST_Expression::EV_wchar:
-            os->print ("ACE_IDL_NSTOHL (0x%04.4x)",
-                       (unsigned short)dv.u.wchar_val);
-            // size of short/wchar aligned to 4 bytes
-            this->tc_offset_ += sizeof (ACE_CDR::ULong);
-            break;
+//           case AST_Expression::EV_wchar:
+//             os->print ("ACE_IDL_NSTOHL (0x%04.4x)",
+//                        (unsigned short)dv.u.wchar_val);
+//             // size of short/wchar aligned to 4 bytes
+//             this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//             break;
 
-          case AST_Expression::EV_short:
-            os->print ("ACE_IDL_NSTOHL (0x%04.4x)",
-                       (unsigned short)dv.u.short_val);
-            // size of short/wchar aligned to 4 bytes
-            this->tc_offset_ += sizeof (ACE_CDR::ULong);
-            break;
+//           case AST_Expression::EV_short:
+//             os->print ("ACE_IDL_NSTOHL (0x%04.4x)",
+//                        (unsigned short)dv.u.short_val);
+//             // size of short/wchar aligned to 4 bytes
+//             this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//             break;
 
-          case AST_Expression::EV_ushort:
-            os->print ("ACE_IDL_NSTOHL (0x%04.4x)",
-                       (unsigned short)dv.u.ushort_val);
-            // size of short/wchar aligned to 4 bytes
-            this->tc_offset_ += sizeof (ACE_CDR::ULong);
-            break;
+//           case AST_Expression::EV_ushort:
+//             os->print ("ACE_IDL_NSTOHL (0x%04.4x)",
+//                        (unsigned short)dv.u.ushort_val);
+//             // size of short/wchar aligned to 4 bytes
+//             this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//             break;
 
-          case AST_Expression::EV_long:
-            os->print ("0x%08.8x", (unsigned long)dv.u.long_val);
-            // size of short/wchar aligned to 4 bytes
-            this->tc_offset_ += sizeof (ACE_CDR::ULong);
-            break;
+//           case AST_Expression::EV_long:
+//             os->print ("0x%08.8x", (unsigned long)dv.u.long_val);
+//             // size of short/wchar aligned to 4 bytes
+//             this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//             break;
 
-          case AST_Expression::EV_ulong:
-            os->print ("0x%08.8x", (unsigned long)dv.u.ulong_val);
-            // size of short/wchar aligned to 4 bytes
-            this->tc_offset_ += sizeof (ACE_CDR::ULong);
-            break;
+//           case AST_Expression::EV_ulong:
+//             os->print ("0x%08.8x", (unsigned long)dv.u.ulong_val);
+//             // size of short/wchar aligned to 4 bytes
+//             this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//             break;
 
-          case AST_Expression::EV_enum:
-            // enum
-            os->print ("0x%08.8x", (unsigned long)dv.u.enum_val);
-            // size of short/wchar aligned to 4 bytes
-            this->tc_offset_ += sizeof (ACE_CDR::ULong);
-            break;
+//           case AST_Expression::EV_enum:
+//             // enum
+//             os->print ("0x%08.8x", (unsigned long)dv.u.enum_val);
+//             // size of short/wchar aligned to 4 bytes
+//             this->tc_offset_ += sizeof (ACE_CDR::ULong);
+//             break;
 
-          case AST_Expression::EV_ulonglong:
-          case AST_Expression::EV_longlong:
-            // unimplemented yet
+//           case AST_Expression::EV_ulonglong:
+//           case AST_Expression::EV_longlong:
+//             // unimplemented yet
 
-          default:
-            ACE_ERROR_RETURN ((LM_DEBUG,
-                               "be_union_branch: (%N:%l) Label value "
-                               "type (%d) is invalid\n",
-                               ub->udisc_type ()),
-                              -1);
-            ACE_NOTREACHED (break;)
-        }
+//           default:
+//             ACE_ERROR_RETURN ((LM_DEBUG,
+//                                "be_union_branch: (%N:%l) Label value "
+//                                "type (%d) is invalid\n",
+//                                ub->udisc_type ()),
+//                               -1);
+//             ACE_NOTREACHED (break;)
+//         }
 
-      *os << ", // union default label (evaluated value)" << be_nl;
-    }
+//       *os << ", // union default label (evaluated value)" << be_nl;
+//     }
 
-  // emit name
-  this->gen_name (node);
+//   // emit name
+//   this->gen_name (node);
 
-  // hand over code generation to our type node
-  bt = be_type::narrow_from_decl (node->field_type ());
-  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
+//   // hand over code generation to our type node
+//   bt = be_type::narrow_from_decl (node->field_type ());
+//   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
 
-  if (!bt || bt->accept (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-          ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
-          ACE_TEXT ("::gen_encapsulation (union_branch) - ")
-          ACE_TEXT ("failed to generate typecode\n")
-        ),
-       -1);
-    }
+//   if (!bt || bt->accept (this) == -1)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//           ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+//           ACE_TEXT ("::gen_encapsulation (union_branch) - ")
+//           ACE_TEXT ("failed to generate typecode\n")
+//         ),
+//        -1);
+//     }
 
-  // revert the state
-  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE);
-  return 0;
-}
+//   // revert the state
+//   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE);
+//   return 0;
+// }
 
 // int
 // be_visitor_typecode_defn::gen_typecode (be_valuetype *node)
@@ -3149,158 +3149,158 @@ be_visitor_typecode_defn::compute_encap_length (be_array *node)
 // }
 
 
-ACE_CDR::Long
-be_visitor_typecode_defn::compute_tc_size (be_union *node)
-{
-  // while computing the encapsulation length we must keep in mind the typecode
-  // that has gotten generated until this point. Hence, we must first check the
-  // "tc_queue" to ensure if are already there somewhere in a previous
-  // encapsulation in which case we must count only the bytes for the
-  // indirection. If we are not already generated, we must then check if we
-  // have already been counted in the current computation or not by checking
-  // for our presence in the compute queue. In both cases, we only include the
-  // 8 bytes in the computation
-  ACE_Unbounded_Queue<AST_Type *> list;
+// ACE_CDR::Long
+// be_visitor_typecode_defn::compute_tc_size (be_union *node)
+// {
+//   // while computing the encapsulation length we must keep in mind the typecode
+//   // that has gotten generated until this point. Hence, we must first check the
+//   // "tc_queue" to ensure if are already there somewhere in a previous
+//   // encapsulation in which case we must count only the bytes for the
+//   // indirection. If we are not already generated, we must then check if we
+//   // have already been counted in the current computation or not by checking
+//   // for our presence in the compute queue. In both cases, we only include the
+//   // 8 bytes in the computation
+//   ACE_Unbounded_Queue<AST_Type *> list;
 
-  if ((be_global->opt_tc () || node->in_recursion (list))
-      && (this->queue_lookup (this->tc_queue_, node)
-          || this->queue_lookup (this->compute_queue_, node)))
-    {
-      this->computed_tc_size_ = 4 + 4;
-    }
-  else
-    {
-      // Insert node into tc_queue_ in case the node is involved in
-      // some form of recursion.
-      if (this->queue_insert (this->compute_queue_,
-                              node,
-                              this->tc_offset_)
-            == 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_typecode_defn::"
-                             "compute_tc_size (union) - "
-                             "queue insert failed\n"),
-                            -1);
-        }
+//   if ((be_global->opt_tc () || node->in_recursion (list))
+//       && (this->queue_lookup (this->tc_queue_, node)
+//           || this->queue_lookup (this->compute_queue_, node)))
+//     {
+//       this->computed_tc_size_ = 4 + 4;
+//     }
+//   else
+//     {
+//       // Insert node into tc_queue_ in case the node is involved in
+//       // some form of recursion.
+//       if (this->queue_insert (this->compute_queue_,
+//                               node,
+//                               this->tc_offset_)
+//             == 0)
+//         {
+//           ACE_ERROR_RETURN ((LM_ERROR,
+//                              "(%N:%l) be_visitor_typecode_defn::"
+//                              "compute_tc_size (union) - "
+//                              "queue insert failed\n"),
+//                             -1);
+//         }
 
-      this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
+//       this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN);
 
-      if (node->accept (this) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                             ACE_TEXT ("::compute_tc_size (union) - ")
-                             ACE_TEXT ("cannot compute encap len\n")),
-                            -1);
-        }
+//       if (node->accept (this) == -1)
+//         {
+//           ACE_ERROR_RETURN ((LM_ERROR,
+//                              ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+//                              ACE_TEXT ("::compute_tc_size (union) - ")
+//                              ACE_TEXT ("cannot compute encap len\n")),
+//                             -1);
+//         }
 
-      this->computed_tc_size_ = 4 + 4 + this->computed_encap_len_;
-    }
+//       this->computed_tc_size_ = 4 + 4 + this->computed_encap_len_;
+//     }
 
-  return this->computed_tc_size_;
-}
-
-
-ACE_CDR::Long
-be_visitor_typecode_defn::compute_encap_length (be_union *node)
-{
-  be_type *discrim;
-
-  ACE_CDR::Long encap_len = 4;  // holds the byte order flag
-
-  encap_len += this->repoID_encap_len (node); // for repoID
-
-  // do the same thing for the local name
-  encap_len += this->name_encap_len (node); // for name
-
-  // add encapsulation size of discriminant typecode
-  discrim = be_type::narrow_from_decl (node->disc_type ());
-  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TC_SIZE);
-
-  if (!discrim || discrim->accept (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ACE_TEXT ("::compute_encap_len (union) - ")
-                         ACE_TEXT ("cannot compute tc size\n")),
-                        -1);
-    }
-
-  encap_len += this->computed_tc_size_;
-
-  encap_len += 4; // to hold the "default used" flag
-  encap_len += 4; // to hold the member count
-
-  // save the current value of scope len and start with a fresh one for our
-  // scope length computation
-  if (this->push (this->computed_scope_encap_len_) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ACE_TEXT ("::compute_encap_len (union) - ")
-                         ACE_TEXT ("push failed\n")),
-                        -1);
-    }
-  this->computed_scope_encap_len_ = 0;
-
-  // compute encap length for members
-  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN);
-
-  if (node->accept (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ACE_TEXT ("::compute_encap_len (union) - ")
-                         ACE_TEXT ("cannot compute scope tc size\n")),
-                        -1);
-    }
-
-  this->computed_encap_len_ = encap_len + this->computed_scope_encap_len_;
-
-  // pop off the previous value of computed_scope_len_
-  if (this->pop (this->computed_scope_encap_len_) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ACE_TEXT ("::compute_encap_len (union) - ")
-                         ACE_TEXT ("pop failed\n")),
-                        -1);
-    }
-
-  return this->computed_encap_len_;
-}
+//   return this->computed_tc_size_;
+// }
 
 
-ACE_CDR::Long
-be_visitor_typecode_defn::compute_encap_length (be_union_branch *node)
-{
-  be_type *bt;
+// ACE_CDR::Long
+// be_visitor_typecode_defn::compute_encap_length (be_union *node)
+// {
+//   be_type *discrim;
 
-  ACE_CDR::Long encap_len = 0;
+//   ACE_CDR::Long encap_len = 4;  // holds the byte order flag
 
-  encap_len += 4; // case label;
-  encap_len += this->name_encap_len (node); // for name
+//   encap_len += this->repoID_encap_len (node); // for repoID
 
-  bt = be_type::narrow_from_decl (node->field_type ());
-  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TC_SIZE);
+//   // do the same thing for the local name
+//   encap_len += this->name_encap_len (node); // for name
 
-  if (!bt || bt->accept (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ACE_TEXT ("::compute_encap_len (union branch) - ")
-                         ACE_TEXT ("cannot compute tc size\n")),
-                        -1);
-    }
+//   // add encapsulation size of discriminant typecode
+//   discrim = be_type::narrow_from_decl (node->disc_type ());
+//   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TC_SIZE);
 
-  encap_len += this->computed_tc_size_;
+//   if (!discrim || discrim->accept (this) == -1)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+//                          ACE_TEXT ("::compute_encap_len (union) - ")
+//                          ACE_TEXT ("cannot compute tc size\n")),
+//                         -1);
+//     }
 
-  this->computed_encap_len_ = encap_len;
+//   encap_len += this->computed_tc_size_;
 
-  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN);
-  return this->computed_encap_len_;
-}
+//   encap_len += 4; // to hold the "default used" flag
+//   encap_len += 4; // to hold the member count
+
+//   // save the current value of scope len and start with a fresh one for our
+//   // scope length computation
+//   if (this->push (this->computed_scope_encap_len_) == -1)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+//                          ACE_TEXT ("::compute_encap_len (union) - ")
+//                          ACE_TEXT ("push failed\n")),
+//                         -1);
+//     }
+//   this->computed_scope_encap_len_ = 0;
+
+//   // compute encap length for members
+//   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN);
+
+//   if (node->accept (this) == -1)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+//                          ACE_TEXT ("::compute_encap_len (union) - ")
+//                          ACE_TEXT ("cannot compute scope tc size\n")),
+//                         -1);
+//     }
+
+//   this->computed_encap_len_ = encap_len + this->computed_scope_encap_len_;
+
+//   // pop off the previous value of computed_scope_len_
+//   if (this->pop (this->computed_scope_encap_len_) == -1)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+//                          ACE_TEXT ("::compute_encap_len (union) - ")
+//                          ACE_TEXT ("pop failed\n")),
+//                         -1);
+//     }
+
+//   return this->computed_encap_len_;
+// }
+
+
+// ACE_CDR::Long
+// be_visitor_typecode_defn::compute_encap_length (be_union_branch *node)
+// {
+//   be_type *bt;
+
+//   ACE_CDR::Long encap_len = 0;
+
+//   encap_len += 4; // case label;
+//   encap_len += this->name_encap_len (node); // for name
+
+//   bt = be_type::narrow_from_decl (node->field_type ());
+//   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TC_SIZE);
+
+//   if (!bt || bt->accept (this) == -1)
+//     {
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+//                          ACE_TEXT ("::compute_encap_len (union branch) - ")
+//                          ACE_TEXT ("cannot compute tc size\n")),
+//                         -1);
+//     }
+
+//   encap_len += this->computed_tc_size_;
+
+//   this->computed_encap_len_ = encap_len;
+
+//   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN);
+//   return this->computed_encap_len_;
+// }
 
 // ACE_CDR::Long
 // be_visitor_typecode_defn::compute_tc_size (be_valuetype *node)
