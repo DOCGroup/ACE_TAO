@@ -1,3 +1,66 @@
+Sun May 09 11:26:57 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * TAO/examples/Callback_Quoter/Makefile
+          TAO/examples/Event_Comm/Makefile
+          TAO/examples/OBV/Typed_Events/Makefile
+          TAO/examples/POA/Adapter_Activator/Makefile
+          TAO/examples/POA/DSI/Makefile
+          TAO/examples/POA/Default_Servant/Makefile
+          TAO/examples/POA/Explicit_Activation/Makefile
+          TAO/examples/POA/Forwarding/Makefile
+          TAO/examples/POA/Generic_Servant/Makefile
+          TAO/examples/POA/Identity/Makefile
+          TAO/examples/POA/On_Demand_Activation/Makefile
+          TAO/examples/POA/Reference_Counted_Servant/Makefile
+          TAO/examples/POA/TIE/Makefile
+          TAO/examples/Quoter/Makefile
+          TAO/examples/Simple/bank/Makefile
+          TAO/examples/Simple/chat/Makefile
+          TAO/examples/Simple/echo/Makefile
+          TAO/examples/Simple/grid/Makefile
+          TAO/examples/Simple/time/Makefile
+          TAO/orbsvcs/Concurrency_Service/Makefile
+          TAO/orbsvcs/CosEvent_Service/Makefile
+          TAO/orbsvcs/Dump_Schedule/Makefile
+          TAO/orbsvcs/Event_Service/Makefile
+          TAO/orbsvcs/ImplRepo_Service/Makefile
+          TAO/orbsvcs/LifeCycle_Service/Makefile
+          TAO/orbsvcs/Logging_Service/Makefile
+          TAO/orbsvcs/Naming_Service/Makefile
+          TAO/orbsvcs/Scheduling_Service/Makefile
+          TAO/orbsvcs/Time_Service/Makefile
+          TAO/orbsvcs/Trading_Service/Makefile
+          TAO/orbsvcs/orbsvcs/Makefile
+          TAO/orbsvcs/tests/Concurrency/Makefile
+          TAO/orbsvcs/tests/CosEC_Basic/Makefile
+          TAO/orbsvcs/tests/CosEC_Multiple/Makefile
+          TAO/orbsvcs/tests/EC_Basic/Makefile
+          TAO/orbsvcs/tests/EC_Custom_Marshal/Makefile
+          TAO/orbsvcs/tests/EC_Mcast/Makefile
+          TAO/orbsvcs/tests/EC_Multiple/Makefile
+          TAO/orbsvcs/tests/EC_Throughput/Makefile
+          TAO/orbsvcs/tests/Event_Latency/Makefile
+          TAO/orbsvcs/tests/ImplRepo/Makefile
+          TAO/orbsvcs/tests/Logger/Makefile
+          TAO/orbsvcs/tests/Property/Makefile
+          TAO/orbsvcs/tests/Sched_Conf/Makefile
+          TAO/orbsvcs/tests/Simple_Naming/Makefile
+          TAO/orbsvcs/tests/Time/Makefile
+          TAO/orbsvcs/tests/Trading/Makefile
+          TAO/performance-tests/Cubit/TAO/DII_Cubit/Makefile
+          TAO/performance-tests/Cubit/TAO/IDL_Cubit/Makefile
+          TAO/performance-tests/Cubit/TAO/MT_Cubit/Makefile
+          TAO/performance-tests/Thruput/TAO/Makefile
+          TAO/tao/Makefile
+          TAO/tests/MT_Client/Makefile
+          TAO/tests/Multiple_Inheritance/Makefile
+          TAO/tests/NestedUpcall/MT_Client_Test/Makefile
+          TAO/tests/NestedUpcall/Reactor/Makefile
+          TAO/tests/NestedUpcall/Triangle_Test/Makefile
+          TAO/tests/OctetSeq/Makefile
+          TAO/tests/Param_Test/Makefile: ran make depend after adding new 
+          RB_Tree interface.
+
 Sat May 08 17:17:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_valuetype.cpp,be_valuetype_fwd.cpp: removed

@@ -226,7 +226,10 @@ CPPFLAGS += -I$(ACE_ROOT)/netsvcs/lib
  $(ACE_ROOT)/netsvcs/lib/Server_Logging_Handler_T.h \
  $(ACE_ROOT)/ace/TLI_Acceptor.h \
  $(ACE_ROOT)/ace/TLI.h \
+ $(ACE_ROOT)/ace/TLI.i \
  $(ACE_ROOT)/ace/TLI_Stream.h \
+ $(ACE_ROOT)/ace/TLI_Stream.i \
+ $(ACE_ROOT)/ace/TLI_Acceptor.i \
  $(ACE_ROOT)/netsvcs/lib/Server_Logging_Handler_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
