@@ -60,25 +60,46 @@ TAO_Default_Protocols_Hooks::get_selector_hook (CORBA::Policy *,
 }
 
 void
-TAO_Default_Protocols_Hooks::get_selector_bands_policy_hook (
-                                          CORBA::Policy *,
-                                          CORBA::Short &,
-                                          CORBA::Short &,
-                                          CORBA::Short &,
-                                          int &)
+TAO_Default_Protocols_Hooks::get_selector_bands_policy_hook (CORBA::Policy *,
+                                                             CORBA::Short &,
+                                                             CORBA::Short &,
+                                                             CORBA::Short &,
+                                                             int &)
 {
 }
 
 int
-TAO_Default_Protocols_Hooks::get_thread_priority (CORBA::Short &,
-                                                  CORBA::Environment &)
+TAO_Default_Protocols_Hooks::get_thread_CORBA_priority (CORBA::Short &,
+                                                        CORBA::Environment &)
 {
   return 0;
 }
 
 int
-TAO_Default_Protocols_Hooks::set_thread_priority (CORBA::Short,
-                                                  CORBA::Environment &)
+TAO_Default_Protocols_Hooks::get_thread_native_priority (CORBA::Short &,
+                                                         CORBA::Environment &)
+{
+  return 0;
+}
+
+int
+TAO_Default_Protocols_Hooks::get_thread_CORBA_and_native_priority (CORBA::Short &,
+                                                                   CORBA::Short &,
+                                                                   CORBA::Environment &)
+{
+  return 0;
+}
+
+int
+TAO_Default_Protocols_Hooks::set_thread_CORBA_priority (CORBA::Short,
+                                                        CORBA::Environment &)
+{
+  return 0;
+}
+
+int
+TAO_Default_Protocols_Hooks::set_thread_native_priority (CORBA::Short,
+                                                         CORBA::Environment &)
 {
   return 0;
 }
@@ -91,9 +112,9 @@ TAO_Default_Protocols_Hooks::set_default_policies (CORBA::Environment &)
 
 void
 TAO_Default_Protocols_Hooks::rt_service_context (TAO_Stub *,
-                                   TAO_Service_Context &,
-                                   CORBA::Boolean ,
-                                   CORBA::Environment &)
+                                                 TAO_Service_Context &,
+                                                 CORBA::Boolean ,
+                                                 CORBA::Environment &)
 {
 }
 

@@ -64,11 +64,21 @@ class TAO_Export TAO_Default_Protocols_Hooks : public TAO_Protocols_Hooks
                            CORBA::Short &p,
                            int &in_range);
 
-  virtual int get_thread_priority (CORBA::Short &,
-                           CORBA::Environment &);
+  virtual int get_thread_CORBA_priority (CORBA::Short &,
+                                         CORBA::Environment &);
 
-  virtual int set_thread_priority (CORBA::Short,
-                           CORBA::Environment &);
+  virtual int get_thread_native_priority (CORBA::Short &,
+                                          CORBA::Environment &);
+
+  virtual int get_thread_CORBA_and_native_priority (CORBA::Short &,
+                                                    CORBA::Short &,
+                                                    CORBA::Environment &);
+
+  virtual int set_thread_CORBA_priority (CORBA::Short,
+                                         CORBA::Environment &);
+
+  virtual int set_thread_native_priority (CORBA::Short,
+                                          CORBA::Environment &);
 
   virtual int set_default_policies (CORBA::Environment &ACE_TRY_ENV);
 
