@@ -46,7 +46,7 @@
 #include "ace/Singleton.h"
 
 // Counting_Service and Options in here
-#include "Process_Strategy_Test.h"	
+#include "Process_Strategy_Test.h"
 
 // Define a <Strategy_Acceptor> that's parameterized by the
 // <Counting_Service>.
@@ -62,7 +62,7 @@ static int connections = 0;
 
 // Use this to show down the process gracefully.
 
-static int 
+static int
 done (void)
 {
   if (OPTIONS::instance ()->concurrency_type () == Options::PROCESS)
@@ -91,7 +91,7 @@ Options::filename (void)
 
 Options::Options (void)
   :
-  // Choose to use processes by default.  
+  // Choose to use processes by default.
 #if !defined (ACE_LACKS_FORK)
     concurrency_type_ (PROCESS)
 #elif defined (ACE_HAS_THREADS)
@@ -356,12 +356,13 @@ Counting_Service::svc (void)
   return 0;
 }
 
+int
 Counting_Service::handle_close (ACE_HANDLE,
                                 ACE_Reactor_Mask)
 {
   // Done with another connection.
   connections++;
- 
+
   // Call down to base class
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::handle_close ();
 }
@@ -490,7 +491,7 @@ server (void *)
   while (!done () && result != -1)
     // Run the main event loop.
     result = ACE_Reactor::instance ()->handle_events ();
-  
+
   return 0;
 }
 
@@ -603,4 +604,3 @@ template class ACE_Write_Guard<ACE_File_Lock>;
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Write_Guard<ACE_File_Lock>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
