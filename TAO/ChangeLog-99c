@@ -1,3 +1,9 @@
+Fri Jun 11 13:01:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/MT_Client/run_test.pl:
+	  Modified to use the new timeouts, just an example for other test 
+	  developers.
+
 Fri Jun 11 11:42:07 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/DynAny_Test/test_wrapper.cpp: Added #include "ace/OS.h" so
