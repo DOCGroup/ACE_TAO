@@ -17,11 +17,9 @@ Fri Mar 27 13:38:04 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 Fri Mar 27 11:47:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * tao/IIOP_ORB.*,IIOP_Object.{h,cpp,corba.h: #include the .i file
-          in the .h/.cpp files instead of corba.h.
-
-        * tao/Request.{h,cpp},Server_Request.*,corba.h: #include the .i file
-          in the .h/.cpp files instead of corba.h.
+        * tao/IIOP_ORB.*,IIOP_Object.{h,cpp},Request.{h,cpp},Server_Request.*,
+          Exception.*,params.*,corba.h: #include the .i file in the .h/.cpp
+          files instead of corba.h.
 
         * tests/Demux_Test/client.cpp: #include ace/stream.h instead of
           system headers, and use ACE_OS::gethrtime () instead of
