@@ -12,7 +12,7 @@
 
 #ifndef TOPOLOGY_LOADER_H
 #define TOPOLOGY_LOADER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
