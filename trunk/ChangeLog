@@ -1,3 +1,11 @@
+Sun Nov 16 23:08:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/footprint_stats.sh:
+
+	  Removed Smart_Proxies from the daily build since it made no
+	  sense to have that. Added new libraries like the Valutype that
+	  we would like to track to the daily stats pages.
+
 Sun Nov 16 18:33:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Reactor.cpp:
