@@ -870,7 +870,8 @@ TAO_POA::create_POA (const char *adapter_name,
       ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
       // Give ownership to auto pointer.
-      new_poa_manager_impl = auto_ptr<TAO_POA_Manager> (poa_manager_impl);
+      auto_ptr<TAO_POA_Manager> auto_new_poa_manager_impl (poa_manager_impl);
+      new_poa_manager_impl = auto_new_poa_manager_impl;
     }
   else
     {
