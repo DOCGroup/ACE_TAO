@@ -38,11 +38,17 @@
 VXWORKS = 1
 CROSS-COMPILE = 1
 
-debug = 1
-optimize = 1
+ifndef debug
+  debug = 1
+endif
+ifndef optimize
+  optimize = 1
+endif
+ifndef rtti
+  rtti = 0
+endif # rtti
 shared_libs =
 static_libs = 1
-
 
 #### CPU type
 ifndef CPU
@@ -81,11 +87,16 @@ endif # ppc
 endif # CPU
 
 #### For GHS 1.8.9:
-LIBS += $(GHS)/libscnoe.a $(GHS)/libsedgnoe.a $(GHS)/liblockinit_sc.o $(GHSROOT)/$(CPU)/libarch.a
+ifeq (1,$(exceptions))
+  LIBS += $(GHS)/libsce.a $(GHS)/libsedge.a $(GHS)/setup_eh.o
+else
+  LIBS += $(GHS)/libscnoe.a $(GHS)/libsedgnoe.a
+endif
+LIBS += $(GHS)/liblockinit_sc.o $(GHSROOT)/$(CPU)/libarch.a
 
 CC       = cxvx$(CPU)
 CXX      = $(CC)
-CCFLAGS  += $(CFLAGS) --no_rtti -tnone -Dghs -I$(GHSROOT)/vxworks/include -I$(WIND_BASE)/target/h
+CCFLAGS  += $(CFLAGS) -tnone -Dghs -I$(GHSROOT)/vxworks/include -I$(WIND_BASE)/target/h
 DCFLAGS  += -g
 SOFLAGS  += -shared
 DLD      = $(CXX)
@@ -96,4 +107,9 @@ PIC      =
 
 ifeq (1, $(exceptions))
    CCFLAGS += --stdle --exceptions
+   override rtti = 1
 endif # exceptions
+
+ifeq (0, $(rtti))
+  CCFLAGS += --no_rtti
+endif # rtti
