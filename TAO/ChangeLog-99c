@@ -9,7 +9,10 @@ Wed Sep 15 15:01:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  at present. This is not part of the spec, so as
 	  it becomes clearer what folks want from this,
 	  some or all of the exception members may be 
-	  output as well.
+	  output as well. The code is generated within the
+	  CDR operator context, since it didn't seem necessary
+	  to create two new types of visitor and two new files
+	  to generate 8 lines of code.
 
 Wed Sep 15 13:51:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
