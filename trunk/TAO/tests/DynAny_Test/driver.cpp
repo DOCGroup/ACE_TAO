@@ -221,7 +221,6 @@ Driver::run (void)
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return retstatus;
 }
