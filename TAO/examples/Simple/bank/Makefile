@@ -280,6 +280,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -510,6 +511,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -740,6 +742,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -989,6 +992,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -1236,6 +1240,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -1302,8 +1307,7 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Get_Opt.i \
- Server_i.h \
+ $(ACE_ROOT)/ace/Get_Opt.i Server_i.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -1485,6 +1489,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -1732,6 +1737,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -1963,6 +1969,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \

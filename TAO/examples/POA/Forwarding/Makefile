@@ -257,6 +257,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -487,6 +488,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -717,6 +719,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -950,6 +953,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -981,8 +985,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- FooC.h FooC.i
+ $(ACE_ROOT)/ace/Read_Buffer.i FooC.h \
+ FooC.i
 .obj/MyFooServant.o .obj/MyFooServant.so .shobj/MyFooServant.o .shobj/MyFooServant.so: MyFooServant.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -1182,6 +1186,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -1413,6 +1418,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
