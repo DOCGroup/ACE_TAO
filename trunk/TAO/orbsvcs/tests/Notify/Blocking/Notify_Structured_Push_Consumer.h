@@ -19,7 +19,7 @@
 #define TAO_NOTIFY_STRUCTURED_PUSH_CONSUMER_H
 
 #include "Notify_StructuredPushConsumer.h"
-
+#include "orbsvcs/TimeBaseC.h"
 
 class Notify_Structured_Push_Consumer: public TAO_Notify_StructuredPushConsumer
 {

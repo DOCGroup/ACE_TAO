@@ -8,6 +8,7 @@
 
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/TimeBaseC.h"
 #include "Notify_Structured_Push_Consumer.h"
 #include "goC.h"
 

@@ -1,3 +1,23 @@
+Mon Jan 21 07:15:35 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.h:
+        * orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Blocking/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.cpp:
+
+          Fix build errors for Debian Minimum.  Added a missing include of
+          "orbsvcs/TimeBaseC.h".
+
 Mon Jan 21 06:59:24 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp: 

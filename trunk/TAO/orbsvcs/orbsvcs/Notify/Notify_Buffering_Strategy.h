@@ -26,6 +26,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Notify_AdminProperties.h"
+#include "orbsvcs/TimeBaseC.h"
 
 #include "ace/Message_Queue.h"
 #include "ace/Synch.h"

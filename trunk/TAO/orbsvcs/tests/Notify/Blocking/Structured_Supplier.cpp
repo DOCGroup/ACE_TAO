@@ -11,6 +11,7 @@
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/TimeBaseC.h"
 #include "Notify_StructuredPushSupplier.h"
 #include "goS.h"
 
