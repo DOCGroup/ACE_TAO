@@ -1,6 +1,7 @@
 // $Id$
 
 #include "EC_Factory.h"
+#include "ace/Dynamic_Service.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Factory.i"
