@@ -370,11 +370,13 @@ public:
   ACE_Malloc_Stats malloc_stats_;
 #define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_Name_Node*) \
                                       + sizeof (ACE_Malloc_Header*) \
+                                      + sizeof (int) \
                                       + MAXNAMELEN  \
                                       + sizeof (ACE_Malloc_Stats)))
 #else
 #define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_Name_Node*) \
                                       + sizeof (ACE_Malloc_Header*) \
+                                      + sizeof (int) \
                                       + MAXNAMELEN))
 #endif /* ACE_HAS_MALLOC_STATS */
 
