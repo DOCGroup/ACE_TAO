@@ -294,10 +294,12 @@ public:
   /// and returns -1 if failures occur.
   int unbind (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *entry);
 
-  /// Return the current size of the map.
+  /// Returns the current number of ACE_Hash_Map_Entry objects in the
+  /// hash table.
   size_t current_size (void) const;
 
-  /// Return the total size of the map.
+  /// Return the size of the array that's used to point to the
+  /// linked lists of ACE_Hash_Map_Entry objects in the hash table.
   size_t total_size (void) const;
 
   /**
