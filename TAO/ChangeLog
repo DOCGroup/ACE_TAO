@@ -1,3 +1,19 @@
+Thu Nov  4 22:20:19 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO/TAOACE.mwc:
+          Added ../protocols, a new directory, to the workspace
+          definition. See my comment in $ACE_ROOT/ChangeLog, Thu Nov  4
+          22:08:40 2004  for details regarding the protocols directory.
+
+        * TAO/orbsvcs/orbsvcs/HTIOP.mpc:
+          This project was not including htbp as a base.
+
+        * TAO/orbsvcs/tests/HTIOP/AMI/HTIOP_AMI.mpc:
+        * TAO/orbsvcs/tests/HTIOP/BiDirectional/HTIOP_BiDirectional.mpc:
+        * TAO/orbsvcs/tests/HTIOP/Hello/HTIOP_Hello.mpc:
+          Removed HTIOP as a base project since these tests all load HTIOP
+          dynamically.
+
 Thu Nov  4 17:42:07 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/PersistStore.cpp:

@@ -2,7 +2,7 @@
 //
 // $Id$
 
-project(*Server): messaging, taoexe, portableserver, ami, htiop {
+project(*Server): messaging, taoexe, portableserver, ami {
   Source_Files {
     Test_Output.cpp
     ami_test_i.cpp
@@ -10,14 +10,14 @@ project(*Server): messaging, taoexe, portableserver, ami, htiop {
   }
 }
 
-project(*Client): messaging, taoexe, portableserver, ami, htiop {
+project(*Client): messaging, taoexe, portableserver, ami {
   Source_Files {
     Test_Output.cpp
     client.cpp
   }
 }
 
-project(*Simple Client): messaging, taoexe, portableserver, ami, htiop {
+project(*Simple Client): messaging, taoexe, portableserver, ami {
   Source_Files {
     Test_Output.cpp
     simple_client.cpp

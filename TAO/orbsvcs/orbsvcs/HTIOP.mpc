@@ -2,9 +2,8 @@
 //
 // $Id$
 
-project : orbsvcslib, core {
+project : htbp, orbsvcslib, core {
   sharedname   = TAO_HTIOP
-  libs += ACE_HTBP
   idlflags    += -Wb,export_macro=HTIOP_Export -Wb,export_include=orbsvcs/HTIOP/HTIOP_Export.h
   dynamicflags = HTIOP_BUILD_DLL
   tagchecks += HTIOP
