@@ -872,14 +872,29 @@ TAO_POA::TAO_POA (const TAO_POA::String &adapter_name,
 void
 TAO_POA::create_internal_lock (void)
 {
-  if (this->policies ().synchronization () == PortableServer::DEFAULT_LOCK)
-    this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_poa_lock ();
-  else if (this->policies ().synchronization () == PortableServer::NULL_LOCK)
-    ACE_NEW (this->lock_,
-             ACE_Lock_Adapter<ACE_Null_Mutex>);
-  else if (this->policies ().synchronization () == PortableServer::THREAD_LOCK)
-    ACE_NEW (this->lock_,
-             ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex>);
+  switch (this->policies ().synchronization ())
+    {
+    case PortableServer::DEFAULT_LOCK:
+      // Ask the server factory to create the lock.  svc.conf will be
+      // consulted. If the user did not specify any preference in
+      // svc.conf, THREAD_LOCK will be the default.
+      this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_poa_lock ();
+      break;
+
+    case PortableServer::THREAD_LOCK:
+#if defined (ACE_HAS_THREADS)
+      // Thread lock
+      ACE_NEW (this->lock_, ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex>);
+      break;
+#else
+      /* FALL THROUGH */
+#endif /* ACE_HAS_THREADS */
+
+    case PortableServer::NULL_LOCK:
+      // Null lock
+      ACE_NEW (this->lock_, ACE_Lock_Adapter<ACE_Null_Mutex>);
+      break;
+    }
 }
 
 TAO_POA::~TAO_POA (void)
