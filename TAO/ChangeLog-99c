@@ -1,3 +1,16 @@
+Fri Apr  9 15:20:10 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp (visit_interface): 
+	* tao/Servant_Base.h (TAO_ServantBase): 
+	* tao/Server_Request.i (operation): 
+	* tao/Operation_Table.h (TAO_Operation_Table): 
+	* tao/Servant_Base.cpp: 
+	* tao/Server_Request.cpp (retval_): 
+	* tao/Operation_Table.cpp (TAO_Dynamic_Hash_OpTable): 
+	 Removed strlen calculation for the Operation Name from the critical
+	 path. Length as it is obtained during demarshalling is stored in the
+	 IIOP_Request object and passed to the Perfect Hash's find operation.
+
 Fri Apr 09 12:52:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/DSI/Database_i.cpp (_is_a): Removed
