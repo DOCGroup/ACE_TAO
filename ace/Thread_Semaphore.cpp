@@ -9,7 +9,7 @@
  * @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 
-#include "ace/Semaphore.h"
+#include "ace/Thread_Semaphore.h"
 
 #if defined (ACE_HAS_THREADS)
 
