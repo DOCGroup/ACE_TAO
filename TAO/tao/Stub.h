@@ -37,16 +37,13 @@
 
 class TAO_GIOP_Invocation;
 class TAO_ORB_Core;
-class TAO_Policy_Manager_Impl;
+
+typedef STUB_Object IIOP_Object;
 
 // Descriptions of parameters.
 
 enum TAO_Param_Type
 {
-  // @@ Is there any use for this enum? I would assume that the
-  //    similar ones on corbfwd.h are enough!
-  // @@ Jeff: can you check into that?
-
   // = TITLE
   //   TAO_Param_Type
   // =DESCRIPTION
@@ -193,10 +190,10 @@ struct TAO_Skel_Entry
   // skeleton corresponding to the operation
 };
 
-class TAO_Export TAO_Stub
+class TAO_Export STUB_Object
 {
   // = TITLE
-  //   TAO_Stub
+  //   STUB_Object
   //
   // = DESCRIPTION
   //   Per-objref data includes the (protocol-specific) Profile, which
@@ -212,8 +209,8 @@ class TAO_Export TAO_Stub
   //   type.
 public:
   void do_static_call (CORBA_Environment &TAO_IN_ENV,
-                       const TAO_Call_Data *info,
-                       void** args);
+                               const TAO_Call_Data *info,
+                               void** args);
   // The "stub interpreter" method parameters are:
   //
   //    - TAO_IN_ENV ... used for exception reporting
@@ -231,16 +228,13 @@ public:
   // shuffling.  The stub and "do_static_call" parameters are all but the
   // same, except that their order is different.
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
   void do_dynamic_call (const char *opname,
-                        CORBA::Boolean is_roundtrip,
-                        CORBA::NVList_ptr args,
-                        CORBA::NamedValue_ptr result,
-                        CORBA::Flags flags,
-                        CORBA::ExceptionList &exceptions,
-                        CORBA_Environment &TAO_IN_ENV =
-                              CORBA::default_environment ());
+                                CORBA::Boolean is_roundtrip,
+                                CORBA::NVList_ptr args,
+                                CORBA::NamedValue_ptr result,
+                                CORBA::Flags flags,
+                                CORBA::ExceptionList &exceptions,
+                                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Dynamic invocations use a more costly "varargs" calling
   // convention; it's got the same input data as the (static)
   // stub-oriented one, but the data is represented somewhat
@@ -259,37 +253,6 @@ public:
   //    - exceptions ... list of legal user-defined exceptions
   //    - TAO_IN_ENV ... used for exception reporting.
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-#if defined (TAO_HAS_CORBA_MESSAGING)
-  CORBA::Policy_ptr get_policy (
-      CORBA::PolicyType type,
-      CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
-    );
-  CORBA::Policy_ptr get_client_policy (
-      CORBA::PolicyType type,
-      CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
-    );
-  TAO_Stub* set_policy_overrides (
-      const CORBA::PolicyList & policies,
-      CORBA::SetOverrideType set_add,
-      CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
-    );
-  CORBA::PolicyList * get_policy_overrides (
-      const CORBA::PolicyTypeSeq & types,
-      CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
-    );
-  CORBA::Boolean validate_connection (
-      CORBA::PolicyList_out inconsistent_policies,
-      CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
-    );
-#endif /* TAO_HAS_CORBA_MESSAGING */
-
   CORBA::String_var type_id;
   // All objref representations carry around a type ID.
 
@@ -302,16 +265,46 @@ public:
   // equivalent).
 
   CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj,
-                                CORBA_Environment &TAO_IN_ENV =
-                                      CORBA::default_environment ());
-  // Implement the is_equivalent() method for the CORBA::Object
+        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  // XXX All objref representations should know how to marshal
+  // themselves.  That will involve ensuring that the IOR that gets
+  // marshaled talks a specific protocol, otherwise the target of a
+  // message would not be invoke using the objref it receives
+  // (compromising functionality in a very basic and mysterious
+  // mannter).  So for example an objref might need to create a proxy
+  // for itself rather than marshaling its own representation.  [ The
+  // IIOP engine does not need to worry about such issues since it
+  // only supports one protocol -- the problem won't show up.
+  // "Multiprotocol ORBs" will need to solve that problem though.  ]
 
   // Our Constructors ...
 
-  TAO_Stub (char *repository_id,
-            const TAO_MProfile &profiles,
-            TAO_ORB_Core *orb_core);
+  STUB_Object (char * repository_id);
+  // XXX All objref representations should know how to marshal
+  // themselves.  That will involve ensuring that the IOR that gets
+  // marshaled talks a specific protocol, otherwise the target of a
+  // message would not be invoke using the objref it receives
+  // (compromising functionality in a very basic and mysterious
+  // manner).  So for example an objref might need to create a proxy
+  // for itself rather than marshaling its own representation.  [ The
+  // IIOP engine does not need to worry about such issues since it
+  // only supports one protocol -- the problem won't show up.
+  // "Multiprotocol ORBs" will need to solve that problem though.  ]
+
+  STUB_Object (char *repository_id,
+               TAO_Profile *profile);
+  // degenerate case where only one profile is wanted.  This method
+  // is depricated and is here ONLY for compatibility with multiple
+  // profile unfriendly code!  The profile is given to the MProfile
+  // object.
+
+  STUB_Object (char *repository_id,
+               TAO_MProfile *profiles);
   // Construct from a repository ID and a list of profiles.
+
+  STUB_Object (char *repository_id,
+               TAO_MProfile &profiles);
+  // Construct from a repository ID and a profile ID.profile ID.
 
   // = Memory management.
   CORBA::ULong _incr_refcnt (void);
@@ -325,7 +318,7 @@ public:
   TAO_MProfile *get_profiles (void);
   // Copy of the profile list, user must free memory when done.
   // although the user can call get_profiles then reorder
-  // the list and give it back to TAO_Stub.
+  // the list and give it back to STUB_Object.
 
   const TAO_MProfile& get_base_profiles (void) const;
   // Obtain a reference to the basic profile set.
@@ -366,11 +359,11 @@ public:
    // returns TRUE if a connection was successful with at least
    // one profile.
 
-   TAO_Profile *set_base_profiles (const TAO_MProfile& mprofiles);
+   TAO_Profile *set_base_profiles (TAO_MProfile *mprofiles);
    // Initialize the base_profiles_ and set profile_in_use_ to
    // reference the first profile.
 
-  void add_forward_profiles (const TAO_MProfile &mprofiles);
+  void add_forward_profiles (TAO_MProfile *mprofiles);
   // THREAD SAFE.
   // set the forward_profiles.  This object will assume ownership of
   // this TAO_MProfile object!!
@@ -380,9 +373,6 @@ public:
   // used to get the next profile after the one being used has
   // failed during the initial connect or send of the message!
 
-  TAO_ORB_Core* orb_core (void) const;
-  // Accessor
-
 protected:
   void put_params (CORBA_Environment &TAO_IN_ENV,
                    const TAO_Call_Data *info,
@@ -391,16 +381,11 @@ protected:
   // Helper method to factor out common code in static oneway
   // vs. twoway invocations.
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
   void put_params (TAO_GIOP_Invocation &call,
                    CORBA::NVList_ptr args,
-                   CORBA_Environment &TAO_IN_ENV =
-                         CORBA::default_environment ());
+                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Helper method to factor out common code in dynamic oneway
   // vs. twoway invocations.
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
 private:
   TAO_Profile *set_profile_in_use_i (TAO_Profile *pfile);
@@ -423,13 +408,17 @@ private:
    // NOT THREAD-SAFE.  utility method which pops all forward profile
    // lists and resets the forward_profiles_ pointer.
 
-  ~TAO_Stub (void);
+  ~STUB_Object (void);
   // Destructor is to be called only through _decr_refcnt()
 
   TAO_Profile *next_forward_profile (void);
   // NON-THREAD-SAFE.  utility method for next_profile.
 
 private:
+    // @@ For now, we keep track of transport specific profiles here,
+  //    but in the next iteration this will go away ... only transport
+  //    neutral info is kept here => STUB_Object should also go away!
+  //    fredk
   TAO_MProfile     base_profiles_;
   // ordered list of profiles for this object.
   TAO_MProfile     *forward_profiles_;
@@ -455,18 +444,9 @@ private:
   CORBA::Boolean first_locate_request_;
   // distinguishes the first from following calls
 
-  TAO_ORB_Core* orb_core_;
-  // The ORB
-
-#if defined (TAO_HAS_CORBA_MESSAGING)
-  TAO_Policy_Manager_Impl* policies_;
-  // The policy overrides in this object, if nil then use the default
-  // policies.
-#endif /* TAO_HAS_CORBA_MESSAGING */
-
   // = Disallow copy constructor and assignment operator
-  ACE_UNIMPLEMENTED_FUNC (TAO_Stub (const TAO_Stub &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Stub &operator = (const TAO_Stub &))
+  ACE_UNIMPLEMENTED_FUNC (STUB_Object (const STUB_Object &))
+  ACE_UNIMPLEMENTED_FUNC (STUB_Object &operator = (const STUB_Object &))
 
 #if defined (__GNUG__)
   // G++ (even 2.6.3) stupidly thinks instances can't be created.

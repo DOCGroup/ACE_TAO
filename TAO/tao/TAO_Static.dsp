@@ -24,7 +24,7 @@ CFG=TAO Static - Win32 Debug
 # Begin Project
 # PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
-# PROP Scc_LocalPath "Desktop"
+# PROP Scc_LocalPath ""
 CPP=cl.exe
 RSC=rc.exe
 
@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D __ACE_INLINE__=0 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
@@ -102,23 +102,11 @@ SOURCE=.\CDR.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CDR_Interpreter.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Client_Strategy_Factory.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Connect.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Context.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\corbafwd.cpp
 # End Source File
 # Begin Source File
 
@@ -146,19 +134,7 @@ SOURCE=.\default_client.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\default_resource.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\default_server.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\DomainC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\DomainS.cpp
 # End Source File
 # Begin Source File
 
@@ -214,15 +190,19 @@ SOURCE=.\GIOP.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Server_Request.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\IIOP_Acceptor.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\IIOP_Connector.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CDR_Interpreter.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_ORB.cpp
 # End Source File
 # Begin Source File
 
@@ -242,27 +222,11 @@ SOURCE=.\Invocation.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IOR_LookupTable.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Key_Adapters.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Managed_Types.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Marshal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\MessagingC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\MessagingS.cpp
 # End Source File
 # Begin Source File
 
@@ -275,10 +239,6 @@ SOURCE=.\NVList.cpp
 # Begin Source File
 
 SOURCE=.\Object.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Object_Adapter.cpp
 # End Source File
 # Begin Source File
 
@@ -322,10 +282,6 @@ SOURCE=.\POAS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Policy_Manager.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\PolicyC.cpp
 # End Source File
 # Begin Source File
@@ -339,10 +295,6 @@ SOURCE=.\Principal.cpp
 # Begin Source File
 
 SOURCE=.\Request.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Resource_Factory.cpp
 # End Source File
 # Begin Source File
 
@@ -362,10 +314,6 @@ SOURCE=.\Server_Strategy_Factory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Services.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\skip.cpp
 # End Source File
 # Begin Source File
@@ -382,14 +330,6 @@ SOURCE=.\TAO_Internal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\TimeBaseC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\TimeBaseS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Typecode.cpp
 # End Source File
 # Begin Source File
@@ -399,22 +339,6 @@ SOURCE=.\Typecode_Constants.cpp
 # Begin Source File
 
 SOURCE=.\Union.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueBase.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueFactory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueFactory_Map.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\WrongTransactionC.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -442,10 +366,6 @@ SOURCE=.\cdr.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\CDR_Interpreter.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Client_Strategy_Factory.h
 # End Source File
 # Begin Source File
@@ -458,10 +378,6 @@ SOURCE=.\corba.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\corbafwd.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\debug.h
 # End Source File
 # Begin Source File
@@ -470,15 +386,7 @@ SOURCE=.\default_client.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\default_resource.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\default_server.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DomainC.h
 # End Source File
 # Begin Source File
 
@@ -526,15 +434,19 @@ SOURCE=.\giop.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Server_Request.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\IIOP_Acceptor.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\IIOP_Connector.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CDR_Interpreter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_ORB.h
 # End Source File
 # Begin Source File
 
@@ -550,23 +462,11 @@ SOURCE=.\InconsistentTypeCodeC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Invocation.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Managed_Types.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\marshal.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\MessagingC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\MessagingS.h
 # End Source File
 # Begin Source File
 
@@ -579,10 +479,6 @@ SOURCE=.\nvlist.h
 # Begin Source File
 
 SOURCE=.\object.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Object_Adapter.h
 # End Source File
 # Begin Source File
 
@@ -646,11 +542,11 @@ SOURCE=.\poaS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Policy_Manager.h
+SOURCE=.\PolicyC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\PolicyC.h
+SOURCE=.\PolicyS.h
 # End Source File
 # Begin Source File
 
@@ -659,10 +555,6 @@ SOURCE=.\Principal.h
 # Begin Source File
 
 SOURCE=.\request.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Resource_Factory.h
 # End Source File
 # Begin Source File
 
@@ -683,10 +575,6 @@ SOURCE=.\Server_Request.h
 # Begin Source File
 
 SOURCE=.\Server_Strategy_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Services.h
 # End Source File
 # Begin Source File
 
@@ -714,23 +602,7 @@ SOURCE=.\typecode.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ValueBase.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueFactory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueFactory_Map.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\varout.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\WrongTransactionC.h
 # End Source File
 # End Group
 # Begin Group "Inline Files"
@@ -754,10 +626,6 @@ SOURCE=.\connect.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\corbafwd.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\CurrentC.i
 # End Source File
 # Begin Source File
@@ -766,19 +634,7 @@ SOURCE=.\default_client.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\default_resource.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\default_server.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\DomainC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\DomainS_T.i
 # End Source File
 # Begin Source File
 
@@ -798,10 +654,6 @@ SOURCE=.\giop.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Server_Request.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\IIOP_ORB.i
 # End Source File
 # Begin Source File
@@ -815,14 +667,6 @@ SOURCE=.\Managed_Types.i
 # Begin Source File
 
 SOURCE=.\marshal.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\MessagingC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\MessagingS.i
 # End Source File
 # Begin Source File
 
@@ -870,10 +714,6 @@ SOURCE=.\poaS.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Policy_Manager.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\PolicyC.i
 # End Source File
 # Begin Source File
@@ -906,10 +746,6 @@ SOURCE=.\Server_Request.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Services.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\stub.i
 # End Source File
 # Begin Source File
@@ -923,18 +759,6 @@ SOURCE=.\Timeprobe.i
 # Begin Source File
 
 SOURCE=.\typecode.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueBase.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueFactory.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueFactory_Map.i
 # End Source File
 # Begin Source File
 

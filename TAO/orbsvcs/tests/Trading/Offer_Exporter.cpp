@@ -27,7 +27,7 @@ TAO_Offer_Exporter::~TAO_Offer_Exporter (void)
     {
       TAO_Dynamic_Property* dp = 0;
       this->clean_up_.dequeue_head (dp);
-      dp->destroy ();
+      delete dp;
     }
 }
 
@@ -66,10 +66,10 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg,
       for (int i = 0; i < NUM_OFFERS; i++)
         {
           CosTrading::OfferId_var offer_id =
-            reg->_cxx_export (this->plotter_[i]._this (TAO_TRY_ENV),
-                              TT_Info::INTERFACE_NAMES[1],
-                              this->props_plotters_[i],
-                              TAO_TRY_ENV);
+            reg->export (this->plotter_[i]._this (TAO_TRY_ENV),
+                         TT_Info::INTERFACE_NAMES[1],
+                         this->props_plotters_[i],
+                         TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
           if (this->verbose_)
@@ -77,10 +77,10 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg,
               ACE_DEBUG ((LM_DEBUG, "Registered offer id: %s.\n", offer_id.in ()));
             }
 
-          offer_id = reg->_cxx_export (this->printer_[i]._this (TAO_TRY_ENV),
-                                       TT_Info::INTERFACE_NAMES[2],
-                                       this->props_printers_[i],
-                                       TAO_TRY_ENV);
+          offer_id = reg->export (this->printer_[i]._this (TAO_TRY_ENV),
+                                  TT_Info::INTERFACE_NAMES[2],
+                                  this->props_printers_[i],
+                                  TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
           if (this->verbose_)
@@ -88,10 +88,10 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg,
               ACE_DEBUG ((LM_DEBUG, "Registered offer id: %s.\n", offer_id.in ()));
             }
 
-          offer_id = reg->_cxx_export (this->fs_[i]._this (TAO_TRY_ENV),
-                                       TT_Info::INTERFACE_NAMES[3],
-                                       this->props_fs_[i],
-                                       TAO_TRY_ENV);
+          offer_id = reg->export (this->fs_[i]._this (TAO_TRY_ENV),
+                                  TT_Info::INTERFACE_NAMES[3],
+                                  this->props_fs_[i],
+                                  TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
           if (this->verbose_)
@@ -172,8 +172,20 @@ TAO_Offer_Exporter::export_offers_to_all (CORBA::Environment& TAO_IN_ENV)
                           ACE_static_cast (const char*, link_name_seq[i])));
             }
 
-          this->export_to (link_info->target_reg.in (), TAO_TRY_ENV);
+          CosTrading::Register_var remote_reg;
+#ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
+          CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
+          CORBA::Object_var obj = orb->string_to_object (link_info->target_reg, TAO_TRY_ENV);
           TAO_CHECK_ENV;
+          remote_reg = CosTrading::Register::_narrow (obj.in (), TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+#else
+          TAO_CHECK_ENV;
+          remote_reg = link_info->target_reg.in ();
+#endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
+
+          this->export_to (remote_reg.in (), TAO_IN_ENV);
+          TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
         }
       TAO_CATCHANY
         {

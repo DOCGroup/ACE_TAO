@@ -25,7 +25,7 @@
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/IOR_Multicast.h"
-#include "Naming_Context.h"
+#include "CosNaming_i.h"
 
 class TAO_ORBSVCS_Export TAO_Naming_Server
 {
@@ -50,8 +50,7 @@ public:
                      PortableServer::POA_ptr poa,
                      size_t context_size = ACE_DEFAULT_MAP_SIZE,
                      ACE_Time_Value *timeout = 0,
-                     int resolve_for_existing_naming_service = 1,
-                     LPCTSTR persistence_location = 0);
+                     int resolve_for_existing_naming_service = 1);
   // Either find an existing Naming Service or creates one.  Takes the
   // POA under which to register the Naming Service implementation
   // object.
@@ -60,8 +59,7 @@ public:
             PortableServer::POA_ptr poa,
             size_t context_size = ACE_DEFAULT_MAP_SIZE,
             ACE_Time_Value *timeout = 0,
-            int resolve_for_existing_naming_service = 1,
-            LPCTSTR persistence_location = 0);
+            int resolve_for_existing_naming_service = 1);
   // Either find an existing Naming Service or creates one.  Takes the
   // POA under which to register the Naming Service implementation
   // object.
@@ -69,7 +67,7 @@ public:
   ~TAO_Naming_Server (void);
   // Destructor.
 
-  TAO_Naming_Context &get_naming_context (void);
+  TAO_NamingContext &get_naming_context (void);
   // Returns the "NameService" NamingContext implementation object
   // reference.
 
@@ -82,11 +80,10 @@ public:
 protected:
   int init_new_naming (CORBA::ORB_ptr orb,
                        PortableServer::POA_ptr root_poa,
-                       LPCTSTR persistence_location,
                        size_t context_size);
   // Initialize a new name server under the given ORB and POA.
 
-  TAO_Naming_Context *naming_context_impl_;
+  TAO_NamingContext *naming_context_impl_;
   // Naming context implementation for "NameService".
 
   CosNaming::NamingContext_var naming_context_;

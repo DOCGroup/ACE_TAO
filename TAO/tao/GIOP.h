@@ -171,8 +171,8 @@ public:
 
 // The IIOP Lite header length and the offset of the message size
 // field in it.
-#define TAO_GIOP_LITE_HEADER_LEN 5
-#define TAO_GIOP_LITE_MESSAGE_SIZE_OFFSET 0
+#define TAO_IIOP_LITE_HEADER_LEN 5
+#define TAO_IIOP_LITE_MESSAGE_SIZE_OFFSET 0
 
 // Support for Implicit ORB Service Context.
 typedef CORBA::ULong TAO_GIOP_ServiceID;
@@ -351,7 +351,7 @@ public:
   static const char *message_name (TAO_GIOP::Message_Type which);
   // Returns the stringified <MsgType>.
 
-  static TAO_GIOP_ReplyStatusType convert_CORBA_to_GIOP_exception (CORBA::exception_type corba_type);
+  static TAO_GIOP_ReplyStatusType convert_CORBA_to_GIOP_exception (CORBA::ExceptionType corba_type);
   // Convert the exception type from CORBA to GIOP
 
 

@@ -53,20 +53,6 @@ MyFooServant::simply_doit (CORBA::Environment &/*env*/)
 }
 
 void
-MyFooServant::timed_operation (CORBA::ULong timeout,
-                               CORBA::Environment &)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              "Thread %t starting  MyFooServant::timed_operation with timeout %d\n",
-              timeout));
-
-  ACE_OS::sleep (timeout);
-
-  ACE_DEBUG ((LM_DEBUG,
-              "Thread %t completes MyFooServant::timed_operation\n"));
-}
-
-void
 MyFooServant::shutdown (CORBA::Environment &)
 {
   this->orb_->shutdown ();
@@ -137,3 +123,5 @@ destroy_servant (const PortableServer::ObjectId & /* oid */,
 {
   delete servant;
 }
+
+

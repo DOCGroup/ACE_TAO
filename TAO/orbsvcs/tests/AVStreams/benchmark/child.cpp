@@ -51,9 +51,11 @@ Bench_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &t
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Bench_Server_StreamEndPoint::handle_connection_requested:() length =%d\n",
               the_spec.length ()));
 
+  return 1;
+
   ACE_INET_Addr client_addr (the_spec [0]);
   u_short local_port = 0;
-  ACE_INET_Addr local_addr (local_port);
+  ACE_INET_Addr local_addr (local_port,"merengue-atm.cs.wustl.edu");
   
   if (this->connector_.connect (this->tcp_stream_,
                                 client_addr,
@@ -73,20 +75,20 @@ Bench_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &t
                                 (void *) &sndbufsize,
                                 sizeof (sndbufsize)) == -1
       && errno != ENOTSUP)
-    return 0;
+    return -1;
   else if (this->tcp_stream_.set_option (SOL_SOCKET,
                                          SO_RCVBUF,
                                      (void *) &rcvbufsize,
                                      sizeof (rcvbufsize)) == -1
            && errno != ENOTSUP)
-    return 0;
+    return -1;
   
   int one = 1;
   if (this->tcp_stream_.set_option (SOL_SOCKET,
                                     TCP_NODELAY,
                                 (char *)& one,
                                 sizeof (one)) == -1 )
-    return 0;
+    return -1;
 
   ACE_NEW_RETURN (this->stream_handler_,
                   ttcp_Stream_Handler (this->tcp_stream_.get_handle ()),
@@ -102,7 +104,7 @@ Bench_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &t
   return 1;
 }
 
-ttcp_Stream_Handler::ttcp_Stream_Handler (ACE_HANDLE control_fd)
+ttcp_Stream_Handler::ttcp_Stream_Handler (int control_fd)
   : control_handle_ (control_fd)
 {
 }
@@ -134,3 +136,18 @@ ttcp_Stream_Handler::handle_input (ACE_HANDLE handle)
 }
 
 
+// --------------------------------------------------------------------------------
+
+
+// int
+// main (int argc, char **argv)
+// {
+//   TAO_AV_Child_Process_B<Bench_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> bench_child;
+  
+//    if (bench_child.init (argc,argv) == -1)
+//      return 1;
+//    if (bench_child.run () == -1)
+//      return 2;
+   
+//    return 0;
+// }

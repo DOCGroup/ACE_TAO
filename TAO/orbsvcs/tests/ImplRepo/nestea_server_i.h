@@ -11,7 +11,7 @@
 //
 // = DESCRIPTION
 //    Server that sets up the ORB and handles the registration and execution
-//    of the Nestea Bookshelf Server.
+//    of the Paper Nestea Server.
 //
 // = AUTHORS
 //    Darrell Brunsch <brunsch@cs.wustl.edu>
@@ -28,24 +28,24 @@
 class Nestea_Server_i
 {
   // = TITLE
-  //   Nestea Bookshelf Server Implementation Class
+  //   Paper Nestea Server Implementation Class
   //
   // = DESCRIPTION
-  //   Sets up everything necessary to get the Nestea Bookshelf Server 
+  //   Sets up everything necessary to get the Paper Nestea Server 
   //   running.
   //   
 public:
   // = Initialization and termination methods.
-  Nestea_Server_i (const char *filename = "nestea.dat");
+  Nestea_Server_i (void);
   // Default constructor
 
   ~Nestea_Server_i (void);
   // Destructor
 
-  int init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV);
+  int init (int argc, char **argv, CORBA::Environment& env);
   // Initialize the Server state - parsing arguments and waiting
 
-  int run (CORBA::Environment &ACE_TRY_ENV);
+  int run (CORBA::Environment& env);
   // Run the orb 
 
 private:
@@ -62,7 +62,7 @@ private:
   // The ORB manager.
 
   Nestea_i *server_impl_;
-  // The Nestea Bookshelf Server Implementation.  
+  // The Paper Nestea Server Implementation.  
 
   FILE *ior_output_file_;
   // File where the IOR of the server object is stored.

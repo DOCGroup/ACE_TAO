@@ -123,9 +123,6 @@ DRV_usage (void)
   cerr << GTDEVEL (" -Gi\t\t\tenable Interpretive marshaling (default)\n");
   cerr << GTDEVEL (" -Ge\t\t\tenable C++ Exception support (suppressed by default)\n");
   cerr << GTDEVEL (" -Gt\t\t\tenable optimized TypeCode support (unopt by default)\n");
-#ifdef IDL_HAS_VALUETYPE
-  cerr << GTDEVEL (" -Gv\t\t\tenable OBV (Valuetype) support (disabled by default)\n");
-#endif /* IDL_HAS_VALUETYPE */
   cerr << GTDEVEL (" -GI[h|s|b|e|c]\tGenerate Implemenation Files \n");
   cerr << GTDEVEL ("  \t\t\th - Implementation header file name ending. Default is I.h \n");
   cerr << GTDEVEL ("  \t\t\ts - Implementation skeleton file name ending. Default is I.cpp\n");
@@ -149,11 +146,6 @@ DRV_usage (void)
   cerr << GTDEVEL (" -sT\t\t\tServer's template skeleton file name ending. Default is S_T.cpp\n");
   cerr << GTDEVEL (" -Sa\t\t\tsuppress Any support (support enabled by default)\n");
   cerr << GTDEVEL (" -St\t\t\tsuppress TypeCode support (support enabled by default)\n");
-#ifdef IDL_HAS_VALUETYPE
-  cerr << GTDEVEL (" -Sv\t\t\tdisable OBV (Valuetype) support (disabled by default)\n");
-#endif /* IDL_HAS_VALUETYPE */
-  cerr << GTDEVEL (" -t\t\t\tTemporary directory to be used by the IDL compiler."
-                   "(default is value of environment variable ACE_DEFAULT_TEMP_DIR_ENV)\n");
   cerr << GTDEVEL (" -u\t\t\tprints usage message and exits\n");
   cerr << GTDEVEL (" -Uname\t\t\tundefines name for preprocessor\n");
   cerr << GTDEVEL (" -v\t\t\ttraces compilation stages\n");
@@ -272,19 +264,19 @@ DRV_parse_args (long ac, char **av)
                   idl_global->client_stub_ending (av[i+1]);
                   i++;
                 }
-
+              
               else if (av[i][2] == 'i')
                 {
                   idl_global->client_inline_ending (av[i+1]);
                   i++;
                 }
-
+              
               else
                 {
                   // I expect 's' or 'i' after 'c'.
                   cerr << GTDEVEL("Incomplete Flag : ")
                        << av[i];
-                  ACE_OS::exit (99);
+                  exit(99);
                 }
               break;
 
@@ -321,13 +313,13 @@ DRV_parse_args (long ac, char **av)
                   idl_global->server_template_inline_ending (av[i+1]);
                   i++;
                 }
-
+              
               else if (av[i][2] == 'I')
                 {
                   idl_global->implementation_skel_ending (av[i+1]);
                   i++;
                 }
-
+              
               else
                 {
                   // I expect 's' or 'T' or 'i' or 't' after 's'.
@@ -349,26 +341,16 @@ DRV_parse_args (long ac, char **av)
                 cg->lookup_strategy (TAO_CodeGen::TAO_BINARY_SEARCH);
               else if (ACE_OS::strcmp (av[i+1], "linear_search") == 0)
                 cg->lookup_strategy (TAO_CodeGen::TAO_LINEAR_SEARCH);
-              else
-                ACE_ERROR ((LM_ERROR,
-                            "%s: unknown operation lookup <%s>\n",
-                            av[0], av[i+1]));
               i++;
               break;
 
-              // Switching between ""s and <>'s when we generate
+              // Switching between "'s and <'s when we generate
               // #include statements for the standard files (e.g. tao/corba.h)
             case 'i':
               if (av[i][2] == 'c')
                 idl_global->changing_standard_include_files (1);
-              else if (av[i][2] == 'n')
-                idl_global->changing_standard_include_files (0);
-              else
-                ACE_ERROR ((LM_ERROR,
-                            "%s: unknown -i modifier <%c>\n",
-                            av[0], av[i][2]));
               break;
-
+                
               // Path for the perfect hash generator(gperf) program. Default
               // is $ACE_ROOT/bin/gperf.
             case 'g':
@@ -381,12 +363,6 @@ DRV_parse_args (long ac, char **av)
               // <tao_idl> is called.
             case 'o':
               idl_global->output_dir (av [i+1]);
-              i++;
-              break;
-
-              // Temp directory for the IDL compiler to keep its files.
-            case 't':
-              idl_global->temp_dir (av [i+1]);
               i++;
               break;
 
@@ -413,17 +389,14 @@ DRV_parse_args (long ac, char **av)
               else
                 DRV_cpp_putarg (av[i]);
               break;
-
             case 'E':
               idl_global->set_compile_flags (idl_global->compile_flags () |
                                              IDL_CF_ONLY_PREPROC);
               break;
-
             case 'V':
               idl_global->set_compile_flags (idl_global->compile_flags () |
                                              IDL_CF_VERSION);
               break;
-
             case 'W':
               if (av[i][2] == '\0')
                 {
@@ -457,7 +430,6 @@ DRV_parse_args (long ac, char **av)
                   break;
                 }
               break;
-
             case 'Y':
               if (av[i][2] == '\0')
                 {
@@ -489,7 +461,6 @@ DRV_parse_args (long ac, char **av)
                   break;
                 }
               break;
-
             case 'b':
               if (av[i][2] == '\0')
                 {
@@ -510,7 +481,6 @@ DRV_parse_args (long ac, char **av)
                 s = av[i] + 2;
               idl_global->set_be (s);
               break;
-
             case 'd':
               idl_global->set_compile_flags (idl_global->compile_flags () |
                                              IDL_CF_DUMP_AST);
@@ -536,15 +506,8 @@ DRV_parse_args (long ac, char **av)
                 }
               else if (av[i][2] == 't')
                 {
-                  // suppress typecode support
+                  // supress typecode support
                   idl_global->tc_support (0);
-                }
-              else if (av[i][2] == 'v')
-                {
-                  // disable OBV (Valuetype) support
-#                 ifdef IDL_HAS_VALUETYPE
-                  idl_global->obv_support (0);
-#                 endif
                 }
               else
                 {
@@ -554,7 +517,6 @@ DRV_parse_args (long ac, char **av)
                   ACE_OS::exit (99);
                 }
               break;
-
             case 'G':
               // enable generation of ...
               if (av[i][2] == 'c')
@@ -572,22 +534,13 @@ DRV_parse_args (long ac, char **av)
                   // exception support
                   idl_global->exception_support (1);
                 }
-              else if (av[i][2] == 't')
+              else if (av[i][2] == 'o')
                 {
                   // optimized typecode support
                   idl_global->opt_tc (1);
                 }
-              else if (av[i][2] == 'v')
-                {
-#             ifdef IDL_HAS_VALUETYPE
-                  // enable OBV (Valuetype) support
-                  idl_global->obv_support (1);
-#             else /* IDL_HAS_VALUETYPE */
-                  cerr << GTDEVEL("IDL: -Gv (Valuetype) not compiled in\n");
-                  ACE_OS::exit (99);
-#             endif /* IDL_HAS_VALUETYPE */
-                }
               else if (av[i][2] == 'I')
+
                 {
                   int options = ACE_OS::strlen(av[i]) - 3;
                   int j;
@@ -596,10 +549,10 @@ DRV_parse_args (long ac, char **av)
                   idl_global->gen_impl_files (1);
                   for (j=0;j<options;j++)
                     {
-
+                     
                       if (av[k][j+3] == 's')
                         {
-
+                          
                           idl_global->implementation_skel_ending (av[i+1]);
                           i++;
                         }
@@ -643,7 +596,7 @@ DRV_parse_args (long ac, char **av)
                   ACE_OS::exit (99);
                 }
               break;
-
+              
             default:
               cerr << GTDEVEL ("IDL: Illegal option '") << av[i] << "'\n";
               idl_global->set_compile_flags (idl_global->compile_flags () |
@@ -700,27 +653,6 @@ DRV_parse_args (long ac, char **av)
     {
       cerr << GTDEVEL ("Bad Combination -St and -Go \n");
       ACE_OS::exit (99);
-    }
-
-  // Make sure the output directory is valid.
-  if (idl_global->temp_dir () == 0)
-    {
-      const char* tmpdir = getenv (ACE_DEFAULT_TEMP_DIR_ENV);
-
-      if (tmpdir == 0)
-        tmpdir = ACE_DIRECTORY_SEPARATOR_STR_A
-          "tmp"
-          ACE_DIRECTORY_SEPARATOR_STR_A;
-
-      if (ACE_OS::access (tmpdir, F_OK | R_OK | W_OK) == -1)
-        {
-          cerr << GTDEVEL ("Warning: Can't access temporary directory (")
-               << tmpdir
-               << GTDEVEL ("), using current directory for temp files.\n");
-          tmpdir = ".";
-        }
-
-      idl_global->temp_dir (tmpdir);
     }
 }
 

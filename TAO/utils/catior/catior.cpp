@@ -70,7 +70,7 @@ catiiop (CORBA::String string,
 
   if (cp == 0)
     {
-      env.exception (new CORBA_DATA_CONVERSION ());
+      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
       return 0;
     }
 
@@ -88,7 +88,7 @@ catiiop (CORBA::String string,
 
   if (cp == 0)
     {
-      env.exception (new CORBA_DATA_CONVERSION ());
+      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
       CORBA::string_free (hostname);
       return 0;
     }
@@ -122,8 +122,8 @@ catior (CORBA::String str,
   // resulting data.
 
   ACE_Message_Block mb (ACE_OS::strlen ((char *) str)  / 2 + 1
-                        + ACE_CDR::MAX_ALIGNMENT);
-  ACE_CDR::mb_align (&mb);
+                        + CDR::MAX_ALIGNMENT);
+  CDR::mb_align (&mb);
 
   char *buffer = mb.rd_ptr ();
   char *tmp = (char *) str;
@@ -201,6 +201,7 @@ catior (CORBA::String str,
   // we unmarshal objrefs.
 
   CORBA::ULong profiles = 0;
+  // IIOP_Object *objdata = 0;
 
   continue_decoding = stream.read_ulong (profiles);
 
@@ -401,7 +402,7 @@ catpoop (CORBA::String string,
 
   if (cp == 0)
     {
-      env.exception (new CORBA_DATA_CONVERSION ());
+      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
       return 0;
     }
 
@@ -509,7 +510,7 @@ main (int argc, char *argv[])
   CORBA::Environment env;
   CORBA::ORB_var orb_var =  CORBA::ORB_init (argc, argv, "TAO", env);
   CORBA::Boolean b;
-  int opt;
+  char opt;
 
   while ((opt = get_opt ()) != EOF)
     {
@@ -545,7 +546,7 @@ main (int argc, char *argv[])
             while (!ifstr.eof ())
               {
                 ifstr.get (ch);
-                if (ch == '\n' || ifstr.eof ())
+                if (ch == '\n' || ch == EOF)
                   break;
                 aString += ch;
               }
@@ -595,7 +596,7 @@ main (int argc, char *argv[])
                 b = catpoop (str, env);
               }
             else
-              ACE_ERROR_RETURN ((LM_ERROR,
+              ACE_ERROR_RETURN ((LM_DEBUG,
                                  "Don't know how to decode this IOR\n"),
                                 -1);
             if (b == 1)

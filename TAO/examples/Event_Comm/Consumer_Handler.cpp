@@ -71,8 +71,7 @@ Consumer_Handler::init (int argc,
      return -1;
    }
   ACE_ENDTRY;
-
-  ACE_NOTREACHED (return 0;)
+  return 0;
 }
 
 int

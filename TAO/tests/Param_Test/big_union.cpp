@@ -67,7 +67,7 @@ Test_Big_Union::init_parameters (Param_Test_ptr objref,
       ACE_PRINT_EXCEPTION (sysex,"System Exception doing make_coffee");
       return -1;
     }
-  ACE_CATCHANY
+  ACE_CATCHANY 
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "An exception caught in make_coffee");
       return -1;
@@ -278,11 +278,7 @@ Test_Big_Union::check_validity (void)
             if (in_array[i] != inout_array[i]
                 || in_array[i] != out_array[i]
                 || in_array[i] != ret_array[i])
-              {
-                ACE_DEBUG ((LM_DEBUG, 
-                            "mismatch of arrays\n"));
-                return 0;
-              }
+              return 0;
           }
       }
       break;

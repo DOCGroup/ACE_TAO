@@ -172,13 +172,7 @@ be_interface::local_coll_name (void) const
 void
 be_interface::compute_fullskelname (void)
 {
-  this->compute_fullskelname (this->full_skel_name_, "POA_");
-}
-
-void
-be_interface::compute_fullskelname (char *&skelname, const char *prefix)
-{
-  if (skelname)
+  if (full_skel_name_)
     return;
   else
     {
@@ -188,7 +182,7 @@ be_interface::compute_fullskelname (char *&skelname, const char *prefix)
       long second = I_FALSE;
 
       // in the first loop compute the total length
-      namelen = ACE_OS::strlen (prefix);
+      namelen = 4;
       i = new UTL_IdListActiveIterator (this->name ());
       while (!(i->is_done ()))
         {
@@ -211,20 +205,20 @@ be_interface::compute_fullskelname (char *&skelname, const char *prefix)
         }
       delete i;
 
-      skelname = new char [namelen+1];
-      skelname[0] = '\0';
+      this->full_skel_name_ = new char [namelen+1];
+      this->full_skel_name_[0] = '\0';
       first = I_TRUE;
       second = I_FALSE;
-      ACE_OS::strcat (skelname, prefix);
+      ACE_OS::strcat (this->full_skel_name_, "POA_");
       i = new UTL_IdListActiveIterator (this->name ());
       while (!(i->is_done ()))
         {
           if (!first)
-            ACE_OS::strcat (skelname, "::");
+            ACE_OS::strcat (this->full_skel_name_, "::");
           else if (second)
             first = second = I_FALSE;
           // print the identifier
-          ACE_OS::strcat (skelname, i->item ()->get_string ());
+          ACE_OS::strcat (this->full_skel_name_, i->item ()->get_string ());
           if (first)
             {
               if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
@@ -277,14 +271,14 @@ void be_interface::in_mult_inheritance (int mi)
 }
 
 //gen copy constructors
-void
+void 
 be_interface::gen_copy_ctors (TAO_OutStream* os)
 {
   this->traverse_inheritance_graph(be_interface::gen_copy_ctors_helper,os);
   return;
 }
 
-int
+int 
 be_interface::gen_copy_ctors_helper (be_interface* node, be_interface* base, TAO_OutStream *os)
 {
   static int first = 0;
@@ -293,14 +287,14 @@ be_interface::gen_copy_ctors_helper (be_interface* node, be_interface* base, TAO
       if(first)
         {
           *os << idl_global->impl_class_prefix () << base->flatname () << idl_global->impl_class_suffix () << " (t)"
-              << ", " << base->full_skel_name () << " (t)";
+              << ", " << base->full_skel_name () << " (t)";          
           first = 0;
         }
       else
         {
-          *os << ", " << idl_global->impl_class_prefix () << base->flatname () << idl_global->impl_class_suffix () << " (t)"
+          *os << ", " << idl_global->impl_class_prefix () << base->flatname () << idl_global->impl_class_suffix () << " (t)" 
               << ", " << base->full_skel_name () << " (t)";   ;
-
+         
         }
     }
   else
@@ -310,19 +304,19 @@ be_interface::gen_copy_ctors_helper (be_interface* node, be_interface* base, TAO
     }
 
   return 1;
-
+  
 }
-
+  
 //generate default constructors
-void
+void 
 be_interface::gen_def_ctors (TAO_OutStream* os)
 {
   this->traverse_inheritance_graph(be_interface::gen_def_ctors_helper,os);
   return;
 }
+  
 
-
-int
+int 
 be_interface::gen_def_ctors_helper (be_interface* node, be_interface* base, TAO_OutStream *os)
 {
 
@@ -331,13 +325,13 @@ be_interface::gen_def_ctors_helper (be_interface* node, be_interface* base, TAO_
     {
       if(first)
         {
-          *os << idl_global->impl_class_prefix () << base->flatname () << idl_global->impl_class_suffix () << " ()";
+          *os << idl_global->impl_class_prefix () << base->flatname () << idl_global->impl_class_suffix () << " ()";          
           first = 0;
         }
       else
         {
           *os << ", " << idl_global->impl_class_prefix () << base->flatname () << idl_global->impl_class_suffix () << " ()";
-
+         
         }
     }
   else
@@ -347,7 +341,7 @@ be_interface::gen_def_ctors_helper (be_interface* node, be_interface* base, TAO_
     }
 
    return 1;
-
+  
 }
 
 
@@ -804,6 +798,95 @@ be_interface::gen_out_impl (void)
   return 0;
 }
 
+// generate typecode.
+// Typecode for interface comprises the enumerated value followed by the
+// encapsulation of the parameters
+
+int
+be_interface::gen_typecode (void)
+{
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  cs = cg->client_stubs ();
+  cs->indent (); // start from whatever indentation level we were at
+
+  *cs << "CORBA::tk_objref, // typecode kind" << nl;
+  *cs << this->tc_encap_len () << ", // encapsulation length\n";
+  // now emit the encapsulation
+  return this->gen_encapsulation ();
+}
+
+// generate encapsulation
+// An encapsulation for ourselves will be necessary when we are part of some
+// other IDL type and a typecode for that other type is being generated. This
+// will comprise our typecode kind. IDL types with parameters will additionally
+// have the encapsulation length and the entire typecode description
+int
+be_interface::gen_encapsulation (void)
+{
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  long i, arrlen;
+  ACE_UINT32 *arr;
+
+  cs = cg->client_stubs ();
+  cs->indent (); // start from whatever indentation level we were at
+
+  // XXXASG - byte order must be based on what m/c we are generating code -
+  // TODO
+  *cs << "TAO_ENCAP_BYTE_ORDER, // byte order" << nl;
+  // generate repoID
+  *cs << (ACE_OS::strlen (this->repoID ())+1) << ", ";
+  (void)this->tc_name2long (this->repoID (), arr, arrlen);
+  for (i=0; i < arrlen; i++)
+    {
+      cs->print ("ACE_NTOHL (0x%x), ", arr[i]);
+    }
+  *cs << " // repository ID = " << this->repoID () << nl;
+  // generate name
+  *cs << (ACE_OS::strlen (this->local_name ()->get_string ())+1) << ", ";
+  (void)this->tc_name2long(this->local_name ()->get_string (), arr, arrlen);
+  for (i=0; i < arrlen; i++)
+    {
+      cs->print ("ACE_NTOHL (0x%x), ", arr[i]);
+    }
+  *cs << " // name = " << this->local_name () << ",\n";
+
+  return 0;
+}
+
+// compute size of typecode
+long
+be_interface::tc_size (void)
+{
+   return 4 + 4 + this->tc_encap_len ();
+}
+
+// compute the encapsulation length
+long
+be_interface::tc_encap_len (void)
+{
+  if (this->encap_len_ == -1) // not computed yet
+    {
+      long slen;
+
+      // Macro to avoid "warning: unused parameter" type warning.
+      ACE_UNUSED_ARG (slen);
+
+      this->encap_len_ = 4;  // holds the byte order flag
+
+      this->encap_len_ += this->repoID_encap_len (); // for repoID
+
+      // do the same thing for the local name
+      this->encap_len_ += this->name_encap_len ();
+
+    }
+  return this->encap_len_;
+}
+
 // helper.
 int
 be_interface::gen_operation_table (void)
@@ -861,22 +944,19 @@ be_interface::gen_operation_table (void)
       *ss << "static ACE_Static_Allocator_Base _tao_" << this->flatname ()
           << "_allocator (_tao_" << this->flatname () << "_optable_pool, "
           << "_tao_" << this->flatname () << "_optable_size);" << be_nl;
-      *ss << "static TAO_Dynamic_Hash_OpTable tao_"
-          << this->flatname () << "_optable " << "(" << be_idt << be_idt_nl
-          << this->flatname () << "_operations," << be_nl
-          << this->skel_count_ << "," << be_nl
-          << 2*this->skel_count_ << "," << be_nl
-          << "&_tao_" << this->flatname () << "_allocator" << be_uidt_nl
-          << ");" << be_uidt_nl;
+      *ss << "TAO_Dynamic_Hash_OpTable tao_" << this->flatname () << "_optable "
+          << "(" << this->flatname () << "_operations, " << this->skel_count_
+          << ", " << 2*this->skel_count_ << ", &_tao_" << this->flatname ()
+          << "_allocator);" << be_nl;
 
       break;
 
     case TAO_CodeGen::TAO_LINEAR_SEARCH:
       // For generating linear search also, we are calling GPERF
-      // only.
+      // only. 
     case TAO_CodeGen::TAO_BINARY_SEARCH:
       // For generating binary search also, we are calling GPERF
-      // only.
+      // only. 
     case TAO_CodeGen::TAO_PERFECT_HASH:
       // For each interface in the IDL, have a new temp file to
       // collect the input for the gperf program.
@@ -884,13 +964,13 @@ be_interface::gen_operation_table (void)
         // Temp file name.
         char *temp_file = 0;
         ACE_NEW_RETURN (temp_file,
-                        char [ACE_OS::strlen (idl_global->temp_dir ()) +
+                        char [ACE_OS::strlen (ACE_DEFAULT_TEMP_FILE) +
                              ACE_OS::strlen (this->flatname ()) +
-                             ACE_OS::strlen (".gperf") + 1],
+                             ACE_OS::strlen (".gperf") + 2],
                         -1);
         ACE_OS::sprintf (temp_file,
-                         "%s%s.gperf",
-                         idl_global->temp_dir (),
+                         "%s_%s.gperf",
+                         ACE_DEFAULT_TEMP_FILE,
                          this->flatname ());
 
         // Save this file name with the codegen singleton.
@@ -910,7 +990,7 @@ be_interface::gen_operation_table (void)
                              "be_visitor_interface_ss",
                              "::",
                              "visit_interface-",
-                             "make_outstream failed\n"),
+                             "make_outstream failed"),
                             -1);
 
         // Store the outstream with the codegen singleton.
@@ -923,12 +1003,12 @@ be_interface::gen_operation_table (void)
                              "be_visitor_interface_ss",
                              "::",
                              "visit_interface-",
-                             "gperf_input.tmp file open failed\n"),
+                             "gperf_input.tmp file open failed"),
                             -1);
 
         // Add the gperf input header.
-        this->gen_gperf_input_header (ss);
-
+        gen_gperf_input_header (ss);
+        
         // Traverse the graph.
         if (this->traverse_inheritance_graph (be_interface::gen_optable_helper, ss) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -952,7 +1032,7 @@ be_interface::gen_operation_table (void)
         // Input to the gperf is ready. Run gperf and get things
         // done. This method also unlinks the temp file that we used
         // for the gperf.
-        this->gen_gperf_things ();
+        gen_gperf_things ();
       }
       break;
 
@@ -961,7 +1041,7 @@ be_interface::gen_operation_table (void)
                          "be_interface",
                          "::",
                          "gen_operation_table",
-                         "unknown op_lookup_strategy\n"),
+                         "unknown op_lookup_strategy"),
                         -1);
     }
   return 0;
@@ -1121,7 +1201,7 @@ be_interface::gen_optable_entries (be_interface *derived)
                          "be_interface",
                          "::",
                          "gen_optable_entries",
-                         "unknown op_lookup_strategy\n"),
+                         "unknown op_lookup_strategy"),
                         -1);
     }
   return 0;
@@ -1152,7 +1232,7 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
   // insert ourselves in the Queue
   if (queue.enqueue_tail (this) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "(%N:%l) be_interface::traverse_inheritance_graph - "
+      ACE_ERROR_RETURN ((LM_ERROR, "(%N:%l) be_interface::gen_operation_table - "
                          "error generating entries\n"), -1);
     }
 
@@ -1283,7 +1363,7 @@ be_interface::gen_optable_helper (be_interface *derived,
 
 // Run GPERF and get the correct lookup and other operations
 // depending on which strategy we are using. Returns 0 on sucess, -1
-// on error.
+// on error. 
 int
 be_interface::gen_gperf_things (void)
 {
@@ -1301,9 +1381,9 @@ be_interface::gen_gperf_things (void)
     {
     case TAO_CodeGen::TAO_PERFECT_HASH:
       // Output a class definition deriving from
-      // TAO_Perfect_Hash_OpTable.
+      // TAO_Perfect_Hash_OpTable.        
       gen_perfect_hash_class_definition ();
-
+      
       // Call GPERF and get the methods defined.
       if (gen_gperf_lookup_methods () == -1)
         return -1;
@@ -1311,14 +1391,14 @@ be_interface::gen_gperf_things (void)
       // Create an instance of the correct class corresponding the
       // operation lookup strategy we are following.
       gen_perfect_hash_instance ();
-
+      
       break;
-
+      
     case TAO_CodeGen::TAO_BINARY_SEARCH:
       // Output a class definition deriving from
       // TAO_Binary_Search_OpTable.
       this->gen_binary_search_class_definition ();
-
+      
       // Call GPERF and get the methods defined.
       if (gen_gperf_lookup_methods () == -1)
         return -1;
@@ -1328,12 +1408,12 @@ be_interface::gen_gperf_things (void)
       gen_binary_search_instance ();
 
       break;
-
+     
     case TAO_CodeGen::TAO_LINEAR_SEARCH:
       // Output a class definition deriving from
       // TAO_Linear_Search_OpTable.
       gen_linear_search_class_definition ();
-
+      
       // Call GPERF and get the methods defined.
       if (gen_gperf_lookup_methods () == -1)
         return -1;
@@ -1343,7 +1423,7 @@ be_interface::gen_gperf_things (void)
       gen_linear_search_instance ();
 
       break;
-
+      
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
                          "tao_idl:ERROR:%N:%l:Unknown Operation Lookup Strategy\n"),
@@ -1383,7 +1463,7 @@ be_interface::gen_perfect_hash_class_definition (void)
 }
 
 // Outputs the class definition for the binary searching. This class
-// will inherit from the TAO_Binary_Seach_OpTable.
+// will inherit from the TAO_Binary_Seach_OpTable. 
 void
 be_interface::gen_binary_search_class_definition (void)
 {
@@ -1413,7 +1493,7 @@ be_interface::gen_linear_search_class_definition (void)
 {
   // Codegen singleton.
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-
+  
   // Outstream.
   TAO_OutStream *ss = cg->server_skeletons ();
 
@@ -1454,21 +1534,21 @@ be_interface::gen_gperf_lookup_methods (void)
   // <open_temp_file> to  open the file now, so that the file will get
   // deleted once when we close the file.
 
-  // Close the file.
+  // Close the file. 
   if (ACE_OS::fclose (cg->gperf_input_stream ()->file ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p:File close failed on temp gperf's input file\n"),
                       -1);
 
-  // Open the temp file.
+  // Open the temp file. 
   ACE_HANDLE input =  ACE::open_temp_file (cg->gperf_input_filename (),
                                            O_RDONLY);
-
+  
   if (input == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p:File open failed on gperf's temp input file\n"),
                       -1);
-
+  
   // Stdout is server skeleton. Do *not* close the file, just open
   // again with ACE_OS::open with WRITE + APPEND option.. After this,
   // remember to update the file offset to the correct location.
@@ -1484,7 +1564,7 @@ be_interface::gen_gperf_lookup_methods (void)
   process_options.set_handles (input, output);
 
   // Set the command line for the gperf program. Give the right
-  // arguments for the operation lookup strategy that we are using.
+  // arguments for the operation lookup strategy that we are using. 
   switch (cg->lookup_strategy ())
     {
       // Perfect Hashing.
@@ -1505,8 +1585,8 @@ be_interface::gen_gperf_lookup_methods (void)
                                     idl_global->gperf_path (),
                                     this->flatname ());
       break;
-
-      // Binary search methods from GPERF. Everythis and the -B flag.
+        
+      // Binary search methods from GPERF. Everythis and the -B flag. 
     case TAO_CodeGen::TAO_BINARY_SEARCH:
       process_options.command_line ("%s"
                                     " "
@@ -1526,7 +1606,7 @@ be_interface::gen_gperf_lookup_methods (void)
                                     idl_global->gperf_path (),
                                     this->flatname ());
       break;
-
+      
       // Linear search methods from GPERF. Everything and the -z flag.
     case TAO_CodeGen::TAO_LINEAR_SEARCH:
       process_options.command_line ("%s"
@@ -1552,7 +1632,7 @@ be_interface::gen_gperf_lookup_methods (void)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "tao_idl:ERROR:%N:%l:Unknown Operation Lookup Strategy\n"),
                         -1);
-    }
+    }      
 
 
   // Spawn a process for gperf.
@@ -1583,10 +1663,11 @@ be_interface::gen_perfect_hash_instance ()
   // Outstream.
   TAO_OutStream *ss = cg->server_skeletons ();
 
-  *ss << "static TAO_" << this->flatname () << "_Perfect_Hash_OpTable"
+  *ss << "TAO_" << this->flatname () << "_Perfect_Hash_OpTable"
       << " "
       << "tao_" << this->flatname () << "_optable"
-      << ";\n" << be_nl;
+      << ";"
+      << be_nl;
 }
 
 // Create an instance of the binary search optable.
@@ -1599,10 +1680,11 @@ be_interface::gen_binary_search_instance ()
   // Outstream.
   TAO_OutStream *ss = cg->server_skeletons ();
 
-  *ss << "static TAO_" << this->flatname () << "_Binary_Search_OpTable"
+  *ss << "TAO_" << this->flatname () << "_Binary_Search_OpTable"
       << " "
       << "tao_" << this->flatname () << "_optable"
-      << ";\n" << be_nl;
+      << ";"
+      << be_nl;
 }
 
 // Create an instance of this perfect hash table.
@@ -1615,10 +1697,11 @@ be_interface::gen_linear_search_instance ()
   // Outstream.
   TAO_OutStream *ss = cg->server_skeletons ();
 
-  *ss << "static TAO_" << this->flatname () << "_Linear_Search_OpTable"
+  *ss << "TAO_" << this->flatname () << "_Linear_Search_OpTable"
       << " "
       << "tao_" << this->flatname () << "_optable"
-      << ";\n" << be_nl;
+      << ";"
+      << be_nl;
 }
 
 int
@@ -1687,7 +1770,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "void *obj," << be_nl
                       << "void *context," << be_nl
                       << "CORBA::Environment &env =" << be_idt_nl
-                      << "CORBA::default_environment ()"
+                      << "CORBA::Environment::default_environment ()"
                       << be_uidt << be_uidt_nl
                       << ");" << be_uidt << "\n\n";
                 }
@@ -1738,7 +1821,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "void *obj," << be_nl
                       << "void *context," << be_nl
                       << "CORBA::Environment &env =" << be_idt_nl
-                      << "CORBA::default_environment ()"
+                      << "CORBA::Environment::default_environment ()"
                       << be_uidt << be_uidt_nl
                       << ");" << be_uidt << "\n\n";
                 }
@@ -1785,7 +1868,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "void *obj," << be_nl
                           << "void *context," << be_nl
                           << "CORBA::Environment &env = " << be_idt_nl
-                          << "CORBA::default_environment ()"
+                          << "CORBA::Environment::default_environment ()"
                           << be_uidt << be_uidt_nl
                           << ");" << be_uidt << "\n\n";
                     }
@@ -1808,7 +1891,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << derived->full_skel_name ()
                           << "_ptr) obj;" << be_nl;
                       *os << ancestor->full_skel_name ()
-                          << "::_set_" << d->local_name ()
+                          << "::_get_" << d->local_name ()
                           << "_skel (" << be_idt << be_idt_nl
                           << "req," << be_nl
                           << "(" << ancestor->full_skel_name ()

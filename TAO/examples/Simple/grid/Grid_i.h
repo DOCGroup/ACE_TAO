@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/examples/Simple/grid
+//    TAO/tests/Simple/grid
 //
 // = FILENAME
 //    Grid_i.h

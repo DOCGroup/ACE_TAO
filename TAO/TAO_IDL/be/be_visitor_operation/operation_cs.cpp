@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include	"idl.h"
+#include	"idl_extern.h"
+#include	"be.h"
 
 #include "be_visitor_operation.h"
 
@@ -151,7 +151,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   if (node->has_native ()) // native exists => no stub
     {
       if (this->gen_raise_exception (bt, "CORBA::MARSHAL",
-                                     "") == -1)
+                                     "CORBA::COMPLETED_NO") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_operation_cs::"
@@ -165,12 +165,12 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       // Generate code that retrieves the underlying stub object and then
       // invokes do_static_call on it.
       *os << be_nl
-          << "TAO_Stub *istub = this->_stubobj ();" << be_nl
+          << "STUB_Object *istub = this->_stubobj ();" << be_nl
           << "if (istub == 0)" << be_idt_nl;
 
       // if the stub object was bad, then we raise a system exception
       if (this->gen_raise_exception (bt, "CORBA::INV_OBJREF",
-                                     "") == -1)
+                                     "CORBA::COMPLETED_NO") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_operation_cs::"
@@ -220,6 +220,20 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                              "codegen for marshal and invoke failed\n"),
                             -1);
 
+        }
+
+      // do any post processing for the retval
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_POST_INVOKE_CS);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (bt->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "visit_operation - "
+                             "codegen for return type post do_static_call failed\n"),
+                            -1);
         }
 
       if (!this->void_return_type (bt))
@@ -578,36 +592,8 @@ be_interpretive_visitor_operation_cs::gen_marshal_and_invoke (be_operation
                          "(%N:%l) be_interpretive_visitor_operation_cs::"
                          "gen_marshal_and_invoke - "
                          "codegen for checking exception failed\n"),
-                        -1);
+                            -1);
 
-    }
-
-  // do any post processing for the arguments
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_POST_INVOKE_CS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (node->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
-                         "visit_operation - "
-                         "codegen for args post do_static_call failed\n"),
-                        -1);
-    }
-
-  // do any post processing for the retval
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_POST_INVOKE_CS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (bt->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
-                         "visit_operation - "
-                         "codegen for return type post do_static_call failed\n"),
-                        -1);
     }
 
   return 0;
@@ -633,15 +619,17 @@ int
 be_compiled_visitor_operation_cs::gen_pre_stub_info (be_operation *node,
                                                      be_type *)
 {
+  be_visitor *visitor;
+  be_visitor_context ctx;
 
   // Check if this operation raises any exceptions. In that case, we must
   // generate a list of exception typecodes. This is not valid for
   // attributes
   if (!this->ctx_->attribute ())
     {
-      be_visitor_context ctx = *this->ctx_;
+      ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_EXCEPTLIST_CS);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (node->accept (visitor) == -1))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -689,15 +677,30 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
     }
   *os << "\"" << node->local_name ()
       << "\"," << be_nl
-      << "istub->orb_core ()" << be_uidt_nl
+      << "TAO_ORB_Core_instance ()" << be_uidt_nl
       << ");" << be_uidt_nl;
 
   *os << "\n" << be_nl
-      << "for (;;)" << be_nl
-      << "{" << be_idt_nl;
+      << "// If we get forwarded we have to return to this point:"
+      << be_uidt_nl
+      << "_tao_start_again:\n" << be_idt_nl;
 
-  *os << "ACE_TRY_ENV.clear ();" << be_nl
-      << "_tao_call.start (ACE_TRY_ENV);" << be_nl;
+  *os << "ACE_TRY_EX (_tao_START_FAILED)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "_tao_call.start (ACE_TRY_ENV);" << be_nl
+      << "ACE_TRY_CHECK_EX (_tao_START_FAILED);" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "ACE_CATCH (CORBA_SystemException, ex)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "if (istub->next_profile_retry ())" << be_nl
+      << "{" << be_idt_nl
+      << "ACE_TRY_ENV.clear ();" << be_nl
+      << "goto _tao_start_again;" << be_uidt_nl
+      << "}" << be_nl
+      << "ACE_RETHROW;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "ACE_ENDTRY;\n";
+
   // check if there is an exception
   if (this->gen_check_exception (bt) == -1)
     {
@@ -738,7 +741,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
 
       // if marshaling fails, raise exception
       if (this->gen_raise_exception (bt, "CORBA::MARSHAL",
-                                     "") == -1)
+                                     "CORBA::COMPLETED_NO") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_compiled_visitor_operation_cs::"
@@ -750,7 +753,12 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
     }
 
   *os << be_nl
-      << "int _invoke_status =" << be_idt_nl;
+      << "TAO_GIOP_ReplyStatusType _invoke_status = TAO_GIOP_NO_EXCEPTION;" << be_nl
+      << "ACE_TRY_EX (_tao_INVOKE_FAILED)" << be_idt_nl
+      << "{" << be_idt_nl;
+
+  *os << "_invoke_status =" << be_idt_nl;
+
   if (node->flags () == AST_Operation::OP_oneway)
     {
       // oneway operation
@@ -771,7 +779,20 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
         }
     }
 
-  *os << be_uidt_nl;
+  *os << be_uidt_nl
+      << "ACE_TRY_CHECK_EX (_tao_INVOKE_FAILED);" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "ACE_CATCH (CORBA_SystemException, ex)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "if (istub->next_profile_retry ())" << be_nl
+      << "{" << be_idt_nl
+      << "ACE_TRY_ENV.clear ();" << be_nl
+      << "goto _tao_start_again;" << be_uidt_nl
+      << "}" << be_nl
+      << "ACE_RETHROW;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "ACE_ENDTRY;\n";
+
   // check if there is an exception
   if (this->gen_check_exception (bt) == -1)
     {
@@ -783,92 +804,40 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
     }
 
   *os << be_nl
-      << "if (_invoke_status == TAO_INVOKE_RESTART)" << be_idt_nl
-      << "continue;" << be_uidt_nl
-      << "// if (_invoke_status == TAO_INVOKE_EXCEPTION)" << be_idt_nl
-      << "// cannot happen" << be_uidt_nl
-      << "if (_invoke_status != TAO_INVOKE_OK)" << be_nl
-      << "{" << be_idt_nl;
-
-  if (this->gen_raise_exception (bt,
-                                 "CORBA::UNKNOWN",
-                                 "TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES") == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_compiled_visitor_operation_cs::"
-                         "gen_marshal_and invoke - "
-                         "codegen for return var failed\n"),
-                        -1);
-    }
-
-  *os << be_uidt_nl
-      << "}" << be_nl
-      << "break;" << be_nl
-      << be_uidt_nl << "}" << be_nl;
+      << "if (_invoke_status == TAO_GIOP_NO_EXCEPTION)" << be_nl
+      << "{" << be_idt_nl
+      << "istub->set_valid_profile ();" << be_nl;
 
   // the code below this is for 2way operations only
 
-  if (this->void_return_type (bt) &&
-      !this->has_param_type (node, AST_Argument::dir_INOUT) &&
-      !this->has_param_type (node, AST_Argument::dir_OUT))
+  if (!this->void_return_type (bt) ||
+      this->has_param_type (node, AST_Argument::dir_INOUT) ||
+      this->has_param_type (node, AST_Argument::dir_OUT))
     {
-      return 0;
-    }
-
-  // Do any post_invoke stuff that might be necessary.
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_POST_INVOKE_CS);
-  ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (node->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_compiled_visitor_operation_cs::"
-                         "gen_marshal_and_invoke - "
-                         "codegen for args in post do_static_call\n"),
-                        -1);
-    }
-
-
-  // Generate any temporary variables to demarshal the arguments
-  ctx = *this->ctx_;
-  be_visitor_compiled_args_decl vis1 (new be_visitor_context (ctx));
-  if (node->accept (&vis1) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_compiled_visitor_operation_cs::"
-                         "gen_pre_stub_info - "
-                         "codegen for pre args failed\n"),
-                        -1);
-    }
-
-  if (!this->void_return_type (bt))
-    {
-      // Generate any temporary variables to demarshal the return value
+      // Do any post_invoke stuff that might be necessary.
       ctx = *this->ctx_;
-      be_visitor_context *new_ctx =
-        new be_visitor_context (ctx);
-      be_visitor_operation_compiled_rettype_post_docall vis2 (new_ctx);
-      if (bt->accept (&vis2) == -1)
+      ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_POST_INVOKE_CS);
+      ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
         {
+          delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_compiled_visitor_operation_cs::"
-                             "gen_pre_stub_info - "
-                             "codegen rettype [post docall] failed\n"),
+                             "gen_marshal_and_invoke - "
+                             "codegen for args in post do_static_call\n"),
                             -1);
         }
+      // check if there was a user exception, else demarshal the
+      // return val (if any) and parameters (if any) that came with
+      // the response message
+      *os << "TAO_InputCDR &_tao_in = _tao_call.inp_stream ();" << be_nl
+          << "if (!(\n" << be_idt << be_idt << be_idt;
     }
-
-  // check if there was a user exception, else demarshal the
-  // return val (if any) and parameters (if any) that came with
-  // the response message
-  *os << "TAO_InputCDR &_tao_in = _tao_call.inp_stream ();" << be_nl
-      << "if (!(\n" << be_idt << be_idt << be_idt;
 
   if (!this->void_return_type (bt))
     {
-      // demarshal the return val
+      // demarshal the return val and each inout and out argument
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_INVOKE_CS);
       ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
@@ -882,14 +851,17 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
                              "codegen for return var failed\n"),
                             -1);
         }
+      if (this->has_param_type (node, AST_Argument::dir_INOUT) ||
+          this->has_param_type (node, AST_Argument::dir_OUT))
+        {
+          // there are more to follow
+          *os << " &&\n";
+        }
     }
 
   if (this->has_param_type (node, AST_Argument::dir_INOUT) ||
       this->has_param_type (node, AST_Argument::dir_OUT))
     {
-      if (!this->void_return_type (bt))
-          *os << " &&\n";
-
       // demarshal each out and inout argument
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_INVOKE_CS);
@@ -915,7 +887,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
           << "))" << be_nl;
       // if marshaling fails, raise exception
       if (this->gen_raise_exception (bt, "CORBA::MARSHAL",
-                                     "TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES") == -1)
+                                     "CORBA::COMPLETED_NO") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_compiled_visitor_operation_cs::"
@@ -925,6 +897,40 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
         }
       *os << be_uidt;
     }
+
+  *os << be_uidt_nl
+      << "}" << be_nl
+      << "else if (_invoke_status == TAO_GIOP_LOCATION_FORWARD)"
+      << be_nl
+      << "{" << be_idt_nl
+      << "if (istub->next_profile ())" << be_nl
+      << "{" << be_idt_nl
+      << "ACE_TRY_ENV.clear ();" << be_nl
+      << "goto _tao_start_again;" << be_uidt_nl
+      << "}" << be_nl;
+  if (this->gen_raise_exception (bt, "CORBA::TRANSIENT",
+                                 "CORBA::COMPLETED_NO") == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_compiled_visitor_operation_cs::"
+                         "gen_marshal_and_invoke\n"),
+                        -1);
+    }
+  *os << be_uidt_nl << "}" << be_nl
+      << "else" << be_nl
+      << "{" << be_idt_nl;
+  // if this operation is not supposed to raise a user defined
+  // exception, then flag an UNKNOWN exception error
+  if (this->gen_raise_exception (bt, "CORBA::UNKNOWN",
+                                 "CORBA::COMPLETED_MAYBE") == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_compiled_visitor_operation_cs::"
+                         "gen_marshal_and invoke - "
+                         "codegen for return var failed\n"),
+                        -1);
+    }
+  *os << be_uidt_nl << "}\n";
 
   return 0;
 }

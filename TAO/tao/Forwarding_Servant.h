@@ -21,10 +21,6 @@
 #ifndef TAO_FORWARDING_SERVANT_H
 #define TAO_FORWARDING_SERVANT_H
 
-#include "tao/orbconf.h"
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
 #include "tao/Servant_Base.h"
 #include "tao/ORB.h"
 
@@ -57,7 +53,5 @@ protected:
   CORBA::String_var interface_repository_id_;
   // Here is the interface we support
 };
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #endif /* TAO_FORWARDING_SERVANT_H */
