@@ -1,7 +1,3 @@
-Sun Jul 01 07:41:31 2001  Balachandran  <bala@cs.wustl.edu>
-
-        * ACE version 5.1.18 released.
-
 Sat Jun 30 12:44:11 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/FIFO_Send_Msg.cpp (send): Fixed another errant use of 
