@@ -1,3 +1,9 @@
+Thu Apr  8 22:21:23 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+	* tao/ORB.cpp: Rewrote the multicast_query() method to test a
+ 	  theory about what might be causing the problem on NT.  Thanks to
+ 	  Margaret Reitz <margaret@veritas.com> for motivating this.
+
 Thu Apr 08 18:45:56 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (root_poa_reference): Had to non-inline this
