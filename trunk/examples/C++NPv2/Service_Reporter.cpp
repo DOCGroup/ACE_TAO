@@ -109,7 +109,7 @@ ACE_FACTORY_DEFINE (ACE_Local_Service, Service_Reporter)
 // Define the ACE_Static_Svc_Descriptor that conveys the service information
 // to the ACE_Service_Config.
 ACE_STATIC_SVC_DEFINE (
-  Reporter,
+  Reporter_Descriptor,
   ACE_TEXT ("Service_Reporter"),
   ACE_SVC_OBJ_T,
   &ACE_SVC_NAME (Service_Reporter),
@@ -120,4 +120,4 @@ ACE_STATIC_SVC_DEFINE (
 
 // Define the class that will register this service with ACE_Service_Config
 // at program startup.
-ACE_STATIC_SVC_REQUIRE (Reporter)
+ACE_STATIC_SVC_REQUIRE (Reporter_Descriptor)

@@ -10,7 +10,7 @@
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
 
-  ACE_STATIC_SVC_REGISTER (Reporter);
+  ACE_STATIC_SVC_REGISTER (Reporter_Descriptor);
 
   ACE_Service_Config::open
     (argc, argv, ACE_DEFAULT_LOGGER_KEY, 0);
