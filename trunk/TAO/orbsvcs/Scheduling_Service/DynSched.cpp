@@ -43,10 +43,10 @@ extern "C" int compare_entry_finish_times (const void *first, const void *second
     return -1;
   }
 
-  ACE_Scheduler::Task_Entry *first_entry = 
-	  * ACE_static_cast (ACE_Scheduler::Task_Entry **, first);
-  ACE_Scheduler::Task_Entry *second_entry = 
-	  * ACE_static_cast (ACE_Scheduler::Task_Entry **, second);
+  Task_Entry *first_entry = 
+	  * ACE_static_cast (Task_Entry **, first);
+  Task_Entry *second_entry = 
+	  * ACE_static_cast (Task_Entry **, second);
 
   // sort blank entries to the end
   if (! first_entry)
@@ -68,6 +68,12 @@ extern "C" int compare_entry_finish_times (const void *first, const void *second
   }
 
   return 0;
+}
+
+// compare the DFS finish times of two task entries, order higher time *first*
+extern "C" int compare_dispatch_priorities (const void *first, const void *second)
+{
+
 }
 
 // TBD - move this to the ACE class
@@ -197,9 +203,11 @@ ACE_Scheduler::ACE_Scheduler ()
   , task_entries_ (0)
   , ordered_task_entries_ (0)
   , thread_delineators_ (0)
-  , ordered_thread_entries_ (0)
+  , ordered_thread_dispatch_entries_ (0)
   , dispatch_entries_ (0)
   , ordered_dispatch_entries_ (0)
+  , dispatch_entry_count_ (0)
+  , threads_ (0)
   , rt_info_entries_ ()
   , lock_ ()
   , handles_ (0)
@@ -207,17 +215,17 @@ ACE_Scheduler::ACE_Scheduler ()
   , rt_info_filename_ (0)
   , timeline_filename_ (0)
   , tasks_ (0)
-  , threads_ (0)
   , status_ (NOT_SCHEDULED)
   , output_level_ (0)
-  , frame_size_ (0)
+  , frame_size_ (1)
   , critical_set_frame_size_ (0)
   , utilization_ (0.0)
   , critical_set_utilization_ (0.0)
   , minimum_priority_queue_ (0)
   , minimum_guaranteed_priority_queue_ (-1)
-  , timeline_ ()
+  , timeline_ (0)
   , up_to_date_ (0)
+
 {
 }
 
@@ -230,8 +238,8 @@ ACE_Scheduler::~ACE_Scheduler ()
 
 
 void
-ACE_Scheduler::init (const int minimum_priority,
-                     const int maximum_priority,
+ACE_Scheduler::init (const OS_Priority minimum_priority,
+                     const OS_Priority maximum_priority,
                      const char *runtime_filename,
                      const char *rt_info_filename,
                      const char *timeline_filename)
@@ -261,7 +269,7 @@ ACE_Scheduler::register_task (RT_Info *rt_info, handle_t &handle)
           // zero out the task entry ACT used by the scheduler
           rt_info->volatile_token = 0;
 
-          // reset the schedule when a new task is registered
+          // make sure the schedule is reset when a new task is registered
           reset ();
 
           if (output_level () >= 5)
@@ -422,11 +430,11 @@ void ACE_Scheduler::export(RT_Info& info, FILE* file)
 
     }
 
-// CDG - TBD - we'll need to update this to use the information aggregated
-//             within the task entry pointed to by the RT_Info's volatile_token 
-//             ACT (in fact, there is now more than one
-//             priority assignment per RT_Info, w/ disjunction on multiple 
-//             priority levels, rates, etc. - iterate through and show each dispatch)
+// TBD - we'll need to update this to use the information aggregated
+//       within the task entry pointed to by the RT_Info's volatile_token 
+//       ACT (in fact, there is now more than one
+//       priority assignment per RT_Info, w/ disjunction on multiple 
+//       priority levels, rates, etc. - iterate through and show each dispatch)
 
   (void) ACE_OS::fprintf (file, "# end calls\n%d\n%d\n%d\n\n",
                           info.priority,
@@ -480,28 +488,51 @@ ACE_Scheduler::reset ()
     delete thread_delineators_;
     thread_delineators_ = 0;
 
-    delete [] ordered_thread_entries_;
-    ordered_thread_entries_ = 0;
+    delete [] ordered_thread_dispatch_entries_;
+    ordered_thread_dispatch_entries_ = 0;
 
-    // free all the 
-
+    // free all the dispatch entries in the list, then the list itself
+    ACE_Unbounded_Set_Iterator <Dispatch_Entry *> iter (*dispatch_entries_);
+    Dispatch_Entry *entry = 0;
+    for (iter.first (); ! iter.done (); iter.advance (), entry = 0)
+    {
+      if ((iter.next (entry) != 0) && (entry))
+      {
+        delete entry;
+      }
+    } 
     delete dispatch_entries_;
     dispatch_entries_ = 0;
 
     delete [] ordered_dispatch_entries_;
     ordered_dispatch_entries_ = 0;
 
-    delete timeline_;
-    timeline_ = 0;
-
+    dispatch_entry_count_ = 0;
     threads_ = 0;
+
     status_ = NOT_SCHEDULED;
-    frame_size_ = 0;
+
+    frame_size_ = 1;
     critical_set_frame_size_ = 0;
     utilization_ = 0.0;
     critical_set_utilization_ = 0.0;
     minimum_priority_queue_ = 0;
     minimum_guaranteed_priority_queue_ = -1;
+
+ 
+    // iterate over and delete the set of timeline entries
+    ACE_Unbounded_Queue_Iterator <TimeLine_Entry *> t_iter_ (timeline_);
+    TimeLine_Entry *t_entry = 0;
+    for (t_iter.first (); ! t_iter.done (); t_iter.advance (), t_entry = 0)
+    {
+      if ((t_iter.next (t_entry) != 0) && (t_entry))
+      {
+        delete t_entry;
+      }
+    } 
+    delete timeline_;
+    timeline_ = 0;
+
     up_to_date_ = 0;
   }
 }
@@ -527,72 +558,78 @@ ACE_Scheduler::schedule (void)
   }
 
   // set up the task entry data structures, check for call cycles
-  ACE_Scheduler::status_t status = setup_task_entries ();
+  status_ = setup_task_entries ();
 
-  if (status == SUCCEEDED)
+  if (status_ == SUCCEEDED)
   {
     // check for cycles in the dependency graph: as a side effect, leaves
     // the ordered_task_entries_ pointer array sorted in topological order, 
     // which is used by propagate_dispatches () to ensure that dispatches
     // are propagated top down in the call graph.
-    status = check_dependency_cycles ();
+    status_ = check_dependency_cycles ();
   }
 
-  if (status == SUCCEEDED)
+  if (status_ == SUCCEEDED)
   {
     // task entries are related, now threads can be found
-    status = identify_threads ();
+    status_ = identify_threads ();
   }
 
-  if (status == SUCCEEDED)
+  if (status_ == SUCCEEDED)
   {
     // invokes the internal thread scheduling method of the strategy
-    status = schedule_threads ();
+    status_ = schedule_threads ();
   }
 
-  if (status == SUCCEEDED)
+  if (status_ == SUCCEEDED)
   {
     // propagate the dispatch information from the 
     // threads throughout the call graph
-    status = propagate_dispatches ();
+    status_ = propagate_dispatches ();
   }
 
-  if (status == SUCCEEDED)
+  if (status_ == SUCCEEDED)
   {
     // invokes the internal dispatch scheduling method of the strategy
-    status = schedule_dispatches ();
+    status_ = schedule_dispatches ();
   }
 
-  // calculate utilization, frame size, critical set
-  if (status == SUCCEEDED)
+  // calculate utilization, total frame size, critical set
+  if (status_ == SUCCEEDED)
   {
-    status = calculate_utilization_params ();
+    status_ = calculate_utilization_params ();
   }
 
-  // store the timeline to a file if one was given
+  // generate the scheduling timeline over the total frame size
+  if (status_ == SUCCEEDED || status_ == ST_UTILIZATION_BOUND_EXCEEDED))
+  {
+    status_ = create_timeline ();
+  }
+
+  // store the rt_info and dispatch information to a file if one was given
   if (rt_info_filename_ != 0  &&
-      (status == SUCCEEDED || status == ST_UTILIZATION_BOUND_EXCEEDED))
+      (status_ == SUCCEEDED || status_ == ST_UTILIZATION_BOUND_EXCEEDED))
   {
-    status = store_rt_infos (rt_info_filename_);
+    status_ = store_rt_infos (rt_info_filename_);
   }
   
   // store the schedule of dispatch entries to a file if one was given
   if (runtime_filename_ != 0  &&
-      (status == SUCCEEDED || status == ST_UTILIZATION_BOUND_EXCEEDED))
+      (status_ == SUCCEEDED || status_ == ST_UTILIZATION_BOUND_EXCEEDED))
   {
-    status = store_schedule (runtime_filename_ );
+    status_ = store_schedule (runtime_filename_ );
   }
 
   // store the timeline to a file if one was given
   if (timeline_filename_ != 0  &&
-      (status == SUCCEEDED || status == ST_UTILIZATION_BOUND_EXCEEDED))
+      (status_ == SUCCEEDED || status_ == ST_UTILIZATION_BOUND_EXCEEDED))
   {
-    status = create_timeline (timeline_filename_);
+    status_ = output_timeline (timeline_filename_);
   }
 
 
   // if a valid schedule was not generated, clean up from the attempt
-  switch (status)
+  switch (status_)
   {
     // these are statuses that indicate a reasonable schedule was generated
     case SUCCEEDED:
@@ -629,7 +666,7 @@ ACE_Scheduler::schedule (void)
   }
 
 
-  return status;
+  return status_;
 }
 
 ACE_Scheduler::status_t 
@@ -637,12 +674,17 @@ ACE_Scheduler::propagate_dispatches ()
 {
   // iterate through the ordered_task_entries_ array in order 
   // from highest DFS finishing time to lowest, so that every
-  // calling dispatch is accessed before those it causes:
+  // calling dispatch is accessed before those it calls:
   // the dispatches propagate top down through the call DAG
   for (u_int i = 0; i < tasks (); ++i)
   {
-    ordered_task_entries_ [i]->merge_calls (*dispatch_entries_);
+    if (ordered_task_entries_ [i]->merge_dispatches (dispatch_entries_) < 0)
+    {
+      return ST_UNKNOWN_TASK;
+    }
   }
+
+  return SUCCEEDED;
 }
 // propagate the dispatch information from the
 // threads throughout the call graph
@@ -659,7 +701,7 @@ ACE_Scheduler::calculate_utilization_params (void)
 
   critical_set_frame_size_ = 0;
   utilization_ = 0.0;
-  critical_set_utilization_ = 0;
+  critical_set_utilization_ = 0.0;
 
   minimum_priority_queue_ = 
     ordered_dispatch_entries_ [0]->priority ();
@@ -667,10 +709,10 @@ ACE_Scheduler::calculate_utilization_params (void)
   minimum_guaranteed_priority_queue_ = -1;
 
   // iterate through ordered task entries, calculating frame size, utilization
-  for (u_int i = 1; i < tasks (); ++i)
+  for (u_int i = 1; i < dispatch_entries_; ++i)
   {
-    // save the effective period of the task entry to which the dispatch refers
-    Period period = 
+    // hold the effective period of the task entry to which the dispatch refers
+    Period period =       
       ordered_dispatch_entries_ [i]->task_entry ().effective_period ();
 
     // if we've just finished examining another priority level
@@ -683,12 +725,14 @@ ACE_Scheduler::calculate_utilization_params (void)
       minimum_priority_queue_ = ordered_dispatch_entries_ [i]->priority ();
     }
 
-    // 
+    // only consider computation times of dispatches on OPERATION descriptors
     if (ordered_dispatch_entries_ [i]->task_entry ().info_type () == 
           RtecScheduler::OPERATION)
     {
-      utilization_ += ordered_dispatch_entries_ [i]->execution_time () / 
-                      ACE_static_cast(double, period);
+      utilization_ += 
+        ACE_static_cast(double, 
+                        ordered_dispatch_entries_ [i]->execution_time ()) /
+        ACE_static_cast(double, period);
 
 	 }
 
@@ -703,18 +747,6 @@ ACE_Scheduler::calculate_utilization_params (void)
 
   // update parameters for the lowest priority level
   update_priority_level_params ();
-
-// CDG - TBD - walk dependencies and make sure there are no *conjunctive* 
-// dependencies by critical set entries on non-guaranteed entries: as long
-// as there is *any* path entirely though guaranteed operations to a thread
-// delineator, all is well: if not, kick and scream.
-//
-// Part Deux:
-//
-// Hmmm... does this have meaning anymore, w/ the notion of priority 
-// inheritance? i.e., clients are not assigned priority, but rather
-// obtain it from their one-way call dependencies.  We could complain
-// if there is a priority/rate/etc specified that doesn't match (or is lower?)
 
   return status;
 }
@@ -772,7 +804,7 @@ ACE_Scheduler::setup_task_entries (void)
   // set up links between rt_info_entries_, task_entries_,
   // and ordered_task_entries_ tables
   ACE_Unbounded_Set_Iterator <RT_Info *> iter (rt_info_entries_);
-  for (u_int i = 0; i <= tasks (); ++i, iter.advance ())
+  for (u_int i = 0; i < tasks (); ++i, iter.advance ())
   {
     RT_Info** info_entry;
 
@@ -808,7 +840,7 @@ ACE_Scheduler::relate_task_entries (void)
   // in the traversal finishing times, which can be used to detect call cycles.
   long time = 0;
 
-  for (u_int i = 0; i <= tasks (); ++i)
+  for (u_int i = 0; i < tasks (); ++i)
   {
     if ((status = relate_task_entries_recurse (time, task_entries_[i]))
         != SUCCEEDED)
@@ -893,22 +925,42 @@ ACE_Scheduler::status_t
 ACE_Scheduler::identify_threads (void)
 {
   // walk array of task entries, picking out thread delineators
-  for (u_int i = 0; i <= tasks (); ++i)
+  for (u_int i = 0; i < tasks (); ++i)
   {
-    // if entry has exposed threads
-    if (task_entries_ [i].rt_info ()->threads > 0)
+    // if entry has exposed threads or no callers, it may be a thread
+    if ((task_entries_ [i].rt_info ()->threads > 0) || 
+        (task_entries_ [i].callers ().is_empty ()))
     {
-      task_entries_ [i].is_thread_delineator (1);
-      thread_delineators_->insert (& (task_entries_ [i]));
-    }
-    // or if entry does not have any callers 
-    else if (task_entries_ [i].callers ().is_empty ())
-    {
-      // and period is valued: it's a thread delineator
+      // if its period is valued, it's a thread delineator
       if (task_entries_ [i].rt_info ()->period > 0)
       {
+        task_entries_ [i].effective_period_ = 
+          task_entries_ [i].rt_info ()->period;
         task_entries_ [i].is_thread_delineator (1);
         thread_delineators_->insert (& (task_entries_ [i]));
+
+        // increase the count of thread dispatches
+        ++ threads_;
+
+        // create a Dispatch_Entry for each thread of the delimiting Task_Entry
+        u_int thread_count = (task_entries_ [i].rt_info ()->threads > 0) 
+                             ? task_entries_ [i].rt_info ()->threads : 1;
+        for (u_int i = 0; i < thread_count; ++i)
+        {
+          Dispatch_Entry * dispatch_ptr;
+          ACE_NEW_RETURN (
+            dispatch_ptr,
+            Dispatch_Entry (0, task_entries_ [i].effective_period (),
+                            task_entries_ [i].rt_info ()->priority (), 
+                            task_entries_ [i]),
+            ST_VIRTUAL_MEMORY_EXHAUSTED);
+
+          if ((task_entries_ [i].dispatches_.insert (Dispatch_Entry_Link (*dispatch_ptr)) < 0) ||
+              (dispatch_entries_.insert (dispatch_ptr) < 0))
+          {
+            return ST_VIRTUAL_MEMORY_EXHAUSTED;
+          }
+        }
       }
       else
       {
@@ -1013,26 +1065,45 @@ ACE_Scheduler::check_dependency_cycles_recurse (Task_Entry &entry)
 ACE_Scheduler::status_t 
 ACE_Scheduler::schedule_threads (void) 
 {
+  // make sure there are as many thread delineator 
+  // entries in the set as the counter indicates
+  if (threads_ != thread_delineators_.size ())
+  {
+    return THREAD_COUNT_MISMATCH;
+  }
+
   // allocate an array of pointers to the thread delineators
-  ACE_NEW_RETURN (ordered_thread_entries_,
-                  Dispatch_Entry * [thread_delineators_.size ()],
+  ACE_NEW_RETURN (ordered_thread_dispatch_entries_,
+                  Dispatch_Entry * [threads_],
                   ST_VIRTUAL_MEMORY_EXHAUSTED);
+  ACE_OS::memset (ordered_thread_dispatch_entries_, 0,
+                  sizeof (Dispatch_Entry *) * threads_);
+
 
   // copy pointers to the thread delineators from the set to the array
   ACE_Unbounded_Set_Iterator <Dispatch_Entry *> iter (thread_delineators_);
-  for (u_int i = 0; i <= thread_delineators_.size (); ++i, iter.advance ())
+  for (u_int i = 0; i < threads_; ++i, iter.advance ())
   {
-    Task_Entry** task_entry;
+    Dispatch_Entry** dispatch_entry;
 
-    if (! iter.next (task_entry))
+    if (! iter.next (dispatch_entry))
     {
       return ST_UNKNOWN_TASK;
     }
 
-    ordered_thread_entries_ [i] = *task_entry;
+    ordered_thread_dispatch_entries_ [i] = *dispatch_entry;
   }
 
-  return schedule_threads_i ();
+  // sort the thread dispatch entries into priority order
+  status_t status = sort_dispatches (ordered_thread_dispatch_entries_, threads_);
+
+  if (status == SUCCEEDED)
+  {
+    // assign priorities to the thread dispatch entries
+    status == assign_priorities (ordered_thread_dispatch_entries_, threads_);
+  }
+
+  return status;
 }
   // thread scheduling method: sets up array of pointers to task 
   // entries that are threads, calls internal thread scheduling method
@@ -1040,12 +1111,18 @@ ACE_Scheduler::schedule_threads (void)
 ACE_Scheduler::status_t
 ACE_Scheduler::schedule_dispatches (void)
 {
+  dispatch_entry_count_ = dispatch_entries_.size ();
+
   ACE_NEW_RETURN (ordered_dispatch_entries_,
-                  Dispatch_Entry * [dispatch_entries_.size ()],
+                  Dispatch_Entry * [dispatch_entry_count_],
                   ST_VIRTUAL_MEMORY_EXHAUSTED);
+  ACE_OS::memset (ordered_dispatch_entries_, 0,
+                  sizeof (Dispatch_Entry *) * dispatch_entry_count_);
+
+
 
   ACE_Unbounded_Set_Iterator <Dispatch_Entry *> iter (dispatch_entries_);
-  for (u_int i = 0; i <= dispatch_entries_.size (); ++i, iter.advance ())
+  for (u_int i = 0; i < dispatch_entry_count_; ++i, iter.advance ())
   {
     Dispatch_Entry** dispatch_entry;
 
@@ -1057,129 +1134,88 @@ ACE_Scheduler::schedule_dispatches (void)
     ordered_dispatch_entries_ [i] = *dispatch_entry;
   }
 
-  return schedule_dispatches_i ();
+  // sort the entries in order of priority and subpriority
+  sort_dispatches (ordered_dispatch_entries_, dispatch_entry_count_);
+
+  // assign dynamic and static subpriorities to the thread dispatch entries
+  return assign_subpriorities (ordered_dispatch_entries_, dispatch_entry_count_);
 }
   // dispatch scheduling method: sets up an array of dispatch entries,
   // calls internal dispatch scheduling method.
 
 
-ACE_Scheduler::Task_Entry::Task_Entry ()
-  : rt_info_ (0)
-  , effective_execution_time_(0)
-  , effective_period_(0)
-  , dfs_status_ (NOT_VISITED)
-  , discovered_ (-1)
-  , finished_ (-1)
-  , is_thread_delineator_ (0)
-  , calls_ ()
-  , callers_ ()
+ACE_Scheduler::status_t 
+ACE_Scheduler::create_timeline ()
 {
 }
+  // Create a timeline.
 
-ACE_Scheduler::Task_Entry::~Task_Entry () 
+ACE_Scheduler::status_t
+ACE_Scheduler::output_dispatch_timeline (const char *filename)
 {
-  // zero out the task entry ACT in the corresponding rt_info
-  rt_info_->volatile_token = 0;
+  status_t status = UNABLE_TO_OPEN_SCHEDULE_FILE;
+  status = UNABLE_TO_WRITE_SCHEDULE_FILE;
+  status = SUCCEEDED;
+
+  return status;
 }
+  // this prints the entire set of timeline outputs to the specified file
 
-// merge calls according to info type, update
-// relevant scheduling characteristics for this entry
-void 
-ACE_Scheduler::Task_Entry::merge_calls (ACE_Unbounded_Set <Dispatch_Entry *> &dispatches)
+ACE_Scheduler::status_t
+ACE_Scheduler::output_preemption_timeline (const char *filename)
 {
-  switch (dependency_type ())
+
+  // open the file 
+  FILE *file = ACE_OS::fopen (filename, "w");
+  if (! file)
   {
-    case DISJUNCTION:
-      disjunctive_merge (ACE_Unbounded_Set <Dispatch_Entry *> &dispatches);
-      break;
-
-    default:
-      conjunctive_merge (ACE_Unbounded_Set <Dispatch_Entry *> &dispatches);
-      break;
+    return UNABLE_TO_OPEN_SCHEDULE_FILE;  
   }
+
+  if (ACE_OS::fprintf (file, "PREEMPTION TIMELINE:\n\n"
+                             "          operation name     dispatch id"
+                             "          start         stop\n"
+                             "          --------------     -----------"
+                             "          -----         ----\n\n") < 0)
+  {
+    return UNABLE_TO_WRITE_SCHEDULE_FILE;
+  }
+  
+HERE - CDG
+  ACE_Unbounded_Queue_Iterator <TimeLine_Entry_Link> iter (timeline_);
+
+  for (iter.first (); iter.done () == 0; iter.)
+  {
+    if (ACE_OS::fprintf (file, "PREEMPTION TIMELINE:\n") < 0)
+    {
+      return UNABLE_TO_WRITE_SCHEDULE_FILE;
+    }
+  }
+
+  return SUCCEEDED;
 }
+  // this prints the entire set of timeline outputs to the specified file
 
-// CDG - TBD think about this: do previously dispatched 
-// operations get subtracted from the frame time remaining ?
-// yes!!!
-
-// perform disjunctive merge of arrival times of oneway calls:
-// all arrival times of all dependencies are duplicated by the
-// multiplier and repetition over the new frame size and merged
-void 
-ACE_Scheduler::Task_Entry::disjunctive_merge (ACE_Unbounded_Set <Dispatch_Entry *> &dispatches)
+ACE_Scheduler::status_t 
+ACE_Scheduler::output_timeline (const char *filename)
 {
-CDG - TBD - write this
-CDG - TBD - add each new dispatch created to the set of dispatches
+CDG - TBD - bail out if we're not up to date or if timeline_ == 0
+
+  status_t status = output_dispatch_timeline (filename);
+
+  if (status == SUCCEEDED)
+  {
+    status = output_preemption_timeline (filename);
+  }
+
+  return status;
 }
-
-// perform conjunctive merge of arrival times of dependencies:
-// all arrival times of all dependencies are duplicated by the
-// multiplier and repetition over the new frame size and then
-// iteratively merged by choosing the maximal arrival time at
-// the current position in each queue (iteration is in lockstep
-// over all queues, and ends when any queue ends).
-void 
-ACE_Scheduler::Task_Entry::conjunctive_merge (ACE_Unbounded_Set <Dispatch_Entry *> &dispatches)
-{
-CDG - TBD
-}
-
-//////////////////////////
-// Class Dispatch Entry //
-//////////////////////////
-
-u_long ACE_Scheduler::Dispatch_Entry::next_id = 0;
-
-ACE_Scheduler::Dispatch_Entry::Dispatch_Entry (
-      Priority priority,
-      Time arrival,
-      Time deadline,
-      Time execution_time,
-      Task_Entry &task_entry, 
-      Dispatch_Entry *previous_instance)
-
-  : priority_ (priority)
-  , arrival_ (arrival)
-  , deadline_ (deadline)
-  , execution_time_ (execution_time)
-  , task_entry_ (task_entry)
-  , previous_dispatch_ (0)
-{
-  // obtain, increment the next id
-  dispatch_id_ = next_id_++;
-}
-
-ACE_Scheduler::Dispatch_Entry::Dispatch_Entry (const Dispatch_Entry &d)
-  : priority_ (d.priority)
-  , arrival_ (d.arrival)
-  , deadline_ (d.deadline)
-  , execution_time_ (d.execution_time)
-  , task_entry_ (d.task_entry)
-  , previous_dispatch_ (0)
-{
-  // obtain, increment the next id
-  dispatch_id_ = next_id_++;
-}
+  // this prints the entire set of timeline outputs to the specified file
 
 
-///////////////////////////
-// Class Task Entry Link //
-///////////////////////////
 
-
-ACE_Scheduler::Task_Entry_Link::Task_Entry_Link (
-  ACE_Scheduler::Task_Entry &caller,
-  ACE_Scheduler::Task_Entry &called,
-  CORBA::Long number_of_calls,
-  RtecScheduler::Dependency_Type dependency_type) 
-  : caller_ (caller)
-  , called_ (called)
-  , dependency_type_ (dependency_type)
-  , number_of_calls_ (number_of_calls) 
-{
-}
-
+// CDG - TBD - need to compile on Sun OS5 and make sure
+// the correct template instantiations are present
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>;
@@ -1199,6 +1235,10 @@ template class ACE_Map_Entry<ACE_CString, ACE_Scheduler::RT_Info **>;
   template class ACE_Read_Guard<ACE_SYNCH_MUTEX>;
   template class ACE_Write_Guard<ACE_SYNCH_MUTEX>;
 
+  template class ACE_Ordered_MultiSet<Dispatch_Entry_Link>;
+  template class ACE_Ordered_MultiSet_Iterator<Dispatch_Entry_Link>;
+  template class ACE_DNode<Dispatch_Entry_Link>;
+
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>
@@ -1212,6 +1252,10 @@ template class ACE_Map_Entry<ACE_CString, ACE_Scheduler::RT_Info **>;
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_CString, ACE_Scheduler::RT_Info **, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Read_Guard<ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Write_Guard<ACE_SYNCH_MUTEX>
+
+#pragma instantiate ACE_Ordered_MultiSet<Dispatch_Entry_Link>;
+#pragma instantiate ACE_Ordered_MultiSet_Iterator<Dispatch_Entry_Link>;
+#pragma instantiate ACE_DNode<Dispatch_Entry_Link>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
