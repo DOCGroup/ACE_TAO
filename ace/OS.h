@@ -4709,7 +4709,7 @@ public:
 
 class ACE_Cleanup_Info_Node;
 
-class ACE_OS_Exit_Info
+class ACE_Export ACE_OS_Exit_Info
 {
   // = TITLE
   //     Hold Object Manager cleanup (exit) information.
