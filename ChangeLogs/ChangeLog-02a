@@ -1,3 +1,9 @@
+Thu May 10 18:19:09 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ACE-INSTALL.html:
+          Add documentation for the mingw support, thanks Cristian Ferretti
+          <cristian_ferretti@yahoo.com> for providing this info.
+
 Thu May 10 16:55:20 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_run_tests.lst:
