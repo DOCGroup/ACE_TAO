@@ -408,7 +408,7 @@ Video_Control_Play_State::stop (CORBA::Long cmdsn)
   VIDEO_SINGLETON::instance ()->cmdsn = cmdsn;
   Video_Timer_Global::StopTimer();
   this->vci_->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
-  return 0;
+  return CORBA::B_TRUE;
 }
 
 
