@@ -45,9 +45,6 @@ namespace CIAO
     void SPE_Handler::process_SubcomponentPortEndpoint
     (::Deployment::SubcomponentPortEndpoint &spe)
     {
-      // This is bogus and should be replaced later.
-      ACE_DECLARE_NEW_CORBA_ENV;
-
       for (DOMNode* node = this->iter_->nextNode();
            node != 0;
            node = this->iter_->nextNode())

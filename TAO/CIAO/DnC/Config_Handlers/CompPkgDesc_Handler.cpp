@@ -47,9 +47,6 @@ namespace CIAO
     void CompPkgDesc_Handler::process_ComponentPackageDescription
       (::Deployment::ComponentPackageDescription &comppkgdesc)
     {
-      // This is bogus and should be replaced later.
-      ACE_DECLARE_NEW_CORBA_ENV;
-
       for (DOMNode* node = this->iter_->nextNode();
            node != 0;
            node = this->iter_->nextNode())

@@ -164,6 +164,10 @@ namespace CIAO
       void parse_bridge_href_doc (DOMDocument* doc, unsigned long filter,
                                   Deployment::Bridge& domain_bridge);
 
+      /// parse the resource in a HREF format
+      void parse_resource_href_doc (DOMDocument* doc, unsigned long filter,
+                                    Deployment::Resource& domain_resource);
+
     private:
 
       DOMDocumentTraversal* traverse_;
