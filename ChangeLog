@@ -1,3 +1,11 @@
+Thu Dec 2 09:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ConfigList.pm:
+          Remove trailing white spaces from entry after the split. Interix
+          perl had problems with this. Thanks to Steven Frare
+          <stevefr at avaya dot com> for reporting this and J.T. Conklin for
+          simplifying the patch.
+
 Thu Dec 2 09:11:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.5.x.GNU:
