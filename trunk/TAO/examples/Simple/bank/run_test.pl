@@ -1,4 +1,4 @@
-#$Id $
+#$Id$
 # -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
@@ -8,16 +8,16 @@ use lib "../../../../bin";
 require ACEutils;
 require Process;
 
+$iorfile = "grid.ior";
 
-$SV = Process::Create ("server$Process::EXE_EXT", " ");
+$SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT", "-o $iorfile ");
 
-sleep(10);
-$status  = system ("client$Process::EXE_EXT  -x -b 100 -y Vishal -z Kachroo");
-#sleep($ACE::sleeptime);
+ACE::waitforfile ($iorfile);
+
+$status  = system ($EXEPREFIX."client$Process::EXE_EXT -f $iorfile");
 
 $SV->Kill (); $SV->Wait ();
 
+unlink $iorfile;
+
 exit $status;
-
-
-
