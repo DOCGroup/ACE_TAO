@@ -1,3 +1,11 @@
+Mon Aug 20 10:27:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/TAO.dsw:
+
+          Added dependencies to several projects. Thanks to
+          Frank Wolf <fwolf@gum.de> for pointing out this lack
+          in Domain.dsp and Domain_Static.dsp.
+
 Mon Aug 20 09:39:06 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/tmplinst.cpp:
