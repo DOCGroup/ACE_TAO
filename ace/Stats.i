@@ -52,7 +52,8 @@ ACE_Stats_Value::scaled_value (ACE_UINT64 &sv) const
 }
 
 ACE_INLINE
-ACE_Stats::ACE_Stats (void)
+ACE_Stats::ACE_Stats (void) :
+  cached_mean_ (0xFFFFFFFFu)
 {
   reset ();
 }
@@ -61,7 +62,7 @@ ACE_INLINE
 ACE_UINT32
 ACE_Stats::samples (void) const
 {
-  return samples_;
+  return number_of_samples_;
 }
 
 ACE_INLINE
