@@ -9,9 +9,15 @@
 
 #include "ace/config-all.h"
 
-#if !defined (TESTSCHED_HAS_DLL)
-#  define TESTSCHED_HAS_DLL 1
-#endif /* ! TESTSCHED_HAS_DLL */
+#if defined (TAO_AS_STATIC_LIBS)
+#  if !defined (TESTSCHED_HAS_DLL)
+#    define TESTSCHED_HAS_DLL 0
+#  endif /* ! TESTSCHED_HAS_DLL */
+#else
+#  if !defined (TESTSCHED_HAS_DLL)
+#    define TESTSCHED_HAS_DLL 1
+#  endif /* ! TESTSCHED_HAS_DLL */
+#endif
 
 #if defined (TESTSCHED_HAS_DLL) && (TESTSCHED_HAS_DLL == 1)
 #  if defined (TESTSCHED_BUILD_DLL)
