@@ -25,7 +25,7 @@ DLD             = libtool
 LD              = $(CXX)
 LIBS            += -lcc_dynamic -lstdc++ -lSystem
 
-OCFLAGS         += -O3
+OCFLAGS         += -O3 -mcpu=G3 -mtune=G4
 RANLIB          = ranlib
 SOEXT		= dylib
 SOFLAGS += -dynamic
