@@ -1,6 +1,8 @@
 /* -*- C++ -*- $Id$ */
 #include "Subscribe.h"
 
+ACE_RCSID(Notify, Subscribe, "$Id$")
+
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"
 
