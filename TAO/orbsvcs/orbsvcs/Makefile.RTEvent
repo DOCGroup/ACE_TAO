@@ -85,7 +85,9 @@ CPP_SRCS += \
         Event/EC_Channel_Destroyer \
         Event/EC_Lifetime_Utils \
         Event/EC_Proxy_Disconnector \
-	Event/EC_Event_Limit
+	Event/EC_Event_Limit \
+	Event/EC_Event_Counter \
+	Event/ec_dsui_vars
 
 CPP_SRCS += \
         Event_Utilities \

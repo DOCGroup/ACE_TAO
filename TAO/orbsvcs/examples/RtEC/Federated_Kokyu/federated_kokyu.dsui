@@ -3,8 +3,11 @@
 #       EC Namespace Specification File        #
 #################################################
 
+# The DSTRM_FAMILY lines should be added in the new spec file
+DSTRM_FAMILY    TEST_ONE        1       "Description"
+DSTRM_FAMILY    MAIN_GROUP      2       "Description"
+DSTRM_FAMILY    WORKER_GROUP    3       "Description"
 
-# Entity type   Family Name     Fam ID  Entity Name     				Ety ID Description  			function 1      function2
 DSTRM_EVENT	TEST_ONE	1	START_SERVICE	0	"START_SERVICE"		print_string
 DSTRM_EVENT	TEST_ONE	1	DEADLINE_MISSED	1	"DEADLINE_MISSED"	print_string
 DSTRM_EVENT	TEST_ONE	1	STOP_SERVICE	2	"STOP_SERVICE"		print_string

@@ -33,7 +33,7 @@ main (int argc, char *argv[])
   ConfigFactory::Default_Config_Factory::init_svcs();
 
   int retval = 0;
-  ds_control ctrl ("Test start","Test.dsui");
+  ds_control ctrl ("Test_start","Test.dsui");
 
   ACEXML_TRY_NEW_ENV
     {

@@ -11,6 +11,8 @@
 
 #include "Kokyu_EC.h"
 #include "Consumer.h"
+#include "orbsvcs/Event/EC_Event_Counter.h"
+#include "orbsvcs/Event/EC_Event_Limit.h"
 
 #include <dsui.h>
 #include "federated_config.h"
@@ -35,12 +37,13 @@ int
 main (int argc, char* argv[])
 {
   //TAO_EC_Default_Factory::init_svcs ();
-  ds_control ctrl ("Federated_Test_Consumer","federated_enabled.dsui");
+  ds_control* ds_cntl = new ds_control ("Federated_Test_Consumer","federated_enabled.dsui");
 
   TAO_EC_Kokyu_Factory::init_svcs ();
 
   //@BT
-  DSUI_EVENT_LOG(MAIN_GROUP_FAM, START,1,0,NULL);
+  EC_Event_Counter::event_id eid = EC_EVENT_COUNTER->increment();
+  DSUI_EVENT_LOG(MAIN_GROUP_FAM, START,1, sizeof(EC_Event_Counter::event_id), (char*)&eid);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -110,6 +113,7 @@ main (int argc, char* argv[])
                                    consumer1.in(),
                                    proxy_supplier1.out()
                                    ACE_ENV_ARG_PARAMETER);
+      ACE_UNUSED_ARG(consumer1_rt_info);
       ACE_TRY_CHECK;
 
       info.criticality = RtecScheduler::VERY_HIGH_CRITICALITY;
@@ -126,6 +130,7 @@ main (int argc, char* argv[])
                                    consumer2.in(),
                                    proxy_supplier2.out()
                                    ACE_ENV_ARG_PARAMETER);
+      ACE_UNUSED_ARG(consumer2_rt_info);
 
       // ****************************************************************
       RtEventChannelAdmin::RtSchedEventChannel_var kokyu_ec_ior =
@@ -160,6 +165,11 @@ main (int argc, char* argv[])
 
       //@BT: Timeouts start when orb starts, similar to starting the DT worker thread
       DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
+
+      EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance(), ds_cntl);
+      ACE_Time_Value ticker (25);
+      orb->orb_core()->reactor()->schedule_timer(e_limit,0, ticker);
+
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       // ****************************************************************
