@@ -467,6 +467,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name IORTable
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TypeCodeFactory
+    End Project Dependency
 }}}
 
 ###############################################################################
