@@ -39,6 +39,7 @@ CORBA_SystemException::completed (CORBA::CompletionStatus c)
 
 ACE_INLINE
 CORBA_ExceptionList::CORBA_ExceptionList (void)
+  : ref_count_ (1)
 {
 }
 

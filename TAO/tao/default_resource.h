@@ -96,6 +96,7 @@ public:
   virtual int use_locked_data_blocks (void) const;
   virtual TAO_Reactor_Registry *get_reactor_registry (void);
   virtual ACE_Reactor *get_reactor (void);
+  virtual void reclaim_reactor (ACE_Reactor *);
   virtual TAO_Acceptor_Registry  *get_acceptor_registry (void);
   virtual TAO_Connector_Registry *get_connector_registry (void);
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);
@@ -150,6 +151,17 @@ protected:
 
   int priority_mapping_type_;
   // The type of priority mapping class created by this factory.
+
+  int dynamically_allocated_reactor_;
+  // Flag that is set to 1 if the reactor obtained from the
+  // get_reactor() method is dynamically allocated.  If this flag is
+  // set to 1, then the reclaim_reactor() method with call the delete
+  // operator on the given reactor.  This flag is necessary to make
+  // sure that a reactor not allocated by the default resource factory
+  // is not reclaimed by the default resource factory.  Such a
+  // situation can occur when a resource factory derived from the
+  // default one overrides the get_reactor() method but does not
+  // override the reclaim_reactor() method.
 };
 
 #if defined (__ACE_INLINE__)

@@ -90,6 +90,12 @@ TAO_Resource_Factory::get_reactor (void)
   return 0;
 }
 
+void
+TAO_Resource_Factory::reclaim_reactor (ACE_Reactor *)
+{
+  return;
+}
+
 TAO_Connector_Registry *
 TAO_Resource_Factory::get_connector_registry (void)
 {

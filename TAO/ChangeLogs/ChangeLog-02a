@@ -1,3 +1,47 @@
+Mon Sep 11 12:53:03 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Exception.i (CORBA_ExceptionList):
+
+	  Initialize ref_count_ member to one.  This fixes an off-by-one
+	  reference count error since the reference count value is
+	  initialized to zero by default since it is an ACE_Atomic_Op
+	  variable.
+
+	* tao/Exception.cpp (fini):
+
+	  Invoke CORBA::ExceptionList::_destroy() instead of invoking the
+	  delete operator on the system exceptions list since a
+	  CORBA::ExceptionList is reference counted.
+
+	  Similarly, invoke CORBA::release() on the
+	  CORBA::_tc_UnknownUserException variable since it is also
+	  reference counted.
+	  
+	* tao/Resource_Factory.h (reclaim_reactor):
+	* tao/Resource_Factory.cpp (reclaim_reactor):
+	* tao/default_resource.h (reclaim_reactor)
+	* tao/default_resource.cpp (reclaim_reactor):
+
+	  New method used to deallocate, if necessary, a reactor obtained
+	  from the resource factory.
+
+	  (get_reactor, dynamically_allocated_reactor_):
+
+	  Set newly added dynamically_allocated_reactor_ member to 1 to
+	  make sure that a reactor not allocated by the default resource
+	  factory is not reclaimed by the default resource factory.  Such
+	  a situation can occur when a resource factory derived from the
+	  default one overrides the get_reactor() method but does not
+	  override the reclaim_reactor() method.
+
+	* tao/Leader_Follower.cpp (~TAO_Leader_Follower):
+	* tao/ORB_Core.cpp (fini):
+
+	  Pass the reactor back to the resource factory.  The resource
+	  factory is now responsible for reclaiming any resources held by
+	  the reactor.  This typically entails deleting the reactor, which
+	  is the default behavior.  [Bug 386]
+
 Mon Sep 11 14:24:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/PortableServer/Makefile:

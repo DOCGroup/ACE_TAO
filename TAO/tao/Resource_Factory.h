@@ -145,6 +145,9 @@ public:
   virtual ACE_Reactor *get_reactor (void);
   // Return an <ACE_Reactor> to be utilized.
 
+  virtual void reclaim_reactor (ACE_Reactor *reactor);
+  // Reclaim reactor resources (e.g. deallocate, etc).
+
   virtual TAO_Acceptor_Registry *get_acceptor_registry (void);
   // return a reference to the acceptor registry.
 
