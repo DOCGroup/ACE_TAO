@@ -196,7 +196,7 @@ class ACE_Export ACE_Name_Reply
 public:
   enum Constants
   {
-    // Class-specific constant values.
+    /// Class-specific constant values.
     MAX_NAME_LENGTH = MAXPATHLEN + 1
   };
 

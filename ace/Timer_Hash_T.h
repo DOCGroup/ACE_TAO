@@ -254,7 +254,7 @@ private:
   /// Table of BUCKETS
   BUCKET **table_;
 
-  /// Keeps track of the size of <table>
+  /// Keeps track of the size of table_
   size_t table_size_;
 
   /// Functor used for the table's timer queues
