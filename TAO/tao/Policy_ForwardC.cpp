@@ -799,6 +799,6 @@ CORBA::Boolean operator>> (
 # pragma instantiate \
     TAO::Any_Basic_Impl_T< \
         CORBA::SetOverrideType \
-      >
+x      >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

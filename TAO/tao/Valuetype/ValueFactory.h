@@ -34,13 +34,13 @@ namespace CORBA
   typedef AbstractBase *AbstractBase_ptr;
 
   class ValueBase;
-  
+
   class ValueFactoryBase;
 
   extern TAO_Valuetype_Export void add_ref (ValueFactoryBase *);
   extern TAO_Valuetype_Export void remove_ref (ValueFactoryBase *);
 
-  typedef TAO_Value_Var_T<ValueFactoryBase> 
+  typedef TAO_Value_Var_T<ValueFactoryBase>
     ValueFactoryBase_var;
 
   typedef ValueFactoryBase_var ValueFactory_var;
@@ -72,6 +72,25 @@ namespace CORBA
 
 }  // End CORBA namespace
 
+namespace TAO
+{
+  /**
+   * @brief Specializations needed for using with Value_Var_T
+   */
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_Valuetype_Export Value_Traits<CORBA::ValueFactoryBase>
+  {
+    static void tao_add_ref (
+        CORBA::ValueFactoryBase *);
+    static void tao_remove_ref (
+        CORBA::ValueFactoryBase *);
+
+    // For INOUT value type arguments, so they can use the same set
+    // of arg classes as interfaces.
+    static void tao_release (
+        CORBA::ValueFactoryBase *);
+  };
+}
 // Use this macro for writing code that is independend from
 // the compiler support of covariant return types of pointers to
 // virtual inherited classes.

@@ -3544,6 +3544,12 @@ operator>>= (
         PortableInterceptor::ORBInitializer
       >;
 
+  template class
+    TAO::Any_Dual_Impl_T<PortableInterceptor::ForwardRequest>;
+
+  template class
+    TAO::Any_Dual_Impl_T<PortableInterceptor::InvalidSlot>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate TAO::Objref_Traits<PortableInterceptor::Interceptor>

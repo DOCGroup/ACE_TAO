@@ -3766,14 +3766,14 @@ operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
   return 1;
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 operator<< (TAO_OutputCDR &strm, const CORBA::TCKind &_tao_enumval)
 {
   CORBA::ULong _tao_temp = _tao_enumval;
   return strm << _tao_temp;
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 operator>> (TAO_InputCDR &strm, CORBA::TCKind &_tao_enumval)
 {
   CORBA::ULong _tao_temp = 0;
@@ -3789,8 +3789,7 @@ operator>> (TAO_InputCDR &strm, CORBA::TCKind &_tao_enumval)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_Pseudo_Object_Manager<CORBA::TypeCode,
-                                         CORBA::TypeCode_var>;
+template class TAO_Pseudo_Object_Manager<CORBA::TypeCode>;
 
 template class ACE_Hash_Map_Entry<const char *,
                                   ACE_Unbounded_Queue<CORBA::Long> *>;
@@ -3823,20 +3822,24 @@ template class TAO_Pseudo_Out_T<CORBA::TypeCode, CORBA::TypeCode_var>;
 template class TAO::Objref_Traits<CORBA::TypeCode>;
 
 template class TAO::Arg_Traits<CORBA::TypeCode>;
-template class 
-  TAO::Object_Arg_Traits_T<CORBA::TypeCode_ptr,
-                           CORBA::TypeCode_var,
-                           CORBA::TypeCode_out,
-                           TAO::Objref_Traits<CORBA::TypeCode> >;
-template class TAO::In_Object_Argument_T<CORBA::TypeCode_ptr>;
-template class 
-  TAO::Inout_Object_Argument_T<CORBA::TypeCode_ptr,
-                               TAO::Objref_Traits<CORBA::TypeCode> >;
-template class TAO::Out_Object_Argument_T<CORBA::TypeCode_ptr,
-                                          CORBA::TypeCode_out>;
-template class TAO::Ret_Object_Argument_T<CORBA::TypeCode_ptr,
-                                          CORBA::TypeCode_var>;
+template class TAO::Object_Arg_Traits_T<CORBA::TypeCode_ptr,
+                                        CORBA::TypeCode_var,
+                                        CORBA::TypeCode_out,
+                                        TAO::Objref_Traits<CORBA::TypeCode> >;
 
+template TAO::Ret_Object_Argument_T<CORBA::TypeCode*,
+                                    TAO_Pseudo_Var_T<CORBA::TypeCode> >;
+
+template TAO::In_Object_Argument_T<CORBA::TypeCode*>;
+
+template TAO::Inout_Object_Argument_T<CORBA::TypeCode*,
+    TAO::Objref_Traits<CORBA::TypeCode> >;
+
+template TAO::Out_Object_Argument_T<CORBA::TypeCode*,
+    TAO_Pseudo_Out_T<CORBA::TypeCode,
+                     TAO_Pseudo_Var_T<CORBA::TypeCode> > >;
+
+#if 0
 template class TAO::SArg_Traits<CORBA::TypeCode>;
 template class TAO::Object_SArg_Traits_T<CORBA::TypeCode_ptr,
                                          CORBA::TypeCode_var,
@@ -3850,11 +3853,10 @@ template class TAO::Out_Object_SArgument_T<CORBA::TypeCode_ptr,
                                            CORBA::TypeCode_out>;
 template class TAO::Ret_Object_SArgument_T<CORBA::TypeCode_ptr,
                                            CORBA::TypeCode_var>;
-
+#endif /*if 0*/
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_Pseudo_Object_Manager<CORBA::TypeCode, \
-                                              CORBA::TypeCode_var>
+#pragma instantiate TAO_Pseudo_Object_Manager<CORBA::TypeCode>
 
 #pragma instantiate ACE_Hash_Map_Entry<const char *, \
                                        ACE_Unbounded_Queue<CORBA::Long> *>
@@ -3915,5 +3917,17 @@ template class TAO::Ret_Object_SArgument_T<CORBA::TypeCode_ptr,
                                                 CORBA::TypeCode_out>
 #pragma instantiate TAO::Ret_Object_SArgument_T<CORBA::TypeCode_ptr, \
                                                 CORBA::TypeCode_var>
+
+#pragma instantiate TAO::Ret_Object_Argument_T<CORBA::TypeCode*,
+     TAO_Pseudo_Var_T<CORBA::TypeCode> >
+
+#pragma instantiate TAO::In_Object_Argument_T<CORBA::TypeCode*>
+
+#pragma instantiate TAO::Inout_Object_Argument_T<CORBA::TypeCode*,
+    TAO::Objref_Traits<CORBA::TypeCode> >
+
+#pragma instantiate TAO::Out_Object_Argument_T<CORBA::TypeCode*,
+    TAO_Pseudo_Out_T<CORBA::TypeCode,
+                     TAO_Pseudo_Var_T<CORBA::TypeCode> > >
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

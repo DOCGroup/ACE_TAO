@@ -40,7 +40,7 @@ namespace CORBA
 {
   class ValueFactoryBase;
   typedef ValueFactoryBase *ValueFactory;
-  
+
   class ValueBase;
 
   extern TAO_Valuetype_Export void add_ref (ValueBase *);
@@ -215,13 +215,25 @@ operator>> (TAO_InputCDR&, CORBA::ValueBase *&);
 /// Used in generated code if CORBA::ValueBase is an argument or return type.
 namespace TAO
 {
-  template<>
+  ACE_TEMPLATE_SPECIALIZATION
   class TAO_Valuetype_Export Arg_Traits<CORBA::ValueBase>
     : public Object_Arg_Traits_T<CORBA::ValueBase *,
                                  CORBA::ValueBase_var,
                                  CORBA::ValueBase_out,
                                  TAO::Value_Traits<CORBA::ValueBase> >
   {
+  };
+
+
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_Valuetype_Export Value_Traits<CORBA::ValueBase>
+  {
+    static void tao_add_ref (CORBA::ValueBase *);
+    static void tao_remove_ref (CORBA::ValueBase *);
+
+    // For INOUT value type arguments, so they can use the same set
+    // of arg classes as interfaces.
+    static void tao_release (CORBA::ValueBase *);
   };
 };
 

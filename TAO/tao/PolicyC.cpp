@@ -1788,6 +1788,11 @@ CORBA::Boolean operator>> (
         CORBA::PolicyCurrent
       >;
 
+template class
+  TAO::Any_Dual_Impl_T<CORBA::PolicyError>;
+template class
+  TAO::Any_Dual_Impl_T<CORBA::InvalidPolicies>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #if !defined (_CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_)
@@ -1857,5 +1862,10 @@ CORBA::Boolean operator>> (
     TAO::Any_Impl_T< \
         CORBA::PolicyCurrent \
       >
+
+#pragma instantiate \
+  TAO::Any_Dual_Impl_T<CORBA::PolicyError>
+#pragma instantiate \
+  TAO::Any_Dual_Impl_T<CORBA::InvalidPolicies>
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
