@@ -1,3 +1,9 @@
+Mon Aug 30 23:03:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Update after Portable Server refactor changes.
+
 Mon Aug 30 18:14:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_expression.cpp:
