@@ -145,7 +145,8 @@ int
 Process_Per_Connection_Logging_Server::run_worker (int, char *argv[])
 {
   int client_handle_i = atoi (argv[2]);
-  ACE_HANDLE client_handle = ACE_static_cast (ACE_HANDLE, client_handle_i);
+  ACE_HANDLE client_handle =
+    ACE_reinterpret_cast (ACE_HANDLE, client_handle_i);
   ACE_SOCK_Stream client (client_handle);
 
   handle_data (&client);
