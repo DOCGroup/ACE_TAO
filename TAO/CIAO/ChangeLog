@@ -1,3 +1,12 @@
+Tue May 11 22:55:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/OEP/BasicSP/BasicSP.mpc:
+        
+          Fixed IDL compiler command line options so the stub and
+          skeleton export macros will get generated correctly regardless
+          of the order of execution of the stub and skeleton project
+          generation.
+
 Tue May 11 16:12:07 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/DT_Handler.h:
