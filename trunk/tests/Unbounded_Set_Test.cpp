@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-// #include "test_config.h"
+#include "test_config.h"
 #include <ace/Unbounded_Set.h>
 
 ACE_RCSID(tests, Unbounded_Set_Test, "$Id$")
@@ -41,13 +41,16 @@ size_t count_const_set (const ACE_Unbounded_Set<MyNode>& cubs)
   return number_of_elements;
 }
 
-int main()
+int
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   int r;
   unsigned k;
   MyNode node (1);
-  ACE_Unbounded_Set<MyNode> ubs;
 
+  ACE_START_TEST (ACE_TEXT ("Unbounded_Set_Test"));
+
+  ACE_Unbounded_Set<MyNode> ubs;
   ACE_ASSERT (ubs.size () == 0);
 
   // Insert a value. Immediately remove it.
@@ -127,6 +130,7 @@ int main()
   }
   ACE_ASSERT (ubs2.is_empty ());
 
+  ACE_END_TEST;
   return 0;
 }
 
