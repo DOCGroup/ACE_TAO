@@ -7,6 +7,10 @@ Mon Oct 18 19:21:25 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Mon Oct 18 21:13:02 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
+	* ace/Logging_Strategy.cpp: Fixed the init() method so that it doesn't
+	  leak memory if it's called more than once.  Thanks to Kobi
+ 	  <kobi.cohenarazi@gmail.com> for this fix.
+
 	* ace/Pagefile_Memory_Pool.cpp: Fixed two bugs with the
 	  ACE_Pagefile_Memory_Pool constructor:
 

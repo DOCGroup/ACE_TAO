@@ -305,7 +305,12 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
                            ACE_Log_Msg::OSTREAM))
         {
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
+          // check if we already have an opened one.
           FILE *output_file = 0;
+          if (this->log_msg_->msg_ostream () 
+              && ACE_OS::fclose (this->log_msg_->msg_ostream ()) == -1)
+                return -1; // failed to close the file
+
           if (wipeout_logfile_)
             output_file = ACE_OS::fopen (this->filename_, ACE_LIB_TEXT ("wt"));
           else
@@ -314,6 +319,9 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
             return -1;
 #else
           ofstream *output_file = 0;
+          if (this->log_msg_->msg_ostream ())
+            delete this->log_msg_->msg_ostream (); // destructor will close it
+
           // Create a new ofstream to direct output to the file.
           if (wipeout_logfile_)
             ACE_NEW_RETURN
