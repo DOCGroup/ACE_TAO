@@ -59,6 +59,7 @@ UTILS_FILES = \
   String_Base_Const \
   SString \
   Stats \
+  Template_Instantiations \
   Sample_History
   #### NOTE:  see below for Filecache.
 LOGGING_FILES = \
@@ -317,7 +318,6 @@ TEMPLATE_FILES = \
            Svc_Handler \
            Synch_T \
            Task_T \
-           Template_Instantiations \
 	   Test_and_Set \
            Timeprobe_T \
            Timer_Hash_T \
