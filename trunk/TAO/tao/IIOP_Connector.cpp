@@ -468,6 +468,23 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
   const ACE_INET_Addr &remote_address =
     iiop_profile->object_addr ();
 
+  // Verify that the remote ACE_INET_Addr was initialized properly.
+  // Failure can occur if hostname lookup failed when initializing the
+  // remote ACE_INET_Addr.
+  if (remote_address.get_type () != AF_INET)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) IIOP connection failed.\n")
+                      ACE_TEXT ("TAO (%P|%t) This is most likely ")
+                      ACE_TEXT ("due to a hostname lookup ")
+                      ACE_TEXT ("failure.\n")));
+        }
+
+      return -1;
+    }
+
   TAO_IIOP_Client_Connection_Handler *svc_handler = 0;
   int result = 0;
 
@@ -501,15 +518,13 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
       // Give users a clue to the problem.
       if (TAO_orbdebug)
         {
-          char buffer [MAXNAMELEN * 2];
-          profile->addr_to_string (buffer,
-                                   (MAXNAMELEN * 2) - 1);
           ACE_DEBUG ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) %s:%u, connection to ")
-                      ACE_TEXT ("%s failed (%p)\n"),
+                      ACE_TEXT ("%s:%d failed (%p)\n"),
                       __FILE__,
                       __LINE__,
-                      buffer,
+                      iiop_profile->host (),
+                      iiop_profile->port (),
                       "errno"));
         }
       return -1;

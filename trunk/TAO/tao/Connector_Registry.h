@@ -115,6 +115,10 @@ private:
   // Put the preconnects in a form that makes it simple for protocol
   // implementers to parse.
 
+  // Prohibited
+  ACE_UNIMPLEMENTED_FUNC (TAO_Connector_Registry (const TAO_Connector_Registry&))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Connector_Registry&))
+
 private:
   TAO_Connector** connectors_;
   // List of connectors that are currently open.

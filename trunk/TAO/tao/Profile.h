@@ -122,6 +122,10 @@ private:
   TAO_MProfile *forward_to_i (void);
   // this object keeps ownership of this object
 
+  // Profiles should not be copied!
+  ACE_UNIMPLEMENTED_FUNC (TAO_Profile (const TAO_Profile&))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Profile&))
+
 protected:
   TAO_Tagged_Components tagged_components_;
   // The tagged components

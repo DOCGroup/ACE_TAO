@@ -73,6 +73,11 @@ public:
   // set the factory pointer's value.
 
 private:
+  // Prohibited
+  ACE_UNIMPLEMENTED_FUNC (TAO_Protocol_Item (const TAO_Protocol_Item&))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Protocol_Item&))
+
+private:
   ACE_CString name_;
   // protocol factory name.
 
