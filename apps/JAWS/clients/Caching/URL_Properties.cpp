@@ -133,7 +133,7 @@ ACE_URL_Offer::encode (void *buf) const
 ACE_URL_Offer *
 ACE_URL_Offer::decode (void *buf)
 {
-  size_t a_size = (size_t) ntohl ((ACE_UINT32 *) buf);
+  size_t a_size = (size_t) ntohl (* (ACE_UINT32 *) buf);
   ACE_USHORT16 *url = (ACE_USHORT16 *) ((char *) buf + sizeof (ACE_UINT32));
   for (int i = 0; url[i] != 0; i++)
     url[i] = ntohs (url[i]);
