@@ -49,9 +49,11 @@ IIOP::Profile::set (const char *h,
   if (this->set (h, p, addr) == -1)
     return -1;
 
-  // Enough room as to print a <void*>
+  // Enough room as to print a <void *>.
+  // @@ The following "32" should not be a magic #...
   const int bufs = 32;
   char buffer[bufs];
+
   if (key == 0)
     {
       // @@ (IRFAN) Object key generation
@@ -64,9 +66,8 @@ IIOP::Profile::set (const char *h,
   this->object_key.length (l);
 
   for (int i = 0; i < l; ++i)
-    {
-      this->object_key[i] = key[i];
-    }
+    this->object_key[i] = key[i];
+
   return 0;
 }
 
@@ -101,7 +102,7 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
 
   if (addr.get_ip_address () == INADDR_ANY)
     {
-      // Special case
+      // Special case.
       char temphost[MAXHOSTNAMELEN + 1];
       if (addr.get_host_name (temphost, sizeof(temphost)) != 0)
         return -1;
@@ -113,8 +114,8 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
     }
   else
     {
-      const char* tempaddr = 0;
-      if ((tempaddr = addr.get_host_addr ()) == 0)
+      const char *tempaddr = addr.get_host_addr ();
+      if (tempaddr == 0)
         return -1;
       else
         return this->set (tempaddr,
@@ -132,7 +133,7 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
 
   if (addr.get_ip_address () == INADDR_ANY)
     {
-      // Special case
+      // Special case.
       char temphost[MAXHOSTNAMELEN + 1];
       if (addr.get_host_name (temphost, sizeof(temphost)) != 0)
         return -1;
@@ -144,8 +145,8 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
     }
   else
     {
-      const char* tempaddr = 0;
-      if ((tempaddr = addr.get_host_addr ()) == 0)
+      const char *tempaddr = addr.get_host_addr ();
+      if (tempaddr == 0)
         return -1;
       else
         return this->set (tempaddr,
@@ -224,10 +225,9 @@ int operator==(const TAO_opaque& rhs,
   for (CORBA::ULong i = 0;
        i < rhs.length ();
        ++i)
-    {
-      if (rhs[i] != lhs[i])
-	return 0;
-    }
+    if (rhs[i] != lhs[i])
+      return 0;
+
   return 1;
 }
 
@@ -253,7 +253,7 @@ IIOP_Object::is_equivalent (CORBA::Object_ptr other_obj,
     return CORBA::B_FALSE;
   CORBA::release (other_obj);
 
-  // Compare all the bytes of the object address -- must be the same
+  // Compare all the bytes of the object address -- must be the same.
 
   body = &profile;
   body2 = &other_iiop_obj->profile;
