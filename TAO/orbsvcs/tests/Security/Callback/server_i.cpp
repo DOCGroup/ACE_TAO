@@ -26,7 +26,7 @@ server_i::set_client (client_ptr c
 
 void
 server_i::test_request (const char *msg
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->client_->test_reply (msg ACE_ENV_ARG_PARAMETER);
