@@ -67,7 +67,7 @@
 #include "tao/sequence.h"
 #include "tao/varout.h"
 #include "tao/any.h"
-#include "tao/boa.h"
+#include "tao/poa.h"
 
 #include "tao/params.h"
 #include "tao/client_factory.h"
@@ -97,7 +97,7 @@
 #include "tao/giop.h"
 
 // TAO specific includes
-#include "tao/Orb_Core.h"
+#include "tao/orb_core.h"
 #include "tao/connect.h"
 #include "tao/objtable.h"
 #include "tao/optable.h"
@@ -112,7 +112,7 @@
 #    define do_undef_on_ACE_INLINE
 #  endif
 
-#include "tao/Orb_Core.i"
+#include "tao/orb_core.i"
 #include "tao/corbacom.i"
 #include "tao/sequence.i"
 #include "tao/typecode.i"
@@ -132,7 +132,7 @@
 
 // the following *.i files are conditionally included here
 #if defined (__ACE_INLINE__)
-#include "tao/boa.i"
+#include "tao/poa.i"
 #include "tao/giop.i"
 #include "tao/svrrqst.i"
 #include "tao/params.i"

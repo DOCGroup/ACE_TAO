@@ -1,3 +1,29 @@
+Tue Oct 21 17:21:51 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* docs/releasenotes/orbcore.html: Updated to reflect daily
+ 	progress.
+
+	* tests/Cubit/TAO/Makefile: Updated dependencies.
+
+	* tests/Cubit/TAO/svc.conf: Updated to eliminate empty quotes at
+ 	the end that tickled a deficiency in the Service Configurator's
+ 	grammar.
+
+	* tests/multiCubit/svr.cpp: Updated to reflect POA_init change.
+
+	* tests/Thruput_test/Makefile: Modified to reflect filename
+ 	changes.
+
+	* tests/Thruput_test/server.cpp: Changed type of argv so that it
+ 	matched properly.
+
+	* tao/boa.*: Renamed to tao/poa.*.
+
+	* tao/Orb_Core.*: Renamed to tao/orb_core.*.
+
+	* tao/{Makefile,corba.h,default_client.cpp,default_server.cpp,orb.h,orbobj.cpp,params.h}:
+ 	Modified to reflect filename changes.
+
 Tue Oct 21 13:23:48 1997 Brian Mendel  <brian.r.mendel@boeing.com>
 
         * tao/connect.i: Moved hash_i and compare_i template

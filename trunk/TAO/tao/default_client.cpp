@@ -14,7 +14,7 @@
 // ============================================================================
 
 #include "tao/default_client.h"
-#include "tao/Orb_Core.h"
+#include "tao/orb_core.h"
 
 TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
 {
