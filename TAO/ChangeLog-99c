@@ -4,6 +4,10 @@ Tue Jul  6 22:10:00 1999  Michael Kircher  <mk1@cs.wustl.edu>
 	  Replaced three ACE_BASE_CLASS macros with ACE_CORBA_1 macros to
 	  get VC to compile it.  
 
+	* tao/TAO.dsp
+	* tao/TAO_Static.dsp:
+          Added the files Pollable{C,S}.{h,cpp} and Asynch_Invocation.{h,cpp}.
+
 	* TAO_IDL/be_include/be_decl.h
 	* TAO_IDL/be/be_decl.cpp
   	* TAO_IDL/be_include/be_interface.h
