@@ -30,23 +30,23 @@ ImplementationRepository::ServerObject::~ServerObject (void) // destructor
 
 ACE_INLINE
 ImplementationRepository::ServerObject_var::ServerObject_var (void) // default constructor
-  : ptr_ (ImplementationRepository::ServerObject::_nil ())
+  : ptr_ (ServerObject::_nil ())
 {}
 
 ACE_INLINE
-ImplementationRepository::ServerObject_var::ServerObject_var (ImplementationRepository::ServerObject_ptr p)
+ImplementationRepository::ServerObject_var::ServerObject_var (ServerObject_ptr p)
   : ptr_ (p)
 {}
 
-ACE_INLINE ImplementationRepository::ServerObject_ptr
+ACE_INLINE ::ImplementationRepository::ServerObject_ptr
 ImplementationRepository::ServerObject_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerObject_var::ServerObject_var (const ImplementationRepository::ServerObject_var &p) // copy constructor
-  : ptr_ (ImplementationRepository::ServerObject::_duplicate (p.ptr ()))
+ImplementationRepository::ServerObject_var::ServerObject_var (const ::ImplementationRepository::ServerObject_var &p) // copy constructor
+  : ptr_ (ServerObject::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -56,7 +56,7 @@ ImplementationRepository::ServerObject_var::~ServerObject_var (void) // destruct
 }
 
 ACE_INLINE ImplementationRepository::ServerObject_var &
-ImplementationRepository::ServerObject_var::operator= (ImplementationRepository::ServerObject_ptr p)
+ImplementationRepository::ServerObject_var::operator= (ServerObject_ptr p)
 {
   CORBA::release (this->ptr_);
   this->ptr_ = p;
@@ -64,60 +64,60 @@ ImplementationRepository::ServerObject_var::operator= (ImplementationRepository:
 }
 
 ACE_INLINE ImplementationRepository::ServerObject_var &
-ImplementationRepository::ServerObject_var::operator= (const ImplementationRepository::ServerObject_var &p)
+ImplementationRepository::ServerObject_var::operator= (const ::ImplementationRepository::ServerObject_var &p)
 {
   if (this != &p)
   {
     CORBA::release (this->ptr_);
-    this->ptr_ = ImplementationRepository::ServerObject::_duplicate (p.ptr ());
+    this->ptr_ = ::ImplementationRepository::ServerObject::_duplicate (p.ptr ());
   }
   return *this;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerObject_var::operator const ImplementationRepository::ServerObject_ptr &() const // cast
+ImplementationRepository::ServerObject_var::operator const ::ImplementationRepository::ServerObject_ptr &() const // cast
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerObject_var::operator ImplementationRepository::ServerObject_ptr &() // cast
+ImplementationRepository::ServerObject_var::operator ::ImplementationRepository::ServerObject_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerObject_ptr
+ACE_INLINE ::ImplementationRepository::ServerObject_ptr
 ImplementationRepository::ServerObject_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerObject_ptr
+ACE_INLINE ::ImplementationRepository::ServerObject_ptr
 ImplementationRepository::ServerObject_var::in (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerObject_ptr &
+ACE_INLINE ::ImplementationRepository::ServerObject_ptr &
 ImplementationRepository::ServerObject_var::inout (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerObject_ptr &
+ACE_INLINE ::ImplementationRepository::ServerObject_ptr &
 ImplementationRepository::ServerObject_var::out (void)
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = ImplementationRepository::ServerObject::_nil ();
+  this->ptr_ = ::ImplementationRepository::ServerObject::_nil ();
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerObject_ptr
+ACE_INLINE ::ImplementationRepository::ServerObject_ptr
 ImplementationRepository::ServerObject_var::_retn (void)
 {
   // yield ownership of managed obj reference
-  ImplementationRepository::ServerObject_ptr val = this->ptr_;
-  this->ptr_ = ImplementationRepository::ServerObject::_nil ();
+  ::ImplementationRepository::ServerObject_ptr val = this->ptr_;
+  this->ptr_ = ::ImplementationRepository::ServerObject::_nil ();
   return val;
 }
 
@@ -133,59 +133,59 @@ ImplementationRepository::ServerObject_var::_retn (void)
 // *************************************************************
 
 ACE_INLINE
-ImplementationRepository::ServerObject_out::ServerObject_out (ImplementationRepository::ServerObject_ptr &p)
+ImplementationRepository::ServerObject_out::ServerObject_out (ServerObject_ptr &p)
   : ptr_ (p)
 {
-  this->ptr_ = ImplementationRepository::ServerObject::_nil ();
+  this->ptr_ = ::ImplementationRepository::ServerObject::_nil ();
 }
 
 ACE_INLINE
-ImplementationRepository::ServerObject_out::ServerObject_out (ImplementationRepository::ServerObject_var &p) // constructor from _var
+ImplementationRepository::ServerObject_out::ServerObject_out (ServerObject_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = ImplementationRepository::ServerObject::_nil ();
+  this->ptr_ = ::ImplementationRepository::ServerObject::_nil ();
 }
 
 ACE_INLINE
-ImplementationRepository::ServerObject_out::ServerObject_out (const ImplementationRepository::ServerObject_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ImplementationRepository::ServerObject_out&,p).ptr_)
+ImplementationRepository::ServerObject_out::ServerObject_out (const ::ImplementationRepository::ServerObject_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (ServerObject_out &, p).ptr_)
 {}
 
-ACE_INLINE ImplementationRepository::ServerObject_out &
-ImplementationRepository::ServerObject_out::operator= (const ImplementationRepository::ServerObject_out &p)
+ACE_INLINE ::ImplementationRepository::ServerObject_out &
+ImplementationRepository::ServerObject_out::operator= (const ::ImplementationRepository::ServerObject_out &p)
 {
-  this->ptr_ = ACE_const_cast (ImplementationRepository::ServerObject_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (ServerObject_out&, p).ptr_;
   return *this;
 }
 
 ACE_INLINE ImplementationRepository::ServerObject_out &
-ImplementationRepository::ServerObject_out::operator= (const ImplementationRepository::ServerObject_var &p)
+ImplementationRepository::ServerObject_out::operator= (const ::ImplementationRepository::ServerObject_var &p)
 {
-  this->ptr_ = ImplementationRepository::ServerObject::_duplicate (p.ptr ());
+  this->ptr_ = ::ImplementationRepository::ServerObject::_duplicate (p.ptr ());
   return *this;
 }
 
 ACE_INLINE ImplementationRepository::ServerObject_out &
-ImplementationRepository::ServerObject_out::operator= (ImplementationRepository::ServerObject_ptr p)
+ImplementationRepository::ServerObject_out::operator= (ServerObject_ptr p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerObject_out::operator ImplementationRepository::ServerObject_ptr &() // cast
+ImplementationRepository::ServerObject_out::operator ::ImplementationRepository::ServerObject_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerObject_ptr &
+ACE_INLINE ::ImplementationRepository::ServerObject_ptr &
 ImplementationRepository::ServerObject_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerObject_ptr
+ACE_INLINE ::ImplementationRepository::ServerObject_ptr
 ImplementationRepository::ServerObject_out::operator-> (void)
 {
   return this->ptr_;
@@ -204,15 +204,15 @@ ImplementationRepository::EnvironmentVariable_var::EnvironmentVariable_var (void
 {}
 
 ACE_INLINE
-ImplementationRepository::EnvironmentVariable_var::EnvironmentVariable_var (ImplementationRepository::EnvironmentVariable *p)
+ImplementationRepository::EnvironmentVariable_var::EnvironmentVariable_var (EnvironmentVariable *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-ImplementationRepository::EnvironmentVariable_var::EnvironmentVariable_var (const ImplementationRepository::EnvironmentVariable_var &p) // copy constructor
+ImplementationRepository::EnvironmentVariable_var::EnvironmentVariable_var (const ::ImplementationRepository::EnvironmentVariable_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, ImplementationRepository::EnvironmentVariable (*p.ptr_));
+    ACE_NEW (this->ptr_, ::ImplementationRepository::EnvironmentVariable (*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -224,68 +224,75 @@ ImplementationRepository::EnvironmentVariable_var::~EnvironmentVariable_var (voi
 }
 
 ACE_INLINE ImplementationRepository::EnvironmentVariable_var &
-ImplementationRepository::EnvironmentVariable_var::operator= (ImplementationRepository::EnvironmentVariable *p)
+ImplementationRepository::EnvironmentVariable_var::operator= (EnvironmentVariable *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE ImplementationRepository::EnvironmentVariable_var &
-ImplementationRepository::EnvironmentVariable_var::operator= (const ImplementationRepository::EnvironmentVariable_var &p)
+ACE_INLINE ::ImplementationRepository::EnvironmentVariable_var &
+ImplementationRepository::EnvironmentVariable_var::operator= (const ::ImplementationRepository::EnvironmentVariable_var &p)
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ImplementationRepository::EnvironmentVariable (*p.ptr_), *this);
+    ACE_NEW_RETURN (this->ptr_, ::ImplementationRepository::EnvironmentVariable (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const ImplementationRepository::EnvironmentVariable *
+ACE_INLINE const ::ImplementationRepository::EnvironmentVariable *
 ImplementationRepository::EnvironmentVariable_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::EnvironmentVariable *
+ACE_INLINE ::ImplementationRepository::EnvironmentVariable *
 ImplementationRepository::EnvironmentVariable_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::EnvironmentVariable_var::operator const ImplementationRepository::EnvironmentVariable &() const // cast
+ImplementationRepository::EnvironmentVariable_var::operator const ::ImplementationRepository::EnvironmentVariable &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::EnvironmentVariable_var::operator ImplementationRepository::EnvironmentVariable &() // cast
+ImplementationRepository::EnvironmentVariable_var::operator ::ImplementationRepository::EnvironmentVariable &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::EnvironmentVariable_var::operator ImplementationRepository::EnvironmentVariable &() const// cast
+ImplementationRepository::EnvironmentVariable_var::operator ::ImplementationRepository::EnvironmentVariable &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE const ImplementationRepository::EnvironmentVariable &
+// variable-size types only
+ACE_INLINE
+ImplementationRepository::EnvironmentVariable_var::operator ::ImplementationRepository::EnvironmentVariable *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::ImplementationRepository::EnvironmentVariable &
 ImplementationRepository::EnvironmentVariable_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::EnvironmentVariable &
+ACE_INLINE ::ImplementationRepository::EnvironmentVariable &
 ImplementationRepository::EnvironmentVariable_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size
-ACE_INLINE ImplementationRepository::EnvironmentVariable *&
+ACE_INLINE ::ImplementationRepository::EnvironmentVariable *&
 ImplementationRepository::EnvironmentVariable_var::out (void)
 {
   delete this->ptr_;
@@ -293,15 +300,15 @@ ImplementationRepository::EnvironmentVariable_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::EnvironmentVariable *
+ACE_INLINE ::ImplementationRepository::EnvironmentVariable *
 ImplementationRepository::EnvironmentVariable_var::_retn (void)
 {
-  ImplementationRepository::EnvironmentVariable *tmp = this->ptr_;
+  ::ImplementationRepository::EnvironmentVariable *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE ImplementationRepository::EnvironmentVariable *
+ACE_INLINE ::ImplementationRepository::EnvironmentVariable *
 ImplementationRepository::EnvironmentVariable_var::ptr (void) const
 {
   return this->ptr_;
@@ -312,14 +319,14 @@ ImplementationRepository::EnvironmentVariable_var::ptr (void) const
 // *************************************************************
 
 ACE_INLINE
-ImplementationRepository::EnvironmentVariable_out::EnvironmentVariable_out (ImplementationRepository::EnvironmentVariable *&p)
+ImplementationRepository::EnvironmentVariable_out::EnvironmentVariable_out (::ImplementationRepository::EnvironmentVariable *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-ImplementationRepository::EnvironmentVariable_out::EnvironmentVariable_out (ImplementationRepository::EnvironmentVariable_var &p) // constructor from _var
+ImplementationRepository::EnvironmentVariable_out::EnvironmentVariable_out (EnvironmentVariable_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -327,37 +334,37 @@ ImplementationRepository::EnvironmentVariable_out::EnvironmentVariable_out (Impl
 }
 
 ACE_INLINE
-ImplementationRepository::EnvironmentVariable_out::EnvironmentVariable_out (const ImplementationRepository::EnvironmentVariable_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ImplementationRepository::EnvironmentVariable_out&,p).ptr_)
+ImplementationRepository::EnvironmentVariable_out::EnvironmentVariable_out (const ::ImplementationRepository::EnvironmentVariable_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (EnvironmentVariable_out&, p).ptr_)
 {}
 
 ACE_INLINE ImplementationRepository::EnvironmentVariable_out &
-ImplementationRepository::EnvironmentVariable_out::operator= (const ImplementationRepository::EnvironmentVariable_out &p)
+ImplementationRepository::EnvironmentVariable_out::operator= (const ::ImplementationRepository::EnvironmentVariable_out &p)
 {
-  this->ptr_ = ACE_const_cast (ImplementationRepository::EnvironmentVariable_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (EnvironmentVariable_out&, p).ptr_;
   return *this;
 }
 
 ACE_INLINE ImplementationRepository::EnvironmentVariable_out &
-ImplementationRepository::EnvironmentVariable_out::operator= (ImplementationRepository::EnvironmentVariable *p)
+ImplementationRepository::EnvironmentVariable_out::operator= (EnvironmentVariable *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE
-ImplementationRepository::EnvironmentVariable_out::operator ImplementationRepository::EnvironmentVariable *&() // cast
+ImplementationRepository::EnvironmentVariable_out::operator ::ImplementationRepository::EnvironmentVariable *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::EnvironmentVariable *&
+ACE_INLINE ::ImplementationRepository::EnvironmentVariable *&
 ImplementationRepository::EnvironmentVariable_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::EnvironmentVariable *
+ACE_INLINE ::ImplementationRepository::EnvironmentVariable *
 ImplementationRepository::EnvironmentVariable_out::operator-> (void)
 {
   return this->ptr_;
@@ -392,7 +399,7 @@ ImplementationRepository::EnvironmentVariable_out::operator-> (void)
 
   ACE_INLINE
   ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (maximum))
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (maximum))
   {
   }
 
@@ -406,13 +413,13 @@ ImplementationRepository::EnvironmentVariable_out::operator-> (void)
   }
 
   ACE_INLINE
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (const ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList &rhs)
+  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList (const _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
     {
-      ImplementationRepository::EnvironmentVariable *tmp1 = ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (this->maximum_);
+      ImplementationRepository::EnvironmentVariable *tmp1 = _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (this->maximum_);
       ImplementationRepository::EnvironmentVariable * const tmp2 = ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable * ACE_CAST_CONST, rhs.buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
@@ -427,7 +434,7 @@ ImplementationRepository::EnvironmentVariable_out::operator-> (void)
   }
 
   ACE_INLINE ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList &
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::operator= (const ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList &rhs)
+  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::operator= (const _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -439,12 +446,12 @@ ImplementationRepository::EnvironmentVariable_out::operator-> (void)
       {
         // free the old buffer
         ImplementationRepository::EnvironmentVariable *tmp = ACE_reinterpret_cast (ImplementationRepository::EnvironmentVariable *, this->buffer_);
-        ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::freebuf (tmp);
-        this->buffer_ = ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (rhs.maximum_);
+        _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (rhs.maximum_);
       }
     }
     else
-      this->buffer_ = ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (rhs.maximum_);
+      this->buffer_ = _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (rhs.maximum_);
 
     TAO_Unbounded_Base_Sequence::operator= (rhs);
 
@@ -487,7 +494,7 @@ ImplementationRepository::EnvironmentVariable_out::operator-> (void)
       // We retain ownership.
       if (this->buffer_ == 0)
       {
-        result = ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (this->length_);
+        result = _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::allocbuf (this->length_);
         this->buffer_ = result;
       }
       else
@@ -528,7 +535,7 @@ ImplementationRepository::EnvironmentVariable_out::operator-> (void)
     if (this->buffer_ && this->release_ == 1)
     {
       ImplementationRepository::EnvironmentVariable *tmp = ACE_reinterpret_cast(ImplementationRepository::EnvironmentVariable*,this->buffer_);
-      ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::freebuf (tmp);
+      _TAO_Unbounded_Sequence_ImplementationRepository_EnvironmentList::freebuf (tmp);
     }
     this->buffer_ = data;
     this->release_ = release;
@@ -552,15 +559,15 @@ ImplementationRepository::EnvironmentList_var::EnvironmentList_var (void) // def
 {}
 
 ACE_INLINE
-ImplementationRepository::EnvironmentList_var::EnvironmentList_var (ImplementationRepository::EnvironmentList *p)
+ImplementationRepository::EnvironmentList_var::EnvironmentList_var (EnvironmentList *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-ImplementationRepository::EnvironmentList_var::EnvironmentList_var (const ImplementationRepository::EnvironmentList_var &p) // copy constructor
+ImplementationRepository::EnvironmentList_var::EnvironmentList_var (const ::ImplementationRepository::EnvironmentList_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, ImplementationRepository::EnvironmentList (*p.ptr_));
+    ACE_NEW (this->ptr_, ::ImplementationRepository::EnvironmentList (*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -572,7 +579,7 @@ ImplementationRepository::EnvironmentList_var::~EnvironmentList_var (void) // de
 }
 
 ACE_INLINE ImplementationRepository::EnvironmentList_var &
-ImplementationRepository::EnvironmentList_var::operator= (ImplementationRepository::EnvironmentList *p)
+ImplementationRepository::EnvironmentList_var::operator= (EnvironmentList *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
@@ -580,44 +587,51 @@ ImplementationRepository::EnvironmentList_var::operator= (ImplementationReposito
 }
 
 ACE_INLINE ImplementationRepository::EnvironmentList_var &
-ImplementationRepository::EnvironmentList_var::operator= (const ImplementationRepository::EnvironmentList_var &p) // deep copy
+ImplementationRepository::EnvironmentList_var::operator= (const ::ImplementationRepository::EnvironmentList_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ImplementationRepository::EnvironmentList (*p.ptr_), *this);
+    ACE_NEW_RETURN (this->ptr_, ::ImplementationRepository::EnvironmentList (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const ImplementationRepository::EnvironmentList *
+ACE_INLINE const ::ImplementationRepository::EnvironmentList *
 ImplementationRepository::EnvironmentList_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::EnvironmentList *
+ACE_INLINE ::ImplementationRepository::EnvironmentList *
 ImplementationRepository::EnvironmentList_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::EnvironmentList_var::operator const ImplementationRepository::EnvironmentList &() const // cast
+ImplementationRepository::EnvironmentList_var::operator const ::ImplementationRepository::EnvironmentList &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::EnvironmentList_var::operator ImplementationRepository::EnvironmentList &() // cast
+ImplementationRepository::EnvironmentList_var::operator ::ImplementationRepository::EnvironmentList &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::EnvironmentList_var::operator ImplementationRepository::EnvironmentList &() const// cast
+ImplementationRepository::EnvironmentList_var::operator ::ImplementationRepository::EnvironmentList &() const // cast
 {
   return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+ImplementationRepository::EnvironmentList_var::operator ::ImplementationRepository::EnvironmentList *&() // cast
+{
+  return this->ptr_;
 }
 
 ACE_INLINE ImplementationRepository::EnvironmentVariable &
@@ -626,20 +640,20 @@ ImplementationRepository::EnvironmentList_var::operator[] (CORBA::ULong index)
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const ImplementationRepository::EnvironmentList &
+ACE_INLINE const ::ImplementationRepository::EnvironmentList &
 ImplementationRepository::EnvironmentList_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::EnvironmentList &
+ACE_INLINE ::ImplementationRepository::EnvironmentList &
 ImplementationRepository::EnvironmentList_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size
-ACE_INLINE ImplementationRepository::EnvironmentList *&
+ACE_INLINE ::ImplementationRepository::EnvironmentList *&
 ImplementationRepository::EnvironmentList_var::out (void)
 {
   delete this->ptr_;
@@ -647,15 +661,15 @@ ImplementationRepository::EnvironmentList_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::EnvironmentList *
+ACE_INLINE ::ImplementationRepository::EnvironmentList *
 ImplementationRepository::EnvironmentList_var::_retn (void)
 {
-  ImplementationRepository::EnvironmentList *tmp = this->ptr_;
+  ::ImplementationRepository::EnvironmentList *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE ImplementationRepository::EnvironmentList *
+ACE_INLINE ::ImplementationRepository::EnvironmentList *
 ImplementationRepository::EnvironmentList_var::ptr (void) const
 {
   return this->ptr_;
@@ -666,14 +680,14 @@ ImplementationRepository::EnvironmentList_var::ptr (void) const
 // *************************************************************
 
 ACE_INLINE
-ImplementationRepository::EnvironmentList_out::EnvironmentList_out (ImplementationRepository::EnvironmentList *&p)
+ImplementationRepository::EnvironmentList_out::EnvironmentList_out (EnvironmentList *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-ImplementationRepository::EnvironmentList_out::EnvironmentList_out (ImplementationRepository::EnvironmentList_var &p) // constructor from _var
+ImplementationRepository::EnvironmentList_out::EnvironmentList_out (EnvironmentList_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -681,37 +695,37 @@ ImplementationRepository::EnvironmentList_out::EnvironmentList_out (Implementati
 }
 
 ACE_INLINE
-ImplementationRepository::EnvironmentList_out::EnvironmentList_out (const ImplementationRepository::EnvironmentList_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ImplementationRepository::EnvironmentList_out&,p).ptr_)
+ImplementationRepository::EnvironmentList_out::EnvironmentList_out (const ::ImplementationRepository::EnvironmentList_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (EnvironmentList_out&, p).ptr_)
 {}
 
-ACE_INLINE ImplementationRepository::EnvironmentList_out &
-ImplementationRepository::EnvironmentList_out::operator= (const ImplementationRepository::EnvironmentList_out &p)
+ACE_INLINE ::ImplementationRepository::EnvironmentList_out &
+ImplementationRepository::EnvironmentList_out::operator= (const ::ImplementationRepository::EnvironmentList_out &p)
 {
-  this->ptr_ = ACE_const_cast (ImplementationRepository::EnvironmentList_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (EnvironmentList_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE ImplementationRepository::EnvironmentList_out &
-ImplementationRepository::EnvironmentList_out::operator= (ImplementationRepository::EnvironmentList *p)
+ACE_INLINE ::ImplementationRepository::EnvironmentList_out &
+ImplementationRepository::EnvironmentList_out::operator= (EnvironmentList *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE
-ImplementationRepository::EnvironmentList_out::operator ImplementationRepository::EnvironmentList *&() // cast
+ImplementationRepository::EnvironmentList_out::operator ::ImplementationRepository::EnvironmentList *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::EnvironmentList *&
+ACE_INLINE ::ImplementationRepository::EnvironmentList *&
 ImplementationRepository::EnvironmentList_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::EnvironmentList *
+ACE_INLINE ::ImplementationRepository::EnvironmentList *
 ImplementationRepository::EnvironmentList_out::operator-> (void)
 {
   return this->ptr_;
@@ -736,15 +750,15 @@ ImplementationRepository::StartupOptions_var::StartupOptions_var (void) // defau
 {}
 
 ACE_INLINE
-ImplementationRepository::StartupOptions_var::StartupOptions_var (ImplementationRepository::StartupOptions *p)
+ImplementationRepository::StartupOptions_var::StartupOptions_var (StartupOptions *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-ImplementationRepository::StartupOptions_var::StartupOptions_var (const ImplementationRepository::StartupOptions_var &p) // copy constructor
+ImplementationRepository::StartupOptions_var::StartupOptions_var (const ::ImplementationRepository::StartupOptions_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, ImplementationRepository::StartupOptions (*p.ptr_));
+    ACE_NEW (this->ptr_, ::ImplementationRepository::StartupOptions (*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -756,68 +770,75 @@ ImplementationRepository::StartupOptions_var::~StartupOptions_var (void) // dest
 }
 
 ACE_INLINE ImplementationRepository::StartupOptions_var &
-ImplementationRepository::StartupOptions_var::operator= (ImplementationRepository::StartupOptions *p)
+ImplementationRepository::StartupOptions_var::operator= (StartupOptions *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE ImplementationRepository::StartupOptions_var &
-ImplementationRepository::StartupOptions_var::operator= (const ImplementationRepository::StartupOptions_var &p)
+ACE_INLINE ::ImplementationRepository::StartupOptions_var &
+ImplementationRepository::StartupOptions_var::operator= (const ::ImplementationRepository::StartupOptions_var &p)
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ImplementationRepository::StartupOptions (*p.ptr_), *this);
+    ACE_NEW_RETURN (this->ptr_, ::ImplementationRepository::StartupOptions (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const ImplementationRepository::StartupOptions *
+ACE_INLINE const ::ImplementationRepository::StartupOptions *
 ImplementationRepository::StartupOptions_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::StartupOptions *
+ACE_INLINE ::ImplementationRepository::StartupOptions *
 ImplementationRepository::StartupOptions_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::StartupOptions_var::operator const ImplementationRepository::StartupOptions &() const // cast
+ImplementationRepository::StartupOptions_var::operator const ::ImplementationRepository::StartupOptions &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::StartupOptions_var::operator ImplementationRepository::StartupOptions &() // cast
+ImplementationRepository::StartupOptions_var::operator ::ImplementationRepository::StartupOptions &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::StartupOptions_var::operator ImplementationRepository::StartupOptions &() const// cast
+ImplementationRepository::StartupOptions_var::operator ::ImplementationRepository::StartupOptions &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE const ImplementationRepository::StartupOptions &
+// variable-size types only
+ACE_INLINE
+ImplementationRepository::StartupOptions_var::operator ::ImplementationRepository::StartupOptions *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::ImplementationRepository::StartupOptions &
 ImplementationRepository::StartupOptions_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::StartupOptions &
+ACE_INLINE ::ImplementationRepository::StartupOptions &
 ImplementationRepository::StartupOptions_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size
-ACE_INLINE ImplementationRepository::StartupOptions *&
+ACE_INLINE ::ImplementationRepository::StartupOptions *&
 ImplementationRepository::StartupOptions_var::out (void)
 {
   delete this->ptr_;
@@ -825,15 +846,15 @@ ImplementationRepository::StartupOptions_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::StartupOptions *
+ACE_INLINE ::ImplementationRepository::StartupOptions *
 ImplementationRepository::StartupOptions_var::_retn (void)
 {
-  ImplementationRepository::StartupOptions *tmp = this->ptr_;
+  ::ImplementationRepository::StartupOptions *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE ImplementationRepository::StartupOptions *
+ACE_INLINE ::ImplementationRepository::StartupOptions *
 ImplementationRepository::StartupOptions_var::ptr (void) const
 {
   return this->ptr_;
@@ -844,14 +865,14 @@ ImplementationRepository::StartupOptions_var::ptr (void) const
 // *************************************************************
 
 ACE_INLINE
-ImplementationRepository::StartupOptions_out::StartupOptions_out (ImplementationRepository::StartupOptions *&p)
+ImplementationRepository::StartupOptions_out::StartupOptions_out (::ImplementationRepository::StartupOptions *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-ImplementationRepository::StartupOptions_out::StartupOptions_out (ImplementationRepository::StartupOptions_var &p) // constructor from _var
+ImplementationRepository::StartupOptions_out::StartupOptions_out (StartupOptions_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -859,37 +880,37 @@ ImplementationRepository::StartupOptions_out::StartupOptions_out (Implementation
 }
 
 ACE_INLINE
-ImplementationRepository::StartupOptions_out::StartupOptions_out (const ImplementationRepository::StartupOptions_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ImplementationRepository::StartupOptions_out&,p).ptr_)
+ImplementationRepository::StartupOptions_out::StartupOptions_out (const ::ImplementationRepository::StartupOptions_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (StartupOptions_out&, p).ptr_)
 {}
 
 ACE_INLINE ImplementationRepository::StartupOptions_out &
-ImplementationRepository::StartupOptions_out::operator= (const ImplementationRepository::StartupOptions_out &p)
+ImplementationRepository::StartupOptions_out::operator= (const ::ImplementationRepository::StartupOptions_out &p)
 {
-  this->ptr_ = ACE_const_cast (ImplementationRepository::StartupOptions_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (StartupOptions_out&, p).ptr_;
   return *this;
 }
 
 ACE_INLINE ImplementationRepository::StartupOptions_out &
-ImplementationRepository::StartupOptions_out::operator= (ImplementationRepository::StartupOptions *p)
+ImplementationRepository::StartupOptions_out::operator= (StartupOptions *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE
-ImplementationRepository::StartupOptions_out::operator ImplementationRepository::StartupOptions *&() // cast
+ImplementationRepository::StartupOptions_out::operator ::ImplementationRepository::StartupOptions *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::StartupOptions *&
+ACE_INLINE ::ImplementationRepository::StartupOptions *&
 ImplementationRepository::StartupOptions_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::StartupOptions *
+ACE_INLINE ::ImplementationRepository::StartupOptions *
 ImplementationRepository::StartupOptions_out::operator-> (void)
 {
   return this->ptr_;
@@ -905,15 +926,15 @@ ImplementationRepository::ServerInformation_var::ServerInformation_var (void) //
 {}
 
 ACE_INLINE
-ImplementationRepository::ServerInformation_var::ServerInformation_var (ImplementationRepository::ServerInformation *p)
+ImplementationRepository::ServerInformation_var::ServerInformation_var (ServerInformation *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-ImplementationRepository::ServerInformation_var::ServerInformation_var (const ImplementationRepository::ServerInformation_var &p) // copy constructor
+ImplementationRepository::ServerInformation_var::ServerInformation_var (const ::ImplementationRepository::ServerInformation_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, ImplementationRepository::ServerInformation (*p.ptr_));
+    ACE_NEW (this->ptr_, ::ImplementationRepository::ServerInformation (*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -925,68 +946,75 @@ ImplementationRepository::ServerInformation_var::~ServerInformation_var (void) /
 }
 
 ACE_INLINE ImplementationRepository::ServerInformation_var &
-ImplementationRepository::ServerInformation_var::operator= (ImplementationRepository::ServerInformation *p)
+ImplementationRepository::ServerInformation_var::operator= (ServerInformation *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformation_var &
-ImplementationRepository::ServerInformation_var::operator= (const ImplementationRepository::ServerInformation_var &p)
+ACE_INLINE ::ImplementationRepository::ServerInformation_var &
+ImplementationRepository::ServerInformation_var::operator= (const ::ImplementationRepository::ServerInformation_var &p)
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ImplementationRepository::ServerInformation (*p.ptr_), *this);
+    ACE_NEW_RETURN (this->ptr_, ::ImplementationRepository::ServerInformation (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const ImplementationRepository::ServerInformation *
+ACE_INLINE const ::ImplementationRepository::ServerInformation *
 ImplementationRepository::ServerInformation_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformation *
+ACE_INLINE ::ImplementationRepository::ServerInformation *
 ImplementationRepository::ServerInformation_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformation_var::operator const ImplementationRepository::ServerInformation &() const // cast
+ImplementationRepository::ServerInformation_var::operator const ::ImplementationRepository::ServerInformation &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformation_var::operator ImplementationRepository::ServerInformation &() // cast
+ImplementationRepository::ServerInformation_var::operator ::ImplementationRepository::ServerInformation &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformation_var::operator ImplementationRepository::ServerInformation &() const// cast
+ImplementationRepository::ServerInformation_var::operator ::ImplementationRepository::ServerInformation &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE const ImplementationRepository::ServerInformation &
+// variable-size types only
+ACE_INLINE
+ImplementationRepository::ServerInformation_var::operator ::ImplementationRepository::ServerInformation *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::ImplementationRepository::ServerInformation &
 ImplementationRepository::ServerInformation_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformation &
+ACE_INLINE ::ImplementationRepository::ServerInformation &
 ImplementationRepository::ServerInformation_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size
-ACE_INLINE ImplementationRepository::ServerInformation *&
+ACE_INLINE ::ImplementationRepository::ServerInformation *&
 ImplementationRepository::ServerInformation_var::out (void)
 {
   delete this->ptr_;
@@ -994,15 +1022,15 @@ ImplementationRepository::ServerInformation_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformation *
+ACE_INLINE ::ImplementationRepository::ServerInformation *
 ImplementationRepository::ServerInformation_var::_retn (void)
 {
-  ImplementationRepository::ServerInformation *tmp = this->ptr_;
+  ::ImplementationRepository::ServerInformation *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformation *
+ACE_INLINE ::ImplementationRepository::ServerInformation *
 ImplementationRepository::ServerInformation_var::ptr (void) const
 {
   return this->ptr_;
@@ -1013,14 +1041,14 @@ ImplementationRepository::ServerInformation_var::ptr (void) const
 // *************************************************************
 
 ACE_INLINE
-ImplementationRepository::ServerInformation_out::ServerInformation_out (ImplementationRepository::ServerInformation *&p)
+ImplementationRepository::ServerInformation_out::ServerInformation_out (::ImplementationRepository::ServerInformation *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformation_out::ServerInformation_out (ImplementationRepository::ServerInformation_var &p) // constructor from _var
+ImplementationRepository::ServerInformation_out::ServerInformation_out (ServerInformation_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -1028,37 +1056,37 @@ ImplementationRepository::ServerInformation_out::ServerInformation_out (Implemen
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformation_out::ServerInformation_out (const ImplementationRepository::ServerInformation_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ImplementationRepository::ServerInformation_out&,p).ptr_)
+ImplementationRepository::ServerInformation_out::ServerInformation_out (const ::ImplementationRepository::ServerInformation_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (ServerInformation_out&, p).ptr_)
 {}
 
 ACE_INLINE ImplementationRepository::ServerInformation_out &
-ImplementationRepository::ServerInformation_out::operator= (const ImplementationRepository::ServerInformation_out &p)
+ImplementationRepository::ServerInformation_out::operator= (const ::ImplementationRepository::ServerInformation_out &p)
 {
-  this->ptr_ = ACE_const_cast (ImplementationRepository::ServerInformation_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (ServerInformation_out&, p).ptr_;
   return *this;
 }
 
 ACE_INLINE ImplementationRepository::ServerInformation_out &
-ImplementationRepository::ServerInformation_out::operator= (ImplementationRepository::ServerInformation *p)
+ImplementationRepository::ServerInformation_out::operator= (ServerInformation *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformation_out::operator ImplementationRepository::ServerInformation *&() // cast
+ImplementationRepository::ServerInformation_out::operator ::ImplementationRepository::ServerInformation *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformation *&
+ACE_INLINE ::ImplementationRepository::ServerInformation *&
 ImplementationRepository::ServerInformation_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformation *
+ACE_INLINE ::ImplementationRepository::ServerInformation *
 ImplementationRepository::ServerInformation_out::operator-> (void)
 {
   return this->ptr_;
@@ -1093,7 +1121,7 @@ ImplementationRepository::ServerInformation_out::operator-> (void)
 
   ACE_INLINE
   ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (maximum))
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (maximum))
   {
   }
 
@@ -1107,13 +1135,13 @@ ImplementationRepository::ServerInformation_out::operator-> (void)
   }
 
   ACE_INLINE
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (const ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList &rhs)
+  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList (const _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
     {
-      ImplementationRepository::ServerInformation *tmp1 = ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (this->maximum_);
+      ImplementationRepository::ServerInformation *tmp1 = _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (this->maximum_);
       ImplementationRepository::ServerInformation * const tmp2 = ACE_reinterpret_cast (ImplementationRepository::ServerInformation * ACE_CAST_CONST, rhs.buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
@@ -1128,7 +1156,7 @@ ImplementationRepository::ServerInformation_out::operator-> (void)
   }
 
   ACE_INLINE ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList &
-  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::operator= (const ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList &rhs)
+  ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::operator= (const _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -1140,12 +1168,12 @@ ImplementationRepository::ServerInformation_out::operator-> (void)
       {
         // free the old buffer
         ImplementationRepository::ServerInformation *tmp = ACE_reinterpret_cast (ImplementationRepository::ServerInformation *, this->buffer_);
-        ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::freebuf (tmp);
-        this->buffer_ = ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (rhs.maximum_);
+        _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (rhs.maximum_);
       }
     }
     else
-      this->buffer_ = ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (rhs.maximum_);
+      this->buffer_ = _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (rhs.maximum_);
 
     TAO_Unbounded_Base_Sequence::operator= (rhs);
 
@@ -1188,7 +1216,7 @@ ImplementationRepository::ServerInformation_out::operator-> (void)
       // We retain ownership.
       if (this->buffer_ == 0)
       {
-        result = ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (this->length_);
+        result = _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::allocbuf (this->length_);
         this->buffer_ = result;
       }
       else
@@ -1229,7 +1257,7 @@ ImplementationRepository::ServerInformation_out::operator-> (void)
     if (this->buffer_ && this->release_ == 1)
     {
       ImplementationRepository::ServerInformation *tmp = ACE_reinterpret_cast(ImplementationRepository::ServerInformation*,this->buffer_);
-      ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::freebuf (tmp);
+      _TAO_Unbounded_Sequence_ImplementationRepository_ServerInformationList::freebuf (tmp);
     }
     this->buffer_ = data;
     this->release_ = release;
@@ -1253,15 +1281,15 @@ ImplementationRepository::ServerInformationList_var::ServerInformationList_var (
 {}
 
 ACE_INLINE
-ImplementationRepository::ServerInformationList_var::ServerInformationList_var (ImplementationRepository::ServerInformationList *p)
+ImplementationRepository::ServerInformationList_var::ServerInformationList_var (ServerInformationList *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-ImplementationRepository::ServerInformationList_var::ServerInformationList_var (const ImplementationRepository::ServerInformationList_var &p) // copy constructor
+ImplementationRepository::ServerInformationList_var::ServerInformationList_var (const ::ImplementationRepository::ServerInformationList_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, ImplementationRepository::ServerInformationList (*p.ptr_));
+    ACE_NEW (this->ptr_, ::ImplementationRepository::ServerInformationList (*p.ptr_));
   else
     this->ptr_ = 0;
 }
@@ -1273,7 +1301,7 @@ ImplementationRepository::ServerInformationList_var::~ServerInformationList_var 
 }
 
 ACE_INLINE ImplementationRepository::ServerInformationList_var &
-ImplementationRepository::ServerInformationList_var::operator= (ImplementationRepository::ServerInformationList *p)
+ImplementationRepository::ServerInformationList_var::operator= (ServerInformationList *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
@@ -1281,44 +1309,51 @@ ImplementationRepository::ServerInformationList_var::operator= (ImplementationRe
 }
 
 ACE_INLINE ImplementationRepository::ServerInformationList_var &
-ImplementationRepository::ServerInformationList_var::operator= (const ImplementationRepository::ServerInformationList_var &p) // deep copy
+ImplementationRepository::ServerInformationList_var::operator= (const ::ImplementationRepository::ServerInformationList_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ImplementationRepository::ServerInformationList (*p.ptr_), *this);
+    ACE_NEW_RETURN (this->ptr_, ::ImplementationRepository::ServerInformationList (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const ImplementationRepository::ServerInformationList *
+ACE_INLINE const ::ImplementationRepository::ServerInformationList *
 ImplementationRepository::ServerInformationList_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformationList *
+ACE_INLINE ::ImplementationRepository::ServerInformationList *
 ImplementationRepository::ServerInformationList_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformationList_var::operator const ImplementationRepository::ServerInformationList &() const // cast
+ImplementationRepository::ServerInformationList_var::operator const ::ImplementationRepository::ServerInformationList &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformationList_var::operator ImplementationRepository::ServerInformationList &() // cast
+ImplementationRepository::ServerInformationList_var::operator ::ImplementationRepository::ServerInformationList &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformationList_var::operator ImplementationRepository::ServerInformationList &() const// cast
+ImplementationRepository::ServerInformationList_var::operator ::ImplementationRepository::ServerInformationList &() const // cast
 {
   return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+ImplementationRepository::ServerInformationList_var::operator ::ImplementationRepository::ServerInformationList *&() // cast
+{
+  return this->ptr_;
 }
 
 ACE_INLINE ImplementationRepository::ServerInformation &
@@ -1327,20 +1362,20 @@ ImplementationRepository::ServerInformationList_var::operator[] (CORBA::ULong in
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const ImplementationRepository::ServerInformationList &
+ACE_INLINE const ::ImplementationRepository::ServerInformationList &
 ImplementationRepository::ServerInformationList_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformationList &
+ACE_INLINE ::ImplementationRepository::ServerInformationList &
 ImplementationRepository::ServerInformationList_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size
-ACE_INLINE ImplementationRepository::ServerInformationList *&
+ACE_INLINE ::ImplementationRepository::ServerInformationList *&
 ImplementationRepository::ServerInformationList_var::out (void)
 {
   delete this->ptr_;
@@ -1348,15 +1383,15 @@ ImplementationRepository::ServerInformationList_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformationList *
+ACE_INLINE ::ImplementationRepository::ServerInformationList *
 ImplementationRepository::ServerInformationList_var::_retn (void)
 {
-  ImplementationRepository::ServerInformationList *tmp = this->ptr_;
+  ::ImplementationRepository::ServerInformationList *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformationList *
+ACE_INLINE ::ImplementationRepository::ServerInformationList *
 ImplementationRepository::ServerInformationList_var::ptr (void) const
 {
   return this->ptr_;
@@ -1367,14 +1402,14 @@ ImplementationRepository::ServerInformationList_var::ptr (void) const
 // *************************************************************
 
 ACE_INLINE
-ImplementationRepository::ServerInformationList_out::ServerInformationList_out (ImplementationRepository::ServerInformationList *&p)
+ImplementationRepository::ServerInformationList_out::ServerInformationList_out (ServerInformationList *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformationList_out::ServerInformationList_out (ImplementationRepository::ServerInformationList_var &p) // constructor from _var
+ImplementationRepository::ServerInformationList_out::ServerInformationList_out (ServerInformationList_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -1382,37 +1417,37 @@ ImplementationRepository::ServerInformationList_out::ServerInformationList_out (
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformationList_out::ServerInformationList_out (const ImplementationRepository::ServerInformationList_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ImplementationRepository::ServerInformationList_out&,p).ptr_)
+ImplementationRepository::ServerInformationList_out::ServerInformationList_out (const ::ImplementationRepository::ServerInformationList_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (ServerInformationList_out&, p).ptr_)
 {}
 
-ACE_INLINE ImplementationRepository::ServerInformationList_out &
-ImplementationRepository::ServerInformationList_out::operator= (const ImplementationRepository::ServerInformationList_out &p)
+ACE_INLINE ::ImplementationRepository::ServerInformationList_out &
+ImplementationRepository::ServerInformationList_out::operator= (const ::ImplementationRepository::ServerInformationList_out &p)
 {
-  this->ptr_ = ACE_const_cast (ImplementationRepository::ServerInformationList_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (ServerInformationList_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformationList_out &
-ImplementationRepository::ServerInformationList_out::operator= (ImplementationRepository::ServerInformationList *p)
+ACE_INLINE ::ImplementationRepository::ServerInformationList_out &
+ImplementationRepository::ServerInformationList_out::operator= (ServerInformationList *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformationList_out::operator ImplementationRepository::ServerInformationList *&() // cast
+ImplementationRepository::ServerInformationList_out::operator ::ImplementationRepository::ServerInformationList *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformationList *&
+ACE_INLINE ::ImplementationRepository::ServerInformationList *&
 ImplementationRepository::ServerInformationList_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformationList *
+ACE_INLINE ::ImplementationRepository::ServerInformationList *
 ImplementationRepository::ServerInformationList_out::operator-> (void)
 {
   return this->ptr_;
@@ -1450,23 +1485,23 @@ ImplementationRepository::Administration::~Administration (void) // destructor
 
 ACE_INLINE
 ImplementationRepository::Administration_var::Administration_var (void) // default constructor
-  : ptr_ (ImplementationRepository::Administration::_nil ())
+  : ptr_ (Administration::_nil ())
 {}
 
 ACE_INLINE
-ImplementationRepository::Administration_var::Administration_var (ImplementationRepository::Administration_ptr p)
+ImplementationRepository::Administration_var::Administration_var (Administration_ptr p)
   : ptr_ (p)
 {}
 
-ACE_INLINE ImplementationRepository::Administration_ptr
+ACE_INLINE ::ImplementationRepository::Administration_ptr
 ImplementationRepository::Administration_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::Administration_var::Administration_var (const ImplementationRepository::Administration_var &p) // copy constructor
-  : ptr_ (ImplementationRepository::Administration::_duplicate (p.ptr ()))
+ImplementationRepository::Administration_var::Administration_var (const ::ImplementationRepository::Administration_var &p) // copy constructor
+  : ptr_ (Administration::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1476,7 +1511,7 @@ ImplementationRepository::Administration_var::~Administration_var (void) // dest
 }
 
 ACE_INLINE ImplementationRepository::Administration_var &
-ImplementationRepository::Administration_var::operator= (ImplementationRepository::Administration_ptr p)
+ImplementationRepository::Administration_var::operator= (Administration_ptr p)
 {
   CORBA::release (this->ptr_);
   this->ptr_ = p;
@@ -1484,60 +1519,60 @@ ImplementationRepository::Administration_var::operator= (ImplementationRepositor
 }
 
 ACE_INLINE ImplementationRepository::Administration_var &
-ImplementationRepository::Administration_var::operator= (const ImplementationRepository::Administration_var &p)
+ImplementationRepository::Administration_var::operator= (const ::ImplementationRepository::Administration_var &p)
 {
   if (this != &p)
   {
     CORBA::release (this->ptr_);
-    this->ptr_ = ImplementationRepository::Administration::_duplicate (p.ptr ());
+    this->ptr_ = ::ImplementationRepository::Administration::_duplicate (p.ptr ());
   }
   return *this;
 }
 
 ACE_INLINE
-ImplementationRepository::Administration_var::operator const ImplementationRepository::Administration_ptr &() const // cast
+ImplementationRepository::Administration_var::operator const ::ImplementationRepository::Administration_ptr &() const // cast
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::Administration_var::operator ImplementationRepository::Administration_ptr &() // cast
+ImplementationRepository::Administration_var::operator ::ImplementationRepository::Administration_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::Administration_ptr
+ACE_INLINE ::ImplementationRepository::Administration_ptr
 ImplementationRepository::Administration_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::Administration_ptr
+ACE_INLINE ::ImplementationRepository::Administration_ptr
 ImplementationRepository::Administration_var::in (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::Administration_ptr &
+ACE_INLINE ::ImplementationRepository::Administration_ptr &
 ImplementationRepository::Administration_var::inout (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::Administration_ptr &
+ACE_INLINE ::ImplementationRepository::Administration_ptr &
 ImplementationRepository::Administration_var::out (void)
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = ImplementationRepository::Administration::_nil ();
+  this->ptr_ = ::ImplementationRepository::Administration::_nil ();
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::Administration_ptr
+ACE_INLINE ::ImplementationRepository::Administration_ptr
 ImplementationRepository::Administration_var::_retn (void)
 {
   // yield ownership of managed obj reference
-  ImplementationRepository::Administration_ptr val = this->ptr_;
-  this->ptr_ = ImplementationRepository::Administration::_nil ();
+  ::ImplementationRepository::Administration_ptr val = this->ptr_;
+  this->ptr_ = ::ImplementationRepository::Administration::_nil ();
   return val;
 }
 
@@ -1553,59 +1588,59 @@ ImplementationRepository::Administration_var::_retn (void)
 // *************************************************************
 
 ACE_INLINE
-ImplementationRepository::Administration_out::Administration_out (ImplementationRepository::Administration_ptr &p)
+ImplementationRepository::Administration_out::Administration_out (Administration_ptr &p)
   : ptr_ (p)
 {
-  this->ptr_ = ImplementationRepository::Administration::_nil ();
+  this->ptr_ = ::ImplementationRepository::Administration::_nil ();
 }
 
 ACE_INLINE
-ImplementationRepository::Administration_out::Administration_out (ImplementationRepository::Administration_var &p) // constructor from _var
+ImplementationRepository::Administration_out::Administration_out (Administration_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = ImplementationRepository::Administration::_nil ();
+  this->ptr_ = ::ImplementationRepository::Administration::_nil ();
 }
 
 ACE_INLINE
-ImplementationRepository::Administration_out::Administration_out (const ImplementationRepository::Administration_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ImplementationRepository::Administration_out&,p).ptr_)
+ImplementationRepository::Administration_out::Administration_out (const ::ImplementationRepository::Administration_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (Administration_out &, p).ptr_)
 {}
 
-ACE_INLINE ImplementationRepository::Administration_out &
-ImplementationRepository::Administration_out::operator= (const ImplementationRepository::Administration_out &p)
+ACE_INLINE ::ImplementationRepository::Administration_out &
+ImplementationRepository::Administration_out::operator= (const ::ImplementationRepository::Administration_out &p)
 {
-  this->ptr_ = ACE_const_cast (ImplementationRepository::Administration_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (Administration_out&, p).ptr_;
   return *this;
 }
 
 ACE_INLINE ImplementationRepository::Administration_out &
-ImplementationRepository::Administration_out::operator= (const ImplementationRepository::Administration_var &p)
+ImplementationRepository::Administration_out::operator= (const ::ImplementationRepository::Administration_var &p)
 {
-  this->ptr_ = ImplementationRepository::Administration::_duplicate (p.ptr ());
+  this->ptr_ = ::ImplementationRepository::Administration::_duplicate (p.ptr ());
   return *this;
 }
 
 ACE_INLINE ImplementationRepository::Administration_out &
-ImplementationRepository::Administration_out::operator= (ImplementationRepository::Administration_ptr p)
+ImplementationRepository::Administration_out::operator= (Administration_ptr p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE
-ImplementationRepository::Administration_out::operator ImplementationRepository::Administration_ptr &() // cast
+ImplementationRepository::Administration_out::operator ::ImplementationRepository::Administration_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::Administration_ptr &
+ACE_INLINE ::ImplementationRepository::Administration_ptr &
 ImplementationRepository::Administration_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::Administration_ptr
+ACE_INLINE ::ImplementationRepository::Administration_ptr
 ImplementationRepository::Administration_out::operator-> (void)
 {
   return this->ptr_;
@@ -1649,23 +1684,23 @@ ImplementationRepository::ServerInformationIterator::~ServerInformationIterator 
 
 ACE_INLINE
 ImplementationRepository::ServerInformationIterator_var::ServerInformationIterator_var (void) // default constructor
-  : ptr_ (ImplementationRepository::ServerInformationIterator::_nil ())
+  : ptr_ (ServerInformationIterator::_nil ())
 {}
 
 ACE_INLINE
-ImplementationRepository::ServerInformationIterator_var::ServerInformationIterator_var (ImplementationRepository::ServerInformationIterator_ptr p)
+ImplementationRepository::ServerInformationIterator_var::ServerInformationIterator_var (ServerInformationIterator_ptr p)
   : ptr_ (p)
 {}
 
-ACE_INLINE ImplementationRepository::ServerInformationIterator_ptr
+ACE_INLINE ::ImplementationRepository::ServerInformationIterator_ptr
 ImplementationRepository::ServerInformationIterator_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformationIterator_var::ServerInformationIterator_var (const ImplementationRepository::ServerInformationIterator_var &p) // copy constructor
-  : ptr_ (ImplementationRepository::ServerInformationIterator::_duplicate (p.ptr ()))
+ImplementationRepository::ServerInformationIterator_var::ServerInformationIterator_var (const ::ImplementationRepository::ServerInformationIterator_var &p) // copy constructor
+  : ptr_ (ServerInformationIterator::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
@@ -1675,7 +1710,7 @@ ImplementationRepository::ServerInformationIterator_var::~ServerInformationItera
 }
 
 ACE_INLINE ImplementationRepository::ServerInformationIterator_var &
-ImplementationRepository::ServerInformationIterator_var::operator= (ImplementationRepository::ServerInformationIterator_ptr p)
+ImplementationRepository::ServerInformationIterator_var::operator= (ServerInformationIterator_ptr p)
 {
   CORBA::release (this->ptr_);
   this->ptr_ = p;
@@ -1683,60 +1718,60 @@ ImplementationRepository::ServerInformationIterator_var::operator= (Implementati
 }
 
 ACE_INLINE ImplementationRepository::ServerInformationIterator_var &
-ImplementationRepository::ServerInformationIterator_var::operator= (const ImplementationRepository::ServerInformationIterator_var &p)
+ImplementationRepository::ServerInformationIterator_var::operator= (const ::ImplementationRepository::ServerInformationIterator_var &p)
 {
   if (this != &p)
   {
     CORBA::release (this->ptr_);
-    this->ptr_ = ImplementationRepository::ServerInformationIterator::_duplicate (p.ptr ());
+    this->ptr_ = ::ImplementationRepository::ServerInformationIterator::_duplicate (p.ptr ());
   }
   return *this;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformationIterator_var::operator const ImplementationRepository::ServerInformationIterator_ptr &() const // cast
+ImplementationRepository::ServerInformationIterator_var::operator const ::ImplementationRepository::ServerInformationIterator_ptr &() const // cast
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformationIterator_var::operator ImplementationRepository::ServerInformationIterator_ptr &() // cast
+ImplementationRepository::ServerInformationIterator_var::operator ::ImplementationRepository::ServerInformationIterator_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformationIterator_ptr
+ACE_INLINE ::ImplementationRepository::ServerInformationIterator_ptr
 ImplementationRepository::ServerInformationIterator_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformationIterator_ptr
+ACE_INLINE ::ImplementationRepository::ServerInformationIterator_ptr
 ImplementationRepository::ServerInformationIterator_var::in (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformationIterator_ptr &
+ACE_INLINE ::ImplementationRepository::ServerInformationIterator_ptr &
 ImplementationRepository::ServerInformationIterator_var::inout (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformationIterator_ptr &
+ACE_INLINE ::ImplementationRepository::ServerInformationIterator_ptr &
 ImplementationRepository::ServerInformationIterator_var::out (void)
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = ImplementationRepository::ServerInformationIterator::_nil ();
+  this->ptr_ = ::ImplementationRepository::ServerInformationIterator::_nil ();
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformationIterator_ptr
+ACE_INLINE ::ImplementationRepository::ServerInformationIterator_ptr
 ImplementationRepository::ServerInformationIterator_var::_retn (void)
 {
   // yield ownership of managed obj reference
-  ImplementationRepository::ServerInformationIterator_ptr val = this->ptr_;
-  this->ptr_ = ImplementationRepository::ServerInformationIterator::_nil ();
+  ::ImplementationRepository::ServerInformationIterator_ptr val = this->ptr_;
+  this->ptr_ = ::ImplementationRepository::ServerInformationIterator::_nil ();
   return val;
 }
 
@@ -1752,59 +1787,59 @@ ImplementationRepository::ServerInformationIterator_var::_retn (void)
 // *************************************************************
 
 ACE_INLINE
-ImplementationRepository::ServerInformationIterator_out::ServerInformationIterator_out (ImplementationRepository::ServerInformationIterator_ptr &p)
+ImplementationRepository::ServerInformationIterator_out::ServerInformationIterator_out (ServerInformationIterator_ptr &p)
   : ptr_ (p)
 {
-  this->ptr_ = ImplementationRepository::ServerInformationIterator::_nil ();
+  this->ptr_ = ::ImplementationRepository::ServerInformationIterator::_nil ();
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformationIterator_out::ServerInformationIterator_out (ImplementationRepository::ServerInformationIterator_var &p) // constructor from _var
+ImplementationRepository::ServerInformationIterator_out::ServerInformationIterator_out (ServerInformationIterator_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = ImplementationRepository::ServerInformationIterator::_nil ();
+  this->ptr_ = ::ImplementationRepository::ServerInformationIterator::_nil ();
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformationIterator_out::ServerInformationIterator_out (const ImplementationRepository::ServerInformationIterator_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (ImplementationRepository::ServerInformationIterator_out&,p).ptr_)
+ImplementationRepository::ServerInformationIterator_out::ServerInformationIterator_out (const ::ImplementationRepository::ServerInformationIterator_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (ServerInformationIterator_out &, p).ptr_)
 {}
 
-ACE_INLINE ImplementationRepository::ServerInformationIterator_out &
-ImplementationRepository::ServerInformationIterator_out::operator= (const ImplementationRepository::ServerInformationIterator_out &p)
+ACE_INLINE ::ImplementationRepository::ServerInformationIterator_out &
+ImplementationRepository::ServerInformationIterator_out::operator= (const ::ImplementationRepository::ServerInformationIterator_out &p)
 {
-  this->ptr_ = ACE_const_cast (ImplementationRepository::ServerInformationIterator_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (ServerInformationIterator_out&, p).ptr_;
   return *this;
 }
 
 ACE_INLINE ImplementationRepository::ServerInformationIterator_out &
-ImplementationRepository::ServerInformationIterator_out::operator= (const ImplementationRepository::ServerInformationIterator_var &p)
+ImplementationRepository::ServerInformationIterator_out::operator= (const ::ImplementationRepository::ServerInformationIterator_var &p)
 {
-  this->ptr_ = ImplementationRepository::ServerInformationIterator::_duplicate (p.ptr ());
+  this->ptr_ = ::ImplementationRepository::ServerInformationIterator::_duplicate (p.ptr ());
   return *this;
 }
 
 ACE_INLINE ImplementationRepository::ServerInformationIterator_out &
-ImplementationRepository::ServerInformationIterator_out::operator= (ImplementationRepository::ServerInformationIterator_ptr p)
+ImplementationRepository::ServerInformationIterator_out::operator= (ServerInformationIterator_ptr p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE
-ImplementationRepository::ServerInformationIterator_out::operator ImplementationRepository::ServerInformationIterator_ptr &() // cast
+ImplementationRepository::ServerInformationIterator_out::operator ::ImplementationRepository::ServerInformationIterator_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformationIterator_ptr &
+ACE_INLINE ::ImplementationRepository::ServerInformationIterator_ptr &
 ImplementationRepository::ServerInformationIterator_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ImplementationRepository::ServerInformationIterator_ptr
+ACE_INLINE ::ImplementationRepository::ServerInformationIterator_ptr
 ImplementationRepository::ServerInformationIterator_out::operator-> (void)
 {
   return this->ptr_;
@@ -2019,7 +2054,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const ImplementationR
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::Administration::AlreadyRegistered &)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,ImplementationRepository::Administration::AlreadyRegistered&)
 {
   return 1;
 }
@@ -2061,14 +2096,15 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const ImplementationR
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, ImplementationRepository::Administration::CannotActivate &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,ImplementationRepository::Administration::CannotActivate &_tao_aggregate)
 {
   // now marshal the members
   if (
-      (strm >> _tao_aggregate.reason.out ())
-      )
+    (strm >> _tao_aggregate.reason.out ())
+  )
     return 1;
-  return 0;
+  else
+    return 0;
 }
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -2100,7 +2136,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const ImplementationR
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::Administration::NotFound &)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,ImplementationRepository::Administration::NotFound&)
 {
   return 1;
 }

@@ -33,6 +33,8 @@
 
 struct TAO_Export CORBA_ServiceDetail
 {
+  static void _tao_any_destructor (void*);
+
   CORBA::ServiceDetailType service_detail_type;
 
 #if !defined (_CORBA_SERVICEDETAIL__TAO_SEQ_OCTET_CH_)
@@ -182,6 +184,7 @@ class  CORBA_ServiceDetail_out
 
 struct  CORBA_ServiceInformation
 {
+  static void _tao_any_destructor (void*);
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 

@@ -13789,31 +13789,16 @@ TAO_NAMESPACE_TYPE (const CORBA::Short)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (const CORBA::Short, VM_TRUNCATABLE, 3)
 TAO_NAMESPACE_END
+
 void operator<<= (CORBA::Any &_tao_any, CORBA::DefinitionKind _tao_elem)
 {
-  CORBA::DefinitionKind *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::DefinitionKind (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::_tc_DefinitionKind,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    // free allocated storage
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::DefinitionKind &_tao_elem)
@@ -13848,47 +13833,31 @@ CORBA::IRObject_ptr (*_TAO_collocation_CORBA_IRObject_Stub_Factory_function_poin
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::IRObject_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::IRObject::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_IRObject, 
+          CORBA::_tc_IRObject,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::IRObject::_tao_any_destructor (void *x)
+{
+  CORBA::IRObject *tmp = ACE_static_cast(CORBA::IRObject*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::IRObject_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::IRObject::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_IRObject, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -13901,24 +13870,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::IRObject_ptr &_ta
     {
       _tao_elem = CORBA::IRObject::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_IRObject,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::IRObject::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::IRObject::_nil ();
     return 0;
   }
@@ -13941,47 +13903,31 @@ CORBA::Contained_ptr (*_TAO_collocation_CORBA_Contained_Stub_Factory_function_po
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::Contained_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::Contained::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_Contained, 
+          CORBA::_tc_Contained,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::Contained::_tao_any_destructor (void *x)
+{
+  CORBA::Contained *tmp = ACE_static_cast(CORBA::Contained*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Contained_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::Contained::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_Contained, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -13994,24 +13940,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Contained_ptr &_t
     {
       _tao_elem = CORBA::Contained::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_Contained,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::Contained::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::Contained::_nil ();
     return 0;
   }
@@ -14031,34 +13970,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Contained_ptr &_t
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::Contained::Description &_tao_elem) // copying
 {
-  CORBA::Contained::Description *_any_val = 0;
-  ACE_NEW (_any_val, CORBA::Contained::Description (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::Contained::_tc_Description,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::Contained::Description::_tao_any_destructor (void *x)
+{
+  CORBA::Contained::Description *tmp = ACE_const_cast(CORBA::Contained::Description*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::Contained::Description *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -14067,16 +13995,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::Contained::Description *_tao_elem
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::Contained::Description::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Contained::Description *&_tao_elem)
@@ -14108,9 +14028,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Contained::Descri
             CORBA::Contained::_tc_Description,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::Contained::Description::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -14124,7 +14043,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Contained::Descri
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -14132,53 +14051,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Contained::Descri
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::Contained::Description *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::Contained::_tc_Description, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::Contained::Description *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::Contained::Description, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::Contained::Description *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::Contained::_tc_Description,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::Contained::Description *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::Contained::Description *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::Contained::Description *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::Contained::Description*&,_tao_elem);
 }
 
 void operator<<= (
@@ -14186,40 +14059,25 @@ void operator<<= (
     const CORBA::InterfaceDefSeq &_tao_elem
   ) // copying
 {
-  CORBA::InterfaceDefSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::InterfaceDefSeq (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    if (stream << *_tao_any_val)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_InterfaceDefSeq,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK; 
     }
-    else
-    {
-      delete _tao_any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::InterfaceDefSeq::_tao_any_destructor (void *x)
+{
+  CORBA::InterfaceDefSeq *tmp = ACE_const_cast(CORBA::InterfaceDefSeq*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::InterfaceDefSeq *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -14228,16 +14086,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::InterfaceDefSeq *_tao_elem) // no
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::InterfaceDefSeq::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDefSeq *&_tao_elem)
@@ -14269,9 +14119,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDefSeq *
             CORBA::_tc_InterfaceDefSeq,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::InterfaceDefSeq::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -14285,7 +14134,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDefSeq *
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -14293,53 +14142,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDefSeq *
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::InterfaceDefSeq *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_InterfaceDefSeq, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::InterfaceDefSeq *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::InterfaceDefSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::InterfaceDefSeq *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_InterfaceDefSeq,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::InterfaceDefSeq *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::InterfaceDefSeq *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::InterfaceDefSeq *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::InterfaceDefSeq*&,_tao_elem);
 }
 
 void operator<<= (
@@ -14347,40 +14150,25 @@ void operator<<= (
     const CORBA::ValueDefSeq &_tao_elem
   ) // copying
 {
-  CORBA::ValueDefSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::ValueDefSeq (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    if (stream << *_tao_any_val)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_ValueDefSeq,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK; 
     }
-    else
-    {
-      delete _tao_any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ValueDefSeq::_tao_any_destructor (void *x)
+{
+  CORBA::ValueDefSeq *tmp = ACE_static_cast(CORBA::ValueDefSeq*,x);
+  delete x;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::ValueDefSeq *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -14389,16 +14177,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ValueDefSeq *_tao_elem) // non co
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::ValueDefSeq::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDefSeq *&_tao_elem)
@@ -14430,9 +14210,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDefSeq *&_ta
             CORBA::_tc_ValueDefSeq,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::ValueDefSeq::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -14446,7 +14225,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDefSeq *&_ta
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -14454,53 +14233,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDefSeq *&_ta
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::ValueDefSeq *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_ValueDefSeq, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::ValueDefSeq *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ValueDefSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::ValueDefSeq *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_ValueDefSeq,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::ValueDefSeq *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::ValueDefSeq *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::ValueDefSeq *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::ValueDefSeq*&,_tao_elem);
 }
 
 void operator<<= (
@@ -14508,40 +14241,25 @@ void operator<<= (
     const CORBA::ContainedSeq &_tao_elem
   ) // copying
 {
-  CORBA::ContainedSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::ContainedSeq (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    if (stream << *_tao_any_val)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_ContainedSeq,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK; 
     }
-    else
-    {
-      delete _tao_any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ContainedSeq::_tao_any_destructor (void *x)
+{
+  CORBA::ContainedSeq *tmp = ACE_static_cast(CORBA::ContainedSeq*,x);
+  delete x;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::ContainedSeq *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -14550,16 +14268,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ContainedSeq *_tao_elem) // non c
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::ContainedSeq::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ContainedSeq *&_tao_elem)
@@ -14591,9 +14301,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ContainedSeq *&_t
             CORBA::_tc_ContainedSeq,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::ContainedSeq::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -14607,7 +14316,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ContainedSeq *&_t
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -14615,85 +14324,28 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ContainedSeq *&_t
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::ContainedSeq *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_ContainedSeq, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::ContainedSeq *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ContainedSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::ContainedSeq *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_ContainedSeq,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::ContainedSeq *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::ContainedSeq *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::ContainedSeq *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::ContainedSeq*&,_tao_elem);
 }
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::StructMember &_tao_elem) // copying
 {
-  CORBA::StructMember *_any_val = 0;
-  ACE_NEW (_any_val, CORBA::StructMember (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::_tc_StructMember,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::StructMember::_tao_any_destructor (void *x)
+{
+  CORBA::StructMember *tmp = ACE_static_cast(CORBA::StructMember*,x);
+  delete x;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::StructMember *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -14702,16 +14354,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::StructMember *_tao_elem) // non c
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::StructMember::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StructMember *&_tao_elem)
@@ -14743,9 +14387,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StructMember *&_t
             CORBA::_tc_StructMember,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::StructMember::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -14759,7 +14402,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StructMember *&_t
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -14767,53 +14410,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StructMember *&_t
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::StructMember *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_StructMember, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::StructMember *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::StructMember, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::StructMember *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_StructMember,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::StructMember *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::StructMember *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::StructMember *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::StructMember *&,_tao_elem);
 }
 
 void operator<<= (
@@ -14821,40 +14418,25 @@ void operator<<= (
     const CORBA::StructMemberSeq &_tao_elem
   ) // copying
 {
-  CORBA::StructMemberSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::StructMemberSeq (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    if (stream << *_tao_any_val)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_StructMemberSeq,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK; 
     }
-    else
-    {
-      delete _tao_any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::StructMemberSeq::_tao_any_destructor (void *x)
+{
+  CORBA::StructMemberSeq *tmp = ACE_static_cast(CORBA::StructMemberSeq*,x);
+  delete x;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::StructMemberSeq *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -14863,16 +14445,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::StructMemberSeq *_tao_elem) // no
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::StructMemberSeq::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StructMemberSeq *&_tao_elem)
@@ -14904,9 +14478,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StructMemberSeq *
             CORBA::_tc_StructMemberSeq,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::StructMemberSeq::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -14920,7 +14493,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StructMemberSeq *
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -14928,85 +14501,28 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StructMemberSeq *
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::StructMemberSeq *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_StructMemberSeq, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::StructMemberSeq *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::StructMemberSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::StructMemberSeq *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_StructMemberSeq,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::StructMemberSeq *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::StructMemberSeq *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::StructMemberSeq *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::StructMemberSeq*&,_tao_elem);
 }
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::Initializer &_tao_elem) // copying
 {
-  CORBA::Initializer *_any_val = 0;
-  ACE_NEW (_any_val, CORBA::Initializer (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::_tc_Initializer,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::Initializer::_tao_any_destructor (void *x)
+{
+  CORBA::Initializer *tmp = ACE_static_cast(CORBA::Initializer*,x);
+  delete x;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::Initializer *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -15015,16 +14531,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::Initializer *_tao_elem) // non co
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::Initializer::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Initializer *&_tao_elem)
@@ -15056,9 +14564,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Initializer *&_ta
             CORBA::_tc_Initializer,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::Initializer::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -15072,7 +14579,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Initializer *&_ta
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -15080,53 +14587,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Initializer *&_ta
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::Initializer *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_Initializer, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::Initializer *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::Initializer, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::Initializer *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_Initializer,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::Initializer *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::Initializer *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::Initializer *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::Initializer*&,_tao_elem);
 }
 
 void operator<<= (
@@ -15134,40 +14595,26 @@ void operator<<= (
     const CORBA::InitializerSeq &_tao_elem
   ) // copying
 {
-  CORBA::InitializerSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::InitializerSeq (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    if (stream << *_tao_any_val)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_InitializerSeq,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK; 
     }
-    else
-    {
-      delete _tao_any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::InitializerSeq::_tao_any_destructor (void *x)
+{
+  CORBA::InitializerSeq *tmp =
+    ACE_static_cast(CORBA::InitializerSeq*,x);
+  delete x;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::InitializerSeq *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -15176,16 +14623,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::InitializerSeq *_tao_elem) // non
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::InitializerSeq::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InitializerSeq *&_tao_elem)
@@ -15217,9 +14656,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InitializerSeq *&
             CORBA::_tc_InitializerSeq,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::InitializerSeq::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -15233,7 +14671,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InitializerSeq *&
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -15241,85 +14679,28 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InitializerSeq *&
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::InitializerSeq *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_InitializerSeq, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::InitializerSeq *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::InitializerSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::InitializerSeq *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_InitializerSeq,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::InitializerSeq *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::InitializerSeq *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::InitializerSeq *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::InitializerSeq*&,_tao_elem);
 }
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::UnionMember &_tao_elem) // copying
 {
-  CORBA::UnionMember *_any_val = 0;
-  ACE_NEW (_any_val, CORBA::UnionMember (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::_tc_UnionMember,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::UnionMember::_tao_any_destructor (void *x)
+{
+  CORBA::UnionMember *tmp = ACE_static_cast(CORBA::UnionMember*,x);
+  delete x;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::UnionMember *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -15328,16 +14709,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::UnionMember *_tao_elem) // non co
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::UnionMember::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::UnionMember *&_tao_elem)
@@ -15369,9 +14742,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::UnionMember *&_ta
             CORBA::_tc_UnionMember,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::UnionMember::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -15385,7 +14757,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::UnionMember *&_ta
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -15393,53 +14765,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::UnionMember *&_ta
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::UnionMember *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_UnionMember, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::UnionMember *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::UnionMember, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::UnionMember *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_UnionMember,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::UnionMember *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::UnionMember *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::UnionMember *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::UnionMember*&,_tao_elem);
 }
 
 void operator<<= (
@@ -15447,40 +14773,25 @@ void operator<<= (
     const CORBA::UnionMemberSeq &_tao_elem
   ) // copying
 {
-  CORBA::UnionMemberSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::UnionMemberSeq (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    if (stream << *_tao_any_val)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_UnionMemberSeq,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK; 
     }
-    else
-    {
-      delete _tao_any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::UnionMemberSeq::_tao_any_destructor (void *x)
+{
+  CORBA::UnionMemberSeq *tmp = ACE_static_cast(CORBA::UnionMemberSeq*,x);
+  delete x;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::UnionMemberSeq *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -15489,16 +14800,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::UnionMemberSeq *_tao_elem) // non
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::UnionMemberSeq::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::UnionMemberSeq *&_tao_elem)
@@ -15530,9 +14833,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::UnionMemberSeq *&
             CORBA::_tc_UnionMemberSeq,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::UnionMemberSeq::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -15546,7 +14848,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::UnionMemberSeq *&
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -15554,53 +14856,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::UnionMemberSeq *&
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::UnionMemberSeq *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_UnionMemberSeq, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::UnionMemberSeq *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::UnionMemberSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::UnionMemberSeq *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_UnionMemberSeq,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::UnionMemberSeq *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::UnionMemberSeq *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::UnionMemberSeq *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::UnionMemberSeq*&,_tao_elem);
+}
+
+void CORBA::EnumMemberSeq::_tao_any_destructor (void *x)
+{
+  CORBA::EnumMemberSeq *tmp = ACE_static_cast(CORBA::EnumMemberSeq*,x);
+  delete x;
 }
 
 void operator<<= (
@@ -15608,40 +14870,19 @@ void operator<<= (
     const CORBA::EnumMemberSeq &_tao_elem
   ) // copying
 {
-  CORBA::EnumMemberSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::EnumMemberSeq (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    if (stream << *_tao_any_val)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_EnumMemberSeq,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK; 
     }
-    else
-    {
-      delete _tao_any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::EnumMemberSeq *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -15650,16 +14891,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::EnumMemberSeq *_tao_elem) // non 
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::EnumMemberSeq::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::EnumMemberSeq *&_tao_elem)
@@ -15691,9 +14924,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::EnumMemberSeq *&_
             CORBA::_tc_EnumMemberSeq,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::EnumMemberSeq::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -15707,7 +14939,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::EnumMemberSeq *&_
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -15715,53 +14947,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::EnumMemberSeq *&_
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::EnumMemberSeq *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_EnumMemberSeq, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::EnumMemberSeq *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::EnumMemberSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::EnumMemberSeq *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_EnumMemberSeq,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::EnumMemberSeq *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::EnumMemberSeq *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::EnumMemberSeq *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::EnumMemberSeq*&,_tao_elem);
 }
 
 CORBA::Container_ptr (*_TAO_collocation_CORBA_Container_Stub_Factory_function_pointer) (
@@ -15769,47 +14955,31 @@ CORBA::Container_ptr (*_TAO_collocation_CORBA_Container_Stub_Factory_function_po
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::Container_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::Container::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_Container, 
+          CORBA::_tc_Container,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::Container::_tao_any_destructor (void *x)
+{
+  CORBA::Container *tmp = ACE_static_cast(CORBA::Container*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Container_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::Container::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_Container, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -15822,24 +14992,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Container_ptr &_t
     {
       _tao_elem = CORBA::Container::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_Container,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::Container::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::Container::_nil ();
     return 0;
   }
@@ -15859,34 +15022,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Container_ptr &_t
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::Container::Description &_tao_elem) // copying
 {
-  CORBA::Container::Description *_any_val = 0;
-  ACE_NEW (_any_val, CORBA::Container::Description (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::Container::_tc_Description,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::Container::Description::_tao_any_destructor (void *x)
+{
+  CORBA::Container::Description *tmp = ACE_static_cast(CORBA::Container::Description*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::Container::Description *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -15895,16 +15047,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::Container::Description *_tao_elem
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::Container::Description::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Container::Description *&_tao_elem)
@@ -15936,9 +15080,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Container::Descri
             CORBA::Container::_tc_Description,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::Container::Description::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -15952,7 +15095,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Container::Descri
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -15960,53 +15103,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Container::Descri
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::Container::Description *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::Container::_tc_Description, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::Container::Description *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::Container::Description, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::Container::Description *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::Container::_tc_Description,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::Container::Description *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::Container::Description *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::Container::Description *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::Container::Description*&,_tao_elem);
 }
 
 void operator<<= (
@@ -16014,40 +15111,25 @@ void operator<<= (
     const CORBA::Container::DescriptionSeq &_tao_elem
   ) // copying
 {
-  CORBA::Container::DescriptionSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::Container::DescriptionSeq (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    if (stream << *_tao_any_val)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::Container::_tc_DescriptionSeq,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK; 
     }
-    else
-    {
-      delete _tao_any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::Container::DescriptionSeq::_tao_any_destructor (void *x)
+{
+  CORBA::Container::DescriptionSeq *tmp = ACE_static_cast(CORBA::Container::DescriptionSeq*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::Container::DescriptionSeq *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -16056,16 +15138,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::Container::DescriptionSeq *_tao_e
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::Container::DescriptionSeq::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Container::DescriptionSeq *&_tao_elem)
@@ -16097,9 +15171,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Container::Descri
             CORBA::Container::_tc_DescriptionSeq,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::Container::DescriptionSeq::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -16113,7 +15186,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Container::Descri
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -16121,53 +15194,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Container::Descri
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::Container::DescriptionSeq *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::Container::_tc_DescriptionSeq, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::Container::DescriptionSeq *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::Container::DescriptionSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::Container::DescriptionSeq *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::Container::_tc_DescriptionSeq,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::Container::DescriptionSeq *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::Container::DescriptionSeq *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::Container::DescriptionSeq *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::Container::DescriptionSeq*&,_tao_elem);
 }
 
 CORBA::IDLType_ptr (*_TAO_collocation_CORBA_IDLType_Stub_Factory_function_pointer) (
@@ -16175,47 +15202,31 @@ CORBA::IDLType_ptr (*_TAO_collocation_CORBA_IDLType_Stub_Factory_function_pointe
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::IDLType_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::IDLType::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_IDLType, 
+          CORBA::_tc_IDLType,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::IDLType::_tao_any_destructor (void *x)
+{
+  CORBA::IDLType *tmp = ACE_static_cast(CORBA::IDLType*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::IDLType_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::IDLType::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_IDLType, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -16228,24 +15239,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::IDLType_ptr &_tao
     {
       _tao_elem = CORBA::IDLType::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_IDLType,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::IDLType::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::IDLType::_nil ();
     return 0;
   }
@@ -16265,29 +15269,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::IDLType_ptr &_tao
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::PrimitiveKind _tao_elem)
 {
-  CORBA::PrimitiveKind *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::PrimitiveKind (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::_tc_PrimitiveKind,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    // free allocated storage
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::PrimitiveKind &_tao_elem)
@@ -16322,47 +15310,31 @@ CORBA::Repository_ptr (*_TAO_collocation_CORBA_Repository_Stub_Factory_function_
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::Repository_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::Repository::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_Repository, 
+          CORBA::_tc_Repository,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::Repository::_tao_any_destructor (void *x)
+{
+  CORBA::Repository *tmp = ACE_static_cast(CORBA::Repository*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Repository_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::Repository::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_Repository, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -16375,24 +15347,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Repository_ptr &_
     {
       _tao_elem = CORBA::Repository::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_Repository,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::Repository::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::Repository::_nil ();
     return 0;
   }
@@ -16415,47 +15380,31 @@ CORBA::ModuleDef_ptr (*_TAO_collocation_CORBA_ModuleDef_Stub_Factory_function_po
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::ModuleDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::ModuleDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_ModuleDef, 
+          CORBA::_tc_ModuleDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ModuleDef::_tao_any_destructor (void *x)
+{
+  CORBA::ModuleDef *tmp = ACE_static_cast(CORBA::ModuleDef*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ModuleDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::ModuleDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_ModuleDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -16468,24 +15417,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ModuleDef_ptr &_t
     {
       _tao_elem = CORBA::ModuleDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_ModuleDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::ModuleDef::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::ModuleDef::_nil ();
     return 0;
   }
@@ -16505,34 +15447,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ModuleDef_ptr &_t
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::ModuleDescription &_tao_elem) // copying
 {
-  CORBA::ModuleDescription *_any_val = 0;
-  ACE_NEW (_any_val, CORBA::ModuleDescription (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::_tc_ModuleDescription,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ModuleDescription::_tao_any_destructor (void *x)
+{
+  CORBA::ModuleDescription *tmp = ACE_static_cast(CORBA::ModuleDescription*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::ModuleDescription *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -16541,16 +15472,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ModuleDescription *_tao_elem) // 
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::ModuleDescription::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ModuleDescription *&_tao_elem)
@@ -16582,9 +15505,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ModuleDescription
             CORBA::_tc_ModuleDescription,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::ModuleDescription::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -16598,7 +15520,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ModuleDescription
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -16606,53 +15528,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ModuleDescription
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::ModuleDescription *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_ModuleDescription, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::ModuleDescription *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ModuleDescription, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::ModuleDescription *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_ModuleDescription,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::ModuleDescription *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::ModuleDescription *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::ModuleDescription *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::ModuleDescription *&,_tao_elem);
 }
 
 CORBA::ConstantDef_ptr (*_TAO_collocation_CORBA_ConstantDef_Stub_Factory_function_pointer) (
@@ -16660,47 +15536,31 @@ CORBA::ConstantDef_ptr (*_TAO_collocation_CORBA_ConstantDef_Stub_Factory_functio
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::ConstantDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::ConstantDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_ConstantDef, 
+          CORBA::_tc_ConstantDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ConstantDef::_tao_any_destructor (void *x)
+{
+  CORBA::ConstantDef *tmp = ACE_static_cast(CORBA::ConstantDef*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ConstantDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::ConstantDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_ConstantDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -16713,24 +15573,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ConstantDef_ptr &
     {
       _tao_elem = CORBA::ConstantDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_ConstantDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::ConstantDef::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::ConstantDef::_nil ();
     return 0;
   }
@@ -16750,34 +15603,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ConstantDef_ptr &
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::ConstantDescription &_tao_elem) // copying
 {
-  CORBA::ConstantDescription *_any_val = 0;
-  ACE_NEW (_any_val, CORBA::ConstantDescription (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::_tc_ConstantDescription,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ConstantDescription::_tao_any_destructor (void *x)
+{
+  CORBA::ConstantDescription *tmp = ACE_static_cast(CORBA::ConstantDescription*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::ConstantDescription *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -16786,16 +15628,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ConstantDescription *_tao_elem) /
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::ConstantDescription::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ConstantDescription *&_tao_elem)
@@ -16827,9 +15661,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ConstantDescripti
             CORBA::_tc_ConstantDescription,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::ConstantDescription::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -16843,7 +15676,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ConstantDescripti
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -16851,53 +15684,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ConstantDescripti
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::ConstantDescription *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_ConstantDescription, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::ConstantDescription *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ConstantDescription, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::ConstantDescription *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_ConstantDescription,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::ConstantDescription *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::ConstantDescription *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::ConstantDescription *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::ConstantDescription *&,_tao_elem);
 }
 
 CORBA::TypedefDef_ptr (*_TAO_collocation_CORBA_TypedefDef_Stub_Factory_function_pointer) (
@@ -16905,47 +15692,31 @@ CORBA::TypedefDef_ptr (*_TAO_collocation_CORBA_TypedefDef_Stub_Factory_function_
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::TypedefDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::TypedefDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_TypedefDef, 
+          CORBA::_tc_TypedefDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::TypedefDef::_tao_any_destructor (void *x)
+{
+  CORBA::TypedefDef *tmp = ACE_static_cast(CORBA::TypedefDef*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::TypedefDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::TypedefDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_TypedefDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -16958,24 +15729,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::TypedefDef_ptr &_
     {
       _tao_elem = CORBA::TypedefDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_TypedefDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::TypedefDef::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::TypedefDef::_nil ();
     return 0;
   }
@@ -16995,34 +15759,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::TypedefDef_ptr &_
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::TypeDescription &_tao_elem) // copying
 {
-  CORBA::TypeDescription *_any_val = 0;
-  ACE_NEW (_any_val, CORBA::TypeDescription (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::_tc_TypeDescription,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::TypeDescription::_tao_any_destructor (void *x)
+{
+  CORBA::TypeDescription *tmp = ACE_static_cast(CORBA::TypeDescription*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::TypeDescription *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -17031,16 +15784,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::TypeDescription *_tao_elem) // no
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::TypeDescription::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::TypeDescription *&_tao_elem)
@@ -17072,9 +15817,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::TypeDescription *
             CORBA::_tc_TypeDescription,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::TypeDescription::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -17088,7 +15832,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::TypeDescription *
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -17096,53 +15840,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::TypeDescription *
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::TypeDescription *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_TypeDescription, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::TypeDescription *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::TypeDescription, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::TypeDescription *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_TypeDescription,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::TypeDescription *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::TypeDescription *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::TypeDescription *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::TypeDescription *&,_tao_elem);
 }
 
 CORBA::StructDef_ptr (*_TAO_collocation_CORBA_StructDef_Stub_Factory_function_pointer) (
@@ -17150,47 +15848,31 @@ CORBA::StructDef_ptr (*_TAO_collocation_CORBA_StructDef_Stub_Factory_function_po
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::StructDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::StructDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_StructDef, 
+          CORBA::_tc_StructDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::StructDef::_tao_any_destructor (void *x)
+{
+  CORBA::StructDef *tmp = ACE_static_cast(CORBA::StructDef*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StructDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::StructDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_StructDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -17203,24 +15885,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StructDef_ptr &_t
     {
       _tao_elem = CORBA::StructDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_StructDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::StructDef::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::StructDef::_nil ();
     return 0;
   }
@@ -17243,47 +15918,31 @@ CORBA::UnionDef_ptr (*_TAO_collocation_CORBA_UnionDef_Stub_Factory_function_poin
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::UnionDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::UnionDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_UnionDef, 
+          CORBA::_tc_UnionDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::UnionDef::_tao_any_destructor (void *x)
+{
+  CORBA::UnionDef *tmp = ACE_static_cast(CORBA::UnionDef*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::UnionDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::UnionDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_UnionDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -17296,24 +15955,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::UnionDef_ptr &_ta
     {
       _tao_elem = CORBA::UnionDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_UnionDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::UnionDef::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::UnionDef::_nil ();
     return 0;
   }
@@ -17336,47 +15988,31 @@ CORBA::EnumDef_ptr (*_TAO_collocation_CORBA_EnumDef_Stub_Factory_function_pointe
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::EnumDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::EnumDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_EnumDef, 
+          CORBA::_tc_EnumDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::EnumDef::_tao_any_destructor (void *x)
+{
+  CORBA::EnumDef *tmp = ACE_static_cast(CORBA::EnumDef*,x);
+  delete tmp;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::EnumDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::EnumDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_EnumDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -17389,24 +16025,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::EnumDef_ptr &_tao
     {
       _tao_elem = CORBA::EnumDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_EnumDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::EnumDef::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::EnumDef::_nil ();
     return 0;
   }
@@ -17429,47 +16058,31 @@ CORBA::AliasDef_ptr (*_TAO_collocation_CORBA_AliasDef_Stub_Factory_function_poin
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::AliasDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::AliasDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_AliasDef, 
+          CORBA::_tc_AliasDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::AliasDef::_tao_any_destructor (void *x)
+{
+  CORBA::AliasDef *tmp = ACE_static_cast(CORBA::AliasDef*,x);
+  delete tmp;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AliasDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::AliasDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_AliasDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -17482,24 +16095,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AliasDef_ptr &_ta
     {
       _tao_elem = CORBA::AliasDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_AliasDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::AliasDef::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::AliasDef::_nil ();
     return 0;
   }
@@ -17522,47 +16128,31 @@ CORBA::PrimitiveDef_ptr (*_TAO_collocation_CORBA_PrimitiveDef_Stub_Factory_funct
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::PrimitiveDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::PrimitiveDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_PrimitiveDef, 
+          CORBA::_tc_PrimitiveDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::PrimitiveDef::_tao_any_destructor (void *x)
+{
+  CORBA::PrimitiveDef *tmp = ACE_static_cast(CORBA::PrimitiveDef*,x);
+  delete tmp;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::PrimitiveDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::PrimitiveDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_PrimitiveDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -17575,24 +16165,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::PrimitiveDef_ptr 
     {
       _tao_elem = CORBA::PrimitiveDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_PrimitiveDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::PrimitiveDef::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::PrimitiveDef::_nil ();
     return 0;
   }
@@ -17615,47 +16198,31 @@ CORBA::StringDef_ptr (*_TAO_collocation_CORBA_StringDef_Stub_Factory_function_po
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::StringDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::StringDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_StringDef, 
+          CORBA::_tc_StringDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::StringDef::_tao_any_destructor (void *x)
+{
+  CORBA::StringDef *tmp = ACE_static_cast(CORBA::StringDef*,x);
+  delete tmp;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StringDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::StringDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_StringDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -17668,24 +16235,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StringDef_ptr &_t
     {
       _tao_elem = CORBA::StringDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_StringDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::StringDef::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::StringDef::_nil ();
     return 0;
   }
@@ -17708,47 +16268,31 @@ CORBA::WstringDef_ptr (*_TAO_collocation_CORBA_WstringDef_Stub_Factory_function_
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::WstringDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::WstringDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_WstringDef, 
+          CORBA::_tc_WstringDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::WstringDef::_tao_any_destructor (void *x)
+{
+  CORBA::WstringDef *tmp = ACE_static_cast(CORBA::WstringDef*,x);
+  delete tmp;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::WstringDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::WstringDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_WstringDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -17761,24 +16305,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::WstringDef_ptr &_
     {
       _tao_elem = CORBA::WstringDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_WstringDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::WstringDef::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::WstringDef::_nil ();
     return 0;
   }
@@ -17801,47 +16338,31 @@ CORBA::FixedDef_ptr (*_TAO_collocation_CORBA_FixedDef_Stub_Factory_function_poin
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::FixedDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::FixedDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_FixedDef, 
+          CORBA::_tc_FixedDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::FixedDef::_tao_any_destructor (void *x)
+{
+  CORBA::FixedDef *tmp = ACE_static_cast(CORBA::FixedDef*,x);
+  delete tmp;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::FixedDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::FixedDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_FixedDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -17854,24 +16375,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::FixedDef_ptr &_ta
     {
       _tao_elem = CORBA::FixedDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_FixedDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::FixedDef::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::FixedDef::_nil ();
     return 0;
   }
@@ -17894,47 +16408,31 @@ CORBA::SequenceDef_ptr (*_TAO_collocation_CORBA_SequenceDef_Stub_Factory_functio
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::SequenceDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::SequenceDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_SequenceDef, 
+          CORBA::_tc_SequenceDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::SequenceDef::_tao_any_destructor (void *x)
+{
+  CORBA::SequenceDef *tmp = ACE_static_cast(CORBA::SequenceDef*,x);
+  delete tmp;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::SequenceDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::SequenceDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_SequenceDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -17947,24 +16445,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::SequenceDef_ptr &
     {
       _tao_elem = CORBA::SequenceDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_SequenceDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::SequenceDef::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::SequenceDef::_nil ();
     return 0;
   }
@@ -17987,47 +16478,31 @@ CORBA::ArrayDef_ptr (*_TAO_collocation_CORBA_ArrayDef_Stub_Factory_function_poin
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::ArrayDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::ArrayDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_ArrayDef, 
+          CORBA::_tc_ArrayDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ArrayDef::_tao_any_destructor (void *x)
+{
+  CORBA::ArrayDef *tmp = ACE_static_cast(CORBA::ArrayDef*,x);
+  delete tmp;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ArrayDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::ArrayDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_ArrayDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -18040,24 +16515,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ArrayDef_ptr &_ta
     {
       _tao_elem = CORBA::ArrayDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_ArrayDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::ArrayDef::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::ArrayDef::_nil ();
     return 0;
   }
@@ -18080,47 +16548,31 @@ CORBA::ExceptionDef_ptr (*_TAO_collocation_CORBA_ExceptionDef_Stub_Factory_funct
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::ExceptionDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::ExceptionDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_ExceptionDef, 
+          CORBA::_tc_ExceptionDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ExceptionDef::_tao_any_destructor (void *x)
+{
+  CORBA::ExceptionDef *tmp = ACE_static_cast(CORBA::ExceptionDef*,x);
+  delete tmp;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExceptionDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::ExceptionDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_ExceptionDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -18133,24 +16585,18 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExceptionDef_ptr 
     {
       _tao_elem = CORBA::ExceptionDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_ExceptionDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::ExceptionDef::_tao_any_destructor
         );
       ACE_TRY_CHECK;
       return 1;
     }
-    else    // failure
-    {
-      delete tmp;
-    }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::ExceptionDef::_nil ();
     return 0;
   }
@@ -18170,34 +16616,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExceptionDef_ptr 
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::ExceptionDescription &_tao_elem) // copying
 {
-  CORBA::ExceptionDescription *_any_val = 0;
-  ACE_NEW (_any_val, CORBA::ExceptionDescription (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::_tc_ExceptionDescription,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ExceptionDescription::_tao_any_destructor (void *x)
+{
+  CORBA::ExceptionDescription *tmp = ACE_static_cast(CORBA::ExceptionDescription*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::ExceptionDescription *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -18206,16 +16641,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ExceptionDescription *_tao_elem) 
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::ExceptionDescription::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExceptionDescription *&_tao_elem)
@@ -18247,9 +16674,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExceptionDescript
             CORBA::_tc_ExceptionDescription,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::ExceptionDescription::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -18263,7 +16689,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExceptionDescript
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -18271,80 +16697,18 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExceptionDescript
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::ExceptionDescription *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_ExceptionDescription, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::ExceptionDescription *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ExceptionDescription, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::ExceptionDescription *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_ExceptionDescription,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::ExceptionDescription *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::ExceptionDescription *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::ExceptionDescription *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::ExceptionDescription *&,_tao_elem);
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::AttributeMode _tao_elem)
 {
-  CORBA::AttributeMode *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::AttributeMode (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::_tc_AttributeMode,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    // free allocated storage
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttributeMode &_tao_elem)
@@ -18379,47 +16743,31 @@ CORBA::AttributeDef_ptr (*_TAO_collocation_CORBA_AttributeDef_Stub_Factory_funct
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::AttributeDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::AttributeDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_AttributeDef, 
+          CORBA::_tc_AttributeDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::AttributeDef::_tao_any_destructor (void *x)
+{
+  CORBA::AttributeDef *tmp = ACE_static_cast(CORBA::AttributeDef*,x);
+  delete tmp;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttributeDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::AttributeDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_AttributeDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -18432,24 +16780,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttributeDef_ptr 
     {
       _tao_elem = CORBA::AttributeDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_AttributeDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::AttributeDef::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::AttributeDef::_nil ();
     return 0;
   }
@@ -18469,34 +16810,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttributeDef_ptr 
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::AttributeDescription &_tao_elem) // copying
 {
-  CORBA::AttributeDescription *_any_val = 0;
-  ACE_NEW (_any_val, CORBA::AttributeDescription (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::_tc_AttributeDescription,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::AttributeDescription::_tao_any_destructor (void *x)
+{
+  CORBA::AttributeDescription *tmp = ACE_static_cast(CORBA::AttributeDescription*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::AttributeDescription *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -18505,16 +16835,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::AttributeDescription *_tao_elem) 
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::AttributeDescription::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttributeDescription *&_tao_elem)
@@ -18546,9 +16868,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttributeDescript
             CORBA::_tc_AttributeDescription,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::AttributeDescription::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -18562,7 +16883,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttributeDescript
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -18570,80 +16891,18 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttributeDescript
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::AttributeDescription *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_AttributeDescription, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::AttributeDescription *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::AttributeDescription, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::AttributeDescription *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_AttributeDescription,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::AttributeDescription *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::AttributeDescription *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::AttributeDescription *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::AttributeDescription *&,_tao_elem);
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::OperationMode _tao_elem)
 {
-  CORBA::OperationMode *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::OperationMode (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::_tc_OperationMode,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    // free allocated storage
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OperationMode &_tao_elem)
@@ -18675,29 +16934,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OperationMode &_t
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::ParameterMode _tao_elem)
 {
-  CORBA::ParameterMode *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::ParameterMode (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::_tc_ParameterMode,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    // free allocated storage
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ParameterMode &_tao_elem)
@@ -18729,34 +16972,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ParameterMode &_t
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::ParameterDescription &_tao_elem) // copying
 {
-  CORBA::ParameterDescription *_any_val = 0;
-  ACE_NEW (_any_val, CORBA::ParameterDescription (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::_tc_ParameterDescription,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ParameterDescription::_tao_any_destructor (void *x)
+{
+  CORBA::ParameterDescription *tmp = ACE_static_cast(CORBA::ParameterDescription*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::ParameterDescription *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -18765,16 +16997,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ParameterDescription *_tao_elem) 
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::ParameterDescription::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ParameterDescription *&_tao_elem)
@@ -18806,7 +17030,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ParameterDescript
             CORBA::_tc_ParameterDescription,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::ParameterDescription::_tao_any_destructor
           );
         ACE_TRY_CHECK;
         return 1;
@@ -18822,7 +17046,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ParameterDescript
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -18830,53 +17054,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ParameterDescript
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::ParameterDescription *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_ParameterDescription, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::ParameterDescription *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ParameterDescription, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::ParameterDescription *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_ParameterDescription,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::ParameterDescription *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::ParameterDescription *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::ParameterDescription *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::ParameterDescription *&,_tao_elem);
 }
 
 void operator<<= (
@@ -18884,40 +17062,25 @@ void operator<<= (
     const CORBA::ParDescriptionSeq &_tao_elem
   ) // copying
 {
-  CORBA::ParDescriptionSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::ParDescriptionSeq (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    if (stream << *_tao_any_val)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_ParDescriptionSeq,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK; 
     }
-    else
-    {
-      delete _tao_any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ParDescriptionSeq::_tao_any_destructor (void *x)
+{
+  CORBA::ParDescriptionSeq *tmp = ACE_static_cast(CORBA::ParDescriptionSeq*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::ParDescriptionSeq *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -18926,16 +17089,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ParDescriptionSeq *_tao_elem) // 
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::ParDescriptionSeq::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ParDescriptionSeq *&_tao_elem)
@@ -18967,9 +17122,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ParDescriptionSeq
             CORBA::_tc_ParDescriptionSeq,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::ParDescriptionSeq::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -18983,7 +17137,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ParDescriptionSeq
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -18991,53 +17145,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ParDescriptionSeq
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::ParDescriptionSeq *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_ParDescriptionSeq, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::ParDescriptionSeq *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ParDescriptionSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::ParDescriptionSeq *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_ParDescriptionSeq,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::ParDescriptionSeq *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::ParDescriptionSeq *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::ParDescriptionSeq *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::ParDescriptionSeq *&,_tao_elem);
 }
 
 void operator<<= (
@@ -19045,40 +17153,25 @@ void operator<<= (
     const CORBA::ContextIdSeq &_tao_elem
   ) // copying
 {
-  CORBA::ContextIdSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::ContextIdSeq (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    if (stream << *_tao_any_val)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_ContextIdSeq,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK; 
     }
-    else
-    {
-      delete _tao_any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ContextIdSeq::_tao_any_destructor (void *x)
+{
+  CORBA::ContextIdSeq *tmp = ACE_static_cast(CORBA::ContextIdSeq*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::ContextIdSeq *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -19087,16 +17180,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ContextIdSeq *_tao_elem) // non c
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::ContextIdSeq::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ContextIdSeq *&_tao_elem)
@@ -19128,9 +17213,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ContextIdSeq *&_t
             CORBA::_tc_ContextIdSeq,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::ContextIdSeq::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -19144,7 +17228,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ContextIdSeq *&_t
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -19152,53 +17236,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ContextIdSeq *&_t
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::ContextIdSeq *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_ContextIdSeq, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::ContextIdSeq *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ContextIdSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::ContextIdSeq *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_ContextIdSeq,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::ContextIdSeq *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::ContextIdSeq *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::ContextIdSeq *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::ContextIdSeq *&,_tao_elem);
 }
 
 void operator<<= (
@@ -19206,40 +17244,25 @@ void operator<<= (
     const CORBA::ExceptionDefSeq &_tao_elem
   ) // copying
 {
-  CORBA::ExceptionDefSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::ExceptionDefSeq (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    if (stream << *_tao_any_val)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_ExceptionDefSeq,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK; 
     }
-    else
-    {
-      delete _tao_any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ExceptionDefSeq::_tao_any_destructor (void *x)
+{
+  CORBA::ExceptionDefSeq *tmp = ACE_static_cast(CORBA::ExceptionDefSeq*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::ExceptionDefSeq *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -19248,16 +17271,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ExceptionDefSeq *_tao_elem) // no
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::ExceptionDefSeq::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExceptionDefSeq *&_tao_elem)
@@ -19289,9 +17304,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExceptionDefSeq *
             CORBA::_tc_ExceptionDefSeq,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::ExceptionDefSeq::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -19305,7 +17319,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExceptionDefSeq *
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -19313,53 +17327,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExceptionDefSeq *
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::ExceptionDefSeq *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_ExceptionDefSeq, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::ExceptionDefSeq *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ExceptionDefSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::ExceptionDefSeq *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_ExceptionDefSeq,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::ExceptionDefSeq *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::ExceptionDefSeq *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::ExceptionDefSeq *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::ExceptionDefSeq *&,_tao_elem);
 }
 
 void operator<<= (
@@ -19367,40 +17335,25 @@ void operator<<= (
     const CORBA::ExcDescriptionSeq &_tao_elem
   ) // copying
 {
-  CORBA::ExcDescriptionSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::ExcDescriptionSeq (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    if (stream << *_tao_any_val)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_ExcDescriptionSeq,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK; 
     }
-    else
-    {
-      delete _tao_any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ExcDescriptionSeq::_tao_any_destructor (void *x)
+{
+  CORBA::ExcDescriptionSeq *tmp = ACE_static_cast(CORBA::ExcDescriptionSeq*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::ExcDescriptionSeq *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -19409,16 +17362,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ExcDescriptionSeq *_tao_elem) // 
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::ExcDescriptionSeq::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExcDescriptionSeq *&_tao_elem)
@@ -19450,9 +17395,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExcDescriptionSeq
             CORBA::_tc_ExcDescriptionSeq,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::ExcDescriptionSeq::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -19466,7 +17410,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExcDescriptionSeq
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -19474,53 +17418,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ExcDescriptionSeq
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::ExcDescriptionSeq *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_ExcDescriptionSeq, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::ExcDescriptionSeq *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ExcDescriptionSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::ExcDescriptionSeq *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_ExcDescriptionSeq,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::ExcDescriptionSeq *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::ExcDescriptionSeq *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::ExcDescriptionSeq *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::ExcDescriptionSeq *&,_tao_elem);
 }
 
 CORBA::OperationDef_ptr (*_TAO_collocation_CORBA_OperationDef_Stub_Factory_function_pointer) (
@@ -19528,47 +17426,31 @@ CORBA::OperationDef_ptr (*_TAO_collocation_CORBA_OperationDef_Stub_Factory_funct
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::OperationDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::OperationDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_OperationDef, 
+          CORBA::_tc_OperationDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::OperationDef::_tao_any_destructor (void *x)
+{
+  CORBA::OperationDef *tmp = ACE_static_cast(CORBA::OperationDef*,x);
+  delete tmp;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OperationDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::OperationDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_OperationDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -19581,24 +17463,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OperationDef_ptr 
     {
       _tao_elem = CORBA::OperationDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_OperationDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::OperationDef::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::OperationDef::_nil ();
     return 0;
   }
@@ -19618,34 +17493,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OperationDef_ptr 
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::OperationDescription &_tao_elem) // copying
 {
-  CORBA::OperationDescription *_any_val = 0;
-  ACE_NEW (_any_val, CORBA::OperationDescription (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::_tc_OperationDescription,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::OperationDescription::_tao_any_destructor (void *x)
+{
+  CORBA::OperationDescription *tmp = ACE_static_cast(CORBA::OperationDescription*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::OperationDescription *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -19654,16 +17518,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::OperationDescription *_tao_elem) 
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::OperationDescription::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OperationDescription *&_tao_elem)
@@ -19695,9 +17551,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OperationDescript
             CORBA::_tc_OperationDescription,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::OperationDescription::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -19711,7 +17566,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OperationDescript
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -19719,53 +17574,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OperationDescript
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::OperationDescription *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_OperationDescription, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::OperationDescription *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::OperationDescription, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::OperationDescription *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_OperationDescription,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::OperationDescription *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::OperationDescription *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::OperationDescription *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::OperationDescription *&,_tao_elem);
 }
 
 void operator<<= (
@@ -19773,40 +17582,25 @@ void operator<<= (
     const CORBA::RepositoryIdSeq &_tao_elem
   ) // copying
 {
-  CORBA::RepositoryIdSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::RepositoryIdSeq (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    if (stream << *_tao_any_val)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_RepositoryIdSeq,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK; 
     }
-    else
-    {
-      delete _tao_any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::RepositoryIdSeq::_tao_any_destructor (void *x)
+{
+  CORBA::RepositoryIdSeq *tmp = ACE_static_cast(CORBA::RepositoryIdSeq*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::RepositoryIdSeq *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -19815,16 +17609,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::RepositoryIdSeq *_tao_elem) // no
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::RepositoryIdSeq::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::RepositoryIdSeq *&_tao_elem)
@@ -19856,9 +17642,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::RepositoryIdSeq *
             CORBA::_tc_RepositoryIdSeq,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::RepositoryIdSeq::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -19872,7 +17657,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::RepositoryIdSeq *
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -19880,53 +17665,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::RepositoryIdSeq *
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::RepositoryIdSeq *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_RepositoryIdSeq, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::RepositoryIdSeq *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::RepositoryIdSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::RepositoryIdSeq *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_RepositoryIdSeq,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::RepositoryIdSeq *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::RepositoryIdSeq *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::RepositoryIdSeq *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::RepositoryIdSeq *&,_tao_elem);
 }
 
 void operator<<= (
@@ -19934,40 +17673,25 @@ void operator<<= (
     const CORBA::OpDescriptionSeq &_tao_elem
   ) // copying
 {
-  CORBA::OpDescriptionSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::OpDescriptionSeq (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    if (stream << *_tao_any_val)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_OpDescriptionSeq,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK; 
     }
-    else
-    {
-      delete _tao_any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::OpDescriptionSeq::_tao_any_destructor (void *x)
+{
+  CORBA::OpDescriptionSeq *tmp = ACE_static_cast(CORBA::OpDescriptionSeq*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::OpDescriptionSeq *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -19976,16 +17700,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::OpDescriptionSeq *_tao_elem) // n
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::OpDescriptionSeq::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OpDescriptionSeq *&_tao_elem)
@@ -20017,9 +17733,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OpDescriptionSeq 
             CORBA::_tc_OpDescriptionSeq,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::OpDescriptionSeq::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -20033,7 +17748,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OpDescriptionSeq 
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -20041,53 +17756,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::OpDescriptionSeq 
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::OpDescriptionSeq *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_OpDescriptionSeq, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::OpDescriptionSeq *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::OpDescriptionSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::OpDescriptionSeq *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_OpDescriptionSeq,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::OpDescriptionSeq *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::OpDescriptionSeq *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::OpDescriptionSeq *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::OpDescriptionSeq *&,_tao_elem);
 }
 
 void operator<<= (
@@ -20095,40 +17764,25 @@ void operator<<= (
     const CORBA::AttrDescriptionSeq &_tao_elem
   ) // copying
 {
-  CORBA::AttrDescriptionSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::AttrDescriptionSeq (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    if (stream << *_tao_any_val)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_AttrDescriptionSeq,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK; 
     }
-    else
-    {
-      delete _tao_any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::AttrDescriptionSeq::_tao_any_destructor (void *x)
+{
+  CORBA::AttrDescriptionSeq *tmp = ACE_static_cast(CORBA::AttrDescriptionSeq*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::AttrDescriptionSeq *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -20137,16 +17791,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::AttrDescriptionSeq *_tao_elem) //
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::AttrDescriptionSeq::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttrDescriptionSeq *&_tao_elem)
@@ -20178,9 +17824,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttrDescriptionSe
             CORBA::_tc_AttrDescriptionSeq,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::AttrDescriptionSeq::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -20194,7 +17839,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttrDescriptionSe
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -20202,53 +17847,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::AttrDescriptionSe
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::AttrDescriptionSeq *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_AttrDescriptionSeq, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::AttrDescriptionSeq *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::AttrDescriptionSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::AttrDescriptionSeq *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_AttrDescriptionSeq,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::AttrDescriptionSeq *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::AttrDescriptionSeq *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::AttrDescriptionSeq *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::AttrDescriptionSeq *&,_tao_elem);
 }
 
 CORBA::InterfaceDef_ptr (*_TAO_collocation_CORBA_InterfaceDef_Stub_Factory_function_pointer) (
@@ -20256,47 +17855,31 @@ CORBA::InterfaceDef_ptr (*_TAO_collocation_CORBA_InterfaceDef_Stub_Factory_funct
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::InterfaceDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::InterfaceDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_InterfaceDef, 
+          CORBA::_tc_InterfaceDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::InterfaceDef::_tao_any_destructor (void *x)
+{
+  CORBA::InterfaceDef *tmp = ACE_static_cast(CORBA::InterfaceDef*,x);
+  delete tmp;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::InterfaceDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_InterfaceDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -20309,24 +17892,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDef_ptr 
     {
       _tao_elem = CORBA::InterfaceDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_InterfaceDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::InterfaceDef::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::InterfaceDef::_nil ();
     return 0;
   }
@@ -20346,34 +17922,24 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDef_ptr 
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::InterfaceDef::FullInterfaceDescription &_tao_elem) // copying
 {
-  CORBA::InterfaceDef::FullInterfaceDescription *_any_val = 0;
-  ACE_NEW (_any_val, CORBA::InterfaceDef::FullInterfaceDescription (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::InterfaceDef::_tc_FullInterfaceDescription,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void
+CORBA::InterfaceDef::FullInterfaceDescription::_tao_any_destructor (void *x)
+{
+  CORBA::InterfaceDef::FullInterfaceDescription *tmp = ACE_static_cast(CORBA::InterfaceDef::FullInterfaceDescription*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::InterfaceDef::FullInterfaceDescription *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -20382,16 +17948,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::InterfaceDef::FullInterfaceDescri
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::InterfaceDef::FullInterfaceDescription::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDef::FullInterfaceDescription *&_tao_elem)
@@ -20423,9 +17981,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDef::Ful
             CORBA::InterfaceDef::_tc_FullInterfaceDescription,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::InterfaceDef::FullInterfaceDescription::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -20439,7 +17996,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDef::Ful
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -20447,85 +18004,28 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDef::Ful
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::InterfaceDef::FullInterfaceDescription *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::InterfaceDef::_tc_FullInterfaceDescription, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::InterfaceDef::FullInterfaceDescription *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::InterfaceDef::FullInterfaceDescription, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::InterfaceDef::FullInterfaceDescription *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::InterfaceDef::_tc_FullInterfaceDescription,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::InterfaceDef::FullInterfaceDescription *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::InterfaceDef::FullInterfaceDescription *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::InterfaceDef::FullInterfaceDescription *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::InterfaceDef::FullInterfaceDescription *&,_tao_elem);
 }
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::InterfaceDescription &_tao_elem) // copying
 {
-  CORBA::InterfaceDescription *_any_val = 0;
-  ACE_NEW (_any_val, CORBA::InterfaceDescription (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::_tc_InterfaceDescription,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::InterfaceDescription::_tao_any_destructor (void *x)
+{
+  CORBA::InterfaceDescription *tmp = ACE_static_cast(CORBA::InterfaceDescription*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::InterfaceDescription *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -20534,16 +18034,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::InterfaceDescription *_tao_elem) 
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::InterfaceDescription::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDescription *&_tao_elem)
@@ -20575,9 +18067,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDescript
             CORBA::_tc_InterfaceDescription,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::InterfaceDescription::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -20591,7 +18082,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDescript
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -20599,85 +18090,28 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::InterfaceDescript
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::InterfaceDescription *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_InterfaceDescription, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::InterfaceDescription *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::InterfaceDescription, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::InterfaceDescription *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_InterfaceDescription,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::InterfaceDescription *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::InterfaceDescription *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::InterfaceDescription *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::InterfaceDescription *&,_tao_elem);
 }
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::ValueMember &_tao_elem) // copying
 {
-  CORBA::ValueMember *_any_val = 0;
-  ACE_NEW (_any_val, CORBA::ValueMember (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::_tc_ValueMember,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ValueMember::_tao_any_destructor (void *x)
+{
+  CORBA::ValueMember *tmp = ACE_static_cast(CORBA::ValueMember*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::ValueMember *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -20686,16 +18120,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ValueMember *_tao_elem) // non co
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::ValueMember::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueMember *&_tao_elem)
@@ -20727,9 +18153,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueMember *&_ta
             CORBA::_tc_ValueMember,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::ValueMember::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -20743,7 +18168,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueMember *&_ta
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -20751,53 +18176,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueMember *&_ta
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::ValueMember *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_ValueMember, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::ValueMember *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ValueMember, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::ValueMember *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_ValueMember,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::ValueMember *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::ValueMember *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::ValueMember *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::ValueMember *&,_tao_elem);
 }
 
 void operator<<= (
@@ -20805,40 +18184,25 @@ void operator<<= (
     const CORBA::ValueMemberSeq &_tao_elem
   ) // copying
 {
-  CORBA::ValueMemberSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::ValueMemberSeq (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    if (stream << *_tao_any_val)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_ValueMemberSeq,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK; 
     }
-    else
-    {
-      delete _tao_any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ValueMemberSeq::_tao_any_destructor (void *x)
+{
+  CORBA::ValueMemberSeq *tmp = ACE_static_cast(CORBA::ValueMemberSeq*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::ValueMemberSeq *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -20847,16 +18211,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ValueMemberSeq *_tao_elem) // non
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::ValueMemberSeq::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueMemberSeq *&_tao_elem)
@@ -20888,9 +18244,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueMemberSeq *&
             CORBA::_tc_ValueMemberSeq,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::ValueMemberSeq::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -20904,7 +18259,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueMemberSeq *&
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -20912,53 +18267,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueMemberSeq *&
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::ValueMemberSeq *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_ValueMemberSeq, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::ValueMemberSeq *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ValueMemberSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::ValueMemberSeq *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_ValueMemberSeq,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::ValueMemberSeq *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::ValueMemberSeq *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::ValueMemberSeq *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::ValueMemberSeq *&,_tao_elem);
 }
 
 CORBA::ValueMemberDef_ptr (*_TAO_collocation_CORBA_ValueMemberDef_Stub_Factory_function_pointer) (
@@ -20966,47 +18275,31 @@ CORBA::ValueMemberDef_ptr (*_TAO_collocation_CORBA_ValueMemberDef_Stub_Factory_f
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::ValueMemberDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::ValueMemberDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_ValueMemberDef, 
+          CORBA::_tc_ValueMemberDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ValueMemberDef::_tao_any_destructor (void *x)
+{
+  CORBA::ValueMemberDef *tmp = ACE_static_cast(CORBA::ValueMemberDef*,x);
+  delete tmp;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueMemberDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::ValueMemberDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_ValueMemberDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -21019,24 +18312,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueMemberDef_pt
     {
       _tao_elem = CORBA::ValueMemberDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_ValueMemberDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::ValueMemberDef::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::ValueMemberDef::_nil ();
     return 0;
   }
@@ -21059,47 +18345,31 @@ CORBA::ValueDef_ptr (*_TAO_collocation_CORBA_ValueDef_Stub_Factory_function_poin
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::ValueDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::ValueDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_ValueDef, 
+          CORBA::_tc_ValueDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ValueDef::_tao_any_destructor (void *x)
+{
+  CORBA::ValueDef *tmp = ACE_static_cast(CORBA::ValueDef*,x);
+  delete tmp;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::ValueDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_ValueDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -21112,24 +18382,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDef_ptr &_ta
     {
       _tao_elem = CORBA::ValueDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_ValueDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::ValueDef::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::ValueDef::_nil ();
     return 0;
   }
@@ -21149,34 +18412,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDef_ptr &_ta
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::ValueDef::FullValueDescription &_tao_elem) // copying
 {
-  CORBA::ValueDef::FullValueDescription *_any_val = 0;
-  ACE_NEW (_any_val, CORBA::ValueDef::FullValueDescription (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::ValueDef::_tc_FullValueDescription,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ValueDef::FullValueDescription::_tao_any_destructor (void *x)
+{
+  CORBA::ValueDef::FullValueDescription *tmp = ACE_static_cast(CORBA::ValueDef::FullValueDescription*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::ValueDef::FullValueDescription *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -21185,16 +18437,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ValueDef::FullValueDescription *_
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::ValueDef::FullValueDescription::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDef::FullValueDescription *&_tao_elem)
@@ -21226,9 +18470,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDef::FullVal
             CORBA::ValueDef::_tc_FullValueDescription,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::ValueDef::FullValueDescription::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -21242,7 +18485,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDef::FullVal
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -21250,85 +18493,28 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDef::FullVal
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::ValueDef::FullValueDescription *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::ValueDef::_tc_FullValueDescription, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::ValueDef::FullValueDescription *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ValueDef::FullValueDescription, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::ValueDef::FullValueDescription *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::ValueDef::_tc_FullValueDescription,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::ValueDef::FullValueDescription *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::ValueDef::FullValueDescription *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::ValueDef::FullValueDescription *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::ValueDef::FullValueDescription *&,_tao_elem);
 }
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::ValueDescription &_tao_elem) // copying
 {
-  CORBA::ValueDescription *_any_val = 0;
-  ACE_NEW (_any_val, CORBA::ValueDescription (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         CORBA::_tc_ValueDescription,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ValueDescription::_tao_any_destructor (void *x)
+{
+  CORBA::ValueDescription *tmp = ACE_static_cast(CORBA::ValueDescription*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::ValueDescription *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -21337,16 +18523,8 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ValueDescription *_tao_elem) // n
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        CORBA::ValueDescription::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDescription *&_tao_elem)
@@ -21378,9 +18556,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDescription 
             CORBA::_tc_ValueDescription,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            CORBA::ValueDescription::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -21394,7 +18571,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDescription 
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -21402,53 +18579,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueDescription 
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::ValueDescription *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CORBA::_tc_ValueDescription, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CORBA::ValueDescription *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ValueDescription, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CORBA::ValueDescription *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_ValueDescription,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::ValueDescription *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CORBA::ValueDescription *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CORBA::ValueDescription *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(CORBA::ValueDescription *&,_tao_elem);
 }
 
 CORBA::ValueBoxDef_ptr (*_TAO_collocation_CORBA_ValueBoxDef_Stub_Factory_function_pointer) (
@@ -21456,47 +18587,31 @@ CORBA::ValueBoxDef_ptr (*_TAO_collocation_CORBA_ValueBoxDef_Stub_Factory_functio
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::ValueBoxDef_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::ValueBoxDef::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_ValueBoxDef, 
+          CORBA::_tc_ValueBoxDef,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void CORBA::ValueBoxDef::_tao_any_destructor (void *x)
+{
+  CORBA::ValueBoxDef *tmp = ACE_static_cast(CORBA::ValueBoxDef*,x);
+  delete tmp;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueBoxDef_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::ValueBoxDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_ValueBoxDef, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -21509,24 +18624,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ValueBoxDef_ptr &
     {
       _tao_elem = CORBA::ValueBoxDef::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_ValueBoxDef,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          CORBA::ValueBoxDef::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::ValueBoxDef::_nil ();
     return 0;
   }

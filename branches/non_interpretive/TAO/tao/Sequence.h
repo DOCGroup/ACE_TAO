@@ -489,6 +489,10 @@ public:
   virtual ~TAO_Unbounded_Sequence (void);
   // see TAO_Unbounded_Sequence in "Sequence_T.h"
 
+  static void _tao_any_destructor (void*);
+  // Use in the implementation of insertion and extraction operators
+  // from CORBA::Any
+
   TAO_Unbounded_Sequence (const TAO_Unbounded_Sequence<CORBA::Octet> &);
   TAO_Unbounded_Sequence<CORBA::Octet>& operator= (const TAO_Unbounded_Sequence<CORBA::Octet> &);
   // The copy constructor and assignment operators *do* copy the data,

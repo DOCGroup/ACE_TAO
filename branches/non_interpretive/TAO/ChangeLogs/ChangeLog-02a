@@ -1,159 +1,234 @@
+Mon Mar 13 08:23:23 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Any.h:
+        * tao/Any.cpp:
+          The _tao_replace() functions do not require an ACE_TRY_ENV
+          argument.
+          Any _tao_replace() function that requires a void* also requires
+          the destructor function.
+
+        * tao/BoundsC.h:
+        * tao/BoundsC.cpp:
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CurrentC.cpp:
+        * tao/DomainC.cpp:
+        * tao/DynAnyC.h:
+        * tao/DynAny_i.cpp:
+        * tao/GIOPC.cpp:
+        * tao/IOPC.cpp:
+        * tao/IOPC.h:
+        * tao/IORC.h:
+        * tao/IORC.cpp:
+        * tao/ImplRepoC.h:
+        * tao/ImplRepoC.i:
+        * tao/ImplRepoC.cpp:
+        * tao/ImplRepoS.cpp:
+        * tao/ImplRepoS.h:
+        * tao/ImplRepoS.i:
+        * tao/ImplRepoS_T.h:
+        * tao/ImplRepoS_T.i:
+        * tao/ImplRepoS_T.cpp:
+        * tao/InterceptorC.h:
+        * tao/InterceptorC.cpp:
+        * tao/InterfaceC.h:
+        * tao/InterfaceC.cpp:
+        * tao/MessagingC.h:
+        * tao/MessagingC.cpp:
+        * tao/MessagingS.cpp:
+        * tao/NVList.cpp:
+        * tao/ObjectIDList.h:
+        * tao/ObjectIDList.cpp:
+        * tao/POAC.h:
+        * tao/POAC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.cpp:
+        * tao/PollableC.h:
+        * tao/PollableC.cpp:
+        * tao/Sequence.h:
+        * tao/Sequence.cpp:
+        * tao/Services.h:
+        * tao/Services.cpp:
+        * tao/TAOC.h:
+        * tao/TAOC.cpp:
+        * tao/TimeBaseC.h:
+        * tao/TimeBaseC.cpp:
+          Changed all the hand-crafted files to use the new _tao_replace
+          style functions.
+
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+          The _tao_replace() functions do not require the ACE_TRY_ENV
+          argument anymore.  This let us simplify many of the
+          implementations for >>= and <<= operators.  We also identified
+          some cases of duplicated code and removed as much as possible of
+          that.
+
+        * tests/Param_Test/Param_Test.dsw:
+        * tests/Param_Test/anyop.dsp:
+        * tests/Param_Test/anyop.cpp:
+          Added the anyop test to the NT project files.
+
 Fri Mar 10 19:06:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DynAnyC.h:
-	* tao/DynAnyC.cpp:
-	  Removed some unnecessary _ptr_type typedefs.
+        * tao/DynAnyC.h:
+        * tao/DynAnyC.cpp:
+          Removed some unnecessary _ptr_type typedefs.
 
 Fri Mar 10 14:54:20 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_array/array_cs.cpp:
-	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
-	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
-	  In the definition of the static function
-	  _tao_any_destructor, prepending the global "::"
-	  to the scoped name of the class or struct keeps
-	  gcc happy. Thanks to Carlos for pointing this out.
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          In the definition of the static function
+          _tao_any_destructor, prepending the global "::"
+          to the scoped name of the class or struct keeps
+          gcc happy. Thanks to Carlos for pointing this out.
 
 Fri Mar 10 12:24:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* examples/POA/DSI/Database_i.cpp:
-	* orbsvcs/LifeCycle_Service/Criteria_Evaluator.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
-	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
-	* orbsvcs/tests/Property/client.cpp:
-	* orbsvcs/tests/Trading/Offer_Exporter.cpp:
-	* orbsvcs/tests/Trading/TT_Info.cpp:
-	* tests/CDR/basic_types.cpp:
-	* tests/Param_Test/objref.cpp:
-	* tests/Param_Test/objref.h:
-	* utils/catior/catior.cpp:
-	  Fixed uses of encode(), decode(), replace(), the void*
-	  constructor for Any and obsolete >>= or <<= operators.
+        * examples/POA/DSI/Database_i.cpp:
+        * orbsvcs/LifeCycle_Service/Criteria_Evaluator.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+        * orbsvcs/tests/Property/client.cpp:
+        * orbsvcs/tests/Trading/Offer_Exporter.cpp:
+        * orbsvcs/tests/Trading/TT_Info.cpp:
+        * tests/CDR/basic_types.cpp:
+        * tests/Param_Test/objref.cpp:
+        * tests/Param_Test/objref.h:
+        * utils/catior/catior.cpp:
+          Fixed uses of encode(), decode(), replace(), the void*
+          constructor for Any and obsolete >>= or <<= operators.
 
-	* */Makefile:
-	  Updated dependencies
+        * */Makefile:
+          Updated dependencies
 
 Fri Mar 10 11:28:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/Any.cpp:
-	  The >>= operator for 'const Any*' was not working properly,
-	  thanks to Jeff for letting me know.
+        * tao/Any.cpp:
+          The >>= operator for 'const Any*' was not working properly,
+          thanks to Jeff for letting me know.
 
-	* tao/GIOPC.h:
-	* tao/GIOPC.cpp:
-	  Another pair of files updated.
+        * tao/GIOPC.h:
+        * tao/GIOPC.cpp:
+          Another pair of files updated.
 
 Fri Mar 10 12:49:21 2000  Jeff Paraons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_codegen.cpp 
-	* TAO_IDL/be/be_visitor_argument.cpp 
-	* TAO_IDL/be/be_visitor_factory.cpp 
-	* TAO_IDL/be/be_visitor_operation.cpp 
-	* TAO_IDL/be/be_visitor_argument/marshal_ss.cpp 
-	* TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp 
-	* TAO_IDL/be/be_visitor_argument/pre_invoke_cs.cpp 
-	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp 
-	* TAO_IDL/be/be_visitor_operation/argument.cpp 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp 
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp 
-	* TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp 
-	* TAO_IDL/be/be_visitor_operation/rettype_post_upcall_ss.cpp 
-	* TAO_IDL/be/be_visitor_operation/rettype_pre_invoke_cs.cpp 
-	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp 
-	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp 
-	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp 
-	* TAO_IDL/be_include/be_codegen.h 
-	* TAO_IDL/be_include/be_visitor_argument.h 
-	* TAO_IDL/be_include/be_visitor_factory.h 
-	* TAO_IDL/be_include/be_visitor_operation.h 
-	* TAO_IDL/be_include/be_visitor_argument/marshal_ss.h 
-	* TAO_IDL/be_include/be_visitor_argument/post_upcall_ss.h 
-	* TAO_IDL/be_include/be_visitor_argument/pre_invoke_cs.h 
-	* TAO_IDL/be_include/be_visitor_argument/vardecl_ss.h 
-	* TAO_IDL/be_include/be_visitor_operation/operation_cs.h 
-	* TAO_IDL/be_include/be_visitor_operation/operation_ss.h 
-	* TAO_IDL/be_include/be_visitor_operation/rettype_marshal_ss.h 
-	* TAO_IDL/be_include/be_visitor_operation/rettype_post_upcall_ss.h 
-	* TAO_IDL/be_include/be_visitor_operation/rettype_pre_invoke_cs.h 
-	* TAO_IDL/be_include/be_visitor_operation/rettype_vardecl_ss.h 
-	* TAO_IDL/be_include/be_visitor_union/any_op_cs.h 
-	* TAO_IDL/driver/drv_args.cpp 
-	* TAO_IDL/include/idl_global.h 
-	* TAO_IDL/util/utl_global.cpp 
-	  Changes to remove the generation of code using interpretive
-	  marshaling.
+        * TAO_IDL/be/be_codegen.cpp
+        * TAO_IDL/be/be_visitor_argument.cpp
+        * TAO_IDL/be/be_visitor_factory.cpp
+        * TAO_IDL/be/be_visitor_operation.cpp
+        * TAO_IDL/be/be_visitor_argument/marshal_ss.cpp
+        * TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp
+        * TAO_IDL/be/be_visitor_argument/pre_invoke_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp
+        * TAO_IDL/be/be_visitor_operation/argument.cpp
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_post_upcall_ss.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_pre_invoke_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp
+        * TAO_IDL/be/be_visitor_valuetype/arglist.cpp
+        * TAO_IDL/be_include/be_codegen.h
+        * TAO_IDL/be_include/be_visitor_argument.h
+        * TAO_IDL/be_include/be_visitor_factory.h
+        * TAO_IDL/be_include/be_visitor_operation.h
+        * TAO_IDL/be_include/be_visitor_argument/marshal_ss.h
+        * TAO_IDL/be_include/be_visitor_argument/post_upcall_ss.h
+        * TAO_IDL/be_include/be_visitor_argument/pre_invoke_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/vardecl_ss.h
+        * TAO_IDL/be_include/be_visitor_operation/operation_cs.h
+        * TAO_IDL/be_include/be_visitor_operation/operation_ss.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_marshal_ss.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_post_upcall_ss.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_pre_invoke_cs.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_vardecl_ss.h
+        * TAO_IDL/be_include/be_visitor_union/any_op_cs.h
+        * TAO_IDL/driver/drv_args.cpp
+        * TAO_IDL/include/idl_global.h
+        * TAO_IDL/util/utl_global.cpp
+          Changes to remove the generation of code using interpretive
+          marshaling.
 
-	* TAO_IDL/be/be_visitor_argument/invoke_cs.cpp 
-	* TAO_IDL/be/be_visitor_argument/post_invoke_cs.cpp 
-	* TAO_IDL/be/be_visitor_operation/rettype_post_invoke_cs.cpp 
-	* TAO_IDL/be_include/be_visitor_argument/invoke_cs.h 
-	* TAO_IDL/be_include/be_visitor_argument/post_invoke_cs.h 
-	* TAO_IDL/be_include/be_visitor_operation/rettype_post_invoke_cs.h 
-  	  Files added or renamed from other files removed below.
+        * TAO_IDL/be/be_visitor_argument/invoke_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/post_invoke_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_post_invoke_cs.cpp
+        * TAO_IDL/be_include/be_visitor_argument/invoke_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/post_invoke_cs.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_post_invoke_cs.h
+          Files added or renamed from other files removed below.
 
-	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp 
-	* TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp 
-	* TAO_IDL/be/be_visitor_argument/docall_cs.cpp 
-	* TAO_IDL/be/be_visitor_argument/post_docall_compiled_cs.cpp 
-	* TAO_IDL/be/be_visitor_argument/post_docall_cs.cpp 
-	* TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp 
-	* TAO_IDL/be/be_visitor_argument/pre_upcall_ss.cpp 
-	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp 
-	* TAO_IDL/be/be_visitor_operation/rettype_docall_cs.cpp 
-	* TAO_IDL/be/be_visitor_operation/rettype_post_docall_cs.cpp 
-	* TAO_IDL/be/be_visitor_operation/rettype_pre_docall_cs.cpp 
-	* TAO_IDL/be_include/be_visitor_argument/compiled_marshal_cs.h 
-	* TAO_IDL/be_include/be_visitor_argument/compiled_marshal_ss.h 
-	* TAO_IDL/be_include/be_visitor_argument/docall_cs.h 
-	* TAO_IDL/be_include/be_visitor_argument/post_docall_compiled_cs.h 
-	* TAO_IDL/be_include/be_visitor_argument/post_docall_cs.h 
-	* TAO_IDL/be_include/be_visitor_argument/pre_docall_cs.h 
-	* TAO_IDL/be_include/be_visitor_argument/pre_upcall_ss.h 
-	* TAO_IDL/be_include/be_visitor_operation/compiled_marshal.h 
-	* TAO_IDL/be_include/be_visitor_operation/rettype_docall_cs.h 
-	* TAO_IDL/be_include/be_visitor_operation/rettype_post_docall_cs.h 
-	* TAO_IDL/be_include/be_visitor_operation/rettype_pre_docall_cs.h 
-	  Files removed.
+        * TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp
+        * TAO_IDL/be/be_visitor_argument/docall_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/post_docall_compiled_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/post_docall_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp
+        * TAO_IDL/be/be_visitor_argument/pre_upcall_ss.cpp
+        * TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_docall_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_post_docall_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/rettype_pre_docall_cs.cpp
+        * TAO_IDL/be_include/be_visitor_argument/compiled_marshal_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/compiled_marshal_ss.h
+        * TAO_IDL/be_include/be_visitor_argument/docall_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/post_docall_compiled_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/post_docall_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/pre_docall_cs.h
+        * TAO_IDL/be_include/be_visitor_argument/pre_upcall_ss.h
+        * TAO_IDL/be_include/be_visitor_operation/compiled_marshal.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_docall_cs.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_post_docall_cs.h
+        * TAO_IDL/be_include/be_visitor_operation/rettype_pre_docall_cs.h
+          Files removed.
 
 Fri Mar 10 09:49:40 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/Any.h:
-	* tao/Any.cpp:
-	  More memory management fixes for the >>= and <<= operators.
-	  Moved some static _tao_any_destructor functions to the Any
-	  class, it is easier to maintain it that way.
+        * tao/Any.h:
+        * tao/Any.cpp:
+          More memory management fixes for the >>= and <<= operators.
+          Moved some static _tao_any_destructor functions to the Any
+          class, it is easier to maintain it that way.
 
-	* tao/Object.h:
-	* tao/Object.cpp:
-	  Add the _tao_any_destructor helper function.
+        * tao/Object.h:
+        * tao/Object.cpp:
+          Add the _tao_any_destructor helper function.
 
-	* tao/DomainC.h:
-	* tao/DomainC.cpp:
-	  Changed to use the new _tao_any_destructors in the right places.
+        * tao/DomainC.h:
+        * tao/DomainC.cpp:
+          Changed to use the new _tao_any_destructors in the right places.
 
-	* tao/DynAny_i.cpp:
-	  It is better just to return 0 than to cast away const.
+        * tao/DynAny_i.cpp:
+          It is better just to return 0 than to cast away const.
 
 Fri Mar 10 11:28:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/TAO.dsp:
-	* tao/TAO_static.dsp:
-	  Added BoundsC.cpp to these projects.
+        * tao/TAO.dsp:
+        * tao/TAO_static.dsp:
+          Added BoundsC.cpp to these projects.
 
-	* tao/DynAny_i,cpp:
-	  In get_string() cast away the constness of the internal
-	  char* pointer in the ACE_THROW_RETURN statement.
+        * tao/DynAny_i,cpp:
+          In get_string() cast away the constness of the internal
+          char* pointer in the ACE_THROW_RETURN statement.
 
 Thu Mar  9 21:02:10 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp: 
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
 
-	  Fixed typo.
+          Fixed typo.
 
 Thu Mar  9 18:50:44 2000  Carlos O'Ryan  <coryan@uci.edu>
 

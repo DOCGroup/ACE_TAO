@@ -20,7 +20,7 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 3:08:21 */
+/* starting time is 22:04:55 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
 /* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable -N lookup  */
 unsigned int
@@ -91,10 +91,10 @@ TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::lookup (const ch
   static const class TAO_operation_db_entry  wordlist[] =
     {
       {"",0},{"",0},{"",0},{"",0},
-      {"ping", 	&POA_ImplementationRepository::ServerObject::ping_skel},
+      {"ping",  &POA_ImplementationRepository::ServerObject::ping_skel},
       {"_is_a",  &POA_ImplementationRepository::ServerObject::_is_a_skel},
       {"",0},{"",0},
-      {"shutdown", 	&POA_ImplementationRepository::ServerObject::shutdown_skel},
+      {"shutdown",      &POA_ImplementationRepository::ServerObject::shutdown_skel},
       {"",0},{"",0},{"",0},{"",0},
       {"_non_existent",  &POA_ImplementationRepository::ServerObject::_non_existent_skel},
     };
@@ -113,7 +113,7 @@ TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::lookup (const ch
     }
   return 0;
 }
-/* ending time is 3:08:21 */
+/* ending time is 22:04:55 */
 static TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable tao_ImplementationRepository_ServerObject_optable;
 
 ImplementationRepository::ServerObject_ptr _TAO_collocation_POA_ImplementationRepository_ServerObject_Stub_Factory (
@@ -121,7 +121,7 @@ ImplementationRepository::ServerObject_ptr _TAO_collocation_POA_ImplementationRe
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -145,14 +145,14 @@ ImplementationRepository::ServerObject_ptr _TAO_collocation_POA_ImplementationRe
 int _TAO_collocation_POA_ImplementationRepository_ServerObject_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_ImplementationRepository_ServerObject_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_ImplementationRepository_ServerObject_Stub_Factory_function_pointer =
     _TAO_collocation_POA_ImplementationRepository_ServerObject_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_ImplementationRepository_ServerObject_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_ImplementationRepository_ServerObject_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_ImplementationRepository_ServerObject_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_ImplementationRepository_ServerObject_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -173,8 +173,8 @@ POA_ImplementationRepository::ServerObject::~ServerObject (void)
 
 void POA_ImplementationRepository::ServerObject::ping_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -248,12 +248,12 @@ void POA_ImplementationRepository::ServerObject::ping_skel (
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-}
+  }
 
 void POA_ImplementationRepository::ServerObject::shutdown_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -327,10 +327,10 @@ void POA_ImplementationRepository::ServerObject::shutdown_skel (
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-}
+  }
 
 void POA_ImplementationRepository::ServerObject::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -342,10 +342,10 @@ void POA_ImplementationRepository::ServerObject::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -354,7 +354,7 @@ void POA_ImplementationRepository::ServerObject::_is_a_skel (
 }
 
 void POA_ImplementationRepository::ServerObject::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -363,7 +363,7 @@ void POA_ImplementationRepository::ServerObject::_non_existent_skel (
   POA_ImplementationRepository::ServerObject *_tao_impl = (POA_ImplementationRepository::ServerObject *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -424,7 +424,7 @@ POA_ImplementationRepository::ServerObject::_this (CORBA_Environment &ACE_TRY_EN
       {
       case TAO_ORB_Core::THRU_POA:
         {
-          ImplementationRepository::ServerObject_ptr retval = 0;
+          ::ImplementationRepository::ServerObject_ptr retval = 0;
           ACE_NEW_RETURN (
               retval,
               POA_ImplementationRepository::_tao_thru_poa_collocated_ServerObject (stub),
@@ -443,15 +443,14 @@ POA_ImplementationRepository::ServerObject::_this (CORBA_Environment &ACE_TRY_EN
       CORBA::Object_ptr tmp = CORBA::Object::_nil ();
       ACE_NEW_RETURN (tmp, CORBA::Object (stub), 0);
       CORBA::Object_var obj = tmp;
-      return ImplementationRepository::ServerObject::_unchecked_narrow (obj.in ());
+      return ::ImplementationRepository::ServerObject::_unchecked_narrow (obj.in ());
     }
 }
 
 POA_ImplementationRepository::_tao_thru_poa_collocated_ServerObject::_tao_thru_poa_collocated_ServerObject (
   TAO_Stub *stub
 )
-  : ACE_NESTED_CLASS (ImplementationRepository,ServerObject) (),
-    CORBA_Object (stub, 0, 1)
+  :  CORBA_Object (stub, 0, 1)
 {
 }
 
@@ -565,7 +564,7 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 3:08:22 */
+/* starting time is 22:04:56 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
 /* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable -N lookup  */
 unsigned int
@@ -636,27 +635,27 @@ TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable::lookup (const 
   static const class TAO_operation_db_entry  wordlist[] =
     {
       {"",0},{"",0},{"",0},{"",0},
-      {"list", 	&POA_ImplementationRepository::Administration::list_skel},
+      {"list",  &POA_ImplementationRepository::Administration::list_skel},
       {"",0},{"",0},{"",0},{"",0},
-      {"find", 	&POA_ImplementationRepository::Administration::find_skel},
+      {"find",  &POA_ImplementationRepository::Administration::find_skel},
       {"",0},{"",0},{"",0},
-      {"remove_server", 	&POA_ImplementationRepository::Administration::remove_server_skel},
+      {"remove_server",         &POA_ImplementationRepository::Administration::remove_server_skel},
       {"",0},
-      {"register_server", 	&POA_ImplementationRepository::Administration::register_server_skel},
+      {"register_server",       &POA_ImplementationRepository::Administration::register_server_skel},
       {"",0},
-      {"reregister_server", 	&POA_ImplementationRepository::Administration::reregister_server_skel},
+      {"reregister_server",     &POA_ImplementationRepository::Administration::reregister_server_skel},
       {"",0},{"",0},
-      {"shutdown_server", 	&POA_ImplementationRepository::Administration::shutdown_server_skel},
+      {"shutdown_server",       &POA_ImplementationRepository::Administration::shutdown_server_skel},
       {"",0},
-      {"server_is_running", 	&POA_ImplementationRepository::Administration::server_is_running_skel},
+      {"server_is_running",     &POA_ImplementationRepository::Administration::server_is_running_skel},
       {"",0},{"",0},
-      {"activate_server", 	&POA_ImplementationRepository::Administration::activate_server_skel},
+      {"activate_server",       &POA_ImplementationRepository::Administration::activate_server_skel},
       {"",0},{"",0},
       {"_non_existent",  &POA_ImplementationRepository::Administration::_non_existent_skel},
       {"",0},
       {"_is_a",  &POA_ImplementationRepository::Administration::_is_a_skel},
       {"",0},{"",0},
-      {"server_is_shutting_down", 	&POA_ImplementationRepository::Administration::server_is_shutting_down_skel},
+      {"server_is_shutting_down",       &POA_ImplementationRepository::Administration::server_is_shutting_down_skel},
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -673,7 +672,7 @@ TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable::lookup (const 
     }
   return 0;
 }
-/* ending time is 3:08:22 */
+/* ending time is 22:04:56 */
 static TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable tao_ImplementationRepository_Administration_optable;
 
 ImplementationRepository::Administration_ptr _TAO_collocation_POA_ImplementationRepository_Administration_Stub_Factory (
@@ -681,7 +680,7 @@ ImplementationRepository::Administration_ptr _TAO_collocation_POA_Implementation
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -705,14 +704,14 @@ ImplementationRepository::Administration_ptr _TAO_collocation_POA_Implementation
 int _TAO_collocation_POA_ImplementationRepository_Administration_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_ImplementationRepository_Administration_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_ImplementationRepository_Administration_Stub_Factory_function_pointer =
     _TAO_collocation_POA_ImplementationRepository_Administration_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_ImplementationRepository_Administration_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_ImplementationRepository_Administration_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_ImplementationRepository_Administration_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_ImplementationRepository_Administration_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -733,8 +732,8 @@ POA_ImplementationRepository::Administration::~Administration (void)
 
 void POA_ImplementationRepository::Administration::activate_server_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -816,12 +815,12 @@ void POA_ImplementationRepository::Administration::activate_server_skel (
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-}
+  }
 
 void POA_ImplementationRepository::Administration::register_server_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -906,12 +905,12 @@ void POA_ImplementationRepository::Administration::register_server_skel (
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-}
+  }
 
 void POA_ImplementationRepository::Administration::reregister_server_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -996,12 +995,12 @@ void POA_ImplementationRepository::Administration::reregister_server_skel (
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-}
+  }
 
 void POA_ImplementationRepository::Administration::remove_server_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -1083,12 +1082,12 @@ void POA_ImplementationRepository::Administration::remove_server_skel (
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-}
+  }
 
 void POA_ImplementationRepository::Administration::shutdown_server_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -1170,12 +1169,12 @@ void POA_ImplementationRepository::Administration::shutdown_server_skel (
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-}
+  }
 
 void POA_ImplementationRepository::Administration::server_is_running_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -1264,7 +1263,6 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << _tao_retval.in ())
@@ -1275,8 +1273,8 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
 
 void POA_ImplementationRepository::Administration::server_is_shutting_down_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -1358,12 +1356,12 @@ void POA_ImplementationRepository::Administration::server_is_shutting_down_skel 
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-}
+  }
 
 void POA_ImplementationRepository::Administration::find_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -1447,7 +1445,6 @@ void POA_ImplementationRepository::Administration::find_skel (
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << info.in ())
@@ -1458,8 +1455,8 @@ void POA_ImplementationRepository::Administration::find_skel (
 
 void POA_ImplementationRepository::Administration::list_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -1545,7 +1542,6 @@ void POA_ImplementationRepository::Administration::list_skel (
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << server_list.in ()) &&
@@ -1556,7 +1552,7 @@ void POA_ImplementationRepository::Administration::list_skel (
 }
 
 void POA_ImplementationRepository::Administration::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -1568,10 +1564,10 @@ void POA_ImplementationRepository::Administration::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -1580,7 +1576,7 @@ void POA_ImplementationRepository::Administration::_is_a_skel (
 }
 
 void POA_ImplementationRepository::Administration::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -1589,7 +1585,7 @@ void POA_ImplementationRepository::Administration::_non_existent_skel (
   POA_ImplementationRepository::Administration *_tao_impl = (POA_ImplementationRepository::Administration *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -1650,7 +1646,7 @@ POA_ImplementationRepository::Administration::_this (CORBA_Environment &ACE_TRY_
       {
       case TAO_ORB_Core::THRU_POA:
         {
-          ImplementationRepository::Administration_ptr retval = 0;
+          ::ImplementationRepository::Administration_ptr retval = 0;
           ACE_NEW_RETURN (
               retval,
               POA_ImplementationRepository::_tao_thru_poa_collocated_Administration (stub),
@@ -1669,15 +1665,14 @@ POA_ImplementationRepository::Administration::_this (CORBA_Environment &ACE_TRY_
       CORBA::Object_ptr tmp = CORBA::Object::_nil ();
       ACE_NEW_RETURN (tmp, CORBA::Object (stub), 0);
       CORBA::Object_var obj = tmp;
-      return ImplementationRepository::Administration::_unchecked_narrow (obj.in ());
+      return ::ImplementationRepository::Administration::_unchecked_narrow (obj.in ());
     }
 }
 
 POA_ImplementationRepository::_tao_thru_poa_collocated_Administration::_tao_thru_poa_collocated_Administration (
   TAO_Stub *stub
 )
-  : ACE_NESTED_CLASS (ImplementationRepository,Administration) (),
-    CORBA_Object (stub, 0, 1)
+  :  CORBA_Object (stub, 0, 1)
 {
 }
 
@@ -2022,7 +2017,7 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 3:08:22 */
+/* starting time is 22:04:56 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
 /* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable -N lookup  */
 unsigned int
@@ -2094,8 +2089,8 @@ TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable::loo
     {
       {"",0},{"",0},{"",0},{"",0},{"",0},
       {"_is_a",  &POA_ImplementationRepository::ServerInformationIterator::_is_a_skel},
-      {"next_n", 	&POA_ImplementationRepository::ServerInformationIterator::next_n_skel},
-      {"destroy", 	&POA_ImplementationRepository::ServerInformationIterator::destroy_skel},
+      {"next_n",        &POA_ImplementationRepository::ServerInformationIterator::next_n_skel},
+      {"destroy",       &POA_ImplementationRepository::ServerInformationIterator::destroy_skel},
       {"",0},{"",0},{"",0},{"",0},{"",0},
       {"_non_existent",  &POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel},
     };
@@ -2114,7 +2109,7 @@ TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable::loo
     }
   return 0;
 }
-/* ending time is 3:08:22 */
+/* ending time is 22:04:56 */
 static TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable tao_ImplementationRepository_ServerInformationIterator_optable;
 
 ImplementationRepository::ServerInformationIterator_ptr _TAO_collocation_POA_ImplementationRepository_ServerInformationIterator_Stub_Factory (
@@ -2122,7 +2117,7 @@ ImplementationRepository::ServerInformationIterator_ptr _TAO_collocation_POA_Imp
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -2146,14 +2141,14 @@ ImplementationRepository::ServerInformationIterator_ptr _TAO_collocation_POA_Imp
 int _TAO_collocation_POA_ImplementationRepository_ServerInformationIterator_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_ImplementationRepository_ServerInformationIterator_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_ImplementationRepository_ServerInformationIterator_Stub_Factory_function_pointer =
     _TAO_collocation_POA_ImplementationRepository_ServerInformationIterator_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_ImplementationRepository_ServerInformationIterator_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_ImplementationRepository_ServerInformationIterator_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_ImplementationRepository_ServerInformationIterator_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_ImplementationRepository_ServerInformationIterator_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -2174,8 +2169,8 @@ POA_ImplementationRepository::ServerInformationIterator::~ServerInformationItera
 
 void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -2260,7 +2255,6 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-  ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
     (_tao_out << CORBA::Any::from_boolean (_tao_retval)) &&
@@ -2272,8 +2266,8 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
 
 void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -2347,10 +2341,10 @@ void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
-}
+  }
 
 void POA_ImplementationRepository::ServerInformationIterator::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -2362,10 +2356,10 @@ void POA_ImplementationRepository::ServerInformationIterator::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -2374,7 +2368,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_is_a_skel (
 }
 
 void POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -2383,7 +2377,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel
   POA_ImplementationRepository::ServerInformationIterator *_tao_impl = (POA_ImplementationRepository::ServerInformationIterator *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -2444,7 +2438,7 @@ POA_ImplementationRepository::ServerInformationIterator::_this (CORBA_Environmen
       {
       case TAO_ORB_Core::THRU_POA:
         {
-          ImplementationRepository::ServerInformationIterator_ptr retval = 0;
+          ::ImplementationRepository::ServerInformationIterator_ptr retval = 0;
           ACE_NEW_RETURN (
               retval,
               POA_ImplementationRepository::_tao_thru_poa_collocated_ServerInformationIterator (stub),
@@ -2463,15 +2457,14 @@ POA_ImplementationRepository::ServerInformationIterator::_this (CORBA_Environmen
       CORBA::Object_ptr tmp = CORBA::Object::_nil ();
       ACE_NEW_RETURN (tmp, CORBA::Object (stub), 0);
       CORBA::Object_var obj = tmp;
-      return ImplementationRepository::ServerInformationIterator::_unchecked_narrow (obj.in ());
+      return ::ImplementationRepository::ServerInformationIterator::_unchecked_narrow (obj.in ());
     }
 }
 
 POA_ImplementationRepository::_tao_thru_poa_collocated_ServerInformationIterator::_tao_thru_poa_collocated_ServerInformationIterator (
   TAO_Stub *stub
 )
-  : ACE_NESTED_CLASS (ImplementationRepository,ServerInformationIterator) (),
-    CORBA_Object (stub, 0, 1)
+  :  CORBA_Object (stub, 0, 1)
 {
 }
 
@@ -2581,6 +2574,3 @@ void POA_ImplementationRepository::_tao_thru_poa_collocated_ServerInformationIte
     );
   return;
 }
-
-
-

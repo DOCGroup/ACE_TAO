@@ -2223,7 +2223,7 @@ void POA_Messaging::Poller::_non_existent_skel (
   CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_MessagingCORBA::Poller *_tao_impl = (POA_Messaging::Poller *) _tao_object_reference;
+  POA_Messaging::Poller *_tao_impl = (POA_Messaging::Poller *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 

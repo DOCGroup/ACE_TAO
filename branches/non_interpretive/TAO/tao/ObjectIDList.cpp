@@ -86,27 +86,12 @@ void operator<<= (
     const CORBA_ORB_ObjectIdList &_tao_elem
   ) // copying
 {
-  CORBA_ORB_ObjectIdList *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA_ORB_ObjectIdList (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << _tao_elem;
 
     _tao_any._tao_replace (CORBA::ORB::_tc_ObjectIdList,
                            TAO_ENCAP_BYTE_ORDER,
-                           stream.begin (),
-                           1,
-                           _tao_any_val,
-                           ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+                           stream.begin ());
 }
 
 CORBA::Boolean
@@ -143,27 +128,23 @@ operator>> (TAO_InputCDR &strm, CORBA_ORB_ObjectIdList &_tao_sequence)
   return 0; // error
 }
 
+void CORBA_ORB_ObjectIdList::_tao_any_destructor (void *x)
+{
+  CORBA_ORB_ObjectIdList *tmp = ACE_static_cast(CORBA_ORB_ObjectIdList*,x);
+  delete tmp;
+}
+
 void operator<<= (CORBA::Any &_tao_any, CORBA_ORB_ObjectIdList *_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
-
-    CORBA_ORB_ObjectIdList *_tao_copy;
-    ACE_NEW (_tao_copy,
-             CORBA_ORB_ObjectIdList (*_tao_elem));
 
     _tao_any._tao_replace (CORBA::ORB::_tc_ObjectIdList,
                            TAO_ENCAP_BYTE_ORDER,
                            stream.begin (),
                            1,
-                           _tao_copy,
-                           ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY {}
-  ACE_ENDTRY;
+                           _tao_elem,
+                           CORBA_ORB_ObjectIdList::_tao_any_destructor);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ORB_ObjectIdList *&_tao_elem)
@@ -189,8 +170,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ORB_ObjectIdList *
             CORBA::ORB::_tc_ObjectIdList,
             1,
             _tao_elem,
-            ACE_TRY_ENV);
-        ACE_TRY_CHECK;
+            CORBA_ORB_ObjectIdList::_tao_any_destructor);
         return 1;
       }
       else

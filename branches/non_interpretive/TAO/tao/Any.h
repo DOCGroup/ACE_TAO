@@ -336,8 +336,7 @@ public:
 
   void _tao_replace (CORBA::TypeCode_ptr,
                      int byte_order,
-                     const ACE_Message_Block *mb,
-                     CORBA::Environment &ACE_TRY_ENV);
+                     const ACE_Message_Block *mb);
   // Replace via message block instead of <value_>.
 
   void _tao_replace (CORBA::TypeCode_ptr type,
@@ -345,25 +344,13 @@ public:
                      const ACE_Message_Block *mb,
                      CORBA::Boolean any_owns_data,
                      void* value,
-                     CORBA::Environment &ACE_TRY_ENV);
-  void _tao_replace (CORBA::TypeCode_ptr type,
-                     int byte_order,
-                     const ACE_Message_Block *mb,
-                     CORBA::Boolean any_owns_data,
-                     void* value,
-                     CORBA::Any::_tao_destructor destructor,
-                     CORBA::Environment &ACE_TRY_ENV);
+                     CORBA::Any::_tao_destructor destructor);
   // Replace all the contents of the any, used in the <<= operators.
 
   void _tao_replace (CORBA::TypeCode_ptr type,
                      CORBA::Boolean any_owns_data,
                      void* value,
-                     CORBA::Environment &ACE_TRY_ENV);
-  void _tao_replace (CORBA::TypeCode_ptr type,
-                     CORBA::Boolean any_owns_data,
-                     void* value,
-                     CORBA::Any::_tao_destructor destructor,
-                     CORBA::Environment &ACE_TRY_ENV);
+                     CORBA::Any::_tao_destructor destructor);
   // Replace the value of the Any, used in the >>= operators.
 
   void _tao_encode (TAO_OutputCDR &cdr,
@@ -388,7 +375,7 @@ public:
   // Used to release Anys contained into anys.
 
 protected:
-  void free_value (CORBA::Environment &ACE_TRY_ENV);
+  void free_value (void);
   // Release the <value_>.
 
 private:
@@ -407,7 +394,6 @@ private:
 
   CORBA::Any::_tao_destructor destructor_;
   // If not zero this is the function used to destroy objects.
-
 
   // 94-9-14 hides unsigned char insert/extract
   void operator<<= (unsigned char);

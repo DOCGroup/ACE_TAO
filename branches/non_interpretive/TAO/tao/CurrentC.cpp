@@ -89,24 +89,15 @@ const char* CORBA_Current::_interface_repository_id (void) const
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::Current_ptr _tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    TAO_OutputCDR stream;
-    if (stream << _tao_elem)
+  TAO_OutputCDR stream;
+  if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_Current,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
-    }
   }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Current_ptr &_tao_elem)
@@ -133,10 +124,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Current_ptr &_tao
           CORBA::_tc_Current,
           1,
           _tao_elem,
-          CORBA::Current::_tao_any_destructor,
-          ACE_TRY_ENV
+          CORBA::Current::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
     }
   }

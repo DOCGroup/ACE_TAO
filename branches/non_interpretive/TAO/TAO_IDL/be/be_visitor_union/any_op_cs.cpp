@@ -57,32 +57,21 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "const " << node->name () << " &_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "ACE_TRY_NEW_ENV" << be_nl
-      << "{" << be_idt_nl
       << "TAO_OutputCDR stream;" << be_nl
       << "if (stream << _tao_elem)" << be_nl
       << "{" << be_idt_nl
       << "_tao_any._tao_replace (" << be_idt << be_idt_nl
       << node->tc_name () << "," << be_nl
       << "TAO_ENCAP_BYTE_ORDER," << be_nl
-      << "stream.begin ()," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_uidt_nl
+      << "stream.begin ()" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl
-      << "}" << be_nl
-      << "ACE_CATCHANY" << be_nl
-      << "{" << be_nl
-      << "}" << be_nl
-      << "ACE_ENDTRY;" << be_uidt_nl
       << "}\n" << be_nl;
 
   *os << "void operator<<= (" << be_idt << be_idt_nl
       << "CORBA::Any &_tao_any," << be_nl
       << node->name () << " *_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "ACE_TRY_NEW_ENV" << be_nl
       << "{" << be_idt_nl
       << "TAO_OutputCDR stream;" << be_nl
       << "if (stream << *_tao_elem)" << be_nl
@@ -93,21 +82,9 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "stream.begin ()," << be_nl
       << "1," << be_nl
       << "_tao_elem," << be_nl
-      << node->name () << "::_tao_any_destructor," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_uidt_nl
-      << "}" << be_nl
-      << "else" << be_nl
-      << "{" << be_idt_nl
-      << "delete _tao_elem;" << be_uidt_nl
+      << node->name () << "::_tao_any_destructor" << be_nl
+      << ");" << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl
-      << "}" << be_nl
-      << "ACE_CATCHANY" << be_nl
-      << "{" << be_idt_nl
-      << "delete _tao_elem;" << be_uidt_nl
-      << "}" << be_nl
-      << "ACE_ENDTRY;" << be_uidt_nl
       << "}\n" << be_nl;
 
   *os << "CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
@@ -145,10 +122,8 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << node->tc_name () << "," << be_nl
       << "1," << be_nl
       << "ACE_reinterpret_cast (void *, _tao_elem)," << be_nl
-      << node->name () << "::_tao_any_destructor," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
+      << node->name () << "::_tao_any_destructor" << be_uidt_nl
       << ");" << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_nl
       << "return 1;" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_nl
@@ -206,10 +181,8 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "1," << be_nl
       << "ACE_reinterpret_cast (void *, ACE_const_cast ("
       << node->name () << " *&, _tao_elem))," << be_nl
-      << node->name () << "::_tao_any_destructor," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
+      << node->name () << "::_tao_any_destructor" << be_nl
       << ");" << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_nl
       << "return 1;" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_nl
@@ -268,4 +241,3 @@ be_visitor_union_any_op_cs::visit_union_branch (be_union_branch *node)
     }
   return 0;
 }
-

@@ -346,24 +346,15 @@ void CORBA_DomainManager::_tao_any_destructor (void* x)
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::DomainManager_ptr _tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    TAO_OutputCDR stream;
-    if (stream << _tao_elem)
+  TAO_OutputCDR stream;
+  if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_DomainManager,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::DomainManager_ptr &_tao_elem)
@@ -395,10 +386,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::DomainManager_ptr
           CORBA::_tc_DomainManager,
           1,
           _tao_elem,
-          CORBA::DomainManager::_tao_any_destructor,
-          ACE_TRY_ENV
+          CORBA::DomainManager::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
     }
   }
@@ -430,24 +419,15 @@ CORBA_ConstructionPolicy::_tao_any_destructor (void *x)
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::ConstructionPolicy_ptr _tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_ConstructionPolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ConstructionPolicy_ptr &_tao_elem)
@@ -479,10 +459,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ConstructionPolic
           CORBA::_tc_ConstructionPolicy,
           1,
           _tao_elem,
-          CORBA::ConstructionPolicy::_tao_any_destructor,
-          ACE_TRY_ENV
+          CORBA::ConstructionPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
     }
   }
@@ -514,47 +492,29 @@ void operator<<= (
     const CORBA::DomainManagerList &_tao_elem
   ) // copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           CORBA::_tc_DomainManagerList,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::DomainManagerList *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
-    TAO_OutputCDR stream;
-    stream << *_tao_elem;
-    _tao_any._tao_replace (
-        CORBA::_tc_DomainManagerList,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_elem,
-        CORBA::DomainManagerList::_tao_any_destructor,
-        ACE_TRY_ENV
-      );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
+  TAO_OutputCDR stream;
+  stream << *_tao_elem;
+  _tao_any._tao_replace (
+      CORBA::_tc_DomainManagerList,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin (),
+      1,
+      _tao_elem,
+      CORBA::DomainManagerList::_tao_any_destructor
+    );
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::DomainManagerList *&_tao_elem)
@@ -586,10 +546,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::DomainManagerList
             CORBA::_tc_DomainManagerList,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            CORBA::DomainManagerList::_tao_any_destructor,
-            ACE_TRY_ENV
+            CORBA::DomainManagerList::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else

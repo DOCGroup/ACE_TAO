@@ -433,10 +433,8 @@ TAO_DynAny_i::insert_reference (CORBA::Object_ptr value,
                                  TAO_ENCAP_BYTE_ORDER,
                                  stream.begin (),
                                  1,
-                                 obj.in (),
-                                 CORBA::Object::_tao_any_destructor,
-                                 ACE_TRY_ENV);
-      ACE_CHECK;
+                                 obj._retn (),
+                                 CORBA::Object::_tao_any_destructor);
     }
   else
     {

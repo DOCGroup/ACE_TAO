@@ -2075,47 +2075,31 @@ TAO_NAMESPACE_END
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::RebindPolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = Messaging::RebindPolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          Messaging::_tc_RebindPolicy, 
+          Messaging::_tc_RebindPolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void Messaging::RebindPolicy::_tao_any_destructor (void *x)
+{
+  Messaging::RebindPolicy *tmp = ACE_static_cast(Messaging::RebindPolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RebindPolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = Messaging::RebindPolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (Messaging::_tc_RebindPolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -2128,24 +2112,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RebindPolicy_
     {
       _tao_elem = Messaging::RebindPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           Messaging::_tc_RebindPolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          Messaging::RebindPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = Messaging::RebindPolicy::_nil ();
     return 0;
   }
@@ -2156,47 +2133,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RebindPolicy_
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::SyncScopePolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = Messaging::SyncScopePolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          Messaging::_tc_SyncScopePolicy, 
+          Messaging::_tc_SyncScopePolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void Messaging::SyncScopePolicy::_tao_any_destructor (void *x)
+{
+  Messaging::SyncScopePolicy *tmp = ACE_static_cast(Messaging::SyncScopePolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::SyncScopePolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = Messaging::SyncScopePolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (Messaging::_tc_SyncScopePolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -2209,24 +2170,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::SyncScopePoli
     {
       _tao_elem = Messaging::SyncScopePolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           Messaging::_tc_SyncScopePolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          Messaging::SyncScopePolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = Messaging::SyncScopePolicy::_nil ();
     return 0;
   }
@@ -2237,34 +2191,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::SyncScopePoli
 
 void operator<<= (CORBA::Any &_tao_any, const Messaging::PriorityRange &_tao_elem) // copying
 {
-  Messaging::PriorityRange *_any_val = 0;
-  ACE_NEW (_any_val, Messaging::PriorityRange (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         Messaging::_tc_PriorityRange,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void Messaging::PriorityRange::_tao_any_destructor (void *x)
+{
+  Messaging::PriorityRange *tmp = ACE_static_cast(Messaging::PriorityRange*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::PriorityRange *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -2273,16 +2216,8 @@ void operator<<= (CORBA::Any &_tao_any, Messaging::PriorityRange *_tao_elem) // 
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        Messaging::PriorityRange::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PriorityRange *&_tao_elem)
@@ -2314,9 +2249,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PriorityRange
             Messaging::_tc_PriorityRange,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            Messaging::PriorityRange::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -2330,7 +2264,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PriorityRange
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -2338,98 +2272,36 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PriorityRange
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PriorityRange *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (Messaging::_tc_PriorityRange, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (Messaging::PriorityRange *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, Messaging::PriorityRange, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(Messaging::PriorityRange *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            Messaging::_tc_PriorityRange,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (Messaging::PriorityRange *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (Messaging::PriorityRange *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (Messaging::PriorityRange *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(Messaging::PriorityRange *&,_tao_elem);
 }
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::RequestPriorityPolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = Messaging::RequestPriorityPolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          Messaging::_tc_RequestPriorityPolicy, 
+          Messaging::_tc_RequestPriorityPolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void Messaging::RequestPriorityPolicy::_tao_any_destructor (void *x)
+{
+  Messaging::RequestPriorityPolicy *tmp = ACE_static_cast(Messaging::RequestPriorityPolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RequestPriorityPolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = Messaging::RequestPriorityPolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (Messaging::_tc_RequestPriorityPolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -2442,24 +2314,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RequestPriori
     {
       _tao_elem = Messaging::RequestPriorityPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           Messaging::_tc_RequestPriorityPolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          Messaging::RequestPriorityPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = Messaging::RequestPriorityPolicy::_nil ();
     return 0;
   }
@@ -2470,47 +2335,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RequestPriori
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::ReplyPriorityPolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = Messaging::ReplyPriorityPolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          Messaging::_tc_ReplyPriorityPolicy, 
+          Messaging::_tc_ReplyPriorityPolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void Messaging::ReplyPriorityPolicy::_tao_any_destructor (void *x)
+{
+  Messaging::ReplyPriorityPolicy *tmp = ACE_static_cast(Messaging::ReplyPriorityPolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyPriorityPolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = Messaging::ReplyPriorityPolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (Messaging::_tc_ReplyPriorityPolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -2523,24 +2372,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyPriority
     {
       _tao_elem = Messaging::ReplyPriorityPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           Messaging::_tc_ReplyPriorityPolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          Messaging::ReplyPriorityPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = Messaging::ReplyPriorityPolicy::_nil ();
     return 0;
   }
@@ -2551,47 +2393,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyPriority
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::RequestStartTimePolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = Messaging::RequestStartTimePolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          Messaging::_tc_RequestStartTimePolicy, 
+          Messaging::_tc_RequestStartTimePolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void Messaging::RequestStartTimePolicy::_tao_any_destructor (void *x)
+{
+  Messaging::RequestStartTimePolicy *tmp = ACE_static_cast(Messaging::RequestStartTimePolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RequestStartTimePolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = Messaging::RequestStartTimePolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (Messaging::_tc_RequestStartTimePolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -2604,24 +2430,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RequestStartT
     {
       _tao_elem = Messaging::RequestStartTimePolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           Messaging::_tc_RequestStartTimePolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          Messaging::RequestStartTimePolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = Messaging::RequestStartTimePolicy::_nil ();
     return 0;
   }
@@ -2632,47 +2451,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RequestStartT
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::RequestEndTimePolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = Messaging::RequestEndTimePolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          Messaging::_tc_RequestEndTimePolicy, 
+          Messaging::_tc_RequestEndTimePolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void Messaging::RequestEndTimePolicy::_tao_any_destructor (void *x)
+{
+  Messaging::RequestEndTimePolicy *tmp = ACE_static_cast(Messaging::RequestEndTimePolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RequestEndTimePolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = Messaging::RequestEndTimePolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (Messaging::_tc_RequestEndTimePolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -2685,24 +2488,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RequestEndTim
     {
       _tao_elem = Messaging::RequestEndTimePolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           Messaging::_tc_RequestEndTimePolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          Messaging::RequestEndTimePolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = Messaging::RequestEndTimePolicy::_nil ();
     return 0;
   }
@@ -2713,47 +2509,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RequestEndTim
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::ReplyStartTimePolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = Messaging::ReplyStartTimePolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          Messaging::_tc_ReplyStartTimePolicy, 
+          Messaging::_tc_ReplyStartTimePolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void Messaging::ReplyStartTimePolicy::_tao_any_destructor (void *x)
+{
+  Messaging::ReplyStartTimePolicy *tmp = ACE_static_cast(Messaging::ReplyStartTimePolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyStartTimePolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = Messaging::ReplyStartTimePolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (Messaging::_tc_ReplyStartTimePolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -2766,24 +2546,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyStartTim
     {
       _tao_elem = Messaging::ReplyStartTimePolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           Messaging::_tc_ReplyStartTimePolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          Messaging::ReplyStartTimePolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = Messaging::ReplyStartTimePolicy::_nil ();
     return 0;
   }
@@ -2794,47 +2567,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyStartTim
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::ReplyEndTimePolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = Messaging::ReplyEndTimePolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          Messaging::_tc_ReplyEndTimePolicy, 
+          Messaging::_tc_ReplyEndTimePolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void Messaging::ReplyEndTimePolicy::_tao_any_destructor (void *x)
+{
+  Messaging::ReplyEndTimePolicy *tmp = ACE_static_cast(Messaging::ReplyEndTimePolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyEndTimePolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = Messaging::ReplyEndTimePolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (Messaging::_tc_ReplyEndTimePolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -2847,24 +2604,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyEndTimeP
     {
       _tao_elem = Messaging::ReplyEndTimePolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           Messaging::_tc_ReplyEndTimePolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          Messaging::ReplyEndTimePolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = Messaging::ReplyEndTimePolicy::_nil ();
     return 0;
   }
@@ -2875,47 +2625,32 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyEndTimeP
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::RelativeRequestTimeoutPolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = Messaging::RelativeRequestTimeoutPolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          Messaging::_tc_RelativeRequestTimeoutPolicy, 
+          Messaging::_tc_RelativeRequestTimeoutPolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void Messaging::RelativeRequestTimeoutPolicy::_tao_any_destructor
+(void *x)
+{
+  Messaging::RelativeRequestTimeoutPolicy *tmp = ACE_static_cast(Messaging::RelativeRequestTimeoutPolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RelativeRequestTimeoutPolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = Messaging::RelativeRequestTimeoutPolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (Messaging::_tc_RelativeRequestTimeoutPolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -2928,24 +2663,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RelativeReque
     {
       _tao_elem = Messaging::RelativeRequestTimeoutPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           Messaging::_tc_RelativeRequestTimeoutPolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          Messaging::RelativeRequestTimeoutPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = Messaging::RelativeRequestTimeoutPolicy::_nil ();
     return 0;
   }
@@ -2956,47 +2684,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RelativeReque
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::RelativeRoundtripTimeoutPolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = Messaging::RelativeRoundtripTimeoutPolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          Messaging::_tc_RelativeRoundtripTimeoutPolicy, 
+          Messaging::_tc_RelativeRoundtripTimeoutPolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void Messaging::RelativeRoundtripTimeoutPolicy::_tao_any_destructor (void *x)
+{
+  Messaging::RelativeRoundtripTimeoutPolicy *tmp = ACE_static_cast(Messaging::RelativeRoundtripTimeoutPolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RelativeRoundtripTimeoutPolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (Messaging::_tc_RelativeRoundtripTimeoutPolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -3009,24 +2721,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RelativeRound
     {
       _tao_elem = Messaging::RelativeRoundtripTimeoutPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           Messaging::_tc_RelativeRoundtripTimeoutPolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          Messaging::RelativeRoundtripTimeoutPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
     return 0;
   }
@@ -3039,34 +2744,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RelativeRound
 
 void operator<<= (CORBA::Any &_tao_any, const Messaging::RoutingTypeRange &_tao_elem) // copying
 {
-  Messaging::RoutingTypeRange *_any_val = 0;
-  ACE_NEW (_any_val, Messaging::RoutingTypeRange (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         Messaging::_tc_RoutingTypeRange,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void Messaging::RoutingTypeRange::_tao_any_destructor (void *x)
+{
+  Messaging::RoutingTypeRange *tmp = ACE_static_cast(Messaging::RoutingTypeRange*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::RoutingTypeRange *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -3075,16 +2769,8 @@ void operator<<= (CORBA::Any &_tao_any, Messaging::RoutingTypeRange *_tao_elem) 
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        Messaging::RoutingTypeRange::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RoutingTypeRange *&_tao_elem)
@@ -3116,9 +2802,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RoutingTypeRa
             Messaging::_tc_RoutingTypeRange,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            Messaging::RoutingTypeRange::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -3132,7 +2817,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RoutingTypeRa
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -3140,100 +2825,38 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RoutingTypeRa
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::RoutingTypeRange *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (Messaging::_tc_RoutingTypeRange, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (Messaging::RoutingTypeRange *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, Messaging::RoutingTypeRange, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(Messaging::RoutingTypeRange *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            Messaging::_tc_RoutingTypeRange,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (Messaging::RoutingTypeRange *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (Messaging::RoutingTypeRange *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (Messaging::RoutingTypeRange *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(Messaging::RoutingTypeRange *&,_tao_elem);
 }
 
 // ****************************************************************
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::RoutingPolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = Messaging::RoutingPolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          Messaging::_tc_RoutingPolicy, 
+          Messaging::_tc_RoutingPolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void Messaging::RoutingPolicy::_tao_any_destructor (void *x)
+{
+  Messaging::RoutingPolicy *tmp = ACE_static_cast(Messaging::RoutingPolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RoutingPolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = Messaging::RoutingPolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (Messaging::_tc_RoutingPolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -3246,24 +2869,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RoutingPolicy
     {
       _tao_elem = Messaging::RoutingPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           Messaging::_tc_RoutingPolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          Messaging::RoutingPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = Messaging::RoutingPolicy::_nil ();
     return 0;
   }
@@ -3274,47 +2890,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RoutingPolicy
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::MaxHopsPolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = Messaging::MaxHopsPolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          Messaging::_tc_MaxHopsPolicy, 
+          Messaging::_tc_MaxHopsPolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void Messaging::MaxHopsPolicy::_tao_any_destructor (void *x)
+{
+  Messaging::MaxHopsPolicy *tmp = ACE_static_cast(Messaging::MaxHopsPolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::MaxHopsPolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = Messaging::MaxHopsPolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (Messaging::_tc_MaxHopsPolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -3327,24 +2927,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::MaxHopsPolicy
     {
       _tao_elem = Messaging::MaxHopsPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           Messaging::_tc_MaxHopsPolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          Messaging::MaxHopsPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = Messaging::MaxHopsPolicy::_nil ();
     return 0;
   }
@@ -3355,47 +2948,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::MaxHopsPolicy
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::QueueOrderPolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = Messaging::QueueOrderPolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          Messaging::_tc_QueueOrderPolicy, 
+          Messaging::_tc_QueueOrderPolicy,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void Messaging::QueueOrderPolicy::_tao_any_destructor (void *x)
+{
+  Messaging::QueueOrderPolicy *tmp = ACE_static_cast(Messaging::QueueOrderPolicy*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::QueueOrderPolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = Messaging::QueueOrderPolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (Messaging::_tc_QueueOrderPolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -3408,24 +2985,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::QueueOrderPol
     {
       _tao_elem = Messaging::QueueOrderPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           Messaging::_tc_QueueOrderPolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          Messaging::QueueOrderPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = Messaging::QueueOrderPolicy::_nil ();
     return 0;
   }
@@ -3436,34 +3006,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::QueueOrderPol
 
 void operator<<= (CORBA::Any &_tao_any, const Messaging::PolicyValue &_tao_elem) // copying
 {
-  Messaging::PolicyValue *_any_val = 0;
-  ACE_NEW (_any_val, Messaging::PolicyValue (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         Messaging::_tc_PolicyValue,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void Messaging::PolicyValue::_tao_any_destructor (void *x)
+{
+  Messaging::PolicyValue *tmp = ACE_static_cast(Messaging::PolicyValue*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::PolicyValue *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -3472,16 +3031,8 @@ void operator<<= (CORBA::Any &_tao_any, Messaging::PolicyValue *_tao_elem) // no
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        Messaging::PolicyValue::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValue *&_tao_elem)
@@ -3513,9 +3064,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValue *
             Messaging::_tc_PolicyValue,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            Messaging::PolicyValue::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -3529,7 +3079,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValue *
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -3537,53 +3087,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValue *
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PolicyValue *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (Messaging::_tc_PolicyValue, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (Messaging::PolicyValue *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, Messaging::PolicyValue, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(Messaging::PolicyValue *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            Messaging::_tc_PolicyValue,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (Messaging::PolicyValue *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (Messaging::PolicyValue *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (Messaging::PolicyValue *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(Messaging::PolicyValue *&,_tao_elem);
 }
 
 // ****************************************************************
@@ -3593,40 +3097,25 @@ void operator<<= (
     const Messaging::PolicyValueSeq &_tao_elem
   ) // copying
 {
-  Messaging::PolicyValueSeq *_tao_any_val;
-  ACE_NEW (_tao_any_val, Messaging::PolicyValueSeq (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    if (stream << *_tao_any_val)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           Messaging::_tc_PolicyValueSeq,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK; 
     }
-    else
-    {
-      delete _tao_any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void Messaging::PolicyValueSeq::_tao_any_destructor (void *x)
+{
+  Messaging::PolicyValueSeq *tmp = ACE_static_cast(Messaging::PolicyValueSeq*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::PolicyValueSeq *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -3635,16 +3124,8 @@ void operator<<= (CORBA::Any &_tao_any, Messaging::PolicyValueSeq *_tao_elem) //
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        Messaging::PolicyValueSeq::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValueSeq *&_tao_elem)
@@ -3676,9 +3157,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValueSe
             Messaging::_tc_PolicyValueSeq,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            Messaging::PolicyValueSeq::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -3692,7 +3172,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValueSe
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -3700,53 +3180,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValueSe
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PolicyValueSeq *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (Messaging::_tc_PolicyValueSeq, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (Messaging::PolicyValueSeq *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, Messaging::PolicyValueSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(Messaging::PolicyValueSeq *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            Messaging::_tc_PolicyValueSeq,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (Messaging::PolicyValueSeq *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (Messaging::PolicyValueSeq *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (Messaging::PolicyValueSeq *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(Messaging::PolicyValueSeq *&,_tao_elem);
 }
 
 // ****************************************************************
@@ -3759,47 +3193,31 @@ Messaging::ReplyHandler_ptr (*_TAO_collocation_Messaging_ReplyHandler_Stub_Facto
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::ReplyHandler_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = Messaging::ReplyHandler::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          Messaging::_tc_ReplyHandler, 
+          Messaging::_tc_ReplyHandler,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void Messaging::ReplyHandler::_tao_any_destructor (void *x)
+{
+  Messaging::ReplyHandler *tmp = ACE_static_cast(Messaging::ReplyHandler*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyHandler_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = Messaging::ReplyHandler::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (Messaging::_tc_ReplyHandler, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -3812,24 +3230,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyHandler_
     {
       _tao_elem = Messaging::ReplyHandler::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           Messaging::_tc_ReplyHandler,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          Messaging::ReplyHandler::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = Messaging::ReplyHandler::_nil ();
     return 0;
   }
@@ -3846,47 +3257,31 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyHandler_
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::Poller_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = Messaging::Poller::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          Messaging::_tc_Poller, 
+          Messaging::_tc_Poller,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
+}
+
+void Messaging::Poller::_tao_any_destructor (void *x)
+{
+  Messaging::Poller *tmp = ACE_static_cast(Messaging::Poller*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::Poller_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = Messaging::Poller::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (Messaging::_tc_Poller, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -3899,24 +3294,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::Poller_ptr &_
     {
       _tao_elem = Messaging::Poller::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           Messaging::_tc_Poller,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          Messaging::Poller::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = Messaging::Poller::_nil ();
     return 0;
   }

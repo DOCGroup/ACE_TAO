@@ -15,6 +15,7 @@
 #endif /* !defined INLINE */
 
 #if defined (TAO_HAS_INTERCEPTORS)
+
 PortableInterceptor::Cookie_ptr PortableInterceptor::Cookie::_narrow (
     CORBA::Object_ptr obj,
     CORBA::Environment &ACE_TRY_ENV
@@ -55,6 +56,12 @@ PortableInterceptor::Cookie::_duplicate (PortableInterceptor::Cookie_ptr obj)
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
+}
+
+void PortableInterceptor::Cookie::_tao_any_destructor (void *x)
+{
+  PortableInterceptor::Cookie* tmp = ACE_const_cast (PortableInterceptor::Cookie*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean PortableInterceptor::Cookie::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -205,6 +212,11 @@ PortableInterceptor::Cookies::Cookies (const Cookies &seq) // copy ctor
 PortableInterceptor::Cookies::~Cookies (void) // dtor
 {}
 
+void PortableInterceptor::Cookies::_tao_any_destructor (void *x)
+{
+  PortableInterceptor::Cookies *tmp = ACE_static_cast(PortableInterceptor::Cookies*,x);
+  delete tmp;
+}
 
 #endif /* end #if !defined */
 
@@ -270,6 +282,12 @@ PortableInterceptor::Interceptor::_duplicate (PortableInterceptor::Interceptor_p
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
+}
+
+void PortableInterceptor::Interceptor::_tao_any_destructor (void* x)
+{
+  PortableInterceptor::Interceptor *tmp = ACE_static_cast(PortableInterceptor::Interceptor*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean PortableInterceptor::Interceptor::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -338,6 +356,12 @@ PortableInterceptor::ServerRequestInterceptor::_duplicate (PortableInterceptor::
   if (!CORBA::is_nil (obj))
     obj->_incr_refcnt ();
   return obj;
+}
+
+void PortableInterceptor::ServerRequestInterceptor::_tao_any_destructor (void *x)
+{
+  PortableInterceptor::ServerRequestInterceptor* tmp = ACE_const_cast (PortableInterceptor::ServerRequestInterceptor*,x);
+  CORBA::release (tmp);
 }
 
 CORBA::Boolean PortableInterceptor::ServerRequestInterceptor::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -409,6 +433,12 @@ PortableInterceptor::ClientRequestInterceptor::_duplicate (PortableInterceptor::
   return obj;
 }
 
+void PortableInterceptor::ClientRequestInterceptor::_tao_any_destructor (void *x)
+{
+  PortableInterceptor::ClientRequestInterceptor* tmp = ACE_const_cast (PortableInterceptor::ClientRequestInterceptor*,x);
+  CORBA::release (tmp);
+}
+
 CORBA::Boolean PortableInterceptor::ClientRequestInterceptor::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
 {
   if (
@@ -436,49 +466,28 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableInterceptor)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ClientRequestInterceptor, &_tc_TAO_tc_PortableInterceptor_ClientRequestInterceptor)
 TAO_NAMESPACE_END
+
 void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::Cookie_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = PortableInterceptor::Cookie::_duplicate (_tao_elem);
-    TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+  TAO_OutputCDR stream;
+  if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          PortableInterceptor::_tc_Cookie, 
+          PortableInterceptor::_tc_Cookie,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableInterceptor::Cookie_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = PortableInterceptor::Cookie::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableInterceptor::_tc_Cookie, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -491,24 +500,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableInterceptor::Coo
     {
       _tao_elem = PortableInterceptor::Cookie::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           PortableInterceptor::_tc_Cookie,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          PortableInterceptor::Cookie::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = PortableInterceptor::Cookie::_nil ();
     return 0;
   }
@@ -530,40 +532,19 @@ void operator<<= (
     const PortableInterceptor::Cookies &_tao_elem
   ) // copying
 {
-  PortableInterceptor::Cookies *_tao_any_val;
-  ACE_NEW (_tao_any_val, PortableInterceptor::Cookies (_tao_elem));
-  if (!_tao_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    if (stream << *_tao_any_val)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           PortableInterceptor::_tc_Cookies,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK; 
     }
-    else
-    {
-      delete _tao_any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_any_val;
-  }
-  ACE_ENDTRY;
 }
 
 void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::Cookies *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -572,16 +553,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::Cookies *_tao_elem)
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        PortableInterceptor::Cookies::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableInterceptor::Cookies *&_tao_elem)
@@ -613,9 +586,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableInterceptor::Coo
             PortableInterceptor::_tc_Cookies,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            PortableInterceptor::Cookies::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -629,7 +601,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableInterceptor::Coo
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -637,98 +609,30 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableInterceptor::Coo
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableInterceptor::Cookies *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (PortableInterceptor::_tc_Cookies, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (PortableInterceptor::Cookies *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, PortableInterceptor::Cookies, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(PortableInterceptor::Cookies *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            PortableInterceptor::_tc_Cookies,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (PortableInterceptor::Cookies *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (PortableInterceptor::Cookies *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (PortableInterceptor::Cookies *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(PortableInterceptor::Cookies*&,_tao_elem);
 }
 
 void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::Interceptor_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
+  TAO_OutputCDR stream;
+  if (stream << _tao_elem)
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = PortableInterceptor::Interceptor::_duplicate (_tao_elem);
-    TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
-    {
-      _tao_any._tao_replace (
-          PortableInterceptor::_tc_Interceptor, 
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
-        );
-      ACE_TRY_CHECK;
-    }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
+    _tao_any._tao_replace (
+        PortableInterceptor::_tc_Interceptor,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin ()
+      );
   }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableInterceptor::Interceptor_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = PortableInterceptor::Interceptor::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableInterceptor::_tc_Interceptor, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -741,24 +645,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableInterceptor::Int
     {
       _tao_elem = PortableInterceptor::Interceptor::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           PortableInterceptor::_tc_Interceptor,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          PortableInterceptor::Interceptor::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = PortableInterceptor::Interceptor::_nil ();
     return 0;
   }
@@ -777,47 +674,25 @@ template class TAO_Object_Manager<PortableInterceptor::Interceptor,PortableInter
 
 void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::ServerRequestInterceptor_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = PortableInterceptor::ServerRequestInterceptor::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          PortableInterceptor::_tc_ServerRequestInterceptor, 
+          PortableInterceptor::_tc_ServerRequestInterceptor,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableInterceptor::ServerRequestInterceptor_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = PortableInterceptor::ServerRequestInterceptor::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableInterceptor::_tc_ServerRequestInterceptor, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -830,24 +705,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableInterceptor::Ser
     {
       _tao_elem = PortableInterceptor::ServerRequestInterceptor::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           PortableInterceptor::_tc_ServerRequestInterceptor,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          PortableInterceptor::ServerRequestInterceptor::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = PortableInterceptor::ServerRequestInterceptor::_nil ();
     return 0;
   }
@@ -866,47 +734,25 @@ template class TAO_Object_Manager<PortableInterceptor::ServerRequestInterceptor,
 
 void operator<<= (CORBA::Any &_tao_any, PortableInterceptor::ClientRequestInterceptor_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = PortableInterceptor::ClientRequestInterceptor::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          PortableInterceptor::_tc_ClientRequestInterceptor, 
+          PortableInterceptor::_tc_ClientRequestInterceptor,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableInterceptor::ClientRequestInterceptor_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = PortableInterceptor::ClientRequestInterceptor::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (PortableInterceptor::_tc_ClientRequestInterceptor, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -919,24 +765,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableInterceptor::Cli
     {
       _tao_elem = PortableInterceptor::ClientRequestInterceptor::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           PortableInterceptor::_tc_ClientRequestInterceptor,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          PortableInterceptor::ClientRequestInterceptor::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = PortableInterceptor::ClientRequestInterceptor::_nil ();
     return 0;
   }
@@ -982,7 +821,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
