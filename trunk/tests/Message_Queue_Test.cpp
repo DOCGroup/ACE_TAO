@@ -384,13 +384,8 @@ performance_test (int queue_type = 0)
 
   if (queue_type == 0)
     {
-#if !defined (VXWORKS)
-      // Ugh, this sometimes causes a "Double Fault" on VxWorks/i386.
-      // I don't see why.  A printout in the destructor doesn't get
-      // printed out, which is really strange.
       delete queue_wrapper.sq_;
       queue_wrapper.sq_ = 0;
-#endif /* ! VXWORKS */
     }
 #if defined (VXWORKS)
   else
@@ -423,7 +418,6 @@ main (int argc, ASYS_TCHAR *argv[])
 
 #if !defined (VXWORKS)
   // The iterator test occasionally causes a page fault or a hang on VxWorks.
-  // Maybe because QUEUE doesn't use synchronization?
   if (status == 0)
     status = iterator_test ();
 #endif /* ! VXWORKS */
