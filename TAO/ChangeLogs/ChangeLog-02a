@@ -1,3 +1,8 @@
+Sat Mar 11 09:33:18 2000  Christopher Kohlhoff <chris@kohlhoff.com>
+
+        * orbsvcs/orbsvcs/Makefile.bor: updated to reflect current
+          Notify service file configuration.
+
 Sat Mar 11 09:28:31 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile: updated dependencies.
