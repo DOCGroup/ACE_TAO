@@ -48,10 +48,7 @@ public:
   // Dispatch the reply.
 
   virtual TAO_GIOP_Message_State *message_state (void) const;
-  // Get the Message State
-  // By default it returns <0> but if the request can pre-allocate one
-  // for us then we can return it and pass it along for non-Muxed
-  // transports.
+  // Get the Message State into which the reply has been read. 
 };
 
 // *********************************************************************
@@ -66,7 +63,7 @@ class TAO_Export TAO_Synch_Reply_Dispatcher : public TAO_Reply_Dispatcher
   //
 
 public:
-  TAO_Synch_Reply_Dispatcher (TAO_GIOP_Message_State* message_state);
+  TAO_Synch_Reply_Dispatcher (void);
   // Constructor.
 
   virtual ~TAO_Synch_Reply_Dispatcher (void);
@@ -76,7 +73,7 @@ public:
   // Get the reply status.
 
   const TAO_GIOP_Version& version (void) const;
-  // Get the GIOP version
+  // Get the GIOP version.
 
   TAO_GIOP_ServiceContextList& reply_ctx (void);
   // Get the reply context
@@ -118,8 +115,7 @@ class TAO_Export TAO_Asynch_Reply_Dispatcher : public TAO_Reply_Dispatcher
   //
 
 public:
-  TAO_Asynch_Reply_Dispatcher (TAO_GIOP_Message_State* message_state,
-                               const TAO_Reply_Handler_Skeleton &reply_handler_skel,
+  TAO_Asynch_Reply_Dispatcher (const TAO_Reply_Handler_Skeleton &reply_handler_skel,
                                Messaging::ReplyHandler_ptr reply_handler_ptr);
   // Constructor.
 

@@ -136,7 +136,7 @@ TAO_Default_Client_Strategy_Factory::create_iiop_profile_lock (void)
 
 // Create the correct client transport muxing strategy.
 TAO_Transport_Mux_Strategy *
-TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (void)
+TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (TAO_ORB_Core *orb_core)
 {
   TAO_Transport_Mux_Strategy *tms = 0;
 
@@ -148,7 +148,7 @@ TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (void)
 
   // @@ Alex: Always creating Exclusive TMS. (Alex).
   ACE_NEW_RETURN (tms,
-                  TAO_Exclusive_TMS,
+                  TAO_Exclusive_TMS (orb_core),
                   0);
 
   return tms;

@@ -64,14 +64,14 @@ public:
   // Exceptions are allocated and decoded here. This reduces the
   // footprint of the generated stubs.
 
-  void get_value (CORBA::TypeCode_ptr tc,
-                  void *value,
-                  CORBA_Environment &TAO_IN_ENV =
-                        TAO_default_environment ());
-  // No CORBA::Context support (deprecated).
-
-  TAO_InputCDR &inp_stream (void);
-  // Return the underlying input stream.
+  //   TAO_InputCDR &inp_stream (void);
+  //   // Return the underlying input stream.
+  // 
+  //   void get_value (CORBA::TypeCode_ptr tc,
+  //                   void *value,
+  //                   CORBA_Environment &TAO_IN_ENV =
+  //                         TAO_default_environment ());
+  //   // No CORBA::Context support (deprecated).
 
 private:
   int invoke_i (CORBA::Environment &ACE_TRY_ENV)
@@ -80,9 +80,6 @@ private:
   // send/reply code and the system exceptions.
 
 private:
-  TAO_GIOP_Message_State *message_state_;
-  // Stream into which the reply is placed.
-
   TAO_Asynch_Reply_Dispatcher *rd_;
   // Reply dispatcher for the current synchronous Asynch_Invocation.
 };

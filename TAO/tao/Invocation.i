@@ -24,16 +24,14 @@ TAO_GIOP_Twoway_Invocation::
 TAO_GIOP_Twoway_Invocation (TAO_Stub *stub,
                             const char *operation,
                             TAO_ORB_Core *orb_core)
-  : TAO_GIOP_Invocation (stub, operation, orb_core),
-    message_state_ (orb_core),
-    rd_ (&message_state_)
+  : TAO_GIOP_Invocation (stub, operation, orb_core)
 {
 }
 
 ACE_INLINE TAO_InputCDR &
 TAO_GIOP_Twoway_Invocation::inp_stream (void)
 {
-  return this->message_state_.cdr;
+  return this->rd_.message_state ()->cdr;
 }
 
 ACE_INLINE void
@@ -68,14 +66,12 @@ ACE_INLINE
 TAO_GIOP_Locate_Request_Invocation::
 TAO_GIOP_Locate_Request_Invocation (TAO_Stub *stub,
                                     TAO_ORB_Core *orb_core)
-  : TAO_GIOP_Invocation (stub, 0, orb_core),
-    message_state_ (orb_core),
-    rd_ (&message_state_)
+  : TAO_GIOP_Invocation (stub, 0, orb_core)
 {
 }
 
 ACE_INLINE TAO_InputCDR &
 TAO_GIOP_Locate_Request_Invocation::inp_stream (void)
 {
-  return this->message_state_.cdr;
+  return this->rd_.message_state ()->cdr;
 }
