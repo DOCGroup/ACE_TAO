@@ -653,8 +653,9 @@ ImplRepo_i::server_is_running (const char *server,
 
   TAO_MProfile mp;
   TAO_ObjectKey objkey;
+  TAO_POA *poa = ACE_dynamic_cast (TAO_POA *, this->imr_poa_.in ());
 
-  registry->make_mprofile (objkey, mp);
+  registry->make_mprofile (objkey, mp, poa);
 
   // @@ (brunsch) Only look at current profile for now.
   TAO_Profile *profile = mp.get_current_profile ();
