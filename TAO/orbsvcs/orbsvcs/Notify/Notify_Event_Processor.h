@@ -62,19 +62,30 @@ class TAO_Notify_Export TAO_Notify_Event_Processor
   void shutdown (CORBA::Environment &ACE_TRY_ENV);
   // Shutdown operations.
 
-  void evaluate_source_filter(TAO_Notify_Event* event, TAO_Notify_EventSource* event_source, CORBA::Environment& ACE_TRY_ENV);
+  void evaluate_source_filter (TAO_Notify_Event* event,
+                               TAO_Notify_EventSource* event_source,
+                               CORBA::Environment& ACE_TRY_ENV);
   // Event processing entry point.
 
   // = Callbacks for Source/Event Listeners.
-  void lookup_subscriptions (TAO_Notify_Event* event, TAO_Notify_EventSource* event_source, CORBA::Environment &ACE_TRY_ENV);
-  // This method is called by an Event_Source after it has successfully evaluated its filter.
+  void lookup_subscriptions (TAO_Notify_Event* event,
+                             TAO_Notify_EventSource* event_source,
+                             CORBA::Environment &ACE_TRY_ENV);
+  // This method is called by an Event_Source after it has
+  // successfully evaluated its filter. 
 
-  void evaluate_listener_filter (TAO_Notify_Event* event, TAO_Notify_EventListener* event_listener, CORBA::Boolean eval_parent, CORBA::Environment &ACE_TRY_ENV);
-  // This method is called by the subscription lookup command asking that <event> be delivered
-  // to <event_listener>.
+  void evaluate_listener_filter (TAO_Notify_Event* event,
+                                 TAO_Notify_EventListener* event_listener,
+                                 CORBA::Boolean eval_parent,
+                                 CORBA::Environment &ACE_TRY_ENV);
+  // This method is called by the subscription lookup command asking
+  // that <event> be delivered to <event_listener>.
 
-  void dispatch_event (TAO_Notify_Event* event, TAO_Notify_EventListener* event_listener, CORBA::Environment &ACE_TRY_ENV);
-  // This method is called by an Event_Listener after it has successfully evaluated its filter.
+  void dispatch_event (TAO_Notify_Event* event,
+                       TAO_Notify_EventListener* event_listener,
+                       CORBA::Environment &ACE_TRY_ENV);
+  // This method is called by an Event_Listener after it has
+  // successfully evaluated its filter. 
 
 protected:
   // = Data Members

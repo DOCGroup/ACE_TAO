@@ -6,19 +6,11 @@ ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LSRC = CosEvent_Service.cpp \
+LSRC = CosEvent_Service.cpp
 
 ES_OBJS=$(LSRC:.cpp=.o)
 
-LDLIBS = -lTAO_CosEvent -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
-#
-# NOTE
-#
-# The following macro expands to a series of libraries
-# on QNX RTP. It has been introduced to solve a problem
-# with the current QNX RTP linker.
-#
-LDLIBS+=$(TAO_COS_NAMING_LIBS)
+LDLIBS = -lTAO_CosEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
 
 BIN_UNCHECKED = CosEvent_Service
 

@@ -1,15 +1,7 @@
 # $Id$
 
 SRC = $(BIN:%=%$(VAR).cpp)
-LDLIBS= -lTAO_RTOLDEvent -lTAO_RTSchedEvent -lTAO_RTSched -lTAO_RTEvent -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
-#
-# NOTE
-#
-# The following macro expands to a series of libraries
-# on QNX RTP. It has been introduced to solve a problem
-# with the current QNX RTP linker.
-#
-LDLIBS+=$(TAO_COS_NAMING_LIBS)
+LDLIBS= -lTAO_RTOLDEvent -lTAO_RTSchedEvent -lTAO_RTSched -lTAO_RTEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
 
 ifndef TAO_ROOT
  TAO_ROOT = $(ACE_ROOT)/TAO

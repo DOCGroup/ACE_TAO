@@ -44,7 +44,9 @@ class TAO_Notify_POA_Factory;
 // portably.  I don't mean that you should do that right now, but
 // consider it in your design.
 
-class TAO_Notify_Export TAO_Notify_EventChannelFactory_i : public virtual POA_CosNotifyChannelAdmin::EventChannelFactory, public virtual PortableServer::RefCountServantBase
+class TAO_Notify_Export TAO_Notify_EventChannelFactory_i
+  : public virtual POA_CosNotifyChannelAdmin::EventChannelFactory
+  , public virtual PortableServer::RefCountServantBase
 {
   // = TITLE
   //   TAO_Notify_EventChannelFactory_i

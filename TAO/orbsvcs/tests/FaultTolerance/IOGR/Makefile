@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-#LDLIBS = -lTAO_FaultTolerance -lTAO -lACE
+#LDLIBS = -lTAO_FaultTolerance -lTAO
 
 IDL_FILES=test
 IDL_SRC = testC testS
@@ -50,16 +50,7 @@ include $(TAO_ROOT)/taoconfig.mk
 .PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))
 
 TAO_IOR_MANIP_LIBS = -lTAO_IORManip
-TAO_FT_LIBS = -lTAO_Svc_Utils -lTAO_PortableServer
-#
-# NOTE
-#
-# The following macro expands to a series of libraries
-# on QNX RTP. It has been introduced to solve a problem
-# with the current QNX RTP linker.
-#
-TAO_FT_LIBS+=$(TAO_COS_NAMING_LIBS) $(TAO_COS_NOTIFICATION_LIBS) $(TAO_FAULT_TOLERANCE_LIBS)
-
+TAO_FT_LIBS = -lTAO_FaultTolerance -lTAO_CosNotification -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_FT_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)

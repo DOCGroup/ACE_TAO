@@ -12,15 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO_IORManip -lTAO
-#
-# NOTE
-#
-# The following macro expands to a series of libraries
-# on QNX RTP. It has been introduced to solve a problem
-# with the current QNX RTP linker.
-#
-LDLIBS+=$(TAO_COS_NAMING_LIBS) $(TAO_COS_NOTIFICATION_LIBS) $(TAO_FAULT_TOLERANCE_LIBS)
+LDLIBS = -lTAO_CosFaultTolerance -lTAO_CosNotification -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORManip -lTAO
 
 PROG_SRCS = IOGRTest.cpp
 
