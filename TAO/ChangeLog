@@ -1,3 +1,8 @@
+Mon Oct 21 06:38:41 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/DsLogAdmin.dsp: Fixed link errors in Win32
+	  builds. 
+
 Mon Oct 21 11:03:06 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* docs/compiler.html: Updated tao_idl compiler option documentation
