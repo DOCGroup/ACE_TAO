@@ -1,3 +1,9 @@
+Fri Apr 28 11:54:21 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/SString.cpp: Fixed the delimiter_replace() method so that
+	  it actually does what it's comment implies...  Thanks to Martin
+ 	  Krumpolec <krumpo@pobox.sk> for reporting this.
+
 Thu Apr 27 18:19:19 2000  James Hu  <jxh@entera.com>
 
         * ace/Dirent.i: Added checks to see if dirp_ is initialized

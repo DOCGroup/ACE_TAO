@@ -41,7 +41,18 @@ int
 ACE_Tokenizer::delimiter_replace (ACE_TCHAR d,
                                   ACE_TCHAR replacement)
 {
-  if (delimiter_index_ == MAX_DELIMITERS)
+  // Make it possible to replace delimiters on-the-fly, e.g., parse
+  // string until certain token count and then copy rest of the
+  // original string.
+  for (int i = 0; i < delimiter_index_; i++)
+    if (delimiters_[i].delimiter_ == d)
+      {
+        delimiters_[i].replacement_ = replacement;
+        delimiters_[i].replace_ = 1;
+        return 0;
+      }
+
+  if (delimiter_index_ >= MAX_DELIMITERS)
     return -1;
 
   delimiters_[delimiter_index_].delimiter_ = d;
