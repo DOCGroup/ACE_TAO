@@ -45,7 +45,7 @@ class ACE_Export OctetStr: public  SnmpSyntax
 {
 public:
   OctetStr( const char *string = "", long size = -1);
-  // constructor using a  string, -1 will calc/use full string length 
+  // construct octet from byte buffer, assume c style string if size == -1  
 
   OctetStr ( const OctetStr &octet);
   // constructor using another octet object
@@ -57,7 +57,7 @@ public:
   // syntax type
 
   void set_data( const SmiBYTE* string, long int size = -1);
-  // set the data on an already constructed Octet
+  // set octet from byte buffer, assume c style string if size == -1  
 
   OctetStr& operator=( const char *string);
   // assignment to a string operator overloaded
