@@ -1,3 +1,17 @@
+Mon Jan  3 10:01:09 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* DAnCE/RTNodeApplication/README: 
+	* DAnCE/RTNodeApplication/NodeApplication_Task.cpp:
+	* DAnCE/RTNodeApplication/NodeApplication_Task.h:
+	* DAnCE/RTNodeApplication/NodeApplication_Task.inl:
+	* DAnCE/RTNodeApplication/RTNodeApplication.cpp:
+	* DAnCE/RTNodeApplication/RTNodeApplication.mpc:
+	* DAnCE/RTNodeApplication/RTServer_Impl.cpp:
+	* DAnCE/RTNodeApplication/RTServer_Impl.h:
+	* DAnCE/RTNodeApplication/RTServer_Impl.inl:
+	* DAnCE/RTNodeApplication/senv.sh: Added a minimal
+	  real-time-enabled NodeApplication server.  
+
 Mon Jan  3 12:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/CCM_Core.mpc:
