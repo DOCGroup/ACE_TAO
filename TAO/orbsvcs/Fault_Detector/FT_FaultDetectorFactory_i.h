@@ -344,5 +344,5 @@ namespace TAO
   };
 }   // namespace TAO
 
-#include /**/ <ace/post.h>
+#include /**/ "ace/post.h"
 #endif /* FT_FAULTDETECTORFACTORY_I_H_  */
