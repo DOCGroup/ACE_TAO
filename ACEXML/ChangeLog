@@ -1,3 +1,10 @@
+Thu May 29 23:00:24 2003  Krishnakumar B  <kitty@spam.invalid.domain>
+
+        * tests/Makefile.ContentHandler_Test:
+        * tests/Makefile:
+
+          This file got left out by mistake during the big merge.
+
 Thu May 29 22:03:40 2003  Krishnakumar B  <kitty@spam.invalid.domain>
 
         * ACEXML/ACEXML.mwc:
