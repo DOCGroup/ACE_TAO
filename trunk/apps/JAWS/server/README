@@ -27,11 +27,11 @@ CONTENTS
 
 1a. Compiling under UNIX.
 
-	Assuming that the environment variable WRAPPER_ROOT is set
+	Assuming that the environment variable ACE_ROOT is set
 correctly, and that you are using GNU make, compiling should simply
 involve:
 
-	$ cd $WRAPPER_ROOT/apps/JAWS/server
+	$ cd $ACE_ROOT/apps/JAWS/server
 	$ make clean
 	$ make depend
 	$ make
@@ -42,7 +42,7 @@ This will produce an executable named ``main''.
 
 	Assuming you are using a recent version of Microsoft
 Visual C++, you can use the jaws.mdp file located in
-$WRAPPER_ROOT/apps/JAWS/server to build JAWS.
+$ACE_ROOT/apps/JAWS/server to build JAWS.
 
 
 ------------
