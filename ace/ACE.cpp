@@ -1267,8 +1267,7 @@ ACE::sock_error (int error)
       /*
 	case WSANO_ADDRESS:
 	return "Valid name, no MX record";
-	/* NOTREACHED */
-	*/
+	  */
     case WSANOTINITIALISED:
       return "WSA Startup not initialized";
       /* NOTREACHED */
