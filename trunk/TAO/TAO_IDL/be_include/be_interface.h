@@ -28,6 +28,7 @@ class be_interface : public virtual AST_Interface
   //   The back end extension of the AST_Interface class
   //
   // = DESCRIPTION
+  //
 {
 public:
   // Operations
