@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 #	@(#)Makefile	1.1	10/18/96
 #
-#	Makefile for the Peer portion of the Gateway application
+#	Makefile for the Peer test driver portion of the Gateway application
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
@@ -12,7 +12,8 @@ BIN   	= peerd
 LIB   	= libPeer.a
 SHLIB	= libPeer.$(SOEXT)
 
-FILES	= Peer 
+FILES	= Options \
+	  Peer
 
 LSRC	= $(addsuffix .cpp,$(FILES)) 
 LOBJ	= $(addsuffix .o,$(FILES))
