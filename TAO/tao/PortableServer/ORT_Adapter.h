@@ -14,16 +14,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Exception.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/SystemException.h"
+
 #include "ace/Service_Object.h"
 #include "ace/Array_Base.h"
 #include "tao/PI_ForwardC.h"
 
-#include "portableserver_export.h"
 
 class TAO_POA;
 
@@ -83,6 +85,10 @@ namespace TAO
     virtual PortableInterceptor::ObjectReferenceFactory *
       get_obj_ref_factory (void) = 0;
 
+    // @@ Johnny, we won't be needing the exception specification
+    //    below for long.  Once bug 1852 is fixed, we can the
+    //    exception specification and the "tao/SystemException.h"
+    //    include above.
     /**
      * @name PortableInterceptor::ObjectReferenceFactory Methods
      *

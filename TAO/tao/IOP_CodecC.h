@@ -46,6 +46,7 @@
 #include "tao/Any.h"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/VarOut_T.h"
+#include "tao/SystemException.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
