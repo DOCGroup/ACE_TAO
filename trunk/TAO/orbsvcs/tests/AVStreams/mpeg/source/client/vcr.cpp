@@ -66,13 +66,13 @@
 
 #include "include/common.h"
 
-#include "video.h"
+#include "mpeg_client/video.h"
 #include "proto.h"
-#include "newproto.h"
-#include "global.h"
+#include "mpeg_client/newproto.h"
+#include "mpeg_client/global.h"
 
-#include "util.h"
-#include "dither.h"
+#include "mpeg_client/util.h"
+#include "mpeg_client/dither.h"
 
 #include "mpeg_shared/routine.h"
 
