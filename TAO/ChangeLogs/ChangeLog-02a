@@ -1,3 +1,28 @@
+Mon Mar 26 14:32:41 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_visitor_interface/interceptors_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface_fwd/interfaceFwd_ch.cpp:
+
+	  Cosmetic changes to source code.
+
+	* TAO_IDL/be/be_visitor_operations/interceptors_arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp:
+
+	  Cosmetic changes to generated code, mostly fixes to
+	  indentation problems.
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+	  Changed generated code for the
+	  static const CORBA::Long _oc_*[] array to put each member
+	  on a new line, eliminating the extremely long line lengths
+	  that were generated previously. This will also enable the
+	  generated comments that describe the various typecode
+	  components (name, repo id, member count, etc.) to be
+	  easily visible and readable in the text editor of your
+	  choice.
+
 Mon Mar 26 14:01:36 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/IDL_Test/union.idl:
