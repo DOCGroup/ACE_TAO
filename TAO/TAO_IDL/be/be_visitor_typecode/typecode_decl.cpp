@@ -123,3 +123,9 @@ be_visitor_typecode_decl::visit_union (be_union *node)
 {
   return this->visit_type (node);
 }
+
+int
+be_visitor_typecode_decl::visit_valuetype (be_valuetype *node)
+{
+  return this->visit_type (node);
+}

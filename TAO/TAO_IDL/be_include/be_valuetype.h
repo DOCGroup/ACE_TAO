@@ -80,21 +80,6 @@ public:
   const char *full_obv_skel_name (void);
   // Retrieve the fully scoped skel class name.
 
-  // TODO.
-#if 0
-  virtual int gen_typecode (void);
-  // Generate the typecode.
-
-  virtual int gen_encapsulation (void);
-  // Encapsulation for parameters.
-
-  virtual long tc_size (void);
-  // Return typecode size.
-
-  virtual long tc_encap_len (void);
-  // Return length of encapsulation.
-#endif
-
   const char *field_pd_prefix (void);
 
   const char *field_pd_postfix (void);
@@ -114,6 +99,12 @@ public:
   void compute_fullobvskelname (void);
   // Compute the fully scoped skel class name.
 
+  ACE_CDR::ULong data_members_count (
+      AST_Field::Visibility vis = AST_Field::vis_NA);
+  // Compute the count of private/public/all data members.
+
+  virtual idl_bool in_recursion (AST_Type *node = 0);
+  // Check if we are in recursion.
 
 private:
   char *full_obv_skel_name_;
