@@ -1,3 +1,25 @@
+Fri Apr 11 16:18:08 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+         * ace/Makefile.ace:
+         * ace/OS.h:
+         * ace/SOCK_Connector.cpp:
+         * ace/SOCK_Connector.h:
+         * ace/SOCK_SEQPACK_Acceptor.h:
+         * ace/ace_dll.dsp:
+         * ace/RMCast/Makefile:
+         * bin/PerlACE/Process_Unix.pm:
+         * bin/PerlACE/Process_Win32.pm:
+         * include/makeinclude/platform_linux.GNU:
+         * include/makeinclude/wrapper_macros.GNU:
+         * performance-tests/Makefile:
+         * tests/Makefile:
+         * tests/run_test.lst:
+         * tests/run_tests.bat:
+         * tests/RMCast/Makefile:
+
+           Reverted changes to above files to pre ChangeLogTag:
+           Thu Apr 10 15:35:00 2003  Gautam Thaker  <gthaker@atl.lmco.com>
+
 Fri Apr 11 06:37:08 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
