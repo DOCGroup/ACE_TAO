@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -12,6 +12,7 @@
 
 #ifndef ACE_ARRAY_BASE_H
 #define ACE_ARRAY_BASE_H
+
 #include "ace/pre.h"
 
 #include "ace/config-all.h"
@@ -19,6 +20,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "Global_Macros.h"
 
 class ACE_Allocator;
 
@@ -203,4 +206,5 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
+
 #endif /* ACE_ARRAY_BASE_H */
