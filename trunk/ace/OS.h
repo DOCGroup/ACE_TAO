@@ -22,10 +22,16 @@
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).
 # include "ace/inc_user_config.h"
 
+// Get OS.h to compile on some of the platforms without DIR info yet.
+#if !defined (ACE_HAS_DIRENT)
+typedef int DIR;
+struct dirent {};
+#endif /* ACE_HAS_DIRENT */
+
 #if defined (ACE_PSOS_TM)
 typedef long long       longlong_t;
 typedef long            id_t;
-#endif /*ACE_PSOS_TM*/
+#endif /* ACE_PSOS_TM */
 
 # if defined (ACE_HAS_MOSTLY_UNICODE_APIS) && !defined (UNICODE)
 #   error UNICODE must be defined when using ACE_HAS_MOSTLY_UNICODE_APIS, check your compiler document on how to enable UNICODE.
