@@ -45,7 +45,7 @@ template class ACE_NonBlocking_Connect_Handler<TAO_SHMIOP_Connection_Handler>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 
-TAO_SHMIOP_Connector::TAO_SHMIOP_Connector (CORBA::Octet flag)
+TAO_SHMIOP_Connector::TAO_SHMIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (TAO_TAG_SHMEM_PROFILE),
     connect_strategy_ (),
     base_connector_ (),
