@@ -1,3 +1,11 @@
+Wed May 19 22:55:48 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tests/test.idl
+ 	* tests/test_i.cpp
+ 	* tests/test_i.h
+	* tests/MT_Client/client.cpp: Simpliefied version of the MT client.
+	* tests/MT_Client/client.conf: Simple client side configuration.
+
 Wed May 19 18:29:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Client_Strategy_Factory.h:
