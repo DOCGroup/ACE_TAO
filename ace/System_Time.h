@@ -27,14 +27,6 @@
 #include "ace/Memory_Pool.h"
 #include "ace/Malloc_T.h"
 
-class ACE_Export ACE_Date_Time
-{
-  // = TITLE
-  //    This class holds internally date and time and has interfaces
-  //    for getting month or compares of times and dates, etc.
-public:
-};
-
 class ACE_Export ACE_System_Time
 {
   // = TITLE
