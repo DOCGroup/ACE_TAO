@@ -38,7 +38,7 @@ class TAO_ORB_Core_TSS_Resources;
 class ACE_Reactor;
 class ACE_Event_Handler;
 
-class TAO_Connection_Handler
+class TAO_Export TAO_Connection_Handler
 {
   // = TITLE
   //     TAO_Connection_Handler
