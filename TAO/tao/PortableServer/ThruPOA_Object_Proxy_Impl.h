@@ -34,7 +34,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-class TAO_PortableServer_Export TAO_ThruPOA_Object_Proxy_Impl : public TAO_Object_Proxy_Impl
+class TAO_PortableServer_Export TAO_ThruPOA_Object_Proxy_Impl : public virtual TAO_Object_Proxy_Impl
 {
   // = TITLE
   //    TAO_ThruPOA_Object_Proxy_Impl
@@ -53,9 +53,9 @@ public:
 
   virtual CORBA::Boolean _non_existent (const CORBA::Object_ptr target,
                                         CORBA_Environment &ACE_TRY_ENV);
-  
+
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-  
+
 };
 
 #include "ace/post.h"
