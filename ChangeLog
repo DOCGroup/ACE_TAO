@@ -1,3 +1,9 @@
+Tue Jun 20 12:57:12 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/config-freebsd-pthread.h: Undefined ACE_LACKS_SETSCHED if we
+          are compiling on R4.0 or above.  Thanks to Sergey A. Osokin
+          <osa@freebsd.org.ru> for reporitng this.
+
 Tue Jun 20 07:37:18 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Select_Reactor_T.h,
@@ -24,20 +30,20 @@ Mon Jun 19 22:14:26 2000  Alex Arulanthu  <Alex.Arulanthu@sylantro.com>
 
 	* ace/POSIX_Asynch_IO.h:
 	* ace/POSIX_Asynch_IO.cpp:
-	* ace/POSIX_Proactor.h:	
+	* ace/POSIX_Proactor.h:
 	* ace/POSIX_Proactor.cpp:
 	* examples/Reactor/Proactor/Makefile
 	* examples/Reactor/Proactor/test_proactor2.cpp:
 
-	  Thanks to Alex Libman <alibman@baltimore.com>, the following 
-	  changes have been integrated onto POSIX Proactor. 
+	  Thanks to Alex Libman <alibman@baltimore.com>, the following
+	  changes have been integrated onto POSIX Proactor.
 
 	  - Enabling the completion call backs even if aio_return
 	  fails. We will call the completion call back methods with 0
 	  transferred data parameter.
 
 	  - MT safe'ing AIOCB proactor. It would not improve the
-	  efficiency. 
+	  efficiency.
 
 Mon Jun 19 19:44:05 2000  Ossama Othman  <ossama@uci.edu>
 
@@ -47,7 +53,7 @@ Mon Jun 19 19:44:05 2000  Ossama Othman  <ossama@uci.edu>
 	  not explicitly disabled, i.e. when the "ssl" make variable is
 	  not equal to zero.  Note that the default is not to build the
 	  SSL wrappers.
-	  
+
 	* ace/OS.i (thr_yield):
 
 	  Corrected typo in comment.
@@ -74,15 +80,15 @@ Mon Jun 19 19:44:05 2000  Ossama Othman  <ossama@uci.edu>
 Mon Jun 19 17:33:28 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h: Removed the special case check for
-  
+
           #     if defined (ACE_HAS_IRIX62_THREADS)
 	  #       define THR_SCOPE_SYSTEM        0x00100000
 	  #     else
-  
+
           and just used this:
-	  
+
 	  #       define THR_SCOPE_SYSTEM        THR_BOUND
-  
+
           Thanks to John Foresteire <John_J_Foresteire@res.raytheon.com>
 	  for this suggestion.
 
