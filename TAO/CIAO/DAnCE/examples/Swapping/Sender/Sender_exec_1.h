@@ -12,7 +12,7 @@
 
 #include "SwapExecC.h"
 #include "SenderEC.h"
-#include "Sender_exec_export.h"
+#include "Sender_exec_1_export.h"
 #include "tao/LocalObject.h"
 
 namespace Sender_Impl
@@ -20,7 +20,7 @@ namespace Sender_Impl
   class SenderSwap_exec_i;
 
 
-  class SENDER_EXEC_Export Sender_exec_1_i :
+  class SENDER_EXEC_1_Export Sender_exec_1_i :
       public virtual Sender_Exec,
       public virtual TAO_Local_RefCounted_Object
   {
@@ -127,7 +127,7 @@ namespace Sender_Impl
 
 }
 
-extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+extern "C" SENDER_EXEC_1_Export ::Components::EnterpriseComponent_ptr
 createSenderExec_Impl (Sender_Impl::SenderSwap_exec_i *p);
 
 #endif /* SENDER_EXEC_H */
