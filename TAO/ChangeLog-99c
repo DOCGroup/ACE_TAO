@@ -1,3 +1,76 @@
+Tue Aug 31 18:07:35 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/:
+	  The modififed implementation of the A/V Streaming Service now
+	  fully supports the Full Profile interfaces like FDev,
+	  FlowConnection, FlowEndPoint. It also support the
+	  Point-to-MultiPoint binding and MultiPoint-to-MultiPoint
+	  binding. The implementation provides a pluggable protocols
+	  framework for flow protocols like SFP, RTP and also for
+	  transport protocols like TCP, UDP and ATM. It provides an
+	  extensible Policy framework to add new policies for flow
+	  protocols. There's also an implementation of
+	  MultiPoint-to-MultiPoint binding.
+
+	  For more documentation, please check
+	  http://www.cs.wustl.edu/~naga/pluggable_av.ps.gz
+
+	  The following files have been newly added.
+
+	* orbsvcs/orbsvcs/AV/Transport.{h,cpp}:
+	  Provides generic transport related interaces.
+	
+	* orbsvcs/orbsvcs/AV/TCP.{h,cpp}: 
+   	  These files contain the TCP Null flow protocol layer and the TCP
+	  transport interfaces.
+
+	* orbsvcs/orbsvcs/AV/UDP.{h,cpp}:
+	  These files contain the UDP Null flow protocol layer and the UDP
+	  transport interfaces.
+
+	* orbsvcs/orbsvcs/AV/MCast.{h,cpp}:
+	  These files contain the UDP Multicast related transport interfaces.
+
+	* orbsvcs/orbsvcs/AV/RTP.{h,cpp}:
+	* orbsvcs/orbsvcs/AV/RTCP.{h,cpp}:
+	* orbsvcs/orbsvcs/AV/source.{h,cpp}:
+	  Provides a RTP/RTCP implementation based on Vic (a Videoconferencing
+	  tool developed at U Cal Berkeley).
+
+	* orbsvcs/orbsvcs/AV/Policy.{h,cpp}:
+	  Provides the Policy related classes for the pluggable protocols framework.		
+
+	* orbsvcs/orbsvcs/AV/Protocol_Factory.{h,cpp}:
+	  Provides the generice interfaces for flow protocol factories and
+	  transport factories.
+
+	* orbsvcs/orbsvcs/AV/Flows_T.{h,cpp}:
+	  FDev implementation classes.
+	
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.{h,cpp,i}:
+	  Moved the Flow Spec Entry classes from AVStreams_i.* files to
+	  these.
+
+	For additional modification that was done during the branch please
+	check $TAO_ROOT/orbsvcs/orbsvcs/AV/pluggable_av_log.
+
+	* orbsvcs/tests/AVStreams/Pluggable:
+	  This directory provides a simple file transfer test using the
+	  pluggable protocols framework and runs over TCP  Null layer, UDP
+	  Null layer, SFP and RTP using the light profile interfaces.
+
+	* orbsvcs/tests/AVStreams/Full_Profile:
+	  This directory provides the same file transfer test as in
+	  Pluggable directory using the Full Profile interfaces.
+
+	* orbsvcs/tests/AVStreams/Multicast:
+	  This directory provides a file transfer test using the
+	  point-to-multipoint binding in AV using light profile interfaces.
+	 
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile:
+	  Multicast file transfer test using the point-to-multipoint binding
+	  for full profile interfaces.		
+
 Tue Aug 31 17:59:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.yy:
