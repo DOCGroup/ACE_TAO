@@ -1,3 +1,9 @@
+Thu Aug  5 12:46:15 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_args.cpp (DRV_usage): Improved the IDL compiler
+	  documentation for the -Ge option.  Thanks to Paul Calabrese
+ 	  <calabrese_p@ociweb.com> for suggesting this.
+  
 Thu Aug  5 12:47:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/DynSched.cpp
@@ -8,7 +14,7 @@ Thu Aug  5 11:46:01 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * rules.tao.GNU: Moved  the definition of interface_repo from
           $ACE_ROOT/include/makeinclude/wrapper_macros.GNU here as per
-          Dr.Levine's suggestions
+ 	  Dr.Levine's suggestions
 
         * tao/InterfaceC.h: Added #incude "tao/varout.h" to fix an error
           with SunCC4.2. This #include should bring in the definition of

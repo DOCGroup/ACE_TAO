@@ -123,7 +123,7 @@ DRV_usage (void)
   cerr << GTDEVEL (" -Ce\t\t\tError if identifier spellings differ only in case (default is warning)\n");
   cerr << GTDEVEL (" -Gc\t\t\tenable Compiled marshaling (default)\n");
   cerr << GTDEVEL (" -Gi\t\t\tenable Interpretive marshaling (default is compiled)\n");
-  cerr << GTDEVEL (" -Ge\t\t\tenable C++ Exception support (enabled by default)\n");
+  cerr << GTDEVEL (" -Ge [0|1]\t\t\tDisable/Enable generation of CORBA::Environment arguments (enabled by default if ACE_HAS_EXCEPTIONS)\n");
   cerr << GTDEVEL (" -Gt\t\t\tenable optimized TypeCode support (unopt by default)\n");
 #ifdef IDL_HAS_VALUETYPE
   cerr << GTDEVEL (" -Gv\t\t\tenable OBV (Valuetype) support (disabled by default)\n");

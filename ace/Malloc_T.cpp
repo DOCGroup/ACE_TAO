@@ -414,15 +414,12 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_free (void *ap)
 
   for (;
        blockp <= currp 
-         || blockp >= ACE_reinterpret_cast (ACE_Malloc_Header *,
-                                            currp->s_.next_block_);
+         || blockp >= (ACE_Malloc_Header *) currp->s_.next_block_;
        currp = currp->s_.next_block_)
     {
-      if (currp >= ACE_reinterpret_cast (ACE_Malloc_Header *,
-                                         currp->s_.next_block_)
+      if (currp >= (ACE_Malloc_Header *) currp->s_.next_block_
           && (blockp > currp 
-              || blockp < ACE_reinterpret_cast (ACE_Malloc_Header *,
-                                                currp->s_.next_block_)))
+              || blockp < (ACE_Malloc_Header *) currp->s_.next_block_))
         // Freed block at the start or the end of the memory pool.
         break;
     }
