@@ -1,3 +1,9 @@
+Fri Nov  6 17:09:52 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/mpeg_shared/MMDevice_Exporter.idl: 
+	  The new idl defining the wrapper interface for exporting both
+	  Audio and Video MMDevices.
+	
 Fri Nov 06 10:59:43 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * VERSION: added reference to BUG-REPORT-FORM.  Thanks to
