@@ -1,3 +1,10 @@
+Fri Oct  2 20:16:35 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* tao/DynAnyC.cpp:
+	  David got a couple of warnings with Dec cxx that led me to 
+	  some lines that I had commented out to find a bug and 
+	  forgot to uncomment.
+
 Fri Oct  2 20:02:42 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* TAO_IDL/be/be_sunsoft.cpp:

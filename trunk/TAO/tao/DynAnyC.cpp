@@ -717,12 +717,11 @@ CORBA_DynEnum_ptr CORBA_DynEnum::_narrow (CORBA::Object_ptr obj,
     return CORBA_DynEnum::_nil ();
 
   void* servant = obj->_servant ()->_downcast ("IDL:/CORBA_DynEnum:1.0");
-//  return new POA_CORBA::_tao_collocated_DynEnum (
-//    ACE_reinterpret_cast (POA_CORBA::DynEnum_ptr, 
-//                          servant),
-//    stub
-//  );
-  return 0;
+  return new POA_CORBA::_tao_collocated_DynEnum (
+    ACE_reinterpret_cast (POA_CORBA::DynEnum_ptr, 
+                          servant),
+    stub
+  );
 }
 
 CORBA_DynEnum_ptr CORBA_DynEnum::_nil (void)
