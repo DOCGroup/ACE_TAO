@@ -254,7 +254,15 @@ be_visitor_field_ch::visit_predefined_type (be_predefined_type *node)
   // if not a typedef and we are defined in the use scope, we must be defined
   os->indent (); // start from current indentation level
   if (node->pt () == AST_PredefinedType::PT_pseudo) // is a psuedo obj
-    *os << bt->nested_type_name (this->ctx_->scope (), "_var");
+    {
+      // check if we are dealing with a CORBA::Object
+      if (!ACE_OS::strcmp (bt->local_name ()->get_string (), "Object"))
+        {
+          *os << "TAO_Object_Field_T<CORBA::Object>";
+        }
+      else
+        *os << bt->nested_type_name (this->ctx_->scope (), "_var");
+    }
   else
     *os << bt->nested_type_name (this->ctx_->scope ());
   return 0;
