@@ -21,6 +21,7 @@
 #if !defined (ACE_LOCAL_NAME_SPACE_T_H)
 #define ACE_LOCAL_NAME_SPACE_T_H
 
+#include "ace/Hash_Map_Manager.h"
 #include "ace/Name_Space.h"
 #include "ace/Naming_Context.h"
 #include "ace/SString.h"
@@ -31,9 +32,9 @@
 typedef ACE_Unbounded_Set<ACE_WString> ACE_WSTRING_SET;
 
 // Simplify later usage by defining typedefs.
-typedef ACE_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex> MAP_MANAGER;
-typedef ACE_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex> MAP_ITERATOR;
-typedef ACE_Map_Entry <ACE_NS_String, ACE_NS_Internal> MAP_ENTRY;
+typedef ACE_Hash_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex> MAP_MANAGER;
+typedef ACE_Hash_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex> MAP_ITERATOR;
+typedef ACE_Hash_Map_Entry <ACE_NS_String, ACE_NS_Internal> MAP_ENTRY;
 
 template <class ALLOCATOR>
 class ACE_Name_Space_Map : public MAP_MANAGER
@@ -55,7 +56,7 @@ public:
   // Constructor.
 
   // = The following methods are Proxies to the underlying methods
-  // provided by <ACE_Map_Manager>.  When they are called, they
+  // provided by <ACE_Hash_Map_Manager>.  When they are called, they
   // acquire the lock, set the allocator to the one specific to this
   // process, and then call down to perform the intended operation.
   int bind (const ACE_NS_String &, 
