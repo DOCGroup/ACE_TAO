@@ -98,7 +98,7 @@ ifeq ($(XLCVERSION),0x0306)
  rtti = 0
 else
  ifeq ($(XLCVERSION),0x0500)
-  CCFLAGS    += -qflag=w:w -qstaticinline
+  CCFLAGS    += -qflag=w:w -qstaticinline -qfuncsect
   DLD         = $(CXX) -qmkshrobj
   SOFLAGS    += $(CCFLAGS) $(CPPFLAGS) $(INCLDIRS)
   ifeq ($(buildbits),64)
