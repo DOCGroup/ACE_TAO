@@ -6680,13 +6680,23 @@ public:
   ACE_CE_Bridge (void);
   // Default ctor.
 
+#   if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
   ACE_CE_Bridge (CWnd *, int notification, int idc);
+  // Construct and set the default windows.
+#   endif /* ACE_HAS_MFC && ACE_HAS_MFC != 0 */
+
+  ACE_CE_Bridge (HWND, int notification, int idc);
   // Construct and set the default windows.
 
   ~ACE_CE_Bridge (void);
   // Default dtor.
 
+#   if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
   void set_window (CWnd *, int notification, int idc);
+  // Specify which window to use.
+#   endif /* ACE_HAS_MFC && ACE_HAS_MFC != 0 */
+
+  void set_window (HWND, int notification, int idc);
   // Specify which window to use.
 
   void set_self_default (void);
@@ -6694,7 +6704,7 @@ public:
 
   int notification (void);
   int idc (void);
-  CWnd *window (void);
+  HWND window (void);
   // Access functions.
 
   static ACE_CE_Bridge *get_default_winbridge (void);
@@ -6703,16 +6713,15 @@ public:
   int write_msg (LPCTSTR str);
   // Write a string to windows.
 
+#if 0
   int write_msg (CString *cs);
   // Write a CString to windows.  Notice that the CString object will
   // be freed by windows.
+#endif /* 0 */
 private:
   // @@ We should use a allocator here.
 
-  CWinThread *control_;
-  // The ace program that tied to this windows.
-
-  CWnd *text_output_;
+  HWND text_output_;
   // A pointer to the window that knows how to
   // handle ACE related messages.
 
