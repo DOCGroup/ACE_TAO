@@ -239,17 +239,33 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
       // Purge connections (if necessary)
       tcm.purge ();
 
-      return this->make_connection (r,
-                                    *desc,
-                                    timeout);
+      TAO_Transport* result = this->make_connection (r,
+                                                     *desc,
+                                                     timeout);
+      if (result == 0)
+        {
+          r->transport ()->opened_as (TAO_CLIENT_ROLE);
+          if (TAO_debug_level > 4)
+            ACE_DEBUG ((LM_DEBUG,
+                        "TAO (%P|%t) - Transport_Connector::connect, "
+                        "opening Transport[%d] in TAO_CLIENT_ROLE\n",
+                        r->transport ()->id ()));
+        }
+      return result;
     }
 
   if (TAO_debug_level > 4)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - Transport_Connector::connect, "
-                "got an existing %s Transport[%d]\n",
-                base_transport->is_connected () ? "connected" : "unconnected",
-                base_transport->id ()));
+    {
+      TAO_Connection_Role cr = base_transport->opened_as ();
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport_Connector::connect, "
+                  "got an existing %s Transport[%d] in role %s\n",
+                  base_transport->is_connected () ? "connected" : "unconnected",
+                  base_transport->id (),
+                  cr == TAO_SERVER_ROLE ? "TAO_SERVER_ROLE" :
+                  cr == TAO_CLIENT_ROLE ? "TAO_CLIENT_ROLE" :
+                  "TAO_UNSPECIFIED_ROLE" ));
+    }
 
   // If connected return..
   if (base_transport->is_connected ())

@@ -111,6 +111,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , orb_core_ (orb_core)
   , cache_map_entry_ (0)
   , bidirectional_flag_ (-1)
+  , opening_connection_role_ (TAO_UNSPECIFIED_ROLE)
   , head_ (0)
   , tail_ (0)
   , incoming_message_queue_ (orb_core)

@@ -909,6 +909,11 @@ the ORB uses. The default reactor is the ACE_TP_Reactor.
               <td><code>tp</code></td>
               <td>Use the <code>ACE_TP_Reactor</code>, a select based
 thread-pool reactor which is the
+        MT_NO_UPCALL means use a client connection handler that
+        participates in the leader-follower model like MT, but, like
+        RW, does not allow handling of nested upcalls within the
+        waiting thread.
+
 default.</td>
             </tr>
           </tbody>
@@ -1168,7 +1173,11 @@ a null lock is used. This makes sense in case of optimizations and is
 allowed when no forwarding is used or only a single threaded client. </td>
       </tr>
       <tr>
-        <td><code>-ORBClientConnectionHandler</code> <em>MT | ST | RW</em></td>
+        <td><code>-ORBClientConnectionHandler</code> <em>MT | ST | RW
+        / MT_NOUPCALL</em><br>
+        <code>-ORBWaitStrategy</code> <em>MT / ST / RW / MT_NOUPCALL
+        </em>
+</td>
         <td><a name="-ORBClientConnectionHandler"></a><em>ST</em> means
 use the single-threaded client connection handler, i.e., the leader
 follower model will not be used. However, <em>ST</em> does support
@@ -1189,6 +1198,18 @@ strategy will only effect two way calls, since there is no waiting for
 one way calls. This strategy can also be used in an application that is
 both a client and a server if the server side is handled by a separate
 thread and the client threads are "pure" clients. </p>
+<p>
+        MT_NOUPCALL means use a client connection handler that
+        participates in the leader-follower model like MT, but, like
+        RW, does not allow handling of nested upcalls within the
+        waiting thread.  Note that with this strategy it is possible
+        to "run out of threads" in a thread pool, and that TAO doesn't
+        grow thread pools.  Unlike RW, this does not require  <a
+        href="-ORBTransportMuxStrategy">-ORBTransportMuxStrategy&nbsp;<em>EXCLUSIVE</em></a>.
+<!--
+I'm not sure what the effect of AMI on this option is.
+-->
+</p>
         <p>Default for this option is <em>MT</em>. </p>
         </td>
       </tr>
