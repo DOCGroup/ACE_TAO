@@ -1,25 +1,30 @@
-// $Id: test_timeout.cpp
-
+// $Id$
+//
 // ============================================================================
 //
 // = LIBRARY
 //    examples
 // 
 // = FILENAME
-//    test_timeout.cpp
+//    test_timeouts.cpp
 //
 // = DESCRIPTION
-//    This example application shows how to write ReactorEx and
-//    Proactor event loops that handle events for some fixed amount of
-//    time.
+//
+//    This example application shows how to write ReactorEx event
+//    loops that handle events for some fixed amount of time.
+//
+//    Run this example (without arguments) to see the timers
+//    expire. The order should be: 
+//    
+//    foo, bar, foo, bar, foo, foo, bar, foo, bar, foo
 //
 // = AUTHOR
 //    Tim Harrison
+//    Irfan Pyarali
 // 
 // ============================================================================
 
 #include "ace/ReactorEx.h"
-#include "ace/Proactor.h"
 #include "ace/Service_Config.h"
 #include "ace/OS.h"
 
@@ -51,19 +56,19 @@ main (int, char *[])
 {
   Timeout_Handler handler;
 
-  // Register a 2 second timer.
-  ACE_Time_Value foo_tv (2);
-  ACE_ReactorEx::instance ()->schedule_timer (&handler,
-						    (void *) "Foo",
-						    ACE_Time_Value::zero,
-						    foo_tv);
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
   ACE_ReactorEx::instance ()->schedule_timer (&handler,
-						    (void *) "Bar",
-						    ACE_Time_Value::zero,
-						    bar_tv);
+					      (void *) "Bar",
+					      bar_tv,
+					      bar_tv);
 
+  // Register a 2 second timer.
+  ACE_Time_Value foo_tv (2);
+  ACE_ReactorEx::instance ()->schedule_timer (&handler,
+					      (void *) "Foo",
+					      foo_tv,
+					      foo_tv);
   // Handle events for 12 seconds.
   ACE_Time_Value run_time (12);
   if (ACE_ReactorEx::run_event_loop(run_time) == -1)

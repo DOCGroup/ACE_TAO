@@ -1,27 +1,134 @@
 // $Id$
-
+//
 // ============================================================================
 //
 // = LIBRARY
 //    examples
 // 
 // = FILENAME
-//    test_reactorEx.cpp
+//    test_talker.cpp
 //
 // = DESCRIPTION
-//    This test application tests a wide range of events that can be
-//    demultiplexed using various ACE utilities.  Events used include ^C
-//    events, reading from STDIN, vanilla Win32 events, thread exits,
-//    ReactorEx notifications, proactive reads, and proactive writes.
 //
+//    This test application tests a wide range of events that can be
+//    demultiplexed using various ACE utilities.  Events used include
+//    ^C events, reading from STDIN, vanilla Win32 events, thread
+//    exits, ReactorEx notifications, proactive reads, and proactive
+//    writes.
+//    
 //    The proactive I/O events are demultiplexed by the ACE_Proactor.
 //    The thread exits, notications, and vanilla Win32 events are
 //    demultiplexed by the ACE_ReactorEx.  To enable a single thread
 //    to run all these events, the Proactor is integrated with the
 //    ReactorEx.
+//    
+//    The test application prototypes a simple talk program.  Two
+//    instances of the application connect.  Input from either console
+//    is displayed on the others console also.  Because of the evils
+//    of Win32 STDIN, a separate thread is used to read from STDIN.
+//    To test the Proactor and ReactorEx, I/O between the remote
+//    processes is performed proactively and interactions between the
+//    STDIN thread and the main thread are performed reactively.
+//    
+//    The following description of the test application is in two
+//    parts.  The participants section explains the main components
+//    involved in the application.  The collaboration section
+//    describes how the partipants interact in response to the
+//    multiple event types which occur.
+//    
+//    The ReactorEx test application has the following participants:
+//    
+//    . ReactorEx -- The ReactorEx demultiplexes Win32 "waitable"
+//    events using WaitForMultipleObjects.
+//    
+//    . Proactor -- The proactor initiates and demultiplexes
+//    overlapped I/O operations.  The Proactor registers with the
+//    ReactorEx so that a single-thread can demultiplex all
+//    application events.
+//    
+//    . STDIN_Handler -- STDIN_Handler is an Active Object which reads
+//    from STDIN and forwards the input to the Peer_Handler.  This
+//    runs in a separate thread to make the test more interesting.
+//    However, STDIN is "waitable", so in general it can be waited on
+//    by the ACE ReactorEx, thanks MicroSlush!
+//    
+//    . Peer_Handler -- The Peer_Handler connects to another instance
+//    of test_reactorEx.  It Proactively reads and writes data to the
+//    peer.  When the STDIN_Handler gives it messages, it fowards them
+//    to the remote peer.  When it receives messages from the remote
+//    peer, it prints the output to the console.
+//    
+//    The collaborations of the participants are as follows:
+//    
+//    . Initialization
+//    
+//      Peer_Handler -- connects to the remote peer.  It then begins
+//      proactively reading from the remote connection.  Note that it
+//      will be notified by the Proactor when a read completes.  It
+//      also registers a notification strategy with message queue so
+//      that it is notified when the STDIN_Handler posts a message
+//      onto the queue.
+//    
+//      STDIN_Handler -- STDIN_Handler registers a signal handler for
+//      SIGINT.  This just captures the exception so that the kernel
+//      doesn't kill our process; We want to exit gracefully.  It also
+//      creates an Exit_Hook object which registers the
+//      STDIN_Handler's thread handle with the ReactorEx.  The
+//      Exit_Hook will get called back when the STDIN_Handler thread
+//      exits.  After registering these, it blocks reading from STDIN.
+//    
+//      Proactor -- is registered with the ReactorEx.
+//    
+//      The main thread of control waits in the ReactorEx.
+//    
+//    . STDIN events -- When the STDIN_Handler thread reads from
+//    STDIN, it puts the message on Peer_Handler's message queue.  It
+//    then returns to reading from STDIN.
+//    
+//    . Message enqueue -- The ReactorEx thread wakes up and calls
+//    Peer_Handler::handle_output.  The Peer_Handler then tries to
+//    dequeue a message from its message queue.  If it can, the
+//    message is Proactively sent to the remote peer.  Note that the
+//    Peer_Handler will be notified with this operation is complete.
+//    The Peer_Handler then falls back into the ReactorEx event loop.
+//    
+//    . Send complete event -- When a proactive send is complete, the
+//    Proactor is notified by the ReactorEx.  The Proactor, in turn,
+//    notifies the Peer_Handler.  The Peer_Handler then checks for
+//    more messages from the message queue.  If there are any, it
+//    tries to send them.  If there are not, it returns to the
+//    ReactorEx event loop.  
+//    
+//    . Read complete event -- When a proactive read is complete (the
+//    Peer_Handler initiated a proactive read when it connected to the
+//    remote peer), the Proactor is notified by the ReactorEx.  The
+//    Proactor, in turn notifies the Peer_Handler.  If the read was
+//    successful the Peer_Handler just displays the received msg to
+//    the console and reinvokes a proactive read from the network
+//    connection.  If the read failed (i.e. the remote peer exited),
+//    the Peer_Handler sets a flag to end the event loop and returns.
+//    This will cause the application to exit.
+//    
+//    . ^C events -- When the user types ^C at the console, the
+//    STDIN_Handler's signal handler will be called.  It does nothing,
+//    but as a result of the signal, the STDIN_Handler thread will
+//    exit.
+//    
+//    . STDIN_Handler thread exits -- The Exit_Hook will get called
+//    back from the ReactorEx.  Exit_Hook::handle_signal sets a flag
+//    to end the event loop and returns.  This will cause the
+//    application to exit.
+//    
+//    
+//    To run example, start an instance of the test with an optional
+//    local port argument (as the acceptor). Start the other instance
+//    with -h <hostname> and -p <server port>. Type in either the
+//    client or server windows and your message should show up in the
+//    other window.  Control C to exit.
 //
 // = AUTHOR
-//    Tim Harrison
+//    Tim Harrison 
+//    Irfan Pyarali
 // 
 // ============================================================================
 
@@ -37,9 +144,9 @@
 typedef ACE_Task<ACE_MT_SYNCH> MT_TASK;
 
 class Peer_Handler : public MT_TASK, public ACE_Handler
-  // = TITLE
-  //     Connect to a server.  Receive messages from STDIN_Handler 
-  //     and forward them to the server using proactive I/O.
+// = TITLE
+//     Connect to a server.  Receive messages from STDIN_Handler 
+//     and forward them to the server using proactive I/O.
 {
 public:
   // = Initialization methods.
@@ -101,9 +208,9 @@ private:
 };
 
 class STDIN_Handler : public ACE_Task<ACE_NULL_SYNCH>
-  // = TITLE
-  //    Active Object.  Reads from STDIN and passes message blocks to
-  //    the peer handler.
+// = TITLE
+//    Active Object.  Reads from STDIN and passes message blocks to
+//    the peer handler.
 {
 public:
   STDIN_Handler (MT_TASK &ph);
@@ -155,15 +262,15 @@ Peer_Handler::Peer_Handler (int argc, char *argv[])
 
   while ((c = get_opt ()) != EOF)
     {
-    switch (c)
-      {
-      case 'h':
-	host_ = get_opt.optarg;
-	break;
-      case 'p':
-	port_ = ACE_OS::atoi (get_opt.optarg);
-	break;
-      }
+      switch (c)
+	{
+	case 'h':
+	  host_ = get_opt.optarg;
+	  break;
+	case 'p':
+	  port_ = ACE_OS::atoi (get_opt.optarg);
+	  break;
+	}
     }
 }
 

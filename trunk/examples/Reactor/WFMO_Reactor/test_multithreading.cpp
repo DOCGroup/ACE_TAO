@@ -1,10 +1,12 @@
+// $Id$
+//
 // ============================================================================
 //
 // = LIBRARY
 //    examples
 // 
 // = FILENAME
-//    test_MT.cpp
+//    test_multithreading.cpp
 //
 // = DESCRIPTION
 //    This application tests multiple threads simultaneously calling
@@ -121,7 +123,7 @@ Task_Handler::Task_Handler (size_t number_of_handles,
   for (size_t i = 0; i < number_of_handles; i++)
     {
       if (ACE_ReactorEx::instance ()->register_handler (this,
-							      this->events_[i].handle ()) == -1)
+							this->events_[i].handle ()) == -1)
 	ACE_ERROR ((LM_ERROR, "%p\t cannot register handle %d with ReactorEx\n", 
 		    "Task_Handler::Task_Handler", i));      
     }
@@ -147,14 +149,14 @@ Task_Handler::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *)
 	      siginfo->si_handle_));
 
   if (ACE_ReactorEx::instance ()->remove_handler (siginfo->si_handle_,
-							ACE_Event_Handler::DONT_CALL) == -1)
+						  ACE_Event_Handler::DONT_CALL) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
 		       "(%t) %p\tTask cannot be unregistered from ReactorEx: handle value = %d\n", 
 		       "Task_Handler::handle_signal",
 		       siginfo->si_handle_), -1);
   
   if (ACE_ReactorEx::instance ()->register_handler (this,
-							  siginfo->si_handle_) == -1)
+						    siginfo->si_handle_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
 		       "(%t) %p\tTask cannot be registered with ReactorEx: handle value = %d\n",  
 		       "Task_Handler::handle_signal",
@@ -209,8 +211,8 @@ main (int argc, char **argv)
 
       // Setup a timer for the task
       if (ACE_ReactorEx::instance ()->schedule_timer (&task,
-							    (void *) i,
-							    0) == -1)
+						      (void *) i,
+						      0) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
 
       for (int i = 0; i < number_of_handles_to_signal; i++)
