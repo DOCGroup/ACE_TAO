@@ -1355,7 +1355,7 @@ protected:
 
 public:
 /**
- * @class
+ * @class Result
  *
  * @brief This is that class which will be passed back to the
  * <handler> when the asynchronous write completes. This class

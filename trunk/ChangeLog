@@ -1,3 +1,12 @@
+Fri Apr 19 11:41:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Typed_SV_Message_Queue.h:
+        * ace/Strategies_T.h:
+        * ace/OS.h:
+        * ace/MEM_SAP.h:
+        * ace/Asynch_IO.h:
+          Doxygen-ized some of the comments
+
 Thu Apr 18 15:58:49 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Asynch_Connector.{h cpp}: Removed static member inet_addr_any_.

@@ -50,8 +50,10 @@ public:
   int remove (void);
   ~ACE_Typed_SV_Message_Queue (void);
 
-  // = Send and recv methods.
+  /// Send method.
   int send (const ACE_Typed_SV_Message<T> &mb, int mflags = 0);
+
+  /// Recv method.
   int recv (ACE_Typed_SV_Message<T> &mb, int mflags = 0);
 
   /// Return the id of the underlying <ACE_SV_Message_Queue>.

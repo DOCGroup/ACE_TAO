@@ -66,7 +66,7 @@ public:
 };
 
 /**
- * @Class ACE_MEM_SAP
+ * @class ACE_MEM_SAP
  *
  * @brief Defines the methods of shared memory management for
  * shared memory transport.
