@@ -1,3 +1,8 @@
+Tue Jun  1 09:57:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ACE-INSTALL.html: Updated the list of platforms that ACE is
+ 	  supported on.
+
 Tue Jun 01 10:00:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: updated Sun C++ and DU versions in fully

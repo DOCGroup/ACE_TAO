@@ -12,7 +12,10 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lorbsvcs -lTAO
+LIB   	= libTime_Date.a
+SHLIB	= libTime_Date.$(SOEXT)
+
+LDLIBS = -lorbsvcs -lTAO -lTime_Date
 
 IDL_SRC = Time_DateC.cpp Time_DateS.cpp
 
