@@ -1,3 +1,16 @@
+Sat Aug 14 17:39:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Pluggable.h:
+	* tao/Pluggable.i:
+	* tao/Pluggable.cpp:
+	* tao/Asynch_Invocation.cpp:
+	* tao/Invocation.cpp:
+	  Small optimization on the critical path: reduce number of
+	  virtual calls and use inline methods in a couple of places.
+
+	* TAO_IDL/Makefile:
+	  Removed repeated -lACE option on the link line.
+
 Fri Aug 13 16:39:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/corbafwd.h:
