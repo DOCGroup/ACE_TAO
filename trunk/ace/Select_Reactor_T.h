@@ -365,21 +365,22 @@ public:
 
   // = Timer management.
   /**
-   * Schedule an <event_handler> that will expire after <delay> amount
-   * of time, which is specified as relative time to the current
-   * <gettimeofday>.  If it expires then <arg> is passed in as the
-   * value to the <event_handler>'s <handle_timeout> callback method.
-   * If <interval> is != to <ACE_Time_Value::zero> then it is used to
-   * reschedule the <event_handler> automatically, which is also
-   * specified using relative time.  This method returns a timer id
-   * that uniquely identifies the <event_handler> in an internal list.
-   * This timer id can be used to cancel an <event_handler> before
-   * it expires.  The cancellation ensures that <timer_ids> are unique
-   * up to values of greater than 2 billion timers.  As long as timers
-   * don't stay around longer than this there should be no problems
-   * with accidentally deleting the wrong timer.  Returns -1 on
-   * failure (which is guaranteed never to be a valid timer id.
-   */
+   * Schedule an ACE_Event_Handler that will expire after an amount
+   * of time.  The return value of this method, a timer_id value,
+   * uniquely identifies the event_handler in the ACE_Reactor's
+   * internal list of timers.
+   * This timer_id value can be used to cancel the timer
+   * with the cancel_timer() call.
+   *
+   * @see cancel_timer()
+   * @see reset_timer_interval()
+   *
+   * @param event_handler  event handler to schedule on reactor
+   * @param arg   argument passed to the handle_timeout() method of  event_handler  
+   * @param delta  time interval after which the timer will expire
+   * @param interval  time interval after which the timer will be automatically rescheduled
+   * @return -1 on failure, a timer_id value on success
+   */                          
   virtual long schedule_timer (ACE_Event_Handler *,
                                const void *arg,
                                const ACE_Time_Value &delay,
