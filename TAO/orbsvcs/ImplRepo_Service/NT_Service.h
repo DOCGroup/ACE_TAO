@@ -23,6 +23,7 @@
 #include "ace/NT_Service.h"
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
+#include "tao/orbconf.h"
 
 static const char *IMR_SERVICE_NAME = "TAOImplRepo";
 static const char *IMR_DISPLAY_NAME = "TAO Implementation Repository";

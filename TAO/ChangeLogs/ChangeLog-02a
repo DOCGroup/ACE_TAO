@@ -1,3 +1,10 @@
+Fri Feb  2 14:45:57 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/NT_Service.h:
+	* orbsvcs/Naming_Service/NT_Naming_Service.h:
+	  Added #include "tao/orbconf.h" to bring in definition for
+	  TAO_SYNCH_MUTEX and fix compile errors in Windows builds.
+
 Fri Feb  2 14:34:15 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/TAO_Singleton_Manager.h: Removed forward reference for 

@@ -26,6 +26,7 @@
 #include /**/ "ace/NT_Service.h"
 #include /**/ "ace/Singleton.h"
 #include /**/ "ace/Synch.h"
+#include /**/ "tao/orbconf.h"
 
 class TAO_NT_Naming_Service : public ACE_NT_Service
 {
