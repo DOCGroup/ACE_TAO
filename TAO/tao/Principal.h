@@ -147,10 +147,10 @@ private:
   CORBA_Principal_ptr &ptr_;
 };
 
-extern TAO_Export CORBA::Boolean
+TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, CORBA_Principal*);
 
-extern TAO_Export CORBA::Boolean
+TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, CORBA_Principal*&);
 
 #if defined (__ACE_INLINE__)
