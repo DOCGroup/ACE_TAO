@@ -1,3 +1,8 @@
+Sun Oct 10 01:16:31 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+	  use TAO_debug_level to print debug messages conditionally.
+
 Sun Oct 10 01:11:47 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/examples/Log/Client/Makefile:
