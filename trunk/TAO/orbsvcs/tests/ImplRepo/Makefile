@@ -16,7 +16,7 @@ LDLIBS = -lorbsvcs -lTAO
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs \
             -I$(TAO_ROOT)
 
-IDL_SRC = AirplaneS.cpp AirplaneC.cpp
+IDL_SRC = AirplaneS.cpp AirplaneC.cpp NesteaS.cpp NesteaC.cpp
 PROG_SRCS = Repository.cpp \
             Repository_Test.cpp \
             airplane_client.cpp \
@@ -24,6 +24,11 @@ PROG_SRCS = Repository.cpp \
             airplane_client_i.cpp \
             airplane_server_i.cpp \
             airplane_i.cpp \
+            nestea_client.cpp \
+            nestea_server.cpp \
+            nestea_client_i.cpp \
+            nestea_server_i.cpp \
+            nestea_i.cpp \
             IR_Helper.cpp
 
 SRC=$(IDL_SRC) $(PROG_SRCS)
@@ -39,6 +44,19 @@ AIRPLANE_SERVER_OBJS =  AirplaneC.o \
                         airplane_server_i.o \
                         airplane_i.o \
                         IR_Helper.o
+
+NESTEA_CLIENT_OBJS =  NesteaC.o \
+                      NesteaS.o \
+                      nestea_client.o \
+                      nestea_client_i.o
+
+NESTEA_SERVER_OBJS =  NesteaC.o \
+                      NesteaS.o \
+                      nestea_server.o \
+                      nestea_server_i.o \
+                      nestea_i.o \
+                      IR_Helper.o
+
 
 REPOSITORY_TEST_OBJS =  ../../../ImplRepo_Service/$(VDIR)/Repository.o \
                         Repository_Test.o
@@ -57,6 +75,8 @@ TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (ImplRepo,$(findstring ImplRepo,$(TAO_ORBSVCS)))
   BIN += airplane_server \
          airplane_client \
+         nestea_server \
+         nestea_client \
          Repository_Test
 endif # ImplRepo
 
@@ -81,11 +101,18 @@ airplane_server: $(addprefix $(VDIR),$(AIRPLANE_SERVER_OBJS))
 airplane_client: $(addprefix $(VDIR),$(AIRPLANE_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
+nestea_server: $(addprefix $(VDIR),$(NESTEA_SERVER_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+
+nestea_client: $(addprefix $(VDIR),$(NESTEA_CLIENT_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+
 Repository_Test: $(addprefix $(VDIR),$(REPOSITORY_TEST_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), Airplane$(ext))
+               $(foreach ext, $(IDL_EXT), Nestea$(ext))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
