@@ -1,3 +1,9 @@
+Wed Aug 18 20:28:23 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/check_build_logs: check for just Stop, not [Ss]top,
+          to avoid snagging top output.  Gnu make says "Stop" when
+          it can't find a dependency.
+
 Wed Aug 18 19:08:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.{h,cpp},Object_Manager.{h,cpp},Log_Msg.cpp:
