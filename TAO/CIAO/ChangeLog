@@ -1,3 +1,26 @@
+Sat Mar 19 15:25:17 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/Config_Handlers/ADD_Handler.cpp:
+        * DAnCE/Config_Handlers/ADD_Handler.h:
+        * DAnCE/Config_Handlers/BasicSP.cdp:
+        * DAnCE/Config_Handlers/CCD_Handler.cpp:
+        * DAnCE/Config_Handlers/CCD_Handler.h:
+        * DAnCE/Config_Handlers/CPD_Handler.cpp:
+        * DAnCE/Config_Handlers/CPD_Handler.h:
+        * DAnCE/Config_Handlers/CRDD_Handler.cpp:
+        * DAnCE/Config_Handlers/CRDD_Handler.h:
+        * DAnCE/Config_Handlers/ComponentPropertyDescription_Handler.cpp:
+        * DAnCE/Config_Handlers/ComponentPropertyDescription_Handler.h:
+        * DAnCE/Config_Handlers/Config_Handlers_Export.h:
+        * DAnCE/Config_Handlers/DP_Handler.cpp:
+        * DAnCE/Config_Handlers/DP_Handler.h:
+        * DAnCE/Config_Handlers/DP_PCD_Handler.cpp:
+        * DAnCE/Config_Handlers/DP_PCD_Handler.h:
+        * DAnCE/Config_Handlers/DataType_Handler.cpp:
+        * DAnCE/Config_Handlers/DataType_Handler.h:
+
+          Added a XSC compiler compliant config handlers.
+
 Sat Mar 19 15:22:54 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/ExecutionManager/DAM_Map.cpp:
