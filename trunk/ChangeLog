@@ -1,3 +1,10 @@
+Tue Sep 25 00:01:59 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Service_Repository.cpp (instance): There are three stages of
+	  the Object Manager: (a) starting up; (b) running; (c) shutdown.
+	  ACE_Service_Repository::instance() was not creating a new
+	  instance in (a) and (c).  It was changed to allow creation (a).
+
 Mon Sep 24 01:55:29 2001  Ossama Othman  <ossama@uci.edu>
 
 	* bin/auto_run_tests.lst:
