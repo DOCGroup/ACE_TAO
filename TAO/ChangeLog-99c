@@ -1,3 +1,13 @@
+Mon May 24 16:43:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/Dynany_Test/test_dynarray.cpp:
+	* TAO/tests/Dynany_Test/test_dynsequence.cpp:
+	* TAO/tests/Dynany_Test/test_dynstruct.cpp:
+	  Fixed some scoping errors due to my moving AnySeq,
+	  FieldName and NameValuePairSeq to the CORBA
+	  namespace. Thanks to Irfan for reporting this
+	  problem.
+
 Mon May 24 16:20:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Param_Test/recursive_struct.h:
