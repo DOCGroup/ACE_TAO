@@ -1,3 +1,16 @@
+Mon Dec 04 12:45:46 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/High_Res_Timer.cpp: Corrected some problems with Linux on
+          Pentium that were introduced by this:
+          Fri Nov 10 10:42:31 2000  Steve Huston  <shuston@riverace.com>
+
+             * ace/High_Res_Timer.cpp: Replaced all occurrences of
+               "defined (ACE_HAS_PENTIUM)" with "defined (ACE_WIN32)" since
+               there is nothing Pentium-specific any longer in the Win32
+               sections.
+
+          Thanks to David Levine and Carlos O'Ryan for weeding this bug out.
+
 Mon Dec  4 07:39:16 2000  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Service_Configurator/IPC-tests/clients:
