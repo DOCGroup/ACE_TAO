@@ -31,12 +31,25 @@ public class PushConsumerFactory {
     {
       try {      
 	dataHandler_ = dataHandler;
-	orb_ = org.omg.CORBA.ORB.init (applet, null);
+
+	// if the DOVE Browser is running as an Applet
+	if (applet != null) {
+	  orb_ = org.omg.CORBA.ORB.init (applet, null);
+	}
+	else { // not running as an Applet, but as an normal Application
+	   orb_ = org.omg.CORBA.ORB.init ();
+	}
 	boa_ = orb_.BOA_init ();
 	
 	// Get the Naming Service initial reference
 	
-	if (nameServiceIOR == null) {      
+	// Name Service Lookup cannot be used when running as an Applet
+	if (nameServiceIOR == null && applet != null) {
+	  System.out.println (" Name Service Lookup cannot be used when running as an Applet! Quit!");
+	  System.exit (1);
+	}
+
+	if (nameServiceIOR == null) {  // only used when running via "java" or "vbj"     
 		System.out.println ("Using the lookup protocol!");
 		NS_Resolve ns_resolve_ = new NS_Resolve ();
 		naming_service_object_ = ns_resolve_.resolve_name_service (orb_);
@@ -48,7 +61,7 @@ public class PushConsumerFactory {
 
       } 
       catch(org.omg.CORBA.SystemException e) {
-	System.err.println ("Client constructur: Failure");
+	System.err.println ("PushConsumerFactory constructor: ORB and Name Service initialization");
 	System.err.println(e);
       }	
       
@@ -77,6 +90,7 @@ public class PushConsumerFactory {
 	      System.err.println ("The Naming Context is null");
 	      System.exit (1);
 	    }
+	  System.out.println ("Reference to the Naming Service is ok.");
 
 	  // Get a reference for the EventService
 
@@ -92,6 +106,8 @@ public class PushConsumerFactory {
        	  RtecEventChannelAdmin.EventChannel event_channel_ = 
 	    RtecEventChannelAdmin.EventChannelHelper.narrow (event_channel_object_);
 
+	  System.out.println ("Reference to the Event Service is ok.");
+
 	  // Get a reference for the ScheduleService
 
 	  CosNaming.NameComponent[] s_name_components_ = new CosNaming.NameComponent[1];
@@ -105,10 +121,14 @@ public class PushConsumerFactory {
 	 
 	  RtecScheduler.Scheduler scheduler_ = 
 	    RtecScheduler.SchedulerHelper.narrow (scheduler_object_);
+
+	  System.out.println ("Reference to the Naming Service is ok.");
 	 
  
 	  // Start the consumer
+	  System.out.println ("Instantiating the Push Consumer.");
 	  PushConsumer pushConsumer_ = new PushConsumer (orb_, dataHandler_);
+	  System.out.println ("Initializing the Push Consumer.");
 	  pushConsumer_.open_consumer (event_channel_, scheduler_, "demo_consumer");
 	 
 	  // Tell the CORBA environment that we are ready
@@ -141,7 +161,7 @@ public class PushConsumerFactory {
 	}
       catch(org.omg.CORBA.SystemException e) 
 	{
-	  System.err.println ("Client run: Failure");
+	  System.err.println ("PushConsumerFactory.run: Failure");
 	  System.err.println(e);
 	}	
     }

@@ -1,10 +1,10 @@
 // $Id$
 // 
 // = FILENAME
-//    NewDemo.java
+//   DOVEBrowser.java
 //
 // = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
+//   Michael Kircher (mk1@cs.wustl.edu)
 //
 // = DESCRIPTION
 //   Entry point for the demo.
@@ -14,43 +14,34 @@
 
 import java.awt.*;
 
-public class DOVEBrowser  extends java.applet.Applet {
+public class DOVEBrowser {
 
   DemoCore demoCore_;
-  static String nameServiceIOR_ = null;
   
   public DOVEBrowser () {
     super (); 
   }
   
-  public void init () {
-	// in case of an applet use the following line, else not!
-	nameServiceIOR_ = this.getParameter ("NSIOR");
+  public void init (String nameServiceIOR) {
 
-	if (nameServiceIOR_ == null) {
-		System.out.println ("No NameSerivce IOR: Will use Name Service Lookup Protokol.");
-	}
-
-    demoCore_ = new DemoCore (nameServiceIOR_, this);   
+    demoCore_ = new DemoCore (nameServiceIOR, null); 
     demoCore_.show ();
     demoCore_.run ();
   }
-
-  public void paint (Graphics g) {
-
-    g.drawString ("Michael is here",10,10);
-  }
   
-  
-  public static void main (String[] args)
-    {      
+  public static void main (String[] args) {      
+    String nameServiceIOR = null;
+
+    if (args.length == 2) {
       if (args[0] == "-ORBnameserviceior") {
-		nameServiceIOR_ = args[1];
+	nameServiceIOR = args[1];
       }
-      
-      DOVEBrowser doveBrowser = new DOVEBrowser();
-      doveBrowser.init ();
-    }  
+    } 
+    
+    DOVEBrowser doveBrowser = new DOVEBrowser();
+    doveBrowser.init (nameServiceIOR);
+  }  
 }
   
   
+
