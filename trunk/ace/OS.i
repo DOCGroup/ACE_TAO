@@ -2011,6 +2011,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
 
 # if defined (ACE_HAS_MUTEX_TIMEOUTS)
 
+#   if defined (ACE_HAS_PTHREADS)
   int result;
 
   // "timeout" should be an absolute time.
@@ -2021,36 +2022,78 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
   // Note that the mutex should not be a recursive one, i.e., it
   // should only be a standard mutex or an error checking mutex.
 
-#   if defined (ACE_HAS_PTHREADS)
-
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_timedlock (m, &ts),
                                        result), int, -1);
+# elif defined (ACE_HAS_WTHREADS)
+  switch (m->type_)
+    {
+    case USYNC_PROCESS:
+      // Timeout can't occur, so don't bother checking...
 
-#   else  /* ACE_HAS_PTHREADS */
+      // @@ Irfan, can you please make sure this is correct?
+      switch (::WaitForSingleObject (m->proc_mutex_, timeout.msec ()))
+        {
+        case WAIT_OBJECT_0:
+        case WAIT_ABANDONED:
+          // We will ignore abandonments in this method
+          // Note that we still hold the lock
+          return 0;
+        case WAIT_TIMEOUT:
+          errno = EBUSY;
+          return -1;
+        default:
+          // This is a hack, we need to find an appropriate mapping...
+          ACE_OS::set_errno_to_last_error ();
+          return -1;
+        }
+    case USYNC_THREAD:
+      // @@ Irfan, can you please check this out to see if it's supported by Win32 CRITICAL_SECTIONS?
+      return ACE_NOTSUP_RETURN (-1);
+    default:
+      errno = EINVAL;
+      return -1;
+    }
+  /* NOTREACHED */
+#   elif defined (ACE_PSOS)
+  // Note that we must convert between absolute time (which is
+  // passed as a parameter) and relative time (which is what
+  // the system call expects).
+  ACE_Time_Value relative_time (timeout - ACE_OS::gettimeofday ());
 
-  // @@ Are there any other platforms that support timed lock
-  //    acquisitions.
+  u_long ticks = relative_time.sec() * KC_TICKS2SEC +
+                 relative_time.usec () * KC_TICKS2SEC /
+                   ACE_ONE_SECOND_IN_USECS;
+  if(ticks == 0)
+    ACE_OSCALL_RETURN (::sm_p (*m, SM_NOWAIT, 0), int, -1); //no timeout
+  else
+    ACE_OSCALL_RETURN (::sm_p (*m, SM_WAIT, ticks), int, -1);
+#   elif defined (VXWORKS)
+  // Note that we must convert between absolute time (which is passed
+  // as a parameter) and relative time (which is what the system call
+  // expects).
+  ACE_Time_Value relative_time (timeout - ACE_OS::gettimeofday ());
 
-  ACE_UNUSED_ARG (m);
-  ACE_UNUSED_ARG (timeout);
-  ACE_NOTSUP_RETURN (-1);
+  int ticks_per_sec = ::sysClkRateGet ();
 
-#   endif  /* ACE_HAS_PTHREADS */
-
+  int ticks = relative_time.sec() * ticks_per_sec +
+              relative_time.usec () * ticks_per_sec / ACE_ONE_SECOND_IN_USECS;
+  if (::semTake (*m, ticks) == ERROR)
+    {
+      if (errno == S_objLib_OBJ_TIMEOUT)
+        // Convert the VxWorks errno to one that's common for to ACE
+        // platforms.
+        errno = ETIME;
+      else if (errno == S_objLib_OBJ_UNAVAILABLE)
+        errno = EBUSY;
+      return -1;
+    }
+  else
+    return 0;
+#endif /* ACE_HAS_PTHREADS */
 # else  /* ACE_HAS_MUTEX_TIMEOUTS */
-
   ACE_UNUSED_ARG (m);
   ACE_UNUSED_ARG (timeout);
   ACE_NOTSUP_RETURN (-1);
-
-# endif /* ACE_HAS_MUTEX_TIMEOUTS */
-
-#else  /* ACE_HAS_THREADS */
-
-  ACE_UNUSED_ARG (m);
-  ACE_UNUSED_ARG (timeout);
-  ACE_NOTSUP_RETURN (-1);
-
 #endif  /* ACE_HAS_THREADS */
 }
 
@@ -4103,7 +4146,6 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_POSIX_SEM */
 }
-
 
 ACE_INLINE int
 ACE_OS::rw_tryrdlock (ACE_rwlock_t *rw)
