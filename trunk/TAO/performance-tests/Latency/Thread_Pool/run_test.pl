@@ -11,6 +11,24 @@ use PerlACE::Run_Test;
 $status = 0;
 $iorfile = PerlACE::LocalFile ("test.ior");
 
+$iteration = 150000;
+
+for ($iter = 0; $iter <= $#ARGV; $iter++) {
+    if ($ARGV[$iter] eq "-h" || $ARGV[$iter] eq "-?") {
+      print "Run_Test Perl script for Thread pool Latency test\n\n";
+      print "run_test [-n num] [-h] \n";
+      print "\n";
+      print "-n num              -- runs the client num times\n";
+      print "-h                  -- prints this information\n";
+      exit 0;
+  }
+  elsif ($ARGV[$iter] eq "-n") {
+      $iteration = $ARGV[$iter + 1];
+      $i++;
+  }
+    
+}
+
 print STDERR "================ Thread Pool Latency Test\n";
 
 unlink $iorfile;
@@ -20,7 +38,7 @@ $SV = new PerlACE::Process ("server",
 
 $CL = new PerlACE::Process ("client",
                             "-k file://$iorfile "
-                            . " -i 150000");
+                            . " -i $iteration");
 
 $SV->Spawn ();
 

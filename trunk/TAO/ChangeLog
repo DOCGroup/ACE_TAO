@@ -1,3 +1,13 @@
+Mon Dec 29 12:46:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/Latency/Single_Threaded/run_test.pl:
+	* performance-tests/Latency/Thread_Per_Connection/run_test.pl:
+	* performance-tests/Latency/Thread_Pool/run_test.pl:
+
+	  Some build freak out due to the number of iterations that these
+	  tests run. Added hooks in the perl script through which we can
+	  control the number of iterations in the daily builds.
+
 Mon Dec 29 12:06:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/RTPortableServer/RTPortableServerA.{h,cpp}:
