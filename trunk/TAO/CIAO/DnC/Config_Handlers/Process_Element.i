@@ -17,7 +17,7 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
                                 DOMNodeIterator* iter,
                                 VALUE value,
                                 DATA& data,
-                                Process_Function <OBJECT, DATA>* func,
+                                Process_Function <OBJECT, DATA> func,
                                 REFMAP& id_map)
 {
   // the number of attributes
@@ -80,12 +80,12 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
 
 // This function only works for calling static process_ methods
 template <typename DATA, typename VALUE, typename OBJECT>
-void process_element (DOMNode* node,
+ void process_element (DOMNode* node,
                       DOMDocument* doc,
                       DOMNodeIterator* iter,
                       DATA& data,
                       VALUE val,
-                      Process_Function <OBJECT, DATA>* func,
+                      Process_Function <OBJECT, DATA> func,
                       REFMAP& id_map)
 {
   // fetch attributes
@@ -107,11 +107,11 @@ void process_element (DOMNode* node,
 
 // This function only works for calling static process_ methods
 template <typename SEQUENCE, typename DATA, typename OBJECT>
-void process_sequential_element (DOMNode* node,
+ void process_sequential_element (DOMNode* node,
                                  DOMDocument* doc,
                                  DOMNodeIterator* iter,
                                  SEQUENCE& seq,
-                                 Process_Function <OBJECT, DATA>* func,
+                                 Process_Function <OBJECT, DATA> func,
                                  REFMAP& id_map)
 {
   if (node->hasAttributes ())

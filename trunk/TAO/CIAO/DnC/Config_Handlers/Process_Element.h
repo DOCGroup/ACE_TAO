@@ -93,6 +93,7 @@ public:
   Process_Member_Function& operator=(func_type ft)
   {
     f_ = f;
+    return *this;
   }
 
   virtual void call(DOMNodeIterator* iter, DATA& data)
@@ -133,6 +134,7 @@ public:
   Process_Static_Function& operator=(func_type ft)
   {
     f_ = f;
+    return *this;
   }
 
   virtual void call(DOMNodeIterator* iter, DATA& data)

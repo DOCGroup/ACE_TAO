@@ -166,7 +166,7 @@ namespace Deployment
   {
     ACE_DEBUG ((LM_DEBUG, "ComponentPropertyDescription: \n"));
     ACE_DEBUG ((LM_DEBUG, "  name: %s\n", comppropdesc.name.in ()));
-    ACE_DEBUG ((LM_DEBUG, "  type: %s\n", TCKind_Names::get_name(comppropdesc.type.in()->kind())));
+    //ACE_DEBUG ((LM_DEBUG, "  type: %s\n", TCKind_Names::get_name(comppropdesc.type.in()->kind())));
   }
 
   // MonolithicImplementationDescription
