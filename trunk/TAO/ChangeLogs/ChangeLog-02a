@@ -1,3 +1,15 @@
+Mon Sep 18 09:55:03 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/Makefile (DIRS):
+
+	  Added the `LoadBalancer' directory to the list of directories to
+	  build.
+
+	* orbsvcs/LoadBalancer/Makefile:
+	* orbsvcs/orbsvcs/LoadBalancer/Makefile:
+
+	  Updated dependencies.
+
 Mon Sep 18 09:29:05 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
