@@ -215,8 +215,8 @@ Client_i::output_latency (void)
                       : "Low Priority",
                       j);
       // This loop visits each request latency from a client.
-      JITTER_ARRAY_ITERATOR iterator (*this->ts_->global_jitter_array_ [j]);
-	//        this->ts_->global_jitter_array_ [j]->begin ();  @@ Remove this line until I know whether UnBounded_Queue can have begin(). Sergio. 09/28/98
+      JITTER_ARRAY_ITERATOR iterator =
+	this->ts_->global_jitter_array_ [j]->begin ();
 
       u_int i = 0;
       ACE_timer_t *latency = 0;
