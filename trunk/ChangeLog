@@ -1,3 +1,13 @@
+Fri Feb 11 07:32:06 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS_NS_sys_time.h:
+        * ace/OS_NS_sys_time.inl:
+        * ace/OS_NS_time.h:
+        * ace/Time_Value.h:
+        * ace/Time_Value.inl:
+
+          Enhanced support for Release mode builds for EVC 4.
+
 Fri Feb 11 08:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_doxygen.pl:
@@ -30,7 +40,7 @@ Thu Feb 10 07:04:33 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Feb 10 02:51:19 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Release: Added *.vcw files to the tar distribution.
+        * Release: Added *.vcw files to the tar distribution.
 
 Thu Feb 10 08:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -56,9 +66,9 @@ Tue Feb  8 05:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Feb  7 21:36:37 2005  Martin Corino  <mcorino@remedy.nl>
 
-	* tests/run_test.pl:
+        * tests/run_test.pl:
 
-	  Some improvements for autobuild testruns on VxWorks.
+          Some improvements for autobuild testruns on VxWorks.
 
 Mon Feb  7 15:19:40 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -74,9 +84,9 @@ Mon Feb 7 14:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Feb  7 05:32:32 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Configure ACEXML makefiles if ACEXML directory exists.
+          Configure ACEXML makefiles if ACEXML directory exists.
 
 Mon Feb 7 13:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -129,49 +139,49 @@ Sun Feb 6 10:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Feb 5 20:12:37 2005  Martin Corino  <mcorino@remedy.nl>
 
-	* ace/OS_NS_Thread.cpp:
-	* ace/OS_NS_Thread.h:
-	* ace/OS_NS_Thread.inl:
+        * ace/OS_NS_Thread.cpp:
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.inl:
 
-	  Fixed some flaws in TSS_Emulation tests for TSS key validity introduced
-	  some 3 years ago when key reuse was enabled for TSS_Emulation.
+          Fixed some flaws in TSS_Emulation tests for TSS key validity introduced
+          some 3 years ago when key reuse was enabled for TSS_Emulation.
 
 Sat Feb 5 15:17:37 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tests/run_test.pl:
 
-	  Some improvements for autobuild testing with VxWorks.
+          Some improvements for autobuild testing with VxWorks.
 
-	* tests/Reactor_Notify_Test.cpp:
-	* tests/Task_Ex_Test.cpp:
+        * tests/Reactor_Notify_Test.cpp:
+        * tests/Task_Ex_Test.cpp:
 
-	  Scaled down testparameters for VxWorks because otherwise the tests take too
-	  long and are killed before having a chance to finish.
+          Scaled down testparameters for VxWorks because otherwise the tests take too
+          long and are killed before having a chance to finish.
 
 Sat Feb 5 11:38:37 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tests/run_test.pl:
 
-	  Added functionality to run and analyze ACE tests for VxWorks from the
-	  autobuild process (depending on target features).
+          Added functionality to run and analyze ACE tests for VxWorks from the
+          autobuild process (depending on target features).
 
-	* tests/Multicast_Test.cpp:
+        * tests/Multicast_Test.cpp:
 
-	  Fixed sloppy resource management (sockets) leading to problems on VxWorks.
+          Fixed sloppy resource management (sockets) leading to problems on VxWorks.
 
-	* tests/TP_Reactor_Test.cpp:
+        * tests/TP_Reactor_Test.cpp:
 
-	  Fixed compiletime test around pthread_sigmask() call so it now compiles
-	  correctly for (non-WIN32) platforms having threads but no pthread_sigmask()
-	  (f.i. VxWorks).
+          Fixed compiletime test around pthread_sigmask() call so it now compiles
+          correctly for (non-WIN32) platforms having threads but no pthread_sigmask()
+          (f.i. VxWorks).
 
 Sat Feb 4 11:32:37 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_time.inl:
 
-	  Made ACE_OS::gethrtime() for VxWorks always (also on PENTIUM) go through
+          Made ACE_OS::gethrtime() for VxWorks always (also on PENTIUM) go through
           clock_gettime() because the RDTSC somehow does not work correctly (all
-	  HiResTime related tests fail) and clock_gettime() does.
+          HiResTime related tests fail) and clock_gettime() does.
 
 Fri Feb 4 14:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 

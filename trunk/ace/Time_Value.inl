@@ -4,6 +4,16 @@
 
 #include "ace/OS_NS_sys_time.h"
 
+#if defined (ACE_WIN32) && defined (_WIN32_WCE)
+// Something is a bit brain-damaged here and I'm not sure what... this code
+// compiled before the OS reorg for ACE 5.4. Since then it hasn't - eVC
+// complains that the operators that return ACE_Time_Value are C-linkage
+// functions that can't return a C++ class. The only way I've found to
+// defeat this is to wrap the whole class in extern "C++".
+//    - Steve Huston, 23-Aug-2004
+extern "C++" {
+#endif
+
 // Returns the value of the object as a timeval.
 
 ACE_INLINE
@@ -335,3 +345,7 @@ operator - (const ACE_Time_Value &tv1,
   delta.normalize ();
   return delta;
 }
+
+#if defined (ACE_WIN32) && defined (_WIN32_WCE)
+}
+#endif
