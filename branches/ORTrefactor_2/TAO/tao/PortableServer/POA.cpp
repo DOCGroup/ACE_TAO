@@ -750,8 +750,6 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       // will be destroyed.
       array_obj_ref_template.size (i + 1);
 
-
-
       array_obj_ref_template[i] = child_at;
 
       child_poa->adapter_state_ = PortableInterceptor::INACTIVE;

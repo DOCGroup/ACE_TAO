@@ -116,7 +116,7 @@ namespace TAO
   void
   ORT_Adapter_Impl::poa (TAO_POA * poa)
   {
-    // @@ Johnny, why isn't the POA  duplicated here?
+    // @@Johnny, why isn't the POA  duplicated here?
     this->tao_ort_template_->poa (poa);
   }
 }

@@ -35,16 +35,14 @@
 
 class TAO_POA;
 
-// @@ Johnny, I am just wondering whether this class is even needed?
-// Why do we need to provide a default implementation? Does the spec
-// call fo it. I know why we did before.. Thoughts??
 namespace TAO
 {
   /**
    * @class TAO_ObjectReferenceTemplate
    *
    * @brief Implementation of the PortableInterceptor::ObjectReferenceTemplate
-   *        interface.
+   *        interface. This is a default implementation created to be returned
+   *        by the IORInfo when the user requests the ORT or ORF.
    */
   class TAO_ORT_Export ObjectReferenceTemplate
     : public virtual OBV_TAO_Default_ORT::ObjectReferenceTemplate,

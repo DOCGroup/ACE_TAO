@@ -79,7 +79,7 @@ namespace TAO
   void
   ObjectReferenceTemplate::poa (TAO_POA * poa)
   {
-    // @@ Johnny, Why aren't we duplicating this?
+    // @@Johnny, Why aren't we duplicating this?
     this->poa_ = poa;
   }
 
