@@ -1,3 +1,8 @@
+Sat Apr 14 12:44:17 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/MEM_IO.i:
+          Reorder operations to eliminate warnings on Tru64/CXX
+
 Sat Apr 14 11:12:26 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/CLASSIX_Addr_Test.icc:
@@ -51,52 +56,52 @@ Fri Apr 13 12:44:21 2001  Steve Huston  <shuston@riverace.com>
 
 Fri Apr 13 12:21:01 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Malloc_T.h: Added an explanation on the requirement about
-	  sizeof (TYPE)link of ACE_Cached_Allocator and a link to
-	  ACE_Cached_Mem_Pool_Node where this stuff was explained.  Thanks
-	  to Rachel G. Smith <Rachel_G_Smith@raytheon.com> for motivating
-	  the change.
+        * ace/Malloc_T.h: Added an explanation on the requirement about
+          sizeof (TYPE)link of ACE_Cached_Allocator and a link to
+          ACE_Cached_Mem_Pool_Node where this stuff was explained.  Thanks
+          to Rachel G. Smith <Rachel_G_Smith@raytheon.com> for motivating
+          the change.
 
 Fri Apr 13 12:05:38 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/MEM_Stream_Test.h:
-	* tests/MEM_Stream_Test.cpp: Borland C++ has problem cleaning up
-	  the static Atomic_Op object in Echo_Handler in the right order.
-	  Made that an ACE_Singleton and re-organized the test a big.
-	  Thanks to Chris Kohlhoff <chris@kohlhoff.com> for reporting and
-	  suggesting the fix.   [Bug 862]
+        * tests/MEM_Stream_Test.h:
+        * tests/MEM_Stream_Test.cpp: Borland C++ has problem cleaning up
+          the static Atomic_Op object in Echo_Handler in the right order.
+          Made that an ACE_Singleton and re-organized the test a big.
+          Thanks to Chris Kohlhoff <chris@kohlhoff.com> for reporting and
+          suggesting the fix.   [Bug 862]
 
 Fri Apr 13 11:58:58 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/OS.i (gethrtime): 
-	  Add support for the the clock tick register as a high resolution
-	  timer under KCC/Linux.  Thanks to David Levine for help on this.
+        * ace/OS.i (gethrtime):
+          Add support for the the clock tick register as a high resolution
+          timer under KCC/Linux.  Thanks to David Levine for help on this.
 
 Fri Apr 13 05:30:04 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/OS.i: Make sure that the PTHREADS version of ACE_OS::thr_yield()
-	  gets top priority over the STHREADS version.  Thanks to Munagala
- 	  Ramanath <amberarrow@yahoo.com> for reporting this.
+        * ace/OS.i: Make sure that the PTHREADS version of ACE_OS::thr_yield()
+          gets top priority over the STHREADS version.  Thanks to Munagala
+          Ramanath <amberarrow@yahoo.com> for reporting this.
 
-	* ace/Malloc_T.{h,i}: Added support for one of the calloc() methods
-	  to ACE_Cached_Allocator.  Thanks to Rachel G Smith
- 	  <Rachel_G_Smith@raytheon.com> for motivating this change.
+        * ace/Malloc_T.{h,i}: Added support for one of the calloc() methods
+          to ACE_Cached_Allocator.  Thanks to Rachel G Smith
+          <Rachel_G_Smith@raytheon.com> for motivating this change.
 
-	* ace/Malloc_Allocator.h: Updated the comments for ACE_New_Allocator
-	  to indicate that the calloc() methods are also supported.
-  	  Thanks to Rachel G Smith <Rachel_G_Smith@raytheon.com> for
- 	  motivating this change.
+        * ace/Malloc_Allocator.h: Updated the comments for ACE_New_Allocator
+          to indicate that the calloc() methods are also supported.
+          Thanks to Rachel G Smith <Rachel_G_Smith@raytheon.com> for
+          motivating this change.
 
-	* docs/ACE-bug-process.html: Updated this document to explain how
-	  bugs pertaining to OCI's TAO releases should be handled.  Thanks
- 	  to Georg Lohrer <GeorgLohrer@web.de> for motivating this.
+        * docs/ACE-bug-process.html: Updated this document to explain how
+          bugs pertaining to OCI's TAO releases should be handled.  Thanks
+          to Georg Lohrer <GeorgLohrer@web.de> for motivating this.
 
 Thu Apr 12 20:36:30 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/OS.i (thr_getspecific): Reorder the way in which we check
-	  the flags so that ACE_HAS_PTHREADS takes precedence over
- 	  ACE_HAS_STHREADS.  Thanks to Munagala Ramanath
- 	  <amberarrow@yahoo.com> for reporting this.
+        * ace/OS.i (thr_getspecific): Reorder the way in which we check
+          the flags so that ACE_HAS_PTHREADS takes precedence over
+          ACE_HAS_STHREADS.  Thanks to Munagala Ramanath
+          <amberarrow@yahoo.com> for reporting this.
 
 Thu Apr 12 21:18:44 2001  Steve Huston  <shuston@riverace.com>
 
@@ -132,24 +137,24 @@ Thu Apr 12 15:48:22 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Thu Apr 12 13:06:27 2001 Joel Sherrill <joel@OARcorp.com>
 
-       	* include/makeinclude/Makefile.rtems: Replaced debug version
-	  with real version that queries RTEMS application Makefile
-	  infrastructure.
+        * include/makeinclude/Makefile.rtems: Replaced debug version
+          with real version that queries RTEMS application Makefile
+          infrastructure.
 
         * include/makeinclude/platform_rtems.x_g++.GNU: Added
           --no-print-directory option to all invocations of recursive
- 	  make to determine information from Makefile.rtems.  This
- 	  avoids getting the "entering/exiting directory" messages
- 	  included in the results.
+          make to determine information from Makefile.rtems.  This
+          avoids getting the "entering/exiting directory" messages
+          included in the results.
 
         * ACE-RTEMS.README: Added requirement to configure C++
           support in RTEMS.  Updated to reflect also compiling for mc68360
- 	  target.
+          target.
 
 Wed Apr 11 20:36:36 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Synch/proc_sema.cpp (main): Fixd an assigning string
-	  literal to char* warning.
+        * examples/Synch/proc_sema.cpp (main): Fixd an assigning string
+          literal to char* warning.
 
 Wed Apr 11 18:04:33 2001  Steve Huston  <shuston@riverace.com>
 
@@ -159,9 +164,9 @@ Wed Apr 11 18:04:33 2001  Steve Huston  <shuston@riverace.com>
 
 Wed Apr 11 11:00:50 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ACE-INSTALL.html: Added a section illustrating how to build
-	  ACE+TAO for RTEMS.  Thanks to Joel Sherrill <joel@OARcorp.com>
- 	  for this build procedure.
+        * ACE-INSTALL.html: Added a section illustrating how to build
+          ACE+TAO for RTEMS.  Thanks to Joel Sherrill <joel@OARcorp.com>
+          for this build procedure.
 
 Wed Apr 11 11:38:37 2001  Steve Huston  <shuston@riverace.com>
 
