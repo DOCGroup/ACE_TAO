@@ -1,3 +1,9 @@
+Sun Jun 22 15:23:00 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/OEP/BasicSP/EC/EC.mpc:
+	* examples/OEP/Display/RateGen/RateGen.mpc: Renamed projects named
+	  "controller" to resolve project name conflicts.
+
 Sun Jun 22 09:03:57 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/diffs/*: Removed obsolete diff files.
