@@ -1,8 +1,8 @@
 Tue Dec 15 14:45:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * *.h: removed () from #pragma implementation argument.
-          Thanks to Christian v. Mueffling <cvm@aiss.de> for reporting
-          this.
+        * *.h,TAO_IDL/be/be_codegen.cpp (end_server_template_header):
+          removed () from #pragma implementation argument.  Thanks to
+          Christian v. Mueffling <cvm@aiss.de> for reporting this.
 
 Tue Dec 15 14:29:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
