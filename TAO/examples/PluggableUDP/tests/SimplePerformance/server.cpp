@@ -60,7 +60,7 @@ int main (int argc, char *argv[])
       PortableServer::ObjectId_var oidServer = root_poa->activate_object (&server_impl, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
-      CORBA::Object_var objOne = root_poa->id_to_reference (oidServer, ACE_TRY_ENV);
+      CORBA::Object_var objOne = root_poa->id_to_reference (oidServer.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       Simple_Server_var server = Simple_Server::_narrow (objOne, ACE_TRY_ENV);
