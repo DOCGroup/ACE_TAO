@@ -1,3 +1,9 @@
+Wed Mar  8 20:24:03 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/decode.cpp:
+	* tao/encode.cpp:
+	  Files were removed by accident, adding them back into the repo.
+
 Wed Mar  8 17:22:32 2000  Ossama Othman  <ossama@uci.edu>
 
 	* docs/pluggable_protocols/index.html:
