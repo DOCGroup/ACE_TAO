@@ -413,9 +413,10 @@ int
 TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_stream_endpoint (CORBA::Environment &env)
 {
   this->stream_endpoint_a_ = 0;
-  ACE_NEW_RETURN (this->stream_endpoint_a_,
-                  T_StreamEndpoint,
-                  -1);
+
+  if (this->make_stream_endpoint (this->stream_endpoint_a_) == -1)
+    return -1;
+
   this->orb_manager_->activate_under_child_poa ("Stream_Endpoint_A",
                                                 this->stream_endpoint_a_,
                                                 env);
@@ -438,9 +439,9 @@ int
 TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_stream_endpoint (CORBA::Environment &env)
 {
   this->stream_endpoint_b_ = 0;
-  ACE_NEW_RETURN (this->stream_endpoint_b_,
-                  T_StreamEndpoint,
-                  -1);
+  if (this->make_stream_endpoint (this->stream_endpoint_b_) == -1)
+    return -1;
+
   this->orb_manager_->activate_under_child_poa ("Stream_Endpoint_B",
                                                 this->stream_endpoint_b_,
                                                 env);
