@@ -29,6 +29,18 @@ ACE_Timeprobe<ACE_LOCK>::ACE_Timeprobe (u_long size)
 }
 
 template <class ACE_LOCK>
+ACE_Timeprobe<ACE_LOCK>::ACE_Timeprobe (const ACE_Timeprobe<ACE_LOCK> &)
+{
+  //
+  // Stupid MSVC is forcing me to define this; please don't use it.
+  //
+
+  ACE_ERROR ((LM_ERROR, 
+              __TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__)); 
+  errno = ENOTSUP;   
+}
+
+template <class ACE_LOCK>
 ACE_Timeprobe<ACE_LOCK>::~ACE_Timeprobe (void)
 {
   delete [] this->timeprobes_;
