@@ -1,6 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -33,7 +34,7 @@
 
 #include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
-
+#include "tao/Pluggable_Messaging.h"
 
 // Forward Decls
 class TAO_ORB_Core;
@@ -62,7 +63,8 @@ class TAO_Export TAO_UIOP_Client_Connection_Handler : public TAO_UIOP_Handler_Ba
 public:
   // = Intialization method.
   TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t = 0,
-                                      TAO_ORB_Core* orb_core = 0);
+                                      TAO_ORB_Core* orb_core = 0,
+                                      CORBA::Boolean flag = 0);
 
   virtual ~TAO_UIOP_Client_Connection_Handler (void);
 
@@ -101,6 +103,12 @@ protected:
 
   TAO_ORB_Core *orb_core_;
   // Cached ORB Core.
+
+  TAO_Pluggable_Messaging_Interface *mesg_factory_;
+  // The Connector messaging factory
+  
+  CORBA::Boolean lite_flag_;
+  // Are we usinglite?
 };
 
 // ****************************************************************
@@ -112,7 +120,8 @@ class TAO_Export TAO_UIOP_Server_Connection_Handler : public TAO_UIOP_Handler_Ba
 
 public:
   TAO_UIOP_Server_Connection_Handler (ACE_Thread_Manager* t = 0);
-  TAO_UIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core);
+  TAO_UIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
+                                      CORBA::Boolean flag = 0);
   // Constructor.
 
   ~TAO_UIOP_Server_Connection_Handler (void);
@@ -146,6 +155,9 @@ protected:
   TAO_UIOP_Server_Transport transport_;
   // @@ New transport object reference.
 
+  TAO_Pluggable_Messaging_Interface *acceptor_factory_;
+  // Messaging acceptor factory
+
   // = Event Handler overloads
 
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
@@ -169,6 +181,9 @@ protected:
 
   u_long refcount_;
   // Reference count, to avoid early deletes...
+  
+   CORBA::Boolean lite_flag_;
+  // Should we use GIOP or GIOPlite
 };
 
 #if defined (__ACE_INLINE__)

@@ -1,12 +1,15 @@
 // $Id$
 
+
 #include "tao/params.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/params.i"
 #endif /* __ACE_INLINE__ */
 
+
 ACE_RCSID(tao, params, "$Id$")
+
 
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   : preconnects_list_ (),

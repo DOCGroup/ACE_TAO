@@ -1,6 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -23,11 +24,15 @@
 
 #include "tao/Pluggable.h"
 
+
+//#include "tao/Pluggable_Messaging.h"
+#include "tao/GIOP_Utils.h"
+//#include "tao/target_identifier.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/GIOP.h"
 
 # if TAO_HAS_UIOP == 1
 
@@ -82,10 +87,17 @@ public:
                             int twoway,
                             ACE_Time_Value *max_wait_time);
 
+  
+  virtual CORBA::Boolean 
+  send_request_header (TAO_Operation_Details &opdetails,
+                       TAO_Target_Specification &spec,
+                       TAO_OutputCDR &msg);
+  
 protected:
   TAO_UIOP_Handler_Base *handler_;
   // the connection service handler used for accessing lower layer
   // communication protocols.
+
 };
 
 class TAO_Export TAO_UIOP_Client_Transport : public TAO_UIOP_Transport
@@ -114,16 +126,18 @@ public:
   // = The TAO_Transport methods, please check the documentation in
   //   "tao/Pluggable.h" for more details.
   virtual void start_request (TAO_ORB_Core *orb_core,
-                              const TAO_Profile *profile,
+                              TAO_Target_Specification &spec,
                               TAO_OutputCDR &output,
                               CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual void start_locate (TAO_ORB_Core *orb_core,
-                             const TAO_Profile *profile,
-                             CORBA::ULong request_id,
+                             TAO_Target_Specification &spec,
+                             TAO_Operation_Details &opdetails,
                              TAO_OutputCDR &output,
                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
+  
   virtual int send_request (TAO_Stub *stub,
                             TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
@@ -135,9 +149,34 @@ public:
   // Register the handler with the reactor. This will be called by the
   // Wait Strategy if Reactor is used  for that strategy.
 
+  virtual CORBA::Boolean 
+  send_request_header (TAO_Operation_Details &opdetail,
+                       TAO_Target_Specification &spec,
+                       TAO_OutputCDR &msg);
+  
+  int messaging_init (CORBA::Octet major,
+                      CORBA::Octet minor);
+  // Initialising the messaging object
+
+  void use_lite (CORBA::Boolean flag);
+  // Set the lite flag
+
 private:
   TAO_UIOP_Client_Connection_Handler *client_handler_;
   // pointer to the corresponding client side connection handler.
+
+  TAO_Pluggable_Messaging_Interface *client_mesg_factory_;
+  // The message_factor instance specific for this particular
+  // transport protocol.
+
+  TAO_ORB_Core *orb_core_;
+  // Our orb Core
+  
+  CORBA::Boolean lite_flag_;
+  // We using GIOP lite?
+  
+  TAO_Pluggable_Connector_Params params_;
+  // The reply data that is sent back by the server
 };
 
 // ****************************************************************
@@ -167,7 +206,12 @@ public:
   TAO_GIOP_Message_State message_state_;
   // This keep the state of the current message, to enable
   // non-blocking reads, fragment reassembly, etc.
+
 };
+
+#if defined (__ACE_INLINE__)
+#include "tao/UIOP_Transport.i"
+#endif /* __ACE_INLINE__ */
 
 # endif  /* TAO_HAS_UIOP == 1 */
 

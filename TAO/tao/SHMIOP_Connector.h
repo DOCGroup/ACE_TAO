@@ -60,7 +60,8 @@ class TAO_Export TAO_SHMIOP_Connect_Creation_Strategy : public ACE_Creation_Stra
   //
 public:
   TAO_SHMIOP_Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
-                                        TAO_ORB_Core* orb_core = 0);
+                                        TAO_ORB_Core* orb_core = 0,
+                                        CORBA::Boolean flag = 0);
 
   virtual int make_svc_handler (TAO_SHMIOP_Client_Connection_Handler *&sh);
   // Makes TAO_SHMIOP_Client_Connection_Handlers
@@ -68,6 +69,9 @@ public:
 private:
   TAO_ORB_Core* orb_core_;
   // The ORB
+  
+  CORBA::Boolean lite_flag_;
+  // Are we using lite?
 };
 
 // ****************************************************************
@@ -84,7 +88,7 @@ class TAO_Export TAO_SHMIOP_Connector : public TAO_Connector
   //
 public:
   // = Initialization and termination methods.
-  TAO_SHMIOP_Connector (void);
+  TAO_SHMIOP_Connector (CORBA::Boolean flag = 0);
   // Constructor.
 
   // = The TAO_Connector methods, please check the documentation on
@@ -197,6 +201,8 @@ private:
   TAO_SHMIOP_BASE_CONNECTOR base_connector_;
   // The connector initiating connection requests for SHMIOP.
 
+  CORBA::Boolean lite_flag_;
+  // Do we need to use a GIOP_Lite for sending messages?
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy_;
   // Cached connect strategy.
