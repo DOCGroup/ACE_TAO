@@ -860,6 +860,8 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr ,
   CORBA_Object_ptr forward_object =
     this->orb_var_->key_to_object (poa_current_impl->object_key (),
                                    0,
+                                   0,
+                                   0,
                                    ACE_TRY_ENV);
   ACE_CHECK;
 
