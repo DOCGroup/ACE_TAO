@@ -14,7 +14,7 @@
 //      same operations as the one in IDL_Cubit
 //
 // = AUTHOR
-//      Jeff Parsons
+//      Jeff Parsons <jp4@cs.wustl.edu>
 // ============================================================================
 
 #if !defined (_DII_C_CLIENT_H)
@@ -41,68 +41,68 @@ class DII_Cubit_Client
   //    Cubit CORBA server.  All the complexity for initializing the 
   //    client is hidden in the class.  Just the run() interface is needed.
 public:
-	 // Constructor and destructor.
-	DII_Cubit_Client (void);
-	~DII_Cubit_Client (void);
+  // Constructor and destructor.
+  DII_Cubit_Client (void);
+  ~DII_Cubit_Client (void);
 
-	int run (void);
-	// Execute client example code.
+  int run (void);
+  // Execute client example code.
 
-	int init (int argc, char **argv);
-	// Initialize the ORB and gets the Cubit objref from the Cubit factory.
+  int init (int argc, char **argv);
+  // Initialize the ORB and gets the Cubit objref from the Cubit factory.
 private:
-	int parse_args (void);
-	// Parses the arguments passed on the command line.
+  int parse_args (void);
+  // Parses the arguments passed on the command line.
 
-	void print_stats (const char *call_name,
-										ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
-	// prints the time stats
+  void print_stats (const char *call_name,
+                    ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
+  // prints the time stats
 
-	// DII versions of Cubit operations
+  // DII versions of Cubit operations
 	
-	void cube_short_dii (void);
+  void cube_short_dii (void);
 
-	void cube_long_dii (void);
+  void cube_long_dii (void);
 
-	void cube_octet_dii (void);
+  void cube_octet_dii (void);
 
-	void cube_union_dii (void);
+  void cube_union_dii (void);
 
-	void cube_struct_dii (void);
+  void cube_struct_dii (void);
 
-	void cube_octet_seq_dii (int length);
+  void cube_octet_seq_dii (int length);
 
-	void cube_long_seq_dii (int length);
+  void cube_long_seq_dii (int length);
 
-	int argc_;
-	// # of arguments on the command line.
+  int argc_;
+  // # of arguments on the command line.
 
-	char **argv_;
-	// arguments from command line.
+  char **argv_;
+  // arguments from command line.
 
-	CORBA::ULong loop_count_;
-	// # of calls in test loop.
+  CORBA::ULong loop_count_;
+  // # of calls in test loop.
 
-	int exit_later_;
-	// Flag to tell server to not exit immediately.
+  int exit_later_;
+  // Flag to tell server to not exit immediately.
 
-	CORBA::Environment env_;
-	// Environment variable.
+  CORBA::Environment env_;
+  // Environment variable.
 
-	CORBA::ORB_var orb_var_;
-	// Storage of the ORB reference.
+  CORBA::ORB_var orb_var_;
+  // Storage of the ORB reference.
 
-	CORBA::Object_var factory_var_;
-	// Storage of the Cubit_factory objref
+  CORBA::Object_var factory_var_;
+  // Storage of the Cubit_factory objref
 
-	CORBA::Object_var obj_var_;
-	// Storage of the Cubit objref.
+  CORBA::Object_var obj_var_;
+  // Storage of the Cubit objref.
 
-	CORBA::ULong call_count_;
-	// # of calls made to functions.
+  CORBA::ULong call_count_;
+  // # of calls made to functions.
 
-	CORBA::ULong error_count_;
-	// # of errors incurred in the lifetime of the application.
+  CORBA::ULong error_count_;
+  // # of errors incurred in the lifetime of the application.
 
   char *factory_IOR_;
   // IOR of the factory used to make a Cubit object.
