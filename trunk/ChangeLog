@@ -1,3 +1,9 @@
+Fri Jan 28 08:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Global_Macros.h
+          Changed ACE_SERVER_ADDRESS to don't cause problems in unicode
+          builds
+
 Fri Jan 28 08:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/C++NPv2/C++NPv2.mpc:
