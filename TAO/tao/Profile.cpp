@@ -29,7 +29,7 @@ TAO_Unknown_Profile::parse_string (const char *,
   return -1;
 }
 
-CORBA::String
+char *
 TAO_Unknown_Profile::to_string (CORBA::Environment &)
 {
   // @@ THROW something?

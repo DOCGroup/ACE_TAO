@@ -32,7 +32,7 @@
 ***************/
 int err (const char *s);
 void mes (const char *s);
-CORBA::String outfmt (CORBA::Double b);
+char* outfmt (CORBA::Double b);
 void prep_timer (void);
 CORBA::Double read_timer (CORBA::Char *str, CORBA::Long len);
 void prusage (CORBA::Char *outp);

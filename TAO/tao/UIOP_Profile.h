@@ -88,7 +88,7 @@ public:
                     CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Initialize this object using the given input string.
 
-  CORBA::String to_string (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  char * to_string (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Return a string representation for this profile.
   // client must deallocate memory.
 

@@ -43,7 +43,7 @@ public:
   virtual int svc (void);
   // Active Object entry point.
 
-  CORBA::String get_servant_ior (u_int index);
+  char* get_servant_ior (u_int index);
   // Gets the ior of the cubit servant in this task.
 
 protected:
@@ -75,7 +75,7 @@ private:
   Cubit_i **servants_;
   // Array to hold the servants.
 
-  CORBA::String *servants_iors_;
+  char **servants_iors_;
   // IOR strings of the servants.
 
   u_int task_id_;

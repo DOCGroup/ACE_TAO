@@ -182,7 +182,7 @@ declare_entry (CORBA::TypeCode_ptr, tk_TypeCode);
 declare_entry (CORBA::Principal_ptr, tk_Principal);
 declare_entry (TAO_Object_Field_Class, tk_objref);
 
-declare_entry (CORBA::String, tk_string);
+declare_entry (char*, tk_string);
 #if !defined (TAO_NO_COPY_OCTET_SEQUENCES)
 declare_entry (TAO_opaque, tk_sequence);
 #endif
@@ -223,7 +223,7 @@ TAO_CDR_Interpreter::init (void)
   TAO_CDR_Interpreter::table_ [CORBA::tk_enum].alignment_ =
     sizeof (generic_enum);
 
-  setup_entry (CORBA::String, tk_string);
+  setup_entry (char*, tk_string);
 #if !defined (TAO_NO_COPY_OCTET_SEQUENCES)
   setup_entry (TAO_opaque, tk_sequence);
 #endif /* defined (TAO_NO_COPY_OCTET_SEQUENCES) */

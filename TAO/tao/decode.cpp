@@ -918,7 +918,7 @@ TAO_Marshal_String::decode (CORBA::TypeCode_ptr,
   // Context is the CDR stream.
   TAO_InputCDR *stream = (TAO_InputCDR *) context;
 
-  CORBA::String* str_ptr = (CORBA::String*)data;
+  char ** str_ptr = (char**)data;
 
   // On decode, omit the check against specified string bounds, and
   // cope with illegal "zero length" strings (all lengths on the wire
@@ -1115,9 +1115,9 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
               // constant, we compute it only once.
               while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                 {
-                  retval = stream->decode (tc2.in (), 
-                                           value, 
-                                           0, 
+                  retval = stream->decode (tc2.in (),
+                                           value,
+                                           0,
                                            ACE_TRY_ENV);
                   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
                   value += size;
@@ -1132,9 +1132,9 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                        retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                   {
                     CORBA_Object_ptr ptr;
-                    retval = stream->decode (tc2.in (), 
-                                             &ptr, 
-                                             0,  
+                    retval = stream->decode (tc2.in (),
+                                             &ptr,
+                                             0,
                                              ACE_TRY_ENV);
                     ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 

@@ -344,9 +344,9 @@ public:
   // Typically these strings are created using <object_to_string()>,
   // but not necessarily locally.
 
-  CORBA::String object_to_string (CORBA::Object_ptr obj,
-                                  CORBA_Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ());
+  char * object_to_string (CORBA::Object_ptr obj,
+                           CORBA_Environment &ACE_TRY_ENV =
+                               TAO_default_environment ());
   // Turn an object reference into a string.  Each type of ORB,
   // e.g. an IIOP ORB, must implement this.  This can be used by
   // servers to publish their whereabouts to clients.  The output of

@@ -96,7 +96,7 @@ public:
   ~TAO_Naming_Server (void);
   // Destructor.
 
-  CORBA::String naming_service_ior (void);
+  char * naming_service_ior (void);
   // Returns the IOR of the naming service.
 
   CosNaming::NamingContext_ptr operator-> (void) const;

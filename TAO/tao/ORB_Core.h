@@ -601,7 +601,7 @@ protected:
   int svc_config_argc_;
   // The number of arguments in the service configurator argument vector.
 
-  CORBA::String *svc_config_argv_;
+  char **svc_config_argv_;
   // The argument vector for the service configurator.
 };
 

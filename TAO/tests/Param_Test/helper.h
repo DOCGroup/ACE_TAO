@@ -33,8 +33,8 @@ public:
 
   CORBA::Short gen_short (void);
   CORBA::Long gen_long (void);
-  CORBA::String gen_string (void);
-  CORBA::String gen_string (int maxlength);
+  char* gen_string (void);
+  char* gen_string (int maxlength);
   CORBA::WString gen_wstring (void);
   CORBA::WString gen_wstring (int maxlength);
   const Param_Test::Fixed_Struct gen_fixed_struct (void);

@@ -35,7 +35,7 @@ Test_DynUnion::~Test_DynUnion (void)
 
 const char*
 Test_DynUnion::test_name (void) const
-{ 
+{
   return this->test_name_;
 }
 
@@ -74,7 +74,7 @@ Test_DynUnion::run_test (void)
       if (s_out1->equal (data.m_typecode1))
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
-      else 
+      else
         ++this->error_count_;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -82,7 +82,7 @@ Test_DynUnion::run_test (void)
 
       CORBA_Any* out_any1 = fa1->to_any (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA_DynUnion_ptr ftc1 = 
+      CORBA_DynUnion_ptr ftc1 =
         this->orb_->create_dyn_union (DynAnyTests::_tc_test_union,
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -94,7 +94,7 @@ Test_DynUnion::run_test (void)
       if (s_out2->equal (data.m_typecode1))
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
-      else 
+      else
         ++this->error_count_;
 
       // Created with NEW
@@ -106,7 +106,7 @@ Test_DynUnion::run_test (void)
       if (!ftc1->set_as_default (ACE_TRY_ENV))
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
-      else 
+      else
         ++this->error_count_;
 
       ACE_TRY_CHECK;
@@ -116,13 +116,13 @@ Test_DynUnion::run_test (void)
 
       CORBA_DynAny_ptr dp2 = ftc1->discriminator (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (dp2->type (ACE_TRY_ENV)->kind () 
+      if (dp2->type (ACE_TRY_ENV)->kind ()
             == ftc1->discriminator_kind (ACE_TRY_ENV))
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
-      else 
-        ++this->error_count_; 
-      
+      else
+        ++this->error_count_;
+
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -130,7 +130,7 @@ Test_DynUnion::run_test (void)
 
       CORBA_DynAny_ptr dp3 = ftc1->member (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::String m_nm = ftc1->member_name (ACE_TRY_ENV);
+      char * m_nm = ftc1->member_name (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA::TCKind tk = ftc1->member_kind (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -139,14 +139,14 @@ Test_DynUnion::run_test (void)
           && data.m_typecode1->equal (dp3->get_typecode (ACE_TRY_ENV)))
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
-      else 
-        ++this->error_count_; 
+      else
+        ++this->error_count_;
 
       ACE_TRY_CHECK;
 
       // Created with string_dup
       CORBA::string_free (m_nm);
-      
+
       fa1->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA::release (fa1);
@@ -169,4 +169,3 @@ Test_DynUnion::run_test (void)
 
   return 0;
 }
-

@@ -17,9 +17,9 @@ ACE_RCSID(tao, Request, "$Id$")
 CORBA::ULong
 CORBA_Request::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, 
-                    ace_mon, 
-                    this->lock_, 
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                    ace_mon,
+                    this->lock_,
                     0);
   return refcount_++;
 }
@@ -28,9 +28,9 @@ CORBA::ULong
 CORBA_Request::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, 
-                      ace_mon, 
-                      this->lock_, 
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                      ace_mon,
+                      this->lock_,
                       0);
     this->refcount_--;
     if (this->refcount_ != 0)
@@ -97,7 +97,7 @@ CORBA_Request::~CORBA_Request (void)
   assert (refcount_ == 0);
 
   CORBA::release (this->target_);
-  CORBA::string_free ((CORBA::String) this->opname_);
+  CORBA::string_free ((char*) this->opname_);
   this->opname_ = 0;
   CORBA::release (this->args_);
   CORBA::release (this->result_);
@@ -175,8 +175,8 @@ CORBA_Request::get_response (CORBA::Environment &ACE_TRY_ENV)
 CORBA::Boolean
 CORBA_Request::poll_response (CORBA::Environment &)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, 
-                    ace_mon, 
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                    ace_mon,
                     this->lock_,
                     0);
 
@@ -190,7 +190,7 @@ CORBA_Request::handle_response (TAO_InputCDR &incoming,
 {
   switch (reply_status)
   {
-    case TAO_GIOP_NO_EXCEPTION:   
+    case TAO_GIOP_NO_EXCEPTION:
       if (this->result_ != 0)
         {
           this->result_->value ()->_tao_decode (incoming,

@@ -154,7 +154,7 @@ Cubit_Task::initialize_orb (void)
   return 0;
 }
 
-CORBA::String
+char*
 Cubit_Task::get_servant_ior (u_int index)
 {
   if (index >= num_of_objs_)
@@ -185,7 +185,7 @@ Cubit_Task::create_servants (void)
 
       // Create the array of strings.
       ACE_NEW_RETURN (this->servants_iors_,
-                      CORBA::String [this->num_of_objs_],
+                      char* [this->num_of_objs_],
                       -1);
 
       char *buffer;

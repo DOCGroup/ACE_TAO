@@ -67,7 +67,7 @@ TAO_CORBA_DomainManager_Perfect_Hash_OpTable::lookup (const char *str, unsigned 
       {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
       {"_non_existent",  &POA_CORBA::DomainManager::_non_existent_skel},
       {"",0}, {"",0}, {"",0},
-      {"get_domain_policy", 	&POA_CORBA::DomainManager::get_domain_policy_skel},
+      {"get_domain_policy",     &POA_CORBA::DomainManager::get_domain_policy_skel},
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -229,7 +229,7 @@ POA_CORBA::DomainManager::_this (CORBA_Environment &ACE_TRY_ENV)
   CORBA::DomainManager *retval = CORBA_DomainManager::_nil ();
 
   ACE_NEW_RETURN (retval,
-                  POA_CORBA::_tao_collocated_DomainManager (this, 
+                  POA_CORBA::_tao_collocated_DomainManager (this,
                                                             stub),
                   CORBA_DomainManager::_nil ());
 
@@ -317,7 +317,7 @@ TAO_CORBA_ConstructionPolicy_Perfect_Hash_OpTable::lookup (const char *str, unsi
       {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
       {"_non_existent",  &POA_CORBA::ConstructionPolicy::_non_existent_skel},
       {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
-      {"make_domain_manager", 	&POA_CORBA::ConstructionPolicy::make_domain_manager_skel},
+      {"make_domain_manager",   &POA_CORBA::ConstructionPolicy::make_domain_manager_skel},
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -489,11 +489,11 @@ POA_CORBA::ConstructionPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  CORBA::ConstructionPolicy *retval = 
+  CORBA::ConstructionPolicy *retval =
     CORBA_ConstructionPolicy::_nil ();
 
   ACE_NEW_RETURN (retval,
-                  POA_CORBA::_tao_collocated_ConstructionPolicy (this, 
+                  POA_CORBA::_tao_collocated_ConstructionPolicy (this,
                                                                  stub),
                   CORBA_ConstructionPolicy::_nil ());
 

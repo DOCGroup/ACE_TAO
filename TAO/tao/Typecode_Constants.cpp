@@ -1833,25 +1833,25 @@ TAO_TypeCodes::init (void)
   static const CORBA::Long _oc_CORBA_Bounds[] =
   {
     TAO_ENCAP_BYTE_ORDER, // byte order
-    29, 
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f426f), 
-    ACE_NTOHL (0x756e6473), 
-    ACE_NTOHL (0x3a312e30), 
+    29,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f426f),
+    ACE_NTOHL (0x756e6473),
+    ACE_NTOHL (0x3a312e30),
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Bounds:1.0
-    7, 
-    ACE_NTOHL (0x426f756e), 
+    7,
+    ACE_NTOHL (0x426f756e),
     ACE_NTOHL (0x64730000),  // name = Bounds
     0, // member count
   };
- CORBA::_tc_Bounds = 
-   new CORBA::TypeCode (CORBA::tk_except, 
-                        sizeof (_oc_CORBA_Bounds), 
-                        (char *) &_oc_CORBA_Bounds, 
-                        0, 
+ CORBA::_tc_Bounds =
+   new CORBA::TypeCode (CORBA::tk_except,
+                        sizeof (_oc_CORBA_Bounds),
+                        (char *) &_oc_CORBA_Bounds,
+                        0,
                         sizeof (CORBA_Bounds));
 }
 
