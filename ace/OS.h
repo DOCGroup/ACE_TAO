@@ -835,17 +835,6 @@ typedef struct
 #     endif /* ACE_DEFAULT_GLOBALNAME_W */
 #   endif /* ACE_HAS_UNICODE */
 
-#   if !defined (ACE_TEXT)
-#     if (defined (ACE_HAS_UNICODE) && (defined (UNICODE)))
-#       define ACE_TEXT(STRING) L##STRING
-#     else
-#       define ACE_TEXT(STRING) STRING
-#     endif /* UNICODE && ACE_HAS_UNICODE */
-#   endif /* !defined ACE_TEXT */
-
-#   if !defined (ACE_HAS_TEXT_MACRO_CONFLICT)
-#     define __TEXT(STRING) ACE_TEXT(STRING)
-#   endif /* ACE_HAS_TEXT_MACRO_CONFLICT */
 
 typedef int ACE_HANDLE;
 typedef ACE_HANDLE ACE_SOCKET;
@@ -988,6 +977,18 @@ private:
 
 # endif /* defined (ACE_PSOS) */
 
+// Macro to replace __TEXT
+#if !defined (ACE_TEXT)
+#  if (defined (ACE_HAS_UNICODE) && (defined (UNICODE)))
+#    define ACE_TEXT(STRING) L##STRING
+#  else
+#    define ACE_TEXT(STRING) STRING
+#  endif /* UNICODE && ACE_HAS_UNICODE */
+#endif /* !defined ACE_TEXT */
+
+#if !defined (ACE_HAS_TEXT_MACRO_CONFLICT)
+#  define __TEXT(STRING) ACE_TEXT(STRING)
+#endif /* ACE_HAS_TEXT_MACRO_CONFLICT */
 
 
 # if defined (ACE_HAS_CHARPTR_SPRINTF)
