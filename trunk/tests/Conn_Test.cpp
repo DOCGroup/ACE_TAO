@@ -489,7 +489,7 @@ static int
 spawn_processes (ACCEPTOR *acceptor,
                  ACE_INET_Addr *server_addr)
 {
-  pid_t *children_ptr;
+  pid_t *children_ptr = 0;
   ACE_NEW_RETURN (children_ptr,
                   pid_t[n_servers],
                   -1);

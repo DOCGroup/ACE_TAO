@@ -1,3 +1,47 @@
+Sun Feb 14 15:25:27 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ACE-configuration.txt:
+	* ACE.ifnames:
+	* acconfig.h:
+	* ace-config.in:
+	* ace-diff-config.in:
+	* acinclude.m4:
+	* aclocal.m4:
+	* config.guess:
+	* config.sub:
+	* configure:
+	* configure.in:
+	* install-sh:
+	* libtool:
+	* ltconfig:
+	* ltmain.sh:
+	* missing:
+	* mkinstalldirs:
+	* ace/config.h.in:
+
+	Started to introduce the work done by the ACE Configuration
+	Project into the official ACE distribution.
+
+	To help speed development, the work being done by the ACE
+	Configuration Project is being slowly introduced into the official
+	ACE distribution.  Some of the functionality in the work created by
+	the ACE Configuration Project has been removed so that ACE may be
+	built in the usual fashion.  Once the ACE Configuration Project
+	work stabilizes on more platforms that removed functionality may be
+	added to ACE.
+
+	Currently the configure script contains most of the tests that are
+	necessary to properly configure ACE on most platforms.  However,
+	there are still some autoconf tests that are missing.  As such, you
+	may encounter and most likely will have compilation problems.
+
+	The `configure' script that is currently being used has been
+	modified from the ACE Configuration Project's `configure' script to
+	prevent makefiles from being automatically generated since there are
+	still some issues that must be addressed before automatically
+	generated makefiles are incorporated into the official ACE
+	distribution.
+
 Sun Feb 14 14:09:11 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/tutorials/015/server.cpp (main): Force the singleton to use 
