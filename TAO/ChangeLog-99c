@@ -1,3 +1,8 @@
+Sat Jun  5 15:27:24 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp: Put an ACE_UNUSED_ARG around at Line 1069 to
+	remove warning in Linux egcs. 
+
 Sat Jun  5 12:58:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/CDR.h:
