@@ -489,7 +489,7 @@ Fri Aug 27 00:25:47 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Added documentation that makes it obvious how this constant is
 	  determined.  Previously, a "magic number" was assigned to this
-	  constant (actuallly TAO_MAX_MINOR_CODE).  This constant is now
+	  constant (actually TAO_MAX_MINOR_CODE).  This constant is now
 	  defined in terms of TAO::VMCID.
 
 	  (TAO::VPVID):
