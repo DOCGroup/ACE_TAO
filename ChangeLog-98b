@@ -1,3 +1,7 @@
+Fri May 29 17:52:37 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.5.9 released.
+
 Fri May 29 16:19:34 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Synch_T.h (class ACE_Guard): ACE_Guard's destructor was
