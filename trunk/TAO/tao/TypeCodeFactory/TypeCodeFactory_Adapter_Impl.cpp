@@ -281,6 +281,57 @@ TAO_TypeCodeFactory_Adapter_Impl::create_local_interface_tc (
                                         ACE_ENV_ARG_PARAMETER);
 }
 
+CORBA::TypeCode_ptr
+TAO_TypeCodeFactory_Adapter_Impl::create_component_tc (
+    const char *id,
+    const char *name
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_i tcf;
+
+  return tcf.create_component_tc (id,
+                                  name
+                                  ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::TypeCode_ptr
+TAO_TypeCodeFactory_Adapter_Impl::create_home_tc (
+    const char *id,
+    const char *name
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_i tcf;
+
+  return tcf.create_home_tc (id,
+                             name
+                             ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::TypeCode_ptr
+TAO_TypeCodeFactory_Adapter_Impl::create_event_tc (
+    const char *id,
+    const char *name,
+    CORBA::ValueModifier type_modifier,
+    CORBA::TypeCode_ptr concrete_base,
+    const CORBA::ValueMemberSeq &members
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_i tcf;
+
+  return tcf.create_event_tc (id,
+                              name,
+                              type_modifier,
+                              concrete_base,
+                              members
+                              ACE_ENV_ARG_PARAMETER);
+}
+
 // *********************************************************************
 
 // Initialization and registration of dynamic service object.

@@ -872,6 +872,84 @@ CORBA::ORB::create_local_interface_tc (
                                              ACE_ENV_ARG_PARAMETER);
 }
 
+CORBA::TypeCode_ptr
+CORBA::ORB::create_component_tc (
+    const char *id,
+    const char *name
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_component_tc (id,
+                                       name
+                                       ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::TypeCode_ptr
+CORBA::ORB::create_home_tc (
+    const char *id,
+    const char *name
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_home_tc (id,
+                                  name
+                                  ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::TypeCode_ptr
+CORBA::ORB::create_event_tc (
+    const char *id,
+    const char *name,
+    CORBA::ValueModifier type_modifier,
+    CORBA::TypeCode_ptr concrete_base,
+    const CORBA::ValueMemberSeq &members
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  return adapter->create_event_tc (id,
+                                   name,
+                                   type_modifier,
+                                   concrete_base,
+                                   members
+                                   ACE_ENV_ARG_PARAMETER);
+}
+
 // ****************************************************************
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
