@@ -14,6 +14,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name TradingLib
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Trading Test Library
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -28,6 +31,9 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name TradingLib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Trading Test Library
     End Project Dependency
 }}}
 
@@ -44,11 +50,14 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name TradingLib
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Trading Test Library
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "TradingLib"=.\TradingLib.dsp - Package Owner=<4>
+Project: "Trading Test Library"=.\TradingLib.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

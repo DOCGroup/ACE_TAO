@@ -279,6 +279,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "DynamicAny"=.\tao\DynamicAny\TAO_DynamicAny.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Event_Service"=.\orbsvcs\Event_Service\Event_Service.dsp - Package Owner=<4>
 
 Package=<5>

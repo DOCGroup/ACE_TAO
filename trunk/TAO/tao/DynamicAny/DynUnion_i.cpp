@@ -120,7 +120,7 @@ TAO_DynUnion_i::_tao_QueryInterface (ptr_arith_t type)
       this->_add_ref ();
       return this;
     }
-  return this->DynamicAny::DynAny::_tao_QueryInterface (type);
+  return this->ACE_NESTED_CLASS (DynamicAny, DynAny::_tao_QueryInterface) (type);
 }
 
 // Private functions

@@ -1,3 +1,33 @@
+Sun Aug 27 22:11:43 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAOACE.dsw:
+        * tao/DynamicAny/TAO_DynamicAny.dsp:
+        * tao/DynamicAny/TAO_DynamicAny_Static.dsp:
+          Add new project files for the dynamic any library.
+
+        * tao/TAO.dsw:
+        * orbsvcs/Trading_Service/Trading_Service.dsp:
+        * orbsvcs/orbsvcs/CosTrading.dsp:
+        * orbsvcs/tests/Trading/Trading.dsw:
+        * orbsvcs/tests/Trading/Colocated_Test.dsp:
+        * orbsvcs/tests/Trading/Export_Test.dsp:
+        * orbsvcs/tests/Trading/Import_Test.dsp:
+        * tests/DynAny_Test/basic_test.dsp:
+          Add the TAO_DynamicAny library to the projects that needed it
+
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynArray_i.h:
+        * tao/DynamicAny/DynEnum_i.cpp:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+          Workaround MSVC bug with nested type names using the
+          ACE_NESTED_CLASS trick.
+
+        * TAO_IDL/be/be_global.cpp:
+          Add missing ,
+
 Sun Aug 27 17:50:04 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/TAO.dsp:
