@@ -275,6 +275,7 @@ struct ACE_Svc_Export CDR
 // at creating typecode interpreters as well as to the ACE convention
 // of placing inline functions into separate files.
 #  if !defined(__ACE_INLINE__)
+#    undef ACE_INLINE
 #    define ACE_INLINE inline
 #    define do_undef_on_ACE_INLINE
 #  endif
@@ -282,7 +283,9 @@ struct ACE_Svc_Export CDR
 #  include "cdr.i"
 
 #  if defined(do_undef_on_ACE_INLINE)
+#    undef do_undef_on_ACE_INLINE
 #    undef ACE_INLINE
+#    define ACE_INLINE
 #  endif
 
 #endif /* TAO_CDR_H */
