@@ -206,10 +206,6 @@ sub Spawn ()
             return -1;
         }
 
-        # The device was soft-reset at the end of the test. Wait a few seconds
-        # for it to come back up.
-        sleep (10);
-
         my $testname = basename($executable,'.EXE');
         my $here = getcwd();
         $here =~ s/\//\\/g;
@@ -220,22 +216,22 @@ sub Spawn ()
         my @tokens = split(' ', $cmdline);
         @tokens = splice(@tokens,1);
         $cmdline = join(' ', @tokens);
-#        print SCRIPT "del 1:\\log\\$testname*.txt\n";
         print SCRIPT "copy $executable 1:\\Windows\n";
         print SCRIPT "$testname $cmdline\n";
         if ($testname eq 'Cached_Conn_Test' || $testname eq 'Cached_Accept_Conn_Test') {
             print SCRIPT "sleep 400\n";
         }
         else {
-            print SCRIPT "sleep 60\n";
+            print SCRIPT "sleep 70\n";
         }
         print SCRIPT "copy 1:\\log\\$testname*.txt $here\\log\n";
         print SCRIPT "del 1:\\Windows\\$testname.exe\n";
-        print SCRIPT "reset /s\n";
+        print SCRIPT "del 1:\\log\\$testname*.txt\n";
         close SCRIPT;
 
         $executable = $ENV{"ComSpec"};
-        $cmdline = "cmd /C start /B /WAIT pocketcontroller -m NAME=start_test.cmd"
+        my $pocket_device_opts = $ENV{"ACE_PCE_DEVICE"};
+        $cmdline = "cmd /C start /B /WAIT $self->{WINCE_CTL} $pocket_device_opts -m NAME=start_test.cmd;WAIT=401000; -e"
     }
     else {
         $executable = $self->Executable ();
