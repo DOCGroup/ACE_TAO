@@ -39,7 +39,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                orb_core->orb_params ()->use_dotted_decimal_addresses ()),
     count_ (1),
     object_key_ (object_key),
-    tagged_profile_ ()
+    tagged_profile_ (0)
 {
 }
 
@@ -53,7 +53,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
     endpoint_ (host, port, addr),
     count_ (1),
     object_key_ (object_key),
-    tagged_profile_ ()
+    tagged_profile_ (0)
 {
 }
 
@@ -64,7 +64,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
     endpoint_ (),
     count_ (1),
     object_key_ (),
-    tagged_profile_ ()
+    tagged_profile_ (0)
 {
 }
 
@@ -453,6 +453,10 @@ TAO_IIOP_Profile::encode (TAO_OutputCDR &stream) const
 IOP::TaggedProfile &
 TAO_IIOP_Profile::create_tagged_profile (void)
 {
+  if (this->tagged_profile_ == 0)
+    {
+      ACE_NEW
+    }
   // Check whether we have already created the TaggedProfile
   if (this->tagged_profile_.profile_data.get_buffer () == 0)
     {

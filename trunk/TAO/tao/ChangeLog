@@ -1,0 +1,36 @@
+Sun Jan 26 21:41:26 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* Mering with the main trunk and moving to a new branch. 
+
+Sun Jan 26 21:16:14 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* docs/Options.html: documented the new option.
+
+Mon Jan 20 09:00:55 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	The aim of this checkin is to provide an option to configure the
+	size of the dispatcher table in the Muxed_Transport_Strategy. 
+	
+	* tao/Client_Strategy_Factory.cpp: 
+	* tao/Client_Strategy_Factory.h: Added a new virtual method to
+	  fetch the dispatcher table size
+
+	* tao/default_client.cpp:
+	* tao/default_client.h: Concrete implementation for the new
+	  virtual method. The default value for the dispatcher table size
+	  is set to TAO_RD_TABLE_SIZE which is defined in orbconf.h. The
+	  table size can also be changed at runtime using a -ORB option
+	  which is explained below. 
+
+	  We now have an option called -ORBReplyDispatcherTableSize which
+	  will parse and set a user provided value as the dispatcher table 
+	  size. This gives extra flexibility to the user.
+	  
+	* tao/orbconf.h: Added TAO_RD_TABLE_SIZE and set the value to be
+	  16.
+	
+	* tao/Muxed_TMS.cpp:
+	* tao/Muxed_TMS.h: All the above changes were motivated to reduce
+	  the size of the hash table that this class creates increasing
+	  the run-time footprint. The default value of 1024 was probably
+	  an over kill for this class. 
