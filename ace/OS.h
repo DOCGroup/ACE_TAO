@@ -3966,7 +3966,7 @@ struct sigaction
 
 # if !defined (ENFILE)
 #   define ENFILE EMFILE /* No more socket descriptors are available. */
-# endif /* !ENOSYS */
+# endif /* !ENFILE */
 
 # if !defined (ECOMM)
     // Not the same, but ECONNABORTED is provided on NT.
@@ -3980,6 +3980,10 @@ struct sigaction
 # if !defined (EDEADLK)
 #   define EDEADLK 1000 /* Some large number.... */
 # endif /* !EDEADLK */
+
+#if !defined (ENXIO)     /* Needed in SOCK_Dgram_Mcast */
+#   define ENXIO  6
+#endif /* ENXIO */
 
 # if !defined (MS_SYNC)
 #   define MS_SYNC 0x0
