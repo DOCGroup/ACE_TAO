@@ -42,7 +42,7 @@ namespace CIAO
 
     };
 
-  };
+  }
 }
 
 #include /**/ "ace/post.h"

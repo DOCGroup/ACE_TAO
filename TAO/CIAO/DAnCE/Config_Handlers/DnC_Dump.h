@@ -37,8 +37,8 @@ namespace Deployment
 
     public:
       /// Dump functions for CORBA sequences
-      static void DnC_Dump::dump (const char* caption,
-                                  const ::CORBA::StringSeq &str_seq);
+      static void dump (const char* caption,
+                        const ::CORBA::StringSeq &str_seq);
 
       template <typename SEQUENCE>
         static void dump_sequence (const char* caption, const SEQUENCE &seq);

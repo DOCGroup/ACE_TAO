@@ -157,7 +157,7 @@ namespace CIAO
 
       pc_table pc_table_;
     };
-};
+}
 
 #include /**/ "ace/post.h"
 #endif /* REPOSITORYMANAGER_IMPL_H */
