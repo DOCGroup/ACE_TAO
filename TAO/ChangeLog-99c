@@ -1,3 +1,8 @@
+Tue Nov 30 12:04:43 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile:
+	  added the Log to the build
+
 Tue Nov 30 11:31:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Exception.h: Added TAO_Export to the exception streaming

@@ -12,7 +12,7 @@ LIBNAME  = liborbsvcs
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-VPATH=.:Naming:Time:Concurrency:Property:Trader:Sched:Event:CosEvent:
+VPATH=.:Naming:Time:Concurrency:Property:Trader:Sched:Event:CosEvent:Log
 
 ACE_SHLIBS = -lTAO -lACE
 
@@ -49,7 +49,7 @@ ifndef minimum_corba
 # Trader uses DynAny which is disabled when compiling with minimum
 # CORBA support.  LifeCycle depend on Trader so don't build
 # them either.
-  TAO_ORBSVCS += Trader LifeCycle
+  TAO_ORBSVCS += Trader LifeCycle Log
 
 endif # minimum_corba
 
