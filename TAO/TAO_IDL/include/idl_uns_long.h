@@ -5,8 +5,8 @@
 // Either an 'unsigned long long' or an 'unsigned long'.
 //
 
-#ifndef _IDL_UNS_LONG.H
-#define _IDL_UNS_LONG.H
+#ifndef _IDL_UNS_LONG_H
+#define _IDL_UNS_LONG_H
 
 #include "ace/Basic_Types.h"
 
@@ -16,4 +16,4 @@
   typedef ACE_UINT64    idl_uns_long;
 #endif /* ACE_LACKS_LONGLONG_T */
 
-#endif _IDL_UNS_LONG.H
+#endif /* _IDL_UNS_LONG_H */
