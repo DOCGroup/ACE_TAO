@@ -1,4 +1,6 @@
-Tue Apr 28 21:58:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Apr 28 23:08:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Map_Manager_Test.cpp (test_hash_map_manager): Bug fixed.
 
 	* tests/Map_Manager_Test.cpp: Added assertion test on the number
 	  of iterations to ensure the test does run correctly.
