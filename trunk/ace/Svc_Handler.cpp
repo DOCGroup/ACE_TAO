@@ -59,11 +59,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new (size_t n)
       // storage, depending on config flags).
       dynamic_instance->set ();
 
-      char *temp = 0;
-      ACE_NEW_RETURN (temp,
-                      char[n],
-                      0);
-      return temp;
+      return ::new char[n];
     }
 }
 
