@@ -644,7 +644,8 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   CORBA::Boolean response_required = 0;
   CORBA::ULong request_id = 0;
 
-  ACE_TRY_NEW_ENV
+  CORBA::Environment &ACE_TRY_ENV = CORBA::default_environment ();
+  ACE_TRY
     {
       // Try to recv a new request.
       TAO_GIOP::Message_Type type =
