@@ -1107,7 +1107,7 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
   int result = 0;
   if (ACE_OS::sema_init (&cv->sema_, 0, type, name, arg) == -1)
     result = -1;
-  else if (ACE_OS::mutex_init (&cs->waiters_lock_) = -1)
+  else if (ACE_OS::mutex_init (&cv->waiters_lock_) = -1)
     result = -1;
   else if (ACE_OS::event_init (&cv->waiters_done_) == -1)
     result = -1;
@@ -1261,7 +1261,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   // Reset errno in case mutex_lock() also fails...
   errno = error;
   return result;
-#endif /* ACE_HAS_STHREADS */
+#endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
@@ -2201,7 +2201,7 @@ ACE_OS::gethostbyname (const char *name)
   static int first_addr;
   static char *hostaddr[2];
 
-  if ((first_addr = (char *) ::hostGetByName ((char *) name)) < 0)
+  if ((first_addr = ::hostGetByName ((char *) name)) < 0)
     return 0;
   hostaddr[0] = (char *) &first_addr;
   hostaddr[1] = 0;
@@ -3187,7 +3187,7 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
   prio = ::GetThreadPriority (thr_id);
   return prio == THREAD_PRIORITY_ERROR_RETURN ? -1 : 0;
 #elif defined (VXWORKS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::taskPriorityGet (thr_id, prio), ace_result_), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::taskPriorityGet (thr_id, &prio), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
 #else
   ACE_NOTSUP_RETURN (-1);
