@@ -308,7 +308,14 @@ I assume you're using MSVC++ 4.0(things are a little different for the
    Then add $WRAPPER_ROOT\ace to the default library search path.
    This means that you can now use relative paths for linking apps
    with ace.lib.  You may skip this step if you have set
-   Tools/Options/Directories/Include_Files to include $WRAPPER_ROOT. <P>
+   Tools/Options/Directories/Include_Files to include
+   $WRAPPER_ROOT. <P>
+
+   If you are going to compile ACE with UNICODE on, please add UNICODE
+   to the pre-processor definitions through: <BR>
+
+   Build -> Settings -> C/C++ -> Preprocessor -> Preprocessor
+   definitions <P>
 
 <LI> SET UP THE LINKER. <P>
 
