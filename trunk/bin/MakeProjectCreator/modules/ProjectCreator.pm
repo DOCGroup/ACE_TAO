@@ -86,8 +86,8 @@ sub new {
   my($toplevel)  = shift;
   my($baseprojs) = shift;
   my($self)      = Creator::new($class, $global, $inc,
-                                $template, $ti, $relative,
-                                $addtemp, $addproj,
+                                $template, $ti, $dynamic, $static,
+                                $relative, $addtemp, $addproj,
                                 $progress, $toplevel, $baseprojs,
                                 'project');
 
@@ -101,8 +101,6 @@ sub new {
   $self->{'idl_defaulted'}         = 0;
   $self->{'source_defaulted'}      = 0;
   $self->{'writing_type'}          = 0;
-  $self->{'want_dynamic_projects'} = $dynamic;
-  $self->{'want_static_projects'}  = $static;
   $self->{'flag_overrides'}        = {};
   $self->{'special_supplied'}      = {};
 
@@ -1365,15 +1363,14 @@ sub write_project {
 
   if ($self->need_to_write_project()) {
     ## Writing the non-static file so set it to 0
-    if ($self->{'want_dynamic_projects'}) {
+    if ($self->get_dynamic()) {
       $self->{'writing_type'} = 0;
       $self->process_assignment('project_name',
                                 $prjname . $self->get_type_append());
       ($status, $error) = $self->write_output_file($name);
     }
 
-    if ($status && $self->{'want_static_projects'} &&
-        $self->separate_static_project()) {
+    if ($status && $self->get_static() && $self->separate_static_project()) {
       ## Set the project name back to what it originally was
       $self->process_assignment('project_name', $prjname);
       $name = $self->transform_file_name($self->static_project_file_name());

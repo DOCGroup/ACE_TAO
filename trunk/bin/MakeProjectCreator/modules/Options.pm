@@ -271,4 +271,27 @@ sub options {
 }
 
 
+sub is_set {
+  my($self)    = shift;
+  my($key)     = shift;
+  my($options) = shift;
+
+  if (UNIVERSAL::isa($options->{$key}, 'ARRAY')) {
+    if (defined $options->{$key}->[0]) {
+      return 'ARRAY';
+    }
+  }
+  elsif (UNIVERSAL::isa($options->{$key}, 'HASH')) {
+    my(@keys) = keys %{$options->{$key}};
+    if (defined $keys[0]) {
+      return 'HASH';
+    }
+  }
+  elsif (defined $options->{$key}) {
+    return 'SCALAR';
+  }
+
+  return undef;
+}
+
 1;
