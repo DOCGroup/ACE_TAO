@@ -1,3 +1,8 @@
+Wed Jul  7 15:50:10 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp: Removed some commented out
+	code that was not required.
+
 Wed Jul  7 15:35:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* docs/Options.html:

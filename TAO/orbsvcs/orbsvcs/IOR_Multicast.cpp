@@ -58,10 +58,6 @@ TAO_IOR_Multicast::init (const char *ior,
                        "subscribe"),
                       -1);
 
-  // Initialise the IOR_LookupTable.
-
-  //  this->ior_lookup_table_.add_ior ("ObjectID1","iioploc://tango.cs.wustl.edu:9999/ObjectID1");
-
   return 0;
 }
 
