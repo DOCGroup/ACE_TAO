@@ -50,6 +50,7 @@ ifndef TAO_ORBSVCS
 
     ifeq ($(corba_messaging),1)
       TAO_ORBSVCS += FaultTolerance
+      TAO_ORBSVCS += FTORB
     endif #corba_messaging
     endif # ACE_HAS_GNUG_PRE_2_8
 
@@ -173,6 +174,9 @@ ifneq (,$(findstring  SSLIOP, $(TAO_ORBSVCS)))
     MKLIST += Makefile.Security
   endif
   MKLIST += Makefile.SSLIOP
+endif
+ifneq (,$(findstring  FTORB, $(TAO_ORBSVCS)))
+  MKLIST += Makefile.FTORB  
 endif
 ifneq (,$(findstring  FaultTolerance, $(TAO_ORBSVCS)))
   MKLIST += Makefile.FTORB Makefile.FaultTolerance 

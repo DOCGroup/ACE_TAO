@@ -1,3 +1,9 @@
+Sun Jan 13 10:33:18 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: Added an FTORB option.
+	* orbsvcs/tests/FaultTolerance/IOGR/Makefile: Updated
+	  dependencies.  
+
 Sun Jan 13 09:35:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAOACE_Static.dsw (Project): Added FT_ORB.dsp.
