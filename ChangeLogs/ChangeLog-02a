@@ -1,3 +1,9 @@
+Thu May 17 10:46:31 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/nightlybuilds/builds.lst:
+
+          Adding the HP-UX 11.00 build back to the list.
+
 Thu May 17 10:16:03 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/POSIX_Asynch_IO.{h,cpp}: There are some weird inconsistencies

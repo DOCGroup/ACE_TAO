@@ -146,8 +146,8 @@ WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?tango_VXWORKS_
 
 [VxWorks_5.4_GCC]
 TYPE = TIMEONLY
-LIST = http://prince.ociweb.com/buildlogs/auto_compile_logs/krusty_VXWORKS_GCC/
-WEB  = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?krusty_VXWORKS_GCC
+LIST = http://prince.ociweb.com/buildlogs/auto_compile_logs/maggie_VXWORKS_GCC/
+WEB  = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?maggie_VXWORKS_GCC
 
 [Chorus_4.0.1_GCC]
 TYPE = TIMEONLY
@@ -200,7 +200,8 @@ TYPE = TIMEONLY
 LIST = http://amras.ece.uci.edu/~bugzilla/auto_compile_logs/amras_QNX/
 WEB  = http://amras.ece.uci.edu/cgi-bin/show_log_dir.cgi?amras_QNX
 
-#[HPUX_ACC]
-#TYPE = TIMEONLY
-#LIST = http://prince.ociweb.com/~buildlog
+[HPUX_ACC]
+TYPE = TIMEONLY
+LIST = http://prince.ociweb.com/buildlogs/auto_compile_logs/herb_HPUX_ACC/
+WEB  = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?herb_HPUX_ACC
 
