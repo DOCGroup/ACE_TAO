@@ -876,7 +876,7 @@ NameValuePairSeq::NameValuePairSeq (void)
 NameValuePairSeq::NameValuePairSeq (CORBA::ULong max) // uses max size
   :
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
-             || !defined (TAO_LACKS_TEMPLATE_SPECIALIZATION)
+             || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_NameValuePairSeq
 #else /* AHETI */
   TAO_Unbounded_Sequence<NameValuePair>
@@ -889,7 +889,7 @@ NameValuePairSeq::NameValuePairSeq (CORBA::ULong max,
                                     CORBA::Boolean release)
   :
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
-             || !defined (TAO_LACKS_TEMPLATE_SPECIALIZATION)
+             || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_NameValuePairSeq
 #else /* AHETI */
   TAO_Unbounded_Sequence<NameValuePair>
@@ -901,7 +901,7 @@ NameValuePairSeq::NameValuePairSeq (
   ) // copy ctor
   :
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
-             || !defined (TAO_LACKS_TEMPLATE_SPECIALIZATION)
+             || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_NameValuePairSeq
 #else /* AHETI */
   TAO_Unbounded_Sequence<NameValuePair>
@@ -1237,7 +1237,7 @@ AnySeq::AnySeq (void)
 AnySeq::AnySeq (CORBA::ULong max) // uses max size
   :
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
-       || !defined (TAO_LACKS_TEMPLATE_SPECIALIZATION)
+       || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_AnySeq
 #else /* AHETI */
   TAO_Unbounded_Sequence<CORBA::Any>
@@ -1250,7 +1250,7 @@ AnySeq::AnySeq (CORBA::ULong max,
                 CORBA::Boolean release)
   :
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
-             || !defined (TAO_LACKS_TEMPLATE_SPECIALIZATION)
+             || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_AnySeq
 #else /* AHETI */
   TAO_Unbounded_Sequence<CORBA::Any>
@@ -1260,7 +1260,7 @@ AnySeq::AnySeq (CORBA::ULong max,
 AnySeq::AnySeq (const AnySeq &seq) // copy ctor
   :
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
-             || !defined (TAO_LACKS_TEMPLATE_SPECIALIZATION)
+             || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_AnySeq
 #else /* AHETI */
   TAO_Unbounded_Sequence<CORBA::Any>

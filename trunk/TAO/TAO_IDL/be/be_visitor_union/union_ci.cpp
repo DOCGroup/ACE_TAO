@@ -76,7 +76,8 @@ int be_visitor_union_ci::visit_union (be_union *node)
       *os << "ACE_INLINE void" << be_nl
           << node->name () << "::_reset (void)" << be_nl
           << "{" << be_idt_nl
-          << "this->_reset (this->disc_, 1);" << be_uidt_nl
+          << "this->_reset (this->disc_, 1);" << be_nl
+          << "ACE_OS::memcpy (&this->u_, 0, sizeof (this->u_));" << be_uidt_nl
           << "}" << be_nl << be_nl;
 
       // the virtual overloaded _discriminant method
