@@ -1,3 +1,10 @@
+Thu Jan 22 15:26:55 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/object.i: CORBA::Object --> CORBA_Object for internal stuff.
+	
+	* tao/object.i (CORBA_Object): Re-ordered member initialization to
+ 	match declaration order.
+
 Thu Jan 22 14:40:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/corbacom.h: 
