@@ -455,7 +455,7 @@ ACE_OS_Object_Manager::shutting_down (void)
 /**
  * @class ACE_OS_Object_Manager_Manager
  *
- * @brief Ensure that the <ACE_OS_Object_Manager> gets initialized at
+ * @brief Ensure that the ACE_OS_Object_Manager gets initialized at
  * program startup, and destroyed at program termination.
  *
  * Without ACE_HAS_NONSTATIC_OBJECT_MANAGER, a static instance of this
