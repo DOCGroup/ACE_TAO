@@ -1,3 +1,16 @@
+Fri Apr 26 17:00:23 2002  Dante J. Cannarozzi  <djc2@cs.wustl.edu>
+
+	* ace/Containers_T.h
+	* ace/Unbounded_Set.h
+	* ace/Hash_Map_Manager.h
+	* ace/RB_Tree.h
+	* ace/Vector_T.h
+	* ace/Unbounded_Queue.h
+	: with the help of Matt Hampton <mph2@cs.wustl.edu> updated
+	doxygen to contain a consistent html list that summarizes the
+	each container (like internal structure, duplicates allowed, etc.)
+	at the request of Steve Huston.
+
 Fri Apr 26 16:36:52 2002  Steve Huston  <shuston@riverace.com>
 
         * netsvcs/lib/Server_Logging_Handler_T.cpp: Added #include
