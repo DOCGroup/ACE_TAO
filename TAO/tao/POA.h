@@ -341,10 +341,16 @@ public:
 
   int operator!= (const TAO_Temporary_Creation_Time &rhs) const;
 
-private:
+protected:
   
-  // Timestamp buffer
-  char time_stamp_[(8 * 2) + 1];
+  enum
+  {
+    SEC_FIELD = 0,
+    USEC_FIELD = 1
+  };
+
+  // Timestamp
+  CORBA::ULong time_stamp_[2];
 
 };
 
@@ -361,7 +367,7 @@ public:
 
   int operator!= (const TAO_Creation_Time &rhs) const;
 
-private:
+protected:
   
   void *time_stamp_;
 };
@@ -539,13 +545,6 @@ public:
   static CORBA::ULong name_separator_length (void);
 
   static CORBA::ULong id_separator_length (void);
-
-  enum 
-  {
-    // This is the maximum space require to convert the ulong into a
-    // string.
-    MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX = 16
-  };
 
 protected:
 
@@ -919,7 +918,7 @@ public:
   virtual ~TAO_POA_Current (void);
   // Destructor
 
-private:
+protected:
   TAO_POA *poa_impl_;
   // The POA implementation invoking an upcall
 
