@@ -16,7 +16,10 @@ Tue Dec 12 12:44:02 2000  Darrell Brunsch <brunsch@uci.edu>
 
           ImplRepo wasn't working on any platform except windows
           because the load_registry_settings wasn't protected by
-          a #if defined (ACE_WIN32).
+          a #if defined (ACE_WIN32).  Before this change, running
+          the ImR on non-Win32 platforms would result in a 
+          "Service not available on this platform" message and 
+          the ImR would immediately exit.
 
 Tue Dec 12 11:57:59 2000  Darrell Brunsch <brunsch@uci.edu>
 
