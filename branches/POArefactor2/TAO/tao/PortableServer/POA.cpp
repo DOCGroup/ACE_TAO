@@ -264,6 +264,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
   this->active_policy_strategies_.update (this->cached_policies_,
                                           this
                                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
 // todo make here a return value of the update and check this, in case of error
 // we get inconsistent policies
@@ -336,6 +337,9 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
   if (result != 0)
     ACE_THROW (CORBA::OBJ_ADAPTER ());
 
+  // Cleanup all strategies
+  this->active_policy_strategies_.cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   // Forced cleanup.  The new memory management scheme is evil and can
   // lead to reference deadlock, i.e., POA holds object A, but POA

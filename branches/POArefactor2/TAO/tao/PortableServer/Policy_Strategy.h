@@ -14,8 +14,9 @@
 #define TAO_POLICY_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 #include "ace/Service_Object.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,7 +32,9 @@ namespace TAO
       : public virtual ACE_Service_Object
     {
     public:
-      virtual void strategy_init(TAO_POA *poa) = 0;
+      virtual void strategy_init(TAO_POA *poa ACE_ENV_ARG_DECL) = 0;
+
+      virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL) = 0;
 
       virtual ~Policy_Strategy (void) {};
     };

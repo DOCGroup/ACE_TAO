@@ -37,6 +37,20 @@ namespace TAO
     {
     }
 
+    void
+    Servant_Activator_Request_Processing_Strategy::strategy_cleanup(
+      ACE_ENV_SINGLE_ARG_DECL)
+    {
+      {
+        Non_Servant_Upcall non_servant_upcall (*this->poa_);
+        ACE_UNUSED_ARG (non_servant_upcall);
+
+        this->servant_activator_ = PortableServer::ServantActivator::_nil ();
+      }
+
+      RequestProcessingStrategy::strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
+    }
+
     PortableServer::ServantManager_ptr
     Servant_Activator_Request_Processing_Strategy::get_servant_manager (
       ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -222,7 +236,7 @@ namespace TAO
         this->poa_->servant_has_remaining_activations (servant);
 
       // ATTENTION: Trick locking here, see class header for details
-      TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+      Non_Servant_Upcall non_servant_upcall (*this->poa_);
       ACE_UNUSED_ARG (non_servant_upcall);
 
       // @todo This is not according to the spec. According to 11.3.6.2 at the
@@ -245,7 +259,7 @@ namespace TAO
       PortableServer::Servant servant = 0;
 
       // ATTENTION: Trick locking here, see class header for details
-      TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+      Non_Servant_Upcall non_servant_upcall (*this->poa_);
       ACE_UNUSED_ARG (non_servant_upcall);
 
       // @@
@@ -308,7 +322,7 @@ namespace TAO
           else
             {
               // ATTENTION: Trick locking here, see class header for details
-              TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+              Non_Servant_Upcall non_servant_upcall (*this->poa_);
               ACE_UNUSED_ARG (non_servant_upcall);
 
               servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);

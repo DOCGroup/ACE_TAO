@@ -40,10 +40,9 @@ namespace TAO
 
       CORBA::ULong waiting_servant_deactivation (void) const;
 
-      virtual
-      void strategy_init (
-        TAO_POA *poa
-        ACE_ENV_ARG_DECL);
+      virtual void strategy_init (TAO_POA *poa ACE_ENV_ARG_DECL);
+
+      virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
 
       virtual int is_servant_in_map (PortableServer::Servant servant,
                                      int &wait_occurred_restart_call);

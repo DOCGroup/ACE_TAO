@@ -173,27 +173,92 @@ namespace TAO
 // @todo, check if all pointers are != 0
 
       if (lifespan_strategy_ != 0)
-        lifespan_strategy_->strategy_init (poa);
+        {
+          lifespan_strategy_->strategy_init (poa ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
 
       if (thread_strategy_ != 0)
-        request_processing_strategy_->strategy_init (poa);
+        {
+          request_processing_strategy_->strategy_init (poa ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
 
       if (id_uniqueness_strategy_ != 0)
-        id_uniqueness_strategy_->strategy_init (poa);
+        {
+          id_uniqueness_strategy_->strategy_init (poa ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
 
       if (implicit_activation_strategy_ != 0)
-        implicit_activation_strategy_->strategy_init (poa);
+        {
+          implicit_activation_strategy_->strategy_init (poa ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
 
       if (thread_strategy_ != 0)
-        thread_strategy_->strategy_init (poa);
+        {
+          thread_strategy_->strategy_init (poa ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
 
       if (servant_retention_strategy_ != 0)
-        servant_retention_strategy_->strategy_init (poa ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        {
+          servant_retention_strategy_->strategy_init (poa ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
 
       if (id_assignment_strategy_ != 0)
-        id_assignment_strategy_->strategy_init (poa);
+        {
+          id_assignment_strategy_->strategy_init (poa ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
+    }
 
+    void
+    Active_Policy_Strategies::cleanup (ACE_ENV_SINGLE_ARG_DECL)
+    {
+      if (lifespan_strategy_ != 0)
+        {
+          lifespan_strategy_->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
+        }
+
+      if (thread_strategy_ != 0)
+        {
+          request_processing_strategy_->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
+        }
+
+      if (id_uniqueness_strategy_ != 0)
+        {
+          id_uniqueness_strategy_->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
+        }
+
+      if (implicit_activation_strategy_ != 0)
+        {
+          implicit_activation_strategy_->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
+        }
+
+      if (thread_strategy_ != 0)
+        {
+          thread_strategy_->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
+        }
+
+      if (servant_retention_strategy_ != 0)
+        {
+          servant_retention_strategy_->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
+        }
+
+      if (id_assignment_strategy_ != 0)
+        {
+          id_assignment_strategy_->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
+        }
     }
   }
 }

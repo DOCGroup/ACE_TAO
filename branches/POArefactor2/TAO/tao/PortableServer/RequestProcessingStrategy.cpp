@@ -21,8 +21,27 @@ namespace TAO
 {
   namespace Portable_Server
   {
+    RequestProcessingStrategy::RequestProcessingStrategy()
+      : poa_ (0)
+    {
+    }
+
     RequestProcessingStrategy::~RequestProcessingStrategy()
     {
+    }
+
+    void
+    RequestProcessingStrategy::strategy_init(
+      TAO_POA *poa
+      ACE_ENV_ARG_DECL_NOT_USED)
+    {
+      poa_ = poa;
+    }
+
+    void
+    RequestProcessingStrategy::strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    {
+      poa_ = 0;
     }
   }
 }

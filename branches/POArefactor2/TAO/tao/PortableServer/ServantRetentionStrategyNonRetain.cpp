@@ -50,6 +50,13 @@ namespace TAO
     }
 
     void
+    Non_Retain_Servant_Retention_Strategy::strategy_cleanup (
+      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    {
+      poa_ = 0;
+    }
+
+    void
     Non_Retain_Servant_Retention_Strategy::deactivate_object (
       const PortableServer::ObjectId &/*id*/
       ACE_ENV_ARG_DECL)
@@ -106,7 +113,7 @@ namespace TAO
       if (servant != 0)
         {
           // ATTENTION: Trick locking here, see class header for details
-          TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          Non_Servant_Upcall non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           // The POA invokes _add_ref once on the Servant before returning

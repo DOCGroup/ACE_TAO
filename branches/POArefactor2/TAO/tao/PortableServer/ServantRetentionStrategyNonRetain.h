@@ -38,10 +38,9 @@ namespace TAO
 
       virtual ~Non_Retain_Servant_Retention_Strategy (void);
 
-      virtual
-      void strategy_init (
-        TAO_POA *poa
-        ACE_ENV_ARG_DECL);
+      virtual void strategy_init (TAO_POA *poa ACE_ENV_ARG_DECL);
+
+      virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
 
       CORBA::ULong waiting_servant_deactivation (void) const;
 

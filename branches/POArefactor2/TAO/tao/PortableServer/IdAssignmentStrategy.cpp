@@ -15,9 +15,13 @@ namespace TAO
     }
 
     void
-    IdAssignmentStrategy::strategy_init (TAO_POA *)
+    IdAssignmentStrategy::strategy_init (TAO_POA */*poa*/ ACE_ENV_ARG_DECL_NOT_USED)
     {
-      // dependent on type create the correct strategy.
+    }
+
+    void
+    IdAssignmentStrategy::strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    {
     }
 
     char

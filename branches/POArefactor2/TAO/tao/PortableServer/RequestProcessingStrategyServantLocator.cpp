@@ -36,6 +36,20 @@ namespace TAO
     {
     }
 
+    void
+    Servant_Locator_Request_Processing_Strategy::strategy_cleanup(
+      ACE_ENV_SINGLE_ARG_DECL)
+    {
+      {
+        Non_Servant_Upcall non_servant_upcall (*this->poa_);
+        ACE_UNUSED_ARG (non_servant_upcall);
+
+        this->servant_locator_ = PortableServer::ServantLocator::_nil ();
+      }
+
+      RequestProcessingStrategy::strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
+    }
+
     PortableServer::ServantManager_ptr
     Servant_Locator_Request_Processing_Strategy::get_servant_manager (
       ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -196,7 +210,7 @@ namespace TAO
       if (servant)
         {
           // ATTENTION: Trick locking here, see class header for details
-          TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          Non_Servant_Upcall non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);

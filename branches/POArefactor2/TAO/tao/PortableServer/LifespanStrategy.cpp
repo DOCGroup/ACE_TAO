@@ -29,9 +29,18 @@ namespace TAO
     }
 
     void
-    LifespanStrategy::strategy_init (TAO_POA *poa)
+    LifespanStrategy::strategy_init (
+      TAO_POA *poa
+      ACE_ENV_ARG_DECL_NOT_USED)
     {
       poa_ = poa;
+    }
+
+    void
+    LifespanStrategy::strategy_cleanup(
+      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    {
+      poa_ = 0;
     }
 
     CORBA::ULong

@@ -50,6 +50,8 @@ namespace TAO
                    TAO_POA* poa
                    ACE_ENV_ARG_DECL);
 
+      void cleanup (ACE_ENV_SINGLE_ARG_DECL);
+
       ThreadStrategy *thread_strategy (void) const;
 
       RequestProcessingStrategy *request_processing_strategy (void) const;

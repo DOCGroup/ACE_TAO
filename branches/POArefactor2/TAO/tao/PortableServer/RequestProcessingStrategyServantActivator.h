@@ -49,6 +49,8 @@ namespace TAO
 
       virtual ~Servant_Activator_Request_Processing_Strategy (void);
 
+      virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
+
       PortableServer::ServantManager_ptr get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));

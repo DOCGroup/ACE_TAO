@@ -15,9 +15,17 @@ namespace TAO
     }
 
     void
-    Multiple_Id_Uniqueness_Strategy::strategy_init (TAO_POA * /*poa*/)
+    Multiple_Id_Uniqueness_Strategy::strategy_init (
+      TAO_POA */*poa*/
+      ACE_ENV_ARG_DECL_NOT_USED)
     {
       // dependent on type create the correct strategy.
+    }
+
+    void
+    Multiple_Id_Uniqueness_Strategy::strategy_cleanup(
+      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    {
     }
 
     bool

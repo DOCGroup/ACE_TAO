@@ -54,7 +54,13 @@ namespace TAO
       : public virtual Policy_Strategy
     {
     public:
+      RequestProcessingStrategy (void);
+
       virtual ~RequestProcessingStrategy (void);
+
+      virtual void strategy_init(TAO_POA *poa ACE_ENV_ARG_DECL);
+
+      virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
 
       virtual PortableServer::ServantManager_ptr get_servant_manager (
         ACE_ENV_SINGLE_ARG_DECL)
@@ -110,6 +116,8 @@ namespace TAO
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::ServantNotActive,
                            PortableServer::POA::WrongPolicy)) = 0;
+    protected:
+      TAO_POA* poa_;
     };
   }
 }

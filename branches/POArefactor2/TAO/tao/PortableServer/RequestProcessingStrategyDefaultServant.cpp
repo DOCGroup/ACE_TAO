@@ -28,20 +28,20 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    Default_Servant_Request_Processing_Strategy::Default_Servant_Request_Processing_Strategy (void) :
-      poa_ (0)
+    Default_Servant_Request_Processing_Strategy::Default_Servant_Request_Processing_Strategy (void)
+      : default_servant_ (0)
     {
     }
 
     Default_Servant_Request_Processing_Strategy::~Default_Servant_Request_Processing_Strategy (void)
     {
-      this->default_servant_ = 0;
     }
 
     void
-    Default_Servant_Request_Processing_Strategy::strategy_init(TAO_POA *poa)
+    Default_Servant_Request_Processing_Strategy::strategy_cleanup(
+      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     {
-      poa_ = poa;
+      this->default_servant_ = 0;
     }
 
     PortableServer::ServantManager_ptr
@@ -184,7 +184,7 @@ namespace TAO
       if (servant != 0)
         {
           // ATTENTION: Trick locking here, see class header for details
-          TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          Non_Servant_Upcall non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           // The POA invokes _add_ref once on the Servant before returning
@@ -215,7 +215,7 @@ namespace TAO
       if (servant)
         {
           // ATTENTION: Trick locking here, see class header for details
-          TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          Non_Servant_Upcall non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);

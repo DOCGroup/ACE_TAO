@@ -37,9 +37,6 @@ namespace TAO
 
     Retain_Servant_Retention_Strategy::~Retain_Servant_Retention_Strategy ()
     {
-      // Delete the active object map.
-      delete this->active_object_map_;
-      active_object_map_ = 0;
     }
 
     void
@@ -70,6 +67,15 @@ namespace TAO
       // Finally everything is fine.  Make sure to take ownership away
       // from the auto pointer.
       this->active_object_map_ = new_active_object_map.release ();
+    }
+
+    void
+    Retain_Servant_Retention_Strategy::strategy_cleanup(
+      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    {
+      // Delete the active object map.
+      delete this->active_object_map_;
+      active_object_map_ = 0;
     }
 
     void
@@ -558,7 +564,7 @@ namespace TAO
           //
 
           // ATTENTION: Trick locking here, see class header for details
-          TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          Non_Servant_Upcall non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           // If this operation causes the object to be activated, _add_ref
@@ -636,7 +642,7 @@ namespace TAO
           //
 
           // ATTENTION: Trick locking here, see class header for details
-          TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          Non_Servant_Upcall non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           // If this operation causes the object to be activated, _add_ref
@@ -758,7 +764,7 @@ namespace TAO
       //
 
       // ATTENTION: Trick locking here, see class header for details
-      TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+      Non_Servant_Upcall non_servant_upcall (*this->poa_);
       ACE_UNUSED_ARG (non_servant_upcall);
 
       // The implementation of activate_object will invoke _add_ref at
@@ -865,7 +871,7 @@ namespace TAO
       //
 
       // ATTENTION: Trick locking here, see class header for details
-      TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+      Non_Servant_Upcall non_servant_upcall (*this->poa_);
       ACE_UNUSED_ARG (non_servant_upcall);
 
       // The implementation of activate_object_with_id will invoke

@@ -22,9 +22,18 @@ namespace TAO
     }
 
     void
-    Unique_Id_Uniqueness_Strategy::strategy_init (TAO_POA *poa)
+    Unique_Id_Uniqueness_Strategy::strategy_init (
+      TAO_POA *poa
+      ACE_ENV_ARG_DECL_NOT_USED)
     {
       poa_ = poa;
+    }
+
+    void
+    Unique_Id_Uniqueness_Strategy::strategy_cleanup(
+      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    {
+      poa_ = 0;
     }
 
     bool

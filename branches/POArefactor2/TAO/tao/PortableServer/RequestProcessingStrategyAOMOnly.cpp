@@ -25,19 +25,12 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    AOM_Only_Request_Processing_Strategy::AOM_Only_Request_Processing_Strategy() :
-      poa_ (0)
+    AOM_Only_Request_Processing_Strategy::AOM_Only_Request_Processing_Strategy()
     {
     }
 
     AOM_Only_Request_Processing_Strategy::~AOM_Only_Request_Processing_Strategy()
     {
-    }
-
-    void
-    AOM_Only_Request_Processing_Strategy::strategy_init(TAO_POA * poa)
-    {
-      poa_ = poa;
     }
 
     PortableServer::ServantManager_ptr
@@ -134,7 +127,7 @@ namespace TAO
       if (servant)
         {
           // ATTENTION: Trick locking here, see class header for details
-          TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          Non_Servant_Upcall non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);

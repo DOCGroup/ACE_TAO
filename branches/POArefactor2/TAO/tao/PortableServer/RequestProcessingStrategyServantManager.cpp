@@ -25,7 +25,6 @@ namespace TAO
   namespace Portable_Server
   {
     Servant_Manager_Request_Processing_Strategy::Servant_Manager_Request_Processing_Strategy (void)
-     : poa_ (0)
     {
     }
 
@@ -41,12 +40,6 @@ namespace TAO
     {
       ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                         0);
-    }
-
-    void
-    Servant_Manager_Request_Processing_Strategy::strategy_init(TAO_POA *poa)
-    {
-      poa_ = poa;
     }
 
     void

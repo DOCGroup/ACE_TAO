@@ -37,7 +37,9 @@ namespace TAO
 
       virtual ~LifespanStrategy (void);
 
-      virtual void strategy_init (TAO_POA *poa);
+      virtual void strategy_init(TAO_POA *poa ACE_ENV_ARG_DECL);
+
+      virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
 
       void create (const char *name, const TAO::ObjectKey &key);
 

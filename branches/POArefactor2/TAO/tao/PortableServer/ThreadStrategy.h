@@ -40,7 +40,9 @@ namespace TAO
 
       virtual int exit () = 0;
 
-      void strategy_init (TAO_POA *poa);
+      virtual void strategy_init (TAO_POA *poa ACE_ENV_ARG_DECL);
+
+      virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
     };
   }
 }

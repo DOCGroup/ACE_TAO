@@ -17,9 +17,13 @@ namespace TAO
     }
 
     void
-    ThreadStrategy::strategy_init (TAO_POA */*poa*/)
+    ThreadStrategy::strategy_init (TAO_POA */*poa*/ ACE_ENV_ARG_DECL_NOT_USED)
     {
-      // Noop at this moment
+    }
+
+    void
+    ThreadStrategy::strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    {
     }
   }
 }
