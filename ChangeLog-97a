@@ -1,3 +1,15 @@
+Sat Mar 22 07:30:49 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/High_Res_Timer.*: Changed scale factor to convert
+	  platform-dependent clock units to microseconds instead of
+	  nanoseconds.  That way, it should be greater than 1 for
+	  all supported platforms.  So, it's now an unsigned long
+	  instead of a double.
+
+	* ace/OS.h: Changed ACE_hrtime_t to unsigned __int64 with
+	  _MSC_VER.  Also, fixed typo: "uint64" instead of "unit64"
+	  without _MSC_VER.
+
 Fri Mar 21 15:10:59 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Memory_Pool.cpp: Added #if !defined
