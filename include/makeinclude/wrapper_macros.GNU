@@ -266,7 +266,7 @@ endif
 
 # NOTE: VLDLIBS is defined below, in case it is overridden for static-
 #       or shared-only builds.
-YACC            = yacc
+YACC            = bison
 
 # Define SOEXT trailing digits if platform needs it.
 ifeq ($(versioned_so),1)
