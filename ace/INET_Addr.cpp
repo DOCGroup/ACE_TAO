@@ -497,7 +497,8 @@ ACE_INET_Addr::get_host_name (void) const
   ACE_TRACE ("ACE_INET_Addr::get_host_name");
 
   static ASYS_TCHAR name[MAXHOSTNAMELEN + 1];
-  this->get_host_name (name, MAXHOSTNAMELEN + 1);
+  if (this->get_host_name (name, MAXHOSTNAMELEN + 1) == -1)
+    ACE_OS::strcpy (name, "<unknown>");
   return name;
 }
 
