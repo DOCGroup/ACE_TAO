@@ -27,10 +27,7 @@
 // arrays of "short" data (e.g. unicode strings) pack tightly.
 //
 
-#include <unistd.h>
-#include <string.h>
-
-#include <orb.h>
+#include "orb.h"
 
 #if defined(HAVE_WIDEC_H)
 #  include <widec.h>
