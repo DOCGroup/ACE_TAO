@@ -80,7 +80,11 @@ main (int argc, char *argv[])
       ACE_NEW_RETURN (test_factory, 
                       Smart_Test_Factory,
                       -1);
-      
+
+      // To make KAI Compiler happy as it considers <test_factory> to be 
+      // an unused variable.
+      ACE_UNUSED_ARG (test_factory);
+
       Test_var server =
         Test::_narrow (object.in (),
                        ACE_TRY_ENV);
