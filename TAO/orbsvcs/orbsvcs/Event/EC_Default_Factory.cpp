@@ -2,7 +2,6 @@
 
 #include "EC_Default_Factory.h"
 #include "EC_Priority_Dispatching.h"
-#include "EC_MT_Dispatching.h"
 #include "EC_Basic_Filter_Builder.h"
 #include "EC_Sched_Filter_Builder.h"
 #include "EC_ConsumerAdmin.h"
@@ -18,7 +17,6 @@
 #include "EC_Reactive_Timeout_Generator.h"
 #include "EC_Event_Channel.h"
 #include "ace/Arg_Shifter.h"
-#include "ace/Sched_Params.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Default_Factory.i"
@@ -42,12 +40,6 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  int priority =
-    (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO) +
-     ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-  this->dispatching_threads_priority_ =
-    ACE_Sched_Params::next_priority (ACE_SCHED_FIFO, priority);
-
   while (arg_shifter.is_anything_left ())
     {
       char *arg = arg_shifter.get_current ();
@@ -67,10 +59,6 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
                 {
                   this->dispatching_ = 1;
                 }
-              else if (ACE_OS::strcasecmp (opt, "mt") == 0)
-                {
-                  this->dispatching_ = 2;
-                }
               else
                 {
                   ACE_ERROR ((LM_ERROR,
@@ -78,18 +66,6 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
                               "unsupported dispatching <%s>\n",
                               opt));
                 }
-              arg_shifter.consume_arg ();
-            }
-        }
-
-      else if (ACE_OS::strcmp (arg, "-ECdispatchingthreads") == 0)
-        {
-          arg_shifter.consume_arg ();
-
-          if (arg_shifter.is_parameter_next ())
-            {
-              char* opt = arg_shifter.get_current ();
-              this->dispatching_threads_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
         }
@@ -407,11 +383,6 @@ TAO_EC_Default_Factory::create_dispatching (TAO_EC_Event_Channel *ec)
     return new TAO_EC_Reactive_Dispatching ();
   else if (this->dispatching_ == 1)
     return new TAO_EC_Priority_Dispatching (ec);
-  else if (this->dispatching_ == 2)
-    return new TAO_EC_MT_Dispatching (this->dispatching_threads_,
-                                      this->dispatching_threads_flags_,
-                                      this->dispatching_threads_priority_,
-                                      this->dispatching_threads_force_active_);
   return 0;
 }
 
@@ -504,7 +475,7 @@ TAO_EC_Default_Factory::destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer *x
 }
 
 TAO_EC_Timeout_Generator*
-TAO_EC_Default_Factory::create_timeout_generator (TAO_EC_Event_Channel *)
+TAO_EC_Default_Factory::create_timeout_generator (TAO_EC_Event_Channel *ec)
 {
   if (this->timeout_ == 0)
     {
@@ -670,18 +641,12 @@ ACE_FACTORY_DEFINE (TAO_ORBSVCS, TAO_EC_Default_Factory)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if defined (ACE_HAS_THREADS)
 template class TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_SYNCH_MUTEX>;
-#endif /* ACE_HAS_THREADS */
-
 template class TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_Null_Mutex>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#if defined (ACE_HAS_THREADS)
 #pragma instantiate TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_SYNCH_MUTEX>
-#endif /* ACE_HAS_THREADS */
-
 #pragma instantiate TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_Null_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

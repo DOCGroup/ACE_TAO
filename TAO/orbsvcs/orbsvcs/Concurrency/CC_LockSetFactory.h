@@ -43,15 +43,10 @@ public:
   ~CC_LockSetFactory (void);
   // Destructor.
 
-  virtual CosConcurrencyControl::LockSet_ptr create (
-      CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosConcurrencyControl::LockSet_ptr create (CORBA::Environment &env);
 
-  virtual CosConcurrencyControl::LockSet_ptr create_related (
-      CosConcurrencyControl::LockSet_ptr which,
-      CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
+  virtual CosConcurrencyControl::LockSet_ptr create_related (CosConcurrencyControl::LockSet_ptr which,
+                                                             CORBA::Environment &env);
 private:
   ACE_SYNCH_MUTEX lock_;
   // Lock to serialize the access to the factory.

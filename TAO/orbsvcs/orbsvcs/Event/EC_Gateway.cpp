@@ -150,6 +150,19 @@ TAO_EC_Gateway_IIOP::close_i (CORBA::Environment &ACE_TRY_ENV)
         RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
     }
 
+  if (this->supplier_is_active_)
+    {
+      PortableServer::POA_var poa =
+        this->supplier_._default_POA (ACE_TRY_ENV);
+      ACE_CHECK;
+      PortableServer::ObjectId_var id =
+        poa->servant_to_id (&this->supplier_, ACE_TRY_ENV);
+      ACE_CHECK;
+      poa->deactivate_object (id.in (), ACE_TRY_ENV);
+      ACE_CHECK;
+      this->supplier_is_active_ = 0;
+    }
+
   if (!CORBA::is_nil (this->supplier_proxy_.in ()))
     {
       this->supplier_proxy_->disconnect_push_supplier (ACE_TRY_ENV);
@@ -158,13 +171,25 @@ TAO_EC_Gateway_IIOP::close_i (CORBA::Environment &ACE_TRY_ENV)
       this->supplier_proxy_ =
         RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
     }
+
+  if (this->consumer_is_active_)
+    {
+      PortableServer::POA_var poa =
+        this->consumer_._default_POA (ACE_TRY_ENV);
+      ACE_CHECK;
+      PortableServer::ObjectId_var id =
+        poa->servant_to_id (&this->consumer_, ACE_TRY_ENV);
+      ACE_CHECK;
+      poa->deactivate_object (id.in (), ACE_TRY_ENV);
+      ACE_CHECK;
+      this->consumer_is_active_ = 0;
+    }
 }
 
 void
 TAO_EC_Gateway_IIOP::update_consumer (
     const RtecEventChannelAdmin::ConsumerQOS& c_qos,
     CORBA::Environment& ACE_TRY_ENV)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (c_qos.dependencies.length () <= 1)
     return;
@@ -346,7 +371,6 @@ void
 TAO_EC_Gateway_IIOP::update_supplier (
     const RtecEventChannelAdmin::SupplierQOS&,
     CORBA::Environment&)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do nothing...
 }
@@ -437,32 +461,6 @@ TAO_EC_Gateway_IIOP::shutdown (CORBA::Environment& ACE_TRY_ENV)
 
   this->close_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-
-  if (this->supplier_is_active_)
-    {
-      PortableServer::POA_var poa =
-        this->supplier_._default_POA (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-      PortableServer::ObjectId_var id =
-        poa->servant_to_id (&this->supplier_, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-      poa->deactivate_object (id.in (), ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-      this->supplier_is_active_ = 0;
-    }
-
-  if (this->consumer_is_active_)
-    {
-      PortableServer::POA_var poa =
-        this->consumer_._default_POA (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-      PortableServer::ObjectId_var id =
-        poa->servant_to_id (&this->consumer_, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-      poa->deactivate_object (id.in (), ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-      this->consumer_is_active_ = 0;
-    }
 
   this->lcl_ec_ =
     RtecEventChannelAdmin::EventChannel::_nil ();

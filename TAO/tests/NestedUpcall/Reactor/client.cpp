@@ -9,24 +9,19 @@ ACE_RCSID(Reactor, client, "$Id$")
 NestedUpCalls_Client::NestedUpCalls_Client (void)
   : nested_up_calls_reactor_key_ ("file://test.ior"),
     shutdown_ (0),
-    call_count_ (5),
-    quiet_ (0)
+    call_count_ (5)
 {
 }
 
 int
 NestedUpCalls_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "qdxn:k:");
+  ACE_Get_Opt get_opts (argc_, argv_, "dxn:k:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'q':
-        this->quiet_ = 1;
-        break;
-
       case 'd':  // debug flag
         TAO_debug_level++;
         break;
@@ -66,7 +61,7 @@ NestedUpCalls_Client::run (void)
   ACE_TRY_NEW_ENV
     {
       // Create an EventHandler servant to hand to the other side...
-      auto_ptr<EventHandler_i> eh_impl (new EventHandler_i (this->quiet_));
+      auto_ptr<EventHandler_i> eh_impl (new EventHandler_i);
       EventHandler_var eh = eh_impl->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -76,10 +71,9 @@ NestedUpCalls_Client::run (void)
       ACE_TRY_CHECK;
 
       // We ought to have a result!
-      if (!this->quiet_)
-        ACE_DEBUG ((LM_DEBUG,
-                    "%s: received %d as return from register_handler ()\n",
-                    argv_[0], r));
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s: received %d as return from register_handler ()\n",
+                  argv_[0], r));
 
       this->reactor_->set_value (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -150,7 +144,7 @@ NestedUpCalls_Client::init (int argc, char **argv)
                            this->nested_up_calls_reactor_key_),
                           -1);
 
-      
+
       ACE_DEBUG ((LM_DEBUG, "Reactor received OK\n"));
 
       CORBA::Object_var poa_object =

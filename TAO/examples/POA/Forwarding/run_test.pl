@@ -31,7 +31,7 @@ $brace="\#\#\#\#\#";
 
 # The client is run for all tests
 @clientarglist = ("-f server2 -i 5",
-                  "-f server2 -i 5",
+                  "-g server2 -i 5",
                   "-f server3 -i 8");
 
 # Descriptions of the tests
@@ -74,77 +74,48 @@ sub run_test
 {
     print STDERR "\n$brace Test of $testtype BEGUN\n";
 
-    # Remove stale IOR files...
-    cleanup_ior ();
-
     # Run the servers
-    $SRV1 = Process::Create  (".".$DIR_SEPARATOR."server".$EXE_EXT,
+    $SRV1 = Process::Create  (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
                              "$server1args");
     print STDERR ("server $server1args\n");
+    ACE::waitforfile ("server1");
 
-    if (ACE::waitforfile_timed ("server1", 5) == -1) {
-      print STDERR "ERROR: cannot find file <server1> or <server2>\n";
-      $SRV1->Kill (); $SRV1->TimedWait (1);
-      exit 1;
-    }
-
-    $SRV2 = Process::Create  (".".$DIR_SEPARATOR."server".$EXE_EXT,
+    $SRV2 = Process::Create  (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
                              "$server2args");
     print STDERR ("server $server2args\n");
-
-    if (ACE::waitforfile_timed ("server2", 5) == -1) {
-      print STDERR "ERROR: cannot find file <server1> or <server2>\n";
-      $SRV1->Kill (); $SRV1->TimedWait (1);
-      $SRV2->Kill (); $SRV2->TimedWait (1);
-      exit 1;
-    }
-
-    if ($server3args ne "") {
-      $SRV3 = Process::Create (".".$DIR_SEPARATOR."server".$EXE_EXT,
-			       "$server3args");
-
-      if (ACE::waitforfile_timed ("server3", 5) == -1) {
-	print STDERR "ERROR: cannot find file <server3>\n";
-	$SRV1->Kill (); $SRV1->TimedWait (1);
-	$SRV2->Kill (); $SRV2->TimedWait (1);
-	$SRV3->Kill (); $SRV3->TimedWait (1);
-	exit 1;
-      }
-    }
-
-    # Run the client and block until completion
-    $CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
-			   " $clientargs");
-    print STDERR ("client $clientargs\n");
-
-    $client = $CL->TimedWait (60);
-    if ($client == -1) {
-      print STDERR "ERROR: client timedout\n";
-      $CL->Kill (); $CL->TimedWait (1);
-    }
-
-    # Now that the client has finished, kill off the servers
-    $SRV1->Terminate ();
-    $SRV2->Terminate ();
-    if ($SRV1->TimedWait (5) == -1 ||
-        $SRV2->TimedWait (5) == -1) {
-      print STDERR "ERROR: couldn't terminate the servers nicely\n";
-      $SRV1->Kill (); $SRV1->TimedWait (1);
-      $SRV2->Kill (); $SRV2->TimedWait (1);
-      $status = 1;
-    }
+    ACE::waitforfile ("server2");
 
     if ($server3args ne "")
     {
-        $SRV3->Kill (); $SRV3->TimedWait (1);
+        $SRV3 = Process::Create (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
+                                 "$server3args");
+        ACE::waitforfile ("server3");
     }
 
-    if ($client != 0) {
-      print STDERR ("\n$brace Test of $testtype FAILED\n");
-      $status = -1;
-    } else {
-      print STDERR ("\n$brace Test of $testtype SUCCEEDED\n");
+    # Run the client and block until completion
+    $status  = system ("client$Process::EXE_EXT $clientargs");
+    print STDERR ("client $clientargs");
+
+    # Now that the client has finished, kill off the servers
+
+    $SRV1->Kill (); $SRV1->Wait ();
+    $SRV2->Kill (); $SRV2->Wait ();
+
+    if ($server3args ne "")
+    {
+        $SRV3->Kill (); $SRV3->Wait ();
     }
+
+    if ($status != 0)
+    {
+        print STDERR ("\n$brace Test of $testtype FAILED\n");
+        $status = -1;
+    }
+    else
+    {
+        print STDERR ("\n$brace Test of $testtype SUCCEEDED\n");
+    }
+    cleanup_ior ();
     return $status;
 }
 
@@ -159,5 +130,3 @@ for ($q = 0; $q < 3; $q++)
         sleep ($ACE::sleeptime);
     }
 }
-
-cleanup_ior ();

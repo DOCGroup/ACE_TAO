@@ -38,7 +38,6 @@ Account_i::orb (CORBA::ORB_ptr o)
 
 CORBA::Float
 Account_i::balance (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return balance_;
 }
@@ -46,7 +45,6 @@ Account_i::balance (CORBA::Environment &)
 void
 Account_i::deposit (CORBA::Float deposit,
 		    CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   balance_ += deposit;
 }
@@ -54,8 +52,6 @@ Account_i::deposit (CORBA::Float deposit,
 void
 Account_i::withdraw (CORBA::Float withdrawl,
 		     CORBA::Environment &env)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Bank::Account::Overdraft))
 {
   if (balance_ >= withdrawl)
     balance_ -= withdrawl;
@@ -65,7 +61,6 @@ Account_i::withdraw (CORBA::Float withdrawl,
 
 char *
 Account_i::name (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (name_);
 }
@@ -73,7 +68,6 @@ Account_i::name (CORBA::Environment &)
 void
 Account_i::name (const char *name,
 		 CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   name_ = CORBA::string_dup (name);
 }

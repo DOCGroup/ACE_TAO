@@ -7,7 +7,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "../../../bin";
 require ACEutils;
-require Process;
 
 $type = "";
 
@@ -15,14 +14,7 @@ sub run_test
 {
   my $type = shift(@_);
 
-  $BT = Process::Create ($EXEPREFIX."basic_test".$EXE_EXT,
-			 " -t $type");
-
-  $test = $BT->TimedWait (10);
-  if ($test == -1) {
-    print STDERR "ERROR: test timedout\n";
-    $BT->Kill (); $BT->TimedWait (1);
-  }
+  system ($EXEPREFIX."basic_test -t $type");
 
 }
 
@@ -51,8 +43,6 @@ for ($i = 0; $i <= $#ARGV; $i++)
 
 @types = ("dynany", "dynarray", "dynenum", "dynsequence", "dynstruct",
           "dynunion");
-
-
 
 if ($type ne "")
 {

@@ -301,7 +301,6 @@ ECB_Consumer::close (CORBA::Environment &TAO_IN_ENV)
 void
 ECB_Consumer::push (const RtecEventComm::EventSet& events,
                     CORBA::Environment &TAO_IN_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->test_->push (this->consumer_id_,
                      events,
@@ -310,7 +309,6 @@ ECB_Consumer::push (const RtecEventComm::EventSet& events,
 
 void
 ECB_Consumer::disconnect_push_consumer (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -408,7 +406,6 @@ ECB_Supplier::send_event (RtecEventComm::EventSet& events,
 
 void
 ECB_Supplier::disconnect_push_supplier (CORBA::Environment& TAO_IN_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (TAO_IN_ENV);
   // this->supplier_proxy_->disconnect_push_supplier (TAO_IN_ENV);

@@ -31,14 +31,11 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  void test_method (CORBA::Environment&)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void test_method (CORBA::Environment&);
 
-  CORBA::Long get_number (CORBA::Environment&)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Long get_number (CORBA::Environment&);
 
-  void shutdown (CORBA::Environment&)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (CORBA::Environment&);
 
 private:
   CORBA::ORB_var orb_;

@@ -30,18 +30,13 @@ public:
   ~Life_Cycle_Service_i (void);
 
   CORBA::Boolean supports (const CosLifeCycle::Key &factory_key,
-                           CORBA::Environment &_env_there)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                           CORBA::Environment &_env_there);
   // Returns true if the Generic Factory is able to forward a request
   // for creating an object described by the <factory_key>.
 
   CORBA::Object_ptr create_object (const CosLifeCycle::Key &factory_key,
                                    const CosLifeCycle::Criteria &the_criteria,
-                                   CORBA::Environment &_env_there)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       CosLifeCycle::NoFactory,
-                       CosLifeCycle::InvalidCriteria,
-                       CosLifeCycle::CannotMeetCriteria));
+                                   CORBA::Environment &_env_there);
   // Returns an object reference to a newly created object, though the
   // Generic Factory itself cannot create objects, it will forward the
   // request to a more concrete Factory.
@@ -50,9 +45,7 @@ public:
                          const char * location,
                          const char * description,
                          CORBA::Object_ptr object,
-                         CORBA::Environment &_env_there)
-      ACE_THROW_SPEC (( CORBA::SystemException));
-
+                         CORBA::Environment &_env_there);
   // Registers a factory with specified properties
 
 private:

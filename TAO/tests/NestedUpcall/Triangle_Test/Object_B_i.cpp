@@ -9,7 +9,7 @@
 //    Object_B_i.cpp
 //
 // = DESCRIPTION
-//    This class implements the Object B  of the
+//    This class implements the Object B  of the 
 //    Nested Upcalls - Triangle test.
 //
 // = AUTHORS
@@ -36,15 +36,14 @@ Object_B_i::~Object_B_i (void)
 
 void
 Object_B_i::foo (Object_A_ptr object_A_ptr,
-                 CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+                    CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) BEGIN Object_B_i::foo ()\n"));
 
   TAO_TRY
     {
-
+      
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) BEGIN Object_B_i::foo: Trying to call Object A\n"));
 
@@ -68,3 +67,4 @@ Object_B_i::foo (Object_A_ptr object_A_ptr,
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) END Object_B_i::foo ()\n"));
 }
+

@@ -16,57 +16,30 @@ $other = "";
 $debug = "";
 $type = "";
 
-unlink $iorfile;
-
 sub run_test
 {
   my $type = shift(@_);
 
-  unlink $iorfile; # Ignore errors
-  print STDERR "==== Testing $type === wait....\n";
-  sleep 2;
-
-  $SV = Process::Create ($EXEPREFIX."server".$EXE_EXT,
+  $SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
                          "$debug -o $iorfile");
 
-  if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-  }
+  ACE::waitforfile ($iorfile);
 
-  $CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
-			 " $debug -f $iorfile  -i $invocation -t ".
-			 "$type -n $num -x");
+  system ($EXEPREFIX."client $debug -f $iorfile  -i $invocation -t ".
+          "$type -n $num -x");
 
-  $client = $CL->TimedWait (60);
-  if ($client == -1) {
-    print STDERR "ERROR: client timedout\n";
-    $CL->Kill (); $CL->TimedWait (1);
-  }
+  # @@
+  # Someday, a better way of doing this should be found.  Or at least
+  # something that can tell if a server is still alive.  There is kill -0 on
+  # Unix, but on NT ???
 
-  $server = $SV->TimedWait (2);
-  if ($server == -1) {
-    print STDERR "ERROR: server timedout\n";
-    $SV->Kill (); $SV->TimedWait (1);
-  }
-  unlink $iorfile;
+  sleep 3;
 
-  print STDERR "==== Test for $type finished ===\n";
+  $SV->Kill (); $SV->Wait ();
+  unlink ($iorfile);
 }
 
 # Parse the arguments
-
-@types = ("short", "ulonglong", "ubstring", "bdstring", "fixed_struct",
-          "ub_strseq", "bd_strseq",
-          "var_struct", "nested_struct", "recursive_struct",
-          "ub_struct_seq", "bd_struct_seq",
-          "any", "objref", "objref_sequence", "objref_struct",
-          "any_sequence",
-          "ub_short_sequence", "ub_long_sequence",
-          "bd_short_sequence", "bd_long_sequence",
-          "fixed_array", "var_array", "typecode", "exception",
-	  "big_union", "complex_any");
 
 for ($i = 0; $i <= $#ARGV; $i++)
 {
@@ -100,21 +73,13 @@ for ($i = 0; $i <= $#ARGV; $i++)
     {
       if ($^O eq "MSWin32")
       {
-        $newwindow = "no";
-      }
-      last SWITCH;
-    }
-    if ($ARGV[$i] eq "-twowin")
-    {
-      if ($^O eq "MSWin32")
-      {
-        $newwindow = "yes";
+        $Process::newwindow = "no";
       }
       last SWITCH;
     }
     if ($ARGV[$i] eq "-t")
     {
-      @types = split (',', $ARGV[$i + 1]);
+      $type = $ARGV[$i + 1];
       $i++;
       last SWITCH;
     }
@@ -128,8 +93,27 @@ for ($i = 0; $i <= $#ARGV; $i++)
   }
 }
 
-foreach $type (@types) {
+@types = ("short", "ulonglong", "ubstring", "bdstring", "fixed_struct",
+          "ub_strseq", "bd_strseq",
+          "var_struct", "nested_struct", "recursive_struct",
+          "ub_struct_seq", "bd_struct_seq",
+          "any", "objref", "objref_sequence", "objref_struct",
+          "any_sequence",
+          "ub_short_sequence", "ub_long_sequence",
+          "bd_short_sequence", "bd_long_sequence",
+          "fixed_array", "var_array", "typecode", "exception",
+	  "big_union", "complex_any");
+
+if ($type ne "")
+{
   run_test ($type);
+}
+else
+{
+  foreach $type (@types)
+  {
+    run_test ($type);
+  }
 }
 
 unlink $iorfile;

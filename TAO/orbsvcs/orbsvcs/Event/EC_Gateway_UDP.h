@@ -160,12 +160,9 @@ public:
   void close (CORBA::Environment &env = TAO_default_environment ());
   // Disconnect from the EC, but reconnection is still possible.
 
-  virtual void disconnect_push_consumer (CORBA::Environment & =
-                                             TAO_default_environment ())
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_consumer (CORBA::Environment & = TAO_default_environment ());
   virtual void push (const RtecEventComm::EventSet &events,
-                     CORBA::Environment & = TAO_default_environment ())
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                     CORBA::Environment & = TAO_default_environment ());
   // The PushConsumer methods.
 
 private:
@@ -280,10 +277,6 @@ public:
                              CORBA::ULong request_id);
   // default copy ctor, dtor and operator=
 
-  // The ACE_INLINE macros here are to keep g++ 2.7.X happy,
-  // otherwise it thinks they are used as inline functions before
-  // beign used as such.... Apparently in the template code for the
-  // Hash_Map_Manager.
   ACE_INLINE u_long hash (void) const;
   // Return a hash value...
 
@@ -465,9 +458,8 @@ public:
   // messages...
 
   // The PushSupplier method.
-  virtual void disconnect_push_supplier (CORBA::Environment & =
-                                             TAO_default_environment ())
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier (CORBA::Environment & = TAO_default_environment ());
+
 
   void get_addr (const RtecEventComm::EventHeader& header,
                  RtecUDPAdmin::UDP_Addr_out addr,
@@ -575,11 +567,9 @@ public:
   // Reactor callbacks
 
   void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub,
-                        CORBA::Environment &env = TAO_default_environment ())
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                        CORBA::Environment &env = TAO_default_environment ());
   void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub,
-                        CORBA::Environment &env = TAO_default_environment ())
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                        CORBA::Environment &env = TAO_default_environment ());
   // The Observer methods
 
   class Observer : public POA_RtecEventChannelAdmin::Observer
@@ -598,16 +588,10 @@ public:
     // handler.
 
     // The Observer methods
-    virtual void update_consumer (
-        const RtecEventChannelAdmin::ConsumerQOS& sub,
-        CORBA::Environment &env =
-            TAO_default_environment ())
-      ACE_THROW_SPEC ((CORBA::SystemException));
-    virtual void update_supplier (
-        const RtecEventChannelAdmin::SupplierQOS& pub,
-        CORBA::Environment &env =
-            TAO_default_environment ())
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub,
+                                  CORBA::Environment &env = TAO_default_environment ());
+    virtual void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub,
+                                  CORBA::Environment &env = TAO_default_environment ());
 
   private:
     TAO_ECG_Mcast_EH *eh_;

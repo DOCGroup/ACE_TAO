@@ -10,9 +10,9 @@
 
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Basic_Factory.h"
 #include "Event_Latency.h"
@@ -95,8 +95,27 @@ Latency_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
   entry_point (my_name);
   TAO_TRY
     {
-      // No scheduling for this test...
-      this->rt_info_ = 0;
+      RtecScheduler::Scheduler_ptr server =
+        ACE_Scheduler_Factory::server ();
+
+      rt_info_ =
+        server->create (my_name, TAO_TRY_ENV);
+
+      const ACE_hrtime_t wcet_ns = ACE_UINT64_LITERAL (10000000); // 1 ms
+      RtecScheduler::Time wcet;
+      ORBSVCS_Time::hrtime_to_TimeT (wcet, wcet_ns);
+
+      server->set (rt_info_,
+                   RtecScheduler::VERY_HIGH_CRITICALITY,
+                   wcet,
+                   wcet,
+                   ORBSVCS_Time::zero (),
+                   0,
+                   RtecScheduler::VERY_LOW_IMPORTANCE,
+                   ORBSVCS_Time::zero (),
+                   1,
+                   RtecScheduler::OPERATION,
+                   TAO_TRY_ENV);
 
       // Create the event that we're registering for.
       ACE_ConsumerQOS_Factory dependencies;
@@ -144,7 +163,6 @@ Latency_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
 
 void
 Latency_Consumer::disconnect_push_consumer (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Consumer received disconnect from channel.\n"));
 }
@@ -152,7 +170,6 @@ Latency_Consumer::disconnect_push_consumer (CORBA::Environment &)
 void
 Latency_Consumer::push (const RtecEventComm::EventSet &events,
                         CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG, "Latency_Consumer:push - "));
   ACE_TIMEPROBE (EVENT_LATENCY_PUSH_EVENT_TO_CONSUMER);
@@ -339,10 +356,8 @@ Latency_Supplier::Supplier::Supplier (Latency_Supplier* impl)
 {
 }
 
-void
-Latency_Supplier::Supplier::disconnect_push_supplier (
-    CORBA::Environment &TAO_IN_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+void Latency_Supplier::Supplier::disconnect_push_supplier
+  (CORBA::Environment &TAO_IN_ENV)
 {
   this->impl_->disconnect_push_supplier (TAO_IN_ENV);
 }
@@ -352,19 +367,15 @@ Latency_Supplier::Consumer::Consumer (Latency_Supplier* impl)
 {
 }
 
-void
-Latency_Supplier::Consumer::disconnect_push_consumer (
-    CORBA::Environment &TAO_IN_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+void Latency_Supplier::Consumer::disconnect_push_consumer
+  (CORBA::Environment &TAO_IN_ENV)
 {
   this->impl_->disconnect_push_consumer (TAO_IN_ENV);
 }
 
-void
-Latency_Supplier::Consumer::push (
-    const RtecEventComm::EventSet &events,
-    CORBA::Environment &TAO_IN_ENV)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+void Latency_Supplier::Consumer::push
+  (const RtecEventComm::EventSet &events,
+   CORBA::Environment &TAO_IN_ENV)
 {
   this->impl_->push (events, TAO_IN_ENV);
 }
@@ -395,7 +406,26 @@ Latency_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
       this->channel_admin_ =
         RtecEventChannelAdmin::EventChannel::_duplicate (ec);
 
-      this->rt_info_ = 0;
+      RtecScheduler::Scheduler_ptr server =
+        ACE_Scheduler_Factory::server ();
+
+      this->rt_info_ =
+        server->create (name, TAO_TRY_ENV);
+
+      RtecScheduler::Period_t period = timeout_interval * 20000;
+
+      server->set (rt_info_,
+                   RtecScheduler::VERY_HIGH_CRITICALITY,
+                   ORBSVCS_Time::zero (),
+                   ORBSVCS_Time::zero (),
+                   ORBSVCS_Time::zero (),
+                   period,
+                   RtecScheduler::VERY_LOW_IMPORTANCE,
+                   ORBSVCS_Time::zero (),
+                   1,
+                   RtecScheduler::OPERATION,
+                   TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       ACE_SupplierQOS_Factory publications;
       publications.insert (supplier_id_,
@@ -652,6 +682,11 @@ Latency_Supplier::shutdown (void)
       // Disconnect from the push supplier.
       suppliers_->disconnect_push_supplier (TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      if (master_)
+        {
+          TAO_ORB_Core_instance ()->orb ()->shutdown ();
+        }
     }
   TAO_CATCHANY
     {
@@ -831,9 +866,6 @@ main (int argc, char *argv [])
         root_poa->the_POAManager (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      poa_manager->activate (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
@@ -844,6 +876,8 @@ main (int argc, char *argv [])
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      ACE_Scheduler_Factory::use_config (naming_context.in ());
 
       if (get_options (argc, argv))
         ACE_OS::exit (-1);
@@ -926,8 +960,7 @@ main (int argc, char *argv [])
             ACE_ERROR_RETURN ((LM_ERROR, "generate_events failed.\n"), -1);
         }
 
-      while (!shutting_down)
-        orb->perform_work ();
+      orb->run ();
 
       for (i = 0; i < suppliers; ++i)
         {

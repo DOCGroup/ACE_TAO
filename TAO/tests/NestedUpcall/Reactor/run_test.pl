@@ -10,74 +10,26 @@ require Process;
 require ACEutils;
 
 $file="test.ior";
-$mtfile="mttest.ior";
 
-print STDERR "\n\n==== Single-threaded test\n";
+$SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
+                       "-o $file");
 
-unlink $file;
+ACE::waitforfile ($file);
 
-$SV = Process::Create ($EXEPREFIX."server".$EXE_EXT,
-                       " -q -o $file");
-if (ACE::waitforfile_timed ($file, 3) == -1) {
-  print STDERR "ERROR: cannot find file <$file>\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  exit 1;
-}
+$status  = system ($EXEPREFIX."client".$Process::EXE_EXT.
+                   "-x -k file://$file");
 
-$CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
-                       "-q -x -k file://$file");
+$SV->Wait ();
 
-$client = $CL->TimedWait (60);
-if ($client == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $CL->Kill (); $CL->TimedWait (1);
-}
+$SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
+                       "-o $file");
 
-$server = $SV->TimedWait (5);
-if ($server == -1) {
-  print STDERR "ERROR: server timedout\n";
-  $SV->Kill (); $SV->TimedWait (1);
-}
+ACE::waitforfile ($file);
 
-if ($client == -1 || $server == -1) {
-  exit 1;
-}
+$status  = system ($EXEPREFIX."mt_client".$Process::EXE_EXT.
+                   "-x -k file://$file -ORBsvcconf svc.mt.conf");
 
-unlink $file;
+$SV->Wait ();
 
-print STDERR "\n\n==== Multi-threaded test\n";
-
-print STDERR "Grace period, waiting for the system to stabilize....";
-sleep 5;
-
-$SV = Process::Create ($EXEPREFIX."server".$EXE_EXT,
-                       "-q -o $mtfile");
-if (ACE::waitforfile_timed ($mtfile, 3) == -1) {
-  print STDERR "ERROR: cannot find file <$file>\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  exit 1;
-}
-
-$CL = Process::Create ($EXEPREFIX."mt_client".$EXE_EXT,
-                       "-ORBsvcconf svc.mt.conf"
-                       ." -q -x -k file://$mtfile -n 20 ");
-
-$client = $CL->TimedWait (60);
-if ($client == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $CL->Kill (); $CL->TimedWait (1);
-}
-
-$server = $SV->TimedWait (5);
-if ($server == -1) {
-  print STDERR "ERROR: server timedout\n";
-  $SV->Kill (); $SV->TimedWait (1);
-}
-
-unlink $mtfile;
-
-if ($client == -1 || $server == -1) {
-  exit 1;
-}
-
-exit 0;
+# @@ Capture any errors from the server too.
+exit $status;

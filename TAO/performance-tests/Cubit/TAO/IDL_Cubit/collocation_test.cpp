@@ -15,15 +15,11 @@ svr_worker (void *arg)
 {
   Cubit_Server cubit_server;
   ACE_Barrier *barrier = (ACE_Barrier *) arg;
-  char *fake[] = {"server", "-o", THE_IOR_FILE};//, "-ORBcollocationstrategy", "direct" };
+  char *fake[] = {"server", "-o", THE_IOR_FILE };
 
   ACE_TRY_NEW_ENV
     {
-      if (cubit_server.init (3,
-                             ACE_const_cast (char **,
-                                             fake),
-                             ACE_TRY_ENV)
-          == -1)
+      if (cubit_server.init (3, fake, ACE_TRY_ENV) == -1)
         return (void *) 1;
       else
         {
@@ -34,12 +30,14 @@ svr_worker (void *arg)
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      ACE_UNUSED_ARG (sysex);
+      ACE_TRY_ENV.print_exception ("System Exception");
       return (void *) 1;
     }
   ACE_CATCH (CORBA::UserException, userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      ACE_UNUSED_ARG (userex);
+      ACE_TRY_ENV.print_exception ("User Exception");
       return (void *) 1;
     }
   ACE_ENDTRY;
@@ -73,6 +71,7 @@ main (int argc, char **argv)
   barrier.wait ();
   ACE_OS::sleep (1);
 
+  {
     Cubit_Client cubit_client (test_collocation, 1);
     // We want to test collocation, so create
     // cubit_client with parameter 1 set.  Make sure
@@ -82,6 +81,7 @@ main (int argc, char **argv)
       return 1;
     else
       retv = cubit_client.run ();
+  }
 
   ACE_THREAD_MANAGER->wait ();
   return retv;

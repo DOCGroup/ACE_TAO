@@ -44,10 +44,6 @@ void
 Broadcaster_i::add (Receiver_ptr receiver,
                     const char *nickname,
                     CORBA::Environment &TAO_TRY_ENV)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      Broadcaster::CannotAdd
-    ))
 {
   Broadcaster_i::Receiver_Data receiver_data;
 
@@ -82,10 +78,6 @@ Broadcaster_i::add (Receiver_ptr receiver,
 void
 Broadcaster_i::remove (Receiver_ptr receiver,
                        CORBA::Environment &TAO_TRY_ENV)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      Broadcaster::CannotRemove
-    ))
 {
   Broadcaster_i::Receiver_Data receiver_data_to_remove;
 
@@ -124,12 +116,9 @@ Broadcaster_i::remove (Receiver_ptr receiver,
 void
 Broadcaster_i::say (Receiver_ptr receiver,
                     const char *text,
-                    CORBA::Environment &ACE_TRY_ENV)
- ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+                    CORBA::Environment &T)
 {
-  ACE_TRY
+  TAO_TRY
     {
       ACE_CString sender_nickname ("Sender Unknown");
 
@@ -151,15 +140,14 @@ Broadcaster_i::say (Receiver_ptr receiver,
       ACE_CString broadcast_string ("[" + sender_nickname + "] " + text);
 
       this->broadcast (broadcast_string.fast_rep (),
-                       ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                       TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Broadcaster_i::say\t\n");
+      TAO_TRY_ENV.print_exception ("Broadcaster_i::say\t\n");
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 }
 
 void

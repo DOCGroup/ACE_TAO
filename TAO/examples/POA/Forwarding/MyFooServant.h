@@ -19,7 +19,7 @@
 #include "FooS.h"
 #include "Servant_Locator.h"
 
-class MyFirstFooServant : public POA_Foo, public ACE_Event_Handler
+class MyFirstFooServant : public POA_Foo
 {
   // = TITLE
   // @@ Michael, please comment me.
@@ -37,28 +37,19 @@ public:
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
 
   // Simple doit method
-  virtual CORBA::Long doit (CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long doit (CORBA::Environment &env);
 
   // Setup forwarding
-  virtual void forward (CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Foo::Cannot_Forward));
+  virtual void forward (CORBA::Environment &env);
 
-  virtual void shutdown (CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (CORBA::Environment &env);
 
 protected:
-  int handle_input (ACE_HANDLE);
-
   // Default poa associated with this servant
-  CORBA::ORB_var orb_;
-  PortableServer::POA_var poa_;
+  CORBA::ORB_var orb_var_;
+  PortableServer::POA_var poa_var_;
   CORBA::Long value_;
   CORBA::Object_var forward_to_var_;
-
-  ACE_HANDLE handle_;
-  // Handle to dev null.
 };
 
 class MySecondFooServant : public POA_Foo
@@ -75,22 +66,19 @@ public:
   virtual ~MySecondFooServant (void);
 
   // Simple doit method
-  virtual CORBA::Long doit (CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long doit (CORBA::Environment &env);
 
   // Setup forwarding
-  virtual void forward (CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Foo::Cannot_Forward));
+  virtual void forward (CORBA::Environment &env);
 
-  virtual void shutdown (CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (CORBA::Environment &env);
 
 protected:
   // Default poa associated with this servant
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_var_;
   MyFooServantLocator *locator_ptr_;
   CORBA::Long value_;
 };
 
 #endif /* MYFOOSERVANT_H */
+

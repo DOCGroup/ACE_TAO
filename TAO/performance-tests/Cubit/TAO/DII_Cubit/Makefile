@@ -15,6 +15,7 @@ endif # ! TAO_ROOT
 DIRS    = ../IDL_Cubit
 
 LDLIBS = ../IDL_Cubit/.obj/cubitC.o \
+         ../IDL_Cubit/.obj/cubitS.o \
          -lTAO
 
 PROG_SRCS = client.cpp
@@ -28,7 +29,6 @@ CFLAGS += -I../IDL_Cubit
 BIN = client
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------

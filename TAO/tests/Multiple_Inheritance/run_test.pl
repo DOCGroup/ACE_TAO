@@ -9,34 +9,14 @@ unshift @INC, '../../../bin';
 require ACEutils;
 
 $iorfile = "server.ior";
-$SV = Process::Create ($EXEPREFIX."server$EXE_EXT",
-                       " -f $iorfile");
+$SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT", " -f $iorfile");
 
-if (ACE::waitforfile_timed ($iorfile, 15) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile>\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  exit 1;
-}
+ACE::waitforfile ($iorfile);
 
-$CL = Process::Create ($EXEPREFIX."client$EXE_EXT",
-                       " -f $iorfile");
+$status  = system ($EXEPREFIX."client$Process::EXE_EXT -f $iorfile");
 
-$client = $CL->TimedWait (60);
-if ($client == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $CL->Kill (); $CL->TimedWait (1);
-}
-
-$SV->Terminate (); $server = $SV->TimedWait (5);
-if ($server == -1) {
-  print STDERR "ERROR: server timedout\n";
-  $SV->Kill (); $SV->TimedWait (1);
-}
+$SV->Kill (); $SV->Wait ();
 
 unlink $iorfile;
 
-if ($server == -1 || $client != 0) {
-  exit 1;
-}
-
-exit 0;
+exit $status;

@@ -33,8 +33,7 @@ Consumer_Handler::Consumer_Handler (void)
     registered_ (0),
     unregistered_ (0),
     ior_ (0),
-    shutdown_ (0),
-    interactive_ (0)
+    shutdown_ (0)
 {
 
 }
@@ -86,7 +85,7 @@ Consumer_Handler::read_ior (char *filename)
 int
 Consumer_Handler::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "a:t:d:f:xk:xs");
+  ACE_Get_Opt get_opts (argc_, argv_, "d:f:xk:xs");
   int c;
   int result;
 
@@ -114,15 +113,6 @@ Consumer_Handler::parse_args (void)
 	this->use_naming_service_ = 0;
 	break;
 
-      case 'a':
-        this->stock_name_ = get_opts.optarg;
-        this->interactive_ = 0;
-        break;
-
-      case 't':
-        this->threshold_value_ = ACE_OS::atoi (get_opts.optarg);
-        break;
-
       case 'x':
         this->shutdown_ = 1;
         break;
@@ -136,8 +126,6 @@ Consumer_Handler::parse_args (void)
                            " [-k ior]"
                            " [-x]"
 			   " [-s]"
-			   " [-a stock_name]"
-			   " [-t threshold]"
                            "\n",
                            this->argv_ [0]),
                           -1);
@@ -176,7 +164,7 @@ Consumer_Handler::via_naming_service (void)
       this->server_ =
         Notifier::_narrow (notifier_obj.in (),
                            ACE_TRY_ENV);
-
+      
       ACE_TRY_CHECK;
 
     }
@@ -200,6 +188,32 @@ Consumer_Handler::init (int argc, char **argv)
 
   // Register our <Input_Handler> to handle STDIN events, which will
   // trigger the <handle_input> method to process these events.
+
+  ACE_NEW_RETURN (consumer_input_handler_,
+                  Consumer_Input_Handler (this),
+                  -1);
+
+  if (ACE_Event_Handler::register_stdin_handler
+      (consumer_input_handler_,
+       TAO_ORB_Core_instance ()->reactor (),
+       TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
+       ACE_ERROR_RETURN ((LM_ERROR,
+		       "%p\n",
+		       "register_stdin_handler"),
+		      -1);
+
+  // Register the signal event handler for ^C
+   ACE_NEW_RETURN (consumer_signal_handler_,
+                  Consumer_Signal_Handler (this),
+                  -1);
+
+  if( this->reactor_used ()->register_handler
+      (SIGINT,
+       consumer_signal_handler_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "%p\n",
+		       "register_handler for SIGINT"),
+		      -1);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -243,62 +257,6 @@ Consumer_Handler::init (int argc, char **argv)
       this->server_ = Notifier::_narrow (server_object.in (),
                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      ACE_NEW_RETURN (this->consumer_servant_,
-		      Consumer_i (),
-		      -1);
-      // Get the consumer stub (i.e consumer object) pointer.
-      this->consumer_var_ =
-	this->consumer_servant_->_this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (this->interactive_)
-        {
-          ACE_NEW_RETURN (consumer_input_handler_,
-                          Consumer_Input_Handler (this),
-                          -1);
-
-          if (ACE_Event_Handler::register_stdin_handler
-              (consumer_input_handler_,
-               TAO_ORB_Core_instance ()->reactor (),
-               TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%p\n",
-                               "register_stdin_handler"),
-                              -1);
-
-          // Register the signal event handler for ^C
-          ACE_NEW_RETURN (consumer_signal_handler_,
-                          Consumer_Signal_Handler (this),
-                          -1);
-
-          if( this->reactor_used ()->register_handler
-              (SIGINT,
-               consumer_signal_handler_) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%p\n",
-                               "register_handler for SIGINT"),
-                              -1);
-        }
-      else
-        {
-          // @@ Encapsulate this in a little method...
-
-          // Register with the server.
-          this->server_->register_callback (this->stock_name_,
-                                            this->threshold_value_,
-                                            this->consumer_var_.in (),
-                                            ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          // Note the registration.
-          this->registered_ = 1;
-          this->unregistered_ = 0;
-
-          ACE_DEBUG ((LM_DEBUG,
-                      "registeration done!\n"));
-        }
-
     }
   ACE_CATCHANY
     {
@@ -313,17 +271,39 @@ Consumer_Handler::init (int argc, char **argv)
 int
 Consumer_Handler::run (void)
 {
-  // Set the orb in the consumer_ object.
-  this->consumer_servant_->orb (this->orb_.in ());
+  //CORBA::Environment TAO_TRY_ENV;
 
-  ACE_DEBUG ((LM_DEBUG,
-              " Services provided:\n "
-              " * Registration <type 'r'>\n "
-              " * Unregistration <type 'u'>\n "
-              " * Quit <type 'q'>\n "));
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      ACE_NEW_RETURN (this->consumer_servant_,
+		      Consumer_i (),
+		      -1);
+      // Set the orb in the consumer_ object.
+      this->consumer_servant_->orb (this->orb_.in ());
 
-  // Run the ORB.
-  this->orb_->run ();
+      ACE_DEBUG ((LM_DEBUG,
+		  " Services provided:\n "
+		  " * Registration <type 'r'>\n "
+		  " * Unregistration <type 'u'>\n "
+		  " * Quit <type 'q'>\n "));
+
+      // Get the consumer stub (i.e consumer object) pointer.
+      this->consumer_var_ =
+	this->consumer_servant_->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Run the ORB.
+      this->orb_->run ();
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Consumer_Handler::run ()");
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
   return 0;
 }
 

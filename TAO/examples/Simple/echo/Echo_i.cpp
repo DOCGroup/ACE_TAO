@@ -29,10 +29,7 @@ Echo_i::orb (CORBA::ORB_ptr o)
 Echo::List *
 Echo_i::echo_list (const char *message,
                    CORBA::Environment &)
- ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (message);
-
   Echo::List *list;
   
   ACE_NEW_RETURN (list,
@@ -54,7 +51,6 @@ Echo_i::echo_list (const char *message,
 char *
 Echo_i::echo_string (const char *mesg,
                      CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The pointer mesg was NULL, return.
   if (mesg == 0)
@@ -80,7 +76,6 @@ Echo_i::echo_string (const char *mesg,
 
 void 
 Echo_i::shutdown (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n%s\n",

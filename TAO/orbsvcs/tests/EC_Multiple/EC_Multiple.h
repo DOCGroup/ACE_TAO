@@ -66,8 +66,7 @@ public:
   // Implement the callbacks for our consumer personality.
 
 
-  virtual void disconnect_push_supplier (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier (CORBA::Environment &);
   // The methods in the skeleton.
 
   RtecEventComm::EventSourceID supplier_id (void) const;
@@ -126,10 +125,8 @@ public:
   // Disconnect from the EC.
 
   virtual void push (const RtecEventComm::EventSet& events,
-                     CORBA::Environment &_env)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                     CORBA::Environment &_env);
+  virtual void disconnect_push_consumer (CORBA::Environment &);
   // The skeleton methods.
 
 private:
@@ -254,10 +251,10 @@ private:
   // One of the consumers has completed its work.
 
 private:
-  const char* lcl_name_;
+  char* lcl_name_;
   // The name of the "local" EC.
 
-  const char* rmt_name_;
+  char* rmt_name_;
   // The name of the "remote" EC.
 
   TAO_EC_Gateway_IIOP ecg_;

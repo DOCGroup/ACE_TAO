@@ -64,7 +64,7 @@ public:
   int run (void);
   // Start the ORB object.
 
-  const char *stock_name_;
+  char *stock_name_;
   // the name of the stock the consumer is interested in.
 
   int threshold_value_;
@@ -79,6 +79,7 @@ public:
   Callback_Quoter::Consumer_var consumer_var_;
   // Pointer to the consumer object registered with the ORB.
 
+
   ACE_Reactor* reactor_used (void) const;
   // This method gives the reactor pointer.
 
@@ -91,10 +92,6 @@ public:
   // the Notifier-server.
 
 private:
-
-  CORBA::ORB_var orb_;
-  // Our orb.
-
   int read_ior (char *filename);
   // Function to read the server IOR from a file.
 
@@ -129,14 +126,15 @@ private:
   // This variable denotes whether the naming service
   // is used or not.
 
+  CORBA::ORB_var orb_;
+  // Our orb.
+
  Consumer_Input_Handler *consumer_input_handler_;
   // Reference to the input_event_handler.
 
  Consumer_Signal_Handler *consumer_signal_handler_;
   // Reference to the signal_event_handler.
 
-  int interactive_;
-  // Is the example interactive?
 };
 
 #endif /* CONSUMER_HANDLER_H */

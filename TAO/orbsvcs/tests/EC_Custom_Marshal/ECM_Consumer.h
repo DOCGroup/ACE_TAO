@@ -31,7 +31,8 @@ class Test_Consumer : public POA_RtecEventComm::PushConsumer
 public:
   Test_Consumer (Driver* driver, void* cookie);
 
-  void connect (int event_a,
+  void connect (const char* name,
+                int event_a,
                 int event_b,
                 RtecEventChannelAdmin::EventChannel_ptr ec,
                 CORBA::Environment& _env);
@@ -41,10 +42,8 @@ public:
   // Disconnect from the EC.
 
   virtual void push (const RtecEventComm::EventSet& events,
-                     CORBA::Environment &_env)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                     CORBA::Environment &_env);
+  virtual void disconnect_push_consumer (CORBA::Environment &);
   // The skeleton methods.
 
 private:

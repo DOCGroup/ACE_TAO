@@ -61,19 +61,17 @@ public:
 
   virtual RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr,
-                       CORBA::Environment &env)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-        RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
+		       CORBA::Environment &env)
+    TAO_THROW_SPEC ((CORBA::SystemException,
+                     RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
+                     RtecEventChannel::EventChannel::CANT_APPEND_OBSERVER))
     = 0;
   virtual void remove_observer (
                         RtecEventChannelAdmin::Observer_Handle,
                         CORBA::Environment &env)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-        RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
+    TAO_THROW_SPEC ((CORBA::SystemException,
+                     RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
+                     RtecEventChannel::EventChannel::CANT_REMOVE_OBSERVER))
      = 0;
   // The basic methods to support the EC strategies.
 
@@ -110,18 +108,16 @@ public:
   // = The TAO_EC_ObserverStrategy methods.
   virtual RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr,
-                       CORBA::Environment &env)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-        RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
+		       CORBA::Environment &env)
+    TAO_THROW_SPEC ((CORBA::SystemException,
+                     RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
+                     RtecEventChannel::EventChannel::CANT_APPEND_OBSERVER));
   virtual void remove_observer (
                         RtecEventChannelAdmin::Observer_Handle,
                         CORBA::Environment &env)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-        RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
+    TAO_THROW_SPEC ((CORBA::SystemException,
+                     RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
+                     RtecEventChannel::EventChannel::CANT_REMOVE_OBSERVER));
   virtual void connected (TAO_EC_ProxyPushConsumer*,
                           CORBA::Environment&);
   virtual void disconnected (TAO_EC_ProxyPushConsumer*,
@@ -161,18 +157,16 @@ public:
   // = The TAO_EC_ObserverStrategy methods.
   virtual RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr,
-                       CORBA::Environment &env)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-        RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
+		       CORBA::Environment &env)
+    TAO_THROW_SPEC ((CORBA::SystemException,
+                     RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
+                     RtecEventChannel::EventChannel::CANT_APPEND_OBSERVER));
   virtual void remove_observer (
                         RtecEventChannelAdmin::Observer_Handle,
                         CORBA::Environment &env)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-        RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
+    TAO_THROW_SPEC ((CORBA::SystemException,
+                     RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
+                     RtecEventChannel::EventChannel::CANT_REMOVE_OBSERVER));
   virtual void connected (TAO_EC_ProxyPushConsumer*,
                           CORBA::Environment&);
   virtual void disconnected (TAO_EC_ProxyPushConsumer*,
@@ -197,10 +191,6 @@ public:
     //   + Does it want to receive all changes?
     //
 
-    // The ACE_INLINE macros here are to keep g++ 2.7.X happy,
-    // otherwise it thinks they are used as inline functions before
-    // beign used as such.... Apparently in the template code for the
-    // Hash_Map_Manager.
     ACE_INLINE Observer_Entry (void);
     ACE_INLINE Observer_Entry (RtecEventChannelAdmin::Observer_Handle h,
                                RtecEventChannelAdmin::Observer_ptr o);
@@ -218,14 +208,14 @@ public:
                      const RtecEventComm::EventHeader& rhs) const;
   };
 
-protected:
+private:
   void fill_qos (RtecEventChannelAdmin::ConsumerQOS &qos,
                  CORBA::Environment &env);
   void fill_qos (RtecEventChannelAdmin::SupplierQOS &qos,
                  CORBA::Environment &env);
   // Helper functions to compute the consumer and supplier QOS.
 
-protected:
+private:
   TAO_EC_Event_Channel* event_channel_;
   // The event channel.
 

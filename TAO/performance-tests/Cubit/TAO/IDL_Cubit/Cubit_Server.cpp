@@ -22,15 +22,12 @@ Cubit_Server::parse_args (void)
       case 'd':  // debug flag.
         TAO_debug_level++;
         break;
-
       case 'o': // output the IOR to a file.
         this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open <%s> for writing: %p\n",
-                             get_opts.optarg,
-                             ""),
-                            -1);
+                             "Unable to open %s for writing: %p\n",
+                             get_opts.optarg), -1);
         break;
       case '?':
       default:
@@ -40,7 +37,7 @@ Cubit_Server::parse_args (void)
                            " [-o] <ior_output_file>"
                            "\n",
                            argv_ [0]),
-                          -1);
+                          1);
       }
 
   // Indicates successful parsing of command line.
@@ -66,19 +63,14 @@ Cubit_Server::init (int argc,
   this->argc_ = argc;
   this->argv_ = argv;
 
-  if (this->parse_args () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "parse_args"),
-                      -1);
+  this->parse_args ();
+  // @@ Check for the return value here.
+
   // Get the orb
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
   // Now create the implementations
   this->factory_impl_ = new Cubit_Factory_i (orb.in ());
-
-  PortableServer::POA_var root_poa = this->orb_manager_.root_poa ();
-  this->factory_impl_->set_default_poa (root_poa.in ());
 
   this->factory_id_ =
     this->orb_manager_.activate_under_child_poa ("factory",

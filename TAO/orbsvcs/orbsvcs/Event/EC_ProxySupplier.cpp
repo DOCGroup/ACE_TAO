@@ -135,9 +135,6 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
       RtecEventComm::PushConsumer_ptr push_consumer,
       const RtecEventChannelAdmin::ConsumerQOS& qos,
       CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecEventChannelAdmin::AlreadyConnected,
-                     RtecEventChannelAdmin::TypeError))
 {
   {
     ACE_GUARD_THROW_EX (
@@ -205,7 +202,6 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
 void
 TAO_EC_ProxyPushSupplier::disconnect_push_supplier (
       CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   {
     ACE_GUARD_THROW_EX (
@@ -230,7 +226,6 @@ TAO_EC_ProxyPushSupplier::disconnect_push_supplier (
 
 void
 TAO_EC_ProxyPushSupplier::suspend_connection (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
@@ -242,7 +237,6 @@ TAO_EC_ProxyPushSupplier::suspend_connection (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_EC_ProxyPushSupplier::resume_connection (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
@@ -372,17 +366,7 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (const RtecEventComm::EventSet& event
     // references,
   }
 
-  ACE_TRY
-    {
-      consumer->push (event, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      // @@ This is where the policies for misbehaving consumers
-      //    should kick in.... for the moment just ignore them.
-    }
-  ACE_ENDTRY;
+  consumer->push (event, ACE_TRY_ENV);
 }
 
 void
@@ -405,18 +389,7 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
     ACE_GUARD_THROW_EX (TAO_EC_Unlock, ace_mon, reverse_lock,
                         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
-
-    ACE_TRY
-      {
-        consumer->push (event, ACE_TRY_ENV);
-        ACE_TRY_CHECK;
-      }
-    ACE_CATCHANY
-      {
-        // @@ This is where the policies for misbehaving consumers
-        //    should kick in.... for the moment just ignore them.
-      }
-    ACE_ENDTRY;
+    consumer->push (event, ACE_TRY_ENV);
   }
 
   // The reference count was incremented just before delegating on the

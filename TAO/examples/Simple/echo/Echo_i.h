@@ -41,17 +41,14 @@ public:
   // Destructor.
 
   virtual Echo::List *echo_list (const char *mesg,
-                                 CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                 CORBA::Environment &env);
   // Return the mesg string back from the server.
 
   virtual char *echo_string (const char *mesg,
-                             CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                             CORBA::Environment &env);
   // Return the mesg string back from the server.
 
- virtual void shutdown (CORBA::Environment &env)
-   ACE_THROW_SPEC ((CORBA::SystemException));
+ virtual void shutdown (CORBA::Environment &env);
   // Shutdown the server.
 
   void orb (CORBA::ORB_ptr o);

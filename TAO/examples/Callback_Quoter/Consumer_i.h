@@ -40,24 +40,22 @@ public:
   // Destructor.
 
   void push (const Callback_Quoter::Info & data,
-             CORBA_Environment& TAO_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+             CORBA_Environment& TAO_TRY_ENV);
   // Gets the stock information from the Notifier.
 
-  virtual void shutdown (CORBA::Environment &TAO_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (CORBA::Environment &TAO_TRY_ENV);
   // Used to get the consumer to shut down.
 
   void orb (CORBA::ORB_ptr o);
   // Set the ORB pointer.
 
 private:
+    int quit_;
+  // If 1 denotes that the consumer is dead else alive.
+ 
   CORBA::ORB_var orb_;
   // ORB pointer.
 
-  int quit_;
-  // If 1 denotes that the consumer is dead else alive.
- 
   // @@ Please rename to Notifier.
   Notifier_var server_;
   // Smart pointer to the Notifier object.

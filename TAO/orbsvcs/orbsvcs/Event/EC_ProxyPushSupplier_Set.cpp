@@ -27,14 +27,14 @@ TAO_EC_ProxyPushSupplier_Set::connected_i (
       TAO_EC_ProxyPushSupplier *supplier,
       CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->all_suppliers_.insert (supplier) == -1)
+  if (this->all_suppliers_.insert (supplier) != 0)
     ACE_THROW (CORBA::NO_MEMORY ());
 }
 
 void
 TAO_EC_ProxyPushSupplier_Set::disconnected_i (
       TAO_EC_ProxyPushSupplier *supplier,
-      CORBA::Environment &)
+      CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->all_suppliers_.remove (supplier) != 0)
     return; // ACE_THROW (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR ());
@@ -43,7 +43,7 @@ TAO_EC_ProxyPushSupplier_Set::disconnected_i (
 
 void
 TAO_EC_ProxyPushSupplier_Set::shutdown_i (
-      CORBA::Environment &)
+      CORBA::Environment &ACE_TRY_ENV)
 {
   SupplierSetIterator end = this->end ();
   for (SupplierSetIterator i = this->begin (); i != end; ++i)
@@ -67,7 +67,7 @@ template class ACE_Guard<TAO_EC_Busy_Lock_Adapter<TAO_EC_ProxyPushSupplier_Set> 
 template class TAO_EC_Busy_Lock_Adapter<TAO_EC_ProxyPushSupplier_Set>;
 template class TAO_EC_Connected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier>;
 template class TAO_EC_Disconnected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier>;
-template class TAO_EC_Shutdown_Command_T<TAO_EC_ProxyPushSupplier_Set>;
+template class TAO_EC_Shutdown_Command<TAO_EC_ProxyPushSupplier_Set>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -78,6 +78,6 @@ template class TAO_EC_Shutdown_Command_T<TAO_EC_ProxyPushSupplier_Set>;
 #pragma instantiate ACE_Guard<TAO_EC_Busy_Lock_Adapter<TAO_EC_ProxyPushSupplier_Set> >
 #pragma instantiate TAO_EC_Connected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier>
 #pragma instantiate TAO_EC_Disconnected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier>
-#pragma instantiate TAO_EC_Shutdown_Command_T<TAO_EC_ProxyPushSupplier_Set>
+#pragma instantiate TAO_EC_Shutdown_Command<TAO_EC_ProxyPushSupplier_Set>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -39,6 +39,7 @@ public:
   void connect (const char* name,
                 int event_a,
                 int event_b,
+                int event_period,
                 RtecEventChannelAdmin::EventChannel_ptr ec,
                 CORBA::Environment& _env);
   // This method connects the supplier to the EC.
@@ -46,8 +47,7 @@ public:
   void disconnect (CORBA::Environment &_env);
   // Disconnect from the EC.
 
-  virtual void disconnect_push_supplier (CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier (CORBA::Environment &);
   // The methods in the skeleton.
 
   RtecEventComm::EventSourceID supplier_id (void) const;

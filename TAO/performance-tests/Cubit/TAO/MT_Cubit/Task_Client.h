@@ -111,7 +111,7 @@ public:
   // Barrier for the multiple clients to synchronize after binding to
   // the servants.
 
-  const char *key_;
+  CORBA::String key_;
   // All cubit objects will have this as prefix to its key.
 
   u_int loop_count_;
@@ -208,7 +208,7 @@ public:
   ACE_SYNCH_MUTEX ready_mtx_;
   // mutex for the condition variable.
 
-  ACE_SYNCH_CONDITION ready_cnd_;
+  ACE_Condition<ACE_SYNCH_MUTEX> ready_cnd_;
   // condition variable for the low priority threads to wait
   //until the high priority thread is done with the arguments parsing.
 

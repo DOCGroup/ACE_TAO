@@ -1,6 +1,11 @@
 // $Id$
 
-// This file includes all the declarations and prototypes.
+/*
+ *    T T C P Header File
+ *
+ */
+
+/* This file includes all the declarations and prototypes */
 
 #ifndef _TTCP_DECL_H_
 #define _TTCP_DECL_H_
@@ -13,12 +18,13 @@
 
 #include "ace/Profile_Timer.h"
 
-// File to be included if Quantify is to be used.
+/* File to be included if Quantify is to be used */
 #if defined (ACE_HAS_QUANTIFY)
 # include <quantify.h>
 #endif /* ACE_HAS_QUANTIFY */
 
-// define the data types to be sent.
+
+/* define the data types to be sent */
 #define SEND_SHORT ((CORBA::ULong)(1))
 #define SEND_LONG ((CORBA::ULong)(2))
 #define SEND_CHAR ((CORBA::ULong)(3))
@@ -74,5 +80,5 @@ extern ACE_Svc_Export ttcp_sequence::CharSeq            *cseq;
 extern ACE_Svc_Export ttcp_sequence::StructSeq          *Sseq;
 //extern ACE_Svc_Export ttcp_sequence::RtiPacketSeq *rtipacketSeq;
 
-#endif /* _TTCP_DECL_H_ */
+#endif
 

@@ -42,29 +42,22 @@ public:
   ~Account_i (void);
   // Destructor.
 
-  virtual CORBA::Float balance (CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
+  virtual CORBA::Float balance (CORBA::Environment &env);
   // Get the current balance in the account.
 
-  virtual char *name (CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char *name (CORBA::Environment &env);
   // Get the name of the <Account> holder.
 
   virtual void name (const char *name,
-                     CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                     CORBA::Environment &env);
   // Set the name of the <Account> holder.
 
   virtual void deposit (CORBA::Float,
-                        CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                        CORBA::Environment &env);
   // Deposit money in the account.
 
   virtual void withdraw (CORBA::Float,
-                         CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Bank::Account::Overdraft));
+                         CORBA::Environment &env);
   // Withdraw money in the account.
 
   void orb (CORBA::ORB_ptr o);

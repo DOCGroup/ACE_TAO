@@ -97,7 +97,7 @@ private:
   int size_;
   // Number of threads to spawn.  By default is set to 10.
 
-  CORBA::ORB_var orb_;
+  CORBA::ORB_ptr orb_;
   // A pointer to our ORB.
 
   char* name_service_ior_;
@@ -225,70 +225,6 @@ private:
                        CORBA::Environment &ACE_TRY_ENV);
   void not_exist_test (CosNaming::NamingContext_var &ref,
                        CORBA::Environment &ACE_TRY_ENV);
-};
-
-class Persistent_Test_Begin : public Naming_Test
-{
-  // = TITLE
-  //    This class implements the first part of the Persistent Naming
-  //    Service test.
-  //
-  // = DESCRIPTION
-  //    This test creates the Naming Context hierarchy:
-  //    root -> level1_context -> level2_context,
-  //    and prints out the ior of the <level1_context>.
-public:
-  // = Initialization and termination methods.
-
-  Persistent_Test_Begin (CORBA::ORB_ptr orb);
-  // Constructor.  Takes in an orb pointer.
-
-  virtual ~Persistent_Test_Begin (void);
-  // Destructor.
-
-  virtual int execute (TAO_Naming_Client &root_context);
-  // Execute the persistent test (part 1) code.
-
-private:
-
-  CORBA::ORB_var orb_;
-  // A pointer to our ORB (needed for object/string conversion).
-};
-
-class Persistent_Test_End : public Naming_Test
-{
-  // = TITLE
-  //    This class implements the second part of the Persistent Naming
-  //    Service test.
-  //
-  // = DESCRIPTION
-  //   This test attempts to resolve <level2_context> both through the
-  //   <root> Naming Context, which it gets from <resolve_initial_references>, and
-  //   through <level1_context> stringified ior, which it gets from part 1 of
-  //   the persistent test.  The results of both methods are then
-  //   compared for equality.
-public:
-  // = Initialization and termination methods.
-
-  Persistent_Test_End (CORBA::ORB_ptr orb,
-                       const char * ior);
-  // Constructor.  Takes in an orb pointer and the ior received from
-  // <Persistent_Test_Begin>.
-
-  virtual ~Persistent_Test_End (void);
-  // Destructor.
-
-  virtual int execute (TAO_Naming_Client &root_context);
-  // Execute the persistent test (part 2).
-
-private:
-
-  CORBA::ORB_var orb_;
-  // A pointer to our ORB (used for string/object conversion).
-
-  const char* ior_;
-  // IOR of <level1_context> recorded during the run of part 1 of
-  // persistent test.
 };
 
 class CosNaming_Client

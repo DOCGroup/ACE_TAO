@@ -50,18 +50,15 @@ public:
 
   virtual Bank::Account_ptr open (const char *name,
                                   CORBA::Float initial_balance,
-                                  CORBA::Environment &_env)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                  CORBA::Environment &_env);
   // Return the Account interface with the given name from the server.
   // Put the initial balance specified in the new account.
 
   virtual void close (Bank::Account_ptr,
-                      CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                      CORBA::Environment &env);
   // Close the given account.
 
-  virtual void shutdown (CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (CORBA::Environment &env);
   // Shutdown the server.
 
   void orb (CORBA::ORB_ptr o);

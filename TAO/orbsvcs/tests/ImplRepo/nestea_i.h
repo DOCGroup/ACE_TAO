@@ -47,25 +47,18 @@ public:
   // Destructor
 
   virtual void drink (CORBA::Long cans,
-                      CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                      CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
   // Add <cans> number of cans to the bookshelf.
 
   virtual void crush (CORBA::Long cans,
-                      CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                      CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
   // Removes <cans> number of cans from the bookshelf.
 
-  virtual CORBA::Long bookshelf_size (CORBA::Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long bookshelf_size (CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
   // Returns the number of cans in the bookshelf.
 
   virtual char *get_praise (CORBA::Environment &ACE_TRY_ENV = 
-                              TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                              CORBA::Environment::default_environment ());
   // Returns comments about your collection.
 
 private:
@@ -77,6 +70,9 @@ private:
 
   char *data_filename_;
   // The name of the file to store the data in.
+
+  int shutdown_;
+  // Shutdown flag.
 
   ACE_UINT32 cans_;
   // Number of cans in the bookshelf.

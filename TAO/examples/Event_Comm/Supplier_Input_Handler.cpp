@@ -58,7 +58,7 @@ Supplier_Input_Handler::initialize (Notifier_Handler *notifier)
 // Frame input events and notify <Consumers>.
 
 int
-Supplier_Input_Handler::handle_input (ACE_HANDLE)
+Supplier_Input_Handler::handle_input (ACE_HANDLE h)
 {
   char buf[BUFSIZ];
 

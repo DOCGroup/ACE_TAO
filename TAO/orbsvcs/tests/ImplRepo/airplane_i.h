@@ -43,16 +43,18 @@ class Airplane_i: public POA_Paper_Airplane_Server
   //    at this moment (in other words, a random airplane).
 public:
   Airplane_i (int shutdown = 0);
-  // Constructor that takes in an optional shutdown parameter which,
-  // if nonzero, will shutdown the server after each call to
-  // get_plane.
+  // Constructor that takes in an optional shutdown parameter which, if nonzero,
+  // will shutdown the server after each call to get_plane.
 
   ~Airplane_i (void);
   // Destructor
 
-  virtual char *get_plane (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char *get_plane (CORBA::Environment &ACE_TRY_ENV);
   // Returns a random plane.
+
+private:
+  int shutdown_;
+  // Shutdown flag
 };
 
 #endif /* AIRPLANE_I_H */

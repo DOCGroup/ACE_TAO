@@ -120,14 +120,14 @@ Cubit_Client::func (u_int i)
 // Reads the Cubit factory ior from a file
 
 int
-Cubit_Client::read_ior (const char *filename)
+Cubit_Client::read_ior (char *filename)
 {
   // Open the file for reading.
   this->f_handle_ = ACE_OS::open (filename,0);
 
   if (this->f_handle_ == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open <%s> for reading: %p\n",
+                       "Unable to open %s for writing: %p\n",
                        filename),
                       -1);
   ACE_Read_Buffer ior_buffer (this->f_handle_);
@@ -173,9 +173,8 @@ Cubit_Client::parse_args (void)
         result = this->read_ior (get_opts.optarg);
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to read ior from <%s> : %p\n",
-                             get_opts.optarg,
-							 ""),
+                             "Unable to read ior from %s : %p\n",
+                             get_opts.optarg),
                             -1);
         break;
       case 'k': // read the cubit IOR from the command-line.
@@ -766,7 +765,7 @@ Cubit_Client::cube_rti_data (int,
           oumh.messagePayload[k] = Cubit::HandleValuePair ();
           Cubit::HandleValuePair &hvp = oumh.messagePayload[k];
           hvp.handle = k * k;
-          const char *d1 = "somedata";
+          char *d1 = "somedata";
           hvp.data.length (ACE_OS::strlen (d1)+1);
           ACE_OS::strcpy ((char *) hvp.data.get_buffer (), d1);
         }
@@ -1121,6 +1120,7 @@ Cubit_Client::run_oneway (CORBA::Environment &ACE_TRY_ENV)
     {
       ACE_DEBUG ((LM_DEBUG, "shutdown on cubit object\n"));
       this->cubit_->shutdown (ACE_TRY_ENV);
+      ACE_TRY_ENV.print_exception ("server, please ACE_OS::exit");
     }
 
   return this->error_count_ == 0 ? 0 : 1;
@@ -1149,6 +1149,7 @@ Cubit_Client::run_void (CORBA::Environment &ACE_TRY_ENV)
     {
       ACE_DEBUG ((LM_DEBUG, "shutdown on cubit object\n"));
       this->cubit_->shutdown (ACE_TRY_ENV);
+      ACE_TRY_ENV.print_exception ("server, please ACE_OS::exit");
     }
 
   return this->error_count_ == 0 ? 0 : 1;
@@ -1176,7 +1177,7 @@ Cubit_Client::~Cubit_Client (void)
 
 
 int
-Cubit_Client::init (int argc, char **argv, const char *collocation_test_ior)
+Cubit_Client::init (int argc, char **argv, char *collocation_test_ior)
 {
   this->argc_ = argc;
   this->argv_ = argv;

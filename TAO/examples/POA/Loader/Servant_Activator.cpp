@@ -38,23 +38,17 @@ ServantActivator_i::ServantActivator_i (CORBA::ORB_ptr orb,
                  "%p\n",
                  this->dll_.error ()));
 
-  // Obtain the symbol for the function that will get the servant
-  // object.
 
-  // Cannot go from void* to function pointer directly. Cast the void*
-  // to long first.
-  void *symbol = this->dll_.symbol (factory_function);
-  long function = ACE_reinterpret_cast (long, symbol);
-
+  // Obtain the symbol for the function that will
+  // get the servant object.
   servant_supplier_ =
-    ACE_reinterpret_cast (SERVANT_FACTORY, function);
+    (SERVANT_FACTORY) this->dll_.symbol (factory_function);
 
-  // Obtain tne symbol for the function which will destroy the
-  // servant.
-  symbol = this->dll_.symbol (garbage_collection_function);
-  function = ACE_reinterpret_cast (long, symbol);
+  // Obtain tne symbol for the function which
+  // will destroy the servant.
   servant_garbage_collector_ =
-    ACE_reinterpret_cast (SERVANT_GARBAGE_COLLECTOR, function);
+    (SERVANT_GARBAGE_COLLECTOR) this->dll_.symbol (garbage_collection_function);
+
 }
 
 // This method associates an servant with the ObjectID.

@@ -68,14 +68,11 @@ private:
   int nthreads_;
   // # of threads
 
-  int quiet_;
-  // be quiet
+  Reactor_var reactor_;
+  // reactor pointer for NestedUpCalls.
 
   CORBA::ORB_var orb_;
   // Remember our orb.
-
-  Reactor_var reactor_;
-  // reactor pointer for NestedUpCalls.
 };
 
 #endif /* TAO_NUC_MT_CLIENT_H */

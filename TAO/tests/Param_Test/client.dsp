@@ -163,6 +163,10 @@ SOURCE=.\param_testCli.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\param_testSer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\recursive_struct.cpp
 # End Source File
 # Begin Source File
@@ -307,6 +311,10 @@ SOURCE=.\Param_TestCli.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Param_TestSer.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\recursive_struct.h
 # End Source File
 # Begin Source File
@@ -386,7 +394,7 @@ InputPath=.\param_test.idl
 InputName=param_test
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -hc Cli.h -hs Ser.h -hT Ser_T.h -cs Cli.cpp -ci Cli.i -ss Ser.cpp -sT Ser_T.cpp  -si Ser.i -st Ser_T.i $(InputName).idl
+	tao_idl -hc Cli.h -hs Ser.h -hT Ser_T.h -cs Cli.cpp -ci Cli.i -ss Ser.cpp -sT Ser_T.cpp  -si Ser.i -st Ser_T.i $(InputName).idl
 
 "$(InputName)Cli.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -425,7 +433,7 @@ InputPath=.\param_test.idl
 InputName=param_test
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -hc Cli.h -hs Ser.h -hT Ser_T.h -cs Cli.cpp -ci Cli.i -ss Ser.cpp -sT Ser_T.cpp -si Ser.i -st Ser_T.i $(InputName).idl
+	tao_idl -hc Cli.h -hs Ser.h -hT Ser_T.h -cs Cli.cpp -ci Cli.i -ss Ser.cpp -sT Ser_T.cpp -si Ser.i -st Ser_T.i $(InputName).idl
 
 "$(InputName)Cli.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
