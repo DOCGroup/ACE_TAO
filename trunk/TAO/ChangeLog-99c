@@ -1,4 +1,4 @@
-Wed Sep 29 14:37:16 1999  Ossama Othman  <othman@cs.wustl.edu>
+Wed Sep 29 15:27:09 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Exception.cpp (make_standard_typecode):
 
@@ -10,6 +10,8 @@ Wed Sep 29 14:37:16 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	  Base class should be initialized with the derived class
 	  typecode.
+
+	  Removed unneccessary pre-deletion zero pointer check.
 
 Wed Sep 29 13:45:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
