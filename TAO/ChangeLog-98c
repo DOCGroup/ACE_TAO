@@ -1,3 +1,10 @@
+Wed May  6 08:46:18 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* rules.tao.GNU: Added dependency of the generated files on the
+	TAO_IDL compiler (in addition to the source IDL files). Thanks to
+	Jim Penny <jpenny@universal-fasteners.com> for suggesting this
+	modification.
+
 Wed May 06 06:36:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Param_Test/tests.cpp: (Test_Any::check_validity): added
