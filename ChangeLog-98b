@@ -1,3 +1,14 @@
+Sat May 30 13:14:18 1998  James C Hu  <jxh@cs.wustl.edu>
+
+	* ace/RB_Tree.h: Try to put enum into a class again.  This time,
+	  created a dummy base class to hold the RED and BLACK enums.
+
+Sat May 30 08:01:31 1998  levine  <levine@lambada.cs.wustl.edu>
+
+	* ace/RB_Tree.h (RB_Tree_Iterator::operator =): Added explicit
+	  return type to the declaration.  Wrapped with
+	  ACE_UNIMPLEMENTED_FUNC.
+
 Fri May 29 23:06:02 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/RB_Tree.{h,i}: moved enum RB_Tree_Node_Color out of the
