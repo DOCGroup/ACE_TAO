@@ -3789,6 +3789,22 @@ TAO_POA_Policies::validate_server_protocol (void)
   return 0;
 }
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+int
+TAO_POA_Policies::validate_client_protocol (RTCORBA::ClientProtocolPolicy_ptr)
+{
+  return 0;
+}
+
+int
+TAO_POA_Policies::validate_priority_bands (RTCORBA::PriorityBandedConnectionPolicy_ptr)
+{
+  return 0;
+}
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
 void
 TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
                                 CORBA::Environment &ACE_TRY_ENV)
@@ -3923,6 +3939,12 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
 
   if (!CORBA::is_nil (client_protocol.in ()))
     {
+      int result =
+        this->validate_client_protocol (client_protocol.in ());
+
+      if (result != 0)
+        ACE_THROW (PortableServer::POA::InvalidPolicy ());
+
       CORBA::ULong current_length =
         this->client_exposed_fixed_policies_.length ();
 
@@ -3930,13 +3952,39 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
 
       this->client_exposed_fixed_policies_[current_length] =
         client_protocol->copy (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      return;
+    }
+
+  RTCORBA::PriorityBandedConnectionPolicy_var priority_bands
+    = RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (!CORBA::is_nil (priority_bands.in ()))
+    {
+      int result =
+        this->validate_priority_bands (priority_bands.in ());
+
+      if (result != 0)
+        ACE_THROW (PortableServer::POA::InvalidPolicy ());
+
+      CORBA::ULong current_length =
+        this->client_exposed_fixed_policies_.length ();
+
+      this->client_exposed_fixed_policies_.length (current_length + 1);
+
+      this->client_exposed_fixed_policies_[current_length] =
+        priority_bands->copy (ACE_TRY_ENV);
+      ACE_CHECK;
 
       return;
     }
 
   RTCORBA::ServerProtocolPolicy_var server_protocol
     = RTCORBA::ServerProtocolPolicy::_narrow (policy,
-                                             ACE_TRY_ENV);
+                                              ACE_TRY_ENV);
   ACE_CHECK;
 
   if (!CORBA::is_nil (server_protocol.in ()))
@@ -3969,7 +4017,7 @@ TAO_POA_Policies::server_protocol (TAO_ServerProtocolPolicy *policy)
 
   if (policy)
     {
-      CORBA::Policy *base_copy = policy->copy ();
+      CORBA::Policy_ptr base_copy = policy->copy ();
 
       RTCORBA::ServerProtocolPolicy_var copy
         = RTCORBA::ServerProtocolPolicy::_narrow (base_copy);
