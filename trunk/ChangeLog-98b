@@ -1,3 +1,9 @@
+Sat Jun 20 14:58:21 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/indent_macros.perl: Instead of hardcoding perl's location in
+	  the script, it now invokes perl according to user's environment
+	  setting.  Thanks to David for providing the improvement.
+
 Sat Jun 20 01:24:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* include/makeinclude/platform_freebsd_pthread.GNU: Changed to use
