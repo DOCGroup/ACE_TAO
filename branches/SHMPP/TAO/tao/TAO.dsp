@@ -2266,6 +2266,120 @@ SOURCE=.\Services.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\SHMIOP_Acceptor.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Connect.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Connector.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Factory.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Profile.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Transport.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Single_Reactor.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
@@ -3192,6 +3306,30 @@ SOURCE=.\Services.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\SHMIOP_Acceptor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Connect.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Connector.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Profile.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Transport.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Single_Reactor.h
 # End Source File
 # Begin Source File
@@ -3289,7 +3427,7 @@ SOURCE=.\WrongTransactionC.h
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter "*.i"
+# PROP Default_Filter "i"
 # Begin Source File
 
 SOURCE=.\Acceptor_Registry.i
@@ -3557,6 +3695,18 @@ SOURCE=.\Server_Request.i
 # Begin Source File
 
 SOURCE=.\Services.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Acceptor.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Connect.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\SHMIOP_Profile.i
 # End Source File
 # Begin Source File
 
