@@ -68,13 +68,11 @@
 #include "be_visitor_operation/rettype_is.cpp"
 #include "be_visitor_operation/rettype_assign_ss.cpp"
 #include "be_visitor_operation/rettype_marshal_ss.cpp"
-#include "be_visitor_operation/rettype_post_invoke_cs.cpp"
 #include "be_visitor_operation/rettype_post_upcall_ss.cpp"
 #include "be_visitor_operation/rettype_return_cs.cpp"
 #include "be_visitor_operation/rettype_vardecl_ss.cpp"
 #include "be_visitor_operation/tie_sh.cpp"
 #include "be_visitor_operation/tie_si.cpp"
-#include "be_visitor_operation/rettype_pre_invoke_cs.cpp"
 
 // AMI
 #include "be_visitor_operation/ami_ch.cpp"
@@ -88,7 +86,6 @@
 #include "be_visitor_operation/smart_proxy_cs.cpp"
 
 // Interceptors
-#include "be_visitor_operation/interceptors_ch.cpp"
 #include "be_visitor_operation/interceptors_arglist.cpp"
 #include "be_visitor_operation/interceptors_sh.cpp"
 #include "be_visitor_operation/interceptors_ss.cpp"

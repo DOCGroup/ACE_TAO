@@ -176,19 +176,6 @@ be_visitor_component_cs::visit_component (be_component *node)
       << "return p->marshal (strm);" << be_uidt_nl
       << "}";
 
-
-  be_visitor_context ctx (*this->ctx_);
-  be_visitor_interface_remote_proxy_broker_cs irpb_visitor (&ctx);
-
-  if (node->accept (&irpb_visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_component_cs::"
-                         "visit_component - "
-                         "codegen for Base Proxy Broker class failed\n"),
-                        -1);
-    }
-
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
@@ -414,6 +401,8 @@ be_visitor_component_cs::visit_component (be_component *node)
                          "codegen for scope failed\n"),
                         -1);
     }
+
+  be_visitor_context ctx (*this->ctx_);
 
   // Smart Proxy classes.
   if (be_global->gen_smart_proxies ())

@@ -72,10 +72,6 @@
 #include "be_visitor_interface/interceptors_ss.cpp"
 
 // Proxy Brokers
-#include "be_visitor_interface/base_proxy_broker_ch.cpp"
-#include "be_visitor_interface/proxy_brokers_ch.cpp"
-#include "be_visitor_interface/remote_proxy_broker_ch.cpp"
-#include "be_visitor_interface/remote_proxy_broker_cs.cpp"
 #include "be_visitor_interface/strategized_proxy_broker_sh.cpp"
 #include "be_visitor_interface/strategized_proxy_broker_ss.cpp"
 
