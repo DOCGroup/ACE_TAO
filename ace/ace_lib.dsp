@@ -1566,7 +1566,7 @@ SOURCE=.\Message_Queue.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Method_Object.cpp
+SOURCE=.\Method_Request.cpp
 
 !IF  "$(CFG)" == "ACE static library - Win32 Debug"
 
@@ -4008,7 +4008,7 @@ SOURCE=.\Message_Queue.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Method_Object.h
+SOURCE=.\Method_Request.h
 # End Source File
 # Begin Source File
 

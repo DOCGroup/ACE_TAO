@@ -814,7 +814,7 @@ DEP_CPP_ACTIV=\
 	".\Message_Queue_T.cpp"\
 	".\Message_Queue_T.h"\
 	".\Message_Queue_T.i"\
-	".\Method_Object.h"\
+	".\Method_Request.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -928,7 +928,7 @@ DEP_CPP_ACTIV=\
 	".\Message_Queue_T.cpp"\
 	".\Message_Queue_T.h"\
 	".\Message_Queue_T.i"\
-	".\Method_Object.h"\
+	".\Method_Request.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -1039,7 +1039,7 @@ DEP_CPP_ACTIV=\
 	".\Message_Queue_T.cpp"\
 	".\Message_Queue_T.h"\
 	".\Message_Queue_T.i"\
-	".\Method_Object.h"\
+	".\Method_Request.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -1153,7 +1153,7 @@ DEP_CPP_ACTIV=\
 	".\Message_Queue_T.cpp"\
 	".\Message_Queue_T.h"\
 	".\Message_Queue_T.i"\
-	".\Method_Object.h"\
+	".\Method_Request.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -1267,7 +1267,7 @@ DEP_CPP_ACTIV=\
 	".\Message_Queue_T.cpp"\
 	".\Message_Queue_T.h"\
 	".\Message_Queue_T.i"\
-	".\Method_Object.h"\
+	".\Method_Request.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -1381,7 +1381,7 @@ DEP_CPP_ACTIV=\
 	".\Message_Queue_T.cpp"\
 	".\Message_Queue_T.h"\
 	".\Message_Queue_T.i"\
-	".\Method_Object.h"\
+	".\Method_Request.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -8837,7 +8837,7 @@ NODEP_CPP_MESSA=\
 # End Source File
 # Begin Source File
 
-SOURCE=.\Method_Object.cpp
+SOURCE=.\Method_Request.cpp
 
 !IF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Release"
 
@@ -8864,7 +8864,7 @@ DEP_CPP_METHO=\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Method_Object.h"\
+	".\Method_Request.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -8904,7 +8904,7 @@ DEP_CPP_METHO=\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Method_Object.h"\
+	".\Method_Request.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -8941,7 +8941,7 @@ DEP_CPP_METHO=\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Method_Object.h"\
+	".\Method_Request.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -8981,7 +8981,7 @@ DEP_CPP_METHO=\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Method_Object.h"\
+	".\Method_Request.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -9021,7 +9021,7 @@ DEP_CPP_METHO=\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Method_Object.h"\
+	".\Method_Request.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -9061,7 +9061,7 @@ DEP_CPP_METHO=\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Method_Object.h"\
+	".\Method_Request.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\

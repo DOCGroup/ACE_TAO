@@ -123,7 +123,7 @@ CLEAN :
 	-@erase "$(INTDIR)\Mem_Map.obj"
 	-@erase "$(INTDIR)\Memory_Pool.obj"
 	-@erase "$(INTDIR)\Message_Block.obj"
-	-@erase "$(INTDIR)\Method_Object.obj"
+	-@erase "$(INTDIR)\Method_Request.obj"
 	-@erase "$(INTDIR)\Msg_WFMO_Reactor.obj"
 	-@erase "$(INTDIR)\Multiplexor.obj"
 	-@erase "$(INTDIR)\Name_Proxy.obj"
@@ -316,7 +316,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\Mem_Map.obj" \
 	"$(INTDIR)\Memory_Pool.obj" \
 	"$(INTDIR)\Message_Block.obj" \
-	"$(INTDIR)\Method_Object.obj" \
+	"$(INTDIR)\Method_Request.obj" \
 	"$(INTDIR)\Msg_WFMO_Reactor.obj" \
 	"$(INTDIR)\Multiplexor.obj" \
 	"$(INTDIR)\Name_Proxy.obj" \
@@ -475,7 +475,7 @@ CLEAN :
 	-@erase "$(INTDIR)\Mem_Map.obj"
 	-@erase "$(INTDIR)\Memory_Pool.obj"
 	-@erase "$(INTDIR)\Message_Block.obj"
-	-@erase "$(INTDIR)\Method_Object.obj"
+	-@erase "$(INTDIR)\Method_Request.obj"
 	-@erase "$(INTDIR)\Msg_WFMO_Reactor.obj"
 	-@erase "$(INTDIR)\Multiplexor.obj"
 	-@erase "$(INTDIR)\Name_Proxy.obj"
@@ -652,7 +652,7 @@ LIB32_OBJS= \
 	"$(INTDIR)\Mem_Map.obj" \
 	"$(INTDIR)\Memory_Pool.obj" \
 	"$(INTDIR)\Message_Block.obj" \
-	"$(INTDIR)\Method_Object.obj" \
+	"$(INTDIR)\Method_Request.obj" \
 	"$(INTDIR)\Msg_WFMO_Reactor.obj" \
 	"$(INTDIR)\Multiplexor.obj" \
 	"$(INTDIR)\Name_Proxy.obj" \
@@ -810,7 +810,7 @@ CLEAN :
 	-@erase "$(INTDIR)\Mem_Map.obj"
 	-@erase "$(INTDIR)\Memory_Pool.obj"
 	-@erase "$(INTDIR)\Message_Block.obj"
-	-@erase "$(INTDIR)\Method_Object.obj"
+	-@erase "$(INTDIR)\Method_Request.obj"
 	-@erase "$(INTDIR)\Msg_WFMO_Reactor.obj"
 	-@erase "$(INTDIR)\Multiplexor.obj"
 	-@erase "$(INTDIR)\Name_Proxy.obj"
@@ -987,7 +987,7 @@ LIB32_OBJS= \
 	"$(INTDIR)\Mem_Map.obj" \
 	"$(INTDIR)\Memory_Pool.obj" \
 	"$(INTDIR)\Message_Block.obj" \
-	"$(INTDIR)\Method_Object.obj" \
+	"$(INTDIR)\Method_Request.obj" \
 	"$(INTDIR)\Msg_WFMO_Reactor.obj" \
 	"$(INTDIR)\Multiplexor.obj" \
 	"$(INTDIR)\Name_Proxy.obj" \
@@ -1145,7 +1145,7 @@ CLEAN :
 	-@erase "$(INTDIR)\Mem_Map.obj"
 	-@erase "$(INTDIR)\Memory_Pool.obj"
 	-@erase "$(INTDIR)\Message_Block.obj"
-	-@erase "$(INTDIR)\Method_Object.obj"
+	-@erase "$(INTDIR)\Method_Request.obj"
 	-@erase "$(INTDIR)\Msg_WFMO_Reactor.obj"
 	-@erase "$(INTDIR)\Multiplexor.obj"
 	-@erase "$(INTDIR)\Name_Proxy.obj"
@@ -1322,7 +1322,7 @@ LIB32_OBJS= \
 	"$(INTDIR)\Mem_Map.obj" \
 	"$(INTDIR)\Memory_Pool.obj" \
 	"$(INTDIR)\Message_Block.obj" \
-	"$(INTDIR)\Method_Object.obj" \
+	"$(INTDIR)\Method_Request.obj" \
 	"$(INTDIR)\Msg_WFMO_Reactor.obj" \
 	"$(INTDIR)\Multiplexor.obj" \
 	"$(INTDIR)\Name_Proxy.obj" \
@@ -1480,7 +1480,7 @@ CLEAN :
 	-@erase "$(INTDIR)\Mem_Map.obj"
 	-@erase "$(INTDIR)\Memory_Pool.obj"
 	-@erase "$(INTDIR)\Message_Block.obj"
-	-@erase "$(INTDIR)\Method_Object.obj"
+	-@erase "$(INTDIR)\Method_Request.obj"
 	-@erase "$(INTDIR)\Msg_WFMO_Reactor.obj"
 	-@erase "$(INTDIR)\Multiplexor.obj"
 	-@erase "$(INTDIR)\Name_Proxy.obj"
@@ -1657,7 +1657,7 @@ LIB32_OBJS= \
 	"$(INTDIR)\Mem_Map.obj" \
 	"$(INTDIR)\Memory_Pool.obj" \
 	"$(INTDIR)\Message_Block.obj" \
-	"$(INTDIR)\Method_Object.obj" \
+	"$(INTDIR)\Method_Request.obj" \
 	"$(INTDIR)\Msg_WFMO_Reactor.obj" \
 	"$(INTDIR)\Multiplexor.obj" \
 	"$(INTDIR)\Name_Proxy.obj" \
@@ -1815,7 +1815,7 @@ CLEAN :
 	-@erase "$(INTDIR)\Mem_Map.obj"
 	-@erase "$(INTDIR)\Memory_Pool.obj"
 	-@erase "$(INTDIR)\Message_Block.obj"
-	-@erase "$(INTDIR)\Method_Object.obj"
+	-@erase "$(INTDIR)\Method_Request.obj"
 	-@erase "$(INTDIR)\Msg_WFMO_Reactor.obj"
 	-@erase "$(INTDIR)\Multiplexor.obj"
 	-@erase "$(INTDIR)\Name_Proxy.obj"
@@ -2008,7 +2008,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\Mem_Map.obj" \
 	"$(INTDIR)\Memory_Pool.obj" \
 	"$(INTDIR)\Message_Block.obj" \
-	"$(INTDIR)\Method_Object.obj" \
+	"$(INTDIR)\Method_Request.obj" \
 	"$(INTDIR)\Msg_WFMO_Reactor.obj" \
 	"$(INTDIR)\Multiplexor.obj" \
 	"$(INTDIR)\Name_Proxy.obj" \
@@ -2167,7 +2167,7 @@ CLEAN :
 	-@erase "$(INTDIR)\Mem_Map.obj"
 	-@erase "$(INTDIR)\Memory_Pool.obj"
 	-@erase "$(INTDIR)\Message_Block.obj"
-	-@erase "$(INTDIR)\Method_Object.obj"
+	-@erase "$(INTDIR)\Method_Request.obj"
 	-@erase "$(INTDIR)\Msg_WFMO_Reactor.obj"
 	-@erase "$(INTDIR)\Multiplexor.obj"
 	-@erase "$(INTDIR)\Name_Proxy.obj"
@@ -2356,7 +2356,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\Mem_Map.obj" \
 	"$(INTDIR)\Memory_Pool.obj" \
 	"$(INTDIR)\Message_Block.obj" \
-	"$(INTDIR)\Method_Object.obj" \
+	"$(INTDIR)\Method_Request.obj" \
 	"$(INTDIR)\Msg_WFMO_Reactor.obj" \
 	"$(INTDIR)\Multiplexor.obj" \
 	"$(INTDIR)\Name_Proxy.obj" \
@@ -2515,7 +2515,7 @@ CLEAN :
 	-@erase "$(INTDIR)\Mem_Map.obj"
 	-@erase "$(INTDIR)\Memory_Pool.obj"
 	-@erase "$(INTDIR)\Message_Block.obj"
-	-@erase "$(INTDIR)\Method_Object.obj"
+	-@erase "$(INTDIR)\Method_Request.obj"
 	-@erase "$(INTDIR)\Msg_WFMO_Reactor.obj"
 	-@erase "$(INTDIR)\Multiplexor.obj"
 	-@erase "$(INTDIR)\Name_Proxy.obj"
@@ -2704,7 +2704,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\Mem_Map.obj" \
 	"$(INTDIR)\Memory_Pool.obj" \
 	"$(INTDIR)\Message_Block.obj" \
-	"$(INTDIR)\Method_Object.obj" \
+	"$(INTDIR)\Method_Request.obj" \
 	"$(INTDIR)\Msg_WFMO_Reactor.obj" \
 	"$(INTDIR)\Multiplexor.obj" \
 	"$(INTDIR)\Name_Proxy.obj" \
@@ -26395,7 +26395,7 @@ DEP_CPP_MULTI=\
 ################################################################################
 # Begin Source File
 
-SOURCE=.\Method_Object.cpp
+SOURCE=.\Method_Request.cpp
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
@@ -26421,7 +26421,7 @@ DEP_CPP_METHO=\
 	"..\ace/Managed_Object.cpp"\
 	"..\ace/Managed_Object.h"\
 	"..\ace/Managed_Object.i"\
-	"..\ace/Method_Object.h"\
+	"..\ace/Method_Request.h"\
 	"..\ace/Object_Manager.h"\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
@@ -26434,7 +26434,7 @@ DEP_CPP_METHO=\
 	{$(INCLUDE)}"\ace\config.h"\
 	
 
-"$(INTDIR)\Method_Object.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
+"$(INTDIR)\Method_Request.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
@@ -26461,7 +26461,7 @@ DEP_CPP_METHO=\
 	"..\ace/Managed_Object.cpp"\
 	"..\ace/Managed_Object.h"\
 	"..\ace/Managed_Object.i"\
-	"..\ace/Method_Object.h"\
+	"..\ace/Method_Request.h"\
 	"..\ace/Object_Manager.h"\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
@@ -26474,7 +26474,7 @@ DEP_CPP_METHO=\
 	{$(INCLUDE)}"\ace\config.h"\
 	
 
-"$(INTDIR)\Method_Object.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
+"$(INTDIR)\Method_Request.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
@@ -26501,7 +26501,7 @@ DEP_CPP_METHO=\
 	"..\ace/Managed_Object.cpp"\
 	"..\ace/Managed_Object.h"\
 	"..\ace/Managed_Object.i"\
-	"..\ace/Method_Object.h"\
+	"..\ace/Method_Request.h"\
 	"..\ace/Object_Manager.h"\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
@@ -26514,7 +26514,7 @@ DEP_CPP_METHO=\
 	{$(INCLUDE)}"\ace\config.h"\
 	
 
-"$(INTDIR)\Method_Object.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
+"$(INTDIR)\Method_Request.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
@@ -26541,7 +26541,7 @@ DEP_CPP_METHO=\
 	"..\ace/Managed_Object.cpp"\
 	"..\ace/Managed_Object.h"\
 	"..\ace/Managed_Object.i"\
-	"..\ace/Method_Object.h"\
+	"..\ace/Method_Request.h"\
 	"..\ace/Object_Manager.h"\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
@@ -26554,7 +26554,7 @@ DEP_CPP_METHO=\
 	{$(INCLUDE)}"\ace\config.h"\
 	
 
-"$(INTDIR)\Method_Object.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
+"$(INTDIR)\Method_Request.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
 
 
 !ENDIF 
@@ -37295,7 +37295,7 @@ DEP_CPP_ACTIV=\
 	"..\ace/Message_Queue_T.cpp"\
 	"..\ace/Message_Queue_T.h"\
 	"..\ace/Message_Queue_T.i"\
-	"..\ace/Method_Object.h"\
+	"..\ace/Method_Request.h"\
 	"..\ace/Object_Manager.h"\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
@@ -37411,7 +37411,7 @@ DEP_CPP_ACTIV=\
 	"..\ace/Message_Queue_T.cpp"\
 	"..\ace/Message_Queue_T.h"\
 	"..\ace/Message_Queue_T.i"\
-	"..\ace/Method_Object.h"\
+	"..\ace/Method_Request.h"\
 	"..\ace/Object_Manager.h"\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
@@ -37527,7 +37527,7 @@ DEP_CPP_ACTIV=\
 	"..\ace/Message_Queue_T.cpp"\
 	"..\ace/Message_Queue_T.h"\
 	"..\ace/Message_Queue_T.i"\
-	"..\ace/Method_Object.h"\
+	"..\ace/Method_Request.h"\
 	"..\ace/Object_Manager.h"\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
@@ -37643,7 +37643,7 @@ DEP_CPP_ACTIV=\
 	"..\ace/Message_Queue_T.cpp"\
 	"..\ace/Message_Queue_T.h"\
 	"..\ace/Message_Queue_T.i"\
-	"..\ace/Method_Object.h"\
+	"..\ace/Method_Request.h"\
 	"..\ace/Object_Manager.h"\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
@@ -66618,7 +66618,7 @@ DEP_CPP_MULTI=\
 ################################################################################
 # Begin Source File
 
-SOURCE=.\Method_Object.cpp
+SOURCE=.\Method_Request.cpp
 
 !IF  "$(CFG)" == "ACE static library - Win32 Release"
 
@@ -66644,7 +66644,7 @@ DEP_CPP_METHO=\
 	"..\ace/Managed_Object.cpp"\
 	"..\ace/Managed_Object.h"\
 	"..\ace/Managed_Object.i"\
-	"..\ace/Method_Object.h"\
+	"..\ace/Method_Request.h"\
 	"..\ace/Object_Manager.h"\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
@@ -66657,7 +66657,7 @@ DEP_CPP_METHO=\
 	{$(INCLUDE)}"\ace\config.h"\
 	
 
-"$(INTDIR)\Method_Object.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
+"$(INTDIR)\Method_Request.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Debug"
@@ -66684,7 +66684,7 @@ DEP_CPP_METHO=\
 	"..\ace/Managed_Object.cpp"\
 	"..\ace/Managed_Object.h"\
 	"..\ace/Managed_Object.i"\
-	"..\ace/Method_Object.h"\
+	"..\ace/Method_Request.h"\
 	"..\ace/Object_Manager.h"\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
@@ -66697,7 +66697,7 @@ DEP_CPP_METHO=\
 	{$(INCLUDE)}"\ace\config.h"\
 	
 
-"$(INTDIR)\Method_Object.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
+"$(INTDIR)\Method_Request.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
@@ -66724,7 +66724,7 @@ DEP_CPP_METHO=\
 	"..\ace/Managed_Object.cpp"\
 	"..\ace/Managed_Object.h"\
 	"..\ace/Managed_Object.i"\
-	"..\ace/Method_Object.h"\
+	"..\ace/Method_Request.h"\
 	"..\ace/Object_Manager.h"\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
@@ -66737,7 +66737,7 @@ DEP_CPP_METHO=\
 	{$(INCLUDE)}"\ace\config.h"\
 	
 
-"$(INTDIR)\Method_Object.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
+"$(INTDIR)\Method_Request.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
@@ -66764,7 +66764,7 @@ DEP_CPP_METHO=\
 	"..\ace/Managed_Object.cpp"\
 	"..\ace/Managed_Object.h"\
 	"..\ace/Managed_Object.i"\
-	"..\ace/Method_Object.h"\
+	"..\ace/Method_Request.h"\
 	"..\ace/Object_Manager.h"\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
@@ -66777,7 +66777,7 @@ DEP_CPP_METHO=\
 	{$(INCLUDE)}"\ace\config.h"\
 	
 
-"$(INTDIR)\Method_Object.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
+"$(INTDIR)\Method_Request.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
 
 
 !ENDIF 
@@ -73615,7 +73615,7 @@ DEP_CPP_ACTIV=\
 	"..\ace/Message_Queue_T.cpp"\
 	"..\ace/Message_Queue_T.h"\
 	"..\ace/Message_Queue_T.i"\
-	"..\ace/Method_Object.h"\
+	"..\ace/Method_Request.h"\
 	"..\ace/Object_Manager.h"\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
