@@ -73,7 +73,6 @@ ACE_THR_FUNC_RETURN waiter (void *) {
   return 0;
 }
 
-#endif /* ACE_HAS_THREADS */
 
 int
 test_1(void)
@@ -201,6 +200,7 @@ test_4()
   ACE_Thread_Manager::instance ()->wait ();
   return 0;
 }
+#endif /* ACE_HAS_THREADS */
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
@@ -252,7 +252,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 #else
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("ACE doesn't support recursive condition variables on this platform\n")));
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;
 }
