@@ -24,22 +24,23 @@
 #include "tao/Resource_Factory.h"
 #include "tao/params.h"
 #include "tao/POAC.h"
+#include "ace/Map_Manager.h"
 
+// Forward declarations
 class TAO_Client_Connection_Handler;
 class TAO_POA;
 class TAO_POA_Current;
-class TAO_POA_Current_Impl;
 class TAO_POA_Manager;
 class TAO_POA_Policies;
 class TAO_Acceptor;
 class TAO_Connector;
+class TAO_Acceptor_Registry;
 class TAO_Connector_Registry;
 
 class TAO_Resource_Factory;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
 class TAO_Connection_Cache;
-class TAO_ORB_Core_TSS_Resources;
 
 // ****************************************************************
 
@@ -60,13 +61,13 @@ class TAO_Export TAO_ORB_Core
   //
   friend class CORBA_ORB;
   friend CORBA::ORB_ptr CORBA::ORB_init (int &,
-                                         char * const*,
+                                         char *argv[],
                                          const char *,
                                          CORBA_Environment &);
 
 public:
   // = Initialization and termination methods.
-  TAO_ORB_Core (void);
+  TAO_ORB_Core (const char* id);
   // Constructor.
 
   ~TAO_ORB_Core (void);
@@ -75,17 +76,24 @@ public:
   TAO_ORB_Parameters *orb_params (void);
   // Accessor for the ORB parameters.
 
-  TAO_POA_Current &poa_current (void) const;
-  // Accessor to the POA current.
+  TAO_POA_Current *poa_current (void);
+  // Accessor which returns a pointer to a structure containing
+  // context on the current POA upcall.
+
+  TAO_POA_Current *poa_current (TAO_POA_Current *new_current);
+  // Sets the thread-specific pointer to the new POA Current state,
+  // returning a pointer to the existing POA Current state.
 
   // = Set/get the connector registry - used to just be the connector.
   TAO_Connector_Registry *connector_registry (TAO_Connector_Registry *c);
   TAO_Connector_Registry *connector_registry (void);
 
-  // = Set/get the acceptor.
-  TAO_Acceptor *acceptor (TAO_Acceptor *a);
-  TAO_Acceptor *acceptor (void);
-  // Accessor which returns the acceptor.
+  // = Set/get the acceptor registry - used to just be the acceptor!
+  TAO_Acceptor_Registry  *acceptor_registry  (TAO_Acceptor_Registry  *a);
+  TAO_Acceptor_Registry  *acceptor_registry  (void);
+
+  TAO_ProtocolFactorySet *protocol_factories (TAO_ProtocolFactorySet *pf);
+  TAO_ProtocolFactorySet *protocol_factories (void);
 
   // = Set/get pointer to the ORB.
   CORBA::ORB_ptr orb (CORBA::ORB_ptr);
@@ -109,10 +117,21 @@ public:
                                               TAO_POA_Manager *poa_manager = 0,
                                               const TAO_POA_Policies *policies = 0);
 
+  // = Set/get the collocation flags
+  void optimize_collocation_objects (CORBA::Boolean opt);
+  CORBA::Boolean optimize_collocation_objects (void) const;
+
+  // just an alias for the previous two methods, should be removed.
+  void using_collocation (CORBA::Boolean opt);
+  CORBA::Boolean using_collocation (void) const;
+
+  void use_global_collocation (CORBA::Boolean opt);
+  CORBA::Boolean use_global_collocation (void) const;
+
   TAO_Object_Adapter *object_adapter (void);
   // Get <Object Adapter>.
 
-  int inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resources);
+  int inherit_from_parent_thread (TAO_ORB_Core *p);
   // A spawned thread needs to inherit some properties/objects from
   // the spawning thread in order to serve requests.  Return 0 if
   // it successfully inherits from the parent, -1 otherwise.
@@ -133,29 +152,12 @@ public:
   TAO_Server_Strategy_Factory *server_factory (void);
   // Returns pointer to the server factory.
 
-  CORBA::Boolean using_collocation (void);
-  // Check if we are optimizing collocation objects.
-
-  CORBA::Boolean using_collocation (CORBA::Boolean);
-  // Set if we want to use optimized collocation objects.
-
-  int add_to_collocation_table (void);
-  // Added this ORB into collocation table.
-
-  TAO_Object_Adapter *get_collocated_object_adapter (const ACE_INET_Addr &addr);
+  int is_collocated (const TAO_MProfile& mprofile);
   // See if we have a collocated address, if yes, return the POA
   // associated with the address.
 
   int add_to_ior_table (ACE_CString init_ref, TAO_IOR_LookupTable &table);
-  // Add the init_ref (objectID->IOR) to the Lookup Table.
-
-#if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
-  CORBA::Boolean arl_same_port_connect (void);
-  // Access function to query whether we want this feature or not.
-  // This is a specialization only for the ARL at Wash U.
-  // This setting this flag will for the connect use the same port
-  // that the server uses.
-#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
+  // Add the init_ref (objectID->IOR) to the Lookup Table
 
   int leader_available (void);
   // returns the refcount on the leader
@@ -242,10 +244,11 @@ public:
   TAO_Policy_Manager *policy_manager (void);
   // Return the Policy_Manager for this ORB.
 
-  TAO_Policy_Current &policy_current (void);
+  TAO_Policy_Current *policy_current (void) const;
+  TAO_Policy_Current *policy_current (TAO_Policy_Current *);
   // Accesors to the policy current, this object should be kept in TSS
-  // storage.  The POA has to reset the policy current object on every
-  // upcall.
+  // storage.
+  // The POA has to reset the policy current object on every upcall.
 
   CORBA::Policy_ptr get_default_policy (
       CORBA::PolicyType policy,
@@ -255,15 +258,13 @@ public:
   // type.
   // If there is no default policy it returns CORBA::Policy::_nil ()
 
-  POA_Messaging::RelativeRoundtripTimeoutPolicy*
-      default_relative_roundtrip_timeout (void) const;
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
 protected:
-  int set_endpoint (int dotted_decimal_addresses,
-                    CORBA::UShort port,
-                    ACE_CString &host,
-                    ACE_INET_Addr &rendezvous);
+  int set_iiop_endpoint (int dotted_decimal_addresses,
+                         CORBA::UShort port,
+                         ACE_CString &host,
+                         ACE_CString &iiop_endpoint);
   // Set the endpoint
 
   int init (int& argc, char ** argv);
@@ -293,6 +294,13 @@ protected:
   // The connector registry which all active connecters must register
   // themselves with.
 
+  TAO_Acceptor_Registry *acceptor_registry_;
+  // The registry which maintains a list of acceptor factories for each
+  // loaded protocol.
+
+  TAO_ProtocolFactorySet *protocol_factories_;
+  // Pointer to the list of protocol loaded into this ORB instance.
+
   CORBA::ORB_ptr orb_;
   // @@ Should we keep a single ORB pointer? This is good because
   //    multiple calls to ORB_init() with the same ORBid can use the
@@ -310,13 +318,8 @@ protected:
   TAO_ORB_Parameters *orb_params_;
   // Parameters used by the ORB.
 
-  // @@ Depricated!
-  ACE_INET_Addr *addr_;
-  // The address of the endpoint on which we're listening for
-  // connections and requests.
-
-  TAO_Acceptor *acceptor_;
-  // The acceptor passively listening for connection requests.
+  char* orbid_;
+  // The ORBid for this ORB.
 
   TAO_Resource_Factory *resource_factory_;
   // Handle to the factory for resource information..
@@ -324,6 +327,8 @@ protected:
   CORBA::Boolean resource_factory_from_service_config_;
   // TRUE if <resource_factory_> was obtained from the Service
   // Configurator.
+  // @@ This is not needed since the default resource factory
+  //    is staticaly added to the service configurator.
 
   TAO_Client_Strategy_Factory *client_factory_;
   // Handle to the factory for Client-side strategies.
@@ -331,6 +336,8 @@ protected:
   CORBA::Boolean client_factory_from_service_config_;
   // TRUE if <client_factory_> was obtained from the Service
   // Configurator.
+  // @@ This is not needed since the client facotry factory
+  //    is staticaly added to the service configurator.
 
   TAO_Server_Strategy_Factory *server_factory_;
   // Handle to the factory for Server-side strategies.
@@ -338,21 +345,16 @@ protected:
   CORBA::Boolean server_factory_from_service_config_;
   // TRUE if <server_factory_> was obtained from the Service
   // Configurator.
+  // @@ This is not needed since the server factory factory
+  //    is staticaly added to the service configurator.
 
   CORBA::Boolean opt_for_collocation_;
   // TRUE if we want to take advantage of collocation optimization in
   // this ORB.
 
-#if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
-  CORBA::Boolean arl_same_port_connect_;
-  // This is a specialization only for the ARL at Wash U.
-  // This setting this flag will for the connect use the same port
-  // that the server uses.
-#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
-
-  char *preconnections_;
-  // A string of comma-separated <{host}>:<{port}> pairs used to
-  // pre-establish connections using <preconnect>.
+  CORBA::Boolean use_global_collocation_;
+  // TRUE if we want to consider all ORBs in this address space
+  // collocated.
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
   TAO_Policy_Manager policy_manager_;
@@ -360,17 +362,7 @@ protected:
 
   TAO_Policy_Manager_Impl default_policies_;
   // The default policies.
-
-  TAO_Policy_Current policy_current_;
-  // Policy current.
 #endif /* TAO_HAS_CORBA_MESSAGING */
-
-  TAO_POA_Current *poa_current_;
-  // POA current.
-  //
-  // Note that this is a pointer in order to reduce the include file
-  // dependencies.
-  //
 };
 
 // ****************************************************************
@@ -396,7 +388,7 @@ public:
   ACE_Reactor *reactor_;
   // Used for responding to I/O reactively
 
-  TAO_POA_Current_Impl *poa_current_impl_;
+  TAO_POA_Current *poa_current_;
   // Points to structure containing state for the current upcall
   // context in this thread.  Note that it does not come from the
   // resource factory because it must always be held in
@@ -413,11 +405,11 @@ public:
   // still holds one.
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
-  TAO_Policy_Current_Impl initial_policy_current_;
+  TAO_Policy_Current initial_policy_current_;
   // The initial PolicyCurrent for this thread. Should be a TSS
   // resource.
 
-  TAO_Policy_Current_Impl *policy_current_;
+  TAO_Policy_Current* policy_current_;
   // This pointer is reset by the POA on each upcall.
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
@@ -433,8 +425,49 @@ public:
 
 // ****************************************************************
 
-typedef ACE_TSS_Singleton<TAO_ORB_Core_TSS_Resources, ACE_SYNCH_MUTEX>
-        TAO_ORB_CORE_TSS_RESOURCES;
+class TAO_Export TAO_ORB_Table
+{
+  // = TITLE
+  //   Keep a table with all the ORBs in the system.
+  //
+  // = DESCRIPTION
+  //   CORBA::ORB_init() is supposed to return the same ORB if the
+  //   user specifies the same ORBid, either in the ORB_init()
+  //   parameter or in the -ORBid option.
+  //   This class is used to implement that feature.
+  //   It is also useful when trying to determine if an object
+  //   reference is collocated or not.
+  //
+public:
+  ~TAO_ORB_Table (void);
+  // destructor
+
+  // @@ Ossama, we may use a Hash_Map_Manager and use "const char*"
+  //    instead of ACE_CString to speed things up.
+  typedef ACE_Map_Manager<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex> Table;
+  typedef Table::iterator Iterator;
+
+  Iterator begin (void);
+  Iterator end (void);
+  int bind (const char* orb_id, TAO_ORB_Core* orb_core);
+  TAO_ORB_Core* find (const char* orb_id);
+  int unbind (const char* orb_id);
+  // The canonical ACE_Map methods.
+
+  static TAO_ORB_Table* instance (void);
+  // Return a unique instance
+
+protected:
+  friend class ACE_Singleton<TAO_ORB_Table,ACE_SYNCH_MUTEX>;
+  TAO_ORB_Table (void);
+  // Constructor
+
+private:
+  Table table_;
+  // The implementation.
+};
+
+// ****************************************************************
 
 extern TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
 

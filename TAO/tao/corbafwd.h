@@ -61,6 +61,8 @@
 # endif
 #endif /* _MSC_VER */
 
+#define TAO_DEFAULT_MINOR_CODE 0xffff0000L
+
 // Forward declarations of some data types are needed.
 
 class CORBA_Any;
@@ -272,13 +274,9 @@ class CORBA_PolicyTypeSeq_var;
 class CORBA_PolicyTypeSeq_out;
 
 class CORBA_PolicyManager;
-class CORBA_PolicyManager_var;
-class CORBA_PolicyManager_out;
 typedef CORBA_PolicyManager *CORBA_PolicyManager_ptr;
 
 class CORBA_PolicyCurrent;
-class CORBA_PolicyCurrent_var;
-class CORBA_PolicyCurrent_out;
 typedef CORBA_PolicyCurrent *CORBA_PolicyCurrent_ptr;
 
 class CORBA_Policy;
@@ -483,7 +481,7 @@ public:
 
 
   typedef CORBA_TypeCode TypeCode;
-  typedef CORBA_TypeCode *TypeCode_ptr;
+  typedef TypeCode *TypeCode_ptr;
   typedef CORBA_TypeCode_var TypeCode_var;
   typedef CORBA_TypeCode_out TypeCode_out;
 
@@ -778,14 +776,10 @@ TAO_SYSTEM_EXCEPTION_LIST
   static CORBA::TypeCode_ptr _tc_SetOverrideType;
 
   typedef CORBA_PolicyManager PolicyManager;
-  typedef CORBA_PolicyManager_var PolicyManager_var;
-  typedef CORBA_PolicyManager_out PolicyManager_out;
   typedef CORBA_PolicyManager *PolicyManager_ptr;
   static CORBA::TypeCode_ptr _tc_PolicyManager;
 
   typedef CORBA_PolicyCurrent PolicyCurrent;
-  typedef CORBA_PolicyCurrent_var PolicyCurrent_var;
-  typedef CORBA_PolicyCurrent_out PolicyCurrent_out;
   typedef CORBA_PolicyCurrent *PolicyCurrent_ptr;
   static CORBA::TypeCode_ptr _tc_PolicyCurrent;
 
@@ -801,14 +795,14 @@ TAO_SYSTEM_EXCEPTION_LIST
   typedef CORBA_DomainManagerList_out DomainManagerList_out;
   static CORBA::TypeCode_ptr _tc_DomainManagerList;
 
-  static const PolicyType SecConstruction;
-
 #if ! defined (TAO_HAS_MINIMUM_CORBA)
   typedef CORBA_ConstructionPolicy ConstructionPolicy;
   typedef CORBA_ConstructionPolicy *ConstructionPolicy_ptr;
   typedef CORBA_ConstructionPolicy_var ConstructionPolicy_var;
   typedef CORBA_ConstructionPolicy_out ConstructionPolicy_out;
   static CORBA::TypeCode_ptr _tc_ConstructionPolicy;
+
+  static const PolicyType SecConstruction;
 
   typedef CORBA_WrongTransaction WrongTransaction;
   typedef WrongTransaction *WrongTransaction_ptr;
@@ -865,10 +859,10 @@ TAO_SYSTEM_EXCEPTION_LIST
   // gets horribly confused if we used CORBA::default_environment() at
   // this point.
   static ORB_ptr ORB_init (int &argc,
-                           char *const *argv,
+                           char *argv[],
                            const char *orb_name = 0);
   static ORB_ptr ORB_init (int &argc,
-                           char *const *argv,
+                           char *argv[],
                            const char *orb_name,
                            CORBA_Environment &TAO_IN_ENV);
   // ORB initialisation
@@ -890,32 +884,6 @@ private:
   static ORB_ptr instance_;
   // Points to the "default ORB."
 };  // end of class (namespace) CORBA
-
-// ****************************************************************
-
-// This number was assigned by the OMG.  Do *NOT* change at random.
-// The ASCII represetantion is TA0xxxx, close enough since they only
-// take 20 bits, the first 16 are TA, the next 4 are 0000.  Remember
-// that we can only play with the last 12 bits, TAO_MAX_MINOR_CODE is
-// there to remind us of that.
-#define TAO_DEFAULT_MINOR_CODE 0x54410000
-#define TAO_MAX_MINOR_CODE 0x54410FFF
-
-// Minor code encoding.  Skip 4 bits, currently unused.  Then, encode
-// the location in 4 bits, and the errno in 4 bits:
-// 0x   0101 0100   0100 0001   0000   ____  ____     ____
-//          T           A        0      location      errno
-
-// Location encoding:  next-to-last 8 bits.
-#define TAO_INVOCATION_CONNECT_MINOR_CODE          (0x01u << 4)
-#define TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE (0x02u << 4)
-#define TAO_INVOCATION_SEND_REQUEST_MINOR_CODE     (0x03u << 4)
-
-// errno encoding:  bottom 4 bits.
-#define TAO_UNKNOWN_MINOR_CODE   0x00u
-#define TAO_ETIMEDOUT_MINOR_CODE 0x01u
-#define TAO_ENFILE_MINOR_CODE    0x02u
-#define TAO_EMFILE_MINOR_CODE    0x03u
 
 // ****************************************************************
 

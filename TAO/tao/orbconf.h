@@ -133,6 +133,10 @@
 #endif /* TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT */
 
 // The default starting port number for TAO servers.
+// @@ This assumes we are using one or more protocols that will all 
+// @@ 1) know what to do with a port number and 
+// @@ 2) use the same default port number.
+// @@ This shou8ld go away!
 #if !defined (TAO_DEFAULT_SERVER_PORT)
 #define TAO_DEFAULT_SERVER_PORT 0
 #endif /* TAO_DEFAULT_SERVER_PORT */
@@ -291,7 +295,10 @@
 // #define TAO_HAS_MINIMUM_CORBA
 
 // CORBA Messaging
+#if defined(ACE_WIN32)
+// In other platforms this is defined in the command-line
 #define TAO_HAS_CORBA_MESSAGING
+#endif /* ACE_WIN32 */
 
 // The maximum value for an standard PolicyType, we use this trick to
 // pack the standard policies and the TAO extension in a single
@@ -313,21 +320,5 @@
 // from the standard policies.
 #define TAO_MIN_PROPIETARY_POLICY 1024
 #define TAO_MAX_PROPIETARY_POLICY (TAO_MIN_PROPIETARY_POLICY+TAO_POLICIES_COUNT)
-
-// Define the policy types as literals, so they can be used in switch
-// statements
-#define TAO_MESSAGING_REBIND_POLICY_TYPE 23
-#define TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE 24
-#define TAO_MESSAGING_REQUEST_PRIORITY_POLICY_TYPE 25
-#define TAO_MESSAGING_REPLY_PRIORITY_POLICY_TYPE 26
-#define TAO_MESSAGING_REQUEST_START_TIME_POLICY_TYPE 27
-#define TAO_MESSAGING_REQUEST_END_TIME_POLICY_TYPE 28
-#define TAO_MESSAGING_REPLY_START_TIME_POLICY_TYPE 29
-#define TAO_MESSAGING_REPLY_END_TIME_POLICY_TYPE 30
-#define TAO_MESSAGING_RELATIVE_REQ_TIMEOUT_POLICY_TYPE 31
-#define TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE 32
-#define TAO_MESSAGING_ROUTING_POLICY_TYPE 33
-#define TAO_MESSAGING_MAX_HOPS_POLICY_TYPE 34
-#define TAO_MESSAGING_QUEUE_ORDER_POLICY_TYPE 35
 
 #endif  /* TAO_ORB_CONFIG_H */

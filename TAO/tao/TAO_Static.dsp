@@ -22,9 +22,11 @@ CFG=TAO Static - Win32 Debug
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
 CPP=cl.exe
+RSC=rc.exe
 
 !IF  "$(CFG)" == "TAO Static - Win32 Release"
 
@@ -38,12 +40,11 @@ CPP=cl.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
-RSC=rc.exe
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
 # SUBTRACT CPP /YX
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -63,11 +64,10 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug"
 # PROP Target_Dir ""
-RSC=rc.exe
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "..\..\\" /I "..\\" /D TAO_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /YX /FD /c
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -255,10 +255,6 @@ SOURCE=.\Managed_Types.cpp
 # Begin Source File
 
 SOURCE=.\Marshal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Messaging_Policy_i.cpp
 # End Source File
 # Begin Source File
 
@@ -566,10 +562,6 @@ SOURCE=.\marshal.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Messaging_Policy_i.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\MessagingC.h
 # End Source File
 # Begin Source File
@@ -823,10 +815,6 @@ SOURCE=.\Managed_Types.i
 # Begin Source File
 
 SOURCE=.\marshal.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Messaging_Policy_i.i
 # End Source File
 # Begin Source File
 

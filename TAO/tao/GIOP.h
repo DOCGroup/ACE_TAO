@@ -53,9 +53,10 @@ typedef CORBA::ULong TAO_IOP_Profile_ID;
 
 enum
 {
-  TAO_IOP_TAG_INVALID = -1,        // 
+  TAO_IOP_TAG_INVALID = -1,        //
   TAO_IOP_TAG_INTERNET_IOP = 0,        // IIOP
   TAO_IOP_TAG_MULTIPLE_COMPONENTS = 1, // DCE-CIOP
+  TAO_IOP_TAG_UNIX_IOP = 1000,  // @@ Temporary hack for UIOP!
   // = This is a subset of the list of other profile tags.
   TAO_IOP_TAG_ONC_IOP = 0x4f4e4300     // ONC IOP
 };

@@ -23,7 +23,6 @@ ACE_RCSID(tao, Exception, "$Id$")
 // Static initializers.
 
 CORBA::ExceptionList *TAO_Exceptions::system_exceptions;
-ACE_Allocator *TAO_Exceptions::global_allocator_;
 
 // TAO specific typecode
 extern CORBA::TypeCode_ptr TC_completion_status;
@@ -107,7 +106,23 @@ CORBA_Exception::print_exception (const char *info,
 
   if (x2 != 0)
     {
-      x2->print_exception_tao_ ();
+
+      // @@ there are a other few "user exceptions" in the CORBA
+      // scope, they're not all standard/system exceptions ... really
+      // need to either compare exhaustively against all those IDs
+      // (yeech) or (preferably) to represent the exception type
+      // directly in the exception value so it can be queried.
+
+      ACE_DEBUG ((LM_ERROR,
+                  "(%P|%t) system exception, ID '%s'\n",
+                  id));
+      ACE_DEBUG ((LM_ERROR,
+                  "(%P|%t) minor code = %x, completed = %s\n",
+                  x2->minor (),
+                  (x2->completed () == CORBA::COMPLETED_YES) ? "YES" :
+                  (x2->completed () == CORBA::COMPLETED_NO) ? "NO" :
+                  (x2->completed () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
+                  "garbage"));
     }
   else
     // @@ we can use the exception's typecode to dump all the data
@@ -232,77 +247,6 @@ CORBA_SystemException::_raise (void)
   TAO_RAISE(*this);
 }
 
-CORBA::ULong
-CORBA_SystemException::errno_tao_ (int errno_value)
-{
-  switch (errno_value) {
-    case ETIMEDOUT : return TAO_ETIMEDOUT_MINOR_CODE;
-    case ENFILE : return TAO_ENFILE_MINOR_CODE;
-    case EMFILE : return TAO_EMFILE_MINOR_CODE;
-    default : return TAO_UNKNOWN_MINOR_CODE;
-  }
-}
-
-CORBA::ULong
-CORBA_SystemException::minor_code_tao_ (u_int location, int errno_value)
-{
-  return TAO_DEFAULT_MINOR_CODE  |
-         location  |
-         errno_tao_ (errno_value);
-}
-
-void
-CORBA_SystemException::print_exception_tao_ (FILE *) const
-{
-  // @@ there are a other few "user exceptions" in the CORBA
-  // scope, they're not all standard/system exceptions ... really
-  // need to either compare exhaustively against all those IDs
-  // (yeech) or (preferably) to represent the exception type
-  // directly in the exception value so it can be queried.
-
-  ACE_DEBUG ((LM_ERROR,
-              "(%P|%t) system exception, ID '%s'\n",
-              _id ()));
-
-  const char *location;
-  switch (minor () & 0x00000FF0) {
-    case TAO_INVOCATION_CONNECT_MINOR_CODE :
-      location = "invocation connect failed";
-      break;
-    case TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE :
-      location = "location forward failed";
-      break;
-    case TAO_INVOCATION_SEND_REQUEST_MINOR_CODE :
-      location = "send request failed";
-      break;
-    default :
-      location = "unknown location";
-  }
-
-  const char *errno_indication;
-  switch (minor () & 0x0000000F) {
-    case TAO_ETIMEDOUT_MINOR_CODE :
-      errno_indication = "ETIMEOUT";
-      break;
-    case TAO_ENFILE_MINOR_CODE :
-      errno_indication = "ENFILE";
-      break;
-    case TAO_EMFILE_MINOR_CODE :
-      errno_indication = "EMFILE";
-      break;
-    default :
-      errno_indication = "unknown errno";
-  }
-
-  ACE_DEBUG ((LM_ERROR,
-              "(%P|%t) minor code = %x (%s; %s), completed = %s\n",
-              minor (), location, errno_indication,
-              (completed () == CORBA::COMPLETED_YES) ? "YES" :
-              (completed () == CORBA::COMPLETED_NO) ? "NO" :
-              (completed () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
-              "garbage"));
-}
-
 
 // ****************************************************************
 
@@ -359,11 +303,7 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
                                             CORBA::Environment &TAO_IN_ENV)
 {
   // Create the TypeCode for the CORBA_UnknownUserException
-  TAO_OutputCDR stream (0,
-                        ACE_CDR_BYTE_ORDER,
-                        TAO_Exceptions::global_allocator_,
-                        TAO_Exceptions::global_allocator_,
-                        ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
+  TAO_OutputCDR stream;
 
   const char* interface_id =
     "IDL:omg.org/CORBA/UnknownUserException:1.0";
@@ -403,12 +343,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   // Create a CDR stream ... juggle the alignment here a bit, we know
   // it's good enough for the typecode.
 
-  TAO_OutputCDR stream (buffer,
-                        buflen,
-                        ACE_CDR_BYTE_ORDER,
-                        TAO_Exceptions::global_allocator_,
-                        TAO_Exceptions::global_allocator_,
-                        ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
+  TAO_OutputCDR stream (buffer, buflen);
 
   // into CDR stream, stuff (in order):
   //    - byte order flag [4 bytes]
@@ -518,10 +453,6 @@ CORBA::TypeCode_ptr CORBA::_tc_UnknownUserException = 0;
 void
 TAO_Exceptions::init (CORBA::Environment &env)
 {
-  // This routine should only be called once.
-  // Initialize the start up allocator.
-  ACE_NEW (TAO_Exceptions::global_allocator_, ACE_New_Allocator);
-
   // Initialize the list of system exceptions, used when unmarshaling.
   ACE_NEW (TAO_Exceptions::system_exceptions, CORBA::ExceptionList);
 
@@ -565,7 +496,6 @@ TAO_Exceptions::fini (void)
 #undef TAO_SYSTEM_EXCEPTION
 
   delete CORBA::_tc_UnknownUserException;
-  delete TAO_Exceptions::global_allocator_;
 }
 
 #define TAO_SYSTEM_EXCEPTION(name) \

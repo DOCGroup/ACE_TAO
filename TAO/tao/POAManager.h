@@ -31,7 +31,6 @@ class TAO_POA;
 class TAO_Export TAO_POA_Manager : public POA_PortableServer::POAManager
 {
   friend class TAO_POA;
-  friend class TAO_Object_Adapter;
 
 public:
 
@@ -53,7 +52,7 @@ public:
 
   PortableServer::POAManager::State get_state (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  TAO_POA_Manager (TAO_Object_Adapter &object_adapter);
+  TAO_POA_Manager (ACE_Lock &lock);
 
   ~TAO_POA_Manager (void);
 
@@ -73,9 +72,9 @@ protected:
                      CORBA::Boolean wait_for_completion,
                      CORBA_Environment &ACE_TRY_ENV);
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
   PortableServer::POAManager::State get_state_i ();
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   ACE_Lock &lock (void);
 
@@ -90,8 +89,6 @@ protected:
   typedef ACE_Unbounded_Set<TAO_POA *> POA_COLLECTION;
 
   POA_COLLECTION poa_collection_;
-
-  TAO_Object_Adapter &object_adapter_;
 };
 
 #if defined (__ACE_INLINE__)

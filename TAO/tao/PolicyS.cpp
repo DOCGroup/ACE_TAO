@@ -14,7 +14,6 @@
 #include "tao/POA_CORBA.h"
 #include "tao/Environment.h"
 #include "tao/Typecode.h"
-#include "tao/ORB.h"
 
 ACE_RCSID(tao, PolicyS, "$Id$")
 

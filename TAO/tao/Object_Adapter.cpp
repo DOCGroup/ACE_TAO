@@ -212,31 +212,6 @@ TAO_Object_Adapter::create_lock (int enable_locking,
   return the_lock;
 }
 
-
-void
-TAO_Object_Adapter::deactivate_i (CORBA::Boolean wait_for_completion,
-                                  CORBA::Environment &ACE_TRY_ENV)
-{
-  // If the ORB::shutdown operation is called, it makes a call on
-  // deactivate with a TRUE etherealize_objects parameter for each POA
-  // manager known in the process; the wait_for_completion parameter
-  // to deactivate will be the same as the similarly named parameter
-  // of ORB::shutdown.
-
-  poa_manager_set::iterator end = this->poa_manager_set_.end ();
-
-  for (poa_manager_set::iterator iterator = this->poa_manager_set_.begin ();
-       iterator != end;
-       ++iterator)
-    {
-      TAO_POA_Manager *poa_manager = *iterator;
-      poa_manager->deactivate_i (1,
-                                 wait_for_completion,
-                                 ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-}
-
 void
 TAO_Object_Adapter::dispatch_servant (const TAO_ObjectKey &key,
                                       CORBA::ServerRequest &req,
@@ -284,17 +259,13 @@ TAO_Object_Adapter::dispatch_servant_i (const TAO_ObjectKey &key,
                     ACE_TRY_ENV);
   ACE_CHECK;
 
-  // Check the state of the POA Manager.
-  poa->check_poa_manager_state (ACE_TRY_ENV);
-  ACE_CHECK;
-
   // Setup for POA Current
   const char *operation = req.operation ();
-  TAO_POA_Current_Impl current_context (poa,
-                                        key,
-                                        0,
-                                        operation,
-                                        this->orb_core_);
+  TAO_POA_Current current_context (poa,
+                                   key,
+                                   0,
+                                   operation,
+                                   this->orb_core_);
 
   PortableServer::Servant servant = 0;
 
@@ -323,27 +294,20 @@ TAO_Object_Adapter::dispatch_servant_i (const TAO_ObjectKey &key,
                                                *this);
     ACE_UNUSED_ARG (outstanding_requests);
 
-    // Unlock for the duration of the servant upcall.  Reacquire once
-    // the upcall completes. Even though we are releasing the lock,
-    // the servant entry in the active object map is reference counted
-    // and will not get removed/deleted prematurely.
-    TAO_POA_GUARD (ACE_Lock, monitor, this->reverse_lock (), ACE_TRY_ENV);
-
     // This class helps us by locking servants in a single threaded
     // POA for the duration of the upcall.  Single_Threaded_POA_Lock
     // has a magic constructor and destructor.  We acquire the servant
     // lock in the constructor.  We release the servant lock in the
     // destructor.
-    //
-    // Note that this lock must be acquired *after* the POA lock has
-    // been released.  This is necessary since we cannot block waiting
-    // for the servant lock while holding the POA lock.  Otherwise,
-    // the thread that wants to release this lock will not be able to
-    // do so since it can't acquire the POA lock.
-    //
     Single_Threaded_POA_Lock single_threaded_poa_lock (*poa,
                                                        servant);
     ACE_UNUSED_ARG (single_threaded_poa_lock);
+
+    // Unlock for the duration of the servant upcall.  Reacquire once
+    // the upcall completes. Even though we are releasing the lock,
+    // the servant entry in the active object map is reference counted
+    // and will not get removed/deleted prematurely.
+    TAO_POA_GUARD (ACE_Lock, monitor, this->reverse_lock (), ACE_TRY_ENV);
 
     ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_DISPATCH_START);
 
@@ -395,7 +359,6 @@ TAO_Object_Adapter::locate_poa (const TAO_ObjectKey &key,
                              poa_creation_time,
                              poa,
                              ACE_TRY_ENV);
-    ACE_CHECK;
   }
 
   if (result != 0)
@@ -624,7 +587,6 @@ TAO_Object_Adapter::Active_Hint_Strategy::find_persistent_poa (const poa_name &s
               result = this->object_adapter_->activate_poa (folded_name,
                                                             poa,
                                                             ACE_TRY_ENV);
-              ACE_CHECK_RETURN (-1);
             }
         }
     }
@@ -693,7 +655,6 @@ TAO_Object_Adapter::No_Hint_Strategy::find_persistent_poa (const poa_name &syste
       result = this->object_adapter_->activate_poa (system_name,
                                                     poa,
                                                     ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
     }
 
   return result;
@@ -874,7 +835,7 @@ TAO_Object_Adapter::Outstanding_Requests::~Outstanding_Requests (void)
   // If locking is enabled and some thread is waiting in POA::destroy.
   if (this->object_adapter_.enable_locking_ &&
       outstanding_requests == 0 &&
-      this->poa_.wait_for_completion_pending_)
+      this->poa_.destroy_pending_)
     {
       // Wakeup all waiting threads.
       this->poa_.outstanding_requests_condition_.broadcast ();
@@ -982,9 +943,6 @@ template class ACE_Map_Iterator<key, value, ACE_Null_Mutex>;
 template class ACE_Map_Reverse_Iterator<key, value, ACE_Null_Mutex>;
 template class ACE_Map_Entry<key, value>;
 
-template class ACE_Unbounded_Set<TAO_POA_Manager *>;
-template class ACE_Unbounded_Set_Iterator<TAO_POA_Manager *>;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 // Common typedefs.
@@ -1058,8 +1016,5 @@ typedef ACE_Noop_Key_Generator<key> noop_key_generator;
 #pragma instantiate ACE_Map_Iterator<key, value, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Reverse_Iterator<key, value, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Entry<key, value>
-
-#pragma instantiate ACE_Unbounded_Set<TAO_POA_Manager *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_POA_Manager *>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

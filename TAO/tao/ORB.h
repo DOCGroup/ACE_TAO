@@ -25,9 +25,6 @@
 #include "tao/IOR_LookupTable.h"
 #include "tao/Services.h"
 
-// IRIX needs this for the throw specs
-#include "tao/PolicyC.h"
-
 typedef enum
 {
   TAO_SERVICEID_NAMESERVICE,
@@ -336,7 +333,7 @@ public:
 
   // ORB_Core has special privileges
   friend class TAO_ORB_Core;
-  friend TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
+  friend TAO_Export TAO_ORB_Core* TAO_ORB_Core_instance (void);
 
   class TAO_Export InvalidName : public CORBA_UserException
   {
@@ -514,8 +511,7 @@ public:
   // we've returned since we've been asked to shut down the value of 1
   // is returned.
 
-  void shutdown (CORBA::Boolean wait_for_completion = 0,
-                 CORBA::Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  void shutdown (CORBA::Boolean wait_for_completion = 0);
   // This operation instructs the ORB to shut down. Shutting down the
   // ORB causes all Object Adapters to be shut down. If
   // <wait_for_completion> parameter is TRUE, this operation blocks
@@ -551,17 +547,7 @@ public:
   CORBA_ORB_ObjectIdList_ptr list_initial_services (CORBA_Environment &TAO_IN_ENV =
                                                     CORBA::default_environment ());
 
-#if defined(TAO_HAS_CORBA_MESSAGING)
-  CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                   const CORBA::Any& val,
-                                   CORBA_Environment &ACE_TRY_ENV =
-                                       CORBA::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException, CORBA::PolicyError));
-#endif /* TAO_HAS_CORBA_MESSAGING */
-
-  // ----------------------------------------------------------------
   // = TAO-specific extensions to the CORBA specification.
-  // ----------------------------------------------------------------
 
   virtual TAO_ServantBase *_get_collocated_servant (TAO_Stub *p);
   // Return the object pointer of an collocated object it there is
@@ -643,11 +629,8 @@ public:
 
   void _optimize_collocation_objects (CORBA::Boolean opt);
   // Set collocation optimization status.
-  CORBA::Boolean _optimize_collocation_objects (void);
+  CORBA::Boolean _optimize_collocation_objects (void) const;
   // Get collocation optimization status.
-
-  TAO_ORB_Core *orb_core (void) const;
-  // Get the ORB core.
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_ORB_ptr _ptr_type;
@@ -657,7 +640,7 @@ public:
 
 protected:
   // We must be created via the <ORB_init> call.
-  CORBA_ORB (TAO_ORB_Core *orb_core);
+  CORBA_ORB (TAO_ORB_Core* orb_core);
   virtual ~CORBA_ORB (void);
 
   CORBA_Object_ptr resolve_poa_current (CORBA_Environment &TAO_IN_ENV);
@@ -702,18 +685,8 @@ private:
   // Read an IOR from a file and then parse it, returning the object
   // reference.
 
-  CORBA::Object_ptr iiop_string_to_object (const char* url,
-                                           CORBA::Environment& env);
-  // Read an IOR from a file and then parse it, returning the object
-  // reference.
-
   CORBA::Object_ptr ior_string_to_object (const char* ior,
                                           CORBA::Environment& env);
-  // Read an IOR from a file and then parse it, returning the object
-  // reference.
-
-  CORBA::Object_ptr iioploc_string_to_object (const char* string,
-                                              CORBA::Environment& env);
   // Read an IOR from a file and then parse it, returning the object
   // reference.
 
@@ -764,7 +737,7 @@ private:
   TAO_Leader_Follower_Info  leader_follower_info_;
   // Information about the leader follower model
 
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core* orb_core_;
   // The ORB_Core that created us....
 
 #ifdef TAO_HAS_VALUETYPE
@@ -776,9 +749,6 @@ private:
   // Table of ObjectID->IOR mappings.
 
   CORBA::Boolean use_omg_ior_format_;
-  // Decides whether to use the URL notation or to use IOR notation.
-
-  CORBA::Boolean optimize_collocation_objects_;
   // Decides whether to use the URL notation or to use IOR notation.
 
   // = NON-PROVIDED METHODS

@@ -36,7 +36,6 @@ class TAO_IIOP_Transport;
 class TAO_IIOP_Client_Transport;
 class TAO_IIOP_Server_Transport;
 class TAO_ORB_Core;
-class TAO_ORB_Core_TSS_Resources;
 
 typedef ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_SVC_HANDLER;
@@ -212,6 +211,7 @@ class TAO_Export TAO_Server_Connection_Handler : public TAO_IIOP_Handler_Base
 public:
   TAO_Server_Connection_Handler (ACE_Thread_Manager* t = 0);
   TAO_Server_Connection_Handler (TAO_ORB_Core *orb_core);
+  ~TAO_Server_Connection_Handler (void);
   // Constructor.
 
   virtual int open (void *);
@@ -283,10 +283,7 @@ protected:
   // Perform appropriate closing.
 
   TAO_ORB_Core *orb_core_;
-  // Cached ORB Core.
-
-  TAO_ORB_Core_TSS_Resources *tss_resources_;
-  // Cached tss resources of the ORB that activated this object.
+  // Cache the ORB Core to minimize
 };
 
 #if defined (__ACE_INLINE__)

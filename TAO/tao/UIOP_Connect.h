@@ -25,10 +25,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #  include "ace/Acceptor.h"
+#  include "ace/LSOCK_Acceptor.h"
+#  include "ace/Reactor.h"
 #  include "ace/Synch.h"
 #  include "ace/Svc_Handler.h"
-#  include "ace/Reactor.h"
-#  include "ace/LSOCK_Acceptor.h"
 
 #  include "tao/corbafwd.h"
 
@@ -40,7 +40,8 @@ class TAO_UIOP_Transport;
 class TAO_UIOP_Client_Transport;
 class TAO_UIOP_Server_Transport;
 
-typedef ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH> TAO_UIOP_SVC_HANDLER;
+typedef ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
+        TAO_UIOP_SVC_HANDLER;
 
 class TAO_UIOP_Handler_Base : public TAO_UIOP_SVC_HANDLER
 {
@@ -215,6 +216,9 @@ public:
   TAO_UIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core);
   // Constructor.
 
+  ~TAO_UIOP_Server_Connection_Handler (void);
+  // Destructor
+
   virtual int open (void *);
   // Called by the <Strategy_Acceptor> when the handler is completely
   // connected.  Argument is unused.
@@ -288,7 +292,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/Connect.i"
+# include "tao/UIOP_Connect.i"
 #endif /* __ACE_INLINE__ */
 
 # endif /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */

@@ -359,7 +359,7 @@ protected:
   void *time_stamp_;
 };
 
-class TAO_POA_Current_Impl;
+class TAO_POA_Current;
 
 class TAO_Export TAO_POA : public POA_PortableServer::POA
 {
@@ -368,7 +368,7 @@ public:
   friend class TAO_Object_Adapter;
   friend class TAO_Object_Adapter::Outstanding_Requests;
   friend class TAO_Object_Adapter::Single_Threaded_POA_Lock;
-  friend class TAO_POA_Current_Impl;
+  friend class TAO_POA_Current;
   friend class TAO_POA_Manager;
 
   typedef ACE_CString String;
@@ -525,17 +525,14 @@ public:
 
   const TAO_Object_Adapter::poa_name &system_name (void) const;
 
-  static void check_for_valid_wait_for_completions (CORBA::Boolean wait_for_completion,
-                                                    CORBA::Environment &ACE_TRY_ENV);
-
 protected:
 
   const ACE_CString &name (void) const;
 
-  PortableServer::POA_ptr create_POA_i (const char *adapter_name,
-                                        PortableServer::POAManager_ptr poa_manager,
-                                        const CORBA::PolicyList &policies,
-                                        CORBA_Environment &ACE_TRY_ENV);
+  TAO_POA *create_POA (const String &adapter_name,
+                       TAO_POA_Manager &poa_manager,
+                       const TAO_POA_Policies &policies,
+                       CORBA_Environment &ACE_TRY_ENV);
 
   TAO_POA *create_POA_i (const String &adapter_name,
                          TAO_POA_Manager &poa_manager,
@@ -573,15 +570,6 @@ protected:
 
   void deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
                                  CORBA::Environment &ACE_TRY_ENV);
-
-  void deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
-                                 CORBA::Boolean wait_for_completion,
-                                 CORBA::Environment &ACE_TRY_ENV);
-
-  void wait_for_completions (CORBA::Boolean wait_for_completion,
-                             CORBA::Environment &ACE_TRY_ENV);
-
-  void check_poa_manager_state (CORBA::Environment &ACE_TRY_ENV);
 
   void deactivate_object_i (const PortableServer::ObjectId &oid,
                             CORBA_Environment &ACE_TRY_ENV);
@@ -657,7 +645,7 @@ protected:
 
   PortableServer::Servant locate_servant_i (const char *operation,
                                             const PortableServer::ObjectId &id,
-                                            TAO_POA_Current_Impl *poa_current_impl,
+                                            TAO_POA_Current *poa_current,
                                             CORBA_Environment &ACE_TRY_ENV);
 
   const TAO_Creation_Time &creation_time (void);
@@ -755,7 +743,7 @@ protected:
 
   ACE_SYNCH_CONDITION outstanding_requests_condition_;
 
-  CORBA::Boolean wait_for_completion_pending_;
+  CORBA::Boolean destroy_pending_;
 };
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -773,50 +761,30 @@ public:
 
 class TAO_Export TAO_POA_Current : public POA_PortableServer::Current
 {
-public:
-
-  PortableServer::POA_ptr get_POA (CORBA_Environment &ACE_TRY_ENV);
-  // Returns the POA on which the current request is being invoked.
-  // Can raise the <CORBA::NoContext> exception if this function is
-  // not invoked in the context of an upcall.
-
-  PortableServer::ObjectId *get_object_id (CORBA_Environment &ACE_TRY_ENV);
-  // Returns the object id of the current request being invoked.  Can
-  // raise the <CORBA::NoContext> exception if this function is not
-  // invoked in the context of an upcall.
-
-  TAO_POA_Current_Impl *implementation (void);
-  // Returns the class that implements this interface.
-
-  TAO_POA_Current_Impl *implementation (TAO_POA_Current_Impl *new_current);
-  // Sets the thread-specific pointer to the new POA Current state,
-  // returning a pointer to the existing POA Current state.
-};
-
-class TAO_Export TAO_POA_Current_Impl
-{
   // = TITLE
   //
-  //     Implementation of the PortableServer::Current object.
+  // Implementation of the PortableServer::Current object.
   //
   // = DESCRIPTION
   //
-  //     Objects of this class hold state information regarding the
-  //     current POA invocation.  Savvy readers will notice that this
-  //     contains substantially more methods than the POA spec shows;
-  //     they exist because the ORB either (a) needs them or (b) finds
-  //     them useful for implementing a more efficient ORB.
+  // Objects of this class hold state information regarding the
+  // current POA invocation.  Savvy readers will notice that this
+  // contains substantially more methods than the POA spec shows; they
+  // exist because the ORB either (a) needs them or (b) finds them
+  // useful for implementing a more efficient ORB.
   //
-  //     The intent is that instances of this class are held in
-  //     Thread-Specific Storage so that upcalls can get context
-  //     information regarding their invocation.  The POA itself must
-  //     insure that all <set_*> operations are performed in the
-  //     execution thread so that the proper <TAO_POA_Current> pointer
-  //     is obtained from TSS.
+  // The intent is that instances of this class are held in
+  // Thread-Specific Storage so that upcalls can get context
+  // information regarding their invocation.  The POA itself must
+  // insure that all <set_*> operations are performed in the execution
+  // thread so that the proper <TAO_POA_Current> pointer is obtained
+  // from TSS.
 
 public:
 
   friend class TAO_POA;
+
+  // = Specification-mandated methods
 
   PortableServer::POA_ptr get_POA (CORBA_Environment &ACE_TRY_ENV);
   // Return pointer to the invoking POA.  Raises the
@@ -827,6 +795,17 @@ public:
   // This may be necessary in cases where a <Servant> is serving under
   // the guise of multiple object ids.  This has _out semantics Raises
   // the <CORBA::NoContext> exception.
+
+  // = TAO Extensions
+
+  void clear (void);
+  // Clear any prior settings made.  This will make things which can
+  // throw the <CORBA::NoContext> exception raise it if invoked
+  // without a corresponding <set_*> operation.
+
+  int context_is_valid (void);
+  // Returns non-zero if the context is valid, i.e., if it would be
+  // impossible for a <CORBA::NoContext> exception to be raised.
 
   void POA_impl (TAO_POA *impl);
   // Set the POA implementation.
@@ -852,6 +831,9 @@ public:
   PortableServer::Servant servant (void) const;
   // Get the servant for the current upcall.
 
+  int in_upcall (void) const;
+  // Get whether we're in an upcall (non-zero is yes).
+
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
   PortableServer::ServantLocator::Cookie locator_cookie (void) const;
@@ -862,20 +844,17 @@ public:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  void active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry);
-  // Set the <active_object_map_entry>.
+  TAO_POA_Current (void);
+  // Constructor
 
-  TAO_Active_Object_Map::Map_Entry *active_object_map_entry (void) const;
-  // Get the <active_object_map_entry>.
-
-  TAO_POA_Current_Impl (TAO_POA *impl,
-                        const TAO_ObjectKey &key,
-                        PortableServer::Servant servant,
-                        const char *operation,
-                        TAO_ORB_Core &orb_core);
+  TAO_POA_Current (TAO_POA *impl,
+                   const TAO_ObjectKey &key,
+                   PortableServer::Servant servant,
+                   const char *operation,
+                   TAO_ORB_Core &orb_core);
   // Convenience constructor combining construction & initialization.
 
-  ~TAO_POA_Current_Impl (void);
+  ~TAO_POA_Current (void);
   // Destructor
 
 protected:
@@ -883,9 +862,7 @@ protected:
   // The POA implementation invoking an upcall
 
   PortableServer::ObjectId object_id_;
-  // The object ID of the current context.  This is the user id and
-  // not the id the goes into the IOR.  Note also that unlike the
-  // <object_key>, this field is stored by value.
+  // The object ID of the current context.
 
   const TAO_ObjectKey *object_key_;
   // The object key of the current context.
@@ -906,7 +883,7 @@ protected:
   TAO_ORB_Core *orb_core_;
   // ORB Core for this current.
 
-  TAO_POA_Current_Impl *previous_current_impl_;
+  TAO_POA_Current *previous_current_;
   // Current previous from <this>.
 
   TAO_Active_Object_Map::Map_Entry *active_object_map_entry_;
@@ -914,8 +891,8 @@ protected:
   // to the servant for this request.
 
   // = Hidden because we don't allow these
-  TAO_POA_Current_Impl (const TAO_POA_Current_Impl &);
-  void operator= (const TAO_POA_Current_Impl &);
+  TAO_POA_Current (const TAO_POA_Current &);
+  void operator= (const TAO_POA_Current &);
 };
 
 #if defined (__ACE_INLINE__)

@@ -155,29 +155,6 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   // available (say the user wants an ATM connection, but we don't
   // have the protocol) then we give it another profile to try.
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
-#if 0 // @@ TODO implement once PP are merged in
-  POA_Messaging::RelativeRoundtripTimeoutPolicy* timeout =
-    this->stub_->relative_roundtrip_timeout ();
-  if (TAO_debug_level > 0)
-    {
-      if (timeout == 0)
-        ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) Timeout is nil\n"));
-      else
-        {
-          TimeBase::TimeT expiry =
-            timeout->relative_expiry (ACE_TRY_ENV);
-          ACE_CHECK;
-          CORBA::ULong msecs =
-            ACE_static_cast(CORBA::ULong, expiry / 10000);
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) Timeout is <%u>\n",
-                      msecs));
-        }
-    }
-#endif /* 0 */
-#endif /* TAO_HAS_CORBA_MESSAGING */
-
   // Loop until a connection is established or there aren't any more
   // profiles to try.
  for (;;)
@@ -194,11 +171,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
       // Try moving to the next profile and starting over, if that
       // fails then we must raise the TRANSIENT exception.
       if (this->stub_->next_profile_retry () == 0)
-        ACE_THROW (CORBA::TRANSIENT (
-          CORBA_SystemException::minor_code_tao_ (
-            TAO_INVOCATION_CONNECT_MINOR_CODE,
-            errno),
-          CORBA::COMPLETED_NO));
+        ACE_THROW (CORBA::TRANSIENT ());
     }
 
   const TAO_ObjectKey& key = this->profile_->object_key();
@@ -491,12 +464,8 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   // get created on a per-call basis. For now we'll play it safe.
 
   if (this->stub_->next_profile () == 0)
-    ACE_THROW_RETURN (CORBA::TRANSIENT (
-      CORBA_SystemException::minor_code_tao_ (
-        TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-        errno),
-      CORBA::COMPLETED_NO),
-      TAO_INVOKE_EXCEPTION);
+    ACE_THROW_RETURN (CORBA::TRANSIENT (),
+                      TAO_INVOKE_EXCEPTION);
 
   return TAO_INVOKE_RESTART;
 }
@@ -671,8 +640,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 {
   int retval = TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
-  if (retval != TAO_INVOKE_OK)
-    return retval;
+  ACE_UNUSED_ARG (retval);
 
   // This blocks until the response is read.  In the current version,
   // there is only one client thread that ever uses this connection,
@@ -955,12 +923,8 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       //    works? Or is that something that a higher level component
       //    should decide?  Remember that LocateRequests are part of
       //    the strategy to establish a connection.
-      ACE_THROW_RETURN (CORBA::TRANSIENT (
-        CORBA_SystemException::minor_code_tao_ (
-          TAO_INVOCATION_SEND_REQUEST_MINOR_CODE,
-          errno),
-        CORBA::COMPLETED_MAYBE),
-        TAO_INVOKE_EXCEPTION);
+      ACE_THROW_RETURN (CORBA::TRANSIENT (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
+                        TAO_INVOKE_EXCEPTION);
     }
 
   // @@ Maybe the right place to do this is once the reply is

@@ -7,6 +7,8 @@
 #include "tao/default_server.h"
 #include "tao/default_client.h"
 #include "tao/default_resource.h"
+#include "tao/IIOP_Factory.h"
+#include "tao/UIOP_Factory.h"
 
 ACE_RCSID(tao, TAO_Internal, "$Id$")
 
@@ -47,6 +49,13 @@ TAO_Internal::open_services (int& argc, char** argv, int ignore_default_svc_conf
         insert (&ace_svc_desc_TAO_Default_Client_Strategy_Factory);
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_Default_Server_Strategy_Factory);
+      ACE_Service_Config::static_svcs ()->
+        insert (&ace_svc_desc_TAO_IIOP_Protocol_Factory);
+#if !defined(ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+      ACE_Service_Config::static_svcs ()->
+        insert (&ace_svc_desc_TAO_UIOP_Protocol_Factory);
+#endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+      // add descriptor to list of static objects.
 
       int retv = ACE_Service_Config::open (argc, argv,
                                            ACE_DEFAULT_LOGGER_KEY,

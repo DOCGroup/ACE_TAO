@@ -3,13 +3,6 @@
 
 # if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-
-ACE_INLINE CORBA::ULong
-TAO_UIOP_Profile::tag (void) const
-{
-  return this->tag_;
-}
-
 ACE_INLINE const TAO_ObjectKey &
 TAO_UIOP_Profile::object_key (void) const
 {
@@ -24,7 +17,7 @@ TAO_UIOP_Profile::object_key (TAO_ObjectKey& objkey)
 }
 
 ACE_INLINE TAO_ObjectKey *
-TAO_UIOP_Profile::_key (CORBA::Environment &)
+TAO_UIOP_Profile::_key (CORBA::Environment &) const
 {
   return new TAO_ObjectKey (this->object_key_);
 }
@@ -60,7 +53,7 @@ TAO_UIOP_Profile::version (TAO_IOP_Version *v)
   return &this->version_;
 }
 
-ACE_INLINE TAO_Client_Connection_Handler *&
+ACE_INLINE TAO_UIOP_Client_Connection_Handler *&
 TAO_UIOP_Profile::hint (void)
 {
   return this->hint_;
