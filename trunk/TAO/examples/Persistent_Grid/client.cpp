@@ -8,7 +8,6 @@ int
 main (int argc, char *argv[])
 {
   Grid_Client_i client;
-  
 
   ACE_DEBUG ((LM_DEBUG,
               "\nGrid client\n\n"));

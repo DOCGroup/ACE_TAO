@@ -72,7 +72,7 @@ Persistent_Client_i::run (const char *name,
                   "(%P|%t) Made the grid succesfully\n"));
       
 
-      for ( CORBA::Short index_ = 0; index_ < height_; index_++)
+      for (CORBA::Short index_ = 0; index_ < height_; index_++)
         {
           for (CORBA::Short ctr = 0; ctr < width_; ctr++)
             {

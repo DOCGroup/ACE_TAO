@@ -2,7 +2,7 @@
 
 # include "Persistent_Client.h"
 
-// The client program for the application.
+// The "persistent client" program for the application.
 
 int
 main (int argc, char *argv[])
@@ -17,7 +17,6 @@ main (int argc, char *argv[])
     return -1; 
   else
     return 0;
-   
 }
 
                                  
