@@ -21,6 +21,15 @@
 // ============================================================================
 
 #include "test_config.h"
+
+ACE_RCSID (tests,
+           Proactor_Timer_Test,
+           "$Id$")
+
+#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+  // This only works on Win32 platforms and on Unix platforms
+  // supporting POSIX aio calls.
+
 #include "ace/Timer_Queue.h"
 #include "ace/Proactor.h"
 #include "ace/High_Res_Timer.h"
@@ -50,8 +59,8 @@ private:
   // Stores the id of this timer.
 };
 
-Time_Handler::Time_Handler ()
-: timer_id_ (-1)
+Time_Handler::Time_Handler (void)
+  : timer_id_ (-1)
 {
   // Nothing
 }
@@ -215,3 +224,21 @@ main (int argc, ACE_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
+
+#else
+
+int
+main (int, ACE_TCHAR *[])
+{
+  ACE_START_TEST (ACE_TEXT ("Proactor_Timer_Test"));
+
+  ACE_DEBUG ((LM_INFO,
+              ACE_TEXT ("Asynchronous IO is unsupported.\n")
+              ACE_TEXT ("Proactor_Timer_Test will not be run.")));
+
+  ACE_END_TEST;
+
+  return 0;
+}
+
+#endif  /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS */
