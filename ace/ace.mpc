@@ -251,7 +251,7 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     Thread_Mutex.cpp
     Thread_Semaphore.cpp
     Time_Request_Reply.cpp
-    Time_Value.cpp    
+    Time_Value.cpp
     Timeprobe.cpp
     Timer_Hash.cpp
     Timer_Heap.cpp
@@ -353,7 +353,6 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     Typed_SV_Message_Queue.cpp
     Unbounded_Queue.cpp
     Unbounded_Set.cpp
-    Unbounded_Set_Ex.cpp
     Vector_T.cpp
   }
 
@@ -370,7 +369,6 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     Reverse_Lock_T.inl
     Swap.inl
     TSS_T.inl
-    Unbounded_Set_Ex.inl
     ace_wchar.inl
   }
 
@@ -421,7 +419,6 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     TSS_T.h
     Timer_Queuefwd.h
     UPIPE_Addr.h
-    Unbounded_Set_Ex.h
     Version.h
     ace_wchar.h
     config-WinCE.h
@@ -454,7 +451,7 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     README
     ../VERSION
   }
-  
+
   verbatim(gnuace, local) {
     "Svc_Conf_y.cpp: Svc_Conf.y"
     "	$(YACC) -l -d Svc_Conf.y"

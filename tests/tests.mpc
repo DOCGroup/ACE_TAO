@@ -880,13 +880,6 @@ project(UPIPE SAP Test) : acetest {
   }
 }
 
-project(Unbounded Set Test Ex) : acetest {
-  exename = Unbounded_Set_Test_Ex
-  Source_Files {
-    Unbounded_Set_Test_Ex.cpp
-  }
-}
-
 project(Upgradable RW Test) : acetest {
   exename = Upgradable_RW_Test
   Source_Files {
