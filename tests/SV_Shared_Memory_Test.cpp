@@ -23,8 +23,16 @@
 #if defined (ACE_HAS_SYSV_IPC)
 
 // Shared memory allocator (note that this chews up the
-// ACE_DEFAULT_SEM_KEY).
-static ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple> allocator;
+// ACE_DEFAULT_SEM_KEY).  Hide the allocator inside this function so
+// that it doesn't get constructed until after the ACE_Object_Manager
+// gets constructed, even with ACE_HAS_NONSTATIC_OBJECT_MANAGER.
+static
+ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple> &
+allocator ()
+{
+  static ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple> allocator;
+  return allocator;
+}
 
 const int SEM_KEY_1 = ACE_DEFAULT_SEM_KEY + 1;
 const int SEM_KEY_2 = ACE_DEFAULT_SEM_KEY + 2;
@@ -38,11 +46,11 @@ parent (char *shm)
   ACE_SV_Semaphore_Complex mutex;
 
   ACE_ASSERT (mutex.open (SEM_KEY_1,
-			   ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
+                           ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
 
   ACE_SV_Semaphore_Complex synch;
   ACE_ASSERT (synch.open (SEM_KEY_2,
-			   ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
+                           ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
 
   for (int i = 0; i < SHMSZ; i++)
     shm[i] = SHMDATA[i];
@@ -52,7 +60,7 @@ parent (char *shm)
   else if (synch.acquire () == -1)
     ACE_ERROR ((LM_ERROR, "(%P) %p", "parent synch.acquire"));
 
-  if (allocator.remove () == -1)
+  if (allocator ().remove () == -1)
     ACE_ERROR ((LM_ERROR, "(%P) %p\n", "parent allocator.remove"));
   if (mutex.remove () == -1)
     ACE_ERROR ((LM_ERROR, "(%P) %p\n", "parent mutex.remove"));
@@ -66,12 +74,12 @@ child (char *shm)
 {
   ACE_SV_Semaphore_Complex mutex;
   ACE_ASSERT (mutex.open (SEM_KEY_1,
-			   ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
+                           ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
 
   ACE_SV_Semaphore_Complex synch;
 
   ACE_ASSERT (synch.open (SEM_KEY_2,
-			   ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
+                           ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
 
   while (mutex.tryacquire () == -1)
     if (errno == EAGAIN)
@@ -108,7 +116,7 @@ main (int, char *[])
   ACE_START_TEST ("SV_Shared_Memory_Test");
 
 #if defined (ACE_HAS_SYSV_IPC)
-  char *shm = (char *) allocator.malloc (27);
+  char *shm = (char *) allocator ().malloc (27);
 
   switch (ACE_OS::fork ("SV_Shared_Memory_Test.cpp"))
   //  switch (1)
@@ -125,7 +133,7 @@ main (int, char *[])
     }
 #else
   ACE_ERROR ((LM_ERROR,
-	      "SYSV IPC is not supported on this platform\n"));
+              "SYSV IPC is not supported on this platform\n"));
 #endif /* ACE_HAS_SYSV_IPC */
   ACE_END_TEST;
   return 0;
