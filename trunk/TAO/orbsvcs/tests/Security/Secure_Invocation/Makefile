@@ -46,9 +46,6 @@ ifeq (Security,$(findstring Security,$(TAO_ORBSVCS)))
     BIN = $(BIN_UNCHECKED)
     CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
     LDFLAGS += $(PLATFORM_SSL_LDFLAGS)
-endif # ssl
-
-
   endif #SSLIOP
 endif #Security
 
