@@ -64,6 +64,27 @@ public:
 //////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class CONTAINER>
+class ACE_Refcounted_Recyclable_Handler_Cleanup_Strategy : public ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>
+{
+  // = TITLE
+  //     Defines a strategy to be followed for cleaning up
+  //     entries which are svc_handlers from a container.
+  //
+  // = DESCRIPTION
+  //     The entry to be cleaned up is removed from the container.
+  //     Here, since we are dealing with recyclable svc_handlers with
+  //     addresses which are refcountable specifically, we perform a
+  //     couple of extra operations and do so without any locking. 
+
+public:
+
+  virtual int cleanup (CONTAINER &container, KEY *key, VALUE *value);
+  // The method which will do the cleanup of the entry in the container.
+};
+
+//////////////////////////////////////////////////////////////////////
+
+template <class KEY, class VALUE, class CONTAINER>
 class ACE_Handler_Cleanup_Strategy : public ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>
 {
   // = TITLE

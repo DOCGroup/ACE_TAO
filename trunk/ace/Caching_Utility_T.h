@@ -129,6 +129,64 @@ protected:
 ////////////////////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
+class ACE_Refcounted_Recyclable_Handler_Caching_Utility
+{
+  // = TITLE
+  //    Defines a helper class for the Caching Strategies.
+  //
+  // = DESCRIPTION
+  //    This class defines the methods commonly used by the different
+  //    caching strategies. For instance: clear_cache () method which
+  //    decides and purges the entry from the container.  Note: This
+  //    class helps in the caching_strategies using a container
+  //    containing entries of <Refcounted_KEY,
+  //    Recyclable_Connection_Handler> kind. The attributes helps in
+  //    deciding the entries to be purged. The Cleanup_Strategy is the
+  //    callback class to which the entries to be cleaned up will be
+  //    delegated.
+
+public:
+
+  typedef ACE_Refcounted_Recyclable_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
+  typedef ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY_BASE;
+
+  ACE_Refcounted_Recyclable_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,
+                                                     int delete_cleanup_strategy = 0);
+
+  // Constructor.
+
+  ~ACE_Refcounted_Recyclable_Handler_Caching_Utility (void);
+  // Destructor.
+
+  int clear_cache (CONTAINER &container,
+                   double purge_percent);
+  // Purge entries from the <container>. The Cleanup_Strategy will do
+  // the actual job of cleanup once the entries to be cleaned up are
+  // decided.
+
+protected:
+
+  void minimum (CONTAINER &container,
+                KEY *&key_to_remove,
+                VALUE *&value_to_remove);
+  // Find the entry with minimum caching attributes.
+
+  CLEANUP_STRATEGY_BASE *cleanup_strategy_;
+  // This is the default Cleanup Strategy for this utility.
+
+  int delete_cleanup_strategy_;
+  // Whether the cleanup_strategy should be destroyed or not.
+
+  size_t marked_as_closed_entries_;
+  // This figure denotes the number of entries are there in the
+  // container which have been marked as closed already but might 
+  // not have been unbound from the container.
+
+};
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
 class ACE_Handler_Caching_Utility
 {
   // = TITLE

@@ -51,6 +51,16 @@ ACE_Recyclable_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (CONTAIN
 /////////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class CONTAINER> int
+ACE_Refcounted_Recyclable_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (CONTAINER &,
+                                                                                    KEY *,
+                                                                                    VALUE *value)
+{
+  return value->first ()->handle_close_i ();
+}
+
+////////////////////////////////////////////////////////////////////////////
+
+template <class KEY, class VALUE, class CONTAINER> int
 ACE_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (CONTAINER &container,
                                                               KEY *key,
                                                               VALUE *value)
