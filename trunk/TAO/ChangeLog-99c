@@ -1,3 +1,7 @@
+Tue Jun 08 14:15:52 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO version 0.3.24 released.
+
 Tue Jun 08 10:00:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Simple/time-date/Makefile: added some Time_Date*

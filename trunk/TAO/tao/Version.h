@@ -3,5 +3,5 @@
 
 #define TAO_MAJOR_VERSION 0
 #define TAO_MINOR_VERSION 3
-#define TAO_BETA_VERSION 23
-#define TAO_VERSION "0.3.23"
+#define TAO_BETA_VERSION 24
+#define TAO_VERSION "0.3.24"
