@@ -33,6 +33,16 @@ namespace TAO
     }
 
     ACE_INLINE void
+    POA_Current_Impl::replace_object_id (
+      const PortableServer::ObjectId &system_id)
+    {
+      object_id_.replace (system_id.maximum (),
+                          system_id.length (),
+                          const_cast <CORBA::Octet *> (system_id.get_buffer ()),
+                          0);
+    }
+
+    ACE_INLINE void
     POA_Current_Impl::object_key (const TAO::ObjectKey &key)
     {
       this->object_key_ = &key;

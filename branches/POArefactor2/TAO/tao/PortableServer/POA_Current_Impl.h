@@ -104,6 +104,9 @@ namespace TAO
       /// Get the object ID.
       const PortableServer::ObjectId &object_id (void) const;
 
+      /// Just replace the object id smartly
+      void replace_object_id (const PortableServer::ObjectId &system_id);
+
       /// Set the object key.
       void object_key (const TAO::ObjectKey &key);
 
