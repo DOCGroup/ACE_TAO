@@ -1,3 +1,11 @@
+Wed May 29 16:36:42 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/CDR_Stream.cpp (write_wchar, read_wchar, skip_wchar):
+	* ace/CDR_Stream.i (write_wchar_array, read_wchar_array):
+
+	  Take into account the actual size of the ACE_CDR::WChar type
+	  instead of assuming that it is always 16 bits long.
+
 Wed May 29 20:16:48 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* tests/Framework_Component_Test.cpp: 
