@@ -1,3 +1,21 @@
+Tue Sep  4 08:36:13 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* tests/vxworks_stub.c: 
+	  Added call to pacevx_vxworks_init to initialize the
+	  main thread.
+
+	* tests/Pthreads_Test.c (main): 
+	  Moved PACE_UNUSED_ARG to beginning of main.
+
+	* tests/Makefile: 
+	  Makefile doesn't build Posix_SP_Test on VxWorks. The
+	  test doesn't compile (which is actually the test for
+	  certain #defines).
+
+	* pace/pthread.h: 
+	  Added #define PACE_PTHREAD_MUTEX_INITIALIZER 
+	  PTHREAD_MUTEX_INITIALIZER
+
 Fri Aug 31 16:48:10 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
 	* pace/vxworks/types.h: 

@@ -11,13 +11,14 @@ CFLAGS += -DPACE_HAS_ALL_POSIX_FUNCS
 #       Local macros
 #----------------------------------------------------------------------------
 
-# Ensure that POSIX_SP_Test is the last test built. For some platforms,
-# it doesn't build (which is actually the test). This is currently the
-# only file like this (i.e., which may not compile).
-BIN =   Stdio_Test \
-	Pthreads_Test \
+# Build POSIX_SP_Test conditionally. For some platforms, it doesn't build
+# (which is actually the test of support for the #defines). 
+BIN =	Cond_Var_Test \
 	mqueue_test \
-        Posix_SP_Test
+	Pthreads_Test \
+	Stdio_Test
+
+BIN2 =  Posix_SP_Test
 
 #### If the PACE library wasn't built with all components, don't
 #### try to build certain tests.
@@ -34,6 +35,8 @@ ACELIB =
 ifdef VXWORKS
   ACELIB += -lPACE
   LDFLAGS += -L$(PACE_ROOT)/pace/
+else
+  BIN += BIN2
 endif
 INCLDIRS += -I$(PACE_ROOT)
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
