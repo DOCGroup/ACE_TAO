@@ -1,3 +1,10 @@
+Thu Aug 16 10:34:20 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/POSIX_Proactor.cpp (allocate_aio_slot): Added a fix so that
+	  the POSIX Proactor compiles with FreeBSD 4.4.  Thanks to Yev
+ 	  Omenzel <omenzel@yahoo.com> for reporting this and to Craig
+ 	  Rodrigues <crodrigu@bbn.com> for fixing it.
+
 Thu Aug 16 08:09:53 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/run_test.lst:
@@ -5,6 +12,7 @@ Thu Aug 16 08:09:53 2001  Chad Elliott  <elliott_c@ociweb.com>
           Added the OTHER requirement to the Thread_Pool_Reactor_Test and
           the Thread_Pool_Reactor_Resume_Test.  These are only built if
           OTHER is part of the ACE components list.
+
 
 Wed Aug 15 15:50:38 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
@@ -1061,7 +1069,7 @@ Wed Jul 25 23:49:43 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
           Thanks to Martin Krumpolec <krumpo@pobox.sk> for reporting this.
 
-Wed Jul 25 23:49:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+Wed Jul 25 23:49:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * include/makeinclude/wrapper_macros.GNU:
 
