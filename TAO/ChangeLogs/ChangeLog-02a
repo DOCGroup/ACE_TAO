@@ -1,3 +1,17 @@
+Thu Jun 27 15:41:53 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ClientInterceptorAdapter.h (len_):
+	* tao/PortableServer/ServerInterceptorAdapter.h	(len_):
+
+	  Made this data member "const" to enforce the fact that the
+	  length of the interceptor list is immutable.
+
+	* tao/ClientInterceptorAdapter.h.inl (len_):
+	* tao/PortableServer/ServerInterceptorAdapter.inl (len_):
+
+	  Initialize this data member in the base member initializer list
+	  since it is now "const."
+
 Thu Jun 27 17:58:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp: Used the
@@ -71,7 +85,7 @@ Thu Jun 27 14:55:08 2002  Ossama Othman  <ossama@uci.edu>
           ACE_Hash_Map_Manager_Ex.  The former requires three additional
           template instantiations and used the latter under the hood
           anyway.  This reduces the IORTable library footprint in addition
-	  to fixing a link error exhibi ted in builds that disable implicit
+	  to fixing a link error exhibited in builds that disable implicit
 	  template instantiation.  Thanks to Craig for pointing out the
 	  build errors.
 
