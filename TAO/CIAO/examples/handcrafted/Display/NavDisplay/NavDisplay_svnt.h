@@ -2,7 +2,7 @@
 
 // ===========================================================
 //
-// @file CIAO_Glue_Session_Template.h
+// @file NavDisplay_svnt.h
 //
 //    This is a pseudo-meta generic servant implementations template
 //    for CIAO's CIDL compiler.  It demonstrates how a servant

@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file Server_init
+ * @file Server_init.h
  *
  * Initializing CIAO Server side ORB, if they need to.
  *
