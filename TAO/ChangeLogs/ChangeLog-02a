@@ -1,3 +1,10 @@
+Fri Oct 27 15:49:55 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/Object.cpp (_set_policy_overrides): 
+	  Made the function exception safe by placing the TAO_Stub into
+	  the auto_ptr since it is dynamically allocated.
+	  Thanks to Ossama.
+	
 Fri Oct 27 11:42:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
