@@ -1,3 +1,23 @@
+Thu Jun 17 12:04:50 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface_fwd.cpp:
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be/be_valuetype.cpp:
+	* TAO_IDL/be/be_valuetype_fwd.cpp:
+	* TAO_IDL/be_include/be_interface_fwd.h:
+	* TAO_IDL/be_include/be_structure.h:
+	* TAO_IDL/be_include/be_type.h:
+	* TAO_IDL/be_include/be_union.h:
+	* TAO_IDL/be_include/be_valuetype.h:
+	* TAO_IDL/be_include/be_valuetype_fwd.h:
+	
+	Changed the signature of various "gen_out_impl", "gen_out_defn",
+	"gen_var_impl" and "gen_var_defn" signatures from "void" to char
+	*'s with default values 0. 
+
+	Thanks to Carlos again for reporting the warnings from IRIX.
+
 Thu Jun 17 11:54:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp:
