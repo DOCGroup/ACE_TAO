@@ -5,83 +5,64 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../../../bin';
-require Process;
-require ACEutils;
-use Cwd;
+use lib '../../../../../bin';
+use PerlACE::Run_Test;
 
 # amount of delay between running the servers
 
 $sleeptime = 6;
 $status = 0;
-$cwd = getcwd();
-local $nsior = "$cwd$DIR_SEPARATOR" . "ns.ior";
 
-ACE::checkForTarget($cwd);
+$nsior = PerlACE::LocalFile ("ns.ior");
+$testfile = PerlACE::LocalFile ("test");
+$makefile = PerlACE::LocalFile ("Makefile");
 
-$name_server_prog = $EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."Naming_Service".$DIR_SEPARATOR."Naming_Service".$EXE_EXT;
-$full_profile_server= $EXEPREFIX.".".$DIR_SEPARATOR."server".$EXE_EXT;
-$full_profile_ftp = $EXEPREFIX.".".$DIR_SEPARATOR."ftp".$EXE_EXT;
+unlink $nsior;
 
-# variables for parameters
+$NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
+$SV = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior -f $testfile");
+$CL = new PerlACE::Process ("ftp", "-ORBInitRef NameService=file://$nsior -f $makefile");
 
-sub name_server
-{
-    my $args = "-o $nsior";
-    print ("\n$name_server_prog $args\n");
-    unlink $nsior;
-    $NS = Process::Create ($name_server_prog, $args);
-    if (ACE::waitforfile_timed ($nsior, 8) == -1) {
-      print STDERR "ERROR: cannot find naming service IOR file\n";
-      $NS->Kill (); $NS->TimedWait (1);
-      exit 1;
-    }
+print STDERR "Starting Naming Service\n";
+
+$NS->Spawn ();
+
+if (PerlACE::waitforfile_timed ($nsior, 5) == -1) {
+    print STDERR "ERROR: cannot find naming service IOR file\n";
+    $NS->Kill (); 
+    exit 1;
 }
 
+print STDERR "Starting Server\n";
 
-sub server
-{
-    my $args = " -ORBInitRef NameService=file://$nsior"." -f test";
-    print ("\nFull_Profile Server: $args\n");
-    $SV = Process::Create ($full_profile_server, $args);
-}
-
-
-sub ftp
-{
-    my $args = "-ORBInitRef NameService=file://$nsior"." -f Makefile";
-    print ("\nFull_Profile Ftp: $args\n");
-    $CL = Process::Create ($full_profile_ftp, $args);
-}
-
-name_server ();
-
-server ();
+$SV->Spawn ();
 
 sleep $sleeptime;
 
-ftp ();
+print STDERR "Starting Client\n";
 
+$client = $CL->SpawnWaitKill (60);
 
-if ($CL->TimedWait (100) == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $status = 1;
-  $CL->Kill (); $CL->TimedWait (1);
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
-$SV->Terminate (); if ($SV->TimedWait (5) == -1) {
-  print STDERR "ERROR: cannot terminate server\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  $NS->Kill (); $NS->TimedWait (1);
-  exit 1;
+$server = $SV->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
 }
 
+$nserver = $NS->TerminateWaitKill (5);
 
-$NS->Terminate (); if ($NS->TimedWait (5) == -1) {
-  print STDERR "ERROR: cannot terminate naming service\n";
-  $NS->Kill (); $NS->TimedWait (1);
-  exit 1;
+if ($nserver != 0) {
+    print STDERR "ERROR: Naming Service returned $nserver\n";
+    $status = 1;
 }
 
+unlink $nsior;
+unlink $testfile;
 
 exit $status;

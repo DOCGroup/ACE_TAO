@@ -5,34 +5,37 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../../bin';
-require ACEutils;
-use Cwd;
+use lib '../../../../bin';
+use PerlACE::Run_Test;
 
-$cwd = getcwd();
-ACE::checkForTarget($cwd);
+$status = 0;
+
+$sample_cfg = PerlACE::LocalFile ("sample.cfg");
+$svc_conf = PerlACE::LocalFile ("svc.conf");
 
 # Run two copies of the same test...
-$T1 = Process::Create ($EXEPREFIX."EC_Mcast".$EXE_EXT,
-		       " -c $cwd$DIR_SEPARATOR" .
-                       "sample.cfg -ORBSvcConf $cwd$DIR_SEPARATOR" .
-                       "svc.conf -n 100 -t 50000 -f Set02");
-$T2 = Process::Create ($EXEPREFIX."EC_Mcast".$EXE_EXT,
-		       " -c $cwd$DIR_SEPARATOR" .
-                       "sample.cfg -ORBSvcConf $cwd$DIR_SEPARATOR" .
-                       "svc.conf -n 100 -t 50000 -f Set02");
+$T1 = new PerlACE::Process ("EC_Mcast",
+                            "-c $sample_cfg -ORBSvcConf $svc_conf "
+                            . "-n 100 -t 50000 -f Set02");
+$T2 = new PerlACE::Process ("EC_Mcast",
+                            "-c $sample_cfg -ORBSvcConf $svc_conf "
+                            . "-n 100 -t 50000 -f Set02");
 
-if ($T1->TimedWait (60) == -1) {
-  print STDERR "ERROR: test1 timedout\n";
-  $T1->Kill (); $T1->TimedWait (1);
-  $T2->Kill (); $T2->TimedWait (1);
-  exit 1;
+$T1->Spawn ();
+$T2->Spawn ();
+
+$test1 = $T1->WaitKill (60);
+
+if ($test1 != 0) {
+    print STDERR "ERROR: test 1 returned $test1\n";
+    $status = 1;
 }
 
-if ($T2->TimedWait (60) == -1) {
-  print STDERR "ERROR: test2 timedout\n";
-  $T2->Kill (); $T2->TimedWait (1);
-  exit 1;
+$test2 = $T2->WaitKill (60);
+
+if ($test2 != 0) {
+    print STDERR "ERROR: test 2 returned $test2\n";
+    $status = 1;
 }
 
-exit 0;
+exit $status;

@@ -48,9 +48,9 @@ sleep ($sleeptime);
 print STDERR "\n     Client using Round Robin Object Group (10 iterations): \n\n";
 $client = $CL->SpawnWaitKill (60);
 
-if ($client == -1) {
-    print STDERR "ERROR: client timedout\n";
-    $CL->Kill (); 
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
 $CL->Arguments ("-r " . $CL->Arguments ());
@@ -58,15 +58,25 @@ $CL->Arguments ("-r " . $CL->Arguments ());
 print STDERR "\n     Client using Random Object Group (10 iterations): \n\n";
 $client = $CL->SpawnWaitKill (60);
 
-if ($client == -1) {
-    print STDERR "ERROR: client timedout\n";
-    $CL->Kill (); 
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
-
 # Clean up.
-$LB->Kill ();
-$SV->Kill ();
+$loadbalancer= $LB->TerminateWaitKill (5);
 
-# @@ Capture any exit status from the processes.
-exit 0;
+if ($loadbalancer != 0) {
+    print STDERR "ERROR: load balancer returned $loadbalancer\n";
+    $status = 1;
+}
+
+$server = $SV->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
+}
+unlink $iorfile;
+
+exit $status;

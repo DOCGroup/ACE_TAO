@@ -118,6 +118,7 @@ SOURCE=.\test.idl
 !IF  "$(CFG)" == "Native Exceptions Client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__TEST_="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\test.idl
 InputName=test
@@ -156,6 +157,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Native Exceptions Client - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\test.idl
 InputName=test

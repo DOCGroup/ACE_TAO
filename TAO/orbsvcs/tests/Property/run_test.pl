@@ -5,81 +5,60 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../../bin';
-require Process;
-require ACEutils;
-use Cwd;
+use lib '../../../../bin';
+use PerlACE::Run_Test;
 
-$cwd = getcwd();
 # amount of delay between running the servers
 
 $sleeptime = 6;
 $status = 0;
 
-ACE::checkForTarget($cwd);
-
 # variables for parameters
 
-$nsior = "$cwd$DIR_SEPARATOR" . "ns.ior";
+$nsior = PerlACE::LocalFile ("ns.ior");
 
-sub name_server
-{
-    my $args = " -o $nsior";
-    my $prog =
-    print STDERR ("\nNaming_Service: $args\n");
+unlink $nsior;
 
-    unlink $nsior;
-    $NS = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR
-			   ."..".$DIR_SEPARATOR
-			   ."Naming_Service".$DIR_SEPARATOR
-			   ."Naming_Service".$EXE_EXT, $args);
-    if (ACE::waitforfile_timed ($nsior, 5) == -1) {
-      print STDERR "ERROR: cannot find naming service IOR file\n";
-      $NS->Kill (); $NS->TimedWait (1);
-      exit 1;
-    }
+$NS = new PerlACE::Process ("../../Naming_Service/Naming_Service", "-o $nsior");
+$SV = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior");
+$CL = new PerlACE::Process ("client", "-ORBInitRef NameService=file://$nsior");
+
+print STDERR "Starting Naming_Service\n";
+$NS->Spawn ();
+
+if (PerlACE::waitforfile_timed ($nsior, 5) == -1) {
+    print STDERR "ERROR: cannot find naming service IOR file\n";
+    $NS->Kill (); 
+    exit 1;
 }
 
+print STDERR "Starting Server\n";
+$SV->Spawn ();
 
-sub server
-{
-    my $args = "-ORBInitRef NameService=file://$nsior";
-    print STDERR "\nServer $args\n";
-    $SV = Process::Create ($EXEPREFIX."server$EXE_EXT", $args);
-}
-
-
-sub client
-{
-    my $args = "-ORBInitRef NameService=file://$nsior";
-    print STDERR "\nclient $args\n";
-    $CL = Process::Create ($EXEPREFIX."client$EXE_EXT", $args);
-}
-
-name_server ();
-
-server ();
 sleep $sleeptime;
 
-client ();
+print STDERR "Starting Client\n";
 
-if ($CL->TimedWait (60) == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $status = 1;
-  $CL->Kill (); $CL->TimedWait (1);
+
+$client = $CL->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client";
+    $status = 1;
 }
 
-$SV->Terminate (); if ($SV->TimedWait (5) == -1) {
-  print STDERR "ERROR: cannot terminate server\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  $NS->Kill (); $NS->TimedWait (1);
-  exit 1;
+$server = $SV->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server";
+    $status = 1;
 }
 
-$NS->Terminate (); if ($NS->TimedWait (5) == -1) {
-  print STDERR "ERROR: cannot terminate naming service\n";
-  $NS->Kill (); $NS->TimedWait (1);
-  exit 1;
+$nserver = $NS->TerminateWaitKill (5);
+
+if ($nserver != 0) {
+    print STDERR "ERROR: name server returned $nserver";
+    $status = 1;
 }
 
 exit $status;

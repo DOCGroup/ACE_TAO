@@ -8,6 +8,13 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib '../../../bin';
 use PerlACE::Run_Test;
 
-my $CL = new PerlACE::Process ("driver", "");
+$T = new PerlACE::Process ("driver");
 
-exit $CL->SpawnWaitKill (60);
+$test = $T->SpawnWaitKill (60);
+
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
+    exit 1;
+}
+
+exit 0;

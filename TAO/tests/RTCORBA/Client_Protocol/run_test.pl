@@ -5,20 +5,18 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../../bin';
-require ACEutils;
-use Cwd;
+use lib '../../../../bin';
+use PerlACE::Run_Test;
 
-$cwd = getcwd();
-$iorfile1 = "$cwd$DIR_SEPARATOR" . "test1.ior";
-$iorfile2 = "$cwd$DIR_SEPARATOR" . "test2.ior";
+$status = 0;
 
-ACE::checkForTarget($cwd);
-
-print STDERR "\n********** RTCORBA Client Protocol Policy Unit Test\n\n";
+$iorfile1 = PerlACE::LocalFile ("test1.ior");
+$iorfile2 = PerlACE::LocalFile ("test2.ior");
 
 unlink $iorfile1;
 unlink $iorfile2;
+
+print STDERR "\n********** RTCORBA Client Protocol Policy Unit Test\n\n";
 
 # Arguments are platform-dependent (UIOP not available on Windows).
 $server_args =
@@ -27,47 +25,45 @@ $server_args =
 $client_args =
     "-s file://$iorfile1 -c file://$iorfile2 -p 1413566210 -ORBdebuglevel 1 ";
 
-if ($^O eq "MSWin32")
-{
-$server_args =
-    "-s $iorfile1 -c $iorfile2 -p 1413566210 "
-    ."-ORBendpoint iiop:// -ORBendpoint shmiop:// ";
-$client_args =
-    "-s file://$iorfile1 -c file://$iorfile2 -ORBdebuglevel 1";
+if ($^O eq "MSWin32") {
+    $server_args =
+        "-s $iorfile1 -c $iorfile2 -p 1413566210 "
+        ."-ORBendpoint iiop:// -ORBendpoint shmiop:// ";
+    $client_args =
+        "-s file://$iorfile1 -c file://$iorfile2 -ORBdebuglevel 1";
 }
 
 # Start server.
-$SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
-                       $server_args);
+$SV = new PerlACE::Process ("server", $server_args);
+$CL = new PerlACE::Process ("client", $client_args);
 
-if (ACE::waitforfile_timed ($iorfile2, 10) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile2>\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  exit 1;
+$SV->Spawn ();
+
+if (PerlACE::waitforfile_timed ($iorfile2, 10) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile2>\n";
+    $SV->Kill (); 
+    exit 1;
 }
 
 # Start client.
-$CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-                       $client_args);
+$client = $CL->SpawnWaitKill (60);
 
-# Clean up.
-$client = $CL->TimedWait (60);
-if ($client == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $CL->Kill (); $CL->TimedWait (1);
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
-$server = $SV->TimedWait (60);
-if ($server == -1) {
-  print STDERR "ERROR: server timedout\n";
-  $SV->Kill (); $SV->TimedWait (1);
+$server = $SV->WaitKill (60);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
 }
 
 unlink $iorfile1;
 unlink $iorfile2;
 
-if ($server != 0 || $client != 0) {
-  exit 1;
-}
+# Clean up SHMIOP files
+unlink glob ("server_shmiop_*");
 
-exit 0;
+exit $status;

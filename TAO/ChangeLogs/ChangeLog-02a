@@ -1,3 +1,167 @@
+Sun Mar  4 19:12:59 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/Callback_Quoter/Consumer.dsp:
+        * examples/Callback_Quoter/Notifier.dsp:
+        * examples/Callback_Quoter/Supplier.dsp:
+        * examples/Load_Balancing/client.dsp:
+        * examples/Load_Balancing/server.dsp:
+        * examples/Load_Balancing/service.dsp:
+        * examples/Persistent_Grid/Persistent_Grid_Client_Files.dsp:
+        * examples/Persistent_Grid/Persistent_Grid_Second_Client_Files.dsp:
+        * examples/Persistent_Grid/Persistent_Grid_Server_Files.dsp:
+        * orbsvcs/tests/EC_Basic/EC_Basic.dsp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECCM_Consumer.dsp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECCM_Supplier.dsp:
+        * orbsvcs/tests/Interoperable_Naming/client.dsp:
+        * orbsvcs/tests/LoadBalancing/client.dsp:
+        * orbsvcs/tests/LoadBalancing/server.dsp:
+        * orbsvcs/tests/Simple_Naming/client.dsp:
+        * orbsvcs/tests/Trading/Colocated_Test.dsp:
+        * orbsvcs/tests/Trading/Export_Test.dsp:
+        * orbsvcs/tests/Trading/Import_Test.dsp:
+        * orbsvcs/tests/Trading/TradingLib.dsp:
+        * tests/AMI/AMI_Test_Client.dsp:
+        * tests/AMI/AMI_Test_Server.dsp:
+        * tests/AMI/AMI_Test_Simple_Client.dsp:
+        * tests/AMI_Timeouts/client.dsp:
+        * tests/AMI_Timeouts/server.dsp:
+        * tests/DynAny_Test/basic_test.dsp:
+        * tests/Multiple/Client.dsp:
+        * tests/Multiple/Server.dsp:
+        * tests/Native_Exceptions/client.dsp:
+        * tests/ORB_destroy/ORB_destroy.dsp:
+        * tests/Native_Exceptions/server.dsp:
+        * tests/Object_Loader/Test_DLL.dsp:
+        * tests/Object_Loader/driver.dsp:
+        * tests/Portable_Interceptors/Benchmark/client.dsp:
+        * tests/Portable_Interceptors/Benchmark/server.dsp:
+        * tests/Smart_Proxies/client.dsp:
+        * tests/Smart_Proxies/server.dsp:
+        * tests/Timeout/client.dsp:
+        * tests/Timeout/server.dsp:
+
+          Fixed problems with outputting the release executables into
+          the wrong directory.
+
+        * tests/CDR/alignment.dsp: (added)
+        * tests/CDR/allocator.dsp: (added)
+        * tests/CDR/CDR.dsw:
+
+          Added a couple of missing projects.
+
+        * tests/Leader_Followers/run_test.pl:
+        * tests/Leader_Followers/run_test_mt.pl:
+
+          Split the actions of this test into 2 run_tests, so it
+          doesn't hit the sandbox timeout in the nightly builds.
+
+        * examples/Buffered_AMI/run_test.pl:
+        * examples/Buffered_Oneways/run_test.pl:
+        * examples/Callback_Quoter/run_test.pl:
+        * examples/Load_Balancing/run_test.pl:
+        * examples/Logging/run_test.pl:
+        * examples/OBV/Typed_Events/run_test.pl:
+        * examples/PluggableUDP/tests/run_test.pl:
+        * examples/POA/Forwarding/run_test.pl:
+        * examples/Persistent_Grid/run_test.pl:
+        * examples/Simple/bank/run_test.pl:
+        * examples/Simple/echo/run_test.pl:
+        * examples/Simple/grid/run_test.pl:
+        * examples/Simple/time/run_test.pl:
+        * examples/Simple/time-date/run_test.pl:
+        * orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
+        * orbsvcs/tests/AVStreams/Latency/run_test.pl:
+        * orbsvcs/tests/AVStreams/Multicast/run_test.pl:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl:
+        * orbsvcs/tests/AVStreams/Pluggable/run_test.pl:
+        * orbsvcs/tests/AVStreams/benchmark/run_test.pl:
+        * orbsvcs/tests/CosEvent/Basic/run_test.pl:
+        * orbsvcs/tests/EC_Basic/run_test.pl:
+        * orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+        * orbsvcs/tests/EC_Mcast/run_test.pl:
+        * orbsvcs/tests/EC_Multiple/run_test.pl:
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+        * orbsvcs/tests/Event/Basic/exhaustive_test.pl:
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+        * orbsvcs/tests/Event/Performance/run_test.pl:
+        * orbsvcs/tests/Event_Latency/run_test.pl:
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+        * orbsvcs/tests/ImplRepo/NameService/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/run_test.pl:
+        * orbsvcs/tests/Interoperable_Naming/run_test.pl:
+        * orbsvcs/tests/Property/run_test.pl:
+        * orbsvcs/tests/Simple_Naming/process-m-output.pl:
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+        * orbsvcs/tests/Time/run_test.pl:
+        * orbsvcs/tests/Trading/run_test.pl:
+        * tests/AMI/run_test.pl:
+        * tests/AMI_Timeouts/run_test.pl:
+        * tests/BiDirectional/run_test.pl:
+        * tests/BiDirectional_NestedUpcall/run_test.pl:
+        * tests/CDR/run_test.pl:
+        * tests/Codec/run_test.pl:
+        * tests/Connection_Purging/run_test.pl:
+        * tests/DSI_Gateway/run_test.pl:
+        * tests/DynAny_Test/run_test.pl:
+        * tests/Endpoint_Per_Priority/run_test.pl:
+        * tests/Exposed_Policies/run_test.pl:
+        * tests/Faults/run_test.pl:
+        * tests/Forwarding/run_test.pl:
+        * tests/IDL_Test/run_test.pl:
+        * tests/IORManipulation/run_test.pl:
+        * tests/InterOp-Naming/run_test.pl:
+        * tests/Leader_Followers/run_test.pl:
+        * tests/LongUpcalls/run_test.pl:
+        * tests/LongWrites/run_test.pl:
+        * tests/MT_Client/run_test.pl:
+        * tests/MT_Server/run_test.pl:
+        * tests/Multiple/run_test.pl:
+        * tests/Multiple_Inheritance/run_test.pl:
+        * tests/Native_Exceptions/run_test.pl:
+        * tests/NestedUpcall/MT_Client_Test/run_test.pl:
+        * tests/NestedUpcall/Simple/run_test.pl:
+        * tests/NestedUpcall/Triangle_Test/run_test.pl:
+        * tests/Nested_Event_Loop/run_test.pl:
+        * tests/ORB_destroy/run_test.pl:
+        * tests/ORB_init/run_test.pl:
+        * tests/Object_Loader/run_test.pl:
+        * tests/OctetSeq/run_test.pl:
+        * tests/POA/Deactivation/run_test.pl:
+        * tests/POA/Destruction/run_test.pl:
+        * tests/POA/Identity/run_test.pl:
+        * tests/POA/Non_Servant_Upcalls/run_test.pl:
+        * tests/POA/wait_for_completion/run_test.pl:
+        * tests/Param_Test/run_test.pl:
+        * tests/Param_Test/run_test_dii.pl:
+        * tests/Policies/run_test.pl:
+        * tests/Portable_Interceptors/Benchmark/run_test.pl:
+        * tests/Portable_Interceptors/Dynamic/run_test.pl:
+        * tests/Portable_Interceptors/ForwardRequest/run_test.pl:
+        * tests/Portable_Interceptors/IORInterceptor/run_test.pl:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/run_test.pl:
+        * tests/RTCORBA/Banded_Connections/run_test.pl:
+        * tests/RTCORBA/Client_Propagated/run_test.pl:
+        * tests/RTCORBA/Client_Protocol/run_test.pl:
+        * tests/RTCORBA/Explicit_Binding/run_test.pl:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/process-output.pl:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
+        * tests/RTCORBA/Private_Connection/run_test.pl:
+        * tests/RTCORBA/RTMutex/run_test.pl:
+        * tests/RTCORBA/Server_Declared/run_test.pl:
+        * tests/RTCORBA/Server_Protocol/run_test.pl:
+        * tests/Smart_Proxies/run_test.pl:
+        * tests/Smart_Proxies/Benchmark/run_test.pl:
+        * tests/Smart_Proxies/On_Demand/run_test.pl:
+        * tests/Smart_Proxies/Policy/run_test.pl:
+        * tests/Timed_Buffered_Oneways/run_test.pl:
+        * tests/Timeout/run_test.pl:
+        * tests/Xt_Stopwatch/run_test.pl:
+        * tests/ior_corbaloc/run_test.pl:
+
+          Updated to use PerlACE::Run_Test;
+
 Sun Mar 04 16:01:50 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/RT_Current.h:

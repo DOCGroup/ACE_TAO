@@ -6,94 +6,87 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "../../../../../bin";
+use PerlACE::Run_Test;
 
-require ACEutils;
-use Cwd;
+$status = 0;
 
-BEGIN {
-    ### We need to BEGIN this block so we make sure ACE_ROOT is set before
-    ### we use it in the use lib line
-    $cwd = getcwd();
-
-    $ACE_ROOT = $ENV{ACE_ROOT};
-
-    if (!$ACE_ROOT) {
-        chdir ('../../../../');
-        $ACE_ROOT = getcwd ();
-        chdir ($cwd);
-        print "ACE_ROOT not defined, defaulting to ACE_ROOT=$ACE_ROOT\n";
-    }
-}
-
-use lib "$ACE_ROOT/bin";
-
-ACE::checkForTarget($cwd);
-
-$if_repo_service = $EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR.
-		   "..".$DIR_SEPARATOR."IFR_Service".$DIR_SEPARATOR.
-		   "IFR_Service".$EXE_EXT;
-
-
-$init_ref = 
-  "-ORBInitRef InterfaceRepository=file://if_repo.ior";
+$ifr_iorfile= "if_repo.ior";
+$svr_iorfile = "iorfile";
+$test_idl = PerlACE::LocalFile ("test.idl");
 
 if ($^O eq "MSWin32") {
-    ### It is in the path
-    $tao_ifr = "tao_ifr".$EXE_EXT;
+    $tao_ifr = "../../../../../bin/tao_ifr";
 }
 else {
-    $tao_ifr = "$ACE_ROOT/TAO/orbsvcs/IFR_Service/tao_ifr".$EXE_EXT;
+    $tao_ifr = "../../../IFR_Service/tao_ifr";
 }
 
-$ifr_iorfile = "$cwd$DIR_SEPARATOR" . "if_repo.ior";
-$svr_iorfile = "$cwd$DIR_SEPARATOR" . "iorfile";
+$TAO_IFR = new PerlACE::Process ($tao_ifr);
+$IFR     = new PerlACE::Process ("../../../IFR_Service/IFR_Service");
+$SV      = new PerlACE::Process ("server");
+$CL      = new PerlACE::Process ("client", "-ORBInitRef InterfaceRepository=file://$ifr_iorfile");
 
 unlink $ifr_iorfile;
 unlink $svr_iorfile;
 
-$IFR = Process::Create ($if_repo_service);
+$IFR->Spawn ();
 
-if (ACE::waitforfile_timed ($ifr_iorfile, 15) == -1) 
-{
-  print STDERR "ERROR: cannot find file <$ifr_iorfile>\n";
-  $IFR->Kill (); 
-  $IFR->TimedWait (1);
-  exit 1;
+if (PerlACE::waitforfile_timed ($ifr_iorfile, 15) == -1) {
+    print STDERR "ERROR: cannot find file <$ifr_iorfile>\n";
+    $IFR->Kill (); 
+    exit 1;
 }
 
-$SV = Process::Create ($EXEPREFIX."server".$EXE_EXT);
+$SV->Spawn ();
 
-if (ACE::waitforfile_timed ($svr_iorfile, 15) == -1) 
-{
-  print STDERR "ERROR: cannot find file <$svr_iorfile>\n";
-  $SV->Kill (); 
-  $SV->TimedWait (1);
-  exit 1;
+if (PerlACE::waitforfile_timed ($svr_iorfile, 15) == -1) {
+    print STDERR "ERROR: cannot find file <$svr_iorfile>\n";
+    $IFR->Kill ();
+    $SV->Kill (); 
+    exit 1;
 }
 
-system ($tao_ifr." test.idl");
+$TAO_IFR->Arguments ($test_idl);
 
-$CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
-                       " $init_ref");
+$tresult = $TAO_IFR->SpawnWaitKill (30);
 
-$client = $CL->TimedWait (60);
-if ($client == -1) 
-{
-  print STDERR "ERROR: client timedout\n";
-  $CL->Kill (); 
-  $CL->TimedWait (1);
+if ($tresult != 0) {
+    print STDERR "ERROR: tao_ifr (test.idl) returned $tresult\n";
+    $status = 1;
 }
 
-$SV->Kill (); 
-$SV->TimedWait (1);
+$client = $CL->SpawnWaitKill (60);
 
-system ($tao_ifr." -r test.idl");
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
+}
 
-$IFR->Kill (); 
-$IFR->TimedWait (1);
+$server = $SV->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
+}
+
+$TAO_IFR->Arguments ("-r $test_idl");
+
+$tresult = $TAO_IFR->SpawnWaitKill (30);
+
+if ($tresult != 0) {
+    print STDERR "ERROR: tao_ifr (-r test.idl) returned $tresult\n";
+    $status = 1;
+}
+
+$server = $IFR->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: IFR returned $server\n";
+    $status = 1;
+}
 
 unlink $ifr_iorfile;
 unlink $svr_iorfile;
 
-exit 0;
+exit $status;
 

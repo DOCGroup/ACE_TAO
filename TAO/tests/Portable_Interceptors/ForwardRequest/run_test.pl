@@ -7,52 +7,51 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 
 
-unshift @INC, '../../../../bin';
-require Process;
-require ACEutils;
-use Cwd;
+use lib '../../../../bin';
+use PerlACE::Run_Test;
 
-$cwd = getcwd();
-ACE::checkForTarget($cwd);
+$file1 = PerlACE::LocalFile ("test1.ior");
+$file2 = PerlACE::LocalFile ("test2.ior");
+
+unlink $file1;
+unlink $file2;
+
+$SV = new PerlACE::Process ("server", "-o $file1 -o $file2");
+$CL = new PerlACE::Process ("client", "-k file://$file1 -k file://$file2");
+
+$status = 0;
 
 print STDERR "\n\n==== Running PortableInterceptor::ForwardRequest test\n";
 
-$file1 = "$cwd$DIR_SEPARATOR" . "test1.ior";
-$file2 = "$cwd$DIR_SEPARATOR" . "test2.ior";
+$SV->Spawn ();
 
-unlink $file1;
-unlink $file2;
-
-$SV = Process::Create ($EXEPREFIX."server".$EXE_EXT,
-                       "-o $file1 -o $file2");
-if (ACE::waitforfile_timed ($file1, 15) == -1
-    || ACE::waitforfile_timed ($file2, 15) == -1) {
-  print STDERR "ERROR: cannot find file <$file1> or <$file2>\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  exit 1;
+if (PerlACE::waitforfile_timed ($file1, 15) == -1) {
+    print STDERR "ERROR: cannot find file <$file1>\n";
+    $SV->Kill ();
+    exit 1;
 }
 
-$CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
-                       "-k file://$file1 -k file://$file2");
-
-
-$client = $CL->TimedWait (60);
-if ($client == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $CL->Kill (); $CL->TimedWait (1);
+if (PerlACE::waitforfile_timed ($file2, 15) == -1) {
+    print STDERR "ERROR: cannot find file <$file2>\n";
+    $SV->Kill ();
+    exit 1;
 }
 
-$server = $SV->TimedWait (5);
-if ($server == -1) {
-  print STDERR "ERROR: server timedout\n";
-  $SV->Kill (); $SV->TimedWait (1);
+$client = $CL->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
-if ($client == -1 || $server == -1) {
-  exit 1;
+$server = $SV->WaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
 }
 
 unlink $file1;
 unlink $file2;
 
-exit 0;
+exit $status;

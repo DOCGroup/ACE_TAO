@@ -4,10 +4,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-unshift @INC, '../../../../bin';
-require Process;
-require Uniqueid;
-
 # Usage:
 # process-output.pl output-filename number-of-iterations priority1 priority2
 
@@ -31,6 +27,8 @@ $input_file = $ARGV[0];
 $iterations = $ARGV[1];
 $priority1 = $ARGV[2];
 $priority2 = $ARGV[3];
+
+$errors = 0;
 
 # Open the output file.
 if ($input_file and $ARGV[1])
@@ -116,12 +114,14 @@ if ($server_shutdown == 0
     or $threads_finished == 0)
 {
     print "ERROR: Missing test over message\n";
+    ++$errors;
 }
 elsif ($iiop_requests != $shmiop_requests
        or $iiop_requests != $iterations)
 {
     print "ERROR: Number of iiop requests differs from shmiop differs from "
         ."number of iterations\n";
+    ++$errors;
 }
 elsif (($priority1 != $priority2 
         and ($priority1_requests != $priority2_requests
@@ -131,12 +131,16 @@ elsif (($priority1 != $priority2
                 or $priority1_requests != 2*$iterations)))
 {
     print "ERROR: Nonmatching number of requests of each priority\n";
+    ++$errors;
 }
 elsif ($test_method != 2*$iterations)
 {
     print "ERROR: Incorrect number servant invocations\n";
+    ++$errors;
 }
 else
 {
     print "Test output is ok \n";
 }
+
+exit $errors;

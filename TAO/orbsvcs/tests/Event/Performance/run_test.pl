@@ -8,94 +8,58 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # This is a Perl script that runs the client and all the other servers that
 # are needed
 
-unshift @INC, '../../../../../bin';
-require ACEutils;
-require Uniqueid;
-use Cwd;
-
-$cwd = getcwd();
-ACE::checkForTarget($cwd);
+use lib  '../../../../../bin';
+use PerlACE::Run_Test;
 
 $status = 0;
 
-print STDERR "\n\nThroughput/Latency single threaded configuration\n";
-$T = Process::Create ($EXEPREFIX . "Throughput".$EXE_EXT,
-		      " -ORBsvcconf $cwd$DIR_SEPARATOR" . "ec.st.conf "
-		      . "-burstsize 2000 -burstcount 1");
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
+$ec_st_conf = PerlACE::LocalFile ("ec.st.conf");
+
+sub RunTest ($$$)
+{
+    my $message = shift;
+    my $program = shift;
+    my $arguments = shift;
+
+    my $TEST = new PerlACE::Process ($program, $arguments);
+
+    print STDERR "\n\n$message\n";
+    
+    my $test = $TEST->SpawnWaitKill (60);
+
+    if ($test != 0) {
+        print STDERR "ERROR: Test returned $test\n";
+        $status = 1;
+    }
 }
 
+RunTest ("\n\nThroughput/Latency single threaded configuration\n",
+         "Throughput",
+         "-ORBsvcconf $ec_st_conf -burstsize 2000 -burstcount 1");
 
-print STDERR "\n\nThroughput/Latency MT-safe configuration\n";
-$T = Process::Create ($EXEPREFIX . "Throughput".$EXE_EXT,
-		      " -burstsize 2000"
-		      ." -burstcount 1");
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
-}
+RunTest ("\n\nThroughput/Latency MT-safe configuration\n",
+         "Throughput",
+         "-burstsize 2000 -burstcount 1");
 
+RunTest ("\n\nThroughput/Latency MT-safe configuration, 4 consumers\n",
+         "Throughput",
+         "-burstsize 2000 -burstcount 1 -consumers 4");
 
-print STDERR "\n\nThroughput/Latency MT-safe configuration, 4 consumers\n";
-$T = Process::Create ($EXEPREFIX . "Throughput".$EXE_EXT,
-		      " -burstsize 2000"
-		      ." -burstcount 1 -consumers 4");
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
-}
+RunTest ("\n\nThroughput/Latency MT-safe configuration, 4 consumers 4 suppliers\n",
+         "Throughput",
+         "-burstsize 2000 -burstcount 1 -consumers 4 -suppliers 4");
 
+RunTest ("\n\nThroughput/Latency MT-safe configuration, 4 consumers 4 suppliers\n",
+         "Throughput",
+         "-burstsize 2000 -burstcount 1 -consumers 4 -suppliers 4"
+         . " -consumers_tshift 0 -suppliers_tshift 0");
 
-print STDERR "\n\nThroughput/Latency MT-safe configuration,",
-  " 4 consumers 4 suppliers\n";
-$T = Process::Create ($EXEPREFIX . "Throughput".$EXE_EXT,
-		      " -burstsize 2000"
-		      ." -burstcount 1 -consumers 4 -suppliers 4");
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
-}
+RunTest ("\n\nConnection and disconnection time, 100 consumers 100 suppliers\n",
+         "Connect",
+         "-consumers 100 -suppliers 100 -connection_order interleaved");
 
-
-print STDERR "\n\nThroughput/Latency MT-safe configuration,",
-  " 4 consumers 4 suppliers\n";
-$T = Process::Create ($EXEPREFIX . "Throughput".$EXE_EXT,
-		      " -burstsize 2000"
-		      ." -burstcount 1 -consumers 4 -suppliers 4"
-		      ." -consumers_tshift 0 -suppliers_tshift 0");
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
-}
-
-print STDERR "\n\nConnection and disconnection time,",
-  " 100 consumers 100 suppliers\n";
-$T = Process::Create ($EXEPREFIX . "Connect".$EXE_EXT,
-		      " -consumers 100 -suppliers 100"
-		      ." -connection_order interleaved");
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
-}
-
-
-print STDERR "\n\nConnection and disconnection time,",
-  " 500 consumers 500 suppliers\n";
-$T = Process::Create ($EXEPREFIX . "Connect".$EXE_EXT,
-		      " -consumers 500 -suppliers 500"
-		      ." -connection_order interleaved");
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
-}
+RunTest ("\n\nConnection and disconnection time, 500 consumers 500 suppliers\n",
+         "Connect",
+         "-consumers 500 -suppliers 500 -connection_order interleaved");
 
 exit $status;

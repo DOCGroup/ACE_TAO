@@ -6,37 +6,34 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "../../../../bin";
-require ACEutils;
-require Process;
+use PerlACE::Run_Test;
 
 $status = 0;
-$iorfile = "./ior";
+$iorfile = PerlACE::LocalFile ("timedate.ior");
+$conf = PerlACE::LocalFile ("client.conf");
 
 # Remove the file before starting the test.
 unlink $iorfile;
 
-$SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "");
+$SV = new PerlACE::Process ("server");
+$CL = new PerlACE::Process ("client", "-f $iorfile -ORBSvcConf $conf");
 
-if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
-  print STDERR "ERROR: timedout waiting for file <$iorfile>\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  exit 1;
+$SV->Spawn ();
+
+if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
+    print STDERR "ERROR: waiting for file <$iorfile>\n";
+    $SV->Kill ();
+    exit 1;
 }
 
-$CL  = Process::Create ($EXEPREFIX."client$EXE_EXT",
-                            "-f $iorfile -ORBSvcConf client.conf");
+$client = $CL->SpawnWaitKill (60);
 
-if ($CL->TimedWait (60) == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $status = 1;
-  $CL->Kill (); $CL->TimedWait (1);
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
-$SV->Terminate (); if ($SV->TimedWait (5) == -1) {
-  print STDERR "ERROR: cannot terminate the server\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  $status = 1;
-}
+$SV->Kill (); 
 
 unlink $iorfile;
 

@@ -5,81 +5,68 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../bin';
-require ACEutils;
-use Cwd;
+use lib '../../../bin';
+use PerlACE::Run_Test;
 
-$cwd = getcwd();
-$threads='8';
-$iorfile = "$cwd$DIR_SEPARATOR" . "test.ior";
-
-ACE::checkForTarget($cwd);
+$status = 0;
+$threads = '8';
+$iorfile = PerlACE::LocalFile ("test.ior");
+$sv_conf = PerlACE::LocalFile ("server.conf");
 
 unlink $iorfile;
-$SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
-                       " -ORBsvcconf " . "$cwd$DIR_SEPARATOR" . "server.conf"
-                       . " -o $iorfile"
-		       . " -n $threads");
 
-if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile>\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  exit 1;
+$SV = new PerlACE::Process ("server", "-ORBsvcconf $sv_conf -o $iorfile -n $threads");
+$CL1 = new PerlACE::Process ("client", "-k file://$iorfile -i 100");
+$CL2 = new PerlACE::Process ("client", "-k file://$iorfile -i 100");
+$CL3 = new PerlACE::Process ("client", "-k file://$iorfile -i 100");
+$CLS = new PerlACE::Process ("client", "-k file://$iorfile -i 100 -x ");
+
+$SV->Spawn ();
+
+if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill ();
+    exit 1;
 }
 
-sleep (1);
+$CL1->Spawn ();
+$CL2->Spawn ();
+$CL3->Spawn ();
 
-$CL1 = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-			" -k file://$iorfile"
-			. " -i 100");
-$CL2 = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-			" -k file://$iorfile"
-			. " -i 100");
-$CL3 = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-			" -k file://$iorfile"
-			. " -i 100");
+$client = $CL1->WaitKill (60);
 
-$client1 = $CL1->TimedWait (60);
-if ($client1 == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $CL1->Kill (); $CL1->TimedWait (1);
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1
+}
+$client = $CL2->WaitKill (30);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1
 }
 
-$client2 = $CL2->TimedWait (60);
-if ($client2 == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $CL2->Kill (); $CL2->TimedWait (1);
+$client = $CL3->WaitKill (30);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1
 }
 
-$client3 = $CL3->TimedWait (60);
-if ($client3 == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $CL3->Kill (); $CL3->TimedWait (1);
+$client = $CLS->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1
 }
 
-$CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-		       " -k file://$iorfile"
-		       . " -i 100 -x");
-$client = $CL->TimedWait (60);
-if ($client == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $CL->Kill (); $CL->TimedWait (1);
-}
+$server = $SV->WaitKill (5);
 
-$server = $SV->TimedWait (5);
-if ($server == -1) {
-  print STDERR "ERROR: server timedout\n";
-  $SV->Kill (); $SV->TimedWait (1);
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1
 }
 
 unlink $iorfile;
 
-if ($server != 0
-    || $client1 != 0
-    || $client2 != 0
-    || $client3 != 0
-    || $client != 0) {
-  exit 1;
-}
-
-exit 0;
+exit $status

@@ -5,29 +5,18 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../../bin';
-require ACEutils;
-use Cwd;
-
-$cwd = getcwd();
-
-ACE::checkForTarget($cwd);
+use lib '../../../../bin';
+use PerlACE::Run_Test;
 
 print STDERR "\n********** RTCORBA RTMutex Unit Test **********\n\n";
-$server_args="";
 
-$SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
-                       $server_args);
+$T = new PerlACE::Process ("server");
 
-$server = $SV->TimedWait (60);
-if ($server == -1) {
-  print STDERR "ERROR: server timedout\n";
-  $SV->Kill (); $SV->TimedWait (1);
-}
+$test = $T->SpawnWaitKill (60);
 
-if ($server != 0) {
-  print STDERR "ERROR: server returned $server\n";
-  exit 1;
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
+    exit 1;
 }
 
 exit 0;

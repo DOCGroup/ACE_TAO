@@ -5,98 +5,78 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../../../bin';
-require Process;
-require ACEutils;
-use Cwd;
+use lib '../../../../../bin';
+use PerlACE::Run_Test;
 
 # amount of delay between running the servers
 
 $sleeptime = 6;
 $status = 0;
-$cwd = getcwd();
-local $nsior = "$cwd$DIR_SEPARATOR" . "ns.ior";
 
-ACE::checkForTarget($cwd);
+$nsior = PerlACE::LocalFile ("ns.ior");
+$test1 = PerlACE::LocalFile ("test1");
+$test2 = PerlACE::LocalFile ("test2");
+$makefile = PerlACE::LocalFile ("Makefile");
 
-$name_server_prog = $EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."Naming_Service".$DIR_SEPARATOR."Naming_Service".$EXE_EXT;
-$multicast_server= $EXEPREFIX.".".$DIR_SEPARATOR."server".$EXE_EXT;
-$multicast_ftp= $EXEPREFIX.".".$DIR_SEPARATOR."ftp".$EXE_EXT;
+unlink $nsior, $test1, $test2;
 
+$NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
+$SV1 = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior -f $test1");
+$SV2 = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior -f $test2");
+$CL  = new PerlACE::Process ("ftp", "-ORBInitRef NameService=file://$nsior -f $makefile");
 
-# variables for parameters
+print STDERR "Starting Naming Service\n";
 
-sub name_server
-{
-    my $args = "-o $nsior";
-    print ("\n$name_server_prog $args\n");
-    unlink $nsior;
-    $NS = Process::Create ($name_server_prog, $args);
-    if (ACE::waitforfile_timed ($nsior, 8) == -1) {
-      print STDERR "ERROR: cannot find naming service IOR file\n";
-      $NS->Kill (); $NS->TimedWait (1);
-      exit 1;
-    }
+$NS->Spawn ();
+
+if (PerlACE::waitforfile_timed ($nsior, 5) == -1) {
+    print STDERR "ERROR: cannot find naming service IOR file\n";
+    $NS->Kill (); 
+    exit 1;
 }
 
-sub server1
-{
-    my $args = " -ORBInitRef NameService=file://$nsior"." -f test";
-    print ("\nPluggable Server: $args\n");
-    $SVA = Process::Create ($multicast_server, $args);
-}
+print STDERR "Starting Server 1\n";
 
-sub server2
-{
-    my $args = " -ORBInitRef NameService=file://$nsior"." -f test1";
-    print ("\nPluggable Server: $args\n");
-    $SVB = Process::Create ($multicast_server, $args);
-}
-
-sub ftp
-{
-    my $args = " -ORBInitRef NameService=file://$nsior"." -f Makefile";
-    print ("\nPluggable Ftp: $args\n");
-    $CL = Process::Create ($multicast_ftp, $args);
-}
-
-name_server ();
-
-server1 ();
+$SV1->Spawn ();
 
 sleep $sleeptime;
 
-server2 ();
+print STDERR "Starting Server 2\n";
+
+$SV2->Spawn ();
 
 sleep $sleeptime;
 
-ftp ();
+print STDERR "Starting Client\n";
 
-if ($CL->TimedWait (300) == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $status = 1;
-  $CL->Kill (); $CL->TimedWait (1);
+$client = $CL->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
+$server = $SV1->TerminateWaitKill (5);
 
-$SVA->Terminate (); if ($SVA->TimedWait (5) == -1) {
-  print STDERR "ERROR: cannot terminate server\n";
-  $SVA->Kill (); $SVA->TimedWait (1);
-  exit 1;
+if ($server != 0) {
+    print STDERR "ERROR: server 1 returned $server\n";
+    $status = 1;
 }
 
-$SVB->Terminate (); if ($SVB->TimedWait (5) == -1) {
-  print STDERR "ERROR: cannot terminate server\n";
-  $SVB->Kill (); $SVB->TimedWait (1);
-  $NS->Kill (); $NS->TimedWait (1);
-  exit 1;
+$server = $SV2->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server 2 returned $server\n";
+    $status = 1;
 }
 
-$NS->Terminate (); if ($NS->TimedWait (5) == -1) {
-  print STDERR "ERROR: cannot terminate naming service\n";
-  $NS->Kill (); $NS->TimedWait (1);
-  exit 1;
+$nserver = $NS->TerminateWaitKill (5);
+
+if ($nserver != 0) {
+    print STDERR "ERROR: Naming Service returned $nserver\n";
+    $status = 1;
 }
 
+unlink $nsior, $test1, $test2;
 
 exit $status;
