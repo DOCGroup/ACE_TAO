@@ -1,3 +1,10 @@
+Sun Jul 19 00:48:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ACE.cpp (ldfind): Re-enabled searching for *d.dll before
+	  *.dll for debug version of ACE.  There was a premature return
+	  error in the logic.  This is now the default behavior and has to
+	  be disabled explicitly by defining ACE_DISABLE_DEBUG_DLL_CHECK.
+
 Sat Jul 18 22:51:59 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.23 released.
@@ -178,13 +185,14 @@ Thu Jul 16 12:50:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
           executables regarding of how they get compiled.
 
           I modified the ldfind so that when a debug version ACE is
-          searching for a DLL file, it will first try to find the debug
-          version of that DLL by suffixing the name with 'd'.  If it can't
-          be found, it then search for the name specified.  The release
-          version doesn't try to do this.  Now, we can only specify only
-          the "normal" dll names in svc.conf files and ACE can pick up the
-          right dll for you without changing svc.conf files.  However, you
-          need to follow the Win32 DLL naming convention described above.
+ 	  searching for a DLL file, it will first try to find the debug
+ 	  version of that DLL by suffixing the name with 'd'.  If it can't
+ 	  be found, it then searches for the name specified.  The release
+ 	  version doesn't try to do this.  Now, we can specify only the
+ 	  "normal" dll names in svc.conf files and ACE can pick up the
+ 	  right dlls for you without changing svc.conf files.  However,
+ 	  you need to follow the Win32 DLL naming convention as described
+ 	  above.
 
           I don't expect this feature to cause any backward compatibility
           problem.  However, if in the rare event, it does cause you
