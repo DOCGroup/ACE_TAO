@@ -1,3 +1,24 @@
+Sun Jul 01 09:05:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport_Mux_Strategy.h:
+	* tao/Muxed_TMS.h:
+	* tao/Muxed_TMS.cpp:
+	* tao/Exclusive_TMS.cpp:
+	* tao/Exclusive_TMS.h: Removed commented out code. They have been
+	  commented out for sometime that we dont need them anymore.
+
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.inl:
+	* tao/Incoming_Message_Queue.h: Added lots of comments. Changed
+	  the name of the method copy_message () to copy_tail () and
+	  missing_data () to missing_data_tail (). Added a new static
+	  method TAO_Queued_Data::release () that releases a node.
+
+	* tao/Transport.cpp: Accomodated the changes to the
+	  Incoming_Message_Queue to the Transport class.
+
+	* tao/LIST_OF_TODO: Updated ..
+
 Sat Jun 30 13:00:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Base.cpp:
