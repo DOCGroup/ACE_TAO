@@ -71,8 +71,15 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
   // Get the message type
   this->message_type_ = buf[TAO_GIOP_MESSAGE_TYPE_OFFSET];
 
+
   // Get the size of the message..
   this->get_payload_size (buf);
+
+#if 0
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) Message size is [%d] \n"),
+              this->message_size_));
+#endif
 
   if (this->message_size_ == 0)
     {

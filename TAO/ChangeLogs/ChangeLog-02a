@@ -1,3 +1,14 @@
+Fri Jul 27 21:38:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp: Added a TAO_debug_level guard around
+	  the places where dump_msg () is called. Though dump_msg ()
+	  prints out information only if the TAO_debug_level is set, this
+	  extra guard will prevent us from calling this method when we are
+	  trying to do performance measurements. 
+	
+	* tao/GIOP_Message_Lite.cpp: For some reason this class never had
+	  a hexdump. Added the hexdump in dump_msg ().
+
 Fri Jul 27 16:33:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/DIOP_Connection_Handler.cpp:
