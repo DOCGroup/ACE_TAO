@@ -1,15 +1,17 @@
-//
 // $Id$
-//
 
 #include "Second_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
-#include "ace/Synch.h"
+#include "ace/Auto_Event.h"
 
-ACE_RCSID(Test, Test, "$Id$")
+
+ACE_RCSID (Two_Objects,
+           Second_i,
+           "$Id$")
+
 
 Second_i::Second_i (CORBA::ORB_ptr orb,
                     CORBA::ULong len, ACE_Auto_Event &two_way_done)

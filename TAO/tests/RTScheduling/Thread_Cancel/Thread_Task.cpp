@@ -2,6 +2,7 @@
 
 #include "Thread_Task.h"
 #include "ace/Atomic_Op.h"
+#include "ace/Lock_Adapter_T.h"
 
 ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_index;
 
@@ -142,9 +143,9 @@ Thread_Task::svc (void)
           orb_->shutdown ();
         return 0;
       }
-      
+
       return 1;
-   
+
     }
   ACE_CATCHANY
     {

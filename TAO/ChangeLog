@@ -1,3 +1,42 @@
+Mon Aug 18 09:12:26 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+	* tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
+
+	  Include "ace/Lock_Adapter_T.h" to pull in ACE_Lock_Adapter<>
+	  template.
+
+	* tests/Collocation_Tests/Server_Task.h:
+	* tests/MT_BiDir/Server_Task.h:
+
+	  Forward declare ACE_Manual_Event.
+
+	* tests/Collocation_Tests/Collocated_Test.cpp:
+	* tests/Collocation_Tests/Server_Task.cpp:
+	* tests/MT_BiDir/Sender_i.cpp:
+	* tests/MT_BiDir/Server_Task.cpp:
+	* tests/MT_BiDir/server.cpp:
+
+	  Include "ace/Manual_Event.h" to pull in ACE_Manual_Event class
+	  declaration.
+
+	* tests/POA/Object_Reactivation/Object_Reactivation.cpp:
+	* tests/Two_Objects/Second_i.cpp:
+
+	  Include "ace/Auto_Event.h" to pull in ACE_Auto_Event class
+	  declaration.
+
+	* tests/Big_Oneways/Session.h:
+	* tests/Big_Twoways/Session.h:
+	* tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp:
+
+	  Include "ace/Barrier.h" to pull in ACE_Barrier class
+	  declaration.
+
+	* tests/Two_Objects/Second_i.h:
+
+	  Forward declare ACE_Auto_Event.
+
 Sun Aug 17 23:41:22 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Scheduler_Factory.cpp:

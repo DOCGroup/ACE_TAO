@@ -7,8 +7,13 @@
 #include "tao/ORB_Core.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Transport_Cache_Manager.h"
+#include "ace/Manual_Event.h"
 
-ACE_RCSID(BiDirectional, server, "server.cpp,v 1.5 2001/03/30 20:11:05 bala Exp")
+
+ACE_RCSID (MT_BirDir,
+           server,
+           "$Id$")
+
 
 const char *ior_output_file = 0;
 static int no_iterations = 10;
