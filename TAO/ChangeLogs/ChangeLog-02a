@@ -5,7 +5,7 @@ Thu Feb 24 18:21:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  operation, some compilers have trouble with the 
 	  implicit cast to const. We now help them out by casting
 	  (multidimensional arrays only) the IN argument to
-	  const foo_slice *.
+	  const foo_slice * before making the upcall.
 
 Thu Feb 24 16:25:04 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
