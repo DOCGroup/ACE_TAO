@@ -4,8 +4,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 #include "Domain_Handler.h"
-#include "Property_Handler.h"
-#include "SP_Handler.h"
 
 #include <iostream>
 #include "string.h"
@@ -84,55 +82,73 @@ namespace CIAO
       for (CORBA::ULong i = 0; i < domain.bridge.length (); ++i)
         {
           ACE_DEBUG ((LM_DEBUG, "\nBridge %d: \n", i + 1));
-          ACE_DEBUG ((LM_DEBUG, "     Name: %s \n", domain.bridge[i].name.in ()));
-          ACE_DEBUG ((LM_DEBUG, "     Label: %s \n", domain.bridge[i].label.in ()));
-          for (CORBA::ULong j = 0; j < domain.bridge[i].resource.length (); ++j)
+          ACE_DEBUG ((LM_DEBUG, "     Name: %s \n", 
+                      domain.bridge[i].name.in ()));
+          ACE_DEBUG ((LM_DEBUG, "     Label: %s \n", 
+                      domain.bridge[i].label.in ()));
+          for (CORBA::ULong j = 0; 
+               j < domain.bridge[i].resource.length (); ++j)
             {
               ACE_DEBUG ((LM_DEBUG, "     Resource %d: \n", j + 1));
               ACE_DEBUG ((LM_DEBUG, "         Name: %s \n", 
                           domain.bridge[i].resource[j].name.in ()));
               for (CORBA::ULong k = 0; 
-                   k < domain.bridge[i].resource[j].resourceType.length (); ++k)
+                   k < domain.bridge[i].resource[j].resourceType.length (); 
+                   ++k)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "         ResourceType: %s \n", domain.bridge[i].resource[j].resourceType[k].in ()));
+                  ACE_DEBUG ((LM_DEBUG, "         ResourceType: %s \n", 
+                    domain.bridge[i].resource[j].resourceType[k].in ()));
                 }
             }
 
-          for (CORBA::ULong j = 0; j < domain.bridge[i].connectRef.length (); ++j)
+          for (CORBA::ULong j = 0; j < domain.bridge[i].connectRef.length (); 
+               ++j)
             {
               ACE_DEBUG ((LM_DEBUG, "     Connection %d: \n", j + 1));
               int value = domain.bridge[i].connectRef[j];
-              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n", domain.interconnect[value].name.in ()));
+              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n", 
+                          domain.interconnect[value].name.in ()));
             }
         }
 
       for (CORBA::ULong i = 0; i < domain.interconnect.length (); ++i)
         {
           ACE_DEBUG ((LM_DEBUG, "\nInterconnect %d: \n", i + 1));
-          ACE_DEBUG ((LM_DEBUG, "     Name: %s \n", domain.interconnect[i].name.in ()));
-          ACE_DEBUG ((LM_DEBUG, "     Label: %s \n", domain.interconnect[i].label.in ()));
-          for (CORBA::ULong j = 0; j < domain.interconnect[i].resource.length (); ++j)
+          ACE_DEBUG ((LM_DEBUG, "     Name: %s \n", 
+                      domain.interconnect[i].name.in ()));
+          ACE_DEBUG ((LM_DEBUG, "     Label: %s \n", 
+                      domain.interconnect[i].label.in ()));
+          for (CORBA::ULong j = 0; 
+               j < domain.interconnect[i].resource.length (); ++j)
             {
               ACE_DEBUG ((LM_DEBUG, "     Resource %d: \n", j + 1));
-              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n", domain.interconnect[i].resource[j].name.in ()));
-              for (CORBA::ULong k = 0; k < domain.interconnect[i].resource[j].resourceType.length (); ++k)
+              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n", 
+                          domain.interconnect[i].resource[j].name.in ()));
+              for (CORBA::ULong k = 0; 
+                k < domain.interconnect[i].resource[j].resourceType.length (); 
+                ++k)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "         ResourceType: %s \n", domain.interconnect[i].resource[j].resourceType[k].in ()));
+                  ACE_DEBUG ((LM_DEBUG, "         ResourceType: %s \n", 
+                   domain.interconnect[i].resource[j].resourceType[k].in ()));
                 }
             }
 
-          for (CORBA::ULong j = 0; j < domain.interconnect[i].connectionRef.length (); ++j)
+          for (CORBA::ULong j = 0; 
+               j < domain.interconnect[i].connectionRef.length (); ++j)
             {
               ACE_DEBUG ((LM_DEBUG, "     Connection %d: \n", j + 1));
               int value = domain.interconnect[i].connectionRef[j];
-              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n", domain.bridge[value].name.in ()));
+              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n", 
+                          domain.bridge[value].name.in ()));
             }
 
-          for (CORBA::ULong j = 0; j < domain.interconnect[i].connectRef.length (); ++j)
+          for (CORBA::ULong j = 0; 
+               j < domain.interconnect[i].connectRef.length (); ++j)
             {
               ACE_DEBUG ((LM_DEBUG, "     SharedResource %d: \n", j + 1));
               int value = domain.interconnect[i].connectRef[j];
-              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n", domain.node[value].name.in ()));
+              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n", 
+                          domain.node[value].name.in ()));
             }
 
         }
@@ -140,17 +156,22 @@ namespace CIAO
       for (CORBA::ULong i = 0; i < domain.sharedResource.length (); ++i)
         {
           ACE_DEBUG ((LM_DEBUG, "\nSharedResource %d: \n", i + 1));
-          ACE_DEBUG ((LM_DEBUG, "     Name: %s \n", domain.sharedResource[i].name.in ()));
-          for (CORBA::ULong k = 0; k < domain.sharedResource[i].resourceType.length (); ++k)
+          ACE_DEBUG ((LM_DEBUG, "     Name: %s \n", 
+                      domain.sharedResource[i].name.in ()));
+          for (CORBA::ULong k = 0; 
+               k < domain.sharedResource[i].resourceType.length (); ++k)
             {
-              ACE_DEBUG ((LM_DEBUG, "         ResourceType: %s \n", domain.sharedResource[i].resourceType[k].in ()));
+              ACE_DEBUG ((LM_DEBUG, "         ResourceType: %s \n", 
+                domain.sharedResource[i].resourceType[k].in ()));
             }
 
-          for (CORBA::ULong j = 0; j < domain.sharedResource[i].nodeRef.length (); ++j)
+          for (CORBA::ULong j = 0; 
+               j < domain.sharedResource[i].nodeRef.length (); ++j)
             {
               ACE_DEBUG ((LM_DEBUG, "     Connection %d: \n", j + 1));
               int value = domain.sharedResource[i].nodeRef[j];
-              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n", domain.node[value].name.in ()));
+              ACE_DEBUG ((LM_DEBUG, "         Name: %s \n", 
+                          domain.node[value].name.in ()));
             }
         }
 /*
@@ -203,7 +224,10 @@ namespace CIAO
         {
           XStr node_name (node->getNodeName ());
 
-          if (node_name == XStr (ACE_TEXT ("UUID")))
+          if (node_name == XStr (ACE_TEXT ("Deployment:Domain")))
+            {
+            }
+          else if (node_name == XStr (ACE_TEXT ("UUID")))
             {
               node = this->iter_->nextNode();
               DOMText* text = ACE_reinterpret_cast (DOMText*, node);
@@ -234,13 +258,16 @@ namespace CIAO
                         {
                           attribute_node = named_node_map->item (j);
                           strattrnodename = attribute_node->getNodeName ();
-                          aceattrnodename = XMLString::transcode (attribute_node->getNodeName ());
-                          aceattrnodevalue = XMLString::transcode (attribute_node->getNodeValue ());
+                          aceattrnodename = 
+                         XMLString::transcode (attribute_node->getNodeName ());
+                          aceattrnodevalue = 
+                        XMLString::transcode (attribute_node->getNodeValue ());
                           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
                             {
                               i = domain.sharedResource.length ();
                               domain.sharedResource.length (i + 1);
-                              this->process_domain_sr (domain.sharedResource[i]);
+                              this->process_domain_sr 
+                                    (domain.sharedResource[i]);
                               acemapname = domain.sharedResource[i].name.in ();
                               id_map_.bind (aceattrnodevalue, i);
                             }
@@ -250,9 +277,12 @@ namespace CIAO
                               domain.sharedResource.length (i + 1);
                               xml_url = aceattrnodevalue.c_str ();
                               result = aceattrnodevalue.c_str ();
-                              doc_path = XMLString::transcode ( doc_->getDocumentURI ());
-                              result.makeRelativeTo (XMLString::transcode (doc_path.c_str ()));
-                              final_url = XMLString::transcode (result.getURLText ());
+                              doc_path = 
+                               XMLString::transcode ( doc_->getDocumentURI ());
+                              result.makeRelativeTo 
+                                 (XMLString::transcode (doc_path.c_str ()));
+                              final_url = 
+                               XMLString::transcode (result.getURLText ());
 
                               if (xml_url.isRelative ())
                                 {
@@ -474,6 +504,7 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("infoProperty")))
             {
+              /*
               // Need to Handle this.
               //
               if (node->hasAttributes ())
@@ -537,9 +568,12 @@ namespace CIAO
               else
                 {
                 }
+                */
             }
           else
             {
+              ACE_DEBUG ((LM_DEBUG, "Node name is %s \n", 
+                XMLString::transcode (node_name))); 
               // ??? How did we get here ???
               ACE_THROW (CORBA::INTERNAL());
             }
@@ -730,6 +764,7 @@ namespace CIAO
                             }
                           else if (node_name == XStr (ACE_TEXT ("property")))
                             {
+                              /*
                               if (node->hasAttributes ())
                                 {
                                   property_node_map = node->getAttributes ();
@@ -791,6 +826,7 @@ namespace CIAO
                               else
                                 {
                                 }
+                                */
                             }
                           else
                             {
@@ -860,6 +896,7 @@ namespace CIAO
                                     }
                                   else if (node_name == XStr (ACE_TEXT ("property")))
                                     {
+                                      /*
                                       if (node->hasAttributes ())
                                         {
                                           property_node_map = node->getAttributes ();
@@ -921,6 +958,7 @@ namespace CIAO
                                       else
                                         {
                                         }
+                                        */
                                     }
                                   else
                                     {
@@ -1072,6 +1110,7 @@ namespace CIAO
                             }
                           else if (node_name == XStr (ACE_TEXT ("property")))
                             {
+                              /*
                               if (node->hasAttributes ())
                                 {
                                   property_node_map = node->getAttributes ();
@@ -1133,6 +1172,7 @@ namespace CIAO
                               else
                                 {
                                 }
+                                */
                             }
                           else
                             {
@@ -1201,6 +1241,7 @@ namespace CIAO
                                     }
                                   else if (node_name == XStr (ACE_TEXT ("property")))
                                     {
+                                      /*
                                       if (node->hasAttributes ())
                                         {
                                           property_node_map = node->getAttributes ();
@@ -1262,6 +1303,7 @@ namespace CIAO
                                       else
                                         {
                                         }
+                                        */
                                     }
                                   else
                                     {
@@ -1389,6 +1431,7 @@ namespace CIAO
                             }
                           else if (node_name == XStr (ACE_TEXT ("property")))
                             {
+                              /*
                               if (node->hasAttributes ())
                                 {
                                   property_node_map = node->getAttributes ();
@@ -1450,6 +1493,7 @@ namespace CIAO
                               else
                                 {
                                 }
+                                */
                             }
                           else
                             {
@@ -1520,6 +1564,7 @@ namespace CIAO
                                     }
                                   else if (node_name == XStr (ACE_TEXT ("property")))
                                     {
+                                      /*
                                       if (node->hasAttributes ())
                                         {
                                           property_node_map = node->getAttributes ();
@@ -1581,6 +1626,7 @@ namespace CIAO
                                       else
                                         {
                                         }
+                                        */
                                     }
                                   else
                                     {
@@ -1726,6 +1772,7 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("property")))
             {
+              /*
               if (node->hasAttributes ())
                 {
                   property_node_map = node->getAttributes ();
@@ -1786,6 +1833,7 @@ namespace CIAO
               else
                 {
                 }
+                */
             }
           else
             {
@@ -2014,6 +2062,7 @@ namespace CIAO
                             }
                           else if (node_name == XStr (ACE_TEXT ("property")))
                             {
+                              /*
                               if (node->hasAttributes ())
                                 {
                                   property_node_map = node->getAttributes ();
@@ -2075,6 +2124,7 @@ namespace CIAO
                               else
                                 {
                                 }
+                                */
                             }
                           else
                             {
@@ -2144,6 +2194,7 @@ namespace CIAO
                                     }
                                   else if (node_name == XStr (ACE_TEXT ("property")))
                                     {
+                                      /*
                                       if (node->hasAttributes ())
                                         {
                                           property_node_map = node->getAttributes ();
@@ -2205,6 +2256,7 @@ namespace CIAO
                                       else
                                         {
                                         }
+                                        */
                                     }
                                   else
                                     {
@@ -2357,6 +2409,7 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("property")))
             {
+              /*
               if (node->hasAttributes ())
                 {
                   property_node_map = node->getAttributes ();
@@ -2417,6 +2470,7 @@ namespace CIAO
               else
                 {
                 }
+                */
             }
           else
             {
@@ -2512,6 +2566,7 @@ namespace CIAO
                             }
                           else if (node_name == XStr (ACE_TEXT ("property")))
                             {
+                              /*
                               if (node->hasAttributes ())
                                 {
                                   property_node_map = node->getAttributes ();
@@ -2573,6 +2628,7 @@ namespace CIAO
                               else
                                 {
                                 }
+                                */
                             }
                           else
                             {
@@ -2641,6 +2697,7 @@ namespace CIAO
                                     }
                                   else if (node_name == XStr (ACE_TEXT ("property")))
                                     {
+                                      /*
                                       if (node->hasAttributes ())
                                         {
                                           property_node_map = node->getAttributes ();
@@ -2702,6 +2759,7 @@ namespace CIAO
                                       else
                                         {
                                         }
+                                        */
                                     }
                                   else
                                     {
@@ -2867,6 +2925,7 @@ namespace CIAO
                             }
                           else if (node_name == XStr (ACE_TEXT ("property")))
                             {
+                              /*
                               if (node->hasAttributes ())
                                 {
                                   property_node_map = node->getAttributes ();
@@ -2928,6 +2987,7 @@ namespace CIAO
                               else
                                 {
                                 }
+                                */
                             }
                           else
                             {
@@ -2996,6 +3056,7 @@ namespace CIAO
                                     }
                                   else if (node_name == XStr (ACE_TEXT ("property")))
                                     {
+                                      /*
                                       if (node->hasAttributes ())
                                         {
                                           property_node_map = node->getAttributes ();
@@ -3057,6 +3118,7 @@ namespace CIAO
                                       else
                                         {
                                         }
+                                        */
                                     }
                                   else
                                     {
@@ -3161,6 +3223,7 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("property")))
             {
+              /*
               if (node->hasAttributes ())
                 {
                   property_node_map = node->getAttributes ();
@@ -3222,6 +3285,7 @@ namespace CIAO
               else
                 {
                 }
+                */
             }
           else
             {
@@ -3243,8 +3307,10 @@ namespace CIAO
                                                            filter,
                                                            0,
                                                            true));
+      /*
       Property_Handler::process_Property (iter,
                                           property);
+      */
 
       return;
     }
@@ -3260,8 +3326,10 @@ namespace CIAO
                                                            filter,
                                                            0,
                                                            true));
+      /*
       SP_Handler::process_SatisfierProperty (iter,
                                              satisfier_property);
+      */
 
       return;
     }
