@@ -165,29 +165,31 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       delete visitor;
     }
 
+  os->decr_indent (0);
+
   // constructor
-  *os << "// skeleton constructor" << be_nl;
+  *os << "// skeleton constructor\n";
   // find if we are at the top scope or inside some module
   if (!node->is_nested ())
     {
       // we are outermost. So the POA_ prefix is prepended to our name
-      *os << node->full_skel_name () << "::POA_" << node->local_name () <<
-        " (void)" << be_nl;
+      *os << node->full_skel_name () << "::POA_" << node->local_name () 
+          << " (void)\n";
     }
   else
     {
       // the POA_ prefix is prepended to our outermost module name
-      *os << node->full_skel_name () << "::" << node->local_name () <<
-        " (void)" << be_nl;
+      *os << node->full_skel_name () << "::" << node->local_name () 
+          << " (void)\n";
     }
 
   // Generate optable
   *os << "{" << be_idt_nl
       << "this->optable_ = &tao_" << node->flat_name ()
       << "_optable;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}\n\n";
 
-  *os << "// copy ctor" << be_nl;
+  *os << "// copy ctor\n";
   // find if we are at the top scope or inside some module
   if (!node->is_nested ())
     {
