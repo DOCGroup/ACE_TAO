@@ -1,3 +1,11 @@
+Thu Nov 30 20:05:35 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/RTCORBA/Private_Connection/run_test.pl:
+
+	  Fixed the script to unlink ior files at the end.  This fixes
+	  TRANSIENT exception in builds where ior files from previous
+	  runs weren't cleaned up.
+
 Wed Nov 29 23:55:37 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
@@ -7,7 +15,7 @@ Wed Nov 29 23:55:37 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
  	  Changed <get_primary> to throw TAO_IOP::NotFound () instead of
 	  Invalid_IOR ()
-	
+
 Wed Nov 29 17:59:10 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
