@@ -1,3 +1,10 @@
+Wed Oct 29 12:57:51 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * orbsvcs/performance-tests/LoadBalancing/ORBInitializer.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/RPS_Monitor.cpp:
+          Added #includes to tao/ORB_Constants.h to define the new "home"
+          of TAO_DEFAULT_MINOR_CODE.
+
 Wed Oct 29 12:44:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicInterface/DynamicInterface.mpc:
@@ -11,7 +18,7 @@ Wed Oct 29 12:16:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
         * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
 
-          Reverted the changes in 
+          Reverted the changes in
 
           Wed Oct 29 11:00:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -21,14 +28,14 @@ Wed Oct 29 12:16:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 Wed Oct 29 12:15:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IIOP_Transport.cpp: Cosmetic fix.
-	
+
 	* tao/Strategies/SCIOP_Endpoint.cpp:
 	* tao/Strategies/SCIOP_Endpoint.h:
 	* tao/Strategies/SCIOP_Factory.h:
-	* tao/Strategies/SCIOP_Transport.cpp: 
-          
+	* tao/Strategies/SCIOP_Transport.cpp:
+
 	  Fixes for the compilation errors in lksctp build. Since I have o
-	  clue on what the problem could be, this is just a guess. 
+	  clue on what the problem could be, this is just a guess.
 
 Wed Oct 29 12:09:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -62,14 +69,14 @@ Wed Oct 29 11:00:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
         * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
 
-          Added generation of ACE_TEMPLATE_SPECIALIZATION macro 
-          to implementataion of Objref_Traits<> and Value_Traits<> 
+          Added generation of ACE_TEMPLATE_SPECIALIZATION macro
+          to implementataion of Objref_Traits<> and Value_Traits<>
           specializations.
 
 Wed Oct 29 10:50:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/RTCORBA/RT_Transport_Descriptor.cpp: Added a missing
-	  include. 
+	  include.
 
 Wed Oct 29 10:23:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -87,7 +94,7 @@ Wed Oct 29 10:23:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Oct 29 09:53:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/TypeCodeFactory_Adapter.h: Added a missing inclusion. 
+	* tao/TypeCodeFactory_Adapter.h: Added a missing inclusion.
 
 Tue Oct 28 23:19:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -146,7 +153,7 @@ Tue Oct 28 22:12:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Updated dependencies.
 
-	* docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.h: 
+	* docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.h:
 	  #included ORB.h instead of corba.h.
 
 Tue Oct 28 22:04:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -163,7 +170,7 @@ Tue Oct 28 22:04:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  All those simple mistakes that were left behind. Changing
 	  corba.h to ORB.h, including additional header files like
-	  ace/Log_Msg.h were done to get these files compiling. 
+	  ace/Log_Msg.h were done to get these files compiling.
 
 Tue Oct 28 21:53:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -171,21 +178,21 @@ Tue Oct 28 21:53:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
 
 	  Removed #include of Invocation.h. We need to remove this from
-	  the repo. We will do that once things stabilize a bit. 
+	  the repo. We will do that once things stabilize a bit.
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h: Removed the
 	  declaratrion of _tao_QueryInterface () since it is no longer
-	  required. 
+	  required.
 
 	* orbsvcs/tests/Security/MT_IIOP_SSL/Makefile:
 
-	  Updated dependecies. 
+	  Updated dependecies.
 
 	* orbsvcs/tests/Security/MT_IIOP_SSL/Server_Worker.h:
-	* orbsvcs/tests/Security/MT_SSLIOP/Server_Worker.h: 
+	* orbsvcs/tests/Security/MT_SSLIOP/Server_Worker.h:
 
 	  Changed the #include of corba.h to ORB.h. This (corba.h)
-	  is another file that needs to be removed from the repo. 
+	  is another file that needs to be removed from the repo.
 
 	* orbsvcs/tests/Security/Secure_Invocation/server.cpp: Fixed a
 	  unused variable warning.
@@ -206,7 +213,7 @@ Tue Oct 28 21:51:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAOACE.dsw:
 
-          Added dependency on the TAO_Messaging library to 
+          Added dependency on the TAO_Messaging library to
           TAO_DynamicInterface library build.
 
 Tue Oct 28 20:56:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -215,7 +222,7 @@ Tue Oct 28 20:56:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* TAO_IDL/be/be_visitor_arg_traits.cpp:
 	* TAO_IDL/be_include/be_sequence.h:
 	* TAO_IDL/be_include/be_visitor_arg_traits.h:
-	* TAO_IDL/util/utl_scope.cpp: 
+	* TAO_IDL/util/utl_scope.cpp:
 
 	  Fixed warnings that arose due to a conversion of string to a
 	  non-const pointers.
@@ -230,31 +237,31 @@ Tue Oct 28 15:53:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/DynamicInterface/DII_Invocation_Adapter.h:
 	* tao/Messaging/Asynch_Invocation_Adapter.cpp:
 	* tao/Messaging/Asynch_Invocation_Adapter.h
-	  
+
 	  Added const qualifier to the operation names. Not sure how this
 	  got missed. Thought I had done this once before!
 
 Tue Oct 28 14:06:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/AVStreams/Latency/pong.cpp: 
+	* orbsvcs/tests/AVStreams/Latency/pong.cpp:
 
 	  #included ORB.h and removed corba.h
 
-	* tao/Invocation_Adapter.h: Cosmetic fixes. 
+	* tao/Invocation_Adapter.h: Cosmetic fixes.
 
 	* TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
 
 	  Implementation of the insertion operators for the valuetypes
 	  generated the ACE_INLINE macro. Removed generation of the
-	  ACE_INLINE macro. 
+	  ACE_INLINE macro.
 
 Tue Oct 28 13:48:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Invocation_Adapter.h: 
+	* tao/Invocation_Adapter.h:
 
 	  Added some documentation. More stuff needs to be added.
-	
-	* tao/Profile_Transport_Resolver.cpp: 
+
+	* tao/Profile_Transport_Resolver.cpp:
 
 	  Cosmetic fix.
 
@@ -292,21 +299,21 @@ Tue Oct 28 13:21:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Oct 28 13:11:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ORB.cpp:
-	* tao/Service_Callbacks.cpp: 
-	  
+	* tao/Service_Callbacks.cpp:
+
 	  Fixed compilation errors due to a wrong casting of an int as an
 	  enum. VC6.o doesn't like this.
 
 Tue Oct 28 12:47:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp
-	  (visit_interface_fwd): 
-	  
+	  (visit_interface_fwd):
+
 	  Unused variable warning.
 
 Tue Oct 28 12:39:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Any.cpp (operator>>): 
+	* tao/Any.cpp (operator>>):
 
 	  Inspite of numerous compilations we seemed to have missed a
 	  warning. The fix is to use .in () on a Typecode_var while
@@ -317,7 +324,7 @@ Tue Oct 28 12:02:47 2003  Balachandran Natarajan <bala@dre.vanderbilt.edu>
 
 	This checkin is aimed at revamping the invocation code path
 	including the generated code. The design is outlined in the
-        bugzilla. Please see 
+        bugzilla. Please see
 
 	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1369
 
@@ -326,15 +333,15 @@ Tue Oct 28 12:02:47 2003  Balachandran Natarajan <bala@dre.vanderbilt.edu>
 
 	- Header inclusions. Now IDL compiler generates just enough
 	  headers for the applications. There is no need to include
-	  corba.h or corbafwd.h anymore. 
+	  corba.h or corbafwd.h anymore.
 
 	- Wide range of problems with PortableInterceptors. Please see the
-	  dependencies in the above bug list. 
+	  dependencies in the above bug list.
 
 	- We have tried reducing the inter-header dependencies quite a
 	  bit within the TAO library. Other libraries need more
 	  work. There are more places in TAO where this can be done
-	  effectively. We will address all of them with time. 
+	  effectively. We will address all of them with time.
 
 	- We have changed most of the tests and examples including the ORB
 	  services to include thelight weight headers.
@@ -342,15 +349,15 @@ Tue Oct 28 12:02:47 2003  Balachandran Natarajan <bala@dre.vanderbilt.edu>
 	- The generated code has gone down by more than 50%
 	  everywhere. This work also clearly demarcates the responsibility
 	  of the IDL compiler from the ORB. More work is needed on the
-	  skeleton side. 
+	  skeleton side.
 
 	More gory details of the changes can be found in
 	$TAO_ROOT/ChangeLogs/ChangeLog-03d. The documentation for all the
 	new interfaces are not complete yet. We will do them as we
 	cleanup the scoreboard.
 
-        * ChangeLogs/ChangeLog-03d: New changelog entry for the changes. 
-	
+        * ChangeLogs/ChangeLog-03d: New changelog entry for the changes.
+
 Tue Oct 28 12:01:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ChangeLogs/ChangeLog-03c: Moved a bunch of ChangeLog entries
@@ -454,4 +461,3 @@ Sat Oct 25 13:19:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAOACE.dsw: Added that EventService is dependent of BiDIR GIOP
           to make sure that BiDIR GIOP is build first.
-
