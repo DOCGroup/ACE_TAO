@@ -40,8 +40,8 @@ Echo_Client_Request_Interceptor::name (CORBA::Environment &)
 {
   return CORBA::string_dup (this->myname_);
 }
- 
-void 
+
+void
 Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
                                                CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -52,7 +52,7 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
               "Echo_Client_Request_Interceptor::send_request from \"%s\" on object: %s\n",
               ri->operation (),
               this->orb_->object_to_string (ri->target ())));
-  
+
   // Populate target member of the ClientRequestInfo.
 
   // MAke the context to send the context to the target
@@ -64,14 +64,14 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
   ACE_NEW (buf,
            CORBA::Octet [string_len]);
   ACE_OS::strcpy (ACE_reinterpret_cast (char *, buf), request_msg);
-  
+
   sc.context_data.replace (string_len, string_len, buf, 1);
 
   // Add this context to the service context list.
   ri->add_request_service_context (sc, 0);
 }
 
-void 
+void
 Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,
                                                 CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -88,17 +88,17 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
 
   if (sc == 0)
     ACE_THROW (CORBA::NO_MEMORY ());
-  
+
   const char *buf = ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
               "  Received reply service context: %s\n",
               buf));
 }
 
-void 
+void
 Echo_Client_Request_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
                                                     CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException, 
+    ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
 
@@ -141,8 +141,8 @@ Echo_Server_Request_Interceptor::name (CORBA::Environment &)
 {
   return CORBA::string_dup (this->myname_);
 }
-  
-void 
+
+void
 Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
                                                   CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -151,13 +151,13 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::receive_request from \"%s\"",
               ri->operation ()));
-  
+
   IOP::ServiceId id = request_ctx_id;
   IOP::ServiceContext *sc = ri->get_request_service_context (id);
 
   if (sc == 0)
     ACE_THROW (CORBA::NO_MEMORY ());
- 
+
   const char *buf = ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
               "  Received service context: %s\n",
@@ -174,27 +174,26 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
            CORBA::Octet [string_len]);
 
   ACE_OS::strcpy (ACE_reinterpret_cast (char *, buff), reply_msg);
-  
+
   scc.context_data.replace (string_len, string_len, buff, 1);
 
   // Add this context to the service context list.
   ri->add_reply_service_context (scc, 0);
-   
+
 }
 
-void 
+void
 Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
                                              CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::send_reply from \"%s\"",
               ri->operation ()));
 
   IOP::ServiceId id = reply_ctx_id;
-  IOP::ServiceContext *sc = ri->get_reply_service_context (id); 
- 
+  IOP::ServiceContext *sc = ri->get_reply_service_context (id);
+
   if (sc == 0)
     ACE_THROW (CORBA::NO_MEMORY ());
 
@@ -205,7 +204,7 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
               buf));
 }
 
-void 
+void
 Echo_Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
                                                  CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException,

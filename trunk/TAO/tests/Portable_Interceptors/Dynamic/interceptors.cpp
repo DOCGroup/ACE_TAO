@@ -5,8 +5,8 @@
 
 ACE_RCSID(Interceptors, interceptors, "$Id$")
 
-const CORBA::ULong request_ctx_id = 0xdead;
-const CORBA::ULong reply_ctx_id = 0xbeef;
+  //const CORBA::ULong request_ctx_id = 0xdead;
+  //const CORBA::ULong reply_ctx_id = 0xbeef;
 const char *request_msg = "The Echo_Request_Interceptor request message";
 const char *reply_msg = "The Echo_Request_Interceptor reply message";
 
@@ -40,8 +40,8 @@ Echo_Client_Request_Interceptor::name (CORBA::Environment &)
 {
   return CORBA::string_dup (this->myname_);
 }
- 
-void 
+
+void
 Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
                                                CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -52,20 +52,20 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
               "Echo_Client_Request_Interceptor::send_request from \"%s\" on object: %s\n",
               ri->operation (),
               this->orb_->object_to_string (ri->target ())));
-  
+
   if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
     {
       Dynamic::ParameterList paramlist = *(ri->arguments ());
       CORBA::Long param;
       (paramlist)[0].argument >>= param;
-      
-      ACE_DEBUG ((LM_DEBUG, 
+
+      ACE_DEBUG ((LM_DEBUG,
                   "the arg is %d\n",
                   param));
     }
 }
 
-void 
+void
 Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,
                                                 CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -79,8 +79,8 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
       Dynamic::ParameterList paramlist = *(ri->arguments ());
       CORBA::Long param;
       (paramlist)[0].argument >>= param;
-      
-      ACE_DEBUG ((LM_DEBUG, 
+
+      ACE_DEBUG ((LM_DEBUG,
                   "the arg is %d\n",
                   param));
     }
@@ -92,8 +92,8 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
       (paramlist)[1].argument >>= param2;
       CORBA_Any result_any = *(ri->result ());
       result_any >>= result;
-      
-      ACE_DEBUG ((LM_DEBUG, 
+
+      ACE_DEBUG ((LM_DEBUG,
                   "the result of calculate  is %d of %d + %d\n",
                   result,
                   param1,
@@ -102,10 +102,10 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
 
 }
 
-void 
+void
 Echo_Client_Request_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr rinfo,
                                                     CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException, 
+    ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
 
@@ -120,7 +120,7 @@ Echo_Client_Request_Interceptor::receive_exception (PortableInterceptor::ClientR
   CORBA::Exception *e;
   excp >>= *e;*/
 
-  TAO_ClientRequest_Info *ri 
+  TAO_ClientRequest_Info *ri
     =  ACE_reinterpret_cast (TAO_ClientRequest_Info *,
                              rinfo->_tao_QueryInterface
                              (
@@ -135,10 +135,10 @@ Echo_Client_Request_Interceptor::receive_exception (PortableInterceptor::ClientR
   CORBA::Exception *e = ri->_received_exception ();
 
   if (ACE_OS::strcmp (ri->received_exception_id (), e->_id ())== 0)
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 "Exception ID=%s\n", e->_id ()));
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%s\n"),
               e->_info ().c_str ()));
 }
@@ -174,8 +174,8 @@ Echo_Server_Request_Interceptor::name (CORBA::Environment &)
 {
   return CORBA::string_dup (this->myname_);
 }
-  
-void 
+
+void
 Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
                                                   CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -184,38 +184,37 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::receive_request from \"%s\"",
               ri->operation ()));
-  
+
   if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
     {
       Dynamic::ParameterList paramlist = *(ri->arguments ());
       CORBA::Long param;
       (paramlist)[0].argument >>= param;
 
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "the arg is %d\n",
                   param));
-  
+
      }
 
-   
+
 }
 
-void 
+void
 Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
                                              CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::send_reply from \"%s\"",
               ri->operation ()));
- 
+
   if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
     {
      Dynamic::ParameterList paramlist = *(ri->arguments ());
       CORBA::Long param;
       (paramlist)[0].argument >>= param;
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "the arg is %d\n",
                   param));
     }
@@ -230,7 +229,7 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
       CORBA_Any result_any = *(ri->result ());
       result_any >>= result;
 
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "the result of calculate  is %d of %d + %d\n",
                   result,
                   param1,
@@ -238,7 +237,7 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
     }
 }
 
-void 
+void
 Echo_Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr rinfo,
                                                  CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -254,7 +253,7 @@ Echo_Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequ
   excp >>= *e;
   */
 
-  TAO_ServerRequest_Info *ri 
+  TAO_ServerRequest_Info *ri
     =  ACE_reinterpret_cast (TAO_ServerRequest_Info *,
                              rinfo->_tao_QueryInterface
                              (
@@ -265,13 +264,13 @@ Echo_Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequ
                                )
                               )
                              );
-  
+
   CORBA::Exception *e = ri->_sending_exception ();
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "Exception ID=%s\n", e->_id ()));
-  
-  ACE_DEBUG ((LM_DEBUG, 
+
+  ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%s\n"),
               e->_info ().c_str ()));
- 
+
 }
