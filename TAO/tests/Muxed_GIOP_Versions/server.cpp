@@ -12,16 +12,21 @@ const char *corbaloc_arg = "corbaloc:iiop:1.0@localhost:12000/ObjectName";
 int niterations = 5;
 
 int nthreads = 4;
+int nclient_threads = nthreads;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "l:i:o:n:");
+  ACE_Get_Opt get_opts (argc, argv, "c:l:i:o:n:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'c':
+        nclient_threads = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+
       case 'l':
         corbaloc_arg = get_opts.opt_arg ();
         break;
@@ -42,7 +47,11 @@ parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-o <iorfile>"
+                           "-c <# client threads> "
+                           "-i <# iterations> "
+                           "-l <corba loc> "
+                           "-n <# server threads> "
+                           "-o <iorfile> "
                            "\n",
                            argv [0]),
                           -1);
@@ -181,7 +190,7 @@ main (int argc, char *argv[])
 
       SelfClient selfabuse (orb.in(), server.in(), niterations);
       if (selfabuse.activate (THR_NEW_LWP | THR_JOINABLE,
-                              nthreads) != 0)
+                              nclient_threads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Cannot activate abusive threads\n"),
                           1);
