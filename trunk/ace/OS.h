@@ -1721,14 +1721,6 @@ typedef u_int ACE_thread_key_t;
 #undef sigfillset
 #endif /* linux && __OPTIMIZE__ */
 
-// sigwait is yet another macro on Digital UNIX 4.0, with cxx prior to 6.0,
-// just causing trouble when introducing member functions with the same name.
-// Thanks to Thilo Kielmann" <kielmann@informatik.uni-siegen.de> for this fix.
-// I added the version discriminator:  David L. Levine  <levine@cs.wustl
-#if defined (DIGITAL_UNIX) && __DECCXX_VER < 60090006
-# undef sigwait
-#endif /* DIGITAL_UNIX && __DECCXX_VER < 60090006 */
-
 #if defined (ACE_HAS_BROKEN_SENDMSG)
 typedef struct msghdr ACE_SENDMSG_TYPE;
 #else
@@ -2477,9 +2469,17 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 extern int t_errno;
 #endif /* ACE_LACKS_T_ERRNO */
 
-#if !defined (ACE_HAS_SIGWAIT)
+// sigwait is yet another macro on Digital UNIX 4.0, just causing
+// trouble when introducing member functions with the same name.
+// Thanks to Thilo Kielmann" <kielmann@informatik.uni-siegen.de> for
+// this fix.
+# undef sigwait
+
+#if defined (DIGITAL_UNIX) && __DECCXX_VER >= 60090006
+extern "C" int __P_C(sigwait) __((const sigset_t *set, int *sig));
+#elif !defined (ACE_HAS_SIGWAIT)
 extern "C" int sigwait (sigset_t *set);
-#endif /* ACE_HAS_SIGWAIT */
+#endif /* ! ACE_HAS_SIGWAIT */
 
 #if defined (ACE_HAS_SELECT_H)
 #include /**/ <sys/select.h>
