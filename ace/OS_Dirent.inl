@@ -43,7 +43,7 @@ ACE_OS_Dirent::closedir (DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
 # if defined (ACE_PSOS)
-  
+
   u_long result;
 
 #   if defined (ACE_PSOS_DIAB_PPC)
@@ -131,7 +131,6 @@ ACE_OS_Dirent::readdir_r (DIR *dirp,
 # else
   return ::readdir_r (dirp, entry, result);
 # endif /* defined (__GNUG__) && defined (DIGITAL_UNIX) */
-    return ::readdir_r (dirp, entry, result);
 # else  /* ! POSIX.1c - this is draft 4 or draft 6 */
 #   if defined (HPUX_10)   /* But HP 10.x doesn't follow the draft either */
     *result = entry;

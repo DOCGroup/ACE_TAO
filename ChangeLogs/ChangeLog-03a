@@ -1,3 +1,21 @@
+Wed Jun  7 13:24:22 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/OS.h:
+          For KCC under linux we have to define ACE_DEFAULT_SHLIB_MODE as
+          RLTD_LAZY (RTLD_GROUP and RTLD_NODELETE are not defined in that
+          configuration).
+
+        * ace/OS_Dirent.inl:
+          Removed unreachable statement.
+
+        * ace/config-linux-common.h:
+          KCC does not have LLSEEK or LLSEEK64
+
+        * include/makeinclude/platform_linux_kcc.GNU:
+          Fixed the configuration file so the default settings for
+          debugging, optimization and exceptions can be overriden by the
+          user.
+
 Wed Jun  7 12:05:23 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/fuzz.pl:
@@ -11,7 +29,7 @@ Wed Jun  7 12:05:23 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/ace_wchar.h:
 
           Added a FUZZ: disable for the TCHAR check, since we need
-          to define the ASYS_TCHAR type macros for backwards 
+          to define the ASYS_TCHAR type macros for backwards
           compatiblity here.
 
 Wed Jun 07 13:22:01 2000  David L. Levine  <levine@cs.wustl.edu>
