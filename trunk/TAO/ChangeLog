@@ -1,3 +1,11 @@
+Thu Jan  1 20:07:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/Smart_Proxies/Collocation/Smart_Proxies_Collocation.mpc:
+	  The Test project needs strategies
+
+	* tests/Smart_Proxies/Collocation/Collocation.bor:
+	  Added strategies library
+
 Thu Jan  1 13:58:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
@@ -13,7 +21,7 @@ Thu Jan  1 13:39:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/Smart_Proxies/Collocation/Makefile.main:
 
 	  Fixed some of the nagging problems.
-	
+
 	* tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.cpp:
 
 	  Fixed a compile error in Borland builds. Thanks to Johnny for
