@@ -1557,7 +1557,7 @@ int be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen
 int
 be_interface::gen_optable_helper (be_interface *derived,
                                   be_interface *ancestor,
-                                  TAO_OutStream */*os*/)
+                                  TAO_OutStream * /*os*/)
 {
   // generate entries for the derived class using the properties of its
   // ancestors
@@ -1572,7 +1572,7 @@ be_interface::gen_optable_helper (be_interface *derived,
 }
 
 int
-be_interface::is_a_helper (be_interface */*derived*/, be_interface *bi, TAO_OutStream *os)
+be_interface::is_a_helper (be_interface * /*derived*/, be_interface *bi, TAO_OutStream *os)
 {
   // emit the comparison code
   os->indent ();
