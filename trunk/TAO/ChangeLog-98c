@@ -1,68 +1,77 @@
+Wed Apr 15 09:11:11 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp (compare_entry_finish_times):
+          added const's to first_entry and second_entry declarations and
+          casts, so that ANSI static_casts will succeed.
+
+        * orbsvcs/orbsvcs/Event/RT_Task.h (ACE_RT_Task): added "class"
+          to declaration of friend ACE_RT_Thread_Manager.
+
 Tue Apr 14 19:35:50 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tests/Quoter/*: Quoter example is running using the Cos LifeCycle
-	  Factory Finder.
+        * tests/Quoter/*: Quoter example is running using the Cos LifeCycle
+          Factory Finder.
 
 Tue Apr 14 16:37:50 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/encode.cpp: 
-	* tao/deep_copy.cpp: 
-	* tao/decode.cpp: 
-	* tao/Principal.cpp: 
-	* tao/ORB.h: 
-	* tao/IIOP_Object.cpp: 
-	* tao/GIOP.cpp: 
-	* tao/Exception.cpp: 
-	  Removed the last traces of CORBA_SEQUENCE<T>, we use
-	  TAO_Unbounded_Sequence<CORBA::Octet> for CORBA::OctetSeq and
-	  TAO_Unbounded_Object_Sequence<T> for CORBA::ExceptionList.
+        * tao/encode.cpp:
+        * tao/deep_copy.cpp:
+        * tao/decode.cpp:
+        * tao/Principal.cpp:
+        * tao/ORB.h:
+        * tao/IIOP_Object.cpp:
+        * tao/GIOP.cpp:
+        * tao/Exception.cpp:
+          Removed the last traces of CORBA_SEQUENCE<T>, we use
+          TAO_Unbounded_Sequence<CORBA::Octet> for CORBA::OctetSeq and
+          TAO_Unbounded_Object_Sequence<T> for CORBA::ExceptionList.
 
-	* orbsvcs/Naming_Service/Naming_Service.cpp: 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.h: 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: 
-	  It is less surprizing to receive arguments as T_ptr than as
-	  T_var&.
-	  Also followed the usual memory managment conventions of CORBA,
-	  i.e. we don't own the parameters we receive, but we do own the
-	  return values or out parameters we obtain.
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+          It is less surprizing to receive arguments as T_ptr than as
+          T_var&.
+          Also followed the usual memory managment conventions of CORBA,
+          i.e. we don't own the parameters we receive, but we do own the
+          return values or out parameters we obtain.
 
-	* orbsvcs/tests/Event_Latency/Event_Latency.h: 
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
-	  Pseudo-objects or objects passed as input parameters must be
-	  duplicated before storing them in a T_var variable.
+        * orbsvcs/tests/Event_Latency/Event_Latency.h:
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+          Pseudo-objects or objects passed as input parameters must be
+          duplicated before storing them in a T_var variable.
 
 Tue Apr 14 13:49:51 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	The following changes are untested.
+        The following changes are untested.
 
-	* TAO/tao/skip.cpp: Added a new file that can skip values in the
-	CDR stream. We need this functionality so that when an Any is
-	decoded, it will simply hold a pointer to the ACE_Message_Block
-	(which in turn consists the incoming CDR stream). However, we
-	still need to skip past the value. This skipping uses the same
-	interpretive algorithm used by the encoder and decoder.
+        * TAO/tao/skip.cpp: Added a new file that can skip values in the
+        CDR stream. We need this functionality so that when an Any is
+        decoded, it will simply hold a pointer to the ACE_Message_Block
+        (which in turn consists the incoming CDR stream). However, we
+        still need to skip past the value. This skipping uses the same
+        interpretive algorithm used by the encoder and decoder.
 
-	* TAO/tao/Any.{h, cpp}: Changed the way constructors, assignment
-	operators, replace method, and destructor worked. The policy is
-	that if the Any owns the value, then it immediately converts the
-	value to a CDR stream and destroys the value.
+        * TAO/tao/Any.{h, cpp}: Changed the way constructors, assignment
+        operators, replace method, and destructor worked. The policy is
+        that if the Any owns the value, then it immediately converts the
+        value to a CDR stream and destroys the value.
 
-	* TAO/tao/CDR.{h, i}: Added some more functionality to do the
-	basic "skip" operations.
+        * TAO/tao/CDR.{h, i}: Added some more functionality to do the
+        basic "skip" operations.
 
-	* TAO/tao/Marshal.h: Added the skip methods on all the
-	TAO_Marshal_* classes.
+        * TAO/tao/Marshal.h: Added the skip methods on all the
+        TAO_Marshal_* classes.
 
-	* TAO/tao/decode.cpp: When we decode an Any, the value pointer now
-	points to the CDR stream (represented as a ACE_Message_Block). It
-	is the application's responsibility to use the <<=, >>= operators
-	to retrieve the right type.
+        * TAO/tao/decode.cpp: When we decode an Any, the value pointer now
+        points to the CDR stream (represented as a ACE_Message_Block). It
+        is the application's responsibility to use the <<=, >>= operators
+        to retrieve the right type.
 
-	* TAO/tao/Policy{C,S}.{h,i,cpp}: Added these files that have stubs
-	and skeletons for the CORBA::Policy interface.
+        * TAO/tao/Policy{C,S}.{h,i,cpp}: Added these files that have stubs
+        and skeletons for the CORBA::Policy interface.
 
-	* TAO/tao/{ORB, corba}.h: Added definitions for the PolicyType,
-	Policy, and PolicyList.
+        * TAO/tao/{ORB, corba}.h: Added definitions for the PolicyType,
+        Policy, and PolicyList.
 
 Tue Apr 14 12:27:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
