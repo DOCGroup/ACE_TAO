@@ -1,3 +1,12 @@
+Fri Feb 16 17:39:16 2001  Mayur Deshpande  <mayur@ics.uci.edu>
+
+        * ace/config-qnx-rtp.h: Commented out ACE_HAS_NONSTATIC_OBJECT_MANAGER. 
+          Thanks to Andrew Olson <andrew.olson@lmco.com> for the suggestion.
+
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU: Added -fexceptions to 
+          CCFLAGS and 'exceptions=1' at end of file. 
+          Thanks to Andrew Olson <andrew.olson@lmco.com> for the suggestion.
+
 Fri Feb 16 05:37:47 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Logging_Strategy.h: Updated the documentation to explain what
