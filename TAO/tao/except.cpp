@@ -81,6 +81,12 @@ CORBA_Exception::type (void) const
   return type_;
 }
 
+int
+CORBA_Exception::_is_a (const char* repository_id) const
+{
+  return (ACE_OS::strcmp (repository_id, "IDL:CORBA/Exception:1.0")==0);
+}
+
 // For COM -- IUnKnown operations
 
 ULONG
@@ -142,6 +148,22 @@ CORBA_UserException::~CORBA_UserException (void)
 {
 }
 
+int
+CORBA_UserException::_is_a (const char* interface_id) const
+{
+  return ((ACE_OS::strcmp (interface_id,
+			   "IDL:CORBA/UserException:1.0") == 0)
+	  || CORBA_Exception::_is_a (interface_id));
+}
+
+CORBA_UserException*
+CORBA_UserException::_narrow (CORBA_Exception* exception)
+{
+  if (exception->_is_a ("IDL:CORBA/UserException:1.0"))
+    return ACE_dynamic_cast (CORBA_UserException*,exception);
+  return 0;
+}
+
 CORBA_SystemException::CORBA_SystemException (CORBA::TypeCode_ptr tc,
 					      CORBA::ULong code,
 					      CORBA::CompletionStatus completed)
@@ -153,6 +175,22 @@ CORBA_SystemException::CORBA_SystemException (CORBA::TypeCode_ptr tc,
 
 CORBA_SystemException::~CORBA_SystemException (void)
 {
+}
+
+int
+CORBA_SystemException::_is_a (const char* interface_id) const
+{
+  return ((ACE_OS::strcmp (interface_id,
+			   "IDL:CORBA/SystemException:1.0") == 0)
+	  || CORBA_Exception::_is_a (interface_id));
+}
+
+CORBA_SystemException*
+CORBA_SystemException::_narrow (CORBA_Exception* exception)
+{
+  if (exception->_is_a ("IDL:CORBA/SystemException:1.0"))
+    return ACE_dynamic_cast (CORBA_SystemException*,exception);
+  return 0;
 }
 
 #define	NUM_SYS_EXCEPTIONS 26		// update correctly!
@@ -319,6 +357,27 @@ __TC_init_standard_exceptions (CORBA::Environment &env)
   STANDARD_EXCEPTION_LIST
 #undef	TAO_SYSTEM_EXCEPTION
     }
+
+#define TAO_SYSTEM_EXCEPTION(name) \
+int \
+CORBA_##name ::_is_a (const char* interface_id) const \
+{ \
+  return ((ACE_OS::strcmp (interface_id, "IDL:CORBA/" #name "1.0")==0) \
+	  || CORBA_SystemException::_is_a (interface_id)); \
+}
+STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
+#define TAO_SYSTEM_EXCEPTION(name) \
+CORBA_##name * \
+CORBA_##name ::_narrow (CORBA_Exception* exception) \
+{ \
+  if (exception->_is_a ("IDL:CORBA/" #name "1.0")) \
+    return ACE_dynamic_cast (CORBA_##name *, exception); \
+  return 0; \
+}
+STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
 
 #undef	STANDARD_EXCEPTION_LIST
 

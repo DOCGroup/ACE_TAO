@@ -149,7 +149,7 @@ ACE_ES_Priority_Dispatching::connected (ACE_Push_Consumer_Proxy *consumer,
 	// Allocate a new dispatch queue.
 	queues_[priority] = new ACE_ES_Dispatch_Queue (this, &notification_strategy_);
 	if (queues_[priority] == 0)
-	  ACE_THROW (CORBA::NO_MEMORY (0, CORBA::COMPLETED_NO, 
+	  TAO_THROW (CORBA::NO_MEMORY (0, CORBA::COMPLETED_NO, 
 					  "ACE_ES_Priority_Dispatching::connected"));
 
 	// Initialize the dispatch queue corresponding to the
@@ -165,7 +165,7 @@ ACE_ES_Priority_Dispatching::connected (ACE_Push_Consumer_Proxy *consumer,
 	// spawns the threads.
 	if (queues_[priority]->open_queue (priority,
 					   threads_per_queue_) == -1)
-	  ACE_THROW (DISPATCH_ERROR (0, CORBA::COMPLETED_NO,
+	  TAO_THROW (DISPATCH_ERROR (0, CORBA::COMPLETED_NO,
 				     "ACE_ES_Priority_Dispatching::connected:"
 				     "queue open failed.\n"));
 
@@ -225,7 +225,7 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
 
   if (request->rt_info () != 0)
     {
-      // @@ TODO use ACE_TRY&friends
+      // @@ TODO use TAO_TRY&friends
       ACE_TIMEPROBE ("  Priority_Dispatching::push - priority requested");
       ACE_Scheduler_Factory::server ()->priority
 	(request->rt_info (),
@@ -258,7 +258,7 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
       ACE_ERROR ((LM_ERROR, "Push to closed queue %d, dropping event.\n", preemption_priority));
       return;
 #if 0
-      ACE_THROW (SYNC_ERROR (0, CORBA::COMPLETED_NO, "ACE_ES_Priority_Dispatching::push"));
+      TAO_THROW (SYNC_ERROR (0, CORBA::COMPLETED_NO, "ACE_ES_Priority_Dispatching::push"));
 #endif /* 0 */
     }
 
@@ -273,7 +273,7 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
 		    " release failed.\n"));
       if (errno != EPIPE)
 	{
-	  ACE_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+	  TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 	  // @@ Orbix parameters
 	  // 0, CORBA::COMPLETED_NO, 
 	  // "ACE_ES_Priority_Dispatching::push enqueue failed"));
@@ -470,21 +470,21 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period &period,
       ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
  			 "ACE_ES_Dispatch_Queue::open_queue"), -1);
     case 0:
-      ACE_TRY
+      TAO_TRY
 	{// @@ TODO: Handle exceptions...
 	  ACE_Scheduler_Factory::server()->set(rt_info_,
 					       0, 0, 0, 0,
 					       RtecScheduler::VERY_LOW,
 					       RtecScheduler::NO_QUANTUM,
-					       1, ACE_TRY_ENV);
-	  ACE_CHECK_ENV;
+					       1, TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
 	}
-      ACE_CATCHANY
+      TAO_CATCHANY
 	{
 	  ACE_ERROR_RETURN ((LM_ERROR,
 			     "ACE_ES_Display_Queue::exception"), -1);
 	}
-      ACE_ENDTRY;
+      TAO_ENDTRY;
     case 1:
       // Found.
       break;
@@ -553,17 +553,17 @@ ACE_ES_RTU_Dispatching::dispatch_event (ACE_ES_Dispatch_Request *request,
   // Store the priority of the task currently running.
   channel_->rtu_manager ()->priority (request->priority ());
 
-  ACE_TRY
+  TAO_TRY
     {
       // Forward the request.
-      up_->push (request, ACE_TRY_ENV);
-      ACE_CHECK_ENV;
+      up_->push (request, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
       ACE_ERROR ((LM_ERROR, "ACE_ES_RTU_Dispatching::dispatch_event unknown exception.\n"));
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   // Reset the priority.
   channel_->rtu_manager ()->priority (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO, ACE_SCOPE_PROCESS));

@@ -180,17 +180,17 @@ ACE_ES_Dispatching_Base::dispatch_event (ACE_ES_Dispatch_Request *request,
 {
   ACE_TIMEPROBE ("  decode the event");
 
-  ACE_TRY
+  TAO_TRY
     {
       // Forward the request.
-      up_->push (request, ACE_TRY_ENV);
-      ACE_CHECK_ENV;
+      up_->push (request, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
       ACE_ERROR ((LM_ERROR, "ACE_ES_Dispatching_Base::dispatch_event unknown exception.\n"));
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   // Tell our caller to release the request.
   command_action = ACE_RT_Task_Command::RELEASE;
