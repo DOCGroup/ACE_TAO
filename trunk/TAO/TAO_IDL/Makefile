@@ -175,7 +175,7 @@ else  # ! CROSS-COMPILE
   IDL_CFE_VERSION	= \"1.3.0\"
 
   ifeq ($(findstring g++,$(CXX)),g++)
-    CCFLAGS += -Wno-switch
+    CCFLAGS += -Wno-switch -Wno-unused
   endif # g++
 
   CPPFLAGS += -Iinclude -Ibe_include -Ife -DCPP_LOCATION=\"$(CXX)\" \
