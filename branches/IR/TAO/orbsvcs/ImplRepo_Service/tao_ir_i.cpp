@@ -123,14 +123,16 @@ TAO_IR_i::parse_args (void)
 void 
 TAO_IR_i::print_usage (void)
 {
-  ACE_ERROR ((LM_ERROR, "Usage: tao_ir [options] command [command-arguments]\n"));
-  ACE_ERROR ((LM_ERROR, "  where [options] are ORB options\n"));
-  ACE_ERROR ((LM_ERROR, "  where command is one of the following:\n"));
-  ACE_ERROR ((LM_ERROR, "    add      Add an entry to the IR\n"));
-  ACE_ERROR ((LM_ERROR, "    remove   Remove an entry from the IR\n"));
-  ACE_ERROR ((LM_ERROR, "    update   Update an entry in the IR\n"));
-  ACE_ERROR ((LM_ERROR, "    list     List the entries in the IR\n"));
-  ACE_ERROR ((LM_ERROR, "  where [command-arguments] depend on the command\n"));
+  ACE_ERROR ((LM_ERROR, "Usage: tao_ir [options] command [command-arguments]\n"
+                        "  where [options] are ORB options\n"
+                        "  where command is one of the following:\n"
+                        "    activate Activates a server through the IR\n"
+                        "    add      Add an entry to the IR\n"
+                        "    list     List the entries in the IR\n"
+                        "    remove   Remove an entry from the IR\n"
+                        "    shutdown Shuts down a server through the IR\n"
+                        "    update   Update an entry in the IR\n"
+                        "  where [command-arguments] depend on the command\n"));
 }
 
 
@@ -139,12 +141,16 @@ TAO_IR_i::print_usage (void)
 TAO_IR_Op *
 TAO_IR_Op::make_op (const ASYS_TCHAR *op_name, ImplementationRepository::Administration_ptr ir)
 {
-  if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("add")) == 0)
+  if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("activate")) == 0)
+    return new TAO_IR_Op_Activate (ir);
+  else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("add")) == 0)
     return new TAO_IR_Op_Add (ir);
   else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("list")) == 0)
     return new TAO_IR_Op_List (ir);
   else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("remove")) == 0)
     return new TAO_IR_Op_Remove (ir);
+  else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("shutdown")) == 0)
+    return new TAO_IR_Op_Shutdown (ir);
   else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("update")) == 0)
     return new TAO_IR_Op_Update (ir);
   
@@ -158,6 +164,12 @@ TAO_IR_Op::make_op (const ASYS_TCHAR *op_name, ImplementationRepository::Adminis
 
 TAO_IR_Op::TAO_IR_Op (ImplementationRepository::Administration_ptr implrepo)
 : implrepo_ (implrepo)
+{
+  // Nothing
+}
+
+TAO_IR_Op_Activate::TAO_IR_Op_Activate (ImplementationRepository::Administration_ptr implrepo)
+: TAO_IR_Op (implrepo)
 {
   // Nothing
 }
@@ -181,6 +193,12 @@ TAO_IR_Op_Remove::TAO_IR_Op_Remove (ImplementationRepository::Administration_ptr
   // Nothing
 }
 
+TAO_IR_Op_Shutdown::TAO_IR_Op_Shutdown (ImplementationRepository::Administration_ptr implrepo)
+: TAO_IR_Op (implrepo)
+{
+  // Nothing
+}
+
 TAO_IR_Op_Update::TAO_IR_Op_Update (ImplementationRepository::Administration_ptr implrepo)
 : TAO_IR_Op (implrepo),
   set_command_line_ (0),
@@ -195,6 +213,11 @@ TAO_IR_Op_Update::TAO_IR_Op_Update (ImplementationRepository::Administration_ptr
 
 
 TAO_IR_Op::~TAO_IR_Op ()
+{
+  // Nothing
+}
+
+TAO_IR_Op_Activate::~TAO_IR_Op_Activate (void)
 {
   // Nothing
 }
@@ -214,6 +237,11 @@ TAO_IR_Op_Remove::~TAO_IR_Op_Remove (void)
   // Nothing
 }
 
+TAO_IR_Op_Shutdown::~TAO_IR_Op_Shutdown (void)
+{
+  // Nothing
+}
+
 TAO_IR_Op_Update::~TAO_IR_Op_Update (void)
 {
   // Nothing
@@ -223,6 +251,35 @@ TAO_IR_Op_Update::~TAO_IR_Op_Update (void)
 // ============================================================================
 // = Parse methods
 
+
+int 
+TAO_IR_Op_Activate::parse (int argc, ASYS_TCHAR **argv)
+{
+  // Check for enough arguments (we need at least one for the server name)
+  if (argc < 1)
+  {
+    this->print_usage ();
+    return -1;
+  }
+
+  // Skip both the program name and the "activate" command
+  ACE_Get_Opt get_opts (argc, argv, "h");
+
+  this->server_name_ = argv[0];
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'h':  // display help
+      default:
+        this->print_usage ();
+        return -1;
+      }
+
+  // Success
+  return 0;
+}
 
 int
 TAO_IR_Op_Add::parse (int argc, ASYS_TCHAR **argv)
@@ -301,7 +358,36 @@ TAO_IR_Op_Remove::parse (int argc, ASYS_TCHAR **argv)
     return -1;
   }
 
-  // Skip both the program name and the "add" command
+  // Skip both the program name and the "remove" command
+  ACE_Get_Opt get_opts (argc, argv, "h");
+
+  this->server_name_ = argv[0];
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'h':  // display help
+      default:
+        this->print_usage ();
+        return -1;
+      }
+
+  // Success
+  return 0;
+}
+
+int 
+TAO_IR_Op_Shutdown::parse (int argc, ASYS_TCHAR **argv)
+{
+  // Check for enough arguments (we need at least one for the server name)
+  if (argc < 1)
+  {
+    this->print_usage ();
+    return -1;
+  }
+
+  // Skip both the program name and the "shutdown" command
   ACE_Get_Opt get_opts (argc, argv, "h");
 
   this->server_name_ = argv[0];
@@ -330,7 +416,7 @@ TAO_IR_Op_Update::parse (int argc, ASYS_TCHAR **argv)
     return -1;
   }
 
-  // Skip both the program name and the "add" command
+  // Skip both the program name and the "update" command
   ACE_Get_Opt get_opts (argc, argv, "hc:w:");
 
   this->server_name_ = argv[0];
@@ -361,6 +447,33 @@ TAO_IR_Op_Update::parse (int argc, ASYS_TCHAR **argv)
 // ============================================================================
 // = Run methods
 
+
+int
+TAO_IR_Op_Activate::run (void)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      this->implrepo_->activate_server (this->server_name_.c_str (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      ACE_DEBUG ((LM_DEBUG, "Successfully Activated server <%s>\n", this->server_name_.c_str ()));
+    } 
+  ACE_CATCH (ImplementationRepository::Administration::NotFound, ex)
+    {
+      ACE_ERROR ((LM_ERROR, "Could not find server <%s>!\n", this->server_name_.c_str ()));
+      return -1;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Activating Server");
+      return -1;
+    }
+  ACE_ENDTRY;
+  
+  // Success
+  return 0;
+}
 
 int
 TAO_IR_Op_Add::run (void)
@@ -487,6 +600,33 @@ TAO_IR_Op_Remove::run (void)
 }
 
 int
+TAO_IR_Op_Shutdown::run (void)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      this->implrepo_->shutdown_server (this->server_name_.c_str (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      ACE_DEBUG ((LM_DEBUG, "Successfully shut down server <%s>\n", this->server_name_.c_str ()));
+    } 
+  ACE_CATCH (ImplementationRepository::Administration::NotFound, ex)
+    {
+      ACE_ERROR ((LM_ERROR, "Could not find server <%s>!\n", this->server_name_.c_str ()));
+      return -1;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Shutting Down Server");
+      return -1;
+    }
+  ACE_ENDTRY;
+  
+  // Success
+  return 0;
+}
+
+int
 TAO_IR_Op_Update::run (void)
 {
   ImplementationRepository::ServerInformation_var server_information;
@@ -535,6 +675,18 @@ TAO_IR_Op_Update::run (void)
 
 
 void
+TAO_IR_Op_Activate::print_usage (void)
+{
+  ACE_ERROR ((LM_ERROR, "Activates a server\n"
+                        "\n"
+                        "Usage: tao_ir [options] activate <name> [command-arguments]\n"
+                        "  where [options] are ORB options\n"
+                        "  where <name> is the POA name used by the server object\n"
+                        "  where [command-arguments] can be\n"
+                        "    -h            Displays this\n"));
+}
+
+void
 TAO_IR_Op_Add::print_usage (void)
 {
   ACE_ERROR ((LM_ERROR, "Usage: tao_ir [options] add <name> [command-arguments]\n"
@@ -566,6 +718,18 @@ TAO_IR_Op_Remove::print_usage (void)
   ACE_ERROR ((LM_ERROR, "Removes a server entry\n"
                         "\n"
                         "Usage: tao_ir [options] remove <name> [command-arguments]\n"
+                        "  where [options] are ORB options\n"
+                        "  where <name> is the POA name used by the server object\n"
+                        "  where [command-arguments] can be\n"
+                        "    -h            Displays this\n"));
+}
+
+void
+TAO_IR_Op_Shutdown::print_usage (void)
+{
+  ACE_ERROR ((LM_ERROR, "Shuts down a server\n"
+                        "\n"
+                        "Usage: tao_ir [options] shutdown <name> [command-arguments]\n"
                         "  where [options] are ORB options\n"
                         "  where <name> is the POA name used by the server object\n"
                         "  where [command-arguments] can be\n"

@@ -95,6 +95,23 @@ protected:
   // Prints out the information contained in a ServerInformation structure.
 };
 
+class TAO_IR_Op_Activate : public TAO_IR_Op
+{
+public:
+  TAO_IR_Op_Activate (ImplementationRepository::Administration_ptr implrepo);
+  ~TAO_IR_Op_Activate (void);
+
+  virtual int parse (int argc, ASYS_TCHAR **argv);
+  virtual int run (void);
+
+protected:
+  void print_usage (void);
+  // Prints a message about the usage
+
+  ACE_TString server_name_;
+  // POA server name.
+};
+
 class TAO_IR_Op_Add : public TAO_IR_Op
 {
 public:
@@ -150,6 +167,23 @@ class TAO_IR_Op_Remove : public TAO_IR_Op
 public:
   TAO_IR_Op_Remove (ImplementationRepository::Administration_ptr implrepo);
   ~TAO_IR_Op_Remove (void);
+
+  virtual int parse (int argc, ASYS_TCHAR **argv);
+  virtual int run (void);
+
+protected:
+  void print_usage (void);
+  // Prints a message about the usage
+
+  ACE_TString server_name_;
+  // POA server name.
+};
+
+class TAO_IR_Op_Shutdown : public TAO_IR_Op
+{
+public:
+  TAO_IR_Op_Shutdown (ImplementationRepository::Administration_ptr implrepo);
+  ~TAO_IR_Op_Shutdown (void);
 
   virtual int parse (int argc, ASYS_TCHAR **argv);
   virtual int run (void);

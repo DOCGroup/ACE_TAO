@@ -6,7 +6,6 @@
 #include "ace/Read_Buffer.h"
 #include "ace/Process.h"
 #include "tao/IIOP_Profile.h"
-//#include "ace/Hash_Map_Manager.h"
 #include "ace/Auto_Ptr.h"
 
 // Constructor
@@ -53,8 +52,6 @@ ImplRepo_i::activate_server (const char *server,
             this->orb_manager_.orb ()->string_to_object (server_object_ior.c_str (),
                                                          ACE_TRY_ENV);
           ACE_TRY_CHECK;
-
-          // @@ We shouldn't have to narrow.
 
           ImplementationRepository::ServerObject_var server_object = 
             ImplementationRepository::ServerObject::_narrow (object.in (), ACE_TRY_ENV);
@@ -600,24 +597,6 @@ ImplRepo_i::list (CORBA::ULong how_many,
           CORBA::String_var str =
             this->orb_manager_.activate (ir_iter, ACE_TRY_ENV)
           ACE_TRY_CHECK;
-          /*
-        
-        char poa_id[BUFSIZ];
-          ACE_OS::sprintf (poa_id,
-                           "%s_%ld",
-                           this->poa_id_.c_str (),
-                           this->counter_++);
-
-          PortableServer::ObjectId_var id =
-            PortableServer::string_to_ObjectId (poa_id);
-
-          this->poa_->activate_object_with_id (id.in (),
-                                               bind_iter,
-                                               ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          bi = bind_iter->_this (ACE_TRY_ENV);
-          ACE_TRY_CHECK;*/
           server_iterator = ir_iter->_this (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
@@ -638,7 +617,62 @@ void
 ImplRepo_i::shutdown_server (const char *server,
                              CORBA::Environment &ACE_TRY_ENV)
 {
-  // @@ Nothing yet
+  ACE_TString server_object_ior, host;
+  unsigned short port;
+
+  // Find out if it is already running
+  if (this->repository_.get_running_info (server, host, port, server_object_ior) != 0)
+    {
+      // If we had problems getting the server_object_ior, probably meant that
+      // there is no <server> registered
+      ACE_ERROR ((LM_ERROR,
+                  "Error: Cannot find ServerObject IOR for server <%s>\n",
+                  server));
+      ACE_THROW (ImplementationRepository::Administration::NotFound ());
+    }
+
+  // Check to see if there is one running (if there is a server_object_ior)
+  if (server_object_ior.length () != 0)
+    {
+      // It is running, so shut it down
+      ACE_TRY
+        {
+          CORBA::Object_var object =
+            this->orb_manager_.orb ()->string_to_object (server_object_ior.c_str (),
+                                                         ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          ImplementationRepository::ServerObject_var server_object = 
+            ImplementationRepository::ServerObject::_narrow (object.in (), ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          if (CORBA::is_nil (server_object.in ()))
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "Error: Invalid ServerObject IOR: <%s>\n",
+                          server_object_ior));
+              ACE_TRY_THROW (ImplementationRepository::Administration::NotFound ());
+            }
+
+          // Call shutdown
+          server_object->shutdown (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          // Remove running info from repository
+          if (this->repository_.update (server, "", 0, "") != 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                         "Error: Could not update information for unknown server <%s>\n",
+                         server));
+              ACE_TRY_THROW (ImplementationRepository::Administration::NotFound ());
+            }          
+        }
+      ACE_CATCHANY
+        {
+          ACE_RETHROW;
+        }
+      ACE_ENDTRY;
+    }
 }
 
 
@@ -733,15 +767,15 @@ IR_Forwarder::IR_Forwarder (CORBA::ORB_ptr orb_ptr,
 }
 
 CORBA::RepositoryId
-IR_Forwarder::_primary_interface (const PortableServer::ObjectId & /* oid */,
-                                  PortableServer::POA_ptr /* poa */,
+IR_Forwarder::_primary_interface (const PortableServer::ObjectId &,
+                                  PortableServer::POA_ptr,
                                   CORBA::Environment &)
 {
   return 0;
 }
 
 void
-IR_Forwarder::invoke (CORBA::ServerRequest_ptr /* request */,
+IR_Forwarder::invoke (CORBA::ServerRequest_ptr ,
                       CORBA::Environment &ACE_TRY_ENV)
 {
   // Get the POA Current object reference
