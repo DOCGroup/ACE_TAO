@@ -1,3 +1,7 @@
+Sun Jul 01 11:16:34 2001  Balachandran  <bala@cs.wustl.edu>
+
+        * ACE version 5.1.18 released.
+
 Sun Jul  1 11:03:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/generate_doxygen.pl: Removed SSLIOP from the list.
