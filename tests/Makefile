@@ -18,6 +18,7 @@ BIN =	Env_Value_Test \
 	Enum_Interfaces_Test \
 	Future_Test \
 	Handle_Set_Test \
+	OrdMultiSet_Test \
 	Hash_Map_Manager_Test \
 	IOStream_Test \
 	Map_Manager_Test \
