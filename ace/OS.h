@@ -2680,8 +2680,7 @@ typedef DWORD nlink_t;
 
 // 64-bit quad-word definitions.
 typedef unsigned __int64 ACE_QWORD;
-// VC++ won't convert unsigned __int64 to double.
-typedef signed __int64 ACE_hrtime_t;
+typedef unsigned __int64 ACE_hrtime_t;
 inline ACE_QWORD ACE_MAKE_QWORD (DWORD lo, DWORD hi) { return ACE_QWORD (lo) | (ACE_QWORD (hi) << 32); }
 inline DWORD ACE_LOW_DWORD  (ACE_QWORD q) { return (DWORD) q; }
 inline DWORD ACE_HIGH_DWORD (ACE_QWORD q) { return (DWORD) (q >> 32); }
