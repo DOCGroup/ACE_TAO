@@ -1,3 +1,9 @@
+Mon Dec  6 06:51:53 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+
+          Added a missing namespace for the Topology_Object.
+
 Mon Dec  6 09:41:12 UTC 2004 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CharSeqC.{h,cpp,inl}:
@@ -21,39 +27,39 @@ Sat Dec  4 20:40:10 2004 Yan Dai  <dai_y@ociweb.com>
 
 Fri Dec  3 21:54:22 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Notify_Service/Notify_Service.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
-	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.cpp:
-	* orbsvcs/orbsvcs/Notify/Consumer.cpp:
-	* orbsvcs/tests/HTIOP/Hello/server.cpp:
-	* orbsvcs/tests/Notify/XML_Persistence/main.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
+        * orbsvcs/orbsvcs/Log/LogRecordStore_persist.cpp:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/tests/HTIOP/Hello/server.cpp:
+        * orbsvcs/tests/Notify/XML_Persistence/main.cpp:
 
-	  Changed #include "orbsvcs/orbsvcs/..." to #include "orbsvcs/..."
-	  in files where it was missed or was inadvertantly reintroduced.
+          Changed #include "orbsvcs/orbsvcs/..." to #include "orbsvcs/..."
+          in files where it was missed or was inadvertantly reintroduced.
 
 Fri Dec  3 20:06:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Changed to call ACE_WITH_SSL instead of explicitly setting
-	  BUILD_SLL false.
+          Changed to call ACE_WITH_SSL instead of explicitly setting
+          BUILD_SLL false.
 
 Fri Dec  3 18:32:19 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Update to account for recent ObjRefTemplate changes.
+          Update to account for recent ObjRefTemplate changes.
 
 Sat Dec  4 00:17:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IIOP_Endpoint.cpp:
-	* tao/Strategies/SCIOP_Endpoint.cpp
+        * tao/IIOP_Endpoint.cpp:
+        * tao/Strategies/SCIOP_Endpoint.cpp
 
-	  Fixed a logic error while trying to parse the string passed in
-	  for PreferredInterfaces option. The parsing introduced a loop
-	  for endpoints created which were not part of the "destination"
-	  in the ORBPreferredInterface option. Thanks to Theckla Louchios
-	  <theckla.louchois@lmco.com> for reporting the problem.
+          Fixed a logic error while trying to parse the string passed in
+          for PreferredInterfaces option. The parsing introduced a loop
+          for endpoints created which were not part of the "destination"
+          in the ORBPreferredInterface option. Thanks to Theckla Louchios
+          <theckla.louchois@lmco.com> for reporting the problem.
 
 Fri Dec  3 11:34:37 2004  Dale Wilson  <wilson_d@ociweb.com>
 
@@ -218,7 +224,7 @@ Thu Dec  2 10:51:34 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Dec  2 13:06:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
 
           Used VMCID while trying to propogate system exception with minor
           code.
@@ -244,7 +250,7 @@ Wed Dec  1 11:38:57 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Wed Dec  1 19:29:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/SystemException.cpp:
+        * tao/SystemException.cpp:
 
           Moved some of the minor code changes from Johnn's branch to the
           main trunk. The minor code specification was slightly out of

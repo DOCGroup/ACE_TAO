@@ -129,7 +129,7 @@ void
 TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory * ecf
                            ACE_ENV_ARG_DECL)
 {
-  Topology_Object::set_parent (ecf ACE_ENV_ARG_PARAMETER);
+  TAO_Notify::Topology_Object::set_parent (ecf ACE_ENV_ARG_PARAMETER);
 
   this->ecf_->_incr_refcnt ();
 
