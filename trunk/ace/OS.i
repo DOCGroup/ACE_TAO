@@ -5167,6 +5167,13 @@ ACE_OS::puts (const char *s)
   // ACE_TRACE ("ACE_OS::puts");
   ACE_OSCALL_RETURN (::puts (s), int, -1);
 }
+
+ACE_INLINE int
+ACE_OS::fputs (const char *s, FILE *stream)
+{
+  // ACE_TRACE ("ACE_OS::puts");
+  ACE_OSCALL_RETURN (::fputs (s, stream), int, -1);
+}
 #endif /* ! ACE_HAS_WINCE */
 
 ACE_INLINE ACE_SignalHandler

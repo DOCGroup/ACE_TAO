@@ -4348,14 +4348,11 @@ public:
   // However, we should provide UNICODE version of them.
   static FILE *fopen (const char *filename,
                       const char *mode);
-
 #if defined (fdopen)
 #undef fdopen
-#endif
-
+#endif /* fdopen */
   static FILE *fdopen (ACE_HANDLE handle,
                        const char *mode);
-
   static char *fgets (char *buf,
                       int size,
                       FILE *fp);
@@ -4386,6 +4383,8 @@ public:
   static char *gets (char *str, int n = 0);
 #   endif /* ACE_LACKS_GETS */
   static int puts (const char *s);
+  static int fputs (const char *s,
+                    FILE *stream);
 # endif /* ! ACE_HAS_WINCE */
 
   static int fflush (FILE *fp);
