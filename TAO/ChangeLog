@@ -1,31 +1,36 @@
+Fri Feb 14 12:02:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/catior/Makefile.bor:
+          Fixed this BCB makefile
+
 Thu Feb 13 19:30:55 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/RTCORBA/Persistent_IOR/Makefile: Linked the client with
-	  RTCORBA library. 
+	  RTCORBA library.
 
 Thu Feb 13 15:15:29 2003  Priyanka Gontla  <pgontla@ociweb.com>
 
-	* tao/MCAST_Parser.cpp (multicast_query): 
+	* tao/MCAST_Parser.cpp (multicast_query):
           Modified the diagnostic message that Craig added with the
-	  changelog entry 
+	  changelog entry
 
 	  Wed Feb 12 00:45:04 UTC 2003  Craig Rodrigues <crodrigu@bbn.com>
 
 	  to reflect the actual service name instead of being NameService
 	  always. Added a service_name check to print out the NameService
 	  related debugging message if it is indeed NameService.
-	
-	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp: 
-	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp: 
+
+	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
 	  A change which I did a while ago seemed to be missing. Nanbor
 	  applied the relevant fixes for Windows. Removing the ifdefs
 	  around the same code so that even for non-windows, the whole
 	  hostname including the domain is used.
-	  
-	  
+
+
 Thu Feb 13 17:45:35 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* utils/catior/Makefile: Do not build if RTCORBA is turned off. 
+	* utils/catior/Makefile: Do not build if RTCORBA is turned off.
 
 Thu Feb 13 17:41:37 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -53,7 +58,7 @@ Thu Feb 13 12:43:27 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* examples/RTCORBA/Activity/Thread_Task.h:
 	  Added missing code to convert CORBA priority to native priority
 	  when activating the thread task.
-	
+
 	  Made the following changes to get the example running in the
 	  autobuilds:
 	* examples/RTCORBA/Activity/run_test.pl:
@@ -64,7 +69,7 @@ Thu Feb 13 12:43:27 2003  Pradeep Gore  <pradeep@oomworks.com>
 	  - Added code to obtain the Priority Mapping Manager.
 	  - Added a "-Started_Flag <file_name> " option. When an activity instance
 	  completes its setup, it generates a file to signal the perl
-	  script that it has finished initialization.  
+	  script that it has finished initialization.
 	* examples/RTCORBA/Activity/README:
 	  Added a new section on the new command-line option.
 	* examples/RTCORBA/Activity/server.conf:
@@ -77,7 +82,7 @@ Thu Feb 13 10:30:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/ast/ast_module.cpp:
 
 	  Fixed an error in comparing the prefixes of a module and a previous
-	  opening of that module. The error appears only when the previous 
+	  opening of that module. The error appears only when the previous
 	  module opening is in an included IDL file, and the IDL compiler
 	  is executed from a subdirectory of the one where the IDL files
 	  are located. Thanks to Will Christof <Will.Christof@krones.de>
@@ -89,13 +94,13 @@ Wed Feb 12 14:58:46 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tao/IIOP_Transport.cpp: Methods tear_listen_point_list () and
 	  get_listen_point () accessed the connection_handler without any
 	  protection and violated the protocol that was set in pre-1.2
-	  timeframe. 
-	  
+	  timeframe.
+
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Same changes as
 	  above. This code needs refactoring.
 
 	* tao/Transport.h: Cosmetic fix.
-	
+
 Wed Feb 12 12:32:57 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/RTCORBA/Client_Protocol/svc.conf:
@@ -119,16 +124,16 @@ Wed Feb 12 00:45:04 UTC 2003  Craig Rodrigues <crodrigu@bbn.com>
 
 Wed Feb 12 00:19:58 UTC 2003  Craig Rodrigues <crodrigu@bbn.com>
 
-	* tao/RTCORBA/Linear_Priority_Mapping.cpp (to_CORBA): 
+	* tao/RTCORBA/Linear_Priority_Mapping.cpp (to_CORBA):
 	  Unconditionally display error message upon priority mapping failure.
 	* tao/RTCORBA/RT_Protocol_Hooks.cpp: Display errno value and message
 	  if setting the native thread priority fails.
 	* tao/RTCORBA/RT_ORBInitiializer.h:
 	  Create a new class member variable sched_policy_flags_.
 	  The value of sched_policy_flags_ is a bitmask value that can be one of
-	  THR_SCHED_RR, THR_SCHED_FIFO, THR_SCHED_DEFAULT, etc.  
-	  sched_policy_flags_ value is stored in the 
-	  TAO_ORB_Core TAO_ORB_Parameters structure.  
+	  THR_SCHED_RR, THR_SCHED_FIFO, THR_SCHED_DEFAULT, etc.
+	  sched_policy_flags_ value is stored in the
+	  TAO_ORB_Core TAO_ORB_Parameters structure.
 	  In TAO_Thread_Lane::create_dynamic_threads(), the sched_policy_flags_
 	  is passed to the ACE_Task_Base::activate() call for creating new
 	  threads for a RTCORBA thread pool.
@@ -143,7 +148,7 @@ Wed Feb 12 00:19:58 UTC 2003  Craig Rodrigues <crodrigu@bbn.com>
 	  policy.
 
 	* tao/RTCORBA/RT_ORBInitiializer.cpp:
-	  Change all assignments of sched_policy_ variable to use 
+	  Change all assignments of sched_policy_ variable to use
 	  ACE_SCHED_* values and not THR_SCHED_* values.
 	  In the TAO_RT_ORBInitializer constructor, set sched_policy_flags_
 	  to the appropriate THR_SCHED_* values depending on what ACE_SCHED_*
@@ -151,7 +156,7 @@ Wed Feb 12 00:19:58 UTC 2003  Craig Rodrigues <crodrigu@bbn.com>
 
 	  In TAO_RT_ORBInitializer::pre_init(), pass sched_policy_flags_
 	  to orb_core()->orb_params()->sched_policy(), since this value
-	  will be later used in the activate() call in 
+	  will be later used in the activate() call in
 	  TAO_Thread_Lane::create_dynamic_threads().
 
 	  At the end of TAO_RT_ORBInitializer::pre_init(), set the policy
@@ -167,7 +172,7 @@ Wed Feb 12 00:19:58 UTC 2003  Craig Rodrigues <crodrigu@bbn.com>
 	  SCHED_RR, I then decided to set the priority to the minimum
 	  priority of the policy/scheduling class.
 
-	  In addition, in RTPortableServer's 
+	  In addition, in RTPortableServer's
 	  TAO_RT_Servant_Dispatcher::post_invoke() function, the priority
 	  of the thread will be reset to what it was before the invocation.
 	  This means that on platforms which use pthread_setschedparam(),
