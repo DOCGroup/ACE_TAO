@@ -180,9 +180,15 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
 }
 
 const char*
-CORBA_Object::_interface_repository_id (void) const
+CORBA_Object::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/Object:1.0";
+}
+
+const char*
+CORBA_Object::_local_interface_repository_id (void) const
+{
+  return 0;
 }
 
 TAO_ServantBase *

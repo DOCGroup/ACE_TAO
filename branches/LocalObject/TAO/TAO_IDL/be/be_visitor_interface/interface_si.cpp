@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_interface.h"
 
@@ -45,7 +45,7 @@ be_visitor_interface_si::visit_interface (be_interface *node)
 {
   TAO_OutStream *os; // output stream
 
-  if (node->srv_inline_gen () || node->imported ())
+  if (node->srv_inline_gen () || node->imported () || node->is_local_interface ())
     return 0;
 
   os = this->ctx_->stream ();

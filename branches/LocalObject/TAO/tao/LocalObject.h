@@ -180,7 +180,7 @@ public:
 
   // = TAO extensions
 
-  virtual const char* _interface_repository_id (void) const;
+  virtual const char* _local_interface_repository_id (void) const;
   // The repository ID for the most derived class, this is an
   // implementation method and does no remote invocations!
 

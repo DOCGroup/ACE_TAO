@@ -82,6 +82,15 @@ CORBA_Object::_stubobj (void) const
   return this->protocol_proxy_;
 }
 
+ACE_INLINE const char*
+CORBA_Object::_interface_repository_id (void) const
+{
+  return (this->is_local_ ?
+          this->_local_interface_repository_id () :
+          this->_remote_interface_repository_id ());
+}
+
+
 // ************************************************************
 // These are in CORBA namespace
 
