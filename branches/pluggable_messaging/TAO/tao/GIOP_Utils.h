@@ -16,8 +16,8 @@
 //     Balachandran Natarajan <bala@cs.wustl.edu>
 //
 // ============================================================================
-#ifndef _TAO_GIOP_UTILS_H_
-#define _TAO_GIOP_UTILS_H_
+#ifndef TAO_GIOP_UTILS_H
+#define TAO_GIOP_UTILS_H
 #include "tao/Pluggable_Messaging.h"
 
 
@@ -262,4 +262,4 @@ public:
 # include "tao/GIOP_Utils.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /*_TAO_GIOP_UTILS_H_ */
+#endif /*TAO_GIOP_UTILS_H */

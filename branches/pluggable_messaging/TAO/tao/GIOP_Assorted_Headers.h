@@ -16,8 +16,8 @@
 //     Balachandran Natarajan <bala@cs.wustl.edu>
 //
 // ============================================================================
-#ifndef _TAO_GIOP_ASSORTED_HEADERS_H_
-#define _TAO_GIOP_ASSORTED_HEADERS_H_
+#ifndef TAO_GIOP_ASSORTED_HEADERS_H
+#define TAO_GIOP_ASSORTED_HEADERS_H
 #include "tao/GIOPC.h"
 
 
@@ -74,4 +74,4 @@ private:
 # include "tao/GIOP_Assorted_Headers.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /*_TAO_GIOP_ASSORTED_HEADERS_H_*/
+#endif /*TAO_GIOP_ASSORTED_HEADERS_H*/

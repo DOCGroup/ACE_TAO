@@ -1,7 +1,7 @@
 // $Id$
 
-
 // Portions of this file are:
+
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
@@ -12,13 +12,14 @@
 #include "tao/ORB_Core.h"
 #include "tao/Object.h"
 #include "tao/singletons.h"
+#include "tao/debug.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Any.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, Any, "$Id$")
-
 
 CORBA::TypeCode_ptr
 CORBA_Any::type (void) const
@@ -654,6 +655,30 @@ CORBA_Any::operator<<= (CORBA::Double d)
   ACE_CHECK;
 }
 
+void
+CORBA_Any::operator<<= (CORBA::LongDouble ld)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::LongDouble *nld;
+      ACE_NEW (nld,
+               CORBA::LongDouble (ld));
+      this->replace (CORBA::_tc_longdouble,
+                     nld,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("Exception in CORBA::LongDouble insertion\n")));
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
 // insertion of Any - copying
 void
 CORBA_Any::operator<<= (const CORBA_Any& a)
@@ -835,9 +860,7 @@ CORBA_Any::operator<<= (const CORBA_Exception &exception)
   ACE_TRY
     {
       TAO_OutputCDR stream;
-      stream.encode (exception._type (),
-                     &exception, 0,
-                     ACE_TRY_ENV);
+      exception._tao_encode (stream, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       this->_tao_replace (exception._type (),
@@ -848,8 +871,9 @@ CORBA_Any::operator<<= (const CORBA_Exception &exception)
     }
   ACE_CATCHANY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("Exception in CORBA::Exception insertion\n")));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("Exception in CORBA::Exception insertion\n")));
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -1348,6 +1372,47 @@ CORBA_Any::operator>>= (CORBA::Double &d) const
     {
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("Exception in CORBA::Double extraction\n")));
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (CORBA::LongDouble &ld) const
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      CORBA::Boolean result =
+        this->type_->equivalent (CORBA::_tc_longdouble,
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (result)
+        {
+          if (this->any_owns_data_ && this->value_)
+            {
+              ld = *(CORBA::LongDouble *) this->value_;
+              return 1;
+            }
+          else
+            {
+              TAO_InputCDR stream (this->cdr_,
+                                   this->byte_order_);
+              return stream.read_longdouble (ld);
+            }
+        }
+      else
+        {
+          return 0;
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("Exception in CORBA::LongDouble extraction\n")));
     }
   ACE_ENDTRY;
 

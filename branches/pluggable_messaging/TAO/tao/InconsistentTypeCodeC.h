@@ -70,6 +70,11 @@ public:
 
   virtual void _raise (void);
 
+  virtual void _tao_encode (TAO_OutputCDR &cdr,
+                            CORBA::Environment &) const;
+  virtual void _tao_decode (TAO_InputCDR &cdr,
+                            CORBA::Environment &);
+
   static CORBA_ORB_InconsistentTypeCode *_narrow (CORBA::Exception *);
 
   // = TAO extension

@@ -16,8 +16,8 @@
 //     Balachandran Natarajan <bala@cs.wustl.edu>
 //
 // ============================================================================
-#ifndef _TAO_GIOP_MESSAGE_CONNECTORS_
-#define _TAO_GIOP_MESSAGE_CONNECTORS_
+#ifndef TAO_GIOP_MESSAGE_CONNECTORS_
+#define TAO_GIOP_MESSAGE_CONNECTORS_
 #include "tao/GIOP_Message_Base.h"
 
 class TAO_Export TAO_GIOP_Message_Connectors:
@@ -39,8 +39,7 @@ protected:
   // Write the GIOP request header.
   
   int parse_reply (TAO_Message_State_Factory &mesg_state,
-                   TAO_Pluggable_Connector_Params &params,
-                   CORBA::ULong &reply_status);
+                   TAO_Pluggable_Connector_Params &params);
   // Parse the reply message from the server
 
 private:
@@ -95,8 +94,7 @@ private:
   // Write the locate request header in to the <msg>
   
   int parse_reply (TAO_Message_State_Factory &mesg_state,
-                   TAO_Pluggable_Connector_Params &params,
-                   CORBA::ULong &reply_status);
+                   TAO_Pluggable_Connector_Params &params);
   // Parse the reply messages from the server
 
   CORBA::Octet major_version (void);
@@ -122,4 +120,4 @@ private:
 # include "tao/GIOP_Message_Connectors.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /*_TAO_GIOP_MESSAGE_CONNECTORS_*/
+#endif /*TAO_GIOP_MESSAGE_CONNECTORS*/

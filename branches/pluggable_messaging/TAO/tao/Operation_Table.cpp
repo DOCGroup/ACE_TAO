@@ -6,7 +6,6 @@
 
 ACE_RCSID(tao, Operation_Table, "$Id$")
 
-
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Operation_Table_Timeprobe_Description[] =

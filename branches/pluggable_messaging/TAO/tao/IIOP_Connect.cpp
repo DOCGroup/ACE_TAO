@@ -1,7 +1,5 @@
 // $Id$
 
-
-
 #include "tao/IIOP_Connect.h"
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
@@ -18,6 +16,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, IIOP_Connect, "$Id$")
+
 
 
 #if defined (ACE_ENABLE_TIMEPROBES)

@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/default_server.h"
 #include "tao/ORB_Core.h"
 
@@ -9,7 +8,6 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, default_server, "$Id$")
-
 
 TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : activate_server_connections_ (0),

@@ -1,7 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -28,9 +27,8 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/debug.h"
 
+
 ACE_RCSID(tao, UIOP_Acceptor, "$Id$")
-
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -57,6 +55,7 @@ template class TAO_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK
 #pragma instantiate TAO_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (CORBA::Boolean flag)
   : TAO_Acceptor (TAO_TAG_UIOP_PROFILE),

@@ -11,7 +11,6 @@
 
 ACE_RCSID(tao, IOR_TableLookup, "$Id$")
 
-
 int 
 TAO_IOR_LookupTable_Callback::find_ior (const ACE_CString &,
                                         ACE_CString &)

@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/Environment.h"
 
 ACE_INLINE ACE_Lock &

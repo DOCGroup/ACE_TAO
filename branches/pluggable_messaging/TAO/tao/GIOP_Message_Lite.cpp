@@ -265,8 +265,7 @@ TAO_GIOP_Message_Lite::
 int
 TAO_GIOP_Message_Lite::
   parse_reply (TAO_Message_State_Factory &mesg_state,
-               TAO_Pluggable_Connector_Params &params,
-               CORBA::ULong &reply_status)
+               TAO_Pluggable_Connector_Params &params)
 {
   // Cast to the GIOP Message state
   TAO_GIOP_Message_State *state = 
@@ -296,7 +295,7 @@ TAO_GIOP_Message_Lite::
       // Handle after the switch
       break;
     case TAO_GIOP_REPLY:
-      if ((state->cdr >> params.svc_ctx) == 0)
+      if ((state->cdr >> params.svc_ctx_) == 0)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
@@ -312,7 +311,7 @@ TAO_GIOP_Message_Lite::
     }
   
   // Read the request id
-  if (!state->cdr.read_ulong (params.request_id))
+  if (!state->cdr.read_ulong (params.request_id_))
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -321,10 +320,11 @@ TAO_GIOP_Message_Lite::
       return -1;
     }
 
+  CORBA::ULong rep_stat = 0;
   // and the reply status type.  status can be NO_EXCEPTION,
   // SYSTEM_EXCEPTION, USER_EXCEPTION, LOCATION_FORWARD
   // CAnnot handle LOCATION_FORWARD_PERM here
-  if (!state->cdr.read_ulong (reply_status))
+  if (!state->cdr.read_ulong (rep_stat))
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -333,6 +333,31 @@ TAO_GIOP_Message_Lite::
       return -1;
     }
 
+    // Pass the right Pluggable interface code to the transport layer
+  switch (rep_stat)
+    {
+      // Request completed successfully
+    case TAO_GIOP_NO_EXCEPTION:
+      params.reply_status_ = TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION;
+      break;
+      
+      // Request terminated with user exception
+    case TAO_GIOP_USER_EXCEPTION:
+      params.reply_status_ = TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION;
+      break;
+      // Request terminated with system exception        
+    case TAO_GIOP_SYSTEM_EXCEPTION:
+      params.reply_status_ = TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION;
+      break;
+      // Reply is a location forward type
+    case TAO_GIOP_LOCATION_FORWARD:
+      params.reply_status_ = TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD;
+      break;
+    default:
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("(%N|%l) Unknown reply status \n")));
+    }
   return 0;
 }
 

@@ -16,8 +16,8 @@
 //     Balachandran Natarajan <bala@cs.wustl.edu>
 //
 // ============================================================================
-#ifndef _TAO_GIOP_MESSAGE_ACCEPTORS_
-#define _TAO_GIOP_MESSAGE_ACCEPTORS_
+#ifndef TAO_GIOP_MESSAGE_ACCEPTORS
+#define TAO_GIOP_MESSAGE_ACCEPTORS
 
 #include "tao/GIOP_Message_Base.h"
 #include "tao/GIOP_Utils.h"
@@ -47,8 +47,7 @@ public:
   // passed on to the appropriate states.
   
   int parse_reply (TAO_Message_State_Factory &mesg_state,
-                   TAO_Pluggable_Connector_Params &params,
-                   CORBA::ULong &reply_status);
+                   TAO_Pluggable_Connector_Params &params);
 private:
   
   int process_connector_request (TAO_Transport *transport,
@@ -130,4 +129,4 @@ private:
 # include "tao/GIOP_Message_Acceptors.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /*_TAO_GIOP_MESSAGE_ACCEPTORS_*/
+#endif /*TAO_GIOP_MESSAGE_ACCEPTORS*/

@@ -1,6 +1,5 @@
 // $Id$
 
-
 ACE_INLINE
 TAO_Tagged_Components::TAO_Tagged_Components (void)
   :  orb_type_ (0),

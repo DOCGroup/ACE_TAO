@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/Wait_Strategy.h"
 #include "tao/Pluggable.h"
 #include "tao/ORB_Core.h"
@@ -8,7 +7,6 @@
 #include "tao/debug.h"
 
 ACE_RCSID(tao, Wait_Strategy, "$Id$")
-
 
 // Constructor.
 TAO_Wait_Strategy::TAO_Wait_Strategy (TAO_Transport *transport)

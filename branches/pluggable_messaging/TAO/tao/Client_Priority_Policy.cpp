@@ -9,9 +9,7 @@
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-
 ACE_RCSID(TAO, Client_Priority_Policy, "$Id$")
-
 
 TAO_Client_Priority_Policy::TAO_Client_Priority_Policy (
     PortableServer::POA_ptr poa,

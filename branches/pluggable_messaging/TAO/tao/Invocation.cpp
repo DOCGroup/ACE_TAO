@@ -1,7 +1,5 @@
 // $Id$
 
-
-
 #include "tao/Invocation.h"
 #include "tao/Stub.h"
 #include "tao/Principal.h"
@@ -23,7 +21,6 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, Invocation, "$Id$")
-
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -310,7 +307,6 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
 {
   // Then fill in the rest of the RequestHeader
   //
-  
   // The target specification mode
   this->target_spec_.target_specifier (this->profile_->object_key ());
   
@@ -593,11 +589,9 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
           const ACE_Message_Block* cdr =
             this->inp_stream ().start ();
-
           CORBA_Any any (tcp, 0,
                          this->inp_stream ().byte_order (),
                          cdr);
-
           CORBA_Exception *exception;
 
           ACE_NEW_THROW_EX (exception,
@@ -684,9 +678,8 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                                                 CORBA::COMPLETED_YES),
                               TAO_INVOKE_EXCEPTION);
 
-          this->inp_stream ().decode (exception->_type (),
-                                      exception, 0,
-                                      ACE_TRY_ENV);
+          exception->_tao_decode (this->inp_stream (),
+                                  ACE_TRY_ENV);
           ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
           if (TAO_debug_level > 5)
@@ -828,15 +821,15 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
   switch (reply_status)
     {
-    case TAO_GIOP_NO_EXCEPTION:
+    case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:
       // Return so that the STUB can demarshal the reply.
       return TAO_INVOKE_OK;
 
-    case TAO_GIOP_USER_EXCEPTION:
+    case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
       // Return so the exception can be handled.
       return TAO_INVOKE_EXCEPTION;
 
-    case TAO_GIOP_SYSTEM_EXCEPTION:
+    case TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION:
       {
         // @@ Add the location macros for this exceptions...
 
@@ -887,7 +880,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
       }
       // NOTREACHED.
 
-    case TAO_GIOP_LOCATION_FORWARD:
+    case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
       // Handle the forwarding and return so the stub restarts the
       // request!
       return this->location_forward (this->inp_stream (), ACE_TRY_ENV);
@@ -906,7 +899,6 @@ TAO_GIOP_Oneway_Invocation (TAO_Stub *stub,
                             TAO_ORB_Core *orb_core)
   : TAO_GIOP_Invocation (stub, operation, opname_len, orb_core),
     sync_scope_ (TAO::SYNC_WITH_TRANSPORT)
-
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
   TAO_Sync_Scope_Policy *ssp = stub->sync_scope ();
@@ -952,7 +944,6 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       return TAO_GIOP_Invocation::invoke (0,
                                           ACE_TRY_ENV);
     }
-
 
   // Create this only if a reply is required.
   TAO_Synch_Reply_Dispatcher rd (this->orb_core_,
@@ -1037,11 +1028,11 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
   switch (reply_status)
     {
-    case TAO_GIOP_NO_EXCEPTION:
+    case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:
       // Return so that the STUB can demarshal the reply.
       return TAO_INVOKE_OK;
 
-    case TAO_GIOP_USER_EXCEPTION:
+    case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
       {
         // Pull the exception from the stream.
         CORBA::String_var buf;
@@ -1062,7 +1053,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
                           TAO_INVOKE_EXCEPTION);
       }
 
-    case TAO_GIOP_SYSTEM_EXCEPTION:
+    case TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION:
       {
         // @@ Add the location macros for these exceptions...
 
@@ -1111,7 +1102,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
         return TAO_INVOKE_OK;
       }
 
-    case TAO_GIOP_LOCATION_FORWARD:
+    case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
       // Handle the forwarding and return so the stub restarts the
       // request!
       return this->location_forward (rd.reply_cdr (),

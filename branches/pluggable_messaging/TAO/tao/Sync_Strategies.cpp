@@ -1,9 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-
-
-
 #include "tao/Sync_Strategies.h"
 
 #include "tao/Buffering_Constraint_Policy.h"

@@ -147,8 +147,10 @@ class  CORBA_Current : public virtual ACE_CORBA_1 (Object)
 #endif /* end #if !defined */
 
 // Any operators for interface CORBA_Current
-void operator<<= (CORBA::Any &, CORBA_Current_ptr);
-CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_Current *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             CORBA_Current_ptr);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       CORBA_Current *&);
 
 #if defined (__ACE_INLINE__)
 #include "tao/CurrentC.i"

@@ -111,28 +111,29 @@ TAO_GIOP_Message_Acceptors::
           //                         "Doing the Table Lookup ...\n",
           //                         object_id.c_str ()));
 
-          CORBA::Object_ptr object_reference =
+          //CORBA::Object_ptr object_reference =
+          CORBA::Object_var object_reference =
             CORBA::Object::_nil ();
 
           // Do the Table Lookup.
           int status =
             orb_core->orb ()->_tao_find_in_IOR_table (object_id,
-                                                      object_reference);
+                                                      object_reference.out ());
 
           // If ObjectID not in table or reference is nil raise
           // OBJECT_NOT_EXIST.
           
-          if (status == -1 || CORBA::is_nil (object_reference))
+          if (status == -1 || CORBA::is_nil (object_reference.in ()))
             ACE_TRY_THROW (CORBA::OBJECT_NOT_EXIST ());
           
           // ObjectID present in the table with an associated NON-NULL
           // reference.  Throw a forward request exception.
 
-          CORBA::Object_ptr dup =
-            CORBA::Object::_duplicate (object_reference);
+          /*CORBA::Object_ptr dup =
+            CORBA::Object::_duplicate (object_reference);*/
           
           // @@ We could simply write the response at this point...
-          ACE_TRY_THROW (PortableServer::ForwardRequest (dup));
+          ACE_TRY_THROW (PortableServer::ForwardRequest (object_reference.in ()));
         }
 #endif /* TAO_NO_IOR_TABLE */
       
@@ -354,7 +355,6 @@ TAO_GIOP_Message_Acceptors::
           ACE_TRY_THROW (PortableServer::ForwardRequest (dup));
         }
 #endif /* TAO_NO_IOR_TABLE */
-
       // Execute a fake request to find out if the object is there or
       // if the POA can activate it on demand...
       char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
@@ -392,7 +392,6 @@ TAO_GIOP_Message_Acceptors::
          transport,
          0,
          ACE_TRY_ENV);
-      
       ACE_TRY_CHECK;
 
       if (server_request.exception_type () == TAO_GIOP_NO_EXCEPTION)
@@ -420,7 +419,6 @@ TAO_GIOP_Message_Acceptors::
                           ASYS_TEXT ("handle_locate has been called: not here\n")));
             }
         }
-
     }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -454,7 +452,6 @@ TAO_GIOP_Message_Acceptors::
     }
 #endif /* TAO_HAS_EXCEPTIONS */
   ACE_ENDTRY;
-
 
   return this->make_send_locate_reply (transport,
                                        locate_request,
@@ -510,11 +507,14 @@ TAO_GIOP_Message_Acceptors::
 
       // @@ Any way to implement this without interpretive
       //    marshaling???
-      output.encode (except_tc,
+      x->_tao_encode (output, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      /*output.encode (except_tc,
                      x,
                      0,
                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                     ACE_TRY_CHECK;*/
     }
   ACE_CATCH (CORBA_Exception, ex)
     {
@@ -604,8 +604,7 @@ TAO_GIOP_Message_Acceptors::
 int
 TAO_GIOP_Message_Acceptors::
 parse_reply (TAO_Message_State_Factory & /*mesg_state*/,
-             TAO_Pluggable_Connector_Params & /*params*/,
-             CORBA::ULong & /*reply_status*/)
+             TAO_Pluggable_Connector_Params & /*params*/)
 {
   ACE_NOTSUP_RETURN (-1);
 }

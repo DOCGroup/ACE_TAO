@@ -7,13 +7,11 @@
 #include "tao/Environment.h"
 #include "tao/debug.h"
 
-
 #if !defined(__ACE_INLINE__)
 #include "tao/Connector_Registry.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(tao, Connector_Registry, "$Id$")
-
 
 TAO_Connector_Registry::TAO_Connector_Registry (void)
   : connectors_ (0),

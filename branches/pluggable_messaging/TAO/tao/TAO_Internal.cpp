@@ -1,8 +1,5 @@
 // $Id$
 
-
-
-
 #include "tao/TAO_Internal.h"
 #include "ace/Service_Config.h"
 #include "ace/Service_Repository.h"
@@ -14,9 +11,7 @@
 #include "tao/UIOP_Factory.h"
 #include "tao/SHMIOP_Factory.h"
 
-
 ACE_RCSID(tao, TAO_Internal, "$Id$")
-
 
 int TAO_Internal::service_open_count_ = 0;
 #if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
@@ -78,7 +73,6 @@ TAO_Internal::open_services (int &argc,
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_SHMIOP_Protocol_Factory);
 #endif /* TAO_HAS_UIOP == 1 */
-
       // add descriptor to list of static objects.
 
       int result = 0;

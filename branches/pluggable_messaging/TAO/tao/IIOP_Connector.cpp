@@ -9,9 +9,7 @@
 #include "tao/Environment.h"
 #include "ace/Auto_Ptr.h"
 
-
 ACE_RCSID(tao, IIOP_Connector, "$Id$")
-
 
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
 int
@@ -341,8 +339,10 @@ typedef ACE_Cached_Connect_Strategy<TAO_IIOP_Client_Connection_Handler,
         TAO_CACHED_CONNECT_STRATEGY;
 #endif /* ! TAO_USES_ROBUST_CONNECTION_MGMT */
 
+
 TAO_IIOP_Connector::TAO_IIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (TAO_TAG_IIOP_PROFILE),
+
     orb_core_ (0),
     base_connector_ (),
     lite_flag_ (flag)

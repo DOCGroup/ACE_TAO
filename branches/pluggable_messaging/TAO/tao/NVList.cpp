@@ -1,6 +1,5 @@
 // $Id$
 
-
 // Implementation of Named Value List and NamedValue classes
 
 #include "tao/NVList.h"
@@ -18,7 +17,6 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, NVList, "$Id$")
-
 
 // Reference counting for DII Request object
 

@@ -1,5 +1,4 @@
 // $Id$
-
 #include "tao/Active_Object_Map.h"
 
 #if !defined (__ACE_INLINE__)

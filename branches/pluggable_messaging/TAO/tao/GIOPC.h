@@ -1,5 +1,6 @@
 /* -*- C++ -*- $Id$ */
 
+
 // ================================================================
 //
 // = LIBRARY
@@ -267,12 +268,22 @@ private:
 }
 TAO_NAMESPACE_CLOSE // module GIOP
 
-TAO_Export void operator<<= (CORBA::Any &, const GIOP::IORAddressingInfo &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, GIOP::IORAddressingInfo*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, GIOP::IORAddressingInfo *&);
-TAO_Export void operator<<= (CORBA::Any &, const GIOP::TargetAddress &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, GIOP::TargetAddress*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, GIOP::TargetAddress *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             const GIOP::IORAddressingInfo &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, 
+                             GIOP::IORAddressingInfo*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       GIOP::IORAddressingInfo *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       const GIOP::IORAddressingInfo *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             const GIOP::TargetAddress &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, 
+                             GIOP::TargetAddress*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       GIOP::TargetAddress *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       const GIOP::TargetAddress *&);
 
 #ifndef __ACE_INLINE__
 

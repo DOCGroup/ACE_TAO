@@ -1,6 +1,5 @@
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -18,7 +17,6 @@
 #include "tao/Environment.h"
 
 ACE_RCSID(tao, TAO, "$Id$")
-
 
 // constructor
 TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,

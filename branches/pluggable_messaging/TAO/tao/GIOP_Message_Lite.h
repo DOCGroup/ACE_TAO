@@ -16,8 +16,8 @@
 //     Balachandran Natarajan <bala@cs.wustl.edu>
 //
 // ============================================================================
-#ifndef _TAO_GIOP_MESSAGE_LITE_H_
-#define _TAO_GIOP_MESSAGE_LITE_H_
+#ifndef TAO_GIOP_MESSAGE_LITE_H
+#define TAO_GIOP_MESSAGE_LITE_H
 
 #include "tao/GIOP_Server_Request.h"
 #include "tao/GIOP_Assorted_Headers.h"
@@ -64,8 +64,7 @@ public:
   // Sends the encapsulated stream in <stream> on to the transport 
   
   int parse_reply (TAO_Message_State_Factory &mesg_state,
-                   TAO_Pluggable_Connector_Params &params,
-                   CORBA::ULong &reply_status);
+                   TAO_Pluggable_Connector_Params &params);
   // Parse the reply message from the server
   
   int process_connector_messages (TAO_Transport *transport,
@@ -161,4 +160,4 @@ const size_t TAO_GIOP_LITE_MESSAGE_TYPE_OFFSET = 4;
 # include "tao/GIOP_Message_Lite.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /*_TAO_GIOP_MESSAGE_LITE_H_*/
+#endif /*TAO_GIOP_MESSAGE_LITE_H*/

@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/POAManager.h"
 #include "tao/POA.h"
 #include "tao/Server_Strategy_Factory.h"

@@ -7,8 +7,8 @@
 # include "tao/params.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, params, "$Id$")
 
+ACE_RCSID(tao, params, "$Id$")
 
 
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)

@@ -1,7 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-
 # if TAO_HAS_UIOP == 1
 
 ACE_INLINE const TAO_ObjectKey &

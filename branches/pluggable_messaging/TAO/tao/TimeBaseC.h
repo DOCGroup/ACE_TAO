@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 //
 // $Id$
-
 //
 // ================================================================
 //
@@ -135,12 +134,22 @@ TAO_NAMESPACE  TimeBase
 }
 TAO_NAMESPACE_CLOSE // module TimeBase
 
-TAO_Export void operator<<= (CORBA::Any &, const TimeBase::UtcT &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, TimeBase::UtcT*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, TimeBase::UtcT *&);
-TAO_Export void operator<<= (CORBA::Any &, const TimeBase::IntervalT &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, TimeBase::IntervalT*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, TimeBase::IntervalT *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             const TimeBase::UtcT &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, 
+                             TimeBase::UtcT*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       TimeBase::UtcT *&);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       const TimeBase::UtcT *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             const TimeBase::IntervalT &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, 
+                             TimeBase::IntervalT*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       TimeBase::IntervalT *&);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       const TimeBase::IntervalT *&);
 
 #if defined (__ACE_INLINE__)
 #include "tao/TimeBaseC.i"

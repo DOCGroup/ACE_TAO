@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/ORB.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Connector_Registry.h"
@@ -66,8 +65,8 @@ using std::set_unexpected;
 # include "tao/ORB.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, ORB, "$Id$")
 
+ACE_RCSID(tao, ORB, "$Id$")
 
 static const char ior_prefix [] = "IOR:";
 static const char file_prefix[] = "file://";
@@ -88,18 +87,10 @@ operator<< (TAO_OutputCDR &strm,
     return 0;
 }
 
-CORBA::Boolean operator>> (TAO_InputCDR &strm,
-                           CORBA::ORB::InvalidName &_tao_aggregate)
+CORBA::Boolean operator>> (TAO_InputCDR &,
+                           CORBA::ORB::InvalidName &)
 {
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    return 1;
-  }
-  else
-    return 0;
+  return 1;
 }
 
 CORBA_ORB::InvalidName::InvalidName (void)
@@ -134,16 +125,36 @@ CORBA_ORB::InvalidName::_narrow (CORBA_Exception *ex)
     return 0;
 }
 
-void
-CORBA_ORB::InvalidName::_raise (void)
+void CORBA_ORB::InvalidName::_raise (void)
 {
   TAO_RAISE(*this);
 }
 
-// TAO extension - the _alloc method
-CORBA::Exception *CORBA::ORB::InvalidName::_alloc (void)
+void CORBA_ORB::InvalidName::_tao_encode (TAO_OutputCDR &cdr,
+                                          CORBA::Environment &ACE_TRY_ENV) const
 {
-  return new CORBA::ORB::InvalidName;
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA_ORB::InvalidName::_tao_decode (TAO_InputCDR &cdr,
+                                          CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+// TAO extension - the _alloc method
+CORBA::Exception *
+CORBA::ORB::InvalidName::_alloc (void)
+{
+  CORBA::ORB::InvalidName *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  CORBA::ORB::InvalidName,
+                  0);
+  return retval;
 }
 
 CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
@@ -304,7 +315,12 @@ CORBA_ORB::create_list (CORBA::Long count,
 
       for (CORBA::Long i=0; i < count; i++)
         {
-          CORBA::NamedValue_ptr nv = new CORBA::NamedValue;
+          CORBA::NamedValue_ptr nv = 0;
+          ACE_NEW_THROW_EX (nv,
+                            CORBA::NamedValue,
+                            CORBA::NO_MEMORY ());
+          ACE_CHECK;
+
           new_list->values_.enqueue_tail (nv);
         }
     }

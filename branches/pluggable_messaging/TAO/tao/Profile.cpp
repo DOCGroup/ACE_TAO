@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/Profile.h"
 #include "tao/Object_KeyC.h"
 
@@ -9,8 +8,6 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(tao, Profile, "$Id$")
-
-
 
 // ****************************************************************
 

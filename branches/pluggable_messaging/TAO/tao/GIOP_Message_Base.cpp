@@ -254,17 +254,15 @@ TAO_GIOP_Message_Base::
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - %p\n",
-                    "TAO_GIOP_Message_Acceptor::handle_input, read_buffer[1]"));
+                    "TAO_GIOP_Message_Base::handle_input, read_buffer[1]"));
       return -1;
     }
   else if (n == 0)
     {
-      if (errno == EWOULDBLOCK)
-        return 0;
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - %p\n",
-                    "TAO_GIOP_Message_Acceptor::handle_input, read_buffer[2]"));
+                    "TAO_GIOP_Message_Base::handle_input, read_buffer[2]"));
       return -1;
     }
 

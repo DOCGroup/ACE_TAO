@@ -1,7 +1,8 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-// ============================================================================
+
+//============================================================================
 //
 // = LIBRARY
 //    TAO
@@ -15,7 +16,7 @@
 // = AUTHOR
 //    Fred Kuhns
 //
-// ============================================================================
+//============================================================================
 
 #ifndef TAO_IIOP_ACCEPTOR_H
 #define TAO_IIOP_ACCEPTOR_H
@@ -74,22 +75,30 @@ public:
   virtual CORBA::ULong endpoint_count (void);
 
 private:
-  int open_i (TAO_ORB_Core* orb_core,
-              const ACE_INET_Addr& addr);
+  int open_i (TAO_ORB_Core *orb_core,
+              const ACE_INET_Addr &addr);
   // Implement the common part of the open*() methods.
+
+  int hostname (TAO_ORB_Core *orb_core,
+                ACE_INET_Addr &addr,
+                ACE_CString &host);
+  // Set the host name for the given addr.
 
   virtual int parse_options (const char *options);
   // Parse protocol specific options.
 
 protected:
-  ACE_INET_Addr address_;
-  ACE_CString host_;
-  // Cache the information about the endpoint serviced by this
+  ACE_INET_Addr *addrs_;
+
+  ACE_CString *hosts_;
+  // Cache the information about the endpoints serviced by this
   // acceptor.
-  // @@ TODO there may in fact be multiple hostnames for this
-  //    endpoint. For example it the IP address is INADDR_ANY
-  //    (0.0.0.0) then there will be possibly a different hostname for
-  //    each interface.
+  // There may in fact be multiple hostnames for this endpoint. For
+  // example, if the IP address is INADDR_ANY (0.0.0.0) then there
+  // will be possibly a different hostname for each interface.
+
+  size_t num_hosts_;
+  // The number of host names cached in the hosts_ array.
 
   TAO_GIOP_Version version_;
   // The GIOP version for this endpoint

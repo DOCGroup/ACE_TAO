@@ -1,6 +1,5 @@
 // -*- C++ -*-
 // $Id$
-
 // ============================================================================
 //
 // = LIBRARY
@@ -60,7 +59,6 @@ private:
   int minor_;
   // Changing the version number can be used to provide backwards
   // compatibility with old clients.
-  
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_UIOP_Protocol_Factory)

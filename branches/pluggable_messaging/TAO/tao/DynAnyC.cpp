@@ -123,6 +123,19 @@ void CORBA_DynAny::Invalid::_raise ()
   TAO_RAISE(*this);
 }
 
+void CORBA_DynAny::Invalid::_tao_encode (TAO_OutputCDR &cdr,
+                                         CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << this->_id ())
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA_DynAny::Invalid::_tao_decode (TAO_InputCDR &,
+                                         CORBA::Environment &)
+{
+}
+
 // TAO extension - the _alloc method
 CORBA::Exception *CORBA_DynAny::Invalid::_alloc (void)
 {
@@ -207,6 +220,19 @@ CORBA_DynAny::InvalidValue::_narrow (CORBA::Exception *exc)
 void CORBA_DynAny::InvalidValue::_raise ()
 {
   TAO_RAISE(*this);
+}
+
+void CORBA_DynAny::InvalidValue::_tao_encode (TAO_OutputCDR &cdr,
+                                              CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << this->_id ())
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA_DynAny::InvalidValue::_tao_decode (TAO_InputCDR &,
+                                              CORBA::Environment &)
+{
 }
 
 // TAO extension - the _alloc method
@@ -299,6 +325,19 @@ void CORBA_DynAny::TypeMismatch::_raise ()
   TAO_RAISE(*this);
 }
 
+void CORBA_DynAny::TypeMismatch::_tao_encode (TAO_OutputCDR &cdr,
+                                              CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << this->_id ())
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA_DynAny::TypeMismatch::_tao_decode (TAO_InputCDR &,
+                                              CORBA::Environment &)
+{
+}
+
 // TAO extension - the _alloc method
 CORBA::Exception *CORBA_DynAny::TypeMismatch::_alloc (void)
 {
@@ -386,6 +425,19 @@ CORBA_DynAny::InvalidSeq::_narrow (CORBA::Exception *exc)
 void CORBA_DynAny::InvalidSeq::_raise ()
 {
   TAO_RAISE(*this);
+}
+
+void CORBA_DynAny::InvalidSeq::_tao_encode (TAO_OutputCDR &cdr,
+                                            CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << this->_id ())
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA_DynAny::InvalidSeq::_tao_decode (TAO_InputCDR &,
+                                            CORBA::Environment &)
+{
 }
 
 // TAO extension - the _alloc method
