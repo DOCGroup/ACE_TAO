@@ -1,3 +1,10 @@
+Fri Dec  3 21:51:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc_T.cpp (shared_malloc): Changed the for loop to
+	  while(1) so the compilers can identify the control will never
+	  fall off the end of the loop and apply ACE_NOTREACHED to the
+	  final return statement.
+
 Fri Dec 03 12:14:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Malloc_T.i (init_malloc_header_ptr): Applied ACE_UNUSED_ARG
