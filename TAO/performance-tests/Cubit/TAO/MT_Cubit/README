@@ -12,57 +12,103 @@ VxWorks-specific instructions for building the client.
 You can either run the server in the background in the same window as
 the client or open a separate window for the client and server.
 
-server:
+
+Options
 -------
+Options are case sensitive, e.g., "-U" has a different meaning than "-u".
 
-./server -p <port_num> -h <my_hostname> -t <number_of_servants>
 
-port_num is the port number at which the server will start the first
-(and highest priority) servant. Successive servants (with successively
-lower priorities) will be created starting at (port_num+1). The -n
-parameter specifies the total number of servants.
+(1) server:
+
+./server [-p <port_num>]		/* starting port			*/
+         [-h <my_hostname>]		/* IP address to use			*/
+         [-t <number_of_servants>]	/* # of servant threads to create	*/
+         [-s ]				/* Do NOT use the naming service	*/
+         [-f <ior_file> ]		/* specify a file to output all ior's	*/
+         [-m ]				/* Use multiple priorities for threads	*/
+         [-U ]				/* Run the server utilization test	*/
+					/*   use the same option on the client	*/
+         [-r ]				/* Run the thread-per-rate test		*/
+
+[-p <port_num>] is the port number at which the server will start the
+  first (and highest priority) servant. Successive servants will be
+  created starting at (port_num+1). The -t parameter specifies the total
+  number of servants.
+
+	Default Value: ACE_DEFAULT_SERVER_PORT  /* see $ACE/ace/OS.h for actual number value */
+
+[-h <my_hostname>] indicates the IP address the ORB should bind to.
+  This is useful when a machine has more than one network interface.
+
+	Default Value: Whatever ACE_OS::hostname () returns, which depends on the platform.
+
+[-t <number_of_servants>] tells the server how many servants to create.
+
+	Default Value: 2
+
+[-s ] Disables the use of the naming service to register the servants.
+
+	Default Value: Use naming service enabled.
+
+[-f <ior_file> ] Use to specify a file to write all the iors from the
+  different servants out to disk.
+
+	Default Value: nil, which means not to write the iors to disk.
+
+[-m ] For the 1 to n low priority servants, this parameter indicates
+  the use of a range of priorities for the threads.
+
+	Default Value: Disabled.  One priority will be used for the
+                       low priority threads.
+
+[-U ] Run the server utilization test.  This option overrides the "-t"
+  option.  This option sets the number threads to one.  NOTE: to use
+  this option successfully, you should also use "-U" on the client
+  side.
+
+	Default Value: Disabled. To enable, specify "-U" on the
+                       command line.
 
 The server will print the IOR of the servants, but it is not required
 by the client.
 
-client:
--------
+
+
+(2) client:
 
 ./client [-ORBobjrefstyle url]
-         [-p <port_num>]
-         [-h <server_hostname>]
          [-d <datatype>]
          [-n <num_calls>]
          [-t <num_of_clients>]
-         [-r]
+         [-f <ior_file>]
+         [-r]			// use thread-per-rate test.
+         [-u]			// run the client utilization test
+         [-U]			// run the servant utilization test
+         [-1]			// use one to n test.
+         [-o]			// makes client use oneway calls instead
+         [-x]			// makes a call to servant to shutdown
+         [-g]			// choose the granularity of timing calls
+         [-c]			// obtain number of context switches.
+         [-s]			// makes client *NOT* use the name service
+         [-m]			// use multiple priorities for the low priority client.
 
 [-ORBobjrefstyle url]  Makes the IOR appear in URL format instead
    of that ugly number sequence format.
 
-<port_num> is the port number of the highest priority servant and
-   should be the same as the port_num supplied to the server, as
-   described earlier. The lower priority servant is assumed to be at
-   (port_num+1).
-
-<server_hostname> is the hostname of the server.
-
-   Based on the server_hostname and the port_num, the client
-   automatically constructs the IOR's for the servants
-
-<datatype> is one of the following:
+[-d <datatype>]  <datatype> is one of the following:
 
    0 Octet
    1 Short
    2 Long
    3 Struct of the above 3 types
 
-<num_calls> is the number of CORBA twoway calls to be made
+[-n <num_calls>] is the number of CORBA twoway calls to be made
 
-<num_of_clients> is the total number of concurrent clients to be
+[-t <num_of_clients>] is the total number of concurrent clients to be
    created. The clients will have successively decreasing
-   priorities.
+   priorities if "-m" is specified.
 
-[-r] this option can be used to turn on the thread-per-rate tests.
+[-r] turn on the thread-per-rate tests.
 
 [-o] enables oneway calls instead of two-way calls.  The oneway call
    is a noop call (for now).
@@ -70,10 +116,14 @@ client:
 [-x] makes the client call the shutdown() method on the servant which
    invokes the shutdown() method on the ORB and causes it to exit.
 
+
+VXWORKS specifics
+-----------------
+
 To build the client for VxWorks, for running the server and client
 on a single target:
 
-  % make BIN=client ACELIB= LDLIBS="$ACE_ROOT/ace/.obj/High_Res_Timer.o $ACE_ROOT/ace/.obj/gethrtime.o"
+  % make BIN=client ACELIB= LDLIBS="$ACE_ROOT/ace/.obj/High_Res_Timer.o $ACE_ROOT/ace/.obj/gethrtime.o $ACE/ace/.obj/Stats.o $ACE/ace/.obj/Log_Msg.o"
 
 To run the server and client on a single target:
 
