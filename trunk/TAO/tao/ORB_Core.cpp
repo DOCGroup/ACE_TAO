@@ -830,8 +830,12 @@ TAO_ORB_Core::set_iiop_endpoint (int dotted_decimal_addresses,
 int
 TAO_ORB_Core::fini (void)
 {
-  // Ask the registry to close all registered connectors!
-  // this->connector_registry ()->close_all ();
+  // Close connectors before acceptors!
+  // Ask the registry to close all registered connectors.
+  this->connector_registry ()->close_all ();
+
+  // Ask the registry to close all registered acceptors.
+  this->acceptor_registry ()->close_all ();
 
   TAO_Internal::close_services ();
 
