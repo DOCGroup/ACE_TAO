@@ -1,3 +1,8 @@
+Sat Nov 02 20:46:08 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/CosNotification.bor:
+	  Modified to add new Notification files.
+
 Sat Nov  2 19:56:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Synch_Refcountable.cpp: Cosmetic fix.
