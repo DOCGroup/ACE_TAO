@@ -55,21 +55,21 @@ main (int, ASYS_TCHAR *[])
   ACE_OS::strcpy (backing_store,
                   ACE_DEFAULT_BACKING_STORE);
 #else /* ACE_DEFAULT_BACKING_STORE */
-  if (ACE::get_temp_dir (backing_store, 
+  if (ACE::get_temp_dir (backing_store,
                          MAXPATHLEN - 17) == -1) // -17 for ace-malloc-XXXXXX
     {
-      ACE_ERROR ((LM_ERROR, 
-                  "Temporary path too long, "
-                  "defaulting to current directory\n"));
+      ACE_ERROR ((LM_ERROR,
+                  ASYS_TEXT ("Temporary path too long, ")
+                  ASYS_TEXT ("defaulting to current directory\n")));
       backing_store[0] = 0;
     }
 
-  // Add the filename to the end.
+  // Add the filename to the end
   ACE_OS::strcat (backing_store,
-                  ASYS_TEXT ("ace-malloc-XXXXXX"));
+                  ACE_TEXT ("ace-malloc-XXXXXX"));
 
 #endif /* ACE_DEFAULT_BACKING_STORE */
-  
+
   ACE_OS::unlink (backing_store);
 
   LPCTSTR server_cl = APPLICATION ACE_TEXT ("server.conf");
