@@ -86,6 +86,7 @@ PUB_HDRS = \
   FILE_Parser \
   CORBALOC_Parser \
   CORBANAME_Parser \
+  MCAST_Parser \
   CORBA_String \
   Connection_Purging_Strategy \
   LRU_Connection_Purging_Strategy
@@ -245,6 +246,7 @@ ORB_CORE_FILES = \
   FILE_Parser \
   CORBALOC_Parser \
   CORBANAME_Parser \
+  MCAST_Parser \
   Bind_Dispatcher_Guard \
   Fault_Tolerance_Service \
   Interceptor_List \
