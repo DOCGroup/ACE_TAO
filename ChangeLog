@@ -1,3 +1,10 @@
+Mon Apr 26 10:04:43 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/mfc.mpb:
+
+          Within 'specific' sections, set the subsystem and use_mfc template
+          variables to correct values for use with MFC.
+
 Mon Apr 26 09:59:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Memory_Pool.h:
@@ -22,20 +29,20 @@ Mon Apr 26 07:18:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Apr 25 23:17:26 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
 
-	  Include "ace/Null_Mutex.h" to pull in ACE_Null_Mutex class
-	  declaration.
+          Include "ace/Null_Mutex.h" to pull in ACE_Null_Mutex class
+          declaration.
 
-	* examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp:
 
-	  Include "ace/Log_Msg.h" and "ace/OS_NS_stdio.h" to pull
-	  ACE_ERROR related macros and ACE_OS::perror() prototype,
-	  respectively.
+          Include "ace/Log_Msg.h" and "ace/OS_NS_stdio.h" to pull
+          ACE_ERROR related macros and ACE_OS::perror() prototype,
+          respectively.
 
-	* examples/IPC_SAP/SSL_SAP/Makefile:
+        * examples/IPC_SAP/SSL_SAP/Makefile:
 
-	  Added missing ACE SSL preprocessor and linker flags.
+          Added missing ACE SSL preprocessor and linker flags.
 
 Sun Apr 25 09:22:50 2004  Chad Elliott  <elliott_c@ociweb.com>
 
