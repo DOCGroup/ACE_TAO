@@ -1392,7 +1392,7 @@ be_sequence::tc_encap_len (void)
                       "be_sequence::tc_encap_len - bad base type\n"));
           return 0;
         }
-      this->encap_len_ += bt->tc_encap_len ();
+      this->encap_len_ += bt->tc_size ();
       this->encap_len_ += 4; // to hold the max size
 
     }
