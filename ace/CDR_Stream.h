@@ -718,6 +718,10 @@ public:
   ACE_Message_Block *steal_contents (void);
   // Steal the contents from the currect CDR.
 
+  void steal_from (ACE_InputCDR &cdr);
+  // Steal the contents of <cdr> and make a shallow copy into this
+  // stream.
+
   void reset_contents (void);
   // Re-initialize the CDR stream, forgetting about the old contents
   // of the stream and allocating a new buffer (from the allocators).
