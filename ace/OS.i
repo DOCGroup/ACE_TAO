@@ -3545,7 +3545,9 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
   // second arg is a struct siginfo *, which we don't need (the selected
   // signal number is returned)
   // third arg is timeout:  NULL means forever
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigtimedwait (set, NULL, NULL),
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigtimedwait (set,
+                                                       (struct siginfo *) NULL,
+                                                       (struct timespec *) NULL),
 				       ace_result_),
 		     int, -1);   // yes, the doc says -1, not ERROR
 #endif /* ACE_HAS_STHREADS */
@@ -5779,7 +5781,7 @@ ACE_OS::sleep (u_int seconds)
   // Initializer doesn't work with Green Hills 1.8.7
   rqtp.tv_sec = seconds;
   rqtp.tv_nsec = 0L;
-  ACE_OSCALL_RETURN (::nanosleep (&rqtp, NULL), int, -1);
+  ACE_OSCALL_RETURN (::nanosleep (&rqtp, (struct timespec *) NULL), int, -1);
 #else
   ACE_OSCALL_RETURN (::sleep (seconds), int, -1);
 #endif /* ACE_WIN32 */
