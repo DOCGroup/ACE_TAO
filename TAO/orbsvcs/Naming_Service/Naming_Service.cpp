@@ -6,7 +6,7 @@
 ACE_RCSID(Naming_Service, Naming_Service, "$Id$")
 
 // Default Constructor.
-  
+
 TAO_Naming_Service::TAO_Naming_Service (void)
   : time_ (0)
 {
@@ -27,27 +27,27 @@ TAO_Naming_Service::init (int argc,
                           char *argv[])
 {
   int result;
- 
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       this->argc_ = argc;
       this->argv_ = argv;
-      
+
       // Initialize the ORB
-      this->orb_ = 
+      this->orb_ =
         CORBA::ORB_init (this->argc_, this->argv_, 0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Parse the args for '-t' option. If '-t' option is passed, do
       // the needful and then remove the option from the list of
       // arguments.
-      this->parse_args (this->argc_, this->argv_); 
+      this->parse_args (this->argc_, this->argv_);
 
       // This function call initializes the naming service and returns
       // '-1' in case of an exception.
-      result = this->my_naming_server_.init_with_orb (this->argc_, 
-                                                      this->argv_, 
+      result = this->my_naming_server_.init_with_orb (this->argc_,
+                                                      this->argv_,
                                                       this->orb_.in ());
 
       if (result == -1)
@@ -87,18 +87,19 @@ TAO_Naming_Service::parse_args (int argc,
           // to avoid any confusion that might result.
           for (int i = count_argv; i != argc; ++i)
             argv [i] = argv [i+2];
-          
+
           // Decrement the value of this->argc_ to reflect the removal
           // of '-t' option.
           argc = argc-2;
           break;
-        
+
       case '?':
       default:
         // Donot do anything. The TAO_Naming_Server::parse_args ()
         // takes care of indicating an error in case of error.
         break;
         }
+    }
   return 0;
 }
 
@@ -126,5 +127,5 @@ TAO_Naming_Service::run (CORBA_Environment& ACE_TRY_ENV)
 // Destructor.
 TAO_Naming_Service::~TAO_Naming_Service (void)
 {
-  // Destructor 
+  // Destructor
 }

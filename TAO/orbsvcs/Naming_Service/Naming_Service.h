@@ -51,12 +51,12 @@ public:
 protected:
 
   int parse_args (int argc, char *argv []);
-  // Parse the command line arguments to find 
+  // Parse the command line arguments to find
   // the timeout period.
 
   CORBA::ORB_var orb_;
   // The ORB.
-  
+
   //  PortableServer::POA_var root_poa_;
   // The Root POA.
 
@@ -66,11 +66,11 @@ protected:
   size_t time_;
   // After how long the server should stop listening to requests (in
   // seconds).
-  
+
   int argc_;
   // argc
 
-  char *argv_ [];
+  char **argv_;
   // argv []
 };
 
