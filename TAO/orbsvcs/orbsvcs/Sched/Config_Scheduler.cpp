@@ -316,7 +316,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   ACE_DEBUG ((LM_DEBUG, "schedule prepared\n"));
 
   ACE_DEBUG ((LM_DEBUG, "dumping to stdout\n"));
-  ACE_Scheduler_Factory::dump_schedule (*(infos.ptr()), 0);
+  ACE_Scheduler_Factory::dump_schedule (*(infos.ptr()), *(configs.ptr()), 0);
   ACE_DEBUG ((LM_DEBUG, "dump done\n"));
 }
 
