@@ -1,3 +1,7 @@
+Tue Dec 16 14:15:48 1997    <irfan@TWOSTEP>
+
+	* ace/OS.i (fstat): Fixed Dr. Schmidt's typo.
+
 Tue Dec 16 09:17:53 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Basic_Types.{h,i}: (ACE_U_LongLong): use ACE_UIN32 instead
