@@ -148,7 +148,7 @@ Identity_Client::run (CORBA::Environment &ACE_TRY_ENV)
   Identity_var identity_object;
   CORBA::String_var identity;
 
-  for (i = 0; i < this->number_of_invocations_; ++i)
+  for (size_t ind = 0; ind < this->number_of_invocations_; ++ind)
     {
       obj = object_group->resolve (ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
@@ -165,7 +165,7 @@ Identity_Client::run (CORBA::Environment &ACE_TRY_ENV)
       ACE_CHECK_RETURN (-1);
       ACE_DEBUG ((LM_DEBUG,
                   "Invocation %d: %s\n",
-                  i,
+                  ind,
                   identity.in ()));
       ACE_CHECK_RETURN (-1);
     }
@@ -180,7 +180,7 @@ Identity_Client::~Identity_Client (void)
 int
 main (int argc, char *argv[])
 {
-  int result;
+  int result = 0;
   Identity_Client client;
 
   if (client.init (argc, argv) == -1)
