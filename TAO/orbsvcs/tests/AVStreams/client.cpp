@@ -34,7 +34,6 @@ Client::init (int argc,
   // init the ORB
   manager_.init (argc,
                  argv,
-                 "avstreams_poa",
                  env);
   TAO_CHECK_ENV_RETURN (env, 1);
 
