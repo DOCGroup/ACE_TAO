@@ -213,7 +213,7 @@ Test_DynSequence::run_test (void)
       DynAnyTests::test_seq *ts_out;
       out_any1.in () >>= ts_out;
 
-      if (!ACE_OS::strcmp ((*ts_out)[0], data.m_string1))
+      if (!ACE_OS::strcmp ((*ts_out)[0U], data.m_string1))
         {
           ACE_DEBUG ((LM_DEBUG,
                      "++ OK ++\n"));

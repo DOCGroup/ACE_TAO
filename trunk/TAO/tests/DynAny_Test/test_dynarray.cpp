@@ -162,7 +162,7 @@ Test_DynArray::run_test (void)
       ACE_TRY_CHECK;
       DynamicAny::AnySeq_var as_out = ftc1->get_elements (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA_Any out_any2 = (*as_out)[1];
+      CORBA_Any out_any2 = as_out[1U];
       CORBA::Long l_out2;
       out_any2 >>= l_out2;
 
