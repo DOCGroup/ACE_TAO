@@ -41,6 +41,7 @@ Tue Jun 29 19:48:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* examples/OBV/Simple_util.cpp:
 	* examples/OBV/Typed_Events/server.cpp:
 	* examples/Simple/Simple_util.cpp:
+	* examples/Simple/time-date/Time_Date.cpp:
 	* performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp:
 	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
 	* performance-tests/Thruput/TAO/client.cpp:
