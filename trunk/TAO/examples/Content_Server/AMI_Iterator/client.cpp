@@ -8,7 +8,7 @@
 #include "Web_ServerC.h"
 #include "Iterator_Handler.h"
 
-ACE_RCSID(AMI_Iterator, client, "$Id")
+ACE_RCSID (AMI_Iterator, client, "$Id$")
 
 // Obtain reference to Iterator_Factory
 Web_Server::Iterator_Factory_ptr
@@ -55,7 +55,7 @@ main (int argc, char *argv[])
       mgr->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Now narrow to an Iterator_Factory reference.
+      // Get an Iterator_Factory reference.
       Web_Server::Iterator_Factory_var factory =
         ::get_iterator (orb.in (),
                         ACE_TRY_ENV);
@@ -137,7 +137,7 @@ get_iterator (CORBA::ORB_ptr o,
   ACE_CHECK_RETURN (Web_Server::Iterator_Factory::_nil ());
 
   // Narrow to a Naming Context
-  CosNaming::NamingContext_var nc = 
+  CosNaming::NamingContext_var nc =
     CosNaming::NamingContext::_narrow (obj.in (), ACE_TRY_ENV);
   ACE_CHECK_RETURN (Web_Server::Iterator_Factory::_nil ());
 
@@ -182,7 +182,7 @@ void invoke_requests (int argc,
                         Iterator_Handler,
                         CORBA::NO_MEMORY ());
       ACE_CHECK;
-      
+
       // Transfer ownership to the POA.
       PortableServer::ServantBase_var tmp (handler);
 

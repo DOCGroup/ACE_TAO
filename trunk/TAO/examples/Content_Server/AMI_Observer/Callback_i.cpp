@@ -7,9 +7,9 @@
 #include "ace/Log_Msg.h"
 #include "ace/Process_Manager.h"
 #include "ace/Synch.h"
-#include "Callback.h"
+#include "Callback_i.h"
 
-ACE_RCSID(AMI_Observer, Callback, "$Id$")
+ACE_RCSID (AMI_Observer, Callback_i, "$Id$")
 
 Callback_i::Callback_i (int *request_count)
   : file_ (ACE_sap_any_cast (ACE_FILE_Addr &)),
@@ -168,7 +168,7 @@ int
 Callback_i::get_viewer (char *viewer,
                         size_t length)
 {
-  const char *content_type = 
+  const char *content_type =
     this->metadata_.content_type.in ();
 
   if (ACE_OS::strcasecmp (content_type, "text/html") == 0)
@@ -223,7 +223,7 @@ Callback_i::get_viewer (char *viewer,
     }
   else
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unsupported MIME type: <%s>\n",
+                       ACE_TEXT ("Unsupported MIME type: <%s>\n"),
                        content_type),
                       -1);
 
@@ -233,9 +233,7 @@ Callback_i::get_viewer (char *viewer,
 int
 Callback_i::spawn_viewer (void)
 {
-  // It is highly unlikey, a mime type will ever be larger than 80
-  // bytes.
-  char viewer[80];
+  char viewer[BUFSIZ];
 
   if (this->get_viewer (viewer,
                         sizeof (viewer)) != 0)

@@ -8,7 +8,7 @@
 
 #include "Iterator_Factory_i.h"
 
-ACE_RCSID(AMI_Iterator, server, "$Id$")
+ACE_RCSID (AMI_Iterator, server, "$Id$")
 
 int
 main (int argc, char *argv[])
@@ -51,7 +51,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Narrow to a Naming Context
-      CosNaming::NamingContext_var nc = 
+      CosNaming::NamingContext_var nc =
         CosNaming::NamingContext::_narrow (obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

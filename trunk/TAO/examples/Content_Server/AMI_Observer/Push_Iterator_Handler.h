@@ -1,12 +1,10 @@
 // -*- C++ -*-
 // $Id$
 
-// Ossama Othman <ossama@uci.edu>
-
 // ============================================================================
 //
 // = LIBRARY
-//     ECE255
+//     AMI_Observer
 //
 // = FILENAME
 //     Push_Iterator_Handler.h
@@ -37,6 +35,29 @@ class Push_Iterator_Handler
   : public virtual POA_Web_Server::AMI_Iterator_FactoryHandler,
     public virtual PortableServer::RefCountServantBase
 {
+  // = TITLE
+  //    Implement the Web_Server::Iterator_Factory AMI Reply Handler.
+  //
+  // = DESCRIPTION
+  //    This classes asynchronously registers a reference to the
+  //    client-side <Callback> object in the Content Server.  Once
+  //    registered, the <Callback> will begin receiving chunks of data
+  //    pushed from the Content Server.
+  //
+  //    Since registration occurs asynchronously, it is possible that
+  //    the metadata returned from the <Iterator_Factory> will be
+  //    received after the content of the file has been received.  The
+  //    <Callback> object is equipped to handle this possibility.
+  //
+  //    The register_callback() reply handler method in this class
+  //    receives the metadata, and then passes it to the <Callback>
+  //    object.  Once the metadata is received, there is no longer any
+  //    use for this <Push_Iterator_Handler> object, and it is
+  //    deactivated.
+
+  friend class Push_Iterator_Handler_Friend;
+  // Dummy friend class declaration to quiet down a warning.
+
 public:
   Push_Iterator_Handler (void);
   // Constructor that creates a content iterator corresponding to the
@@ -66,7 +87,7 @@ private:
   // AMI callback that is invoked when a response from the
   // corresponding server method is received.
 
-  virtual void register_callback_excep 
+  virtual void register_callback_excep
   (Web_Server::AMI_Iterator_FactoryExceptionHolder *,
    CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException)) {}

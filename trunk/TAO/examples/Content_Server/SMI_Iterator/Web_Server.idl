@@ -7,14 +7,14 @@ module Web_Server
 
   interface Content_Iterator
   {
+    boolean next_chunk (in unsigned long offset,
+                        out Chunk_Type chunk);
     // This operation returns the next <chunk> of the
     // file starting at <offset>.  If there are
     // no more bindings, false is returned.
-    boolean next_chunk (in unsigned long offset,
-                        out Chunk_Type chunk);
 
-    // This operation destroys the iterator.
     void destroy ();
+    // This operation destroys the iterator.
   };
 
   exception Error_Result {
@@ -27,22 +27,22 @@ module Web_Server
 
   struct Metadata_Type
   {
-    // Modification date.
     string modification_date;
-    
-    // Type of content.
+    // Modification date.
+
     string content_type;
+    // Type of content.
   };
 
   interface Iterator_Factory
   {
-    // This factory method returns a <Content_Iterator> that
-    // can be used to read the <contents> associated with
-    // <pathname> one ``chunk'' at a time.  The <metadata>
-    // reports information about the <contents>. 
     void get_iterator (in string pathname,
                        out Content_Iterator contents,
                        out Metadata_Type metadata)
       raises (Error_Result);
+    // This factory method returns a <Content_Iterator> that
+    // can be used to read the <contents> associated with
+    // <pathname> one ``chunk'' at a time.  The <metadata>
+    // reports information about the <contents>.
   };
 };

@@ -34,7 +34,7 @@ main (int argc, char *argv[])
     {
       if (argc < 2)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage: client filename\n"),
+                           ACE_TEXT ("Usage: client filename\n")),
                           -1);
 
       // Initialize the ORB.
@@ -51,8 +51,8 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Narrow to a Naming Context
-      CosNaming::NamingContext_var nc;
-      nc = CosNaming::NamingContext::_narrow (obj.in (), ACE_TRY_ENV);
+      CosNaming::NamingContext_var nc =
+        CosNaming::NamingContext::_narrow (obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()))

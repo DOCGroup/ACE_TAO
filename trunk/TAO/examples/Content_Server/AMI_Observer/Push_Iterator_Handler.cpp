@@ -6,9 +6,9 @@
 #include "ace/Log_Msg.h"
 #include "ace/Process_Manager.h"
 #include "Push_Iterator_Handler.h"
-#include "Callback.h"
+#include "Callback_i.h"
 
-ACE_RCSID(AMI_Observer, Push_Iterator_Handler, "$Id$")
+ACE_RCSID (AMI_Observer, Push_Iterator_Handler, "$Id$")
 
 Push_Iterator_Handler::Push_Iterator_Handler (void)
   : callback_servant_ (0),
@@ -24,7 +24,7 @@ Push_Iterator_Handler::~Push_Iterator_Handler (void)
 }
 
 void
-Push_Iterator_Handler::register_callback 
+Push_Iterator_Handler::register_callback
   (const Web_Server::Metadata_Type &metadata,
    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))

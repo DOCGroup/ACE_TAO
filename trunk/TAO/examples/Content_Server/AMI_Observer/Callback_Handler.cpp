@@ -7,7 +7,7 @@
 #include "ace/Log_Msg.h"
 #include "Callback_Handler.h"
 
-ACE_RCSID(AMI_Observer, Callback_Handler, "$Id$")
+ACE_RCSID (AMI_Observer, Callback_Handler, "$Id$")
 
 Callback_Handler::Callback_Handler (const char *pathname,
                                     Web_Server::Callback_ptr client_callback)
@@ -42,6 +42,9 @@ Callback_Handler::next_chunk (CORBA::Environment &ACE_TRY_ENV)
   // Allocate a buffer for the file being read.
   CORBA::Octet *buf =
     Web_Server::Chunk_Type::allocbuf (BUFSIZ);
+
+  if (buf == 0)
+    ACE_THROW (CORBA::NO_MEMORY ());
 
   ssize_t bytes_read = this->file_io_.recv (buf,
                                             BUFSIZ);
@@ -82,7 +85,7 @@ Callback_Handler::next_chunk (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-Callback_Handler::next_chunk_excep 
+Callback_Handler::next_chunk_excep
   (Web_Server::AMI_CallbackExceptionHolder *excep_holder,
    CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -107,26 +110,24 @@ Callback_Handler::next_chunk_excep
   ACE_ENDTRY;
 }
 
-ACE_HANDLE
+void
 Callback_Handler::run (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Web_Server::Error_Result))
 {
   // Open the file to be downloaded
   this->open_file (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
+  ACE_CHECK;
 
   // Activate this Reply Handler.
   this->ami_handler_ = this->_this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
+  ACE_CHECK;
 
   // Begin the asynchronous invocation.  Note that the AMI
   // "sendc_next_chunk()" call is done within the following call,
   // since data must first be read into the Chunk.
   this->next_chunk (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
-
-  return this->file_io_.get_handle ();
+  ACE_CHECK;
 }
 
 void

@@ -6,10 +6,10 @@
 #include "Push_Iterator_Factory_i.h"
 #include "Callback_Handler.h"
 
-ACE_RCSID(AMI_Observer, Push_Iterator_Factory_i, "$Id$")
+ACE_RCSID (AMI_Observer, Push_Iterator_Factory_i, "$Id$")
 
 Web_Server::Metadata_Type *
-Push_Iterator_Factory_i::register_callback 
+Push_Iterator_Factory_i::register_callback
   (const char *pathname,
    Web_Server::Callback_ptr client_callback,
    CORBA::Environment &ACE_TRY_ENV)
@@ -27,7 +27,7 @@ Push_Iterator_Factory_i::register_callback
   // content.
 
   ACE_DEBUG ((LM_DEBUG,
-              "Received request for file: <%s>\n",
+              ACE_TEXT ("Received request for file: <%s>\n"),
               pathname));
 
   // Send the file to the client asynchronously.  This allows the
@@ -42,34 +42,42 @@ Push_Iterator_Factory_i::register_callback
   // Transfer ownership to the POA.
   PortableServer::ServantBase_var tmp (handler);
 
-  ACE_HANDLE fd = handler->run (ACE_TRY_ENV);
+  // Start sending data to the client callback object.
+  handler->run (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   struct stat file_status;
-  if (fd == ACE_INVALID_HANDLE
-      || ACE_OS::fstat (fd,
-                        &file_status) == -1)
+  if (ACE_OS::stat (pathname,
+                    &file_status) == -1)
     // HTTP 1.1 "Internal Server Error".
     ACE_THROW_RETURN (Web_Server::Error_Result (500),
                       0);
-  Web_Server::Metadata_Type_var metadata =
-    new Web_Server::Metadata_Type;
+
+  Web_Server::Metadata_Type *meta_tmp = 0;
+  ACE_NEW_THROW_EX (meta_tmp,
+                    Web_Server::Metadata_Type,
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  Web_Server::Metadata_Type_var metadata = meta_tmp;
 
   if (this->modification_date (&file_status,
                                metadata.inout ()) != 0)
     // HTTP 1.1 "Internal Server Error.
     ACE_THROW_RETURN (Web_Server::Error_Result (500),
                       0);
+
   if (this->content_type (pathname,
                           metadata.inout ()) != 0)
     // HTTP 1.1 "Internal Server Error.
     ACE_THROW_RETURN (Web_Server::Error_Result (500),
                       0);
+
   return metadata._retn ();
 }
 
 int
-Push_Iterator_Factory_i::modification_date 
+Push_Iterator_Factory_i::modification_date
   (struct stat *file_status,
    Web_Server::Metadata_Type & metadata)
 {
@@ -154,9 +162,9 @@ Push_Iterator_Factory_i::content_type (const char *filename,
     {
       metadata.content_type = CORBA::string_dup ("text/html");
       ACE_ERROR ((LM_WARNING,
-                  "\n  "
-                  "Unknown file type.  "
-                  "Using \"text/html\" content type.\n"));
+                  ACE_TEXT ("\n  ")
+                  ACE_TEXT ("Unknown file type.  ")
+                  ACE_TEXT ("Using \"text/html\" content type.\n")));
     }
 
   return 0;
