@@ -175,7 +175,7 @@ static CACHED_CONNECT_STRATEGY *connect_strategy = 0;
 #if defined (ACE_WIN32)
 static int iterations = 2000;
 #else
-static int iterations = 500;
+static int iterations = 200;
 #endif /* ACE_WIN32 */
 
 //====================================================================
@@ -525,7 +525,7 @@ main (int argc,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-// = Consume handles
+// = Handle Gobbler
 template class ACE_Node<ACE_HANDLE>;
 template class ACE_Unbounded_Set<ACE_HANDLE>;
 template class ACE_Unbounded_Set_Iterator<ACE_HANDLE>;
@@ -612,7 +612,7 @@ template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-// = Consume handles
+// = Handle Gobbler
 #pragma instantiate ACE_Node<ACE_HANDLE>
 #pragma instantiate ACE_Unbounded_Set<ACE_HANDLE>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_HANDLE>
