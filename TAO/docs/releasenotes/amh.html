@@ -152,7 +152,7 @@ ul
 <p class=MsoNormal>Point of contact: <a href="mailto:coryan@uci.edu">Carlos
 O’Ryan</a>, <a href="mailto:mayur@ics.uci.edu">Mayur Deshpande</a></p>
 
-<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+<!--<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>-->
 
 <p class=MsoNormal>The purpose of this document is to provide a guide to using
 the AMH capability available in TAO.<span style="mso-spacerun: yes"> 
@@ -198,7 +198,7 @@ current implementation status. </p>
 <p class=MsoNormal style='text-align:justify;tab-stops:18.0pt 350.65pt'><span
 style='mso-bidi-font-size:11.5pt'>For many types of distributed systems, the
 CORBA asynchronous method invocation <a
-href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/releasenotes/index.html#ami">(AMI)</a>
+href="<A http=./index.html#ami">(AMI)</a>
 mechanism can improve concurrency, scalability, and responsiveness
 significantly. AMI allows clients to invoke multiple two-way requests without
 waiting for responses. The time normally spent waiting for replies can
@@ -224,7 +224,7 @@ href="http://www.ics.uci.edu/~mayur/papers/AMH.pdf">AMH-In-Detail</a>.<o:p></o:p
 
 <p class=MsoNormal>Servers that want to take advantage of AMH capability must
 use AMH-servants derived from AMH-skeletons. Invoking the <a
-href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/releasenotes/index.html#idl">IDL
+href="index.html#idl">IDL
 compiler</a> with the ‘-GH’ option causes the IDL-compiler to generate
 AMH-skeletons for all interfaces in the ‘.idl’ file.<span style="mso-spacerun:
 yes">  </span>The signatures of the AMH-methods differ from the original
@@ -239,7 +239,7 @@ registered in any POA and can intermix with ‘normal’ servants in the same POA.
 The granularity of AMH is at the interface level and not at the method level;
 Thus for an interface compiled with the –GH option, all operations in that
 interface are asynchronous. Currently, AMH doesn’t work in conjunction with <a
-href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/releasenotes/index.html#interceptor">Interceptors</a>
+href="index.html#interceptor">Interceptors</a>
 and behaviour is undefined if both are used together. </p>
 
 

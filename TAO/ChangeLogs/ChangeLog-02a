@@ -1,3 +1,9 @@
+Sat Feb  9 08:24:08 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/releasenotes/amh.html: Removed references to pages in the
+	  docs section through Dr.Schmidt's home page. This also fixes
+	  fuzz errors. 
+
 Sat Feb 09 01:58:00 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/IORInfo.cpp (current_factory):
