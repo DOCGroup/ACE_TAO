@@ -1,3 +1,11 @@
+Wed Sep 17 12:34:02 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * tests/OBV/Supports/Supports_Test_impl.h:
+        * tests/OBV/Supports/Supports_Test_impl.cpp:
+        * tests/OBV/Supports/client.cpp:
+
+          Added missing exception specifications.
+
 Wed Sep 17 07:13:04 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Utils/Utils.mpc:
