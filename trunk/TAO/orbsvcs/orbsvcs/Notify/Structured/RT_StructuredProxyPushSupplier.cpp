@@ -6,7 +6,7 @@
 #include "RT_StructuredProxyPushSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_RT_StructuredProxyPushSupplier, "$id$")
+ACE_RCSID (Notify, TAO_Notify_RT_StructuredProxyPushSupplier, "$Id$")
 
 TAO_Notify_RT_StructuredProxyPushSupplier::TAO_Notify_RT_StructuredProxyPushSupplier (void)
 {

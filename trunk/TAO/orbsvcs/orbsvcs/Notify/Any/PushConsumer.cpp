@@ -6,7 +6,7 @@
 #include "PushConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_PushConsumer, "$id$")
+ACE_RCSID (Notify, TAO_Notify_PushConsumer, "$Id$")
 
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "orbsvcs/CosEventCommC.h"
