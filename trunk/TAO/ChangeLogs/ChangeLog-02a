@@ -1,3 +1,15 @@
+Thu Jan 24 00:08:22 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/IORInfo.cpp:
+	* tao/PortableServer/ObjectReferenceTemplate.cpp:
+	* tao/PortableServer/ObjectReferenceTemplate.h:
+	* tao/PortableServer/POA.cpp:
+	* tao/PortableServer/POA.h:
+	* tao/PortableServer/POA.i:
+
+	  Code review!  Left a whole slew of "@@" comments regarding
+	  disfunctional code, exception safety, memory leaks, etc.
+
 Wed Jan 23 22:00:16 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/IORInfo.cpp

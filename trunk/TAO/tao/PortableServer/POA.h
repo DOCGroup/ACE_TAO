@@ -1,27 +1,22 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    POA.h
-//
-// = DESCRIPTION
-//     POA
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    POA.h
+ *
+ *  $Id$
+ *
+ *  Header file for CORBA's ORB type.
+ *
+ *  @author  Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
 
 #ifndef TAO_POA_H
 #define TAO_POA_H
+
 #include "ace/pre.h"
 
-// String
 #include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -220,6 +215,11 @@ public:
   PortableInterceptor::AdapterManagerId get_manager_id (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  // @@ Priyanka, shouldn't this method return a
+  //    PortableInterceptor::AdapterName, not a CORBA::StringSeq?  One
+  //    may be a typedef of the other but they have different
+  //    TypeCodes!
+  //
   /// This method returns the adapter_name as a sequence of strings of
   /// length one or more or just a fixed name depending on the Object
   /// Adapter. Added wrt to ORT Spec.
@@ -256,10 +256,14 @@ public:
 
   TAO_MProfile *get_mprofile ();
 
+  // @@ Priyanka, this method appears to be very useless and broken.
+  //    Do you really need it?
   void
   save_ior_component (const IOP::TaggedComponent &component
                       TAO_ENV_ARG_DECL);
 
+  // @@ Priyanka, this method appears to be very useless and broken.
+  //    Do you really need it?
   void
   save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
                                      IOP::ProfileId profile_id
@@ -547,6 +551,11 @@ protected:
   PortableServer::POAList *the_children_i (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  // @@ Priyanka, shouldn't this method return a
+  //    PortableInterceptor::AdapterName, not a CORBA::StringSeq?  One
+  //    may be a typedef of the other but they have different
+  //    TypeCodes!
+  //
   /// This method returns the adapter_name as a sequence of strings of
   /// length one or more or just a fixed name depending on the Object
   /// Adapter. Added wrt to ORT Spec.
@@ -841,8 +850,16 @@ protected:
 
   CORBA::OctetSeq id_;
 
+  // @@ Priyanka, this should be a
+  //    PortableInterceptor::ObjectReferenceTemplate_var.  Not only
+  //    does it simplify memory management but it also fixes a memory
+  //    leak that you introduced.
   PortableInterceptor::ObjectReferenceTemplate *ort_template_;
 
+  // @@ Priyanka, this should be a
+  //    PortableInterceptor::ObjectReferenceFactory_var.  Not only
+  //    does it simplify memory management but it also fixes a memory
+  //    leak that you introduced.
   PortableInterceptor::ObjectReferenceFactory *obj_ref_factory_;
 
   /// Adapter can be accepting, rejecting etc.
@@ -953,4 +970,5 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif /* TAO_POA_H */
