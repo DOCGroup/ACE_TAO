@@ -9,6 +9,8 @@
 #----------------------------------------------------------------------------
 
 BIN   	= main
+LIB	= libJAWS.a
+SHLIB	= libJAWS.$(SOEXT)
 
 FILES  	= \
 	HTTP_Server \
@@ -22,10 +24,14 @@ FILES  	= \
 	Parse_Headers \
 	IO
 
-SRC	= $(addsuffix .cpp,$(FILES))
-OBJ	= $(addsuffix .o,$(FILES))
+LDLIBS	= -lJAWS
 
-BUILD	= $(VBIN)
+PSRC   	= $(addsuffix .cpp,$(BIN))
+LSRC	= $(addsuffix .cpp,$(FILES))
+
+VLDLIBS = $(LDLIBS:%=%$(VAR))
+
+BUILD	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -35,6 +41,7 @@ include         $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include         $(ACE_ROOT)/include/makeinclude/macros.GNU
 include         $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include         $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include         $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include         $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include         $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
