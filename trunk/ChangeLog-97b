@@ -1,4 +1,8 @@
-Sun Oct 26 00:31:10 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Sun Oct 26 00:50:00 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tests/Conn_Test.cpp (close): Since the connect() method on
+ 	  ACE_Connector closes the svc_handler if failure occurs, we
+ 	  shouldn't do that again unless we succeed in connecting.
 
 	* ace/OS.h: Moved the CORBA portability macros from
  	  CORBA_Handler.h into OS.h so they will be accessible from TAO.

@@ -186,12 +186,14 @@ timed_blocking_connect (CONNECTOR &con,
   if (con.connect (svc_handler, server_addr, options) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
   else
-    // Send the data to the server.
-    svc_handler->send_data ();
+    {
+      // Send the data to the server.
+      svc_handler->send_data ();
 
-  // Close the connection completely.
-  if (svc_handler->close (1) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
+      // Close the connection completely.
+      if (svc_handler->close (1) == -1)
+        ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
+    }
 }
 
 static void
@@ -205,12 +207,14 @@ blocking_connect (CONNECTOR &con,
   if (con.connect (svc_handler, server_addr) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
   else
-    // Send the data to the server.
-    svc_handler->send_data ();
+    {
+      // Send the data to the server.
+      svc_handler->send_data ();
 
-  // Close the connection completely.
-  if (svc_handler->close (1) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
+      // Close the connection completely.
+      if (svc_handler->close (1) == -1)
+        ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
+    }
 }
 
 typedef ACE_Hash_Addr<ACE_INET_Addr> EXT_ID;
