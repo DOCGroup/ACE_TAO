@@ -16,7 +16,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
-#include "tao/GIOP_Message_Lite.h"
+//#include "tao/GIOP_Message_Lite.h"
 
 #if !defined (__ACE_INLINE__)
 # include "UIOP_Transport.i"
