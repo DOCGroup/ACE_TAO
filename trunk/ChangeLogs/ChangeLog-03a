@@ -1,3 +1,9 @@
+Mon Oct 14 20:47:21 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/SPIPE_Acceptor.cpp (open): Changed "mode" to "pipe_mode",
+	  which is the name of the parameter.  Thanks to Don Hinton for
+ 	  reporting this.
+
 Mon Oct 14 19:20:35 2002  Frank Hunleth  <frank@hunleth.com>
 
 	* ACE-INSTALL.html: Added installation notes for the OpenBSD port.

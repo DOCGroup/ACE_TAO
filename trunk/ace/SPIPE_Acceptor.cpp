@@ -57,7 +57,7 @@ ACE_SPIPE_Acceptor::open (const ACE_SPIPE_Addr &local_sap,
   this->pipe_mode_ = pipe_mode;
 #else
   ACE_UNUSED_ARG (sa);
-  ACE_UNUSED_ARG (mode);
+  ACE_UNUSED_ARG (pipe_mode);
 #endif /* ACE_WIN32 */
 
   return this->create_new_instance (perms);
