@@ -3,7 +3,7 @@ Fri Sep 29 17:17:08 2000  Ossama Othman  <ossama@uci.edu>
 	* tao/corbafwd.cpp (string_dup, wstring_dup):
 
 	  Verify that the allocated buffer is non-zero prior to copying
-	  the string to it since the copy functions used assumes that the
+	  the string to it since the copy functions used assume that the
 	  buffer is a valid one.
 
 Fri Sep 29 16:37:03 2000  Carlos O'Ryan  <coryan@uci.edu>
