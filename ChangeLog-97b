@@ -12,8 +12,6 @@ Thu Nov 13 16:52:31 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 	  Thanks to ARTURO MONTES <mitosys@colomsat.net.co> for reporting
 	  this.
 
-Thu Nov 13 13:57:18 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
-
 	* ace/OS.h: Separate definition of proper export flag for
 	  platforms from setting these flags for building/not building
 	  DLL.  I keep ACE_Export and ACE_Svc_Export to remain backward
