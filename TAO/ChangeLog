@@ -1,4 +1,10 @@
-Tue Aug 26 09:13:43 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+Tue Aug 26 09:16:55 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/Dynamic/test_i.cpp (the_structure):
+
+	  Fixed "return-statement with no value" warning.
+
+Tue Aug 26 09:15:44 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp (fini):
 
