@@ -6127,9 +6127,11 @@ public:
                          const char *reject);
   static size_t strspn(const char *s1,
                        const char *s2);
+#if defined (ACE_HAS_STRPTIME)
   static char *strptime (char *buf,
                          const char *format,
                          struct tm *tm);
+#endif /* ACE_HAS_STRPTIME */
   static char *strstr (char *s,
                        const char *t);
   static const char *strstr (const char *s,
@@ -6576,14 +6578,14 @@ private:
   friend class ACE_OS_Object_Manager;
   // Allow the ACE_OS_Object_Manager to call set_exit_hook.
 
-#if defined (ACE_LACKS_STRPTIME)
+#if defined (ACE_HAS_STRPTIME)  &&  defined (ACE_LACKS_NATIVE_STRPTIME)
   static int strptime_getnum (char *buf,
                               int *num,
                               int *bi,
                               int *fi,
                               int min,
                               int max);
-#endif /* ACE_LACKS_STRPTIME */
+#endif /* ACE_HAS_STRPTIME  &&  ACE_LACKS_NATIVE_STRPTIME */
 
 # if defined (ACE_WIN32)
 #   if defined (ACE_HAS_WINCE)

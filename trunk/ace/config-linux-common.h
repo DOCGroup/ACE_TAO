@@ -166,6 +166,8 @@
 // Compiler/platform supports strerror ().
 #define ACE_HAS_STRERROR
 
+#define ACE_HAS_STRPTIME
+
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T
 

@@ -122,6 +122,8 @@
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
 
+#define ACE_HAS_STRPTIME
+
 //**************************************************************
 // Not so sure how next lines should look like
 

@@ -1,13 +1,37 @@
+Tue Aug 10 14:46:12 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.{h,cpp},README: Changed support for ACE_OS::strptime ()
+          to be configurable.  VxWorks, LynxOS, and Chorus, for example,
+          don't have a native ::strptime ().  The current emulation cost
+          2 Kb, which will be objectionable to some embedded systems
+          developers.
+
+          Replaced ACE_LACKS_STRPTIME with a combination
+          ACE_HAS_STRPTIME/ACE_LACKS_NATIVE_STRPTIME.  ACE_HAS_STRPTIME
+          enables ACE_OS::strptime () support.  ACE_LACKS_NATIVE_STRPTIME
+          lets ACE know that there's no native ::strptime (), so it then
+          uses its emulation.
+
+          This has two advantages:  it minimizes footprint in the default
+          case, and doesn't break builds on platforms that don't have
+          ::strptime ().  It easily allows developers to configure ACE
+          identically, with respect to strptime, on their Unix, NT, and
+          embedded platforms. [Bug 219]
+
+        * ace/config-sunos5.5.h,config-linux-common.h,config-osf1-4.0.h,
+          config-irix6.x-common.h:
+          added #define ACE_HAS_STRPTIME. [Bug 219]
+
 Tue Aug 10 12:28:54 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* bin/run_all_list.pm:
-	  Added IDL test to the list.
+        * bin/run_all_list.pm:
+          Added IDL test to the list.
 
 Mon Aug 09 16:49:45 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Process.{h,cpp} (wait): Re-visited the implementation so it
-	  behaves the same on both UNIX and Win32.  Thanks to Doug for
-	  suggesting this.
+        * ace/Process.{h,cpp} (wait): Re-visited the implementation so it
+          behaves the same on both UNIX and Win32.  Thanks to Doug for
+          suggesting this.
 
 Mon Aug 09 16:30:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
