@@ -83,7 +83,7 @@ ACE_SHLIBS =<%foreach(libs)%> -l<%lib%><%endfor%><%foreach(pure_libs)%> <%pure_l
 <%if(tao_idl)%>
 TAO_IDL = <%tao_idl%>
 <%endif%>
-<%if(tao_idl_dep)
+<%if(tao_idl_dep)%>
 TAO_IDL_DEP = <%tao_idl%>
 <%endif%>
 <%if(tao_idlflags)%>
