@@ -67,7 +67,7 @@ TAO_IIOP_SSL_Connection_Handler (ACE_Thread_Manager *t)
 
 TAO_IIOP_SSL_Connection_Handler::
 TAO_IIOP_SSL_Connection_Handler (TAO_ORB_Core *orb_core,
-                                 CORBA::Boolean flag,
+                                 CORBA::Boolean /*flag*/,
                                  void *arg)
   : TAO_IIOP_Connection_Handler (orb_core,
                                  (ACE_static_cast (
