@@ -1,3 +1,18 @@
+Fri Nov 23 13:45:52 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_typedef.cpp:
+
+          Added check for locality of base type in the 'local' arg in the
+          call to the base class constructor of COMMON_Base. This was done
+          in the indirect call to COMMON_Base through the base class 
+          AST_TypeDef but that is_local_ memeber was not the one that the
+          call to the virtual function is_local() was finding. This resulted
+          in the 'local' value not getting propagated when a struct contained
+          a (typedef'd) sequence of a local struct. As a result of this, CDR
+          operators were getting generated that wouldn't compile. Thanks to 
+          Praphul Menon <praphulm@yahoo.com> for sending in the example IDL
+          file that uncovered this bug.
+
 Fri Nov 23 10:34:39 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* performance-tests/RTCorba/Oneways/Reliable/client.cpp (main): 
