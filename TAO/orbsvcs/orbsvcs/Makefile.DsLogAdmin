@@ -79,9 +79,9 @@ realclean: clean
 
 
 .obj/PersistStore.o .obj/PersistStore.so .shobj/PersistStore.o .shobj/PersistStore.so: Log/PersistStore.cpp Log/PersistStore.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
+ DsLogAdminS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -229,7 +229,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -284,8 +284,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ svc_utils_export.h \
+ TimeBaseC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -302,24 +302,24 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ DsLogAdminC.h \
+ Log/log_export.h \
+ DsLogAdminC.i \
+ DsLogAdminS_T.h \
+ DsLogAdminS_T.i \
+ DsLogAdminS_T.cpp \
+ DsLogAdminS.i \
+ Time_Utilities.h \
+ Time_Utilities.i
 
 .obj/LogRecordStore.o .obj/LogRecordStore.so .shobj/LogRecordStore.o .shobj/LogRecordStore.so: Log/LogRecordStore.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
+ Time_Utilities.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -501,7 +501,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ svc_utils_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -517,11 +517,11 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogRecordStore.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ TimeBaseC.i \
+ Time_Utilities.i \
+ Log/LogRecordStore.h \
+ DsLogAdminS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
@@ -543,17 +543,17 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ DsLogAdminC.h \
+ Log/log_export.h \
+ DsLogAdminC.i \
+ DsLogAdminS_T.h \
+ DsLogAdminS_T.i \
+ DsLogAdminS_T.cpp \
+ DsLogAdminS.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -594,19 +594,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Interpreter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/etcl_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.inl \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint_Visitor.h
+ Log/Log_Constraint_Interpreter.h \
+ ETCL/ETCL_Interpreter.h \
+ ETCL/etcl_export.h \
+ ETCL/ETCL_Constraint.h \
+ ETCL/ETCL_Constraint.inl \
+ Log/Log_Constraint_Visitors.h \
+ ETCL/ETCL_Constraint_Visitor.h
 
 .obj/BasicLogFactory_i.o .obj/BasicLogFactory_i.so .shobj/BasicLogFactory_i.o .shobj/BasicLogFactory_i.so: Log/BasicLogFactory_i.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/BasicLogFactory_i.h \
+ Log/BasicLogFactory_i.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ DsLogAdminS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -754,7 +754,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -809,8 +809,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ svc_utils_export.h \
+ TimeBaseC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -827,20 +827,20 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogMgr_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogRecordStore.h \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ DsLogAdminC.h \
+ Log/log_export.h \
+ DsLogAdminC.i \
+ DsLogAdminS_T.h \
+ DsLogAdminS_T.i \
+ DsLogAdminS_T.cpp \
+ DsLogAdminS.i \
+ Log/LogMgr_i.h \
+ Log/Log_i.h \
+ Log/LogRecordStore.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -881,20 +881,20 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogNotification.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/BasicLog_i.h
+ Log/LogNotification.h \
+ DsLogNotificationS.h \
+ DsLogNotificationC.h \
+ DsLogNotificationC.i \
+ DsLogNotificationS_T.h \
+ DsLogNotificationS_T.i \
+ DsLogNotificationS_T.cpp \
+ DsLogNotificationS.i \
+ Log/BasicLog_i.h
 
 .obj/Iterator_i.o .obj/Iterator_i.so .shobj/Iterator_i.o .shobj/Iterator_i.so: Log/Iterator_i.cpp Log/Iterator_i.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ DsLogAdminS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -1042,7 +1042,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -1097,8 +1097,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ svc_utils_export.h \
+ TimeBaseC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1115,18 +1115,18 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogRecordStore.h \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ DsLogAdminC.h \
+ Log/log_export.h \
+ DsLogAdminC.i \
+ DsLogAdminS_T.h \
+ DsLogAdminS_T.i \
+ DsLogAdminS_T.cpp \
+ DsLogAdminS.i \
+ Log/LogRecordStore.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -1167,19 +1167,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Interpreter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/etcl_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.inl \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint_Visitor.h
+ Log/Log_Constraint_Interpreter.h \
+ ETCL/ETCL_Interpreter.h \
+ ETCL/etcl_export.h \
+ ETCL/ETCL_Constraint.h \
+ ETCL/ETCL_Constraint.inl \
+ Log/Log_Constraint_Visitors.h \
+ ETCL/ETCL_Constraint_Visitor.h
 
 .obj/BasicLog_i.o .obj/BasicLog_i.so .shobj/BasicLog_i.o .shobj/BasicLog_i.so: Log/BasicLog_i.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/BasicLog_i.h \
+ Log/BasicLog_i.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ DsLogAdminS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -1327,7 +1327,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -1382,8 +1382,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ svc_utils_export.h \
+ TimeBaseC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1400,19 +1400,19 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogRecordStore.h \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ DsLogAdminC.h \
+ Log/log_export.h \
+ DsLogAdminC.i \
+ DsLogAdminS_T.h \
+ DsLogAdminS_T.i \
+ DsLogAdminS_T.cpp \
+ DsLogAdminS.i \
+ Log/Log_i.h \
+ Log/LogRecordStore.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -1453,22 +1453,22 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogNotification.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogMgr_i.h
+ Log/LogNotification.h \
+ DsLogNotificationS.h \
+ DsLogNotificationC.h \
+ DsLogNotificationC.i \
+ DsLogNotificationS_T.h \
+ DsLogNotificationS_T.i \
+ DsLogNotificationS_T.cpp \
+ DsLogNotificationS.i \
+ Log/LogMgr_i.h
 
 .obj/Log_i.o .obj/Log_i.so .shobj/Log_i.o .shobj/Log_i.so: Log/Log_i.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_i.h \
+ Log/Log_i.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogRecordStore.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ Log/LogRecordStore.h \
+ DsLogAdminS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -1616,7 +1616,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -1671,8 +1671,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ svc_utils_export.h \
+ TimeBaseC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1689,17 +1689,17 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ DsLogAdminC.h \
+ Log/log_export.h \
+ DsLogAdminC.i \
+ DsLogAdminS_T.h \
+ DsLogAdminS_T.i \
+ DsLogAdminS_T.cpp \
+ DsLogAdminS.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -1740,30 +1740,30 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogNotification.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Iterator_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Interpreter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/etcl_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.inl \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint_Visitor.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
+ Log/LogNotification.h \
+ DsLogNotificationS.h \
+ DsLogNotificationC.h \
+ DsLogNotificationC.i \
+ DsLogNotificationS_T.h \
+ DsLogNotificationS_T.i \
+ DsLogNotificationS_T.cpp \
+ DsLogNotificationS.i \
+ Log/Iterator_i.h \
+ Log/Log_Constraint_Interpreter.h \
+ ETCL/ETCL_Interpreter.h \
+ ETCL/etcl_export.h \
+ ETCL/ETCL_Constraint.h \
+ ETCL/ETCL_Constraint.inl \
+ Log/Log_Constraint_Visitors.h \
+ ETCL/ETCL_Constraint_Visitor.h \
+ Time_Utilities.h \
+ Time_Utilities.i \
  $(TAO_ROOT)/tao/debug.h
 
 .obj/LogMgr_i.o .obj/LogMgr_i.so .shobj/LogMgr_i.o .shobj/LogMgr_i.so: Log/LogMgr_i.cpp Log/LogMgr_i.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ DsLogAdminS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -1911,7 +1911,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -1966,8 +1966,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ svc_utils_export.h \
+ TimeBaseC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1984,19 +1984,19 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogRecordStore.h \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ DsLogAdminC.h \
+ Log/log_export.h \
+ DsLogAdminC.i \
+ DsLogAdminS_T.h \
+ DsLogAdminS_T.i \
+ DsLogAdminS_T.cpp \
+ DsLogAdminS.i \
+ Log/Log_i.h \
+ Log/LogRecordStore.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -2037,14 +2037,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogNotification.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.i \
+ Log/LogNotification.h \
+ DsLogNotificationS.h \
+ DsLogNotificationC.h \
+ DsLogNotificationC.i \
+ DsLogNotificationS_T.h \
+ DsLogNotificationS_T.i \
+ DsLogNotificationS_T.cpp \
+ DsLogNotificationS.i \
  Log/log_export.h
 
 .obj/Log_Constraint_Visitors.o .obj/Log_Constraint_Visitors.so .shobj/Log_Constraint_Visitors.o .shobj/Log_Constraint_Visitors.so: Log/Log_Constraint_Visitors.cpp \
@@ -2175,9 +2175,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint_Visitor.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/etcl_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
+ ETCL/ETCL_Constraint_Visitor.h \
+ ETCL/etcl_export.h \
+ DsLogAdminC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2266,9 +2266,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ Log/log_export.h \
+ TimeBaseC.h \
+ svc_utils_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -2284,12 +2284,12 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
+ TimeBaseC.i \
+ DsLogAdminC.i \
  Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.inl \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_y.h \
+ ETCL/ETCL_Constraint.h \
+ ETCL/ETCL_Constraint.inl \
+ ETCL/ETCL_y.h \
  $(TAO_ROOT)/tao/DynamicAny/DynArray_i.h \
  $(TAO_ROOT)/tao/DynamicAny/DynamicAny.h \
  $(TAO_ROOT)/tao/DynamicAny/dynamicany_export.h \
@@ -2315,8 +2315,8 @@ realclean: clean
 .obj/Log_Constraint_Interpreter.o .obj/Log_Constraint_Interpreter.so .shobj/Log_Constraint_Interpreter.o .shobj/Log_Constraint_Interpreter.so: Log/Log_Constraint_Interpreter.cpp \
  Log/Log_Constraint_Interpreter.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Interpreter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/etcl_export.h \
+ ETCL/ETCL_Interpreter.h \
+ ETCL/etcl_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2359,7 +2359,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h \
+ ETCL/ETCL_Constraint.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -2422,8 +2422,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.inl \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
+ ETCL/ETCL_Constraint.inl \
+ DsLogAdminC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
@@ -2501,9 +2501,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ Log/log_export.h \
+ TimeBaseC.h \
+ svc_utils_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -2519,8 +2519,8 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
+ TimeBaseC.i \
+ DsLogAdminC.i \
  Log/log_export.h Log/Log_Constraint_Visitors.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -2554,13 +2554,13 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint_Visitor.h
+ ETCL/ETCL_Constraint_Visitor.h
 
 .obj/LogNotification.o .obj/LogNotification.so .shobj/LogNotification.o .shobj/LogNotification.so: Log/LogNotification.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogNotification.h \
+ Log/LogNotification.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ DsLogAdminS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -2708,7 +2708,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -2763,8 +2763,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ svc_utils_export.h \
+ TimeBaseC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -2781,26 +2781,26 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ DsLogAdminC.h \
+ Log/log_export.h \
+ DsLogAdminC.i \
+ DsLogAdminS_T.h \
+ DsLogAdminS_T.i \
+ DsLogAdminS_T.cpp \
+ DsLogAdminS.i \
+ DsLogNotificationS.h \
+ DsLogNotificationC.h \
+ DsLogNotificationC.i \
+ DsLogNotificationS_T.h \
+ DsLogNotificationS_T.i \
+ DsLogNotificationS_T.cpp \
+ DsLogNotificationS.i \
+ Time_Utilities.h \
+ Time_Utilities.i \
  $(TAO_ROOT)/tao/debug.h
 
 .obj/DsLogNotificationS.o .obj/DsLogNotificationS.so .shobj/DsLogNotificationS.o .shobj/DsLogNotificationS.so: DsLogNotificationS.cpp DsLogNotificationS.h \
