@@ -1,3 +1,15 @@
+Tue Sep 17 17:26:40 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Basic_Types.cpp:
+
+	  Cosmetic changes to clarify some preprocessor blocks.
+
+	* ace/CDR_Base.h:
+
+	  Corrected placement of '#' character in preprocessor
+	  directives.  It belongs in the first column, not arbitrary
+	  ones.
+
 Tue Sep 17 01:35:54 UTC 2002 Don Hinton  <dhinton@ieee.org>
 
 	* ace/OS.h: Remove redundant MAXPATHLEN definition when 
