@@ -1,0 +1,70 @@
+/**
+ * @file NotifyExt.idl
+ *
+ * @brief Additional interfaces for QoS properties to Notify.
+ *
+ * $Id$
+ *
+ * @author Pradeep Gore <pradeep@oomworks.com>
+ */
+
+#ifndef _NOTIFY_EXT_IDL_
+#define _NOTIFY_EXT_IDL_
+
+#pragma prefix ""
+
+/**
+ * @namespace NotifyExt
+ *
+ * @brief Notify Extensions.
+ */
+module NotifyExt
+{
+  // Priority defs. same as RTCORBA 
+  typedef short Priority;
+  const Priority minPriority = 0;
+  const Priority maxPriority = 32767;
+
+  /*
+   * ThreadPool QoS property,
+   */
+  const string ThreadPool = "ThreadPool";
+
+  // ThreadPoolParams : same as RTCORBA::create_threadpool
+  struct ThreadPoolParams
+  {
+    unsigned long stacksize;
+    unsigned long static_threads;
+    unsigned long dynamic_threads;
+    Priority default_priority;
+    boolean allow_request_buffering;
+    unsigned long max_buffered_requests;
+    unsigned long max_request_buffer_size;
+  };
+
+  /*
+   * ThreadPoolLanes QoS property,
+   */
+  const string ThreadPoolLanes = "ThreadPoolLanes";
+
+  struct ThreadPoolLane
+  {
+    Priority lane_priority;
+    unsigned long static_threads;
+    unsigned long dynamic_threads;
+  };
+
+  typedef sequence <ThreadPoolLane> ThreadPoolLanes_List;
+
+  struct ThreadPoolLanesParams
+    {
+      unsigned long stacksize;
+      ThreadPoolLanes_List lanes;
+      boolean allow_borrowing;
+      boolean allow_request_buffering;
+      unsigned long max_buffered_requests;
+      unsigned long max_request_buffer_size;
+  };
+};
+
+#endif /* _NOTIFY_EXT_IDL_ */

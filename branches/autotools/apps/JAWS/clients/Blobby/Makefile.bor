@@ -1,0 +1,10 @@
+
+NAME = blobby
+OBJFILES = \
+	$(OBJDIR)\Blob.obj \
+	$(OBJDIR)\Blob_Handler.obj \
+	$(OBJDIR)\Options.obj \
+	$(OBJDIR)\blobby.obj
+
+!include <$(ACE_ROOT)\apps\build.bor>
+

@@ -1,0 +1,29 @@
+
+#
+# Makefile for building the Load_Balancing example
+#
+
+NAME = load_balancer
+
+OBJFILES = \
+        $(OBJDIR)\Load_BalancerC.obj \
+        $(OBJDIR)\Load_BalancerS.obj \
+        $(OBJDIR)\Load_Balancer_i.obj \
+        $(OBJDIR)\Load_Balancing_Service.obj
+
+IDLFILES = \
+        $(IDLDIR)\Load_Balancer.idl
+
+CPPDIR = .;..
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\Load_BalancerC.cpp $(IDLDIR)\Load_BalancerS.cpp: $(IDLDIR)\Load_Balancer.idl
+	$(TAO_IDL) $**
+

@@ -1,0 +1,8 @@
+
+#
+# Makefile for building the Pluggable UDP examples
+#
+
+DIRS = tests
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

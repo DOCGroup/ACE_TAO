@@ -1,0 +1,22 @@
+project: server {
+  idlflags += -Gv
+
+  Source_Files {
+    Server_i.cpp
+    Event_Types_impl.cpp
+    ../Simple_util.cpp
+    server.cpp
+  }
+}
+
+project(client): server {
+  exename   = client
+  idlflags += -Gv
+
+  Source_Files {
+    Client_i.cpp
+    Event_Types_impl.cpp
+    ../Simple_util.cpp
+    client.cpp
+  }
+}

@@ -1,0 +1,168 @@
+# $Id$
+
+NOTE: The code in this test is highly specialized and very brittle.
+      Do not use it as a model for "real world" interceptor code.
+
+
+This test verifies that proper request interceptor flow semantics
+occur during a given request/invocation.  It does so by executing a
+canned (hard-coded) set of scenarios.  Each scenario excercises a
+specific flow behavior.  All scenarios correspond to the ones detailed
+in the Portable Interceptor specification (00-04-05).  They are listed
+below:
+
+Client Request Interceptor Flow
+===============================
+
+Given client request interceptors A, B and C.
+
+------------------------------------------------------------------------
+
+    Scenario 1: an exception arrives from the server:
+
+	A.send_request is called;
+	B.send_request is called;
+	C.send_request is called;
+	C.receive_exception is called;
+	B.receive_exception is called;
+	A.receive_exception is called.
+
+The starting interception point (send_request) on each of the
+client request interceptors was invoked successfully, so the ending
+interception point (receive_exception in this case since the server
+raised an exception) will be invoked on each of the client request
+interceptors.
+
+------------------------------------------------------------------------
+
+    Scenario 2: B.send_request raises an exception:
+	A.send_request is called;
+	B.send_request is called and raises an exception
+	A.receive_exception is called.
+
+Only the starting interception point (send_request) on client request
+interceptor A was completed successfully, so only its ending
+interception point (receive_exception in this case) will be invoked.
+No ending interception point from interceptor B will be invoked.
+
+------------------------------------------------------------------------
+
+    Scenario 3: a reply returns successfully from the server, but
+                B.receive_reply raises an exception:
+
+	A.send_request is called;
+	B.send_request is called;
+	C.send_request is called;
+	C.receive_reply is called;
+	B.receive_reply is called and raises an exception
+	A.receive_exception is called.
+
+Since B.receive_reply raises an exception, and since B's and C's
+ending interception point (receive_reply) has already been invoked,
+then only A's ending interception point is invoked since it hasn't
+been invoked yet.  In this case, since an exception was raised, A's
+receive_exception ending interception point is invoked.
+
+------------------------------------------------------------------------
+
+    Scenario 4: an exception X is returned by the server, but
+              B.receive_exception changes the exception to Y:
+
+	A.send_request is called;
+	B.send_request is called;
+	C.send_request is called;
+	C.receive_exception is called with X;
+	B.receive_exception is called with X, raises Y;
+	A.receive_exception is called with Y.
+
+Since each client request interceptor's starting interception point
+(send_request) was invoked, each client request interceptor's ending
+interception point (receive_exception in this case) will be invoked.
+However, A's receive_exception ending interception point will be
+handed exception Y instead of exception X.
+
+************************************************************************
+
+Server Request Interceptor Flow
+===============================
+
+Given server request interceptors A, B and C.
+
+------------------------------------------------------------------------
+
+    Scenario 1: an exception is raised by the target:
+
+	A.receive_request_service_contexts is called;
+	B.receive_request_service_contexts is called;
+	C.receive_request_service_contexts is called;
+	A.receive_request is called;
+	B.receive_request is called;
+	C.receive_request is called;
+	C.send_exception is called;
+	B.send_exception is called;
+	A.send_exception is called.
+
+Each server request interceptor's starting interception point
+(receive_request_service_contexts) was invoked, meaning that each
+server request interceptor's intermediate interception point
+(receive_request) will be invoked.  The operation itself raises an
+exception, meaning that each server request interceptor's ending
+interception point (send_exception) will be invoked.
+
+------------------------------------------------------------------------
+
+    Scenario 2: B.receive_request_service_contexts raises an exception:
+
+	A.receive_request_service_contexts is called;
+	B.receive_request_service_contexts is called and raises an exception
+	A.send_exception is called.
+
+Only interceptor A's starting interception point
+(receive_request_service_contexts) was completed successfully, so only
+its ending interception point (send_exception in this case) will be
+invoked.
+
+------------------------------------------------------------------------
+
+    Scenario 3: the target invocation returns successfully, but
+              B.send_reply raises an exception:
+
+	A.receive_request_service_contexts is called;
+	B.receive_request_service_contexts is called;
+	C.receive_request_service_contexts is called;
+	A.receive_request is called;
+	B.receive_request is called;
+	C.receive_request is called;
+	C.send_reply is called;
+	B.send_reply is called and raises an exception;
+	A.send_exception is called.
+
+Each server request interceptor's starting interception point was
+invoked successfully, so each will have one (and only one) of its
+ending interception points (send_reply or send_exception) invoked.  In
+this case, B's send_reply interception point raises an exception.  B's
+and C's ending interception point has already been invoked so only A's
+send_exception (rather thans send_reply) ending interception point is
+invoked.
+
+------------------------------------------------------------------------
+
+    Scenario 4: an exception X is raised by the target, but
+              B.send_exception changes the exception to Y:
+
+	A.receive_request_service_contexts is called;
+	B.receive_request_service_contexts is called;
+	C.receive_request_service_contexts is called;
+	A.receive_request is called;
+	B.receive_request is called;
+	C.receive_request is called;
+	C.send_exception is called with X;
+	B.send_exception is called with X, raises Y;
+	A.send_exception is called with Y.
+
+Since each server request interceptor's starting interception point
+(receive_request_service_contexts) was invoked, each server request
+interceptor's ending interception point (receive_exception in this
+case) will be invoked.  However, A's send_exception ending
+interception point will be handed exception Y exception instead of
+exception X.

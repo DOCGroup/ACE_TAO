@@ -1,0 +1,5 @@
+project(server) : taoexe {
+  depends += PortableServer
+  exename  = server
+  libs    += TAO_PortableServer
+}
