@@ -24,9 +24,9 @@ for ($rate = $min_rate, $i = 0;
    @rates[$i] = $rate;
 }
 
-$min_work = 150; 
-$max_work = 410;
-$work_increment = 10;
+$min_work = 25; 
+$max_work = 85;
+$work_increment = 5;
 
 for ($work = $min_work, $i = 0; 
      $work <= $max_work; 
@@ -47,8 +47,8 @@ for ($thread = $min_thread, $i = 0;
 }
 
 $min_pool_priority = 1; 
-$max_pool_priority = 99;
-$pool_priority_increment = 40;
+$max_pool_priority = 91;
+$pool_priority_increment = 30;
 
 for ($pool_priority = $min_pool_priority, $i = 0; 
      $pool_priority <= $max_pool_priority; 
@@ -82,10 +82,13 @@ for $pool_priority (@pool_priorities)
 }
 
 $iorfile = "ior";
-$work = 13;
+$work = 30;
+$work_with_slack = 28;
 $time_for_test = 10;
 $max_throughput_timeout = 5;
 $pool_threads = 3;
+$native_priorities = 1;
+$run_server = 1;
 
 # Parse the arguments
 for ($i = 0; $i <= $#ARGV; $i++) {
@@ -137,6 +140,10 @@ for ($i = 0; $i <= $#ARGV; $i++) {
         }
         print STDERR ")\n";
 
+        print STDERR "\t-native-priorities for work pool tests: defaults to $native_priorities\n";
+
+        print STDERR "\t-run-server: defaults to $run_server\n";
+
         print STDERR "\n";
 
         $CL = new PerlACE::Process ("client", "-h");
@@ -149,29 +156,45 @@ for ($i = 0; $i <= $#ARGV; $i++) {
 
         exit;
     }
-    elsif ($ARGV[$i] eq "-tests") {
-      @test_types = split (',', $ARGV[$i + 1]);
-      $i++;
+    elsif ($ARGV[$i] eq "-tests") 
+    {
+        @test_types = split (',', $ARGV[$i + 1]);
+        $i++;
     }
-    elsif ($ARGV[$i] eq "-rates") {
-      @rates = split (',', $ARGV[$i + 1]);
-      $i++;
+    elsif ($ARGV[$i] eq "-rates") 
+    {
+        @rates = split (',', $ARGV[$i + 1]);
+        $i++;
     }
-    elsif ($ARGV[$i] eq "-works") {
-      @works = split (',', $ARGV[$i + 1]);
-      $i++;
+    elsif ($ARGV[$i] eq "-works") 
+    {
+        @works = split (',', $ARGV[$i + 1]);
+        $i++;
     }
-    elsif ($ARGV[$i] eq "-workers") {
-      @workers = split (',', $ARGV[$i + 1]);
-      $i++;
+    elsif ($ARGV[$i] eq "-workers") 
+    {
+        @workers = split (',', $ARGV[$i + 1]);
+        $i++;
     }
-    elsif ($ARGV[$i] eq "-threads") {
-      @threads = split (',', $ARGV[$i + 1]);
-      $i++;
+    elsif ($ARGV[$i] eq "-threads") 
+    {
+        @threads = split (',', $ARGV[$i + 1]);
+        $i++;
     }
-    elsif ($ARGV[$i] eq "-pool-priorities") {
-      @pool_priorities = split (',', $ARGV[$i + 1]);
-      $i++;
+    elsif ($ARGV[$i] eq "-pool-priorities") 
+    {
+        @pool_priorities = split (',', $ARGV[$i + 1]);
+        $i++;
+    }
+    elsif ($ARGV[$i] eq "-native-priorities") 
+    {
+        $i++;
+        $native_priorities = $ARGV[$i];
+    }
+    elsif ($ARGV[$i] eq "-run-server") 
+    {
+        $i++;
+        $run_server = $ARGV[$i];
     }
     elsif ($ARGV[$i] eq "-o") 
     {
@@ -211,11 +234,11 @@ $fixed_client_args = "-w $work -t $time_for_test -z $max_throughput_timeout";
 @configurations = 
     (
      {
-         description => "rates",
+         description => "work",
          server => "-n 1", 
      },
      {
-         description => "work",
+         description => "rates",
          server => "-n 1", 
      },
      {
@@ -228,7 +251,7 @@ $fixed_client_args = "-w $work -t $time_for_test -z $max_throughput_timeout";
      },
      {
          description => "work-nolanes",
-         server => "-l one-zero-lane -b one-full-band", 
+         server => "-s $pool_threads -l one-zero-lane -b one-full-band", 
      },
      {
          description => "work-lanes-increase",
@@ -240,7 +263,7 @@ $fixed_client_args = "-w $work -t $time_for_test -z $max_throughput_timeout";
      },
      {
          description => "thread-nolanes",
-         server => "-l one-zero-lane -b one-full-band", 
+         server => "-s $pool_threads -l one-zero-lane -b one-full-band", 
      },
      {
          description => "thread-lanes-increase",
@@ -250,25 +273,22 @@ $fixed_client_args = "-w $work -t $time_for_test -z $max_throughput_timeout";
          description => "thread-lanes-decrease",
          server => "-l three-lanes-with-best-effort -b three-bands-with-best-effort", 
      },
+     {
+         description => "thread-nolanes-with-slack",
+         server => "-s $pool_threads -l one-zero-lane -b one-full-band", 
+     },
+     {
+         description => "thread-lanes-increase-with-slack",
+         server => "-l three-lanes-with-best-effort -b three-bands-with-best-effort", 
+     },
+     {
+         description => "thread-lanes-decrease-with-slack",
+         server => "-l three-lanes-with-best-effort -b three-bands-with-best-effort", 
+     },
      );
 
 for $test (@configurations)
 {
-    #
-    # setup rates test
-    #
-    if ($test->{description} eq "rates")
-    {
-        $i = 0;
-        for $rate (@rates)
-        {
-            $test->{clients}[$i] = "-r $rate $fixed_client_args";
-            $i++;
-        }
-
-        $test->{clients}[$i - 1] .= " -x 1";
-    }
-
     #
     # setup work test
     #
@@ -279,6 +299,21 @@ for $test (@configurations)
         {
             $test->{clients}[$i] = "-w $work -c 1 -r empty-file -t $time_for_test -z $max_throughput_timeout";
 	    $i++;
+        }
+
+        $test->{clients}[$i - 1] .= " -x 1";
+    }
+
+    #
+    # setup rates test
+    #
+    if ($test->{description} eq "rates")
+    {
+        $i = 0;
+        for $rate (@rates)
+        {
+            $test->{clients}[$i] = "-r $rate $fixed_client_args";
+            $i++;
         }
 
         $test->{clients}[$i - 1] .= " -x 1";
@@ -348,12 +383,24 @@ for $test (@configurations)
     #
     # setup thread-nolanes test
     #
-    elsif ($test->{description} eq "thread-nolanes")
+    elsif ($test->{description} eq "thread-nolanes" or
+           $test->{description} eq "thread-nolanes-with-slack")
     {
+        $client_args = "-t $time_for_test -z $max_throughput_timeout";
+
+        if ($test->{description} eq "thread-nolanes")
+        {
+            $client_args .= "-w $work";
+        }
+        else
+        {
+            $client_args .= "-w $work_with_slack";
+        }            
+        
 	$i = 0;
 	for $thread (@threads)
         {
-            $test->{clients}[$i] = "-c $thread -r increasing-rates -u 1000 $fixed_client_args";
+            $test->{clients}[$i] = "-c $thread -r increasing-rates -u 1000 $client_args";
 	    $i++;
         }
 
@@ -364,11 +411,23 @@ for $test (@configurations)
     # setup thread-lanes-increase test
     #
     elsif ($test->{description} eq "thread-lanes-increase")
+           $test->{description} eq "thread-lanes-increase-with-slack")
     {
+        $client_args = "-t $time_for_test -z $max_throughput_timeout";
+
+        if ($test->{description} eq "thread-lanes-increase")
+        {
+            $client_args .= "-w $work";
+        }
+        else
+        {
+            $client_args .= "-w $work_with_slack";
+        }            
+        
 	$i = 0;
 	for $thread (@threads)
         {
-            $test->{clients}[$i] = "-c $thread -r increasing-rates $fixed_client_args";
+            $test->{clients}[$i] = "-c $thread -r increasing-rates $client_args";
 	    $i++;
         }
 
@@ -379,11 +438,23 @@ for $test (@configurations)
     # setup thread-lanes-decrease test
     #
     elsif ($test->{description} eq "thread-lanes-decrease")
+           $test->{description} eq "thread-lanes-decrease-with-slack")
     {
+        $client_args = "-t $time_for_test -z $max_throughput_timeout";
+
+        if ($test->{description} eq "thread-lanes-decrease")
+        {
+            $client_args .= "-w $work";
+        }
+        else
+        {
+            $client_args .= "-w $work_with_slack";
+        }            
+        
 	$i = 0;
 	for $thread (@threads)
         {
-            $test->{clients}[$i] = "-c $thread -r decreasing-rates $fixed_client_args";
+            $test->{clients}[$i] = "-c $thread -r decreasing-rates $client_args";
 	    $i++;
         }
 
@@ -394,7 +465,10 @@ for $test (@configurations)
 for $pool_priority (@pool_priorities)
 {
     $new_configuration = {};
-    $pool_args = "-ORBsvcconf svc.conf-native -p invocation-priorities-native";
+    if ($native_priorities)
+    {
+        $pool_args = "-ORBsvcconf svc.conf-native -p invocation-priorities-native";
+    }
     $test_type = "work-pool-".$pool_priority;
     $new_configuration->{description} = $test_type;
     $new_configuration->{server} = "-f $pool_priority -s $pool_threads $pool_args";
@@ -402,7 +476,7 @@ for $pool_priority (@pool_priorities)
     $i = 0;
     for $work (@works)
     {
-	$new_configuration->{clients}[$i] = "-w $work -r rates -t $time_for_test -z $max_throughput_timeout $pool_args";
+	$new_configuration->{clients}[$i] = "-w $work -r increasing-rates -t $time_for_test -z $max_throughput_timeout $pool_args";
 	$i++;
     }
 
@@ -506,7 +580,10 @@ for $test (@configurations)
     open (STDERR, ">&STDOUT") 
         or die "can't redirect stderror: $!";
 
-    run_server ($test->{server} . $extra_args);
+    if ($run_server == 1)
+    {
+        run_server ($test->{server} . $extra_args);
+    }
 
     my $clients = $test->{clients};
     for $args (@$clients)
@@ -514,7 +591,10 @@ for $test (@configurations)
         run_client ($args . $extra_args);
     }
 
-    zap_server (0);
+    if ($run_server == 1)
+    {
+        zap_server (0);
+    }
 
     close (STDERR);
     close (STDOUT);
