@@ -65,6 +65,7 @@ BIN =   ACE_Test \
         Message_Queue_Test_Ex \
         Message_Queue_Notifications_Test \
         Multicast_Test \
+        Multihomed_INET_Addr_Test \
         Notify_Performance_Test \
         Object_Manager_Test \
         Obstack_Test \

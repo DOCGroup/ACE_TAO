@@ -1,3 +1,14 @@
+Tue Apr 22 21:45:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        Please direct all immediate build issues to jcohen@atl.lmco.com
+        if problems occur as a result of this check in.  Thank you.
+
+        * tests/Makefile
+        * tests/run_test.lst
+        * tests/run_tests.bat
+
+        Reconnected Multihomed_INET_Addr_Test to Makefile and scripts.
+
 Tue Apr 22 21:20:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
         Please direct all immediate build issues to jcohen@atl.lmco.com
@@ -15,7 +26,7 @@ Tue Apr 22 21:20:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
         Removed SCTP.dsw for time being -- will be adding dsw and dsp
         files as Windows conformability can be properly verified.
-	
+
 Tue Apr 22 13:49:42 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-sunos5.7.h:
