@@ -26,7 +26,7 @@ doc:
 	$(JD) $(JDOPTS) $(addsuffix .java,$(pkg_all)) $(packages)
 
 clean:
-	find ${JACE_WRAPPER}/classes/ACE -name '*.class' -print | xargs ${RM}
+	find ${JACE_WRAPPER}/classes/JACE -name '*.class' -print | xargs ${RM}
 
 docclean:
 	find ${JACE_WRAPPER}/doc -name '*.html' -print | xargs ${RM}
@@ -125,15 +125,15 @@ pkg_svcconfig = \
 svcconfig:	os reactor misc $(addsuffix .java,$(pkg_svcconfig))
 	$(COMPILE.java)
 
-packages = ACE \
-	   ACE.ASX \
-	   ACE.Connection \
-	   ACE.Concurrency \
-	   ACE.Misc \
-	   ACE.OS \
-	   ACE.Reactor \
-	   ACE.SOCK_SAP \
-	   ACE.Service_Configurator \
-	   ACE.Timers
+packages = JACE \
+	   JACE.ASX \
+	   JACE.Connection \
+	   JACE.Concurrency \
+	   JACE.Misc \
+	   JACE.OS \
+	   JACE.Reactor \
+	   JACE.SOCK_SAP \
+	   JACE.Service_Configurator \
+	   JACE.Timers
 
 
