@@ -19,3 +19,6 @@
 
 // I think this is correct, but needs to be verified...   -Steve Huston
 #define ACE_HAS_SIGTIMEDWAIT
+
+// AIX 5.1 has netinet/tcp.h
+#undef ACE_LACKS_NETINET_TCP_H
