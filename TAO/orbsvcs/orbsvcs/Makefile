@@ -156,7 +156,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 
 LDFLAGS += -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)#-H
+CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)
 
 .PRECIOUS: CosNamingC.cpp CosNamingS.cpp CosNamingC.h CosNamingS.h
 .PRECIOUS: CosTimeBaseC.cpp CosTimeBaseS.cpp CosTimeBaseC.h CosTimeBaseS.h
@@ -333,7 +333,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -559,7 +558,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -784,7 +782,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -1008,7 +1005,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -1232,7 +1228,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -1459,7 +1454,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -1686,7 +1680,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -1911,7 +1904,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -2136,7 +2128,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -2360,7 +2351,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -2584,7 +2574,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -2808,7 +2797,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -3032,7 +3020,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -3259,7 +3246,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -3485,7 +3471,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -3712,7 +3697,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -3939,7 +3923,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -4172,7 +4155,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -4403,7 +4385,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -4632,7 +4613,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -4861,7 +4841,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -5087,7 +5066,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -5315,7 +5293,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -5539,7 +5516,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -5764,7 +5740,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -5988,7 +5963,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -6214,7 +6188,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -6451,7 +6424,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -6693,7 +6665,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -6938,7 +6909,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -7167,7 +7137,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -7392,7 +7361,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -7621,7 +7589,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -7850,7 +7817,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -8076,7 +8042,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -8334,7 +8299,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -8561,7 +8525,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -8841,7 +8804,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -9125,7 +9087,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -9386,7 +9347,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -9664,7 +9624,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -9949,7 +9908,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -10223,7 +10181,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -10495,7 +10452,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -10753,7 +10709,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -11025,7 +10980,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -11294,7 +11248,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -11544,7 +11497,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -11778,7 +11730,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -12012,7 +11963,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -12246,7 +12196,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -12477,7 +12426,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -12705,7 +12653,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -12936,7 +12883,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -13168,7 +13114,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -13401,7 +13346,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -13638,7 +13582,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -13866,7 +13809,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -14097,7 +14039,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -14337,7 +14278,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -14590,7 +14530,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -14840,7 +14779,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -15073,7 +15011,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -15307,7 +15244,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -15544,7 +15480,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -15778,7 +15713,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -16012,7 +15946,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -16245,7 +16178,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -16477,7 +16409,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -16708,7 +16639,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -16941,7 +16871,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -17179,7 +17108,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -17415,7 +17343,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -17652,7 +17579,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \

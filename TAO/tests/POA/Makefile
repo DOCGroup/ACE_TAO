@@ -16,7 +16,8 @@ DIRS  = Generic_Servant \
 	FindPOA \
 	NewPOA \
 	On_Demand_Activation \
-	RootPOA
+	RootPOA \
+	locking \
 
 # The following test hasn't been updated yet
 # Demux_Test

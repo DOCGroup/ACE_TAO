@@ -654,7 +654,7 @@ TAO_Marshal_Alias::append (CORBA::TypeCode_ptr  tc,
       retval = dest->append (tc2, src, env);
     }
 
-  //  tc2->Release ();
+  //  tc2->_decr_refcnt ();
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
       && continue_append == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;

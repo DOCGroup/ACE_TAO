@@ -279,21 +279,20 @@ CORBA::Boolean
 IIOP_Object::is_equivalent (CORBA::Object_ptr other_obj,
                             CORBA::Environment &env)
 {
-  IIOP::Profile *body, *body2;
-  IIOP_Object *other_iiop_obj;
-
   env.clear ();
 
-  if (CORBA::is_nil (other_obj) == CORBA::B_TRUE
-      || other_obj->QueryInterface (IID_IIOP_Object,
-                                    (void **) &other_iiop_obj) != TAO_NOERROR)
+  if (CORBA::is_nil (other_obj) == CORBA::B_TRUE)
     return CORBA::B_FALSE;
-  CORBA::release (other_obj);
+
+  IIOP_Object *other_iiop_obj =
+    ACE_dynamic_cast (IIOP_Object*, other_obj->_stubobj ());
+  if (other_iiop_obj == 0)
+    return CORBA::B_FALSE;
 
   // Compare all the bytes of the object address -- must be the same.
 
-  body = &profile;
-  body2 = &other_iiop_obj->profile;
+  IIOP::Profile *body = &profile;
+  IIOP::Profile *body2 = &other_iiop_obj->profile;
 
   ACE_ASSERT (body->object_key.length () < UINT_MAX);
 
@@ -304,22 +303,18 @@ IIOP_Object::is_equivalent (CORBA::Object_ptr other_obj,
     && body->iiop_version.major == body2->iiop_version.major;
 }
 
-// For COM -- IUnknown operations
+// Memory managment
 
-// {A201E4C3-F258-11ce-9598-0000C07CA898}
-TAO_DEFINE_GUID (IID_IIOP_Object,
-0xa201e4c3, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
-
-ULONG
-IIOP_Object::AddRef (void)
+CORBA::ULong
+IIOP_Object::_incr_refcnt (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->IUnknown_lock_, 0));
 
   return ++this->refcount_;
 }
 
-ULONG
-IIOP_Object::Release (void)
+CORBA::ULong
+IIOP_Object::_decr_refcnt (void)
 {
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->IUnknown_lock_, 0));
@@ -332,31 +327,6 @@ IIOP_Object::Release (void)
 
   delete this;
   return 0;
-}
-
-// Note that (as of this writing) this is the only place all the
-// interfaces to an "objref" come together:
-//
-// IUnknown ... this one
-// STUB_OBJECT ... inherited by this one
-// IIOP_OBJECT ... this one
-//
-TAO_HRESULT
-IIOP_Object::QueryInterface (TAO_REFIID riid,
-                             void **ppv)
-{
-  *ppv = 0;
-
-  if (IID_IIOP_Object == riid
-      || IID_STUB_Object == riid
-      || IID_TAO_IUnknown == riid)
-    *ppv = this;
-
-  if (*ppv == 0)
-    return TAO_ResultFromScode (TAO_E_NOINTERFACE);
-
- (void) AddRef ();
-  return TAO_NOERROR;
 }
 
 // TAO extensions
@@ -725,7 +695,7 @@ IIOP_Object::do_dynamic_call (const char *opname,
                         {
                           void *ptr = new CORBA::Octet [size];
 
-                          tcp->AddRef ();
+                          tcp->_incr_refcnt ();
                           result->value ()->replace (tcp, ptr,
                                                      CORBA::B_TRUE, env);
                           dexc (env, "do_dynamic_call, set result mem");
@@ -797,7 +767,7 @@ IIOP_Object::do_dynamic_call (const char *opname,
                             {
                               CORBA::Octet *ptr = new CORBA::Octet [size];
 
-                              tcp->AddRef ();
+                              tcp->_incr_refcnt ();
                               value->value ()->replace (tcp, ptr,
                                                         CORBA::B_TRUE, env);
                               dexc (env, "do_dynamic_call, set result mem");

@@ -853,7 +853,7 @@ Cubit_Client::~Cubit_Client (void)
   CORBA::release (this->cubit_);
 
   if (this->cubit_factory_key_ != 0)
-    ACE_OS::free (this->cubit_factory_key_);
+    delete[] (this->cubit_factory_key_);
   if (this->cubit_key_ != 0)
     ACE_OS::free (this->cubit_key_);
 }

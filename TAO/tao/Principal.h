@@ -36,8 +36,8 @@ public:
   // @@ add "==", "<", ">" operators
 
   // = Stuff required for memory management.
-  CORBA::ULong AddRef (void);
-  CORBA::ULong Release (void);
+  CORBA::ULong _incr_refcnt (void);
+  CORBA::ULong _decr_refcnt (void);
 
   CORBA_Principal (void);
 

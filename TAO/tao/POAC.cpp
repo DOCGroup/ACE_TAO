@@ -167,7 +167,7 @@ CORBA::TypeCode_ptr PortableServer::_tc_ThreadPolicyValue = &_tc__tc_PortableSer
 PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_duplicate (PortableServer::ThreadPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->AddRef ();
+    obj->_incr_refcnt ();
 
   return obj;
 } // end of _duplicate
@@ -183,7 +183,7 @@ PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_narrow (
     return PortableServer::ThreadPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
-      PortableServer::ThreadPolicy_ptr new_obj = new PortableServer::ThreadPolicy (obj->_get_parent ()); // construct obj ref using the stub object
+      PortableServer::ThreadPolicy_ptr new_obj = new PortableServer::ThreadPolicy (obj->_stubobj ()); // construct obj ref using the stub object
       return new_obj;
     } // end of if
 
@@ -208,15 +208,9 @@ PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Env
 
   PortableServer::ThreadPolicyValue retval =
     ACE_static_cast (PortableServer::ThreadPolicyValue, -1);
-  STUB_Object *istub;
-
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-    {
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return retval;
-    }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_static_call (env, &_get_PortableServer_ThreadPolicy_value_calldata, &retval);
+  this->_stubobj ()->do_static_call (env,
+				     &_get_PortableServer_ThreadPolicy_value_calldata,
+				     &retval);
   return retval;
 
 }
@@ -257,7 +251,7 @@ CORBA::TypeCode_ptr PortableServer::_tc_LifespanPolicyValue = &_tc__tc_PortableS
 PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_duplicate (PortableServer::LifespanPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->AddRef ();
+    obj->_incr_refcnt ();
 
   return obj;
 } // end of _duplicate
@@ -273,7 +267,7 @@ PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_narrow (
     return PortableServer::LifespanPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
-      PortableServer::LifespanPolicy_ptr new_obj = new PortableServer::LifespanPolicy (obj->_get_parent ()); // construct obj ref using the stub object
+      PortableServer::LifespanPolicy_ptr new_obj = new PortableServer::LifespanPolicy (obj->_stubobj ()); // construct obj ref using the stub object
       return new_obj;
     } // end of if
 
@@ -298,15 +292,8 @@ PortableServer::LifespanPolicyValue PortableServer::LifespanPolicy::value(CORBA:
 
   PortableServer::LifespanPolicyValue retval =
     ACE_static_cast (PortableServer::LifespanPolicyValue, -1);
-  STUB_Object *istub;
 
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-    {
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return retval;
-    }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_static_call (env, &_get_PortableServer_LifespanPolicy_value_calldata, &retval);
+  this->_stubobj ()->do_static_call (env, &_get_PortableServer_LifespanPolicy_value_calldata, &retval);
   return retval;
 
 }
@@ -347,7 +334,7 @@ CORBA::TypeCode_ptr PortableServer::_tc_IdUniquenessPolicyValue = &_tc__tc_Porta
 PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_duplicate (PortableServer::IdUniquenessPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->AddRef ();
+    obj->_incr_refcnt ();
 
   return obj;
 } // end of _duplicate
@@ -363,7 +350,7 @@ PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_narr
     return PortableServer::IdUniquenessPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
-      PortableServer::IdUniquenessPolicy_ptr new_obj = new PortableServer::IdUniquenessPolicy (obj->_get_parent ()); // construct obj ref using the stub object
+      PortableServer::IdUniquenessPolicy_ptr new_obj = new PortableServer::IdUniquenessPolicy (obj->_stubobj ()); // construct obj ref using the stub object
       return new_obj;
     } // end of if
 
@@ -388,15 +375,8 @@ PortableServer::IdUniquenessPolicyValue PortableServer::IdUniquenessPolicy::valu
 
   PortableServer::IdUniquenessPolicyValue retval =
     ACE_static_cast (PortableServer::IdUniquenessPolicyValue, -1);
-  STUB_Object *istub;
 
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-    {
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return retval;
-    }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_static_call (env, &_get_PortableServer_IdUniquenessPolicy_value_calldata, &retval);
+  this->_stubobj ()->do_static_call (env, &_get_PortableServer_IdUniquenessPolicy_value_calldata, &retval);
   return retval;
 
 }
@@ -437,7 +417,7 @@ CORBA::TypeCode_ptr PortableServer::_tc_IdAssignmentPolicyValue = &_tc__tc_Porta
 PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_duplicate (PortableServer::IdAssignmentPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->AddRef ();
+    obj->_incr_refcnt ();
 
   return obj;
 } // end of _duplicate
@@ -453,7 +433,7 @@ PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_narr
     return PortableServer::IdAssignmentPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
-      PortableServer::IdAssignmentPolicy_ptr new_obj = new PortableServer::IdAssignmentPolicy (obj->_get_parent ()); // construct obj ref using the stub object
+      PortableServer::IdAssignmentPolicy_ptr new_obj = new PortableServer::IdAssignmentPolicy (obj->_stubobj ()); // construct obj ref using the stub object
       return new_obj;
     } // end of if
 
@@ -478,15 +458,8 @@ PortableServer::IdAssignmentPolicyValue PortableServer::IdAssignmentPolicy::valu
 
   PortableServer::IdAssignmentPolicyValue retval =
     ACE_static_cast (PortableServer::IdAssignmentPolicyValue, -1);
-  STUB_Object *istub;
 
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-    {
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return retval;
-    }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_static_call (env, &_get_PortableServer_IdAssignmentPolicy_value_calldata, &retval);
+  this->_stubobj ()->do_static_call (env, &_get_PortableServer_IdAssignmentPolicy_value_calldata, &retval);
   return retval;
 
 }
@@ -527,7 +500,7 @@ CORBA::TypeCode_ptr PortableServer::_tc_ImplicitActivationPolicyValue = &_tc__tc
 PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationPolicy::_duplicate (PortableServer::ImplicitActivationPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->AddRef ();
+    obj->_incr_refcnt ();
 
   return obj;
 } // end of _duplicate
@@ -543,7 +516,7 @@ PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationP
     return PortableServer::ImplicitActivationPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
-      PortableServer::ImplicitActivationPolicy_ptr new_obj = new PortableServer::ImplicitActivationPolicy (obj->_get_parent ()); // construct obj ref using the stub object
+      PortableServer::ImplicitActivationPolicy_ptr new_obj = new PortableServer::ImplicitActivationPolicy (obj->_stubobj ()); // construct obj ref using the stub object
       return new_obj;
     } // end of if
 
@@ -568,15 +541,8 @@ PortableServer::ImplicitActivationPolicyValue PortableServer::ImplicitActivation
 
   PortableServer::ImplicitActivationPolicyValue retval =
     ACE_static_cast (PortableServer::ImplicitActivationPolicyValue, -1);
-  STUB_Object *istub;
 
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-    {
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return retval;
-    }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_static_call (env, &_get_PortableServer_ImplicitActivationPolicy_value_calldata, &retval);
+  this->_stubobj ()->do_static_call (env, &_get_PortableServer_ImplicitActivationPolicy_value_calldata, &retval);
   return retval;
 
 }
@@ -617,7 +583,7 @@ CORBA::TypeCode_ptr PortableServer::_tc_ServantRetentionPolicyValue = &_tc__tc_P
 PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolicy::_duplicate (PortableServer::ServantRetentionPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->AddRef ();
+    obj->_incr_refcnt ();
 
   return obj;
 } // end of _duplicate
@@ -633,7 +599,7 @@ PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolic
     return PortableServer::ServantRetentionPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
-      PortableServer::ServantRetentionPolicy_ptr new_obj = new PortableServer::ServantRetentionPolicy (obj->_get_parent ()); // construct obj ref using the stub object
+      PortableServer::ServantRetentionPolicy_ptr new_obj = new PortableServer::ServantRetentionPolicy (obj->_stubobj ()); // construct obj ref using the stub object
       return new_obj;
     } // end of if
 
@@ -658,15 +624,8 @@ PortableServer::ServantRetentionPolicyValue PortableServer::ServantRetentionPoli
 
   PortableServer::ServantRetentionPolicyValue retval =
     ACE_static_cast (PortableServer::ServantRetentionPolicyValue, -1);
-  STUB_Object *istub;
 
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-    {
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return retval;
-    }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_static_call (env, &_get_PortableServer_ServantRetentionPolicy_value_calldata, &retval);
+  this->_stubobj ()->do_static_call (env, &_get_PortableServer_ServantRetentionPolicy_value_calldata, &retval);
   return retval;
 
 }
@@ -708,7 +667,7 @@ CORBA::TypeCode_ptr PortableServer::_tc_RequestProcessingPolicyValue = &_tc__tc_
 PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPolicy::_duplicate (PortableServer::RequestProcessingPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->AddRef ();
+    obj->_incr_refcnt ();
 
   return obj;
 } // end of _duplicate
@@ -725,7 +684,7 @@ PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPol
   if (!obj->_is_collocated () || !obj->_servant())
     {
       PortableServer::RequestProcessingPolicy_ptr
-        new_obj = new PortableServer::RequestProcessingPolicy (obj->_get_parent ()); // construct obj ref using the stub object
+        new_obj = new PortableServer::RequestProcessingPolicy (obj->_stubobj ()); // construct obj ref using the stub object
       return new_obj;
     } // end of if
 
@@ -750,15 +709,8 @@ PortableServer::RequestProcessingPolicyValue PortableServer::RequestProcessingPo
 
   PortableServer::RequestProcessingPolicyValue retval =
     ACE_static_cast (PortableServer::RequestProcessingPolicyValue, -1);
-  STUB_Object *istub;
 
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-    {
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return retval;
-    }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_static_call (env, &_get_PortableServer_RequestProcessingPolicy_value_calldata, &retval);
+  this->_stubobj ()->do_static_call (env, &_get_PortableServer_RequestProcessingPolicy_value_calldata, &retval);
   return retval;
 
 }
@@ -805,7 +757,7 @@ CORBA::TypeCode_ptr PortableServer::_tc_SynchronizationPolicyValue = &_tc__tc_Po
 PortableServer::SynchronizationPolicy_ptr PortableServer::SynchronizationPolicy::_duplicate (PortableServer::SynchronizationPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->AddRef ();
+    obj->_incr_refcnt ();
 
   return obj;
 } // end of _duplicate
@@ -822,7 +774,7 @@ PortableServer::SynchronizationPolicy_ptr PortableServer::SynchronizationPolicy:
   if (!obj->_is_collocated () || !obj->_servant())
     {
       PortableServer::SynchronizationPolicy_ptr
-        new_obj = new PortableServer::SynchronizationPolicy (obj->_get_parent ()); // construct obj ref using the stub object
+        new_obj = new PortableServer::SynchronizationPolicy (obj->_stubobj ()); // construct obj ref using the stub object
       return new_obj;
     } // end of if
 
@@ -847,15 +799,8 @@ PortableServer::SynchronizationPolicyValue PortableServer::SynchronizationPolicy
 
   PortableServer::SynchronizationPolicyValue retval =
     ACE_static_cast (PortableServer::SynchronizationPolicyValue, -1);
-  STUB_Object *istub;
 
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-    {
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return retval;
-    }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_static_call (env, &_get_PortableServer_SynchronizationPolicy_value_calldata, &retval);
+  this->_stubobj ()->do_static_call (env, &_get_PortableServer_SynchronizationPolicy_value_calldata, &retval);
   return retval;
 
 }
@@ -883,7 +828,7 @@ CORBA::TypeCode_ptr PortableServer::_tc_SynchronizationPolicy = &_tc__tc_Portabl
 PortableServer::POAManager_ptr PortableServer::POAManager::_duplicate (PortableServer::POAManager_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->AddRef ();
+    obj->_incr_refcnt ();
 
   return obj;
 } // end of _duplicate
@@ -1024,7 +969,7 @@ CORBA::TypeCode_ptr PortableServer::_tc_POAManager = &_tc__tc_PortableServer_POA
 PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_duplicate (PortableServer::AdapterActivator_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->AddRef ();
+    obj->_incr_refcnt ();
 
   return obj;
 } // end of _duplicate
@@ -1077,7 +1022,7 @@ CORBA::TypeCode_ptr PortableServer::_tc_AdapterActivator = &_tc__tc_PortableServ
 PortableServer::ServantManager_ptr PortableServer::ServantManager::_duplicate (PortableServer::ServantManager_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->AddRef ();
+    obj->_incr_refcnt ();
 
   return obj;
 } // end of _duplicate
@@ -1130,7 +1075,7 @@ CORBA::TypeCode_ptr PortableServer::_tc_ServantManager = &_tc__tc_PortableServer
 PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_duplicate (PortableServer::ServantActivator_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->AddRef ();
+    obj->_incr_refcnt ();
 
   return obj;
 } // end of _duplicate
@@ -1184,7 +1129,7 @@ CORBA::TypeCode_ptr PortableServer::_tc_ServantActivator = &_tc__tc_PortableServ
 PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_duplicate (PortableServer::ServantLocator_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->AddRef ();
+    obj->_incr_refcnt ();
 
   return obj;
 } // end of _duplicate
@@ -1238,7 +1183,7 @@ CORBA::TypeCode_ptr PortableServer::_tc_ServantLocator = &_tc__tc_PortableServer
 PortableServer::POA_ptr PortableServer::POA::_duplicate (PortableServer::POA_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->AddRef ();
+    obj->_incr_refcnt ();
 
   return obj;
 } // end of _duplicate
@@ -2268,7 +2213,7 @@ CORBA::TypeCode_ptr PortableServer::_tc_POA = &_tc__tc_PortableServer_POA;
 PortableServer::Current_ptr PortableServer::Current::_duplicate (PortableServer::Current_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->AddRef ();
+    obj->_incr_refcnt ();
 
   return obj;
 } // end of _duplicate
@@ -2285,7 +2230,7 @@ PortableServer::Current_ptr PortableServer::Current::_narrow (
   if (!obj->_is_collocated () || !obj->_servant())
     {
       PortableServer::Current_ptr
-        new_obj = new PortableServer::Current (obj->_get_parent ()); // construct obj ref using the stub object
+        new_obj = new PortableServer::Current (obj->_stubobj ()); // construct obj ref using the stub object
       return new_obj;
     } // end of if
 
@@ -2404,15 +2349,8 @@ PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Enviro
   {"get_object_id", 1, 1, PortableServer_Current_get_object_id_paramdata, 0, 0};
 
   PortableServer::ObjectId *retval = 0;
-  STUB_Object *istub;
 
-  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-    {
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return 0;
-    }
-  this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_static_call (env, &PortableServer_Current_get_object_id_calldata, &retval);
+  this->_stubobj ()->do_static_call (env, &PortableServer_Current_get_object_id_calldata, &retval);
   return retval;
 
 }

@@ -28,7 +28,7 @@ CORBA_Environment::exception (CORBA::Exception *ex)
     {
       this->clear ();
       this->exception_ = ex;
-      this->exception_->AddRef ();
+      this->exception_->_incr_refcnt ();
     }
 }
 
@@ -41,7 +41,7 @@ void
 CORBA_Environment::clear (void)
 {
   if (this->exception_)
-    this->exception_->Release ();
+    this->exception_->_decr_refcnt ();
 
   this->exception_ = 0;
 }
@@ -68,7 +68,7 @@ CORBA_Exception::CORBA_Exception (CORBA::TypeCode_ptr tc)
     refcount_ (0)
 {
   if (this->type_)
-    this->type_->AddRef ();
+    this->type_->_incr_refcnt ();
   assert (this->type_ != 0);
 }
 
@@ -77,7 +77,7 @@ CORBA_Exception::CORBA_Exception (const CORBA_Exception &src)
     refcount_ (0)
 {
   if (this->type_)
-    this->type_->AddRef ();
+    this->type_->_incr_refcnt ();
   assert (this->type_ != 0);
 }
 
@@ -95,10 +95,10 @@ CORBA_Exception &
 CORBA_Exception::operator = (const CORBA_Exception &src)
 {
   if (this->type_)
-    this->type_->Release ();
+    this->type_->_decr_refcnt ();
   this->type_ = src.type_;
   if (this->type_)
-    this->type_->AddRef ();
+    this->type_->_incr_refcnt ();
   assert (this->type_ != 0);
 
   return *this;
@@ -128,13 +128,13 @@ CORBA_Exception::_is_a (const char* repository_id) const
 }
 
 CORBA::ULong
-CORBA_Exception::AddRef (void)
+CORBA_Exception::_incr_refcnt (void)
 {
   return ++this->refcount_;
 }
 
 CORBA::ULong
-CORBA_Exception::Release (void)
+CORBA_Exception::_decr_refcnt (void)
 {
   this->refcount_--;
   if (this->refcount_ != 0)
@@ -160,10 +160,10 @@ CORBA_UserException &
 CORBA_UserException::operator = (const CORBA_UserException &src)
 {
   if (this->type_)
-    this->type_->Release ();
+    this->type_->_decr_refcnt ();
   this->type_ = src.type_;
   if (this->type_)
-    this->type_->AddRef ();
+    this->type_->_incr_refcnt ();
   assert (this->type_ != 0);
 
   return *this;
@@ -209,10 +209,10 @@ CORBA_SystemException &
 CORBA_SystemException::operator = (const CORBA_SystemException &src)
 {
   if (this->type_)
-    this->type_->Release ();
+    this->type_->_decr_refcnt ();
   this->type_ = src.type_;
   if (this->type_)
-    this->type_->AddRef ();
+    this->type_->_incr_refcnt ();
 
   this->minor_ = src.minor_;
   this->completed_ = src.completed_;
@@ -467,9 +467,8 @@ CORBA::Environment::print_exception (const char *info,
 
   if (this->exception_type () == CORBA::SYSTEM_EXCEPTION)
     {
-      // @@ this should be a QueryInterface call instead.
       CORBA::SystemException *x2 =
-        (CORBA::SystemException *) this->exception_;
+	CORBA_SystemException::_narrow (this->exception_);
 
       // @@ there are a other few "user exceptions" in the CORBA
       // scope, they're not all standard/system exceptions ... really

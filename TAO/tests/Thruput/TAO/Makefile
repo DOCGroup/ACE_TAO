@@ -49,7 +49,7 @@ include $(TAO_ROOT)/taoconfig.mk
 #----------------------------------------------------------------------------
 
 LDFLAGS += -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat
+CPPFLAGS += -I$(TAO_ROOT)
 
 $(IDL_SRC): ttcp.idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl ttcp.idl
@@ -211,7 +211,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -434,7 +433,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -657,7 +655,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -885,7 +882,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -1113,7 +1109,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -1336,7 +1331,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -1563,7 +1557,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \

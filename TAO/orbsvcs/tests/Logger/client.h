@@ -52,7 +52,7 @@ private:
   int parse_args (void);
   // Parses the arguments passed on the command line.
 
-  void setup_record (Logger::Log_Record newrec,
+  void setup_record (Logger::Log_Record &newrec,
 		     Logger::Log_Priority lp, const char* msg);
   // Prepares the logger recors for logging
   

@@ -142,20 +142,20 @@ class TAO_Export IIOP_Object : public STUB_Object
   //   interpreter that let  static stubs be very small.  It's
   //   specific to objrefs with IIOP::Profile.
 public:
-  void do_static_call (CORBA::Environment &env,
-                       const TAO_Call_Data *info,
-                       ...);
+  virtual void do_static_call (CORBA::Environment &env,
+			       const TAO_Call_Data *info,
+			       ...);
   // SII-based "Stub interpreter" for static stubs.  IDL compiler just
   // dumps a read-only description of the call into "calldata" and do
   // varargs calls to this routine, which does all the work.
 
-  void do_dynamic_call (const char *opname,
-                        CORBA::Boolean is_roundtrip,
-                        CORBA::NVList_ptr args,
-                        CORBA::NamedValue_ptr result,
-                        CORBA::Flags flags,
-                        CORBA::ExceptionList &exceptions,
-                        CORBA::Environment &env);
+  virtual void do_dynamic_call (const char *opname,
+				CORBA::Boolean is_roundtrip,
+				CORBA::NVList_ptr args,
+				CORBA::NamedValue_ptr result,
+				CORBA::Flags flags,
+				CORBA::ExceptionList &exceptions,
+				CORBA::Environment &env);
   // DII-based invocation analogue of the <do_static_call> above.
   // Differs in how the vararg calling convention is implemented --
   // DII doesn't use the normal call stack with its implicit typing,
@@ -200,10 +200,8 @@ public:
   // Constructor used typically by the server side.
 
   // = Memory management.
-  ULONG AddRef (void);
-  ULONG Release (void);
-  TAO_HRESULT QueryInterface (TAO_REFIID type_id,
-                              void **ppv);
+  virtual CORBA::ULong _incr_refcnt (void);
+  virtual CORBA::ULong _decr_refcnt (void);
 
   virtual TAO_ObjectKey *key (CORBA::Environment &env);
   // Return the object key as an out parameter.  Caller should release
@@ -253,7 +251,7 @@ private:
   // Number of outstanding references to this object.
 
   ~IIOP_Object (void);
-  // Destructor is to be called only through Release()
+  // Destructor is to be called only through _decr_refcnt()
 
   // = Disallow copy constructor and assignment operator
   ACE_UNIMPLEMENTED_FUNC (IIOP_Object (const IIOP_Object &))

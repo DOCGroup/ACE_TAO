@@ -179,7 +179,7 @@ struct TAO_Skel_Entry
   // skeleton corresponding to the operation
 };
 
-class TAO_Export STUB_Object : public TAO_IUnknown
+class TAO_Export STUB_Object
 {
   // = TITLE
   //   STUB_Object
@@ -272,6 +272,10 @@ public:
   virtual TAO_ObjectKey *key (CORBA::Environment &env) = 0;
   // Return the object key as an out parameter.  Caller should release
   // return value when finished with it.
+
+  // = Memory management.
+  virtual CORBA::ULong _incr_refcnt (void) = 0;
+  virtual CORBA::ULong _decr_refcnt (void) = 0;
 
 protected:
   virtual ~STUB_Object (void);

@@ -178,7 +178,7 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
             {
               any->any_owns_data_ = 1;
               any->value_ = 0;
-              elem_tc->AddRef ();
+              elem_tc->_incr_refcnt ();
               any->type_ = elem_tc;
               // now skip the value
               //      retval = stream->skip (elem_tc, env);
@@ -630,7 +630,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
                         profile->iiop_version.major,
                         profile->iiop_version.minor));
             objdata->type_id = (const char *) 0;
-            objdata->Release ();
+            objdata->_decr_refcnt ();
             objdata = 0;
             continue;
           }
@@ -644,7 +644,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
           {
             env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
             ACE_DEBUG ((LM_DEBUG, "error decoding IIOP host/port"));
-            objdata->Release ();
+            objdata->_decr_refcnt ();
             return CORBA::TypeCode::TRAVERSE_STOP;
           }
 
@@ -663,7 +663,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
             ACE_DEBUG ((LM_DEBUG,
                         "%d bytes out of %d left after IIOP profile data\n",
                         str.length (), encap_len));
-            objdata->Release ();
+            objdata->_decr_refcnt ();
             return CORBA::TypeCode::TRAVERSE_STOP;
           }
       }
@@ -694,7 +694,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
       // the corba proxy would have already incremented the reference count on
       // the objdata. So we decrement it here by 1 so that the objdata is now
       // fully owned by the corba_proxy that was created.
-      objdata->Release ();
+      objdata->_decr_refcnt ();
     }
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
       && continue_decoding == CORBA::B_TRUE)
@@ -1500,7 +1500,7 @@ TAO_Marshal_Alias::decode (CORBA::TypeCode_ptr  tc,
         retval = CORBA::TypeCode::TRAVERSE_STOP;
       }
   }
-  //  tc2->Release ();
+  //  tc2->_decr_refcnt ();
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
       && continue_decoding == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;

@@ -159,15 +159,15 @@ ACE_INLINE void
 CORBA::release (CORBA::ORB_ptr obj)
 {
   if (obj)
-    obj->Release ();
+    obj->_decr_refcnt ();
 }
 
 // ---------------------------------------------------------------------------
 //  ORB specific
 // ---------------------------------------------------------------------------
 
-ACE_INLINE ULONG
-CORBA_ORB::AddRef (void)
+ACE_INLINE CORBA::ULong
+CORBA_ORB::_incr_refcnt (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
 
@@ -178,7 +178,7 @@ ACE_INLINE CORBA::ORB_ptr
 CORBA_ORB::_duplicate (CORBA::ORB_ptr obj)
 {
   if (obj)
-    obj->AddRef ();
+    obj->_incr_refcnt ();
   return obj;
 }
 

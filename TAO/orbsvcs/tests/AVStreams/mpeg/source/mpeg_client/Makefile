@@ -9,6 +9,10 @@ LIBNAME  = libmpeg_client
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
+ifndef TAO_ROOT
+TAO_ROOT = $(ACE_ROOT)/TAO
+endif
+
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
 FILES= 24bit            \
@@ -99,7 +103,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i newproto.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ newproto.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
  global.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/filters.h \
@@ -122,7 +127,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i newproto.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ newproto.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
  global.h
 .obj/decoders.o .obj/decoders.so .shobj/decoders.o .shobj/decoders.so: decoders.cpp decoders.h util.h video.h proto.h
@@ -143,7 +149,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i newproto.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ newproto.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
  global.h
 .obj/fs2.o .obj/fs2.so .shobj/fs2.o .shobj/fs2.so: fs2.cpp video.h dither.h fs2.h proto.h
@@ -194,7 +201,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i newproto.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ newproto.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
  global.h
 .obj/parseblock.o .obj/parseblock.so .shobj/parseblock.o .shobj/parseblock.so: parseblock.cpp video.h proto.h decoders.h util.h \
@@ -231,7 +239,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i newproto.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ newproto.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
  global.h
 .obj/ui.o .obj/ui.so .shobj/ui.o .shobj/ui.so: ui.cpp \
@@ -251,10 +260,10 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i interface/fb.xbm \
- interface/play.xbm interface/step.xbm interface/stop.xbm \
- interface/loop.xbm interface/ff.xbm interface/MainWindow.mib \
- interface/Info.mib video.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ interface/fb.xbm interface/play.xbm interface/step.xbm \
+ interface/stop.xbm interface/loop.xbm interface/ff.xbm \
+ interface/MainWindow.mib interface/Info.mib video.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  newproto.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
@@ -278,7 +287,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i newproto.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ newproto.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
  global.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/filters.h \
@@ -301,7 +311,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i newproto.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ newproto.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
  global.h dither.h video.h proto.h
 .obj/video.o .obj/video.so .shobj/video.o .shobj/video.so: video.cpp \
@@ -321,8 +332,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i decoders.h util.h \
- video.h proto.h global.h ui.h
+ $(ACE_ROOT)/ace/Log_Record.i \
+ decoders.h util.h video.h proto.h global.h ui.h
 .obj/vp.o .obj/vp.so .shobj/vp.o .shobj/vp.so: vp.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -340,7 +351,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i newproto.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ newproto.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
  global.h dither.h video.h proto.h ui.h
 .obj/Command_Handler.o .obj/Command_Handler.so .shobj/Command_Handler.o .shobj/Command_Handler.so: Command_Handler.cpp Command_Handler.h \
@@ -458,8 +470,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -490,8 +504,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -501,22 +513,12 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -546,6 +548,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -554,6 +558,15 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -561,6 +574,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -599,6 +614,8 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
+ $(ACE_ROOT)/ace/High_Res_Timer.h \
+ $(ACE_ROOT)/ace/High_Res_Timer.i \
  ctr.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  newproto.h \

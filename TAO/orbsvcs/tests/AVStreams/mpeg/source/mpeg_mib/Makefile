@@ -9,6 +9,10 @@ LIBNAME  = libmpeg_mib
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
+ifndef TAO_ROOT
+TAO_ROOT = $(ACE_ROOT)/TAO
+endif
+
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
 FILES= mibButton \
@@ -63,6 +67,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -79,6 +85,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -95,6 +103,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -111,6 +121,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -127,6 +139,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -143,6 +157,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -159,6 +175,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -175,6 +193,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -191,6 +211,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -207,6 +229,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -223,6 +247,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -239,6 +265,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -255,6 +283,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \

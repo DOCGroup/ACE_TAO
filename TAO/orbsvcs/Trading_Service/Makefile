@@ -33,7 +33,7 @@ endif
 #TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
 
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG) \
+CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG) \
 	-DTAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.

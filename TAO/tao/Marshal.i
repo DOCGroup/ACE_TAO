@@ -179,7 +179,7 @@ TAO_Marshal_TypeCode::deep_copy (CORBA::TypeCode_ptr,
   else
     dest = CORBA::_tc_null;
 
-  ((CORBA::TypeCode_ptr) dest)->AddRef ();
+  ((CORBA::TypeCode_ptr) dest)->_incr_refcnt ();
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
@@ -238,7 +238,7 @@ TAO_Marshal_TypeCode::deep_free (CORBA::TypeCode_ptr,
                                  CORBA::Environment &)
 {
   if ((*(CORBA::TypeCode_ptr *) source) != 0)
-    (*(CORBA::TypeCode_ptr *) source)->Release ();
+    (*(CORBA::TypeCode_ptr *) source)->_decr_refcnt ();
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
