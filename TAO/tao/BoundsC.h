@@ -33,15 +33,13 @@
 
 #include "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "tao/CDR.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "tao/Exception.h"
-#include "tao/CDR.h"
 #include "tao/VarOut_T.h"
 
 #if defined (TAO_EXPORT_MACRO)

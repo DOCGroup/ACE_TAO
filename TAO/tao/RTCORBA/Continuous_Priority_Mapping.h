@@ -12,6 +12,7 @@
 #define TAO_CONTINUOUS_PRIORITY_MAPPING_H
 
 #include /**/ "ace/pre.h"
+
 #include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -22,6 +23,8 @@
 
 #include "rtcorba_export.h"
 #include "Priority_Mapping.h"
+
+#include "ace/OS.h"
 
 /**
  * @class TAO_Continuous_Priority_Mapping

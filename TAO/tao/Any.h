@@ -14,16 +14,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Var_Size_Argument_T.h"
-#include "tao/Pseudo_VarOut_T.h"
+#include "ace/CDR_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Var_Size_Argument_T.h"
+#include "tao/Pseudo_VarOut_T.h"
 #include "tao/Arg_Traits_T.h"
-
-#include "ace/CDR_Stream.h"
 
 namespace TAO
 {

@@ -14,21 +14,19 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Basic_Types.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Basic_Types.h"
 #include "tao/TAO_Export.h"
 #include "tao/orbconf.h"
-#include "ace/CORBA_macros.h"
 
 class TAO_OutputCDR;
 class TAO_InputCDR;
 class ACE_Message_Block;
-class ACE_Char_Codeset_Translator;
-class ACE_WChar_Codeset_Translator;
 
 namespace CORBA
 {
@@ -41,8 +39,6 @@ namespace CORBA
   class ValueBase;
   class AbstractBase;
   typedef AbstractBase *AbstractBase_ptr;
-
-  class Environment;
 }
 
 namespace TAO

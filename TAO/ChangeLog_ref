@@ -1,3 +1,36 @@
+Wed Sep 10 19:37:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Abstract_Servant_Base.h:
+        * tao/Acceptor_Filter.h:
+        * tao/Acceptor_Impl.cpp:
+        * tao/Acceptor_Impl.h:
+        * tao/Acceptor_Registry.h:
+        * tao/Any.h:
+        * tao/Any_Impl.h:
+        * tao/Any_Unknown_IDL_Type.h:
+        * tao/Asynch_Reply_Dispatcher_Base.cpp:
+        * tao/Asynch_Reply_Dispatcher_Base.h:
+        * tao/BoundsC.h:
+        * tao/Buffering_Constraint_Policy.h:
+        * tao/CDR.h:
+        * tao/CDR.i:
+        * tao/CDR_Encaps_Codec.h:
+        * tao/Cache_Entries.h:
+        * tao/Endpoint.h:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Lite_Factory.cpp:
+        * tao/corbafwd.cpp:
+        * tao/corbafwd.h:
+        * tao/corbafwd.i:
+        * tao/orbconf.h:
+
+          Partial pass to reduce #include overhead.
+
+        * tao/RTCORBA/Continuous_Priority_Mapping.h:
+        * tao/RTCORBA/Linear_Network_Priority_Mapping.cpp:
+
+	  Added newly necessary #includes.
+
 Wed Sep 10 18:12:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Makefile.tao:
