@@ -158,6 +158,12 @@ ifdef CROSS-COMPILE
 	@echo Nothing to clean in TAO_IDL on CROSS-COMPILE platforms.
 else  # ! CROSS-COMPILE
   IDL_CFE_VERSION	= \"1.3.0\"
+
+  ifeq ($(findstring g++,$(CXX)),g++)
+    CCFLAGS += -Wno-switch
+    PIC = -fPIC
+  endif # g++
+
   CPPFLAGS += -Iinclude -Ibe_include -Ife -DCPP_LOCATION=\"$(CXX)\" \
               -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
 
