@@ -1,3 +1,7 @@
+Mon May 03 10:30:37 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE version 4.6.38 released.
+
 Mon May  3 09:56:06 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/INET_Addr.cpp (get_host_name): Make sure to check if
