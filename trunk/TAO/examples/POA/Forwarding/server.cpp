@@ -127,8 +127,18 @@ create_servant_manager (CORBA::ORB_ptr orb,
                                          forward_to.in ()),
                   0);
 
+  // Set MyFooServantActivator to be the servant activator.
   child_poa->set_servant_manager (activator,
                                   ACE_TRY_ENV);
+  // For the code above, we're using the CORBA 3.0 servant manager
+  // semantics supported by TAO.  For CORBA 2.x ORBs you'd need to
+  // use the following code in place of the previous line:
+  //
+  // PortableServer::ServantManager_var servant_activator = 
+  //   activator->_this ();
+  //
+  // child_poa->set_servant_manager (servant_activator.in (),
+  //                                 ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   MyFooServant *servant = 0;
@@ -150,7 +160,7 @@ create_servant_manager (CORBA::ORB_ptr orb,
                            ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+  FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
   if (output_file == 0)
     ACE_ERROR ((LM_ERROR,
                 "Cannot open output file for writing IOR: %s\n",
