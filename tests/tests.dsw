@@ -1077,6 +1077,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "SOCK_SEQPACK_Association_Test"=".\SOCK_SEQPACK_Association_Test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "SOCK_Send_Recv_Test"=".\SOCK_Send_Recv_Test.dsp" - Package Owner=<4>
 
 Package=<5>
