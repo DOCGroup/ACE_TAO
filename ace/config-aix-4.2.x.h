@@ -22,6 +22,8 @@
 
 #  define ACE_TEMPLATES_REQUIRE_PRAGMA
 
+#  define ACE_LACKS_PRAGMA_ONCE
+
 #elif defined (__GNUG__)
 # include "ace/config-g++-common.h"
 # define ACE_HAS_STRING_CLASS
