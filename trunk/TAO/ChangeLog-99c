@@ -4,10 +4,13 @@ Sat May  8 15:02:37 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/GIOP.cpp:
 	* tao/Connect.cpp:
 	* tao/corbafwd.h: Changed the exception type defined as an enum in
- 	  corbafwd.h as 'ExceptionType' to 'exception_type'.
-  	  'exception_type' seems to be the right way of defining according
- 	  to the spec. The previous spelling 'ExceptionType' seems to a
- 	  spill out of the CORBA-DCOM, CORBA-OLE specs.  Changes to other
+ 	  corbafwd.h as 'ExceptionType' to 'exception_type'. This is
+	  defined in the spec in chapter-3, pg.3-38, section 3.15.1 under
+	  Standard Exception Definitions. The vsOrb test suite also tests
+	  for this with this spelling. 
+	
+  	  The previous spelling 'ExceptionType' seems to a
+ 	  spill out of the CORBA-COM, CORBA-OLE specs.  Changes to other
  	  *.cpp and *.h files listed above to acommodate the change made
  	  in corbafwd.h.
 
