@@ -28,14 +28,24 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
 	  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   void dt_creator (FP_DT_Creator* dt_creator);
+  FP_DT_Creator* dt_creator (void);
 
   Fixed_Priority_Scheduler* scheduler (void);
 
   int activate_task (void);
+
+  CORBA::ORB_ptr orb (void);
+
+  ACE_hrtime_t base_t;
+  
+  void register_synch_obj (ACE_ENV_SINGLE_ARG_DECL);
+
   protected:
   /// task svc
   virtual int svc (void);
 
+
+  
  private:
   /// = Policies
   long thr_sched_policy_;
@@ -47,6 +57,10 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
   RTScheduling::Current_var current_; 
   FP_DT_Creator* dt_creator_;
   Fixed_Priority_Scheduler* scheduler_;
+  RTCORBA::RTORB_var rt_orb_;
+  /// Reference to the root poa.
+  PortableServer::POA_var root_poa_;
+  
 };
 
 typedef ACE_Singleton <DT_Test, ACE_Thread_Mutex> DT_TEST;

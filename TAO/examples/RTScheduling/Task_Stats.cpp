@@ -39,7 +39,7 @@ int
 Task_Stats::init (size_t max_samples)
 {
   max_samples_ = max_samples;
-  ACE_NEW_RETURN (this->thr_run_time_, ACE_UINT64[this->max_samples_], -1);
+  ACE_NEW_RETURN (this->thr_run_time_, ACE_UINT32[this->max_samples_], -1);
   ACE_NEW_RETURN (this->thr_count_, int[this->max_samples_], -1);
   return 0;
 }
@@ -60,7 +60,15 @@ void
 Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
                           ACE_UINT32)
 {
+  
   FILE* output_file = ACE_OS::fopen (file_name, "w");
+
+  if (output_file == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+		  "%s cannot be opened \n",
+		  file_name));
+    }
 
   // first dump what the caller has to say.
   ACE_OS::fprintf (output_file, "%s\n",msg);
@@ -73,33 +81,36 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
   x = this->thr_run_time_[0];// scale_factor;
   val_1 = ACE_CU64_TO_CU32 (x);	
   
-  ACE_OS::fprintf (output_file, "%u \t %d\n",val_1,thr_count_[0]-1);
+  ACE_OS::fprintf (output_file, "%u \t %d\n",val_1,thr_count_[0]);
   
   // dump the samples recorded.
   for (size_t i = 1; i != this->samples_count_; ++i)
     {
-      if (this->thr_count_[i] == this->thr_count_[i-1])
-	{
-	  x = this->thr_run_time_[i];// / scale_factor;
-	  val_1 = ACE_CU64_TO_CU32 (x);	
-	}
-      else 
-	{
-	  x = this->thr_run_time_[i-1];// / scale_factor;
-	  val_1 = ACE_CU64_TO_CU32 (x);	
-	}
-      
+      //        if (! ((this->thr_count_[i] == this->thr_count_[i-1]) && (this->thr_run_time_[i] == this->thr_run_time_[i-1])))
+      //    	{
+      x = this->thr_run_time_[i];// / scale_factor;
+      val_1 = ACE_CU64_TO_CU32 (x);	
       val_2  = this->thr_count_[i];
-
+      ACE_OS::fprintf (output_file, "%u \t %d\n",val_1,val_2);
+      //	}
+      /*
+	else 
+	{
+	x = this->thr_run_time_[i-1];// / scale_factor;
+	val_1 = ACE_CU64_TO_CU32 (x);	
+	}
+      */
+      
       // ACE_OS::fprintf (output_file, "%d\n",val_2);
-      ACE_OS::fprintf (output_file, "%u \t %d\n",val_1,val_2-1);
+      
       
     }
   
   ACE_OS::fclose (output_file);
-  
+
   ACE_DEBUG ((LM_DEBUG,
 	      "Samples are ready to view\n"));
+  
 }
 
 
