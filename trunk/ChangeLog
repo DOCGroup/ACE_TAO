@@ -1,3 +1,19 @@
+Wed Aug 27 10:32:03 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/USAGE:
+
+          Added documentation for the new -hierarchy option.
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/Driver.pm:
+        * bin/MakeProjectCreator/modules/Options.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Added a -hierarchy option which forces MPC to generate a workspace
+          at each directory level between the current directory and the
+          directory in which the mpc file is located.
+
 Tue Aug 26 18:57:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ASNMP/asnmp/ASNMP_Export.h:
@@ -56,8 +72,8 @@ Tue Aug 26 11:10:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Aug 26 09:55:19 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Kokyu_defs.{cpp,h,i}: Added operator != for ConfigInfo to
-	  satisfy RH71_Explicit_Templates build.
+        * Kokyu/Kokyu_defs.{cpp,h,i}: Added operator != for ConfigInfo to
+          satisfy RH71_Explicit_Templates build.
 
 Tue Aug 26 09:21:44 2003  Chad Elliott  <elliott_c@ociweb.com>
 

@@ -26,7 +26,7 @@ use vars qw(@ISA);
 my(@statekeys) = ('global', 'include', 'template', 'ti',
                   'dynamic', 'static', 'relative', 'addtemp',
                   'addproj', 'progress', 'toplevel', 'baseprojs',
-                  'feature_file',
+                  'feature_file', 'hierarchy',
                  );
 
 my(%all_written) = ();
@@ -50,6 +50,7 @@ sub new {
   my($toplevel)  = shift;
   my($baseprojs) = shift;
   my($feature)   = shift;
+  my($hierarchy) = shift;
   my($type)      = shift;
   my($self)      = Parser::new($class, $inc);
 
@@ -73,6 +74,7 @@ sub new {
   $self->{'dynamic'}        = $dynamic;
   $self->{'static'}         = $static;
   $self->{'feature_file'}   = $feature;
+  $self->{'hierarchy'}      = $hierarchy;
 
   return $self;
 }
@@ -745,6 +747,12 @@ sub get_static {
 sub get_default_component_name {
   #my($self) = shift;
   return 'default';
+}
+
+
+sub get_hierarchy {
+  my($self) = shift;
+  return $self->{'hierarchy'};
 }
 
 # ************************************************************

@@ -145,12 +145,13 @@ sub new {
   my($baseprojs) = shift;
   my($gfeature)  = shift;
   my($feature)   = shift;
+  my($hierarchy) = shift;
   my($makeco)    = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $dynamic, $static,
                                 $relative, $addtemp, $addproj,
                                 $progress, $toplevel, $baseprojs,
-                                $feature, 'project');
+                                $feature, $hierarchy, 'project');
 
   $self->{$self->{'type_check'}}   = 0;
   $self->{'feature_defined'}       = 0;
