@@ -41,12 +41,12 @@
 #include	<assert.h>
 #include	<limits.h>
 #include	<string.h>
-#include	<orb.hh>
+#include	<orb.h>
 
-#include	"debug.hh"
-#include	"cdr.hh"
+#include	"debug.h"
+#include	"cdr.h"
 
-#include	"giop.hh"
+#include	"giop.h"
 
 
 #if	defined (HAVE_WIDEC_H)

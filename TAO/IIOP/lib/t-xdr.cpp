@@ -15,16 +15,16 @@
 #include	<sys/types.h>
 #include	<sys/time.h>
 
-#include	<orb.hh>
+#include	<orb.h>
 
 #if defined(HAVE_WIDEC_H)
 #  include	<widec.h>
 #endif
 
-#include	"cdr.hh"
-#include	"debug.hh"
+#include	"cdr.h"
+#include	"debug.h"
 
-#include	"xdr.hh"
+#include	"xdr.h"
 
 
 // A structure that's somewhat representative of an IIOP message

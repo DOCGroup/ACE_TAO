@@ -1,5 +1,5 @@
 #include <iostream.h>
-#include "orb.hh"
+#include "orb.h"
 
 #define SHOWSIZE(t) cout << "sizeof(" #t ") = " << sizeof(t) << endl;
 

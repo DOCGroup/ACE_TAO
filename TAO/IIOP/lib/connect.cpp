@@ -7,9 +7,9 @@
 // = VERSION
 //     $Id$
 
-#include "connect.hh"
-#include "roa.hh"
-#include "debug.hh"
+#include "connect.h"
+#include "roa.h"
+#include "debug.h"
 
 
 ROA_Handler::ROA_Handler(ACE_Thread_Manager* t)

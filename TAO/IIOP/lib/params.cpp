@@ -1,6 +1,6 @@
-#include "params.hh"
-#include "connect.hh"
-#include "objtable.hh"
+#include "params.h"
+#include "connect.h"
+#include "objtable.h"
 
 ROA_Parameters::ROA_Parameters()
   : using_threads_(0),
@@ -89,6 +89,7 @@ ROA_Factory::ROA_Factory()
 #if defined(ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Thread_Strategy<ROA_Handler>;
 template class ACE_Concurrency_Strategy<ROA_Handler>;
+template class ACE_Reactive_Strategy<ROA_Handler>;
 template class ACE_Creation_Strategy<ROA_Handler>;
 template class ACE_Scheduling_Strategy<ROA_Handler>;
 template class ACE_Accept_Strategy<ROA_Handler, ACE_SOCK_ACCEPTOR>;

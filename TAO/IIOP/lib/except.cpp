@@ -14,10 +14,10 @@
 #include	<stdio.h>
 #include <ace/Log_Msg.h>
 
-#include	<orb.hh>
+#include	<orb.h>
 
-#include	"cdr.hh"
-#include	"debug.hh"
+#include	"cdr.h"
+#include	"debug.h"
 
 #include	<initguid.h>
 

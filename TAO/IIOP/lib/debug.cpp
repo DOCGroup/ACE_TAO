@@ -15,10 +15,10 @@
 #include	<assert.h>
 #include	<limits.h>
 #include	<string.h>
-#include	<orb.hh>
+#include	<orb.h>
 
-#include	"thread.hh"
-#include	"debug.hh"
+#include	"thread.h"
+#include	"debug.h"
 
 #include	<ctype.h>
 #include	<stdio.h>
