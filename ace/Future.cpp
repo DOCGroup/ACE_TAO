@@ -407,7 +407,12 @@ ACE_Future<T>::get_rep ()
 template <class T> void *
 ACE_Future<T>::operator new (size_t)
 {
-  return 0;
+#if defined(ACE_NEW_THROWS_EXCEPTIONS) && defined(ACE_HAS_EXCEPTIONS)
+  throw ACE_bad_alloc;
+#else
+  void* gcc_will_complain_if_literal_0_is_returned = 0;
+  return gcc_will_complain_if_literal_0_is_returned;
+#endif /* ACE_NEW_THROWS_EXCEPTIONS && ACE_HAS_EXCEPTIONS */
 }
 
 template <class T> void

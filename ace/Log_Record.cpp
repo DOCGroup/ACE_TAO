@@ -143,7 +143,7 @@ ACE_Log_Record::format_msg (const ASYS_TCHAR *host_name,
       ctp[24] = '\0'; // NUL-terminate after the date.
 
       ACE_OS::sprintf (timestamp,
-                       ASYS_TEXT ("%s.%03d %s"),
+                       ASYS_TEXT ("%s.%03ld %s"),
                        ctp + 4,
                        this->time_stamp_.usec () / 1000,
                        ctp + 20);
@@ -162,7 +162,7 @@ ACE_Log_Record::format_msg (const ASYS_TCHAR *host_name,
                                       : host_name);
 # endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
       ACE_OS::sprintf (verbose_msg,
-                       ASYS_TEXT ("%s@%s@%d@%s@%s"),
+                       ASYS_TEXT ("%s@%s@%ld@%s@%s"),
                        timestamp,
                        lhost_name,
                        this->pid_,

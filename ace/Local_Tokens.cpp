@@ -93,7 +93,7 @@ ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_Token_Proxy *new_proxy,
       ACE_OS::hostname (host_name, sizeof host_name);
 
       ACE_OS::sprintf (name,
-		       ASYS_TEXT ("/%s/%u/%u"),
+		       ASYS_TEXT ("/%s/%u/%lu"),
 		       host_name,
 		       ACE_OS::getpid (),
 		       ACE_Thread::self ());

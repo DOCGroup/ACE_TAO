@@ -140,7 +140,7 @@ if ($debug) {
   @RUN_LIST = ('TAO/tests/OctetSeq , run_test.pl');
   @SINGLE_THREADED_LIST = ('TAO/tests/OctetSeq , run_test.pl');
   @MINIMUM_CORBA_LIST = ('TAO/tests/OctetSeq , run_test.pl');
-  $ADMIN = $ENV{'USER'};
+  $ADMIN = $ENV{'LOGNAME'};
 
 }
 
@@ -206,7 +206,7 @@ print HIST $CMD, ': running at ', $date, ' ';
 if (-f $disable_file) {
   print HIST "DISABLED\n";
 
-  local $to = $ENV{'USER'};
+  local $to = $ENV{'LOGNAME'};
   open (MAIL, "|".$MAIL.' -s [AUTO_COMPILE] '.$to)
     || die "Cannot open mail pipe for DISABLED error\n";
 
