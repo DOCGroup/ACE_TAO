@@ -24,9 +24,9 @@ for ($rate = $min_rate, $i = 0;
    @rates[$i] = $rate;
 }
 
-$min_work = 10; 
-$max_work = 30;
-$work_increment = 1;
+$min_work = 150; 
+$max_work = 410;
+$work_increment = 10;
 
 for ($work = $min_work, $i = 0; 
      $work <= $max_work; 
@@ -46,6 +46,17 @@ for ($thread = $min_thread, $i = 0;
    @threads[$i] = $thread;
 }
 
+$min_pool_priority = 1; 
+$max_pool_priority = 99;
+$pool_priority_increment = 40;
+
+for ($pool_priority = $min_pool_priority, $i = 0; 
+     $pool_priority <= $max_pool_priority; 
+     $pool_priority += $pool_priority_increment, $i += 1)
+{
+   @pool_priorities[$i] = $pool_priority;
+}
+
 @workers = (1, 2, 3, 5, 10, 15, 20);
 
 $results_directory = "results";
@@ -62,16 +73,19 @@ $results_directory = "results";
      "thread-nolanes",
      "thread-lanes-increase",
      "thread-lanes-decrease",
-     "work-pool-high",
-     "work-pool-medium",
-     "work-pool-low",
-     "work-pool-zero",
      );
+
+for $pool_priority (@pool_priorities)
+{
+    $test_type = "work-pool-".$pool_priority;
+    push @test_types, $test_type;
+}
 
 $iorfile = "ior";
 $work = 13;
 $time_for_test = 10;
 $max_throughput_timeout = 5;
+$pool_threads = 3;
 
 # Parse the arguments
 for ($i = 0; $i <= $#ARGV; $i++) {
@@ -116,6 +130,13 @@ for ($i = 0; $i <= $#ARGV; $i++) {
         }
         print STDERR ")\n";
 
+        print STDERR "\t-pool-priorities: defaults to (";
+        for $pool_priority (@pool_priorities)
+        {
+            print STDERR "$pool_priority, ";
+        }
+        print STDERR ")\n";
+
         print STDERR "\n";
 
         $CL = new PerlACE::Process ("client", "-h");
@@ -148,6 +169,10 @@ for ($i = 0; $i <= $#ARGV; $i++) {
       @threads = split (',', $ARGV[$i + 1]);
       $i++;
     }
+    elsif ($ARGV[$i] eq "-pool-priorities") {
+      @pool_priorities = split (',', $ARGV[$i + 1]);
+      $i++;
+    }
     elsif ($ARGV[$i] eq "-o") 
     {
         $extra_args .= " " . $ARGV[$i];
@@ -169,6 +194,11 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     {
         $i++;
         $max_throughput_timeout = $ARGV[$i];
+    }
+    elsif ($ARGV[$i] eq "-s") 
+    {
+        $i++;
+        $pool_threads = $ARGV[$i];
     }
     else
     {
@@ -219,22 +249,6 @@ $fixed_client_args = "-w $work -t $time_for_test -z $max_throughput_timeout";
      {
          description => "thread-lanes-decrease",
          server => "-l three-lanes-with-best-effort -b three-bands-with-best-effort", 
-     },
-     {
-         description => "work-pool-high",
-         server => "-s 3 -f 32767", 
-     },
-     {
-         description => "work-pool-medium",
-         server => "-s 3 -f 21844", 
-     },
-     {
-         description => "work-pool-low",
-         server => "-s 3 -f 10922", 
-     },
-     {
-         description => "work-pool-zero",
-         server => "-s 3 -f 0", 
      },
      );
 
@@ -316,21 +330,6 @@ for $test (@configurations)
         $test->{clients}[$i - 1] .= " -x 1";
     }
 
-    elsif ($test->{description} eq "work-pool-high" or
-	   $test->{description} eq "work-pool-medium" or
-	   $test->{description} eq "work-pool-low" or
-	   $test->{description} eq "work-pool-zero")
-    {
-	$i = 0;
-	for $work (@works)
-        {
-            $test->{clients}[$i] = "-w $work -r rates -t $time_for_test -z $max_throughput_timeout";
-	    $i++;
-        }
-
-        $test->{clients}[$i - 1] .= " -x 1";
-    }
-
     #
     # setup work-lanes-decrease test
     #
@@ -390,6 +389,26 @@ for $test (@configurations)
 
         $test->{clients}[$i - 1] .= " -x 1";
     }
+}
+
+for $pool_priority (@pool_priorities)
+{
+    $new_configuration = {};
+    $pool_args = "-ORBsvcconf svc.conf-native -p invocation-priorities-native";
+    $test_type = "work-pool-".$pool_priority;
+    $new_configuration->{description} = $test_type;
+    $new_configuration->{server} = "-f $pool_priority -s $pool_threads $pool_args";
+
+    $i = 0;
+    for $work (@works)
+    {
+	$new_configuration->{clients}[$i] = "-w $work -r rates -t $time_for_test -z $max_throughput_timeout $pool_args";
+	$i++;
+    }
+
+    $new_configuration->{clients}[$i - 1] .= " -x 1";
+    
+    push @configurations, $new_configuration;
 }
 
 sub run_client

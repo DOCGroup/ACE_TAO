@@ -240,12 +240,18 @@ int
 start_synchronization (test_ptr test,
                        Synchronizers &synchronizers)
 {
+  CORBA::ULong synchronization_iterations = 1;
   ACE_TRY_NEW_ENV
     {
-      test->method (work,
-                    prime_number,
-                    ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      for (CORBA::ULong i = 0;
+	   i < synchronization_iterations;
+	   ++i)
+	{
+	  test->method (work,
+			prime_number,
+			ACE_TRY_ENV);
+	  ACE_TRY_CHECK;
+	}
     }
   ACE_CATCHANY
     {
