@@ -31,6 +31,7 @@ Thu Jun  8 18:07:03 2000  Carlos O'Ryan  <coryan@uci.edu>
           The correct fix was to add reference counting to the ORB_Core
           itself, and use the reference count in the destroy() operation
           and the ORB_Core_Table.
+          This fixes [BUGID:542]
 
 Thu Jun  8 17:21:11 2000  Ossama Othman  <ossama@uci.edu>
 
