@@ -1,3 +1,19 @@
+Sat Mar  2 14:32:32 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/performance-tests/RTEvent/lib/ORB_Holder.h (ORB_Holder) :
+	  Change ACE_ENV_ARG_DECL to ACE_ENV_ARG_DECL_WITH_DEFAULTS.
+
+	* orbsvcs/performance-tests/RTEvent/lib/RTCORBA_Setup.cpp (RTCORBA_Setup::RTCORBA_Setup):
+
+	  Change ACE_ENV_ARG_DECL to ACE_ENV_ARG_PARAMETER.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Send_Task.cpp (Send_Task::svc):
+
+	  Add  ACE_DECLARE_NEW_CORBA_ENV.
+
+	* orbsvcs/performance-tests/RTEvent/lib/SyncScope_Setup.h (SyncScope_Setup):
+	  Change ACE_ENV_ARG_DECL to ACE_ENV_ARG_DECL_WITH_DEFAULTS. 
+
 Sat Mar  2 19:26:34 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Latency/AMH/Single_Threaded/client.bor:

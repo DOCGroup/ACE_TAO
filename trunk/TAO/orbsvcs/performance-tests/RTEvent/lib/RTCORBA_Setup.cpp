@@ -54,15 +54,15 @@ RTCORBA_Setup::RTCORBA_Setup (CORBA::ORB_ptr orb,
 
   this->setup_lane (rtclass.priority_high (),
                     this->lanes_[0]
-                    ACE_ENV_ARG_DECL);
+                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   this->setup_lane (rtclass.priority_process (),
                     this->lanes_[1]
-                    ACE_ENV_ARG_DECL);
+                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   this->setup_lane (rtclass.priority_low (),
                     this->lanes_[2]
-                    ACE_ENV_ARG_DECL);
+                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
