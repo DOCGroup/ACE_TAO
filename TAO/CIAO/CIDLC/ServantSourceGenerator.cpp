@@ -807,7 +807,6 @@ namespace
          << " (" << endl
          << "ev" << endl
          << STRS[ENV_ARG] << ");" << endl
-         << "}" << endl
          << "}" << endl << endl;
 
       os << "void" << endl
