@@ -1,3 +1,16 @@
+Mon May 12 16:53:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP/BasicSP.idl: 
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice.idl: 
+	* examples/handcrafted/BasicSP/BMDevice/BMDeviceE.idl:
+	* examples/handcrafted/BasicSP/BMDevice/BMDeviceEI.idl:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice.mpc
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_exec_export.h:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_stub_export.h:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_svnt_export.h:
+
+	  Some standard files for thr BMDevice component
+
 Mon May 12 14:48:12 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/Hello/run_simple_test.pl:

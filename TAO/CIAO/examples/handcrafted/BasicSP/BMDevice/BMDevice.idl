@@ -1,16 +1,30 @@
 //$Id$
+//=============================================================================
+/**
+ * @file BMDevice.idl
+ *
+ * Definition of the BMDevice component
+ *
+ * @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
+ */
+//=============================================================================
+#ifndef CIAO_BMDEVICE_IDL
+#define CIAO_BMDEVICE_IDL
+
 #include "../BasicSP.idl"
 
 module BasicSP
 {
   component BMDevice
     {
-      provides ReadData dataOut;
-      publishes DataAvailable outDataAvailable;
-      consumes TimeOut timeOut20;
+      provides ReadData data_out;
+      publishes DataAvailable out_data;
+      consumes TimeOut timeout20;
     };
 
   home BMDeviceHome manages BMDevice
     {
     };
 };
+
+#endif /*CIAO_BMDEVICE_IDL */
