@@ -1,8 +1,22 @@
-Mon Sep  2 16:59:08 2002  Ossama Othman  <ossama@uci.edu>
+Mon Sep  2 18:28:14 2002  Ossama Othman  <ossama@uci.edu>
 
-	* tao/RTCORBA/RT_PolicyFactory.cpp:
+	* tao/RTCORBA/RT_PolicyFactory.cpp (create_policy):
 
 	  Fixed unused variable warning.
+
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp
+	  (universal_time):
+
+	  Fixed syntax error.
+
+	  Added missing emulated exception macros to _this() calls.
+
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp (get_time):
+
+	  Applied the same fix from Jon Biggar that Doug applied to the
+	  TimeService implementation.
+
+	  Added missing emulated exception macros to _this() calls.
 
 Mon Sep  2 16:20:08 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
