@@ -39,7 +39,12 @@
 
     <P>ORB throughput, in requests per second,
       using the performance test in:
-      <CODE>$ACE_ROOT/TAO/performance-tests/Single_Threaded_Latency</CODE>.
+      <CODE>$ACE_ROOT/TAO/performance-tests/Single_Threaded_Latency</CODE>,
+      the ORB configuration is optimized for single threaded
+      applications using the <CODE>svc.conf</CODE> file in said
+      directory.
+      The test is executed over the loopback interface, using the
+      <CODE>run_test.pl</CODE> driver script in the same directory.
     </P>
     <DIV align="center">
       <IMG alt="Single Threaded"
