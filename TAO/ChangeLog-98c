@@ -1,6 +1,13 @@
 Fri Mar 27 20:08:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-        * tao/params.cpp: Removed the extra inclusion of <params.i>.
+	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (NS_NamingContext):
+ 	  Changed to get lock from the ORB.
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp: Update the source file list.
+
+	* tao/ORB.h: Added TAO_Export to class CORBA_ORB_var.
+
+	* tao/params.cpp: Removed the extra inclusion of <params.i>.
 
 Fri Mar 27 14:10:34 1998  Steve Huston  <shuston@riverace.com>
 
