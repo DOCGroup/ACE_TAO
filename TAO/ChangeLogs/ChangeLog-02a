@@ -1,3 +1,10 @@
+Thu Aug 31 16:03:20 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp : 
+	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp: 
+
+          Added missing ace/Dynamic_Service.h include.
+
 Thu Aug 31 15:24:06 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tao/Makefile.bor: Added the TAO_Singleton.cpp, orb.idl, and 
