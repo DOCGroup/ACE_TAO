@@ -1,3 +1,24 @@
+Thu Nov 20 20:12:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+
+          Removed generation of _tao_any_destructor for anonymous sequences.
+
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
+
+          Removed generation of explicit template instantiation of 
+          sequence base class for anonymous sequences of typedef'd
+          basic types. Also removed generation of explicit template
+          instantiation of Any impl class for anonymous sequences.
+
+        * orbsvcs/performance-tests/RTEvent/lib/RIR_Narrow.cpp:
+        * orbsvcs/performance-tests/RTEvent/lib/RT_Class.cpp:
+        * orbsvcs/performance-tests/RTEvent/lib/Send_Task.cpp:
+        * tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.cpp:
+
+          Added missing ACE file includes.
+
 Thu Nov 20 19:16:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/DomainC.cpp:

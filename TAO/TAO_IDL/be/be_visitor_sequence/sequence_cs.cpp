@@ -176,7 +176,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       << "{}";
 
 
-  if (be_global->any_support ())
+  if (be_global->any_support () && !node->anonymous ())
     {
       *os << be_nl << be_nl
           << "void "

@@ -2,6 +2,8 @@
 
 #include "Smart_Proxy_Impl.h"
 
+#include "ace/OS_NS_string.h"
+
 Smart_Diamond_Top_Factory::Smart_Diamond_Top_Factory (void)
 {
   ACE_DEBUG ((LM_DEBUG, "Smart_Diamond_Top_Factory\n"));
@@ -27,9 +29,7 @@ Smart_Diamond_Top_Proxy::Smart_Diamond_Top_Proxy (Diamond::Top_ptr proxy)
 }
 
 char *
-Smart_Diamond_Top_Proxy::shape (
-                                                                ACE_ENV_SINGLE_ARG_DECL
-                                                                )
+Smart_Diamond_Top_Proxy::shape ( ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -40,12 +40,15 @@ Smart_Diamond_Top_Proxy::shape (
   char *ans= 0;
   ACE_TRY
     {
-          ans = ACE_OS::strdup (TAO_Diamond_Top_Smart_Proxy_Base::shape(ACE_ENV_SINGLE_ARG_PARAMETER));
-
-          ACE_TRY_CHECK;
+      ans = 
+        ACE_OS::strdup (
+            TAO_Diamond_Top_Smart_Proxy_Base::shape (
+                ACE_ENV_SINGLE_ARG_PARAMETER
+              )
+          );
+      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "%s\n", ans));
-
     }
   ACE_CATCHANY
     {
