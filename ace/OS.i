@@ -658,8 +658,10 @@ ACE_OS::lstat (const char *file, ACE_stat *stp)
    // Solaris for intel uses an macro for lstat(), this macro is a
    // wrapper for _lxstat().
   ACE_OSCALL_RETURN (::_lxstat (_STAT_VER, file, stp), int, -1);
-#else /* !ACE_HAS_X86_STAT_MACROS */
+# elif defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::_lstat (file, stp), int, -1);
+# else /* !ACE_HAS_X86_STAT_MACROS */
+  ACE_OSCALL_RETURN (::lstat (file, stp), int, -1);
 #endif /* !ACE_HAS_X86_STAT_MACROS */
 # endif /* VXWORKS */
 }
@@ -1058,10 +1060,14 @@ ACE_OS::stat (const ACE_TCHAR *file, ACE_stat *stp)
   ACE_OSCALL_RETURN (::_xstat (_STAT_VER, file, stp), int, -1);
 #elif defined (__BORLANDC__)  && (__BORLANDC__ <= 0x540) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wstat (file, stp), int, -1);
-#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+#elif defined (ACE_WIN32)
+#   if defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wstat (file, (struct _stat *) stp), int, -1);
+#   else
+  ACE_OSCALL_RETURN (::_stat (file, (struct _stat *) stp), int, -1);
+#   endif /* ACE_USES_WCHAR */
 #else /* VXWORKS */
-  ACE_OSCALL_RETURN (::_stat (file, stp), int, -1);
+  ACE_OSCALL_RETURN (::stat (file, stp), int, -1);
 #endif /* ACE_HAS_PACE */
 }
 

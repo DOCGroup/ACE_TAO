@@ -1,3 +1,7 @@
+Wed Jan 24 19:43:24 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (lstat,stat): Separated win32 cases out.
+
 Wed Jan 24 18:15:59 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (fstat): Oops, wrong version of this function was
