@@ -131,8 +131,8 @@ WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?guajira.cs.wus
 
 [VxWorks_GCC]
 TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_VXWORKS_GCC/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_VXWORKS_GCC
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/tango_VXWORKS_GCC/
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?tango_VXWORKS_GCC
 
 [VxWorks_5.4_GCC]
 TYPE = TIMEONLY
