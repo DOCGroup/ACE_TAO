@@ -1,11 +1,14 @@
-// $Id$
-
 #include "ace/Dynamic_Service_Base.h"
 #include "ace/Service_Config.h"
 #include "ace/Service_Repository.h"
+#include "ace/Service_Types.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(ace, Dynamic_Service_Base, "$Id$")
+
+ACE_RCSID (ace,
+           Dynamic_Service_Base,
+           "$Id$")
+
 
 void
 ACE_Dynamic_Service_Base::dump (void) const

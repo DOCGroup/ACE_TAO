@@ -14,7 +14,7 @@
 #define ACE_HASH_MAP_WITH_ALLOCATOR_T_H
 #include "ace/pre.h"
 
-#include "ace/Hash_Map_Manager.h"
+#include "ace/Hash_Map_Manager_T.h"
 #include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -42,7 +42,7 @@
  */
 template <class EXT_ID, class INT_ID>
 class ACE_Hash_Map_With_Allocator :
-  public ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_Null_Mutex>
+  public ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_Null_Mutex>
 {
 public:
   /// Constructor.

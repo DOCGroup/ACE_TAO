@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Synch.h"
-#include "ace/Hash_Map_Manager.h"
+#include "ace/Hash_Map_Manager_T.h"
 #include "ace/Containers.h"
 #include "ace/SString.h"
 
@@ -33,15 +33,17 @@
  * subclasses.
  *
  * This class is not instantiable and does not provide accessors
- * or methods.  If you want to add a new kind of attribute you
- * subclasses of this class and dynamic cast to proper subclass.
+ * or methods.  If you want to add a new kind of attribute subclass
+ * this class and dynamic_cast to proper subclass.
  */
 class ACE_Export ACE_CapEntry
 {
 public:
+
    virtual ~ACE_CapEntry (void);
 
 protected:
+
   enum
   {
     ACE_INTCAP = 0,
@@ -51,7 +53,10 @@ protected:
 
   ACE_CapEntry (int captype);
 
+protected:
+
   int captype_;
+
 };
 
 /**
@@ -126,6 +131,9 @@ protected:
 class ACE_Export ACE_Capabilities
 {
 public:
+
+  typedef  ACE_Hash_Map_Manager_Ex<ACE_TString, ACE_CapEntry *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex> MAP;
+
   /// The Constructor
   ACE_Capabilities (void);
 
@@ -133,6 +141,7 @@ public:
   ~ACE_Capabilities(void);
 
 public:
+
   /// Get a string entry.
   int getval (const ACE_TCHAR *ent, ACE_TString &val);
 
@@ -144,6 +153,7 @@ public:
   int getent (const ACE_TCHAR *fname, const ACE_TCHAR *name);
 
 protected:
+
   /// Parse an integer property
   const ACE_TCHAR *parse (const ACE_TCHAR *buf, int &cap);
 
@@ -166,10 +176,11 @@ protected:
   /// Reset the set of capabilities
   void resetcaps (void);
 
-  /// Attributes
 private:
+
   /// This is the set of ACE_CapEntry.
-  ACE_Hash_Map_Manager<ACE_TString, ACE_CapEntry *, ACE_Null_Mutex> caps_;
+  MAP caps_;
+
 };
 
 #if defined (ACE_IS_SPLITTING)

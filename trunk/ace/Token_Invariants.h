@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -193,12 +193,18 @@ protected:
     MUTEX_COLLECTION;
 
   /// Allows iterations through collection.
-  typedef ACE_Map_Iterator<TOKEN_NAME, ACE_Mutex_Invariants *, ACE_Null_Mutex>
-    MUTEX_COLLECTION_ITERATOR;
+  /**
+   * @note Deprecated typedef.  Use MUTEX_COLLECTION::ITERATOR trait
+   *       instead.
+   */
+  typedef MUTEX_COLLECTION::ITERATOR MUTEX_COLLECTION_ITERATOR;
 
   /// Allows iterations through collection.
-  typedef ACE_Map_Entry<TOKEN_NAME, ACE_Mutex_Invariants *>
-    MUTEX_COLLECTION_ENTRY;
+  /**
+   * @note Deprecated typedef.  Use MUTEX_COLLECTION::ENTRY trait
+   *       instead.
+   */
+  typedef MUTEX_COLLECTION::ENTRY MUTEX_COLLECTION_ENTRY;
 
   /// MUTEX_COLLECTION maintains a mapping from token names to mutexes.
   MUTEX_COLLECTION mutex_collection_;
@@ -208,12 +214,18 @@ protected:
     RWLOCK_COLLECTION;
 
   /// Allows iterations through collection.
-  typedef ACE_Map_Iterator<TOKEN_NAME, ACE_RWLock_Invariants *, ACE_Null_Mutex>
-    RWLOCK_COLLECTION_ITERATOR;
+  /**
+   * @note Deprecated typedef.  Use RWLOCK_COLLECTION::ITERATOR trait
+   *       instead.
+   */
+  typedef RWLOCK_COLLECTION::ITERATOR RWLOCK_COLLECTION_ITERATOR;
 
   /// Allows iterations through collection.
-  typedef ACE_Map_Entry<TOKEN_NAME, ACE_RWLock_Invariants *>
-    RWLOCK_COLLECTION_ENTRY;
+  /**
+   * @note Deprecated typedef.  Use RWLOCK_COLLECTION::ENTRY trait
+   *       instead.
+   */
+  typedef RWLOCK_COLLECTION::ENTRY RWLOCK_COLLECTION_ENTRY;
 
   /// MUTEX_COLLECTION maintains a mapping from token names to mutexes.
   RWLOCK_COLLECTION rwlock_collection_;

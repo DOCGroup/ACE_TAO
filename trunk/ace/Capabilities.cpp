@@ -1,6 +1,3 @@
-// $Id$
-
-#include "ace/Map_Manager.h"
 #include "ace/Capabilities.h"
 #include "ace/Log_Msg.h"
 
@@ -8,13 +5,21 @@
 #include "ace/Capabilities.i"
 #endif /* !__ACE_INLINE__ */
 
+
+ACE_RCSID (ace,
+           Capabilities,
+           "$Id$")
+
+
 #define ACE_ESC ((ACE_TCHAR)0x1b)
+
 
 ACE_CapEntry::~ACE_CapEntry (void)
 {
 }
 
 ACE_Capabilities::ACE_Capabilities (void)
+  : caps_ ()
 {
 }
 
@@ -94,17 +99,17 @@ ACE_Capabilities::parse (const ACE_TCHAR *buf, int &cap)
 void
 ACE_Capabilities::resetcaps (void)
 {
-  for (ACE_Hash_Map_Iterator<ACE_TString, ACE_CapEntry *, ACE_Null_Mutex> iter (caps_);
+  for (MAP::ITERATOR iter (this->caps_);
        !iter.done ();
        iter.advance ())
     {
-      ACE_Hash_Map_Entry<ACE_TString,ACE_CapEntry*> *entry;
+      MAP::ENTRY *entry;
       iter.next (entry);
       delete entry->int_id_;
     }
 
-  caps_.close ();
-  caps_.open ();
+  this->caps_.close ();
+  this->caps_.open ();
 }
 
 int
@@ -147,7 +152,7 @@ ACE_Capabilities::fillent (const ACE_TCHAR *buf)
           ACE_NEW_RETURN (ce,
                           ACE_StringCapEntry (s),
                           -1);
-          if (caps_.bind (name, ce) == -1)
+          if (this->caps_.bind (name, ce) == -1)
             {
               delete ce;
               return -1;
@@ -159,7 +164,7 @@ ACE_Capabilities::fillent (const ACE_TCHAR *buf)
           ACE_NEW_RETURN (ce,
                           ACE_IntCapEntry (n),
                           -1);
-          if (caps_.bind (name, ce) == -1)
+          if (this->caps_.bind (name, ce) == -1)
             {
               delete ce;
               return -1;
@@ -170,7 +175,7 @@ ACE_Capabilities::fillent (const ACE_TCHAR *buf)
           ACE_NEW_RETURN (ce,
                           ACE_BoolCapEntry (1),
                           -1);
-          if (caps_.bind (name, ce) == -1)
+          if (this->caps_.bind (name, ce) == -1)
             {
               delete ce;
               return -1;
@@ -242,7 +247,7 @@ int
 ACE_Capabilities::getval (const ACE_TCHAR *keyname, ACE_TString &val)
 {
   ACE_CapEntry* cap;
-  if (caps_.find (keyname, cap) == -1)
+  if (this->caps_.find (keyname, cap) == -1)
     return -1;
 
   ACE_StringCapEntry *scap =
@@ -258,7 +263,7 @@ int
 ACE_Capabilities::getval (const ACE_TCHAR *keyname, int &val)
 {
   ACE_CapEntry *cap;
-  if (caps_.find (keyname, cap) == -1)
+  if (this->caps_.find (keyname, cap) == -1)
     return -1;
 
   ACE_IntCapEntry *icap =
@@ -344,9 +349,6 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Manager<ACE_TString,ACE_CapEntry*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<ACE_TString,ACE_CapEntry*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_TString,ACE_CapEntry*,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<ACE_TString,ACE_CapEntry*>;
 template class ACE_Hash_Map_Manager_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>;
@@ -355,9 +357,6 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Ha
 template class ACE_Hash<ACE_TString>;
 template class ACE_Equal_To<ACE_TString>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager<ACE_TString,ACE_CapEntry*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_TString,ACE_CapEntry*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_TString,ACE_CapEntry*,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<ACE_TString,ACE_CapEntry*>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>

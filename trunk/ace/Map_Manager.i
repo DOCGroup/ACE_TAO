@@ -535,7 +535,7 @@ ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)
 {
   ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
-  this->forward_i ();
+  ++*this;
   return retv;
 }
 
@@ -552,7 +552,7 @@ ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)
 {
   ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
-  this->reverse_i ();
+  --*this;
   return retv;
 }
 
@@ -613,7 +613,7 @@ ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)
 {
   ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
-  this->forward_i ();
+  ++*this;
   return retv;
 }
 
@@ -630,7 +630,7 @@ ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)
 {
   ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
-  this->reverse_i ();
+  --*this;
   return retv;
 }
 
@@ -691,7 +691,7 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)
 {
   ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
-  this->reverse_i ();
+  ++*this;
   return retv;
 }
 
@@ -708,6 +708,6 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)
 {
   ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
-  this->forward_i ();
+  --*this;
   return retv;
 }

@@ -17,7 +17,7 @@
 #include "ace/Thread.h"
 #include "ace/Message_Queue.h"
 #include "ace/Future.h"
-#include "ace/Hash_Map_Manager.h"
+#include "ace/Hash_Map_Manager_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

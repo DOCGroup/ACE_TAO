@@ -1,4 +1,4 @@
-/* -*- c++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,6 +13,7 @@
 
 #ifndef ACE_FILECACHE_H
 #define ACE_FILECACHE_H
+
 #include "ace/pre.h"
 
 #include "ace/Mem_Map.h"
@@ -22,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Synch_T.h"
-#include "ace/Hash_Map_Manager.h"
+#include "ace/Hash_Map_Manager_T.h"
 #include "ace/SString.h"
 
 enum ACE_Filecache_Flag
@@ -145,18 +146,21 @@ private:
 };
 
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-typedef ACE_Hash_Map_Entry<const ACE_TCHAR *, ACE_Filecache_Object *>
-        ACE_Filecache_Hash_Entry;
 
-typedef ACE_Hash_Map_Manager<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Null_Mutex>
+typedef ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>
         ACE_Filecache_Hash;
+
+typedef ACE_Hash_Map_Entry<const ACE_TCHAR *, ACE_Filecache_Object *> ACE_Filecache_Hash_Entry;
+
 #else
-typedef ACE_Hash_Map_Entry<ACE_TString, ACE_Filecache_Object *>
-        ACE_Filecache_Hash_Entry;
 
-typedef ACE_Hash_Map_Manager<ACE_TString, ACE_Filecache_Object *, ACE_Null_Mutex>
+typedef ACE_Hash_Map_Manager_Ex<ACE_TString, ACE_Filecache_Object *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>
         ACE_Filecache_Hash;
+
+typedef ACE_Filecache_Hash::ENTRY ACE_Filecache_Hash_Entry;
+
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
+
 
 /**
  * @class ACE_Filecache
@@ -352,4 +356,5 @@ private:
 
 
 #include "ace/post.h"
+
 #endif /* ACE_FILECACHE_H */

@@ -28,10 +28,13 @@
 #include "ace/ARGV.h"
 #include "ace/Module.h"
 #include "ace/Stream.h"
+#include "ace/Service_Types.h"
+
 
 ACE_RCSID (ace,
            Svc_Conf_y,
            "$Id$")
+
 
 // Prototypes.
 static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,

@@ -37,9 +37,6 @@ template class ACE_Hash<ACE_Configuration_ExtId>;
 template class ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager<ACE_Configuration_ExtId, int, ACE_Null_Mutex>;
 template class ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId>;
 template class ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId>;
 template class ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, int>;
@@ -73,9 +70,6 @@ template class ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, int>;
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_Configuration_ExtId, int, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId>
 #pragma instantiate ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId>
 #pragma instantiate ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, int>
@@ -1621,7 +1615,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
 
   section += sub_section;
   ACE_Configuration_ExtId SectionExtId (section.fast_rep ());
-  SECTION_ENTRY* section_entry;
+  SECTION_HASH::ENTRY* section_entry;
   SECTION_HASH* hashmap = index_;
   if (hashmap->find (SectionExtId, section_entry))
     return -1;
@@ -1652,7 +1646,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
 
   // Now remove subkey from parent key
   ACE_Configuration_ExtId SubSExtId (sub_section);
-  SUBSECTION_ENTRY* subsection_entry;
+  SUBSECTION_HASH::ENTRY* subsection_entry;
   if (((SUBSECTION_HASH*)ParentIntId.section_hash_map_)->
       find (SubSExtId, subsection_entry))
     return -1;
@@ -1671,7 +1665,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
   VALUE_HASH::ITERATOR value_iter = value_hash_map->begin ();
   while (!value_iter.done ())
     {
-      VALUE_ENTRY* value_entry;
+      VALUE_HASH::ENTRY* value_entry;
       if (!value_iter.next (value_entry))
         return 1;
 
@@ -1803,7 +1797,7 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
     return -1;
 
   // Get the entry for this item (if it exists)
-  VALUE_ENTRY* entry;
+  VALUE_HASH::ENTRY* entry;
   ACE_Configuration_ExtId item_name (name);
   if (section_int.value_hash_map_->VALUE_HASH::find (item_name, entry) == 0)
     {
@@ -1861,7 +1855,7 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
     return -1;  // section does not exist
 
   // Get the entry for this item (if it exists)
-  VALUE_ENTRY* entry;
+  VALUE_HASH::ENTRY* entry;
   ACE_Configuration_ExtId item_name (name);
   if (section_int.value_hash_map_->VALUE_HASH::find (item_name, entry) == 0)
     {
@@ -1910,7 +1904,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
     return -1;    // section does not exist
 
   // Get the entry for this item (if it exists)
-  VALUE_ENTRY* entry;
+  VALUE_HASH::ENTRY* entry;
   ACE_Configuration_ExtId item_name (name);
   if (section_int.value_hash_map_->VALUE_HASH::find (item_name, entry) == 0)
     {
@@ -2124,7 +2118,7 @@ ACE_Configuration_Heap::find_value (const ACE_Configuration_Section_Key& key,
 
   // Find it
   ACE_Configuration_ExtId ValueExtId (name);
-  VALUE_ENTRY* value_entry;
+  VALUE_HASH::ENTRY* value_entry;
   if (((VALUE_HASH *) IntId.value_hash_map_)->find (ValueExtId, value_entry))
     return -1;  // value does not exist
 
@@ -2153,7 +2147,7 @@ ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,
 
   // Find it
   ACE_Configuration_ExtId ValueExtId (name);
-  VALUE_ENTRY* value_entry;
+  VALUE_HASH::ENTRY* value_entry;
   if (((VALUE_HASH *) IntId.value_hash_map_)->find (ValueExtId, value_entry))
     return -1;
 

@@ -1,10 +1,9 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/Service_Repository.h"
 #include "ace/Service_Config.h"
 #include "ace/Service_Manager.h"
+#include "ace/Service_Types.h"
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 
@@ -12,9 +11,13 @@
 #include "ace/Service_Manager.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Service_Manager, "$Id$")
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Service_Manager)
+ACE_RCSID (ace,
+           Service_Manager,
+           "$Id$")
+
+
+ACE_ALLOC_HOOK_DEFINE (ACE_Service_Manager)
 
 void
 ACE_Service_Manager::dump (void) const

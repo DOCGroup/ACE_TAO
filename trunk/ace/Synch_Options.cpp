@@ -1,14 +1,17 @@
-// $Id$
-
 #include "ace/Synch_Options.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Synch_Options.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Synch_Options, "$Id$")
+#include "ace/Trace.h"
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Synch_Options)
+ACE_RCSID (ace,
+           Synch_Options,
+           "$Id$")
+
+
+ACE_ALLOC_HOOK_DEFINE (ACE_Synch_Options)
 
 void
 ACE_Synch_Options::dump (void) const
@@ -28,7 +31,7 @@ ACE_Synch_Options ACE_Synch_Options::synch;
 /* static */
 ACE_Synch_Options ACE_Synch_Options::asynch (ACE_Synch_Options::USE_REACTOR);
 
-ACE_Synch_Options::ACE_Synch_Options (u_long options,
+ACE_Synch_Options::ACE_Synch_Options (unsigned long options,
                                       const ACE_Time_Value &timeout,
                                       const void *arg)
 {
@@ -37,7 +40,7 @@ ACE_Synch_Options::ACE_Synch_Options (u_long options,
 }
 
 void
-ACE_Synch_Options::set (u_long options,
+ACE_Synch_Options::set (unsigned long options,
                         const ACE_Time_Value &timeout,
                         const void *arg)
 {
@@ -56,14 +59,14 @@ ACE_Synch_Options::set (u_long options,
 }
 
 int
-ACE_Synch_Options::operator[] (u_long option) const
+ACE_Synch_Options::operator[] (unsigned long option) const
 {
   ACE_TRACE ("ACE_Synch_Options::operator[]");
   return (this->options_ & option) != 0;
 }
 
 void
-ACE_Synch_Options::operator= (u_long option)
+ACE_Synch_Options::operator= (unsigned long option)
 {
   ACE_TRACE ("ACE_Synch_Options::operator=");
   this->options_ |= option;

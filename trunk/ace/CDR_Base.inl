@@ -149,15 +149,6 @@ ACE_CDR::swap_16 (const char* orig, char* target)
   swap_8 (orig, target + 8);
 }
 
-ACE_INLINE void
-ACE_CDR::mb_align (ACE_Message_Block *mb)
-{
-  char *start = ACE_ptr_align_binary (mb->base (),
-                                      ACE_CDR::MAX_ALIGNMENT);
-  mb->rd_ptr (start);
-  mb->wr_ptr (start);
-}
-
 ACE_INLINE size_t
 ACE_CDR::first_size (size_t minsize)
 {
@@ -201,5 +192,57 @@ ACE_CDR::next_size (size_t minsize)
 
   return newsize;
 }
+
+// ****************************************************************
+
+#if defined (NONNATIVE_LONGLONG)
+ACE_INLINE
+ACE_CDR::LongLong::LongLong (ACE_INT32 l)
+{
+  *this = l;
+}
+
+ACE_INLINE
+ACE_CDR::LongLong::LongLong (ACE_UINT32 l)
+{
+  *this = l;
+}
+
+ACE_INLINE void
+ACE_CDR::LongLong::operator= (ACE_CDR::Long rhs)
+{
+  // Take into account the 2's complement when storing the signed 32
+  // bit integer.
+  if (rhs >= 0)
+    {
+      this->l = rhs;
+      this->h = 0;
+    }
+  else
+    {
+      this->l = rhs;
+      this->h = 0xFFFFFFFF;
+    }
+}
+
+ACE_INLINE void
+ACE_CDR::LongLong::operator= (ACE_CDR::ULong rhs)
+{
+  // When storing the unsigned long value be careful to prevent
+  // overflow.
+  if (rhs <= ACE_static_cast (ACE_CDR::ULong, ACE_INT32_MAX))
+    {
+      this->l = ACE_static_cast (ACE_CDR::Long, rhs);
+      this->h = 0;
+    }
+  else
+    {
+      // 2's complement since this structure represents a signed
+      // "long long" value.
+      this->l = 0;
+      this->h = rhs - ACE_INT32_MAX;
+    }
+}
+#endif  /* NONNATIVE_LONGLONG */
 
 // ****************************************************************

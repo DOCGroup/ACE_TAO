@@ -50,7 +50,10 @@ ACE_TEMPLATE_SPECIALIZATION
  * @class ACE_Atomic_Op<ACE_Thread_Mutex, long>
  *
  * @brief Specialization of ACE_Atomic_Op for platforms that
- * support atomic integer operations.
+ *        support atomic integer operations.
+ *
+ * Specialization of ACE_Atomic_Op for platforms that support atomic
+ * integer operations.
  */
 class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, long>
 {

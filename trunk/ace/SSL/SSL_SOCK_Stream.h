@@ -57,9 +57,6 @@
  */
 class ACE_SSL_Export ACE_SSL_SOCK_Stream : public ACE_SSL_SOCK
 {
-  friend class ACE_SSL_SOCK_Connector;
-  friend class ACE_SSL_SOCK_Acceptor;
-
 public:
 
   /// Constructor

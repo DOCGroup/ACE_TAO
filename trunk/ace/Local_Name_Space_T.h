@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -32,16 +32,17 @@ typedef ACE_Unbounded_Set<ACE_NS_WString> ACE_WSTRING_SET;
 
 // Simplify later usage by defining typedefs.
 #if (1)
-#include "ace/Hash_Map_Manager.h"
-typedef ACE_Hash_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex> MAP_MANAGER;
-typedef ACE_Hash_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex> MAP_ITERATOR;
-typedef ACE_Hash_Map_Entry <ACE_NS_String, ACE_NS_Internal> MAP_ENTRY;
+# include "ace/Hash_Map_Manager_T.h"
+typedef ACE_Hash_Map_Manager_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_String>, ACE_Equal_To<ACE_NS_String>, ACE_Null_Mutex> MAP_MANAGER;
 #else
-#include "ace/Map_Manager.h"
+# include "ace/Map_Manager.h"
 typedef ACE_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex> MAP_MANAGER;
-typedef ACE_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex> MAP_ITERATOR;
-typedef ACE_Map_Entry <ACE_NS_String, ACE_NS_Internal> MAP_ENTRY;
 #endif /* 0 */
+
+// Deprecated typedefs.  Use the map's traits instead.
+typedef MAP_MANAGER::ITERATOR MAP_ITERATOR;
+typedef MAP_MANAGER::ENTRY MAP_ENTRY;
+
 
 /**
  * @class ACE_Name_Space_Map

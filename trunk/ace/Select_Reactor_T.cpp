@@ -1019,6 +1019,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending
   ACE_Time_Value *this_timeout =
     this->timer_queue_->calculate_timeout (&mwt, &timer_buf);
 
+  // Check if we have timers to fire.
+  int timers_pending =
+    (this_timeout != 0 && *this_timeout != max_wait_time ? 1 : 0);
+
   u_long width = (u_long) this->handler_rep_.max_handlep1 ();
 
   ACE_Select_Reactor_Handle_Set fd_set;
@@ -1026,11 +1030,15 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending
   fd_set.wr_mask_ = this->wait_set_.wr_mask_;
   fd_set.ex_mask_ = this->wait_set_.ex_mask_;
 
-  return ACE_OS::select (int (width),
-                         fd_set.rd_mask_,
-                         fd_set.wr_mask_,
-                         fd_set.ex_mask_,
-                         this_timeout);
+  int nfds = ACE_OS::select (int (width),
+                             fd_set.rd_mask_,
+                             fd_set.wr_mask_,
+                             fd_set.ex_mask_,
+                             this_timeout);
+
+  // If timers are pending, override any timeout from the select()
+  // call.
+  return (nfds == 0 && timers_pending != 0 ? 1 : nfds);
 }
 
 // Must be called with lock held.

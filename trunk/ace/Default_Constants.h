@@ -345,8 +345,41 @@
 // Max size of an ACE Token client ID.
 # define ACE_MAXCLIENTIDLEN MAXHOSTNAMELEN + 20
 
+/**
+ * @name Default values to control CDR classes memory allocation strategies
+ */
+//@{
 
+/// Control the initial size of all CDR buffers, application
+/// developers may want to optimize this value to fit their request
+/// size
+#if !defined (ACE_DEFAULT_CDR_BUFSIZE)
+#  define ACE_DEFAULT_CDR_BUFSIZE 512
+#endif /* ACE_DEFAULT_CDR_BUFSIZE */
 
+/// Stop exponential growth of CDR buffers to avoid overallocation
+#if !defined (ACE_DEFAULT_CDR_EXP_GROWTH_MAX)
+#  define ACE_DEFAULT_CDR_EXP_GROWTH_MAX 65536
+#endif /* ACE_DEFAULT_CDR_EXP_GROWTH_MAX */
+
+/// Control CDR buffer growth after maximum exponential growth is
+/// reached
+#if !defined (ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK)
+#  define ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK 65536
+#endif /* ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK */
+//@}
+
+/// Control the zero-copy optimizations for octet sequences
+/**
+ * Large octet sequences can be sent without any copies by chaining
+ * them in the list of message blocks that represent a single CDR
+ * stream.  However, if the octet sequence is too small the zero copy
+ * optimizations actually hurt performance.  Octet sequences smaller
+ * than this value will be copied.
+ */
+#if !defined (ACE_DEFAULT_CDR_MEMCPY_TRADEOFF)
+#define ACE_DEFAULT_CDR_MEMCPY_TRADEOFF 256
+#endif /* ACE_DEFAULT_CDR_MEMCPY_TRADEOFF */
 
 
 #include "ace/post.h"

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 ACE_INLINE
@@ -23,7 +24,7 @@ ACE_IntCapEntry::getval (void) const
 ACE_INLINE
 ACE_StringCapEntry::ACE_StringCapEntry (const ACE_TString &val)
   : ACE_CapEntry (ACE_STRINGCAP),
-    val_(val)
+    val_ (val)
 {
 }
 

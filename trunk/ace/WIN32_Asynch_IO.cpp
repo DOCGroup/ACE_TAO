@@ -1,8 +1,8 @@
-// $Id$
-
 #include "ace/WIN32_Asynch_IO.h"
 
-// ACE_RCSID(ace, Asynch_IO, "$Id$")
+ACE_RCSID (ace,
+           Win32_Asynch_IO,
+           "$Id$")
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
 
@@ -218,18 +218,25 @@ ACE_WIN32_Asynch_Read_Stream_Result::handle (void) const
   return this->handle_;
 }
 
-ACE_WIN32_Asynch_Read_Stream_Result::ACE_WIN32_Asynch_Read_Stream_Result (ACE_Handler &handler,
-                                                                          ACE_HANDLE handle,
-                                                                          ACE_Message_Block &message_block,
-                                                                          size_t bytes_to_read,
-                                                                          const void* act,
-                                                                          ACE_HANDLE event,
-                                                                          int priority,
-                                                                          int signal_number,
-                                                                          int scatter_enabled)
+ACE_WIN32_Asynch_Read_Stream_Result::ACE_WIN32_Asynch_Read_Stream_Result (
+  ACE_Handler &handler,
+  ACE_HANDLE handle,
+  ACE_Message_Block &message_block,
+  size_t bytes_to_read,
+  const void* act,
+  ACE_HANDLE event,
+  int priority,
+  int signal_number,
+  int scatter_enabled)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Read_Stream_Result_Impl (),
-    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
+    ACE_WIN32_Asynch_Result (handler,
+                             act,
+                             event,
+                             0,
+                             0,
+                             priority,
+                             signal_number),
     bytes_to_read_ (bytes_to_read),
     message_block_ (message_block),
     handle_ (handle),
@@ -633,15 +640,16 @@ ACE_WIN32_Asynch_Write_Stream_Result::handle (void) const
   return this->handle_;
 }
 
-ACE_WIN32_Asynch_Write_Stream_Result::ACE_WIN32_Asynch_Write_Stream_Result (ACE_Handler &handler,
-                                                                            ACE_HANDLE handle,
-                                                                            ACE_Message_Block &message_block,
-                                                                            size_t bytes_to_write,
-                                                                            const void* act,
-                                                                            ACE_HANDLE event,
-                                                                            int priority,
-                                                                            int signal_number,
-                                                                            int gather_enabled)
+ACE_WIN32_Asynch_Write_Stream_Result::ACE_WIN32_Asynch_Write_Stream_Result (
+  ACE_Handler &handler,
+  ACE_HANDLE handle,
+  ACE_Message_Block &message_block,
+  size_t bytes_to_write,
+  const void* act,
+  ACE_HANDLE event,
+  int priority,
+  int signal_number,
+  int gather_enabled)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Write_Stream_Result_Impl (),
     ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
@@ -1025,17 +1033,18 @@ ACE_WIN32_Asynch_Write_Stream::proactor (void) const
   return ACE_WIN32_Asynch_Operation::proactor ();
 }
 
-ACE_WIN32_Asynch_Read_File_Result::ACE_WIN32_Asynch_Read_File_Result (ACE_Handler &handler,
-                                                                      ACE_HANDLE handle,
-                                                                      ACE_Message_Block &message_block,
-                                                                      size_t bytes_to_read,
-                                                                      const void* act,
-                                                                      u_long offset,
-                                                                      u_long offset_high,
-                                                                      ACE_HANDLE event,
-                                                                      int priority,
-                                                                      int signal_number,
-                                                                      int scatter_enabled)
+ACE_WIN32_Asynch_Read_File_Result::ACE_WIN32_Asynch_Read_File_Result (
+  ACE_Handler &handler,
+  ACE_HANDLE handle,
+  ACE_Message_Block &message_block,
+  size_t bytes_to_read,
+  const void* act,
+  u_long offset,
+  u_long offset_high,
+  ACE_HANDLE event,
+  int priority,
+  int signal_number,
+  int scatter_enabled)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Read_Stream_Result_Impl (),
     ACE_Asynch_Read_File_Result_Impl (),
@@ -1424,17 +1433,18 @@ ACE_WIN32_Asynch_Read_File::proactor (void) const
   return ACE_WIN32_Asynch_Operation::proactor ();
 }
 
-ACE_WIN32_Asynch_Write_File_Result::ACE_WIN32_Asynch_Write_File_Result (ACE_Handler &handler,
-                                                                        ACE_HANDLE handle,
-                                                                        ACE_Message_Block &message_block,
-                                                                        size_t bytes_to_write,
-                                                                        const void* act,
-                                                                        u_long offset,
-                                                                        u_long offset_high,
-                                                                        ACE_HANDLE event,
-                                                                        int priority,
-                                                                        int signal_number,
-                                                                        int gather_enabled)
+ACE_WIN32_Asynch_Write_File_Result::ACE_WIN32_Asynch_Write_File_Result (
+  ACE_Handler &handler,
+  ACE_HANDLE handle,
+  ACE_Message_Block &message_block,
+  size_t bytes_to_write,
+  const void* act,
+  u_long offset,
+  u_long offset_high,
+  ACE_HANDLE event,
+  int priority,
+  int signal_number,
+  int gather_enabled)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Write_Stream_Result_Impl (),
     ACE_Asynch_Write_File_Result_Impl (),
@@ -1852,18 +1862,25 @@ ACE_WIN32_Asynch_Accept_Result::accept_handle (void) const
   return this->accept_handle_;
 }
 
-ACE_WIN32_Asynch_Accept_Result::ACE_WIN32_Asynch_Accept_Result (ACE_Handler &handler,
-                                                                ACE_HANDLE listen_handle,
-                                                                ACE_HANDLE accept_handle,
-                                                                ACE_Message_Block &message_block,
-                                                                size_t bytes_to_read,
-                                                                const void* act,
-                                                                ACE_HANDLE event,
-                                                                int priority,
-                                                                int signal_number)
+ACE_WIN32_Asynch_Accept_Result::ACE_WIN32_Asynch_Accept_Result (
+  ACE_Handler &handler,
+  ACE_HANDLE listen_handle,
+  ACE_HANDLE accept_handle,
+  ACE_Message_Block &message_block,
+  size_t bytes_to_read,
+  const void* act,
+  ACE_HANDLE event,
+  int priority,
+  int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Accept_Result_Impl (),
-    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
+    ACE_WIN32_Asynch_Result (handler,
+                             act,
+                             event,
+                             0,
+                             0,
+                             priority,
+                             signal_number),
     bytes_to_read_ (bytes_to_read),
     message_block_ (message_block),
     listen_handle_ (listen_handle),
@@ -2563,9 +2580,9 @@ ACE_WIN32_Asynch_Connect::cancel_uncompleted (int flg_notify, ACE_Handle_Set & s
 
   int retval = 0;
 
-  MAP_ITERATOR iter (result_map_);
+  MAP_MANAGER::ITERATOR iter (result_map_);
 
-  MAP_ENTRY *   me = 0;
+  MAP_MANAGER::ENTRY *   me = 0;
 
   set.reset ();
 
@@ -2805,22 +2822,29 @@ ACE_WIN32_Asynch_Transmit_File_Result::flags (void) const
   return this->flags_;
 }
 
-ACE_WIN32_Asynch_Transmit_File_Result::ACE_WIN32_Asynch_Transmit_File_Result (ACE_Handler &handler,
-                                                                              ACE_HANDLE socket,
-                                                                              ACE_HANDLE file,
-                                                                              ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
-                                                                              size_t bytes_to_write,
-                                                                              u_long offset,
-                                                                              u_long offset_high,
-                                                                              size_t bytes_per_send,
-                                                                              u_long flags,
-                                                                              const void *act,
-                                                                              ACE_HANDLE event,
-                                                                              int priority,
-                                                                              int signal_number)
+ACE_WIN32_Asynch_Transmit_File_Result::ACE_WIN32_Asynch_Transmit_File_Result (
+  ACE_Handler &handler,
+  ACE_HANDLE socket,
+  ACE_HANDLE file,
+  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
+  size_t bytes_to_write,
+  u_long offset,
+  u_long offset_high,
+  size_t bytes_per_send,
+  u_long flags,
+  const void *act,
+  ACE_HANDLE event,
+  int priority,
+  int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Transmit_File_Result_Impl (),
-    ACE_WIN32_Asynch_Result (handler, act, event, offset, offset_high, priority, signal_number),
+    ACE_WIN32_Asynch_Result (handler,
+                             act,
+                             event,
+                             offset,
+                             offset_high,
+                             priority,
+                             signal_number),
     socket_ (socket),
     file_ (file),
     header_and_trailer_ (header_and_trailer),
@@ -3186,16 +3210,17 @@ ACE_WIN32_Asynch_Read_Dgram_Result::post_completion (ACE_Proactor_Impl *proactor
   return ACE_WIN32_Asynch_Result::post_completion (proactor);
 }
 
-ACE_WIN32_Asynch_Read_Dgram_Result::ACE_WIN32_Asynch_Read_Dgram_Result (ACE_Handler &handler,
-                                                                        ACE_HANDLE handle,
-                                                                        ACE_Message_Block *message_block,
-                                                                        size_t bytes_to_read,
-                                                                        int flags,
-                                                                        int protocol_family,
-                                                                        const void* act,
-                                                                        ACE_HANDLE event,
-                                                                        int priority,
-                                                                        int signal_number)
+ACE_WIN32_Asynch_Read_Dgram_Result::ACE_WIN32_Asynch_Read_Dgram_Result (
+  ACE_Handler &handler,
+  ACE_HANDLE handle,
+  ACE_Message_Block *message_block,
+  size_t bytes_to_read,
+  int flags,
+  int protocol_family,
+  const void* act,
+  ACE_HANDLE event,
+  int priority,
+  int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Read_Dgram_Result_Impl(),
     ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
@@ -3516,18 +3541,25 @@ ACE_WIN32_Asynch_Write_Dgram_Result::post_completion (ACE_Proactor_Impl *proacto
   return ACE_WIN32_Asynch_Result::post_completion (proactor);
 }
 
-ACE_WIN32_Asynch_Write_Dgram_Result::ACE_WIN32_Asynch_Write_Dgram_Result (ACE_Handler &handler,
-                                                                          ACE_HANDLE handle,
-                                                                          ACE_Message_Block *message_block,
-                                                                          size_t bytes_to_write,
-                                                                          int flags,
-                                                                          const void* act,
-                                                                          ACE_HANDLE event,
-                                                                          int priority,
-                                                                          int signal_number)
+ACE_WIN32_Asynch_Write_Dgram_Result::ACE_WIN32_Asynch_Write_Dgram_Result (
+  ACE_Handler &handler,
+  ACE_HANDLE handle,
+  ACE_Message_Block *message_block,
+  size_t bytes_to_write,
+  int flags,
+  const void* act,
+  ACE_HANDLE event,
+  int priority,
+  int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Write_Dgram_Result_Impl(),
-    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
+    ACE_WIN32_Asynch_Result (handler,
+                             act,
+                             event,
+                             0,
+                             0,
+                             priority,
+                             signal_number),
     bytes_to_write_ (bytes_to_write),
     message_block_ (message_block),
     flags_ (flags),
