@@ -15,10 +15,6 @@
 #### Similarly, the default VERSION and HOST_OS settings (see below)
 #### can be overridden for your particular platform.
 
-
-ifeq ($(debug),)
-  debug = 1
-endif
 ifeq ($(shared_libs_only),1)
   shared_libs = 1
   static_libs =
@@ -29,14 +25,13 @@ ifeq ($(static_libs_only),1)
 endif
 
 optimize ?= 1
+debug ?= 1
 pipes ?= 1
 
 ifeq ($(shell uname -s),LynxOS)
   export VERSION=$(shell uname -r)
 else
   CROSS-COMPILE = 1
-
-  PACE_SYSNAME = LynxOS
 
   #### The following may need to be customized for your host or target type.
   #### Or, you can source the appropriate (for your shell) Lynx SETUP file
@@ -45,8 +40,6 @@ else
   ifeq (,$(VERSION))
     export VERSION=3.0.0
   endif # VERSION
-
-  PACE_SYSVER = 0x$(VERSION)
 
   ifeq (,$(LYNXTARGET))
     export LYNXTARGET = x86
@@ -96,13 +89,15 @@ PLATFORM_X11_CPPFLAGS=
 PLATFORM_X11_LIBS=-lXpm -lXext -lX11 -lSM -lICE
 PLATFORM_X11_LDFLAGS=
 
-PLATFORM_TCL_CPPFLAGS=-I/usr/include/tcl8.4
-PLATFORM_TCL_LIBS=-ltcl8.4
-PLATFORM_TCL_LDFLAGS=
+ifeq ($(LYNXOS_MAJOR),4)
+  PLATFORM_TCL_CPPFLAGS=-I/usr/include/tcl8.4
+  PLATFORM_TCL_LIBS=-ltcl8.4
+  PLATFORM_TCL_LDFLAGS=
 
-PLATFORM_TK_CPPFLAGS=-I$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS)
-PLATFORM_TK_LIBS=$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_LIB_FLAG)
-PLATFORM_TK_LDFLAGS=
+  PLATFORM_TK_CPPFLAGS=-I$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS)
+  PLATFORM_TK_LIBS=$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_LIB_FLAG)
+  PLATFORM_TK_LDFLAGS=
+endif
 
 CC              = gcc
 CXX             = g++
