@@ -33,6 +33,7 @@
 #include "tao/Any.h"
 #include "tao/Typecode.h"
 #include "tao/Marshal.h"
+#include "tao/ORB_Core.h"
 #include "tao/Object.h"
 
 #if !defined (__ACE_INLINE__)
@@ -794,7 +795,13 @@ CORBA_Any::operator>>= (to_object obj) const
     }
     else
     {
-      TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
+      // @@ This uses ORB_Core instance because we need one to
+      //    demarshal objects (to create the right profiles for that
+      //    object), but the Any does not belong to any ORB.
+      TAO_InputCDR stream (this->cdr_,
+                           ACE_CDR_BYTE_ORDER,
+                           TAO_ORB_Core_instance ());
+      
       CORBA::Boolean flag = (stream.decode (CORBA::_tc_Object,
                                             &obj.ref_, 0, env)
                              == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1:0;

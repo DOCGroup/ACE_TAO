@@ -1,3 +1,15 @@
+Thu May 27 22:00:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Any.cpp:
+	* tao/Object.cpp:
+	  If an object is extracted from an InputCDR stream that doesn't
+	  have an ORB Core configured then the default ORB core is
+	  used. This is common in extraction from Anys.
+
+	* TAO_IDL/driver/drv_preproc.cpp:
+	  Added missing '/' between ACE_ROOT and TAO/tao to find the
+	  orb.idl file
+
 Thu May 27 21:42:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_array.cpp:
