@@ -2,7 +2,7 @@
 
 #include "server_impl.h"
 
-ACE_RCSID(Simple, server, "$Id$")
+ACE_RCSID(Time, server, "$Id$")
 
 int
 main (int argc, char *argv[])

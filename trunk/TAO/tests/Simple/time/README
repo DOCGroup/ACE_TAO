@@ -1,6 +1,6 @@
 $Id$
 
-This is a simple CORBA example that has an object (simple_object) with
+This is a simple CORBA example that has an object (Time) with
 only two methods, one that returns the current time of day on a
 server and another that shuts down the server.
 
@@ -12,14 +12,12 @@ server [-d] [-o <ior_output_file>]
 Options:
 -------
 -d    Debug flag (It is additive more -d flags will give debugging).
--o    Outputs the cubit_factory ior file to the file
+-o    Outputs the server ior to the file
 
-The server cubit factory maintains num_of_cubit objects (default =
-1). They are assigned keys that look like "key0", "key1", ...
 
 When the server is started, you should see as the first line of output 
 something that looks like
-      iiop:1.0//danzon.cs.wustl.edu:10015/P35ad159600081a38/child_poa/server
+	iiop:1.0//danzon.cs.wustl.edu:10015/P35ad159600081a38/child_poa/server
 	(-ORBobjrefstyle url)
 or
 	IOR:000000000000001649444c3a43756269745...
@@ -34,16 +32,16 @@ are ignored.
 client:
 -------
 
-client [-d] [-x] [-f cubit_factory_ior_file] [-n iterations]
+client [-d] [-x] [-f <server_ior_file>] [-n iterations]
 
 Options:
 -------
 -d    Debug flag
 -x    Tells the server to shutdown.
--f    Reads the cubit factory ior from the file
+-f    Reads the server ior from the file
 -n    no. of iterations
 	
-There is only one way of giving the CubitFactory IOR to the client, and
+There is only one way of giving the server IOR to the client, and
 that is from a file using the -f option. (This file is produced using 
 the -o option of the server.)
 	

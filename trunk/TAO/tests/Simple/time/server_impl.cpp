@@ -3,7 +3,7 @@
 #include "server_impl.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Simple, server_impl, "$Id$")
+ACE_RCSID(Time, server_impl, "$Id$")
 
 Server_Impl::Server_Impl (void)
   : ior_output_file_ (0)

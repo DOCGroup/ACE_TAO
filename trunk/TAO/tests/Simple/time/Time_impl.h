@@ -17,32 +17,32 @@
 // 
 // ============================================================================
 
-#if !defined (SIMPLE_OBJECT_IMPL_H)
-#define	SIMPLE_OBJECT_IMPL_H
+#if !defined (TIME_IMPL_H)
+#define	TIME_IMPL_H
 
-#include "Simple_ObjectS.h"
+#include "TimeS.h"
 
 // Forward declarations.
-class Simple_Impl;
+class Time_Impl;
 
 // Typedefs.
-typedef Simple_Impl *Simple_Impl_ptr;
-typedef Simple_Impl_ptr Simple_Impl_ref;
+typedef Time_Impl *Time_Impl_ptr;
+typedef Time_Impl_ptr Time_Impl_ref;
 
-class Simple_Impl: public POA_simple_object
+class Time_Impl: public POA_Time
 {
   // = TITLE
-  //    Simple Object Implementation
+  //    Simple Time Object Implementation
   //
   // = DESCRIPTION
   //    Implementation of a simple object that has two methods, one that 
   //    return the current time/date on the server and the other that
   //    shuts down the server.  
 public:
-  Simple_Impl (const char *obj_name = 0);
+  Time_Impl (const char *obj_name = 0);
   // Constructor
 
-  ~Simple_Impl (void);
+  ~Time_Impl (void);
   // Destructor
 
   virtual CORBA::Long time (CORBA::Environment &env);
@@ -52,4 +52,4 @@ public:
   // Shutdown routine.
 };
 
-#endif /* SIMPLE_OBJECT_IMPL_H */
+#endif /* TIME_IMPL_H */

@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="Simple Client Static" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Simple Time Client Static" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Simple Client Static - Win32 Debug
+CFG=Simple Time Client Static - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,13 +13,14 @@ CFG=Simple Client Static - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "client_static.mak" CFG="Simple Client Static - Win32 Debug"
+!MESSAGE NMAKE /f "client_static.mak"\
+ CFG="Simple Time Client Static - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Simple Client Static - Win32 Debug" (based on\
+!MESSAGE "Simple Time Client Static - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
-!MESSAGE "Simple Client Static - Win32 Release" (based on\
+!MESSAGE "Simple Time Client Static - Win32 Release" (based on\
  "Win32 (x86) Console Application")
 !MESSAGE 
 
@@ -29,7 +30,7 @@ CFG=Simple Client Static - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Simple Client Static - Win32 Debug"
+!IF  "$(CFG)" == "Simple Time Client Static - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -45,7 +46,7 @@ RSC=rc.exe
 # PROP Target_Dir "client"
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /I "..\..\..\\" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I "..\..\\" /I "..\..\..\\" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D TAO_HAS_DLL=0 /D __ACE_INLINE__=0 /D ACE_HAS_DLL=0 /FD /c
+# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /I "..\..\..\..\\" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D TAO_HAS_DLL=0 /D __ACE_INLINE__=0 /D ACE_HAS_DLL=0 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -54,9 +55,9 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 acesd.lib TAOsd.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 acesd.lib TAOsd.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "Simple Client Static - Win32 Release"
+!ELSEIF  "$(CFG)" == "Simple Time Client Static - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -72,7 +73,7 @@ LINK32=link.exe
 # PROP Target_Dir "client"
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MT /W3 /GX /O2 /I "..\..\\" /I "..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D __ACE_INLINE__=0 /FD /c
+# ADD CPP /nologo /MT /W3 /GX /O2 /I "..\..\..\\" /I "..\..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D __ACE_INLINE__=0 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -81,14 +82,14 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 aces.lib TAOs.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 aces.lib TAOs.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
 !ENDIF 
 
 # Begin Target
 
-# Name "Simple Client Static - Win32 Debug"
-# Name "Simple Client Static - Win32 Release"
+# Name "Simple Time Client Static - Win32 Debug"
+# Name "Simple Time Client Static - Win32 Release"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
@@ -136,16 +137,16 @@ SOURCE=.\Simple_ObjectS_T.h
 
 SOURCE=.\Simple_Object.idl
 
-!IF  "$(CFG)" == "Simple Client Static - Win32 Debug"
+!IF  "$(CFG)" == "Simple Time Client Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__SIMPL="..\..\tao_idl\tao_idl_static.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
+USERDEP__SIMPL="..\..\..\tao_idl\tao_idl_static.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Simple_Object.idl
 InputName=Simple_Object
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl_static $(InputName).idl
+	..\..\..\tao_idl\tao_idl_static $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -175,16 +176,16 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "Simple Client Static - Win32 Release"
+!ELSEIF  "$(CFG)" == "Simple Time Client Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__SIMPL="..\..\tao_idl\Release\tao_idl_static.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
+USERDEP__SIMPL="..\..\..\tao_idl\Release\tao_idl_static.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Simple_Object.idl
 InputName=Simple_Object
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl_static $(InputName).idl
+	..\..\..\tao_idl\Release\tao_idl_static $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

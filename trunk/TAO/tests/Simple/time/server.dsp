@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="Simple Server" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Simple Time Server" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Simple Server - Win32 Release
+CFG=Simple Time Server - Win32 Release
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,13 +13,13 @@ CFG=Simple Server - Win32 Release
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "server.mak" CFG="Simple Server - Win32 Release"
+!MESSAGE NMAKE /f "server.mak" CFG="Simple Time Server - Win32 Release"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Simple Server - Win32 Release" (based on\
+!MESSAGE "Simple Time Server - Win32 Release" (based on\
  "Win32 (x86) Console Application")
-!MESSAGE "Simple Server - Win32 Debug" (based on\
+!MESSAGE "Simple Time Server - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
 !MESSAGE 
 
@@ -29,7 +29,7 @@ CFG=Simple Server - Win32 Release
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Simple Server - Win32 Release"
+!IF  "$(CFG)" == "Simple Time Server - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ".\server"
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\\" /I "..\..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -52,9 +52,9 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "Simple Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -68,7 +68,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ".\server"
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /I "..\..\..\\" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /I "..\..\..\..\\" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -77,14 +77,14 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
 !ENDIF 
 
 # Begin Target
 
-# Name "Simple Server - Win32 Release"
-# Name "Simple Server - Win32 Debug"
+# Name "Simple Time Server - Win32 Release"
+# Name "Simple Time Server - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
@@ -98,15 +98,15 @@ SOURCE=.\server_impl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\simple_object_impl.cpp
+SOURCE=.\Time_impl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Simple_ObjectC.cpp
+SOURCE=.\TimeC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Simple_ObjectS.cpp
+SOURCE=.\TimeS.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -114,15 +114,11 @@ SOURCE=.\Simple_ObjectS.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
-SOURCE=.\server.h
+SOURCE=.\server_impl.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\simple_object_impl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Simple_ObjectS.h
+SOURCE=.\Time_impl.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -130,17 +126,17 @@ SOURCE=.\Simple_ObjectS.h
 # PROP Default_Filter ".idl"
 # Begin Source File
 
-SOURCE=.\Simple_Object.idl
+SOURCE=.\Time.idl
 
-!IF  "$(CFG)" == "Simple Server - Win32 Release"
+!IF  "$(CFG)" == "Simple Time Server - Win32 Release"
 
-USERDEP__SIMPL="..\..\tao_idl\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
-InputPath=.\Simple_Object.idl
-InputName=Simple_Object
+USERDEP__TIME_="..\..\..\tao_idl\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\Time.idl
+InputName=Time
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl $(InputName).idl
+	..\..\..\tao_idl\Release\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -170,15 +166,16 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "Simple Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Debug"
 
-USERDEP__SIMPL="..\..\tao_idl\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
-InputPath=.\Simple_Object.idl
-InputName=Simple_Object
+# PROP Ignore_Default_Tool 1
+USERDEP__TIME_="..\..\..\tao_idl\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\Time.idl
+InputName=Time
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl $(InputName).idl
+	..\..\..\tao_idl\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

@@ -1,26 +1,26 @@
 // $Id$
 
-#include "simple_object_impl.h"
+#include "Time_impl.h"
 #include "tao/corba.h"
 
-ACE_RCSID(Simple, simple_object_impl, "$Id$")
+ACE_RCSID(Time, Time_impl, "$Id$")
 
 // Constructor
 
-Simple_Impl::Simple_Impl (const char *)
+Time_Impl::Time_Impl (const char *)
 {
 }
 
 // Destructor
 
-Simple_Impl::~Simple_Impl (void)
+Time_Impl::~Time_Impl (void)
 {
 }
 
 // Return the current date/time on the server.
 
 CORBA::Long
-Simple_Impl::time (CORBA::Environment &env)
+Time_Impl::time (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
 
@@ -29,13 +29,13 @@ Simple_Impl::time (CORBA::Environment &env)
 
 // Shutdown.
 
-void Simple_Impl::shutdown (CORBA::Environment &env)
+void Time_Impl::shutdown (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
 
   ACE_DEBUG ((LM_DEBUG,
               "%s\n",
-              "Simple_Impl is shutting down"));
+              "Time_Impl is shutting down"));
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
 
