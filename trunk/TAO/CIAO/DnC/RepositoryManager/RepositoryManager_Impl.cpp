@@ -44,45 +44,39 @@ installPackage (const char* installation_name,
                    Deployment::NameExists,
                    Deployment::PackageError))
 {
-  DOMBuilder* tpd_parser =
-     CIAO::Config_Handler::Utils::create_parser ();
-  DOMDocument* top_pc_doc = tpd_parser->parseURI (location);
-  auto_ptr<DOMBuilder> cleanup_parser (tpd_parser);
-
-  XercesDOMParser *new_parser = new XercesDOMParser;
+  xercesc::XMLPlatformUtils::Initialize();
+  XercesDOMParser *tpd_parser = new XercesDOMParser;
+  XercesDOMParser *pc_parser = new XercesDOMParser;
+  auto_ptr<XercesDOMParser> cleanup_parser (tpd_parser);
+  auto_ptr<XercesDOMParser> cleanup_pc_parser (pc_parser);
   XercesDOMParser::ValSchemes val_schema = XercesDOMParser::Val_Auto;
-  new_parser->setValidationScheme (val_schema);
-  new_parser->setDoNamespaces (true);
-  new_parser->setDoSchema (true);
-  new_parser->setValidationSchemaFullChecking (true);
-  new_parser->setCreateEntityReferenceNodes (false);
-  new_parser->setIncludeIgnorableWhitespace (false);
-  new_parser->parse (location);
 
-  DOMDocument* ano_doc = new_parser->getDocument ();
+  tpd_parser->setValidationScheme (val_schema);
+  tpd_parser->setDoNamespaces (true);
+  tpd_parser->setDoSchema (true);
+  tpd_parser->setValidationSchemaFullChecking (true);
+  tpd_parser->setCreateEntityReferenceNodes (false);
+  tpd_parser->setIncludeIgnorableWhitespace (false);
+  tpd_parser->parse (location);
 
-  CIAO::Config_Handler::TPD_Handler top_pc_handler (ano_doc,
-                                               DOMNodeFilter::SHOW_ELEMENT |
-                                               DOMNodeFilter::SHOW_TEXT);
+  DOMDocument* tpd_doc = tpd_parser->getDocument ();
+
+  CIAO::Config_Handler::TPD_Handler top_pc_handler (tpd_doc,
+                                                   DOMNodeFilter::SHOW_ELEMENT |
+                                                   DOMNodeFilter::SHOW_TEXT);
   ACE_TString package_location = top_pc_handler.
       process_TopLevelPackageDescription ();
-  DOMBuilder* pc_parser =
-     CIAO::Config_Handler::Utils::create_parser ();
-  auto_ptr<DOMBuilder> cleanup_pc_parser (pc_parser);
-  DOMDocument* pc_doc = pc_parser->parseURI (package_location.c_str());
 
-  XercesDOMParser *ano_new_parser = new XercesDOMParser;
-  XercesDOMParser::ValSchemes ano_val_schema = XercesDOMParser::Val_Auto;
-  ano_new_parser->setValidationScheme (ano_val_schema);
-  ano_new_parser->setDoNamespaces (true);
-  ano_new_parser->setDoSchema (true);
-  ano_new_parser->setValidationSchemaFullChecking (true);
-  ano_new_parser->setCreateEntityReferenceNodes (false);
-  ano_new_parser->setIncludeIgnorableWhitespace (false);
-  ano_new_parser->parse (package_location.c_str());
-  DOMDocument* ano_ano_doc = ano_new_parser->getDocument ();
+  pc_parser->setValidationScheme (val_schema);
+  pc_parser->setDoNamespaces (true);
+  pc_parser->setDoSchema (true);
+  pc_parser->setValidationSchemaFullChecking (true);
+  pc_parser->setCreateEntityReferenceNodes (false);
+  pc_parser->setIncludeIgnorableWhitespace (false);
+  pc_parser->parse (package_location.c_str());
+  DOMDocument* pc_doc = pc_parser->getDocument ();
 
-  CIAO::Config_Handler::PC_Handler pc_handler (ano_ano_doc,
+  CIAO::Config_Handler::PC_Handler pc_handler (pc_doc,
                                                DOMNodeFilter::SHOW_ELEMENT |
                                                DOMNodeFilter::SHOW_TEXT);
   pc_handler.process_PackageConfiguration (this->pc_);

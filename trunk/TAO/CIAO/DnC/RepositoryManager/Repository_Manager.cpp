@@ -72,31 +72,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
-      // get a reference to the parser.
-      DOMBuilder* parser = CIAO::Config_Handler::Utils::
-                           create_parser ();
+      xercesc::XMLPlatformUtils::Initialize();
 
-      XercesDOMParser *new_parser = new XercesDOMParser;
-      new_parser->setValidationScheme (val_schema);
-      new_parser->setDoNamespaces (true);
-      new_parser->setDoSchema (true);
-      new_parser->setValidationSchemaFullChecking (true);
-      new_parser->setCreateEntityReferenceNodes (false);
-      new_parser->setIncludeIgnorableWhitespace (false);
-      new_parser->parse (plan_url);
+      // get a reference to the parser.
+      XercesDOMParser *plan_parser = new XercesDOMParser;
+
+      // free up DOMBuilder. DOMBuilder also deletes the DOMDocument memory.
+      auto_ptr<XercesDOMParser> cleanup_parser (plan_parser);
+
+      plan_parser->setValidationScheme (val_schema);
+      plan_parser->setDoNamespaces (true);
+      plan_parser->setDoSchema (true);
+      plan_parser->setValidationSchemaFullChecking (true);
+      plan_parser->setCreateEntityReferenceNodes (false);
+      plan_parser->setIncludeIgnorableWhitespace (false);
+      plan_parser->parse (plan_url);
 
       // use the parser to parse the deployment plan URL and create
       // a DOM document.
-      DOMDocument* dup_doc = parser->parseURI (plan_url);
-      DOMDocument* ano_doc = new_parser->getDocument ();
-
-      if (dup_doc == NULL)
-        {
-          ACE_DEBUG ((LM_DEBUG, "Null DOM Document obtained, \
-                      May be the URL is wrong!!\n"));
-          throw Null_Dom_Document ();
-        }
-
+      DOMDocument* ano_doc = plan_parser->getDocument ();
       if (ano_doc == NULL)
         {
           ACE_DEBUG ((LM_DEBUG, "Null DOM Document obtained, \
@@ -105,7 +99,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // free up DOMBuilder. DOMBuilder also deletes the DOMDocument memory.
-      auto_ptr<DOMBuilder> cleanup_parser (parser);
+      //auto_ptr<DOMBuilder> cleanup_parser (parser);
 
       // call the Deployment Plan handler to parse the XML descriptor.
       CIAO::Config_Handler::Plan_Handler plan_handler (ano_doc,
