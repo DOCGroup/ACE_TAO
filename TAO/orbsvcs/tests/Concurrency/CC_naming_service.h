@@ -49,14 +49,14 @@ public:
   // Initialization method must be called after first call of Instance()
   // in order to initialize the object correctly
 
-  CORBA::Object_var get_obj_from_name (char *c_name, char *name,
+  CORBA::Object_var get_obj_from_name (const char *c_name,
+                                       const char *name,
                                        CORBA::Environment &_env);
   // Lookup a name in the naming service (context, name)
 
-  void
-  bind_name (char *n,
-             CORBA::Object_ptr obj,
-             CORBA::Environment &_env);
+  void bind_name (const char *n,
+                  CORBA::Object_ptr obj,
+                  CORBA::Environment &_env);
   // Bind a name in the concurrency context.
 
   CosConcurrencyControl::LockSetFactory_var get_lock_set_factory (void);

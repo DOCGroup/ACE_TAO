@@ -69,7 +69,8 @@ CC_naming_service::Instance(void)
 }
 
 CORBA::Object_var
-CC_naming_service::get_obj_from_name (char *c_name, char *name,
+CC_naming_service::get_obj_from_name (const char *c_name,
+                                      const char *name,
                                       CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "C: %s, N: %s\n", c_name, name));
@@ -110,7 +111,7 @@ CC_naming_service::get_obj_from_name (char *c_name, char *name,
 }
 
 void
-CC_naming_service::bind_name (char *n,
+CC_naming_service::bind_name (const char *n,
                               CORBA::Object_ptr obj,
                               CORBA::Environment &ACE_TRY_ENV)
 {
