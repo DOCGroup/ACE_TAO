@@ -1,3 +1,9 @@
+Wed Dec 31 12:27:16 2003  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* docs/tutorial/Hello/hello.mpc:
+	  Updated this file to avoid duplicated project names in
+	  MPC generated solution file for VC.
+
 Wed Dec 31 10:16:17 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CIAO/ciao/Component_Base.idl:
