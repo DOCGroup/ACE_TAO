@@ -1,3 +1,9 @@
+Sun Feb 29 17:43:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/Latency/Thread_Per_Connection/Roundtrip.cpp:
+
+	  Do not use a boolean value of true while callin shutdown ().
+
 Sun Feb 29 17:07:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/tests/Miop/McastHello/Makefile:
