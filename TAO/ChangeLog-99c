@@ -1,10 +1,16 @@
+Thu May 13 00:42:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB.h (CORBA_ORB): Rewrote the comments for <perform_work>.
+	  Previously, it was somewhat unclear what this function was
+	  doing. Thanks to Trey Grubbs <t-grubbs1@raytheon.com> for
+	  pointing this out.
+
 Wed May 12 19:40:12 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Object.{h,cpp}:
-	  Changed the name of the second create_request function
-	  to be identical to the name of the first. The spec
-	  clearly indicates in some places that it is to be
-	  called 'create_request2', but that's wrong.
+	* tao/Object.{h,cpp}: Changed the name of the second
+	  create_request function to be identical to the name of the
+	  first. The spec clearly indicates in some places that it is to
+	  be called 'create_request2', but that's wrong.
 
 Wed May 12 19:22:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -21,10 +27,10 @@ Wed May 12 18:02:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Wed May 12 16:26:14 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ORB.cpp (resolve_initial_references): 
+	* tao/ORB.cpp (resolve_initial_references):
 	Changed the const CORBA::String to const char * as is expected by the
 	test suite and also by the CORBA v2.2 spec vide page 20-115,
-	section 20-39-20. 
+	section 20-39-20.
 
 Wed May 12 16:04:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -34,7 +40,7 @@ Wed May 12 16:04:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Wed May 12 15:46:57 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Makefile: 
+	* tao/Makefile:
 	* tao/ORB.h
 	* tao/ORB.i
 	* tao/ORB.i
@@ -52,7 +58,7 @@ Wed May 12 15:46:57 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
  	  inclusion from them as this would add a high dependency on these
  	  files. Managed_Types.h included ORB.h for just a few operations
  	  which has now been moved to corbafwd.i
-	
+
 Wed May 12 15:41:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/corbafwd.h:

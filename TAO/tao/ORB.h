@@ -256,9 +256,9 @@ public:
   // can be used for initialization or in comparisons.
 
   virtual CORBA::Object_ptr string_to_object (
-         const char *str,
-         CORBA_Environment &ACE_TRY_ENV =
-               CORBA::default_environment ());
+                                              const char *str,
+                                              CORBA_Environment &ACE_TRY_ENV =
+                                              CORBA::default_environment ());
   // Turn a string-ified object reference back into an object pointer.
   // Typically these strings are created using <object_to_string()>,
   // but not necessarily locally.
@@ -273,7 +273,7 @@ public:
   // this is typically eventually given to <string_to_object()> as an
   // argument.
 
-  
+
 #ifdef TAO_HAS_VALUETYPE
   // Value factory operations  (CORBA 2.3 ptc/98-10-05 Ch. 4.2 p.4-7)
   CORBA::ValueFactory_ptr register_value_factory (
@@ -308,43 +308,43 @@ public:
 
   void create_named_value (CORBA::NamedValue_ptr &nmval,
                            CORBA_Environment &ACE_TRY_ENV =
-                             CORBA::default_environment ());
+                           CORBA::default_environment ());
 
   void create_exception_list (CORBA::ExceptionList_ptr &exclist,
                               CORBA_Environment &ACE_TRY_ENV =
-                                CORBA::default_environment ());
+                              CORBA::default_environment ());
 
   void create_context_list (CORBA::ContextList_ptr &ctxtlist,
                             CORBA_Environment &ACE_TRY_ENV =
-                              CORBA::default_environment ());
+                            CORBA::default_environment ());
 
   void get_default_context (CORBA::Context_ptr &ctx,
                             CORBA_Environment &ACE_TRY_ENV =
-                              CORBA::default_environment ());
+                            CORBA::default_environment ());
 
   void create_environment (CORBA::Environment_ptr &new_env,
                            CORBA_Environment &ACE_TRY_ENV =
-                             CORBA::default_environment ());
+                           CORBA::default_environment ());
 
-  CORBA::Boolean get_service_information (CORBA::ServiceType service_type, 
+  CORBA::Boolean get_service_information (CORBA::ServiceType service_type,
                                           CORBA::ServiceInformation_out service_information,
                                           CORBA::Environment &ACE_TRY_ENV =
                                           CORBA::default_environment ());
 
   void send_multiple_requests_oneway (const CORBA_ORB_RequestSeq req,
                                       CORBA_Environment &ACE_TRY_ENV =
-                                        CORBA::default_environment ());
+                                      CORBA::default_environment ());
 
   void send_multiple_requests_deferred (const CORBA_ORB_RequestSeq req,
                                         CORBA_Environment &ACE_TRY_ENV =
-                                          CORBA::default_environment ());
+                                        CORBA::default_environment ());
 
   void get_next_response (CORBA_Request_ptr &req,
                           CORBA_Environment &ACE_TRY_ENV =
-                            CORBA::default_environment ());
+                          CORBA::default_environment ());
 
   CORBA::Boolean poll_next_response (CORBA_Environment &ACE_TRY_ENV =
-                                       CORBA::default_environment ());
+                                     CORBA::default_environment ());
 
   // = New Things from the POA Specification
   //
@@ -353,17 +353,14 @@ public:
   // than is currently available.
 
   CORBA::Boolean work_pending (void);
-  // Returns an indication of whether the ORB needs the <{main thread}> to
-  // perform some work.
+  // Returns an indication of whether the ORB needs to perform some
+  // work.
 
   int perform_work (const ACE_Time_Value & = ACE_Time_Value::zero);
-  // If called by the <{main thread}>, this operation performs an
-  // implementation-defined unit of work. Otherwise, it does nothing.
-  // Note that the default behavior is not to block; this behavior can
-  // be modified by passing an appropriate <ACE_Time_Value>.
-  //
-  // It is platform-specific how the application and ORB arrange to
-  // use compatible threading primitives.
+  // This operation performs an implementation-defined unit of
+  // work. Note that the default behavior is not to block; this
+  // behavior can be modified by passing an appropriate
+  // <ACE_Time_Value>.
 
   // Typecode for the above exception.
   static CORBA::TypeCode_ptr _tc_InconsistentTypeCode;
@@ -417,12 +414,12 @@ public:
   // @@EXC@@ Add the ACE_THROW_SPEC for these two functions
 
   CORBA_Object_ptr resolve_initial_references (const char *name,
-                                               CORBA_Environment &TAO_IN_ENV =	
+                                               CORBA_Environment &TAO_IN_ENV =
                                                CORBA::default_environment ());
-						         
+
   CORBA_Object_ptr resolve_initial_references (const char *name,
                                                ACE_Time_Value *timeout,
-                                               CORBA_Environment &TAO_IN_ENV = 	
+                                               CORBA_Environment &TAO_IN_ENV =
                                                CORBA::default_environment ());
   // This method acts as a mini-bootstrapping Naming Service, which is
   // provided by the ORB for certain well-known object references.
@@ -438,8 +435,8 @@ public:
   // <resolve_initial_references> specification.
 
   // Unimplemented function - throws CORBA::NO_IMPLEMENT.
-  CORBA_ORB_ObjectIdList_ptr list_initial_services (CORBA_Environment &TAO_IN_ENV = 	
-                                                      CORBA::default_environment ());
+  CORBA_ORB_ObjectIdList_ptr list_initial_services (CORBA_Environment &TAO_IN_ENV =
+                                                    CORBA::default_environment ());
 
   // = TAO-specific extensions to the CORBA specification.
 
