@@ -192,7 +192,7 @@ protected:
   virtual ~ACE_POSIX_AIOCB_Asynch_Operation (void);
   // Destructor.
 
-  int register_aio_with_proactor (aiocb *aiocb_ptr);
+  int register_aio_with_proactor (ACE_POSIX_Asynch_Result *result);
   // This call is for the POSIX implementation. This method is used by
   // <ACE_Asynch_Operation> to store some information with the
   // Proactor after an <aio_> call is issued, so that the Proactor can
