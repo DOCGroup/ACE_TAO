@@ -1,3 +1,6 @@
+#
+# $Id$
+#
 # Makefile for building the NT Notify Service executable
 
 NAME = NT_Notify_Service
