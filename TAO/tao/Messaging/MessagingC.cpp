@@ -126,29 +126,29 @@ CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal (
         base,
         ExceptionHolder::_tao_obv_static_repository_id ()
       );
-
+  
   if (retval == 0)
     {
       return 0;
     }
-
+  
   if (factory.in () != 0)
     {
       base = factory->create_for_unmarshal ();
-
+      
       if (base == 0)
         {
           return 0;  // %! except.?
         }
-
+      
       retval = base->_tao_unmarshal_v (strm);
-
+      
       if (retval == 0)
         {
           return 0;
         }
     }
-
+  
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = ExceptionHolder::_downcast (base);
@@ -172,7 +172,7 @@ Messaging::ExceptionHolder_init::_downcast (CORBA::ValueFactoryBase *v)
   return dynamic_cast< ::Messaging::ExceptionHolder_init * > (v);
 }
 
-const char*
+const char* 
 Messaging::ExceptionHolder_init::tao_repository_id (void)
 {
   return ::Messaging::ExceptionHolder::_tao_obv_static_repository_id ();
@@ -227,7 +227,7 @@ TAO::Objref_Traits<Messaging::ReplyHandler>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -251,7 +251,7 @@ Messaging::ReplyHandler::Messaging_ReplyHandler_setup_collocation ()
 Messaging::ReplyHandler::~ReplyHandler (void)
 {}
 
-void
+void 
 Messaging::ReplyHandler::_tao_any_destructor (void *_tao_void_pointer)
 {
   ReplyHandler *_tao_tmp_pointer =
@@ -296,7 +296,7 @@ Messaging::ReplyHandler::_duplicate (ReplyHandler_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -514,26 +514,26 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::Object_var obj;
-
+  
   if (!(strm >> obj.inout ()))
     {
       return false;
     }
-
+  
   typedef ::Messaging::ReplyHandler RHS_SCOPED_NAME;
-
+  
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (
         obj.in (),
         Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer
       );
-
+    
   return 1;
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1619
+// be\be_visitor_root/root.cpp:1620
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -545,13 +545,13 @@ CORBA::Boolean operator>> (
   template class
     TAO_Value_Var_T<
         Messaging::ExceptionHolder
-
+        
       >;
-
+  
   template class
     TAO_Value_Out_T<
         Messaging::ExceptionHolder
-
+        
       >;
 
   template class
