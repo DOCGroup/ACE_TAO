@@ -698,7 +698,7 @@ Thu Jul 17 06:21:30 2003  Chad Elliott  <elliott_c@ociweb.com>
           option causes the default workspace names for nmake and borland to
           work as they previously had.  The nmake workspace would be
           workspace name .nmake and the borland workspace would be named
-          Makefile . project name .bor.
+          Makefile.bor.
 
 Wed Jul 16 15:29:37 2003  Justin Michel  <michel_j@ociweb.com>
 
