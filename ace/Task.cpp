@@ -158,6 +158,7 @@ ACE_Task_Base::activate (long flags,
     ACE_UNUSED_ARG (stack);
     ACE_UNUSED_ARG (stack_size);
     ACE_UNUSED_ARG (thread_ids);
+    ACE_UNUSED_ARG (inherit_priority);
     ACE_NOTSUP_RETURN (-1);
   }
 #endif /* ACE_MT_SAFE */
