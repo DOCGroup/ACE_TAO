@@ -5,6 +5,9 @@ Mon Jun 29 14:43:17 1998  David L. Levine  <levine@cs.wustl.edu>
           to keep DEC cxx from complaining.  Also, commented out
           the declaration, because it doesn't appear to be necessary.
 
+        * tests/OctetSeq/OctetSeq.cpp (main): cast sizeof to int
+          to avoid egcs warning about signed/unsigned comparison.
+
 Mon Jun 29 11:05:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/encode.cpp:
