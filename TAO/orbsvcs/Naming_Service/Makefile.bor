@@ -5,7 +5,8 @@
 NAME = Naming_Service
 
 OBJFILES = \
-	$(OBJDIR)\Naming_Service.obj
+	$(OBJDIR)\Naming_Service.obj \
+	$(OBJDIR)\Naming_Server.obj
         
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(ORBSVCS_CFLAGS)
         
