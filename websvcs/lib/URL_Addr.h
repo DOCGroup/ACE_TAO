@@ -250,9 +250,9 @@ class ACE_WEBSVCS_Export ACE_FTP_Addr : public ACE_URL_Addr
   //
   //   but the most general form is:
   //
-  //   ftp://user:passwd@hostname/path
+  //   ftp://user:password@hostname/path
   //
-  //   the [:passwd] part can be omitted too.
+  //   the [:password] part can be omitted too.
   //
 public:
   ACE_FTP_Addr (void);
@@ -261,14 +261,14 @@ public:
   ACE_FTP_Addr (const ACE_TCHAR *host_name,
                 const ACE_TCHAR *path,
                 const ACE_TCHAR *user = 0,
-                const ACE_TCHAR *passwd = 0);
+                const ACE_TCHAR *password = 0);
   // Construct an FTP URL from the host_name, the path, the username
-  // and the passwd.
+  // and the password.
 
   int set (const ACE_TCHAR *host_name,
            const ACE_TCHAR *path,
            const ACE_TCHAR *user = 0,
-           const ACE_TCHAR *passwd = 0);
+           const ACE_TCHAR *password = 0);
   // Essentially the constructor above.
 
   ACE_FTP_Addr (const ACE_FTP_Addr &addr);
@@ -290,7 +290,7 @@ public:
   // Get the username component in the URL
 
   const ACE_TCHAR *get_passwd (void) const;
-  // Get the passwd component in the URL
+  // Get the password component in the URL
 
   const ACE_TCHAR *get_path (void) const;
   // Get the path component in the URL
@@ -316,7 +316,7 @@ private:
 
 private:
   ACE_TCHAR *user_;
-  ACE_TCHAR *passwd_;
+  ACE_TCHAR *password_;
   // The login name
 
   ACE_TCHAR *hostname_;
