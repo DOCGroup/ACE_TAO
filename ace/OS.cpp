@@ -4,7 +4,9 @@
 #define ACE_BUILD_DLL
 #include "ace/OS.h"
 
+#if defined (ACE_WIN32)
 #include "ace/ARGV.h"
+#endif /* ACE_WIN32 */
 
 // Perhaps we should *always* include ace/OS.i in order to make sure
 // we can always link against the OS symbols?
@@ -541,6 +543,7 @@ ACE_TSS_Cleanup::dump (void)
 
 #endif /* WIN32 */
 
+#if !defined (VXWORKS)
 class ACE_Thread_Adapter
   // = TITLE
   //     Converts a C++ function into a function <ace_thread_adapter>
@@ -608,6 +611,7 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC f, void *a)
 {
 // ACE_TRACE ("ACE_Thread_Adapter::ACE_Thread_Adapter");
 }
+#endif /* VXWORKS */
 
 int
 ACE_OS::thr_create (ACE_THR_FUNC func,
