@@ -549,7 +549,7 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
   int result = 0;
 
   // If there was an event handler ready, dispatch it.
-  /// Decrement the event left
+  // Decrement the event left
   --event_count;
 
   if (this->dispatch_socket_event (dispatch_info) == 0)
@@ -701,9 +701,8 @@ ACE_TP_Reactor::get_socket_event_info (ACE_EH_Dispatch_Info &event)
                    this->handler_rep_.find (handle),
                    ACE_Event_Handler::WRITE_MASK,
                    &ACE_Event_Handler::handle_output);
-        this->ready_set_.wr_mask_.clr_bit (handle);
-        this->ready_set_.ex_mask_.clr_bit (handle);
-        this->ready_set_.rd_mask_.clr_bit (handle);
+
+        this->clear_handle_read_set (handle);
         found_io = 1;
       }
   }
@@ -722,9 +721,9 @@ ACE_TP_Reactor::get_socket_event_info (ACE_EH_Dispatch_Info &event)
                      this->handler_rep_.find (handle),
                      ACE_Event_Handler::EXCEPT_MASK,
                      &ACE_Event_Handler::handle_exception);
-          this->ready_set_.ex_mask_.clr_bit (handle);
-          this->ready_set_.wr_mask_.clr_bit (handle);
-          this->ready_set_.rd_mask_.clr_bit (handle);
+
+          this->clear_handle_read_set (handle);
+
           found_io = 1;
         }
     }
@@ -743,9 +742,8 @@ ACE_TP_Reactor::get_socket_event_info (ACE_EH_Dispatch_Info &event)
                      this->handler_rep_.find (handle),
                      ACE_Event_Handler::READ_MASK,
                      &ACE_Event_Handler::handle_input);
-          this->ready_set_.rd_mask_.clr_bit (handle);
-          this->ready_set_.wr_mask_.clr_bit (handle);
-          this->ready_set_.ex_mask_.clr_bit (handle);
+
+          this->clear_handle_read_set (handle);
           found_io = 1;
         }
     }
@@ -837,9 +835,12 @@ ACE_TP_Reactor::get_notify_handle (void)
 
   // Check whether the rd_mask has been set on that handle. If so
   // return the handle.
-  //  if (read_handle != ACE_INVALID_HANDLE &&
-  //this->ready_set_.rd_mask_.is_set (read_handle))
-  if (read_handle != ACE_INVALID_HANDLE)
+  if (read_handle != ACE_INVALID_HANDLE &&
+      this->ready_set_.rd_mask_.is_set (read_handle))
+    {
+      return read_handle;
+    }
+    /*if (read_handle != ACE_INVALID_HANDLE)
     {
       ACE_Handle_Set_Iterator handle_iter (this->ready_set_.rd_mask_);
       ACE_HANDLE handle = ACE_INVALID_HANDLE;
@@ -849,7 +850,7 @@ ACE_TP_Reactor::get_notify_handle (void)
           return read_handle;
         }
       ACE_UNUSED_ARG (handle);
-    }
+      }*/
 
   // None found..
   return ACE_INVALID_HANDLE;
