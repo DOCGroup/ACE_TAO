@@ -11,36 +11,36 @@
 #include "ace/Auto_Ptr.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_ALLOC_HOOK_DEFINE(auto_basic_ptr)
+ACE_ALLOC_HOOK_DEFINE(ACE_Auto_Basic_Ptr)
 
 template<class X> void
-auto_basic_ptr<X>::dump (void) const
+ACE_Auto_Basic_Ptr<X>::dump (void) const
 {
-  ACE_TRACE ("auto_basic_ptr<X>::dump");
+  ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::dump");
 }
 
 template<class X> void
-auto_basic_ptr<X>::remove (X *& x)
+ACE_Auto_Basic_Ptr<X>::remove (X *& x)
 {
-  ACE_TRACE ("auto_basic_ptr<X>::remove");
+  ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::remove");
 
   X *tp = x;
   x = 0;
   delete tp;
 }
 
-ACE_ALLOC_HOOK_DEFINE(auto_basic_array_ptr)
+ACE_ALLOC_HOOK_DEFINE(ACE_Auto_Basic_Array_Ptr)
 
 template<class X> void
-auto_basic_array_ptr<X>::dump (void) const
+ACE_Auto_Basic_Array_Ptr<X>::dump (void) const
 {
-  ACE_TRACE ("auto_basic_array_ptr<X>::dump");
+  ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::dump");
 }
 
 template<class X> void
-auto_basic_array_ptr<X>::remove (X *& x)
+ACE_Auto_Basic_Array_Ptr<X>::remove (X *& x)
 {
-  ACE_TRACE ("auto_basic_array_ptr<X>::remove");
+  ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::remove");
 
   X *tp = x;
   x = 0;

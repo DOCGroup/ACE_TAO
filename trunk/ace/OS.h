@@ -4097,7 +4097,7 @@ extern "C" ssize_t writev_timedwait (ACE_HANDLE handle,
 #define ACE_WIDE_STRING(ASCII_STRING) \
 ACE_WString (ASCII_STRING).fast_rep ()
 #define ACE_MULTIBYTE_STRING(WIDE_STRING) \
-auto_basic_array_ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
+ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 #define ACE_TEXT_STRING ACE_WString
 #else
 #define ACE_WIDE_STRING(ASCII_STRING) ASCII_STRING

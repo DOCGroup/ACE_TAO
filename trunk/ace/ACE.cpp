@@ -8,6 +8,7 @@
 #include "ace/ACE.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Reactor.h"
+#include "ace/Auto_Ptr.h"
 #include "ace/INET_Addr.h"
 #include "ace/SString.h"
 #include "ace/Process.h"
@@ -2096,7 +2097,7 @@ ACE::get_ip_interfaces (size_t &count,
   struct ifreq *ifs;
   ACE_NEW_RETURN (ifs, struct ifreq[num_ifs], -1);
   ACE_OS::memset (ifs, 0, num_ifs * sizeof (struct ifreq));
-  auto_array_ptr<struct ifreq> p_ifs (ifs);
+  ACE_Auto_Array_Ptr<struct ifreq> p_ifs (ifs);
 
   if (p_ifs.get() == 0)
     {
@@ -2184,10 +2185,10 @@ ACE_Object_Manager_Destroyer::~ACE_Object_Manager_Destroyer (void)
 static ACE_Object_Manager_Destroyer ACE_Object_Manager_Destroyer_internal;
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class auto_array_ptr<struct ifreq>;
-template class auto_basic_array_ptr<struct ifreq>;
+template class ACE_Auto_Array_Ptr<struct ifreq>;
+template class ACE_Auto_Basic_Array_Ptr<struct ifreq>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate auto_array_ptr<struct ifreq>
-#pragma instantiate auto_basic_array_ptr<struct ifreq>
+#pragma instantiate ACE_Auto_Array_Ptr<struct ifreq>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<struct ifreq>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

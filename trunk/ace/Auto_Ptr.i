@@ -4,162 +4,162 @@
 // Auto_Ptr.i
 
 template<class X> ACE_INLINE void
-auto_basic_ptr<X>::operator= (auto_basic_ptr<X> &rhs)
+ACE_Auto_Basic_Ptr<X>::operator= (ACE_Auto_Basic_Ptr<X> &rhs)
 {
-  ACE_TRACE ("auto_basic_ptr<X>::operator=");
+  ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::operator=");
   if (this != &rhs) 
     {
-      auto_basic_ptr<X>::remove (p_);
+      ACE_Auto_Basic_Ptr<X>::remove (p_);
       p_ = rhs.release ();
     }
 }
 
 template<class X> ACE_INLINE
-auto_basic_ptr<X>::auto_basic_ptr (X *p)
+ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr (X *p)
   : p_ (p)
 {
-  ACE_TRACE ("auto_basic_ptr<X>::auto_basic_ptr");
+  ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr");
 }
 
 template<class X> ACE_INLINE
-auto_basic_ptr<X>::auto_basic_ptr (auto_basic_ptr<X> &ap)
+ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr (ACE_Auto_Basic_Ptr<X> &ap)
   : p_ (ap.release ()) 
 {
-  ACE_TRACE ("auto_basic_ptr<X>::auto_basic_ptr");
+  ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr");
 }
 
 template<class X> ACE_INLINE
-auto_basic_ptr<X>::~auto_basic_ptr (void) 
+ACE_Auto_Basic_Ptr<X>::~ACE_Auto_Basic_Ptr (void) 
 { 
-  ACE_TRACE ("auto_basic_ptr<X>::~auto_basic_ptr");
+  ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::~ACE_Auto_Basic_Ptr");
   delete p_; 
 }
 
 template<class X> ACE_INLINE X &
-auto_basic_ptr<X>::operator *() const 
+ACE_Auto_Basic_Ptr<X>::operator *() const 
 {
   return *p_;
 }
 
 template<class X> ACE_INLINE X *
-auto_basic_ptr<X>::get (void) const 
+ACE_Auto_Basic_Ptr<X>::get (void) const 
 {
-  ACE_TRACE ("auto_basic_ptr<X>::get");
+  ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::get");
   return p_;
 }
 
 template<class X> ACE_INLINE X *
-auto_basic_ptr<X>::release (void) 
+ACE_Auto_Basic_Ptr<X>::release (void) 
 {
-  ACE_TRACE ("auto_basic_ptr<X>::release");
+  ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::release");
   return this->reset (0);
 }
 
 template<class X> ACE_INLINE X *
-auto_basic_ptr<X>::reset (X *p) 
+ACE_Auto_Basic_Ptr<X>::reset (X *p) 
 {
-  ACE_TRACE ("auto_basic_ptr<X>::reset");
+  ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::reset");
   X *tp = p_; 
   p_ = p; 
   return tp;
 }
 
 template<class X> ACE_INLINE
-auto_ptr<X>::auto_ptr (X *p)
-  : auto_basic_ptr<X> (p)
+ACE_Auto_Ptr<X>::ACE_Auto_Ptr (X *p)
+  : ACE_Auto_Basic_Ptr<X> (p)
 {
-  ACE_TRACE ("auto_basic_ptr<X>::auto_basic_ptr");
+  ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr");
 }
 
 template<class X> ACE_INLINE X *
-auto_ptr<X>::operator-> () const 
+ACE_Auto_Ptr<X>::operator-> () const 
 {
-  ACE_TRACE ("auto_ptr<X>::operator->");
+  ACE_TRACE ("ACE_Auto_Ptr<X>::operator->");
   return p_;
 }
 
 template<class X> ACE_INLINE
-auto_basic_array_ptr<X>::auto_basic_array_ptr (X *p) 
+ACE_Auto_Basic_Array_Ptr<X>::ACE_Auto_Basic_Array_Ptr (X *p) 
   : p_ (p) 
 {
-  ACE_TRACE ("auto_basic_array_ptr<X>::auto_basic_array_ptr");
+  ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::ACE_Auto_Basic_Array_Ptr");
 }
 
 template<class X> ACE_INLINE
-auto_basic_array_ptr<X>::auto_basic_array_ptr (auto_basic_array_ptr<X> &ap) 
+ACE_Auto_Basic_Array_Ptr<X>::ACE_Auto_Basic_Array_Ptr (ACE_Auto_Basic_Array_Ptr<X> &ap) 
   : p_ (ap.release ()) 
 {
-  ACE_TRACE ("auto_basic_array_ptr<X>::auto_basic_array_ptr");
+  ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::ACE_Auto_Basic_Array_Ptr");
 }
 
 template<class X> ACE_INLINE
-auto_basic_array_ptr<X>::~auto_basic_array_ptr (void) 
+ACE_Auto_Basic_Array_Ptr<X>::~ACE_Auto_Basic_Array_Ptr (void) 
 {
-  ACE_TRACE ("auto_basic_array_ptr<X>::~auto_basic_array_ptr");
+  ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::~ACE_Auto_Basic_Array_Ptr");
   delete [] p_;
 }
 
 template<class X> ACE_INLINE X &
-auto_basic_array_ptr<X>::operator*() 
+ACE_Auto_Basic_Array_Ptr<X>::operator*() 
 {
   return *p_;
 }
 
 template<class X> ACE_INLINE X &
-auto_basic_array_ptr<X>::operator[](int i) 
+ACE_Auto_Basic_Array_Ptr<X>::operator[](int i) 
 {
   return p_[i];
 }
 
 template<class X> ACE_INLINE X 
-auto_basic_array_ptr<X>::operator[](int i) const 
+ACE_Auto_Basic_Array_Ptr<X>::operator[](int i) const 
 {
   return p_[i];
 }
 
 template<class X> ACE_INLINE X *
-auto_basic_array_ptr<X>::get (void) const 
+ACE_Auto_Basic_Array_Ptr<X>::get (void) const 
 {
-  ACE_TRACE ("auto_basic_array_ptr<X>::get");
+  ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::get");
   return p_;
 }
 
 template<class X> ACE_INLINE X *
-auto_basic_array_ptr<X>::release (void) 
+ACE_Auto_Basic_Array_Ptr<X>::release (void) 
 {
-  ACE_TRACE ("auto_basic_array_ptr<X>::release");
+  ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::release");
   return this->reset (0);
 }
 
 template<class X> ACE_INLINE X *
-auto_basic_array_ptr<X>::reset (X *p) 
+ACE_Auto_Basic_Array_Ptr<X>::reset (X *p) 
 {
-  ACE_TRACE ("auto_basic_array_ptr<X>::reset");
+  ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::reset");
   X *tp = p_; 
   p_ = p; 
   return tp;
 }
 
 template<class X> ACE_INLINE void 
-auto_basic_array_ptr<X>::operator= (auto_basic_array_ptr<X> &rhs)
+ACE_Auto_Basic_Array_Ptr<X>::operator= (ACE_Auto_Basic_Array_Ptr<X> &rhs)
 {
-  ACE_TRACE ("auto_basic_array_ptr<X>::operator=");
+  ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::operator=");
   if (this != &rhs) 
     {
-      auto_basic_array_ptr<X>::remove (p_);
+      ACE_Auto_Basic_Array_Ptr<X>::remove (p_);
       p_ = rhs.release ();
     }
 }
 
 template<class X> ACE_INLINE
-auto_array_ptr<X>::auto_array_ptr (X *p) 
-  : auto_basic_array_ptr<X> (p) 
+ACE_Auto_Array_Ptr<X>::ACE_Auto_Array_Ptr (X *p) 
+  : ACE_Auto_Basic_Array_Ptr<X> (p) 
 {
-  ACE_TRACE ("auto_basic_array_ptr<X>::auto_basic_array_ptr");
+  ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::ACE_Auto_Basic_Array_Ptr");
 }
 
 template<class X> ACE_INLINE X *
-auto_array_ptr<X>::operator->() const
+ACE_Auto_Array_Ptr<X>::operator->() const
 {
   return p_;
 }

@@ -22,17 +22,17 @@
 #include "ace/ACE.h"
 
 template <class X>
-class auto_basic_ptr 
+class ACE_Auto_Basic_Ptr 
   // = TITLE
-  //     Implements the draft C++ standard auto_ptr abstraction.
+  //     Implements the draft C++ standard ACE_Auto_Ptr abstraction.
   //     This class allows one to work on non-object (basic) types
 {
 public:
   // = Initialization and termination methods
-  auto_basic_ptr (X *p = 0);
-  auto_basic_ptr (auto_basic_ptr<X> &ap);
-  ~auto_basic_ptr (void);
-  void operator= (auto_basic_ptr<X> &rhs);
+  ACE_Auto_Basic_Ptr (X *p = 0);
+  ACE_Auto_Basic_Ptr (ACE_Auto_Basic_Ptr<X> &ap);
+  ~ACE_Auto_Basic_Ptr (void);
+  void operator= (ACE_Auto_Basic_Ptr<X> &rhs);
 
   // = Accessor methods.
   X &operator *() const;
@@ -53,31 +53,31 @@ protected:
 };
 
 template <class X>
-class auto_ptr : public auto_basic_ptr <X>
+class ACE_Auto_Ptr : public ACE_Auto_Basic_Ptr <X>
   // = TITLE
-  //     Implements the draft C++ standard auto_ptr abstraction.
+  //     Implements the draft C++ standard ACE_Auto_Ptr abstraction.
 {
 public:
   // = Initialization and termination methods
-  auto_ptr (X *p = 0);
+  ACE_Auto_Ptr (X *p = 0);
 
   X *operator-> () const;  
 };
 
 
 template<class X>
-class auto_basic_array_ptr 
+class ACE_Auto_Basic_Array_Ptr 
   // = TITLE
-  //     Implements an extension to the draft C++ standard auto_ptr
+  //     Implements an extension to the draft C++ standard ACE_Auto_Ptr
   //     abstraction.  This class allows one to work on non-object
   //     (basic) types
 {
 public:
   // = Initialization and termination methods.
-  auto_basic_array_ptr (X *p = 0);
-  auto_basic_array_ptr (auto_basic_array_ptr<X> &ap);
-  ~auto_basic_array_ptr (void);
-  void operator= (auto_basic_array_ptr<X> &rhs);
+  ACE_Auto_Basic_Array_Ptr (X *p = 0);
+  ACE_Auto_Basic_Array_Ptr (ACE_Auto_Basic_Array_Ptr<X> &ap);
+  ~ACE_Auto_Basic_Array_Ptr (void);
+  void operator= (ACE_Auto_Basic_Array_Ptr<X> &rhs);
 
   // = Accessor methods.
   X &operator* ();
@@ -100,14 +100,14 @@ protected:
 };
 
 template<class X>
-class auto_array_ptr : public auto_basic_array_ptr<X>
+class ACE_Auto_Array_Ptr : public ACE_Auto_Basic_Array_Ptr<X>
   // = TITLE
-  //     Implements an extension to the draft C++ standard auto_ptr
+  //     Implements an extension to the draft C++ standard ACE_Auto_Ptr
   //     abstraction.
 {
 public:
   // = Initialization and termination methods.
-  auto_array_ptr (X *p = 0);
+  ACE_Auto_Array_Ptr (X *p = 0);
 
   X *operator-> () const;
 };
