@@ -1,3 +1,13 @@
+Fri Nov 14 15:17:30 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* ace/INET_Addr.cpp (get_host_addr): Fixed these two methods so
+	  that they work properly on vxworks.  They used to work in 1.2a,
+	  but those changes got lost during an IPv6 refactoring after the
+	  release of DOC 1.2.1.  This should close [RT 3183].
+
+	* tests/INET_Addr_Test.cpp: Added a test for the argumented
+	  version of get_host_addr.
+
 Fri Nov 14 15:55:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/os_include/sys/os_select.h:

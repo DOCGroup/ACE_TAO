@@ -941,6 +941,7 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
   // So, we use the way that vxworks suggests.
   ACE_INET_Addr *ncthis = ACE_const_cast (ACE_INET_Addr *, this);
   inet_ntoa_b (this->inet_addr_.in4_.sin_addr, ncthis->buf_);
+  ACE_OS::strsncpy (dst, &buf_[0], size);
   return &buf_[0];
 #else /* VXWORKS */
   char *ch = ACE_OS::inet_ntoa (this->inet_addr_.in4_.sin_addr);
@@ -958,7 +959,18 @@ ACE_INET_Addr::get_host_addr (void) const
   static char buf[INET6_ADDRSTRLEN];
   return this->get_host_addr (buf, INET6_ADDRSTRLEN);
 #else
+#  if defined (VXWORKS)
+  // It would be nice to be able to encapsulate this into
+  // ACE_OS::inet_ntoa(), but that would lead to either inefficiencies
+  // on vxworks or lack of thread safety.
+  //
+  // So, we use the way that vxworks suggests.
+  ACE_INET_Addr *ncthis = ACE_const_cast (ACE_INET_Addr *, this);
+  inet_ntoa_b (this->inet_addr_.in4_.sin_addr, ncthis->buf_);
+  return &buf_[0];
+#  else /* VXWORKS */
   return ACE_OS::inet_ntoa (this->inet_addr_.in4_.sin_addr);
+#  endif /* !VXWORKS */
 #endif
 }
 
