@@ -91,7 +91,7 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       // This only works for IIOP objrefs.  If we're handed an objref
       // that's not an IIOP objref, fail -- application must use an
       // ORB that's configured differently.
-      IIOP_Object *iiopobj = 
+      IIOP_Object *iiopobj =
 	ACE_dynamic_cast (IIOP_Object*, obj->_stubobj ());
 
       if (iiopobj == 0)
@@ -297,15 +297,18 @@ IIOP_ORB::string_to_object (const char *str,
   CORBA::Object_ptr obj = 0;
 
   // Use the prefix code to choose which destringify algorithm to use.
-  if (ACE_OS::strncmp (str,
-                       iiop_prefix,
-                       sizeof iiop_prefix - 1) == 0)
-    obj = iiop_string_to_object (str + sizeof iiop_prefix - 1, env);
+  if (str != 0)
+    {
+      if (ACE_OS::strncmp (str,
+                           iiop_prefix,
+                           sizeof iiop_prefix - 1) == 0)
+        obj = iiop_string_to_object (str + sizeof iiop_prefix - 1, env);
 
-  else if (ACE_OS::strncmp (str,
-                            ior_prefix,
-                            sizeof ior_prefix - 1) == 0)
-    obj = ior_string_to_object (str + sizeof ior_prefix - 1, env);
+      else if (ACE_OS::strncmp (str,
+                                ior_prefix,
+                                sizeof ior_prefix - 1) == 0)
+        obj = ior_string_to_object (str + sizeof ior_prefix - 1, env);
+    }
 
   // Return the object
   return obj;
@@ -318,9 +321,9 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
 
   if (this->optimize_collocation_objects_ && sobj != 0)
     {
-      IIOP_Object *iiopobj = 
+      IIOP_Object *iiopobj =
 	ACE_dynamic_cast (IIOP_Object*, sobj);
-      
+
       // Make sure users passed in an IIOP_Object otherwise, we don't
       // know what to do next.
       if (iiopobj == 0)
