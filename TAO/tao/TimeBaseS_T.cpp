@@ -18,10 +18,14 @@
 #ifndef TAO_IDL_TIMEBASES_T_CPP
 #define TAO_IDL_TIMEBASES_T_CPP
 
-#include "tao/TimeBaseS_T.h"
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
+#include "TimeBaseS_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/TimeBaseS_T.i"
+#include "TimeBaseS_T.i"
 #endif /* !defined INLINE */
 
 

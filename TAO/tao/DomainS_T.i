@@ -101,7 +101,7 @@ CORBA::Policy_ptr POA_CORBA::DomainManager_tie<T>::get_domain_policy  (
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if ! defined (TAO_HAS_MINIMUM_CORBA)
 
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE

@@ -11,10 +11,14 @@
 #ifndef _TAO_IDL_DOMAINS_T_CPP_
 #define _TAO_IDL_DOMAINS_T_CPP_
 
-#include "tao/DomainS_T.h"
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
+#include "DomainS_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/DomainS_T.i"
+#include "DomainS_T.i"
 #endif /* !defined INLINE */
 
 

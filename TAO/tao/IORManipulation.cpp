@@ -17,10 +17,9 @@
 // ============================================================================
 
 #include "tao/IORManipulation.h"
-#include "tao/MProfile.h"
-#include "tao/Stub.h"
-
+#include "tao/corba.h"
 #include "ace/Auto_Ptr.h"
+#include "tao/MProfile.h"
 
 ACE_RCSID(tao, IORManipulation, "$Id$")
 
@@ -51,7 +50,7 @@ TAO_IOR_Manipulation_impl::merge_iors (
   CORBA::ULong i, count=0;
   for (i = 0; i < iors.length (); i++)
     {
-      count += iors[i]->_stubobj ()->base_profiles ().profile_count ();
+      count += iors[i]->_stubobj ()->get_base_profiles ().profile_count ();
     }
 
   // make sure we have some profiles
@@ -65,20 +64,21 @@ TAO_IOR_Manipulation_impl::merge_iors (
   // get the profile lists, start by initialize the composite reference
   // by using the first Object.  Then for each subsequent Object verify
   // they are the same type and they do not have duplicate profiles.
-  auto_ptr<TAO_MProfile> tmp_pfiles (iors[0]->_stubobj ()->make_profiles ());
+  auto_ptr<TAO_MProfile> tmp_pfiles (iors[0]->_stubobj ()->get_profiles ());
   if (Merged_Profiles.add_profiles (tmp_pfiles.get ())< 0)
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                       CORBA::Object::_nil ());
-  CORBA::String_var id =
-    CORBA::string_dup (iors[0]->_stubobj ()->type_id.in ());
+  CORBA::String_var type_id = iors[0]->_stubobj ()->type_id;
 
   for (i = 1; i < iors.length () ; i++)
     {
-      // this gets a copy of the MProfile, hense the auto_ptr;
+      // this gets a copy of the MProfile, hense ther auto_ptr;
 
-      ACE_AUTO_PTR_RESET (tmp_pfiles,
-                          iors[i]->_stubobj ()->make_profiles (),
-                          TAO_MProfile);
+      // @@ This is ugly, it is a work around MS C++ auto_ptr which
+      // does not implement reset ()!!
+      auto_ptr<TAO_MProfile> XXtemp (iors[i]->_stubobj ()->get_profiles ());
+      // tmp_pfiles.reset (iors[i]->_stubobj ()->get_profiles ());
+      tmp_pfiles = XXtemp;
 
       // check to see if any of the profile in tmp_pfiles are already
       // in Merged_Profiles.  If so raise exception.
@@ -86,9 +86,10 @@ TAO_IOR_Manipulation_impl::merge_iors (
         ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Duplicate (),
                           CORBA::Object::_nil ());
 
-      // If the object type_id's differ then raise an exception.
-      if (id.in () && iors[i]->_stubobj ()->type_id.in () &&
-          ACE_OS::strcmp (id.in (), iors[i]->_stubobj ()->type_id.in ()))
+      // If the object type_is's differ then raise an exception.
+      if (type_id.in () && iors[i]->_stubobj ()->type_id.in () &&
+          ACE_OS::strcmp (type_id.in (),
+                          iors[i]->_stubobj ()->type_id.in ()))
         ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                           CORBA::Object::_nil ());
 
@@ -99,46 +100,37 @@ TAO_IOR_Manipulation_impl::merge_iors (
 
     }
 
-  // MS C++ knows nothing about reset!
+  // MS C++ knows nothing abouyt reset!
   // tmp_pfiles.reset (0); // get rid of last MProfile
 
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-
-  TAO_Stub *stub = 0;
+  // @@ need some sort of auto_ptr here
+  TAO_Stub *stub;
   ACE_NEW_THROW_EX (stub,
-                    TAO_Stub (id._retn (),  // give the id string to stub
+                    TAO_Stub (type_id,
                               Merged_Profiles,
                               orb_core),
                     CORBA::NO_MEMORY ());
 
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  // Make the stub memory allocation exception safe for the duration
-  // of this method.
-  TAO_Stub_Auto_Ptr safe_stub (stub);
-
   // Create the CORBA level proxy
-  CORBA::Object_ptr temp_obj = CORBA::Object::_nil ();
-  ACE_NEW_THROW_EX (temp_obj,
-                    CORBA::Object (safe_stub.get ()),
+  CORBA_Object *new_obj;
+  ACE_NEW_THROW_EX (new_obj,
+                    CORBA_Object (stub),
                     CORBA::NO_MEMORY ());
-
-  CORBA::Object_var new_obj = temp_obj;
 
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Clean up in case of errors.
-  if (CORBA::is_nil (new_obj.in ()))
+  if (CORBA::is_nil (new_obj))
     {
+      stub->_decr_refcnt ();
       ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                         CORBA::Object::_nil ());
     }
 
-  // Release ownership of the pointers protected by the auto_ptrs since they
-  // no longer need to be protected by this point.
-  stub = safe_stub.release ();
-
-  return new_obj._retn ();
+  return new_obj;
 }
 
 CORBA::Object_ptr
@@ -175,78 +167,71 @@ TAO_IOR_Manipulation_impl::remove_profiles (
       ))
 {
   // First verify they are the same type!
-  CORBA::String_var id =
-    CORBA::string_dup (ior1->_stubobj ()->type_id.in ());
-  if (id.in () && ior2->_stubobj ()->type_id.in () &&
-      ACE_OS::strcmp (id.in (), ior2->_stubobj ()->type_id.in ()))
+  CORBA::String_var type_id = ior1->_stubobj ()->type_id;
+  if (type_id.in () && ior2->_stubobj ()->type_id.in () &&
+      ACE_OS::strcmp (type_id.in (),
+                      ior2->_stubobj ()->type_id.in ()))
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                       CORBA::Object::_nil ());
 
   // Since we are removing from ior1 ...
-  CORBA::ULong count = ior1->_stubobj ()->base_profiles ().profile_count ();
+  CORBA::ULong count = ior1->_stubobj ()->get_base_profiles ().profile_count ();
 
   // make sure we have some profiles
   if (count == 0 ||
-      ior2->_stubobj ()->base_profiles ().profile_count () == 0)
+      ior2->_stubobj ()->get_base_profiles ().profile_count () == 0)
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList (),
                       CORBA::Object::_nil ());
 
   // initialize with estimated pfile count.
   TAO_MProfile Diff_Profiles (count);
 
-  auto_ptr<TAO_MProfile> tmp_pfiles (ior1->_stubobj ()->make_profiles ());
+  auto_ptr<TAO_MProfile> tmp_pfiles (ior1->_stubobj ()->get_profiles ());
   if (Diff_Profiles.add_profiles (tmp_pfiles.get ()) < 0)
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                       CORBA::Object::_nil ());
 
-  ACE_AUTO_PTR_RESET (tmp_pfiles,
-                      ior2->_stubobj ()->make_profiles (),
-                      TAO_MProfile);
+  // @@ This is ugly, it is a work around MS C++ auto_ptr which
+  // does not implement reset ()!!
+  auto_ptr<TAO_MProfile> XXtemp (ior2->_stubobj ()->get_profiles ());
+  tmp_pfiles = XXtemp;
+  // tmp_pfiles.reset (ior2->_stubobj ()->get_profiles ());
 
   if (Diff_Profiles.remove_profiles (tmp_pfiles.get ()) < 0)
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::NotFound (),
                       CORBA::Object::_nil ());
 
-  // MS C++ knows nothing about reset!
+  // MS C++ knows nothing abouyt reset!
   // tmp_pfiles.reset (0); // get rid of last MProfile
 
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-
-  TAO_Stub *stub = 0;
+  TAO_Stub *stub;
   ACE_NEW_THROW_EX (stub,
-                    TAO_Stub (id._retn (), // give id string to stub
+                    TAO_Stub (type_id,
                               Diff_Profiles,
                               orb_core),
                     CORBA::NO_MEMORY ());
 
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  // Make the stub memory allocation exception safe for the duration
-  // of this method.
-  TAO_Stub_Auto_Ptr safe_stub (stub);
-
   // Create the CORBA level proxy
-  CORBA::Object_ptr temp_obj = CORBA::Object::_nil ();
-  ACE_NEW_THROW_EX (temp_obj,
-                    CORBA::Object (safe_stub.get ()),
+  CORBA_Object *new_obj;
+  ACE_NEW_THROW_EX (new_obj,
+                    CORBA_Object (stub),
                     CORBA::NO_MEMORY ());
-
-  CORBA::Object_var new_obj = temp_obj;
 
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
+
   // Clean up in case of errors.
-  if (CORBA::is_nil (new_obj.in ()))
+  if (CORBA::is_nil (new_obj))
     {
+      stub->_decr_refcnt ();
       ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                         CORBA::Object::_nil ());
     }
 
-  // Exception safety is no longer an issue by this point so release
-  // the TAO_Stub from the TAO_Stub_Auto_Ptr.
-  stub = safe_stub.release ();
-
-  return new_obj._retn ();
+  return new_obj;
 }
 
 CORBA::ULong
@@ -261,8 +246,8 @@ TAO_IOR_Manipulation_impl::is_in_ior (
 {
   CORBA::ULong count=0;
   TAO_Profile *pfile1, *pfile2;
-  auto_ptr<TAO_MProfile> tmp_pfiles1 (ior1->_stubobj ()->make_profiles ());
-  auto_ptr<TAO_MProfile> tmp_pfiles2 (ior2->_stubobj ()->make_profiles ());
+  auto_ptr<TAO_MProfile> tmp_pfiles1 (ior1->_stubobj ()->get_profiles ());
+  auto_ptr<TAO_MProfile> tmp_pfiles2 (ior2->_stubobj ()->get_profiles ());
 
   tmp_pfiles1->rewind ();
   while ((pfile1 = tmp_pfiles1->get_next ()) > 0)
@@ -292,7 +277,7 @@ TAO_IOR_Manipulation_impl::get_profile_count (
       ))
 {
   CORBA::ULong count;
-  count = ior->_stubobj ()->base_profiles ().profile_count ();
+  count = ior->_stubobj ()->get_base_profiles ().profile_count ();
 
   if (count == 0)
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList (),

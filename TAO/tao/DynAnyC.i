@@ -430,7 +430,7 @@ ACE_INLINE
 CORBA_NameValuePair_var::CORBA_NameValuePair_var (const CORBA_NameValuePair_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, CORBA_NameValuePair(*p.ptr_));
+    this->ptr_ = new CORBA_NameValuePair(*p.ptr_);
   else
     this->ptr_ = 0;
 }
@@ -455,9 +455,7 @@ CORBA_NameValuePair_var::operator= (const CORBA_NameValuePair_var &p)
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_NameValuePair (*p.ptr_), 
-		    *this);
+    this->ptr_ = new CORBA_NameValuePair (*p.ptr_);
   }
   return *this;
 }
@@ -601,7 +599,7 @@ ACE_INLINE
 CORBA_NameValuePairSeq_var::CORBA_NameValuePairSeq_var (const CORBA_NameValuePairSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, CORBA_NameValuePairSeq(*p.ptr_));
+    this->ptr_ = new CORBA_NameValuePairSeq(*p.ptr_);
   else
     this->ptr_ = 0;
 }
@@ -626,9 +624,7 @@ CORBA_NameValuePairSeq_var::operator= (const CORBA_NameValuePairSeq_var &p) // d
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_NameValuePairSeq (*p.ptr_), 
-		    *this);
+    this->ptr_ = new CORBA_NameValuePairSeq (*p.ptr_);
   }
   return *this;
 }
@@ -1158,7 +1154,7 @@ ACE_INLINE
 CORBA_AnySeq_var::CORBA_AnySeq_var (const CORBA_AnySeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, CORBA_AnySeq(*p.ptr_));
+    this->ptr_ = new CORBA_AnySeq(*p.ptr_);
   else
     this->ptr_ = 0;
 }
@@ -1183,9 +1179,7 @@ CORBA_AnySeq_var::operator= (const CORBA_AnySeq_var &p) // deep copy
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_AnySeq (*p.ptr_), 
-		    *this);
+    this->ptr_ = new CORBA_AnySeq (*p.ptr_);
   }
   return *this;
 }

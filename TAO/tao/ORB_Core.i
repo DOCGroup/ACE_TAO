@@ -1,7 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-
 #include "ace/Dynamic_Service.h"
 
 ACE_INLINE ACE_Thread_Manager *
@@ -13,7 +12,7 @@ TAO_ORB_Core::thr_mgr (void)
 ACE_INLINE CORBA::ORB_ptr
 TAO_ORB_Core::orb (void)
 {
-  return this->orb_.in ();
+  return this->orb_;
 }
 
 ACE_INLINE TAO_POA *
@@ -115,12 +114,17 @@ TAO_ORB_Core::to_unicode (void) const
   return this->to_unicode_;
 }
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+ACE_INLINE TAO_GIOP_ServiceContextList&
+TAO_ORB_Core::service_context (void)
+{
+  return this->service_context_;
+}
 
-ACE_INLINE TAO_Policy_Manager *
+#if defined (TAO_HAS_CORBA_MESSAGING)
+ACE_INLINE TAO_Policy_Manager*
 TAO_ORB_Core::policy_manager (void)
 {
-  return this->policy_manager_;
+  return &this->policy_manager_;
 }
 
 ACE_INLINE CORBA::Policy_ptr
@@ -128,50 +132,16 @@ TAO_ORB_Core::get_default_policy (
       CORBA::PolicyType policy,
       CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->default_policies_->get_policy (policy, ACE_TRY_ENV);
+  return this->default_policies_.get_policy (policy, ACE_TRY_ENV);
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-ACE_INLINE TAO_RelativeRoundtripTimeoutPolicy *
+ACE_INLINE POA_Messaging::RelativeRoundtripTimeoutPolicy*
 TAO_ORB_Core::default_relative_roundtrip_timeout (void) const
 {
-  return this->default_policies_->relative_roundtrip_timeout ();
+  return this->default_policies_.relative_roundtrip_timeout ();
 }
 
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-ACE_INLINE TAO_Client_Priority_Policy *
-TAO_ORB_Core::default_client_priority (void) const
-{
-  return this->default_policies_->client_priority ();
-}
-
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
-
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-ACE_INLINE TAO_Sync_Scope_Policy *
-TAO_ORB_Core::default_sync_scope (void) const
-{
-  return this->default_policies_->sync_scope ();
-}
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
-
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-ACE_INLINE TAO_Buffering_Constraint_Policy *
-TAO_ORB_Core::default_buffering_constraint (void) const
-{
-  return this->default_policies_->buffering_constraint ();
-}
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 ACE_INLINE TAO_ORB_Core_TSS_Resources*
 TAO_ORB_Core::get_tss_resources (void)
@@ -179,182 +149,147 @@ TAO_ORB_Core::get_tss_resources (void)
   return ACE_TSS_GET (&this->tss_resources_,TAO_ORB_Core_TSS_Resources);
 }
 
-ACE_INLINE int
-TAO_ORB_Core::has_shutdown (void)
+ACE_INLINE TAO_Leader_Follower &
+TAO_ORB_Core::leader_follower (void)
 {
-  return this->has_shutdown_;
-}
-
-ACE_INLINE void
-TAO_ORB_Core::check_shutdown (CORBA_Environment &ACE_TRY_ENV)
-{
-  if (this->has_shutdown ())
-    {
-      // As defined by the CORBA 2.3 specification, throw a
-      // CORBA::BAD_INV_ORDER exception with minor code 4 if the ORB
-      // has shutdown by the time an ORB function is called.
-
-      ACE_THROW (CORBA::BAD_INV_ORDER (4, CORBA::COMPLETED_NO));
-    }
-}
-
-
-ACE_INLINE int
-TAO_ORB_Core::thread_per_connection_timeout (ACE_Time_Value &timeout) const
-{
-  timeout = this->thread_per_connection_timeout_;
-  return this->thread_per_connection_use_timeout_;
-}
-
-ACE_INLINE const char *
-TAO_ORB_Core::orbid (void) const
-{
-  return this->orbid_;
-}
-
-ACE_INLINE void
-TAO_ORB_Core::implrepo_service (const CORBA::Object_ptr ir)
-{
-  this->implrepo_service_ = ir;
-}
-
-// ****************************************************************
-
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-ACE_INLINE TAO_Eager_Buffering_Sync_Strategy &
-TAO_ORB_Core::eager_buffering_sync_strategy (void)
-{
-  return *this->eager_buffering_sync_strategy_;
-}
-
-ACE_INLINE TAO_Delayed_Buffering_Sync_Strategy &
-TAO_ORB_Core::delayed_buffering_sync_strategy (void)
-{
-  return *this->delayed_buffering_sync_strategy_;
-}
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-ACE_INLINE TAO_Transport_Sync_Strategy &
-TAO_ORB_Core::transport_sync_strategy (void)
-{
-  return *this->transport_sync_strategy_;
-}
-
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
-ACE_INLINE TAO_Policy_Current &
-TAO_ORB_Core::policy_current (void)
-{
-  return *this->policy_current_;
-}
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-ACE_INLINE TAO_Priority_Mapping *
-TAO_ORB_Core::priority_mapping (void)
-{
-  return this->priority_mapping_;
-}
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
-ACE_INLINE TAO_POA_Current &
-TAO_ORB_Core::poa_current (void) const
-{
-  return *this->poa_current_;
-}
-
-ACE_INLINE CORBA_Environment *
-TAO_ORB_Core::default_environment (void) const
-{
-  return TAO_TSS_RESOURCES::instance ()->default_environment_;
-}
-
-ACE_INLINE void
-TAO_ORB_Core::default_environment (CORBA_Environment *env)
-{
-  TAO_TSS_RESOURCES::instance ()->default_environment_ = env;
+  return this->leader_follower_;
 }
 
 // ****************************************************************
 
 ACE_INLINE
-TAO_ORB_Core_Auto_Ptr::TAO_ORB_Core_Auto_Ptr (TAO_ORB_Core *p)
-  : p_ (p)
+TAO_Leader_Follower::TAO_Leader_Follower (TAO_ORB_Core* orb_core)
+  : orb_core_ (orb_core),
+    reverse_lock_ (lock_),
+    leaders_ (0)
 {
-  ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::TAO_ORB_Core_Auto_Ptr");
 }
 
-ACE_INLINE TAO_ORB_Core *
-TAO_ORB_Core_Auto_Ptr::get (void) const
+ACE_INLINE TAO_ORB_Core_TSS_Resources *
+TAO_Leader_Follower::get_tss_resources (void) const
 {
-  ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::get");
-  return this->p_;
-}
-
-ACE_INLINE TAO_ORB_Core *
-TAO_ORB_Core_Auto_Ptr::release (void)
-{
-  ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::release");
-  TAO_ORB_Core *old = this->p_;
-  this->p_ = 0;
-  return old;
+  return this->orb_core_->get_tss_resources ();
 }
 
 ACE_INLINE void
-TAO_ORB_Core_Auto_Ptr::reset (TAO_ORB_Core *p)
+TAO_Leader_Follower::set_server_thread (void)
 {
-  ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::reset");
-  if (this->get () != p && this->get () != 0)
-    this->get ()->fini ();
-  this->p_ = p;
+  // Set the TSS flag to remember that we are a leader thread...
+  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  tss->is_server_thread_ = 1;
+
+  ++this->leaders_;
 }
 
-ACE_INLINE TAO_ORB_Core *
-TAO_ORB_Core_Auto_Ptr::operator-> () const
+ACE_INLINE void
+TAO_Leader_Follower::reset_server_thread (void)
 {
-  ACE_TRACE ("auto_ptr::operator->");
-  return this->get ();
+  // Set the TSS flag to remember that we are a leader thread...
+  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  tss->is_server_thread_ = 0;
+
+  --this->leaders_;
 }
 
-ACE_INLINE
-TAO_ORB_Core_Auto_Ptr::TAO_ORB_Core_Auto_Ptr (TAO_ORB_Core_Auto_Ptr &rhs)
-  : p_ (rhs.release ())
+ACE_INLINE int
+TAO_Leader_Follower::leader_available (void) const
 {
-  ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::TAO_ORB_Core_Auto_Ptr");
+  return this->leaders_ != 0;
 }
 
-ACE_INLINE TAO_ORB_Core_Auto_Ptr &
-TAO_ORB_Core_Auto_Ptr::operator= (TAO_ORB_Core_Auto_Ptr &rhs)
+ACE_INLINE void
+TAO_Leader_Follower::set_client_thread (void)
 {
-  ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::operator=");
-  if (this != &rhs)
+  // Set the TSS flag to remember that we are a leader thread...
+  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  if (tss->is_server_thread_)
     {
-      this->reset (rhs.release ());
+      --this->leaders_;
     }
-  return *this;
 }
 
-ACE_INLINE
-TAO_ORB_Core_Auto_Ptr::~TAO_ORB_Core_Auto_Ptr (void)
+ACE_INLINE void
+TAO_Leader_Follower::reset_client_thread (void)
 {
-  ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::~TAO_ORB_Core_Auto_Ptr");
-  if (this->get() != 0)
-    this->get ()->fini ();
+  // Set the TSS flag to remember that we are a leader thread...
+  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  if (tss->is_server_thread_)
+    {
+      ++this->leaders_;
+    }
 }
 
-// Accessor methods to the underlying ORB_Core Object
-
-ACE_INLINE TAO_ORB_Core &
-TAO_ORB_Core_Auto_Ptr::operator *() const
+ACE_INLINE void
+TAO_Leader_Follower::set_leader_thread (void)
 {
-  ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::operator *()");
-  // @@ Potential problem if this->p_ is zero!
-  return *this->get ();
+  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  if (tss->is_leader_thread_ == 0)
+    {
+      ++this->leaders_;
+    }
+  ++tss->is_leader_thread_;
+}
+
+ACE_INLINE void
+TAO_Leader_Follower::reset_leader_thread (void)
+{
+  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  --tss->is_leader_thread_;
+  if (tss->is_leader_thread_ == 0)
+    {
+      --this->leaders_;
+    }
+}
+
+ACE_INLINE int
+TAO_Leader_Follower::is_leader_thread (void) const
+{
+  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  return tss->is_leader_thread_ != 0;
+}
+
+ACE_INLINE int
+TAO_Leader_Follower::follower_available (void) const
+{
+  return !this->follower_set_.is_empty ();
+}
+
+ACE_INLINE int
+TAO_Leader_Follower::elect_new_leader (void)
+{
+  if (this->leaders_ == 0 && this->follower_available ())
+    {
+      ACE_SYNCH_CONDITION* condition_ptr = this->get_next_follower ();
+      if (condition_ptr == 0 || condition_ptr->signal () == -1)
+        return -1;
+    }
+  return 0;
+}
+
+ACE_INLINE int
+TAO_Leader_Follower::add_follower (ACE_SYNCH_CONDITION *follower_ptr)
+{
+  if (this->follower_set_.insert (follower_ptr) != 0)
+    return -1;
+  return 0;
+}
+
+ACE_INLINE int
+TAO_Leader_Follower::remove_follower (ACE_SYNCH_CONDITION *follower_ptr)
+{
+  return this->follower_set_.remove (follower_ptr);
+}
+
+ACE_INLINE ACE_SYNCH_MUTEX &
+TAO_Leader_Follower::lock (void)
+{
+  return this->lock_;
+}
+
+ACE_INLINE ACE_Reverse_Lock<ACE_SYNCH_MUTEX> &
+TAO_Leader_Follower::reverse_lock (void)
+{
+  return this->reverse_lock_;
 }
 
 // ****************************************************************

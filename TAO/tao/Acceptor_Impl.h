@@ -17,7 +17,6 @@
 
 #ifndef TAO_ACCEPTOR_IMPL_H
 #define TAO_ACCEPTOR_IMPL_H
-#include "ace/pre.h"
 
 #include "ace/Acceptor.h"
 
@@ -25,75 +24,49 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-template <class SVC_HANDLER>
-class TAO_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
+template<class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> class TAO_Acceptor_Impl : public ACE_Acceptor<SVC_HANDLER,ACE_PEER_ACCEPTOR_2>
 {
   // = TITLE
-  //     Creates a Svc_Handler and set the ORB_Core pointer on it.
+  //   Helper class to implement the acceptors in TAO
+  //
+  // = DESCRIPTION
+  //   TAO pluggable protocols framework provide an abstraction to
+  //   represent any kind of acceptor object, the implementation of
+  //   that acceptor is left for the pluggable protocol implementor,
+  //   but the most common case would be to use an ACE_Acceptor<>
+  //   instantiated over the right Svc_Handlers.
+  //   But the Svc_Handlers must inherit the <orb_core> that owns the
+  //   acceptor, though this could be implemented in each pluggable
+  //   protocol we believe that this class would simplify that task
+  //   and work in most cases.  Pluggable protocol implementors are,
+  //   of course, free to use something else.
+  //
 public:
-  TAO_Creation_Strategy (TAO_ORB_Core *orb_core,
-                         CORBA::Boolean flag = 0);
+  // = Initialization and termination methods.
+  TAO_Acceptor_Impl (ACE_Reactor * = 0,
+                     int use_select = 1);
   // Constructor.
 
-  int make_svc_handler (SVC_HANDLER *&sh);
-  // Create a SVC_HANDLER  and set the ORB_Core pointer on it.
+  TAO_Acceptor_Impl (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
+                     ACE_Reactor * = ACE_Reactor::instance (),
+                     int flags = 0,
+                     int use_select = 1,
+                     int reuse_addr = 1);
+  // The constructors, just delegate to the base class.
+
+  int open (TAO_ORB_Core* orb_core,
+            const ACE_PEER_ACCEPTOR_ADDR &,
+            int flags = 0,
+            int use_select = 1,
+            int reuse_addr = 1);
+  // Initialize the ORB_Core.
 
 protected:
-  TAO_ORB_Core *orb_core_;
-  // Pointer to the ORB Core.
-  
-  CORBA::Boolean lite_flag_;
-  // Should we use the Lite version for any protocol?
-};
+  // = See $ACE_ROOT/ace/Acceptor.h for the documentation.
+  virtual int make_svc_handler (SVC_HANDLER *&sh);
+  virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
 
-template <class SVC_HANDLER>
-class TAO_Concurrency_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
-{
-  // = TITLE
-  //     Activates the Svc_Handler, and then if specified by the
-  //     TAO_Server_Strategy_Factory, it activates the Svc_Handler to
-  //     run in its own thread.
-public:
-  TAO_Concurrency_Strategy (TAO_ORB_Core *orb_core);
-  // Constructor.
-
-  int activate_svc_handler (SVC_HANDLER *svc_handler,
-                            void *arg);
-  // Activates the Svc_Handler, and then if specified by the
-  // TAO_Server_Strategy_Factory, it activates the Svc_Handler to run
-  // in its own thread.
-
-protected:
-  TAO_ORB_Core *orb_core_;
-  // Pointer to the ORB Core.
-};
-
-template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
-class TAO_Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
-{
-public:
-
-  TAO_Accept_Strategy (TAO_ORB_Core *orb_core);
-  // Constructor.
-
-  int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-            int restart = 0);
-  // Initialize the <peer_acceptor_> with <local_addr>.  If the
-  // process runs out of handles, purge some "old" connections.
-
-  int accept_svc_handler (SVC_HANDLER *svc_handler);
-  // Delegates to the <accept> method of the PEER_ACCEPTOR. If the
-  // process runs out of handles, purge some "old" connections.
-
-protected:
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-  int out_of_sockets_handler (void);
-  // Handler which deals with purging "old" connections.
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
-
-  typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> ACCEPT_STRATEGY_BASE;
-  // Base class.
-
+private:
   TAO_ORB_Core *orb_core_;
   // Pointer to the ORB Core.
 };
@@ -110,5 +83,4 @@ protected:
 #pragma implementation ("Acceptor_Impl.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
 #endif /* TAO_ACCEPTOR_IMPL_H */

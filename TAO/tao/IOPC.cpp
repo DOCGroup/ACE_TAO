@@ -1,6 +1,5 @@
 //
 // $Id$
-
 //
 // ================================================================
 //
@@ -538,33 +537,30 @@ TAO_NAMESPACE_DEFINE (const CORBA::ULong, UnknownExceptionInfo, 9)
 TAO_NAMESPACE_END
 void operator<<= (CORBA::Any &_tao_any, const IOP::TaggedProfile &_tao_elem) // copying
 {
-    TAO_OutputCDR stream;
-    stream << _tao_elem;
-    _tao_any._tao_replace (
-        IOP::_tc_TaggedProfile,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin ()
-      );
-}
-
-void IOP::TaggedProfile::_tao_any_destructor (void *x)
-{
-  IOP::TaggedProfile *tmp = ACE_static_cast(IOP::TaggedProfile*,x);
-  delete tmp;
+  IOP::TaggedProfile *_any_val;
+  ACE_NEW (_any_val, IOP::TaggedProfile (_tao_elem));
+  if (!_any_val) return;
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (IOP::_tc_TaggedProfile, _any_val, 1, ACE_TRY_ENV); // copy the value
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    delete _any_val;
+  }
+  ACE_ENDTRY;
 }
 
 void operator<<= (CORBA::Any &_tao_any, IOP::TaggedProfile *_tao_elem) // non copying
 {
-    TAO_OutputCDR stream;
-    stream << *_tao_elem;
-    _tao_any._tao_replace (
-        IOP::_tc_TaggedProfile,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_elem,
-        IOP::TaggedProfile::_tao_any_destructor
-      );
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (IOP::_tc_TaggedProfile, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY {}
+  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::TaggedProfile *&_tao_elem)
@@ -572,95 +568,33 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::TaggedProfile *&_ta
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_TaggedProfile, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
+    if (!type->equal (IOP::_tc_TaggedProfile, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (IOP::TaggedProfile *)_tao_any.value ();
       return 1;
-    }
+      }
     else
     {
       ACE_NEW_RETURN (_tao_elem, IOP::TaggedProfile, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
+      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      if (stream.decode (IOP::_tc_TaggedProfile, _tao_elem, 0, ACE_TRY_ENV)
+        == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_TaggedProfile,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            IOP::TaggedProfile::_tao_any_destructor
-          );
+        ((CORBA::Any *)&_tao_any)->replace (IOP::_tc_TaggedProfile, _tao_elem, 1, ACE_TRY_ENV);
+        ACE_TRY_CHECK;
         return 1;
       }
       else
       {
         delete _tao_elem;
-        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
     delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::TaggedProfile *&_tao_elem)
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_TaggedProfile, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (IOP::TaggedProfile *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, IOP::TaggedProfile, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(IOP::TaggedProfile *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_TaggedProfile,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (IOP::TaggedProfile *&, _tao_elem)),
-            IOP::TaggedProfile::_tao_any_destructor
-          );
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (IOP::TaggedProfile *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (IOP::TaggedProfile *&, _tao_elem);
-    _tao_elem = 0;
     return 0;
   }
   ACE_ENDTRY;
@@ -669,33 +603,30 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::TaggedProfile
 
 void operator<<= (CORBA::Any &_tao_any, const IOP::IOR &_tao_elem) // copying
 {
-    TAO_OutputCDR stream;
-    stream << _tao_elem;
-    _tao_any._tao_replace (
-        IOP::_tc_IOR,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin ()
-      );
-}
-
-void IOP::IOR::_tao_any_destructor (void *x)
-{
-  IOP::IOR *tmp = ACE_static_cast(IOP::IOR*,x);
-  delete tmp;
+  IOP::IOR *_any_val;
+  ACE_NEW (_any_val, IOP::IOR (_tao_elem));
+  if (!_any_val) return;
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (IOP::_tc_IOR, _any_val, 1, ACE_TRY_ENV); // copy the value
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    delete _any_val;
+  }
+  ACE_ENDTRY;
 }
 
 void operator<<= (CORBA::Any &_tao_any, IOP::IOR *_tao_elem) // non copying
 {
-    TAO_OutputCDR stream;
-    stream << *_tao_elem;
-    _tao_any._tao_replace (
-        IOP::_tc_IOR,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_elem,
-        IOP::IOR::_tao_any_destructor
-      );
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (IOP::_tc_IOR, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY {}
+  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::IOR *&_tao_elem)
@@ -703,95 +634,33 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::IOR *&_tao_elem)
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_IOR, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
+    if (!type->equal (IOP::_tc_IOR, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (IOP::IOR *)_tao_any.value ();
       return 1;
-    }
+      }
     else
     {
       ACE_NEW_RETURN (_tao_elem, IOP::IOR, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
+      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      if (stream.decode (IOP::_tc_IOR, _tao_elem, 0, ACE_TRY_ENV)
+        == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_IOR,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            IOP::IOR::_tao_any_destructor
-          );
+        ((CORBA::Any *)&_tao_any)->replace (IOP::_tc_IOR, _tao_elem, 1, ACE_TRY_ENV);
+        ACE_TRY_CHECK;
         return 1;
       }
       else
       {
         delete _tao_elem;
-        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
     delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::IOR *&_tao_elem)
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_IOR, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (IOP::IOR *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, IOP::IOR, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(IOP::IOR *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_IOR,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (IOP::IOR *&, _tao_elem)),
-            IOP::IOR::_tao_any_destructor
-          );
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (IOP::IOR *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (IOP::IOR *&, _tao_elem);
-    _tao_elem = 0;
     return 0;
   }
   ACE_ENDTRY;
@@ -800,33 +669,30 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::IOR *&_tao_el
 
 void operator<<= (CORBA::Any &_tao_any, const IOP::TaggedComponent &_tao_elem) // copying
 {
-    TAO_OutputCDR stream;
-    stream << _tao_elem;
-    _tao_any._tao_replace (
-        IOP::_tc_TaggedComponent,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin ()
-      );
-}
-
-void IOP::TaggedComponent::_tao_any_destructor (void *x)
-{
-  IOP::TaggedComponent *tmp = ACE_static_cast(IOP::TaggedComponent*,x);
-  delete tmp;
+  IOP::TaggedComponent *_any_val;
+  ACE_NEW (_any_val, IOP::TaggedComponent (_tao_elem));
+  if (!_any_val) return;
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (IOP::_tc_TaggedComponent, _any_val, 1, ACE_TRY_ENV); // copy the value
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    delete _any_val;
+  }
+  ACE_ENDTRY;
 }
 
 void operator<<= (CORBA::Any &_tao_any, IOP::TaggedComponent *_tao_elem) // non copying
 {
-    TAO_OutputCDR stream;
-    stream << *_tao_elem;
-    _tao_any._tao_replace (
-        IOP::_tc_TaggedComponent,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_elem,
-        IOP::TaggedComponent::_tao_any_destructor
-      );
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (IOP::_tc_TaggedComponent, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY {}
+  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::TaggedComponent *&_tao_elem)
@@ -834,95 +700,33 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::TaggedComponent *&_
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_TaggedComponent, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
+    if (!type->equal (IOP::_tc_TaggedComponent, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (IOP::TaggedComponent *)_tao_any.value ();
       return 1;
-    }
+      }
     else
     {
       ACE_NEW_RETURN (_tao_elem, IOP::TaggedComponent, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
+      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      if (stream.decode (IOP::_tc_TaggedComponent, _tao_elem, 0, ACE_TRY_ENV)
+        == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_TaggedComponent,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            IOP::TaggedComponent::_tao_any_destructor
-          );
+        ((CORBA::Any *)&_tao_any)->replace (IOP::_tc_TaggedComponent, _tao_elem, 1, ACE_TRY_ENV);
+        ACE_TRY_CHECK;
         return 1;
       }
       else
       {
         delete _tao_elem;
-        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
     delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::TaggedComponent *&_tao_elem)
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_TaggedComponent, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (IOP::TaggedComponent *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, IOP::TaggedComponent, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(IOP::TaggedComponent *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_TaggedComponent,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (IOP::TaggedComponent *&, _tao_elem)),
-            IOP::TaggedComponent::_tao_any_destructor
-          );
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (IOP::TaggedComponent *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (IOP::TaggedComponent *&, _tao_elem);
-    _tao_elem = 0;
     return 0;
   }
   ACE_ENDTRY;
@@ -934,35 +738,30 @@ void operator<<= (
     const IOP::MultipleComponentProfile &_tao_elem
   ) // copying
 {
-    TAO_OutputCDR stream;
-    if (stream << _tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_MultipleComponentProfile,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin ()
-        );
-    }
-}
-
-void IOP::MultipleComponentProfile::_tao_any_destructor (void *x)
-{
-  IOP::MultipleComponentProfile *tmp = ACE_static_cast(IOP::MultipleComponentProfile*,x);
-  delete tmp;
+  IOP::MultipleComponentProfile *_tao_any_val;
+  ACE_NEW (_tao_any_val, IOP::MultipleComponentProfile (_tao_elem));
+  if (!_tao_any_val) return;
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (IOP::_tc_MultipleComponentProfile, _tao_any_val, 1, ACE_TRY_ENV); // copy the value
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    delete _tao_any_val;
+  }
+  ACE_ENDTRY;
 }
 
 void operator<<= (CORBA::Any &_tao_any, IOP::MultipleComponentProfile *_tao_elem) // non copying
 {
-    TAO_OutputCDR stream;
-    stream << *_tao_elem;
-    _tao_any._tao_replace (
-        IOP::_tc_MultipleComponentProfile,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_elem,
-        IOP::MultipleComponentProfile::_tao_any_destructor
-      );
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (IOP::_tc_MultipleComponentProfile, _tao_elem, 0, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY {}
+  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::MultipleComponentProfile *&_tao_elem)
@@ -970,11 +769,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::MultipleComponentPr
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_MultipleComponentProfile, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
+    if (!type->equal (IOP::_tc_MultipleComponentProfile, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
@@ -984,81 +779,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::MultipleComponentPr
     else
     {
       ACE_NEW_RETURN (_tao_elem, IOP::MultipleComponentProfile, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
+      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      if (stream.decode (IOP::_tc_MultipleComponentProfile, _tao_elem, 0, ACE_TRY_ENV)
+        == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_MultipleComponentProfile,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            IOP::MultipleComponentProfile::_tao_any_destructor
-          );
+        ((CORBA::Any *)&_tao_any)->replace (IOP::_tc_MultipleComponentProfile, _tao_elem, 1, ACE_TRY_ENV);
+        ACE_TRY_CHECK;
         return 1;
       }
       else
       {
         delete _tao_elem;
-        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
     delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::MultipleComponentProfile *&_tao_elem)
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_MultipleComponentProfile, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (IOP::MultipleComponentProfile *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, IOP::MultipleComponentProfile, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(IOP::MultipleComponentProfile *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_MultipleComponentProfile,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (IOP::MultipleComponentProfile *&, _tao_elem)),
-            IOP::MultipleComponentProfile::_tao_any_destructor
-          );
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (IOP::MultipleComponentProfile *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (IOP::MultipleComponentProfile *&, _tao_elem);
-    _tao_elem = 0;
     return 0;
   }
   ACE_ENDTRY;
@@ -1067,33 +804,30 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::MultipleCompo
 
 void operator<<= (CORBA::Any &_tao_any, const IOP::ServiceContext &_tao_elem) // copying
 {
-    TAO_OutputCDR stream;
-    stream << _tao_elem;
-    _tao_any._tao_replace (
-        IOP::_tc_ServiceContext,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin ()
-      );
-}
-
-void IOP::ServiceContext::_tao_any_destructor (void *x)
-{
-  IOP::ServiceContext *tmp = ACE_static_cast(IOP::ServiceContext*,x);
-  delete tmp;
+  IOP::ServiceContext *_any_val;
+  ACE_NEW (_any_val, IOP::ServiceContext (_tao_elem));
+  if (!_any_val) return;
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (IOP::_tc_ServiceContext, _any_val, 1, ACE_TRY_ENV); // copy the value
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    delete _any_val;
+  }
+  ACE_ENDTRY;
 }
 
 void operator<<= (CORBA::Any &_tao_any, IOP::ServiceContext *_tao_elem) // non copying
 {
-    TAO_OutputCDR stream;
-    stream << *_tao_elem;
-    _tao_any._tao_replace (
-        IOP::_tc_ServiceContext,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_elem,
-        IOP::ServiceContext::_tao_any_destructor
-      );
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (IOP::_tc_ServiceContext, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY {}
+  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::ServiceContext *&_tao_elem)
@@ -1101,95 +835,33 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::ServiceContext *&_t
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_ServiceContext, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
+    if (!type->equal (IOP::_tc_ServiceContext, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (IOP::ServiceContext *)_tao_any.value ();
       return 1;
-    }
+      }
     else
     {
       ACE_NEW_RETURN (_tao_elem, IOP::ServiceContext, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
+      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      if (stream.decode (IOP::_tc_ServiceContext, _tao_elem, 0, ACE_TRY_ENV)
+        == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_ServiceContext,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            IOP::ServiceContext::_tao_any_destructor
-          );
+        ((CORBA::Any *)&_tao_any)->replace (IOP::_tc_ServiceContext, _tao_elem, 1, ACE_TRY_ENV);
+        ACE_TRY_CHECK;
         return 1;
       }
       else
       {
         delete _tao_elem;
-        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
     delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::ServiceContext *&_tao_elem)
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_ServiceContext, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (IOP::ServiceContext *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, IOP::ServiceContext, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(IOP::ServiceContext *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_ServiceContext,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (IOP::ServiceContext *&, _tao_elem)),
-            IOP::ServiceContext::_tao_any_destructor
-          );
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (IOP::ServiceContext *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (IOP::ServiceContext *&, _tao_elem);
-    _tao_elem = 0;
     return 0;
   }
   ACE_ENDTRY;
@@ -1201,35 +873,30 @@ void operator<<= (
     const IOP::ServiceContextList &_tao_elem
   ) // copying
 {
-    TAO_OutputCDR stream;
-    if (stream << _tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_ServiceContextList,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin ()
-        );
-    }
-}
-
-void IOP::ServiceContextList::_tao_any_destructor (void *x)
-{
-  IOP::ServiceContextList *tmp = ACE_static_cast(IOP::ServiceContextList*,x);
-  delete tmp;
+  IOP::ServiceContextList *_tao_any_val;
+  ACE_NEW (_tao_any_val, IOP::ServiceContextList (_tao_elem));
+  if (!_tao_any_val) return;
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (IOP::_tc_ServiceContextList, _tao_any_val, 1, ACE_TRY_ENV); // copy the value
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    delete _tao_any_val;
+  }
+  ACE_ENDTRY;
 }
 
 void operator<<= (CORBA::Any &_tao_any, IOP::ServiceContextList *_tao_elem) // non copying
 {
-    TAO_OutputCDR stream;
-    stream << *_tao_elem;
-    _tao_any._tao_replace (
-        IOP::_tc_ServiceContextList,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_elem,
-        IOP::ServiceContextList::_tao_any_destructor
-      );
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (IOP::_tc_ServiceContextList, _tao_elem, 0, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY {}
+  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::ServiceContextList *&_tao_elem)
@@ -1237,11 +904,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::ServiceContextList 
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_ServiceContextList, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
+    if (!type->equal (IOP::_tc_ServiceContextList, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
@@ -1251,81 +914,23 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::ServiceContextList 
     else
     {
       ACE_NEW_RETURN (_tao_elem, IOP::ServiceContextList, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
+      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      if (stream.decode (IOP::_tc_ServiceContextList, _tao_elem, 0, ACE_TRY_ENV)
+        == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_ServiceContextList,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            IOP::ServiceContextList::_tao_any_destructor
-          );
+        ((CORBA::Any *)&_tao_any)->replace (IOP::_tc_ServiceContextList, _tao_elem, 1, ACE_TRY_ENV);
+        ACE_TRY_CHECK;
         return 1;
       }
       else
       {
         delete _tao_elem;
-        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
     delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::ServiceContextList *&_tao_elem)
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_ServiceContextList, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (IOP::ServiceContextList *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, IOP::ServiceContextList, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(IOP::ServiceContextList *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_ServiceContextList,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (IOP::ServiceContextList *&, _tao_elem)),
-            IOP::ServiceContextList::_tao_any_destructor
-          );
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (IOP::ServiceContextList *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (IOP::ServiceContextList *&, _tao_elem);
-    _tao_elem = 0;
     return 0;
   }
   ACE_ENDTRY;

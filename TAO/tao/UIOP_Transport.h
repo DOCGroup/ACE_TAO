@@ -1,7 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -21,19 +20,16 @@
 
 #ifndef TAO_UIOP_TRANSPORT_H
 #define TAO_UIOP_TRANSPORT_H
-#include "ace/pre.h"
 
 #include "tao/Pluggable.h"
-
-#include "tao/GIOP_Message_State.h"
-
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/GIOP.h"
 
-# if TAO_HAS_UIOP == 1
+# if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 // Forward decls.
 class TAO_UIOP_Handler_Base;
@@ -59,44 +55,61 @@ public:
   ~TAO_UIOP_Transport (void);
   // Default destructor.
 
+  CORBA::ULong tag (void);
+  // Returns the specific IOP instance, in this case UIOP.
+
+  void close_connection (void);
+  // Call the corresponding connection handlers close method.
+
+  int idle (void);
+  // Idles the corresponding connection handler.
+
   TAO_UIOP_Handler_Base *&handler (void);
   // Return a reference to the corresponding connection handler.
 
-  // = The TAO_Transport methods, please check the documentation in
-  //   "tao/Pluggable.h" for more details.
-  virtual void close_connection (void);
-  virtual int idle (void);
-  virtual ACE_HANDLE handle (void);
-  virtual ACE_Event_Handler *event_handler (void);
-  virtual ssize_t send (TAO_Stub *stub,
-                        int two_way,
-                        const ACE_Message_Block *mblk,
-                        const ACE_Time_Value *s = 0);
-  virtual ssize_t send (const ACE_Message_Block *mblk,
-                        const ACE_Time_Value *s = 0);
-  virtual ssize_t send (const u_char *buf,
-                        size_t len,
-                        const ACE_Time_Value *s = 0);
-  virtual ssize_t recv (char *buf,
-                        size_t len,
-                        const ACE_Time_Value *s = 0);
-  virtual int send_request (TAO_Stub *stub,
-                            TAO_ORB_Core *orb_core ,
+  ACE_HANDLE handle (void);
+  // Return the underlying connection handle.
+
+  ssize_t send (const ACE_Message_Block *mblk,
+                ACE_Time_Value *s = 0);
+  // Write the contents of the Message_Block to the connection.
+
+  ssize_t send (const u_char *buf,
+                size_t len,
+                ACE_Time_Value *s = 0);
+  // Write the contents of the buffer of length len to the connection.
+
+  ssize_t send (const iovec *iov,
+                int iovcnt,
+                ACE_Time_Value *s = 0);
+  // Write the contents of iovcnt iovec's to the connection.
+
+  ssize_t recv (char *buf,
+                size_t len,
+                ACE_Time_Value *s = 0);
+  // Read len bytes from into buf.
+
+  ssize_t recv (char *buf,
+                size_t len,
+                int flags,
+                ACE_Time_Value *s = 0);
+  // Read len bytes from into buf using flags.
+
+  ssize_t recv (iovec *iov,
+                int iovcnt,
+                ACE_Time_Value *s = 0);
+  //  Read received data into the iovec buffers.
+
+  virtual int send_request (TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
                             int twoway,
                             ACE_Time_Value *max_wait_time);
+  // Default action to be taken for send request.
 
-  
-  virtual CORBA::Boolean 
-  send_request_header (TAO_Operation_Details &opdetails,
-                       TAO_Target_Specification &spec,
-                       TAO_OutputCDR &msg);
-  
 protected:
   TAO_UIOP_Handler_Base *handler_;
   // the connection service handler used for accessing lower layer
   // communication protocols.
-
 };
 
 class TAO_Export TAO_UIOP_Client_Transport : public TAO_UIOP_Transport
@@ -122,60 +135,51 @@ public:
   TAO_UIOP_Client_Connection_Handler *client_handler (void);
   // return a pointer to the client's connection handler.
 
-  // = The TAO_Transport methods, please check the documentation in
-  //   "tao/Pluggable.h" for more details.
   virtual void start_request (TAO_ORB_Core *orb_core,
-                              TAO_Target_Specification &spec,
+                              const TAO_Profile *profile,
+                              const char* opname,
+                              CORBA::ULong request_id,
+                              CORBA::Boolean is_twoway,
                               TAO_OutputCDR &output,
                               CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
+  // Fill into <output> the right headers to make a request.
 
   virtual void start_locate (TAO_ORB_Core *orb_core,
-                             TAO_Target_Specification &spec,
-                             TAO_Operation_Details &opdetails,
+                             const TAO_Profile *profile,
+                             CORBA::ULong request_id,
                              TAO_OutputCDR &output,
                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
-  virtual int send_request (TAO_Stub *stub,
-                            TAO_ORB_Core *orb_core,
-                            TAO_OutputCDR &stream,
-                            int twoway,
-                            ACE_Time_Value *max_wait_time);
-  virtual int handle_client_input (int block = 0,
-                                   ACE_Time_Value *max_time_value = 0);
+  // Fill into <output> the right headers to make a locate request.
+
+  int send_request (TAO_ORB_Core *orb_core,
+                    TAO_OutputCDR &stream,
+                    int twoway,
+                    ACE_Time_Value *max_wait_time);
+  // This is a bridge method for the connection handlers
+  // <send_request> method.  The connection handler is responsible for
+  // concurrency strategies, typically using the leader-follower
+  // pattern.
+
+  int handle_client_input (int block = 0,
+                           ACE_Time_Value *max_time_value = 0);
+  // Read and handle the reply. Returns 0 when there is Short Read on
+  // the connection. Returns 1 when the full reply is read and
+  // handled. If <block> is 1, then reply is read in a blocking
+  // manner.
+
   virtual int register_handler (void);
   // Register the handler with the reactor. This will be called by the
   // Wait Strategy if Reactor is used  for that strategy.
 
-  virtual CORBA::Boolean 
-  send_request_header (TAO_Operation_Details &opdetail,
-                       TAO_Target_Specification &spec,
-                       TAO_OutputCDR &msg);
-  
-  int messaging_init (CORBA::Octet major,
-                      CORBA::Octet minor);
-  // Initialising the messaging object
-
-  void use_lite (CORBA::Boolean flag);
-  // Set the lite flag
+protected:
+  int check_unexpected_data (void);
+  // This method checks for unexpected data.
 
 private:
   TAO_UIOP_Client_Connection_Handler *client_handler_;
   // pointer to the corresponding client side connection handler.
-
-  TAO_Pluggable_Messaging *client_mesg_factory_;
-  // The message_factor instance specific for this particular
-  // transport protocol.
-
-  TAO_ORB_Core *orb_core_;
-  // Our orb Core
-  
-  CORBA::Boolean lite_flag_;
-  // We using GIOP lite?
-  
-  TAO_Pluggable_Reply_Params params_;
-  // The reply data that is sent back by the server
 };
 
 // ****************************************************************
@@ -205,14 +209,8 @@ public:
   TAO_GIOP_Message_State message_state_;
   // This keep the state of the current message, to enable
   // non-blocking reads, fragment reassembly, etc.
-
 };
 
-#if defined (__ACE_INLINE__)
-#include "tao/UIOP_Transport.i"
-#endif /* __ACE_INLINE__ */
+# endif  /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 
-# endif  /* TAO_HAS_UIOP == 1 */
-
-#include "ace/post.h"
 #endif  /* TAO_UIOP_TRANSPORT_H */

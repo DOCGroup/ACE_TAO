@@ -5,7 +5,7 @@
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
 # TARGTYPE "Win32 (ALPHA) Dynamic-Link Library" 0x0602
 
-CFG=TAO DLL - Win32 Debug
+CFG=TAO DLL - Win32 MFC Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -14,7 +14,7 @@ CFG=TAO DLL - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "TAO.mak" CFG="TAO DLL - Win32 Debug"
+!MESSAGE NMAKE /f "TAO.mak" CFG="TAO DLL - Win32 MFC Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -328,44 +328,6 @@ SOURCE=.\Asynch_Invocation.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\BoundsC.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Buffering_Constraint_Policy.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\CDR.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
@@ -386,25 +348,6 @@ SOURCE=.\CDR.cpp
 # Begin Source File
 
 SOURCE=.\CDR_Interpreter.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Client_Priority_Policy.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
 
@@ -594,6 +537,44 @@ SOURCE=.\debug.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\decode.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\deep_free.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\default_client.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
@@ -633,25 +614,6 @@ SOURCE=.\default_resource.cpp
 # Begin Source File
 
 SOURCE=.\default_server.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Direct_Priority_Mapping.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
 
@@ -860,6 +822,25 @@ SOURCE=.\DynUnion_i.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\encode.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Environment.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
@@ -917,121 +898,7 @@ SOURCE=.\Forwarding_Servant.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Accept_State.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Acceptors.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Base.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Connectors.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Headers.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Lite.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_State.cpp
+SOURCE=.\GIOP.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
 
@@ -1051,44 +918,6 @@ SOURCE=.\GIOP_Message_State.cpp
 # Begin Source File
 
 SOURCE=.\GIOP_Server_Request.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Utils.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOPC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
 
@@ -1183,25 +1012,6 @@ SOURCE=.\IIOP_Factory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Lite_Factory.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\IIOP_Profile.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
@@ -1240,159 +1050,7 @@ SOURCE=.\IIOP_Transport.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImplRepoC.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS_T.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\InconsistentTypeCodeC.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Interceptor.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterceptorC.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterceptorS.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceC.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceS.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
 
@@ -1545,44 +1203,6 @@ SOURCE=.\IORS.cpp
 # Begin Source File
 
 SOURCE=.\Key_Adapters.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Leader_Follower.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Linear_Priority_Mapping.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
 
@@ -1810,25 +1430,6 @@ SOURCE=.\ObjectIDList.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\operation_details.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Operation_Table.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
@@ -1906,44 +1507,6 @@ SOURCE=.\params.cpp
 # Begin Source File
 
 SOURCE=.\Pluggable.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Pluggable_Messaging.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Pluggable_Messaging_Utils.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
 
@@ -2133,25 +1696,6 @@ SOURCE=.\PollableS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pool_Per_Endpoint.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Principal.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
@@ -2171,83 +1715,7 @@ SOURCE=.\Principal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Priority_Mapping.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Profile.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Protocol_Factory.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reactor_Per_Priority.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reactor_Registry.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
 
@@ -2305,44 +1773,6 @@ SOURCE=.\Request.cpp
 # Begin Source File
 
 SOURCE=.\Resource_Factory.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Current.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\rtcorbafwd.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
 
@@ -2456,139 +1886,6 @@ SOURCE=.\Services.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\SHMIOP_Acceptor.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Connect.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Connector.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Factory.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Profile.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Transport.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\skip.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
@@ -2609,25 +1906,6 @@ SOURCE=.\skip.cpp
 # Begin Source File
 
 SOURCE=.\Stub.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Sync_Strategies.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
 
@@ -2685,63 +1963,6 @@ SOURCE=.\TAO.cpp
 # Begin Source File
 
 SOURCE=.\TAO_Internal.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\TAOC.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\TAOS.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\target_specification.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
 
@@ -2913,25 +2134,6 @@ SOURCE=.\UIOP_Connector.cpp
 # Begin Source File
 
 SOURCE=.\UIOP_Factory.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Lite_Factory.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
 
@@ -3126,19 +2328,11 @@ SOURCE=.\Asynch_Invocation.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Buffering_Constraint_Policy.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\cdr.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\CDR_Interpreter.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Client_Priority_Policy.h
 # End Source File
 # Begin Source File
 
@@ -3187,10 +2381,6 @@ SOURCE=.\default_resource.h
 # Begin Source File
 
 SOURCE=.\default_server.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Direct_Priority_Mapping.h
 # End Source File
 # Begin Source File
 
@@ -3246,19 +2436,7 @@ SOURCE=.\giop.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Headers.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_State.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Server_Request.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOPC.h
 # End Source File
 # Begin Source File
 
@@ -3286,39 +2464,7 @@ SOURCE=.\IIOP_Transport.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImplRepoC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\InconsistentTypeCodeC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Interceptor.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterceptorC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterceptorS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceS.h
 # End Source File
 # Begin Source File
 
@@ -3347,14 +2493,6 @@ SOURCE=.\IORManipulation.h
 # Begin Source File
 
 SOURCE=.\IORS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Leader_Follower.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Linear_Priority_Mapping.h
 # End Source File
 # Begin Source File
 
@@ -3474,31 +2612,11 @@ SOURCE=.\PollableS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pool_Per_Endpoint.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Principal.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Priority_Mapping.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Profile.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Protocol_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reactor_Per_Priority.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reactor_Registry.h
 # End Source File
 # Begin Source File
 
@@ -3511,14 +2629,6 @@ SOURCE=.\request.h
 # Begin Source File
 
 SOURCE=.\Resource_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Current.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\rtcorbafwd.h
 # End Source File
 # Begin Source File
 
@@ -3546,43 +2656,11 @@ SOURCE=.\Services.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\SHMIOP_Acceptor.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Connect.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Connector.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Profile.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Transport.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\singletons.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\stub.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Sync_Strategies.h
 # End Source File
 # Begin Source File
 
@@ -3595,22 +2673,6 @@ SOURCE=.\TAO.h
 # Begin Source File
 
 SOURCE=.\TAO_Internal.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\TAOC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\TAOS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\target_specification.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\TimeBaseC.h
 # End Source File
 # Begin Source File
 
@@ -3675,7 +2737,7 @@ SOURCE=.\WrongTransactionC.h
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter "i"
+# PROP Default_Filter "*.i"
 # Begin Source File
 
 SOURCE=.\Acceptor_Registry.i
@@ -3690,23 +2752,7 @@ SOURCE=.\any.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Asynch_Invocation.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\BoundsC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Buffering_Constraint_Policy.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\cdr.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Client_Priority_Policy.i
 # End Source File
 # Begin Source File
 
@@ -3738,10 +2784,6 @@ SOURCE=.\default_server.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Direct_Priority_Mapping.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\DomainC.i
 # End Source File
 # Begin Source File
@@ -3766,19 +2808,7 @@ SOURCE=.\giop.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Headers.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_State.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Server_Request.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOPC.i
 # End Source File
 # Begin Source File
 
@@ -3790,51 +2820,11 @@ SOURCE=.\IIOP_ORB.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImplRepoC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS_T.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Interceptor.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterceptorC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Invocation.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\IOPC.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\IOPS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Leader_Follower.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Linear_Priority_Mapping.i
 # End Source File
 # Begin Source File
 
@@ -3910,39 +2900,7 @@ SOURCE=.\PolicyC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pool_Per_Endpoint.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Priority_Mapping.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Profile.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reactor_Per_Priority.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reactor_Registry.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reply_Dispatcher.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Request.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Current.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\rtcorbafwd.i
 # End Source File
 # Begin Source File
 
@@ -3962,22 +2920,6 @@ SOURCE=.\Services.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\SHMIOP_Acceptor.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Connect.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Profile.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\stub.i
 # End Source File
 # Begin Source File
@@ -3987,18 +2929,6 @@ SOURCE=.\Tagged_Components.i
 # Begin Source File
 
 SOURCE=.\TAO_Internal.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\TAOC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\TAOS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\target_specification.i
 # End Source File
 # Begin Source File
 
@@ -4027,14 +2957,6 @@ SOURCE=.\ValueFactory.i
 # Begin Source File
 
 SOURCE=.\ValueFactory_Map.i
-# End Source File
-# End Group
-# Begin Group "Resource files"
-
-# PROP Default_Filter "rc"
-# Begin Source File
-
-SOURCE=.\tao.rc
 # End Source File
 # End Group
 # End Target

@@ -16,7 +16,6 @@
 
 #ifndef TAO_IIOP_CONNECT_H
 #define TAO_IIOP_CONNECT_H
-#include "ace/pre.h"
 
 #include "ace/Reactor.h"
 
@@ -34,19 +33,13 @@
 
 #include "tao/IIOP_Transport.h"
 
-
-
-
-
-
 // Forward Decls
 class TAO_ORB_Core;
 class TAO_ORB_Core_TSS_Resources;
-class Pluggable_Messaging;
 
-typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+
+typedef ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_SVC_HANDLER;
-
 
 // ****************************************************************
 
@@ -56,6 +49,7 @@ public:
   TAO_IIOP_Handler_Base (ACE_Thread_Manager *t);
   TAO_IIOP_Handler_Base (TAO_ORB_Core *orb_core);
 
+  virtual TAO_Transport *transport (void) = 0;
 };
 
 class TAO_Export TAO_IIOP_Client_Connection_Handler : public TAO_IIOP_Handler_Base
@@ -66,8 +60,7 @@ class TAO_Export TAO_IIOP_Client_Connection_Handler : public TAO_IIOP_Handler_Ba
 public:
   // = Intialization method.
   TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager *t = 0,
-                                      TAO_ORB_Core* orb_core = 0,
-                                      CORBA::Boolean flag = 0);
+                                      TAO_ORB_Core* orb_core = 0);
 
   virtual ~TAO_IIOP_Client_Connection_Handler (void);
 
@@ -78,19 +71,11 @@ public:
   // = Event Handler overloads
 
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
-  // Called when a response from a twoway invocation is available.
-
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
-  // Called when buffering timer expires.
+  // Called when a a response from a twoway invocation is available.
 
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
   // Perform appropriate closing.
-
-  virtual int handle_close_i (ACE_HANDLE = ACE_INVALID_HANDLE,
-                              ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
-  // Perform appropriate closing but without grabbing any locks.
 
   virtual int close (u_long flags = 0);
   // Object termination hook.
@@ -99,17 +84,11 @@ public:
   // Return the transport objects
 
 protected:
-  int handle_cleanup (void);
-  // This method deregisters the handler from the reactor and closes it.
-
   TAO_IIOP_Client_Transport transport_;
   // Reference to the transport object, it is owned by this class.
 
   TAO_ORB_Core *orb_core_;
   // Cached ORB Core.
-
-  CORBA::Boolean lite_flag_;
-  // Are we using GIOP lite?
 };
 
 // ****************************************************************
@@ -121,8 +100,7 @@ class TAO_Export TAO_IIOP_Server_Connection_Handler : public TAO_IIOP_Handler_Ba
 
 public:
   TAO_IIOP_Server_Connection_Handler (ACE_Thread_Manager* t = 0);
-  TAO_IIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
-                                      CORBA::Boolean flag);
+  TAO_IIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core);
   ~TAO_IIOP_Server_Connection_Handler (void);
   // Constructor.
 
@@ -155,13 +133,8 @@ protected:
   // = Event Handler overloads
 
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
-  virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
-                              ACE_Time_Value *max_wait_time = 0);
   // Reads a message from the <peer()>, dispatching and servicing it
   // appropriately.
-  // handle_input() just delegates on handle_input_i() which timeouts
-  // after <max_wait_time>, this is used in thread-per-connection to
-  // ensure that server threads eventually exit.
 
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
@@ -171,28 +144,15 @@ protected:
   TAO_IIOP_Server_Transport transport_;
   // @@ New transport object reference.
 
-  TAO_Pluggable_Messaging *acceptor_factory_;
-  // Messaging acceptor factory
-
   TAO_ORB_Core *orb_core_;
   // Cached ORB Core.
 
   TAO_ORB_Core_TSS_Resources *tss_resources_;
   // Cached tss resources of the ORB that activated this object.
-
-  u_long refcount_;
-  // Reference count.  It is used to count nested upcalls on this
-  // svc_handler i.e., the connection can close during nested upcalls,
-  // you should not delete the svc_handler until the stack unwinds
-  // from the nested upcalls.
-
-  CORBA::Boolean lite_flag_;
-  // Should we use GIOP or GIOPlite
 };
 
 #if defined (__ACE_INLINE__)
 #include "tao/IIOP_Connect.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
 #endif /* TAO_IIOP_CONNECT_H */

@@ -17,7 +17,6 @@
 
 #ifndef TAO_RESOURCE_FACTORY_H
 #define TAO_RESOURCE_FACTORY_H
-#include "ace/pre.h"
 
 #include "ace/Service_Object.h"
 
@@ -34,8 +33,6 @@
 
 class TAO_Acceptor_Registry;
 class TAO_Connector_Registry;
-class TAO_Reactor_Registry;
-class TAO_Priority_Mapping;
 
 // ****************************************************************
 
@@ -58,10 +55,6 @@ public:
   // creator method, the protocol name can only be set when the
   // object is created.
 
-  ~TAO_Protocol_Item (void);
-  // destructor that deallocates the factory object if the
-  // Protocol_Item retains ownership.
-
   const ACE_CString &protocol_name (void);
   // return a reference to the character representation of the protocol
   // factories name.
@@ -69,7 +62,7 @@ public:
   TAO_Protocol_Factory *factory (void);
   // return a pointer to the protocol factory.
 
-  void factory (TAO_Protocol_Factory *factory, int owner = 0);
+  void factory (TAO_Protocol_Factory *factory);
   // set the factory pointer's value.
 
 private:
@@ -78,9 +71,6 @@ private:
 
   TAO_Protocol_Factory *factory_;
   // pointer to factory object.
-
-  int factory_owner_;
-  // whether we own (and therefore have to delete) the factory object.
 };
 
 // typedefs for containers containing the list of loaded protocol
@@ -103,22 +93,6 @@ class TAO_Export TAO_Resource_Factory : public ACE_Service_Object
   //   resources.
   //
 public:
-
-  enum Caching_Strategy
-  {
-    // Least Recently Used
-    LRU,
-
-    // Least Frequently Used
-    LFU,
-
-    // First In First Out
-    FIFO,
-
-    // Dont use any strategy.
-    NOOP
-  };
-
   // = Initialization and termination methods.
   TAO_Resource_Factory (void);
   virtual ~TAO_Resource_Factory (void);
@@ -132,10 +106,6 @@ public:
   virtual int use_locked_data_blocks (void) const;
   // @@ Backwards compatibility, return 1 if the ORB core should use
   //    Locked_Data_Blocks
-
-  virtual TAO_Reactor_Registry *get_reactor_registry (void);
-  // Create the reactor holder, an strategy to control the number of
-  // reactors in the ORB
 
   virtual ACE_Reactor *get_reactor (void);
   // Return an <ACE_Reactor> to be utilized.
@@ -167,18 +137,6 @@ public:
   // from the service configurator.  It is assumed
   // that only one thread will call this method at ORB initialization.
   // NON-THREAD-SAFE
-
-  virtual Caching_Strategy connection_caching_strategy_type (void) const;
-  // This accesses the connection caching strategy we use for managing
-  // purging of unused entries from the connection cache on demnad.
-
-  virtual double purge_percentage (void) const;
-  // This denotes the amount of entries to remove from the connection
-  // cache.
-
-  virtual TAO_Priority_Mapping *get_priority_mapping (void);
-  // Configure the priority mapping for the ORB
 };
 
-#include "ace/post.h"
 #endif /* TAO_RESOURCE_FACTORY_H */

@@ -20,10 +20,14 @@
 #ifndef TAO_IOPS_T_CPP
 #define TAO_IOPS_T_CPP
 
-#include "tao/IOPS_T.h"
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
+#include "IOPS_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/IOPS_T.i"
+#include "IOPS_T.i"
 #endif /* !defined INLINE */
 
 

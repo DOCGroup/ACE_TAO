@@ -16,7 +16,6 @@
 
 #ifndef TAO_ACTIVE_OBJECT_MAP_H
 #define TAO_ACTIVE_OBJECT_MAP_H
-#include "ace/pre.h"
 
 #include "tao/Key_Adapters.h"
 #include "tao/Server_Strategy_Factory.h"
@@ -32,7 +31,7 @@ class TAO_Lifespan_Strategy;
 class TAO_Id_Assignment_Strategy;
 class TAO_Id_Hint_Strategy;
 
-class TAO_Export TAO_Active_Object_Map
+class TAO_Active_Object_Map
 {
   // = TITLE
   //     Map of object ids to servants.
@@ -185,13 +184,11 @@ public:
     TAO_Incremental_Key_Generator> user_id_hash_map;
   // Id hash map.
 
-#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   typedef ACE_Map_Manager_Adapter<
   PortableServer::ObjectId,
     Map_Entry *,
     TAO_Incremental_Key_Generator> user_id_linear_map;
   // Id linear map.
-#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   typedef ACE_Active_Map_Manager_Adapter<
   PortableServer::ObjectId,
@@ -212,13 +209,11 @@ public:
     ACE_Noop_Key_Generator<PortableServer::Servant> > servant_hash_map;
   // Servant hash map.
 
-#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   typedef ACE_Map_Manager_Adapter<
   PortableServer::Servant,
     Map_Entry *,
     ACE_Noop_Key_Generator<PortableServer::Servant> > servant_linear_map;
   // Servant linear map.
-#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   user_id_map *user_id_map_;
   // Id map.
@@ -591,5 +586,4 @@ public:
 # include "tao/Active_Object_Map.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
 #endif /* TAO_ACTIVE_OBJECT_MAP_H */

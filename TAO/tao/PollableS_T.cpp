@@ -11,10 +11,14 @@
 #ifndef _TAO_IDL_POLLABLES_T_CPP_
 #define _TAO_IDL_POLLABLES_T_CPP_
 
-#include "tao/PollableS_T.h"
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
+#include "PollableS_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/PollableS_T.i"
+#include "PollableS_T.i"
 #endif /* !defined INLINE */
 
 

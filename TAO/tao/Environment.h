@@ -23,7 +23,6 @@
 
 #ifndef TAO_ENVIRONMENT_H
 #define TAO_ENVIRONMENT_H
-#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -195,5 +194,4 @@ private:
 # include "tao/Environment.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
 #endif /* TAO_ENVIRONMENT_H */

@@ -1,7 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -20,16 +19,17 @@
 
 #ifndef TAO_IIOP_PROFILE_H
 #define TAO_IIOP_PROFILE_H
-#include "ace/pre.h"
 
-#include "tao/Profile.h"
-#include "tao/GIOP_Message_State.h"
+#include "tao/ORB.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/ORB.h"
+#include "tao/Pluggable.h"
 #include "tao/Object_KeyC.h"
+#include "tao/GIOP.h"
+#include "tao/Tagged_Components.h"
 
 #include "ace/Synch.h"
 #include "ace/INET_Addr.h"
@@ -47,8 +47,7 @@ class TAO_Export TAO_IIOP_Profile : public TAO_Profile
   //   This class defines the IIOP profile as specified in the CORBA
   //   specification.
 public:
-  static const char object_key_delimiter_;
-  virtual char object_key_delimiter (void) const;
+  static const char object_key_delimiter;
   // The object key delimiter that IIOP uses or expects.
 
   static const char *prefix (void);
@@ -72,7 +71,7 @@ public:
 
   TAO_IIOP_Profile (const char *string,
                     TAO_ORB_Core *orb_core,
-                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                    CORBA::Environment &ACE_TRY_ENV);
   // Create object using a string ior.
 
   TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile);
@@ -88,10 +87,10 @@ public:
   // Destructor is to be called only through <_decr_refcnt>.
 
   int parse_string (const char *string,
-                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                    CORBA::Environment &ACE_TRY_ENV);
   // Initialize this object using the given input string.
 
-  char * to_string (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  CORBA::String to_string (CORBA::Environment &ACE_TRY_ENV);
   // Return a string representation for this profile.
   // client must deallocate memory.
 
@@ -149,6 +148,11 @@ public:
   void reset_hint (void);
   //  Reset the hint's value.
 
+  const TAO_Tagged_Components& tagged_components (void) const;
+  TAO_Tagged_Components& tagged_components (void);
+  // Access the tagged components, notice that they are empty and
+  // ignored for GIOP 1.0
+
 private:
   int set (const ACE_INET_Addr &addr);
   // helper method to set the INET_Addr.
@@ -177,11 +181,13 @@ private:
 
   TAO_ORB_Core *orb_core_;
   // ORB Core.
+
+  TAO_Tagged_Components tagged_components_;
+  // The tagged components
 };
 
 #if defined (__ACE_INLINE__)
 # include "tao/IIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
 #endif  /* TAO_IIOP_PROFILE_H */

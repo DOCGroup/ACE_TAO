@@ -24,7 +24,6 @@
 
 #ifndef TAO_CORBA_OBJECT_H
 #define TAO_CORBA_OBJECT_H
-#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -50,13 +49,7 @@ public:
   static CORBA_Object_ptr _narrow (CORBA_Object_ptr obj,
                                    CORBA_Environment &ACE_TRY_ENV =
                                      TAO_default_environment ());
-  static CORBA_Object_ptr _unchecked_narrow (CORBA_Object_ptr obj,
-                                             CORBA_Environment &ACE_TRY_ENV =
-                                                 TAO_default_environment ());
   // no-op it is just here to simplify some templates.
-
-  static void _tao_any_destructor (void*);
-  // Used in the implementation of CORBA::Any
 
   // These calls correspond to over-the-wire operations, or at least
   // do so in many common cases.  The normal implementation assumes a
@@ -79,7 +72,7 @@ public:
   virtual CORBA::Boolean _is_collocated (void) const;
   // are we collocated with the servant?
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
   virtual CORBA::Boolean _non_existent (CORBA_Environment &ACE_TRY_ENV =
                                           TAO_default_environment ());
@@ -132,8 +125,7 @@ public:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
+#if defined (TAO_HAS_CORBA_MESSAGING)
   CORBA::Policy_ptr _get_policy (
       CORBA::PolicyType type,
       CORBA::Environment &ACE_TRY_ENV =
@@ -160,8 +152,7 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
   virtual CORBA::ULong _hash (CORBA::ULong maximum,
                               CORBA_Environment &ACE_TRY_ENV =
@@ -317,15 +308,14 @@ public:
   virtual void _release (void) = 0;
 };
 
-TAO_Export CORBA::Boolean
+extern TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, const CORBA_Object*);
 
-TAO_Export CORBA::Boolean
+extern TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, CORBA_Object*&);
 
 #if defined (__ACE_INLINE__)
 # include "tao/Object.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
 #endif /* TAO_CORBA_OBJECT_H */

@@ -184,7 +184,7 @@ CORBA_DomainManager_out::operator-> (void)
   return this->ptr_;
 }
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if ! defined (TAO_HAS_MINIMUM_CORBA)
 
 ACE_INLINE
 CORBA_ConstructionPolicy::CORBA_ConstructionPolicy (void) // default constructor
@@ -386,7 +386,7 @@ ACE_INLINE
 CORBA_DomainManagerList_var::CORBA_DomainManagerList_var (const CORBA_DomainManagerList_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, CORBA_DomainManagerList(*p.ptr_));
+    this->ptr_ = new CORBA_DomainManagerList(*p.ptr_);
   else
     this->ptr_ = 0;
 }
@@ -411,9 +411,7 @@ CORBA_DomainManagerList_var::operator= (const CORBA_DomainManagerList_var &p) //
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_DomainManagerList (*p.ptr_), 
-		    *this);
+    this->ptr_ = new CORBA_DomainManagerList (*p.ptr_);
   }
   return *this;
 }
@@ -600,7 +598,7 @@ operator>> (
   return 0;
 }
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if ! defined (TAO_HAS_MINIMUM_CORBA)
 
 ACE_INLINE CORBA::Boolean
 operator<< (

@@ -1,5 +1,5 @@
+//
 // $Id$
-
 //
 // ================================================================
 //
@@ -19,7 +19,6 @@
 
 #ifndef TAO_CONV_FRAMEC_H
 #define TAO_CONV_FRAMEC_H
-#include "ace/pre.h"
 
 #include "tao/CDR.h"
 #include "tao/Sequence.h"
@@ -34,9 +33,6 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -48,8 +44,6 @@ TAO_NAMESPACE  CONV_FRAME
 
   struct TAO_Export CodeSetComponent
   {
-    static void _tao_any_destructor (void*);
-
     CodeSetId native_code_set;
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -241,8 +235,6 @@ TAO_NAMESPACE  CONV_FRAME
 
   struct TAO_Export CodeSetComponentInfo
   {
-    static void _tao_any_destructor (void*);
-
     CodeSetComponent ForCharData;
     CodeSetComponent ForWcharData;
   };
@@ -296,8 +288,6 @@ TAO_NAMESPACE  CONV_FRAME
 
   struct TAO_Export CodeSetContext
   {
-    static void _tao_any_destructor (void*);
-
     CodeSetId char_data;
     CodeSetId wchar_data;
   };
@@ -334,59 +324,45 @@ TAO_NAMESPACE  CONV_FRAME
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_CodeSetContext;
 
 
-}
-TAO_NAMESPACE_CLOSE // module CONV_FRAME
+}; // module CONV_FRAME
 
-TAO_Export void operator<<= (CORBA::Any &,
-                             const CONV_FRAME::CodeSetComponent &); // copying version
-TAO_Export void operator<<= (CORBA::Any &,
-                             CONV_FRAME::CodeSetComponent*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
-                                       CONV_FRAME::CodeSetComponent *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
-                                       const CONV_FRAME::CodeSetComponent *&);
-TAO_Export void operator<<= (CORBA::Any &,
-                             const CONV_FRAME::CodeSetComponentInfo &); // copying version
-TAO_Export void operator<<= (CORBA::Any &,
-                             CONV_FRAME::CodeSetComponentInfo*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
-                                       CONV_FRAME::CodeSetComponentInfo *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
-                                       const CONV_FRAME::CodeSetComponentInfo *&);
-TAO_Export void operator<<= (CORBA::Any &,
-                             const CONV_FRAME::CodeSetContext &); // copying version
-TAO_Export void operator<<= (CORBA::Any &,
-                             CONV_FRAME::CodeSetContext*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
-                                       CONV_FRAME::CodeSetContext *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
-                                       const CONV_FRAME::CodeSetContext *&);
+void TAO_Export operator<<= (CORBA::Any &, const CONV_FRAME::CodeSetComponent &); // copying version
+void TAO_Export operator<<= (CORBA::Any &, CONV_FRAME::CodeSetComponent*); // noncopying version
+CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, CONV_FRAME::CodeSetComponent *&);
+void TAO_Export operator<<= (CORBA::Any &, const CONV_FRAME::CodeSetComponentInfo &); // copying version
+void TAO_Export operator<<= (CORBA::Any &, CONV_FRAME::CodeSetComponentInfo*); // noncopying version
+CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, CONV_FRAME::CodeSetComponentInfo *&);
+void TAO_Export operator<<= (CORBA::Any &, const CONV_FRAME::CodeSetContext &); // copying version
+void TAO_Export operator<<= (CORBA::Any &, CONV_FRAME::CodeSetContext*); // noncopying version
+CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, CONV_FRAME::CodeSetContext *&);
+
 #ifndef __ACE_INLINE__
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CONV_FRAME::CodeSetComponent &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CONV_FRAME::CodeSetComponent &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &,
-                                      const CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId &);
-TAO_Export CORBA::Boolean operator>> (
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const CONV_FRAME::CodeSetComponent &);
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, CONV_FRAME::CodeSetComponent &);
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId &
+  );
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId &
   );
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CONV_FRAME::CodeSetComponentInfo &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CONV_FRAME::CodeSetComponentInfo &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CONV_FRAME::CodeSetContext &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CONV_FRAME::CodeSetContext &);
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const CONV_FRAME::CodeSetComponentInfo &);
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, CONV_FRAME::CodeSetComponentInfo &);
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const CONV_FRAME::CodeSetContext &);
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, CONV_FRAME::CodeSetContext &);
 
 #endif /* __ACE_INLINE__ */
 
 
 #if defined (__ACE_INLINE__)
-#include "tao/CONV_FRAMEC.i"
+#include "CONV_FRAMEC.i"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
 #endif /* TAO_CONV_FRAMEC_H */

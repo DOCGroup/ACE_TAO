@@ -19,7 +19,6 @@
 
 #ifndef TAO_ACCEPTOR_REGISTRY_H
 #define TAO_ACCEPTOR_REGISTRY_H
-#include "ace/pre.h"
 
 #include "tao/Pluggable.h"
 
@@ -28,7 +27,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/corbafwd.h"
+#include "tao/Typecode.h"
 #include "tao/Resource_Factory.h"
+
+#include "ace/Containers_T.h"
 
 // Forward declarations.
 class ACE_Addr;
@@ -39,8 +41,10 @@ class TAO_Stub;
 class TAO_Profile;
 class TAO_MProfile;
 
-
-typedef TAO_Acceptor** TAO_AcceptorSetIterator;
+typedef ACE_Unbounded_Set<TAO_Acceptor*>
+        TAO_AcceptorSet;
+typedef ACE_Unbounded_Set_Iterator<TAO_Acceptor*>
+        TAO_AcceptorSetItor;
 
 class TAO_Export TAO_Acceptor_Registry
 {
@@ -61,9 +65,7 @@ public:
   ~TAO_Acceptor_Registry (void);
   //  Default destructor.
 
-  int open (TAO_ORB_Core *orb_core,
-            CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  int open (TAO_ORB_Core *orb_core);
   // Initialize all registered acceptors.  Return -1 on error.
 
   int close_all (void);
@@ -71,7 +73,7 @@ public:
 
   size_t endpoint_count (void);
   // Returns the total number of endpoints, i.e., the number of
-  // profiles that have been created.
+  // profiles that will be created.
 
   int make_mprofile (const TAO_ObjectKey& object_key,
                      TAO_MProfile &mprofile);
@@ -82,30 +84,24 @@ public:
   // corresponds to a collocated object.
 
   // = Iterator.
-  TAO_AcceptorSetIterator begin (void);
-  TAO_AcceptorSetIterator end (void);
+  TAO_AcceptorSetItor begin (void);
+  TAO_AcceptorSetItor end (void);
 
 private:
-  int open_default (TAO_ORB_Core *orb_core,
-                    const char *options);
+  int open_default (TAO_ORB_Core *orb_core);
   // Create a default acceptor for all loaded protocols.
 
   int open_default (TAO_ORB_Core *orb_core,
-                    TAO_ProtocolFactorySetItor &factory,
-                    const char *options);
+                    TAO_ProtocolFactorySetItor &factory);
   // Create a default acceptor using the specified protocol factory.
 
 private:
-  TAO_Acceptor **acceptors_;
+  TAO_AcceptorSet acceptors_;
   // List of acceptors that are currently open.
-
-  size_t size_;
-  // Number of acceptors that are currently open.
 };
 
 #if defined(__ACE_INLINE__)
 #include "tao/Acceptor_Registry.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
 #endif /* TAO_ACCEPTOR_REGISTRY_H */

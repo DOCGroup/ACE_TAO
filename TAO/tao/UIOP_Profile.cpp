@@ -1,11 +1,11 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 #include "tao/UIOP_Profile.h"
 
-#if TAO_HAS_UIOP == 1
+#if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
+#include "tao/GIOP.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"
@@ -15,26 +15,19 @@
 
 ACE_RCSID(tao, UIOP_Profile, "$Id$")
 
-
 #if !defined (__ACE_INLINE__)
 # include "tao/UIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
-static const char prefix_[] = "uiop";
+static const char *prefix_ = "uiop:";
 
-const char TAO_UIOP_Profile::object_key_delimiter_ = '|';
-
-char
-TAO_UIOP_Profile::object_key_delimiter (void) const
-{
-  return TAO_UIOP_Profile::object_key_delimiter_;
-}
+const char TAO_UIOP_Profile::object_key_delimiter = '|';
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
                                     const TAO_ObjectKey &object_key,
                                     const TAO_GIOP_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_UIOP_PROFILE),
+  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
     version_ (version),
     object_key_ (object_key),
     object_addr_ (addr),
@@ -48,7 +41,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char *,
                                     const ACE_UNIX_Addr &addr,
                                     const TAO_GIOP_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_UIOP_PROFILE),
+  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
     version_ (version),
     object_key_ (object_key),
     object_addr_ (addr),
@@ -70,7 +63,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_UIOP_Profile &pfile)
 TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
                                     TAO_ORB_Core *orb_core,
                                     CORBA::Environment &ACE_TRY_ENV)
-  : TAO_Profile (TAO_TAG_UIOP_PROFILE),
+  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     object_key_ (),
     object_addr_ (),
@@ -82,7 +75,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
 }
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_UIOP_PROFILE),
+  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     object_key_ (),
     object_addr_ (),
@@ -137,7 +130,7 @@ TAO_UIOP_Profile::parse_string (const char *string,
   CORBA::String_var copy (string);
 
   char *start = copy.inout ();
-  char *cp = ACE_OS::strchr (start, this->object_key_delimiter_);
+  char *cp = ACE_OS::strchr (start, this->object_key_delimiter);
 
   if (cp == 0)
     {
@@ -178,7 +171,7 @@ CORBA::Boolean
 TAO_UIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 {
 
-  if (other_profile->tag () != TAO_TAG_UIOP_PROFILE)
+  if (other_profile->tag () != TAO_IOP_TAG_UNIX_IOP)
     return 0;
 
   const TAO_UIOP_Profile *op =
@@ -231,7 +224,10 @@ void
 TAO_UIOP_Profile::reset_hint (void)
 {
   if (this->hint_)
-    this->hint_->cleanup_hint ((void **) &this->hint_);
+    {
+      this->hint_->cleanup_hint ();
+      this->hint_ = 0;
+    }
 }
 
 TAO_UIOP_Profile &
@@ -246,7 +242,7 @@ TAO_UIOP_Profile::operator= (const TAO_UIOP_Profile &src)
   return *this;
 }
 
-char *
+CORBA::String
 TAO_UIOP_Profile::to_string (CORBA::Environment &)
 {
   CORBA::String_var key;
@@ -254,8 +250,6 @@ TAO_UIOP_Profile::to_string (CORBA::Environment &)
                                       this->object_key ());
 
   u_int buflen = (ACE_OS::strlen (::prefix_) +
-                  3 /* "loc" */ +
-                  1 /* colon separator */ +
                   2 /* double-slash separator */ +
                   1 /* major version */ +
                   1 /* decimal point */ +
@@ -265,17 +259,17 @@ TAO_UIOP_Profile::to_string (CORBA::Environment &)
                   1 /* object key separator */ +
                   ACE_OS::strlen (key.in ()));
 
-  char * buf = CORBA::string_alloc (buflen);
+  CORBA::String buf = CORBA::string_alloc (buflen);
 
   static const char digits [] = "0123456789";
 
   ACE_OS::sprintf (buf,
-                   "%sloc://%c.%c@%s%c%s",
+                   "%s//%c.%c@%s%c%s",
                    ::prefix_,
                    digits [this->version_.major],
                    digits [this->version_.minor],
                    this->rendezvous_point (),
-                   this->object_key_delimiter_,
+                   this->object_key_delimiter,
                    key.in ());
   return buf;
 }
@@ -299,23 +293,18 @@ TAO_UIOP_Profile::decode (TAO_InputCDR& cdr)
   // profiles whose versions we don't understand.
   // FIXME:  Version question again,  what do we do about them for this
   //         protocol?
-  CORBA::Octet major, minor;
 
-  if (!(cdr.read_octet (major)
-        && (major == TAO_DEF_GIOP_MAJOR)
-        && cdr.read_octet (minor)))
+  if (!(cdr.read_octet (this->version_.major)
+        && this->version_.major == TAO_DEF_GIOP_MAJOR
+        && cdr.read_octet (this->version_.minor)
+        && this->version_.minor <= TAO_DEF_GIOP_MINOR))
   {
     ACE_DEBUG ((LM_DEBUG,
                 "detected new v%d.%d UIOP profile\n",
-                major,
-                minor));
+                this->version_.major,
+                this->version_.minor));
     return -1;
   }
-
-  this->version_.major = major;
-
-  if (minor <= TAO_DEF_GIOP_MINOR)
-    this->version_.minor = minor;
 
   char *rendezvous = 0;
 
@@ -326,16 +315,7 @@ TAO_UIOP_Profile::decode (TAO_InputCDR& cdr)
       return -1;
     }
 
-  if (this->object_addr_.set (rendezvous) == -1)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO (%P|%t) UIOP_Profile::decode - \n")
-                      ASYS_TEXT ("TAO (%P|%t) ACE_UNIX_Addr::set () failed")));
-        }
-      return -1;
-    }
+  this->object_addr_.set (rendezvous);
 
   // Clean up
   delete [] rendezvous;
@@ -373,7 +353,7 @@ TAO_UIOP_Profile::encode (TAO_OutputCDR &stream) const
   // @@ it seems like this is not a good separation of concerns, why
   // do we write the TAG here? That's generic code and should be
   // handled by the object reference writer (IMHO).
-  stream.write_ulong (TAO_TAG_UIOP_PROFILE);
+  stream.write_ulong (TAO_IOP_TAG_UNIX_IOP);
 
   // Create the encapsulation....
   TAO_OutputCDR encap (ACE_CDR::DEFAULT_BUFSIZE,
@@ -399,7 +379,7 @@ TAO_UIOP_Profile::encode (TAO_OutputCDR &stream) const
 
   if (this->version_.major > 1
       || this->version_.minor > 0)
-    this->tagged_components ().encode (encap);
+    this->tagged_components_.encode (encap);
 
   // write the encapsulation as an octet sequence...
   stream << CORBA::ULong (encap.total_length ());
@@ -408,4 +388,4 @@ TAO_UIOP_Profile::encode (TAO_OutputCDR &stream) const
   return 1;
 }
 
-#endif  /* TAO_HAS_UIOP == 1 */
+#endif  /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */

@@ -18,7 +18,6 @@
 
 #ifndef TAO_NVLIST_H
 #define TAO_NVLIST_H
-#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -26,12 +25,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #include "ace/Containers_T.h"
 #include "tao/Any.h"
-
-class TAO_InputCDR;
 
 class TAO_Export CORBA_NamedValue
 {
@@ -44,7 +41,6 @@ class TAO_Export CORBA_NamedValue
   // They just represent parameters to calls.  The name is optional, and
   // the value is packaged as an Any.  The flags indicate parameter
   // mode, and some ownership rules for "top level" memory.
-  //
 public:
   const char *name (void) const;
   // optional name
@@ -89,8 +85,8 @@ private:
   // optional IDL name of the parameter
 
   CORBA_NamedValue (void);
-  // private constructor. Cannot be directly instantiated other than
-  // by its friends.
+  // private constructor. Cannot be directly instantiated other than by its
+  // friends.
 
   friend class CORBA_ORB;
   friend class CORBA_NVList;
@@ -183,52 +179,42 @@ public:
   ~CORBA_NVList (void);
   // destructor
 
-  CORBA::ULong count (CORBA_Environment &ACE_TRY_ENV =
-                          TAO_default_environment ()) const;
+  CORBA::ULong count (void) const;
   // return the current number of elements in the list
 
   CORBA_NamedValue_ptr add (CORBA::Flags,
-                            CORBA_Environment &ACE_TRY_ENV =
-                                TAO_default_environment ());
+                             CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // add an element and just initialize the flags
 
   CORBA_NamedValue_ptr add_item (const char *,
-                                 CORBA::Flags,
-                                 CORBA_Environment &ACE_TRY_ENV =
-                                     TAO_default_environment ());
+                                  CORBA::Flags,
+                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // add an element and initialize its name and flags
 
   CORBA_NamedValue_ptr add_value (const char *,
-                                  const CORBA::Any &,
-                                  CORBA::Flags,
-                                  CORBA_Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ());
+                                   const CORBA::Any &,
+                                   CORBA::Flags,
+                                   CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // initializes a value, name, and flags
 
   CORBA_NamedValue_ptr add_item_consume (char *,
-                                         CORBA::Flags,
-                                         CORBA_Environment &ACE_TRY_ENV =
-                                             TAO_default_environment ());
-  // just like add_item. In addition, memory management of char * name
-  // is taken over by the NVList
+                                          CORBA::Flags,
+                                          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // just like add_item. In addition, memory management of char * name is taken
+  // over by the NVList
 
   CORBA_NamedValue_ptr add_value_consume (char *,
-                                          CORBA::Any_ptr,
-                                          CORBA::Flags,
-                                          CORBA_Environment &ACE_TRY_ENV =
-                                              TAO_default_environment ());
+                                           CORBA::Any_ptr,
+                                           CORBA::Flags,
+                                           CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // just like add_value. In addition, the NVList controls the memory
   // management of the char *name and Any *value parameter
 
-  CORBA_NamedValue_ptr item (CORBA::ULong n,
-                             CORBA_Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ());
+  CORBA_NamedValue_ptr item (CORBA::ULong n, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // retrieve the item at the nth location. Raises Bounds
 
   //  CORBA::Status
-  void remove (CORBA::ULong n,
-               CORBA_Environment &ACE_TRY_ENV =
-                   TAO_default_environment ());
+  void remove (CORBA::ULong n, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // remove element at index n. Raises Bounds
 
   // The pseudo object static methods..
@@ -238,35 +224,6 @@ public:
   // = Reference counting.
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
-
-  // = TAO Extensions:
-
-  void _tao_incoming_cdr (TAO_InputCDR &cdr,
-                          int flag,
-                          int &lazy_evaluation,
-                          CORBA::Environment &ACE_TRY_ENV);
-  // Set the incoming CDR stream, this is used by TAO to perform lazy
-  // evaluation of the NVList in an incoming ServerRequest.
-  // The <flag> is used to check which parameters (IN, OUT and/or
-  // INOUT) are to be extracted
-
-  void _tao_encode (TAO_OutputCDR &cdr,
-                    TAO_ORB_Core *orb_core,
-                    int flag,
-                    CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ());
-  // Encode the NVList into the CDR stream. <flag> masks the type of
-  // arguments (IN, OUT or INOUT) that are to be marshaled.
-
-  void _tao_decode (TAO_InputCDR &cdr,
-                    int flag,
-                    CORBA::Environment &ACE_TRY_ENV);
-  // Decode the NVList arguments from the <cdr> stream.
-
-  ptr_arith_t _tao_target_alignment (void);
-  // Return the required alignment to marshal the NVList without any
-  // re-alignment.
-  // It returns ACE_CDR::MAX_ALIGNMENT to indicate errors.
 
   // Useful for template programming.
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
@@ -279,17 +236,10 @@ private:
   // constructor - cannot be instantiated directly other than through the
   // ORB::create_list method
 
-  CORBA_NamedValue_ptr add_element (CORBA::Flags,
-                                    CORBA_Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ());
-  // helper to increase the list size. This is used by all the add_
-  // methods of the NVList class
+  CORBA_NamedValue_ptr add_element (CORBA::Flags, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // helper to increase the list size. This is used by all the add_ methods of
+  // the NVList class
 
-  void evaluate (CORBA::Environment &ACE_TRY_ENV);
-  // Lazy evaluation routine to fill up the Anys in the NVList from
-  // the CDR stream.
-
-private:
   ACE_Unbounded_Queue<CORBA_NamedValue_ptr> values_;
   // internal list of parameters stored as NamedValues
 
@@ -301,15 +251,6 @@ private:
 
   ACE_SYNCH_MUTEX refcount_lock_;
   // Protects the reference count.
-
-  TAO_InputCDR *incoming_;
-  // When the NVList is used as part of a Server Request we can simply
-  // store the CDR buffer and perform lazy evaluation to compute the
-  // Anys.
-
-  int incoming_flag_;
-  // The flags used to check which parameters are actually extracted
-  // from the <incoming_> buffer
 
   friend class CORBA_ORB;
   friend class CORBA_Request;
@@ -389,5 +330,4 @@ private:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-#include "ace/post.h"
 #endif /* TAO_NVLIST_H */

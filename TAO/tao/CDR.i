@@ -83,15 +83,6 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs)
 }
 
 ACE_INLINE
-TAO_InputCDR::TAO_InputCDR (ACE_InputCDR::Transfer_Contents rhs,
-                            TAO_ORB_Core* orb_core)
-  : ACE_InputCDR (rhs),
-    orb_core_ (orb_core)
-{
-  this->init_translators ();
-}
-
-ACE_INLINE
 TAO_InputCDR::~TAO_InputCDR (void)
 {
 }
@@ -164,12 +155,6 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
   return ACE_static_cast (ACE_OutputCDR &, os) << x;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const CORBA::WChar* x)
-{
-  return ACE_static_cast (ACE_OutputCDR &, os) << x;
-}
-
 // ****************************************************************
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
@@ -228,12 +213,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::Char* &x)
-{
-  return ACE_static_cast (ACE_InputCDR &, is) >> x;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
-                                      CORBA::WChar* &x)
 {
   return ACE_static_cast (ACE_InputCDR &, is) >> x;
 }

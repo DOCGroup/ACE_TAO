@@ -6,7 +6,7 @@
 # include "tao/corbafwd.i"
 #endif /* ! __ACE_INLINE__ */
 
-char *
+CORBA::String
 CORBA::string_dup (const CORBA::Char *str)
 {
   if (!str)
@@ -15,7 +15,7 @@ CORBA::string_dup (const CORBA::Char *str)
   size_t len = ACE_OS::strlen (str);
 
   // This allocates an extra byte for the '\0';
-  char * copy = CORBA::string_alloc (len);
+  CORBA::String copy = CORBA::string_alloc (len);
 
   ACE_OS::memcpy (copy, str, len + 1);
   return copy;

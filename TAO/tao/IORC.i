@@ -239,8 +239,7 @@ ACE_INLINE
 TAO_IOP::TAO_IOR_Manipulation::IORList_var::IORList_var (const TAO_IOP::TAO_IOR_Manipulation::IORList_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_,
-             TAO_IOP::TAO_IOR_Manipulation::IORList(*p.ptr_));
+    this->ptr_ = new TAO_IOP::TAO_IOR_Manipulation::IORList(*p.ptr_);
   else
     this->ptr_ = 0;
 }
@@ -265,9 +264,7 @@ TAO_IOP::TAO_IOR_Manipulation::IORList_var::operator= (const TAO_IOP::TAO_IOR_Ma
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_,
-                    TAO_IOP::TAO_IOR_Manipulation::IORList (*p.ptr_),
-                    *this);
+    this->ptr_ = new TAO_IOP::TAO_IOR_Manipulation::IORList (*p.ptr_);
   }
   return *this;
 }
@@ -428,9 +425,17 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO_IOP::TAO_IO
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList &)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList &_tao_aggregate)
 {
-  return 1;
+  // retrieve  RepoID and verify if we are of that type
+  char *_tao_repoID;
+  if ((strm >> _tao_repoID) &&
+      (_tao_aggregate._is_a (_tao_repoID)))
+  {
+    return 1;
+  }
+  else
+    return 0;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO_IOP::TAO_IOR_Manipulation::NotFound &_tao_aggregate)
@@ -442,9 +447,17 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO_IOP::TAO_IO
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, TAO_IOP::TAO_IOR_Manipulation::NotFound &)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TAO_IOP::TAO_IOR_Manipulation::NotFound &_tao_aggregate)
 {
-  return 1;
+  // retrieve  RepoID and verify if we are of that type
+  char *_tao_repoID;
+  if ((strm >> _tao_repoID) &&
+      (_tao_aggregate._is_a (_tao_repoID)))
+  {
+    return 1;
+  }
+  else
+    return 0;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO_IOP::TAO_IOR_Manipulation::Duplicate &_tao_aggregate)
@@ -456,9 +469,17 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO_IOP::TAO_IO
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, TAO_IOP::TAO_IOR_Manipulation::Duplicate &)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TAO_IOP::TAO_IOR_Manipulation::Duplicate &_tao_aggregate)
 {
-  return 1;
+  // retrieve  RepoID and verify if we are of that type
+  char *_tao_repoID;
+  if ((strm >> _tao_repoID) &&
+      (_tao_aggregate._is_a (_tao_repoID)))
+  {
+    return 1;
+  }
+  else
+    return 0;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR &_tao_aggregate)
@@ -470,9 +491,17 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO_IOP::TAO_IO
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &, TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR &)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR &_tao_aggregate)
 {
-  return 1;
+  // retrieve  RepoID and verify if we are of that type
+  char *_tao_repoID;
+  if ((strm >> _tao_repoID) &&
+      (_tao_aggregate._is_a (_tao_repoID)))
+  {
+    return 1;
+  }
+  else
+    return 0;
 }
 
 CORBA::Boolean  operator<< (

@@ -182,52 +182,52 @@ void POA_CORBA::Policy::_is_a_skel (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
-  POA_CORBA::Policy *_tao_impl = (POA_CORBA::Policy *) _tao_object_reference;
-  CORBA::Boolean _tao_retval = 0;
-  CORBA::String_var value;
-  if (!((_tao_in >> value.out ())))
-    ACE_THROW (CORBA::MARSHAL ());
-
-  _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
+  static const TAO_Param_Data_Skel CORBA_Policy_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel CORBA_Policy_is_a_calldata =
+  {"_is_a", 1, 2, CORBA_Policy_is_a_paramdata};
+  POA_CORBA::Policy_ptr  _tao_impl = (POA_CORBA::Policy_ptr) _tao_object_reference;
+  CORBA::Boolean _tao_retval;
+  CORBA::String_var _tao_value;
+  _tao_server_request.demarshal (
+    ACE_TRY_ENV,
+    &CORBA_Policy_is_a_calldata,
+    &_tao_retval,
+    &_tao_value.inout ()
+  );
   ACE_CHECK;
-
-  _tao_server_request.init_reply (ACE_TRY_ENV);
+  _tao_retval = _tao_impl->_is_a (_tao_value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
-    ACE_THROW (CORBA::MARSHAL ());
+  _tao_server_request.marshal (
+    ACE_TRY_ENV,
+    &CORBA_Policy_is_a_calldata,
+    &_tao_retval,
+    &_tao_value.inout ()
+  );
 }
 
 void POA_CORBA::Policy::_non_existent_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void * _tao_object_reference ,
+    void * /* _tao_object_reference */ ,
     void * /*context*/,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Policy *_tao_impl = (POA_CORBA::Policy *) _tao_object_reference;
-  CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  _tao_server_request.init_reply (ACE_TRY_ENV);
-  ACE_CHECK;
-  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))
-    ACE_THROW (CORBA::MARSHAL ());
-}
-
-void POA_CORBA::Policy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel) == -1)
-    {
-      ACE_THROW (CORBA_BAD_OPERATION ());
-    }
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  static const TAO_Param_Data_Skel CORBA_Policy_non_existent_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0}
+  };
+  static const TAO_Call_Data_Skel CORBA_Policy_non_existent_calldata =
+  {"_non_existent", 1, 1, CORBA_Policy_non_existent_paramdata};
+  CORBA::Boolean _tao_retval = 0;
+  _tao_server_request.marshal (
+    ACE_TRY_ENV,
+    &CORBA_Policy_non_existent_calldata,
+    &_tao_retval
+  );
 }
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
@@ -254,6 +254,21 @@ void* POA_CORBA::Policy::_downcast (
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
 }
+
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
+void POA_CORBA::Policy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Skeleton skel; // pointer to skeleton for operation
+  const char *opname = req.operation (); // retrieve operation name
+  // find the skeleton corresponding to this opname
+  if (this->_find (opname, skel) == -1)
+  {
+    ACE_THROW (CORBA_BAD_OPERATION ());
+  }
+else
+    skel (req, this, context, ACE_TRY_ENV);
+}
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 const char* POA_CORBA::Policy::_interface_repository_id (void) const
 {
@@ -320,15 +335,7 @@ POA_CORBA::Policy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
-  CORBA::Policy *retval = CORBA::Policy::_nil ();
-
-  ACE_NEW_RETURN (retval,
-                  POA_CORBA::_tao_collocated_Policy (this,
-                                                     stub),
-                  CORBA::Policy::_nil ());
-
-  return retval;
+  return new POA_CORBA::_tao_collocated_Policy (this, stub);
 }
 
 // ****************************************************************
@@ -379,15 +386,7 @@ POA_CORBA::PolicyManager::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
-  CORBA::PolicyManager *retval = CORBA::PolicyManager::_nil ();
-
-  ACE_NEW_RETURN (retval,
-                  POA_CORBA::_tao_collocated_PolicyManager (this,
-                                                            stub),
-                  CORBA::PolicyManager::_nil ());
-
-  return retval;
+  return new POA_CORBA::_tao_collocated_PolicyManager (this, stub);
 }
 
 POA_CORBA::_tao_collocated_PolicyManager::_tao_collocated_PolicyManager (
@@ -497,15 +496,7 @@ POA_CORBA::PolicyCurrent::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
-  CORBA::PolicyCurrent *retval = CORBA::PolicyCurrent::_nil ();
-
-  ACE_NEW_RETURN (retval,
-                  POA_CORBA::_tao_collocated_PolicyCurrent (this,
-                                                            stub),
-                  CORBA::PolicyCurrent::_nil ());
-
-  return retval;
+  return new POA_CORBA::_tao_collocated_PolicyCurrent (this, stub);
 }
 
 POA_CORBA::_tao_collocated_PolicyCurrent::_tao_collocated_PolicyCurrent (

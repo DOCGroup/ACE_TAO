@@ -17,23 +17,19 @@
 
 #ifndef TAO_IDL_TIMEBASES_T_H
 #define TAO_IDL_TIMEBASES_T_H
-#include "ace/pre.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
 
 #if defined (__ACE_INLINE__)
-#include "tao/TimeBaseS_T.i"
+#include "TimeBaseS_T.i"
 #endif /* defined INLINE */
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/TimeBaseS_T.cpp"
+#include "TimeBaseS_T.cpp"
 #endif /* defined REQUIRED SOURCE */
 
 
@@ -41,9 +37,8 @@
 #pragma implementation ("TimeBaseS_T.cpp")
 #endif /* defined REQUIRED PRAGMA */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
 #endif /* TAO_IDL_TIMEBASES_T_H */

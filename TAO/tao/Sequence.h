@@ -17,7 +17,6 @@
 
 #ifndef TAO_SEQUENCE_H
 #define TAO_SEQUENCE_H
-#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -325,128 +324,6 @@ public:
   char **get_buffer (CORBA::Boolean orphan = 0);
   const char **get_buffer (void) const;
 
-  // Functions to create, destroy, and adjust the underlying buffer.
-  virtual void _allocate_buffer (CORBA::ULong length);
-  virtual void _deallocate_buffer (void);
-  virtual void _shrink_buffer (CORBA::ULong new_length,
-                               CORBA::ULong old_length);
-};
-
-// ****************************************************************
-
-class TAO_Export TAO_Unbounded_WString_Sequence : public TAO_Unbounded_Base_Sequence
-{
-  // =TITLE
-  //  Unbounded sequence of wstrings.
-  //
-  // =DESCRIPTION
-  //  IDL sequences of wstrings must automatically duplicate and
-  //  release their members based on some global <release> flag.
-
-  // = SPEC
-  // 16.8 Mapping for Structured Types
-  // The mapping for struct, union, and sequence (but not array) is a
-  // C++ struct or class with a default constructor, a copy
-  // constructor, an assignment operator, and a destructor.
-  //
-public:
-  // = Operations for the Unbounded_ObjectSequence
-
-  TAO_Unbounded_WString_Sequence (void);
-  // {orbos/97-05-15:16.8}
-  // The default constructor initializes object reference members to
-  // appropriately typed nil object references and wstring members to
-  // NULL; all other members are initialized via their default
-  // constructors.
-  //
-  // {orbos/97-05-15:16.11}
-  // For both bounded and unbounded sequences, the default constructor
-  // (as shown in the example above) sets the sequence length equal to
-  // 0.
-
-  TAO_Unbounded_WString_Sequence (CORBA::ULong maximum);
-  // Unbounded sequences provide a constructor that allows only the
-  // initial value of the maximum length to be set (the ``maximum
-  // constructor'' shown in the example above). This allows
-  // applications to control how much buffer space is initially
-  // allocated by the sequence. This constructor also sets the length
-  // to 0 and the release flag to TRUE.
-
-  TAO_Unbounded_WString_Sequence (CORBA::ULong maximum,
-                                  CORBA::ULong length,
-                                  CORBA::WChar **data,
-                                  CORBA::Boolean release=0);
-  // The ``T *data'' constructor (as shown in the example above)
-  // allows the length and contents of a bounded or unbounded sequence
-  // to be set. For unbounded sequences, it also allows the initial
-  // value of the maximum length to be set. For this constructor,
-  // ownership of the contents vector is determined by the release
-  // parameter---FALSE means the caller owns the storage, while TRUE
-  // means that the sequence assumes ownership of the storage.
-  // If release is TRUE, the contents vector must have been allocated
-  // using the sequence allocbuf function, and the sequence will pass
-  // it to freebuf when finished with it.
-
-  TAO_Unbounded_WString_Sequence (const TAO_Unbounded_WString_Sequence&);
-  // The copy constructor performs a deep copy from the existing
-  // structure to create a new structure, including calling _duplicate
-  // on all object  reference members and performing the necessary
-  // heap allocations for all string members.
-  //
-  // The copy constructor creates a new sequence with the same maximum
-  // and length as the given sequence, copies each of its current
-  // elements (items zero through length-1), and sets the release
-  // flag to TRUE.
-
-  ~TAO_Unbounded_WString_Sequence (void);
-  // The destructor releases all object reference members and frees
-  // all string members.
-
-  TAO_Unbounded_WString_Sequence &operator= (const TAO_Unbounded_WString_Sequence &);
-  // The assignment operator first releases all object reference
-  // members and frees all wstring  members, and then performs a
-  // deep­copy to create a new structure.
-  //
-  // The assignment operator deep­copies its parameter, releasing
-  // old storage if necessary. It behaves as if the original sequence
-  // is destroyed via its destructor and then the source sequence
-  // copied using the copy constructor. If release=TRUE, the
-  // destructor destroys each of the current elements (items zero
-  // through length--1).
-  // For an unbounded sequence, if a reallocation is necessary due to
-  // a change in the length and the sequence was created using the
-  // release=TRUE parameter in its constructor, the sequence will
-  // deallocate the old storage. If release is FALSE under these
-  // circumstances, old storage will not be freed before the
-  // reallocation is performed. After reallocation, the release flag
-  // is always set to TRUE.
-
-  TAO_SeqElem_WString_Manager operator[] (CORBA::ULong slot) const;
-  // read-write accessor
-
-  static CORBA::WChar* *allocbuf (CORBA::ULong);
-  // The allocbuf function allocates a vector of T elements that can
-  // be passed to the T *data constructor. The length of the vector is
-  // given by the nelems function argument.  The allocbuf function
-  // initializes each element using its default constructor, except
-  // for strings, which are initialized to null pointers, and object
-  // references, which are initialized to suitably typed nil object
-  // references. A null pointer is returned if allocbuf for some
-  // reason cannot allocate the requested vector. Vectors allocated by
-  // allocbuf should be freed using the freebuf function.
-
-  static void freebuf (CORBA::WChar **);
-  // The freebuf function ensures that the destructor for each element
-  // is called before the buffer is destroyed, except for string
-  // elements, which are freed using wstring_free(), and object
-  // reference elements, which are freed using release(). The freebuf
-  // function will ignore null pointers passed to it.
-
-  // = Fast buffer accessors.
-  CORBA::WChar **get_buffer (CORBA::Boolean orphan = 0);
-  const CORBA::WChar **get_buffer (void) const;
-
-  // Functions to create, destroy, and adjust the underlying buffer.
   virtual void _allocate_buffer (CORBA::ULong length);
   virtual void _deallocate_buffer (void);
   virtual void _shrink_buffer (CORBA::ULong new_length,
@@ -489,10 +366,6 @@ public:
                           CORBA::Boolean release = 0);
   virtual ~TAO_Unbounded_Sequence (void);
   // see TAO_Unbounded_Sequence in "Sequence_T.h"
-
-  static void _tao_any_destructor (void*);
-  // Use in the implementation of insertion and extraction operators
-  // from CORBA::Any
 
   TAO_Unbounded_Sequence (const TAO_Unbounded_Sequence<CORBA::Octet> &);
   TAO_Unbounded_Sequence<CORBA::Octet>& operator= (const TAO_Unbounded_Sequence<CORBA::Octet> &);
@@ -567,11 +440,11 @@ private:
 // ****************************************************************
 
 // Comparison of octet sequence.
-TAO_Export int operator== (const TAO_Unbounded_Sequence<CORBA::Octet> &l,
-                           const TAO_Unbounded_Sequence<CORBA::Octet> &r);
+extern TAO_Export int operator== (const TAO_Unbounded_Sequence<CORBA::Octet> &l,
+                                  const TAO_Unbounded_Sequence<CORBA::Octet> &r);
 
-TAO_Export int operator!= (const TAO_Unbounded_Sequence<CORBA::Octet> &l,
-                           const TAO_Unbounded_Sequence<CORBA::Octet> &r);
+extern TAO_Export int operator!= (const TAO_Unbounded_Sequence<CORBA::Octet> &l,
+                                  const TAO_Unbounded_Sequence<CORBA::Octet> &r);
 
 // ****************************************************************
 
@@ -581,5 +454,4 @@ TAO_Export int operator!= (const TAO_Unbounded_Sequence<CORBA::Octet> &l,
 
 #include "tao/Sequence_T.h"
 
-#include "ace/post.h"
 #endif /* TAO_SEQUENCE_H */

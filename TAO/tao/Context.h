@@ -19,7 +19,6 @@
 
 #ifndef TAO_CONTEXT_H
 #define TAO_CONTEXT_H
-#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -27,7 +26,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 class TAO_Export CORBA_Context
 {
@@ -301,5 +300,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
-#include "ace/post.h"
 #endif /* TAO_CONTEXT_H */

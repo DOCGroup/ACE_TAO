@@ -17,8 +17,8 @@
 //
 // ================================================================
 
-#include "tao/IOPS.h"
+#include "IOPS.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/IOPS.i"
+#include "IOPS.i"
 #endif /* !defined INLINE */

@@ -10,7 +10,6 @@
 
 #ifndef _TAO_IDL_IORS_H_
 #define _TAO_IDL_IORS_H_
-#include "ace/pre.h"
 
 #include "tao/IORC.h"
 #include "tao/Servant_Base.h"
@@ -21,9 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -31,12 +27,13 @@ TAO_NAMESPACE  POA_TAO_IOP
 {
   class TAO_IOR_Manipulation;
   typedef TAO_IOR_Manipulation *TAO_IOR_Manipulation_ptr;
-  class TAO_Export  TAO_IOR_Manipulation :  public virtual TAO_Local_ServantBase
+  class  TAO_IOR_Manipulation :  public virtual TAO_Local_ServantBase
   {
   protected:
     TAO_IOR_Manipulation (void);
 
   public:
+    TAO_IOR_Manipulation (const TAO_IOR_Manipulation& rhs);
     virtual ~TAO_IOR_Manipulation (void);
 
 
@@ -120,15 +117,13 @@ TAO_NAMESPACE  POA_TAO_IOP
         TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList
       )) = 0;
 
-  private:
-    ACE_UNIMPLEMENTED_FUNC (TAO_IOR_Manipulation (const TAO_IOR_Manipulation& rhs))
   };
 
 
 #if !defined (_TAO_IOP_TAO_IOR_MANIPULATION___COLLOCATED_SH_)
 #define _TAO_IOP_TAO_IOR_MANIPULATION___COLLOCATED_SH_
 
-  class TAO_Export  _tao_collocated_TAO_IOR_Manipulation     : public virtual TAO_IOP::TAO_IOR_Manipulation
+  class  _tao_collocated_TAO_IOR_Manipulation     : public virtual TAO_IOP::TAO_IOR_Manipulation
   {
   public:
     _tao_collocated_TAO_IOR_Manipulation (
@@ -200,19 +195,17 @@ TAO_NAMESPACE  POA_TAO_IOP
     TAO_IOR_Manipulation_ptr servant_;
   };
 
-}
-TAO_NAMESPACE_CLOSE
+};
 
 #endif /* end #if !defined */
 
 
 #if defined (__ACE_INLINE__)
-#include "tao/IORS.i"
+#include "IORS.i"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
 #endif /* ifndef */

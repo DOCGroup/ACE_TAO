@@ -20,18 +20,18 @@
 
 #ifndef TAO_UIOP_PROFILE_H
 #define TAO_UIOP_PROFILE_H
-#include "ace/pre.h"
 
-#include "tao/Profile.h"
+#include "tao/Pluggable.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-# if TAO_HAS_UIOP == 1
+# if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 #include "tao/Object_KeyC.h"
 #include "tao/UIOP_Connect.h"
+#include "tao/Tagged_Components.h"
 
 #include "ace/UNIX_Addr.h"
 #include "ace/Synch.h"
@@ -48,8 +48,7 @@ class TAO_Export TAO_UIOP_Profile : public TAO_Profile
   // = DESCRIPTION
   //   This class defines the UIOP profile.
 public:
-  static const char object_key_delimiter_;
-  virtual char object_key_delimiter (void) const;
+  static const char object_key_delimiter;
   // The object key delimiter that UIOP uses or expects.
 
   static const char *prefix (void);
@@ -90,7 +89,7 @@ public:
                     CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Initialize this object using the given input string.
 
-  char * to_string (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  CORBA::String to_string (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Return a string representation for this profile.
   // client must deallocate memory.
 
@@ -138,6 +137,11 @@ public:
   void reset_hint (void);
   // Reset the hint's value.
 
+  const TAO_Tagged_Components& tagged_components (void) const;
+  TAO_Tagged_Components& tagged_components (void);
+  // Access the tagged components, notice that they are empty and
+  // ignored for GIOP 1.0.
+
 private:
 
   TAO_GIOP_Version version_;
@@ -159,13 +163,15 @@ private:
 
   TAO_ORB_Core *orb_core_;
   // ORB Core.
+
+  TAO_Tagged_Components tagged_components_;
+  // The tagged components
 };
 
 #if defined (__ACE_INLINE__)
 # include "tao/UIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
-# endif  /* TAO_HAS_UIOP == 1 */
+# endif  /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 
-#include "ace/post.h"
 #endif  /* TAO_UIOP_PROFILE_H */

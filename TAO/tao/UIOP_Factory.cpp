@@ -3,7 +3,7 @@
 
 #include "tao/UIOP_Factory.h"
 
-#if TAO_HAS_UIOP == 1
+# if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 #include "tao/UIOP_Acceptor.h"
 #include "tao/UIOP_Connector.h"
@@ -26,7 +26,8 @@ TAO_UIOP_Protocol_Factory::~TAO_UIOP_Protocol_Factory (void)
 int
 TAO_UIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {
-  // Check for the proper prefix for this protocol.
+  // Check for the proper prefix in the IOR.  If the proper prefix isn't
+  // in the IOR then it is not an IOR we can use.
   return (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_) == 0);
 }
 
@@ -34,12 +35,6 @@ const char *
 TAO_UIOP_Protocol_Factory::prefix (void) const
 {
   return ::prefix_;
-}
-
-char
-TAO_UIOP_Protocol_Factory::options_delimiter (void) const
-{
-  return '|';
 }
 
 TAO_Acceptor *
@@ -69,7 +64,6 @@ TAO_UIOP_Protocol_Factory::make_connector (void)
   ACE_NEW_RETURN (connector,
                   TAO_UIOP_Connector,
                   0);
-
   return connector;
 }
 
@@ -84,10 +78,10 @@ ACE_STATIC_SVC_DEFINE (TAO_UIOP_Protocol_Factory,
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_UIOP_Protocol_Factory),
                        ACE_Service_Type::DELETE_THIS |
-                          ACE_Service_Type::DELETE_OBJ,
+                                  ACE_Service_Type::DELETE_OBJ,
                        0)
 
 ACE_FACTORY_DEFINE (TAO, TAO_UIOP_Protocol_Factory)
 
 
-#endif  /* TAO_HAS_UIOP == 1 */
+# endif  /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */

@@ -15,10 +15,10 @@
 //
 // ================================================================
 
-#include "tao/TimeBaseS.h"
+#include "TimeBaseS.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/TimeBaseS.i"
+#include "TimeBaseS.i"
 #endif /* !defined INLINE */
 
 ACE_RCSID(tao, TimeBaseS, "$Id$")

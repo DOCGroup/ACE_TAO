@@ -24,7 +24,6 @@
 
 #ifndef TAO_IDL_INCONSISTENTTYPECODEC_H
 #define TAO_IDL_INCONSISTENTTYPECODEC_H
-#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -32,7 +31,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #include "tao/Exception.h"
 
@@ -41,9 +40,6 @@
 #endif
 #define TAO_EXPORT_MACRO
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -71,11 +67,6 @@ public:
 
   virtual void _raise (void);
 
-  virtual void _tao_encode (TAO_OutputCDR &cdr,
-                            CORBA::Environment &) const;
-  virtual void _tao_decode (TAO_InputCDR &cdr,
-                            CORBA::Environment &);
-
   static CORBA_ORB_InconsistentTypeCode *_narrow (CORBA::Exception *);
 
   // = TAO extension
@@ -85,11 +76,10 @@ public:
 
 #endif /* end #if !defined */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
 #endif /* _MSC_VER */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-#include "ace/post.h"
 #endif /* TAO_IDL_INCONSISTENTTYPECODEC_H */

@@ -7,7 +7,7 @@
 //     TAO
 //
 // = FILENAME
-//     orbconf.h
+//     default_server.h
 //
 // = DESCRIPTION
 //     Build configuration file for the Inter-ORB Engine, and application
@@ -22,7 +22,6 @@
 
 #ifndef TAO_ORB_CONFIG_H
 #define TAO_ORB_CONFIG_H
-#include "ace/pre.h"
 
 #include "ace/OS.h"
 
@@ -38,24 +37,39 @@
 #define TAO_NULL_LOCK_REACTOR ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
 #endif /* TAO_NULL_LOCK_REACTOR */
 
+// Users should override this stuff if they don't want to use the
+// default ACE Socket wrappers.  This makes it possible to change
+// TAO's transport mechanism wholesale by making a few minor changes
+// to the ACE config.h file.
+#if !defined (TAO_SOCK_STREAM)
+#define TAO_SOCK_STREAM ACE_SOCK_STREAM
+#define TAO_SOCK_Stream ACE_SOCK_Stream
+#endif /* TAO_SOCK_STREAM */
+
+#if !defined (TAO_SOCK_ACCEPTOR)
+#define TAO_SOCK_ACCEPTOR ACE_SOCK_ACCEPTOR
+#endif /* TAO_SOCK_ACCEPTOR */
+
+#if !defined (TAO_SOCK_CONNECTOR)
+#define TAO_SOCK_CONNECTOR ACE_SOCK_CONNECTOR
+#endif /* TAO_SOCK_CONNECTOR */
+
+//#define POA_NO_TIMESTAMP
+//
 // Define this if you don't want POA timestamps in the IOR.  Remember,
 // without timestamps, transient and persistent POA cannot be
 // distinguished
-#if !defined (POA_NO_TIMESTAMP)
-# define POA_NO_TIMESTAMP 0
-#endif /* POA_NO_TIMESTAMP */
 
+//#define TAO_USE_DOTTED_DECIMAL_ADDRESSES
+//
 // If set the ORB will use dotted decimal addresses in the IORs it
 // exports, this is useful for platforms or environments that cannot
 // depend on a DNS beign available.
-#if !defined (TAO_USE_DOTTED_DECIMAL_ADDRESSES)
-# define TAO_USE_DOTTED_DECIMAL_ADDRESSES 0
-#endif /* TAO_USE_DOTTED_DECIMAL_ADDRESSES */
 
 // The default arguments of the resource factory for the fake service
 // configurator
 #if !defined (TAO_DEFAULT_RESOURCE_FACTORY_ARGS)
-#define TAO_DEFAULT_RESOURCE_FACTORY_ARGS "static Resource_Factory \"-ORBresources tss -ORBReactorType select_st\""
+#define TAO_DEFAULT_RESOURCE_FACTORY_ARGS "static Resource_Factory \"-ORBresources tss -ORBreactorlock null\""
 #endif /* TAO_DEFAULT_RESOURCE_FACTORY_ARGS */
 
 // The default arguments of the client strategy factory for the fake service
@@ -128,7 +142,7 @@
 // The default timeout receiving the location request to the TAO
 // Naming, Trading and other servicesService.
 #if !defined (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
-#define TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT 10
+#define TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT 4
 #endif /* TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT */
 
 // The default starting port number for TAO servers.
@@ -151,39 +165,19 @@
 # define TAO_MAXIMUM_NATIVE_TYPE_SIZE 128
 #endif /* TAO_MAXIMUM_NATIVE_TYPE_SIZE */
 
-// By default connection purging and recycling are done to provide robust
-// connection management in TAO.
-#if !defined (ACE_MVS)
-# define TAO_USES_ROBUST_CONNECTION_MGMT
-#endif /* ! ACE_MVS */
-
-// This deals with the strategies for connection caching. By default
-// it is the Null Strategy. Although it shall be Least Recently Used
-// (LRU) with the default purging percentage of 20% once this feature
-// has been thoroughly tested.
-#if !defined (TAO_CONNECTION_CACHING_STRATEGY)
-# define TAO_CONNECTION_CACHING_STRATEGY TAO_Resource_Factory::LRU
-#endif /* TAO_CONNECTION_CACHING_STRATEGY */
-
-#if !defined (TAO_PURGE_PERCENT)
-# define TAO_PURGE_PERCENT 20
-#endif /* TAO_PURGE_PERCENT */
-
 // This deals with platforms that support namespaces vs platforms that
 // don't.  @@ MSVC's namespace implementation is somehow broken.
 // The following macros are required to deal with the most bizarre and insane
 // behavior of the MSVC++ compiler
 #if defined (ACE_HAS_USING_KEYWORD)
 #define TAO_NAMESPACE namespace
-#define TAO_NAMESPACE_CLOSE
 #define TAO_NAMESPACE_STORAGE_CLASS extern TAO_EXPORT_MACRO
 #define TAO_NAMESPACE_BEGIN(NS)  namespace NS {
-#define TAO_NAMESPACE_END  }
+#define TAO_NAMESPACE_END  };
 #define TAO_NAMESPACE_TYPE(TYPE)
 #define TAO_NAMESPACE_DEFINE(TYPE,NAME,RHS) TYPE NAME = RHS;
 #else
 #define TAO_NAMESPACE struct TAO_EXPORT_MACRO
-#define TAO_NAMESPACE_CLOSE ;
 #define TAO_NAMESPACE_STORAGE_CLASS static
 #define TAO_NAMESPACE_BEGIN(NS)  NS##::
 #define TAO_NAMESPACE_END
@@ -302,43 +296,15 @@
 // ObjectIds recognized by CORBA_ORB::resolve_initial_references ()...
 // of course, no guarantees are made that the call will return
 // something useful.
-#define TAO_OBJID_NAMESERVICE         "NameService"
-#define TAO_OBJID_TRADINGSERVICE      "TradingService"
-#define TAO_OBJID_IMPLREPOSERVICE     "ImplRepoService"
-#define TAO_OBJID_ROOTPOA             "RootPOA"
-#define TAO_OBJID_POACURRENT          "POACurrent"
-#define TAO_OBJID_INTERFACEREP        "InterfaceRepository"
-#define TAO_OBJID_POLICYMANAGER       "ORBPolicyManager"
-#define TAO_OBJID_POLICYCURRENT       "PolicyCurrent"
-#define TAO_OBJID_IORMANIPULATION     "IORManipulation"
-#define TAO_OBJID_SECURITYCURRENT     "SecurityCurrent"
-#define TAO_OBJID_TRANSACTIONCURRENT  "TransactionCurrent"
-#define TAO_OBJID_DYNANYFACTORY       "DynAnyFactory"
-
-// Comma separated list of the above ObjectIDs.
-// DO NOT include unimplemented services!
-// The CORBA_ORB::list_initial_services () method iterates through
-// this list to determine which initial services are available.
-#define TAO_LIST_OF_INITIAL_SERVICES \
-        TAO_OBJID_NAMESERVICE, \
-        TAO_OBJID_TRADINGSERVICE, \
-        TAO_OBJID_IMPLREPOSERVICE, \
-        TAO_OBJID_ROOTPOA, \
-        TAO_OBJID_POACURRENT, \
-        TAO_OBJID_POLICYMANAGER, \
-        TAO_OBJID_POLICYCURRENT, \
-        TAO_OBJID_IORMANIPULATION
-
-// Service IDs for the services that are located through Multicast.
-enum MCAST_SERVICEID
-{
-  NAMESERVICE,
-  TRADINGSERVICE,
-  IMPLREPOSERVICE
-};
-
-// No. of services locatable through multicast.
-#define NO_OF_MCAST_SERVICES 3
+#define TAO_OBJID_NAMESERVICE      "NameService"
+#define TAO_OBJID_TRADINGSERVICE   "TradingService"
+#define TAO_OBJID_IMPLREPOSERVICE  "ImplRepoService"
+#define TAO_OBJID_ROOTPOA          "RootPOA"
+#define TAO_OBJID_POACURRENT       "POACurrent"
+#define TAO_OBJID_INTERFACEREP     "InterfaceRepository"
+#define TAO_OBJID_POLICYMANAGER    "ORBPolicyManager"
+#define TAO_OBJID_POLICYCURRENT    "PolicyCurrent"
+#define TAO_OBJID_IORMANIPULATION  "IORManipulation"
 
 // TAO Naming Service.
 
@@ -360,381 +326,17 @@ enum MCAST_SERVICEID
 #define TAO_HAS_VALUETYPE
 
 // Minimum CORBA
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-# define TAO_HAS_MINIMUM_CORBA 0
-#endif /* TAO_HAS_MINIMUM_CORBA */
+// #define TAO_HAS_MINIMUM_CORBA
 
-// UIOP support is enabled by default if the platform supports UNIX
-// domain sockets, and TAO is not configured for minimum CORBA.
-// If TAO is configured for minimum CORBA, then UIOP will be disabled
-// by default.
-// To explicitly enable UIOP support uncomment the following
-// #define TAO_HAS_UIOP 1
-// To explicitly disable UIOP support uncomment the following
-// #define TAO_HAS_UIOP 0
-
-// Default UIOP settings
-#if !defined (TAO_HAS_UIOP)
-#  if defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
-#    define TAO_HAS_UIOP 0
-#  elif defined (TAO_HAS_MINIMUM_CORBA)
-#    define TAO_HAS_UIOP 0
-#  else
-#    define TAO_HAS_UIOP 1
-#  endif  /* TAO_HAS_MINIMUM_CORBA */
-#endif  /* !TAO_HAS_UIOP */
-
-#if !defined (TAO_HAS_SHMIOP)
-# define TAO_HAS_SHMIOP 1
-#endif /* TAO_HAS_SHMIOP */
-
-// RT_CORBA support is enabled by default if TAO is not configured for
-// minimum CORBA.  If TAO is configured for minimum CORBA, then
-// RT_CORBA will be disabled by default.
-// To explicitly enable RT_CORBA support uncomment the following
-// #define TAO_HAS_RT_CORBA 1
-// To explicitly disable RT_CORBA support uncomment the following
-// #define TAO_HAS_RT_CORBA 0
-
-// Default RT_CORBA settings
-#if !defined (TAO_HAS_RT_CORBA)
-#  if (TAO_HAS_MINIMUM_CORBA == 1)
-#    define TAO_HAS_RT_CORBA 0
-#  else
-#    define TAO_HAS_RT_CORBA 1
-#  endif  /* TAO_HAS_MINIMUM_CORBA */
-#endif  /* !TAO_HAS_RT_CORBA */
-
-// MINIMUM_POA support is disabled by default if TAO is not
-// configured for minimum CORBA.  If TAO is configured for minimum
-// CORBA, then MINIMUM_POA will be enabled by default.
-// To explicitly enable MINIMUM_POA support uncomment the following
-// #define TAO_HAS_MINIMUM_POA 1
-// To explicitly disable MINIMUM_POA support uncomment the following
-// #define TAO_HAS_MINIMUM_POA 0
-
-// Default MINIMUM_POA settings
-#if !defined (TAO_HAS_MINIMUM_POA)
-#  if (TAO_HAS_MINIMUM_CORBA == 1)
-#    define TAO_HAS_MINIMUM_POA 1
-#  else
-#    define TAO_HAS_MINIMUM_POA 0
-#  endif  /* TAO_HAS_MINIMUM_CORBA */
-#endif  /* !TAO_HAS_MINIMUM_POA */
-
-// MINIMUM_POA_MAPS support is disabled by default if TAO is not
-// configured for minimum POA.  If TAO is configured for minimum
-// POA, then MINIMUM_POA_MAPS will be enabled by default.
-// To explicitly enable MINIMUM_POA_MAPS support uncomment the following
-// #define TAO_HAS_MINIMUM_POA_MAPS 1
-// To explicitly disable MINIMUM_POA_MAPS support uncomment the following
-// #define TAO_HAS_MINIMUM_POA_MAPS 0
-
-// Default MINIMUM_POA_MAPS settings
-#if !defined (TAO_HAS_MINIMUM_POA_MAPS)
-#  if (TAO_HAS_MINIMUM_POA == 1)
-#    define TAO_HAS_MINIMUM_POA_MAPS 1
-#  else
-#    define TAO_HAS_MINIMUM_POA_MAPS 0
-#  endif  /* TAO_HAS_MINIMUM_POA */
-#endif  /* !TAO_HAS_MINIMUM_POA_MAPS */
-
-// CORBA_MESSAGING support is enabled by default if TAO is not
-// configured for minimum CORBA.  If TAO is configured for minimum
-// CORBA, then CORBA_MESSAGING will be disabled by default.
-// To explicitly enable CORBA_MESSAGING support uncomment the following
-// #define TAO_HAS_CORBA_MESSAGING 1
-// To explicitly disable CORBA_MESSAGING support uncomment the following
-// #define TAO_HAS_CORBA_MESSAGING 0
-
-// Default CORBA_MESSAGING settings
-#if !defined (TAO_HAS_CORBA_MESSAGING)
-#  if (TAO_HAS_MINIMUM_CORBA == 1)
-#    define TAO_HAS_CORBA_MESSAGING 0
-#  else
-#    define TAO_HAS_CORBA_MESSAGING 1
-#  endif  /* TAO_HAS_MINIMUM_CORBA */
-#endif  /* !TAO_HAS_CORBA_MESSAGING */
-
-// For all the policies, support is enabled by default if TAO is
-// configured for CORBA Messaging.  If TAO is not configured for CORBA
-// Messaging, then policies cannot be enabled.  Default support can be
-// turned off by setting TAO_DISABLE_CORBA_MESSAGING_POLICIES to 1.
-
-#if !defined (TAO_DISABLE_CORBA_MESSAGING_POLICIES)
-# define TAO_DISABLE_CORBA_MESSAGING_POLICIES 0
-#endif  /* !TAO_DISABLE_CORBA_MESSAGING_POLICIES */
-
-// To explicitly disable REBIND_POLICY support uncomment the following
-// #define TAO_HAS_REBIND_POLICY 0
-
-// Default REBIND_POLICY settings
-#if !defined (TAO_HAS_REBIND_POLICY)
-#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
-      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
-#    define TAO_HAS_REBIND_POLICY 1
-#  else
-#    define TAO_HAS_REBIND_POLICY 0
-#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
-             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
-#endif  /* !TAO_HAS_REBIND_POLICY */
-
-// To explicitly disable SYNC_SCOPE_POLICY support uncomment the following
-// #define TAO_HAS_SYNC_SCOPE_POLICY 0
-
-// Default SYNC_SCOPE_POLICY settings
-#if !defined (TAO_HAS_SYNC_SCOPE_POLICY)
-#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
-      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
-#    define TAO_HAS_SYNC_SCOPE_POLICY 1
-#  else
-#    define TAO_HAS_SYNC_SCOPE_POLICY 0
-#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
-             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
-#endif  /* !TAO_HAS_SYNC_SCOPE_POLICY */
-
-// To explicitly disable PRIORITY_POLICIES support uncomment the following
-// #define TAO_HAS_PRIORITY_POLICIES 0
-
-// Default PRIORITY_POLICIES settings
-#if !defined (TAO_HAS_PRIORITY_POLICIES)
-#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
-      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
-#    define TAO_HAS_PRIORITY_POLICIES 1
-#  else
-#    define TAO_HAS_PRIORITY_POLICIES 0
-#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
-             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
-#endif  /* !TAO_HAS_PRIORITY_POLICIES */
-
-// To explicitly disable REQUEST_START_TIME_POLICY support uncomment the following
-// #define TAO_HAS_REQUEST_START_TIME_POLICY 0
-
-// Default REQUEST_START_TIME_POLICY settings
-#if !defined (TAO_HAS_REQUEST_START_TIME_POLICY)
-#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
-      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
-#    define TAO_HAS_REQUEST_START_TIME_POLICY 1
-#  else
-#    define TAO_HAS_REQUEST_START_TIME_POLICY 0
-#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
-             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
-#endif  /* !TAO_HAS_REQUEST_START_TIME_POLICY */
-
-// To explicitly disable REQUEST_END_TIME_POLICY support uncomment the following
-// #define TAO_HAS_REQUEST_END_TIME_POLICY 0
-
-// Default REQUEST_END_TIME_POLICY settings
-#if !defined (TAO_HAS_REQUEST_END_TIME_POLICY)
-#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
-      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
-#    define TAO_HAS_REQUEST_END_TIME_POLICY 1
-#  else
-#    define TAO_HAS_REQUEST_END_TIME_POLICY 0
-#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
-             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
-#endif  /* !TAO_HAS_REQUEST_END_TIME_POLICY */
-
-// To explicitly disable REPLY_START_TIME_POLICY support uncomment the following
-// #define TAO_HAS_REPLY_START_TIME_POLICY 0
-
-// Default REPLY_START_TIME_POLICY settings
-#if !defined (TAO_HAS_REPLY_START_TIME_POLICY)
-#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
-      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
-#    define TAO_HAS_REPLY_START_TIME_POLICY 1
-#  else
-#    define TAO_HAS_REPLY_START_TIME_POLICY 0
-#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
-             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
-#endif  /* !TAO_HAS_REPLY_START_TIME_POLICY */
-
-// To explicitly disable REPLY_END_TIME_POLICY support uncomment the following
-// #define TAO_HAS_REPLY_END_TIME_POLICY 0
-
-// Default REPLY_END_TIME_POLICY settings
-#if !defined (TAO_HAS_REPLY_END_TIME_POLICY)
-#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
-      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
-#    define TAO_HAS_REPLY_END_TIME_POLICY 1
-#  else
-#    define TAO_HAS_REPLY_END_TIME_POLICY 0
-#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
-             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
-#endif  /* !TAO_HAS_REPLY_END_TIME_POLICY */
-
-// To explicitly disable RELATIVE_REQUEST_TIMEOUT_POLICY support uncomment the following
-// #define TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY 0
-
-// Default RELATIVE_REQUEST_TIMEOUT_POLICY settings
-#if !defined (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY)
-#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
-      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
-#    define TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY 1
-#  else
-#    define TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY 0
-#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
-             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
-#endif  /* !TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY */
-
-// To explicitly disable RELATIVE_ROUNDTRIP_TIMEOUT_POLICY support uncomment the following
-// #define TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY 0
-
-// Default RELATIVE_ROUNDTRIP_TIMEOUT_POLICY settings
-#if !defined (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY)
-#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
-      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
-#    define TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY 1
-#  else
-#    define TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY 0
-#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
-             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
-#endif  /* !TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY */
-
-// To explicitly disable ROUTING_POLICY support uncomment the following
-// #define TAO_HAS_ROUTING_POLICY 0
-
-// Default ROUTING_POLICY settings
-#if !defined (TAO_HAS_ROUTING_POLICY)
-#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
-      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
-#    define TAO_HAS_ROUTING_POLICY 1
-#  else
-#    define TAO_HAS_ROUTING_POLICY 0
-#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
-             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
-#endif  /* !TAO_HAS_ROUTING_POLICY */
-
-// To explicitly disable MAX_HOPS_POLICY support uncomment the following
-// #define TAO_HAS_MAX_HOPS_POLICY 0
-
-// Default MAX_HOPS_POLICY settings
-#if !defined (TAO_HAS_MAX_HOPS_POLICY)
-#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
-      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
-#    define TAO_HAS_MAX_HOPS_POLICY 1
-#  else
-#    define TAO_HAS_MAX_HOPS_POLICY 0
-#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
-             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
-#endif  /* !TAO_HAS_MAX_HOPS_POLICY */
-
-// To explicitly disable QUEUE_ORDER_POLICY support uncomment the following
-// #define TAO_HAS_QUEUE_ORDER_POLICY 0
-
-// Default QUEUE_ORDER_POLICY settings
-#if !defined (TAO_HAS_QUEUE_ORDER_POLICY)
-#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
-      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
-#    define TAO_HAS_QUEUE_ORDER_POLICY 1
-#  else
-#    define TAO_HAS_QUEUE_ORDER_POLICY 0
-#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
-             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
-#endif  /* !TAO_HAS_QUEUE_ORDER_POLICY */
-
-// To explicitly disable CLIENT_PRIORITY_POLICY support uncomment the following
-// #define TAO_HAS_CLIENT_PRIORITY_POLICY 0
-
-// Default CLIENT_PRIORITY_POLICY settings
-#if !defined (TAO_HAS_CLIENT_PRIORITY_POLICY)
-#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
-      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
-#    define TAO_HAS_CLIENT_PRIORITY_POLICY 1
-#  else
-#    define TAO_HAS_CLIENT_PRIORITY_POLICY 0
-#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
-             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
-#endif  /* !TAO_HAS_CLIENT_PRIORITY_POLICY */
-
-// To explicitly disable BUFFERING_CONSTRAINT_POLICY support uncomment the following
-// #define TAO_HAS_BUFFERING_CONSTRAINT_POLICY 0
-
-// Default BUFFERING_CONSTRAINT_POLICY settings
-#if !defined (TAO_HAS_BUFFERING_CONSTRAINT_POLICY)
-#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
-      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
-#    define TAO_HAS_BUFFERING_CONSTRAINT_POLICY 1
-#  else
-#    define TAO_HAS_BUFFERING_CONSTRAINT_POLICY 0
-#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
-             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
-#endif  /* !TAO_HAS_BUFFERING_CONSTRAINT_POLICY */
-
-// AMI support is disabled by default, irrespective of whether TAO is
-// configured for minimum CORBA.
-// To explicitly enable AMI support uncomment the following
-// #define TAO_HAS_AMI 1
-// To explicitly disable AMI support uncomment the following
-// #define TAO_HAS_AMI 0
-
-// Default AMI settings
-#if !defined (TAO_HAS_AMI)
-#  define TAO_HAS_AMI 0
-#endif  /* !TAO_HAS_AMI */
-
-// AMI_POLLER support is disabled by default if TAO is not configured
-// for AMI.  If TAO is configured for AMI, then AMI_POLLER will be
-// enabled by default.
-// To explicitly enable AMI_POLLER support uncomment the following
-// #define TAO_HAS_AMI_POLLER 1
-// To explicitly disable AMI_POLLER support uncomment the following
-// #define TAO_HAS_AMI_POLLER 0
-
-// Default AMI_POLLER settings
-#if !defined (TAO_HAS_AMI_POLLER)
-#  if (TAO_HAS_AMI == 1)
-#    define TAO_HAS_AMI_POLLER 1
-#  else
-#    define TAO_HAS_AMI_POLLER 0
-#  endif  /* TAO_HAS_AMI == 1 */
-#endif  /* !TAO_HAS_AMI_POLLER */
-
-// AMI_CALLBACK support is disabled by default if TAO is not configured
-// for AMI.  If TAO is configured for AMI, then AMI_CALLBACK will be
-// enabled by default.
-// To explicitly enable AMI_CALLBACK support uncomment the following
-// #define TAO_HAS_AMI_CALLBACK 1
-// To explicitly disable AMI_CALLBACK support uncomment the following
-// #define TAO_HAS_AMI_CALLBACK 0
-
-// Default AMI_CALLBACK settings
-#if !defined (TAO_HAS_AMI_CALLBACK)
-#  if (TAO_HAS_AMI == 1)
-#    define TAO_HAS_AMI_CALLBACK 1
-#  else
-#    define TAO_HAS_AMI_CALLBACK 0
-#  endif  /* TAO_HAS_AMI == 1 */
-#endif  /* !TAO_HAS_AMI_CALLBACK */
-
-// INTERFACE_REPOSITORY support is disabled by default, irrespective
-// of whether TAO is configured for minimum CORBA.
-// To explicitly enable INTERFACE_REPOSITORY support uncomment the following
-// #define TAO_HAS_INTERFACE_REPOSITORY 1
-// To explicitly disable INTERFACE_REPOSITORY support uncomment the following
-// #define TAO_HAS_INTERFACE_REPOSITORY 0
-
-// Default INTERFACE_REPOSITORY settings
-#if !defined (TAO_HAS_INTERFACE_REPOSITORY)
-#  define TAO_HAS_INTERFACE_REPOSITORY 0
-#endif  /* !TAO_HAS_INTERFACE_REPOSITORY */
-
-// REMOTE_POLICIES support is enabled by default if TAO is not
-// configured for minimum CORBA.  If TAO is configured for minimum
-// CORBA, then REMOTE_POLICIES will be disabled by default.
-// To explicitly enable REMOTE_POLICIES support uncomment the following
-// #define TAO_HAS_REMOTE_POLICIES 1
-// To explicitly disable REMOTE_POLICIES support uncomment the following
-// #define TAO_HAS_REMOTE_POLICIES 0
-
-// Default REMOTE_POLICIES settings
-#if !defined (TAO_HAS_REMOTE_POLICIES)
-#  if (TAO_HAS_MINIMUM_CORBA == 1)
-#    define TAO_HAS_REMOTE_POLICIES 0
-#  else
-#    define TAO_HAS_REMOTE_POLICIES 1
-#  endif  /* TAO_HAS_MINIMUM_CORBA */
-#endif  /* !TAO_HAS_REMOTE_POLICIES */
+// Without Minimum CORBA, the user will get regular (no locality
+// constraints) policies by default.  With Minimum CORBA, the user
+// will get locality constraint policies by default.
+//
+// If #define TAO_HAS_REMOTE_POLICIES 0, then the user will always get
+// locality constraint policies (regardless of Minimum CORBA).
+//
+// If #define TAO_HAS_REMOTE_POLICIES 1, then the user will always get
+// regular policies (regardless of Minimum CORBA).
 
 // TAO_HAS_LOCALITY_CONSTRAINT_POLICIES is an internal macro and
 // should not be set by the user.
@@ -744,40 +346,34 @@ enum MCAST_SERVICEID
 and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
+#if defined (TAO_HAS_MINIMUM_CORBA)
+
+// With minimum CORBA, we don't have the ForwardRequest exception.
+// Therefore, we can't support the INS forwarding agent.
+# if !defined (TAO_NO_IOR_TABLE)
+#  define TAO_NO_IOR_TABLE
+# endif /* TAO_NO_IOR_TABLE */
+
+# if !defined (TAO_HAS_REMOTE_POLICIES)
+#  define TAO_HAS_REMOTE_POLICIES 0
+# endif /* TAO_HAS_REMOTE_POLICIES */
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+// Policies are not locality constraint by default.
+#if !defined (TAO_HAS_REMOTE_POLICIES)
+# define TAO_HAS_REMOTE_POLICIES 1
+#endif /* TAO_HAS_REMOTE_POLICIES */
+
 #if (TAO_HAS_REMOTE_POLICIES == 0)
 # define TAO_HAS_LOCALITY_CONSTRAINT_POLICIES
 #endif /* TAO_HAS_REMOTE_POLICIES */
 
-// With minimum CORBA, we don't have the ForwardRequest exception.
-// Therefore, we can't support the INS forwarding agent.  Otherwise,
-// we allow user to supress it.
-#if (TAO_HAS_MINIMUM_CORBA == 1)
-# if defined (TAO_NO_IOR_TABLE)
-#   undef TAO_NO_IOR_TABLE
-# endif /* TAO_NO_IOR_TABLE */
-# define TAO_NO_IOR_TABLE 1
-#else
-# if !defined (TAO_NO_IOR_TABLE)
-#  define TAO_NO_IOR_TABLE 0
-# endif /* TAO_NO_IOR_TABLE */
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-// Interceptors is supported by default if we are not building for
-// MinimumCORBA.
-#if !defined (TAO_HAS_INTERCEPTORS)
-# if (TAO_HAS_MINIMUM_CORBA == 1)
-#   define TAO_HAS_INTERCEPTORS 0
-# else
-#   define TAO_HAS_INTERCEPTORS 1
-# endif /* TAO_HAS_MINIMUM_CORBA */
-#endif
+// CORBA Messaging
+#define TAO_HAS_CORBA_MESSAGING
 
 // Define the policy types as literals, so they can be used in switch
 // statements
-
-#define TAO_CLIENT_PRIORITY_POLICY_TYPE 0x54410000
-#define TAO_BUFFERING_CONSTRAINT_POLICY_TYPE 0x54410001
-
 #define TAO_MESSAGING_REBIND_POLICY_TYPE 23
 #define TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE 24
 #define TAO_MESSAGING_REQUEST_PRIORITY_POLICY_TYPE 25
@@ -813,11 +409,4 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 #define TAO_DEFAULT_IOR_SIZE 1024
 #endif /* TAO_DEFAULT_IOR_SIZE */
 
-#if !defined (TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT)
-// The default timeout value for the thread-per-connection model, in
-// milliseconds. The "INFINITE" value is magic and means blocking forever.
-#define TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT "5000"
-#endif /* TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT */
-
-#include "ace/post.h"
 #endif  /* TAO_ORB_CONFIG_H */

@@ -16,7 +16,6 @@
 
 #ifndef TAO_VALUEFACTORY_H
 #define TAO_VALUEFACTORY_H
-#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -79,7 +78,7 @@ private:
 // valuetype via tao_repository_id () of the specialized factory.
 // It forgets the pre-registered factory (if any) and the reference
 // to the newly created one. (A new reference could be obtained with
-// orb->lookup_value_factory (char * repo_id) .)
+// orb->lookup_value_factory (CORBA::String repo_id) .)
 
 #define TAO_OBV_REGISTER_FACTORY(FACTORY) \
   { CORBA_ValueFactory_ptr factory = new FACTORY; \
@@ -96,5 +95,4 @@ private:
 #endif /* __ACE_INLINE__) */
 
 #endif /* TAO_HAS_VALUETYPE */
-#include "ace/post.h"
 #endif /* TAO_VALUEFACTORY_H */

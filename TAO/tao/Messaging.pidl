@@ -41,10 +41,6 @@ module Messaging
   const SyncScope SYNC_WITH_SERVER    = 2;
   const SyncScope SYNC_WITH_TARGET    = 3;
 
-  // = TAO specific.
-  const SyncScope SYNC_EAGER_BUFFERING   = SYNC_NONE;
-  const SyncScope SYNC_DELAYED_BUFFERING = -1;
-
   typedef short RoutingType;
   const RoutingType ROUTE_NONE              = 0;
   const RoutingType ROUTE_FORWARD           = 1;
@@ -162,10 +158,10 @@ module Messaging
     sequence<octet> marshaled_exception;
   };
 #else
-  valuetype ExceptionHolder {
-    public boolean         is_system_exception;
-    public boolean         byte_order;
-    public sequence<octet> marshaled_exception;
+  value ExceptionHolder {
+    boolean         is_system_exception;
+    boolean         byte_order;
+    sequence<octet> marshaled_exception;
   };
 #endif
 
@@ -191,15 +187,15 @@ module Messaging
     readonly attribute string  op_name;
   };
 #else
-  valuetype Poller supports CORBA::Pollable {
+  value Poller supports CORBA::Pollable {
     readonly attribute Object  operation_target;
     readonly attribute string  operation_name;
 
     attribute ReplyHandler     associated_handler;
     readonly attribute boolean is_from_poller;
 
-    public Object                     target;
-    public string                     op_name;
+    Object                     target;
+    string                     op_name;
   };
 #endif
 };

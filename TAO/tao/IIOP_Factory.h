@@ -1,13 +1,12 @@
 // -*- C++ -*-
 // $Id$
-
 // ============================================================================
 //
 // = LIBRARY
 //   TAO
 //
 // = FILENAME
-//   IIOP_Factory.h
+//   Protocol_Factory.h
 //
 // = AUTHOR
 //   Fred Kuhns <fredk@cs.wustl.edu>
@@ -16,7 +15,6 @@
 
 #ifndef TAO_IIOP_FACTORY_H
 #define TAO_IIOP_FACTORY_H
-#include "ace/pre.h"
 
 #include "tao/Protocol_Factory.h"
 
@@ -43,10 +41,6 @@ public:
   virtual const char *prefix (void) const;
   // Returns the prefix used by the protocol.
 
-  virtual char options_delimiter (void) const;
-  // Return the character used to mark where an endpoint ends and
-  // where its options begin.
-
   // = Check Protocol_Factory.h for a description of these methods.
   virtual TAO_Acceptor  *make_acceptor (void);
   virtual TAO_Connector *make_connector  (void);
@@ -62,5 +56,4 @@ private:
 ACE_STATIC_SVC_DECLARE (TAO_IIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_IIOP_Protocol_Factory)
 
-#include "ace/post.h"
 #endif /* TAO_IIOP_FACTORY_H */

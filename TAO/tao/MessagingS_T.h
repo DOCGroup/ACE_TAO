@@ -10,23 +10,19 @@
 
 #ifndef _TAO_IDL_MESSAGINGS_T_H_
 #define _TAO_IDL_MESSAGINGS_T_H_
-#include "ace/pre.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
 
 #if defined (__ACE_INLINE__)
-#include "tao/MessagingS_T.i"
+#include "MessagingS_T.i"
 #endif /* defined INLINE */
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/MessagingS_T.cpp"
+#include "MessagingS_T.cpp"
 #endif /* defined REQUIRED SOURCE */
 
 
@@ -34,9 +30,8 @@
 #pragma implementation ("MessagingS_T.cpp")
 #endif /* defined REQUIRED PRAGMA */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
 #endif /* ifndef */

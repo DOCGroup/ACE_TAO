@@ -3,28 +3,374 @@
 
 // Insertion from special types.
 
-ACE_INLINE CORBA::Boolean
+ACE_INLINE 
+void
+CORBA_Any::replace (CORBA::TypeCode_ptr type,
+                    const void *value,
+                    CORBA::Environment &ACE_TRY_ENV)
+{
+  // Invoke the first form of the replace method and pass the default
+  // value (FALSE) for the "any_owns_data" parameter
+  this->replace (type,
+                 value,
+                 0,
+                 ACE_TRY_ENV);
+}
+
+ACE_INLINE 
+CORBA::Boolean
 CORBA_Any::any_owns_data (void) const
 {
   return (this->any_owns_data_ != 0 && this->value_ != 0);
 }
 
-ACE_INLINE ACE_Message_Block*
+ACE_INLINE 
+ACE_Message_Block*
 CORBA_Any::_tao_get_cdr (void) const
 {
   return this->cdr_;
 }
 
-ACE_INLINE int
-CORBA_Any::_tao_byte_order (void) const
+// insertion operators
+
+ACE_INLINE 
+void
+CORBA_Any::operator<<= (CORBA::Short s)
 {
-  return this->byte_order_;
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::Short *ns;
+      ACE_NEW (ns,
+               CORBA::Short (s));
+      this->replace (CORBA::_tc_short,
+                     ns,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
+ACE_INLINE 
+void
+CORBA_Any::operator<<= (CORBA::UShort s)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::UShort *ns;
+      ACE_NEW (ns,
+               CORBA::UShort (s));
+      this->replace (CORBA::_tc_ushort,
+                     ns,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+ACE_INLINE 
+void
+CORBA_Any::operator<<= (CORBA::Long l)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::Long *nl;
+      ACE_NEW (nl,
+               CORBA::Long (l));
+      this->replace (CORBA::_tc_long,
+                     nl,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+ACE_INLINE 
+void
+CORBA_Any::operator<<= (CORBA::ULong l)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::ULong *nl;
+      ACE_NEW (nl,
+               CORBA::ULong (l));
+      this->replace (CORBA::_tc_ulong,
+                     nl,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+ACE_INLINE 
+void
+CORBA_Any::operator<<= (CORBA::LongLong l)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::LongLong *nl;
+      ACE_NEW (nl,
+               CORBA::LongLong (l));
+      this->replace (CORBA::_tc_longlong,
+                     nl,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+ACE_INLINE 
+void
+CORBA_Any::operator<<= (CORBA::ULongLong l)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::ULongLong *nl;
+      ACE_NEW (nl,
+               CORBA::ULongLong (l));
+      this->replace (CORBA::_tc_ulonglong,
+                     nl,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+ACE_INLINE 
+void
+CORBA_Any::operator<<= (CORBA::Float f)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::Float *nf;
+      ACE_NEW (nf,
+               CORBA::Float (f));
+      this->replace (CORBA::_tc_float,
+                     nf,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+ACE_INLINE void
+CORBA_Any::operator<<= (CORBA::Double d)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::Double *nd;
+      ACE_NEW (nd,
+               CORBA::Double (d));
+      this->replace (CORBA::_tc_double,
+                     nd,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+// insertion of Any - copying
+ACE_INLINE void
+CORBA_Any::operator<<= (const CORBA_Any& a)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA_Any_ptr na;
+      ACE_NEW (na,
+               CORBA::Any (a));
+      this->replace (CORBA::_tc_any,
+                     na,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+// insertion of Any - non-copying
+ACE_INLINE 
+void
+CORBA::Any::operator<<= (CORBA::Any_ptr anyptr)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      this->replace (CORBA::_tc_any,
+                     anyptr,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+// implementing the special types
 ACE_INLINE
 CORBA_Any::to_object::to_object (CORBA_Object_out obj)
   : ref_ (obj.ptr ())
 {
+}
+
+ACE_INLINE 
+void
+CORBA_Any::operator<<= (from_boolean b)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::Boolean *nb;
+      ACE_NEW (nb,
+               CORBA::Boolean (b.val_));
+      this->replace (CORBA::_tc_boolean,
+                     nb,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+ACE_INLINE 
+void
+CORBA_Any::operator<<= (from_octet o)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::Octet *no;
+      ACE_NEW (no,
+               CORBA::Octet (o.val_));
+      this->replace (CORBA::_tc_octet,
+                     no,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+ACE_INLINE 
+void
+CORBA_Any::operator<<= (from_char c)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::Char *nc;
+      ACE_NEW (nc,
+               CORBA::Char (c.val_));
+      this->replace (CORBA::_tc_char,
+                     nc,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+ACE_INLINE 
+void
+CORBA_Any::operator<<= (from_wchar wc)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::WChar *nwc;
+      ACE_NEW (nwc,
+               CORBA::WChar (wc.val_));
+      this->replace (CORBA::_tc_wchar,
+                     nwc,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 // *************************************************************
@@ -275,13 +621,7 @@ operator >>= (CORBA_Any_var lhs, CORBA::TypeCode_ptr &rhs)
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA_Any_var lhs, const char *&rhs)
-{
-  return lhs.inout () >>= rhs;
-}
-
-ACE_INLINE CORBA::Boolean
-operator >>= (CORBA_Any_var lhs, const CORBA::WChar *&rhs)
+operator >>= (CORBA_Any_var lhs, char* &rhs)
 {
   return lhs.inout () >>= rhs;
 }

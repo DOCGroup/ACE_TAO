@@ -19,7 +19,6 @@
 
 #ifndef TAO_MPROFILE_H
 #define TAO_MPROFILE_H
-#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -27,7 +26,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Profile.h"
+#include "tao/Pluggable.h"
 
 typedef CORBA::ULong TAO_PHandle;
 
@@ -189,5 +188,4 @@ private:
 # include "tao/MProfile.i"
 #endif /*__ACE_INLINE__ */
 
-#include "ace/post.h"
 #endif /*TAO_MPROFILE_H */

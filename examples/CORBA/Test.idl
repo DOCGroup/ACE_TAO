@@ -1,8 +1,0 @@
-// $Id$
-
-interface Test
-// @(#)Test.idl	1.1	10/18/96
-
-{
-  void method (in long input1);
-};

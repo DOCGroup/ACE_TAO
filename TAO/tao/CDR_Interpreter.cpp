@@ -182,7 +182,7 @@ declare_entry (CORBA::TypeCode_ptr, tk_TypeCode);
 declare_entry (CORBA::Principal_ptr, tk_Principal);
 declare_entry (TAO_Object_Field_Class, tk_objref);
 
-declare_entry (char*, tk_string);
+declare_entry (CORBA::String, tk_string);
 #if !defined (TAO_NO_COPY_OCTET_SEQUENCES)
 declare_entry (TAO_opaque, tk_sequence);
 #endif
@@ -223,7 +223,7 @@ TAO_CDR_Interpreter::init (void)
   TAO_CDR_Interpreter::table_ [CORBA::tk_enum].alignment_ =
     sizeof (generic_enum);
 
-  setup_entry (char*, tk_string);
+  setup_entry (CORBA::String, tk_string);
 #if !defined (TAO_NO_COPY_OCTET_SEQUENCES)
   setup_entry (TAO_opaque, tk_sequence);
 #endif /* defined (TAO_NO_COPY_OCTET_SEQUENCES) */
@@ -298,7 +298,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
 
   if (TAO_CDR_Interpreter::table_[kind].calc_ != 0)
     {
-      ACE_ASSERT (TAO_CDR_Interpreter::table_[kind].size_ == 0);
+      assert (TAO_CDR_Interpreter::table_[kind].size_ == 0);
 
       // Pull encapsulation length out of the stream.
       if (stream->read_ulong (temp) == 0)
@@ -319,7 +319,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
       // any to ensure correctness.  Then use the calculator routine
       // to calculate size and alignment.
 
-      ACE_ASSERT (temp <= UINT_MAX);
+      assert (temp <= UINT_MAX);
 
       TAO_InputCDR nested (*stream, temp);
 
@@ -344,7 +344,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
         }
       return size;
     }
-  ACE_ASSERT (TAO_CDR_Interpreter::table_[kind].size_ != 0);
+  assert (TAO_CDR_Interpreter::table_[kind].size_ != 0);
 
   // Reinitialize the TypeCode if requested; this consumes any
   // TypeCode parameters in the stream.  They only exist for TCKind
@@ -360,7 +360,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
       switch (kind)
         {
         default:
-          ACE_ASSERT (TAO_CDR_Interpreter::table_[kind].skipper_ == 0);
+          assert (TAO_CDR_Interpreter::table_[kind].skipper_ == 0);
           break;
 
         case CORBA::tk_string:
@@ -381,7 +381,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
             }
           tc->length_ = len;
 
-          ACE_ASSERT (len < UINT_MAX);
+          assert (len < UINT_MAX);
           tc->buffer_ = stream->rd_ptr ();
           stream->skip_bytes (len);
           break;
@@ -554,7 +554,7 @@ TAO_CDR_Interpreter::calc_struct_and_except_attributes (TAO_InputCDR *stream,
       // adding internal padding), then update the current size to
       // handle the member's size.
 
-      size = (size_t) ACE_align_binary (size, member_alignment);
+      size = (size_t) align_binary (size, member_alignment);
       size += member_size;
 
       // Finally update the overall structure alignment requirement,
@@ -566,7 +566,7 @@ TAO_CDR_Interpreter::calc_struct_and_except_attributes (TAO_InputCDR *stream,
 
   // Round up the structure size to match its overall alignment.  This
   // adds tail padding, if needed.
-  return (size_t) ACE_align_binary (size, alignment);
+  return (size_t) align_binary (size, alignment);
 }
 
 // Calculate size and alignment for a structure.
@@ -775,7 +775,7 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
   // Round up the discriminator's size to include padding it needs in
   // order to be followed by the value.
   discrim_and_base_size_with_pad =
-    (size_t) ACE_align_binary (discrim_and_base_size, value_alignment);
+    (size_t) align_binary (discrim_and_base_size, value_alignment);
 
   discrim_size_with_pad = discrim_and_base_size_with_pad -
     sizeof (TAO_Base_Union);
@@ -789,9 +789,8 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
   if (value_alignment > overall_alignment)
     overall_alignment = value_alignment;
 
-  return (size_t) ACE_align_binary (discrim_and_base_size_with_pad
-                                    + value_size,
-                                    overall_alignment);
+  return (size_t) align_binary (discrim_and_base_size_with_pad + value_size,
+                                overall_alignment);
 }
 
 // Calculate size and alignment for a CORBA discriminated union.
@@ -1056,15 +1055,17 @@ TAO_CDR_Interpreter::calc_union_attr_is_var_sized_member
   (TAO_InputCDR *stream,
    CORBA::Boolean &flag)
 {
-    CORBA::Long temp;
+    CORBA::ULong temp;
     flag = 0;
 
     // Get the tk_ "kind"  field
-    if (stream->read_long (temp) == 0)
+    if (stream->read_ulong (temp) == 0)
       // Error.
     return -1;
 
-  switch (temp)
+  CORBA::TCKind kind = (CORBA::TCKind) temp;
+
+  switch (kind)
     {
     case CORBA::tk_null:
     case CORBA::tk_void:
@@ -1108,7 +1109,7 @@ TAO_CDR_Interpreter::calc_union_attr_is_var_sized_member
         if (stream->read_ulong (encap) == 0)
           return -1;
 
-        ACE_ASSERT (encap <= UINT_MAX);
+        assert (encap <= UINT_MAX);
 
         TAO_InputCDR nested (*stream, temp);
 
@@ -1134,7 +1135,7 @@ TAO_CDR_Interpreter::calc_union_attr_is_var_sized_member
         if (stream->read_ulong (encap) == 0)
           return -1;
 
-        ACE_ASSERT (encap <= UINT_MAX);
+        assert (encap <= UINT_MAX);
 
         TAO_InputCDR nested (*stream, temp);
 

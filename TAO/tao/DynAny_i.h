@@ -16,7 +16,6 @@
 
 #ifndef TAO_DYNANY_I_H
 #define TAO_DYNANY_I_H
-#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -24,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #include "tao/corbafwd.h"
 #include "tao/POA_CORBA.h"
@@ -225,5 +224,4 @@ private:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-#include "ace/post.h"
 #endif /* TAO_DYNANY_I_H */

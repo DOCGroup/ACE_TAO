@@ -16,7 +16,6 @@
 
 #ifndef TAO_SERVER_STRATEGY_FACTORY_H
 #define TAO_SERVER_STRATEGY_FACTORY_H
-#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -104,13 +103,6 @@ public:
   virtual int activate_server_connections (void);
   // Are server connections active (i.e. run in their own thread)
 
-  virtual int thread_per_connection_timeout (ACE_Time_Value &timeout);
-  // Obtain the timeout value used by the thread-per-connection server 
-  // threads to poll the shutdown flag in the ORB.
-  // Return -1 if the ORB should use the compile-time defaults.
-  // If the return value is zero then the threads block without
-  // timeouts.
-
   virtual int server_connection_thread_flags (void);
   virtual int server_connection_thread_count (void);
   // The thread activation parameters
@@ -127,5 +119,4 @@ protected:
   // Active object map creation parameters.
 };
 
-#include "ace/post.h"
 #endif /* TAO_SERVER_STRATEGY_FACTORY_H */

@@ -20,20 +20,15 @@
 
 #ifndef TAO_GIOP_SERVER_REQUEST_H
 #define TAO_GIOP_SERVER_REQUEST_H
-#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
-
-
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Server_Request.h"
-#include "tao/ORB.h"
 #include "tao/Principal.h"
-#include "tao/GIOP_Message_Base.h"
 
 class TAO_Export TAO_GIOP_ServerRequest : public CORBA_ServerRequest
 {
@@ -41,15 +36,13 @@ class TAO_Export TAO_GIOP_ServerRequest : public CORBA_ServerRequest
   //    Class representing an GIOP ServerRequest object.
 public:
   // = Initialization and termination methods.
-  TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
-                          TAO_InputCDR &input,
+  TAO_GIOP_ServerRequest (TAO_InputCDR &input,
                           TAO_OutputCDR &output,
                           TAO_ORB_Core *orb_core,
-                          const TAO_GIOP_Version &version);
-
+                          const TAO_GIOP_Version &version,
+                          int &parse_error);
   // Constructor
-  TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
-                          CORBA::ULong &request_id,
+  TAO_GIOP_ServerRequest (CORBA::ULong &request_id,
                           CORBA::Boolean &response_expected,
                           TAO_ObjectKey &object_key,
                           const ACE_CString &operation,
@@ -61,7 +54,7 @@ public:
   virtual ~TAO_GIOP_ServerRequest (void);
   // Destructor.
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
   // = General ServerRequest operations
   void arguments (CORBA::NVList_ptr &list,
@@ -88,14 +81,6 @@ public:
   const char *operation (void) const;
   // return the operation name
 
-  void operation (ACE_CString &operation);
-  // set the operation name
-
-  void operation (const char * name,
-                  int release);
-  // set the operation name
-
-
   unsigned int operation_length (void) const;
   // return the legnth of the operation
 
@@ -115,6 +100,19 @@ public:
   // meant to be used internally.
   //
 
+  virtual void demarshal (CORBA_Environment &ACE_TRY_ENV,
+                          const TAO_Call_Data_Skel *info,
+                          ...);
+  // demarshal incoming parameters. Used by the SII skeleton (i.e., the IDL
+  // compiler generated skeleton)
+
+  virtual void marshal (CORBA_Environment &ACE_TRY_ENV,
+                        //                        CORBA_Environment &skel_env,
+                        const TAO_Call_Data_Skel *info,
+                        ...);
+  // marshal outgoing parameters and return value. This is used by the SSI
+  // i.e., by the IDL compiler generated skeletons.
+
   virtual void init_reply (CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ());
   // start a Reply message
@@ -126,33 +124,13 @@ public:
   // Retrieve the outgoing stream.
 
   virtual CORBA::Boolean response_expected (void) const;
-  // Is the response expected?
-
-  virtual void response_expected (CORBA::Boolean response);
-  // Set the response expected flag
-
-  virtual CORBA::Boolean sync_with_server (void) const;
-  // Should we return before dispatching the servant?
-
-  virtual void sync_with_server (CORBA::Boolean sync_flag);
-  // Set the sync_with_server flag
-
-  virtual void _tao_lazy_evaluation (int lazy_evaluation);
-  // Set the lazy evaluation flag
-
-  virtual void send_no_exception_reply (TAO_Transport *transport);
-  // Used with reliable oneway requests.
+  // is the response expected
 
   virtual CORBA::Principal_ptr principal (void) const;
 
-  virtual TAO_ObjectKey &object_key (void);
+  virtual const TAO_ObjectKey &object_key (void) const;
 
-  virtual CORBA::Object_ptr objref (CORBA_Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ());
-  // Return the object reference of the request.
-
-  virtual IOP::ServiceContextList &service_info (void);
-  virtual void service_info (IOP::ServiceContextList &service_info);
+  virtual const TAO_GIOP_ServiceContextList &service_info (void) const;
 
   // The pseudo object methods, not really needed because the class is
   // not in the spec, but we add them for the sake of completeness.
@@ -162,8 +140,7 @@ public:
   // To handle System Exceptions at the lowest level,
   // a method returning the request_id_ is needed.
 
-  virtual CORBA::ULong request_id (void);
-  virtual void request_id (CORBA::ULong req);
+  CORBA::ULong request_id (void);
 
   CORBA::Object_ptr forward_location (void);
   // get the forward_location
@@ -171,16 +148,19 @@ public:
   CORBA::ULong exception_type (void);
   // get the exception type
 
-  void requesting_principal (CORBA_Principal_ptr principal);
-  // set the requesting principal
+private:
+  int parse_header (void);
+  // Parse the request header and store the result on this object.
 
-  void header_length (size_t len);
+  int parse_header_std (void);
+  // Parse the standard GIOP request header and store the result on
+  // this object.
 
-  void message_size_offset (size_t len);
+  int parse_header_lite (void);
+  // Parse the lightweight version of the GIOP request header and
+  // store the result on this object.
 
 private:
-  TAO_Pluggable_Messaging *mesg_base_;
-
   ACE_CString operation_;
   // Operation name.
 
@@ -193,17 +173,9 @@ private:
   // Outgoing stream.
 
   CORBA::Boolean response_expected_;
-  // 0: oneway (SYNC_NONE or SYNC_WITH_TRANSPORT)
-  // 1: twoway, or oneway (SYNC_WITH_SERVER or SYNC_WITH_TARGET)
+  // is it oneway or twoway
 
-  CORBA::Boolean sync_with_server_;
-  // 1: oneway (SYNC_WITH_SERVER)
-  // 0: anything else
-
-  int lazy_evaluation_;
-  // If zero then the NVList is evaluated ASAP.
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
   CORBA::NVList_ptr params_;
   // Incoming parameters.
@@ -228,7 +200,7 @@ private:
   // The version for the GIOP request, the reply must have the same
   // one.
 
-  IOP::ServiceContextList service_info_;
+  TAO_GIOP_ServiceContextList service_info_;
   // The service context for the request (CORBA Reference?)
 
   CORBA::ULong request_id_;
@@ -245,5 +217,4 @@ private:
 # include "tao/GIOP_Server_Request.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
 #endif /* TAO_GIOP_SERVER_REQUEST_H */

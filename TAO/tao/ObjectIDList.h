@@ -12,9 +12,8 @@
 
 #ifndef OBJECTIDLIST_H_
 #define OBJECTIDLIST_H_
-#include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/corba.h"
 #include "tao/Sequence.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -27,9 +26,6 @@
 #endif
 #define TAO_EXPORT_MACRO
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -41,7 +37,7 @@
 // ObjectIdList
 // *************************************************************
 
-class TAO_Export CORBA_ORB_ObjectIdList : public
+class  CORBA_ORB_ObjectIdList : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -59,8 +55,6 @@ public:
                );
  CORBA_ORB_ObjectIdList (const CORBA_ORB_ObjectIdList &); // copy ctor
  ~CORBA_ORB_ObjectIdList (void); // dtor
-
-  static void _tao_any_destructor (void*);
 };
 
 typedef CORBA_ORB_ObjectIdList *CORBA_ORB_ObjectIdList_ptr;
@@ -74,7 +68,7 @@ typedef CORBA_ORB_ObjectIdList *CORBA_ORB_ObjectIdList_ptr;
 // class CORBA::ORB::ObjectIdList_var
 // *************************************************************
 
-class TAO_Export CORBA_ORB_ObjectIdList_var
+class CORBA_ORB_ObjectIdList_var
 {
 public:
   CORBA_ORB_ObjectIdList_var (void); // default constructor
@@ -108,7 +102,7 @@ private:
 #if !defined (_CORBA_ORB_OBJECTIDLIST___OUT_CH_)
 #define _CORBA_ORB_OBJECTIDLIST___OUT_CH_
 
-class TAO_Export CORBA_ORB_ObjectIdList_out
+class CORBA_ORB_ObjectIdList_out
 {
 public:
   CORBA_ORB_ObjectIdList_out (CORBA_ORB_ObjectIdList *&);
@@ -129,16 +123,20 @@ private:
 
 #endif /* end #if !defined */
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_ORB_ObjectIdList &); //
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_ORB_ObjectIdList &);
+#ifndef __ACE_INLINE__
+
+CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA_ORB_ObjectIdList &); //
+CORBA::Boolean  operator>> (TAO_InputCDR &, CORBA_ORB_ObjectIdList &);
+
+#endif /* __ACE_INLINE__ */
+
 
 #if defined (__ACE_INLINE__)
-#include "tao/ObjectIDList.i"
+#include "ObjectIDList.i"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
 #endif /* ifndef */

@@ -19,7 +19,6 @@
 
 #ifndef TAO_PRINCIPAL_H
 #define TAO_PRINCIPAL_H
-#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -148,15 +147,14 @@ private:
   CORBA_Principal_ptr &ptr_;
 };
 
-TAO_Export CORBA::Boolean
+extern TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, CORBA_Principal*);
 
-TAO_Export CORBA::Boolean
+extern TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, CORBA_Principal*&);
 
 #if defined (__ACE_INLINE__)
 # include "tao/Principal.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
 #endif /* TAO_PRINCIPAL_H */

@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 // $Id$
-
 // ===================================================================
 //
 // = LIBRARY
@@ -16,7 +15,7 @@
 
 #include "tao/DynAny_i.h"
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #include "tao/DynEnum_i.h"
 #include "tao/InconsistentTypeCodeC.h"
@@ -43,8 +42,7 @@ TAO_DynEnum_i::TAO_DynEnum_i (const CORBA_Any &any)
           // Get the CDR stream of the argument.
           ACE_Message_Block* mb = any._tao_get_cdr ();
 
-          TAO_InputCDR cdr (mb,
-                            any._tao_byte_order ());
+          TAO_InputCDR cdr (mb);
 
           cdr.read_ulong (this->value_);
         }
@@ -218,8 +216,7 @@ TAO_DynEnum_i::from_any (const CORBA_Any& any,
       // Get the CDR stream of the argument.
       ACE_Message_Block* mb = any._tao_get_cdr ();
 
-      TAO_InputCDR cdr (mb,
-                        any._tao_byte_order ());
+      TAO_InputCDR cdr (mb);
 
       cdr.read_ulong (this->value_);
     }
@@ -240,7 +237,6 @@ TAO_DynEnum_i::to_any (CORBA::Environment& ACE_TRY_ENV)
   ACE_NEW_THROW_EX (retval,
                     CORBA_Any (this->type_.in (),
                                0,
-                               TAO_ENCAP_BYTE_ORDER,
                                out_cdr.begin ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
@@ -250,7 +246,7 @@ TAO_DynEnum_i::to_any (CORBA::Environment& ACE_TRY_ENV)
 CORBA::TypeCode_ptr
 TAO_DynEnum_i::type (CORBA::Environment &)
 {
-  return CORBA::TypeCode::_duplicate (this->type_.in ());
+  return this->type_.in ();
 }
 
 CORBA_DynAny_ptr

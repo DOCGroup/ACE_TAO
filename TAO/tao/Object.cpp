@@ -11,15 +11,11 @@
 #include "tao/Servant_Base.h"
 #include "tao/Request.h"
 #include "tao/varout.h"
+#include "tao/GIOP.h"
 #include "tao/ORB_Core.h"
 #include "tao/Invocation.h"
 #include "tao/Connector_Registry.h"
 #include "tao/debug.h"
-
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-#include "tao/InterfaceC.h"
-#endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
-
 #include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
@@ -40,19 +36,11 @@ CORBA_Object::CORBA_Object (TAO_Stub *protocol_proxy,
   : servant_ (servant),
     is_collocated_ (collocated),
     protocol_proxy_ (protocol_proxy),
-    refcount_ (1),
-    refcount_lock_ ()
+    refcount_ (1)
 {
   // Notice that the refcount_ above is initialized to 1 because
   // the semantics of CORBA Objects are such that obtaining one
   // implicitly takes a reference.
-}
-
-void
-CORBA_Object::_tao_any_destructor (void *x)
-{
-  CORBA_Object_ptr tmp = ACE_static_cast(CORBA_Object_ptr,x);
-  CORBA::release (tmp);
 }
 
 // IS_A ... ask the object if it's an instance of the type whose
@@ -62,6 +50,25 @@ CORBA::Boolean
 CORBA_Object::_is_a (const CORBA::Char *type_id,
                      CORBA::Environment &ACE_TRY_ENV)
 {
+  // If the object is collocated then try locally....
+  if (this->is_collocated_)
+    {
+      // Which collocation strategy should we use?
+      if (this->protocol_proxy_->servant_orb_var ()->orb_core ()->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
+        {
+          TAO_Object_Adapter::Servant_Upcall servant_upcall
+            (*this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ());
+          servant_upcall.prepare_for_upcall (this->_object_key (),
+                                             "_non_existent",
+                                             ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+          return servant_upcall.servant ()->_is_a (type_id, ACE_TRY_ENV);
+        }
+
+      // Direct collocation strategy is used.
+      if (this->servant_ != 0)
+        return this->servant_->_is_a (type_id, ACE_TRY_ENV);
+    }
   // NOTE: if istub->type_id is nonzero and we have local knowledge of
   // it, we can answer this question without a costly remote call.
   //
@@ -83,29 +90,6 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
                          this->_stubobj ()->type_id.in ()) == 0)
     return 1;
 
-  // If the object is collocated then try locally....
-  if (this->is_collocated_)
-    {
-      // Which collocation strategy should we use?
-      if (this->protocol_proxy_ != 0 &&
-          this->protocol_proxy_->servant_orb_var ()->orb_core ()
-          ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
-        {
-          TAO_Object_Adapter::Servant_Upcall servant_upcall
-            (*this->_stubobj ()->servant_orb_var ()->orb_core ()
-             ->object_adapter ());
-          servant_upcall.prepare_for_upcall (this->_object_key (),
-                                             "_is_a",
-                                             ACE_TRY_ENV);
-          ACE_CHECK_RETURN (0);
-          return servant_upcall.servant ()->_is_a (type_id, ACE_TRY_ENV);
-        }
-
-      // Direct collocation strategy is used.
-      if (this->servant_ != 0)
-        return this->servant_->_is_a (type_id, ACE_TRY_ENV);
-    }
-
   CORBA::Boolean _tao_retval = 0;
 
   TAO_Stub *istub = this->_stubobj ();
@@ -116,7 +100,6 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_is_a",
-      5,
       istub->orb_core ()
     );
 
@@ -127,12 +110,6 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
   for (;;)
     {
       _tao_call.start (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (_tao_retval);
-
-      CORBA::Short flag = 131;
-
-      _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
-                               ACE_TRY_ENV);
       ACE_CHECK_RETURN (_tao_retval);
 
       TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
@@ -151,18 +128,14 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
         // cannot happen
       if (_invoke_status != TAO_INVOKE_OK)
       {
-        ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                          CORBA::COMPLETED_YES),
-                          _tao_retval);
+        ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
       }
       break;
     }
   TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
   if (!(_tao_in >> CORBA::Any::to_boolean (_tao_retval)))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                      CORBA::COMPLETED_YES),
-                      _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
@@ -191,12 +164,7 @@ CORBA::ULong
 CORBA_Object::_hash (CORBA::ULong maximum,
                      CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->protocol_proxy_ != 0)
-    return this->protocol_proxy_->hash (maximum, ACE_TRY_ENV);
-  else
-    // @@ I really don't know how to support this for
-    //    a locality constrained object.  -- nw.
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  return this->_stubobj ()->hash (maximum, ACE_TRY_ENV);
 }
 
 // Compare two object references to see if they point to the same
@@ -215,10 +183,7 @@ CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj,
       return 1;
     }
 
-  if (this->protocol_proxy_ != 0)
-    return this->protocol_proxy_->is_equivalent (other_obj);
-  else
-    return this->servant_ == other_obj->servant_;
+  return this->_stubobj ()->is_equivalent (other_obj);
 }
 
 // TAO's extensions
@@ -229,7 +194,7 @@ CORBA::Object::_key (CORBA::Environment &)
   if (this->_stubobj () && this->_stubobj ()->profile_in_use ())
     return this->_stubobj ()->profile_in_use ()->_key ();
 
-  ACE_ERROR_RETURN((LM_ERROR, ASYS_TEXT ("(%P|%t) Null stub obj!!!\n")), 0);
+  ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Null stub obj!!!\n"), 0);
 }
 
 const TAO_ObjectKey &
@@ -248,7 +213,7 @@ CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
   return;
 }
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 // NON_EXISTENT ... send a simple call to the object, which will
 // either elicit a FALSE response or a OBJECT_NOT_EXIST exception.  In
@@ -257,90 +222,52 @@ CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
 CORBA::Boolean
 CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
 {
+  // If the object is collocated then try locally....
+  if (this->is_collocated_ && this->servant_ != 0)
+    return this->servant_->_non_existent (ACE_TRY_ENV);
+
   CORBA::Boolean _tao_retval = 0;
 
-  ACE_TRY
+  TAO_Stub *istub = this->_stubobj ();
+  if (istub == 0)
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
+
+
+  TAO_GIOP_Twoway_Invocation _tao_call (
+      istub,
+      "_non_existent",
+      istub->orb_core ()
+    );
+
+
+  // ACE_TRY_ENV.clear ();
+  for (;;)
+  {
+    _tao_call.start (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
+
+    int _invoke_status =
+      _tao_call.invoke (0, 0, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
+
+    if (_invoke_status == TAO_INVOKE_RESTART)
+      continue;
+    // if (_invoke_status == TAO_INVOKE_EXCEPTION)
+      // cannot happen
+    if (_invoke_status != TAO_INVOKE_OK)
     {
-      // If the object is collocated then try locally....
-      if (this->is_collocated_)
-        {
-          // Which collocation strategy should we use?
-          if (this->protocol_proxy_ != 0 &&
-              this->protocol_proxy_->servant_orb_var ()->orb_core ()
-              ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
-            {
-              TAO_Object_Adapter::Servant_Upcall servant_upcall
-                (*this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ());
-              servant_upcall.prepare_for_upcall (this->_object_key (),
-                                                 "_non_existent",
-                                                 ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-              return servant_upcall.servant ()->_non_existent (ACE_TRY_ENV);
-            }
+      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
-          // Direct collocation strategy is used.
-          if (this->servant_ != 0)
-            return this->servant_->_non_existent (ACE_TRY_ENV);
-        }
-
-      // Must catch exceptions, if the server raises a
-      // CORBA::OBJECT_NOT_EXIST then we must return 1, instead of
-      // propagating the exception.
-      TAO_Stub *istub = this->_stubobj ();
-      if (istub == 0)
-        ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
-
-
-      TAO_GIOP_Twoway_Invocation _tao_call (
-                istub,
-          "_non_existent",
-          13,
-          istub->orb_core ()
-        );
-
-
-      // ACE_TRY_ENV.clear ();
-      for (;;)
-        {
-          _tao_call.start (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          CORBA::Short flag = 131;
-
-          _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
-                                    ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          int _invoke_status =
-            _tao_call.invoke (0, 0, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          if (_invoke_status == TAO_INVOKE_RESTART)
-            continue;
-          ACE_ASSERT (_invoke_status != TAO_INVOKE_EXCEPTION);
-          if (_invoke_status != TAO_INVOKE_OK)
-            {
-              ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                                CORBA::COMPLETED_YES),
-                                _tao_retval);
-            }
-          break;
-        }
-      TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
-      if (!(
-          (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
-        ))
-        ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
     }
-  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
-    {
-      _tao_retval = 1;
-    }
-  ACE_CATCHANY
-    {
-      ACE_RETHROW;
-    }
-  ACE_ENDTRY;
+    break;
+
+  }
+
+  TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+  if (!(
+        (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
+    ))
+    ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
   return _tao_retval;
 }
 
@@ -354,21 +281,17 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
                                CORBA::Environment &ACE_TRY_ENV)
 {
   // Since we don't really support Context, anything but a null pointer
-  // is a no-no. - Jeff
-  // Neither can we create a request object from locality constraint
-  // object references.
-  if (ctx || this->protocol_proxy_ == 0)
+  // is a no-no.
+  if (ctx)
+    {
       ACE_THROW (CORBA::NO_IMPLEMENT ());
-
-  ACE_NEW_THROW_EX (request,
-                    CORBA::Request (this,
-                                    this->protocol_proxy_->orb_core ()-> orb (),
-                                    operation,
-                                    arg_list,
-                                    result,
-                                    req_flags,
-                                    ACE_TRY_ENV),
-                    CORBA::NO_MEMORY ());
+    }
+  request = new CORBA::Request (this,
+                                operation,
+                                arg_list,
+                                result,
+                                req_flags,
+                                ACE_TRY_ENV);
 }
 
 void
@@ -384,20 +307,16 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
 {
   // Since we don't really support Context, anything but a null pointer
   // is a no-no.
-  // Neither can we create a request object from locality constraint
-  // object references.
-  if (ctx || this->protocol_proxy_ == 0)
+  if (ctx)
+    {
       ACE_THROW (CORBA::NO_IMPLEMENT ());
-
-  ACE_NEW_THROW_EX (request,
-                    CORBA::Request (this,
-                                    this->protocol_proxy_->orb_core ()->orb (),
-                                    operation,
-                                    arg_list,
-                                    result,
-                                    req_flags,
-                                    ACE_TRY_ENV),
-                    CORBA::NO_MEMORY ());
+    }
+  request = new CORBA::Request (this,
+                                operation,
+                                arg_list,
+                                result,
+                                req_flags,
+                                ACE_TRY_ENV);
 }
 
 CORBA::Request_ptr
@@ -405,31 +324,20 @@ CORBA_Object::_request (const CORBA::Char *operation,
                         CORBA::Environment &ACE_TRY_ENV)
 {
   //  ACE_TRY_ENV.clear ();
-  if (this->protocol_proxy_)
-    {
-      CORBA::Request_ptr req = CORBA::Request::_nil ();
-      ACE_NEW_THROW_EX (req,
-                        CORBA::Request (this,
-                                        this->protocol_proxy_->orb_core ()->orb (),
-                                        operation,
-                                        ACE_TRY_ENV),
-                        CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (CORBA::Request::_nil ());
-
-      return req;
-    }
-  else
-      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Request::_nil ());
+  return new CORBA::Request (this,
+                             operation,
+                             ACE_TRY_ENV);
 }
 
 CORBA::InterfaceDef_ptr
 CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
 {
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-  CORBA::InterfaceDef_ptr _tao_retval = CORBA::InterfaceDef::_nil();
-#else
+  // @@ TODO this method will require some modifications once the
+  // interface repository is implemented. The modifications are
+  // documented with @@ comments.
+
+  // @@ this should use the _nil() method...
   CORBA::InterfaceDef_ptr _tao_retval = 0;
-#endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
@@ -439,50 +347,43 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_interface",
-      10,
       istub->orb_core ()
     );
 
   for (;;)
-    {
-      _tao_call.start (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (_tao_retval);
+  {
+    _tao_call.start (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = 131;
+    int _invoke_status =
+      _tao_call.invoke (0, 0, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
-                              ACE_TRY_ENV);
-      ACE_CHECK_RETURN (_tao_retval);
-
-      int _invoke_status =
-        _tao_call.invoke (0, 0, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (_tao_retval);
-
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        continue;
-      // if (_invoke_status == TAO_INVOKE_EXCEPTION)
+    if (_invoke_status == TAO_INVOKE_RESTART)
+      continue;
+    // if (_invoke_status == TAO_INVOKE_EXCEPTION)
       // cannot happen
-      if (_invoke_status != TAO_INVOKE_OK)
-        {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                            CORBA::COMPLETED_YES),
-                            _tao_retval);
-        }
-      break;
-    }
+    if (_invoke_status != TAO_INVOKE_OK)
+    {
+      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
+    }
+    break;
+  }
+
+#if 0
   TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+  // @@ The extraction operation (>>) for InterfaceDef will be
+  // defined, and thus this code will work. Right now we raise a
+  // MARSHAL exception....
   if (!(
         (_tao_in >> _tao_retval)
-        ))
+    ))
     ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
-
-  return _tao_retval;
 #else
-  ACE_UNUSED_ARG (_tao_retval);
-  ACE_THROW_RETURN (CORBA::INTF_REPOS (), _tao_retval);
-#endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
+    ACE_UNUSED_ARG (_tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+#endif
 }
 
 CORBA::ImplementationDef_ptr
@@ -495,21 +396,13 @@ CORBA_Object::_get_implementation (CORBA::Environment &)
 
 // ****************************************************************
 
-// @@ Does it make sense to support policy stuff for locality constrained
-//    objects?  Also, does it make sense to bind policies with stub object?
-//    - nw.
-
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
+#if defined (TAO_HAS_CORBA_MESSAGING)
 CORBA::Policy_ptr
 CORBA_Object::_get_policy (
     CORBA::PolicyType type,
     CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->protocol_proxy_)
-    return this->protocol_proxy_->get_policy (type, ACE_TRY_ENV);
-  else
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
+  return this->_stubobj ()->get_policy (type, ACE_TRY_ENV);
 }
 
 CORBA::Policy_ptr
@@ -517,10 +410,7 @@ CORBA_Object::_get_client_policy (
     CORBA::PolicyType type,
     CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->protocol_proxy_)
-    return this->_stubobj ()->get_client_policy (type, ACE_TRY_ENV);
-  else
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
+  return this->_stubobj ()->get_client_policy (type, ACE_TRY_ENV);
 }
 
 CORBA::Object_ptr
@@ -529,64 +419,35 @@ CORBA_Object::_set_policy_overrides (
     CORBA::SetOverrideType set_add,
     CORBA::Environment &ACE_TRY_ENV)
 {
-  if (!this->protocol_proxy_)
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
-
   TAO_Stub* stub =
-    this->protocol_proxy_->set_policy_overrides (policies,
-                                                 set_add,
-                                                 ACE_TRY_ENV);
+    this->_stubobj ()->set_policy_overrides (policies,
+                                             set_add,
+                                             ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  CORBA::Object_ptr obj = CORBA::Object::_nil ();
-
-  ACE_NEW_THROW_EX (obj,
-                    CORBA_Object (stub,
-                                  this->servant_,
-                                  this->is_collocated_),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  return obj;
+  return new CORBA_Object (stub,
+                           this->servant_,
+                           this->is_collocated_);
 }
 
 CORBA::PolicyList *
-CORBA_Object::_get_policy_overrides (const CORBA::PolicyTypeSeq & types,
-                                     CORBA::Environment &ACE_TRY_ENV)
+CORBA_Object::_get_policy_overrides (
+    const CORBA::PolicyTypeSeq & types,
+    CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->protocol_proxy_)
-    return this->protocol_proxy_->get_policy_overrides (types, ACE_TRY_ENV);
-  else
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  return this->_stubobj ()->get_policy_overrides (types, ACE_TRY_ENV);
 }
 
 CORBA::Boolean
-CORBA_Object::_validate_connection (CORBA::PolicyList_out inconsistent_policies,
-                                    CORBA::Environment &ACE_TRY_ENV)
+CORBA_Object::_validate_connection (
+    CORBA::PolicyList_out inconsistent_policies,
+    CORBA::Environment &ACE_TRY_ENV)
 {
-  inconsistent_policies = 0;
-
-#if (TAO_HAS_MINIMUM_CORBA == 1)
-
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
-#else
-
-  // If the object is collocated then use non_existent to see whether
-  // it's there.
-  if (this->is_collocated_)
-      return !(this->_non_existent (ACE_TRY_ENV));
-
-  if (this->protocol_proxy_)
-    return this->protocol_proxy_->validate_connection (inconsistent_policies,
-                                                       ACE_TRY_ENV);
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-  return 0;
+  return this->_stubobj ()->validate_connection (inconsistent_policies,
+                                                 ACE_TRY_ENV);
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 // ****************************************************************
 
@@ -599,7 +460,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA_Object* x)
       cdr.write_ulong (1);
       cdr.write_char ('\0');
       cdr.write_ulong (0);
-      return (CORBA::Boolean) cdr.good_bit ();
+      return cdr.good_bit ();
     }
 
   TAO_Stub *stubobj = x->_stubobj ();
@@ -611,7 +472,8 @@ operator<< (TAO_OutputCDR& cdr, const CORBA_Object* x)
   if ((cdr << stubobj->type_id.in ()) == 0)
     return 0;
 
-  const TAO_MProfile& mprofile = stubobj->base_profiles ();
+  const TAO_MProfile& mprofile =
+    stubobj->get_base_profiles ();
 
   CORBA::ULong profile_count = mprofile.profile_count ();
   if ((cdr << profile_count) == 0)
@@ -625,7 +487,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA_Object* x)
       if (p->encode (cdr) == 0)
         return 0;
     }
-  return (CORBA::Boolean) cdr.good_bit ();
+  return cdr.good_bit ();
 }
 
 CORBA::Boolean
@@ -643,7 +505,7 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
   if (profile_count == 0)
     {
       x = CORBA::Object::_nil ();
-      return (CORBA::Boolean) cdr.good_bit ();
+      return cdr.good_bit ();
     }
 
   // get a profile container to store all profiles in the IOR.
@@ -656,7 +518,7 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("WARNING: extracting object from default ORB_Core\n")));
+                      "WARNING: extracting object from default ORB_Core\n"));
         }
     }
 
@@ -674,24 +536,25 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
   if (mp.profile_count () != profile_count)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("TAO (%P|%t) could not create all ")
-                  ASYS_TEXT ("the profiles\n")));
+                  "TAO (%P|%t) could not create all "
+                  "the profiles\n"));
       return 0;
     }
 
   // Ownership of type_hint is given to TAO_Stub
   // TAO_Stub will make a copy of mp!
-  TAO_Stub *objdata = 0;
+  TAO_Stub *objdata;
   ACE_NEW_RETURN (objdata, TAO_Stub (type_hint._retn (),
                                      mp,
                                      cdr.orb_core ()), 0);
 
-  TAO_Stub_Auto_Ptr safe_objdata (objdata);
+  if (objdata == 0)
+    return 0;
 
   // Figure out if the servant is collocated.
   TAO_ServantBase *servant = 0;
   TAO_SERVANT_LOCATION servant_location =
-    objdata->orb_core ()->orb ()->_get_collocated_servant (safe_objdata.get (),
+    objdata->orb_core ()->orb ()->_get_collocated_servant (objdata,
                                                            servant);
 
   int collocated = 0;
@@ -699,21 +562,14 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
     collocated = 1;
 
   // Create a new CORBA_Object and give it the TAO_Stub just created.
-  ACE_NEW_RETURN (x,
-                  CORBA_Object (safe_objdata.get (),
-                                servant,
-                                (CORBA::Boolean) collocated),
-                  0);
-
-  // It is now safe to release the TAO_Stub from the TAO_Stub_Auto_Ptr.
-  objdata = safe_objdata.release ();
+  ACE_NEW_RETURN (x, CORBA_Object (objdata, servant, collocated), 0);
 
   // the corba proxy would have already incremented the reference count on
   // the objdata. So we decrement it here by 1 so that the objdata is now
   // fully owned by the corba_proxy that was created.
   // objdata->_decr_refcnt ();
 
-  return (CORBA::Boolean) cdr.good_bit ();
+  return cdr.good_bit ();
 }
 
 // ****************************************************************

@@ -11,10 +11,9 @@ ACE_RCSID(tao, default_server, "$Id$")
 
 TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : activate_server_connections_ (0),
-    thread_flags_ (THR_BOUND | THR_DETACHED),
+    thread_flags_ (THR_BOUND),
     poa_lock_type_ (TAO_THREAD_LOCK),
-    event_loop_lock_type_ (TAO_NULL_LOCK),
-    thread_per_connection_use_timeout_ (-1)
+    event_loop_lock_type_ (TAO_NULL_LOCK)
 {
 }
 
@@ -40,13 +39,6 @@ int
 TAO_Default_Server_Strategy_Factory::activate_server_connections (void)
 {
   return this->activate_server_connections_;
-}
-
-int
-TAO_Default_Server_Strategy_Factory::thread_per_connection_timeout (ACE_Time_Value &timeout)
-{
-  timeout = this->thread_per_connection_timeout_;
-  return this->thread_per_connection_use_timeout_;
 }
 
 int
@@ -146,30 +138,6 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
               this->activate_server_connections_ = 1;
           }
       }
-
-    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBThreadPerConnectionTimeout") == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-          {
-            char *name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name,
-                                    "infinite") == 0)
-              {
-                this->thread_per_connection_use_timeout_ = 0;
-              }
-            else
-              {
-                this->thread_per_connection_use_timeout_ = 1;
-                int milliseconds = ACE_OS::atoi (name);
-                this->thread_per_connection_timeout_.set (0,
-                                                          1000 * milliseconds);
-              }
-          }
-      }
-
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  "-ORBTableSize") == 0
              || ACE_OS::strcasecmp (argv[curarg],
@@ -332,8 +300,8 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
                                  "-ORBDemuxStrategy") == 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("Warning: -ORBDemuxStrategy is deprecated.  Please use ")
-                    ASYS_TEXT ("-ORBSystemidPolicyDemuxStrategy or -ORBUseridPolicyDemuxStrategy instead.\n")));
+                    "Warning: -ORBDemuxStrategy is deprecated.  Please use "
+                    "-ORBSystemidPolicyDemuxStrategy or -ORBUseridPolicyDemuxStrategy instead.\n"));
         curarg++;
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -373,9 +341,9 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
                                  "-ORBConnectorLock") == 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) WARNING: the ")
-                    ASYS_TEXT ("-ORBConnectorLock option is in the client ")
-                    ASYS_TEXT ("strategy factory now\n")));
+                    "TAO (%P|%t) WARNING: the "
+                    "-ORBConnectorLock option is in the client "
+                    "strategy factory now\n"));
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],

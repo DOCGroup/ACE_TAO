@@ -1,22 +1,43 @@
 // -*- C++ -*-
 // $Id$
 
-ACE_INLINE TAO_EndpointSet &
+// ============================================================================
+//
+// = LIBRARY
+//    TAO
+//
+// = FILENAME
+//    params.i
+//
+// = AUTHOR
+//    Chris Cleeland
+//
+// ============================================================================
+
+ACE_INLINE int
+TAO_ORB_Parameters::preconnects (ACE_CString &preconnects)
+{
+  return this->parse_endpoints (preconnects,
+                                this->preconnect_insertion_strategy_);
+}
+
+ACE_INLINE TAO_PreconnectSet &
 TAO_ORB_Parameters::preconnects (void)
 {
   return this->preconnects_list_;
 }
 
-ACE_INLINE int
-TAO_ORB_Parameters::preconnects (ACE_CString &preconnects)
-{
-  return this->parse_endpoints (preconnects, this->preconnects ());
-}
-
 ACE_INLINE void
 TAO_ORB_Parameters::add_preconnect (ACE_CString &preconnect)
 {
-  this->preconnects ().enqueue_tail (preconnect);
+  this->preconnects_list_.enqueue_tail (preconnect);
+}
+
+ACE_INLINE int
+TAO_ORB_Parameters::endpoints (ACE_CString &endpoints)
+{
+  return this->parse_endpoints (endpoints,
+                                this->endpoint_insertion_strategy_);
 }
 
 ACE_INLINE TAO_EndpointSet &
@@ -25,16 +46,10 @@ TAO_ORB_Parameters::endpoints (void)
   return this->endpoints_list_;
 }
 
-ACE_INLINE int
-TAO_ORB_Parameters::endpoints (ACE_CString &endpoints)
-{
-  return this->parse_endpoints (endpoints, this->endpoints ());
-}
-
 ACE_INLINE void
 TAO_ORB_Parameters::add_endpoint (ACE_CString &endpoint)
 {
-  this->endpoints ().enqueue_tail (endpoint);
+  this->endpoints_list_.insert (endpoint);
 }
 
 ACE_INLINE int
@@ -46,9 +61,7 @@ TAO_ORB_Parameters::sock_rcvbuf_size (void) const
 ACE_INLINE void
 TAO_ORB_Parameters::sock_rcvbuf_size (int s)
 {
-  sock_rcvbuf_size_ = s <= ACE_DEFAULT_MAX_SOCKET_BUFSIZ 
-    ? s 
-    : ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
+  sock_rcvbuf_size_ = s <= ACE_DEFAULT_MAX_SOCKET_BUFSIZ ? s : ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
 }
 
 ACE_INLINE int
@@ -60,9 +73,7 @@ TAO_ORB_Parameters::sock_sndbuf_size (void) const
 ACE_INLINE void
 TAO_ORB_Parameters::sock_sndbuf_size (int s)
 {
-  sock_sndbuf_size_ = s <= ACE_DEFAULT_MAX_SOCKET_BUFSIZ 
-    ? s 
-    : ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
+  sock_sndbuf_size_ = s <= ACE_DEFAULT_MAX_SOCKET_BUFSIZ ? s : ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
 }
 
 ACE_INLINE int
@@ -77,8 +88,6 @@ TAO_ORB_Parameters::cdr_memcpy_tradeoff (int x)
   this->cdr_memcpy_tradeoff_ = x;
 }
 
-#if 0
-// Supprt has been deprecated.
 ACE_INLINE int
 TAO_ORB_Parameters::use_lite_protocol (void) const
 {
@@ -90,7 +99,6 @@ TAO_ORB_Parameters::use_lite_protocol (int x)
 {
   this->use_lite_protocol_ = x;
 }
-#endif /*if 0*/
 
 ACE_INLINE int
 TAO_ORB_Parameters::use_dotted_decimal_addresses (void) const
@@ -104,36 +112,100 @@ TAO_ORB_Parameters::use_dotted_decimal_addresses (int x)
   this->use_dotted_decimal_addresses_ = x;
 }
 
-
 ACE_INLINE void
-TAO_ORB_Parameters::service_port (MCAST_SERVICEID service_id,
-                                  CORBA::UShort port)
+TAO_ORB_Parameters::init_ref (const ACE_CString &init_ref)
 {
-  this->service_port_[service_id] = port;
-}
-
-ACE_INLINE CORBA::UShort
-TAO_ORB_Parameters::service_port (MCAST_SERVICEID service_id) const
-{
-  return this->service_port_[service_id];
-}
-
-ACE_INLINE void
-TAO_ORB_Parameters::mcast_discovery_endpoint (const ACE_CString &mde)
-{
-  this->mcast_discovery_endpoint_ = mde;
+  this->init_ref_ = init_ref;
 }
 
 ACE_INLINE const char *
-TAO_ORB_Parameters::mcast_discovery_endpoint (void) const
+TAO_ORB_Parameters::init_ref (void) const
 {
-  return this->mcast_discovery_endpoint_.c_str ();
+  return this->init_ref_.c_str ();
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::name_service_ior (const ACE_CString &ns)
+{
+  this->name_service_ior_ = ns;
+}
+
+ACE_INLINE const char *
+TAO_ORB_Parameters::name_service_ior (void) const
+{
+  return this->name_service_ior_.c_str ();
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::name_service_port (CORBA::UShort port)
+{
+  this->name_service_port_ = port;
+}
+
+ACE_INLINE CORBA::UShort
+TAO_ORB_Parameters::name_service_port (void) const
+{
+  return this->name_service_port_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::trading_service_ior (const ACE_CString &ns)
+{
+  this->trading_service_ior_ = ns;
+}
+
+ACE_INLINE const char *
+TAO_ORB_Parameters::trading_service_ior (void) const
+{
+  return this->trading_service_ior_.c_str ();
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::trading_service_port (CORBA::UShort port)
+{
+  this->trading_service_port_ = port;
+}
+
+ACE_INLINE CORBA::UShort
+TAO_ORB_Parameters::trading_service_port (void) const
+{
+  return this->trading_service_port_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::implrepo_service_ior (const ACE_CString &ir)
+{
+  this->implrepo_service_ior_ = ir;
+}
+
+ACE_INLINE const char *
+TAO_ORB_Parameters::implrepo_service_ior (void) const
+{
+  return this->implrepo_service_ior_.c_str ();
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::implrepo_service_port (CORBA::UShort port)
+{
+  this->implrepo_service_port_ = port;
+}
+
+ACE_INLINE CORBA::UShort
+TAO_ORB_Parameters::implrepo_service_port (void) const
+{
+  return this->implrepo_service_port_;
 }
 
 ACE_INLINE TAO_IOR_LookupTable *
 TAO_ORB_Parameters::ior_lookup_table (void)
 {
-  return &(this->ior_lookup_table_);
+  return this->ior_lookup_table_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::ior_lookup_table (TAO_IOR_LookupTable *table)
+{
+  this->ior_lookup_table_ = table;
 }
 
 ACE_INLINE void
@@ -158,17 +230,5 @@ ACE_INLINE void
 TAO_ORB_Parameters::std_profile_components (int x)
 {
   this->std_profile_components_ = x;
-}
-
-ACE_INLINE int
-TAO_ORB_Parameters::nodelay (void) const
-{
-  return this->nodelay_;
-}
-
-ACE_INLINE void
-TAO_ORB_Parameters::nodelay (int x)
-{
-  this->nodelay_ = x;
 }
 

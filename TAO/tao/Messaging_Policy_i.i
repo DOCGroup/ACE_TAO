@@ -1,17 +1,10 @@
 // $Id$
 
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-ACE_INLINE Messaging::SyncScope
-TAO_Sync_Scope_Policy::synchronization (CORBA::Environment &)
+ACE_INLINE
+TAO_RelativeRoundtripTimeoutPolicy_i::TAO_RelativeRoundtripTimeoutPolicy_i (
+    PortableServer::POA_ptr poa,
+    const TimeBase::TimeT& relative_expiry)
+  :  poa_ (PortableServer::POA::_duplicate (poa)),
+     relative_expiry_ (relative_expiry)
 {
-  return this->synchronization_;
 }
-
-ACE_INLINE Messaging::SyncScope
-TAO_Sync_Scope_Policy::synchronization (void)
-{
-  return this->synchronization_;
-}
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */

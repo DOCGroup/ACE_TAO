@@ -5,8 +5,7 @@
 #include "tao/debug.h"
 #include "tao/Pluggable.h"
 
-TAO_Transport_Mux_Strategy::TAO_Transport_Mux_Strategy (TAO_Transport *transport)
-  : transport_ (transport)
+TAO_Transport_Mux_Strategy::TAO_Transport_Mux_Strategy (void)
 {
 }
 
@@ -14,24 +13,13 @@ TAO_Transport_Mux_Strategy::~TAO_Transport_Mux_Strategy (void)
 {
 }
 
-
-int
-TAO_Transport_Mux_Strategy::bind_dispatcher (CORBA::ULong,
-                                             TAO_Reply_Dispatcher *rd)
-{
-  // Help the Reply dispatcher to obtain leader follower condition
-  // variable.
-  return rd->leader_follower_condition_variable (this->transport_);
-}
-
 // *********************************************************************
 
-TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_Transport *transport)
-  : TAO_Transport_Mux_Strategy (transport),
-    request_id_generator_ (0),
+TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_ORB_Core *orb_core)
+  : request_id_generator_ (0),
     request_id_ (0),
     rd_ (0),
-    message_state_ (transport->orb_core ())
+    message_state_ (orb_core)
 {
 }
 
@@ -60,7 +48,7 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
   //    should be the correct place to <reset> the message state. Do I
   //    make sense? (Alex).
   // @@ Alex: the state must be reset, but the contents are always
-  //    clean because:
+  //    clean because: 
   //    1) it starts clean
   //    2) it is reset after each reply arrives...
 
@@ -68,54 +56,47 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
   if (this->message_state_.message_size != 0)
     this->message_state_.reset (0);
 
-  return TAO_Transport_Mux_Strategy::bind_dispatcher (request_id,
-                                                      rd);
+  return 0;
 }
 
 int
 TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
                                    CORBA::ULong reply_status,
                                    const TAO_GIOP_Version& version,
-                                   IOP::ServiceContextList& reply_ctx,
+                                   TAO_GIOP_ServiceContextList& reply_ctx,
                                    TAO_GIOP_Message_State* message_state)
 {
+  // There can be only one message state possible. Just do a sanity
+  // check here.
+  ACE_ASSERT (message_state == &(this->message_state_));
+
   // Check the ids.
   if (this->request_id_ != request_id)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO_Exclusive_TMS::dispatch_reply - <%d != %d>\n"),
+                    "TAO_Exclusive_TMS::dispatch_reply - <%d != %d>\n",
                     this->request_id_, request_id));
-      return 0;
+      return -1;
     }
 
   TAO_Reply_Dispatcher *rd = this->rd_;
   this->request_id_ = 0xdeadbeef; // @@ What is a good value???
   this->rd_ = 0;
 
-  // Dispatch the reply.
-  int result = rd->dispatch_reply (reply_status,
-                                   version,
-                                   reply_ctx,
-                                   message_state);
-
-  return result;
+  return rd->dispatch_reply (reply_status,
+                             version,
+                             reply_ctx,
+                             message_state);
 }
 
 TAO_GIOP_Message_State *
 TAO_Exclusive_TMS::get_message_state (void)
 {
-  if (this->rd_ != 0)
-    {
-      TAO_GIOP_Message_State* rd_message_state = this->rd_->message_state ();
-      if (rd_message_state == 0)
-        {
-          // The Reply Dispatcher does not have one (the Asynch guys
-          // don't) so go ahead and pass yours.
-          return &this->message_state_;
-        }
-    }
-  return &this->message_state_;
+  if (this->rd_ == 0)
+    return 0;
+
+  return &(this->message_state_);
 }
 
 void
@@ -125,54 +106,53 @@ TAO_Exclusive_TMS::destroy_message_state (TAO_GIOP_Message_State *)
 }
 
 int
-TAO_Exclusive_TMS::idle_after_send (void)
+TAO_Exclusive_TMS::idle_after_send (TAO_Transport *)
 {
   // No op.
   return 0;
 }
 
 int
-TAO_Exclusive_TMS::idle_after_reply (void)
+TAO_Exclusive_TMS::idle_after_reply (TAO_Transport *transport)
 {
-  if (this->transport_ != 0)
-    return this->transport_->idle ();
+  if (transport != 0)
+    return transport->idle ();
 
   return 0;
 }
 
-// int
-// TAO_Exclusive_TMS::reply_received (const CORBA::ULong request_id)
-// {
-//   if (this->rd_ == 0)
-//     {
-//       // Reply should have been dispatched already.
-//       return 1;
-//     }
-//   else if (this->request_id_ == request_id)
-//     {
-//       // Reply dispatcher is still here.
-//       return 0;
-//     }
-//   else
-//     {
-//       // Error. Request id is not matching.
-//
-//       if (TAO_debug_level > 0)
-//         {
-//           ACE_DEBUG ((LM_DEBUG,
-//                       "(%P | %t):TAO_Exclusive_TMS::reply_received:"
-//                       "Invalid request_id \n"));
-//         }
-//       return -1;
-//     }
-// }
+int
+TAO_Exclusive_TMS::reply_received (const CORBA::ULong request_id)
+{
+  if (this->rd_ == 0)
+    {
+      // Reply should have been dispatched already.
+      return 1;
+    }
+  else if (this->request_id_ == request_id)
+    {
+      // Reply dispatcher is still here.
+      return 0;
+    }
+  else
+    {
+      // Error. Request id is not matching.
+
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P | %t):TAO_Exclusive_TMS::reply_received:"
+                      "Invalid request_id \n"));
+        }
+      return -1;
+    }
+}
 
 // *********************************************************************
 
-TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)
-  : TAO_Transport_Mux_Strategy (transport),
-    request_id_generator_ (0),
-    orb_core_ (transport->orb_core ()),
+TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_ORB_Core *orb_core)
+  : request_id_generator_ (0),
+    orb_core_ (orb_core),
     message_state_ (0)
 {
 }
@@ -203,22 +183,20 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%P | %t):TAO_Muxed_TMS::bind_dispatcher: ")
-                    ASYS_TEXT ("bind dispatcher failed: result = %d\n"),
+                    "(%P | %t):TAO_Muxed_TMS::bind_dispatcher: "
+                    "bind dispatcher failed: result = %d\n",
                     result));
 
       return -1;
     }
-
-  return TAO_Transport_Mux_Strategy::bind_dispatcher (request_id,
-                                                      rd);
+  return 0;
 }
 
 int
 TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
                                CORBA::ULong reply_status,
                                const TAO_GIOP_Version &version,
-                               IOP::ServiceContextList &reply_ctx,
+                               TAO_GIOP_ServiceContextList &reply_ctx,
                                TAO_GIOP_Message_State *message_state)
 {
   // This message state should be the same as the one we have here,
@@ -236,14 +214,14 @@ TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%P | %t):TAO_Muxed_TMS::dispatch_reply: ")
-                    ASYS_TEXT ("unbind dispatcher failed: result = %d\n"),
+                    "(%P | %t):TAO_Muxed_TMS::dispatch_reply: "
+                    "unbind dispatcher failed: result = %d\n",
                     result));
 
       return -1;
     }
 
-  // @@ Carlos : We could save the <message_state> somehow and then
+  // @@ Carlos : We could save the <messagee_state> somehow and then
   //    signal some other thread to go ahead read the incoming message
   //    if any. Is this what you were telling me before? (Alex).
 
@@ -252,9 +230,6 @@ TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
                              version,
                              reply_ctx,
                              message_state);
-
-  // No need for idling Transport, it would have got idle'd soon after
-  // sending the request.
 }
 
 TAO_GIOP_Message_State *
@@ -264,8 +239,7 @@ TAO_Muxed_TMS::get_message_state (void)
     {
       // Create the next message state.
       ACE_NEW_RETURN (this->message_state_,
-                      TAO_GIOP_Message_State
-                      (this->transport_->orb_core ()),
+                      TAO_GIOP_Message_State (this->orb_core_),
                       0);
     }
 
@@ -280,35 +254,34 @@ TAO_Muxed_TMS::destroy_message_state (TAO_GIOP_Message_State *)
 }
 
 int
-TAO_Muxed_TMS::idle_after_send (void)
+TAO_Muxed_TMS::idle_after_send (TAO_Transport *transport)
 {
-  if (this->transport_ != 0)
-    return this->transport_->idle ();
+  if (transport != 0)
+    return transport->idle ();
 
   return 0;
 }
 
 int
-TAO_Muxed_TMS::idle_after_reply (void)
+TAO_Muxed_TMS::idle_after_reply (TAO_Transport *)
 {
-  // No op.
   return 0;
 }
 
-// int
-// TAO_Muxed_TMS::reply_received (const CORBA::ULong request_id)
-// {
-//   if (this->dispatcher_table_.find (request_id) == -1)
-//     {
-//       // Reply should have been dispatched already.
-//       return 1;
-//     }
-//   else
-//     {
-//       // Reply dispatcher is still here.
-//       return 0;
-//     }
-// }
+int
+TAO_Muxed_TMS::reply_received (const CORBA::ULong request_id)
+{
+  if (this->dispatcher_table_.find (request_id) == -1)
+    {
+      // Reply should have been dispatched already.
+      return 1;
+    }
+  else
+    {
+      // Reply dispatcher is still here.
+      return 0;
+    }
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Manager_Ex <CORBA::ULong,

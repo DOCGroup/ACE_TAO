@@ -241,8 +241,7 @@ ACE_INLINE
 CORBA_PolicyList_var::CORBA_PolicyList_var (const CORBA_PolicyList_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_,
-             CORBA_PolicyList (*p.ptr_));
+    this->ptr_ = new CORBA_PolicyList(*p.ptr_);
   else
     this->ptr_ = 0;
 }
@@ -267,9 +266,7 @@ CORBA_PolicyList_var::operator= (const CORBA_PolicyList_var &p) // deep copy
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_,
-                    CORBA_PolicyList (*p.ptr_),
-                    *this);
+    this->ptr_ = new CORBA_PolicyList (*p.ptr_);
   }
   return *this;
 }
@@ -365,7 +362,7 @@ CORBA_PolicyList_out::CORBA_PolicyList_out (CORBA_PolicyList_var &p) // construc
 }
 
 ACE_INLINE
-CORBA_PolicyList_out::CORBA_PolicyList_out (const CORBA_PolicyList_out &p) // copy constructor
+CORBA_PolicyList_out::CORBA_PolicyList_out (CORBA_PolicyList_out &p) // copy constructor
   : ptr_ (p.ptr_)
 {}
 
@@ -425,8 +422,7 @@ ACE_INLINE
 CORBA_PolicyTypeSeq_var::CORBA_PolicyTypeSeq_var (const CORBA_PolicyTypeSeq_var &p)
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_,
-             CORBA_PolicyTypeSeq (*p.ptr_));
+    this->ptr_ = new CORBA_PolicyTypeSeq(*p.ptr_);
   else
     this->ptr_ = 0;
 }
@@ -451,9 +447,7 @@ CORBA_PolicyTypeSeq_var::operator= (const CORBA_PolicyTypeSeq_var &p) // deep co
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_,
-                    CORBA_PolicyTypeSeq (*p.ptr_),
-                    *this);
+    this->ptr_ = new CORBA_PolicyTypeSeq (*p.ptr_);
   }
   return *this;
 }
@@ -990,12 +984,21 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_PolicyErr
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_PolicyError &_tao_aggregate)
 {
-  // now marshal the members
-  if (
+  // retrieve  RepoID and verify if we are of that type
+  char *_tao_repoID;
+  if ((strm >> _tao_repoID) &&
+      (_tao_aggregate._is_a (_tao_repoID)))
+  {
+    // now marshal the members
+    if (
       (strm >> _tao_aggregate.reason)
-      )
-    return 1;
-  return 0;
+    )
+      return 1;
+    else
+      return 0;
+  }
+  else
+    return 0;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (
@@ -1043,12 +1046,21 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_InvalidPo
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_InvalidPolicies &_tao_aggregate)
 {
-  // now marshal the members
-  if (
+  // retrieve  RepoID and verify if we are of that type
+  char *_tao_repoID;
+  if ((strm >> _tao_repoID) &&
+      (_tao_aggregate._is_a (_tao_repoID)))
+  {
+    // now marshal the members
+    if (
       (strm >> _tao_aggregate.indices)
-      )
-    return 1;
-  return 0;
+    )
+      return 1;
+    else
+      return 0;
+  }
+  else
+    return 0;
 }
 
 CORBA::Boolean TAO_Export
@@ -1137,80 +1149,3 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::SetOverrideType
   else
     return 0;
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const CORBA::PolicyManager_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    CORBA::PolicyManager_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      CORBA::PolicyManager::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const CORBA::PolicyCurrent_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    CORBA::PolicyCurrent_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      CORBA::PolicyCurrent::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-

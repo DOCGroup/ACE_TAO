@@ -19,7 +19,6 @@
 
 #ifndef TAO_WAIT_STRATEGY_H
 #define TAO_WAIT_STRATEGY_H
-#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -53,10 +52,8 @@ public:
   // variables because the reply may arrive *before* the user calls
   // wait.
 
-  virtual int wait (ACE_Time_Value *max_wait_time,
-                    int &reply_received) = 0;
-  // Base class virtual method. Wait till the <reply_received> flag is
-  // true or the time expires.
+  virtual int wait (ACE_Time_Value *max_wait_time) = 0;
+  // Base class virtual method.
 
   virtual int handle_input (void) = 0;
   // Handle the input.
@@ -65,11 +62,6 @@ public:
   // Register the handler with the Reactor if it makes sense for the
   // strategy.
 
-  virtual ACE_SYNCH_CONDITION *leader_follower_condition_variable (void);
-  // Return the TSS leader follower condition variable used in the
-  // Wait Strategy. Muxed Leader Follower implementation returns a
-  // valid condition variable, others return 0.
-
 protected:
   TAO_Transport *transport_;
   // Transport object.
@@ -77,9 +69,7 @@ protected:
 
 // @@ Alex: we should consider moving these classes to separate files,
 //    that can minimize the footprint of systems that use only one of
-//    the strategies....(coryan).
-
-// *********************************************************************
+//    the strategies....
 
 class TAO_Export TAO_Wait_On_Reactor : public TAO_Wait_Strategy
 {
@@ -100,18 +90,15 @@ public:
 
   // = Documented in TAO_Wait_Strategy.
 
-  virtual int wait (ACE_Time_Value *max_wait_time,
-                    int &reply_received);
+  virtual int wait (ACE_Time_Value *max_wait_time);
   virtual int handle_input (void);
   virtual int register_handler (void);
 
 private:
-  // int reply_received_;
+  int reply_received_;
   // This flag indicates if a *complete* reply has been received. Used
   // to exit the event loop.
 };
-
-// *********************************************************************
 
 class TAO_Export TAO_Wait_On_Leader_Follower : public TAO_Wait_Strategy
 {
@@ -130,53 +117,14 @@ public:
 
   virtual ~TAO_Wait_On_Leader_Follower (void);
   // Destructor.
-  
-  // = Documented in TAO_Wait_Strategy.
 
-  // virtual int sending_request (TAO_ORB_Core *orb_core,
-  //                              int two_way);
-  
-  // virtual int wait (ACE_Time_Value *max_wait_time,
-  //                   int &reply_received);
-
-  // virtual int handle_input (void);
-  
-  virtual int register_handler (void);
-};
-
-// *********************************************************************
-
-class TAO_Export TAO_Exclusive_Wait_On_Leader_Follower : public TAO_Wait_On_Leader_Follower
-{
-  // = TITLE
-  //
-  //    Wait according to the Leader-Follower model. Leader does the
-  //    event loop of the Reactor and the Followers wait on the
-  //    condition variable.
-  //
-  // = DESCRIPTION
-  //    
-  //     This is strategy is to work with the Exclusive Transport Mux
-  //     Strategy. This was the original implementation of Leader
-  //     Follower before Muxed Transport was introduced. Here the
-  //     state variables such as Condition Variable etc are kept in
-  //     the <Wait Strategy> which is a per Transport object.
-
-public:
-  TAO_Exclusive_Wait_On_Leader_Follower (TAO_Transport *transport);
-  // Constructor.
-
-  virtual ~TAO_Exclusive_Wait_On_Leader_Follower (void);
-  // Destructor.
-  
   // = Documented in TAO_Wait_Strategy.
 
   virtual int sending_request (TAO_ORB_Core *orb_core,
                                int two_way);
-  virtual int wait (ACE_Time_Value *max_wait_time,
-                    int &reply_received);
+  virtual int wait (ACE_Time_Value *max_wait_time);
   virtual int handle_input (void);
-  // virtual int register_handler (void);
+  virtual int register_handler (void);
 
 protected:
   ACE_SYNCH_CONDITION* cond_response_available (void);
@@ -203,50 +151,6 @@ protected:
   // or the reactor event loop.
 };
 
-// *********************************************************************
-
-class TAO_Export TAO_Muxed_Wait_On_Leader_Follower : public TAO_Wait_On_Leader_Follower
-{
-  // = TITLE
-  //
-  //    Wait according to the Leader-Follower model. Leader does the
-  //    event loop of the Reactor and the Followers wait on the
-  //    condition variable.
-  //
-  // = DESCRIPTION
-  //
-  //    This impelementation is to work with the Muxed Transport
-  //    Mechanism. Here the state variables such as <Condition
-  //    Variable> etc cannot be kept in the Wait Strategy, since the
-  //    Wait Strategy is per Transport object and here the Transport
-  //    is Muxed and hence there are multiple threads running in the
-  //    same Transport context. 
-
-public:
-  TAO_Muxed_Wait_On_Leader_Follower (TAO_Transport *transport);
-  // Constructor.
-
-  virtual ~TAO_Muxed_Wait_On_Leader_Follower (void);
-  // Destructor.
-  
-  // = Documented in TAO_Wait_Strategy.
-  
-  virtual int sending_request (TAO_ORB_Core *orb_core,
-                               int two_way);
-
-  virtual int wait (ACE_Time_Value *max_wait_time,
-                    int &reply_received);
-
-  virtual int handle_input (void);
-
-  // virtual int register_handler (void);
-
-  virtual ACE_SYNCH_CONDITION *leader_follower_condition_variable (void);
-  // TSS Leader follower condition variable.
-};
-
-// *********************************************************************
-
 class TAO_Export TAO_Wait_On_Read :  public TAO_Wait_Strategy
 {
   // = TITLE
@@ -262,13 +166,9 @@ public:
   virtual ~TAO_Wait_On_Read (void);
   // Destructor.
 
-  // = Documented in TAO_Wait_Strategy.
-
-  virtual int wait (ACE_Time_Value *max_wait_time,
-                    int &reply_received);
+  virtual int wait (ACE_Time_Value *max_wait_time);
   virtual int handle_input (void);
   virtual int register_handler (void);
 };
 
-#include "ace/post.h"
 #endif /* TAO_WAIT_STRATEGY_H */

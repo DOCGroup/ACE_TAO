@@ -20,11 +20,10 @@
 
 #ifndef TAO_IDL_WRONG_TRANSACTIONC_H
 #define TAO_IDL_WRONG_TRANSACTIONC_H
-#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #include "tao/corbafwd.h"
 #include "tao/Exception.h"
@@ -39,9 +38,6 @@
 #endif
 #define TAO_EXPORT_MACRO
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -64,11 +60,6 @@ public:
 
   virtual void _raise (void);
 
-  virtual void _tao_encode (TAO_OutputCDR &cdr,
-                            CORBA::Environment &) const;
-  virtual void _tao_decode (TAO_InputCDR &cdr,
-                            CORBA::Environment &);
-
   static CORBA_WrongTransaction *_narrow (CORBA::Exception *);
 
 
@@ -77,16 +68,10 @@ public:
 
 }; // exception CORBA::WrongTransaction
 
-TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR &, const CORBA_WrongTransaction &);
-TAO_Export CORBA::Boolean
-operator>> (TAO_InputCDR &, CORBA_WrongTransaction &);
-
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
 #endif /* _MSC_VER */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-#include "ace/post.h"
 #endif /* ifndef TAO_IDL_WRONG_TRANSACTIONC_H */

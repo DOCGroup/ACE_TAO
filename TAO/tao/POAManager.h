@@ -19,7 +19,6 @@
 
 #ifndef TAO_POAMANAGER_H
 #define TAO_POAMANAGER_H
-#include "ace/pre.h"
 
 #include "tao/POAS.h"
 
@@ -43,7 +42,7 @@ public:
 
   void activate (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
   void hold_requests (CORBA::Boolean wait_for_completion,
                       CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -55,7 +54,7 @@ public:
                    CORBA::Boolean wait_for_completion,
                    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   PortableServer::POAManager::State get_state (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
@@ -71,7 +70,7 @@ protected:
                      CORBA::Boolean wait_for_completion,
                      CORBA_Environment &ACE_TRY_ENV);
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
   void hold_requests_i (CORBA::Boolean wait_for_completion,
                         CORBA_Environment &ACE_TRY_ENV);
@@ -79,7 +78,7 @@ protected:
   void discard_requests_i (CORBA::Boolean wait_for_completion,
                            CORBA_Environment &ACE_TRY_ENV);
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   PortableServer::POAManager::State get_state_i ();
 
@@ -104,5 +103,4 @@ protected:
 # include "tao/POAManager.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
 #endif /* TAO_POAMANAGER_H */

@@ -32,12 +32,6 @@ TAO_Server_Strategy_Factory::activate_server_connections (void)
 }
 
 int
-TAO_Server_Strategy_Factory::thread_per_connection_timeout (ACE_Time_Value &)
-{
-  return -1;
-}
-
-int
 TAO_Server_Strategy_Factory::server_connection_thread_flags (void)
 {
   return 0;

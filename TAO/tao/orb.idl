@@ -7,14 +7,4 @@
 
 #include <Policy.pidl>
 
-#pragma prefix "omg.org"
-
-module CORBA
-{
-  typedef unsigned long ServiceOption;
-  typedef unsigned long ServiceDetailType;
-};
-
-#pragma prefix ""
-
 #endif /* TAO_CORBA_IDL */

@@ -21,7 +21,6 @@
 
 #ifndef TAO_REQUEST_H
 #define TAO_REQUEST_H
-#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -29,15 +28,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #include "tao/corbafwd.h"
-#include "tao/ORB.h"
 #include "tao/NVList.h"
 #include "tao/Environment.h"
 #include "tao/Context.h"
 #include "tao/Sequence.h"
-#include "tao/MessagingC.h"
 
 class TAO_Export CORBA_Request
 {
@@ -110,7 +107,7 @@ public:
   // A default argument is set, but please note that this not recommended
   // as the user may not be able to propagate the exceptions.
 
-  // The 'deferred synchronous' methods.
+  // NOT IMPLEMENTED - these next 3 will just throw CORBA::NO_IMPLEMENT.
   void send_deferred (CORBA::Environment &ACE_TRY_ENV =
                         CORBA::Environment::default_environment ());
   void get_response (CORBA::Environment &ACE_TRY_ENV =
@@ -118,12 +115,6 @@ public:
   CORBA::Boolean poll_response (CORBA::Environment &ACE_TRY_ENV =
                                   CORBA::Environment::default_environment ());
 
-  // Callback method for deferred synchronous requests.
-  void handle_response (TAO_InputCDR &incoming,
-                        CORBA::ULong reply_status,
-                        CORBA::Environment &ACE_TRY_ENV =
-                          CORBA::Environment::default_environment ());   
-                          
   // Pseudo object methods
   static CORBA_Request* _duplicate (CORBA_Request*);
   static CORBA_Request* _nil (void);
@@ -131,9 +122,6 @@ public:
   // = Reference counting.
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
-
-  void _tao_lazy_evaluation (int lazy_evaluation);
-  // Set the lazy evaluation flag
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_Request_ptr _ptr_type;
@@ -147,7 +135,6 @@ private:
   // following are not allowed
 
   CORBA_Request (CORBA::Object_ptr obj,
-                 CORBA::ORB_ptr orb,
                  const CORBA::Char *op,
                  CORBA::NVList_ptr args,
                  CORBA::NamedValue_ptr result,
@@ -156,7 +143,6 @@ private:
                    TAO_default_environment ());
 
   CORBA_Request (CORBA::Object_ptr obj,
-                 CORBA::ORB_ptr orb,
                  const CORBA::Char *op,
                  CORBA::Environment &ACE_TRY_ENV =
                    TAO_default_environment ());
@@ -165,9 +151,6 @@ private:
 
   CORBA::Object_ptr target_;
   // target object
-
-  CORBA::ORB_var orb_;
-  // Pointer to our ORB.
 
   const CORBA::Char *opname_;
   // operation name
@@ -196,15 +179,8 @@ private:
   CORBA::ULong refcount_;
   // reference counting
 
-  ACE_SYNCH_MUTEX lock_;
-  // protect the refcount_ and response_receieved_.
-
-  int lazy_evaluation_;
-  // If not zero then the NVList is not evaluated by default
-
-  CORBA::Boolean response_received_;
-  // Set to TRUE upon completion of invoke() or
-  // handle_response().
+  ACE_SYNCH_MUTEX refcount_lock_;
+  // protect the reference count
 };
 
 typedef CORBA_Request* CORBA_Request_ptr;
@@ -285,6 +261,7 @@ class CORBA_ORB_RequestSeq : public TAO_Unbounded_Pseudo_Sequence<CORBA_Request,
 public:
 // Helpful with template programming.
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef CORBA_ORB_RequestSeq_ptr _ptr_type;
   typedef CORBA_ORB_RequestSeq_var _var_type;
 #endif /* __GNUC__ */
 
@@ -306,8 +283,69 @@ public:
 
   CORBA_ORB_RequestSeq (const CORBA_ORB_RequestSeq &);
   // Copy ctor, deep copies.
+
+  //~CORBA_ORB_RequestSeq (void);
+  // dtor releases all the contained elements.
 };
 
+// This class definition should be removed.. But need to
+// check with all the compiler guys before we have this removed
+
+/*class CORBA_ORB_RequestSeq : public TAO_Unbounded_Base_Sequence
+{
+public:
+
+
+  // Default constructor.
+  CORBA_ORB_RequestSeq (void);
+
+  // Constructor using a maximum length value.
+  CORBA_ORB_RequestSeq (CORBA::ULong maximum);
+
+  // Constructor with all the sequence parameters.
+  CORBA_ORB_RequestSeq (CORBA::ULong maximum,
+                        CORBA::ULong length,
+                        CORBA::Request_ptr *data,
+                        CORBA::Boolean release = 0);
+
+  // Copy constructor.
+  CORBA_ORB_RequestSeq (const CORBA_ORB_RequestSeq &rhs);
+
+  // Assignment operator.
+  CORBA_ORB_RequestSeq &operator= (const CORBA_ORB_RequestSeq &rhs);
+
+  // Dtor.
+  ~CORBA_ORB_RequestSeq (void);
+
+  // = Accessors.
+  CORBA::Request_ptr operator[] (CORBA::ULong i);
+
+  const CORBA::Request* operator[] (CORBA::ULong i) const;
+
+  // = Static operations.
+
+  // Allocate storage for the sequence.
+  static CORBA::Request_ptr *allocbuf (CORBA::ULong size);
+
+  // Free the sequence.
+  static void freebuf (CORBA::Request_ptr *buffer);
+
+  virtual void _allocate_buffer (CORBA::ULong length);
+
+  virtual void _deallocate_buffer (void);
+
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+  CORBA::Request_ptr *get_buffer (CORBA::Boolean orphan = 0);
+
+  const CORBA::Request_ptr *get_buffer (void) const;
+
+  void replace (CORBA::ULong max,
+                CORBA::ULong length,
+                CORBA::Request_ptr *data,
+                CORBA::Boolean release);
+};
+*/
 class CORBA_ORB_RequestSeq_var
 {
 public:
@@ -357,5 +395,4 @@ private:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-#include "ace/post.h"
 #endif /* TAO_REQUEST_H */

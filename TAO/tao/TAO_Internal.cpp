@@ -9,7 +9,6 @@
 #include "tao/default_resource.h"
 #include "tao/IIOP_Factory.h"
 #include "tao/UIOP_Factory.h"
-#include "tao/SHMIOP_Factory.h"
 
 ACE_RCSID(tao, TAO_Internal, "$Id$")
 
@@ -53,26 +52,12 @@ TAO_Internal::open_services (int &argc,
         insert (&ace_svc_desc_TAO_Default_Client_Strategy_Factory);
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_Default_Server_Strategy_Factory);
-
-      // Configure the IIOP and UIOP factories. You do *NOT*
-      // need modify this code to add your own protocol, instead
-      // simply add the following to your svc.conf file:
-      //
-      // dynamic PN_Factory Service_Object * LIB:_make_PN_Protocol_Factory() ""
-      // static Resource_Factory "-ORBProtocolFactory PN_Factory"
-      //
-      // where PN is the name of your protocol and LIB is the base
-      // name of the shared library that implements the protocol.
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_IIOP_Protocol_Factory);
-#if TAO_HAS_UIOP == 1
+#if !defined(ACE_LACKS_UNIX_DOMAIN_SOCKETS)
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_UIOP_Protocol_Factory);
-#endif /* TAO_HAS_UIOP == 1 */
-#if TAO_HAS_SHMIOP == 1
-      ACE_Service_Config::static_svcs ()->
-        insert (&ace_svc_desc_TAO_SHMIOP_Protocol_Factory);
-#endif /* TAO_HAS_UIOP == 1 */
+#endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
       // add descriptor to list of static objects.
 
       int result = 0;

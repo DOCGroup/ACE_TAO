@@ -24,7 +24,7 @@
 
 #include "tao/DynAnyC.h"
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #include "tao/Stub.h"
 #include "tao/Servant_Base.h"
@@ -32,7 +32,7 @@
 #include "tao/POA_CORBA.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/DynAnyC.i"
+#include "DynAnyC.i"
 #endif /* !defined INLINE */
 
 ACE_RCSID(tao, DynAnyC, "$Id$")
@@ -46,33 +46,29 @@ CORBA_DynAny_ptr CORBA_DynAny::_duplicate (CORBA_DynAny_ptr obj)
 } // end of _duplicate
 
 CORBA_DynAny_ptr CORBA_DynAny::_narrow (CORBA::Object_ptr obj,
-                                        CORBA::Environment &ACE_TRY_ENV)
+                                        CORBA::Environment &env)
 {
   if (CORBA::is_nil (obj))
     return CORBA_DynAny::_nil ();
 
-  if (!obj->_is_a ("IDL:/CORBA_DynAny:1.0", ACE_TRY_ENV))
+  if (!obj->_is_a ("IDL:/CORBA_DynAny:1.0", env))
     return CORBA_DynAny::_nil ();
 
-  void *servant = 0;
+  TAO_Stub* stub = obj->_stubobj ();
+  stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
       || !obj->_servant ()
-      || (servant = obj->_servant ()->_downcast ("IDL:/CORBA_DynAny:1.0")) == 0)
-    ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA_DynAny::_nil ());
+      || obj->_servant ()->_downcast ("IDL:/CORBA_DynAny:1.0") == 0)
+    {
+      return new CORBA_DynAny (stub);
+    }
 
-  CORBA_DynAny_ptr retval = CORBA_DynAny::_nil ();
-
-  ACE_NEW_RETURN (
-      retval,
-      POA_CORBA::_tao_collocated_DynAny (
-          ACE_reinterpret_cast (POA_CORBA::DynAny_ptr,
-                                servant),
-          0
-        ),
-      CORBA_DynAny::_nil ()
-    );
-
-  return retval;
+  void* servant = obj->_servant ()->_downcast ("IDL:/CORBA_DynAny:1.0");
+  return new POA_CORBA::_tao_collocated_DynAny (
+    ACE_reinterpret_cast (POA_CORBA::DynAny_ptr,
+                          servant),
+    stub
+  );
 }
 
 CORBA_DynAny_ptr CORBA_DynAny::_nil (void)
@@ -106,12 +102,12 @@ CORBA_DynAny::Invalid::operator= (const CORBA_DynAny::Invalid &_tao_excp)
 }
 
 // narrow
-CORBA_DynAny::Invalid *
+CORBA_DynAny::Invalid_ptr
 CORBA_DynAny::Invalid::_narrow (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:/CORBA_DynAny/Invalid:1.0",
                        exc->_id ())) // same type
-    return ACE_dynamic_cast (CORBA_DynAny::Invalid *,
+    return ACE_dynamic_cast (CORBA_DynAny::Invalid_ptr,
                              exc);
   else
     return 0;
@@ -123,29 +119,10 @@ void CORBA_DynAny::Invalid::_raise ()
   TAO_RAISE(*this);
 }
 
-void CORBA_DynAny::Invalid::_tao_encode (TAO_OutputCDR &cdr,
-                                         CORBA::Environment &ACE_TRY_ENV) const
-{
-  if (cdr << this->_id ())
-    return;
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-void CORBA_DynAny::Invalid::_tao_decode (TAO_InputCDR &,
-                                         CORBA::Environment &)
-{
-}
-
 // TAO extension - the _alloc method
 CORBA::Exception *CORBA_DynAny::Invalid::_alloc (void)
 {
-  CORBA::Exception *retval = 0;
-
-  ACE_NEW_RETURN (retval,
-                  CORBA_DynAny::Invalid,
-                  0);
-
-  return retval;
+  return new CORBA_DynAny::Invalid;
 }
 
 static const CORBA::Long _oc_CORBA_DynAny_Invalid[] =
@@ -205,12 +182,12 @@ CORBA_DynAny::InvalidValue::operator= (
 }
 
 // narrow
-CORBA_DynAny::InvalidValue *
+CORBA_DynAny::InvalidValue_ptr
 CORBA_DynAny::InvalidValue::_narrow (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:/CORBA_DynAny/InvalidValue:1.0",
                        exc->_id ())) // same type
-    return ACE_dynamic_cast (CORBA_DynAny::InvalidValue *,
+    return ACE_dynamic_cast (CORBA_DynAny::InvalidValue_ptr,
                              exc);
   else
     return 0;
@@ -222,29 +199,10 @@ void CORBA_DynAny::InvalidValue::_raise ()
   TAO_RAISE(*this);
 }
 
-void CORBA_DynAny::InvalidValue::_tao_encode (TAO_OutputCDR &cdr,
-                                              CORBA::Environment &ACE_TRY_ENV) const
-{
-  if (cdr << this->_id ())
-    return;
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-void CORBA_DynAny::InvalidValue::_tao_decode (TAO_InputCDR &,
-                                              CORBA::Environment &)
-{
-}
-
 // TAO extension - the _alloc method
 CORBA::Exception *CORBA_DynAny::InvalidValue::_alloc (void)
 {
-  CORBA::Exception *retval = 0;
-
-  ACE_NEW_RETURN (retval,
-                  CORBA_DynAny::InvalidValue,
-                  0);
-
-  return retval;
+  return new CORBA_DynAny::InvalidValue;
 }
 
 static const CORBA::Long _oc_CORBA_DynAny_InvalidValue[] =
@@ -308,12 +266,12 @@ CORBA_DynAny::TypeMismatch::operator= (
 }
 
 // narrow
-CORBA_DynAny::TypeMismatch *
+CORBA_DynAny::TypeMismatch_ptr
 CORBA_DynAny::TypeMismatch::_narrow (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:/CORBA_DynAny/TypeMismatch:1.0",
                        exc->_id ())) // same type
-    return ACE_dynamic_cast (CORBA_DynAny::TypeMismatch *,
+    return ACE_dynamic_cast (CORBA_DynAny::TypeMismatch_ptr,
                              exc);
   else
     return 0;
@@ -325,29 +283,10 @@ void CORBA_DynAny::TypeMismatch::_raise ()
   TAO_RAISE(*this);
 }
 
-void CORBA_DynAny::TypeMismatch::_tao_encode (TAO_OutputCDR &cdr,
-                                              CORBA::Environment &ACE_TRY_ENV) const
-{
-  if (cdr << this->_id ())
-    return;
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-void CORBA_DynAny::TypeMismatch::_tao_decode (TAO_InputCDR &,
-                                              CORBA::Environment &)
-{
-}
-
 // TAO extension - the _alloc method
 CORBA::Exception *CORBA_DynAny::TypeMismatch::_alloc (void)
 {
-  CORBA::Exception *retval = 0;
-
-  ACE_NEW_RETURN (retval,
-                  CORBA_DynAny::TypeMismatch,
-                  0);
-
-  return retval;
+  return new CORBA_DynAny::TypeMismatch;
 }
 
 static const CORBA::Long _oc_CORBA_DynAny_TypeMismatch[] =
@@ -410,12 +349,12 @@ CORBA_DynAny::InvalidSeq::operator= (
 }
 
 // narrow
-CORBA_DynAny::InvalidSeq *
+CORBA_DynAny::InvalidSeq_ptr
 CORBA_DynAny::InvalidSeq::_narrow (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:/CORBA_DynAny/InvalidSeq:1.0",
                        exc->_id ())) // same type
-    return ACE_dynamic_cast (CORBA_DynAny::InvalidSeq *,
+    return ACE_dynamic_cast (CORBA_DynAny::InvalidSeq_ptr,
                              exc);
   else
     return 0;
@@ -427,29 +366,10 @@ void CORBA_DynAny::InvalidSeq::_raise ()
   TAO_RAISE(*this);
 }
 
-void CORBA_DynAny::InvalidSeq::_tao_encode (TAO_OutputCDR &cdr,
-                                            CORBA::Environment &ACE_TRY_ENV) const
-{
-  if (cdr << this->_id ())
-    return;
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-void CORBA_DynAny::InvalidSeq::_tao_decode (TAO_InputCDR &,
-                                            CORBA::Environment &)
-{
-}
-
 // TAO extension - the _alloc method
 CORBA::Exception *CORBA_DynAny::InvalidSeq::_alloc (void)
 {
-  CORBA::Exception *retval = 0;
-
-  ACE_NEW_RETURN (retval,
-                  CORBA_DynAny::InvalidSeq,
-                  0);
-
-  return retval;
+  return new CORBA_DynAny::InvalidSeq;
 }
 
 static const CORBA::Long _oc_CORBA_DynAny_InvalidSeq[] =
@@ -786,33 +706,29 @@ CORBA_DynEnum_ptr CORBA_DynEnum::_duplicate (CORBA_DynEnum_ptr obj)
 } // end of _duplicate
 
 CORBA_DynEnum_ptr CORBA_DynEnum::_narrow (CORBA::Object_ptr obj,
-                                          CORBA::Environment &ACE_TRY_ENV)
+                                          CORBA::Environment &env)
 {
   if (CORBA::is_nil (obj))
     return CORBA_DynEnum::_nil ();
 
-  if (!obj->_is_a ("IDL:/CORBA_DynEnum:1.0", ACE_TRY_ENV))
+  if (!obj->_is_a ("IDL:/CORBA_DynEnum:1.0", env))
     return CORBA_DynEnum::_nil ();
 
-  void *servant = 0;
+  TAO_Stub* stub = obj->_stubobj ();
+  stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
       || !obj->_servant ()
-      || (servant = obj->_servant ()->_downcast ("IDL:/CORBA_DynEnum:1.0")) == 0)
-    ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA_DynEnum::_nil ());
+      || obj->_servant ()->_downcast ("IDL:/CORBA_DynEnum:1.0") == 0)
+    {
+      return new CORBA_DynEnum (stub);
+    }
 
-  CORBA_DynEnum_ptr retval = CORBA_DynEnum::_nil ();
-
-  ACE_NEW_RETURN (
-      retval,
-      POA_CORBA::_tao_collocated_DynEnum (
-          ACE_reinterpret_cast (POA_CORBA::DynEnum_ptr,
-                                servant),
-          0
-        ),
-      CORBA_DynEnum::_nil ()
-    );
-
-  return retval;
+  void* servant = obj->_servant ()->_downcast ("IDL:/CORBA_DynEnum:1.0");
+  return new POA_CORBA::_tao_collocated_DynEnum (
+    ACE_reinterpret_cast (POA_CORBA::DynEnum_ptr,
+                          servant),
+    stub
+  );
 }
 
 CORBA_DynEnum_ptr CORBA_DynEnum::_nil (void)
@@ -947,33 +863,30 @@ CORBA_DynStruct_ptr CORBA_DynStruct::_duplicate (CORBA_DynStruct_ptr obj)
 } // end of _duplicate
 
 CORBA_DynStruct_ptr CORBA_DynStruct::_narrow (CORBA::Object_ptr obj,
-                                              CORBA::Environment &ACE_TRY_ENV)
+                                              CORBA::Environment &env)
 {
   if (CORBA::is_nil (obj))
     return CORBA_DynStruct::_nil ();
 
-  if (!obj->_is_a ("IDL:/CORBA_DynStruct:1.0", ACE_TRY_ENV))
+  if (!obj->_is_a ("IDL:/CORBA_DynStruct:1.0", env))
     return CORBA_DynStruct::_nil ();
 
-  void *servant = 0;
+  TAO_Stub* stub = obj->_stubobj ();
+  stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
       || !obj->_servant ()
-      || (servant = obj->_servant ()->_downcast ("IDL:/CORBA_DynStruct:1.0")) == 0)
-    ACE_THROW_RETURN (CORBA::MARSHAL (),  CORBA_DynStruct::_nil ());
+      || obj->_servant ()->_downcast ("IDL:/CORBA_DynStruct:1.0") == 0
+      )
+    {
+      return new CORBA_DynStruct (stub);
+    } // end of if
 
-  CORBA_DynStruct_ptr retval = CORBA_DynStruct::_nil ();
-
-  ACE_NEW_RETURN (
-      retval,
-      POA_CORBA::_tao_collocated_DynStruct (
-          ACE_reinterpret_cast (POA_CORBA::DynStruct_ptr,
-                                servant),
-          0
-        ),
-      CORBA_DynStruct::_nil ()
-    );
-
-  return retval;
+  void* servant = obj->_servant ()->_downcast ("IDL:/CORBA_DynStruct:1.0");
+  return new POA_CORBA::_tao_collocated_DynStruct (
+    ACE_reinterpret_cast (POA_CORBA::DynStruct_ptr,
+                          servant),
+    stub
+  );
 }
 
 CORBA_DynStruct_ptr CORBA_DynStruct::_nil (void)
@@ -1058,34 +971,30 @@ CORBA_DynUnion_ptr CORBA_DynUnion::_duplicate (CORBA_DynUnion_ptr obj)
 } // end of _duplicate
 
 CORBA_DynUnion_ptr CORBA_DynUnion::_narrow (CORBA::Object_ptr obj,
-                                            CORBA::Environment &ACE_TRY_ENV)
+                                            CORBA::Environment &env)
 {
   if (CORBA::is_nil (obj))
     return CORBA_DynUnion::_nil ();
 
   if (!obj->_is_a ("IDL:/CORBA_DynUnion:1.0",
-                   ACE_TRY_ENV))
+                   env))
     return CORBA_DynUnion::_nil ();
 
-  void *servant = 0;
+  TAO_Stub* stub = obj->_stubobj ();
+  stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
       || !obj->_servant ()
-      || (servant = obj->_servant ()->_downcast ("IDL:/CORBA_DynUnion:1.0")) == 0)
-    ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA_DynUnion::_nil ());
+      || obj->_servant ()->_downcast ("IDL:/CORBA_DynUnion:1.0") == 0)
+    {
+      return new CORBA_DynUnion (stub);
+    } // end of if
 
-  CORBA_DynUnion_ptr retval = CORBA_DynUnion::_nil ();
-
-  ACE_NEW_RETURN (
-      retval,
-      POA_CORBA::_tao_collocated_DynUnion (
-          ACE_reinterpret_cast (POA_CORBA::DynUnion_ptr,
-                                servant),
-          0
-        ),
-      CORBA_DynUnion::_nil ()
-    );
-
-  return retval;
+  void* servant = obj->_servant ()->_downcast ("IDL:/CORBA_DynUnion:1.0");
+  return new POA_CORBA::_tao_collocated_DynUnion (
+    ACE_reinterpret_cast (POA_CORBA::DynUnion_ptr,
+                          servant),
+    stub
+  );
 }
 
 CORBA_DynUnion_ptr CORBA_DynUnion::_nil (void)
@@ -1249,34 +1158,29 @@ CORBA_DynSequence_ptr CORBA_DynSequence::_duplicate (
 } // end of _duplicate
 
 CORBA_DynSequence_ptr CORBA_DynSequence::_narrow (CORBA::Object_ptr obj,
-                                                  CORBA::Environment &ACE_TRY_ENV)
+                                                  CORBA::Environment &env)
 {
   if (CORBA::is_nil (obj))
     return CORBA_DynSequence::_nil ();
 
   if (!obj->_is_a ("IDL:/CORBA_DynSequence:1.0",
-                   ACE_TRY_ENV))
+                   env))
     return CORBA_DynSequence::_nil ();
 
-  void *servant = 0;
+  TAO_Stub* stub = obj->_stubobj ();
+  stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
       || !obj->_servant ()
-      || (servant = obj->_servant ()->_downcast ("IDL:/CORBA_DynSequence:1.0")) == 0)
-    ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA_DynSequence::_nil ());
-
-  CORBA_DynSequence_ptr retval = CORBA_DynSequence::_nil ();
-
-  ACE_NEW_RETURN (
-      retval,
-      POA_CORBA::_tao_collocated_DynSequence (
-          ACE_reinterpret_cast (POA_CORBA::DynSequence_ptr,
-                                servant),
-          0
-        ),
-      CORBA_DynSequence::_nil ()
-    );
-
-  return retval;
+      || obj->_servant ()->_downcast ("IDL:/CORBA_DynSequence:1.0") == 0)
+    {
+      return new CORBA_DynSequence (stub);
+    } // end of if
+  void* servant = obj->_servant ()->_downcast ("IDL:/CORBA_DynSequence:1.0");
+  return new POA_CORBA::_tao_collocated_DynSequence (
+    ACE_reinterpret_cast (POA_CORBA::DynSequence_ptr,
+                          servant),
+    stub
+  );
 }
 
 CORBA_DynSequence_ptr CORBA_DynSequence::_nil (void)
@@ -1296,7 +1200,7 @@ CORBA_DynSequence::length (CORBA::ULong,
 {
 }
 
-CORBA_AnySeq *
+CORBA_AnySeq_ptr
 CORBA_DynSequence::get_elements (CORBA::Environment &)
 {
   return 0;
@@ -1363,34 +1267,30 @@ CORBA_DynArray_ptr CORBA_DynArray::_duplicate (CORBA_DynArray_ptr obj)
 } // end of _duplicate
 
 CORBA_DynArray_ptr CORBA_DynArray::_narrow (CORBA::Object_ptr obj,
-                                            CORBA::Environment &ACE_TRY_ENV)
+                                            CORBA::Environment &env)
 {
   if (CORBA::is_nil (obj))
     return CORBA_DynArray::_nil ();
 
   if (!obj->_is_a ("IDL:/CORBA_DynArray:1.0",
-                   ACE_TRY_ENV))
+                   env))
     return CORBA_DynArray::_nil ();
 
-  void *servant = 0;
+  TAO_Stub* stub = obj->_stubobj ();
+  stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
       || !obj->_servant ()
-      || (servant = obj->_servant ()->_downcast ("IDL:/CORBA_DynArray:1.0")) == 0)
-    ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA_DynArray::_nil ());
+      || obj->_servant ()->_downcast ("IDL:/CORBA_DynArray:1.0") == 0)
+    {
+      return new CORBA_DynArray (stub);
+    } // end of if
 
-  CORBA_DynArray_ptr retval = CORBA_DynArray::_nil ();
-
-  ACE_NEW_RETURN (
-      retval,
-      POA_CORBA::_tao_collocated_DynArray (
-          ACE_reinterpret_cast (POA_CORBA::DynArray_ptr,
-                                servant),
-          0
-        ),
-      CORBA_DynArray::_nil ()
-    );
-
-  return retval;
+  void* servant = obj->_servant ()->_downcast ("IDL:/CORBA_DynArray:1.0");
+  return new POA_CORBA::_tao_collocated_DynArray (
+    ACE_reinterpret_cast (POA_CORBA::DynArray_ptr,
+                          servant),
+    stub
+  );
 }
 
 CORBA_DynArray_ptr CORBA_DynArray::_nil (void)
@@ -1398,7 +1298,7 @@ CORBA_DynArray_ptr CORBA_DynArray::_nil (void)
   return (CORBA_DynArray_ptr) NULL;
 } // end of _nil
 
-CORBA_AnySeq *
+CORBA_AnySeq_ptr
 CORBA_DynArray::get_elements (CORBA::Environment &)
 {
   return 0;

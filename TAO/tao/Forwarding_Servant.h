@@ -18,7 +18,6 @@
 
 #ifndef TAO_FORWARDING_SERVANT_H
 #define TAO_FORWARDING_SERVANT_H
-#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -26,7 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #include "tao/Servant_Base.h"
 #include "tao/ORB.h"
@@ -63,5 +62,4 @@ protected:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-#include "ace/post.h"
 #endif /* TAO_FORWARDING_SERVANT_H */

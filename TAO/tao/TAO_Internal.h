@@ -19,7 +19,6 @@
 
 #ifndef TAO_INTERNAL_H
 #define TAO_INTERNAL_H
-#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -77,5 +76,4 @@ private:
   static const char *client_strategy_args_;
 };
 
-#include "ace/post.h"
 #endif /* TAO_INTERNAL_H */

@@ -16,11 +16,10 @@
 
 #ifndef TAO_DYNSEQUENCE_I_H
 #define TAO_DYNSEQUENCE_I_H
-#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #include "ace/Containers.h"
 
@@ -57,7 +56,7 @@ public:
                  TAO_default_environment ());
   // Set length of sequence.
 
-  CORBA_AnySeq *get_elements (CORBA::Environment &ACE_TRY_ENV =
+  CORBA_AnySeq_ptr get_elements (CORBA::Environment &ACE_TRY_ENV =
                                    TAO_default_environment ());
   // Get elements using IDL defined type AnySeq.
 
@@ -218,5 +217,4 @@ private:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-#include "ace/post.h"
 #endif /* TAO_DYNSEQUENCE_I_H */

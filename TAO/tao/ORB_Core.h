@@ -6,7 +6,8 @@
 // = LIBRARY
 //     TAO
 //
-//     ORB_Core.h
+// = FILENAME
+//     orb_core.h
 //
 // = AUTHOR
 //     Chris Cleeland
@@ -15,7 +16,6 @@
 
 #ifndef TAO_ORB_CORE_H
 #define TAO_ORB_CORE_H
-#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -23,14 +23,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/Policy_Manager.h"
 #include "tao/Resource_Factory.h"
 #include "tao/params.h"
 #include "tao/POAC.h"
-
-
+#include "tao/GIOP.h"
 
 #include "ace/Map_Manager.h"
 #include "ace/Singleton.h"
@@ -51,18 +49,6 @@ class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
 class TAO_Connection_Cache;
 class TAO_TSS_Resources;
-class TAO_Reactor_Registry;
-class TAO_Leader_Follower;
-class TAO_Priority_Mapping;
-
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-class TAO_Eager_Buffering_Sync_Strategy;
-class TAO_Delayed_Buffering_Sync_Strategy;
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-class TAO_Transport_Sync_Strategy;
 
 // ****************************************************************
 
@@ -84,6 +70,15 @@ public:
   ~TAO_ORB_Core_TSS_Resources (void);
   // destructor
 
+  int owns_resources_;
+  // Set to 1 if this object owns the resources below
+
+  ACE_Reactor *reactor_;
+  // Used for responding to I/O reactively
+
+  int inherited_reactor_;
+  // The reactor was inherited from the spawning thread, do not delete
+
   // = The rest of the resources are not currently in use, just a plan
   //   for the future...
 
@@ -101,23 +96,101 @@ public:
   // cache will be separated from the connectors and it will be a
   // (potentially) TSS object.
 
-  int event_loop_thread_;
-  // Counter for how (nested) calls this thread has made to run the
-  // event loop.
+  int is_server_thread_;
+  // Is this thread a server for this ORB?
 
-  int client_leader_thread_;
-  // Counter for how many times this thread has become a client
-  // leader.
+  int is_leader_thread_;
+  // Is this thread a leader for this ORB?
+};
 
-  ACE_SYNCH_CONDITION* leader_follower_condition_variable_;
-  // Condition variable for the leader follower model.
+// ****************************************************************
 
-  TAO_Reactor_Registry *reactor_registry_;
-  // The Reactor Holder that we should callback when destroying the
-  // cookie.
+class TAO_Export TAO_Leader_Follower
+{
+public:
+  TAO_Leader_Follower (TAO_ORB_Core *orb_core);
+  // Constructor
 
-  void *reactor_registry_cookie_;
-  // A TSS magic cookie used by the Reactor_Registry
+  void set_server_thread (void);
+  // The current thread has become a server thread (i.e. called
+  // ORB::run), update any flags and counters.
+
+  void reset_server_thread (void);
+  // The current thread is not a server thread anymore, reset any
+  // flags and counters.
+
+  int leader_available (void) const;
+  // Is there any thread running as a leader?
+
+  void set_client_thread (void);
+  // A server thread is making a request.
+
+  void reset_client_thread (void);
+  // A server thread has finished is making a request.
+
+  void set_leader_thread (void) ;
+  // The current thread has become the leader thread in the
+  // client side leader-follower set.
+
+  void reset_leader_thread (void) ;
+  // The current thread is no longer the leader thread in the client
+  // side leader-follower set.
+
+  void set_leader_thread (ACE_thread_t thread_ID);
+  // sets the thread ID of the leader thread in the leader-follower
+  // model
+
+  int is_leader_thread (void) const;
+  // checks if we are a leader thread
+
+  int elect_new_leader (void);
+  // A leader thread is relinquishing its role, unless there are more
+  // leader threads running pick up a follower (if there is any) to
+  // play the leader role.
+
+  int add_follower (ACE_SYNCH_CONDITION *follower_ptr);
+  // adds the a follower to the set of followers in the leader-
+  // follower model
+  // returns 0 on success, -1 on failure
+
+  int follower_available (void) const;
+  // checks for the availablity of a follower
+  // returns 1 on available, 0 else
+
+  int remove_follower (ACE_SYNCH_CONDITION *follower_ptr);
+  // removes a follower from the leader-follower set
+  // returns 0 on success, -1 on failure
+
+  ACE_SYNCH_CONDITION *get_next_follower (void);
+  // returns randomly a follower from the leader-follower set
+  // returns follower on success, else 0
+
+  ACE_SYNCH_MUTEX &lock (void);
+  ACE_Reverse_Lock<ACE_SYNCH_MUTEX> &reverse_lock (void);
+  // Accessors
+
+private:
+  TAO_ORB_Core_TSS_Resources *get_tss_resources (void) const;
+  // Shortcut to obtain the TSS resources of the orb core.
+
+private:
+  TAO_ORB_Core *orb_core_;
+  // The orb core
+
+  ACE_SYNCH_MUTEX lock_;
+  // do protect the access to the following three members
+
+  ACE_Reverse_Lock<ACE_SYNCH_MUTEX> reverse_lock_;
+  // do protect the access to the following three members
+
+  ACE_Unbounded_Set<ACE_SYNCH_CONDITION *> follower_set_;
+  // keep a set of followers around (protected)
+
+  int leaders_;
+  // Count the number of active leaders.
+  // There could be many leaders in the thread pool (i.e. calling
+  // ORB::run), and the same leader could show up multiple times as it
+  // receives nested upcalls and sends more requests.
 };
 
 // ****************************************************************
@@ -137,8 +210,7 @@ class TAO_Export TAO_ORB_Core
   //   Resource_Factory will simply return a pointer to the global
   //   instance.
   //
-  friend class TAO_ORB_Core_Auto_Ptr;
-  friend class TAO_ORB_Table;
+  friend class CORBA_ORB;
   friend CORBA::ORB_ptr CORBA::ORB_init (int &,
                                          char *argv[],
                                          const char *,
@@ -168,34 +240,30 @@ public:
   TAO_ProtocolFactorySet *protocol_factories (void);
 
   // = Set/get pointer to the ORB.
+  CORBA::ORB_ptr orb (CORBA::ORB_ptr);
   CORBA::ORB_ptr orb (void);
 
+  // = Set/get the <ACE_Reactor>.
   ACE_Reactor *reactor (void);
-  ACE_Reactor *reactor (TAO_Acceptor *acceptor);
-  // Wrappers that forward the request to the concurrency strategy
 
-  // = Get the ACE_Thread_Manager
+  // = Set/get the <ACE_Thread_Manager>.
   ACE_Thread_Manager *thr_mgr (void);
 
-  // = Get the rootPOA
-  TAO_POA *root_poa (CORBA::Environment &ACE_TRY_ENV =
-                           TAO_default_environment (),
+  // = Set/get <rootPOA>.
+  TAO_POA *root_poa (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment (),
                      const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                      TAO_POA_Manager *poa_manager = 0,
                      const TAO_POA_Policies *policies = 0);
-  PortableServer::POA_ptr root_poa_reference (
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment (),
-      const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
-      TAO_POA_Manager *poa_manager = 0,
-      const TAO_POA_Policies *policies = 0);
+  PortableServer::POA_ptr root_poa_reference (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment (),
+                                              const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
+                                              TAO_POA_Manager *poa_manager = 0,
+                                              const TAO_POA_Policies *policies = 0);
 
   // = Collocation strategies.
-  enum
-  {
-    ORB_CONTROL,  // Indicate object should refer to ORB for either
-                  // one of the following strategies.
-    THRU_POA,     // Collocated calls will go thru POA.
-    DIRECT        // Collocated calls invoke operation on Servant directly.
+  enum {
+    ORB_CONTROL,                // Indicate object should refer to ORB for either one of the following strategies.
+    THRU_POA,                   // Collocated calls will go thru POA.
+    DIRECT                      // Collocated calls invoke operation on Servant directly.
   };
 
   // = Get the default codeset translators.
@@ -214,6 +282,9 @@ public:
 
   ACE_WChar_Codeset_Translator *to_unicode (void) const;
   // Convert from the native wide character set to UNICODE
+
+  TAO_GIOP_ServiceContextList& service_context (void);
+  // Obtain the service context list used to send requests...
 
   // @@ This is just note on how could the translator database be
   //    implemented: use the service configurator to load the
@@ -271,6 +342,9 @@ public:
   // See if we have a collocated address, if yes, return the POA
   // associated with the address.
 
+  int add_to_ior_table (ACE_CString init_ref, TAO_IOR_LookupTable &table);
+  // Add the init_ref (objectID->IOR) to the Lookup Table
+
   ACE_Allocator *output_cdr_dblock_allocator (void);
   // This allocator is always TSS and has no locks. It is intended for
   // allocating the ACE_Data_Blocks used in *outgoing* CDR streams.
@@ -310,8 +384,7 @@ public:
   // on the heap and/or as class members; we need to investigate the
   // tradeoffs and take a decision.
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
+#if defined (TAO_HAS_CORBA_MESSAGING)
   TAO_Policy_Manager *policy_manager (void);
   // Return the Policy_Manager for this ORB.
 
@@ -325,110 +398,21 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ());
   // Accesor to obtain the default policy for a particular policy
-  // type.  If there is no default policy it returns
-  // CORBA::Policy::_nil ()
+  // type.
+  // If there is no default policy it returns CORBA::Policy::_nil ()
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-  TAO_RelativeRoundtripTimeoutPolicy *default_relative_roundtrip_timeout (void) const;
-
-  TAO_RelativeRoundtripTimeoutPolicy *stubless_relative_roundtrip_timeout (void);
-  // Access to the RoundtripTimeoutPolicy policy set on the thread or
-  // on the ORB.  In this method, we do not consider the stub since we
-  // do not have access to it.
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-  TAO_Client_Priority_Policy *default_client_priority (void) const;
-
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
-
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-  TAO_Sync_Scope_Policy *default_sync_scope (void) const;
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
-
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-  TAO_Buffering_Constraint_Policy *default_buffering_constraint (void) const;
-
-  // = This strategy will buffer messages.
-  TAO_Eager_Buffering_Sync_Strategy &eager_buffering_sync_strategy (void);
-  TAO_Delayed_Buffering_Sync_Strategy &delayed_buffering_sync_strategy (void);
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-  TAO_Transport_Sync_Strategy &transport_sync_strategy (void);
-  // This strategy will sync with the transport.
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-  TAO_Priority_Mapping *priority_mapping (void);
-  // Access the priority mapping class, this is a TAO extension but
-  // there is no standard way to get to it either.
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
-  int get_thread_priority (CORBA::Short &priority);
-  int set_thread_priority (CORBA::Short  priority);
-  // Accessor and modifier to the current thread priority, used to
-  // implement the RTCORBA::Current interface, but it is faster for
-  // some critical components.
-  // If TAO_HAS_RT_CORBA == 0, the operations are noops.
+  POA_Messaging::RelativeRoundtripTimeoutPolicy*
+      default_relative_roundtrip_timeout (void) const;
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
   TAO_ORB_Core_TSS_Resources* get_tss_resources (void);
   // Obtain the TSS resources of this orb.
 
   TAO_Leader_Follower &leader_follower (void);
-  // Get access to the leader_follower class.
+  // Get access to the leader_follower class
 
-  int run (ACE_Time_Value *tv,
-           int perform_work,
-           CORBA::Environment &ACE_TRY_ENV);
+  int run (ACE_Time_Value *tv, int break_on_timeouts);
   // Run the event loop
-
-  void shutdown (CORBA::Boolean wait_for_completion,
-                 CORBA::Environment &ACE_TRY_ENV =
-                     TAO_default_environment ());
-  // End the event loop
-
-  int has_shutdown (void);
-  // Get the shutdown flag value
-
-  void destroy (CORBA::Environment &ACE_TRY_ENV =
-                    TAO_default_environment ());
-  // Shutdown the ORB and free resources
-
-  void check_shutdown (CORBA::Environment &ACE_TRY_ENV);
-  // Check if ORB has shutdown.  If it has, throw an exception.
-
-  int thread_per_connection_timeout (ACE_Time_Value &timeout) const;
-  // Returns the <timeout> value used by the server threads to poll
-  // the shutdown flag.
-  // If the return value is zero then the server threads block forever.
-
-  ACE_SYNCH_CONDITION* leader_follower_condition_variable (void);
-  // Condition variable used in the Leader Follower Wait Strategy, on
-  // which the follower thread blocks.
-
-  TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
-                                const char *type_id,
-                                CORBA::Environment &ACE_TRY_ENV =
-                                    TAO_default_environment ());
-  // Makes sure that the ORB is open and then creates a TAO_Stub
-  // based on the endpoint.
-
-  const char *orbid (void) const;
-  // Return ORBid string.
-
-  CORBA::Object_ptr implrepo_service (void);
-  void implrepo_service (const CORBA::Object_ptr ir);
-  // Set/Get the IOR of the Implementation Repository service.
 
 protected:
   int set_iiop_endpoint (int dotted_decimal_addresses,
@@ -437,7 +421,7 @@ protected:
                          ACE_CString &iiop_endpoint);
   // Set the endpoint
 
-  int init (int &argc, char **argv, CORBA::Environment &ACE_TRY_ENV);
+  int init (int &argc, char **argv);
   // Initialize the guts of the ORB Core.  It is intended that this be
   // called by <CORBA::ORB_init>.
 
@@ -452,16 +436,6 @@ protected:
 
   TAO_Object_Adapter *object_adapter_i (void);
   // Get <Object Adapter>, assume the lock is held...
-
-  ACE_Allocator *input_cdr_dblock_allocator_i (TAO_ORB_Core_TSS_Resources *);
-  ACE_Allocator *input_cdr_buffer_allocator_i (TAO_ORB_Core_TSS_Resources *);
-  // Implement the input_cdr_*_allocator() routines using pre-fetched
-  // TSS resources.  This minimizes the number of calls to them.
-
-  int open (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Set up the ORB Core's acceptor to listen on the
-  // previously-specified port for requests.  Returns -1 on failure,
-  // else 0.
 
 protected:
   ACE_SYNCH_MUTEX lock_;
@@ -480,14 +454,7 @@ protected:
   TAO_ProtocolFactorySet *protocol_factories_;
   // Pointer to the list of protocol loaded into this ORB instance.
 
-  CORBA::Object_ptr implrepo_service_;
-  // The cached IOR for the Implementation Repository.
-  // @@ If this is a _var, where should it get deleted? (brunsch)
-
-  int use_implrepo_;
-  // Flag for whether the implrepo support is enabled or not.
-
-  CORBA::ORB_var orb_;
+  CORBA::ORB_ptr orb_;
   // @@ Should we keep a single ORB pointer? This is good because
   //    multiple calls to ORB_init() with the same ORBid can use the
   //    same object, but maybe don't want so much coupling.
@@ -504,7 +471,7 @@ protected:
   TAO_ORB_Parameters orb_params_;
   // Parameters used by the ORB.
 
-  char *orbid_;
+  char* orbid_;
   // The ORBid for this ORB.
 
   TAO_Resource_Factory *resource_factory_;
@@ -545,18 +512,16 @@ protected:
   CORBA::ULong collocation_strategy_;
   // Default collocation policy.  This should never be ORB_CONTROL.
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
-  TAO_Policy_Manager *policy_manager_;
+#if defined (TAO_HAS_CORBA_MESSAGING)
+  TAO_Policy_Manager policy_manager_;
   // The Policy_Manager for this ORB.
 
-  TAO_Policy_Manager_Impl *default_policies_;
+  TAO_Policy_Manager_Impl default_policies_;
   // The default policies.
 
-  TAO_Policy_Current *policy_current_;
+  TAO_Policy_Current policy_current_;
   // Policy current.
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
   TAO_POA_Current *poa_current_;
   // POA current.
@@ -570,9 +535,6 @@ protected:
 
   ACE_Thread_Manager tm_;
   // The Thread Manager
-
-  ACE_Lock_Adapter<ACE_SYNCH_MUTEX> data_block_lock_;
-  // The data block reference counts are locked using this mutex
 
   ACE_Char_Codeset_Translator *from_iso8859_;
   ACE_Char_Codeset_Translator *to_iso8859_;
@@ -590,73 +552,14 @@ protected:
   // If the resources are per-ORB (as opposed to per-ORB-per-thread)
   // then they are stored here...
 
-  TAO_Reactor_Registry *reactor_registry_;
-  // The server concurrency strategy
+  // @@ TODO: the service context list may need to be in TSS
+  //    storage...
+  // NOTE: this is only used to *send* requests, not to store the
+  // service context list of a reply...
+  TAO_GIOP_ServiceContextList service_context_;
 
-  ACE_Reactor *reactor_;
-  // The reactor used for pure-clients, otherwise it comes from the
-  // reactor_registry
-
-  int has_shutdown_;
-  // Flag which denotes that the ORB has been shutdown.
-
-  int thread_per_connection_use_timeout_;
-  ACE_Time_Value thread_per_connection_timeout_;
-  // The value of the timeout if the flag above is not zero
-
-  ACE_SYNCH_MUTEX open_lock_;
-  // Mutual exclusion for calling open.
-
-  int open_called_;
-  // Flag which denotes that the open method was called.
-
-  TAO_Priority_Mapping *priority_mapping_;
-  // The priority mapping.
-
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-  TAO_Eager_Buffering_Sync_Strategy *eager_buffering_sync_strategy_;
-  // This strategy will buffer messages.
-
-  TAO_Delayed_Buffering_Sync_Strategy *delayed_buffering_sync_strategy_;
-  // This strategy will buffer messages.
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-  TAO_Transport_Sync_Strategy *transport_sync_strategy_;
-  // This strategy will sync with the transport.
-
-  int svc_config_argc_;
-  // The number of arguments in the service configurator argument vector.
-
-  char **svc_config_argv_;
-  // The argument vector for the service configurator.
-};
-
-// ****************************************************************
-
-// Define a TAO_ORB_Core auto_ptr class
-class TAO_ORB_Core_Auto_Ptr
-{
-  // = TITLE
-  //     Implements the draft C++ standard auto_ptr abstraction.
-  //     This class allows one to work ORB_Core Objects *Only*!
-public:
-  // = Initialization and termination methods
-  /* explicit */ TAO_ORB_Core_Auto_Ptr (TAO_ORB_Core *p = 0);
-  TAO_ORB_Core_Auto_Ptr (TAO_ORB_Core_Auto_Ptr &ap);
-  TAO_ORB_Core_Auto_Ptr &operator= (TAO_ORB_Core_Auto_Ptr &rhs);
-  ~TAO_ORB_Core_Auto_Ptr (void);
-
-  // = Accessor methods.
-  TAO_ORB_Core &operator *() const;
-  TAO_ORB_Core *get (void) const;
-  TAO_ORB_Core *release (void);
-  void reset (TAO_ORB_Core *p = 0);
-  TAO_ORB_Core *operator-> () const;
-
-protected:
-  TAO_ORB_Core *p_;
+  TAO_Leader_Follower leader_follower_;
+  // Information about the leader follower model
 };
 
 // ****************************************************************
@@ -695,17 +598,14 @@ public:
   // If the user (or library) provides no environment the ORB_Core
   // still holds one.
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
+#if defined (TAO_HAS_CORBA_MESSAGING)
   TAO_Policy_Current_Impl initial_policy_current_;
   // The initial PolicyCurrent for this thread. Should be a TSS
   // resource.
 
   TAO_Policy_Current_Impl *policy_current_;
   // This pointer is reset by the POA on each upcall.
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
+#endif /* TAO_HAS_CORBA_MESSAGING */
 };
 
 // @@ Must go away....
@@ -764,11 +664,10 @@ private:
 
 // ****************************************************************
 
-TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
+extern TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
 
 #if defined (__ACE_INLINE__)
 # include "tao/ORB_Core.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
 #endif /* TAO_ORB_CORE_H */

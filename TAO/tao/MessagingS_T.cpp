@@ -11,12 +11,16 @@
 #ifndef _TAO_IDL_MESSAGINGS_T_CPP_
 #define _TAO_IDL_MESSAGINGS_T_CPP_
 
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 #include "MessagingS_T.h"
 #include "tao/POA.h"
 #include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/MessagingS_T.i"
+#include "MessagingS_T.i"
 #endif /* !defined INLINE */
 
 template <class T> PortableServer::POA_ptr
@@ -136,7 +140,7 @@ POA_Messaging::QueueOrderPolicy_tie<T>::_default_POA (CORBA::Environment &ACE_TR
   return this->QueueOrderPolicy::_default_POA (ACE_TRY_ENV);
 }
 
-#if (TAO_HAS_AMI_CALLBACK == 1)
+#if defined (TAO_POLLER)
 
 template <class T> PortableServer::POA_ptr
 POA_Messaging::ReplyHandler_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
@@ -147,10 +151,6 @@ POA_Messaging::ReplyHandler_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_EN
   return this->ReplyHandler::_default_POA (ACE_TRY_ENV);
 }
 
-#endif /* TAO_HAS_AMI_CALLBACK == 1 */
-
-#if (TAO_HAS_AMI_POLLER == 1)
-
 template <class T> PortableServer::POA_ptr
 POA_Messaging::Poller_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -159,6 +159,6 @@ POA_Messaging::Poller_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
 
   return this->Poller::_default_POA (ACE_TRY_ENV);
 }
-#endif /* TAO_HAS_AMI_POLLER == 1 */
+#endif /* TAO_POLLER */
 
 #endif /* ifndef */

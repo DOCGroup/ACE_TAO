@@ -19,7 +19,6 @@
 
 #ifndef TAO_PLUGGABLE_H
 #define TAO_PLUGGABLE_H
-#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -27,11 +26,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Message_Queue.h"
 #include "tao/Sequence.h"
 #include "tao/Typecode.h"
-#include "tao/IOPC.h"
-
 
 // Forward declarations.
 class ACE_Addr;
@@ -47,24 +43,14 @@ class TAO_Reply_Dispatcher;
 class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
 
-class TAO_Pluggable_Messaging_Interface;
-class TAO_Target_Specification;
-class TAO_Operation_Details;
-
-typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Transport_Buffering_Queue;
-
 class TAO_Export TAO_Transport
 {
   // = TITLE
-  //   Generic definitions for the Transport class.
+  //   Generic definitions for the new Transport class.
   //
   // = DESCRIPTION
   //   The transport object is created in the Service handler
-  //   constructor and deleted in the Service Handler's destructor!!
-
-  friend class TAO_Transport_Sync_Strategy;
-  friend class TAO_Eager_Buffering_Sync_Strategy;
-  friend class TAO_Delayed_Buffering_Sync_Strategy;
+  //   constructor and deleted in the service handlers destructor!!
 
 public:
   TAO_Transport (CORBA::ULong tag,
@@ -77,7 +63,7 @@ public:
   CORBA::ULong tag (void) const;
   // The tag, each concrete class will have a specific tag value.
 
-  virtual void close_connection (void) = 0;
+  virtual void close_connection() = 0;
   // Call the corresponding connection handler's <close>
   // method.
 
@@ -85,19 +71,11 @@ public:
   // Idles the corresponding connection handler.
 
   virtual ACE_HANDLE handle (void) = 0;
-  // This method provides a way to gain access to the underlying file
-  // handle used by the reactor.
+  // This method provides a way to gain access to the underlying
+  // file handle used by the reactor.
 
-  virtual ACE_Event_Handler *event_handler (void) = 0;
-  // This method provides a way to gain access to the underlying event
-  // handler used by the reactor.
-
-  virtual ssize_t send (TAO_Stub *stub,
-                        int two_way,
-                        const ACE_Message_Block *mblk,
-                        const ACE_Time_Value *s = 0) = 0;
   virtual ssize_t send (const ACE_Message_Block *mblk,
-                        const ACE_Time_Value *s = 0) = 0;
+                        ACE_Time_Value *s = 0) = 0;
   // Write the complete Message_Block chain to the connection.
   // @@ The ACE_Time_Value *s is just a place holder for now.  It is
   // not clear this this is the best place to specify this.  The actual
@@ -105,61 +83,97 @@ public:
 
   virtual ssize_t send (const u_char *buf,
                         size_t len,
-                        const ACE_Time_Value *s = 0) = 0;
+                        ACE_Time_Value *s = 0) = 0;
   // Write the contents of the buffer of length len to the connection.
+  // @@ The ACE_Time_Value *s is just a place holder for now.  It is
+  // not clear this this is the best place to specify this.  The actual
+  // timeout values will be kept in the Policies.
+
+  virtual ssize_t send (const iovec *iov,
+                        int iovcnt,
+                        ACE_Time_Value *s = 0) = 0;
+  // Write the contents of iovcnt iovec's to the connection.
+  // @@ The ACE_Time_Value *s is just a place holder for now.  It is
+  // not clear this this is the best place to specify this.  The actual
+  // timeout values will be kept in the Policies.
 
   virtual ssize_t recv (char *buf,
                         size_t len,
-                        const ACE_Time_Value *s = 0) = 0;
+                        ACE_Time_Value *s = 0) = 0;
   // Read len bytes from into buf.
   // @@ The ACE_Time_Value *s is just a place holder for now.  It is
   // not clear this this is the best place to specify this.  The actual
   // timeout values will be kept in the Policies.
 
+  virtual ssize_t recv (char *buf,
+                        size_t len,
+                        int flags,
+                        ACE_Time_Value *s = 0) = 0;
+  // Read len bytes from into buf using flags.
+  // @@ The ACE_Time_Value *s is just a place holder for now.  It is
+  // not clear this this is the best place to specify this.  The actual
+  // timeout values will be kept in the Policies.
+
+  virtual ssize_t recv (iovec *iov,
+                        int iovcnt,
+                        ACE_Time_Value *s = 0) = 0;
+  //  Read received data into the iovec buffers.
+  // @@ The ACE_Time_Value *s is just a place holder for now.  It is
+  // not clear this this is the best place to specify this.  The actual
+  // timeout values will be kept in the Policies.
 
   virtual void start_request (TAO_ORB_Core *orb_core,
-                              TAO_Target_Specification &spec,
+                              const TAO_Profile *profile,
+                              const char* opname,
+                              CORBA::ULong request_id,
+                              CORBA::Boolean is_twoway,
                               TAO_OutputCDR &output,
-                              CORBA::Environment &ACE_TRY_ENV =
-                              TAO_default_environment ())
+                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Fill into <output> the right headers to make a request.
 
   virtual void start_locate (TAO_ORB_Core *orb_core,
-                             TAO_Target_Specification &spec,
-                             TAO_Operation_Details &opdetails,
+                             const TAO_Profile *profile,
+                             CORBA::ULong request_id,
                              TAO_OutputCDR &output,
-                             CORBA::Environment &ACE_TRY_ENV =
-                             TAO_default_environment ())
+                             CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Fill into <output> the right headers to make a locate request.
 
-  virtual int send_request (TAO_Stub *stub,
-                            TAO_ORB_Core *orb_core,
+  virtual int send_request (TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
                             int twoway,
                             ACE_Time_Value *max_time_wait) = 0;
-  // Depending on the concurrency strategy used by the transport it
-  // may be required to setup state to receive a reply before the
-  // request is sent.
-  // Using this method, instead of send(), allows the transport (and
-  // wait strategy) to take appropiate action.
+  // Default action to be taken for send request.
 
-  virtual CORBA::Boolean 
-  send_request_header (TAO_Operation_Details &op_details,
-                       TAO_Target_Specification &spec,
-                       TAO_OutputCDR &msg) = 0;
-  // This is a request for the transport object to write a request
-  // header before it sends out a request
-                                
+  // = Get and set methods for the ORB Core.
+
+  // void orb_core (TAO_ORB_Core *orb_core);
+  // Set it.
+
   TAO_ORB_Core *orb_core (void) const;
-  // Access the ORB that owns this connection.
+  // Get it.
+
+  // = Get and set methods for thr TMS object.
+
+  // void tms(TAO_Transport_Mux_Strategy *rms);
+  // Set the TMSobject.
 
   TAO_Transport_Mux_Strategy *tms (void) const;
   // Get the TMS used by this Transport object.
 
   TAO_Wait_Strategy *wait_strategy (void) const;
   // Return the Wait strategy used by the Transport.
+
+  CORBA::ULong request_id (void);
+  // Get request id for the current invocation from the TMSobject.
+
+  int bind_reply_dispatcher (CORBA::ULong request_id,
+                             TAO_Reply_Dispatcher *rd);
+  // Bind the reply dispatcher with the TMS object.
+
+  virtual int wait_for_reply (ACE_Time_Value *max_wait_time);
+  // Wait for the reply depending on the strategy.
 
   virtual int handle_client_input (int block = 0,
                                    ACE_Time_Value *max_wait_time = 0);
@@ -173,8 +187,8 @@ public:
   // Strategy if Reactor is used  for that strategy. Default
   // implementation out here returns -1 setting <errno> to ENOTSUP.
 
-  // = Setting the Transport object in Idle state. These methods are
-  //   routed through the TMS object. The TMS strategies implement the
+  // = Setting the Transport object in Idle state. Theese methods are
+  //   routed the TMS object. The TMS starategies implement the
   //   methods accordingly.
 
   virtual int idle_after_send (void);
@@ -185,48 +199,11 @@ public:
   // Request is sent and the reply is received. Idle the transport
   // now.
 
-  virtual ACE_SYNCH_CONDITION *leader_follower_condition_variable (void);
-  // Return the TSS leader follower condition variable used in the
-  // Wait Strategy. Muxed Leader Follower implementation returns a
-  // valid condition variable, others return 0.
-
-  virtual TAO_Transport_Buffering_Queue &buffering_queue (void);
-  // Queue for buffering transport messages.
-
-  long buffering_timer_id (void) const;
-  void buffering_timer_id (long);
-  // Timer id associated with buffering.
-
-  const ACE_Time_Value &buffering_timeout_value (void) const;
-  void buffering_timeout_value (const ACE_Time_Value &time);
-  // Timeout value associated with buffering.
-
-  ssize_t send_buffered_messages (const ACE_Time_Value *max_wait_time = 0);
-  // Send any messages that have been buffered.
-
-  virtual int
-  messaging_init (CORBA::Octet major,
-                  CORBA::Octet minor);
-  // Initialising the messaging object. This would be used by the
-  // connector  side. On the acceptor side the connection handler
-  // would take care of the messaging objects.
+  virtual int reply_received (const CORBA::ULong request_id);
+  // Check with the TMS whether the reply has been receieved for the
+  // request with <request_id>.
 
 protected:
-
-  void dequeue_head (void);
-
-  void dequeue_all (void);
-
-  void reset_queued_message (ACE_Message_Block *message_block,
-                             size_t bytes_delivered);
-
-  void reset_sent_message (ACE_Message_Block *message_block,
-                           size_t bytes_delivered);
-
-  void reset_message (ACE_Message_Block *message_block,
-                      size_t bytes_delivered,
-                      int queued_message);
-
   CORBA::ULong tag_;
   // IOP protocol tag.
 
@@ -239,15 +216,138 @@ protected:
 
   TAO_Wait_Strategy *ws_;
   // Strategy for waiting for the reply after sending the request.
+};
 
-  TAO_Transport_Buffering_Queue *buffering_queue_;
-  // Queue for buffering transport messages.
+class TAO_Export TAO_Profile
+{
+  // = TITLE
+  //   Defines the Profile interface
+  //
+  // = DESCRIPTION
+  //   An abstract base class for representing object address or location
+  //   information.  This is based on the CORBA IOR definitions.
+  //
+public:
+  TAO_Profile (CORBA::ULong tag);
+  // Constructor
 
-  long buffering_timer_id_;
-  // Buffering timer id.
+  virtual ~TAO_Profile (void);
+  // If you have a virtual method you need a virtual dtor.
 
-  ACE_Time_Value buffering_timeout_value_;
-  // Buffering timeout value.
+  CORBA::ULong tag (void) const;
+  // The tag, each concrete class will have a specific tag value.
+
+  CORBA::ULong _incr_refcnt (void);
+  // Increase the reference count by one on this object.
+
+  CORBA::ULong _decr_refcnt (void);
+  // Decrement the object's reference count.  When this count goes to
+  // 0 this object will be deleted.
+
+  void forward_to (TAO_MProfile *mprofiles);
+  // Keep a pointer to the forwarded profile
+
+  TAO_MProfile* forward_to (void);
+  // MProfile accessor
+
+  virtual int parse_string (const char *string,
+                            CORBA::Environment &ACE_TRY_ENV) = 0;
+  // Initialize this object using the given input string.
+  // Supports URL stylr of object references
+
+  virtual CORBA::String to_string (CORBA::Environment &ACE_TRY_ENV) = 0;
+  // Return a string representation for this profile.  client must
+  // deallocate memory.
+
+  virtual int decode (TAO_InputCDR& cdr) = 0;
+  // Initialize this object using the given CDR octet string.
+
+  virtual int encode (TAO_OutputCDR &stream) const = 0;
+  // Encode this profile in a stream, i.e. marshal it.
+
+  virtual const TAO_ObjectKey &object_key (void) const = 0;
+  // @@ deprecated. return a reference to the Object Key.
+
+  TAO_ObjectKey &object_key (TAO_ObjectKey& objkey);
+  // @@ deprecated. set the Object Key.
+
+  virtual TAO_ObjectKey *_key (void) const = 0;
+  // Obtain the object key, return 0 if the profile cannot be parsed.
+  // The memory is owned by the caller!
+
+  virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile) = 0;
+  // Return true if this profile is equivalent to other_profile.  Two
+  // profiles are equivalent iff their key, port, host, object_key and
+  // version are the same.
+
+  virtual CORBA::ULong hash (CORBA::ULong max,
+                             CORBA::Environment &ACE_TRY_ENV) = 0;
+  // Return a hash value for this object.
+
+  virtual int addr_to_string(char *buffer, size_t length) = 0;
+  // Return a string representation for the address.  Returns
+  // -1 if buffer is too small.  The purpose of this method is to
+  // provide a general interface to the underlying address object's
+  // addr_to_string method.  This allowsthe protocol implementor to
+  // select the appropriate string format.
+
+  virtual void reset_hint (void) = 0;
+  // This method is used with a connection has been reset requiring
+  // the hint to be cleaned up and reset to NULL.
+
+private:
+  TAO_MProfile *forward_to_i (void);
+  // this object keeps ownership of this object
+
+private:
+  CORBA::ULong tag_;
+  // IOP protocol tag.
+
+  TAO_MProfile* forward_to_;
+  // the TAO_MProfile which contains the profiles for the forwarded
+  // object.
+
+  ACE_SYNCH_MUTEX refcount_lock_;
+  // Mutex to protect reference count.
+
+  CORBA::ULong refcount_;
+  // Number of outstanding references to this object.
+};
+
+class TAO_Export TAO_Unknown_Profile : public TAO_Profile
+{
+  // = TITLE
+  //   A TAO_Profile class to handle foreign profiles.
+  //
+  // = DESCRIPTION
+  //   The CORBA spec implies that ORBs must be prepared to save and
+  //   pass around profiles for protocols it does not recognize. It is
+  //   not mandatory to *use* those profiles but they shouldn't be
+  //   dropped.
+  //   This class stores the information required to marshal and
+  //   demarshal an unknown profile, but simply returns an error if
+  //   any of the TAO internal methods are invoked.
+  //
+public:
+  TAO_Unknown_Profile (CORBA::ULong tag);
+  // Create the profile
+
+  // = The TAO_Profile methods look above
+  virtual int parse_string (const char *string,
+                            CORBA::Environment &ACE_TRY_ENV);
+  virtual CORBA::String to_string (CORBA::Environment &ACE_TRY_ENV);
+  virtual int decode (TAO_InputCDR& cdr);
+  virtual int encode (TAO_OutputCDR &stream) const;
+  virtual const TAO_ObjectKey &object_key (void) const;
+  virtual TAO_ObjectKey *_key (void) const;
+  virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile);
+  virtual CORBA::ULong hash (CORBA::ULong max,
+                             CORBA::Environment &ACE_TRY_ENV);
+  virtual int addr_to_string(char *buffer, size_t length);
+  virtual void reset_hint (void);
+
+private:
+  TAO_opaque body_;
 };
 
 // ****************************************************************
@@ -260,51 +360,45 @@ class TAO_Export TAO_Acceptor
   // = DESCRIPTION
   //   Base class for the Acceptor bridge calss.
 public:
+
   TAO_Acceptor (CORBA::ULong tag);
-
-  virtual ~TAO_Acceptor (void);
-  // Destructor
-
-  CORBA::ULong tag (void) const;
-  // The tag, each concrete class will have a specific tag value.
-
-  CORBA::Short priority (void) const;
-  // The priority for this endpoint.
-
-  virtual int open (TAO_ORB_Core *orb_core,
-                    int version_major,
-                    int version_minor,
-                    const char *address,
-                    const char *options = 0) = 0;
-  // Method to initialize acceptor for address.
-
-  virtual int open_default (TAO_ORB_Core *orb_core,
-                            const char *options = 0) = 0;
-  // Open an acceptor on the default endpoint for this protocol
-
-  virtual int close (void) = 0;
-  // Closes the acceptor
 
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
                                TAO_MProfile &mprofile) = 0;
   // Create the corresponding profile for this endpoint.
 
+  virtual int open (TAO_ORB_Core *orb_core,
+                    int version_major,
+                    int version_minor,
+                    ACE_CString &address) = 0;
+  // method to initialize acceptor for address.
+
+  virtual int open_default (TAO_ORB_Core *orb_core) = 0;
+  // Open an acceptor on the default endpoint for this protocol
+
+  virtual ACE_Event_Handler *acceptor (void) = 0;
+  // Return the ACE acceptor...
+
   virtual int is_collocated (const TAO_Profile* profile) = 0;
   // Return 1 if the <profile> has the same endpoint as the acceptor.
 
+  CORBA::ULong tag (void) const;
+  // The tag, each concrete class will have a specific tag value.
+
+  virtual int close (void) = 0;
+  // Closes the acceptor
+
   virtual CORBA::ULong endpoint_count (void) = 0;
-  // Returns the number of endpoints this acceptor is listening on.  This
+  // returns the number of endpoints this acceptor is listening on.  This
   // is used for determining how many profiles will be generated
   // for this acceptor.
 
-protected:
-  CORBA::Short priority_;
-  // The priority for this endpoint
+  virtual ~TAO_Acceptor (void);
+  // Destructor
 
 private:
   CORBA::ULong tag_;
   // IOP protocol tag.
-
 };
 
 class TAO_Export TAO_Connector
@@ -324,7 +418,7 @@ public:
 
   CORBA::ULong tag (void) const;
   // The tag identifying the specific ORB transport layer protocol.
-  // For example TAO_TAG_IIOP_PROFILE = 0.  The tag is used in the
+  // For example TAO_IOP_TAG_INTERNET_IOP = 0.  The tag is used in the
   // IOR to identify the type of profile included. IOR -> {{tag0,
   // profile0} {tag1, profole1} ...}  GIOP.h defines typedef
   // CORBA::ULong TAO_IOP_Profile_ID;
@@ -362,11 +456,6 @@ public:
   virtual char object_key_delimiter (void) const = 0;
   // Return the object key delimiter to use or expect.
 
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-  virtual int purge_connections (void) = 0;
-  // Purge "old" connections.
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
-
 protected:
   virtual void make_profile (const char *endpoint,
                              TAO_Profile *&,
@@ -382,5 +471,4 @@ private:
 # include "tao/Pluggable.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
 #endif  /* TAO_PLUGGABLE_H */

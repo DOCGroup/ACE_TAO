@@ -10,36 +10,28 @@
 
 #ifndef TAO_IDL_MESSAGINGS_H
 #define TAO_IDL_MESSAGINGS_H
-#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING)
 
-#include "tao/TimeBaseS.h"
-#include "tao/POA_CORBA.h"
-#include "tao/MessagingC.h"
+#include "TimeBaseS.h"
+#include "POA_CORBA.h"
+#include "MessagingC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
 TAO_NAMESPACE  POA_Messaging
 {
-
-#if (TAO_HAS_REBIND_POLICY == 1)
-
   class RebindPolicy;
   typedef RebindPolicy *RebindPolicy_ptr;
-  class TAO_Export RebindPolicy : public virtual POA_CORBA::Policy,
-                                  public virtual TAO_Locality_Constrained_ServantBase
+  class TAO_Export RebindPolicy : public virtual POA_CORBA::Policy
   {
   protected:
     RebindPolicy (void);
@@ -59,17 +51,18 @@ TAO_NAMESPACE  POA_Messaging
           CORBA::Environment::default_environment ()
       ) = 0;
 
-    Messaging::RebindPolicy *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual const char* _interface_repository_id (void) const;
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+
+    Messaging::RebindPolicy *_this (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual const char* _interface_repository_id (void) const;
   };
 
   class TAO_Export _tao_collocated_RebindPolicy     : public virtual Messaging::RebindPolicy,
@@ -157,14 +150,9 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#endif /* TAO_HAS_REBIND_POLICY == 1 */
-
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
   class SyncScopePolicy;
   typedef SyncScopePolicy *SyncScopePolicy_ptr;
-  class TAO_Export SyncScopePolicy : public virtual POA_CORBA::Policy,
-                                     public virtual TAO_Locality_Constrained_ServantBase
+  class TAO_Export SyncScopePolicy : public virtual POA_CORBA::Policy
   {
   protected:
     SyncScopePolicy (void);
@@ -179,23 +167,23 @@ private:
     virtual void* _downcast (
         const char* logical_type_id
       );
-    virtual Messaging::SyncScope synchronization (CORBA::Environment &ACE_TRY_ENV) = 0;
-    // Hacky TAO extension to reduce call to
-    // CORBA::Environment::default_environment () since this method
-    // will never raise exceptions.
-    virtual Messaging::SyncScope synchronization (void) = 0;
-
-    Messaging::SyncScopePolicy *_this (
+    virtual Messaging::SyncScope synchronization (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      );
-    virtual const char* _interface_repository_id (void) const;
+      ) = 0;
+
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+
+    Messaging::SyncScopePolicy *_this (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual const char* _interface_repository_id (void) const;
   };
 
   class TAO_Export _tao_collocated_SyncScopePolicy     : public virtual Messaging::SyncScopePolicy,
@@ -212,8 +200,10 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual Messaging::SyncScope synchronization (CORBA::Environment &ACE_TRY_ENV);
-    virtual Messaging::SyncScope synchronization (void);
+    virtual Messaging::SyncScope synchronization (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
 
   private:
     SyncScopePolicy_ptr servant_;
@@ -253,8 +243,10 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    Messaging::SyncScope synchronization (CORBA::Environment &ACE_TRY_ENV);
-    Messaging::SyncScope synchronization (void);
+    Messaging::SyncScope synchronization (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
     CORBA::PolicyType policy_type (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
@@ -279,14 +271,9 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
-
-#if (TAO_HAS_PRIORITY_POLICIES == 1)
-
   class RequestPriorityPolicy;
   typedef RequestPriorityPolicy *RequestPriorityPolicy_ptr;
-  class TAO_Export RequestPriorityPolicy : public virtual POA_CORBA::Policy,
-                                           public virtual TAO_Locality_Constrained_ServantBase
+  class TAO_Export RequestPriorityPolicy : public virtual POA_CORBA::Policy
   {
   protected:
     RequestPriorityPolicy (void);
@@ -306,17 +293,18 @@ private:
           CORBA::Environment::default_environment ()
       ) = 0;
 
-    Messaging::RequestPriorityPolicy *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual const char* _interface_repository_id (void) const;
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+
+    Messaging::RequestPriorityPolicy *_this (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual const char* _interface_repository_id (void) const;
   };
 
   class TAO_Export _tao_collocated_RequestPriorityPolicy     : public virtual Messaging::RequestPriorityPolicy,
@@ -406,8 +394,7 @@ private:
 
   class ReplyPriorityPolicy;
   typedef ReplyPriorityPolicy *ReplyPriorityPolicy_ptr;
-  class TAO_Export ReplyPriorityPolicy : public virtual POA_CORBA::Policy,
-                                         public virtual TAO_Locality_Constrained_ServantBase
+  class TAO_Export ReplyPriorityPolicy : public virtual POA_CORBA::Policy
   {
   protected:
     ReplyPriorityPolicy (void);
@@ -427,17 +414,18 @@ private:
           CORBA::Environment::default_environment ()
       ) = 0;
 
-    Messaging::ReplyPriorityPolicy *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual const char* _interface_repository_id (void) const;
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+
+    Messaging::ReplyPriorityPolicy *_this (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual const char* _interface_repository_id (void) const;
   };
 
   class TAO_Export _tao_collocated_ReplyPriorityPolicy     : public virtual Messaging::ReplyPriorityPolicy,
@@ -525,14 +513,9 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
-
-#if (TAO_HAS_REQUEST_START_TIME_POLICY == 1)
-
   class RequestStartTimePolicy;
   typedef RequestStartTimePolicy *RequestStartTimePolicy_ptr;
-  class TAO_Export RequestStartTimePolicy : public virtual POA_CORBA::Policy,
-                                            public virtual TAO_Locality_Constrained_ServantBase
+  class TAO_Export RequestStartTimePolicy : public virtual POA_CORBA::Policy
   {
   protected:
     RequestStartTimePolicy (void);
@@ -552,17 +535,18 @@ private:
           CORBA::Environment::default_environment ()
       ) = 0;
 
-    Messaging::RequestStartTimePolicy *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual const char* _interface_repository_id (void) const;
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+
+    Messaging::RequestStartTimePolicy *_this (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual const char* _interface_repository_id (void) const;
   };
 
   class TAO_Export _tao_collocated_RequestStartTimePolicy     : public virtual Messaging::RequestStartTimePolicy,
@@ -650,14 +634,9 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#endif /* TAO_HAS_REQUEST_START_TIME_POLICY == 1 */
-
-#if (TAO_HAS_REQUEST_END_TIME_POLICY == 1)
-
   class RequestEndTimePolicy;
   typedef RequestEndTimePolicy *RequestEndTimePolicy_ptr;
-  class TAO_Export RequestEndTimePolicy : public virtual POA_CORBA::Policy,
-                                          public virtual TAO_Locality_Constrained_ServantBase
+  class TAO_Export RequestEndTimePolicy : public virtual POA_CORBA::Policy
   {
   protected:
     RequestEndTimePolicy (void);
@@ -677,17 +656,18 @@ private:
           CORBA::Environment::default_environment ()
       ) = 0;
 
-    Messaging::RequestEndTimePolicy *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual const char* _interface_repository_id (void) const;
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+
+    Messaging::RequestEndTimePolicy *_this (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual const char* _interface_repository_id (void) const;
   };
 
   class TAO_Export _tao_collocated_RequestEndTimePolicy     : public virtual Messaging::RequestEndTimePolicy,
@@ -775,14 +755,9 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#endif /* TAO_HAS_REQUEST_END_TIME_POLICY == 1 */
-
-#if (TAO_HAS_REPLY_START_TIME_POLICY == 1)
-
   class ReplyStartTimePolicy;
   typedef ReplyStartTimePolicy *ReplyStartTimePolicy_ptr;
-  class TAO_Export ReplyStartTimePolicy : public virtual POA_CORBA::Policy,
-                                          public virtual TAO_Locality_Constrained_ServantBase
+  class TAO_Export ReplyStartTimePolicy : public virtual POA_CORBA::Policy
   {
   protected:
     ReplyStartTimePolicy (void);
@@ -802,17 +777,18 @@ private:
           CORBA::Environment::default_environment ()
       ) = 0;
 
-    Messaging::ReplyStartTimePolicy *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual const char* _interface_repository_id (void) const;
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+
+    Messaging::ReplyStartTimePolicy *_this (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual const char* _interface_repository_id (void) const;
   };
 
   class TAO_Export _tao_collocated_ReplyStartTimePolicy     : public virtual Messaging::ReplyStartTimePolicy,
@@ -900,14 +876,9 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#endif /* TAO_HAS_REPLY_START_TIME_POLICY == 1 */
-
-#if (TAO_HAS_REPLY_END_TIME_POLICY == 1)
-
   class ReplyEndTimePolicy;
   typedef ReplyEndTimePolicy *ReplyEndTimePolicy_ptr;
-  class TAO_Export ReplyEndTimePolicy : public virtual POA_CORBA::Policy,
-                                        public virtual TAO_Locality_Constrained_ServantBase
+  class TAO_Export ReplyEndTimePolicy : public virtual POA_CORBA::Policy
   {
   protected:
     ReplyEndTimePolicy (void);
@@ -927,17 +898,18 @@ private:
           CORBA::Environment::default_environment ()
       ) = 0;
 
-    Messaging::ReplyEndTimePolicy *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual const char* _interface_repository_id (void) const;
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+
+    Messaging::ReplyEndTimePolicy *_this (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual const char* _interface_repository_id (void) const;
   };
 
   class TAO_Export _tao_collocated_ReplyEndTimePolicy     : public virtual Messaging::ReplyEndTimePolicy,
@@ -1025,14 +997,9 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#endif /* TAO_HAS_REPLY_END_TIME_POLICY == 1 */
-
-#if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
-
   class RelativeRequestTimeoutPolicy;
   typedef RelativeRequestTimeoutPolicy *RelativeRequestTimeoutPolicy_ptr;
-  class TAO_Export RelativeRequestTimeoutPolicy : public virtual POA_CORBA::Policy,
-                                                  public virtual TAO_Locality_Constrained_ServantBase
+  class TAO_Export RelativeRequestTimeoutPolicy : public virtual POA_CORBA::Policy
   {
   protected:
     RelativeRequestTimeoutPolicy (void);
@@ -1047,23 +1014,23 @@ private:
     virtual void* _downcast (
         const char* logical_type_id
       );
-    virtual TimeBase::TimeT relative_expiry (CORBA::Environment &ACE_TRY_ENV) = 0;
-    // Hacky TAO extension to reduce call to
-    // CORBA::Environment::default_environment () since this method
-    // will never raise exceptions.
-    virtual TimeBase::TimeT relative_expiry (void) = 0;
-
-    Messaging::RelativeRequestTimeoutPolicy *_this (
+    virtual TimeBase::TimeT relative_expiry (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      );
-    virtual const char* _interface_repository_id (void) const;
+      ) = 0;
+
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+
+    Messaging::RelativeRequestTimeoutPolicy *_this (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual const char* _interface_repository_id (void) const;
   };
 
   class TAO_Export _tao_collocated_RelativeRequestTimeoutPolicy     : public virtual Messaging::RelativeRequestTimeoutPolicy,
@@ -1080,8 +1047,10 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual TimeBase::TimeT relative_expiry (CORBA::Environment &ACE_TRY_ENV);
-    virtual TimeBase::TimeT relative_expiry (void);
+    virtual TimeBase::TimeT relative_expiry (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
 
   private:
     RelativeRequestTimeoutPolicy_ptr servant_;
@@ -1121,8 +1090,10 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    TimeBase::TimeT relative_expiry (CORBA::Environment &ACE_TRY_ENV);
-    TimeBase::TimeT relative_expiry (void);
+    TimeBase::TimeT relative_expiry (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
     CORBA::PolicyType policy_type (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
@@ -1147,14 +1118,9 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#endif /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
   class RelativeRoundtripTimeoutPolicy;
   typedef RelativeRoundtripTimeoutPolicy *RelativeRoundtripTimeoutPolicy_ptr;
-  class TAO_Export RelativeRoundtripTimeoutPolicy : public virtual POA_CORBA::Policy,
-                                                    public virtual TAO_Locality_Constrained_ServantBase
+  class TAO_Export RelativeRoundtripTimeoutPolicy : public virtual POA_CORBA::Policy
   {
   protected:
     RelativeRoundtripTimeoutPolicy (void);
@@ -1169,23 +1135,23 @@ private:
     virtual void* _downcast (
         const char* logical_type_id
       );
-    virtual TimeBase::TimeT relative_expiry (CORBA::Environment &ACE_TRY_ENV) = 0;
-    // Hacky TAO extension to reduce call to
-    // CORBA::Environment::default_environment () since this method
-    // will never raise exceptions.
-    virtual TimeBase::TimeT relative_expiry (void) = 0;
-
-    Messaging::RelativeRoundtripTimeoutPolicy *_this (
+    virtual TimeBase::TimeT relative_expiry (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      );
-    virtual const char* _interface_repository_id (void) const;
+      ) = 0;
+
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+
+    Messaging::RelativeRoundtripTimeoutPolicy *_this (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual const char* _interface_repository_id (void) const;
   };
 
   class TAO_Export _tao_collocated_RelativeRoundtripTimeoutPolicy     : public virtual Messaging::RelativeRoundtripTimeoutPolicy,
@@ -1202,8 +1168,10 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual TimeBase::TimeT relative_expiry (CORBA::Environment &ACE_TRY_ENV);
-    virtual TimeBase::TimeT relative_expiry (void);
+    virtual TimeBase::TimeT relative_expiry (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
 
   private:
     RelativeRoundtripTimeoutPolicy_ptr servant_;
@@ -1243,8 +1211,10 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    TimeBase::TimeT relative_expiry (CORBA::Environment &ACE_TRY_ENV);
-    TimeBase::TimeT relative_expiry (void);
+    TimeBase::TimeT relative_expiry (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
     CORBA::PolicyType policy_type (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
@@ -1269,14 +1239,9 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_ROUTING_POLICY == 1)
-
   class RoutingPolicy;
   typedef RoutingPolicy *RoutingPolicy_ptr;
-  class TAO_Export RoutingPolicy : public virtual POA_CORBA::Policy,
-                                   public virtual TAO_Locality_Constrained_ServantBase
+  class TAO_Export RoutingPolicy : public virtual POA_CORBA::Policy
   {
   protected:
     RoutingPolicy (void);
@@ -1296,17 +1261,18 @@ private:
           CORBA::Environment::default_environment ()
       ) = 0;
 
-    Messaging::RoutingPolicy *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual const char* _interface_repository_id (void) const;
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+
+    Messaging::RoutingPolicy *_this (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual const char* _interface_repository_id (void) const;
   };
 
   class TAO_Export _tao_collocated_RoutingPolicy     : public virtual Messaging::RoutingPolicy,
@@ -1394,14 +1360,9 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#endif /* TAO_HAS_ROUTING_POLICY == 1 */
-
-#if (TAO_HAS_MAX_HOPS_POLICY == 1)
-
   class MaxHopsPolicy;
   typedef MaxHopsPolicy *MaxHopsPolicy_ptr;
-  class TAO_Export MaxHopsPolicy : public virtual POA_CORBA::Policy,
-                                   public virtual TAO_Locality_Constrained_ServantBase
+  class TAO_Export MaxHopsPolicy : public virtual POA_CORBA::Policy
   {
   protected:
     MaxHopsPolicy (void);
@@ -1421,17 +1382,18 @@ private:
           CORBA::Environment::default_environment ()
       ) = 0;
 
-    Messaging::MaxHopsPolicy *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual const char* _interface_repository_id (void) const;
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+
+    Messaging::MaxHopsPolicy *_this (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual const char* _interface_repository_id (void) const;
   };
 
   class TAO_Export _tao_collocated_MaxHopsPolicy     : public virtual Messaging::MaxHopsPolicy,
@@ -1519,14 +1481,9 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#endif /* TAO_HAS_MAX_HOPS_POLICY == 1 */
-
-#if (TAO_HAS_QUEUE_ORDER_POLICY == 1)
-
   class QueueOrderPolicy;
   typedef QueueOrderPolicy *QueueOrderPolicy_ptr;
-  class TAO_Export QueueOrderPolicy : public virtual POA_CORBA::Policy,
-                                      public virtual TAO_Locality_Constrained_ServantBase
+  class TAO_Export QueueOrderPolicy : public virtual POA_CORBA::Policy
   {
   protected:
     QueueOrderPolicy (void);
@@ -1546,17 +1503,18 @@ private:
           CORBA::Environment::default_environment ()
       ) = 0;
 
-    Messaging::QueueOrderPolicy *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-    virtual const char* _interface_repository_id (void) const;
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+
+    Messaging::QueueOrderPolicy *_this (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual const char* _interface_repository_id (void) const;
   };
 
   class TAO_Export _tao_collocated_QueueOrderPolicy     : public virtual Messaging::QueueOrderPolicy,
@@ -1644,10 +1602,7 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#endif /* TAO_HAS_QUEUE_ORDER_POLICY == 1 */
-
-#if (TAO_HAS_AMI_CALLBACK == 1)
-
+#if defined (TAO_POLLER)
   class ReplyHandler;
   typedef ReplyHandler *ReplyHandler_ptr;
   class TAO_Export ReplyHandler :  public virtual PortableServer::ServantBase
@@ -1697,43 +1652,19 @@ private:
     virtual const char* _interface_repository_id (void) const;
   };
 
-
-  class TAO_Export _tao_thru_poa_collocated_ReplyHandler     : public virtual Messaging::ReplyHandler
+  class TAO_Export _tao_collocated_ReplyHandler     : public virtual Messaging::ReplyHandler
   {
   public:
-    _tao_thru_poa_collocated_ReplyHandler (
-        TAO_Stub *stub
-      );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-
-  };
-
-
-  class TAO_Export _tao_direct_collocated_ReplyHandler     : public virtual Messaging::ReplyHandler
-  {
-  public:
-    _tao_direct_collocated_ReplyHandler (
+    _tao_collocated_ReplyHandler (
         ReplyHandler_ptr  servant,
         TAO_Stub *stub
       );
-    virtual CORBA::Boolean _is_a(
-        const CORBA::Char *logical_type_id,
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-      );
-
     ReplyHandler_ptr _get_servant (void) const;
-
-    virtual CORBA::Boolean _non_existent(
-        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
       );
-
 
   private:
     ReplyHandler_ptr servant_;
@@ -1784,10 +1715,6 @@ private:
   };
 
 #endif /* ACE_HAS_USING_KEYWORD */
-
-#endif /* TAO_HAS_AMI_CALLBACK == 1 */
-
-#if (TAO_HAS_AMI_POLLER == 1)
 
   class Poller;
   typedef Poller *Poller_ptr;
@@ -2070,22 +1997,20 @@ private:
   };
 
 #endif /* ACE_HAS_USING_KEYWORD */
-#endif /* TAO_HAS_AMI_POLLER == 1 */
+#endif /* TAO_POLLER */
 
-}
-TAO_NAMESPACE_CLOSE
+};
 
-// #include "tao/MessagingS_T.h"
+// #include "MessagingS_T.h"
 
 #if defined (__ACE_INLINE__)
-#include "tao/MessagingS.i"
+#include "MessagingS.i"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
 #endif /* _MSC_VER */
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
-#include "ace/post.h"
 #endif /* TAO_IDL_MESSAGINGS_H */

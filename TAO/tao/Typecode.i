@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 ACE_INLINE CORBA::ULong
@@ -38,27 +37,20 @@ CORBA::TypeCode::_nil (void)
 ACE_INLINE CORBA::TCKind
 CORBA_TypeCode::kind (CORBA::Environment &) const
 {
-  return (CORBA::TCKind) this->kind_;
+  return this->kind_;
 }
 
-// Returns true if the two typecodes are equivalent.
+// Returns true if the two typecodes are identical
 ACE_INLINE CORBA::Boolean
-CORBA_TypeCode::equivalent (CORBA::TypeCode_ptr tc,
-                            CORBA::Environment &ACE_TRY_ENV) const
-{
-  return this->equ_common (tc,
-                           1,
-			   ACE_TRY_ENV);
-}
-
-// Returns true if the two typecodes are identical.
-ACE_INLINE CORBA::Boolean
-CORBA_TypeCode::equal (CORBA::TypeCode_ptr tc,
+CORBA_TypeCode::equal (const CORBA::TypeCode_ptr tc,
                        CORBA::Environment &ACE_TRY_ENV) const
 {
-  return this->equ_common (tc,
-                           0,
-			   ACE_TRY_ENV);
+  if (this->kind_ != tc->kind (ACE_TRY_ENV))
+    // simple case
+    return 0;
+  else
+    // typecode kinds are same
+    return this->private_equal (tc, ACE_TRY_ENV);
 }
 
 // returns the Repository ID

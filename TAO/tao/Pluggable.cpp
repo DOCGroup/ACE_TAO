@@ -4,7 +4,9 @@
 #include "tao/Pluggable.h"
 #include "tao/Stub.h"
 #include "tao/Environment.h"
+#include "tao/GIOP.h"
 #include "tao/ORB_Core.h"
+#include "tao/Object_KeyC.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Transport_Mux_Strategy.h"
@@ -12,14 +14,138 @@
 #include "tao/debug.h"
 
 #include "ace/ACE.h"
-#include "tao/target_specification.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Pluggable.i"
 #endif /* __ACE_INLINE__ */
 
-
 ACE_RCSID(tao, Pluggable, "$Id$")
+
+// ****************************************************************
+
+TAO_Profile::~TAO_Profile (void)
+{
+}
+
+// Generic Profile
+CORBA::ULong
+TAO_Profile::tag (void) const
+{
+  return this->tag_;
+}
+
+CORBA::ULong
+TAO_Profile::_incr_refcnt (void)
+{
+  // OK, think I got it.  When this object is created (guard) the
+  // lock is automatically acquired (refcount_lock_).  Then when
+  // we leave this method the destructir for guard is called which
+  // releases the lock!
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->refcount_lock_, 0);
+
+  return this->refcount_++;
+}
+
+CORBA::ULong
+TAO_Profile::_decr_refcnt (void)
+{
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->refcount_lock_, 0);
+    this->refcount_--;
+    if (this->refcount_ != 0)
+      return this->refcount_;
+  }
+
+  // refcount is 0, so delete us!
+  // delete will call our ~ destructor which in turn deletes stuff.
+  delete this;
+  return 0;
+}
+
+// ****************************************************************
+
+TAO_Unknown_Profile::TAO_Unknown_Profile (CORBA::ULong tag)
+  : TAO_Profile (tag)
+{
+}
+
+int
+TAO_Unknown_Profile::parse_string (const char *,
+                                   CORBA::Environment &)
+{
+  // @@ THROW something????
+  return -1;
+}
+
+CORBA::String
+TAO_Unknown_Profile::to_string (CORBA::Environment &)
+{
+  // @@ THROW something?
+  return 0;
+}
+
+int
+TAO_Unknown_Profile::decode (TAO_InputCDR& cdr)
+{
+  if ((cdr >> this->body_) == 0)
+    return -1;
+  return 0;
+}
+
+int
+TAO_Unknown_Profile::encode (TAO_OutputCDR &stream) const
+{
+  stream.write_ulong (this->tag ());
+  return (stream << this->body_);
+}
+
+const TAO_ObjectKey &
+TAO_Unknown_Profile::object_key (void) const
+{
+  // @@ TODO this is wrong, but the function is deprecated anyway....
+  static TAO_ObjectKey empty_key;
+  return empty_key;
+}
+
+TAO_ObjectKey *
+TAO_Unknown_Profile::_key (void) const
+{
+  return 0;
+}
+
+CORBA::Boolean
+TAO_Unknown_Profile::is_equivalent (const TAO_Profile* other_profile)
+{
+  if (other_profile->tag () != this->tag ())
+    return 0;
+
+  const TAO_Unknown_Profile *op =
+    ACE_dynamic_cast (const TAO_Unknown_Profile*, other_profile);
+
+  return (this->body_ == op->body_);
+}
+
+CORBA::ULong
+TAO_Unknown_Profile::hash (CORBA::ULong max,
+                           CORBA::Environment &)
+{
+  return (ACE::hash_pjw (ACE_reinterpret_cast (const char*,
+                                               this->body_.get_buffer ()),
+                         this->body_.length ()) % max);
+}
+
+int
+TAO_Unknown_Profile::addr_to_string (char * /* buffer */,
+                                     size_t /* length */)
+{
+  return 0;
+}
+
+void
+TAO_Unknown_Profile::reset_hint (void)
+{
+  // do nothing
+}
 
 // ****************************************************************
 
@@ -28,156 +154,70 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
                               TAO_ORB_Core *orb_core)
   : tag_ (tag),
     orb_core_ (orb_core),
-    buffering_queue_ (0),
-    buffering_timer_id_ (0)
+    tms_ (0),
+    ws_ (0)
 {
-  TAO_Client_Strategy_Factory *cf =
-    this->orb_core_->client_factory ();
-
   // Create WS now.
-  this->ws_ = cf->create_wait_strategy (this);
+  this->ws_ = orb_core->client_factory ()->create_wait_strategy (this);
 
   // Create TMS now.
-  this->tms_ = cf->create_transport_mux_strategy (this);
+  this->tms_ = orb_core->client_factory ()->create_transport_mux_strategy (orb_core);
 }
 
 TAO_Transport::~TAO_Transport (void)
 {
   delete this->ws_;
   this->ws_ = 0;
-
   delete this->tms_;
-  this->tms_ = 0;
-
-  delete this->buffering_queue_;
+  this->tms_ =0;
 }
 
-ssize_t
-TAO_Transport::send_buffered_messages (const ACE_Time_Value *max_wait_time)
+CORBA::ULong
+TAO_Transport::tag (void) const
 {
-  // Make sure we have a buffering queue and there are messages in it.
-  if (this->buffering_queue_ == 0 ||
-      this->buffering_queue_->is_empty ())
-    return 1;
-
-  // Get the first message from the queue.
-  ACE_Message_Block *queued_message = 0;
-  ssize_t result = this->buffering_queue_->peek_dequeue_head (queued_message);
-
-  // @@ What to do here on failures?
-  ACE_ASSERT (result != -1);
-
-  // Actual network send.
-  result = this->send (queued_message,
-                       max_wait_time);
-
-  // Cannot send.
-  if (result == -1 ||
-      result == 0)
-    {
-      // Timeout.
-      if (errno == ETIME)
-        {
-          // Since we queue up the message, this is not an error.  We
-          // can try next time around.
-          return 1;
-        }
-      // Non-timeout error.
-      else
-        {
-          this->dequeue_all ();
-          return -1;
-        }
-    }
-
-  // If successful in sending some or all of the data, reset the queue
-  // appropriately.
-  this->reset_queued_message (queued_message,
-                              result);
-
-  // Indicate success.
-  return result;
+  return this->tag_;
 }
 
-void
-TAO_Transport::reset_sent_message (ACE_Message_Block *message_block,
-                                   size_t bytes_delivered)
+// Get it.
+TAO_ORB_Core *
+TAO_Transport::orb_core (void) const
 {
-  this->reset_message (message_block,
-                       bytes_delivered,
-                       0);
+  return this->orb_core_;
 }
 
-void
-TAO_Transport::reset_queued_message (ACE_Message_Block *message_block,
-                                     size_t bytes_delivered)
+TAO_Transport_Mux_Strategy *
+TAO_Transport::tms (void) const
 {
-  this->reset_message (message_block,
-                       bytes_delivered,
-                       1);
+  return tms_;
 }
 
-void
-TAO_Transport::reset_message (ACE_Message_Block *message_block,
-                              size_t bytes_delivered,
-                              int queued_message)
+// Return the Wait strategy used by the Transport.
+TAO_Wait_Strategy *
+TAO_Transport::wait_strategy (void) const
 {
-  while (bytes_delivered != 0)
-    {
-      // Our current message block chain.
-      ACE_Message_Block *current_message_block = message_block;
+  return this->ws_;
+}
 
-      int completely_delivered_current_message_block_chain = 0;
+// Get request id for the current invocation from the TMS object.
+CORBA::ULong
+TAO_Transport::request_id (void)
+{
+  return this->tms ()->request_id ();
+}
 
-      while (current_message_block != 0 &&
-             bytes_delivered != 0)
-        {
-          size_t current_message_block_length = current_message_block->length ();
-
-          int completely_delivered_current_message_block =
-            bytes_delivered >= current_message_block_length;
-
-          size_t adjustment_size = ACE_MIN (current_message_block_length, bytes_delivered);
-
-          // Reset according to send size.
-          current_message_block->rd_ptr (adjustment_size);
-
-          // If queued message, adjust the queue.
-          if (queued_message)
-            // Hand adjust <message_length>.
-            this->buffering_queue_->message_length (this->buffering_queue_->message_length () - adjustment_size);
-
-          // Adjust <bytes_delivered>.
-          bytes_delivered -= adjustment_size;
-
-          if (completely_delivered_current_message_block)
-            {
-              // Next message block in the continuation chain.
-              current_message_block = current_message_block->cont ();
-
-              if (current_message_block == 0)
-                completely_delivered_current_message_block_chain = 1;
-            }
-        }
-
-      if (completely_delivered_current_message_block_chain)
-        {
-          // Go to the next message block chain.
-          message_block = message_block->next ();
-
-          // If queued message, adjust the queue.
-          if (queued_message)
-            // Release this <current_message_block>.
-            this->dequeue_head ();
-        }
-    }
+// Bind the reply dispatcher with the TMS object.
+int
+TAO_Transport::bind_reply_dispatcher (CORBA::ULong request_id,
+                                      TAO_Reply_Dispatcher *rd)
+{
+  return this->tms_->bind_dispatcher (request_id,
+                                      rd);
 }
 
 int
-TAO_Transport::messaging_init (CORBA::Octet /*major*/,
-                               CORBA::Octet /*minor*/)
+TAO_Transport::wait_for_reply (ACE_Time_Value *max_wait_time)
 {
-  ACE_NOTSUP_RETURN (-1);
+  return this->ws_->wait (max_wait_time);
 }
 
 // Read and handle the reply. Returns 0 when there is Short Read on
@@ -201,30 +241,27 @@ TAO_Transport::register_handler (void)
 int
 TAO_Transport::idle_after_send (void)
 {
-  return this->tms ()->idle_after_send ();
-}
+  return this->tms ()->idle_after_send (this);
+}  
 
 int
 TAO_Transport::idle_after_reply (void)
 {
-  return this->tms ()->idle_after_reply ();
+  return this->tms ()->idle_after_reply (this);
 }
 
-// int
-// TAO_Transport::reply_received (const CORBA::ULong request_id)
-// {
-//   return this->tms ()->reply_received (request_id);
-// }
-
-ACE_SYNCH_CONDITION *
-TAO_Transport::leader_follower_condition_variable (void)
+int
+TAO_Transport::reply_received (const CORBA::ULong request_id)
 {
-  return this->wait_strategy ()->leader_follower_condition_variable ();
+  return this->tms ()->reply_received (request_id);
 }
 
 void
 TAO_Transport::start_request (TAO_ORB_Core *,
-                              TAO_Target_Specification & /*spec */,
+                              const TAO_Profile *,
+                              const char* ,
+                              CORBA::ULong ,
+                              CORBA::Boolean,
                               TAO_OutputCDR &,
                               CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -234,8 +271,8 @@ TAO_Transport::start_request (TAO_ORB_Core *,
 
 void
 TAO_Transport::start_locate (TAO_ORB_Core *,
-                             TAO_Target_Specification & /*spec */,
-                             TAO_Operation_Details & /* */,
+                             const TAO_Profile *,
+                             CORBA::ULong,
                              TAO_OutputCDR &,
                              CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -253,6 +290,12 @@ TAO_Connector::TAO_Connector (CORBA::ULong tag)
 
 TAO_Connector::~TAO_Connector (void)
 {
+}
+
+CORBA::ULong
+TAO_Connector::tag (void) const
+{
+  return this->tag_;
 }
 
 int
@@ -293,7 +336,7 @@ TAO_Connector::make_mprofile (const char *string,
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("TAO (%P|%t) - TAO_Connector::make_mprofile <%s>\n"),
+                  "TAO (%P|%t) - TAO_Connector::make_mprofile <%s>\n",
                   string));
     }
 
@@ -428,11 +471,16 @@ TAO_Connector::make_mprofile (const char *string,
 
 // Acceptor
 TAO_Acceptor::TAO_Acceptor (CORBA::ULong tag)
-  :  priority_ (0),
-     tag_ (tag)
+  :  tag_ (tag)
 {
 }
 
 TAO_Acceptor::~TAO_Acceptor (void)
 {
+}
+
+CORBA::ULong
+TAO_Acceptor::tag (void) const
+{
+  return this->tag_;
 }

@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-ACE_INLINE char *
+ACE_INLINE CORBA::String
 CORBA::string_alloc (CORBA::ULong len)
 {
   // Allocate 1 + strlen to accomodate the null terminating character.

@@ -6,7 +6,7 @@
 //   TAO
 //
 // = FILENAME
-//   UIOP_Factory.h
+//   Protocol_Factory.h
 //
 // = AUTHOR
 //   Fred Kuhns <fredk@cs.wustl.edu>
@@ -16,11 +16,10 @@
 
 #ifndef TAO_UIOP_FACTORY_H
 #define TAO_UIOP_FACTORY_H
-#include "ace/pre.h"
 
 #include "tao/Protocol_Factory.h"
 
-# if TAO_HAS_UIOP == 1
+# if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -46,10 +45,6 @@ public:
   virtual const char *prefix (void) const;
   // Returns the prefix used by the protocol.
 
-  virtual char options_delimiter (void) const;
-  // Return the character used to mark where an endpoint ends and
-  // where its options begin.
-
   // = Check Protocol_Factory.h for a description of these methods.
   virtual TAO_Acceptor  *make_acceptor (void);
   virtual TAO_Connector *make_connector  (void);
@@ -65,7 +60,6 @@ private:
 ACE_STATIC_SVC_DECLARE (TAO_UIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_UIOP_Protocol_Factory)
 
-# endif  /* TAO_HAS_UIOP == 1 */
+# endif  /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 
-#include "ace/post.h"
 #endif /* TAO_UIOP_FACTORY_H */

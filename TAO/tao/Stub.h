@@ -18,7 +18,7 @@
 //    remote invocation framework.  This is for use by
 //    compiler-generated code, not by portable applications!
 //
-//    These constitute the stub API to this "ORB Core."  Such
+//    These constitute the stub API to this "ORB Core".  Such
 //    interfaces are not specified by OMG, and may differ between
 //    different ORBs.  This one has the particular advantage that
 //    stubs can be quite small.
@@ -30,7 +30,6 @@
 
 #ifndef TAO_STUB_H
 #define TAO_STUB_H
-#include "ace/pre.h"
 
 #include "tao/Pluggable.h"
 
@@ -41,14 +40,11 @@
 #include "tao/MProfile.h"
 #include "tao/ORB.h"
 
-// Forward declarations.
+#if defined (TAO_HAS_CORBA_MESSAGING)
+#include "tao/MessagingS.h"
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
-class TAO_RelativeRoundtripTimeoutPolicy;
-class TAO_Client_Priority_Policy;
-class TAO_Sync_Scope_Policy;
-class TAO_Buffering_Constraint_Policy;
 
-class TAO_Sync_Strategy;
 class TAO_GIOP_Invocation;
 class TAO_ORB_Core;
 class TAO_Policy_Manager_Impl;
@@ -69,6 +65,41 @@ enum TAO_Param_Type
 };
 
 class TAO_Profile;
+
+struct TAO_Param_Data
+{
+  // = TITLE
+  //   TAO_Param_Data
+  //
+  // = DESCRIPTION
+  //   Description of a single parameter.
+  //
+  //   If value_size is nonzero for OUT, INOUT, or RETURN parameters,
+  //   it's (a) an indicator that the ORB returns a pointer-to-value
+  //   for this parameter, and also (b) is the size of the top-level
+  //   of the value that's returned (e.g. ignoring nested sequence
+  //   buffers).  That is, it moves CPU cycles from runtime -- some
+  //   calls to tc->size() -- to compile time where they're
+  //   cheap/free.
+  //
+  //   It _must_ only be set for cases where the ORB allocates the
+  //   return value, which must then be ORB::free()d ... e.g. where
+  //   the value is a pointer to data such as a struct, sequence, or
+  //   union.  (The CORBA C++ mapping doesn't require that for all
+  //   "out" structs; only those of "variable size".)  If this value
+  //   is nonzero, the value passed to do_static_call() must be the address
+  //   of a pointer.
+
+  CORBA::TypeCode_ptr tc;
+  // TypeCode for the parameter
+
+  TAO_Param_Type mode;
+  // Its mode.
+
+  size_t value_size;
+  // zero or tc->size (). For SII, we always know its size since it is the IDL
+  // compiler which generates the stub code.
+};
 
 // Function pointer returning a pointer to CORBA::Exception. This is used to
 // describe the allocator for user-defined exceptions that are used internally
@@ -95,6 +126,80 @@ struct TAO_Exception_Data
   // the allocator for this exception
 };
 
+struct TAO_Call_Data
+{
+  // = TITLE
+  //   TAO_Call_Data
+  //
+  // = DESCRIPTION
+  //   Descriptions of operations, as used by the stub interpreter.
+  //   Only interpretive marshaling/unmarshaling is used, and the
+  //   stubs don't know what particular on-the-wire protocol is being
+  //   used.
+  //
+  //   When using C++ exceptions, many C++ compilers will require the
+  //   use of compiled code throw the exception.  As binary standards
+  //   for exception throwing evolve, it may become practical to
+  //   interpretively throw exceptions.
+
+  const char *opname;
+  // Operation name.
+
+  CORBA::Boolean is_roundtrip;
+  // !oneway
+
+  // When constructing tables of parameters, put them in the same
+  // order they appear in the IDL spec: return value, then parameters
+  // left to right.  Other orders may produce illegal protocol
+  // messages.
+
+  u_int param_count;
+  // # parameters.
+
+  const TAO_Param_Data *params;
+  // Their descriptions.
+
+  // The exceptions allowed by this operation can be listed in any
+  // order, and need not include the system exceptions which may be
+  // returned by OMG-IDL operations.  If an operation tries to return
+  // any exception not allowed by its type signature, this causes a a
+  // system exception to be reported.
+
+  u_int except_count;
+  // # exceptions.
+
+  //  CORBA::TypeCode_ptr *excepts;
+  TAO_Exception_Data *excepts;
+  // Their descriptions.
+};
+
+struct TAO_Skel_Entry
+{
+  // = TITLE
+  //   TAO_Skel_Entry
+  //
+  // = DESCRIPTION
+  //   Skeletons map "ServerRequest" generic signatures to the static
+  //   call signature required by the implementation's methods.  table
+  //   of these per implementation
+  //
+  //   There are several optimizations that'd be desirable for use by
+  //   "static skeletons", notably (a) passing of per-object data held
+  //   by the OA so that the method doesn't need to look it up itself,
+  //   (b) removing all mandatory heap allocation of data, and of
+  //   course (c) handling all the built-in ORB calls like "is_a" and
+  //   "get_implementation".  This code is currently set up only for
+  //   Dynamic Skeletons and bridging, for which none of those are
+  //   real issues.
+
+  const TAO_Call_Data *op_descriptor;
+  // pointer to the calldata structure that holds information about all the
+  // parameters
+
+  TAO_Skeleton impl_skeleton;
+  // skeleton corresponding to the operation
+};
+
 class TAO_Export TAO_Stub
 {
   // = TITLE
@@ -113,7 +218,27 @@ class TAO_Export TAO_Stub
   //   The stub and DII interpreter APIs are member functions of this
   //   type.
 public:
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+  void do_static_call (CORBA_Environment &ACE_TRY_ENV,
+                       const TAO_Call_Data *info,
+                       void** args);
+  // The "stub interpreter" method parameters are:
+  //
+  //    - ACE_TRY_ENV ... used for exception reporting
+  //    - info ... describes the call
+  //    - args parameters follow
+  //
+  // The varargs parameters are pointers to data instances as
+  // described by info->params.  (If the value_size is nonzero, the
+  // data instance is itself a pointer.)  The order on the call stack
+  // must be exactly the order they're listed in info->params;
+  // normally this is the order the values are listed in the OMG-IDL
+  // operation specification.
+  //
+  // NOTE: This can be sped up by eliminating some parameter
+  // shuffling.  The stub and "do_static_call" parameters are all but the
+  // same, except that their order is different.
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
   void do_dynamic_call (const char *opname,
                         CORBA::Boolean is_roundtrip,
@@ -121,7 +246,6 @@ public:
                         CORBA::NamedValue_ptr result,
                         CORBA::Flags flags,
                         CORBA::ExceptionList &exceptions,
-                        int lazy_evaluation,
                         CORBA_Environment &ACE_TRY_ENV =
                               TAO_default_environment ());
   // Dynamic invocations use a more costly "varargs" calling
@@ -142,20 +266,17 @@ public:
   //    - exceptions ... list of legal user-defined exceptions
   //    - ACE_TRY_ENV ... used for exception reporting.
 
-  // Used with DII deferred synchronous requests.
-  void do_deferred_call (const CORBA::Request_ptr req,
-                         CORBA_Environment &ACE_TRY_ENV =
-                              TAO_default_environment ());
-
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
+#if defined (TAO_HAS_CORBA_MESSAGING)
   CORBA::Policy_ptr get_policy (
       CORBA::PolicyType type,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
+
+  POA_Messaging::RelativeRoundtripTimeoutPolicy*
+     relative_roundtrip_timeout (void);
 
   CORBA::Policy_ptr get_client_policy (
       CORBA::PolicyType type,
@@ -178,36 +299,7 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void);
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-  TAO_Client_Priority_Policy *client_priority (void);
-
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
-
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-  TAO_Sync_Scope_Policy *sync_scope (void);
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
-
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-  TAO_Buffering_Constraint_Policy *buffering_constraint (void);
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-  TAO_Sync_Strategy &sync_strategy (void);
-  // Return the sync strategy to be used in by the transport.
-  // Selection will be based on the SyncScope policies.
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
   CORBA::String_var type_id;
   // All objref representations carry around a type ID.
@@ -239,12 +331,12 @@ public:
   // returns a pointer to the profile_in_use object.  This object
   // retains ownership of this profile.
 
-  TAO_MProfile *make_profiles (void);
+  TAO_MProfile *get_profiles (void);
   // Copy of the profile list, user must free memory when done.
-  // although the user can call make_profiles() then reorder
+  // although the user can call get_profiles then reorder
   // the list and give it back to TAO_Stub.
 
-  const TAO_MProfile& base_profiles (void) const;
+  const TAO_MProfile& get_base_profiles (void) const;
   // Obtain a reference to the basic profile set.
 
   // manage forward and base profiles.
@@ -283,7 +375,7 @@ public:
    // returns TRUE if a connection was successful with at least
    // one profile.
 
-   TAO_Profile *base_profiles (const TAO_MProfile& mprofiles);
+   TAO_Profile *set_base_profiles (const TAO_MProfile& mprofiles);
    // Initialize the base_profiles_ and set profile_in_use_ to
    // reference the first profile.
 
@@ -313,7 +405,14 @@ public:
   // temporary.
 
 protected:
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+  void put_params (CORBA_Environment &ACE_TRY_ENV,
+                   const TAO_Call_Data *info,
+                   TAO_GIOP_Invocation &call,
+                   void** args);
+  // Helper method to factor out common code in static oneway
+  // vs. twoway invocations.
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
   void put_params (TAO_GIOP_Invocation &call,
                    CORBA::NVList_ptr args,
@@ -352,11 +451,11 @@ private:
   // NON-THREAD-SAFE.  utility method for next_profile.
 
 private:
-  TAO_MProfile base_profiles_;
+  TAO_MProfile     base_profiles_;
   // ordered list of profiles for this object.
 
-  TAO_MProfile *forward_profiles_;
-  // The list of forwarding profiles.  This is actually implemented as a
+  TAO_MProfile     *forward_profiles_;
+  // The list of forwarding profiles.  This is actually iimplemented as a
   // linked list of TAO_MProfile objects.
 
   TAO_Profile *profile_in_use_;
@@ -394,13 +493,11 @@ private:
   //   2. we can search for the servant/POA's status starting from
   //      the ORB's RootPOA.
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
-  TAO_Policy_Manager_Impl *policies_;
+#if defined (TAO_HAS_CORBA_MESSAGING)
+  TAO_Policy_Manager_Impl* policies_;
   // The policy overrides in this object, if nil then use the default
   // policies.
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
   // = Disallow copy constructor and assignment operator
   ACE_UNIMPLEMENTED_FUNC (TAO_Stub (const TAO_Stub &))
@@ -441,5 +538,4 @@ protected:
 # include "tao/Stub.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
 #endif /* TAO_STUB_H */

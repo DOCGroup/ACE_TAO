@@ -7,8 +7,8 @@
 
 ACE_INLINE
 CORBA_String_var::CORBA_String_var (void)
-  : ptr_ (0)
 {
+  this->ptr_ = 0;
 }
 
 ACE_INLINE
@@ -108,13 +108,6 @@ CORBA_String_out::operator= (char *s)
   return *this;
 }
 
-ACE_INLINE CORBA_String_out &
-CORBA_String_out::operator= (const char *s)
-{
-  this->ptr_ = CORBA::string_dup (s);
-  return *this;
-}
-
 ACE_INLINE
 CORBA_String_out::operator char *&()
 {
@@ -135,8 +128,8 @@ CORBA_String_out::ptr (void)
 
 ACE_INLINE
 CORBA_WString_var::CORBA_WString_var (void)
-  : ptr_ (0)
 {
+  this->ptr_ = 0;
 }
 
 ACE_INLINE
@@ -148,14 +141,14 @@ CORBA_WString_var::CORBA_WString_var (const CORBA::WChar *p)
 ACE_INLINE CORBA::WChar &
 CORBA_WString_var::operator[] (CORBA::ULong slot)
 {
-  // @@ We need to verify bounds else raise some exception.
+  // We need to verify bounds else raise some exception.
   return this->ptr_[slot];
 }
 
 ACE_INLINE CORBA::WChar
 CORBA_WString_var::operator[] (CORBA::ULong slot) const
 {
-  // @@ We need to verify bounds else raise some exception.
+  // We need to verify bounds else raise some exception.
   return this->ptr_[slot];
 }
 
@@ -254,6 +247,20 @@ CORBA_WString_out::ptr (void)
 //  ORB specific
 // ---------------------------------------------------------------------------
 
+ACE_INLINE void
+CORBA_ORB::should_shutdown (int value)
+{
+  ACE_GUARD (ACE_Lock, monitor, *this->shutdown_lock_);
+  this->should_shutdown_ = value;
+}
+
+ACE_INLINE int
+CORBA_ORB::should_shutdown (void)
+{
+  ACE_GUARD_RETURN (ACE_Lock, monitor, *this->shutdown_lock_, -1);
+  return this->should_shutdown_;
+}
+
 ACE_INLINE CORBA::ULong
 CORBA_ORB::_incr_refcnt (void)
 {
@@ -291,6 +298,12 @@ CORBA_ORB::_nil (void)
   return 0;
 }
 
+ACE_INLINE CORBA::Boolean
+CORBA_ORB::orb_free_resources (void)
+{
+  return !CORBA_ORB::orb_init_count_;
+}
+
 ACE_INLINE void
 CORBA_ORB::_use_omg_ior_format (CORBA::Boolean ior)
 {
@@ -309,56 +322,6 @@ CORBA_ORB::orb_core (void) const
   return this->orb_core_;
 }
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr
-CORBA_ORB::_register_client_interceptor
-  (PortableInterceptor::ClientRequestInterceptor_ptr ci,
-   CORBA_Environment &ACE_TRY_ENV)
-{
-  if (ci == 0 ||
-      ci->_is_a ("IDL:TAO/PortableInterceptor/ClientRequestInterceptor:1.0"))
-      {
-        PortableInterceptor::ClientRequestInterceptor_var oci =
-          PortableInterceptor::ClientRequestInterceptor::_duplicate (this->client_interceptor_.in ());
-        this->client_interceptor_ = ci;
-        return oci._retn ();
-      }
-  else
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);
-}
-
-ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr
-CORBA_ORB::_register_server_interceptor
-  (PortableInterceptor::ServerRequestInterceptor_ptr si,
-   CORBA_Environment &ACE_TRY_ENV)
-{
-  if (si == 0 ||
-      si->_is_a ("IDL:TAO/PortableInterceptor/ServerRequestInterceptor:1.0"))
-      {
-        PortableInterceptor::ServerRequestInterceptor_var oci =
-          PortableInterceptor::ServerRequestInterceptor::_duplicate (this->server_interceptor_.in ());
-        this->server_interceptor_ = si;
-        return oci._retn ();
-      }
-  else
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);
-}
-
-ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr
-CORBA_ORB::_get_client_interceptor (CORBA_Environment &)
-{
-  return
-    PortableInterceptor::ClientRequestInterceptor::_duplicate (this->client_interceptor_.in ());
-}
-
-ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr
-CORBA_ORB::_get_server_interceptor (CORBA_Environment &)
-{
-  return
-    PortableInterceptor::ServerRequestInterceptor::_duplicate (this->server_interceptor_.in ());
-}
-#endif /* TAO_HAS_INTERCEPTORS */
-
 // ************************************************************
 // These are in CORBA namespace
 // ************************************************************
@@ -366,13 +329,13 @@ CORBA_ORB::_get_server_interceptor (CORBA_Environment &)
 ACE_INLINE CORBA::Boolean
 CORBA::is_nil (CORBA::ORB_ptr obj)
 {
-  return obj == CORBA_ORB::_nil ();
+  return obj == 0;
 }
 
 ACE_INLINE void
 CORBA::release (CORBA::ORB_ptr obj)
 {
-  if (!CORBA::is_nil (obj))
+  if (obj)
     obj->_decr_refcnt ();
 }
 
@@ -388,7 +351,7 @@ CORBA_ORB_var::CORBA_ORB_var (void) // default constructor
 
 ACE_INLINE
 CORBA_ORB_var::CORBA_ORB_var (CORBA::ORB_ptr p)
-  : ptr_ (p)
+        : ptr_ (p)
 {
 }
 
@@ -482,22 +445,22 @@ CORBA_ORB_var::_retn (void)
 
 ACE_INLINE
 CORBA_ORB_out::CORBA_ORB_out (CORBA::ORB_ptr &p)
-  : ptr_ (p)
+        : ptr_ (p)
 {
   this->ptr_ = CORBA_ORB::_nil ();
 }
 
 ACE_INLINE
 CORBA_ORB_out::CORBA_ORB_out (CORBA_ORB_var &p) // constructor from _var
-  : ptr_ (p.out ())
+        : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = CORBA_ORB::_nil ();
 }
 
 ACE_INLINE
-CORBA_ORB_out::CORBA_ORB_out (const CORBA_ORB_out &p) // copy constructor
-  : ptr_ (p.ptr_)
+CORBA_ORB_out::CORBA_ORB_out (CORBA_ORB_out &p) // copy constructor
+        : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE CORBA_ORB_out &

@@ -30,7 +30,6 @@ TAO_SeqElem_String_Manager::operator= (const CORBA::String_var &var)
 
 // ****************************************************************
 
-// assignment from CORBA::WString_var makes a copy
 TAO_WString_Manager&
 TAO_WString_Manager::operator= (const CORBA::WString_var &var)
 {
@@ -39,7 +38,6 @@ TAO_WString_Manager::operator= (const CORBA::WString_var &var)
   return *this;
 }
 
-// assignment from WString_var
 TAO_SeqElem_WString_Manager&
 TAO_SeqElem_WString_Manager::operator= (const CORBA::WString_var &var)
 {
@@ -48,3 +46,4 @@ TAO_SeqElem_WString_Manager::operator= (const CORBA::WString_var &var)
   *this->ptr_ = CORBA::wstring_dup (var.in ());
   return *this;
 }
+

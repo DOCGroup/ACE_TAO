@@ -24,7 +24,6 @@
 
 #ifndef TAO_MASTER_CORBA_H
 #define TAO_MASTER_CORBA_H
-#include "ace/pre.h"
 
 // ACE specific includes
 #include "ace/OS.h"
@@ -57,7 +56,6 @@
 #include "tao/POA.h"
 
 // TAO specific files, avoid them as much as possible.
-#include "tao/Interceptor.h"
 #include "tao/Stub.h"
 #include "tao/params.h"
 #include "tao/ORB_Core.h"
@@ -67,7 +65,7 @@
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Active_Object_Map.h"
-//#include "tao/GIOP.h"
+#include "tao/GIOP.h"
 #include "tao/Invocation.h"
 
 // Dynamic Any includes
@@ -85,16 +83,6 @@
 #include "tao/DomainC.h"
 #include "tao/WrongTransactionC.h"
 
-#ifdef TAO_HAS_INTERFACE_REPOSITORY
-// Interface repository
-#include "tao/InterfaceC.h"
-
-#endif /*TAO_HAS_INTERFACE_REPOSITORY */
-
-#include "tao/BoundsC.h"
-#include "tao/TAOC.h"
-#include "tao/MessagingC.h"
-
 #if !defined (ACE_NESTED_CLASS)
 #if defined (ACE_WIN32)
 #define ACE_NESTED_CLASS(SCOPE,CLASS) CLASS
@@ -103,5 +91,4 @@
 #endif /* ACE_WIN32 */
 #endif /* ACE_NESTED_CLASS */
 
-#include "ace/post.h"
 #endif /* TAO_MASTER_CORBA_H */

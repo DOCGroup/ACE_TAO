@@ -4,7 +4,7 @@
 #include "tao/poa_macros.h"
 #include "tao/Environment.h"
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 ACE_INLINE PortableServer::ThreadPolicyValue
 TAO_POA_Policies::thread (void) const
@@ -18,7 +18,7 @@ TAO_POA_Policies::thread (PortableServer::ThreadPolicyValue value)
   this->thread_ = value;
 }
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 ACE_INLINE PortableServer::LifespanPolicyValue
 TAO_POA_Policies::lifespan (void) const
@@ -129,7 +129,7 @@ TAO_Creation_Time::creation_time (void) const
 ACE_INLINE int
 TAO_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
 {
-#if (POA_NO_TIMESTAMP == 1)
+#if defined (POA_NO_TIMESTAMP)
   ACE_UNUSED_ARG (rhs);
   return 1;
 #else
@@ -142,7 +142,7 @@ TAO_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
 ACE_INLINE int
 TAO_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
 {
-#if (POA_NO_TIMESTAMP == 1)
+#if defined (POA_NO_TIMESTAMP)
   ACE_UNUSED_ARG (rhs);
   return 0;
 #else
@@ -155,7 +155,7 @@ TAO_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
 ACE_INLINE int
 TAO_Temporary_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
 {
-#if (POA_NO_TIMESTAMP == 1)
+#if defined (POA_NO_TIMESTAMP)
   ACE_UNUSED_ARG (rhs);
   return 1;
 #else
@@ -168,7 +168,7 @@ TAO_Temporary_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
 ACE_INLINE int
 TAO_Temporary_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
 {
-#if (POA_NO_TIMESTAMP == 1)
+#if defined (POA_NO_TIMESTAMP)
   ACE_UNUSED_ARG (rhs);
   return 0;
 #else
@@ -248,7 +248,7 @@ TAO_POA::active_object_map (void) const
   return *this->active_object_map_;
 }
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 ACE_INLINE PortableServer::ServantManager_ptr
 TAO_POA::get_servant_manager (CORBA::Environment &ACE_TRY_ENV)
@@ -290,7 +290,7 @@ TAO_POA::set_servant (PortableServer::Servant servant,
                        ACE_TRY_ENV);
 }
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 ACE_INLINE PortableServer::ObjectId *
 TAO_POA::activate_object (PortableServer::Servant servant,
@@ -396,10 +396,7 @@ TAO_POA::id_to_reference (const PortableServer::ObjectId &oid,
   return this->id_to_reference_i (oid, ACE_TRY_ENV);
 }
 
-//
-// Forwarding related.
-//
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 ACE_INLINE void
 TAO_POA::forward_object (const PortableServer::ObjectId &oid,
@@ -431,7 +428,7 @@ TAO_POA::the_POAManager (CORBA::Environment &ACE_TRY_ENV)
   return this->poa_manager_._this (ACE_TRY_ENV);
 }
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 ACE_INLINE PortableServer::AdapterActivator_ptr
 TAO_POA::the_activator (CORBA::Environment &ACE_TRY_ENV)
@@ -452,7 +449,7 @@ TAO_POA::the_activator (PortableServer::AdapterActivator_ptr adapter_activator,
   this->adapter_activator_ = PortableServer::AdapterActivator::_duplicate (adapter_activator);
 }
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 ACE_INLINE const TAO_Creation_Time &
 TAO_POA::creation_time (void)
@@ -463,7 +460,7 @@ TAO_POA::creation_time (void)
 ACE_INLINE CORBA::Boolean
 TAO_POA::system_id (void)
 {
-  return (CORBA::Boolean) this->system_id_;
+  return this->system_id_;
 }
 
 
@@ -477,7 +474,7 @@ TAO_POA::root (void)
 ACE_INLINE CORBA::Boolean
 TAO_POA::persistent (void)
 {
-  return (CORBA::Boolean) this->persistent_;
+  return this->persistent_;
 }
 
 ACE_INLINE const ACE_CString &
@@ -486,7 +483,7 @@ TAO_POA::name (void) const
   return this->name_;
 }
 
-ACE_INLINE char *
+ACE_INLINE CORBA::String
 TAO_POA::the_name (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
@@ -626,27 +623,23 @@ TAO_POA::decrement_outstanding_requests (void)
 ACE_INLINE void
 TAO_POA::establish_servant_lock (PortableServer::Servant servant)
 {
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
   if (this->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
     {
       servant->_increment_single_threaded_poa_lock_count ();
     }
-#else /* TAO_HAS_MINIMUM_POA == 0 */
-  ACE_UNUSED_ARG (servant);
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
 ACE_INLINE void
 TAO_POA::teardown_servant_lock (PortableServer::Servant servant)
 {
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
   if (this->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
     {
       servant->_decrement_single_threaded_poa_lock_count ();
     }
-#else /* TAO_HAS_MINIMUM_POA == 0 */
-  ACE_UNUSED_ARG (servant);
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
 ACE_INLINE TAO_ORB_Core &

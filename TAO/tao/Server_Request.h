@@ -20,21 +20,20 @@
 
 #ifndef TAO_SERVER_REQUEST_H
 #define TAO_SERVER_REQUEST_H
-#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
-#include "tao/IOPC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Object_KeyC.h"
+#include "tao/GIOP.h"
 #include "tao/Object.h"
 
 class TAO_POA;
 class TAO_ORB_Core;
-class TAO_Transport;
+
 class TAO_Param_Data_Skel
 {
   // = TITLE
@@ -68,6 +67,39 @@ public:
   // whether we own it or not
 };
 
+class TAO_Call_Data_Skel
+{
+  // = TITLE
+  //   Descriptions of operations, as used by the stub interpreter.
+  //   Only interpretive marshaling/unmarshaling is used, and the
+  //   stubs don't know what particular on-the-wire protocol is being
+  //   used.
+  //
+  // = DESCRIPTION
+  //   When using C++ exceptions, many C++ compilers will require the
+  //   use of compiled code throw the exception.  As binary standards
+  //   for exception throwing evolve, it may become practical to
+  //   interpretively throw exceptions.
+public:
+  const char *opname;
+  // Operation name.
+
+  CORBA::Boolean is_roundtrip;
+  // !oneway
+
+  // When constructing tables of parameters, put them in the same
+  // order they appear in the IDL spec: return value, then parameters
+  // left to right.  Other orders may produce illegal IIOP protocol
+  // messages.
+
+  CORBA::ULong param_count;
+  // # parameters.
+
+  const TAO_Param_Data_Skel *params;
+  // Their descriptions.
+
+};
+
 class TAO_Export CORBA_ServerRequest
 {
   // = TITLE
@@ -83,18 +115,16 @@ public:
   static CORBA_ServerRequest *_nil (void);
   // the standard _nil method on pseudo objects
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
   virtual void arguments (CORBA::NVList_ptr &list,
-                          CORBA_Environment &ACE_TRY_ENV =
-                              TAO_default_environment ()) = 0;
+                          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
   // Implementation uses this to provide the ORB with the operation's
   // parameter list ... on return, their values are available; the
   // list fed in has typecodes and (perhap) memory assigned.
 
   virtual void set_result (const CORBA::Any &value,
-                           CORBA_Environment &ACE_TRY_ENV =
-                               TAO_default_environment ()) = 0;
+                           CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
   // Implementation uses this to provide the operation result
   // ... illegal if exception() was called or params() was not called.
   //
@@ -102,8 +132,7 @@ public:
   // sent when this returns, and reclaim memory it allocated.
 
   virtual void set_exception (const CORBA::Any &value,
-                              CORBA_Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ()) = 0;
+                              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
   // Implementation uses this to provide the exception value which is
   // the only result of this particular invocation.
   //
@@ -119,8 +148,7 @@ public:
   // this stuff is a catastrophic error since this is all part of the
   // basic CORBA Object Model.
 
-  virtual void dsi_marshal (CORBA_Environment &ACE_TRY_ENV =
-                                TAO_default_environment ()) = 0;
+  virtual void dsi_marshal (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
   // marshal outgoing parameters. Used by DSI
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -131,23 +159,9 @@ public:
   virtual unsigned int operation_length (void) const = 0;
   // get the length of the operation name
 
-  virtual CORBA::Object_ptr objref (CORBA_Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ()) = 0;
-  // Return the object reference of the request.
-
   virtual void init_reply (CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ()) = 0;
   // Start a Reply message.
-
-  virtual IOP::ServiceContextList &service_info (void) = 0;
-  // Accessor to the underlying ServiceContextList for request/reply
-  // message.
-
-  // To invoke interceptors and handle System Exceptions at the lowest
-  // level, a method returning the request_id_ is needed.  However,
-  // request_id is GIOP specific, so I am not sure if this is the
-  // right place to put it.  (nw)
-  virtual CORBA::ULong request_id (void) = 0;
 
   //  CORBA::Context_ptr ctx (void) = 0;
   // return the context pointer
@@ -160,6 +174,17 @@ public:
   virtual CORBA::ORB_ptr  orb (void) = 0;
   // get the underlying ORB
 
+  virtual void demarshal (CORBA_Environment &ACE_TRY_ENV,
+                          const TAO_Call_Data_Skel *info,
+                          ...) = 0;
+  // demarshal incoming parameters
+
+  virtual void marshal (CORBA_Environment &ACE_TRY_ENV,
+                        //                        CORBA_Environment &skel_env,
+                        const TAO_Call_Data_Skel *info,
+                        ...) = 0;
+  // marshal outgoing parameters
+
   virtual TAO_InputCDR &incoming (void) = 0;
   // Retrieve the incoming stream.
 
@@ -168,15 +193,6 @@ public:
 
   virtual CORBA::Boolean response_expected (void) const = 0;
   // is the response expected
-
-  virtual CORBA::Boolean sync_with_server (void) const = 0;
-  // Should we return before dispatching the servant?
-
-  virtual void _tao_lazy_evaluation (int lazy_evaluation) = 0;
-  // Set the lazy evaluation flag
-
-  virtual void send_no_exception_reply (TAO_Transport *transport) = 0;
-  // Used with reliable oneway requests.
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA::ServerRequest_ptr _ptr_type;
@@ -189,5 +205,4 @@ public:
 # include "tao/Server_Request.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
 #endif /* TAO_SERVER_REQUEST_H */

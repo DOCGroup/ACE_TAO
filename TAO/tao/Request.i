@@ -139,13 +139,7 @@ CORBA_Request::ctx (void) const
 ACE_INLINE void
 CORBA_Request::ctx (CORBA::Context_ptr ctx)
 {
-  this->ctx_ = ctx;
-}
-
-ACE_INLINE void
-CORBA_Request::_tao_lazy_evaluation (int lazy_evaluation)
-{
-  this->lazy_evaluation_ = lazy_evaluation;
+  ACE_UNUSED_ARG (ctx);
 }
 
 // *************************************************************

@@ -2,7 +2,7 @@
 
 #include "tao/Forwarding_Servant.h"
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #include "tao/Object.h"
 #include "tao/POAC.h"
@@ -22,12 +22,19 @@ void
 TAO_Forwarding_Servant::invoke (CORBA::ServerRequest_ptr request,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  PortableServer::ForwardRequest exception (this->forward_to_.in ());
+  ACE_UNUSED_ARG (request);
 
-  CORBA::Any any;
-  any <<= exception;
+  CORBA::Exception *exception = 0;
+  ACE_NEW_THROW_EX (exception,
+                    PortableServer::ForwardRequest (this->forward_to_.in ()),
+                    CORBA::NO_MEMORY ());
 
-  request->set_exception (any, ACE_TRY_ENV);
+  CORBA::Any any (exception->_type (),
+                  exception,
+                  1);
+
+  request->set_exception (any,
+                          ACE_TRY_ENV);
 }
 
 CORBA::RepositoryId

@@ -9,11 +9,8 @@ OBJFILES = \
 	$(OBJDIR)\Active_Object_Map.obj \
 	$(OBJDIR)\Any.obj \
 	$(OBJDIR)\append.obj \
-	$(OBJDIR)\Asynch_Invocation.obj \
-	$(OBJDIR)\Buffering_Constraint_Policy.obj \
 	$(OBJDIR)\CDR.obj \
 	$(OBJDIR)\CDR_Interpreter.obj \
-	$(OBJDIR)\Client_Priority_Policy.obj \
 	$(OBJDIR)\Client_Strategy_Factory.obj \
 	$(OBJDIR)\Connector_Registry.obj \
 	$(OBJDIR)\Context.obj \
@@ -28,7 +25,6 @@ OBJFILES = \
 	$(OBJDIR)\default_client.obj \
 	$(OBJDIR)\default_resource.obj \
 	$(OBJDIR)\default_server.obj \
-	$(OBJDIR)\Direct_Priority_Mapping.obj \
 	$(OBJDIR)\DomainC.obj \
 	$(OBJDIR)\DomainS.obj \
 	$(OBJDIR)\DynAny_i.obj \
@@ -45,21 +41,13 @@ OBJFILES = \
 	$(OBJDIR)\Forwarding_Servant.obj \
 	$(OBJDIR)\GIOP.obj \
 	$(OBJDIR)\GIOP_Server_Request.obj \
-	$(OBJDIR)\GIOPC.obj \
 	$(OBJDIR)\IIOP_Acceptor.obj \
 	$(OBJDIR)\IIOP_Connect.obj \
 	$(OBJDIR)\IIOP_Connector.obj \
 	$(OBJDIR)\IIOP_Factory.obj \
 	$(OBJDIR)\IIOP_Profile.obj \
 	$(OBJDIR)\IIOP_Transport.obj \
-	$(OBJDIR)\ImplRepoC.obj \
-	$(OBJDIR)\ImplRepoS.obj \
 	$(OBJDIR)\InconsistentTypeCodeC.obj \
-	$(OBJDIR)\Interceptor.obj \
-	$(OBJDIR)\InterceptorC.obj \
-	$(OBJDIR)\InterceptorS.obj \
-	$(OBJDIR)\InterfaceC.obj \
-	$(OBJDIR)\InterfaceS.obj \
 	$(OBJDIR)\Invocation.obj \
 	$(OBJDIR)\IOPC.obj \
 	$(OBJDIR)\IOPS.obj \
@@ -68,8 +56,6 @@ OBJFILES = \
 	$(OBJDIR)\IORManipulation.obj \
 	$(OBJDIR)\IORS.obj \
 	$(OBJDIR)\Key_Adapters.obj \
-	$(OBJDIR)\Leader_Follower.obj \
-	$(OBJDIR)\Linear_Priority_Mapping.obj \
 	$(OBJDIR)\Managed_Types.obj \
 	$(OBJDIR)\Marshal.obj \
 	$(OBJDIR)\Messaging_Policy_i.obj \
@@ -93,59 +79,32 @@ OBJFILES = \
 	$(OBJDIR)\Policy_Manager.obj \
 	$(OBJDIR)\PolicyC.obj \
 	$(OBJDIR)\PolicyS.obj \
-	$(OBJDIR)\PollableC.obj \
-	$(OBJDIR)\PollableS.obj \
-	$(OBJDIR)\Pool_Per_Endpoint.obj \
 	$(OBJDIR)\Principal.obj \
-	$(OBJDIR)\Priority_Mapping.obj \
-	$(OBJDIR)\Profile.obj \
 	$(OBJDIR)\Protocol_Factory.obj \
-	$(OBJDIR)\Reactor_Per_Priority.obj \
-	$(OBJDIR)\Reactor_Registry.obj \
 	$(OBJDIR)\Reply_Dispatcher.obj \
 	$(OBJDIR)\Request.obj \
 	$(OBJDIR)\Resource_Factory.obj \
-	$(OBJDIR)\RT_Current.obj \
-	$(OBJDIR)\rtcorbafwd.obj \
 	$(OBJDIR)\Sequence.obj \
 	$(OBJDIR)\Servant_Base.obj \
 	$(OBJDIR)\Server_Request.obj \
 	$(OBJDIR)\Server_Strategy_Factory.obj \
 	$(OBJDIR)\Services.obj \
-	$(OBJDIR)\SHMIOP_Acceptor.obj \
-	$(OBJDIR)\SHMIOP_Connect.obj \
-	$(OBJDIR)\SHMIOP_Connector.obj \
-	$(OBJDIR)\SHMIOP_Factory.obj \
-	$(OBJDIR)\SHMIOP_Profile.obj \
-	$(OBJDIR)\SHMIOP_Transport.obj \
-	$(OBJDIR)\Single_Reactor.obj \
 	$(OBJDIR)\skip.obj \
 	$(OBJDIR)\Stub.obj \
-	$(OBJDIR)\Sync_Strategies.obj \
 	$(OBJDIR)\Tagged_Components.obj \
 	$(OBJDIR)\TAO.obj \
 	$(OBJDIR)\TAO_Internal.obj \
-	$(OBJDIR)\TAOC.obj \
-	$(OBJDIR)\TAOS.obj \
 	$(OBJDIR)\TimeBaseC.obj \
 	$(OBJDIR)\TimeBaseS.obj \
 	$(OBJDIR)\Transport_Mux_Strategy.obj \
 	$(OBJDIR)\Typecode.obj \
 	$(OBJDIR)\Typecode_Constants.obj \
-	$(OBJDIR)\UIOP_Acceptor.obj \
-	$(OBJDIR)\UIOP_Connect.obj \
-	$(OBJDIR)\UIOP_Connector.obj \
-	$(OBJDIR)\UIOP_Factory.obj \
-	$(OBJDIR)\UIOP_Profile.obj \
-	$(OBJDIR)\UIOP_Transport.obj \
 	$(OBJDIR)\Union.obj \
 	$(OBJDIR)\ValueBase.obj \
 	$(OBJDIR)\ValueFactory.obj \
 	$(OBJDIR)\ValueFactory_Map.obj \
 	$(OBJDIR)\Wait_Strategy.obj \
 	$(OBJDIR)\WrongTransactionC.obj
-
-RESOURCE = $(OBJDIR)\tao.res
 
 CFLAGS = $(ACE_CFLAGS) $(TAO_BUILD_CFLAGS) $(TAO_CFLAGS)
 

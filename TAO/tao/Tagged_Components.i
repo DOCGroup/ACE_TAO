@@ -3,10 +3,11 @@
 ACE_INLINE
 TAO_Tagged_Components::TAO_Tagged_Components (void)
   :  orb_type_ (0),
-     tao_priority_ (0),
+     tao_priority_min_ (0),
+     tao_priority_max_ (0),
      orb_type_set_ (0),
      code_sets_set_ (0),
-     tao_priority_set_ (0)
+     tao_priority_range_set_ (0)
 {
 }
 
@@ -19,13 +20,15 @@ TAO_Tagged_Components::get_orb_type (CORBA::ULong& orb_type) const
 }
 
 ACE_INLINE int
-TAO_Tagged_Components::get_tao_priority (CORBA::Short& p) const
+TAO_Tagged_Components::get_tao_priority_range (CORBA::Short& min_p,
+                                               CORBA::Short& max_p) const
 {
-  if (this->tao_priority_set_ == 1)
+  if (this->tao_priority_range_set_ == 1)
     {
-      p = this->tao_priority_;
+      min_p = this->tao_priority_min_;
+      max_p = this->tao_priority_max_;
     }
-  return this->tao_priority_set_;
+  return this->tao_priority_range_set_;
 }
 
 ACE_INLINE int
@@ -49,7 +52,7 @@ TAO_Tagged_Components::known_tag (IOP::ComponentId tag) const
 {
   return (tag == IOP::TAG_ORB_TYPE
           || tag == IOP::TAG_CODE_SETS
-          || tag == TAO_TAG_PRIORITY);
+          || tag == TAO_TAG_PRIORITY_RANGE);
 }
 
 ACE_INLINE int
@@ -57,7 +60,7 @@ TAO_Tagged_Components::unique_tag (IOP::ComponentId tag) const
 {
   return (tag == IOP::TAG_ORB_TYPE
           || tag == IOP::TAG_CODE_SETS
-          || tag == TAO_TAG_PRIORITY
+          || tag == TAO_TAG_PRIORITY_RANGE
           || tag == IOP::TAG_POLICIES
           // || tag == IOP::TAG_ALTERNATE_IIOP_ADDRESS
           || tag == IOP::TAG_ASSOCIATION_OPTIONS
@@ -78,10 +81,4 @@ TAO_Tagged_Components::unique_tag (IOP::ComponentId tag) const
           || tag == IOP::TAG_DCE_BINDING_NAME
           || tag == IOP::TAG_DCE_NO_PIPES
           || tag == IOP::TAG_DCE_SEC_MECH);
-}
-
-ACE_INLINE IOP::MultipleComponentProfile&
-TAO_Tagged_Components::components (void)
-{
-  return this->components_;
 }

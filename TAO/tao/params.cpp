@@ -1,55 +1,49 @@
 // $Id$
 
-
 #include "tao/params.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/params.i"
 #endif /* __ACE_INLINE__ */
 
+#include "tao/IOR_LookupTable.h"
 
 ACE_RCSID(tao, params, "$Id$")
 
-
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   : preconnects_list_ (),
+    preconnect_insertion_strategy_ (this->preconnects_list_),
     endpoints_list_ (),
+    endpoint_insertion_strategy_ (this->endpoints_list_),
+    name_service_ior_ (),
+    name_service_port_ (0),
+    trading_service_ior_ (),
+    trading_service_port_ (0),
+    implrepo_service_ior_ (),
+    implrepo_service_port_ (0),
     init_ref_ (),
-    ior_lookup_table_ (),
+    ior_lookup_table_ (0),
     default_init_ref_ (),
     sock_rcvbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
     sock_sndbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
-    nodelay_ (1),
     cdr_memcpy_tradeoff_ (ACE_DEFAULT_CDR_MEMCPY_TRADEOFF),
     use_lite_protocol_ (0),
     use_dotted_decimal_addresses_ (0),
     std_profile_components_ (1)
 {
-  for (int i=0; i<= NO_OF_MCAST_SERVICES; i++)
-    this->service_port_[i] = 0;
 }
 
 TAO_ORB_Parameters::~TAO_ORB_Parameters (void)
 {
-}
-
-int
-TAO_ORB_Parameters::add_to_ior_table (ACE_CString init_ref)
-{
-  int slot = init_ref.find ("=");
-  if (slot == ACE_CString::npos)
-    return -1;
-
-  ACE_CString object_id = init_ref.substr (0, slot);
-  ACE_CString ior = init_ref.substr (slot + 1);
-
-  // Add the objectID-IOR to the table and return the status.
-  return this->ior_lookup_table_.add_ior (object_id, ior);
+  // Delete the table.
+  delete this->ior_lookup_table_;
+  this->ior_lookup_table_ = 0;
 }
 
 int
 TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
-                                     TAO_EndpointSet &endpoints_list)
+                                     TAO_Base_Endpoint_Insertion_Strategy &
+                                       endpoints_list)
 {
   // Parse the string into seperate endpoints, where `endpoints' is of
   // the form:
@@ -59,7 +53,7 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
   // A single endpoint, instead of several, can be added just as well.
 
   int status = 0;
-  // Return code:  0 = success,  -1 = failure
+  // Return code:  0 = success,  1 = failure
 
   const char endpoints_delimiter = ';';
 
@@ -110,7 +104,7 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
           if (check_offset > 0 &&
               check_offset != endpt.npos)
             {
-              endpoints_list.enqueue_tail (endpt);
+              endpoints_list.insert (endpt);
               // Insert endpoint into list
             }
           else
@@ -129,3 +123,28 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
   return status;
 }
 
+// Don't bother inlining since the most used methods are virtual.
+
+TAO_Preconnect_Insertion_Strategy::
+   TAO_Preconnect_Insertion_Strategy (TAO_PreconnectSet &preconnects)
+     : preconnects_ (preconnects)
+{
+}
+
+int
+TAO_Preconnect_Insertion_Strategy::insert (const ACE_CString &preconnect)
+{
+  return this->preconnects_.enqueue_tail (preconnect);
+}
+
+TAO_Endpoint_Insertion_Strategy::
+  TAO_Endpoint_Insertion_Strategy (TAO_EndpointSet &endpoints)
+    : endpoints_ (endpoints)
+{
+}
+
+int
+TAO_Endpoint_Insertion_Strategy::insert (const ACE_CString &endpoint)
+{
+  return this->endpoints_.insert (endpoint);
+}

@@ -25,7 +25,6 @@
 
 #ifndef TAO_IDL_CURRENTC_H
 #define TAO_IDL_CURRENTC_H
-#include "ace/pre.h"
 
 #ifndef TAO_EXPORT_MACRO
 #define TAO_EXPORT_MACRO
@@ -38,9 +37,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -112,7 +108,7 @@ private:
 #if !defined (_CORBA_CURRENT_CH_)
 #define _CORBA_CURRENT_CH_
 
-class  CORBA_Current : public virtual CORBA_Object
+class  CORBA_Current : public virtual ACE_CORBA_1 (Object)
 {
  public:
   #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
@@ -126,7 +122,6 @@ class  CORBA_Current : public virtual CORBA_Object
                                     CORBA_Environment &ACE_TRY_ENV =
                                         TAO_default_environment ());
   static CORBA_Current_ptr _nil (void);
-  static void _tao_any_destructor (void*);
 
   virtual CORBA::Boolean _is_a (const CORBA::Char *type_id,
                                 CORBA_Environment &ACE_TRY_ENV =
@@ -149,18 +144,15 @@ class  CORBA_Current : public virtual CORBA_Object
 #endif /* end #if !defined */
 
 // Any operators for interface CORBA_Current
-TAO_Export void operator<<= (CORBA::Any &,
-                             CORBA_Current_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
-                                       CORBA_Current *&);
+void operator<<= (CORBA::Any &, CORBA_Current_ptr);
+CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_Current *&);
 
 #if defined (__ACE_INLINE__)
-#include "tao/CurrentC.i"
+#include "CurrentC.i"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
 #endif /* TAO_IDL_CURRENTC_H */

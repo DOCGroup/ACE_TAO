@@ -22,11 +22,9 @@ CFG=TAO LIB - Win32 Debug
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
 CPP=cl.exe
-RSC=rc.exe
 
 !IF  "$(CFG)" == "TAO LIB - Win32 Release"
 
@@ -40,11 +38,12 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
+RSC=rc.exe
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
 # SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -64,10 +63,11 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "../../" /I "../" /D TAO_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /YX /FD /c
+RSC=rc.exe
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
+# ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "../../" /I "../" /D TAO_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /YX /FD /c
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -83,7 +83,7 @@ LIB32=link.exe -lib
 # Name "TAO LIB - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter "cpp"
+# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
 SOURCE=.\Acceptor_Registry.cpp
@@ -106,23 +106,11 @@ SOURCE=.\Asynch_Invocation.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\BoundsC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Buffering_Constraint_Policy.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\CDR.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\CDR_Interpreter.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Client_Priority_Policy.cpp
 # End Source File
 # Begin Source File
 
@@ -162,6 +150,14 @@ SOURCE=.\debug.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\decode.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\deep_free.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\default_client.cpp
 # End Source File
 # Begin Source File
@@ -171,10 +167,6 @@ SOURCE=.\default_resource.cpp
 # Begin Source File
 
 SOURCE=.\default_server.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Direct_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
@@ -218,6 +210,10 @@ SOURCE=.\DynUnion_i.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\encode.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Environment.cpp
 # End Source File
 # Begin Source File
@@ -230,43 +226,11 @@ SOURCE=.\Forwarding_Servant.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Accept_State.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Acceptors.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Base.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Connectors.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Headers.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Lite.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_State.cpp
+SOURCE=.\GIOP.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\GIOP_Server_Request.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Utils.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOPC.cpp
 # End Source File
 # Begin Source File
 
@@ -286,10 +250,6 @@ SOURCE=.\IIOP_Factory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Lite_Factory.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\IIOP_Profile.cpp
 # End Source File
 # Begin Source File
@@ -298,39 +258,7 @@ SOURCE=.\IIOP_Transport.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImplRepoC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS_T.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\InconsistentTypeCodeC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Interceptor.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterceptorC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterceptorS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceS.cpp
 # End Source File
 # Begin Source File
 
@@ -363,14 +291,6 @@ SOURCE=.\IORS.cpp
 # Begin Source File
 
 SOURCE=.\Key_Adapters.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Leader_Follower.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Linear_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
@@ -418,10 +338,6 @@ SOURCE=.\ObjectIDList.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\operation_details.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Operation_Table.cpp
 # End Source File
 # Begin Source File
@@ -439,14 +355,6 @@ SOURCE=.\params.cpp
 # Begin Source File
 
 SOURCE=.\Pluggable.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Pluggable_Messaging.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Pluggable_Messaging_Utils.cpp
 # End Source File
 # Begin Source File
 
@@ -486,31 +394,11 @@ SOURCE=.\PollableS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pool_Per_Endpoint.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Principal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Priority_Mapping.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Profile.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Protocol_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reactor_Per_Priority.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reactor_Registry.cpp
 # End Source File
 # Begin Source File
 
@@ -523,14 +411,6 @@ SOURCE=.\Request.cpp
 # Begin Source File
 
 SOURCE=.\Resource_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Current.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\rtcorbafwd.cpp
 # End Source File
 # Begin Source File
 
@@ -554,43 +434,11 @@ SOURCE=.\Services.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\SHMIOP_Acceptor.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Connect.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Connector.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Profile.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Transport.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\skip.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Stub.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Sync_Strategies.cpp
 # End Source File
 # Begin Source File
 
@@ -603,18 +451,6 @@ SOURCE=.\TAO.cpp
 # Begin Source File
 
 SOURCE=.\TAO_Internal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\TAOC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\TAOS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\target_specification.cpp
 # End Source File
 # Begin Source File
 
@@ -654,10 +490,6 @@ SOURCE=.\UIOP_Factory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\UIOP_Lite_Factory.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\UIOP_Profile.cpp
 # End Source File
 # Begin Source File
@@ -691,7 +523,7 @@ SOURCE=.\WrongTransactionC.cpp
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter "h"
+# PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
 SOURCE=.\Acceptor_Registry.h
@@ -714,23 +546,11 @@ SOURCE=.\Asynch_Invocation.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\BoundsC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Buffering_Constraint_Policy.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\cdr.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\CDR_Interpreter.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Client_Priority_Policy.h
 # End Source File
 # Begin Source File
 
@@ -779,10 +599,6 @@ SOURCE=.\default_resource.h
 # Begin Source File
 
 SOURCE=.\default_server.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Direct_Priority_Mapping.h
 # End Source File
 # Begin Source File
 
@@ -838,19 +654,7 @@ SOURCE=.\giop.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Headers.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_State.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Server_Request.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOPC.h
 # End Source File
 # Begin Source File
 
@@ -878,39 +682,7 @@ SOURCE=.\IIOP_Transport.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImplRepoC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\InconsistentTypeCodeC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Interceptor.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterceptorC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterceptorS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceS.h
 # End Source File
 # Begin Source File
 
@@ -939,14 +711,6 @@ SOURCE=.\IORManipulation.h
 # Begin Source File
 
 SOURCE=.\IORS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Leader_Follower.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Linear_Priority_Mapping.h
 # End Source File
 # Begin Source File
 
@@ -1066,31 +830,11 @@ SOURCE=.\PollableS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pool_Per_Endpoint.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Principal.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Priority_Mapping.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Profile.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Protocol_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reactor_Per_Priority.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reactor_Registry.h
 # End Source File
 # Begin Source File
 
@@ -1103,14 +847,6 @@ SOURCE=.\request.h
 # Begin Source File
 
 SOURCE=.\Resource_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Current.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\rtcorbafwd.h
 # End Source File
 # Begin Source File
 
@@ -1138,34 +874,6 @@ SOURCE=.\Services.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\SHMIOP_Acceptor.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Connect.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Connector.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Profile.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Transport.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\singletons.h
 # End Source File
 # Begin Source File
@@ -1183,18 +891,6 @@ SOURCE=.\TAO.h
 # Begin Source File
 
 SOURCE=.\TAO_Internal.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\TAOC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\TAOS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\target_specification.h
 # End Source File
 # Begin Source File
 
@@ -1259,7 +955,7 @@ SOURCE=.\WrongTransactionC.h
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter "i"
+# PROP Default_Filter "*.i"
 # Begin Source File
 
 SOURCE=.\Acceptor_Registry.i
@@ -1274,23 +970,7 @@ SOURCE=.\any.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Asynch_Invocation.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\BoundsC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Buffering_Constraint_Policy.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\cdr.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Client_Priority_Policy.i
 # End Source File
 # Begin Source File
 
@@ -1322,10 +1002,6 @@ SOURCE=.\default_server.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Direct_Priority_Mapping.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\DomainC.i
 # End Source File
 # Begin Source File
@@ -1350,19 +1026,7 @@ SOURCE=.\giop.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Headers.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_State.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Server_Request.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOPC.i
 # End Source File
 # Begin Source File
 
@@ -1374,51 +1038,11 @@ SOURCE=.\IIOP_ORB.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImplRepoC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS_T.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Interceptor.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterceptorC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Invocation.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\IOPC.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\IOPS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Leader_Follower.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Linear_Priority_Mapping.i
 # End Source File
 # Begin Source File
 
@@ -1494,39 +1118,7 @@ SOURCE=.\PolicyC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pool_Per_Endpoint.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Priority_Mapping.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Profile.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reactor_Per_Priority.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reactor_Registry.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reply_Dispatcher.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Request.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Current.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\rtcorbafwd.i
 # End Source File
 # Begin Source File
 
@@ -1546,22 +1138,6 @@ SOURCE=.\Services.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\SHMIOP_Acceptor.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Connect.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Profile.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\stub.i
 # End Source File
 # Begin Source File
@@ -1571,18 +1147,6 @@ SOURCE=.\Tagged_Components.i
 # Begin Source File
 
 SOURCE=.\TAO_Internal.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\TAOC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\TAOS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\target_specification.i
 # End Source File
 # Begin Source File
 
@@ -1611,14 +1175,6 @@ SOURCE=.\ValueFactory.i
 # Begin Source File
 
 SOURCE=.\ValueFactory_Map.i
-# End Source File
-# End Group
-# Begin Group "Resource files"
-
-# PROP Default_Filter "rc"
-# Begin Source File
-
-SOURCE=.\tao.rc
 # End Source File
 # End Group
 # End Target

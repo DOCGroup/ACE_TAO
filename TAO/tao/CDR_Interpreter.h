@@ -19,7 +19,6 @@
 
 #ifndef TAO_CDR_INTERPRETER_H
 #define TAO_CDR_INTERPRETER_H
-#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -274,5 +273,4 @@ public:
   // initialization time.
 };
 
-#include "ace/post.h"
 #endif /* TAO_CDR_INTERPRETER_H */

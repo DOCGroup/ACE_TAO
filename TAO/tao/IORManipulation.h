@@ -19,7 +19,6 @@
 
 #ifndef TAO_IOR_MANIPULATION_H
 #define TAO_IOR_MANIPULATION_H
-#include "ace/pre.h"
 
 #include "tao/Object.h"
 
@@ -29,7 +28,7 @@
 
 #include "tao/IORS.h"
 
-class TAO_Export TAO_IOR_Manipulation_impl : public POA_TAO_IOP::TAO_IOR_Manipulation
+class TAO_IOR_Manipulation_impl : public POA_TAO_IOP::TAO_IOR_Manipulation
 {
 // = TITLE
   //     IOR Manipulation class
@@ -95,5 +94,4 @@ public:
       ));
 };
 
-#include "ace/post.h"
 #endif /* TAO_IOR_MANIPULATION_H */

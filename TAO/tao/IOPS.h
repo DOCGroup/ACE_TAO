@@ -1,3 +1,4 @@
+//
 // $Id$
 //
 // ================================================================
@@ -18,9 +19,8 @@
 
 #ifndef TAO_IOPS_H
 #define TAO_IOPS_H
-#include "ace/pre.h"
 
-#include "tao/IOPC.h"
+#include "IOPC.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -28,26 +28,21 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
 TAO_NAMESPACE  POA_IOP
 {
-}
-TAO_NAMESPACE_CLOSE
+};
 
-#include "tao/IOPS_T.h"
+#include "IOPS_T.h"
 
 #if defined (__ACE_INLINE__)
-#include "tao/IOPS.i"
+#include "IOPS.i"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
 #endif /* TAO_IOPS_H */

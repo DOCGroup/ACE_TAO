@@ -20,7 +20,6 @@
 
 #ifndef TAO_IDL_TIMEBASEC_H
 #define TAO_IDL_TIMEBASEC_H
-#include "ace/pre.h"
 
 #include "tao/Any.h"
 #include "tao/CDR.h"
@@ -35,9 +34,6 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -57,8 +53,6 @@ TAO_NAMESPACE  TimeBase
 
   struct TAO_Export UtcT
   {
-    static void _tao_any_destructor (void*);
-
     TimeT time;
     CORBA::ULong inacclo;
     CORBA::UShort inacchi;
@@ -98,8 +92,6 @@ TAO_NAMESPACE  TimeBase
 
   struct TAO_Export IntervalT
   {
-    static void _tao_any_destructor (void*);
-
     TimeT lower_bound;
     TimeT upper_bound;
   };
@@ -136,38 +128,26 @@ TAO_NAMESPACE  TimeBase
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_IntervalT;
 
 
-}
-TAO_NAMESPACE_CLOSE // module TimeBase
+}; // module TimeBase
 
-TAO_Export void operator<<= (CORBA::Any &,
-                             const TimeBase::UtcT &); // copying version
-TAO_Export void operator<<= (CORBA::Any &,
-                             TimeBase::UtcT*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
-                                       TimeBase::UtcT *&);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
-                                       const TimeBase::UtcT *&);
-TAO_Export void operator<<= (CORBA::Any &,
-                             const TimeBase::IntervalT &); // copying version
-TAO_Export void operator<<= (CORBA::Any &,
-                             TimeBase::IntervalT*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
-                                       TimeBase::IntervalT *&);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
-                                       const TimeBase::IntervalT *&);
+void TAO_Export operator<<= (CORBA::Any &, const TimeBase::UtcT &); // copying version
+void TAO_Export operator<<= (CORBA::Any &, TimeBase::UtcT*); // noncopying version
+CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, TimeBase::UtcT *&);
+void TAO_Export operator<<= (CORBA::Any &, const TimeBase::IntervalT &); // copying version
+void TAO_Export operator<<= (CORBA::Any &, TimeBase::IntervalT*); // noncopying version
+CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, TimeBase::IntervalT *&);
 
 #if defined (__ACE_INLINE__)
-#include "tao/TimeBaseC.i"
+#include "TimeBaseC.i"
 #else
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TimeBase::UtcT &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TimeBase::UtcT &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TimeBase::IntervalT &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TimeBase::IntervalT &);
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const TimeBase::UtcT &);
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, TimeBase::UtcT &);
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const TimeBase::IntervalT &);
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, TimeBase::IntervalT &);
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
 #endif /* TAO_IDL_TIMEBASEC_H */

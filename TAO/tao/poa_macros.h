@@ -2,7 +2,6 @@
 
 #ifndef TAO_POA_MACROS_H
 #define TAO_POA_MACROS_H
-#include "ace/pre.h"
 
 #include "tao/try_macros.h"
 
@@ -33,5 +32,4 @@
   ACE_READ_GUARD_THROW_EX(MUTEX,OBJ,LOCK,CORBA::OBJ_ADAPTER ()); \
   ACE_CHECK_RETURN (RETURN)
 
-#include "ace/post.h"
 #endif /* TAO_POA_MACROS_H */

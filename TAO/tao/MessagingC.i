@@ -8,8 +8,6 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#if (TAO_HAS_REBIND_POLICY == 1)
-
 ACE_INLINE
 Messaging::RebindPolicy::RebindPolicy (void) // default constructor
 {}
@@ -196,10 +194,6 @@ Messaging::RebindPolicy_out::operator-> (void)
 {
   return this->ptr_;
 }
-
-#endif /* TAO_HAS_REBIND_POLICY == 1 */
-
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
 ACE_INLINE
 Messaging::SyncScopePolicy::SyncScopePolicy (void) // default constructor
@@ -388,10 +382,6 @@ Messaging::SyncScopePolicy_out::operator-> (void)
   return this->ptr_;
 }
 
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
-
-#if (TAO_HAS_PRIORITY_POLICIES == 1)
-
 // *************************************************************
 // Inline operations for class Messaging::PriorityRange_var
 // *************************************************************
@@ -410,8 +400,7 @@ ACE_INLINE
 Messaging::PriorityRange_var::PriorityRange_var (const Messaging::PriorityRange_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_,
-             Messaging::PriorityRange(*p.ptr_));
+    this->ptr_ = new Messaging::PriorityRange(*p.ptr_);
   else
     this->ptr_ = 0;
 }
@@ -436,9 +425,7 @@ Messaging::PriorityRange_var::operator= (const Messaging::PriorityRange_var &p)
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_,
-                    Messaging::PriorityRange (*p.ptr_),
-                    *this);
+    this->ptr_ = new Messaging::PriorityRange (*p.ptr_);
   }
   return *this;
 }
@@ -878,10 +865,6 @@ Messaging::ReplyPriorityPolicy_out::operator-> (void)
   return this->ptr_;
 }
 
-#endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
-
-#if (TAO_HAS_REQUEST_START_TIME_POLICY == 1)
-
 ACE_INLINE
 Messaging::RequestStartTimePolicy::RequestStartTimePolicy (void) // default constructor
 {}
@@ -1068,10 +1051,6 @@ Messaging::RequestStartTimePolicy_out::operator-> (void)
 {
   return this->ptr_;
 }
-
-#endif /* TAO_HAS_REQUEST_START_TIME_POLICY == 1 */
-
-#if (TAO_HAS_REQUEST_END_TIME_POLICY == 1)
 
 ACE_INLINE
 Messaging::RequestEndTimePolicy::RequestEndTimePolicy (void) // default constructor
@@ -1260,10 +1239,6 @@ Messaging::RequestEndTimePolicy_out::operator-> (void)
   return this->ptr_;
 }
 
-#endif /* TAO_HAS_REQUEST_END_TIME_POLICY == 1 */
-
-#if (TAO_HAS_REPLY_START_TIME_POLICY == 1)
-
 ACE_INLINE
 Messaging::ReplyStartTimePolicy::ReplyStartTimePolicy (void) // default constructor
 {}
@@ -1450,10 +1425,6 @@ Messaging::ReplyStartTimePolicy_out::operator-> (void)
 {
   return this->ptr_;
 }
-
-#endif /* TAO_HAS_REPLY_START_TIME_POLICY == 1 */
-
-#if (TAO_HAS_REPLY_END_TIME_POLICY == 1)
 
 ACE_INLINE
 Messaging::ReplyEndTimePolicy::ReplyEndTimePolicy (void) // default constructor
@@ -1642,10 +1613,6 @@ Messaging::ReplyEndTimePolicy_out::operator-> (void)
   return this->ptr_;
 }
 
-#endif /* TAO_HAS_REPLY_END_TIME_POLICY == 1 */
-
-#if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
-
 ACE_INLINE
 Messaging::RelativeRequestTimeoutPolicy::RelativeRequestTimeoutPolicy (void) // default constructor
 {}
@@ -1832,10 +1799,6 @@ Messaging::RelativeRequestTimeoutPolicy_out::operator-> (void)
 {
   return this->ptr_;
 }
-
-#endif /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
 ACE_INLINE
 Messaging::RelativeRoundtripTimeoutPolicy::RelativeRoundtripTimeoutPolicy (void) // default constructor
@@ -2024,10 +1987,6 @@ Messaging::RelativeRoundtripTimeoutPolicy_out::operator-> (void)
   return this->ptr_;
 }
 
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_ROUTING_POLICY == 1)
-
 // *************************************************************
 // Inline operations for class Messaging::RoutingTypeRange_var
 // *************************************************************
@@ -2046,8 +2005,7 @@ ACE_INLINE
 Messaging::RoutingTypeRange_var::RoutingTypeRange_var (const Messaging::RoutingTypeRange_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_,
-             Messaging::RoutingTypeRange(*p.ptr_));
+    this->ptr_ = new Messaging::RoutingTypeRange(*p.ptr_);
   else
     this->ptr_ = 0;
 }
@@ -2072,9 +2030,7 @@ Messaging::RoutingTypeRange_var::operator= (const Messaging::RoutingTypeRange_va
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_,
-                    Messaging::RoutingTypeRange (*p.ptr_),
-                    *this);
+    this->ptr_ = new Messaging::RoutingTypeRange (*p.ptr_);
   }
   return *this;
 }
@@ -2327,10 +2283,6 @@ Messaging::RoutingPolicy_out::operator-> (void)
   return this->ptr_;
 }
 
-#endif /* TAO_HAS_ROUTING_POLICY == 1 */
-
-#if (TAO_HAS_MAX_HOPS_POLICY == 1)
-
 ACE_INLINE
 Messaging::MaxHopsPolicy::MaxHopsPolicy (void) // default constructor
 {}
@@ -2517,10 +2469,6 @@ Messaging::MaxHopsPolicy_out::operator-> (void)
 {
   return this->ptr_;
 }
-
-#endif /* TAO_HAS_MAX_HOPS_POLICY == 1 */
-
-#if (TAO_HAS_QUEUE_ORDER_POLICY == 1)
 
 ACE_INLINE
 Messaging::QueueOrderPolicy::QueueOrderPolicy (void) // default constructor
@@ -2709,8 +2657,6 @@ Messaging::QueueOrderPolicy_out::operator-> (void)
   return this->ptr_;
 }
 
-#endif /* TAO_HAS_QUEUE_ORDER_POLICY == 1 */
-
 // *************************************************************
 // Inline operations for class Messaging::PolicyValue_var
 // *************************************************************
@@ -2729,8 +2675,7 @@ ACE_INLINE
 Messaging::PolicyValue_var::PolicyValue_var (const Messaging::PolicyValue_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_,
-             Messaging::PolicyValue(*p.ptr_));
+    this->ptr_ = new Messaging::PolicyValue(*p.ptr_);
   else
     this->ptr_ = 0;
 }
@@ -2755,9 +2700,7 @@ Messaging::PolicyValue_var::operator= (const Messaging::PolicyValue_var &p)
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_,
-                    Messaging::PolicyValue (*p.ptr_),
-                    *this);
+    this->ptr_ = new Messaging::PolicyValue (*p.ptr_);
   }
   return *this;
 }
@@ -2901,8 +2844,7 @@ ACE_INLINE
 Messaging::PolicyValueSeq_var::PolicyValueSeq_var (const Messaging::PolicyValueSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_,
-             Messaging::PolicyValueSeq (*p.ptr_));
+    this->ptr_ = new Messaging::PolicyValueSeq(*p.ptr_);
   else
     this->ptr_ = 0;
 }
@@ -2927,9 +2869,7 @@ Messaging::PolicyValueSeq_var::operator= (const Messaging::PolicyValueSeq_var &p
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_,
-                    Messaging::PolicyValueSeq (*p.ptr_),
-                    *this);
+    this->ptr_ = new Messaging::PolicyValueSeq (*p.ptr_);
   }
   return *this;
 }
@@ -3067,206 +3007,7 @@ Messaging::PolicyValueSeq_out::operator[] (CORBA::ULong slot)
   return this->ptr_->operator[] (slot);
 }
 
-
-#if (TAO_HAS_AMI_CALLBACK == 1)
-
-// *************************************************************
-// Inline operations for class Messaging::ExceptionHolder::_tao_seq_Octet_var
-// *************************************************************
-
-ACE_INLINE
-Messaging::ExceptionHolder::_tao_seq_Octet_var::_tao_seq_Octet_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-Messaging::ExceptionHolder::_tao_seq_Octet_var::_tao_seq_Octet_var (Messaging::ExceptionHolder::_tao_seq_Octet *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-Messaging::ExceptionHolder::_tao_seq_Octet_var::_tao_seq_Octet_var (const Messaging::ExceptionHolder::_tao_seq_Octet_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, Messaging::ExceptionHolder::_tao_seq_Octet (*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-Messaging::ExceptionHolder::_tao_seq_Octet_var::~_tao_seq_Octet_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet_var &
-Messaging::ExceptionHolder::_tao_seq_Octet_var::operator= (Messaging::ExceptionHolder::_tao_seq_Octet *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet_var &
-Messaging::ExceptionHolder::_tao_seq_Octet_var::operator= (const Messaging::ExceptionHolder::_tao_seq_Octet_var &p) // deep copy
-{
-  if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, Messaging::ExceptionHolder::_tao_seq_Octet (*p.ptr_), *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const Messaging::ExceptionHolder::_tao_seq_Octet *
-Messaging::ExceptionHolder::_tao_seq_Octet_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet *
-Messaging::ExceptionHolder::_tao_seq_Octet_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-Messaging::ExceptionHolder::_tao_seq_Octet_var::operator const Messaging::ExceptionHolder::_tao_seq_Octet &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-Messaging::ExceptionHolder::_tao_seq_Octet_var::operator Messaging::ExceptionHolder::_tao_seq_Octet &() // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-Messaging::ExceptionHolder::_tao_seq_Octet_var::operator Messaging::ExceptionHolder::_tao_seq_Octet &() const// cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA::Octet &
-Messaging::ExceptionHolder::_tao_seq_Octet_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE const Messaging::ExceptionHolder::_tao_seq_Octet &
-Messaging::ExceptionHolder::_tao_seq_Octet_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet &
-Messaging::ExceptionHolder::_tao_seq_Octet_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size
-ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet *&
-Messaging::ExceptionHolder::_tao_seq_Octet_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet *
-Messaging::ExceptionHolder::_tao_seq_Octet_var::_retn (void)
-{
-  Messaging::ExceptionHolder::_tao_seq_Octet *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet *
-Messaging::ExceptionHolder::_tao_seq_Octet_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class Messaging::ExceptionHolder::_tao_seq_Octet_out
-// *************************************************************
-
-ACE_INLINE
-Messaging::ExceptionHolder::_tao_seq_Octet_out::_tao_seq_Octet_out (Messaging::ExceptionHolder::_tao_seq_Octet *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-Messaging::ExceptionHolder::_tao_seq_Octet_out::_tao_seq_Octet_out (Messaging::ExceptionHolder::_tao_seq_Octet_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-Messaging::ExceptionHolder::_tao_seq_Octet_out::_tao_seq_Octet_out (const Messaging::ExceptionHolder::_tao_seq_Octet_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (Messaging::ExceptionHolder::_tao_seq_Octet_out&,p).ptr_)
-{}
-
-ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet_out &
-Messaging::ExceptionHolder::_tao_seq_Octet_out::operator= (const Messaging::ExceptionHolder::_tao_seq_Octet_out &p)
-{
-  this->ptr_ = ACE_const_cast (Messaging::ExceptionHolder::_tao_seq_Octet_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet_out &
-Messaging::ExceptionHolder::_tao_seq_Octet_out::operator= (Messaging::ExceptionHolder::_tao_seq_Octet *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-Messaging::ExceptionHolder::_tao_seq_Octet_out::operator Messaging::ExceptionHolder::_tao_seq_Octet *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet *&
-Messaging::ExceptionHolder::_tao_seq_Octet_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet *
-Messaging::ExceptionHolder::_tao_seq_Octet_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA::Octet &
-Messaging::ExceptionHolder::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-
-
-ACE_INLINE
-Messaging::ExceptionHolder::ExceptionHolder (void) // default constructor
-{}
-
-ACE_INLINE
-Messaging::ExceptionHolder::~ExceptionHolder (void) // destructor
-{}
-
-ACE_INLINE const char*
-Messaging::ExceptionHolder::_tao_obv_static_repository_id ()
-{
-  return "IDL:Messaging/ExceptionHolder:1.0";
-}
-
+#if defined(TAO_POLLER)
 // *************************************************************
 // Inline operations for class Messaging::ExceptionHolder_var
 // *************************************************************
@@ -3277,38 +3018,29 @@ Messaging::ExceptionHolder_var::ExceptionHolder_var (void) // default constructo
 {}
 
 ACE_INLINE
-Messaging::ExceptionHolder_var::ExceptionHolder_var (Messaging::ExceptionHolder* p)
+Messaging::ExceptionHolder_var::ExceptionHolder_var (Messaging::ExceptionHolder *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-Messaging::ExceptionHolder_var::ExceptionHolder_var (const Messaging::ExceptionHolder* p)
-  : ptr_ (ACE_const_cast(Messaging::ExceptionHolder*, p))
-{}
-
-ACE_INLINE Messaging::ExceptionHolder*
-Messaging::ExceptionHolder_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
 Messaging::ExceptionHolder_var::ExceptionHolder_var (const Messaging::ExceptionHolder_var &p) // copy constructor
 {
-  CORBA::add_ref (p.ptr ());
-  this->ptr_ = p.ptr ();
+  if (p.ptr_)
+    this->ptr_ = new Messaging::ExceptionHolder(*p.ptr_);
+  else
+    this->ptr_ = 0;
 }
 
 ACE_INLINE
 Messaging::ExceptionHolder_var::~ExceptionHolder_var (void) // destructor
 {
-  CORBA::remove_ref (this->ptr_);
+  delete this->ptr_;
 }
 
 ACE_INLINE Messaging::ExceptionHolder_var &
-Messaging::ExceptionHolder_var::operator= (Messaging::ExceptionHolder* p)
+Messaging::ExceptionHolder_var::operator= (Messaging::ExceptionHolder *p)
 {
-  CORBA::remove_ref (this->ptr_);
+  delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
@@ -3318,68 +3050,83 @@ Messaging::ExceptionHolder_var::operator= (const Messaging::ExceptionHolder_var 
 {
   if (this != &p)
   {
-    CORBA::remove_ref (this->ptr_);
-    ExceptionHolder* tmp = p.ptr ();
-    CORBA::add_ref (tmp);
-    this->ptr_ = tmp;
+    delete this->ptr_;
+    this->ptr_ = new Messaging::ExceptionHolder (*p.ptr_);
   }
   return *this;
 }
 
-ACE_INLINE
-Messaging::ExceptionHolder_var::operator const Messaging::ExceptionHolder* () const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-Messaging::ExceptionHolder_var::operator Messaging::ExceptionHolder* () // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE Messaging::ExceptionHolder*
+ACE_INLINE const Messaging::ExceptionHolder *
 Messaging::ExceptionHolder_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE Messaging::ExceptionHolder*
+ACE_INLINE Messaging::ExceptionHolder *
+Messaging::ExceptionHolder_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+Messaging::ExceptionHolder_var::operator const Messaging::ExceptionHolder &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+Messaging::ExceptionHolder_var::operator Messaging::ExceptionHolder &() // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+Messaging::ExceptionHolder_var::operator Messaging::ExceptionHolder &() const// cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE const Messaging::ExceptionHolder &
 Messaging::ExceptionHolder_var::in (void) const
 {
-  return this->ptr_;
+  return *this->ptr_;
 }
 
-ACE_INLINE Messaging::ExceptionHolder* &
+ACE_INLINE Messaging::ExceptionHolder &
 Messaging::ExceptionHolder_var::inout (void)
 {
-  return this->ptr_;
+  return *this->ptr_;
 }
 
-ACE_INLINE Messaging::ExceptionHolder* &
+// mapping for variable size
+ACE_INLINE Messaging::ExceptionHolder *&
 Messaging::ExceptionHolder_var::out (void)
 {
-  CORBA::remove_ref (this->ptr_);
+  delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE Messaging::ExceptionHolder*
+ACE_INLINE Messaging::ExceptionHolder *
 Messaging::ExceptionHolder_var::_retn (void)
 {
-  // yield ownership of managed obj reference
-  ExceptionHolder* tmp = this->ptr_;
+  Messaging::ExceptionHolder *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
+ACE_INLINE Messaging::ExceptionHolder *
+Messaging::ExceptionHolder_var::ptr (void) const
+{
+  return this->ptr_;
+}
 
 // *************************************************************
 // Inline operations for class Messaging::ExceptionHolder_out
 // *************************************************************
 
 ACE_INLINE
-Messaging::ExceptionHolder_out::ExceptionHolder_out (Messaging::ExceptionHolder* &p)
+Messaging::ExceptionHolder_out::ExceptionHolder_out (Messaging::ExceptionHolder *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
@@ -3389,7 +3136,7 @@ ACE_INLINE
 Messaging::ExceptionHolder_out::ExceptionHolder_out (Messaging::ExceptionHolder_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
-  CORBA::remove_ref (this->ptr_);
+  delete this->ptr_;
   this->ptr_ = 0;
 }
 
@@ -3406,43 +3153,31 @@ Messaging::ExceptionHolder_out::operator= (const Messaging::ExceptionHolder_out 
 }
 
 ACE_INLINE Messaging::ExceptionHolder_out &
-Messaging::ExceptionHolder_out::operator= (const Messaging::ExceptionHolder_var &p)
-{
-  ExceptionHolder* tmp = p.ptr ();
-  CORBA::add_ref (tmp);
-  this->ptr_ = tmp;
-  return *this;
-}
-
-ACE_INLINE Messaging::ExceptionHolder_out &
-Messaging::ExceptionHolder_out::operator= (Messaging::ExceptionHolder* p)
+Messaging::ExceptionHolder_out::operator= (Messaging::ExceptionHolder *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE
-Messaging::ExceptionHolder_out::operator Messaging::ExceptionHolder* &() // cast
+Messaging::ExceptionHolder_out::operator Messaging::ExceptionHolder *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE Messaging::ExceptionHolder* &
+ACE_INLINE Messaging::ExceptionHolder *&
 Messaging::ExceptionHolder_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE Messaging::ExceptionHolder*
+ACE_INLINE Messaging::ExceptionHolder *
 Messaging::ExceptionHolder_out::operator-> (void)
 {
   return this->ptr_;
 }
 
-
-
 // ****************************************************************
-
 
 ACE_INLINE
 Messaging::ReplyHandler::ReplyHandler (void) // default constructor
@@ -3631,10 +3366,7 @@ Messaging::ReplyHandler_out::operator-> (void)
   return this->ptr_;
 }
 
-#endif /* TAO_HAS_AMI_CALLBACK == 1 */
-
-#if (TAO_HAS_AMI_POLLER == 1)
-
+#if defined(TAO_POLLER)
 ACE_INLINE
 Messaging::Poller::Poller (void) // default constructor
 {}
@@ -3821,113 +3553,11 @@ Messaging::Poller_out::operator-> (void)
 {
   return this->ptr_;
 }
-
-#endif /* TAO_HAS_AMI_POLLER == 1 */
+#endif
 
 // ****************************************************************
 
-#if (TAO_HAS_REBIND_POLICY == 1)
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::RebindPolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    Messaging::RebindPolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      Messaging::RebindPolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-#endif /* TAO_HAS_REBIND_POLICY == 1 */
-
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const Messaging::SyncScopePolicy_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    Messaging::SyncScopePolicy_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::SyncScopePolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    Messaging::SyncScopePolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      Messaging::SyncScopePolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
-
-#if (TAO_HAS_PRIORITY_POLICIES == 1)
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::PriorityRange &_tao_aggregate
-  )
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Messaging::PriorityRange &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.min) &&
@@ -3939,11 +3569,7 @@ operator<< (
 
 }
 
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    Messaging::PriorityRange &_tao_aggregate
-  )
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::PriorityRange &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.min) &&
@@ -3955,343 +3581,9 @@ operator>> (
 
 }
 
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::RequestPriorityPolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
+// ****************************************************************
 
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    Messaging::RequestPriorityPolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      Messaging::RequestPriorityPolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::ReplyPriorityPolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    Messaging::ReplyPriorityPolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      Messaging::ReplyPriorityPolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-#endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
-
-#if (TAO_HAS_REQUEST_START_TIME_POLICY == 1)
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::RequestStartTimePolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    Messaging::RequestStartTimePolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      Messaging::RequestStartTimePolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-#endif /* TAO_HAS_REQUEST_START_TIME_POLICY == 1 */
-
-#if (TAO_HAS_REQUEST_END_TIME_POLICY == 1)
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::RequestEndTimePolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    Messaging::RequestEndTimePolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      Messaging::RequestEndTimePolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-#endif /* TAO_HAS_REQUEST_END_TIME_POLICY == 1 */
-
-#if (TAO_HAS_REPLY_START_TIME_POLICY == 1)
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::ReplyStartTimePolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    Messaging::ReplyStartTimePolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      Messaging::ReplyStartTimePolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-#endif /* TAO_HAS_REPLY_START_TIME_POLICY == 1 */
-
-#if (TAO_HAS_REPLY_END_TIME_POLICY == 1)
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::ReplyEndTimePolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    Messaging::ReplyEndTimePolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      Messaging::ReplyEndTimePolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-#endif /* TAO_HAS_REPLY_END_TIME_POLICY == 1 */
-
-#if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::RelativeRequestTimeoutPolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    Messaging::RelativeRequestTimeoutPolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      Messaging::RelativeRequestTimeoutPolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-#endif /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::RelativeRoundtripTimeoutPolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    Messaging::RelativeRoundtripTimeoutPolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      Messaging::RelativeRoundtripTimeoutPolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_ROUTING_POLICY == 1)
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::RoutingTypeRange &_tao_aggregate
-  )
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Messaging::RoutingTypeRange &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.min) &&
@@ -4303,11 +3595,7 @@ operator<< (
 
 }
 
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    Messaging::RoutingTypeRange &_tao_aggregate
-  )
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::RoutingTypeRange &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.min) &&
@@ -4318,130 +3606,6 @@ operator>> (
     return 0;
 
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::RoutingPolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    Messaging::RoutingPolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      Messaging::RoutingPolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-#endif /* TAO_HAS_ROUTING_POLICY == 1 */
-
-#if (TAO_HAS_MAX_HOPS_POLICY == 1)
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::MaxHopsPolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    Messaging::MaxHopsPolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      Messaging::MaxHopsPolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-#endif /* TAO_HAS_MAX_HOPS_POLICY == 1 */
-
-#if (TAO_HAS_QUEUE_ORDER_POLICY == 1)
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::QueueOrderPolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    Messaging::QueueOrderPolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      Messaging::QueueOrderPolicy::_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-#endif /* TAO_HAS_QUEUE_ORDER_POLICY == 1 */
 
 // ****************************************************************
 
@@ -4504,11 +3668,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::PolicyValue
 
 // ****************************************************************
 
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::PolicyValue &_tao_aggregate
-  )
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Messaging::PolicyValue &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.ptype) &&
@@ -4520,11 +3680,7 @@ operator<< (
 
 }
 
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    Messaging::PolicyValue &_tao_aggregate
-  )
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::PolicyValue &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.ptype) &&
@@ -4538,8 +3694,7 @@ operator>> (
 
 // ****************************************************************
 
-ACE_INLINE CORBA::Boolean
-operator<< (
+ACE_INLINE CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
     const Messaging::PolicyValueSeq &_tao_sequence
   )
@@ -4555,11 +3710,7 @@ operator<< (
   return 0; // error
 }
 
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    Messaging::PolicyValueSeq &_tao_sequence
-  )
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::PolicyValueSeq &_tao_sequence)
 {
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)
@@ -4577,52 +3728,6 @@ operator>> (
 
 // ****************************************************************
 
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
-
-ACE_INLINE CORBA::Boolean
-operator<< (TAO_OutputCDR &strm, const Messaging::ExceptionHolder *_tao_valuetype)
-{
-  return CORBA_ValueBase::_tao_marshal (strm,
-    ACE_const_cast (Messaging::ExceptionHolder*, _tao_valuetype),
-    (ptr_arith_t) &Messaging::ExceptionHolder::_downcast);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (TAO_InputCDR &strm, Messaging::ExceptionHolder *&_tao_valuetype)
-{
-  return Messaging::ExceptionHolder::_tao_unmarshal (strm, _tao_valuetype);
-}
-
-ACE_INLINE CORBA::Boolean
-OBV_Messaging::ExceptionHolder::_tao_marshal_state (TAO_OutputCDR &strm)
-{
-  if (
-    (strm << CORBA::Any::from_boolean (_pd_is_system_exception)) &&
-    (strm << CORBA::Any::from_boolean (_pd_byte_order)) &&
-    (strm << *_pd_marshaled_exception)
-  )
-    return 1;
-  else
-    return 0;
-
-}
-
-ACE_INLINE CORBA::Boolean
-OBV_Messaging::ExceptionHolder::_tao_unmarshal_state (TAO_InputCDR &strm)
-{
-  if (
-    (strm >> CORBA::Any::to_boolean (_pd_is_system_exception)) &&
-    (strm >> CORBA::Any::to_boolean (_pd_byte_order)) &&
-    (strm >> *_pd_marshaled_exception)
-  )
-    return 1;
-  else
-    return 0;
-
-}
-
-
-
 ACE_INLINE CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
     const Messaging::ExceptionHolder::_tao_seq_Octet &_tao_sequence
@@ -4635,7 +3740,7 @@ ACE_INLINE CORBA::Boolean operator<< (
 #if defined (TAO_NO_COPY_OCTET_SEQUENCES)
     {
       TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
-        ACE_dynamic_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (Messaging::PolicyValue::_tao_seq_Octet *)&_tao_sequence);
+        ACE_dynamic_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (Messaging::ExceptionHolder::_tao_seq_Octet *)&_tao_sequence);
       if (oseq->mb ())
         return strm.write_octet_array_mb (oseq->mb ());
       else
@@ -4680,10 +3785,33 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::ExceptionHo
   return 0; // error
 }
 
+// ****************************************************************
 
-#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Messaging::ExceptionHolder &_tao_aggregate)
+{
+  if (
+    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_system_exception)) &&
+    (strm << CORBA::Any::from_boolean (_tao_aggregate.byte_order)) &&
+    (strm << _tao_aggregate.marshaled_exception)
+  )
+    return 1;
+  else
+    return 0;
 
-#if (TAO_HAS_AMI_CALLBACK == 1)
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::ExceptionHolder &_tao_aggregate)
+{
+  if (
+    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_system_exception)) &&
+    (strm >> CORBA::Any::to_boolean (_tao_aggregate.byte_order)) &&
+    (strm >> _tao_aggregate.marshaled_exception)
+  )
+    return 1;
+  else
+    return 0;
+
+}
 
 // ****************************************************************
 
@@ -4736,11 +3864,7 @@ operator>> (
   return 0;
 }
 
-#endif /* TAO_HAS_AMI_CALLBACK == 1 */
-
 // ****************************************************************
-
-#if (TAO_HAS_AMI_POLLER == 1)
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -4790,5 +3914,4 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-
-#endif /* TAO_HAS_AMI_POLLER == 1 */
+#endif

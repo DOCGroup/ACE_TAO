@@ -7,23 +7,16 @@
 #include "tao/debug.h"
 #include "tao/IIOP_Factory.h"
 #include "tao/UIOP_Factory.h"
-#include "tao/SHMIOP_Factory.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Connector_Registry.h"
-#include "tao/Single_Reactor.h"
-#include "tao/Reactor_Per_Priority.h"
-#include "tao/Direct_Priority_Mapping.h"
-#include "tao/Linear_Priority_Mapping.h"
 
 #include "ace/Select_Reactor.h"
 #include "ace/FlReactor.h"
-#include "ace/TkReactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Msg_WFMO_Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
-#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/default_resource.i"
@@ -34,15 +27,9 @@ ACE_RCSID(tao, default_resource, "$Id$")
 TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   : use_tss_resources_ (0),
     use_locked_data_blocks_ (1),
-    reactor_registry_type_ (TAO_SINGLE_REACTOR),
     reactor_type_ (TAO_REACTOR_SELECT_MT),
     cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK),
-    protocol_factories_ (),
-    connection_caching_type_ (TAO_CONNECTION_CACHING_STRATEGY),
-    purge_percentage_ (TAO_PURGE_PERCENT),
-    reactor_mask_signals_ (1),
-    sched_policy_ (ACE_SCHED_OTHER),
-    priority_mapping_type_ (TAO_PRIORITY_MAPPING_LINEAR)
+    protocol_factories_ ()
 {
 }
 
@@ -81,13 +68,12 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               this->use_tss_resources_ = 1;
           }
       }
-
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  "-ORBReactorLock") == 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO_Default_Resource obsolete -ORBReactorLock ")
-                    ASYS_TEXT ("option, please use -ORBReactorType\n")));
+                    "TAO_Default_Resource obsolete -ORBReactorLock "
+                    "option, please use -ORBReactorType\n"));
         curarg++;
         if (curarg < argc)
           {
@@ -97,42 +83,6 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               reactor_type_ = TAO_REACTOR_SELECT_ST;
             else if (ACE_OS::strcasecmp (name, "token") == 0)
               reactor_type_= TAO_REACTOR_SELECT_MT;
-          }
-      }
-
-    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBReactorMaskSignals") == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-          {
-            char *name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name, "0") == 0)
-              this->reactor_mask_signals_ = 0;
-            else if (ACE_OS::strcasecmp (name, "1") == 0)
-              this->reactor_mask_signals_= 1;
-          }
-      }
-
-    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBReactorRegistry") == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-          {
-            char *name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name,
-                                    "single") == 0)
-              this->reactor_registry_type_ = TAO_SINGLE_REACTOR;
-            else if (ACE_OS::strcasecmp (name,
-                                         "per-priority") == 0)
-              this->reactor_registry_type_ = TAO_REACTOR_PER_PRIORITY;
-            else
-              ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("TAO_Default_Factory - unknown argument")
-                          ASYS_TEXT (" <%s> for -ORBReactorRegistry\n"), name));
           }
       }
 
@@ -156,17 +106,9 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               reactor_type_ = TAO_REACTOR_FL;
 #else
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("TAO_Default_Factory - FlReactor")
-                          ASYS_TEXT (" not supported on this platform\n")));
+                          "TAO_Default_Factory - FlReactor"
+                          " not supported on this platform\n"));
 #endif /* ACE_HAS_FL */
-            else if (ACE_OS::strcasecmp (name, "tk_reactor") == 0)
-#if defined(ACE_HAS_TK)
-              reactor_type_ = TAO_REACTOR_TK;
-#else
-              ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("TAO_Default_Factory - TkReactor")
-                          ASYS_TEXT (" not supported on this platform\n")));
-#endif /* ACE_HAS_TK */
             else if (ACE_OS::strcasecmp (name,
                                          "wfmo") == 0)
 #if defined(ACE_WIN32)
@@ -191,8 +133,8 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               reactor_type_ = TAO_REACTOR_TP;
             else
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("TAO_Default_Factory - unknown argument")
-                          ASYS_TEXT (" <%s> for -ORBreactortype\n"), name));
+                          "TAO_Default_Factory - unknown argument"
+                          " <%s> for -ORBreactortype\n", name));
           }
       }
 
@@ -232,92 +174,8 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
                             -1);
             if (pset->insert (item) == -1)
               ACE_ERROR ((LM_ERROR,
-                          ASYS_TEXT ("(%P|%t) Unable to add protocol factories for %s: %p\n"),
+                          "(%P|%t) Unable to add protocol factories for %s: %p\n",
                           argv[curarg]));
-          }
-      }
-
-    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBConnectionCachingStrategy") == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-          {
-            char *name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name,
-                                    "lru") == 0)
-              this->connection_caching_type_ = TAO_Resource_Factory::LRU;
-            else if (ACE_OS::strcasecmp (name,
-                                         "lfu") == 0)
-              this->connection_caching_type_ = TAO_Resource_Factory::LFU;
-            else if (ACE_OS::strcasecmp (name,
-                                         "fifo") == 0)
-              this->connection_caching_type_ = TAO_Resource_Factory::FIFO;
-            else if (ACE_OS::strcasecmp (name,
-                                         "null") == 0)
-              this->connection_caching_type_ = TAO_Resource_Factory::NOOP;
-            else
-              ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("TAO_Default_Factory - unknown argument")
-                          ASYS_TEXT (" <%s> for -ORBConnectionCachingStrategy\n"), name));
-          }
-      }
-
-   else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBPurgePercentage") == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-            this->purge_percentage_ = ACE_OS::atoi (argv[curarg]);
-        else
-           ACE_DEBUG ((LM_DEBUG,
-                       ASYS_TEXT ("TAO_Default_Factory - unknown argument")
-                       ASYS_TEXT ("for -ORBPurgePercentage\n")));
-      }
-
-    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBSchedPolicy") == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-          {
-            char *name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name,
-                                    "SCHED_OTHER") == 0)
-              this->sched_policy_ = ACE_SCHED_OTHER;
-            else if (ACE_OS::strcasecmp (name,
-                                         "SCHED_FIFO") == 0)
-              this->sched_policy_ = ACE_SCHED_FIFO;
-            else if (ACE_OS::strcasecmp (name,
-                                         "SCHED_RR") == 0)
-              this->sched_policy_ = ACE_SCHED_RR;
-            else
-              ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("TAO_Default_Factory - unknown argument")
-                          ASYS_TEXT (" <%s> for -ORBSchedPolicy\n"), name));
-          }
-      }
-
-    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBPriorityMapping") == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-          {
-            char *name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name,
-                                    "linear") == 0)
-              this->priority_mapping_type_ = TAO_PRIORITY_MAPPING_LINEAR;
-            else if (ACE_OS::strcasecmp (name,
-                                         "direct") == 0)
-              this->priority_mapping_type_ = TAO_PRIORITY_MAPPING_DIRECT;
-            else
-              ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("TAO_Default_Factory - unknown argument")
-                          ASYS_TEXT (" <%s> for -ORBPriorityMapping\n"), name));
           }
       }
 
@@ -332,42 +190,8 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
 
   if (factory == end)
     {
-      // If the user did not list any protocols in her svc.conf file
-      // then default to TAO's basic protocols.
-      // You do *NOT* need modify this code to add your own protocol,
-      // instead simply add the following to your svc.conf file:
-      //
-      // dynamic PP_Factory Service_Object * LIB:_make_PP_Protocol_Factory() ""
-      // static Resource_Factory "-ORBProtocolFactory PP_Factory"
-      //
-      // where "PP_Factory" is the name of your protocol, i.e. the
-      // second argument passed to the ACE_STATIC_SVC_DEFINE macro:
-      //
-      // ACE_STATIC_SVC_DEFINE (PP_Protocol_Factory,
-      //                        ASYS_TEXT ("PP_Factory"), ...)
-      //
-      // "PP_Protocol_Factory" is the name of your protocol factory
-      // class.  A "_make_" is prepended to your protocol factory
-      // class name by the ACE_FACTORY_DECLARE macro.  The resulting
-      // factory function "_make_PP_Protocol_Factory()" is what should
-      // be used in the "dynamic" line in your svc.conf file.
-      // 
-      // LIB is the base name of the shared library that implements
-      // the protocol.  The directory containing your library must be
-      // in your library search path, typically defined by the
-      // LD_LIBRARY_PATH environment variable on UNIX systems, and/or
-      // the `/etc/ld.so.conf' file on some UNIX systems.  Remember to
-      // run "ldconfig" if you modify `/etc/ld.so.conf'.
-
       TAO_Protocol_Factory *protocol_factory = 0;
-      auto_ptr<TAO_Protocol_Factory> safe_protocol_factory;
-
       TAO_Protocol_Item *item = 0;
-
-      // If a protocol factory is obtained from the Service
-      // Configurator then do not transfer ownership to the
-      // TAO_Protocol_Item.
-      int transfer_ownership = 0;
 
       protocol_factory =
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("IIOP_Factory");
@@ -376,65 +200,36 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
         {
           if (TAO_orbdebug)
             ACE_ERROR ((LM_WARNING,
-                        ASYS_TEXT ("TAO (%P|%t) No %s found in ")
-                        ASYS_TEXT ("Service Repository. ")
-                        ASYS_TEXT ("Using default instance IIOP ")
-                        ASYS_TEXT ("Protocol Factory.\n"),
-                        ASYS_TEXT ("IIOP Protocol Factory")));
+                        "TAO (%P|%t) No %s found in Service Repository.  "
+                        "Using default instance IIOP Protocol Factory.\n"));
 
           ACE_NEW_RETURN (protocol_factory,
                           TAO_IIOP_Protocol_Factory,
                           -1);
-
-          ACE_AUTO_PTR_RESET (safe_protocol_factory,
-                              protocol_factory,
-                              TAO_Protocol_Factory);
-
-          transfer_ownership = 1;
-        }
-      else
-        {
-          transfer_ownership = 0;
         }
 
-      ACE_NEW_RETURN (item,
-                      TAO_Protocol_Item ("IIOP_Factory"),
-                      -1);
-      // If the TAO_Protocol_Item retains ownership of the
-      // TAO_Protocol_Factory then we used an auto_ptr<> above, so
-      // release the TAO_Protocol_Factory from it.  Otherwise, we
-      // obtained the TAO_Protocol_Factory from the Service
-      // Configurator so an auto_ptr<> wasn't used since the Service
-      // Configurator retains ownership, hence there was no need to
-      // use an auto_ptr<> in this method.
-      item->factory ((transfer_ownership ?
-                      safe_protocol_factory.release () :
-                      protocol_factory),
-                     transfer_ownership);
+      ACE_NEW_RETURN (item, TAO_Protocol_Item ("IIOP_Factory"), -1);
+      item->factory (protocol_factory);
 
       if (this->protocol_factories_.insert (item) == -1)
         {
-          ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("TAO (%P|%t) Unable to add ")
-                      ASYS_TEXT ("<%s> to protocol factory set.\n"),
-                      item->protocol_name ().c_str ()));
-
           delete item;
+          delete protocol_factory;
 
-          if (transfer_ownership == 0)
-            delete protocol_factory;
-
-          return -1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "TAO (%P|%t) Unable to add "
+                             "<%s> to protocol factory set.\n",
+                             item->protocol_name ().c_str ()),
+                            -1);
         }
 
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO (%P|%t) Loaded default ")
-                      ASYS_TEXT ("protocol <IIOP_Factory>\n")));
+                      "TAO (%P|%t) Loaded default protocol <IIOP_Factory>\n"));
         }
 
-#if TAO_HAS_UIOP == 1
+#if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
       protocol_factory =
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("UIOP_Factory");
 
@@ -449,117 +244,29 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
           ACE_NEW_RETURN (protocol_factory,
                           TAO_UIOP_Protocol_Factory,
                           -1);
-
-          ACE_AUTO_PTR_RESET (safe_protocol_factory,
-                              protocol_factory,
-                              TAO_Protocol_Factory);
-
-          transfer_ownership = 1;
-        }
-      else
-        {
-          transfer_ownership = 0;
         }
 
       ACE_NEW_RETURN (item, TAO_Protocol_Item ("UIOP_Factory"), -1);
-      // If the TAO_Protocol_Item retains ownership of the
-      // TAO_Protocol_Factory then we used an auto_ptr<> above, so
-      // release the TAO_Protocol_Factory from it.  Otherwise, we
-      // obtained the TAO_Protocol_Factory from the Service
-      // Configurator so an auto_ptr<> wasn't used since the Service
-      // Configurator retains ownership, hence there was no need to
-      // use an auto_ptr<> in this method.
-      item->factory ((transfer_ownership ?
-                      safe_protocol_factory.release () :
-                      protocol_factory),
-                     transfer_ownership);
+      item->factory (protocol_factory);
 
       if (this->protocol_factories_.insert (item) == -1)
         {
-          ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("TAO (%P|%t) Unable to add ")
-                      ASYS_TEXT ("<%s> to protocol factory set.\n"),
-                      item->protocol_name ().c_str ()));
-
           delete item;
+          delete protocol_factory;
 
-          if (transfer_ownership == 0)
-            delete protocol_factory;
-
-          return -1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "TAO (%P|%t) Unable to add "
+                             "<%s> to protocol factory set.\n",
+                             item->protocol_name ().c_str ()),
+                            -1);
         }
 
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO (%P|%t) Loaded default ")
-                      ASYS_TEXT ("protocol <UIOP_Factory>\n")));
+                      "TAO (%P|%t) Loaded default protocol <UIOP_Factory>\n"));
         }
-#endif /* TAO_HAS_UIOP == 1 */
-
-#if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
-      protocol_factory =
-        ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("SHMIOP_Factory");
-
-      if (protocol_factory == 0)
-        {
-          if (TAO_orbdebug)
-            ACE_ERROR ((LM_WARNING,
-                        "(%P|%t) WARNING - No %s found in Service Repository."
-                        "  Using default instance.\n",
-                        "SHMIOP Protocol Factory"));
-
-          ACE_NEW_RETURN (protocol_factory,
-                          TAO_SHMIOP_Protocol_Factory,
-                          -1);
-
-          ACE_AUTO_PTR_RESET (safe_protocol_factory,
-                              protocol_factory,
-                              TAO_Protocol_Factory);
-
-          transfer_ownership = 1;
-        }
-      else
-        {
-          transfer_ownership = 0;
-        }
-
-      ACE_NEW_RETURN (item, TAO_Protocol_Item ("SHMIOP_Factory"), -1);
-      // If the TAO_Protocol_Item retains ownership of the
-      // TAO_Protocol_Factory then we used an auto_ptr<> above, so
-      // release the TAO_Protocol_Factory from it.  Otherwise, we
-      // obtained the TAO_Protocol_Factory from the Service
-      // Configurator so an auto_ptr<> wasn't used since the Service
-      // Configurator retains ownership, hence there was no need to
-      // use an auto_ptr<> in this method.
-      item->factory ((transfer_ownership ?
-                      safe_protocol_factory.release () :
-                      protocol_factory),
-                     transfer_ownership);
-
-      if (this->protocol_factories_.insert (item) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("TAO (%P|%t) Unable to add ")
-                      ASYS_TEXT ("<%s> to protocol factory set.\n"),
-                      item->protocol_name ().c_str ()));
-
-          delete item;
-
-          if (transfer_ownership == 0)
-            delete protocol_factory;
-
-          return -1;
-        }
-
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO (%P|%t) Loaded default ")
-                      ASYS_TEXT ("protocol <SHMIOP_Factory>\n")));
-        }
-#endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
-
+#endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
       return 0;
     }
 
@@ -571,8 +278,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
       if ((*factory)->factory () == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("TAO (%P|%t) Unable to load ")
-                             ASYS_TEXT ("protocol <%s>, %p\n"),
+                             "TAO (%P|%t) Unable to load protocol <%s>, %p\n",
                              name.c_str (), ""),
                             -1);
         }
@@ -580,11 +286,10 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO (%P|%t) Loaded protocol <%s>\n"),
+                      "TAO (%P|%t) Loaded protocol <%s>\n",
                       name.c_str ()));
         }
     }
-
   return 0;
 }
 
@@ -609,49 +314,18 @@ TAO_Default_Resource_Factory::get_protocol_factories (void)
 TAO_Acceptor_Registry*
 TAO_Default_Resource_Factory::get_acceptor_registry (void)
 {
-  TAO_Acceptor_Registry *ar = 0;
-
-  ACE_NEW_RETURN(ar,
-                 TAO_Acceptor_Registry,
-                 0);
-
-  return ar;
+  return new TAO_Acceptor_Registry;
 }
 
 TAO_Connector_Registry*
 TAO_Default_Resource_Factory::get_connector_registry (void)
 {
-  TAO_Connector_Registry *cr = 0;
-
-  ACE_NEW_RETURN(cr,
-                 TAO_Connector_Registry,
-                 0);
-
-  return cr;
+  return new TAO_Connector_Registry;
 }
 
-TAO_Reactor_Registry *
-TAO_Default_Resource_Factory::get_reactor_registry (void)
-{
-  TAO_Reactor_Registry *reactor_registry = 0;
-  switch (this->reactor_registry_type_)
-    {
-    default:
-    case TAO_SINGLE_REACTOR:
-      ACE_NEW_RETURN (reactor_registry,
-                      TAO_Single_Reactor,
-                      0);
-      break;
-
-    case TAO_REACTOR_PER_PRIORITY:
-      ACE_NEW_RETURN (reactor_registry,
-                      TAO_Reactor_Per_Priority,
-                      0);
-      break;
-    }
-
-  return reactor_registry;
-}
+// @@ TODO We may be changing the state of the global
+//    Allocated_Resources structure, but without any locks?
+//    It seems to be done all over the place.
 
 ACE_Reactor_Impl*
 TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
@@ -661,35 +335,17 @@ TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
     {
     default:
     case TAO_REACTOR_SELECT_MT:
-      ACE_NEW_RETURN (impl,
-                      TAO_REACTOR ((ACE_Sig_Handler*)0,
-                                   (ACE_Timer_Queue*)0,
-                                   0,
-                                   (ACE_Reactor_Notify*)0,
-                                   this->reactor_mask_signals_),
-                      0);
+      ACE_NEW_RETURN (impl, TAO_REACTOR, 0);
       break;
 
     case TAO_REACTOR_SELECT_ST:
-      ACE_NEW_RETURN (impl,
-                      TAO_NULL_LOCK_REACTOR ((ACE_Sig_Handler*)0,
-                                             (ACE_Timer_Queue*)0,
-                                             0,
-                                             (ACE_Reactor_Notify*)0,
-                                             this->reactor_mask_signals_),
-                      0);
+      ACE_NEW_RETURN (impl, TAO_NULL_LOCK_REACTOR, 0);
       break;
 
     case TAO_REACTOR_FL:
 #if defined(ACE_HAS_FL)
       ACE_NEW_RETURN (impl, ACE_FlReactor, 0);
 #endif /* ACE_HAS_FL */
-      break;
-
-    case TAO_REACTOR_TK:
-#if defined(ACE_HAS_TK)
-      ACE_NEW_RETURN (impl, ACE_TkReactor, 0);
-#endif /* ACE_HAS_TK */
       break;
 
     case TAO_REACTOR_WFMO:
@@ -699,16 +355,13 @@ TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
       break;
 
     case TAO_REACTOR_MSGWFMO:
-#if defined(ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined(ACE_WIN32)
       ACE_NEW_RETURN (impl, ACE_Msg_WFMO_Reactor, 0);
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
       break;
 
     case TAO_REACTOR_TP:
-      ACE_NEW_RETURN (impl, ACE_TP_Reactor ((ACE_Sig_Handler*)0,
-                                            (ACE_Timer_Queue*)0,
-                                            this->reactor_mask_signals_),
-                      0);
+      ACE_NEW_RETURN (impl, ACE_TP_Reactor, 0);
       break;
     }
   return impl;
@@ -781,6 +434,7 @@ TAO_Default_Resource_Factory::input_cdr_buffer_allocator (void)
                       0);
       break;
     }
+
   return allocator;
 }
 
@@ -800,47 +454,6 @@ TAO_Default_Resource_Factory::output_cdr_buffer_allocator (void)
   return allocator;
 }
 
-TAO_Resource_Factory::Caching_Strategy
-TAO_Default_Resource_Factory::connection_caching_strategy_type (void) const
-{
-  return this->connection_caching_type_;
-}
-
-double
-TAO_Default_Resource_Factory::purge_percentage (void) const
-{
-  return this->purge_percentage_;
-}
-
-TAO_Priority_Mapping *
-TAO_Default_Resource_Factory::get_priority_mapping (void)
-{
-#if (TAO_HAS_RT_CORBA == 0)
-  return 0;
-#else
-  TAO_Priority_Mapping *pm;
-  switch (this->priority_mapping_type_)
-    {
-    case TAO_PRIORITY_MAPPING_LINEAR:
-      ACE_NEW_RETURN (pm,
-                      TAO_Linear_Priority_Mapping (this->sched_policy_),
-                      0);
-      break;
-    case TAO_PRIORITY_MAPPING_DIRECT:
-      ACE_NEW_RETURN (pm,
-                      TAO_Direct_Priority_Mapping (this->sched_policy_),
-                      0);
-      break;
-    default:
-      ACE_NEW_RETURN (pm,
-                      TAO_Priority_Mapping,
-                      0);
-      break;
-    }
-  return pm;
-#endif /* TAO_HAS_RT_CORBA == 0 */
-}
-
 // ****************************************************************
 
 ACE_STATIC_SVC_DEFINE (TAO_Default_Resource_Factory,
@@ -855,20 +468,20 @@ ACE_FACTORY_DEFINE (TAO, TAO_Default_Resource_Factory)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX>;
+template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX> >;
+
 template class ACE_Select_Reactor_Token_T<ACE_Noop_Token>;
 template class ACE_Lock_Adapter<ACE_Select_Reactor_Token_T<ACE_Noop_Token> >;
 template class ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >;
 
-template class auto_ptr<TAO_Protocol_Factory>;
-template class ACE_Auto_Basic_Ptr<TAO_Protocol_Factory>;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX> >
 
 #pragma instantiate ACE_Select_Reactor_Token_T<ACE_Noop_Token>
 #pragma instantiate ACE_Lock_Adapter< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
 #pragma instantiate ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
-
-#pragma instantiate auto_ptr<TAO_Protocol_Factory>
-#pragma ACE_Auto_Basic_Ptr<TAO_Protocol_Factory>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -20,16 +20,10 @@
 
 #ifndef TAO_IDL_MESSAGINGC_H
 #define TAO_IDL_MESSAGINGC_H
-#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
-#include "tao/ValueBase.h"
-#include "tao/ValueFactory.h"
-#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
+#if defined (TAO_HAS_CORBA_MESSAGING)
 
 #include "tao/corbafwd.h"
 
@@ -50,9 +44,6 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -85,11 +76,6 @@ TAO_NAMESPACE  Messaging
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_WITH_TARGET;
 
-  // = TAO specific.
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_EAGER_BUFFERING;
-
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_DELAYED_BUFFERING;
-
   typedef CORBA::Short RoutingType;
   typedef CORBA::Short_out RoutingType_out;
     TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RoutingType;
@@ -120,9 +106,8 @@ TAO_NAMESPACE  Messaging
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::UShort ORDER_DEADLINE;
 
-#if (TAO_HAS_REBIND_POLICY == 1)
-
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong REBIND_POLICY_TYPE;
+
 
   class RebindPolicy;
   typedef RebindPolicy *RebindPolicy_ptr;
@@ -190,7 +175,6 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static RebindPolicy_ptr _nil (void);
-    static void _tao_any_destructor (void *);
 
     virtual RebindMode rebind_mode (
         CORBA::Environment &ACE_TRY_ENV =
@@ -215,10 +199,6 @@ TAO_NAMESPACE  Messaging
   };
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RebindPolicy;
-
-#endif /* TAO_HAS_REBIND_POLICY == 1 */
-
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong SYNC_SCOPE_POLICY_TYPE;
 
@@ -288,7 +268,6 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static SyncScopePolicy_ptr _nil (void);
-    static void _tao_any_destructor (void *);
 
     virtual SyncScope synchronization (
         CORBA::Environment &ACE_TRY_ENV =
@@ -314,16 +293,10 @@ TAO_NAMESPACE  Messaging
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_SyncScopePolicy;
 
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
-
-#if (TAO_HAS_PRIORITY_POLICIES == 1)
-
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong REQUEST_PRIORITY_POLICY_TYPE;
 
   struct TAO_Export PriorityRange
   {
-    static void _tao_any_destructor (void *);
-
     Priority min;
     Priority max;
   };
@@ -425,7 +398,6 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static RequestPriorityPolicy_ptr _nil (void);
-    static void _tao_any_destructor (void *);
 
     virtual PriorityRange priority_range (
         CORBA::Environment &ACE_TRY_ENV =
@@ -519,7 +491,6 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static ReplyPriorityPolicy_ptr _nil (void);
-    static void _tao_any_destructor (void *);
 
     virtual PriorityRange priority_range (
         CORBA::Environment &ACE_TRY_ENV =
@@ -544,10 +515,6 @@ TAO_NAMESPACE  Messaging
   };
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ReplyPriorityPolicy;
-
-#endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
-
-#if (TAO_HAS_REQUEST_START_TIME_POLICY == 1)
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong REQUEST_START_TIME_POLICY_TYPE;
 
@@ -617,7 +584,6 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static RequestStartTimePolicy_ptr _nil (void);
-    static void _tao_any_destructor (void *);
 
     virtual TimeBase::UtcT start_time (
         CORBA::Environment &ACE_TRY_ENV =
@@ -642,10 +608,6 @@ TAO_NAMESPACE  Messaging
   };
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RequestStartTimePolicy;
-
-#endif /* TAO_HAS_REQUEST_START_TIME_POLICY == 1 */
-
-#if (TAO_HAS_REQUEST_END_TIME_POLICY == 1)
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong REQUEST_END_TIME_POLICY_TYPE;
 
@@ -715,7 +677,6 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static RequestEndTimePolicy_ptr _nil (void);
-    static void _tao_any_destructor (void *);
 
     virtual TimeBase::UtcT end_time (
         CORBA::Environment &ACE_TRY_ENV =
@@ -740,10 +701,6 @@ TAO_NAMESPACE  Messaging
   };
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RequestEndTimePolicy;
-
-#endif /* TAO_HAS_REQUEST_END_TIME_POLICY == 1 */
-
-#if (TAO_HAS_REPLY_START_TIME_POLICY == 1)
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong REPLY_START_TIME_POLICY_TYPE;
 
@@ -813,7 +770,6 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static ReplyStartTimePolicy_ptr _nil (void);
-    static void _tao_any_destructor (void *);
 
     virtual TimeBase::UtcT start_time (
         CORBA::Environment &ACE_TRY_ENV =
@@ -838,10 +794,6 @@ TAO_NAMESPACE  Messaging
   };
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ReplyStartTimePolicy;
-
-#endif /* TAO_HAS_REPLY_START_TIME_POLICY == 1 */
-
-#if (TAO_HAS_REPLY_END_TIME_POLICY == 1)
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong REPLY_END_TIME_POLICY_TYPE;
 
@@ -911,7 +863,6 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static ReplyEndTimePolicy_ptr _nil (void);
-    static void _tao_any_destructor (void *);
 
     virtual TimeBase::UtcT end_time (
         CORBA::Environment &ACE_TRY_ENV =
@@ -936,10 +887,6 @@ TAO_NAMESPACE  Messaging
   };
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ReplyEndTimePolicy;
-
-#endif /* TAO_HAS_REPLY_END_TIME_POLICY == 1 */
-
-#if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong RELATIVE_REQ_TIMEOUT_POLICY_TYPE;
 
@@ -1009,7 +956,6 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static RelativeRequestTimeoutPolicy_ptr _nil (void);
-    static void _tao_any_destructor (void *);
 
     virtual TimeBase::TimeT relative_expiry (
         CORBA::Environment &ACE_TRY_ENV =
@@ -1034,10 +980,6 @@ TAO_NAMESPACE  Messaging
   };
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RelativeRequestTimeoutPolicy;
-
-#endif /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong RELATIVE_RT_TIMEOUT_POLICY_TYPE;
 
@@ -1107,7 +1049,6 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static RelativeRoundtripTimeoutPolicy_ptr _nil (void);
-    static void _tao_any_destructor (void *);
 
     virtual TimeBase::TimeT relative_expiry (
         CORBA::Environment &ACE_TRY_ENV =
@@ -1133,16 +1074,10 @@ TAO_NAMESPACE  Messaging
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RelativeRoundtripTimeoutPolicy;
 
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_ROUTING_POLICY == 1)
-
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong ROUTING_POLICY_TYPE;
 
   struct TAO_Export RoutingTypeRange
   {
-    static void _tao_any_destructor (void *);
-
     RoutingType min;
     RoutingType max;
   };
@@ -1244,7 +1179,6 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static RoutingPolicy_ptr _nil (void);
-    static void _tao_any_destructor (void *);
 
     virtual RoutingTypeRange routing_range (
         CORBA::Environment &ACE_TRY_ENV =
@@ -1269,10 +1203,6 @@ TAO_NAMESPACE  Messaging
   };
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RoutingPolicy;
-
-#endif /* TAO_HAS_ROUTING_POLICY == 1 */
-
-#if (TAO_HAS_MAX_HOPS_POLICY == 1)
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong MAX_HOPS_POLICY_TYPE;
 
@@ -1342,7 +1272,6 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static MaxHopsPolicy_ptr _nil (void);
-    static void _tao_any_destructor (void *);
 
     virtual CORBA::UShort max_hops (
         CORBA::Environment &ACE_TRY_ENV =
@@ -1367,10 +1296,6 @@ TAO_NAMESPACE  Messaging
   };
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_MaxHopsPolicy;
-
-#endif /* TAO_HAS_MAX_HOPS_POLICY == 1 */
-
-#if (TAO_HAS_QUEUE_ORDER_POLICY == 1)
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong QUEUE_ORDER_POLICY_TYPE;
 
@@ -1440,7 +1365,6 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static QueueOrderPolicy_ptr _nil (void);
-    static void _tao_any_destructor (void *);
 
     virtual Ordering allowed_orders (
         CORBA::Environment &ACE_TRY_ENV =
@@ -1466,12 +1390,8 @@ TAO_NAMESPACE  Messaging
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_QueueOrderPolicy;
 
-#endif /* TAO_HAS_QUEUE_ORDER_POLICY == 1 */
-
   struct TAO_Export PolicyValue
   {
-    static void _tao_any_destructor (void *);
-
     CORBA::PolicyType ptype;
 
     // *************************************************************
@@ -1501,6 +1421,7 @@ TAO_NAMESPACE  Messaging
 #endif /* TAO_NO_COPY_OCTET_SEQUENCE */
 
     };
+    typedef _tao_seq_Octet *_tao_seq_Octet_ptr;
     static CORBA::TypeCode_ptr _tc__tao_seq_Octet;
 
     _tao_seq_Octet pvalue;
@@ -1570,8 +1491,6 @@ TAO_NAMESPACE  Messaging
     );
     PolicyValueSeq (const PolicyValueSeq &); // copy ctor
     ~PolicyValueSeq (void); // dtor
-
-    static void _tao_any_destructor (void *);
   };
   typedef PolicyValueSeq *PolicyValueSeq_ptr;
 
@@ -1632,126 +1551,17 @@ TAO_NAMESPACE  Messaging
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong INVOCATION_POLICIES;
 
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
-
-  // valuetype class
-  class ExceptionHolder;
-  typedef ExceptionHolder *ExceptionHolder_ptr;
-
-#if !defined (_MESSAGING_EXCEPTIONHOLDER___VAR_CH_)
-#define _MESSAGING_EXCEPTIONHOLDER___VAR_CH_
-
-  class TAO_Export ExceptionHolder_var
+#if defined (TAO_POLLER)
+  struct TAO_Export ExceptionHolder
   {
-  public:
-    ExceptionHolder_var (void); // default constructor
-    ExceptionHolder_var (ExceptionHolder*);
-    ExceptionHolder_var (const ExceptionHolder*); // (TAO extension)
-    ExceptionHolder_var (const ExceptionHolder_var &); // copy constructor
-    ~ExceptionHolder_var (void); // destructor
-
-    ExceptionHolder_var &operator= (ExceptionHolder*);
-    ExceptionHolder_var &operator= (const ExceptionHolder_var &);
-    ExceptionHolder* operator-> (void) const;
-
-    operator const ExceptionHolder* () const;
-    operator ExceptionHolder* ();
-    // in, inout, out, _retn
-    ExceptionHolder* in (void) const;
-    ExceptionHolder* &inout (void);
-    ExceptionHolder* &out (void);
-    ExceptionHolder* _retn (void);
-    ExceptionHolder* ptr (void) const;
-
-  private:
-    ExceptionHolder* ptr_;
-  };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_EXCEPTIONHOLDER___OUT_CH_)
-#define _MESSAGING_EXCEPTIONHOLDER___OUT_CH_
-
-  class TAO_Export ExceptionHolder_out
-  {
-  public:
-    ExceptionHolder_out (ExceptionHolder* &);
-    ExceptionHolder_out (ExceptionHolder_var &);
-    ExceptionHolder_out (const ExceptionHolder_out &);
-    ExceptionHolder_out &operator= (const ExceptionHolder_out &);
-    ExceptionHolder_out &operator= (const ExceptionHolder_var &);
-    ExceptionHolder_out &operator= (ExceptionHolder*);
-    operator ExceptionHolder* &();
-    ExceptionHolder* &ptr (void);
-    ExceptionHolder* operator-> (void);
-
-  private:
-    ExceptionHolder* &ptr_;
-  };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_EXCEPTIONHOLDER___INIT_CH_)
-#define _MESSAGING_EXCEPTIONHOLDER___INIT_CH_
-
-  class TAO_Export ExceptionHolder_init : public ACE_CORBA_1 (ValueFactoryBase)
-  {
-  public:
-    virtual ~ExceptionHolder_init ();
-    virtual const char* tao_repository_id ();
-
-    // create () goes here
-
-  };
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_EXCEPTIONHOLDER_CH_)
-#define _MESSAGING_EXCEPTIONHOLDER_CH_
-
-  class TAO_Export ExceptionHolder : public virtual ACE_CORBA_1 (ValueBase)
-  {
-  public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef ExceptionHolder* _ptr_type;
-    typedef ExceptionHolder_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
-    static ExceptionHolder* _downcast (CORBA::ValueBase* );
-    // The address of static _downcast is implicit used as type id
-
-    // (TAO extensions or internals)
-    static CORBA::Boolean _tao_unmarshal (TAO_InputCDR &, ExceptionHolder *&);
-    virtual const char* _tao_obv_repository_id () const;
-    static const char* _tao_obv_static_repository_id ();
-  public:
-    virtual void is_system_exception (CORBA::Boolean) = 0;    // set
-    virtual CORBA::Boolean is_system_exception (void) const = 0;     // get method
-
-    virtual void byte_order (CORBA::Boolean) = 0;    // set
-    virtual CORBA::Boolean byte_order (void) const = 0;     // get method
-
-
-#if !defined (_MESSAGING_EXCEPTIONHOLDER__TAO_SEQ_OCTET_CH_)
-#define _MESSAGING_EXCEPTIONHOLDER__TAO_SEQ_OCTET_CH_
+    CORBA::Boolean is_system_exception;
+    CORBA::Boolean byte_order;
 
     // *************************************************************
     // _tao_seq_Octet
     // *************************************************************
-    class _tao_seq_Octet;
-    class _tao_seq_Octet_var;
 
-    class TAO_Export _tao_seq_Octet : public
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-      TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-      TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+    class TAO_Export _tao_seq_Octet : public TAO_Unbounded_Sequence<CORBA::Octet>
     {
     public:
       _tao_seq_Octet (void); // default ctor
@@ -1765,10 +1575,6 @@ TAO_NAMESPACE  Messaging
       _tao_seq_Octet (const _tao_seq_Octet &); // copy ctor
       ~_tao_seq_Octet (void); // dtor
 
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef _tao_seq_Octet_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
 #if defined(TAO_NO_COPY_OCTET_SEQUENCES)
       _tao_seq_Octet (
           CORBA::ULong length,
@@ -1778,106 +1584,62 @@ TAO_NAMESPACE  Messaging
 #endif /* TAO_NO_COPY_OCTET_SEQUENCE */
 
     };
+    typedef _tao_seq_Octet *_tao_seq_Octet_ptr;
+    static CORBA::TypeCode_ptr _tc__tao_seq_Octet;
 
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_EXCEPTIONHOLDER__TAO_SEQ_OCTET___VAR_CH_)
-#define _MESSAGING_EXCEPTIONHOLDER__TAO_SEQ_OCTET___VAR_CH_
-
-// *************************************************************
-    // class Messaging::ExceptionHolder::_tao_seq_Octet_var
-    // *************************************************************
-
-    class TAO_Export _tao_seq_Octet_var
-    {
-    public:
-      _tao_seq_Octet_var (void); // default constructor
-      _tao_seq_Octet_var (_tao_seq_Octet *);
-      _tao_seq_Octet_var (const _tao_seq_Octet_var &); // copy constructor
-      ~_tao_seq_Octet_var (void); // destructor
-
-      _tao_seq_Octet_var &operator= (_tao_seq_Octet *);
-      _tao_seq_Octet_var &operator= (const _tao_seq_Octet_var &);
-      _tao_seq_Octet *operator-> (void);
-      const _tao_seq_Octet *operator-> (void) const;
-
-      operator const _tao_seq_Octet &() const;
-      operator _tao_seq_Octet &();
-      operator _tao_seq_Octet &() const;
-      CORBA::Octet &operator[] (CORBA::ULong index);
-      // in, inout, out, _retn
-      const _tao_seq_Octet &in (void) const;
-      _tao_seq_Octet &inout (void);
-      _tao_seq_Octet *&out (void);
-      _tao_seq_Octet *_retn (void);
-      _tao_seq_Octet *ptr (void) const;
-
-    private:
-      _tao_seq_Octet *ptr_;
-    };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_MESSAGING_EXCEPTIONHOLDER__TAO_SEQ_OCTET___OUT_CH_)
-#define _MESSAGING_EXCEPTIONHOLDER__TAO_SEQ_OCTET___OUT_CH_
-
-    class TAO_Export _tao_seq_Octet_out
-    {
-    public:
-      _tao_seq_Octet_out (_tao_seq_Octet *&);
-      _tao_seq_Octet_out (_tao_seq_Octet_var &);
-      _tao_seq_Octet_out (const _tao_seq_Octet_out &);
-      _tao_seq_Octet_out &operator= (const _tao_seq_Octet_out &);
-      _tao_seq_Octet_out &operator= (_tao_seq_Octet *);
-      operator _tao_seq_Octet *&();
-      _tao_seq_Octet *&ptr (void);
-      _tao_seq_Octet *operator-> (void);
-      CORBA::Octet &operator[] (CORBA::ULong index);
-
-    private:
-      _tao_seq_Octet *&ptr_;
-      // assignment from T_var not allowed
-      void operator= (const _tao_seq_Octet_var &);
-    };
-
-#endif /* end #if !defined */
-
-#if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-  typedef _tao_seq_Octet _marshaled_exception_seq;
-#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
-
-    virtual void marshaled_exception (const _tao_seq_Octet &) = 0;    // set
-    virtual const _tao_seq_Octet &marshaled_exception (void) const = 0;     // get method (read only)
-    virtual _tao_seq_Octet &marshaled_exception (void) = 0;     // get method (read/write only)
-
-
-  protected:
-    ExceptionHolder (void);           // default constructor
-    virtual ~ExceptionHolder (void);
-
-    // TAO internals
-    virtual void *_tao_obv_narrow (ptr_arith_t);
-    virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
-    virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
-
-  private:
-    ExceptionHolder (const ExceptionHolder &);
-    void operator= (const ExceptionHolder &);
-
-  protected:
-    virtual CORBA::Boolean _tao_marshal__Messaging_ExceptionHolder (TAO_OutputCDR &) = 0;
-    virtual CORBA::Boolean _tao_unmarshal__Messaging_ExceptionHolder (TAO_InputCDR &) = 0;
-
+    _tao_seq_Octet marshaled_exception;
   };
 
-#endif /* end #if !defined */
+  class TAO_Export ExceptionHolder_var
+  {
+  public:
+    ExceptionHolder_var (void); // default constructor
+    ExceptionHolder_var (ExceptionHolder *);
+    ExceptionHolder_var (const ExceptionHolder_var &); // copy constructor
+    ~ExceptionHolder_var (void); // destructor
+
+    ExceptionHolder_var &operator= (ExceptionHolder *);
+    ExceptionHolder_var &operator= (const ExceptionHolder_var &);
+    ExceptionHolder *operator-> (void);
+    const ExceptionHolder *operator-> (void) const;
+
+    operator const ExceptionHolder &() const;
+    operator ExceptionHolder &();
+    operator ExceptionHolder &() const;
+    // in, inout, out, _retn
+    const ExceptionHolder &in (void) const;
+    ExceptionHolder &inout (void);
+    ExceptionHolder *&out (void);
+    ExceptionHolder *_retn (void);
+    ExceptionHolder *ptr (void) const;
+
+  private:
+    ExceptionHolder *ptr_;
+  };
+
+  class TAO_Export ExceptionHolder_out
+  {
+  public:
+    ExceptionHolder_out (ExceptionHolder *&);
+    ExceptionHolder_out (ExceptionHolder_var &);
+    ExceptionHolder_out (const ExceptionHolder_out &);
+    ExceptionHolder_out &operator= (const ExceptionHolder_out &);
+    ExceptionHolder_out &operator= (ExceptionHolder *);
+    operator ExceptionHolder *&();
+    ExceptionHolder *&ptr (void);
+    ExceptionHolder *operator-> (void);
+
+  private:
+    ExceptionHolder *&ptr_;
+    // assignment from T_var not allowed
+    void operator= (const ExceptionHolder_var &);
+  };
+
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ExceptionHolder;
 
   class ReplyHandler;
   typedef ReplyHandler *ReplyHandler_ptr;
-
+  
   class TAO_Export ReplyHandler_var
   {
   public:
@@ -1941,7 +1703,6 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static ReplyHandler_ptr _nil (void);
-    static void _tao_any_destructor (void *);
 
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
@@ -1962,10 +1723,6 @@ TAO_NAMESPACE  Messaging
   };
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ReplyHandler;
-
-#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
-
-#if (TAO_HAS_AMI_POLLER == 1)
 
   class Poller;
   typedef Poller *Poller_ptr;
@@ -2033,7 +1790,6 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static Poller_ptr _nil (void);
-    static void _tao_any_destructor (void *);
 
     virtual CORBA::Object_ptr operation_target (
         CORBA::Environment &ACE_TRY_ENV =
@@ -2083,346 +1839,88 @@ TAO_NAMESPACE  Messaging
   };
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Poller;
-#endif /* TAO_HAS_AMI_POLLER == 1 */
+#endif /* TAO_POLLER */
 
-}
-TAO_NAMESPACE_CLOSE // module Messaging
-
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
-
-TAO_NAMESPACE  OBV_Messaging
-{
-
-#if !defined (_MESSAGING_EXCEPTIONHOLDER___OBV_CH_)
-#define _MESSAGING_EXCEPTIONHOLDER___OBV_CH_
-
-  // OBV_ class
-  class TAO_Export ExceptionHolder : public virtual Messaging::ExceptionHolder
-  {
-  public:
-    virtual void is_system_exception (CORBA::Boolean);    // set
-    virtual CORBA::Boolean is_system_exception (void) const;     // get method
-
-    virtual void byte_order (CORBA::Boolean);    // set
-    virtual CORBA::Boolean byte_order (void) const;     // get method
-
-    virtual void marshaled_exception (const _tao_seq_Octet &);    // set
-    virtual const _tao_seq_Octet &marshaled_exception (void) const;     // get method (read only)
-    virtual _tao_seq_Octet &marshaled_exception (void);     // get method (read/write only)
-
-
-  protected:
-    virtual CORBA::Boolean _tao_marshal__Messaging_ExceptionHolder (TAO_OutputCDR &);
-    virtual CORBA::Boolean _tao_unmarshal__Messaging_ExceptionHolder (TAO_InputCDR &);
-    CORBA::Boolean _tao_marshal_state (TAO_OutputCDR &);
-    CORBA::Boolean _tao_unmarshal_state (TAO_InputCDR &);
-
-
-  private:
-        CORBA::Boolean _pd_is_system_exception;
-    CORBA::Boolean _pd_byte_order;
-#if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef _tao_seq_Octet _marshaled_exception_seq;
-  #endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
-
-  // @@ Michael: Needed to add the "*"
-   _tao_seq_Octet *_pd_marshaled_exception;
-  };
-
-#endif /* end #if !defined */
-
-}
-TAO_NAMESPACE_CLOSE
-
-#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
+}; // module Messaging
 
 // Typedef for the Reply Handler Skeleton.
 // This is handcrafted not generated by the IDL compiler.
 
 class TAO_InputCDR;
 
-enum TAO_AMI_Reply_Status
-{
-  TAO_AMI_REPLY_OK,
-  // Reply is normal.
-
-  TAO_AMI_REPLY_NOT_OK,
-  // Reply is not normal and no exceptions
-
-  TAO_AMI_REPLY_USER_EXCEPTION,
-  // An user exception was raised.
-
-  TAO_AMI_REPLY_SYSTEM_EXCEPTION
-  // An system exception was raised.
-};
-
-
-#if (TAO_HAS_AMI_CALLBACK == 1)
-
+#if defined (TAO_POLLER)
 typedef void (*TAO_Reply_Handler_Skeleton)(
     TAO_InputCDR &,
     Messaging::ReplyHandler *,
-    CORBA::ULong reply_status,
     CORBA::Environment &
     );
+#endif /* TAO_POLLER */
 
-#endif /* TAO_HAS_AMI_CALLBACK == 1 */
+void TAO_Export operator<<= (CORBA::Any &, Messaging::PriorityRange*); // noncopying version
+CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, Messaging::PriorityRange *&);
 
-#if (TAO_HAS_REBIND_POLICY == 1)
+void TAO_Export operator<<= (CORBA::Any &, const Messaging::RoutingTypeRange &); // copying version
+void TAO_Export operator<<= (CORBA::Any &, Messaging::RoutingTypeRange*); // noncopying version
+CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, Messaging::RoutingTypeRange *&);
 
-TAO_Export void operator<<= (CORBA::Any &, Messaging::RebindPolicy_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RebindPolicy *&);
+void TAO_Export operator<<= (CORBA::Any &, const Messaging::PolicyValue &); // copying version
+void TAO_Export operator<<= (CORBA::Any &, Messaging::PolicyValue*); // noncopying version
+CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, Messaging::PolicyValue *&);
+void TAO_Export operator<<= (CORBA::Any &, const Messaging::PolicyValueSeq &); // copying version
+void TAO_Export operator<<= (CORBA::Any &, Messaging::PolicyValueSeq*); // noncopying version
+CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, Messaging::PolicyValueSeq *&);
 
-#endif /* TAO_HAS_REBIND_POLICY == 1 */
-
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-TAO_Export void operator<<= (CORBA::Any &, Messaging::SyncScopePolicy_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::SyncScopePolicy *&);
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
-
-#if (TAO_HAS_PRIORITY_POLICIES == 1)
-
-TAO_Export void operator<<= (CORBA::Any &, const Messaging::PriorityRange &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, Messaging::PriorityRange*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::PriorityRange *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Messaging::PriorityRange *&);
-
-TAO_Export void operator<<= (CORBA::Any &, Messaging::RequestPriorityPolicy_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RequestPriorityPolicy *&);
-
-TAO_Export void operator<<= (CORBA::Any &, Messaging::ReplyPriorityPolicy_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::ReplyPriorityPolicy *&);
-
-#endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
-
-#if (TAO_HAS_REQUEST_START_TIME_POLICY == 1)
-
-TAO_Export void operator<<= (CORBA::Any &, Messaging::RequestStartTimePolicy_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RequestStartTimePolicy *&);
-
-#endif /* TAO_HAS_REQUEST_START_TIME_POLICY == 1 */
-
-#if (TAO_HAS_REQUEST_END_TIME_POLICY == 1)
-
-TAO_Export void operator<<= (CORBA::Any &, Messaging::RequestEndTimePolicy_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RequestEndTimePolicy *&);
-
-#endif /* TAO_HAS_REQUEST_END_TIME_POLICY == 1 */
-
-#if (TAO_HAS_REPLY_START_TIME_POLICY == 1)
-
-TAO_Export void operator<<= (CORBA::Any &, Messaging::ReplyStartTimePolicy_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::ReplyStartTimePolicy *&);
-
-#endif /* TAO_HAS_REPLY_START_TIME_POLICY == 1 */
-
-#if (TAO_HAS_REPLY_END_TIME_POLICY == 1)
-
-TAO_Export void operator<<= (CORBA::Any &, Messaging::ReplyEndTimePolicy_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::ReplyEndTimePolicy *&);
-
-#endif /* TAO_HAS_REPLY_END_TIME_POLICY == 1 */
-
-#if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
-
-TAO_Export void operator<<= (CORBA::Any &, Messaging::RelativeRequestTimeoutPolicy_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RelativeRequestTimeoutPolicy *&);
-
-#endif /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-TAO_Export void operator<<= (CORBA::Any &, Messaging::RelativeRoundtripTimeoutPolicy_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RelativeRoundtripTimeoutPolicy *&);
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_ROUTING_POLICY == 1)
-
-TAO_Export void operator<<= (CORBA::Any &, const Messaging::RoutingTypeRange &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, Messaging::RoutingTypeRange*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RoutingTypeRange *&);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Messaging::RoutingTypeRange *&);
-
-TAO_Export void operator<<= (CORBA::Any &, Messaging::RoutingPolicy_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RoutingPolicy *&);
-
-#endif /* TAO_HAS_ROUTING_POLICY == 1 */
-
-#if (TAO_HAS_MAX_HOPS_POLICY == 1)
-
-TAO_Export void operator<<= (CORBA::Any &, Messaging::MaxHopsPolicy_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::MaxHopsPolicy *&);
-
-#endif /* TAO_HAS_MAX_HOPS_POLICY == 1 */
-
-#if (TAO_HAS_QUEUE_ORDER_POLICY == 1)
-
-TAO_Export void operator<<= (CORBA::Any &, Messaging::QueueOrderPolicy_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::QueueOrderPolicy *&);
-
-#endif /* TAO_HAS_QUEUE_ORDER_POLICY == 1 */
-
-TAO_Export void operator<<= (CORBA::Any &, const Messaging::PolicyValue &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, Messaging::PolicyValue*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::PolicyValue *&);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Messaging::PolicyValue *&);
-
-TAO_Export void operator<<= (CORBA::Any &, const Messaging::PolicyValueSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, Messaging::PolicyValueSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::PolicyValueSeq *&);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Messaging::PolicyValueSeq *&);
-
-#if (TAO_HAS_AMI_CALLBACK == 1)
-
-extern TAO_Export  Messaging::ReplyHandler_ptr (*_TAO_collocation_Messaging_ReplyHandler_Stub_Factory_function_pointer) (
-                                     CORBA::Object_ptr obj);
-
+#if defined (TAO_POLLER)
+void TAO_Export operator<<= (CORBA::Any &, const Messaging::ExceptionHolder &); // copying version
+void TAO_Export operator<<= (CORBA::Any &, Messaging::ExceptionHolder*); // noncopying version
+CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, Messaging::ExceptionHolder *&);
 // Any operators for interface Messaging::ReplyHandler
-TAO_Export void operator<<= (CORBA::Any &, Messaging::ReplyHandler_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::ReplyHandler *&);
-
-#endif /* TAO_HAS_AMI_CALLBACK == 1 */
-
-#if (TAO_HAS_AMI_POLLER == 1)
-
+void TAO_Export operator<<= (CORBA::Any &, Messaging::ReplyHandler_ptr);
+CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, Messaging::ReplyHandler *&);
 // Any operators for interface Messaging::Poller
-TAO_Export void operator<<= (CORBA::Any &, Messaging::Poller_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::Poller *&);
-
-#endif /* TAO_HAS_AMI_POLLER == 1 */
+void TAO_Export operator<<= (CORBA::Any &, Messaging::Poller_ptr);
+CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, Messaging::Poller *&);
+#endif
 
 #ifndef __ACE_INLINE__
 
-#if (TAO_HAS_REBIND_POLICY == 1)
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const Messaging::PriorityRange &); //
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, Messaging::PriorityRange &);
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const Messaging::RoutingTypeRange &); //
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, Messaging::RoutingTypeRange &);
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const Messaging::PolicyValue &); //
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, Messaging::PolicyValue &);
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const Messaging::PolicyValue::_tao_seq_Octet &); //
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, Messaging::PolicyValue::_tao_seq_Octet &);
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const Messaging::PolicyValueSeq &); //
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, Messaging::PolicyValueSeq &);
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::RebindPolicy_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::RebindPolicy_ptr &);
-
-#endif /* TAO_HAS_REBIND_POLICY == 1 */
-
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::SyncScopePolicy_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::SyncScopePolicy_ptr &);
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
-
-#if (TAO_HAS_PRIORITY_POLICIES == 1)
-
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::PriorityRange &); //
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::PriorityRange &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::RequestPriorityPolicy_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::RequestPriorityPolicy_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ReplyPriorityPolicy_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ReplyPriorityPolicy_ptr &);
-
-#endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
-
-#if (TAO_HAS_REQUEST_START_TIME_POLICY == 1)
-
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::RequestStartTimePolicy_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::RequestStartTimePolicy_ptr &);
-
-#endif /* TAO_HAS_REQUEST_START_TIME_POLICY == 1 */
-
-#if (TAO_HAS_REQUEST_END_TIME_POLICY == 1)
-
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::RequestEndTimePolicy_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::RequestEndTimePolicy_ptr &);
-
-#endif /* TAO_HAS_REQUEST_END_TIME_POLICY == 1 */
-
-#if (TAO_HAS_REPLY_START_TIME_POLICY == 1)
-
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ReplyStartTimePolicy_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ReplyStartTimePolicy_ptr &);
-
-#endif /* TAO_HAS_REPLY_START_TIME_POLICY == 1 */
-
-#if (TAO_HAS_REPLY_END_TIME_POLICY == 1)
-
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ReplyEndTimePolicy_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ReplyEndTimePolicy_ptr &);
-
-#endif /* TAO_HAS_REPLY_END_TIME_POLICY == 1 */
-
-#if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
-
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::RelativeRequestTimeoutPolicy_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::RelativeRequestTimeoutPolicy_ptr &);
-
-#endif /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::RelativeRoundtripTimeoutPolicy_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::RelativeRoundtripTimeoutPolicy_ptr &);
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_ROUTING_POLICY == 1)
-
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::RoutingTypeRange &); //
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::RoutingTypeRange &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::RoutingPolicy_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::RoutingPolicy_ptr &);
-
-#endif /* TAO_HAS_ROUTING_POLICY == 1 */
-
-#if (TAO_HAS_MAX_HOPS_POLICY == 1)
-
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::MaxHopsPolicy_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::MaxHopsPolicy_ptr &);
-
-#endif /* TAO_HAS_MAX_HOPS_POLICY == 1 */
-
-#if (TAO_HAS_QUEUE_ORDER_POLICY == 1)
-
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::QueueOrderPolicy_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::QueueOrderPolicy_ptr &);
-
-#endif /* TAO_HAS_QUEUE_ORDER_POLICY == 1 */
-
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::PolicyValue &); //
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::PolicyValue &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::PolicyValue::_tao_seq_Octet &); //
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::PolicyValue::_tao_seq_Octet &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::PolicyValueSeq &); //
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::PolicyValueSeq &);
-
-#if (TAO_HAS_AMI_CALLBACK == 1)
-
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ReplyHandler_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ReplyHandler_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder &); //
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ExceptionHolder &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder::_tao_seq_Octet &); //
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ExceptionHolder::_tao_seq_Octet &);
-
-#endif /* TAO_HAS_AMI_CALLBACK == 1 */
-
-#if (TAO_HAS_AMI_POLLER == 1)
-
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::Poller_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::Poller_ptr &);
-
-#endif /* TAO_HAS_AMI_POLLER == 1 */
+#if defined (TAO_POLLER)
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder &); //
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, Messaging::ExceptionHolder &);
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder::_tao_seq_Octet &); //
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, Messaging::ExceptionHolder::_tao_seq_Octet &);
+CORBA::Boolean TAO_Export
+operator<< (TAO_OutputCDR &, const Messaging::ReplyHandler_ptr );
+CORBA::Boolean TAO_Export
+operator>> (TAO_InputCDR &, Messaging::ReplyHandler_ptr &);
+CORBA::Boolean TAO_Export
+operator<< (TAO_OutputCDR &, const Messaging::Poller_ptr );
+CORBA::Boolean TAO_Export
+operator>> (TAO_InputCDR &, Messaging::Poller_ptr &);
+#endif
 
 #endif /* __ACE_INLINE__ */
 
 
 #if defined (__ACE_INLINE__)
-#include "tao/MessagingC.i"
+#include "MessagingC.i"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
 #endif /* _MSC_VER */
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
-#include "ace/post.h"
 #endif /* TAO_IDL_MESSAGINGC_H */

@@ -15,12 +15,12 @@
 //
 // ================================================================
 
-#include "tao/TimeBaseC.h"
+#include "TimeBaseC.h"
 
-#include "tao/TimeBaseS.h"
+#include "TimeBaseS.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/TimeBaseC.i"
+#include "TimeBaseC.i"
 #endif /* !defined INLINE */
 
 ACE_RCSID(tao, TimeBaseC, "$Id$")
@@ -133,33 +133,30 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_IntervalT, &_tc_TAO_tc_TimeBase_I
 TAO_NAMESPACE_END
 void operator<<= (CORBA::Any &_tao_any, const TimeBase::UtcT &_tao_elem) // copying
 {
-    TAO_OutputCDR stream;
-    stream << _tao_elem;
-    _tao_any._tao_replace (
-        TimeBase::_tc_UtcT,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin ()
-      );
-}
-
-void TimeBase::UtcT::_tao_any_destructor (void *x)
-{
-  TimeBase::UtcT *tmp = ACE_static_cast (TimeBase::UtcT*,x);
-  delete tmp;
+  TimeBase::UtcT *_any_val;
+  ACE_NEW (_any_val, TimeBase::UtcT (_tao_elem));
+  if (!_any_val) return;
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (TimeBase::_tc_UtcT, _any_val, 1, ACE_TRY_ENV); // copy the value
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    delete _any_val;
+  }
+  ACE_ENDTRY;
 }
 
 void operator<<= (CORBA::Any &_tao_any, TimeBase::UtcT *_tao_elem) // non copying
 {
-    TAO_OutputCDR stream;
-    stream << *_tao_elem;
-    _tao_any._tao_replace (
-        TimeBase::_tc_UtcT,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_elem,
-        TimeBase::UtcT::_tao_any_destructor
-      );
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (TimeBase::_tc_UtcT, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY {}
+  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TimeBase::UtcT *&_tao_elem)
@@ -167,95 +164,33 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TimeBase::UtcT *&_tao_el
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (TimeBase::_tc_UtcT, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
+    if (!type->equal (TimeBase::_tc_UtcT, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (TimeBase::UtcT *)_tao_any.value ();
       return 1;
-    }
+      }
     else
     {
       ACE_NEW_RETURN (_tao_elem, TimeBase::UtcT, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
+      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      if (stream.decode (TimeBase::_tc_UtcT, _tao_elem, 0, ACE_TRY_ENV)
+        == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            TimeBase::_tc_UtcT,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            TimeBase::UtcT::_tao_any_destructor
-          );
+        ((CORBA::Any *)&_tao_any)->replace (TimeBase::_tc_UtcT, _tao_elem, 1, ACE_TRY_ENV);
+        ACE_TRY_CHECK;
         return 1;
       }
       else
       {
         delete _tao_elem;
-        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
     delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TimeBase::UtcT *&_tao_elem)
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (TimeBase::_tc_UtcT, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (TimeBase::UtcT *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, TimeBase::UtcT, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(TimeBase::UtcT *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            TimeBase::_tc_UtcT,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (TimeBase::UtcT *&, _tao_elem)),
-            TimeBase::UtcT::_tao_any_destructor
-          );
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (TimeBase::UtcT *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (TimeBase::UtcT *&, _tao_elem);
-    _tao_elem = 0;
     return 0;
   }
   ACE_ENDTRY;
@@ -264,33 +199,30 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TimeBase::UtcT *&_
 
 void operator<<= (CORBA::Any &_tao_any, const TimeBase::IntervalT &_tao_elem) // copying
 {
-    TAO_OutputCDR stream;
-    stream << _tao_elem;
-    _tao_any._tao_replace (
-        TimeBase::_tc_IntervalT,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin ()
-      );
-}
-
-void TimeBase::IntervalT::_tao_any_destructor (void *x)
-{
-  TimeBase::IntervalT *tmp = ACE_static_cast (TimeBase::IntervalT*,x);
-  delete tmp;
+  TimeBase::IntervalT *_any_val;
+  ACE_NEW (_any_val, TimeBase::IntervalT (_tao_elem));
+  if (!_any_val) return;
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (TimeBase::_tc_IntervalT, _any_val, 1, ACE_TRY_ENV); // copy the value
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    delete _any_val;
+  }
+  ACE_ENDTRY;
 }
 
 void operator<<= (CORBA::Any &_tao_any, TimeBase::IntervalT *_tao_elem) // non copying
 {
-    TAO_OutputCDR stream;
-    stream << *_tao_elem;
-    _tao_any._tao_replace (
-        TimeBase::_tc_IntervalT,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_elem,
-        TimeBase::IntervalT::_tao_any_destructor
-      );
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (TimeBase::_tc_IntervalT, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY {}
+  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TimeBase::IntervalT *&_tao_elem)
@@ -298,95 +230,33 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TimeBase::IntervalT *&_t
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (TimeBase::_tc_IntervalT, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
+    if (!type->equal (TimeBase::_tc_IntervalT, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (TimeBase::IntervalT *)_tao_any.value ();
       return 1;
-    }
+      }
     else
     {
       ACE_NEW_RETURN (_tao_elem, TimeBase::IntervalT, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
+      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      if (stream.decode (TimeBase::_tc_IntervalT, _tao_elem, 0, ACE_TRY_ENV)
+        == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            TimeBase::_tc_IntervalT,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            TimeBase::IntervalT::_tao_any_destructor
-          );
+        ((CORBA::Any *)&_tao_any)->replace (TimeBase::_tc_IntervalT, _tao_elem, 1, ACE_TRY_ENV);
+        ACE_TRY_CHECK;
         return 1;
       }
       else
       {
         delete _tao_elem;
-        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
     delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TimeBase::IntervalT *&_tao_elem)
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (TimeBase::_tc_IntervalT, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (TimeBase::IntervalT *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, TimeBase::IntervalT, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(TimeBase::IntervalT *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            TimeBase::_tc_IntervalT,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (TimeBase::IntervalT *&, _tao_elem)),
-            TimeBase::IntervalT::_tao_any_destructor
-          );
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (TimeBase::IntervalT *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (TimeBase::IntervalT *&, _tao_elem);
-    _tao_elem = 0;
     return 0;
   }
   ACE_ENDTRY;

@@ -19,11 +19,10 @@
 
 #ifndef TAO_IDL_POLLABLES_H
 #define TAO_IDL_POLLABLES_H
-#include "ace/pre.h"
 
 #include "tao/PollableC.h"
 
-#if (TAO_HAS_AMI_POLLER == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
 
 #include "tao/POA_CORBA.h"
 
@@ -32,9 +31,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -223,21 +219,19 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-}
-TAO_NAMESPACE_CLOSE
+};
 
-#include "tao/PollableS_T.h"
+#include "PollableS_T.h"
 #endif /* 0 */
 
 #if defined (__ACE_INLINE__)
-#include "tao/PollableS.i"
+#include "PollableS.i"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
 #endif /* _MSC_VER */
 
-#endif /* TAO_HAS_AMI_POLLER == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */
 
-#include "ace/post.h"
 #endif /* ifndef */

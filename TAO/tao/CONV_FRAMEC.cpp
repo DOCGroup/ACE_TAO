@@ -17,33 +17,12 @@
 //
 // ================================================================
 
-#include "tao/CONV_FRAMEC.h"
+#include "CONV_FRAMEC.h"
 #include "tao/Any.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/CONV_FRAMEC.i"
+#include "CONV_FRAMEC.i"
 #endif /* !defined INLINE */
-
-void
-CONV_FRAME::CodeSetComponent::_tao_any_destructor (void* x)
-{
-  CONV_FRAME::CodeSetComponent *tmp = ACE_static_cast(CONV_FRAME::CodeSetComponent*,x);
-  delete tmp;
-}
-
-void
-CONV_FRAME::CodeSetComponentInfo::_tao_any_destructor (void* x)
-{
-  CONV_FRAME::CodeSetComponentInfo *tmp = ACE_static_cast(CONV_FRAME::CodeSetComponentInfo*,x);
-  delete tmp;
-}
-
-void
-CONV_FRAME::CodeSetContext::_tao_any_destructor (void* x)
-{
-  CONV_FRAME::CodeSetContext *tmp = ACE_static_cast(CONV_FRAME::CodeSetContext*,x);
-  delete tmp;
-}
 
 static const CORBA::Long _oc_CONV_FRAME_CodeSetId[] =
 {
@@ -287,30 +266,32 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CONV_FRAME)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_CodeSetContext, &_tc_TAO_tc_CONV_FRAME_CodeSetContext)
 TAO_NAMESPACE_END
-
 void operator<<= (CORBA::Any &_tao_any, const CONV_FRAME::CodeSetComponent &_tao_elem) // copying
 {
-  TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      CONV_FRAME::_tc_CodeSetComponent,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
-    );
+  CONV_FRAME::CodeSetComponent *_any_val;
+  ACE_NEW (_any_val, CONV_FRAME::CodeSetComponent (_tao_elem));
+  if (!_any_val) return;
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (CONV_FRAME::_tc_CodeSetComponent, _any_val, 1, ACE_TRY_ENV); // copy the value
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    delete _any_val;
+  }
+  ACE_ENDTRY;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CONV_FRAME::CodeSetComponent *_tao_elem) // non copying
 {
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      CONV_FRAME::_tc_CodeSetComponent,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      CONV_FRAME::CodeSetComponent::_tao_any_destructor
-    );
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (CONV_FRAME::_tc_CodeSetComponent, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY {}
+  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CONV_FRAME::CodeSetComponent *&_tao_elem)
@@ -318,95 +299,33 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CONV_FRAME::CodeSetCompo
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CONV_FRAME::_tc_CodeSetComponent, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
+    if (!type->equal (CONV_FRAME::_tc_CodeSetComponent, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (CONV_FRAME::CodeSetComponent *)_tao_any.value ();
       return 1;
-    }
+      }
     else
     {
       ACE_NEW_RETURN (_tao_elem, CONV_FRAME::CodeSetComponent, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
+      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      if (stream.decode (CONV_FRAME::_tc_CodeSetComponent, _tao_elem, 0, ACE_TRY_ENV)
+        == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CONV_FRAME::_tc_CodeSetComponent,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            CONV_FRAME::CodeSetComponent::_tao_any_destructor
-          );
+        ((CORBA::Any *)&_tao_any)->replace (CONV_FRAME::_tc_CodeSetComponent, _tao_elem, 1, ACE_TRY_ENV);
+        ACE_TRY_CHECK;
         return 1;
       }
       else
       {
         delete _tao_elem;
-        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
     delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CONV_FRAME::CodeSetComponent *&_tao_elem)
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CONV_FRAME::_tc_CodeSetComponent, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CONV_FRAME::CodeSetComponent *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CONV_FRAME::CodeSetComponent, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CONV_FRAME::CodeSetComponent *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CONV_FRAME::_tc_CodeSetComponent,
-            1,
-            ACE_const_cast (CONV_FRAME::CodeSetComponent *&, _tao_elem),
-            CONV_FRAME::CodeSetComponent::_tao_any_destructor
-           );
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CONV_FRAME::CodeSetComponent *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CONV_FRAME::CodeSetComponent *&, _tao_elem);
-    _tao_elem = 0;
     return 0;
   }
   ACE_ENDTRY;
@@ -415,27 +334,30 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CONV_FRAME::CodeSe
 
 void operator<<= (CORBA::Any &_tao_any, const CONV_FRAME::CodeSetComponentInfo &_tao_elem) // copying
 {
-  TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      CONV_FRAME::_tc_CodeSetComponentInfo,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
-    );
+  CONV_FRAME::CodeSetComponentInfo *_any_val;
+  ACE_NEW (_any_val, CONV_FRAME::CodeSetComponentInfo (_tao_elem));
+  if (!_any_val) return;
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (CONV_FRAME::_tc_CodeSetComponentInfo, _any_val, 1, ACE_TRY_ENV); // copy the value
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    delete _any_val;
+  }
+  ACE_ENDTRY;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CONV_FRAME::CodeSetComponentInfo *_tao_elem) // non copying
 {
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      CONV_FRAME::_tc_CodeSetComponentInfo,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      CONV_FRAME::CodeSetComponentInfo::_tao_any_destructor
-    );
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (CONV_FRAME::_tc_CodeSetComponentInfo, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY {}
+  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CONV_FRAME::CodeSetComponentInfo *&_tao_elem)
@@ -443,95 +365,33 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CONV_FRAME::CodeSetCompo
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CONV_FRAME::_tc_CodeSetComponentInfo, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
+    if (!type->equal (CONV_FRAME::_tc_CodeSetComponentInfo, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (CONV_FRAME::CodeSetComponentInfo *)_tao_any.value ();
       return 1;
-    }
+      }
     else
     {
       ACE_NEW_RETURN (_tao_elem, CONV_FRAME::CodeSetComponentInfo, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
+      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      if (stream.decode (CONV_FRAME::_tc_CodeSetComponentInfo, _tao_elem, 0, ACE_TRY_ENV)
+        == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CONV_FRAME::_tc_CodeSetComponentInfo,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            CONV_FRAME::CodeSetComponentInfo::_tao_any_destructor
-          );
+        ((CORBA::Any *)&_tao_any)->replace (CONV_FRAME::_tc_CodeSetComponentInfo, _tao_elem, 1, ACE_TRY_ENV);
+        ACE_TRY_CHECK;
         return 1;
       }
       else
       {
         delete _tao_elem;
-        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
     delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CONV_FRAME::CodeSetComponentInfo *&_tao_elem)
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CONV_FRAME::_tc_CodeSetComponentInfo, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CONV_FRAME::CodeSetComponentInfo *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CONV_FRAME::CodeSetComponentInfo, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CONV_FRAME::CodeSetComponentInfo *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CONV_FRAME::_tc_CodeSetComponentInfo,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CONV_FRAME::CodeSetComponentInfo *&, _tao_elem)),
-            CONV_FRAME::CodeSetComponentInfo::_tao_any_destructor
-          );
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CONV_FRAME::CodeSetComponentInfo *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CONV_FRAME::CodeSetComponentInfo *&, _tao_elem);
-    _tao_elem = 0;
     return 0;
   }
   ACE_ENDTRY;
@@ -540,27 +400,30 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CONV_FRAME::CodeSe
 
 void operator<<= (CORBA::Any &_tao_any, const CONV_FRAME::CodeSetContext &_tao_elem) // copying
 {
-  TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      CONV_FRAME::_tc_CodeSetContext,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
-    );
+  CONV_FRAME::CodeSetContext *_any_val;
+  ACE_NEW (_any_val, CONV_FRAME::CodeSetContext (_tao_elem));
+  if (!_any_val) return;
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (CONV_FRAME::_tc_CodeSetContext, _any_val, 1, ACE_TRY_ENV); // copy the value
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    delete _any_val;
+  }
+  ACE_ENDTRY;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CONV_FRAME::CodeSetContext *_tao_elem) // non copying
 {
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      CONV_FRAME::_tc_CodeSetContext,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      CONV_FRAME::CodeSetContext::_tao_any_destructor
-    );
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (CONV_FRAME::_tc_CodeSetContext, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY {}
+  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CONV_FRAME::CodeSetContext *&_tao_elem)
@@ -568,95 +431,33 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CONV_FRAME::CodeSetConte
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CONV_FRAME::_tc_CodeSetContext, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
+    if (!type->equal (CONV_FRAME::_tc_CodeSetContext, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (CONV_FRAME::CodeSetContext *)_tao_any.value ();
       return 1;
-    }
+      }
     else
     {
       ACE_NEW_RETURN (_tao_elem, CONV_FRAME::CodeSetContext, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *_tao_elem)
+      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      if (stream.decode (CONV_FRAME::_tc_CodeSetContext, _tao_elem, 0, ACE_TRY_ENV)
+        == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CONV_FRAME::_tc_CodeSetContext,
-            1,
-            ACE_reinterpret_cast (void *, _tao_elem),
-            CONV_FRAME::CodeSetContext::_tao_any_destructor
-          );
+        ((CORBA::Any *)&_tao_any)->replace (CONV_FRAME::_tc_CodeSetContext, _tao_elem, 1, ACE_TRY_ENV);
+        ACE_TRY_CHECK;
         return 1;
       }
       else
       {
         delete _tao_elem;
-        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
     delete _tao_elem;
-    _tao_elem = 0;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CONV_FRAME::CodeSetContext *&_tao_elem)
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (CONV_FRAME::_tc_CodeSetContext, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (CONV_FRAME::CodeSetContext *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, CONV_FRAME::CodeSetContext, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(CONV_FRAME::CodeSetContext *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CONV_FRAME::_tc_CodeSetContext,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (CONV_FRAME::CodeSetContext *&, _tao_elem)),
-            CONV_FRAME::CodeSetContext::_tao_any_destructor
-            );
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (CONV_FRAME::CodeSetContext *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (CONV_FRAME::CodeSetContext *&, _tao_elem);
-    _tao_elem = 0;
     return 0;
   }
   ACE_ENDTRY;

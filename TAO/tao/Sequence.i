@@ -157,12 +157,6 @@ TAO_Bounded_Base_Sequence::length (void) const
 ACE_INLINE void
 TAO_Bounded_Base_Sequence::length (CORBA::ULong length)
 {
-  if (this->length_ == 0)
-    {
-      this->_allocate_buffer (this->maximum_);
-      this->release_ = 1;
-    }
-
   if (length > this->maximum_)
     {
       return;
@@ -171,13 +165,12 @@ TAO_Bounded_Base_Sequence::length (CORBA::ULong length)
     {
       this->_shrink_buffer (length, this->length_);
     }
-
   this->length_ = length;
 }
 
 // ****************************************************************
 
-//default constructors
+//default constructor
 ACE_INLINE
 TAO_Unbounded_String_Sequence::TAO_Unbounded_String_Sequence (void)
 {
@@ -188,21 +181,6 @@ TAO_Unbounded_String_Sequence::
 TAO_Unbounded_String_Sequence (CORBA::ULong maximum,
                                CORBA::ULong length,
                                char* *value,
-                               CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
-{
-}
-
-ACE_INLINE
-TAO_Unbounded_WString_Sequence::TAO_Unbounded_WString_Sequence (void)
-{
-}
-
-ACE_INLINE
-TAO_Unbounded_WString_Sequence::
-TAO_Unbounded_WString_Sequence (CORBA::ULong maximum,
-                               CORBA::ULong length,
-                               CORBA::WChar* *value,
                                CORBA::Boolean release)
   : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
 {

@@ -16,7 +16,6 @@
 
 #ifndef TAO_CLIENT_STRATEGY_FACTORY_H
 #define TAO_CLIENT_STRATEGY_FACTORY_H
-#include "ace/pre.h"
 
 #include "ace/Service_Object.h"
 
@@ -50,7 +49,7 @@ public:
   // <TAO_GIOP_Invocation::location_forward> and the
   // <TAO_GIOP_Invocation::start>.
 
-  virtual TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport);
+  virtual TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_ORB_Core *orb_core);
   // Create the correct client request muxing strategy.
 
   virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
@@ -60,5 +59,4 @@ public:
   // Create the lock to be used by the cached connector.
 };
 
-#include "ace/post.h"
 #endif /* TAO_CLIENT_STRATEGY_FACTORY_H */

@@ -65,17 +65,21 @@ TAO_Tagged_Components::set_code_sets_i (
 }
 
 void
-TAO_Tagged_Components::set_tao_priority (CORBA::Short p)
+TAO_Tagged_Components::set_tao_priority_range (CORBA::Short min_p,
+                                               CORBA::Short max_p)
 {
-  this->tao_priority_ = p;
-  this->tao_priority_set_ = 1;
+  this->tao_priority_min_ = min_p;
+  this->tao_priority_max_ = max_p;
+  this->tao_priority_range_set_ = 1;
 
   TAO_OutputCDR cdr;
   cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
+  cdr << this->orb_type_;
 
-  cdr << this->tao_priority_;
+  cdr << this->tao_priority_min_;
+  cdr << this->tao_priority_max_;
 
-  this->set_component_i (TAO_TAG_PRIORITY, cdr);
+  this->set_component_i (TAO_TAG_PRIORITY_RANGE, cdr);
 }
 
 // ****************************************************************
@@ -132,15 +136,15 @@ TAO_Tagged_Components::set_known_component_i (
   TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
                                           component.component_data.get_buffer ()),
                     component.component_data.length ());
-  CORBA::Boolean byte_order;
-  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+  CORBA::Octet byte_order;
+  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) != 0)
     return;
   cdr.reset_byte_order (ACE_static_cast(int,byte_order));
 
   if (component.tag == IOP::TAG_ORB_TYPE)
     {
       CORBA::ULong orb_type;
-      if ((cdr >> orb_type) == 0)
+      if ((cdr >> orb_type) != 0)
         return;
 
       this->orb_type_ = orb_type;
@@ -149,7 +153,7 @@ TAO_Tagged_Components::set_known_component_i (
   else if (component.tag == IOP::TAG_CODE_SETS)
     {
       CONV_FRAME::CodeSetComponentInfo ci;
-      if ((cdr >> ci) == 0)
+      if ((cdr >> ci) != 0)
         return;
 
       this->set_code_sets_i (this->code_sets_.ForCharData,
@@ -158,15 +162,18 @@ TAO_Tagged_Components::set_known_component_i (
                              ci.ForWcharData);
       this->code_sets_set_ = 1;
     }
-  else if (component.tag == TAO_TAG_PRIORITY)
+  else if (component.tag == TAO_TAG_PRIORITY_RANGE)
     {
-      CORBA::Short p;
+      CORBA::Short min_p, max_p;
 
-      if ((cdr >> p) == 0)
+      if ((cdr >> min_p) != 0
+          || (cdr >> max_p) != 0
+          || min_p > max_p)
         return;
 
-      this->tao_priority_ = p;
-      this->tao_priority_set_ = 1;
+      this->tao_priority_min_ = min_p;
+      this->tao_priority_max_ = max_p;
+      this->tao_priority_range_set_ = 1;
     }
 }
 
@@ -255,7 +262,7 @@ TAO_Tagged_Components::decode (TAO_InputCDR& cdr)
   // Mark the well-known components as removed
   this->orb_type_set_ = 0;
   this->code_sets_set_ = 0;
-  this->tao_priority_set_ = 0;
+  this->tao_priority_range_set_ = 0;
 
   if ((cdr >> this->components_) == 0)
     return 0;

@@ -19,7 +19,6 @@
 
 #ifndef TAO_TYPECODE_H
 #define TAO_TYPECODE_H
-#include "ace/pre.h"
 
 #include "ace/Synch.h"
 
@@ -31,7 +30,6 @@
 
 // Forward decl.
 class TAO_InputCDR;
-class TAO_OutputCDR;
 
 // A TypeCode describes data.  This one's as thin a wrapper around CDR
 // octet sequences as is practical.  There are guesses here about how
@@ -73,12 +71,6 @@ public:
     Bounds (void);
 
     virtual void _raise (void);
-
-    virtual void _tao_encode (TAO_OutputCDR &cdr,
-                              CORBA::Environment &) const;
-    virtual void _tao_decode (TAO_InputCDR &cdr,
-                              CORBA::Environment &);
-
     static Bounds* _narrow (CORBA_Exception *ex);
     virtual int _is_a (const char* interface_id) const;
   };
@@ -89,12 +81,6 @@ public:
     BadKind (void);
 
     virtual void _raise (void);
-
-    virtual void _tao_encode (TAO_OutputCDR &cdr,
-                              CORBA::Environment &) const;
-    virtual void _tao_decode (TAO_InputCDR &cdr,
-                              CORBA::Environment &);
-
     static BadKind* _narrow (CORBA_Exception *ex);
     virtual int _is_a (const char* interface_id) const;
   };
@@ -108,15 +94,15 @@ public:
   static CORBA::TypeCode_ptr _nil (void);
   // Returns a NULL typecode.
 
-  CORBA::Boolean equal (CORBA::TypeCode_ptr,
+  CORBA::Boolean equal (const CORBA::TypeCode_ptr,
                         CORBA_Environment &ACE_TRY_ENV =
                           TAO_default_environment ()) const;
-  // Compares two typecodes. Must be identical in every respect.
+  // Compares two typecodes.
 
   CORBA::Boolean equivalent (CORBA::TypeCode_ptr,
                              CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ()) const;
-  // Conforms to CORBA 2.3.1 (99-10-07).
+  // Unaliases receiver and argument before comparing.
 
   CORBA::TCKind kind (CORBA_Environment &ACE_TRY_ENV =
                         TAO_default_environment ()) const;
@@ -246,13 +232,6 @@ public:
   // Deprecated, CORBA 1.2, not fully usable. Returns the number of
   // parameters that the typecode takes.
 
-  static void _tao_decode (const CORBA_TypeCode *parent,
-                           TAO_InputCDR &cdr,
-                           CORBA_TypeCode *&child,
-                           CORBA::Environment &ACE_TRY_ENV);
-  // CDR decoding: the >> operator is not enough because we must also
-  // respect the parent/child relationship among TypeCodes.
-
   // private:
   //
   // = The guts of the typecode implementation class
@@ -269,7 +248,7 @@ public:
   CORBA::Long byte_order_;
   // The byte order in the encapsulated stream.
 
-  CORBA::Long kind_;
+  CORBA::TCKind kind_;
   // the TypeCode kind
 
   CORBA::TypeCode_ptr parent_;
@@ -300,18 +279,7 @@ public:
 private:
   // = All the private/helper methods
 
-  CORBA::Boolean equ_common (CORBA::TypeCode_ptr tc,
-                             CORBA::Boolean equiv_only,
-                             CORBA_Environment &ACE_TRY_ENV =
-                                TAO_default_environment ()) const;
-  // equal() and equivalent() must both recurse, but their
-  // behavior is somewhat different (as defined in CORBA 2.3).
-  // This function allows us to reuse the same code by acting
-  // as the point of recursion and by adding the equiv_only
-  // flag, to differentiate the behavior where necessary.
-
   CORBA::Boolean private_equal (CORBA::TypeCode_ptr tc,
-                                CORBA::Boolean equiv_only,
                                 CORBA_Environment &ACE_TRY_ENV =
                                   TAO_default_environment ()) const;
   // Compares the typecodes.
@@ -381,61 +349,51 @@ private:
   // = All the private helpers testing for equality of typecodes
 
   CORBA::Boolean private_equal_objref (CORBA::TypeCode_ptr tc,
-                                       CORBA::Boolean equiv_only,
                                        CORBA_Environment &ACE_TRY_ENV =
                                          TAO_default_environment ()) const;
   // test equality for typecodes of objrefs
 
   CORBA::Boolean private_equal_struct (CORBA::TypeCode_ptr tc,
-                                       CORBA::Boolean equiv_only,
                                        CORBA_Environment &ACE_TRY_ENV =
                                          TAO_default_environment ()) const;
   // test equality for typecodes of structs
 
   CORBA::Boolean private_equal_union (CORBA::TypeCode_ptr tc,
-                                      CORBA::Boolean equiv_only,
                                       CORBA_Environment &ACE_TRY_ENV =
                                         TAO_default_environment ()) const;
   // test equality for typecodes of unions
 
   CORBA::Boolean private_equal_enum (CORBA::TypeCode_ptr tc,
-                                     CORBA::Boolean equiv_only,
                                      CORBA_Environment &ACE_TRY_ENV =
                                        TAO_default_environment ()) const;
   // test equality for typecodes of enums
 
   CORBA::Boolean private_equal_string (CORBA::TypeCode_ptr tc,
-                                       CORBA::Boolean equiv_only,
                                        CORBA_Environment &ACE_TRY_ENV =
                                          TAO_default_environment ()) const;
   // test equality for typecodes of strings
 
   CORBA::Boolean private_equal_wstring (CORBA::TypeCode_ptr tc,
-                                        CORBA::Boolean equiv_only,
                                         CORBA_Environment &ACE_TRY_ENV =
                                           TAO_default_environment ()) const;
   // test equality for typecodes of wide strings
 
   CORBA::Boolean private_equal_sequence (CORBA::TypeCode_ptr tc,
-                                         CORBA::Boolean equiv_only,
                                          CORBA_Environment &ACE_TRY_ENV =
                                            TAO_default_environment ()) const;
   // test equality for typecodes of sequences
 
   CORBA::Boolean private_equal_array (CORBA::TypeCode_ptr tc,
-                                      CORBA::Boolean equiv_only,
                                       CORBA_Environment &ACE_TRY_ENV =
                                         TAO_default_environment ()) const;
   // test equality for typecodes of array
 
   CORBA::Boolean private_equal_alias (CORBA::TypeCode_ptr tc,
-                                      CORBA::Boolean equiv_only,
                                       CORBA_Environment &ACE_TRY_ENV =
                                         TAO_default_environment ()) const;
   // test equality for typecodes of typedefs
 
   CORBA::Boolean private_equal_except (CORBA::TypeCode_ptr tc,
-                                       CORBA::Boolean equiv_only,
                                        CORBA_Environment &ACE_TRY_ENV =
                                          TAO_default_environment ()) const;
   // test equality for typecodes of exceptions
@@ -512,8 +470,8 @@ public:
   CORBA::Boolean tc_discrim_pad_size_known_;
 
   // = These data members store the precomputed values
-  char *  tc_id_;
-  char *  tc_name_;
+  CORBA::String  tc_id_;
+  CORBA::String  tc_name_;
   CORBA::ULong   tc_member_count_;
   CORBA::TypeCode_ptr *tc_member_type_list_;
   char **tc_member_name_list_;
@@ -602,15 +560,8 @@ public:
 
 };
 
-// These operators are too complex to be inline....
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR& cdr,
-                                      const CORBA::TypeCode *x);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR& cdr,
-                                      CORBA::TypeCode *&x);
-
 #if defined (__ACE_INLINE__)
 # include "tao/Typecode.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
 #endif /* TAO_TYPECODE_H */

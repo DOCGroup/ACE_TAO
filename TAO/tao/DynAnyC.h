@@ -24,7 +24,6 @@
 
 #ifndef TAO_IDL_CORBA_DYNANYC_H_
 #define TAO_IDL_CORBA_DYNANYC_H_
-#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -32,10 +31,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #include "tao/corbafwd.h"
 #include "tao/Any.h"
+#include "tao/ORB.h"
 #include "tao/Object.h"
 #include "tao/Sequence.h"
 
@@ -44,9 +44,6 @@
 #endif
 #define TAO_EXPORT_MACRO
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -54,7 +51,7 @@
 class CORBA_DynAny;
 typedef CORBA_DynAny *CORBA_DynAny_ptr;
 
-class TAO_Export CORBA_DynAny_var
+class  CORBA_DynAny_var
 {
 public:
   CORBA_DynAny_var (void); // default constructor
@@ -80,7 +77,7 @@ private:
   CORBA_DynAny_ptr ptr_;
 };
 
-class TAO_Export CORBA_DynAny_out
+class  CORBA_DynAny_out
 {
 public:
   CORBA_DynAny_out (CORBA_DynAny_ptr &);
@@ -97,7 +94,7 @@ private:
   CORBA_DynAny_ptr &ptr_;
 };
 
-class TAO_Export CORBA_DynAny : public virtual CORBA_Object
+class TAO_Export CORBA_DynAny : public virtual ACE_CORBA_1 (Object)
 {
 public:
   #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
@@ -115,6 +112,7 @@ public:
   static CORBA_DynAny_ptr _nil (void);
 
   class Invalid;
+  typedef Invalid *Invalid_ptr;
 
   class TAO_Export Invalid : public CORBA::UserException
   {
@@ -127,22 +125,23 @@ public:
 
     virtual void _raise (void);
 
-    virtual void _tao_encode (TAO_OutputCDR &cdr,
-                              CORBA::Environment &) const;
-    virtual void _tao_decode (TAO_InputCDR &cdr,
-                              CORBA::Environment &);
-
     static Invalid *_narrow (CORBA::Exception *);
 
 
     // = TAO extension
     static CORBA::Exception *_alloc (void);
 
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef Invalid_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
   }; // exception CORBA_DynAny::Invalid
 
     static CORBA::TypeCode_ptr _tc_Invalid;
 
   class InvalidValue;
+  typedef InvalidValue *InvalidValue_ptr;
 
   class TAO_Export InvalidValue : public CORBA::UserException
   {
@@ -155,22 +154,23 @@ public:
 
     virtual void _raise (void);
 
-    virtual void _tao_encode (TAO_OutputCDR &cdr,
-                              CORBA::Environment &) const;
-    virtual void _tao_decode (TAO_InputCDR &cdr,
-                              CORBA::Environment &);
-
     static InvalidValue *_narrow (CORBA::Exception *);
 
 
     // = TAO extension
     static CORBA::Exception *_alloc (void);
 
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef InvalidValue_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
   }; // exception CORBA_DynAny::InvalidValue
 
     static CORBA::TypeCode_ptr _tc_InvalidValue;
 
   class TypeMismatch;
+  typedef TypeMismatch *TypeMismatch_ptr;
 
   class TAO_Export TypeMismatch : public CORBA::UserException
   {
@@ -183,22 +183,23 @@ public:
 
     virtual void _raise (void);
 
-    virtual void _tao_encode (TAO_OutputCDR &cdr,
-                              CORBA::Environment &) const;
-    virtual void _tao_decode (TAO_InputCDR &cdr,
-                              CORBA::Environment &);
-
     static TypeMismatch *_narrow (CORBA::Exception *);
 
 
     // = TAO extension
     static CORBA::Exception *_alloc (void);
 
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef TypeMismatch_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
   }; // exception CORBA_DynAny::TypeMismatch
 
     static CORBA::TypeCode_ptr _tc_TypeMismatch;
 
   class InvalidSeq;
+  typedef InvalidSeq *InvalidSeq_ptr;
 
   class TAO_Export InvalidSeq : public CORBA::UserException
   {
@@ -211,16 +212,16 @@ public:
 
     virtual void _raise (void);
 
-    virtual void _tao_encode (TAO_OutputCDR &cdr,
-                              CORBA::Environment &) const;
-    virtual void _tao_decode (TAO_InputCDR &cdr,
-                              CORBA::Environment &);
-
     static InvalidSeq *_narrow (CORBA::Exception *);
 
 
     // = TAO extension
     static CORBA::Exception *_alloc (void);
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef InvalidSeq_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
 
   }; // exception CORBA_DynAny::InvalidSeq
 
@@ -436,7 +437,7 @@ extern  CORBA::TypeCode_ptr  _tc_CORBA_DynAny;
 class CORBA_DynEnum;
 typedef CORBA_DynEnum *CORBA_DynEnum_ptr;
 
-class TAO_Export CORBA_DynEnum_var
+class  CORBA_DynEnum_var
 {
 public:
   CORBA_DynEnum_var (void); // default constructor
@@ -461,7 +462,7 @@ private:
   CORBA_DynEnum_ptr ptr_;
 };
 
-class TAO_Export CORBA_DynEnum_out
+class  CORBA_DynEnum_out
 {
 public:
   CORBA_DynEnum_out (CORBA_DynEnum_ptr &);
@@ -536,7 +537,7 @@ extern  CORBA::TypeCode_ptr  _tc_CORBA_DynEnum;
 // Forward declaration.
 struct CORBA_NameValuePair;
 
-class TAO_Export CORBA_NameValuePair_var
+class  CORBA_NameValuePair_var
 {
 public:
   CORBA_NameValuePair_var (void); // default constructor
@@ -563,7 +564,7 @@ private:
   CORBA_NameValuePair *ptr_;
 };
 
-class TAO_Export CORBA_NameValuePair_out
+class  CORBA_NameValuePair_out
 {
 public:
   CORBA_NameValuePair_out (CORBA_NameValuePair *&);
@@ -581,12 +582,13 @@ private:
   void operator= (const CORBA_NameValuePair_var &);
 };
 
-struct TAO_Export CORBA_NameValuePair
+struct  CORBA_NameValuePair
 {
   TAO_String_Manager id;
   CORBA::Any value;
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef CORBA_NameValuePair_ptr _ptr_type;
   typedef CORBA_NameValuePair_var _var_type;
 #endif /* __GNUC__ */
   // Useful for template programming.
@@ -783,7 +785,7 @@ public:
 // class CORBA::NameValuePairSeq_var
 // *************************************************************
 
-class TAO_Export CORBA_NameValuePairSeq_var
+class  CORBA_NameValuePairSeq_var
 {
 public:
   CORBA_NameValuePairSeq_var (void); // default constructor
@@ -811,7 +813,7 @@ private:
   CORBA_NameValuePairSeq *ptr_;
 };
 
-class TAO_Export CORBA_NameValuePairSeq_out
+class  CORBA_NameValuePairSeq_out
 {
 public:
   CORBA_NameValuePairSeq_out (CORBA_NameValuePairSeq *&);
@@ -855,6 +857,7 @@ public:
   ~CORBA_NameValuePairSeq (void); // dtor
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef CORBA_NameValuePairSeq_ptr _ptr_type;
   typedef CORBA_NameValuePairSeq_var _var_type;
 #endif /* __GNUC__ */
   // Useful for template programming.
@@ -864,7 +867,7 @@ public:
 class CORBA_DynStruct;
 typedef CORBA_DynStruct *CORBA_DynStruct_ptr;
 
-class TAO_Export CORBA_DynStruct_var
+class  CORBA_DynStruct_var
 {
 public:
   CORBA_DynStruct_var (void); // default constructor
@@ -889,7 +892,7 @@ private:
   CORBA_DynStruct_ptr ptr_;
 };
 
-class TAO_Export CORBA_DynStruct_out
+class  CORBA_DynStruct_out
 {
 public:
   CORBA_DynStruct_out (CORBA_DynStruct_ptr &);
@@ -963,7 +966,7 @@ extern  CORBA::TypeCode_ptr  _tc_CORBA_DynStruct;
 class CORBA_DynUnion;
 typedef CORBA_DynUnion *CORBA_DynUnion_ptr;
 
-class TAO_Export CORBA_DynUnion_var
+class  CORBA_DynUnion_var
 {
 public:
   CORBA_DynUnion_var (void); // default constructor
@@ -988,7 +991,7 @@ private:
   CORBA_DynUnion_ptr ptr_;
 };
 
-class TAO_Export CORBA_DynUnion_out
+class  CORBA_DynUnion_out
 {
 public:
   CORBA_DynUnion_out (CORBA_DynUnion_ptr &);
@@ -1266,7 +1269,7 @@ public:
 // class CORBA::AnySeq_var
 // *************************************************************
 
-class TAO_Export CORBA_AnySeq_var
+class  CORBA_AnySeq_var
 {
 public:
   CORBA_AnySeq_var (void); // default constructor
@@ -1294,7 +1297,7 @@ private:
   CORBA_AnySeq *ptr_;
 };
 
-class TAO_Export CORBA_AnySeq_out
+class  CORBA_AnySeq_out
 {
 public:
   CORBA_AnySeq_out (CORBA_AnySeq *&);
@@ -1339,6 +1342,7 @@ public:
   ~CORBA_AnySeq (void); // dtor
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef CORBA_AnySeq_ptr _ptr_type;
   typedef CORBA_AnySeq_var _var_type;
 #endif /* __GNUC__ */
 
@@ -1349,7 +1353,7 @@ extern  CORBA::TypeCode_ptr  _tc_AnySeq;
 class CORBA_DynSequence;
 typedef CORBA_DynSequence *CORBA_DynSequence_ptr;
 
-class TAO_Export CORBA_DynSequence_var
+class  CORBA_DynSequence_var
 {
 public:
   CORBA_DynSequence_var (void); // default constructor
@@ -1374,7 +1378,7 @@ private:
   CORBA_DynSequence_ptr ptr_;
 };
 
-class TAO_Export CORBA_DynSequence_out
+class  CORBA_DynSequence_out
 {
 public:
   CORBA_DynSequence_out (CORBA_DynSequence_ptr &);
@@ -1449,7 +1453,7 @@ extern  CORBA::TypeCode_ptr  _tc_CORBA_DynSequence;
 class CORBA_DynArray;
 typedef CORBA_DynArray *CORBA_DynArray_ptr;
 
-class TAO_Export CORBA_DynArray_var
+class  CORBA_DynArray_var
 {
 public:
   CORBA_DynArray_var (void); // default constructor
@@ -1474,7 +1478,7 @@ private:
   CORBA_DynArray_ptr ptr_;
 };
 
-class TAO_Export CORBA_DynArray_out
+class  CORBA_DynArray_out
 {
 public:
   CORBA_DynArray_out (CORBA_DynArray_ptr &);
@@ -1538,14 +1542,13 @@ private:
 extern  CORBA::TypeCode_ptr  _tc_CORBA_DynArray;
 
 #if defined (__ACE_INLINE__)
-#include "tao/DynAnyC.i"
+#include "DynAnyC.i"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
 #endif /* _MSC_VER */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-#include "ace/post.h"
 #endif /* if !defined */

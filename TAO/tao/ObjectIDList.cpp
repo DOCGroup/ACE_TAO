@@ -10,13 +10,10 @@
 // Hand Modified by Vishal Kachroo <vishal@cs.wustl.edu>
 //
 
-#include "tao/ObjectIDList.h"
-#include "tao/Typecode.h"
-#include "tao/ORB.h"
-#include "tao/Any.h"
+#include "ObjectIDList.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/ObjectIDList.i"
+#include "ObjectIDList.i"
 #endif /* !defined INLINE */
 
 #if !defined (_CORBA_ORB_OBJECTIDLIST_CS_)
@@ -86,65 +83,30 @@ void operator<<= (
     const CORBA_ORB_ObjectIdList &_tao_elem
   ) // copying
 {
-    TAO_OutputCDR stream;
-    stream << _tao_elem;
-
-    _tao_any._tao_replace (CORBA::ORB::_tc_ObjectIdList,
-                           TAO_ENCAP_BYTE_ORDER,
-                           stream.begin ());
-}
-
-CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const CORBA_ORB_ObjectIdList &_tao_sequence
-  )
-{
-  if (strm << _tao_sequence.length ())
+  CORBA_ORB_ObjectIdList *_tao_any_val;
+  ACE_NEW (_tao_any_val, CORBA_ORB_ObjectIdList (_tao_elem));
+  if (!_tao_any_val) return;
+  ACE_TRY_NEW_ENV
   {
-    // encode all elements
-    CORBA::Boolean _tao_marshal_flag = 1;
-    for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
-      _tao_marshal_flag = (strm << _tao_sequence[i].in ());
-    return _tao_marshal_flag;
+    _tao_any.replace (CORBA::ORB::_tc_ObjectIdList, _tao_any_val, 1, ACE_TRY_ENV); // copy the value
+    ACE_TRY_CHECK;
   }
-  return 0; // error
-}
-
-CORBA::Boolean
-operator>> (TAO_InputCDR &strm, CORBA_ORB_ObjectIdList &_tao_sequence)
-{
-  CORBA::ULong _tao_seq_len;
-  if (strm >> _tao_seq_len)
+  ACE_CATCHANY
   {
-    // set the length of the sequence
-    _tao_sequence.length (_tao_seq_len);
-    // retrieve all the elements
-    CORBA::Boolean _tao_marshal_flag = 1;
-    for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
-      _tao_marshal_flag = (strm >> _tao_sequence[i].out ());
-    return _tao_marshal_flag;
+    delete _tao_any_val;
   }
-  return 0; // error
+  ACE_ENDTRY;
 }
 
-void CORBA_ORB_ObjectIdList::_tao_any_destructor (void *x)
+void operator<<= (CORBA::Any &_tao_any, CORBA_ORB_ObjectIdList *_tao_elem) // non copying
 {
-  CORBA_ORB_ObjectIdList *tmp = ACE_static_cast(CORBA_ORB_ObjectIdList*,x);
-  delete tmp;
-}
-
-void operator<<= (CORBA::Any &_tao_any, CORBA_ORB_ObjectIdList *_tao_elem)
-{
-    TAO_OutputCDR stream;
-    stream << *_tao_elem;
-
-    _tao_any._tao_replace (CORBA::ORB::_tc_ObjectIdList,
-                           TAO_ENCAP_BYTE_ORDER,
-                           stream.begin (),
-                           1,
-                           _tao_elem,
-                           CORBA_ORB_ObjectIdList::_tao_any_destructor);
+  ACE_TRY_NEW_ENV
+  {
+    _tao_any.replace (CORBA::ORB::_tc_ObjectIdList, _tao_elem, 0, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY {}
+  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ORB_ObjectIdList *&_tao_elem)
@@ -162,15 +124,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ORB_ObjectIdList *
     else
     {
       ACE_NEW_RETURN (_tao_elem, CORBA_ORB_ObjectIdList, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
-                           _tao_any._tao_byte_order ());
-      if (stream >> *_tao_elem)
+      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      if (stream.decode (CORBA::ORB::_tc_ObjectIdList, _tao_elem, 0, ACE_TRY_ENV)
+        == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::ORB::_tc_ObjectIdList,
-            1,
-            _tao_elem,
-            CORBA_ORB_ObjectIdList::_tao_any_destructor);
+        ((CORBA::Any *)&_tao_any)->replace (CORBA::ORB::_tc_ObjectIdList, _tao_elem, 1, ACE_TRY_ENV);
+        ACE_TRY_CHECK;
         return 1;
       }
       else

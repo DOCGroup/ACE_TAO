@@ -16,11 +16,10 @@
 
 #ifndef TAO_DYNENUM_I_H
 #define TAO_DYNENUM_I_H
-#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #include "ace/Containers.h"
 
@@ -210,5 +209,4 @@ private:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-#include "ace/post.h"
 #endif /* TAO_DYNENUM_I_H */

@@ -16,7 +16,6 @@
 
 #ifndef TAO_TAGGED_COMPONENTS_H
 #define TAO_TAGGED_COMPONENTS_H
-#include "ace/pre.h"
 
 #include "tao/IOPC.h"
 
@@ -75,11 +74,13 @@ public:
   // if the component is not present.
 
   // = TAO specific components
-  void set_tao_priority (CORBA::Short priority);
-  // The the TAO_TAG_PRIORITY component value.
+  void set_tao_priority_range (CORBA::Short min_priority,
+                               CORBA::Short max_priority);
+  // The the TAO_TAG_PRIORITY_RANGE component value.
 
-  int get_tao_priority (CORBA::Short& min_priority) const;
-  // Gets the TAO_TAG_PRIORITY component value.
+  int get_tao_priority_range (CORBA::Short& min_priority,
+                              CORBA::Short& max_priority) const;
+  // Gets the TAO_TAG_PRIORITY_RANGE component value.
 
   // = Generic components
 
@@ -100,11 +101,6 @@ public:
   int encode (TAO_OutputCDR& cdr) const;
   int decode (TAO_InputCDR& cdr);
   // Marshal and demarshal the list.
-
-  IOP::MultipleComponentProfile &components (void);
-  // Read/Write access to the underlying
-  // MutipleComponentProfile. Added by request from Chris Hafey
-  // <chris@stentorsoft.com> 
 
 private:
   void set_code_sets_i (CONV_FRAME::CodeSetComponent &lhs,
@@ -136,22 +132,22 @@ private:
   CONV_FRAME::CodeSetComponentInfo code_sets_;
   // The ORB_TYPE component value
 
-  CORBA::Short tao_priority_;
-  // The TAO_PRIORITY priorities
+  CORBA::Short tao_priority_min_;
+  CORBA::Short tao_priority_max_;
+  // The TAO_PRIORITY_RANGE priorities
 
   IOP::MultipleComponentProfile components_;
   // The rest of the components, to be compliant we cannot drop a
   // bunch of them.
 
   // A flag for each component...
-  CORBA::Octet orb_type_set_;
-  CORBA::Octet code_sets_set_;
-  CORBA::Octet tao_priority_set_;
+  unsigned int orb_type_set_  : 1;
+  unsigned int code_sets_set_ : 1;
+  unsigned int tao_priority_range_set_ : 1;
 };
 
 #if defined (__ACE_INLINE__)
 # include "tao/Tagged_Components.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
 #endif /* TAO_TAGGED_COMPONENTS_H */

@@ -123,11 +123,12 @@ TAO_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
 
   CORBA::ORB_ptr servant_orb = 0;
 
+  if (poa_current_impl != 0)
+    servant_orb = poa_current_impl->orb_core ().orb () ;
+
   if (poa_current_impl != 0 &&
       this == poa_current_impl->servant ())
     {
-      servant_orb = poa_current_impl->orb_core ().orb () ;
-
       stub = servant_orb->create_stub_object (poa_current_impl->object_key (),
                                               this->_interface_repository_id (),
                                               ACE_TRY_ENV);
@@ -147,10 +148,10 @@ TAO_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
       // Increment the reference count since <object> will zap its
       // stub object on deletion.
       stub->_incr_refcnt ();
-
-      servant_orb = stub->orb_core ()->orb ();
     }
 
+  if (servant_orb == 0)
+    servant_orb = stub->orb_core ()->orb ();
   stub->servant_orb (servant_orb);
   return stub;
 }
@@ -309,40 +310,41 @@ TAO_ServantBase_var::_retn (void)
   return retval;
 }
 
+TAO_Stub *
+TAO_Local_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
+{
+  PortableServer::ObjectId_var invalid_oid =
+    PortableServer::string_to_ObjectId ("invalid");
+
+  TAO_ObjectKey tmp_key (invalid_oid->length (),
+                         invalid_oid->length (),
+                         invalid_oid->get_buffer (),
+                         0);
+
+  // It is ok to use TAO_ORB_Core_instance here since the locality
+  // constrained servant does not really register with a POA or get
+  // exported remotely.
+  //
+  // The correct thing to do is to probably use ORB of the default
+  // POA. The unfortunate part is that calling default_POA() requires
+  // the creation of a local stub, hence causing a infinite loop.
+  return TAO_ORB_Core_instance ()->orb ()->create_stub_object (tmp_key,
+                                                               this->_interface_repository_id (),
+                                                               ACE_TRY_ENV);
+}
+
 void
-TAO_Local_ServantBase::_dispatch (CORBA::ServerRequest &,
-                                  void *,
+TAO_Local_ServantBase::_dispatch (CORBA::ServerRequest &request,
+                                  void *context,
                                   CORBA_Environment &ACE_TRY_ENV)
 {
+  ACE_UNUSED_ARG (request);
+  ACE_UNUSED_ARG (context);
+
   ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
-TAO_Stub *
-TAO_Locality_Constrained_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
-{
-  // Get our default POA.
-  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  // This call might register us with the POA if we are not already
-  // registered and if the POA has the correct policies.
-  CORBA::Object_var object = poa->servant_to_reference (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  // Still return a null stub.  This will signify a locality
-  // constrained object, i.e., one that cannot be exported.
-  return 0;
-}
-
-void
-TAO_Locality_Constrained_ServantBase::_dispatch (CORBA::ServerRequest &,
-                                                 void *,
-                                                 CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::BAD_OPERATION ());
-}
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 CORBA::Object_ptr
 TAO_DynamicImplementation::_this (CORBA::Environment &ACE_TRY_ENV)
@@ -384,8 +386,8 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &ACE_TRY_ENV)
   TAO_POA_Current_Impl *poa_current_impl =
     TAO_TSS_RESOURCES::instance ()->poa_current_impl_;
 
-  if (poa_current_impl == 0 ||
-      this != poa_current_impl->servant ())
+  if (poa_current_impl != 0 &&
+      this == poa_current_impl->servant ())
     {
       ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                         0);

@@ -19,23 +19,17 @@
 
 #ifndef TAO_POLICY_MANAGER_H
 #define TAO_POLICY_MANAGER_H
-#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING)
 
 #include "tao/POA_CORBA.h"
+#include "tao/MessagingS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-// Forward declarations.
-class TAO_RelativeRoundtripTimeoutPolicy;
-class TAO_Client_Priority_Policy;
-class TAO_Sync_Scope_Policy;
-class TAO_Buffering_Constraint_Policy;
 
 class TAO_Export TAO_Policy_Manager_Impl
 {
@@ -50,14 +44,6 @@ class TAO_Export TAO_Policy_Manager_Impl
 public:
   TAO_Policy_Manager_Impl (void);
   // Constructor
-
-  ~TAO_Policy_Manager_Impl (void);
-  // Destructor
-
-  void copy_from (TAO_Policy_Manager_Impl* source,
-                  CORBA::Environment &ACE_TRY_ENV);
-  // Copy the state from <source>, it uses the copy() operator to
-  // obtain independent copies of all the policies.
 
   void set_policy_overrides (
       const CORBA::PolicyList & policies,
@@ -88,67 +74,14 @@ public:
 
   // = Direct accesors to the policy implementations, for speedy
   //   lookups.
-
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-  TAO_Client_Priority_Policy *client_priority (void) const;
-
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
-
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-  TAO_Sync_Scope_Policy *sync_scope (void) const;
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
-
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-  TAO_Buffering_Constraint_Policy *buffering_constraint (void) const;
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_Policy_Manager_Impl operator=(const TAO_Policy_Manager_Impl&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Policy_Manager_Impl(const TAO_Policy_Manager_Impl&))
-
-  void cleanup_i (CORBA::Environment &ACE_TRY_ENV);
-  // Remove and destroy all the policy objects owned by this policy
-  // manager.
+  POA_Messaging::RelativeRoundtripTimeoutPolicy*
+      relative_roundtrip_timeout (void) const;
 
 private:
   // The known policies are kept as pointers to the implementation
   // objects, this allow us to query the supported policies really
   // fast, without memory allocations.
-
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout_;
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-  TAO_Client_Priority_Policy *client_priority_;
-
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
-
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-  TAO_Sync_Scope_Policy *sync_scope_;
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
-
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-  TAO_Buffering_Constraint_Policy *buffering_constraint_;
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+  POA_Messaging::RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout_;
 
   CORBA::PolicyList other_policies_;
   // Other policies that are not optimized for fast querying
@@ -185,30 +118,8 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-  TAO_Client_Priority_Policy *client_priority (void) const;
-
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
-
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-  TAO_Sync_Scope_Policy *sync_scope (void) const;
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
-
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-  TAO_Buffering_Constraint_Policy *buffering_constraint (void) const;
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+  POA_Messaging::RelativeRoundtripTimeoutPolicy*
+      relative_roundtrip_timeout (void) const;
 
 private:
   TAO_Policy_Manager_Impl impl_;
@@ -240,30 +151,8 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-  TAO_Client_Priority_Policy *client_priority (void) const;
-
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
-
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-  TAO_Sync_Scope_Policy *sync_scope (void) const;
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
-
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-  TAO_Buffering_Constraint_Policy *buffering_constraint (void) const;
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+  POA_Messaging::RelativeRoundtripTimeoutPolicy*
+      relative_roundtrip_timeout (void) const;
 
 private:
   TAO_Policy_Manager_Impl manager_impl_;
@@ -298,30 +187,8 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-  TAO_Client_Priority_Policy *client_priority (void) const;
-
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
-
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-  TAO_Sync_Scope_Policy *sync_scope (void) const;
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
-
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-  TAO_Buffering_Constraint_Policy *buffering_constraint (void) const;
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+  POA_Messaging::RelativeRoundtripTimeoutPolicy*
+      relative_roundtrip_timeout (void) const;
 
   // = Set and get the implementation.
   TAO_Policy_Current_Impl &implementation (void) const;
@@ -332,7 +199,6 @@ public:
 # include "tao/Policy_Manager.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
-#include "ace/post.h"
 #endif /* TAO_POLICY_MANAGER_H */

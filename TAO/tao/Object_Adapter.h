@@ -16,7 +16,6 @@
 
 #ifndef TAO_OBJECT_ADAPTER_H
 #define TAO_OBJECT_ADAPTER_H
-#include "ace/pre.h"
 
 #include "tao/Key_Adapters.h"
 #include "tao/Server_Strategy_Factory.h"
@@ -46,7 +45,6 @@ class TAO_POA_Manager;
 class TAO_Temporary_Creation_Time;
 class TAO_POA_Current_Impl;
 class TAO_TSS_Resources;
-class TAO_Transport;
 
 class TAO_Export TAO_POA_Current : public POA_PortableServer::Current
 {
@@ -182,8 +180,6 @@ class TAO_Object_Adapter
   //     This class will be used as a facade for the POAs in a server
 public:
 
-  friend class TAO_POA;
-
   typedef PortableServer::ObjectId poa_name;
   typedef PortableServer::ObjectId_var poa_name_var;
   typedef PortableServer::ObjectId_out poa_name_out;
@@ -197,7 +193,6 @@ public:
 
   void dispatch_servant (const TAO_ObjectKey &key,
                          CORBA::ServerRequest &req,
-                         TAO_Transport *transport,
                          void *context,
                          CORBA_Environment &ACE_TRY_ENV);
 
@@ -392,7 +387,6 @@ protected:
     TAO_POA *> transient_poa_map;
   // Base class of the id map.
 
-#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   typedef ACE_Hash_Map_Manager_Ex_Adapter<
   poa_name,
     TAO_POA *,
@@ -400,15 +394,12 @@ protected:
     ACE_Equal_To<poa_name>,
     TAO_Incremental_Key_Generator> transient_poa_hash_map;
   // Id hash map.
-#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
-#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   typedef ACE_Map_Manager_Adapter<
   poa_name,
     TAO_POA *,
     TAO_Incremental_Key_Generator> transient_poa_linear_map;
   // Id linear map.
-#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   typedef ACE_Active_Map_Manager_Adapter<
   poa_name,
@@ -429,13 +420,11 @@ protected:
     ACE_Noop_Key_Generator<poa_name> > persistent_poa_name_hash_map;
   // Id hash map.
 
-#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   typedef ACE_Map_Manager_Adapter<
   poa_name,
     TAO_POA *,
     ACE_Noop_Key_Generator<poa_name> > persistent_poa_name_linear_map;
   // Id linear map.
-#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
 public:
 
@@ -577,7 +566,7 @@ public:
     PortableServer::Servant servant (void) const;
     // Servant accessor.
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
     PortableServer::ServantLocator::Cookie locator_cookie (void) const;
     // Get the Servant Locator's cookie
@@ -591,7 +580,7 @@ public:
     void operation (const char *);
     // Set the operation name.
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
     void active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry);
     // Set the <active_object_map_entry>.
@@ -632,7 +621,7 @@ public:
 
     TAO_POA_Current_Impl current_context_;
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
     PortableServer::ServantLocator::Cookie cookie_;
     // Servant Locator's cookie
@@ -640,7 +629,7 @@ public:
     const char *operation_;
     // Operation name for this current.
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
     TAO_Active_Object_Map::Map_Entry *active_object_map_entry_;
     // Pointer to the entry in the TAO_Active_Object_Map corresponding
@@ -663,5 +652,4 @@ public:
 # include "tao/Object_Adapter.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
 #endif /* TAO_OBJECT_ADAPTER_H */

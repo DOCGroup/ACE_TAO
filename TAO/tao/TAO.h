@@ -7,7 +7,7 @@
 //    tao
 //
 // = FILENAME
-//   TAO.h
+//   tao.h
 //
 // = DESCRIPTION
 //   Externally visible TAO extensions.
@@ -19,7 +19,6 @@
 
 #ifndef TAO_H
 #define TAO_H
-#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -47,6 +46,9 @@ public:
                    PortableServer::POAManager_ptr poa_manager = 0);
   // Constructor.
 
+  ~TAO_ORB_Manager (void);
+  // Destructor.
+
   int init (int &argc,
             char *argv[],
             CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -63,8 +65,7 @@ public:
   int init_child_poa (int &argc,
                       char *argv[],
                       const char *poa_name,
-                      CORBA_Environment &ACE_TRY_ENV =
-                          TAO_default_environment ());
+                      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Creates a child poa under the root poa with PERSISTENT and
   // USER_ID policies.  Call this if you want a <child_poa> with the
   // above policies, otherwise call init.  Returns -1 on failure.
@@ -73,52 +74,39 @@ public:
                       char *argv[],
                       const char *poa_name,
                       const char *orb_name,
-                      CORBA_Environment &ACE_TRY_ENV =
-                          TAO_default_environment ());
+                      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Creates a child poa under the root poa with PERSISTENT and
   // USER_ID policies.  Call this if you want a <child_poa> with the
   // above policies, otherwise call init.  Returns -1 on failure.
 
-  int fini (CORBA_Environment &ACE_TRY_ENV);
-  // Shut down the <ORB_Manager>.
-
-  ~TAO_ORB_Manager (void);
-  // Destructor.
-
-  // = Accessor methods.
-
   int activate_poa_manager (CORBA_Environment &ACE_TRY_ENV =
-                                TAO_default_environment ());
+                            TAO_default_environment ());
   //  Put POA manager into the <Active> state, so that incoming corba
   //  requests are processed.  This method is useful for clients,
   //  which are not going to enter "orb->run" loop, yet may want to
   //  service incoming requests while waiting for a result of CORBA
   //  call on a server.  Returns -1 on failure.
 
-  char *activate (PortableServer::Servant servant,
-                  CORBA_Environment &ACE_TRY_ENV =
-                      TAO_default_environment ());
+  CORBA::String activate (PortableServer::Servant servant,
+                          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Activate <servant>, using the POA <activate_object> call.  Users
   // can call this method multiple times to activate multiple objects.
   // Returns 0 on failure.
 
   void deactivate (const char *id,
-                   CORBA_Environment &ACE_TRY_ENV =
-                       TAO_default_environment ());
+                   CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Deactivate object in RootPOA.
 
-  char *activate_under_child_poa (const char *servant_name,
-                                  PortableServer::Servant servant,
-                                  CORBA_Environment &ACE_TRY_ENV =
-                                     TAO_default_environment ());
+  CORBA::String activate_under_child_poa (const char *servant_name,
+                                          PortableServer::Servant servant,
+                                          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Precondition: init_child_poa has been called.  Activate <servant>
   // using the POA <activate_object_with_id> created from the string
   // servant_name. Users should call this to activate objects under
   // the child_poa.
 
   void deactivate_under_child_poa (const char *id,
-                                   CORBA_Environment &ACE_TRY_ENV =
-                                       TAO_default_environment ());
+                                   CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Deactivate object in child POA.
 
   int run (CORBA_Environment &ACE_TRY_ENV,
@@ -165,6 +153,19 @@ protected:
   // The POA manager of poa_.
 };
 
+class TAO_Export TAO
+{
+  // = TITLE
+  //   Defines a namespace for externally visible TAO extensions.
+public:
+  // From Object_KeyC.h
+  typedef TAO_ObjectKey ObjectKey;
+  typedef TAO_ObjectKey_var ObjectKey_var;
+  typedef TAO_ObjectKey_out ObjectKey_out;
 
-#include "ace/post.h"
+  typedef TAO_ORB_Manager ORB_Manager;
+
+  ACE_CLASS_IS_NAMESPACE (TAO);
+};
+
 #endif /* TAO_H */

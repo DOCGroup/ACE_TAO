@@ -19,7 +19,6 @@
 
 #ifndef TAO_EXCEPTION_H
 #define TAO_EXCEPTION_H
-#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -87,11 +86,6 @@ public:
   // Returns a string containing information about the exception. This
   // function is not CORBA compliant.
 
-  virtual void _tao_encode (TAO_OutputCDR &cdr,
-                            CORBA::Environment &) const = 0;
-  virtual void _tao_decode (TAO_InputCDR &cdr,
-                            CORBA::Environment &) = 0;
-
   // = Methods required for memory management support.
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
@@ -114,14 +108,6 @@ private:
   // critical path.
 };
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-
-// Convenient ostream operator.
-TAO_Export ostream& operator<< (ostream &os,
-                                const CORBA_Exception &e);
-
-#endif // (ACE_LACKS_IOSTREAM_TOTALLY)
-
 class TAO_Export CORBA_UserException : public CORBA_Exception
 {
   // = TITLE
@@ -138,6 +124,9 @@ public:
 
   CORBA_UserException &operator= (const CORBA_UserException &src);
   // Assignment operator.
+
+  virtual void _raise (void);
+  // To throw an exception of this type.
 
   static CORBA_UserException *_narrow (CORBA_Exception *exception);
   // The narrow operation.
@@ -209,11 +198,6 @@ public:
   // Returns a string containing information about the exception. This
   // function is not CORBA compliant.
 
-  virtual void _tao_encode (TAO_OutputCDR &cdr,
-                            CORBA::Environment &) const;
-  virtual void _tao_decode (TAO_InputCDR &cdr,
-                            CORBA::Environment &);
-
   static CORBA::ULong _tao_minor_code (u_int location,
                                        int errno_value);
   // Helper to create a minor status value.
@@ -281,14 +265,14 @@ TAO_SYSTEM_EXCEPTION(INTF_REPOS);       // interface repository unavailable
 TAO_SYSTEM_EXCEPTION(BAD_CONTEXT);      // error processing context object
 TAO_SYSTEM_EXCEPTION(OBJ_ADAPTER);      // object adapter failure
 TAO_SYSTEM_EXCEPTION(DATA_CONVERSION);  // data conversion error
-TAO_SYSTEM_EXCEPTION(INV_POLICY);       // invalid policies present
-TAO_SYSTEM_EXCEPTION(REBIND);           // rebind needed
-TAO_SYSTEM_EXCEPTION(TIMEOUT);          // operation timed out
-TAO_SYSTEM_EXCEPTION(TRANSACTION_UNAVAILABLE); // no transaction
-TAO_SYSTEM_EXCEPTION(TRANSACTION_MODE);        // invalid transaction mode
-TAO_SYSTEM_EXCEPTION(TRANSACTION_REQUIRED);    // operation needs transaction
-TAO_SYSTEM_EXCEPTION(TRANSACTION_ROLLEDBACK);  // operation was a no-op
-TAO_SYSTEM_EXCEPTION(INVALID_TRANSACTION);     // invalid TP context passed
+TAO_SYSTEM_EXCEPTION(INV_POLICY);       // invalid policy override
+TAO_SYSTEM_EXCEPTION(REBIND);
+TAO_SYSTEM_EXCEPTION(TIMEOUT);
+TAO_SYSTEM_EXCEPTION(TRANSACTION_UNAVAILABLE);
+TAO_SYSTEM_EXCEPTION(TRANSACTION_MODE);
+TAO_SYSTEM_EXCEPTION(TRANSACTION_REQUIRED);   // operation needs transaction
+TAO_SYSTEM_EXCEPTION(TRANSACTION_ROLLEDBACK); // operation was a no-op
+TAO_SYSTEM_EXCEPTION(INVALID_TRANSACTION);    // invalid TP context passed
 
 #undef TAO_SYSTEM_EXCEPTION
 
@@ -311,9 +295,6 @@ public:
   CORBA_UnknownUserException (CORBA_Any& exception);
   // Destructor.
 
-  CORBA_UnknownUserException (const CORBA_UnknownUserException& e);
-  // Copy constructor
-
   virtual ~CORBA_UnknownUserException (void);
   // Constructor.
 
@@ -322,11 +303,6 @@ public:
 
   virtual void _raise (void);
   // To throw an UnknownUserException of this type.
-
-  virtual void _tao_encode (TAO_OutputCDR &cdr,
-                            CORBA::Environment &) const;
-  virtual void _tao_decode (TAO_InputCDR &cdr,
-                            CORBA::Environment &);
 
   static CORBA_UnknownUserException *_narrow (CORBA_Exception *ex);
   // Narrow to an UnknowUserException
@@ -512,5 +488,4 @@ public:
 # include "tao/Exception.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
 #endif /* TAO_EXCEPTION_H */
