@@ -1,13 +1,14 @@
-
 Wed Jul 22 11:45:44 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* tests/Aio_Platform_Test.cpp: Added <aio_> calls test for
-	platforms with ACE_HAS_AIO_CALLS defined.
+        * tests/Aio_Platform_Test.cpp: Added <aio_> calls test for
+          platforms with ACE_HAS_AIO_CALLS defined.
 
 Wed Jul 22 11:32:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Dynamic_Priority_Test.cpp: VxWorks only, fixed a few
           minor things so that it builds now.
+
+        * ace/config-linux-common.h: added ACE_HAS_GPERF.
 
 Tue Jul 21 23:09:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
