@@ -582,7 +582,7 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
                                     result);
   if (initiate_result == 1)
     // Immediate success: the OVERLAPPED will still get queued.
-    return 1;
+    return 0;
 
   // If initiate failed, check for a bad error.
   ACE_OS::set_errno_to_last_error ();
@@ -1000,7 +1000,7 @@ ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Resul
                                      result);
   if (initiate_result == 1)
     // Immediate success: the OVERLAPPED will still get queued.
-    return 1;
+    return 0;
 
   // If initiate failed, check for a bad error.
   ACE_OS::set_errno_to_last_error ();
@@ -1016,11 +1016,9 @@ ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Resul
       // queued.
 
       if (ACE::debug ())
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      ACE_LIB_TEXT ("%p\n"),
-                      ACE_LIB_TEXT ("WriteFile")));
-        }
+        ACE_DEBUG ((LM_ERROR,
+                    ACE_LIB_TEXT ("%p\n"),
+                    ACE_LIB_TEXT ("WriteFile")));
       return -1;
     }
 }
