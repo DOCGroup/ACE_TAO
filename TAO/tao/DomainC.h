@@ -39,7 +39,7 @@ class TAO_Export CORBA_DomainManager_var : public TAO_Base_var
 {
 public:
   CORBA_DomainManager_var (void); // default constructor
-  CORBA_DomainManager_var (CORBA_DomainManager_ptr);
+  CORBA_DomainManager_var (CORBA_DomainManager_ptr p) : ptr_ (p) {}
   CORBA_DomainManager_var (const CORBA_DomainManager_var &); // copy constructor
   ~CORBA_DomainManager_var (void); // destructor
 

@@ -110,7 +110,7 @@ class TAO_Export  CORBA_Policy_var : public TAO_Base_var
 {
 public:
   CORBA_Policy_var (void); // default constructor
-  CORBA_Policy_var (CORBA_Policy_ptr);
+  CORBA_Policy_var (CORBA_Policy_ptr p) : ptr_ (p) {}
   CORBA_Policy_var (const CORBA_Policy_var &); // copy constructor
   ~CORBA_Policy_var (void); // destructor
 

@@ -71,11 +71,6 @@ CORBA_Policy_var::CORBA_Policy_var (void) // default constructor
   : ptr_ (CORBA_Policy::_nil ())
 {}
 
-ACE_INLINE
-CORBA_Policy_var::CORBA_Policy_var (CORBA_Policy_ptr p)
-  : ptr_ (p)
-{}
-
 ACE_INLINE CORBA_Policy_ptr
 CORBA_Policy_var::ptr (void) const
 {
