@@ -199,11 +199,31 @@ client (void *arg = 0)
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client Receiving\n"));
 
+  ACE_Time_Value timeout (2);
+  ACE_Time_Value *timeoutp = &timeout;
+
+  server >> timeoutp;
+
   int i;
   float f1, f2;
   long l;
   double d;
-  server >> i;
+
+  while( !(server >> i) )
+    {
+      int eof = server.eof();
+      if( eof )
+ 	{
+          ACE_DEBUG((LM_DEBUG, "(%P|%t) Unrecoverable stream error/eof\n" ));
+          break;
+ 	}
+      else
+ 	{
+          ACE_DEBUG((LM_DEBUG, "(%P|%t) Recoverable stream error (timeout)\n" ));
+          server.clear(0);
+ 	}
+    }
+
   server >> f1;
   server >> l;
   server >> f2;
@@ -319,6 +339,10 @@ server (void *arg = 0)
   // whitespace.  The data will be sent if the iostream's buffer gets
   // filled or when we flush it with an explicit client.sync() command
   // or the implicit <<endl.
+
+
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server sleeping\n" ));
+  ACE_OS::sleep(30);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server Sending:  1 .12342134 666555444 23.45 -46.5e9 \n"));
   client_handler << 1 << " ";
