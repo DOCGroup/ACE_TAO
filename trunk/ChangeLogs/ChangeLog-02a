@@ -1,3 +1,11 @@
+Tue Jan 23 18:03:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/CDR_Stream.cpp:
+
+          Added patches to read_8 and write_8 sent in by
+          Keith Nicewarner <knicewar@erg.sri.com> to deal
+          with the ARM byte format for doubles
+
 Tue Jan 23 15:06:18 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Configuration.cpp:
