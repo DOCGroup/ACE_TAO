@@ -24,6 +24,7 @@ TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (const TA
 
 TimeBase::TimeT
 TAO_RelativeRoundtripTimeoutPolicy::relative_expiry (CORBA::Environment &)
+  ACE_THROW_SPEC (())
 {
   return this->relative_expiry_;
 }
@@ -160,6 +161,7 @@ TAO_Sync_Scope_Policy::clone (void) const
 
 Messaging::SyncScope
 TAO_Sync_Scope_Policy::synchronization (CORBA::Environment &)
+  ACE_THROW_SPEC (())
 {
   return this->synchronization_;
 }

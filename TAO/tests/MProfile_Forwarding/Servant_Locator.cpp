@@ -41,9 +41,11 @@ PortableServer::Servant
 Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
                                 PortableServer::POA_ptr /* poa_ptr */,
                                 const char * /*operation*/,
-                                PortableServer::ServantLocator::Cookie & /* cookie */,
-                                CORBA::Environment &ACE_TRY_ENV)
+                                PortableServer::ServantLocator::Cookie & /* cookie */
+                            TAO_ENV_ARG_DECL)
 {
+  TAO_ENV_ARG_DEFN;
+
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -76,8 +78,8 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &,
                              PortableServer::POA_ptr ,
                              const char *,
                              PortableServer::ServantLocator::Cookie ,
-                             PortableServer::Servant ,
-                             CORBA::Environment &)
+                             PortableServer::Servant
+                             TAO_ENV_ARG_DECL_NOT_USED)
 {
 }
 
