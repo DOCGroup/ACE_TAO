@@ -88,7 +88,9 @@ TAO_IDLFLAGS = <%tao_idlflags%>
 <%endif%>
 
 <%if(exename)%>
-INSBIN ?= <%if(install)%><%install%><%else%>.<%endif%>
+<%if(install)%>
+INSBIN ?= <%install%>
+<%endif%>
 OUTPUT_DIRECTORY = $(INSBIN)
 <%else%>
 <%if(dllout || libout)%>
@@ -121,10 +123,12 @@ all: $(TEMPINCDIR)
 
 endif
 
+ifneq ($(OUTPUT_DIRECTORY),)
 all: $(OUTPUT_DIRECTORY)
 
 $(OUTPUT_DIRECTORY):
 	-@mkdir -p "$(OUTPUT_DIRECTORY)"
+endif
 
 <%if(sharedname || staticname || exename)%>
 <%if(libs && libpaths)%>
@@ -290,11 +294,13 @@ LSRC   = $(addsuffix .cpp, $(FILES))
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-<%if(install && exename)%>
+<%if(exename)%>
 
+ifneq ($(OUTPUT_DIRECTORY),)
 ifneq ($(OUTPUT_DIRECTORY),.)
   INSTALL = $(VBIN:%=$(INSBIN)/%)
   CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%)
+endif
 endif
 
 <%endif%>
