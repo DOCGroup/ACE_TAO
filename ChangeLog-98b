@@ -1,7 +1,14 @@
+Fri Jun 26 10:51:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/OS.h: 
+	  Fixed problem in ACE_DES_* macros, some preprocessors were
+	  tokenizing ::~CLASS as ":: ~CLASS" and we wanted ":: ~ CLASS"
+	  (were class in a macro argument).
+
 Fri Jun 26 09:45:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tests/{tests.dsw, Makefile}: Added the Upgradable RW lock test to the 
-	  workspace.
+	* tests/{tests.dsw, Makefile}: Added the Upgradable RW lock test
+	  to the workspace.
 
 Fri Jun 26 09:48:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -12,8 +19,8 @@ Fri Jun 26 10:43:02 EET DST 1998 Wei Chiang <wei.chiang@ntc.nokia.com>
 
 	* ace/CLASSIX/CLASSIX_OS.cpp:
 	ACE_CLASSIX_OS::ACE_CLASSIX_OS()
-	After created an CLASSIX reactor as an actor-wide sinleton reactor,
-	delete the original reator singleton, if any.
+	After created an CLASSIX reactor as an actor-wide singleton
+	reactor, delete the original reator singleton, if any.
 
 
 Fri Jun 26 02:18:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
