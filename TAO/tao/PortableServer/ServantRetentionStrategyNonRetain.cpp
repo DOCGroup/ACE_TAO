@@ -74,7 +74,7 @@ namespace TAO
     {
       // The system id is the id (and no conversion/transformation is
       // needed).
-      CORBA::OctetSeq *id = 0;
+      PortableServer::ObjectId *id = 0;
       ACE_NEW_THROW_EX (id,
                         PortableServer::ObjectId (system_id),
                         CORBA::NO_MEMORY ());
@@ -173,8 +173,8 @@ namespace TAO
       PortableServer::Servant /*servant*/
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
-                      PortableServer::POA::ServantNotActive,
-                      PortableServer::POA::WrongPolicy))
+                         PortableServer::POA::ServantNotActive,
+                         PortableServer::POA::WrongPolicy))
     {
       ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                         CORBA::Object::_nil ());
@@ -202,9 +202,9 @@ namespace TAO
       int &/*wait_occurred_restart_call*/
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ServantAlreadyActive,
-                   PortableServer::POA::ObjectAlreadyActive,
-                   PortableServer::POA::WrongPolicy))
+                         PortableServer::POA::ServantAlreadyActive,
+                         PortableServer::POA::ObjectAlreadyActive,
+                         PortableServer::POA::WrongPolicy))
     {
       ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
@@ -250,8 +250,8 @@ namespace TAO
                                              priority);
 
       return this->poa_->invoke_key_to_object_helper_i (intf,
-                                                  user_id
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                        user_id
+                                                        ACE_ENV_ARG_PARAMETER);
     }
 
     CORBA::Object_ptr
@@ -285,14 +285,14 @@ namespace TAO
 
       // Remember params for potentially invoking <key_to_object> later.
       this->poa_->key_to_object_params_.set (system_id,
-                                       intf,
-                                       servant,
-                                       1,
-                                       priority);
+                                             intf,
+                                             servant,
+                                             1,
+                                             priority);
 
       return this->poa_->invoke_key_to_object_helper_i (intf,
-                                                  oid
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                        oid
+                                                        ACE_ENV_ARG_PARAMETER);
     }
 
     int
