@@ -34,8 +34,7 @@ IDL_FILES += \
   SSLIOP
 
 IDL_SRC = \
-  $(addsuffix S.cpp, $(IDL_FILES)) \
-  $(addsuffix C.cpp, $(IDL_FILES))
+  SSLIOPC.cpp
 
 FILES = \
   SSLIOP/IIOP_SSL_Acceptor \
