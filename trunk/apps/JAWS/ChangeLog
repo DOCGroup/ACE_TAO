@@ -1,3 +1,11 @@
+Sat Jan 02 08:44:48 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * server/HTTP_Request.cpp,Parse_Headers.cpp: initialized
+          third param to strtok_r with 0.  DU 4.0 cxx was complaining
+          about it, with ACE_NDEBUG.  According to the strtok_r
+          man page on DU 4.0, it must be initialized to 0 on the
+          first call to strtok_r.
+
 Fri Sep 25 23:29:14 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * server/IO.cpp (receive_file,transmit_file): changed
