@@ -24,6 +24,10 @@ Sat Nov 22 14:38:22 1997  Steve Huston  <shuston@riverace.com>
 	  Added 'const' to "char *" - can't initialize a char * with
 	  a const string.  Fixes Riverace problem ID P38, P40.
 
+	* tests/Thread_Pool_Test.cpp: Moved 'this->getq(mb)' out of an
+	  ACE_ASSERT.  Thanks to Arturo Montes <mitosys@colomsat.net.co>
+	  for finding this.
+
 Sat Nov 22 05:44:10 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
 	* tests/Process_Strategy_Test.cpp (main): Shuffled things around
