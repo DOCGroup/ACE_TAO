@@ -253,8 +253,8 @@ TAO_Policies::starting_trader (CORBA::Environment& _env)
 			  trader_name);
       else
 	{
-	  ACE_NEW_RETURN (trader_name, CosTrading::TraderName, 0);
-	  //	  value >>= *trader_name;
+	  //	  ACE_NEW_RETURN (trader_name, CosTrading::TraderName, 0);
+	  value >>= trader_name;
 	}
     }
 
@@ -282,8 +282,7 @@ TAO_Policies::link_follow_rule (CORBA::Environment& _env)
 	TAO_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
 			  return_value);
       else
-	//	    value >>= return_value;
-	;
+	value >>= return_value;
 
       if (return_value > max_follow_policy)
 	return_value = max_follow_policy;
@@ -326,10 +325,8 @@ TAO_Policies::link_follow_rule (const char* link_name,
 	    TAO_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
 			      return_value);
 	  else
-	    {
-	      //	    value >>= query_link_follow_rule;
-	    }
-
+	    value >>= query_link_follow_rule;
+	  
 	  return_value = (query_link_follow_rule < trader_max_follow_policy) 
 	    ? query_link_follow_rule : trader_max_follow_policy;
 	  return_value = (return_value < link_limiting_follow_rule)
@@ -372,8 +369,8 @@ TAO_Policies::request_id (CORBA::Environment& _env)
 			  request_id);
       else
 	{
-	  ACE_NEW_RETURN (request_id, CosTrading::Admin::OctetSeq, 0);
-	  //	value >>= *request_id;
+	  //ACE_NEW_RETURN (request_id, CosTrading::Admin::OctetSeq, 0);
+	  value >>= request_id;
 	}
     }
 
@@ -416,7 +413,7 @@ TAO_Policies::policies_to_forward (void)
 		    trader_name[j - 1] = trader_name[j];		  
 		  trader_name->length (length - 1);
 
-		  //		  new_policy.value <<= *trader_name;
+		  new_policy.value <<= *trader_name;
 		}
 	      TAO_CATCHANY {}
 	      TAO_ENDTRY;	      
@@ -465,13 +462,13 @@ policies_to_pass (CosTrading::FollowOption def_pass_on_follow_rule,
 	    {
 	      // Add a link follow rule if one didn't exist.
 	      new_policy.name = POLICY_NAMES[i];
-	      //	      new_policy.value <<= def_pass_on_follow_rule;
+	      new_policy.value <<= def_pass_on_follow_rule;
 	    }
 	  else if (i == REQUEST_ID)
 	    {
 	      // Add the request id if one didn't exist.
 	      new_policy.name = POLICY_NAMES[i];
-	      //	      new_policy.value <<= *(admin_if->request_id_stem (env));
+	      new_policy.value <<= *(admin_if->request_id_stem (env));
 	    }
 	}    
 

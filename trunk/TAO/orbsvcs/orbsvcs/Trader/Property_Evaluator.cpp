@@ -57,20 +57,20 @@ TAO_Property_Evaluator::property_value(int index,
     {
       // Property is defined at this point.
       DP_Eval* dp_eval;
-      DP_Struct dp_struct;
+      CosTradingDynamic::DynamicProp* dp_struct;
       const CORBA::String_var name = this->props_[index].name;
       const CORBA::Any& value = this->props_[index].value;
 
       // Extract the DP_Struct.
-      //value >>= dp_struct;
-      dp_eval = dp_struct.eval_if;
+      value >>= dp_struct;
+      dp_eval = dp_struct->eval_if;
 	  
       if (CORBA::is_nil (dp_eval))
 	TAO_THROW_RETURN (CosTradingDynamic::DPEvalFailure (), prop_val);
       else
 	{
-	  CORBA::TypeCode* type = dp_struct.returned_type;
-	  CORBA::Any& info = dp_struct.extra_info;
+	  CORBA::TypeCode* type = dp_struct->returned_type;
+	  CORBA::Any& info = dp_struct->extra_info;
 	  
 	  TAO_TRY
 	    {
@@ -100,11 +100,11 @@ TAO_Property_Evaluator::property_type(int index)
     {
       // Extract type information from the DP_Struct.
       const CORBA::Any& value = this->props_[index].value;
-      DP_Struct dp_struct;
-      //value >>= dp_struct;
+      CosTradingDynamic::DynamicProp* dp_struct;
+      value >>= dp_struct;
       
       // Grab a pointer to the returned_type description
-      prop_type = CORBA::TypeCode::_duplicate(dp_struct.returned_type);
+      prop_type = CORBA::TypeCode::_duplicate(dp_struct->returned_type);
     }
   else
     // TypeCode is self-evident at this point.

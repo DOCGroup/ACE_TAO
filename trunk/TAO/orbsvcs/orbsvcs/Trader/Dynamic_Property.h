@@ -34,7 +34,7 @@ public:
   
 };
 
-class TAO_Dynamic_Property :
+class TAO_DP_Dispatcher :
   public POA_CosTradingDynamic::DynamicPropEval
 // = TITLE
 //   This class exhibits one strategy for handling many dynamic
@@ -46,15 +46,13 @@ class TAO_Dynamic_Property :
 {
 public:
 
-  TAO_Dynamic_Property(const char* name = "Dynamic Property");
+  TAO_DP_Dispatcher(const char* name = "Dynamic Property");
 
-  ~TAO_Dynamic_Property (void);
+  ~TAO_DP_Dispatcher (void);
   
-  CosTradingDynamic::DynamicProp*
-    register_handler(const char* name,
-		     CORBA::TypeCode_ptr returned_type,
-		     const CORBA::Any& extra_info,
-		     TAO_DP_Evaluation_Handler* handler);
+  void register_handler (const char* name,
+			 TAO_DP_Evaluation_Handler* handler,
+			 CORBA::Boolean release_on_delete = CORBA::B_FALSE);
   // Registers a handler with the Dynamic_Property
   // demultiplexer. Returns a constructed dynamic property struct
   // upon success, which the caller must then deallocate when
@@ -70,22 +68,23 @@ public:
     TAO_THROW_SPEC ((CORBA::SystemException,
 		     CosTradingDynamic::DPEvalFailure));
   // Point of demultiplexing.  
+
+  CosTradingDynamic::DynamicProp*
+    construct_dynamic_prop (const char* name,			    
+			    CORBA::TypeCode_ptr returned_type,
+			    const CORBA::Any& extra_info);
   
 private:
 
   typedef map
     <
     string,
-    TAO_DP_Evaluation_Handler*,
+    pair <TAO_DP_Evaluation_Handler*, CORBA::Boolean>,
     less<string>
     > HANDLER_MAP;
 
   HANDLER_MAP handlers_;
 
 };
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Dynamic_Property.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* TAO_DYNAMIC_PROPERTY_H*/

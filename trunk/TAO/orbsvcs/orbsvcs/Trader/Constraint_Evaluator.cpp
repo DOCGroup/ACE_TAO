@@ -556,72 +556,71 @@ sequence_does_contain(CORBA::Any* sequence,
       TAO_CHECK_ENV_RETURN (env, return_value);
     }
 
-  /*
   switch(sequence_type)
     {
     case CORBA::tk_short:
       {
-	TAO_Sequences::ShortSeq short_seq;
+	TAO_Sequences::ShortSeq* short_seq;
 	if ((*sequence) >>= short_seq)
-	  return_value = ::TAO_find (short_seq, (CORBA::Long)element);
+	  return_value = ::TAO_find (*short_seq, (CORBA::Long)element);
       }
     break;
     case CORBA::tk_ushort:
       {
-	TAO_Sequences::UShortSeq ushort_seq;
+	TAO_Sequences::UShortSeq* ushort_seq;
 	if ((*sequence) >>= ushort_seq)
-	  return_value = ::TAO_find (ushort_seq, (CORBA::ULong)element);
+	  return_value = ::TAO_find (*ushort_seq, (CORBA::ULong)element);
       }
       break;
     case CORBA::tk_long:
       {
-	TAO_Sequences::LongSeq long_seq;
+	TAO_Sequences::LongSeq* long_seq;
 	if ((*sequence) >>= long_seq)
-	  return_value = ::TAO_find (long_seq, (CORBA::Long)element);
+	  return_value = ::TAO_find (*long_seq, (CORBA::Long)element);
       }
       break;
     case CORBA::tk_ulong:
       {
-	TAO_Sequences::ULongSeq ulong_seq;
+	TAO_Sequences::ULongSeq* ulong_seq;
 	if ((*sequence) >>= ulong_seq)
-	  return_value = ::TAO_find (ulong_seq, (CORBA::ULong)element);
+	  return_value = ::TAO_find (*ulong_seq, (CORBA::ULong)element);
       }
       break;
     case CORBA::tk_float:
       {
-	TAO_Sequences::FloatSeq float_seq;
+	TAO_Sequences::FloatSeq* float_seq;
 	if ((*sequence) >>= float_seq)
-	  return_value = ::TAO_find (float_seq, (CORBA::Double)element);
+	  return_value = ::TAO_find (*float_seq, (CORBA::Double)element);
       }
       break;
     case CORBA::tk_double:
       {
-	TAO_Sequences::DoubleSeq double_seq;
+	TAO_Sequences::DoubleSeq* double_seq;
 	if ((*sequence) >>= double_seq)
-	  return_value = ::TAO_find (double_seq, (CORBA::Double)element);
+	  return_value = ::TAO_find (*double_seq, (CORBA::Double)element);
       }
       break;
     case CORBA::tk_boolean:
       {
-	TAO_Sequences::BooleanSeq bool_seq;
+	TAO_Sequences::BooleanSeq* bool_seq;
 	if ((*sequence) >>= bool_seq)
-	  return_value = ::TAO_find (bool_seq, (CORBA::ULong)element);
+	  return_value = ::TAO_find (*bool_seq, (CORBA::ULong)element);
       }
       break;
     case CORBA::tk_string:
       {
-	TAO_Sequences::StringSeq string_seq;
+	TAO_Sequences::StringSeq* string_seq;
 	if ((*sequence) >>= string_seq)
 	  {
 #ifdef ACE_HAS_TEMPLATE_SPECIALIZATION
-	    return_value = ::TAO_find (string_seq, (const char *)element);
+	    return_value = ::TAO_find (*string_seq, (const char *)element);
 #else
-	    return_value = ::TAO_find_string (string_seq, (const char*) element);
+	    return_value = ::TAO_find_string (*string_seq, (const char*) element);
 #endif // ACE_HAS_TEMPLATE_SPECIALIZATION 
 	  }
 	break;
       }
-      }
-            */
-return return_value;
+    }
+
+  return return_value;
 }
