@@ -569,14 +569,14 @@ POA_CORBA::_tao_collocated_DynAny::rewind (
 
 
 CORBA_DynAny*
-POA_CORBA::DynAny::_this (CORBA_Environment &TAO_IN_ENV)
+POA_CORBA::DynAny::_this (CORBA_Environment &ACE_TRY_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
 
-  if (TAO_IN_ENV.exception () != 0)
-    return 0;
+  ACE_CHECK_RETURN (0);
 
-  return new POA_CORBA::_tao_collocated_DynAny (this, stub);
+  return new POA_CORBA::_tao_collocated_DynAny (this, 
+                                                stub);
 }
 
 // constructor
@@ -718,12 +718,11 @@ POA_CORBA::_tao_collocated_DynEnum::value_as_ulong (
 
 
 CORBA_DynEnum*
-POA_CORBA::DynEnum::_this (CORBA_Environment &TAO_IN_ENV)
+POA_CORBA::DynEnum::_this (CORBA_Environment &ACE_TRY_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
 
-  if (TAO_IN_ENV.exception () != 0)
-    return 0;
+  ACE_CHECK_RETURN (0);
 
   return new POA_CORBA::_tao_collocated_DynEnum (this,
                                                  stub);
@@ -862,12 +861,11 @@ POA_CORBA::_tao_collocated_DynStruct::set_members (
 
 
 CORBA_DynStruct*
-POA_CORBA::DynStruct::_this (CORBA_Environment &TAO_IN_ENV)
+POA_CORBA::DynStruct::_this (CORBA_Environment &ACE_TRY_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
 
-  if (TAO_IN_ENV.exception () != 0)
-    return 0;
+  ACE_CHECK_RETURN (0);
 
   return new POA_CORBA::_tao_collocated_DynStruct (this,
                                                    stub);
@@ -1045,15 +1043,14 @@ POA_CORBA::_tao_collocated_DynUnion::member_kind (
 
 
 CORBA_DynUnion*
-POA_CORBA::DynUnion::_this (CORBA_Environment &TAO_IN_ENV)
+POA_CORBA::DynUnion::_this (CORBA_Environment &ACE_TRY_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
 
-  if (TAO_IN_ENV.exception () != 0)
-    return 0;
+  ACE_CHECK_RETURN (0);
 
   return new POA_CORBA::_tao_collocated_DynUnion (this,
-                                             stub);
+                                                  stub);
 }
 
 // constructor
@@ -1189,12 +1186,11 @@ POA_CORBA::_tao_collocated_DynSequence::set_elements (
 
 
 CORBA_DynSequence*
-POA_CORBA::DynSequence::_this (CORBA_Environment &TAO_IN_ENV)
+POA_CORBA::DynSequence::_this (CORBA_Environment &ACE_TRY_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
 
-  if (TAO_IN_ENV.exception () != 0)
-    return 0;
+  ACE_CHECK_RETURN (0);
 
   return new POA_CORBA::_tao_collocated_DynSequence (this,
                                                      stub);
@@ -1310,12 +1306,11 @@ POA_CORBA::_tao_collocated_DynArray::set_elements (
 
 
 CORBA_DynArray*
-POA_CORBA::DynArray::_this (CORBA_Environment &TAO_IN_ENV)
+POA_CORBA::DynArray::_this (CORBA_Environment &ACE_TRY_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
 
-  if (TAO_IN_ENV.exception () != 0)
-    return 0;
+  ACE_CHECK_RETURN (0);
 
   return new POA_CORBA::_tao_collocated_DynArray (this,
                                                   stub);
