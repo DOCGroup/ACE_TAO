@@ -1,0 +1,5 @@
+Tue Apr 16 07:43:44 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* IIOP_Connector.h: Added a new mthod narrow_endpoint ()
+	* IIOP_Connector.cpp:
+
