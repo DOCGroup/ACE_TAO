@@ -1,3 +1,9 @@
+Thu Sep 30 02:04:37 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Object.cpp:
+	  Changed CORBA_Object::_validate_connection to be no-op if
+	  defined TAO_HAS_MINIMUM_CORBA.
+
 Wed Sep 29 15:35:21 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * docs/implrepo/index.html:
