@@ -192,23 +192,29 @@
 //
 // Threads information.
 //
+// Use of threads is controlled by the 'threads' argument to make.  See
+// include/makeinclude/platform_hpux_aCC.GNU for details.
+//
 ////////////////////////////////////////////////////////////////////////
 
-#if !defined (ACE_MT_SAFE)
-#  define ACE_MT_SAFE 1
-#endif
+#if defined (ACE_HAS_THREADS)
 
-#define ACE_HAS_THREADS
-#define ACE_HAS_PTHREADS
-#define ACE_HAS_PTHREADS_STD
-#define ACE_HAS_POSIX_SEM
-#define ACE_HAS_PTHREAD_T
-#define ACE_HAS_PTHREAD_EQUAL
+#  if !defined (ACE_MT_SAFE)
+#    define ACE_MT_SAFE 1
+#  endif
 
-#define ACE_HAS_THREAD_SPECIFIC_STORAGE
+#  define ACE_HAS_PTHREADS
+#  define ACE_HAS_PTHREADS_STD
+#  define ACE_HAS_PTHREAD_T
+#  define ACE_HAS_PTHREAD_EQUAL
+
+#  define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
 // Platform has pthread_sigmask defined
-#define ACE_HAS_PTHREAD_SIGMASK
+#  define ACE_HAS_PTHREAD_SIGMASK
+#endif /* ACE_HAS_THREADS */
+
+#define ACE_HAS_POSIX_SEM
 
 // Turns off the tracing feature.
 // To build with tracing enabled, make sure ACE_NTRACE is not defined

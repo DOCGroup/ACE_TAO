@@ -48,14 +48,6 @@
 
 extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 
-// There are a number of sections to this file, one of which is the
-// threads-related information.  If _ACE_HPUX_USE_DCETHREADS is defined,
-// the DCE threading definitions will be set up for the build.  If it
-// is not defined, ACE will be built without thread support.
-// Of course, you must have DCE threads installed if you want to use
-// this.
-#define _ACE_HPUX_USE_DCETHREADS
-
 
 ////////////////////////////////////////////////////////////////////////////
 //
@@ -176,18 +168,17 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 /////////////////////////////////////////////////////////////////////////
 //
 // Threads information.
-// Threads definitions are controlled by _ACE_HPUX_USE_DCETHREADS, above.
-//
-// NOTE!  The platform_macros.GNU file may also need some settings
-// to work with threads.
+// Threads definitions are controlled by the threads setting in the
+// include/makeinclude/platform_hpux_aCC.GNU file - see that for details.
+// If you build with threads support, the DCE Core subset must be installed
+// from the core OS CD.
 //
 ////////////////////////////////////////////////////////////////////////
 
-#ifdef _ACE_HPUX_USE_DCETHREADS
+#ifdef ACE_HAS_THREADS
 #  if !defined (ACE_MT_SAFE)
 	#define ACE_MT_SAFE 1
 #  endif
-#  define ACE_HAS_THREADS
 #  define ACE_HAS_PTHREADS
 #  define ACE_HAS_PTHREADS_DRAFT4
 // POSIX real-time semaphore definitions are in the header files, and it
@@ -232,9 +223,7 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 // Without threads being compiled in, the fd_set/int thing is not an issue.
 #  define _CMA_NOWRAPPERS_
 
-// This is a def for this file only
-#  undef _ACE_HPUX_USE_DCETHREADS
-#endif /* _ACE_HPUX_USE_DCETHREADS */
+#endif /* ACE_HAS_THREADS */
 
 // Turns off the tracing feature.
 // To build with tracing enabled, make sure ACE_NTRACE is not defined
