@@ -2,7 +2,7 @@ Sun Apr 11 15:36:33 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/DSI/Database_i.cpp
 	* examples/POA/DSI/Database_i.h
-	Fixed some warnings on IRIX
+	  Fixed some warnings on IRIX
 
 Sun Apr 11 11:45:49 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
