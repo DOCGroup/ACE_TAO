@@ -508,10 +508,23 @@ ACE_ReactorEx::handle_events (ACE_Time_Value *max_wait_time,
 
   int wait_status = this->wait_for_multiple_events (max_wait_time,
 						    alertable);
+  result = this->safe_dispatch (wait_status);
 
-  result = this->dispatch (wait_status);  
-  
-  this->update_state ();
+  return result;
+}
+
+int
+ACE_ReactorEx::safe_dispatch (int wait_status)
+{
+  int result;
+  ACE_SEH_TRY
+    {
+      result = this->dispatch (wait_status);  
+    }
+  ACE_SEH_FINALLY
+    {
+      this->update_state ();
+    }
 
   return result;
 }

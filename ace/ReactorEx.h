@@ -227,6 +227,9 @@ private:
   // -1, which means "iterate until the queue is empty."
 };
 
+class ACE_ReactorEx_Test;
+// Forward declaration
+
 #if defined (ACE_WIN32)
 class ACE_Export ACE_ReactorEx
   // = TITLE
@@ -241,6 +244,7 @@ class ACE_Export ACE_ReactorEx
   //     semaphores, threads, etc.) and timer events.
 {
   friend class ACE_ReactorEx_Handler_Repository;
+  friend class ACE_ReactorEx_Test;
 public:
   enum 
   {
@@ -438,6 +442,10 @@ private:
   ACE_ReactorEx (const ACE_ReactorEx &);
   ACE_ReactorEx &operator = (const ACE_ReactorEx &);
   // Deny access since member-wise won't work...
+
+  int safe_dispatch (int wait_status);
+  // Protect against structured exceptions caused by user code when
+  // dispatching handles
 
   int calculate_timeout (ACE_Time_Value *time);
   // Used to caluculate the next timeout
