@@ -1,3 +1,9 @@
+Sat Nov 29 19:40:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_array/array_ch.cpp:
+
+	  Fixed an unused variable warning.
+
 Sat Nov 29 12:45:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAOACE.dsw:
