@@ -1,3 +1,11 @@
+Sat Mar 03 23:32:29 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/AMI_Timeouts/timeout_client.cpp (init):
+	* tests/AMI_Timeouts/timeout_client.cpp (init, svc):
+
+	  Renamed "init()" method to "initialize()."  It conflicted with
+	  its base class "ACE_Task_Base::init()" method.
+
 Sat Mar 03 22:56:20 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/AMI_Timeouts/client.cpp (main):

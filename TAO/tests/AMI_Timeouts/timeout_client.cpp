@@ -41,7 +41,7 @@ TimeoutClient::~TimeoutClient ()
 int
 TimeoutClient::svc ()
 {
-  this->init ();
+  this->initialize ();
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -86,7 +86,7 @@ TimeoutClient::svc ()
 
 
 int
-TimeoutClient::init ()
+TimeoutClient::initialize ()
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
