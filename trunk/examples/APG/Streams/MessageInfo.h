@@ -11,19 +11,19 @@
 class CallerId
 {
 public:
-  CallerId () : id_("UNKNOWN")
+  CallerId () : id_ (ACE_TEXT ("UNKNOWN"))
   { }
 
-  CallerId (ACE_CString id) : id_(id)
+  CallerId (ACE_TString id) : id_(id)
   { }
 
-  const char *string(void)
+  const ACE_TCHAR * string(void)
   {
     return this->id_.c_str ();
   }
 
 private:
-  ACE_CString id_;
+  ACE_TString id_;
 };
 
 class MessageType

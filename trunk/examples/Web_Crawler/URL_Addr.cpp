@@ -7,7 +7,10 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_Memory.h"
 
-ACE_RCSID(Web_Crawler, URL_Addr, "$Id$")
+ACE_RCSID (Web_Crawler,
+           URL_Addr,
+           "$Id$")
+
 
 ACE_URL_Addr::ACE_URL_Addr (void)
   : path_name_ (0),
@@ -21,7 +24,7 @@ ACE_URL_Addr::addr_to_string (ACE_TCHAR *s,
                               size_t size,
                               int ipaddr_format) const
 {
-  size_t total_len =
+  const size_t total_len =
     ACE_OS::strlen (ipaddr_format == 0 ?
                     this->get_host_name () :
                     this->get_host_addr ())
@@ -48,8 +51,7 @@ ACE_URL_Addr::addr_to_string (ACE_TCHAR *s,
 const ACE_TCHAR *
 ACE_URL_Addr::addr_to_string (int ipaddr_format) const
 {
-  ACE_URL_Addr *this_ptr = ACE_const_cast (ACE_URL_Addr *,
-                                           this);
+  ACE_URL_Addr *this_ptr = const_cast<ACE_URL_Addr *> (this);
 
   size_t size =
     ACE_OS::strlen (ipaddr_format == 0 ?
@@ -144,11 +146,11 @@ int
 ACE_URL_Addr::set (const ACE_URL_Addr &addr)
 {
   ACE_OS::free (ACE_reinterpret_cast (void *,
-                                      ACE_const_cast (char *,
-                                                      this->path_name_)));
+                                      const_cast<ACE_TCHAR *>
+                                                      (this->path_name_)));
   ACE_OS::free (ACE_reinterpret_cast (void *,
-                                      ACE_const_cast (char *,
-                                                      this->addr_string_)));
+                                      const_cast<ACE_TCHAR *>
+                                                      (this->addr_string_)));
   if (this->ACE_INET_Addr::set (addr) == -1)
     return -1;
   else
@@ -219,11 +221,11 @@ ACE_URL_Addr::get_path_name (void) const
 ACE_URL_Addr::~ACE_URL_Addr (void)
 {
   ACE_OS::free (ACE_reinterpret_cast (void *,
-                                      ACE_const_cast (ACE_TCHAR *,
-                                                      this->path_name_)));
+                                      const_cast<ACE_TCHAR *>
+                                                      (this->path_name_)));
   ACE_OS::free (ACE_reinterpret_cast (void *,
-                                      ACE_const_cast (ACE_TCHAR *,
-                                                      this->addr_string_)));
+                                      const_cast<ACE_TCHAR *>
+                                                      (this->addr_string_)));
   this->path_name_ = 0;
 }
 
