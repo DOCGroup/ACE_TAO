@@ -958,7 +958,7 @@ TAO_Marshal_String::decode (CORBA::TypeCode_ptr,
     {
       // note that the encoded length is 1 more than the length of the string
       // because it also accounts for the terminating NULL character
-      
+
       str = (*(char **) data) = CORBA::string_alloc (len - 1);
       // only allocate the string *after* the length was validated.
 
@@ -1127,6 +1127,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                         {
                           continue_decoding = stream->get_long (*(CORBA::Long *) value);
                           value += size;
+
                         }
                       //                      CORBA::release (tc2);
                       if (continue_decoding == CORBA::B_TRUE)
