@@ -761,10 +761,10 @@ ACE_WIN32_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
 {
   size_t len = message_block.length();
   
-  if ( bytes_to_write > len )
+  if (bytes_to_write > len)
      bytes_to_write = len ;
 
-  if ( bytes_to_write == 0 )
+  if (bytes_to_write == 0)
     ACE_ERROR_RETURN 
       ((LM_ERROR,
         ACE_LIB_TEXT ("ACE_WIN32_Asynch_Write_Stream::write:")
