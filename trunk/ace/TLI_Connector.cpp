@@ -171,7 +171,7 @@ ACE_TLI_Connector::complete (ACE_TLI_Stream &new_stream,
 			     ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_TLI_Connector::complete");
-  ACE_HANDLE h = ACE::handle_timed_complete (this->get_handle (), tv);
+  ACE_HANDLE h = ACE::handle_timed_complete (this->get_handle (), tv, 1);
 
   if (h == ACE_INVALID_HANDLE)
     {
