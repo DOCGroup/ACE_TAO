@@ -1,3 +1,9 @@
+Sat Feb 20 09:05:20 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/OS.cpp: Changed the ACE_static_cast() in ACE_OS_Wstring to
+ 	  first use an ACE_const_cast().  Thanks to Andy Gokhale for
+ 	  reporting this.
+
 Sat Feb 20 02:53:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.cpp (ACE_OS_WString): Need to add a statis cast when
