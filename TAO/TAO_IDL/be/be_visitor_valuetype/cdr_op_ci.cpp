@@ -64,11 +64,11 @@ be_visitor_valuetype_cdr_op_ci::visit_valuetype (be_valuetype *node)
   //@@ Boris: Can I move this to be_valuetype? (as with _var, _out, etc?)
 
   //This is just declaration so no ACE_INLINE
-  *os << be_global->stub_export_macro ()
+  *os << be_global->stub_export_macro () << " "
       << "CORBA::Boolean operator<< (TAO_OutputCDR &, const "
       << node->full_name () << " *);" << be_nl;
 
-  *os << be_global->stub_export_macro ()
+  *os << be_global->stub_export_macro () << " "
       << "CORBA::Boolean operator>> (TAO_InputCDR &, "
       << node->full_name () << " *&);" << be_nl;
 

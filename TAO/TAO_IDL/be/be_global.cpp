@@ -827,4 +827,3 @@ void
 BE_GlobalData::destroy (void)
 {
 }
-

@@ -65,11 +65,11 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
 
       os->indent (); //start with whatever indentation level we are at now
 
-      *os << be_global->stub_export_macro ()
+      *os << be_global->stub_export_macro () << " "
           << "CORBA::Boolean operator<< (TAO_OutputCDR &, const "
           << node->full_name () << " *);" << be_nl;
 
-      *os << be_global->stub_export_macro ()
+      *os << be_global->stub_export_macro () << " "
           << "CORBA::Boolean operator>> (TAO_InputCDR &, "
           << node->full_name () << " *&);" << be_nl;
 

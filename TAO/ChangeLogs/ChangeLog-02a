@@ -1,3 +1,19 @@
+Mon Jan 14 15:25:25 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype_fwd/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype_fwd/cdr_op_ci.cpp:
+	  Fixed syntax error generated in the CDR operators for
+`	  valuetypes.  There was no blank after the export macro name.
+
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_global.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_valuetype.cpp:
+	  Cosmetic fixes
+
 Mon Jan 14 15:19:05 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/PortableInterceptorC.h:
@@ -25,13 +41,13 @@ Mon Jan 14 15:19:05 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 Mon Jan 14 15:03:53 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ORB_Core.cpp: 
+	* tao/ORB_Core.cpp:
 	  Removed include of IORInfo.h
 
 Mon Jan 14 14:41:17 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	The following set of changes are wrt to Object Reference Template.
-	
+
 	* tao/IORInfo.h:
 	* tao/IORInfo.cpp:
 	  Moved these files to PortableServer directory to continue
@@ -86,7 +102,7 @@ Mon Jan 14 14:41:17 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  TAO_POA.
 
 	  Added a new method open (TAO_ENV_ARG_DECL) to set endpoints for
-	  listening. 
+	  listening.
 
 	  In the TAO_ORB_Core::run method, the Environment variable is
 	  going to be used. So, changed TAO_ENV_ARG_DECL_NOT_USED to
@@ -103,8 +119,8 @@ Mon Jan 14 14:41:17 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	  Private variables: server_id_, open_lock_, open_called_;
 
-	* tao/PortableServer/IORInfo.h: 
-	* tao/PortableServer/IORInfo.h: 
+	* tao/PortableServer/IORInfo.h:
+	* tao/PortableServer/IORInfo.h:
 	  Moved the files from tao to PortableServer. And, added new
 	  methods: manager_id, state, adapter_template, current_factory
 	  according to the ORT spec.
@@ -114,33 +130,33 @@ Mon Jan 14 14:41:17 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  TAO_POA::save_ior_component and
 	  save_ior_component_and_profile_id instead of adding them
 	  immediately for reasons explained later.
-	
-	* tao/PortableServer/ObjectReferenceTemplate.h : 
-	* tao/PortableServer/ObjectReferenceTemplate.cpp : 
-	* tao/PortableServer/ObjectReferenceFactory.h : 
-	* tao/PortableServer/ObjectReferenceFactory.cpp : 
+
+	* tao/PortableServer/ObjectReferenceTemplate.h :
+	* tao/PortableServer/ObjectReferenceTemplate.cpp :
+	* tao/PortableServer/ObjectReferenceFactory.h :
+	* tao/PortableServer/ObjectReferenceFactory.cpp :
 	  New files for the ObjectReferenceFactory and
 	  ObjectReferenceTemplate classes.
-	
-	* tao/RTPortableServer/RT_POA.i (create_reference_with_priority): 
+
+	* tao/RTPortableServer/RT_POA.i (create_reference_with_priority):
 	  Modified the call create_reference_i and
  	  create_reference_with_id_i to go along with the
 	  modified signatures of the respective methods.
 
-	* tao/PortableServer/ServerRequestInfo.h: 
-	* tao/PortableServer/ServerRequestInfo.cpp: 
+	* tao/PortableServer/ServerRequestInfo.h:
+	* tao/PortableServer/ServerRequestInfo.cpp:
 	  New methods server_id, orb_id and adapter_name from the ORT
 	  spec. Accessor methods to get the server_id of the server
 	  ( passed via -ORBServerId option), orb_id ( ORBId value that
-	  is passed to the ORB_init call) and the name of the related 
+	  is passed to the ORB_init call) and the name of the related
 	  Object Adapter.
-	
-	* tao/PortableServer/POAManager.h: 
-	* tao/PortableServer/POAManager.cpp: 
-	  New method adapter_manager_state_changed which calls all 
+
+	* tao/PortableServer/POAManager.h:
+	* tao/PortableServer/POAManager.cpp:
+	  New method adapter_manager_state_changed which calls all
 	  the registered interceptor's adapter_manager_state_changed
-	  methods. Included new header files as needed. 
-	
+	  methods. Included new header files as needed.
+
 	* tao/PortableServer/Object_Adapter.cpp (open):
 	  As explained in ORB_Core changes, we are going to open
 	  the default resources during run time and not during RootPOA
@@ -259,16 +275,16 @@ Mon Jan 14 14:41:17 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  particular class in invoked.
 
 	  Also, in the servant_to_reference method, instead of setting
-	  value of the priority variable to 
+	  value of the priority variable to
 	  this->cached_policies_.server_priority (), am setting it to
 	  TAO_INVALID_PRIORITY. This is because when the control comes to
 	  this method, this->cached_policies_ is nil. By setting it to
 	  TAO_INVALID_PRIORITY doesnt hurt since the priority is actually
 	  set in servant_to_system_id method.
-	
+
 	  Added TAO_ObjectReferenceFactory and TAO_ObjectReferenceTemplate
 	  as friend classes to TAO_POA class.
-	
+
 	* tao/PortableServer/Makefile:
 	  Added new files.
 	  IORInfo
@@ -299,29 +315,29 @@ Mon Jan 14 14:41:17 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	* tao/IORTable/Makefile:
 	  Updated dependencies.
 
-	* orbsvcs/examples/ORT/README : 
-	* orbsvcs/examples/ORT/Makefile : 
-	* orbsvcs/examples/ORT/server.cpp : 
-	* orbsvcs/examples/ORT/client.cpp : 
-	* orbsvcs/examples/ORT/Gateway.idl : 
-	* orbsvcs/examples/ORT/sum_server.idl : 
-	* orbsvcs/examples/ORT/sum_server_i.h : 
-	* orbsvcs/examples/ORT/sum_server_i.cpp : 
-	* orbsvcs/examples/ORT/Server_IORInterceptor.cpp : 
-	* orbsvcs/examples/ORT/Server_IORInterceptor.h : 
-	* orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.cpp : 
-	* orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.h : 
-	* orbsvcs/examples/ORT/Gateway_i.h : 
-	* orbsvcs/examples/ORT/Gateway_i.cpp : 
-	* orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.cpp : 
-	* orbsvcs/examples/ORT/Object_Factory_i.h : 
-	* orbsvcs/examples/ORT/Object_Factory_i.cpp : 
-	* orbsvcs/examples/ORT/Gateway_ObjRef_Factory.h : 
+	* orbsvcs/examples/ORT/README :
+	* orbsvcs/examples/ORT/Makefile :
+	* orbsvcs/examples/ORT/server.cpp :
+	* orbsvcs/examples/ORT/client.cpp :
+	* orbsvcs/examples/ORT/Gateway.idl :
+	* orbsvcs/examples/ORT/sum_server.idl :
+	* orbsvcs/examples/ORT/sum_server_i.h :
+	* orbsvcs/examples/ORT/sum_server_i.cpp :
+	* orbsvcs/examples/ORT/Server_IORInterceptor.cpp :
+	* orbsvcs/examples/ORT/Server_IORInterceptor.h :
+	* orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.cpp :
+	* orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.h :
+	* orbsvcs/examples/ORT/Gateway_i.h :
+	* orbsvcs/examples/ORT/Gateway_i.cpp :
+	* orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.cpp :
+	* orbsvcs/examples/ORT/Object_Factory_i.h :
+	* orbsvcs/examples/ORT/Object_Factory_i.cpp :
+	* orbsvcs/examples/ORT/Gateway_ObjRef_Factory.h :
 	* orbsvcs/examples/ORT/Gateway_ObjRef_Factory.cpp :
 
-	  Example to show how ORT can be used. 
-	
-	* tests/ORT/README: 
+	  Example to show how ORT can be used.
+
+	* tests/ORT/README:
 	* tests/ORT/Makefile:
 	* tests/ORT/server.cpp:
 	* tests/ORT/ORT_test.idl:
@@ -332,7 +348,7 @@ Mon Jan 14 14:41:17 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	* tests/ORT/ORT_test_i.cpp:
 	* tests/ORT/ORT_test_i.h:
 	* tests/ORT/client.cpp:
-	  Test for the ORT changes. 
+	  Test for the ORT changes.
 
 Mon Jan 14 14:46:54 2002  Carlos O'Ryan  <coryan@uci.edu>
 

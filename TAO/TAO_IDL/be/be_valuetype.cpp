@@ -536,7 +536,7 @@ be_valuetype::gen_out_impl (char *,
 
   // Constructor from _var &.
   cs->indent ();
-  *cs << fname << "::" << lname << " (" << this->local_name () 
+  *cs << fname << "::" << lname << " (" << this->local_name ()
       << "_var &p) // constructor from _var" << be_nl;
   *cs << "  : ptr_ (p.out ())" << be_nl;
   *cs << "{\n";
@@ -548,7 +548,7 @@ be_valuetype::gen_out_impl (char *,
 
   // Copy constructor.
   cs->indent ();
-  *cs << fname << "::" << lname << " (const " << lname 
+  *cs << fname << "::" << lname << " (const " << lname
       << " &p) // copy constructor" << be_nl;
   *cs << "  : ptr_ (ACE_const_cast (" << lname << "&,p).ptr_)" << be_nl;
   *cs << "{}\n\n";
@@ -593,7 +593,7 @@ be_valuetype::gen_out_impl (char *,
 
   // Other extra methods - cast operator ().
   cs->indent ();
-  *cs << fname << "::operator " << this->name () 
+  *cs << fname << "::operator " << this->name ()
       << "* &() // cast" << be_nl;
   *cs << "{\n";
   cs->incr_indent ();
@@ -752,4 +752,3 @@ be_valuetype::accept (be_visitor *visitor)
 IMPL_NARROW_METHODS1 (be_valuetype, be_interface)
 IMPL_NARROW_FROM_DECL (be_valuetype)
 IMPL_NARROW_FROM_SCOPE (be_valuetype)
-
