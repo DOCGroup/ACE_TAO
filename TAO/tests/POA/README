@@ -65,3 +65,8 @@ Object Adapter (POA) interfaces and their usage scenarios.
                 This test checks the combination of PERSISTENT &
                 SYSTEM_ID POA policies.
 
+        . Policies
+
+                This program tests the construction of POA policies,
+                both through the generic ORB::create_policy interface
+                and the PortableServer specific interfaces.

@@ -1,3 +1,56 @@
+Tue Aug 27 15:48:17 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\PortableServer\PortableServer_PolicyFactory.cpp: New class
+	  for creating POA Policies.
+
+	* tao\PortableServer\PortableServer_ORBInitializer.cpp:  New
+	  initialization class that adds TAO_PortableServer_PolicyFactory
+	  as a factory for POA Policies.
+
+	* tao\PortableServer\PortableServer.cpp (init): Registered 
+	  TAO_PortableServer_ORBInitializer with the PortableInterceptor.
+
+	* tao\PortableServer\POA_Policies.cpp (create): Added create
+	  methods to the policy classes so that they can be created from
+	  Any values.
+
+	* tests\POA\Policies: This program tests the construction of POA
+	  policies, both through the generic ORB::create_policy interface
+	  and the PortableServer specific interfaces.  
+
+	  The following files were added:
+
+	  - tests/POA/Policies/Makefile
+	  - tests/POA/Policies/Policies.cpp
+	  - tests/POA/Policies/Policies.dsp
+	  - tests/POA/Policies/Policies.dsw
+	  - tests/POA/Policies/Policies.mpc
+	  - tests/POA/Policies/makefile.bor
+	  - tests/POA/Policies/run_test.pl
+
+	  The following files were updated:
+
+	  - tests/TAO_Tests.dsw
+	  - tests/POA/Makefile
+	  - tests/POA/Makefile.bor
+	  - tests/POA/README		
+	  - $ACE_ROOT/bin/auto_run_tests.lst
+
+	* tao\PortableServer: Added new files
+	  PortableServer_PolicyFactory.{cpp,h} and
+	  PortableServer_ORBInitializer.{cpp,h} to:
+
+	  - TAO_PortableServer_Static.dsp
+	  - TAO_PortableServer.dsp
+	  - Makefile
+	  - Makefile.bor
+
+Tue Aug 27 12:42:58 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\POA\Default_Servant\Makefile (BIN_UNCHECKED): Changed
+	  Makefile such that the test program is not compiled with minimum
+	  CORBA.  Thanks to Ossama for pointing this out.
+
 Tue Aug 27 12:40:12 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	Fix for [BUG 1265]. 

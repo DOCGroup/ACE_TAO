@@ -31,6 +31,8 @@ OBJFILES = \
         $(OBJDIR)\PortableGroup_Hooks.obj \
 	$(OBJDIR)\PortableServer.obj \
 	$(OBJDIR)\PortableServerC.obj \
+	$(OBJDIR)\PortableServer_PolicyFactory.obj \
+	$(OBJDIR)\PortableServer_ORBInitializer.obj \
 	$(OBJDIR)\Servant_Base.obj \
 	$(OBJDIR)\Servant_Dispatcher.obj \
 	$(OBJDIR)\ServerInterceptorAdapter.obj \
