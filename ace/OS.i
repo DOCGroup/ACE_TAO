@@ -5717,7 +5717,11 @@ ACE_OS::thr_testcancel (void)
   // ACE_TRACE ("ACE_OS::thr_testcancel");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
+#if defined(ACE_HAS_PTHREAD_DRAFT6)
+  ::pthread_testintr ();
+#else /* ACE-HAS_PTHREAD_DRAFT6 */
   ::pthread_testcancel ();
+#endif /* !ACE_HAS_PTHREAD_DRAFT6 */
 # elif defined (ACE_HAS_STHREADS)
 # elif defined (ACE_HAS_WTHREADS)
 # elif defined (VXWORKS)
