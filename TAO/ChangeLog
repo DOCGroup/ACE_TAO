@@ -1,3 +1,12 @@
+Wed Nov 5 16:03:08 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/orbsvcs/AV/SCTP_SEQ.h: 	
+	* orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp: 
+
+	  Added the change_qos (...) method to
+	  TAO_AV_SCTP_SEQ_Flow_Handler in order to set the specified
+	  Diffserv Codepoint on the data packets sent.
+	
 Wed Nov  5 09:56:26 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tao/ORB_Core.cpp (run): Removed 'int' declaration to prevent
@@ -1145,7 +1154,7 @@ Fri Oct 31 14:42:09 2003  Edward R. Mulholland  <emulholl@atl.lmco.com>
           URLs with plus-separated hostnames (e.g.,
           "sciop://host-a+host-b") are implemented with a single Acceptor
           and produce a shared Profile in the SCIOR.  Thanks to Yamuna
-          Krishnamurthy <yamuna@cs.wustl.edu> and Craig Rodrigues
+          Krishnamurthy <yamuna@oomworks.com> and Craig Rodrigues
           <crodrigu@bbn.com> for identifying the previous, erroneous
           behavior in which URLs with comma-separated hostnames were
           implemented with distinct Acceptors, but produced a single,
