@@ -1,3 +1,8 @@
+Mon Dec 30 15:24:59 1996  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS.h: Added a special case for ACE_UNUSED_ARG that works
+ 	  with G++.  Thanks to David Levine for this.
+
 Mon Dec 30 16:05:11 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.cpp (ace_thread_adapter): Updated ACE_TRACE arg
