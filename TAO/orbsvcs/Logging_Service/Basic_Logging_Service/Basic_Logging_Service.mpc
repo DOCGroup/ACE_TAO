@@ -1,5 +1,0 @@
-// $Id$
-project: namingexe, core, dslogadmin_serv {
-  exename   = Basic_Logging_Service
-  includes += $(TAO_ROOT)/orbsvcs
-}

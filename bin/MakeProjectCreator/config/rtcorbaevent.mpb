@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : rtportableserver, rtevent {
-  after     += RTCORBAEvent
-  libs      += TAO_RTCORBAEvent
-  tagchecks += RTCORBAEvent
-}
