@@ -1,3 +1,12 @@
+Wed Sep 10 22:17:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Acceptor_Impl.cpp:
+	* tao/Any_Impl.h:
+	* tao/CDR.h:
+	* tao/RTCORBA/Linear_Priority_Mapping.cpp: The last checkin was
+	  too aggressive in reducing the required incvludes. Had to add
+	  few back to get these compiling with g++.
+
 Wed Sep 10 19:37:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Abstract_Servant_Base.h:

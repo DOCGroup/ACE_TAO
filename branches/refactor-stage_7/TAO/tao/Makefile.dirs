@@ -13,7 +13,6 @@ DIRS = \
   ObjRefTemplate \
   PortableServer \
   DynamicAny \
-  DynamicInterface \
   BiDir_GIOP \
   IORManipulation \
   IORTable \
