@@ -7,19 +7,19 @@
 CFG=Nested Upcall Reactor Client - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "client.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "client.mak" CFG="Nested Upcall Reactor Client - Win32 Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "Nested Upcall Reactor Client - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "Nested Upcall Reactor Client - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -78,7 +78,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 TAOd.lib aced.lib orbsvcsd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\orbsvcs\orbsvcs"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -137,13 +137,13 @@ SOURCE=.\Reactor.idl
 
 !IF  "$(CFG)" == "Nested Upcall Reactor Client - Win32 Release"
 
-USERDEP__REACT="..\..\..\..\bin\Release\tao_idl.exe"
+USERDEP__REACT="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL compiler
 InputPath=.\Reactor.idl
 InputName=Reactor
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -175,13 +175,13 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "Nested Upcall Reactor Client - Win32 Debug"
 
-USERDEP__REACT="..\..\..\..\bin\tao_idl.exe"
+USERDEP__REACT="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler
 InputPath=.\Reactor.idl
 InputName=Reactor
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	..\..\..\..\bin\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -211,7 +211,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group
