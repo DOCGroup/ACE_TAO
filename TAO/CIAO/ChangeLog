@@ -1,3 +1,9 @@
+Sat Aug  7 17:55:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc:
+
+	  Prevented compilation errors if CIDL is not built.
+
 Sat Aug  7 16:43:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tests/CIDL/CodeGen/CodeGen.mpc:
