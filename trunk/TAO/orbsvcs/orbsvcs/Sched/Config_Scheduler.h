@@ -47,22 +47,22 @@ public:
     TAO_THROW_SPEC ((CORBA::SystemException, RtecScheduler::UNKNOWN_TASK));
 
   virtual void set (RtecScheduler::handle_t handle,
-                    RtecScheduler::Criticality criticality,
+                    RtecScheduler::Criticality_t criticality,
                     RtecScheduler::Time time,
                     RtecScheduler::Time typical_time,
                     RtecScheduler::Time cached_time,
-                    RtecScheduler::Period period,
-                    RtecScheduler::Importance importance,
-                    RtecScheduler::Quantum quantum,
+                    RtecScheduler::Period_t period,
+                    RtecScheduler::Importance_t importance,
+                    RtecScheduler::Quantum_t quantum,
                     CORBA::Long threads,
-                    RtecScheduler::Info_Type info_type,
+                    RtecScheduler::Info_Type_t info_type,
                     CORBA::Environment &_env)
     TAO_THROW_SPEC ((CORBA::SystemException, RtecScheduler::UNKNOWN_TASK));
 
   virtual void priority (RtecScheduler::handle_t handle,
                          RtecScheduler::OS_Priority& priority,
-                         RtecScheduler::Preemption_Subpriority& p_subpriority,
-                         RtecScheduler::Preemption_Priority& p_priority,
+                         RtecScheduler::Preemption_Subpriority_t& p_subpriority,
+                         RtecScheduler::Preemption_Priority_t& p_priority,
                          CORBA::Environment &_env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK,
@@ -70,8 +70,8 @@ public:
 
   virtual void entry_point_priority (const char * entry_point,
                                      RtecScheduler::OS_Priority& priority,
-                                     RtecScheduler::Preemption_Subpriority& p_subpriority,
-                                     RtecScheduler::Preemption_Priority& p_priority,
+                                     RtecScheduler::Preemption_Subpriority_t& p_subpriority,
+                                     RtecScheduler::Preemption_Priority_t& p_priority,
                                      CORBA::Environment &_env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK,
@@ -80,7 +80,7 @@ public:
   virtual void add_dependency (RtecScheduler::handle_t handle,
                                RtecScheduler::handle_t dependency,
                                CORBA::Long number_of_calls,
-                               RtecScheduler::Dependency_Type dependency_type,
+                               RtecScheduler::Dependency_Type_t dependency_type,
                                CORBA::Environment &_env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK));
@@ -96,16 +96,16 @@ public:
                     RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
                     RtecScheduler::TASK_COUNT_MISMATCH));
 
-  virtual void dispatch_configuration (RtecScheduler::Preemption_Priority p_priority,
+  virtual void dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                                        RtecScheduler::OS_Priority& priority,
-                                       RtecScheduler::Dispatching_Type & d_type,
+                                       RtecScheduler::Dispatching_Type_t & d_type,
                                        CORBA::Environment &_env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                     RtecScheduler::NOT_SCHEDULED,
                     RtecScheduler::UNKNOWN_PRIORITY_LEVEL));
   // provide the thread priority and queue type for the given priority level
 
-  virtual RtecScheduler::Preemption_Priority last_scheduled_priority (CORBA::Environment &_env)
+  virtual RtecScheduler::Preemption_Priority_t last_scheduled_priority (CORBA::Environment &_env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                     RtecScheduler::NOT_SCHEDULED));
   // Returns the last priority number assigned to an operation in the schedule.

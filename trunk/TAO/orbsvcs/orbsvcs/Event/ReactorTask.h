@@ -47,7 +47,7 @@ public:
   virtual int svc_hook(RtecScheduler::OS_Priority);
   // Assume ownership of the reactor_.
 
-  int open_reactor (RtecScheduler::Period &period);
+  int open_reactor (RtecScheduler::Period_t &period);
   // This is a hack for now.
 
   virtual int svc_one();

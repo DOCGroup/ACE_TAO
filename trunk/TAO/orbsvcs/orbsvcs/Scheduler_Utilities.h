@@ -33,9 +33,9 @@ public:
                RtecScheduler::Time worst_time,
                RtecScheduler::Time typical_time,
                RtecScheduler::Time cached_time,
-               RtecScheduler::Period period,
-               RtecScheduler::Importance importance,
-               RtecScheduler::Quantum quantum,
+               RtecScheduler::Period_t period,
+               RtecScheduler::Importance_t importance,
+               RtecScheduler::Quantum_t quantum,
                CORBA::Long threads);
 
   ACE_RT_Info (const RtecScheduler::RT_Info& rt_info);

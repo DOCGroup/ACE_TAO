@@ -3,7 +3,7 @@
 //
 
 ACE_INLINE TAO_EC_RPT_Timer_Module::ReactorTask*
-TAO_EC_RPT_Timer_Module::GetReactorTask(RtecScheduler::Preemption_Priority priority)
+TAO_EC_RPT_Timer_Module::GetReactorTask(RtecScheduler::Preemption_Priority_t priority)
 {
   if (reactorTasks[priority] == 0)
     {

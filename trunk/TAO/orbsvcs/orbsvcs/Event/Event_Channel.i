@@ -686,7 +686,7 @@ ACE_ES_Conjunction_Group::add_events (TAO_EC_Event_Array *outbox,
 ACE_INLINE int
 ACE_EventChannel::schedule_timer (RtecScheduler::handle_t rt_info,
 				  const ACE_ES_Timer_ACT *act,
-				  RtecScheduler::Preemption_Priority preemption_priority,
+				  RtecScheduler::Preemption_Priority_t preemption_priority,
 				  const RtecScheduler::Time &delta,
 				  const RtecScheduler::Time &interval)
 {

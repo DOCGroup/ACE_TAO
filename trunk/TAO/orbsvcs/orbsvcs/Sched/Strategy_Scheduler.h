@@ -97,7 +97,7 @@ class ACE_Strategy_Scheduler_Factory
 {
 public:
 
-        static ACE_Strategy_Scheduler * create (RtecScheduler::Preemption_Priority minimum_critical_priority);
+        static ACE_Strategy_Scheduler * create (RtecScheduler::Preemption_Priority_t minimum_critical_priority);
     // construct and return a scheduler strategized with
     // an instance of the the parameterized strategy type
 };

@@ -168,7 +168,7 @@ public:
 
   void set (ACE_ES_Dispatching_Base *dispatching_module,
             RtecScheduler::OS_Priority priority,
-            RtecScheduler::Preemption_Subpriority sub_priority);
+            RtecScheduler::Preemption_Subpriority_t sub_priority);
   // For multi-threaded implementations, <dispatching_module> is
   // called back when a request is dequeued.  <priority> is the
   // dispatch priority of the event.  <sub_priority> is the enqueue
@@ -334,7 +334,7 @@ public:
   // Stores <dispatching_module> for this->threads_closed.  Stores
   // away <notification_strategy> for this->synch_threads.
 
-  int open_queue (RtecScheduler::Period &period,
+  int open_queue (RtecScheduler::Period_t &period,
                   int threads);
   // This is a hack to get the channel to work with the new
   // scheduler.

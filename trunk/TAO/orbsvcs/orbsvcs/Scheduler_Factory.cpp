@@ -33,7 +33,7 @@ struct ACE_Scheduler_Factory_Data
   ACE_Runtime_Scheduler scheduler_;
   // The static runtime scheduler.
 
-  ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority> >
+  ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t> >
     preemption_priority_;
   // The dispatch queue number of the calling thread.  For access by
   // applications; must be set by either the application or Event
@@ -375,14 +375,14 @@ int ACE_Scheduler_Factory::dump_schedule
   typedef CORBA::Long RtecScheduler_Preemption_Priority;
 #endif /* HPUX && !g++ */
 
-RtecScheduler::Preemption_Priority
+RtecScheduler::Preemption_Priority_t
 ACE_Scheduler_Factory::preemption_priority ()
 {
   // Return whatever we've got.  The application or Event Channel is
   // responsible for making sure that it was set.
   if (ace_scheduler_factory_data->preemption_priority_.ts_object ())
     {
-      ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority> *tss =
+      ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t> *tss =
         ace_scheduler_factory_data->preemption_priority_;
       // egcs 1.0.1 raises an internal compiler error if we implicitly
       // call the type conversion operator.  So, call it explicitly.
@@ -391,19 +391,19 @@ ACE_Scheduler_Factory::preemption_priority ()
         ACE_static_cast (RtecScheduler::Preemption_Priority,
                          tss->operator RtecScheduler_Preemption_Priority ());
 #else
-      const RtecScheduler::Preemption_Priority preemption_priority =
-        ACE_static_cast (RtecScheduler::Preemption_Priority,
-                         tss->operator RtecScheduler::Preemption_Priority ());
+      const RtecScheduler::Preemption_Priority_t preemption_priority =
+        ACE_static_cast (RtecScheduler::Preemption_Priority_t,
+                         tss->operator RtecScheduler::Preemption_Priority_t ());
 #endif /* HPUX && !g++ */
       return preemption_priority;
     }
   else
-    return ACE_static_cast (RtecScheduler::Preemption_Priority, -1);
+    return ACE_static_cast (RtecScheduler::Preemption_Priority_t, -1);
 }
 
 void
 ACE_Scheduler_Factory::set_preemption_priority
-  (const RtecScheduler::Preemption_Priority preemption_priority)
+  (const RtecScheduler::Preemption_Priority_t preemption_priority)
 {
   // Probably don't need this, because it should be safe to assume
   // that static_server () was called before this function.  But just
@@ -417,9 +417,9 @@ ACE_Scheduler_Factory::set_preemption_priority
   ace_scheduler_factory_data->preemption_priority_->
 #if defined (HPUX) && !defined (__GNUG__)
     // aCC can't handle the typedef.
-    operator RtecScheduler_Preemption_Priority & () = preemption_priority;
+    operator RtecScheduler_Preemption_Priority_t & () = preemption_priority;
 #else
-    operator RtecScheduler::Preemption_Priority & () = preemption_priority;
+    operator RtecScheduler::Preemption_Priority_t & () = preemption_priority;
 #endif /* HPUX && !g++ */
 }
 

@@ -46,14 +46,14 @@ public:
     RtecScheduler::Time worst_case_execution_time;
     RtecScheduler::Time typical_execution_time;
     RtecScheduler::Time cached_execution_time;
-    RtecScheduler::Period period;
+    RtecScheduler::Period_t period;
     CORBA::Long criticality;
     CORBA::Long importance;
-    RtecScheduler::Quantum quantum;
+    RtecScheduler::Quantum_t quantum;
     CORBA::Long threads;
     RtecScheduler::OS_Priority priority;
-    RtecScheduler::Preemption_Subpriority static_subpriority;
-    RtecScheduler::Preemption_Priority preemption_priority;
+    RtecScheduler::Preemption_Subpriority_t static_subpriority;
+    RtecScheduler::Preemption_Priority_t preemption_priority;
     CORBA::Long info_type;
   };
 
@@ -68,9 +68,9 @@ public:
         //   array index match the preemption priority stored in the config info
         //   at that index: this is used to detect uninitialized/corrupted schedules
   {
-    RtecScheduler::Preemption_Priority preemption_priority;
+    RtecScheduler::Preemption_Priority_t preemption_priority;
     RtecScheduler::OS_Priority thread_priority;
-    RtecScheduler::Dispatching_Type dispatching_type;
+    RtecScheduler::Dispatching_Type_t dispatching_type;
   };
 
     struct POD_Scheduling_Anomaly
@@ -129,12 +129,12 @@ public:
   // factory is uninitialized, or in a config or runtime mode of operation.
 
   // = Access the (OS independent) preemption priority of the calling thread.
-  static RtecScheduler::Preemption_Priority preemption_priority ();
+  static RtecScheduler::Preemption_Priority_t preemption_priority ();
   // Returns (u_int) -1 if the preemption priority hadn't been set.
 
   // = Set the (OS independent) preemption priority of the calling thread.
   static void set_preemption_priority
-    (const RtecScheduler::Preemption_Priority);
+    (const RtecScheduler::Preemption_Priority_t);
   // The application or Event Channel is responsible for making sure
   // that the preemption priority is set before any access of the
   // preemption priority.

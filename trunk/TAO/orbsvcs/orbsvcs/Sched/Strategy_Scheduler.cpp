@@ -584,7 +584,7 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
 ////////////////////////////////////////////////////////////////////
 
 template <class STRATEGY> ACE_Strategy_Scheduler *
-ACE_Strategy_Scheduler_Factory<STRATEGY>::create (RtecScheduler::Preemption_Priority minimum_critical_priority)
+ACE_Strategy_Scheduler_Factory<STRATEGY>::create (RtecScheduler::Preemption_Priority_t minimum_critical_priority)
 {
   ACE_Strategy_Scheduler *the_scheduler = 0;
   STRATEGY *the_strategy;

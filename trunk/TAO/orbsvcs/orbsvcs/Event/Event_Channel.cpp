@@ -91,13 +91,13 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Event_Channel_Timeprobe_Description,
 
 // ************************************************************
 
-static RtecScheduler::Preemption_Priority
+static RtecScheduler::Preemption_Priority_t
 Preemption_Priority (RtecScheduler::handle_t rtinfo,
                      CORBA::Environment &_env)
 {
   RtecScheduler::OS_Priority thread_priority;
-  RtecScheduler::Preemption_Subpriority subpriority;
-  RtecScheduler::Preemption_Priority preemption_priority;
+  RtecScheduler::Preemption_Subpriority_t subpriority;
+  RtecScheduler::Preemption_Priority_t preemption_priority;
 
   ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PREEMPTION_PRIORITY_PRIORITY_REQUESTED);
   ACE_Scheduler_Factory::server ()->priority
@@ -151,7 +151,7 @@ public:
       // request to get the appropriate preemption priority.
       ACE_ES_Dependency_Iterator iter (consumer->qos ().dependencies);
       CORBA::Environment env;
-      RtecScheduler::Preemption_Priority p =
+      RtecScheduler::Preemption_Priority_t p =
         ACE_Scheduler_MIN_PREEMPTION_PRIORITY;
       while (iter.advance_dependency () == 0)
         {
@@ -162,7 +162,7 @@ public:
               type != ACE_ES_DISJUNCTION_DESIGNATOR)
             {
               env.clear ();
-              RtecScheduler::Preemption_Priority q =
+              RtecScheduler::Preemption_Priority_t q =
                 ::Preemption_Priority ((*iter).rt_info, env);
               if (env.exception () != 0)
                 continue;

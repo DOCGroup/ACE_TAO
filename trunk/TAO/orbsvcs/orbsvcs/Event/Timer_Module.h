@@ -45,24 +45,24 @@ public:
      rt_info (RtecScheduler::OS_Priority priority) = 0;
   // The RT_Info handle for the "task" at <priority>
 
-  virtual int schedule_timer (RtecScheduler::Preemption_Priority priority,
+  virtual int schedule_timer (RtecScheduler::Preemption_Priority_t priority,
                               ACE_Event_Handler* eh,
                               void* act,
                               const ACE_Time_Value& delta,
                               const ACE_Time_Value& interval) = 0;
   // Add a timer at the given priority, returns the timer ID.
 
-  virtual int cancel_timer (RtecScheduler::Preemption_Priority priority,
+  virtual int cancel_timer (RtecScheduler::Preemption_Priority_t priority,
                             int id,
                             const void*& act) = 0;
   // Add a timer at the given priority.
 
-  virtual int register_handler (RtecScheduler::Preemption_Priority priority,
+  virtual int register_handler (RtecScheduler::Preemption_Priority_t priority,
                                 ACE_Event_Handler* eh,
                                 ACE_HANDLE handle) = 0;
   // Register a handler?????
 
-  virtual ACE_Reactor* reactor (RtecScheduler::Preemption_Priority priority) = 0;
+  virtual ACE_Reactor* reactor (RtecScheduler::Preemption_Priority_t priority) = 0;
   // Obtain the reactor for the given priority.
   // @@ This may prove tricky to implement with timer queues not based
   // on reactors.
@@ -90,19 +90,19 @@ public:
   virtual void activate (void);
   virtual void shutdown (void);
   virtual RtecScheduler::handle_t
-     rt_info (RtecScheduler::Preemption_Priority priority);
-  virtual int schedule_timer (RtecScheduler::Preemption_Priority priority,
+     rt_info (RtecScheduler::Preemption_Priority_t priority);
+  virtual int schedule_timer (RtecScheduler::Preemption_Priority_t priority,
                               ACE_Event_Handler* eh,
                               void* act,
                               const ACE_Time_Value& delta,
                               const ACE_Time_Value& interval);
-  virtual int cancel_timer (RtecScheduler::Preemption_Priority priority,
+  virtual int cancel_timer (RtecScheduler::Preemption_Priority_t priority,
                             int id,
                             const void*& act);
-  virtual int register_handler (RtecScheduler::Preemption_Priority priority,
+  virtual int register_handler (RtecScheduler::Preemption_Priority_t priority,
                                 ACE_Event_Handler* eh,
                                 ACE_HANDLE handle);
-  virtual ACE_Reactor* reactor (RtecScheduler::Preemption_Priority priority);
+  virtual ACE_Reactor* reactor (RtecScheduler::Preemption_Priority_t priority);
 
 private:
   ACE_Reactor* reactor_;
@@ -133,7 +133,7 @@ public:
 
   typedef ACE_ES_Reactor_Task ReactorTask;
 
-  ReactorTask* GetReactorTask(RtecScheduler::Preemption_Priority priority);
+  ReactorTask* GetReactorTask(RtecScheduler::Preemption_Priority_t priority);
   // Obtain the ReactorTask for the given priority.
   // The Task must have been created already.
 
@@ -144,19 +144,19 @@ public:
   virtual void activate (void);
   virtual void shutdown (void);
   virtual RtecScheduler::handle_t
-     rt_info (RtecScheduler::Preemption_Priority priority);
-  virtual int schedule_timer (RtecScheduler::Preemption_Priority priority,
+     rt_info (RtecScheduler::Preemption_Priority_t priority);
+  virtual int schedule_timer (RtecScheduler::Preemption_Priority_t priority,
                               ACE_Event_Handler* eh,
                               void* act,
                               const ACE_Time_Value& delta,
                               const ACE_Time_Value& interval);
-  virtual int cancel_timer (RtecScheduler::Preemption_Priority priority,
+  virtual int cancel_timer (RtecScheduler::Preemption_Priority_t priority,
                             int id,
                             const void*& act);
-  virtual int register_handler (RtecScheduler::Preemption_Priority priority,
+  virtual int register_handler (RtecScheduler::Preemption_Priority_t priority,
                                 ACE_Event_Handler* eh,
                                 ACE_HANDLE handle);
-  virtual ACE_Reactor* reactor (RtecScheduler::Preemption_Priority priority);
+  virtual ACE_Reactor* reactor (RtecScheduler::Preemption_Priority_t priority);
 
 private:
   int shutdown_;

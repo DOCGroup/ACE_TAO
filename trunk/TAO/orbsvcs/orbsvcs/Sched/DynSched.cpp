@@ -362,8 +362,8 @@ ACE_DynScheduler::get_rt_info (Object_Name name,
 int ACE_DynScheduler::priority (
   const RtecScheduler::handle_t handle,
   RtecScheduler::OS_Priority &priority,
-  RtecScheduler::Preemption_Subpriority &subpriority,
-  RtecScheduler::Preemption_Priority &preemption_prio)
+  RtecScheduler::Preemption_Subpriority_t &subpriority,
+  RtecScheduler::Preemption_Priority_t &preemption_prio)
 {
   // look up the RT_Info that has the given handle
   RT_Info *rt_info = 0;
