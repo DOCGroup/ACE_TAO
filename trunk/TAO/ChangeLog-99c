@@ -1,3 +1,13 @@
+Thu Dec 23 12:06:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* utils/NamingViewer/StdAfx.h: Moved the inclusion of corba.h.
+	  ACE headers must come first to avoid conflicts among MFC and
+	  non-MFC windows header files.
+
+	  Added macro check against ACE's MFC support.
+
+	* utils/NamingViewer/NamingViewer.dsp: Added ACE_HAS_MFC=1.
+
 Thu Dec 23 11:52:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* utils/NamingViewer/NamingViewer.dsp: Updated directory settings
