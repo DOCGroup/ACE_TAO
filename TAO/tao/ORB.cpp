@@ -46,6 +46,14 @@
 #include "tao/Messaging_Policy_i.h"
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
+#if defined(ACE_HAS_EXCEPTIONS)
+#if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+#include /**/ <exception>
+using std::set_unexpected;
+#else
+#include /**/ <exception.h>
+#endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#endif /* ACE_HAS_EXCEPTIONS */
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ORB.i"
@@ -1159,6 +1167,10 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
 
   if (CORBA_ORB::orb_init_count_ == 0)
     {
+#if defined(ACE_HAS_EXCEPTIONS)
+      set_unexpected (CORBA_ORB::_tao_unexpected_exception);
+#endif /* ACE_HAS_EXCEPTIONS */
+      
       // initialize the system TypeCodes
       TAO_TypeCodes::init ();
 
@@ -1207,6 +1219,18 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
     }
   CORBA_ORB::orb_init_count_++;
 }
+
+void CORBA_ORB::_tao_unexpected_exception (void)
+{
+#if defined(ACE_HAS_EXCEPTIONS)
+  throw CORBA::UNKNOWN ();
+#else
+  // Nothing to do, this will be handled by the ORB core when sending
+  // the exception back to the client...
+#endif /* ACE_HAS_EXCEPTIONS */
+}
+
+// ****************************************************************
 
 // ORB initialisation, per OMG document 94-9-46.
 //
