@@ -97,10 +97,11 @@ be_visitor_operation_interceptors_result::visit_interface_fwd (be_interface_fwd 
 int 
 be_visitor_operation_interceptors_result::visit_valuetype (be_valuetype *)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-
   // Not supported since TAO doesnt support Any operators for valuetype yet.
-  //  *os << "this->result_val_ <<= this->result_;";
+
+  // TAO_OutStream *os = this->ctx_->stream (); // get output stream
+
+  // *os << "this->result_val_ <<= this->result_;";
 
   return 0;
 }
@@ -108,10 +109,11 @@ be_visitor_operation_interceptors_result::visit_valuetype (be_valuetype *)
 int 
 be_visitor_operation_interceptors_result::visit_valuetype_fwd (be_valuetype_fwd *)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-
   // Not supported since TAO doesnt support Any operators for valuetype yet.
-  //  *os << "this->result_val_ <<= this->result_;";
+
+  // TAO_OutStream *os = this->ctx_->stream (); // get output stream
+
+  // *os << "this->result_val_ <<= this->result_;";
 
   return 0;
 }

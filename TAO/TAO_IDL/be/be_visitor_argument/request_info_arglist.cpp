@@ -84,16 +84,17 @@ int be_visitor_args_request_info_arglist::visit_array (be_array *node)
 
   // ACE_NESTED_CLASS macros needed for MSVC.
 
+  be_decl* scope = 
+    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
+
+  AST_Decl::NodeType nt = scope->node_type ();
+        
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
       {
-        be_decl* scope = 
-          be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
         if (bt->is_nested () 
-            && (scope->node_type () == AST_Decl::NT_interface 
-                || scope->node_type () == AST_Decl::NT_union ))
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union ))
           {
             *os << "const ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
@@ -109,12 +110,8 @@ int be_visitor_args_request_info_arglist::visit_array (be_array *node)
       }
     case AST_Argument::dir_INOUT:
       {
-        be_decl* scope = 
-          be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
         if (bt->is_nested () 
-            && (scope->node_type () == AST_Decl::NT_interface 
-                || scope->node_type () == AST_Decl::NT_union ))
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union ))
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
@@ -130,12 +127,8 @@ int be_visitor_args_request_info_arglist::visit_array (be_array *node)
       }
     case AST_Argument::dir_OUT:
       {
-        be_decl* scope = 
-          be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
         if (bt->is_nested () 
-            && (scope->node_type () == AST_Decl::NT_interface 
-                || scope->node_type () == AST_Decl::NT_union ))
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union ))
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
@@ -167,19 +160,17 @@ int be_visitor_args_request_info_arglist::visit_enum (be_enum *node)
 
   // ACE_NESTED_CLASS macros needed for MSVC.
 
-  be_decl *scope = 
-    be_decl::narrow_from_decl (ScopeAsDecl (node->defined_in ()));
-
+  be_decl* scope = 
+    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
+        
+  AST_Decl::NodeType nt = scope->node_type ();
+        
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
       {
-        be_decl* scope = 
-          be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
         if (bt->is_nested () 
-            && (scope->node_type () == AST_Decl::NT_interface 
-                || scope->node_type () == AST_Decl::NT_union ))
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union ))
           {
             *os << "const ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
@@ -195,12 +186,8 @@ int be_visitor_args_request_info_arglist::visit_enum (be_enum *node)
       }
     case AST_Argument::dir_INOUT:
       {
-        be_decl* scope = 
-          be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
         if (bt->is_nested () 
-            && (scope->node_type () == AST_Decl::NT_interface 
-                || scope->node_type () == AST_Decl::NT_union ))
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union ))
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
@@ -216,12 +203,8 @@ int be_visitor_args_request_info_arglist::visit_enum (be_enum *node)
       }
     case AST_Argument::dir_OUT:
       {
-        be_decl* scope = 
-          be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
         if (bt->is_nested () 
-            && (scope->node_type () == AST_Decl::NT_interface 
-                || scope->node_type () == AST_Decl::NT_union ))
+            && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union ))
           {
             *os << "ACE_NESTED_CLASS (";
 	          *os << scope->name () << ",";
