@@ -1,9 +1,9 @@
-
 #----------------------------------------------------------------------------
 #
 # $Id$
 #
 #----------------------------------------------------------------------------
+
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
@@ -33,19 +33,19 @@ ifndef TAO_ORBSVCS
 
   ifeq ($(corba_messaging),1)
     TAO_ORBSVCS += RTEvent \
-		   NativeCosEvent \
+                   NativeCosEvent \
                    CosEvent \
-		   RTOLDEvent \
-		   RTSchedEvent
-#                   EventLog \
-#                   RTEventLog \
-#		   NotifyLog
+                   RTOLDEvent \
+                   RTSchedEvent \
+                   EventLog \
+                   RTEventLog \
+                   NotifyLog
   endif #corba_messaging
 
   TAO_ORBSVCS += Concurrency \
-		 Trader \
-		 AV
-#		 Log
+                 Trader \
+                 AV \
+                 Log
 
   ifeq ($(minimum_corba),0)
       ifneq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
@@ -174,21 +174,25 @@ endif
 ifneq (,$(findstring  EventLog, $(TAO_ORBSVCS)))
   # The EventLog service depends on the CosEvent service.
   ifeq (,$(findstring  CosEvent, $(TAO_ORBSVCS)))
-    MKLIST += Makefile.CosEvent
+    MKLIST += Makefile.CosEvent Makefile.DsLogAdmin
   endif
   MKLIST += Makefile.DsEventLogAdmin
 endif
 ifneq (,$(findstring  NotifyLog, $(TAO_ORBSVCS)))
   # The NotifyLog service depends on the Notification service.
   ifeq (,$(findstring  Notify, $(TAO_ORBSVCS)))
-    MKLIST += Makefile.ETCL Makefile.CosNotification
+    MKLIST += \
+      Makefile.ETCL \
+      Makefile.CosNotification \
+      Makefile.DsLogAdmin \
+      Makefile.DsEventLogAdmin
   endif
   MKLIST += Makefile.DsNotifyLogAdmin
 endif
 ifneq (,$(findstring  RTEventLog, $(TAO_ORBSVCS)))
   # The RTEventLog service depends on the RTEvent service.
   ifeq (,$(findstring  RTEvent, $(TAO_ORBSVCS)))
-    MKLIST += Makefile.RTEvent
+    MKLIST += Makefile.RTEvent Makefile.DsLogAdmin
   endif
   MKLIST += Makefile.RTEventLogAdmin
 endif
