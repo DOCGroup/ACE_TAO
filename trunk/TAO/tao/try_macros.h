@@ -25,14 +25,16 @@
 
 #include "tao/orbconf.h"
 
+// Define a local enviroment variable...
+#define TAO_IN_ENV  _env
+#define TAO_TRY_ENV _tao_try_environment
+
 // These macros can be used to write "portable" code between platforms
 // supporting CORBA exceptions natively (using the C++ exceptions) or
 // through the Enviroment parameter.  Their use requires some
 // discipline, but they certainly help...
 
 #if defined (TAO_HAS_EXCEPTIONS)
-
-#define TAO_TRY_ENV _tao_try_environment
 
 // The first "do" scope is for the env.
 // The second "do" scope is for the TAO_CHECK_ENV continues.
@@ -121,9 +123,6 @@
 // This is used in the implementation of the _raise methods
 
 #else /* ACE_HAS_EXCEPTIONS && TAO_IDL_COMPILES_HAS_EXCEPTIONS */
-
-// Define a local enviroment variable...
-#define TAO_TRY_ENV _tao_try_environment
 
 #define TAO_TRY_VAR(X) \
 do { CORBA_Environment &TAO_TRY_ENV = X; \
@@ -229,7 +228,7 @@ if (TAO_TRY_ENV.exception () != 0) \
 
 #define TAO_THROW(EXCEPTION) \
 do {\
-  _env.exception (new EXCEPTION); \
+ TAO_IN_ENV.exception (new EXCEPTION); \
   return; } while (0)
 
 #define TAO_THROW_ENV(EXCEPTION, ENV) \
@@ -239,7 +238,7 @@ do {\
 
 #define TAO_THROW_RETURN(EXCEPTION, RETURN) \
 do {\
- _env.exception (new EXCEPTION); \
+ TAO_IN_ENV.exception (new EXCEPTION); \
  return RETURN; } while (0)
 
 #define TAO_THROW_ENV_RETURN(EXCEPTION, ENV, RETURN) \
@@ -253,18 +252,18 @@ do {\
  return; } while (0)
 
 #define TAO_RETHROW \
-_env.exception (TAO_TRY_ENV.exception ()); \
+TAO_IN_ENV.exception (TAO_TRY_ENV.exception ()); \
 return
 
 #define TAO_GOTO(LABEL) goto LABEL
 #define TAO_LABEL(LABEL) LABEL:
 
 #define TAO_RETHROW_RETURN(RETURN) \
-_env.exception (TAO_TRY_ENV.exception ()); \
+TAO_IN_ENV.exception (TAO_TRY_ENV.exception ()); \
 return RETURN
 
 #define TAO_RETHROW_RETURN_VOID \
-_env.exception (TAO_TRY_ENV.exception ()); \
+TAO_IN_ENV.exception (TAO_TRY_ENV.exception ()); \
 return
 
 #define TAO_RETHROW_SAME_ENV_RETURN(RETURN) return RETURN
