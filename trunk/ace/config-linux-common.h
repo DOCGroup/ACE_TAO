@@ -187,6 +187,9 @@
 
 #define ACE_HAS_DIRENT
 
+// Linux has lseek64()
+#define ACE_HAS_LLSEEK
+
 # define ACE_UINT64_FORMAT_SPECIFIER "%Lu"
 
 #if !defined (ACE_TIMER_SKEW)
