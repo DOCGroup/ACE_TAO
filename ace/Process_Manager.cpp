@@ -403,7 +403,7 @@ ACE_Process_Manager::wait (void)
 }
 
 // Reap a single child processes' exit status by calling
-// <ACE_OS::waitpid>.
+// <ACE_OS::wait>.
 
 int 
 ACE_Process_Manager::reap (pid_t pid,
@@ -412,7 +412,7 @@ ACE_Process_Manager::reap (pid_t pid,
 {
   ACE_TRACE ("ACE_Process_Manager::reap");
 
-  pid = ACE_OS::waitpid (pid, stat_loc, options);
+  pid = ACE_OS::wait (pid, stat_loc, options);
 
   if (pid != -1)
     this->remove (pid);
