@@ -569,6 +569,9 @@ TAO_IIOP_Transport::get_listen_point (
                         -1);
     }
 
+  ACE_INET_Addr *tmp_addr = ACE_const_cast (ACE_INET_Addr *,
+                                            endpoint_addr);
+
   for (size_t index = 0;
        index <= count;
        index++)
@@ -579,7 +582,7 @@ TAO_IIOP_Transport::get_listen_point (
 
       if (iiop_acceptor->hostname (this->orb_core_,
                                    ACE_const_cast (ACE_INET_Addr,
-                                                   endpoint_addr[index]),
+                                                   tmp_addr[index]),
                                    acceptor_interface) == -1)
           continue;
 
