@@ -50,7 +50,7 @@ Logging_Strategy_Test: !STATIC !ST
 Map_Manager_Test
 Map_Test
 Max_Default_Port_Test: !ST
-#MEM_Stream_Test: !VxWorks
+MEM_Stream_Test: !VxWorks
 Mem_Map_Test: !chorus !Unicos !VxWorks
 Message_Block_Test: !chorus
 Message_Queue_Notifications_Test
