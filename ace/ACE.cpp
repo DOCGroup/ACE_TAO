@@ -18,7 +18,7 @@
 ACE_RCSID(ace, ACE, "$Id$")
 
 // Keeps track of whether we're in some global debug mode.
-char ACE::debug_ = 1;
+char ACE::debug_ = 0;
 
 // Hex characters.
 const char ACE::hex_chars_[] = "0123456789abcdef";

@@ -206,7 +206,7 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
         ACE_Service_Config::be_a_daemon_ = 1;
         break;
       case 'd':
-        ACE::debug (0);
+        ACE::debug (1);
         break;
       case 'f':
         ACE_Service_Config::service_config_file_ = getopt.optarg;
@@ -473,7 +473,7 @@ ACE_Service_Config::open (const ASYS_TCHAR program_name[],
   ACE_TRACE ("ACE_Service_Config::open");
 
   // Clear the LM_DEBUG bit from log messages if appropriate
-  if (ACE::debug () == 0)
+  if (ACE::debug ())
     ACE_Log_Msg::disable_debug_messages ();
   // Become a daemon before doing anything else.
   if (ACE_Service_Config::be_a_daemon_)
@@ -533,7 +533,7 @@ ACE_Service_Config::open (const ASYS_TCHAR program_name[],
 #endif /* ACE_LACKS_UNIX_SIGNALS */
     }
   
-  if (ACE::debug () == 0)
+  if (ACE::debug ())
     ACE_Log_Msg::enable_debug_messages ();
 
   return retval;
@@ -675,12 +675,12 @@ ACE_Service_Config::fini_svcs (void)
   ACE_TRACE ("ACE_Service_Config::fini_svcs");
 
   // Clear the LM_DEBUG bit from log messages if appropriate
-  if (ACE::debug () == 0)
+  if (ACE::debug ())
     ACE_Log_Msg::disable_debug_messages ();
 
   int result = ACE_Service_Repository::instance ()->fini ();
 
-  if (ACE::debug () == 0)
+  if (ACE::debug ())
     ACE_Log_Msg::enable_debug_messages ();
   
   return result;

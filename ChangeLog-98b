@@ -1,3 +1,10 @@
+Fri Sep  4 14:16:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Config: Changed the default value of
+ 	  ACE_Service_Config::debug_ from 1 to 0.  Thus, debugging is
+ 	  DISABLED by default.  If you want to enable debugging, pass the
+ 	  -d option to the constructor of ACE_Service_Config.
+
 Fri Sep 04 13:56:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Log_Msg.h (ACE_Log_Msg): Added a new ACE_DEBUG format
