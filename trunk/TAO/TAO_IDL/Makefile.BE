@@ -94,6 +94,11 @@ LSRC = $(addsuffix .cpp,$(FILES))
 #       Include macros and targets
 #----------------------------------------------------------------------------
 
+ifdef MINGW_BASE
+# tao_idl.exe core dumps in mingw if linked with this lib as dll.
+  override static_libs_only := 1
+endif
+
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
