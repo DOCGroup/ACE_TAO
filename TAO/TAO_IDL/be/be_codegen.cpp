@@ -1899,6 +1899,8 @@ TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
 
   this->gen_standard_include (stream,
                               "tao/PortableServer/TypeCode_SArg_Traits.h");
+  this->gen_standard_include (stream,
+                              "tao/PortableServer/Object_SArg_Traits.h");
 }
 
 void
