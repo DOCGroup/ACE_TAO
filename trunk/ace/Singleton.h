@@ -41,6 +41,25 @@ class ACE_Singleton : public ACE_Cleanup
   //     provided.  <ACE_Singleton> provides one so that TYPE doesn't
   //     need to.
   //
+  //     If you want to make sure that only the singleton instance of
+  //     <T> is created, and that users cannot create their own
+  //     instances of <T>, do the following to class <T>:
+  //
+  //     (a) Make the constructor of <T> private (or protected)
+  //     (b) Make Singleton a friend of <T>
+  // 
+  //     Here is an example:
+  // 
+  //     class foo
+  //     {
+  //       friend class ACE_Singleton<foo, ACE_Null_Mutex>;
+  //     private:
+  //       foo () { cout << "foo constructed" << endl; }
+  //       ~foo () { cout << "foo destroyed" << endl; }
+  //     };
+  //
+  //     typedef ACE_Singleton<foo, ACE_Null_Mutex> FOO;
+  //
   //     NOTE:  the best types to use for ACE_LOCK are
   //     ACE_Recursive_Thread_Mutex and ACE_Null_Mutex.
   //     ACE_Recursive_Thread_Mutex should be used in multi-threaded
@@ -52,6 +71,7 @@ class ACE_Singleton : public ACE_Cleanup
   //     and ACE_Null_Mutex instances are used for all ACE_Singleton
   //     instantiations.  However, other types of locks are allocated
   //     per ACE_Singleton instantiation.
+  //
 public:
   static TYPE *instance (void);
   // Global access point to the Singleton.
