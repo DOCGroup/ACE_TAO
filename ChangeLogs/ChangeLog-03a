@@ -1,3 +1,14 @@
+Mon May 15 14:01:23 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS.h:
+
+	  QNX Neutrino has the <sys/resource.h> header, so include it.
+
+	* ace/config-qnx-neutrino.h:
+
+	  QNX supports the {get,set}rlimit() functions.  ACE's autoconf
+	  support detected this support.
+
 Mon May 15 12:32:05 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Log_Record.cpp (print):
