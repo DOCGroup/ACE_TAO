@@ -83,8 +83,8 @@ public:
                             ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
   // Perform termination activities on the SVC_HANDLER.  The default
   // behavior is to close down the <peer_> (to avoid descriptor leaks)
-  // and to delete this (to avoid memory leaks)!  If you don't want
-  // this behavior make sure you override this method...
+  // and to <destroy> this object (to avoid memory leaks)!  If you
+  // don't want this behavior make sure you override this method...
 
   virtual int handle_timeout (const ACE_Time_Value &time,
                               const void *);
@@ -98,28 +98,26 @@ public:
   // Set the underlying handle associated with the <peer_>.
 
   ACE_PEER_STREAM &peer (void) const;
-  // Returns the underlying PEER_STREAM
-
-  // operator ACE_PEER_STREAM &();
-  // Returns the underlying PEER_STREAM (used by
-  // ACE_Acceptor::accept() and ACE_Connector::connect() factories).
+  // Returns the underlying PEER_STREAM.  Used by
+  // <ACE_Acceptor::accept> and <ACE_Connector::connect> factories
 
   void *operator new (size_t n);
-  // Overloaded new operator.  This is used to unobtrusively detect
-  // when a Svc_Handler is allocated dynamically.
+  // Overloaded new operator.  This method unobtrusively records if a
+  // <Svc_Handler> is allocated dynamically.
 
   virtual void destroy (void);
-  // Call this instead of <delete> to free up dynamically allocated
-  // <Svc_Handlers> (otherwise you will get memory leaks).  This
-  // method knows whether or not the object was allocated dynamically,
-  // and can act accordingly (i.e., deleting it if it was allocated
-  // dynamically, otherwise ignoring it).
+  // Call this to free up dynamically allocated <Svc_Handlers>
+  // (otherwise you will get memory leaks).  In general, you should
+  // call this method rather than <delete> since this method knows
+  // whether or not the object was allocated dynamically, and can act
+  // accordingly (i.e., deleting it if it was allocated dynamically).
 
   void operator delete (void *);
   // This really should be private so that users are forced to call
   // <destroy>.  Unfortunately, the C++ standard doesn't allow there
   // to be a public new and a private delete.  It is a bad idea to
-  // call this method directly, so use <destroy> instead.
+  // call this method directly, so use <destroy> instead, unless you
+  // know for sure that you've allocated the object dynamically.
 
   void shutdown (void);
   // Close down the descriptor and unregister from the Reactor
