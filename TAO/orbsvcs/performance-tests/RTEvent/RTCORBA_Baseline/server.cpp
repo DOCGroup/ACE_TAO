@@ -99,12 +99,12 @@ int main (int argc, char *argv[])
       PortableServer::ObjectId_var id =
         the_poa->activate_object (roundtrip.in ()
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       CORBA::Object_var object =
         the_poa->id_to_reference (id.in ()
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         orb->object_to_string (object.in () ACE_ENV_ARG_PARAMETER);
