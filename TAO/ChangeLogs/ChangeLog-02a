@@ -1,3 +1,12 @@
+Wed Jan  3 10:30:46 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * tests/RTCORBA/README: 
+        * tests/README: 
+        * performance-tests/README: 
+          Documenting that TAO-specific RT tests are in
+          $TAO_ROOT/performance-tests/RTCorba while general
+          RT CORBA tests are in $TAO_ROOT/tests/RTCorba.
+
 Wed Jan  3 09:28:41 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
