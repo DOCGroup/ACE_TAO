@@ -3,6 +3,7 @@
 #include "FTRT_ClientORB_Interceptor.h"
 #include "tao/MProfile.h"
 #include "tao/Stub.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (ClientORB,
            FTRT_ClientORB_Interceptor,
