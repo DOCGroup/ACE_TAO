@@ -57,6 +57,7 @@ project (FTRT_EventChannel) :  orbsvcslib, ftrtevent, utils {
   tagchecks    = FTRT_EventChannel
   includes    += $(TAO_ROOT)/orbsvcs/orbsvcs/FtRtEvent/EventChannel
   after       += FTORB_Utils
+  requires    += corba_messaging
   avoids      += minimum_corba
 
   IDL_Files {

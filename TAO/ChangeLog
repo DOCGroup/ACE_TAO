@@ -1,3 +1,9 @@
+Sat Jun 19 09:43:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FtRtEvent.mpc (FTRT_EventChannel):
+
+	  This project requires CORBA messaging support.
+
 Sat Jun 19 09:05:37 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/CosEvent.mpc:
