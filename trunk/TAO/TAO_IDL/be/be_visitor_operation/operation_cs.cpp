@@ -224,6 +224,9 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                             -1);
         }
 
+      // This was putting post_invoke code in the wrong place (after
+      // demarshaling). See line 807++ for this block's replacement.
+#if 0
       // do any post processing for the arguments
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_POST_INVOKE_CS);
@@ -237,7 +240,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                              "codegen for args in post do_static_call failed\n"),
                             -1);
         }
-
+#endif
       // now generate the normal successful return statement
       os->indent ();
       *os << "return ";
@@ -803,8 +806,21 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
   if (!this->void_return_type (bt) ||
       this->has_param_type (node, AST_Argument::dir_INOUT) ||
       this->has_param_type (node, AST_Argument::dir_OUT))
-    {
-      
+    {  
+      // Do any post_invoke stuff that might be necessary.
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_POST_INVOKE_CS);
+      ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_compiled_visitor_operation_cs::"
+                             "gen_marshal_and_invoke - "
+                             "codegen for args in post do_static_call\n"),
+                            -1);
+        }
       // check if there was a user exception, else demarshal the return val (if
       // any) and parameters (if any) that came with the response message 
       os->indent ();
