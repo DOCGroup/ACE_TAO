@@ -231,7 +231,7 @@ Thread_Pool::test_queue_deactivation_shutdown (void)
         }
       else
         {
-          static int count = 0;
+          static size_t count = 0;
 
           ACE_OS::sprintf (mb->rd_ptr (),
                            "%d\n",
@@ -316,7 +316,7 @@ Thread_Pool::test_empty_message_shutdown (void)
         }
       else
         {
-          static int count = 0;
+          static size_t count = 0;
 
           ACE_OS::sprintf (mb->rd_ptr (),
                            "%d\n",
