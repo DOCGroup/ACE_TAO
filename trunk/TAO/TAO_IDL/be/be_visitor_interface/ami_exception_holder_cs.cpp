@@ -58,7 +58,6 @@ be_visitor_interface_ami_exception_holder_cs::visit_interface (be_interface *nod
                                                0,
                                                0);
   inherit_vt->set_name (inherit_name);
-  const char * name = inherit_vt->full_name ();
 
   be_module *msg = new be_module (new UTL_ScopedName (new Identifier ("Messaging", 0,0,0),
                                                             0),
@@ -86,8 +85,6 @@ be_visitor_interface_ami_exception_holder_cs::visit_interface (be_interface *nod
                                                     0);                 // set abstract
   excep_holder_vt->set_name (excep_holder_name);
 
-
-  // @@Michael: Set defined in.
   excep_holder_vt->set_defined_in (node->defined_in ());
 
   // proceed if the number of members in our scope is greater than 0
@@ -129,11 +126,6 @@ be_visitor_interface_ami_exception_holder_cs::visit_interface (be_interface *nod
                                                                  (new Identifier ("void", 1, 0, I_FALSE), 
                                                                   0),
                                                                0);
-
-              AST_Operation *operation = new AST_Operation (rt,
-                                                            AST_Operation::OP_noflags,
-                                                            node->name (),
-                                                            0);
 
               UTL_ScopedName *new_name = (UTL_ScopedName *) node->name ()->copy ();
 
