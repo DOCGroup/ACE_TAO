@@ -10,7 +10,7 @@
 //    MEM_Connector.h
 //
 // = AUTHOR
-//    Nanbor Wang
+//    Nanbor Wang <nanbor@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -54,9 +54,9 @@ public:
   // this is the amount of time to wait before timing out.  If the
   // time expires before the connection is made <errno == ETIME>.  The
   // <local_sap> is the value of local address to bind to.  If it's
-  // the default value of <0> then the user is letting
-  // the OS do the binding.  If <reuse_addr> == 1 then the
-  // <local_addr> is reused, even if it hasn't been cleanedup yet.
+  // the default value of <0> then the user is letting the OS do the
+  // binding.  If <reuse_addr> == 1 then the <local_addr> is reused,
+  // even if it hasn't been cleanedup yet.
 
   int connect (ACE_MEM_Stream &new_stream,
                const ACE_INET_Addr &remote_sap,
@@ -76,9 +76,9 @@ public:
   // this is the amount of time to wait before timing out.  If the
   // time expires before the connection is made <errno == ETIME>.  The
   // <local_sap> is the value of local address to bind to.  If it's
-  // the default value of <0> then the user is letting
-  // the OS do the binding.  If <reuse_addr> == 1 then the
-  // <local_addr> is reused, even if it hasn't been cleanedup yet.
+  // the default value of <0> then the user is letting the OS do the
+  // binding.  If <reuse_addr> == 1 then the <local_addr> is reused,
+  // even if it hasn't been cleanedup yet.
 
   ACE_MEM_SAP::MALLOC_OPTIONS &malloc_options (void);
   // Accessor to underlying malloc options.
@@ -95,8 +95,10 @@ public:
 
 private:
   ACE_MEM_Addr address_;
+  // @@ Nanbor, can you please add a comment here?
 
   ACE_MEM_SAP::MALLOC_OPTIONS malloc_options_;
+  // @@ Nanbor, can you please add a comment here?
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
