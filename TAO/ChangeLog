@@ -1,3 +1,9 @@
+Tue Nov 18 22:49:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/Naming_Service/Makefile:
+
+	  Added messaging library.
+
 Tue Nov 18 22:32:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/CosNaming.mpc:
