@@ -1,3 +1,8 @@
+Tue Dec  4 10:00:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Multicast/client.cpp:
+          Made this file compiling when ACE_USES_WCHAR is set
+
 Mon Dec  3 18:19:11 2001  Ossama Othman  <ossama@uci.edu>
 
 	* bin/fuzz.pl (check_for_id_string):
