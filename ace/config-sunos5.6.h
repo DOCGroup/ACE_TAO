@@ -36,6 +36,7 @@
 #ifdef ACE_LACKS_ACE_IOSTREAM
 #undef ACE_LACKS_ACE_IOSTREAM
 #endif /* ACE_LACKS_ACE_IOSTREAM */
+#endif /* defined (__SUNPRO_CC_COMPAT) && (__SUNPRO_CC_COMPAT >= 5) */
 
 #ifndef ACE_LACKS_UNBUFFERED_STREAMBUF
 #define ACE_LACKS_UNBUFFERED_STREAMBUF 1
@@ -98,7 +99,6 @@
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF        1
 #endif /* ACE_LACKS_LINEBUFFERED_STREAMBUF */
 
-#endif /* defined (__SUNPRO_CC_COMPAT) && (__SUNPRO_CC_COMPAT >= 5)
 #endif /* defined (__SUNPRO_CC) && __SUNPRO_CC > 0x510 */
 
 // SunOS 5.6 and above support mkstemp
