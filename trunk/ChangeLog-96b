@@ -10,7 +10,6 @@ Wed Nov 20 10:32:52 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 	  Reader_Writer_Test.cpp Thread_Pool_Test.cpp were changed
 	  slightly to remove some compile time warnings. 
 
-=======
 Thu Nov 21 10:37:40 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Service_Config: Changed the implementation of the
