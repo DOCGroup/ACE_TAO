@@ -21,7 +21,7 @@ static void *
 server (void *arg)
 {
   ACE_SOCK_Stream new_stream;
-  ACE_HANDLE handle = ACE_HANDLE (arg);
+  ACE_HANDLE handle = (ACE_HANDLE) (long) arg;
 
   new_stream.set_handle (handle);
 
