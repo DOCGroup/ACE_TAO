@@ -222,11 +222,8 @@ TAO_SSLIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
 
   // Try to clean up things if the upcall count has reached 0
   if (upcalls == 0)
-    {
-      this->handle_close_i ();
+    this->handle_close_i ();
 
-      retval = -1;
-    }
 
   return 0;
 }
