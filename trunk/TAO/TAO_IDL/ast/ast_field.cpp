@@ -155,9 +155,6 @@ AST_Field::dump (ostream &o)
       o << "public ";
       break;
     case vis_NA:
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) AST_Field - "
-                  "bad visibility value\n"));
       break;
     }
   pd_field_type->local_name ()->dump (o);
