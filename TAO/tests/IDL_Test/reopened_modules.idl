@@ -106,8 +106,6 @@ interface OpHolder
 // getInfo(). Partial solution got rid of infinite loop, 
 // but erroneously returned ::com from lookup.
 
-module com {};
-
 module com 
 {
   module mr 
@@ -151,12 +149,12 @@ module XX
 
   interface blah_intfc 
   {
-    void op1();
+    void op1 ();
   };
 
   interface blah0 : blah_intfc 
   {
-    void op0();
+    void op0 ();
   };
 };
 
