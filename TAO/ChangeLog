@@ -1,17 +1,26 @@
+Sun Jan 23 14:56:20 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO-INSTALL.html (href): 
+
+	  Added some notes about g++ on Solaris 10 downloaded from
+	  blastwave. 
+
 Sun Jan 23 19:04:31 2005  Marek Brudka  <mbrudka@aster.pl>
 
 	* .cvsignore (Module):
-	Removed unnecessary file.
+	  Removed unnecessary file.
 
 Sun Jan 23 18:04:02 2005  Marek Brudka  <mbrudka@aster.pl>
 
 	* examples/AMI/FL_Callback/Peer_i.cpp (Module):
-	Fixed error related with sleep once again. I lost this fix during merge.
+	  Fixed error related with sleep once again. I lost this fix
+	  during merge. 
 
 Sun Jan 23 15:50:25 2005  Marek Brudka  <mbrudka@aster.pl>
 
         * */.cvsignore (Module):
-	Made cvs less annoyed.
+	  
+	  Made cvs less annoyed.
 
 Sun Jan 23 13:17:29 2005  Marek Brudka  <mbrudka@aster.pl>
 
