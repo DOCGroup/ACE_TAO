@@ -23,7 +23,7 @@
 
 #include "tao/corba.h"
 
-class TAO_Forwarding_Servant : public PortableServer::DynamicImplementation
+class TAO_Forwarding_Servant : public TAO_DynamicImplementation
 {
 public:
 
