@@ -17,6 +17,9 @@ Fri Mar 28 10:18:48 2003  Steve Huston  <shuston@riverace.com>
 	* tests/Conn_Test.cpp: When displaying a hostname, properly adjust
 	  to the charset width in use.
 
+	* tests/run_test.lst: Added !WinCE to Env_Value_Test. CE doesn't
+	  do environment variables.
+
 Thu Mar 27 14:20:32 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* THANKS: Added Jia Wan to the hall of fame.
