@@ -1,3 +1,22 @@
+Mon May 10 19:44:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* Domain.pidl:
+	* DomainC.{h,i,cpp}:
+	* DomainS.{h,cpp}:
+	* DomainS_T.{h,i,cpp}:
+	  New files incorporating the (as yet unimplemented)
+	  classes DomainManager, ConstructionPolicy, and
+	  DomainManagerList.
+
+	* corbafwd.h:
+	* POA_CORBA.h:
+	* Typecode_Constants.cpp:
+	* TAO.dsp:
+	* TAO_Static.dsp:
+	  All the necessary modifications corresponding to
+	  the above new files. Also removed the (nonexistent) 
+	  file PolicyS.h from the two projects.
+
 Mon May 10 17:21:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
