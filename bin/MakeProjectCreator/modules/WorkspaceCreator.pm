@@ -62,6 +62,7 @@ sub new {
   my($gfeature)  = shift;
   my($feature)   = shift;
   my($hierarchy) = shift;
+  my($exclude)   = shift;
   my($makeco)    = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $dynamic, $static,
@@ -83,6 +84,14 @@ sub new {
   $self->{'modified_count'}      = 0;
   $self->{'global_feature_file'} = $gfeature;
   $self->{'coexistence'}         = $makeco;
+
+  if (defined $$exclude[0]) {
+    my($type) = $self->{'wctype'};
+    if (!defined $self->{'exclude'}->{$type}) {
+      $self->{'exclude'}->{$type} = [];
+    }
+    push(@{$self->{'exclude'}->{$type}}, @$exclude);
+  }
 
   ## Add a hash reference for our workspace type
   if (!defined $previous_workspace_name{$self->{'wctype'}}) {
@@ -1029,6 +1038,7 @@ sub project_creator {
                    $self->{'global_feature_file'},
                    $parameters{'feature_file'},
                    $parameters{'hierarchy'},
+                   $self->{'exclude'}->{$self->{'wctype'}},
                    $self->make_coexistence());
 }
 
@@ -1086,8 +1096,7 @@ sub get_modified_workspace_name {
 sub generate_recursive_input_list {
   my($self) = shift;
   my($dir)  = shift;
-  my($exc)  = shift;
-  return $self->extension_recursive_input_list($dir, $exc, $wsext);
+  return $self->extension_recursive_input_list($dir, $wsext);
 }
 
 

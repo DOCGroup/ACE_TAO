@@ -95,13 +95,14 @@ sub optionError {
   }
   my($spaces) = (' ' x (length($base) + 8));
   print STDERR "$base v$self->{'version'}\n" .
-               "Usage: $base [-global <file>] [-include <directory>] [-recurse[=dir1,...]]\n" .
+               "Usage: $base [-global <file>] [-include <directory>] [-recurse]]\n" .
                $spaces . "[-ti <dll | lib | dll_exe | lib_exe>:<file>] [-hierarchy]\n" .
                $spaces . "[-template <file>] [-relative NAME=VAR] [-base <project>]\n" .
                $spaces . "[-noreldefs] [-notoplevel] [-static] [-static_only]\n" .
                $spaces . "[-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
                $spaces . "[-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
                $spaces . "[-feature_file <file name>] [-make_coexistence]\n" .
+               $spaces . "[-exclude <directories>]\n" .
                $spaces . "[-type <";
 
   my(@keys) = sort keys %{$self->{'types'}};
@@ -121,6 +122,8 @@ sub optionError {
   print STDERR
 "       -base           Add <project> as a base project to each generated\n" .
 "                       project file.\n" .
+"       -exclude        Use this option to exclude directories when searching\n" .
+"                       for input files.\n" .
 "       -feature_file   Specifies the feature file to read before processing.\n" .
 "                       The default feature file is default.features under the\n" .
 "                       config directory.\n" .
@@ -138,8 +141,7 @@ sub optionError {
 "                       addition to dynamic projects.\n" .
 "       -static_only    Specifies that only static projects will be generated.\n" .
 "       -recurse        Recurse from the current directory and generate from\n" .
-"                       all found input files.  If directories are passed to\n" .
-"                       this option, then those directories are not recursed.\n" .
+"                       all found input files.\n" .
 "       -relative       Any \$() variable in an mpc that is matched to NAME\n" .
 "                       is replaced by VAR only if VAR can be made into a\n" .
 "                       relative path based on the current working directory.\n" .
@@ -223,8 +225,7 @@ sub run {
 
       ## Generate the recursive input list
       my($generator) = $name->new();
-      my(@input) = $generator->generate_recursive_input_list(
-                                               '.', $options->{'recurse'});
+      my(@input) = $generator->generate_recursive_input_list('.');
       $options->{'input'} = \@input;
 
       ## If no files were found above, then we issue a warning
@@ -332,6 +333,7 @@ sub run {
                                   $global_feature_file,
                                   $options->{'feature_file'},
                                   $options->{'hierarchy'},
+                                  $options->{'exclude'},
                                   $options->{'coexistence'});
       if ($base ne $file) {
         my($dir) = ($base eq '' ? $file : dirname($file));
