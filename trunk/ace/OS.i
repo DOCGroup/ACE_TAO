@@ -5540,7 +5540,7 @@ ACE_OS::msgsnd (int int_id, const void *buf, size_t len, int flags)
 {
   // ACE_TRACE ("ACE_OS::msgsnd");
 #if defined (ACE_HAS_SYSV_IPC)
-#if defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_HAS_NONCONST_MSGSND) || defined (ACE_LACKS_POSIX_SOME_PROTOTYPES)
+#if defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_HAS_NONCONST_MSGSND) || defined (ACE_LACKS_SOME_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::msgsnd (int_id, (msgbuf *) buf, len, flags), int, -1);
 #else
   ACE_OSCALL_RETURN (::msgsnd (int_id, buf, len, flags), int, -1);

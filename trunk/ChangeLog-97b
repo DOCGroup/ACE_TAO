@@ -3,6 +3,9 @@ Thu Oct 30 10:50:21 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 	* ace/OS.i (getopt): Changed ACE_LACKS_SOME_POSIX_PROTOTYPES back
  	to ACE_LACKS_POSIX_PROTOTYPES so that a clean build on Linux is
  	achievable now.
+	(msgsnd): Corrected errant spelling from
+ 	ACE_LACKS_POSIX_SOME_PROTOTYPES to
+ 	ACE_LACKS_SOME_POSIX_PROTOTYPES.
 
 Thu Oct 30 07:02:03 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
