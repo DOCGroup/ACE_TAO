@@ -4,6 +4,12 @@ Mon Nov  3 17:15:17 1997  Steve Huston  <shuston@riverace.com>
 	  ACE_CLASS_IS_NAMESPACE macro.  Produces warnings on AIX and
 	  shouldn't be needed.
 	
+Mon Nov  3 15:49:18 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/Connector.cpp (connect): "Fixed" so that the service handler
+ 	  pointer passed in by the caller doesn't change until the connect
+ 	  completes without errors.
+
 Mon Nov  3 14:16:37 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/SV_Semaphore_Complex.cpp (close): Changed to return 0
