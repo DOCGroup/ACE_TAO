@@ -41,9 +41,7 @@ public:
     TAO_LINEAR_SEARCH,
     TAO_DYNAMIC_HASH,
     TAO_PERFECT_HASH,
-    TAO_BINARY_SEARCH,
-    TAO_ACTIVE_DEMUX,
-    TAO_USER_DEFINED
+    TAO_BINARY_SEARCH
   };
 
   /// Set the lookup strategy from the list of enumerated values
