@@ -92,7 +92,7 @@ public:
 
 // ****************************************************************
 
-class TAO_EC_Null_ObserverStrategy : public TAO_EC_ObserverStrategy
+class TAO_ORBSVCS_Export TAO_EC_Null_ObserverStrategy : public TAO_EC_ObserverStrategy
 {
   // = TITLE
   //   A null observer strategy.
@@ -130,7 +130,7 @@ public:
 
 // ****************************************************************
 
-class TAO_EC_Basic_ObserverStrategy : public TAO_EC_ObserverStrategy
+class TAO_ORBSVCS_Export TAO_EC_Basic_ObserverStrategy : public TAO_EC_ObserverStrategy
 {
   // = TITLE
   //   A simple observer strategy.
