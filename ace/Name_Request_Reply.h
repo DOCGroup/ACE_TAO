@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_NAME_REQUEST_REPLY_H)
+#ifndef ACE_NAME_REQUEST_REPLY_H
 #define ACE_NAME_REQUEST_REPLY_H
 
 #include "ace/Time_Value.h"

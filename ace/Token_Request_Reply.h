@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -20,8 +19,8 @@
 // 
 // ============================================================================
 
-#if !defined (_TOKEN_REQUEST_REPLY_H)
-#define _TOKEN_REQUEST_REPLY_H
+#ifndef (ACE_TOKEN_REQUEST_REPLY_H)
+#define ACE_TOKEN_REQUEST_REPLY_H
 
 #include "ace/Local_Tokens.h"
 #include "ace/Time_Value.h"
@@ -226,4 +225,4 @@ private:
 #include "ace/Token_Request_Reply.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* _TOKEN_REQUEST_REPLY_H */
+#endif /* ACE_TOKEN_REQUEST_REPLY_H */

@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_MODULE_H)
+#ifndef ACE_MODULE_H
 #define ACE_MODULE_H
 
 #include "ace/ACE.h"

@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_SINGLETON_H)
+#ifndef ACE_SINGLETON_H
 #define ACE_SINGLETON_H
 
 #include "ace/Synch.h"

@@ -6,7 +6,7 @@
 // This file contains compiler-specific settings, and uses the common
 // HP-UX file (config-hpux-10.x.h) for the platform information.
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 // There are 2 compiler-specific sections, plus a 3rd for common to both.

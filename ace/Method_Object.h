@@ -15,7 +15,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_METHOD_OBJECT_H)
+#ifndef ACE_METHOD_OBJECT_H
 #define ACE_METHOD_OBJECT_H
 
 #include "ace/OS.h"

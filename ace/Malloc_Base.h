@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_MALLOC_BASE_H)
+#ifndef ACE_MALLOC_BASE_H
 #define ACE_MALLOC_BASE_H
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

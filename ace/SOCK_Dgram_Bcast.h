@@ -13,7 +13,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_SOCK_DGRAM_BCAST_H)
+#ifndef ACE_SOCK_DGRAM_BCAST_H
 #define ACE_SOCK_DGRAM_BCAST_H
 
 #include "ace/INET_Addr.h"

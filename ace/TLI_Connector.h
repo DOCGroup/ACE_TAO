@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_TLI_CONNECTOR_H)
+#ifndef ACE_TLI_CONNECTOR_H
 #define ACE_TLI_CONNECTOR_H
 
 #include "ace/TLI_Stream.h"

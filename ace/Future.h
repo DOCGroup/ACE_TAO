@@ -16,7 +16,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_FUTURE_H)
+#ifndef ACE_FUTURE_H
 #define ACE_FUTURE_H
 
 #include "ace/Synch.h"

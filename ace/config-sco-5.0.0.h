@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-#if !defined (ACE_CONFIG_SCO_5_0_0_H)
+#ifndef ACE_CONFIG_SCO_5_0_0_H
 #define ACE_CONFIG_SCO_5_0_0_H
 
 // Compiling for SCO.

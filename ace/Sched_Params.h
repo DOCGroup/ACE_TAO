@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_SCHED_PARAMS_H)
+#ifndef ACE_SCHED_PARAMS_H
 #define ACE_SCHED_PARAMS_H
 
 #include "ace/OS.h"

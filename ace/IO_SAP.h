@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_IO_SAP_H)
+#ifndef ACE_IO_SAP_H
 #define ACE_IO_SAP_H
 
 #include "ace/ACE.h"

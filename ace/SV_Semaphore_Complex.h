@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_SV_SEMAPHORE_COMPLEX_H)
+#ifndef ACE_SV_SEMAPHORE_COMPLEX_H
 #define ACE_SV_SEMAPHORE_COMPLEX_H
 
 #include "ace/SV_Semaphore_Simple.h"

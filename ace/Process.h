@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_PROCESS_H)
+#ifndef ACE_PROCESS_H
 #define ACE_PROCESS_H
 
 #include "ace/OS.h"

@@ -14,14 +14,15 @@
 // 
 // ============================================================================
 
+// This #include must come first to avoid recursive include problems.
 #include "ace/OS.h"
+
+#ifndef ACE_ACE_H
+#define ACE_ACE_H
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#if !defined (ACE_ACE_H)
-#define ACE_ACE_H
 
 // Forward declarations.
 class ACE_Time_Value;

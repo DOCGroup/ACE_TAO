@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_TIMER_QUEUE_ADAPTERS_H)
+#ifndef ACE_TIMER_QUEUE_ADAPTERS_H
 # define ACE_TIMER_QUEUE_ADAPTERS_H
 
 # include "ace/Task.h"

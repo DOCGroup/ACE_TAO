@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_XTREACTOR_H)
+#ifndef ACE_XTREACTOR_H
 #define ACE_XTREACTOR_H
 
 #include "ace/Select_Reactor.h"

@@ -15,7 +15,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_OS_H)
+#ifndef ACE_OS_H
 # define ACE_OS_H
 
 // This file should be a link to the platform/compiler-specific

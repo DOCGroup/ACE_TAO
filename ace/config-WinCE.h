@@ -1,6 +1,6 @@
 // $Id$
 
-#if ! defined (ACE_CONFIG_WINCE_H)
+#ifndef ACE_CONFIG_WINCE_H
 #define ACE_CONFIG_WINCE_H
 
 // Only DLL version is supported on CE.
@@ -43,7 +43,7 @@
 #define ACE_LACKS_INLINE_FUNCTIONS
 #endif /* SH3 && _DEBUG */
 
-#if !defined (ACE_DEFAULT_SERVER_HOST)
+#ifndef ACE_DEFAULT_SERVER_HOST
 # define ACE_DEFAULT_SERVER_HOST L"localhost"
 #endif /* ACE_DEFAULT_SERVER_HOST */
 

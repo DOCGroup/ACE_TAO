@@ -15,7 +15,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_REMOTE_MUTEX_H)
+#ifndef ACE_REMOTE_MUTEX_H
 #define ACE_REMOTE_MUTEX_H
 
 #include "ace/INET_Addr.h"

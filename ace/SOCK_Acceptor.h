@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_SOCK_ACCEPTOR_H)
+#ifndef ACE_SOCK_ACCEPTOR_H
 #define ACE_SOCK_ACCEPTOR_H
 
 #include "ace/SOCK_Stream.h"

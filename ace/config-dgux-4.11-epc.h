@@ -4,7 +4,7 @@
 // The following configuration file is designed to work for DG/UX
 // 4.11 platforms using the EPC compiler.
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 // Platform requires (struct sockaddr *) for msg_name field of struct

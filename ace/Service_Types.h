@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_SERVICE_TYPE_H)
+#ifndef ACE_SERVICE_TYPE_H
 #define ACE_SERVICE_TYPE_H
 
 #include "ace/Service_Object.h"

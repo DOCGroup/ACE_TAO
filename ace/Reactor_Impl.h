@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_REACTOR_IMPL_H)
+#ifndef ACE_REACTOR_IMPL_H
 #define ACE_REACTOR_IMPL_H
 
 // Timer Queue is a complicated template class. A simple forward

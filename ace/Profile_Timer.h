@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_PROFILE_TIMER_H)
+#ifndef ACE_PROFILE_TIMER_H
 #define ACE_PROFILE_TIMER_H
 
 #include "ace/ACE.h"

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_OBJECT_MANAGER_H)
+#ifndef ACE_OBJECT_MANAGER_H
 #define ACE_OBJECT_MANAGER_H
 
 #include "ace/OS.h"

@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_HANDLE_SET_H)
+#ifndef ACE_HANDLE_SET_H
 #define ACE_HANDLE_SET_H
 
 #include "ace/ACE.h"

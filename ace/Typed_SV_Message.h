@@ -15,7 +15,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_TYPED_SV_MESSAGE_H)
+#ifndef ACE_TYPED_SV_MESSAGE_H
 #define ACE_TYPED_SV_MESSAGE_H
 
 #include "ace/ACE.h"

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_SIGNAL_HANDLER_H)
+#ifndef ACE_SIGNAL_HANDLER_H
 #define ACE_SIGNAL_HANDLER_H
 
 #include "ace/Synch.h"

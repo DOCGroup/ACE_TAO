@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_PIPE_H)
+#ifndef ACE_PIPE_H
 #define ACE_PIPE_H
 
 #include "ace/ACE.h"

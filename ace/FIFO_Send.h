@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_FIFO_SEND_H)
+#ifndef ACE_FIFO_SEND_H
 #define ACE_FIFO_SEND_H
 
 #include "ace/FIFO.h"

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_SSTRING_H)
+#ifndef ACE_SSTRING_H
 #define ACE_SSTRING_H
 
 #include "ace/ACE.h"

@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_MESSAGE_QUEUE_H)
+#ifndef ACE_MESSAGE_QUEUE_H
 #define ACE_MESSAGE_QUEUE_H
 
 #include "ace/ACE.h"

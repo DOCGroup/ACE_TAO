@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_DEV_ADDR_H)
+#ifndef ACE_DEV_ADDR_H
 #define ACE_DEV_ADDR_H
 
 #include "ace/Addr.h"

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_DYNAMIC_H)
+#ifndef ACE_DYNAMIC_H
 #define ACE_DYNAMIC_H
 
 #include "ace/ACE.h"

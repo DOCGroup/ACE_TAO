@@ -44,7 +44,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_BASIC_TYPES_H)
+#ifndef ACE_BASIC_TYPES_H
 #define ACE_BASIC_TYPES_H
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
