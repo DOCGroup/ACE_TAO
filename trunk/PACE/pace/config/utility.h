@@ -28,9 +28,11 @@ return ( (errno = ENOTSUP), FAILVALUE)
 
 # define PACE_ERRNO_NO_SUPPORT() errno=ENOTSUP
 
-/* A couple useful inline functions for checking whether bits are
+/* ----------------------------------------------------------------------
+   A couple useful inline functions for checking whether bits are
    enabled or disabled.
- */
+ * ---------------------------------------------------------------------- */
+
 # define PACE_POW(X) (((X) == 0)?1:(X-=1,X|=X>>1,X|=X>>2,X|=X>>4,X|=X>>8,X|=X>>16,(++X)))
 # define PACE_EVEN(NUM) (((NUM) & 1) == 0)
 # define PACE_ODD(NUM) (((NUM) & 1) == 1)
@@ -45,6 +47,10 @@ return ( (errno = ENOTSUP), FAILVALUE)
 
 /* Create a string of a server address with a "host:port" format. */
 # define PACE_SERVER_ADDRESS(H,P) H":"P
+
+/* ----------------------------------------------------------------------
+   Specific for (PACE_WIN32)
+ * ---------------------------------------------------------------------- */
 
 #if (PACE_WIN32)
 
