@@ -38,7 +38,7 @@ Coffee_i::description (CORBA::Environment & /*env*/)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Coffee::Desc *desc = new Coffee::Desc;
-  desc->name = CORBA::string_dup (this->name_);
+  desc->name = CORBA::string_dup (this->name_.in ());
   return desc;
 }
 
@@ -805,7 +805,13 @@ Param_Test_i::test_exception (CORBA::ULong s1,
   else if (d == 1)
       ACE_THROW_RETURN (Param_Test::Ooops (CORBA::string_dup (" % 3 == 1"), s1), 0);
 
-  ACE_THROW_RETURN (Param_Test::BadBoy (), 0);
+  // This will avoid the compiler
+  // warning that test_exception is throwing an exception
+  // not in its THROW_SPEC, but still test TAO's 
+  // conversion of such an exception to UNKNOWN.
+  this->throw_badboy (ACE_TRY_ENV);
+
+  return 0;
 }
 
 Param_Test::Big_Union*
@@ -857,4 +863,10 @@ Param_Test_i::shutdown (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();
+}
+
+void
+Param_Test_i::throw_badboy (CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (Param_Test::BadBoy ());
 }
