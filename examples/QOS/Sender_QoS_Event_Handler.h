@@ -21,7 +21,7 @@
 #include "ace/Reactor.h"
 #include "ace/INET_Addr.h"
 #include "ace/QoS/SOCK_Dgram_Mcast_QoS.h"
-#include "ace/QoS_Session.h"
+#include "ace/QoS/QoS_Session.h"
 
 //#define MY_DEFPORT 5001
 //#define DEFAULT_MULTICASTGROUP "234.5.6.7"

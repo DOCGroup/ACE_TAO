@@ -17,7 +17,7 @@
 #define QOSEVENT_MAIN
 
 #include "ace/OS.h"
-#include "ace/QoS_Session.h"
+#include "ace/QoS/QoS_Session.h"
 #include "ace/QoS/QoS_Session_Factory.h"
 #include "ace/QoS/QoS_Decorator.h"
 #include "ace/QoS/SOCK_Dgram_Mcast_QoS.h"

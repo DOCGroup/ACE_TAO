@@ -24,8 +24,7 @@
 #include "ace/IPC_SAP.h"
 #include "ace/Containers_T.h"
 #include "ACE_QoS_Export.h"
-
-class ACE_QoS_Session;
+#include "QoS_Session.h"
 
 /**
  * @class ACE_QoS_Manager

@@ -1,3 +1,19 @@
+Thu Mar 29 19:48:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+        * ace/QoS_Session.h:
+        * ace/QoS/QoS_Manager.h:
+        * ace/QoS/QoS_Session_Impl.h:
+        * ace/QoS/QoS_Session_Factory.h:
+        * examples/QOS/QoS_Signal_Handler.h:
+        * examples/QOS/Receiver_QoS_Event_Handler.h:
+        * examples/QOS/client.cpp:
+        * examples/QOS/QoS_Util.h:
+        * examples/QOS/Sender_QoS_Event_Handler.h:
+        * examples/QOS/server.cpp:
+        * examples/QOS/Makefile:
+
+        Move QoS_Session.h to the ace/QoS directory.
+
 Thu Mar 29 19:12:38 2001  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/rules.lib.GNU: AIX-specific changes to
