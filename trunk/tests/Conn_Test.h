@@ -32,4 +32,7 @@ public:
 
   int close (u_long = 0);
   // Shutdown the <Svc_Handler>.
+
+  int idle (u_long flags);
+  // Set <this> to idle.
 };

@@ -150,6 +150,14 @@ Svc_Handler::close (u_long side)
   return this->handle_close ();
 }
 
+int
+Svc_Handler::idle (u_long flags)
+{
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) idling Svc_Handler %d with handle %d\n"),
+              this, this->peer ().get_handle ()));
+  return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::idle (flags);
+}
+
 // ****************************************
 
 // Template specializations!
@@ -253,10 +261,10 @@ static void
 cached_connect (STRAT_CONNECTOR &con,
                 const ACE_INET_Addr &server_addr)
 {
+  Svc_Handler *svc_handler = 0;
+
   for (int i = 0; i < n_client_iterations; i++)
     {
-      Svc_Handler *svc_handler = 0;
-
       // Perform a blocking connect to the server using the Strategy
       // Connector with a connection caching strategy.  Since we are
       // connecting to the same <server_addr> these calls will return the
