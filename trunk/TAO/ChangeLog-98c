@@ -1,3 +1,8 @@
+Fri Nov 14 00:03:20 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/iiopobj.cpp (Profile): Modified the code to consistently 
+	  store a NUL at the end of each object key string.
+
 Fri Nov 14 00:29:09 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/fe/lex.yy.cpp: set RCS -ko option so that the Id keyword
@@ -6,6 +11,17 @@ Fri Nov 14 00:29:09 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Nov 13 19:11:36 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* tao/giop.cpp (start): Updated the code to use the new
+	  object_addr() style.
+
+	* tao/iiopobj: Added many fixes to the Profile code to fix nasty
+ 	  bugs.  Also, renamed {get|set}_object_addr() to simply
+ 	  object_addr(), which is the correct style.
+
+	* tao/iiopobj.h: Replaced the use of "localhost" with
+ 	   ACE_DEFAULT_SERVER_HOST.  This is necessary to support broken
+ 	   platforms like MVS that don't support "localhost"...
+	  
 	* TAO/tests/Cubit/TAO/IDL_Cubit/svr.cpp (parse_args): Assume for
  	  the moment that any arguments starting with `-O' are `-ORB' or
  	  `-OA'.  This should be fixed by having the ORB_init() and

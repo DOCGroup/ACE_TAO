@@ -18,14 +18,16 @@ IIOP::Profile::~Profile (void)
 }
 
 ACE_INLINE void
-IIOP::Profile::set_object_addr (void)
+IIOP::Profile::object_addr (const ACE_INET_Addr *addr)
 {
-  if (this->host)
+  if (addr != 0)
+    this->object_addr_ = *addr;
+  else if (this->host)
     this->object_addr_.set (this->port, this->host);
 }
 
 ACE_INLINE ACE_INET_Addr &
-IIOP::Profile::get_object_addr (void)
+IIOP::Profile::object_addr (void)
 {
   return this->object_addr_;
 }

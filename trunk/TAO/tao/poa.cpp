@@ -78,17 +78,11 @@ CORBA_POA::create (CORBA::OctetSeq &key,
   else
     id = 0;
 
-  IIOP::Version ver (IIOP::MY_MAJOR, IIOP::MY_MINOR);
-  const ACE_INET_Addr &addr = TAO_ORB_Core_instance ()->orb_params ()->addr ();
-
-  char host[MAXHOSTNAMELEN + 1];
-  if (addr.get_host_name (host, MAXHOSTNAMELEN) == -1)
-    return 0;
   
-  data = new IIOP_Object (id, IIOP::Profile (ver,
-                                             host,
-                                             addr.get_port_number (),
-                                             key));
+
+  data = new IIOP_Object (id,
+                          IIOP::Profile (TAO_ORB_Core_instance ()->orb_params ()->addr (),
+                                         key));
   if (data != 0)
     env.clear ();
   else
