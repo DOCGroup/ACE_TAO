@@ -55,7 +55,8 @@ public:
   ~TAO_UTO (void);
   // Destructor.
 
-  virtual TimeBase::TimeT time (CORBA::Environment &env)
+  virtual TimeBase::TimeT time (
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // For the readonly attribute <time>.
 
