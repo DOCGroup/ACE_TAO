@@ -8,7 +8,6 @@ import java.awt.image.*;
 import java.applet.*;
 import gjt.Separator;
 import gjt.Util;
-import imaging.filters.Timer;
 
 public class ImageApp extends Applet
 {
@@ -96,40 +95,44 @@ public class ImageApp extends Applet
     this.imageCanvas_.applyFilter (null);
   }
 
-  public void openURL (String url)
+  public int openURL (String url)
   {
     if (url == null)
-      {
-	DialogManager.popDialog (DialogType.MALFORMED_URL,
-				 "Error: Malformed URL");
-	return;
-      }
-    Image image;
+      return -1;
+
+    Image image = null;
     try
       {
-	if (url.compareTo ("pj") == 0)  	// This is just for debugging...
-	  image = getImage (new URL ("http://www.cs/~pjain/myphoto.gif"));
-	else
-	  image = getImage (new URL (url));
+	image = getImage (new URL (url));
       }
     catch (MalformedURLException e)
       {
-	DialogManager.popDialog (DialogType.MALFORMED_URL,
-				 "Error: Malformed URL");
-	return;
+	return -1;
       }
 
     if (image != null)
-      this.imageCanvas_.setImage (image);
+      {
+	// Check if the image was actually loaded. Note that we have
+	// to wait for the potential image to finish loading before we
+	// know if it is a valid image.
+	if (this.imageCanvas_.setImage (image) == -1)
+	  return -1;
+	else
+	  this.filePanel_.enableSaveButton ();
+      }
     else
-      DialogManager.popDialog (DialogType.URL_NOT_FOUND,
-			       "Error: URL not found");
+      return -1;
+    return 0;
   }
 
-  public void saveFile ()
+  public void saveFile (String url)
   {
-    DialogManager.popDialog (DialogType.NOT_YET_IMPLEMENTED,
-			     "Save File: Not yet implemented ");
+    ImageSender imageSender = new ImageSender ();
+    imageSender.open (this.imageCanvas_.getImage (), url);
+    int bytesSent = imageSender.send ();
+    System.out.println ("Sent: " + bytesSent);
+    //    DialogManager.popDialog (DialogType.NOT_YET_IMPLEMENTED,
+    //			     "Save File: " + url);
   }
 
   public Choice getFilters () 
@@ -260,19 +263,6 @@ public class ImageApp extends Applet
   private HelpPanel helpPanel_;
 
   private StatusDisplay statusDisplay_;
-
-  // Now create all the buttons
-  private Button URLDialogButton_ = new Button ("Open URL");
-  private Button saveButton_ = new Button ("Save");
-  private Button reloadButton_ = new Button ("Reload Filters");
-  private Button applyButton_ = new Button ("Apply");
-  private Button resetButton_ = new Button ("Reset");
-  private Button aboutButton_ = new Button ("About");
-
-  private Button zoomInButton_ = new Button ("<< Zoom in");
-  private Button zoomOutButton_ = new Button ("Zoom out >>");
-
-
   private Hashtable filterTable_ = new Hashtable ();
   private ImageFilterFactory iff_ = new ImageFilterFactory ();
   //  private FilterRepository filterRepository_ = new FilterRepository ();
