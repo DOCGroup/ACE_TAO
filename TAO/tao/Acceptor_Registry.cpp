@@ -61,7 +61,7 @@ TAO_Acceptor_Registry::make_mprofile (const TAO_ObjectKey &object_key,
 int
 TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
 {
-  // @@ Fred&Osssama: we should optimize this: we loop over the
+  // @@ Fred&Ossama: we should optimize this: we loop over the
   //    profiles here and in the ORB::is_collocated() method, maybe we
   //    should return the index of the profile that matched?
   //    What happens if the address matches but the object key does
@@ -102,48 +102,10 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
       // No endpoints were specified, we let each protocol pick its
       // own default...
 
-      TAO_ProtocolFactorySetItor end =
-        orb_core->protocol_factories ()->end ();
-      for (TAO_ProtocolFactorySetItor i =
-             orb_core->protocol_factories ()->begin ();
-           i != end;
-           ++i)
-        {
-          TAO_Acceptor *acceptor =
-            (*i)->factory ()->make_acceptor ();
+      // All TAO pluggable protocols are expected to have the ability
+      // to create a default endpoint.
 
-          if (acceptor == 0)
-            {
-              if (TAO_debug_level > 0)
-                ACE_ERROR ((LM_ERROR,
-                            "TAO (%P|%t) unable to create "
-                            "an acceptor for <%s>\n",
-                            (*i)->protocol_name ().c_str ()));
-              continue;
-            }
-
-          if (acceptor->open_default (orb_core) == -1)
-            {
-              if (TAO_debug_level > 0)
-                ACE_ERROR ((LM_ERROR,
-                            "TAO (%P|%t) unable to open "
-                            "default acceptor for <%s>%p\n",
-                            (*i)->protocol_name ().c_str (), ""));
-              continue;
-            }
-
-          this->acceptors_.insert (acceptor);
-        }
-
-      if (this->acceptors_.size () == 0)
-        {
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
-                        "TAO (%P%t) cannot create any default acceptor\n"));
-          return -1;
-        }
-
-      return 0;
+      return this->open_default (orb_core);
     }
 
   ACE_Auto_Basic_Array_Ptr <char> addr_str;
@@ -155,16 +117,30 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
       ACE_CString iop = (*endpoint);
 
       int indx = iop.find ("://", 0);
-      if ( indx == iop.npos)
+      if (indx == iop.npos)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) Invalid endpoint epecification.\n"),
+                             "(%P|%t) Invalid endpoint epecification: "
+                             "<%s>.\n",
+                             iop.c_str ()),
                             -1);
         }
 
       ACE_CString prefix = iop.substring (0, indx);
 
-      ACE_CString addrs  = iop.substring (indx+3);
+      if (indx == ACE_static_cast (int, iop.length () - 3))
+        {
+          // Protocol was specified without an endpoint.  According to 
+          // the "iioploc" spec, this is valid.  As such, we extend
+          // this feature to all pluggable protocols.  All TAO
+          // pluggable protocols are expected to have the ability to
+          // create a default endpoint.
+
+          (void) this->open_default (orb_core, &prefix);
+          continue;
+        }
+
+      ACE_CString addrs  = iop.substring (indx + 3);
 
       if (addrs [addrs.length () - 1] == '/')
         addrs [addrs.length () - 1] = '\0'; // get rid of trailing /
@@ -218,7 +194,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
                     {
                       ACE_ERROR_RETURN ((LM_ERROR,
                                          "(%P|%t) Unable to create an "
-                                         "acceptor for %s\n",
+                                         "acceptor for <%s>\n",
                                          iop.c_str ()),
                                         -1);
                     }
@@ -227,6 +203,94 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
                 continue;
             }
         }
+    }
+
+  return 0;
+}
+
+int
+TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
+                                     ACE_CString *protocol_prefix)
+{
+  // No endpoints were specified, we let each protocol pick its
+  // own default...
+
+  TAO_ProtocolFactorySetItor end =
+    orb_core->protocol_factories ()->end ();
+
+  for (TAO_ProtocolFactorySetItor i =
+         orb_core->protocol_factories ()->begin ();
+       i != end;
+       ++i)
+    {
+      if (protocol_prefix != 0)
+        {
+          if (!(*i)->factory ()->match_prefix (*protocol_prefix))
+            {
+              // If we have no matching protocol then keep searching
+              // for one until the entire list of protocols has been
+              // searched.
+
+              if (TAO_debug_level > 0)
+                ACE_ERROR ((LM_ERROR,
+                            "TAO (%P|%t) Unable to match protocol prefix "
+                            "for <%s>\n",
+                            protocol_prefix->c_str ()));
+
+              continue;
+            }
+        }
+
+      TAO_Acceptor *acceptor = (*i)->factory ()->make_acceptor ();
+
+      if (acceptor == 0)
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        "TAO (%P|%t) unable to create "
+                        "an acceptor for <%s>\n",
+                        (*i)->protocol_name ().c_str ()));
+          continue;
+        }
+
+      if (acceptor->open_default (orb_core) == -1)
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        "TAO (%P|%t) unable to open "
+                        "default acceptor for <%s>%p\n",
+                        (*i)->protocol_name ().c_str (), ""));
+          continue;
+        }
+
+      this->acceptors_.insert (acceptor);
+    }
+
+  if (this->acceptors_.size () == 0)
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "TAO (%P%t) cannot create any default acceptor\n"));
+      return -1;
+    }
+
+  return 0;
+}
+
+int
+TAO_Acceptor_Registry::close_all (void)
+{
+  TAO_AcceptorSetItor end =
+                this->acceptors_.end ();
+  TAO_AcceptorSetItor acceptor =
+                this->acceptors_.begin ();
+
+  for (;
+       acceptor != end ;
+       ++acceptor)
+    {
+      if (*acceptor)
+        (*acceptor)->close ();
     }
 
   return 0;
