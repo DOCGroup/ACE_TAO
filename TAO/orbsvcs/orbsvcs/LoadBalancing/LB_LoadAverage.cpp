@@ -380,17 +380,6 @@ TAO_LB_LoadAverage::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
-CORBA::Boolean
-TAO_LB_LoadAverage::get_location (
-  CosLoadBalancing::LoadManager_ptr load_manager /* the manager */,
-  const PortableGroup::Locations & locations /* locations */,
-  PortableGroup::Location & location /* the location */
-  ACE_ENV_ARG_DECL_NOT_USED)
-{
-  CORBA::Boolean found_location = 0;
-  return found_location;
-}
-
 void
 TAO_LB_LoadAverage::init (const PortableGroup::Properties & props
                           ACE_ENV_ARG_DECL)

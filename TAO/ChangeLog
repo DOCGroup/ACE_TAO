@@ -1,3 +1,10 @@
+Wed Apr 21 18:30:25 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.h:
+
+          Removed a function as it was not used at all.
+
 Wed Apr 21 18:05:19 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp:
