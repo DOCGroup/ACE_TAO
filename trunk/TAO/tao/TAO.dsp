@@ -144,6 +144,10 @@ SOURCE=.\Exception.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Forwarding_Servant.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP.cpp
 # End Source File
 # Begin Source File
@@ -313,6 +317,10 @@ SOURCE=.\default_server.h
 # Begin Source File
 
 SOURCE=.\Exception.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Forwarding_Servant.h
 # End Source File
 # Begin Source File
 

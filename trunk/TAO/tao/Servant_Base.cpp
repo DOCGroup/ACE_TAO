@@ -57,25 +57,6 @@ TAO_ServantBase::_bind (const char *opname,
   return optable_->bind (opname, skel_ptr);
 }
 
-void
-TAO_ServantBase::_dispatch (CORBA::ServerRequest &req,
-                            void *context,
-                            CORBA::Environment &env)
-{
-  // @@ (ASG) - we should check here if the call was for _non_existant, else
-  // issue an error. For the time being we issue an error
-  const char *opname = req.operation ();
-  ACE_UNUSED_ARG (context);
-
-  // Something really bad happened: the operation was not
-  // found in the object, fortunately there is a standard
-  // exception for that purpose.
-  env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
-  ACE_ERROR ((LM_ERROR,
-              "Cannot find operation <%s> in object\n",
-              opname));
-}
-
 STUB_Object *
 TAO_ServantBase::_create_stub (CORBA_Environment &env)
 {
@@ -196,11 +177,11 @@ TAO_DynamicImplementation::_dispatch (CORBA::ServerRequest &request,
   ACE_UNUSED_ARG (context);
 
   // Delegate to user
-  this->invoke (&request);
+  this->invoke (&request, env);
+
   if (request.response_expected ())
     {
-      CORBA::Environment env2;
-      request.init_reply (env2);
-      request.dsi_marshal (env2);
+      request.init_reply (env);
+      request.dsi_marshal (env);
     }
 }

@@ -56,7 +56,7 @@ protected:
 
   virtual void _dispatch (CORBA::ServerRequest &request,
                           void *context,
-                          CORBA::Environment &env);
+                          CORBA::Environment &env) = 0;
   // Dispatches a request to the object: find the operation, cast the
   // type to the most derived type, demarshall all the parameters from
   // the request and finally invokes the operation, storing the
@@ -103,7 +103,8 @@ class TAO_Export TAO_DynamicImplementation : public virtual TAO_ServantBase
   //   circumstances may lead to unpredictable results.
 {
 public:
-  virtual void invoke (CORBA::ServerRequest_ptr request) = 0;
+  virtual void invoke (CORBA::ServerRequest_ptr request,
+                       CORBA::Environment &env) = 0;
   // The invoke() method receives requests issued to any CORBA object
   // incarnated by the DSI servant and performs the processing
   // necessary to execute the request.

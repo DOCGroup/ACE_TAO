@@ -134,48 +134,106 @@ static const CORBA::Long _oc_PortableServer_ObjectId[] =
 static CORBA::TypeCode _tc__tc_PortableServer_ObjectId (CORBA::tk_alias, sizeof (_oc_PortableServer_ObjectId), (char *) &_oc_PortableServer_ObjectId, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ObjectId = &_tc__tc_PortableServer_ObjectId;
 
-// copy constructor
-PortableServer::ForwardRequest::ForwardRequest(const PortableServer::ForwardRequest &_tao_excp)
-        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp._type ()))
+// default constructor
+PortableServer::ForwardRequest::ForwardRequest (void)
+  : CORBA_UserException (CORBA::TypeCode::_duplicate (PortableServer::_tc_ForwardRequest))
 {
-    this->forward_reference = _tao_excp.forward_reference;
 }
+
+// destructor - all members are of self managing types
+PortableServer::ForwardRequest::~ForwardRequest (void)
+{
+}
+
+// copy constructor
+PortableServer::ForwardRequest::ForwardRequest (const PortableServer::ForwardRequest &_tao_excp)
+  :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp._type ()))
+{
+    }
 
 // assignment operator
 PortableServer::ForwardRequest&
 PortableServer::ForwardRequest::operator= (const PortableServer::ForwardRequest &_tao_excp)
 {
   this->type_ = CORBA::TypeCode::_duplicate (_tao_excp._type ());
-  this->forward_reference = _tao_excp.forward_reference;
-  return *this;
+    return *this;
 }
 
-// special constructor
-PortableServer::ForwardRequest::ForwardRequest(const CORBA::Object_ptr &_tao_forward_reference)
-        : CORBA_UserException (CORBA::TypeCode::_duplicate (PortableServer::_tc_ForwardRequest))
+PortableServer::ForwardRequest::ForwardRequest(
+  const CORBA::Object_ptr  _tao_forward_reference)
+
+  : CORBA_UserException  (CORBA::TypeCode::_duplicate (PortableServer::_tc_ForwardRequest))
 {
     this->forward_reference = _tao_forward_reference;
 }
 
 // narrow
-PortableServer::ForwardRequest_ptr
-PortableServer::ForwardRequest::_narrow(CORBA::Exception *exc)
+PortableServer::ForwardRequest_ptr 
+PortableServer::ForwardRequest::_narrow (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:PortableServer/ForwardRequest:1.0", exc->_id ())) // same type
-        return ACE_dynamic_cast (PortableServer::ForwardRequest_ptr, exc);
+    return ACE_dynamic_cast (PortableServer::ForwardRequest_ptr, exc);
   else
-        return 0;
+    return 0;
+}
+
+// TAO extension - the _alloc method
+CORBA::Exception *PortableServer::ForwardRequest::_alloc (void)
+{
+  return new PortableServer::ForwardRequest;
+}
+
+void operator<<= (CORBA::Any &_tao_any, const PortableServer::ForwardRequest &_tao_elem) // copying
+{
+  CORBA::Environment _tao_env;
+  _tao_any.replace (PortableServer::_tc_ForwardRequest, &_tao_elem, 1, _tao_env);
+}
+void operator<<= (CORBA::Any &_tao_any, PortableServer::ForwardRequest *_tao_elem) // non copying
+{
+  CORBA::Environment _tao_env;
+  _tao_any.replace (PortableServer::_tc_ForwardRequest, _tao_elem, 0, _tao_env);
+}
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ForwardRequest *&_tao_elem)
+{
+  CORBA::Environment _tao_env;
+  if (!_tao_any.type ()->equal (PortableServer::_tc_ForwardRequest, _tao_env)) return 0; // not equal
+  if (_tao_any.any_owns_data ())
+  {
+    ACE_NEW_RETURN (_tao_elem, PortableServer::ForwardRequest, 0);
+    TAO_InputCDR stream ((ACE_Message_Block *)_tao_any.value ());
+    if (stream.decode (PortableServer::_tc_ForwardRequest, _tao_elem, 0, _tao_env)
+      == CORBA::TypeCode::TRAVERSE_CONTINUE)
+    {
+      ((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), _tao_elem, 1, _tao_env);
+        return 1;
+    }
+    else
+    {
+      delete _tao_elem;
+      return 0;
+    }
+  }
+  else
+  {
+    _tao_elem = (PortableServer::ForwardRequest *)_tao_any.value ();
+    return 1;
+  }
 }
 
 static const CORBA::Long _oc_PortableServer_ForwardRequest[] =
 {
-  0, // byte order
-  38, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f46, 0x6f727761, 0x72645265, 0x71756573, 0x743a312e, 0x30000000,  // repository ID = IDL:PortableServer/ForwardRequest:1.0
-  15, 0x466f7277, 0x61726452, 0x65717565, 0x73740000,  // name = ForwardRequest
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  38, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x462f7265, 0x6177726f, 0x65526472, 0x73657571, 0x2e313a74, 0xfdfd0030,  // repository ID = IDL:PortableServer/ForwardRequest:1.0
+  15, 0x77726f46, 0x52647261, 0x65757165, 0xfd007473,  // name = ForwardRequest
   1, // member count
-    18, 0x666f7277, 0x6172645f, 0x72656665, 0x72656e63, 0x65000000,  // name = forward_reference
-    };
-static CORBA::TypeCode _tc__tc_PortableServer_ForwardRequest (CORBA::tk_struct, sizeof (_oc_PortableServer_ForwardRequest), (char *) &_oc_PortableServer_ForwardRequest, CORBA::B_FALSE);
+    18, 0x77726f66, 0x5f647261, 0x65666572, 0x636e6572, 0xfdfd0065,  // name = forward_reference
+    CORBA::tk_objref,
+44, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    21, 0x3a4c4449, 0x42524f43, 0x624f2f41, 0x7463656a, 0x302e313a, 0xfdfdfd00,  // repository ID = IDL:CORBA/Object:1.0
+    7, 0x656a624f, 0xfd007463,  // name = Object,
+};
+static CORBA::TypeCode _tc__tc_PortableServer_ForwardRequest (CORBA::tk_except, sizeof (_oc_PortableServer_ForwardRequest), (char *) &_oc_PortableServer_ForwardRequest, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ForwardRequest = &_tc__tc_PortableServer_ForwardRequest;
 
 
