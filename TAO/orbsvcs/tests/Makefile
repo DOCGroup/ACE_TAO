@@ -14,7 +14,8 @@ DIRS  =	Simple_Naming \
 	EC_Multiple \
 	EC_Throughput \
 	EC_Mcast \
-	Concurrency
+	Concurrency \
+	Trading
 
 ifdef av
 ## Add the implementation files 
