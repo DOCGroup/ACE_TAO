@@ -7,16 +7,14 @@
 // Information on TAO is available at
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "tao/corba.h"
+#include "tao/Object_KeyC.h"
+#include "tao/Typecode.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Object_KeyC.i"
 #endif // !defined INLINE
 
 ACE_RCSID(tao, Object_KeyC, "$Id$")
-
-#if !defined (_TAO__TAO_SEQ_OCTET_CS_)
-#define _TAO__TAO_SEQ_OCTET_CS_
 
 const CORBA::Long _oc_TAO__tao_seq_Octet[] =
 {
@@ -28,11 +26,8 @@ const CORBA::Long _oc_TAO__tao_seq_Octet[] =
 CORBA::TypeCode _tc_TAO_tc_TAO__tao_seq_Octet (CORBA::tk_sequence, sizeof
                                             (_oc_TAO__tao_seq_Octet), (char *)
                                             &_oc_TAO__tao_seq_Octet, 0,
-                                            sizeof (TAO_tao_seq_Octet));
+                                            sizeof (TAO_ObjectKey));
 CORBA::TypeCode_ptr TAO_tc__tao_seq_Octet = &_tc_TAO_tc_TAO__tao_seq_Octet;
-
-
-#endif // end #if !defined
 
 const CORBA::Long _oc_TAO_ObjectKey[] =
 {
@@ -51,4 +46,23 @@ CORBA::TypeCode _tc_TAO_tc_TAO_ObjectKey (CORBA::tk_alias, sizeof
                                        &_oc_TAO_ObjectKey, 0,
                                        sizeof (TAO_ObjectKey));
 CORBA::TypeCode_ptr TAO_tc_ObjectKey = &_tc_TAO_tc_TAO_ObjectKey;
+
+
+// ****************************************************************
+
+int
+operator== (const TAO_ObjectKey &lhs,
+            const TAO_ObjectKey &rhs)
+{
+  if (rhs.length () != lhs.length ())
+    return 0;
+
+  for (CORBA::ULong i = 0;
+       i < rhs.length ();
+       ++i)
+    if (rhs[i] != lhs[i])
+      return 0;
+
+  return 1;
+}
 

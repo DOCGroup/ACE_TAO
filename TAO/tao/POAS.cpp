@@ -7,10 +7,13 @@
 // Information on TAO is available at
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "tao/corba.h"
+#include "tao/POAS.h"
+#include "tao/Server_Request.h"
+#include "tao/Operation_Table.h"
+#include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
-#include "POAS.i"
+#include "tao/POAS.i"
 #endif // !defined INLINE
 
 ACE_RCSID(tao, POAS, "$Id$")

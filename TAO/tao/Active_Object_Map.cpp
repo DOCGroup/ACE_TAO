@@ -1,14 +1,23 @@
 // $Id$
 
 #include "ace/Auto_Ptr.h"
-#include "tao/corba.h"
 #include "tao/Active_Object_Map.h"
+#include "tao/ORB_Core.h"
+#include "tao/POA.h"
+#include "tao/Server_Strategy_Factory.h"
 
 ACE_RCSID(tao, Active_Object_Map, "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Active_Object_Map.i"
 #endif /* ! __ACE_INLINE__ */
+
+u_long 
+TAO_ObjectId_Hash::operator () (const PortableServer::ObjectId &id) const
+{
+  return ACE::hash_pjw ((const char *) id.get_buffer (),
+                        id.length ());
+}
 
 TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
                                               int unique_id_policy)

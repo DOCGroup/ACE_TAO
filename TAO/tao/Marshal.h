@@ -20,17 +20,23 @@
 #ifndef TAO_MARSHAL_H
 #define TAO_MARSHAL_H
 
+#include "tao/corbafwd.h"
+#include "tao/Typecode.h"
+
+class TAO_OutputCDR;
+class TAO_InputCDR;
+
 CORBA::TypeCode::traverse_status
 DEEP_COPY (CORBA::TypeCode_ptr  param,
            const void *source,
            const void *dest,
-           CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+           CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
 CORBA::TypeCode::traverse_status
 DEEP_FREE (CORBA::TypeCode_ptr  param,
            const void *source,
            const void *dest,
-           CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+           CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
 // = Forward declarations.
 class TAO_Marshal_Object;
@@ -62,7 +68,7 @@ public:
   // destructor
 
   virtual TAO_Marshal_Object *make_marshal_object (CORBA::TypeCode_ptr tc,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Factory method that returns the appropriate marshal object.
 
 private:
@@ -107,25 +113,25 @@ public:
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
   // encoding operation
 
   virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
   // decoding operation
 
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
-                                                 CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
+                                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
   // skip operation
 
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
-                                                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
+                                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
   // append operation
 
   TAO_Marshal_Object (void);
@@ -150,25 +156,25 @@ public:
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
-                                                 CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // skip operation
 
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
-                                                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // append operation
 
 };
@@ -188,25 +194,25 @@ public:
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *source,
                                                   const void *,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
-                                                 CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // skip operation
 
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
-                                                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // append operation
 
 };
@@ -226,25 +232,25 @@ public:
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
-                                                 CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // skip operation
 
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
-                                                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // append operation
 
 };
@@ -264,25 +270,25 @@ public:
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
-                                                 CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // skip operation
 
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
-                                                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // append operation
 
 };
@@ -302,25 +308,25 @@ public:
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
-                                                 CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // skip operation
 
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
-                                                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // append operation
 
 };
@@ -340,25 +346,25 @@ public:
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
-                                                 CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // skip operation
 
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
-                                                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // append operation
 
 };
@@ -378,25 +384,25 @@ public:
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
-                                                 CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // skip operation
 
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
-                                                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // append operation
 
 };
@@ -416,25 +422,25 @@ public:
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
-                                                 CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // skip operation
 
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
-                                                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // append operation
 
 };
@@ -454,25 +460,25 @@ public:
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
-                                                 CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // skip operation
 
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
-                                                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // append operation
 
 };
@@ -492,25 +498,25 @@ public:
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
-                                                 CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // skip operation
 
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
-                                                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // append operation
 
 };
@@ -530,25 +536,25 @@ public:
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
-                                                 CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // skip operation
 
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
-                                                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // append operation
 
 };
@@ -567,25 +573,25 @@ public:
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
-                                                 CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // skip operation
 
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
-                                                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // append operation
 
 };
@@ -604,25 +610,25 @@ public:
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
-                                                 CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // skip operation
 
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
-                                                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // append operation
 
 };

@@ -18,11 +18,19 @@
 // ============================================================================
 
 #ifndef TAO_PLUGGABLE_H
-#  define TAO_PLUGGABLE_H
+#define TAO_PLUGGABLE_H
 
+#include "tao/corbafwd.h"
+#include "tao/Typecode.h"
+
+class ACE_Addr;
+class ACE_Reactor;
+class TAO_ORB_Core;
+
+class STUB_Object;
+class TAO_Profile;
 class TAO_MProfile;
 class TAO_Resource_Factory;
-class ACE_Reactor;
 
 // Generic definitions for the new Transport class.
 // NOTE, the transport object is created in the Service handler constructor

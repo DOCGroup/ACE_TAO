@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/corba.h"
+#include "tao/params.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/params.i"

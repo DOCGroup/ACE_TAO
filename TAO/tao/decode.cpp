@@ -23,7 +23,20 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
+#include "tao/Marshal.h"
+#include "tao/CDR.h"
+#include "tao/Environment.h"
+#include "tao/GIOP.h"
+#include "tao/Any.h"
+#include "tao/Principal.h"
+#include "tao/IIOP_Profile.h"
+#include "tao/MProfile.h"
+#include "tao/Object.h"
+#include "tao/Stub.h"
+#include "tao/varout.h"
+#include "tao/ORB.h"
+#include "tao/Union.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID(tao, decode, "$Id$")
 
@@ -102,7 +115,8 @@ TAO_Marshal_Primitive::decode (CORBA::TypeCode_ptr  tc,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
-      dmsg ("TAO_Marshal_Primitive::decode detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Primitive::decode detected error"));
       TAO_THROW_ENV_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_MAYBE), env,
                             CORBA::TypeCode::TRAVERSE_STOP);
     }
@@ -209,7 +223,8 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
   if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_Any::decode detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Any::decode detected error"));
     }
   return retval;
 }
@@ -506,7 +521,8 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
       else // bad kind_ value to be decoded
         {
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-          dmsg ("TAO_Marshal_TypeCode: Bad kind_ value in CDR stream");
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO_Marshal_TypeCode: Bad kind_ value in CDR stream"));
           return CORBA::TypeCode::TRAVERSE_STOP;
         }
     }
@@ -516,7 +532,8 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_TypeCode::decode detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_TypeCode::decode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -558,7 +575,8 @@ TAO_Marshal_Principal::decode (CORBA::TypeCode_ptr,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_Principal::decode detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Principal::decode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -899,7 +917,8 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("marshaling encode_struct detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "marshaling encode_struct detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -1135,7 +1154,8 @@ TAO_Marshal_String::decode (CORBA::TypeCode_ptr,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_TypeCode::decode detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_TypeCode::decode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -1504,7 +1524,8 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
     } // no exception computing bounds
   // error exit
   env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  dmsg ("marshaling TAO_Marshal_Sequence::decode detected error");
+  ACE_DEBUG ((LM_DEBUG,
+              "marshaling TAO_Marshal_Sequence::decode detected error"));
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
@@ -1599,7 +1620,8 @@ TAO_Marshal_Alias::decode (CORBA::TypeCode_ptr  tc,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_Alias::decode detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Alias::decode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -1727,7 +1749,8 @@ TAO_Marshal_Except::decode (CORBA::TypeCode_ptr  tc,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_Except detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Except detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -1772,7 +1795,8 @@ TAO_Marshal_WString::decode (CORBA::TypeCode_ptr,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_TypeCode::decode detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_TypeCode::decode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }

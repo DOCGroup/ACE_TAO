@@ -35,8 +35,12 @@
 #ifndef TAO_GIOP_H
 #  define TAO_GIOP_H
 
-class TAO_Export TAO_InputCDR;
-class TAO_Export TAO_OuputCDR;
+#include "tao/corbafwd.h"
+#include "tao/Sequence.h"
+#include "tao/Sequence_T.h"
+
+class TAO_Transport;
+class TAO_ORB_Core;
 
 // namespace TAO_IOP
 
@@ -198,16 +202,16 @@ typedef TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>
 
 extern CORBA::TypeCode_ptr TC_ServiceContextList;
 
-extern TAO_Export CORBA_Boolean
+extern TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, const TAO_GIOP_ServiceContext&);
 
-extern TAO_Export CORBA_Boolean
+extern TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, TAO_GIOP_ServiceContext&);
 
-extern TAO_Export CORBA_Boolean
+extern TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, const TAO_GIOP_ServiceContextList&);
 
-extern TAO_Export CORBA_Boolean
+extern TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, TAO_GIOP_ServiceContextList&);
 
 // = Reply headers
@@ -260,7 +264,7 @@ public:
   // Constructor
 
   CORBA::Boolean init (TAO_InputCDR &msg,
-                       CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                       CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Initialize the header from the values found in <msg>.
 
   CORBA::ULong request_id;

@@ -19,7 +19,11 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
+#include "tao/Marshal.h"
+#include "tao/CDR.h"
+#include "tao/Environment.h"
+#include "tao/Any.h"
+#include "tao/GIOP.h"
 
 ACE_RCSID(tao, append, "$Id$")
 
@@ -83,7 +87,8 @@ TAO_Marshal_Primitive::append (CORBA::TypeCode_ptr tc,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_Primitive::encode detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Primitive::encode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -119,7 +124,8 @@ TAO_Marshal_Any::append (CORBA::TypeCode_ptr,
     {
       CORBA::release (elem_tc);
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_Any::append detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Any::append detected error"));
     }
   return retval;
 }
@@ -190,7 +196,8 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
       else // bad kind_ value to be decoded
         {
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-          dmsg ("TAO_Marshal_TypeCode: Bad kind_ value in CDR stream");
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO_Marshal_TypeCode: Bad kind_ value in CDR stream"));
           return CORBA::TypeCode::TRAVERSE_STOP;
         }
     }
@@ -201,7 +208,8 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_TypeCode::append detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_TypeCode::append detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -322,7 +330,8 @@ TAO_Marshal_Struct::append (CORBA::TypeCode_ptr  tc,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("marshaling encode_struct detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "marshaling encode_struct detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -541,7 +550,8 @@ TAO_Marshal_String::append (CORBA::TypeCode_ptr,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_TypeCode::append detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_TypeCode::append detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -590,7 +600,8 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
     }
   // error exit
   env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  dmsg ("marshaling TAO_Marshal_Sequence::append detected error");
+  ACE_DEBUG ((LM_DEBUG,
+              "marshaling TAO_Marshal_Sequence::append detected error"));
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
@@ -632,7 +643,8 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
     } // no exception computing bounds
   // error exit
   env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  dmsg ("marshaling TAO_Marshal_Sequence::append detected error");
+  ACE_DEBUG ((LM_DEBUG,
+              "marshaling TAO_Marshal_Sequence::append detected error"));
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
@@ -664,7 +676,8 @@ TAO_Marshal_Alias::append (CORBA::TypeCode_ptr  tc,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_Alias::append detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Alias::append detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -716,7 +729,8 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_Except detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Except detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -745,7 +759,8 @@ TAO_Marshal_WString::append (CORBA::TypeCode_ptr,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_TypeCode::append detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_TypeCode::append detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }

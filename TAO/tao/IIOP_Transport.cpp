@@ -13,7 +13,9 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
+#include "tao/IIOP_Transport.h"
+#include "tao/GIOP.h"
+#include "tao/Connect.h"
 
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Handler_Base* handler)
   : handler_(handler),

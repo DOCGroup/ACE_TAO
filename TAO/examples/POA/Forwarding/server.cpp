@@ -15,6 +15,7 @@
 
 #include "tao/corba.h"
 #include "ace/Read_Buffer.h"
+#include "ace/Get_Opt.h"
 #include "MyFooServant.h"
 
 ACE_RCSID(Forwarding, server, "$Id$")

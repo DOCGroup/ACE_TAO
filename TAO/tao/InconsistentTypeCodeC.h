@@ -25,7 +25,7 @@
 #ifndef TAO_IDL_INCONSISTENTTYPECODEC_H
 #define TAO_IDL_INCONSISTENTTYPECODEC_H
 
-#include "tao/corba.h"
+#include "tao/Exception.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

@@ -13,7 +13,8 @@
 //
 // ============================================================================
 
-#include "TAO.h"
+#include "tao/TAO.h"
+#include "tao/Environment.h"
 
 ACE_RCSID(tao, TAO, "$Id$")
 

@@ -16,7 +16,8 @@
 #ifndef TAO_DYNANY_I_H
 #define TAO_DYNANY_I_H
 
-#include "tao/corba.h"
+#include "tao/corbafwd.h"
+#include "tao/POA_CORBA.h"
 
 class TAO_Export TAO_DynAny_i : public POA_CORBA::DynAny
 {

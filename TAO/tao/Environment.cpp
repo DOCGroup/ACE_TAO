@@ -1,6 +1,8 @@
 // $Id$
 
-#include "tao/corba.h"
+#include "tao/Environment.h"
+#include "tao/ORB_Core.h"
+#include "tao/Exception.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Environment.i"
@@ -126,6 +128,12 @@ CORBA_Environment::default_environment ()
 #endif /* TAO_HAS_EXCEPTIONS */
 
   return *TAO_ORB_Core_instance ()->default_environment ();
+}
+
+CORBA_Environment&
+CORBA::default_environment ()
+{
+  return CORBA_Environment::default_environment ();
 }
 
 // Convenience -- say if the exception is a system exception or not.

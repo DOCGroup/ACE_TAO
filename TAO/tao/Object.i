@@ -1,6 +1,6 @@
 // $Id$
 
-// = methods for class CORBA_Object
+// ****************************************************************
 
 ACE_INLINE CORBA::ULong
 CORBA_Object::_incr_refcnt (void)
@@ -29,6 +29,13 @@ CORBA_Object::_duplicate (CORBA_Object_ptr obj)
   if (obj)
     obj->_incr_refcnt ();
   return obj;
+}
+
+ACE_INLINE void
+CORBA::release (CORBA_Object_ptr obj)
+{
+  if (obj)
+    obj->_decr_refcnt ();
 }
 
 // Null pointers represent nil objects.
@@ -62,27 +69,6 @@ CORBA_Object::_stubobj (void)
 // The mapping for create_request is split into two forms,
 // corresponding to the two usage styles described in CORBA section
 // 6.2.1.
-
-ACE_INLINE void
-CORBA_Object::_create_request (const CORBA::Char *operation,
-                               CORBA::NVList_ptr arg_list,
-                               CORBA::NamedValue_ptr result,
-                               CORBA::Request_ptr &request,
-                               CORBA::Flags req_flags,
-                               CORBA::Environment &TAO_IN_ENV)
-{
-  TAO_IN_ENV.clear ();
-  request = new CORBA::Request (this, operation, arg_list, result, req_flags);
-}
-
-ACE_INLINE CORBA::Request_ptr
-CORBA_Object::_request (const CORBA::Char *operation,
-                        CORBA::Environment &TAO_IN_ENV)
-{
-  TAO_IN_ENV.clear ();
-  return new CORBA::Request (this, operation);
-}
-
 
 // *************************************************************
 // Inline operations for class CORBA_Object_var

@@ -29,12 +29,13 @@
 // ============================================================================
 
 #ifndef TAO_STUB_H
-#  define TAO_STUB_H
+#define TAO_STUB_H
 
-#include <tao/Pluggable.h>
-#include <tao/MProfile.h>
+#include "tao/Pluggable.h"
+#include "tao/MProfile.h"
+#include "tao/ORB.h"
 
-class  TAO_GIOP_Invocation;
+class TAO_GIOP_Invocation;
 class TAO_ORB_Core;
 
 typedef STUB_Object IIOP_Object;
@@ -233,7 +234,7 @@ public:
                                 CORBA::NamedValue_ptr result,
                                 CORBA::Flags flags,
                                 CORBA::ExceptionList &exceptions,
-                                CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Dynamic invocations use a more costly "varargs" calling
   // convention; it's got the same input data as the (static)
   // stub-oriented one, but the data is represented somewhat
@@ -256,7 +257,7 @@ public:
   // All objref representations carry around a type ID.
 
   CORBA::ULong hash (CORBA::ULong maximum,
-          CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+          CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // All objref representations know how to hash themselves and
   // compare themselves for equivalence to others.  It's easily
   // possible to have two objrefs that are distinct copies of data
@@ -264,7 +265,7 @@ public:
   // equivalent).
 
   CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj,
-        CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()); 
+        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()); 
   // XXX All objref representations should know how to marshal
   // themselves.  That will involve ensuring that the IOR that gets
   // marshaled talks a specific protocol, otherwise the target of a
@@ -386,7 +387,7 @@ protected:
 
   void put_params (TAO_GIOP_Invocation &call,
                    CORBA::NVList_ptr args,
-                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Helper method to factor out common code in dynamic oneway
   // vs. twoway invocations.
 

@@ -17,8 +17,8 @@
 //
 // ============================================================================
 
+#include "ace/Get_Opt.h"
 #include "tao/corba.h"
-#include "tao/debug.h"
 
 ACE_RCSID(CDR, basic_types, "$Id$")
 

@@ -15,9 +15,9 @@
 // ============================================================================
 
 #ifndef TAO_DEFAULT_CLIENT_H
-#  define TAO_DEFAULT_CLIENT_H
+#define TAO_DEFAULT_CLIENT_H
 
-#include "tao/corba.h"
+#include "tao/Client_Strategy_Factory.h"
 
 class TAO_Default_Client_Strategy_Factory : public TAO_Client_Strategy_Factory
 {

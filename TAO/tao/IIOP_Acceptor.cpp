@@ -13,7 +13,8 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
+#include "tao/IIOP_Acceptor.h"
+#include "tao/GIOP.h"
 
 CORBA::ULong
 TAO_IIOP_Acceptor::tag (void)

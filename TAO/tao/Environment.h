@@ -23,9 +23,14 @@
 // ============================================================================
 
 #ifndef TAO_ENVIRONMENT_H
-#  define TAO_ENVIRONMENT_H
+#define TAO_ENVIRONMENT_H
 
-class CORBA_Exception;
+#include "tao/corbafwd.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class TAO_ORB_Core;
 
 class TAO_Export CORBA_Environment
@@ -114,4 +119,4 @@ private:
 # include "tao/Environment.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_EXCEPTION_H */
+#endif /* TAO_ENVIRONMENT_H */

@@ -1,7 +1,12 @@
 // $Id$
 
-#include "tao/corba.h"
+#include "tao/Servant_Base.h"
 #include "tao/Timeprobe.h"
+#include "tao/Operation_Table.h"
+#include "tao/ORB_Core.h"
+#include "tao/Stub.h"
+#include "tao/Environment.h"
+#include "tao/Server_Request.h"
 
 ACE_RCSID(tao, Servant_Base, "$Id$")
 
@@ -123,8 +128,12 @@ TAO_Local_ServantBase::_create_stub (CORBA_Environment &env)
   PortableServer::ObjectId_var invalid_oid = 
     PortableServer::string_to_ObjectId ("invalid");
 
+  TAO_ObjectKey tmp_key (invalid_oid->length (),
+                         invalid_oid->length (),
+                         invalid_oid->get_buffer (),
+                         0);
   // Note the use of a fake key and no registration with POAs
-  return TAO_ORB_Core_instance ()->orb ()->create_stub_object (invalid_oid.in (),
+  return TAO_ORB_Core_instance ()->orb ()->create_stub_object (tmp_key,
                                                                this->_interface_repository_id (),
                                                                env);
 }

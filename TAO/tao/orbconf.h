@@ -221,4 +221,26 @@
 #  pragma warning (disable:4355) /* disable C4355 warning */
 #endif /* defined (_WIN32) */
 
+#if !defined (TAO_CONST)
+// Something to document the fact that we want to put 'const' in front
+// of a type, but that it won't turn out the way we want, e.g., we
+// really want to express that a CORBA_String is const, but since
+// CORBA_String is a char*, the const modifies the pointer and not the
+// pointed-to, and some compilers (like SGI's EDG-derived thang)
+// complain.
+#define TAO_CONST
+#endif /* TAO_CONST */
+
+// ObjectIds recognized by CORBA_ORB::resolve_initial_references ()...
+// of course, no guarantees are made that the call will return
+// something useful.
+#define TAO_OBJID_NAMESERVICE      "NameService"
+#define TAO_OBJID_TRADINGSERVICE   "TradingService"
+#define TAO_OBJID_ROOTPOA          "RootPOA"
+#define TAO_OBJID_POACURRENT       "POACurrent"
+#define TAO_OBJID_INTERFACEREP     "InterfaceRepository"
+
+// The Root POA default name.
+#define TAO_DEFAULT_ROOTPOA_NAME   ""
+
 #endif  /* TAO_ORB_CONFIG_H */

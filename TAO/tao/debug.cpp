@@ -13,7 +13,7 @@
 //
 // XXX on Windows, make it always use OutputDebugString () instead of stdio. 
 
-#include "tao/corba.h"
+#include "tao/corbafwd.h"
 
 ACE_RCSID(tao, debug, "$Id$")
 

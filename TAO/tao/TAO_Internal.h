@@ -18,9 +18,9 @@
 // ============================================================================
 
 #ifndef TAO_INTERNAL_H
-#  define TAO_INTERNAL_H
+#define TAO_INTERNAL_H
 
-#  include "tao/corba.h"
+#include "tao/corbafwd.h"
 
 class TAO_Export TAO_Internal
   // = TITLE

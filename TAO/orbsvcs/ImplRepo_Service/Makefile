@@ -103,10 +103,13 @@ realclean: clean
  $(ACE_ROOT)/ace/Name_Request_Reply.h \
  $(ACE_ROOT)/ace/Name_Space.h \
  $(TAO_ROOT)/tao/TAO.h \
+ $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i
+ $(ACE_ROOT)/ace/Process.i \
+ $(TAO_ROOT)/tao/IIOP_Profile.h
 .obj/Repository.o .obj/Repository.so .shobj/Repository.o .shobj/Repository.so: Repository.cpp Repository.h \
  $(ACE_ROOT)/ace/Naming_Context.h \
  $(ACE_ROOT)/ace/ACE.h \

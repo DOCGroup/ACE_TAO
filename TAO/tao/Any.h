@@ -18,6 +18,9 @@
 #ifndef TAO_ANY_H
 #define TAO_ANY_H
 
+#include "tao/CDR.h"
+#include "tao/Environment.h"
+
 class TAO_Export CORBA_Any
 {
   // = TITLE
@@ -235,13 +238,13 @@ public:
   void replace (CORBA::TypeCode_ptr type,
                 const void *value,
                 CORBA::Boolean any_owns_data,
-                CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Replace the current typecode and data with the specified one -
   // unsafe.
 
   void replace (CORBA::TypeCode_ptr type,
                 const void *value,
-                CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Replace the current typecode and data with the specified one -
   // unsafe. This uses a default value for the "any_owns_data" parameter
 

@@ -9,7 +9,10 @@
 // Information on TAO is available at
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "tao/corba.h"
+#include "tao/PolicyC.h"
+#include "tao/Stub.h"
+#include "tao/Servant_Base.h"
+#include "tao/POA_CORBA.h"
 
 #if !defined (__ACE_INLINE__)
 #include "PolicyC.i"

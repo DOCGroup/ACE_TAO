@@ -5,6 +5,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Process.h"
+#include "tao/IIOP_Profile.h"
 
 ACE_RCSID(ImplRepo_Service, ImplRepo_i, "$Id$")
 

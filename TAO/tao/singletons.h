@@ -21,7 +21,11 @@
 // ============================================================================
 
 #ifndef TAO_SINGLETONS_H
-#  define TAO_SINGLETONS_H
+#define TAO_SINGLETONS_H
+
+#include "ace/Singleton.h"
+#include "ace/Synch.h"
+#include "tao/Marshal.h"
 
 typedef ACE_Singleton<TAO_Marshal_Factory, ACE_SYNCH_RECURSIVE_MUTEX> TAO_MARSHAL_FACTORY;
 typedef ACE_Singleton<TAO_Marshal_Primitive, ACE_SYNCH_RECURSIVE_MUTEX> TAO_MARSHAL_PRIMITIVE;

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/Get_Opt.h"
 #include "Naming_Service.h"
 
 ACE_RCSID(Naming_Service, Naming_Service, "$Id$")
