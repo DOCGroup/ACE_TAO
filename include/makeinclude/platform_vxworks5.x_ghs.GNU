@@ -17,7 +17,7 @@ ARFLAGS		= rv
 RANLIB		= /bin/true
 PRELIB	= (echo "int main() { return 0; }" > gcctemp.c && \
 	  $(COMPILE.cc) -o gcctemp.o gcctemp.c && \
-	  $(CXX) $(INCLDIRS) $^ $(LDFLAGS) $(LIBS); \
+	  $(CXX) $(INCLDIRS) $^ $(LDFLAGS) $(VLDLIBS); \
 	  status=$$?; rm -f gcctemp.c a.out*; exit $$status)
 
 #### don't build shared objects:
