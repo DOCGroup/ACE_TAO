@@ -13,15 +13,15 @@
 //
 // ============================================================================
 
+#include "ValueBase.h"
 #include "tao/CDR.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
-#include "tao/ValueBase.h"
-#include "tao/ValueFactory.h"
+#include "ValueFactory.h"
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/ValueBase.i"
+# include "ValueBase.inl"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (tao,

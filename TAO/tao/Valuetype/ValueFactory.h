@@ -15,6 +15,7 @@
 #define TAO_VALUEFACTORY_H
 #include "ace/pre.h"
 
+#include "valuetype_export.h"
 #include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -25,11 +26,11 @@
 
 namespace CORBA
 {
-  class TAO_Export ValueFactoryBase
+  class TAO_Valuetype_Export ValueFactoryBase
   {
   public:
-    ValueFactoryBase ();
-    virtual ~ValueFactoryBase ();
+    ValueFactoryBase (void);
+    virtual ~ValueFactoryBase (void);
 
     // non-virtual is non-standard
     void _add_ref (void);
@@ -47,14 +48,14 @@ namespace CORBA
   private:
     CORBA::ULong _tao_reference_count_;
     TAO_SYNCH_MUTEX _tao_reference_count_lock_;
-  }; // CORBA_ValueFactoryBase
+  };
 
   /**
    * @class ValueFactoryBase_var
    *
    * @brief _var class for ValueFactoryBase
    */
-  class TAO_Export ValueFactoryBase_var
+  class TAO_Valuetype_Export ValueFactoryBase_var
   {
   public:
     ValueFactoryBase_var (void);
@@ -112,7 +113,7 @@ namespace CORBA
 
 
 #if defined (__ACE_INLINE__)
-# include "tao/ValueFactory.i"
+# include "ValueFactory.inl"
 #endif /* __ACE_INLINE__) */
 
 #include "ace/post.h"

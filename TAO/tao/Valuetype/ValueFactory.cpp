@@ -1,7 +1,7 @@
-#include "tao/ValueFactory.h"
+#include "ValueFactory.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/ValueFactory.i"
+# include "ValueFactory.inl"
 #endif /* ! __ACE_INLINE__ */
 
 
