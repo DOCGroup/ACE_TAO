@@ -1,7 +1,12 @@
+Wed Mar 28 12:39:44 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+          More Fuzz warnings fixed
+
 Wed Mar 28 14:34:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Multiple/Multiple_Impl.cpp: Fixed some more fuzz script
-	  warnings. 
+        * tests/Multiple/Multiple_Impl.cpp: Fixed some more fuzz script
+          warnings.
 
 Wed Mar 28 12:20:08 2001  Carlos O'Ryan  <coryan@uci.edu>
 
