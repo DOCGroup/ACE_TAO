@@ -666,8 +666,8 @@ ACE_OS::unlink (const char *path)
 #endif /* VXWORKS */
 }
 
-ACE_INLINE char *
-ACE_OS::cuserid (char *user, size_t maxlen)
+ACE_INLINE LPTSTR
+ACE_OS::cuserid (LPTSTR user, size_t maxlen)
 {
   // ACE_TRACE ("ACE_OS::cuserid");
 #if defined (VXWORKS)
@@ -2675,8 +2675,10 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
       && ACE_OS::strcmp (host_name, "255.255.255.255") != 0)
     return 0;
   else if (addr != 0)
-    ACE_OS::memcpy ((void *) addr, (void *) &ip_addr, sizeof ip_addr);
-  return 1;
+    {
+      ACE_OS::memcpy ((void *) addr, (void *) &ip_addr, sizeof ip_addr);
+      return 1;
+    }
 }
 
 ACE_INLINE char *
@@ -4195,7 +4197,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
 {
   // ACE_TRACE ("ACE_OS::uname");
 #if defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerName (name, LPDWORD (&maxnamelen)), 
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameA (name, LPDWORD (&maxnamelen)), 
 				       ace_result_), int, -1);
 #else /* !ACE_WIN32 */
   struct utsname host_info;
@@ -4353,7 +4355,7 @@ ACE_OS::dlopen (ACE_DL_TYPE filename, int mode)
 #elif defined (ACE_WIN32)
   ACE_UNUSED_ARG(mode);
 	
-  ACE_OSCALL_RETURN (::LoadLibrary (filename), void *, 0);
+  ACE_OSCALL_RETURN (::LoadLibraryA (filename), void *, 0);
 #else
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
@@ -4860,7 +4862,7 @@ ACE_OS::shmget (key_t key, int size, int flags)
 }
 
 ACE_INLINE ACE_HANDLE 
-ACE_OS::open (LPCTSTR filename,
+ACE_OS::open (const char *filename,
 	      int mode, 
 	      int perms)
 {
@@ -4890,11 +4892,11 @@ ACE_OS::open (LPCTSTR filename,
   if (ACE_BIT_ENABLED (mode, _O_TEMPORARY))
     flags |= FILE_FLAG_DELETE_ON_CLOSE;
 
-  ACE_HANDLE h = ::CreateFile (filename, access, 
-			       FILE_SHARE_READ | FILE_SHARE_WRITE,
-			       0, creation, 
-			       flags,
-			       0);
+  ACE_HANDLE h = ::CreateFileA (filename, access, 
+				FILE_SHARE_READ | FILE_SHARE_WRITE,
+				0, creation, 
+				flags,
+				0);
 
   if (h == ACE_INVALID_HANDLE)
     {

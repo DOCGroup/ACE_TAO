@@ -1,3 +1,82 @@
+<<<<<<< ChangeLog-96b
+Tue Dec 17 04:27:07 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ReactorEx: Added a new feature to the ReactorEx.  If we
+ 	  enable the wait_all flag when calling
+ 	  ACE_ReactorEx::handle_events() *and* we give an
+ 	  ACE_Event_Handler (this is a new final param to the call) then
+ 	  the handle_signal() call will be invoked on this
+ 	  "wait_all_callback" object when all the handles become signaled.
+  	  Moreover, we pass in the array of signaled handled to through
+ 	  the siginfo_t parameter (see the following ChangeLog entry for
+ 	  details).  If there is no wait_all_callback param, then all the
+ 	  handle_signal() methods are invoked on all the handles.
+
+	* ace/OS.h (siginfo_t): Augmented the siginfo_t interface so that
+ 	  we can pass an array of signaled Win32 HANDLEs, in addition to
+ 	  just a single HANDLE.  This is used in the ReactorEx.
+
+	* examples/Reactor/ReactorEx/test_reactorEx.cpp: Added a number of
+ 	  enhancements to this test program based on discussions with
+ 	  Irfan, Karlheinz, Dieter, and Detlef.
+
+	* ace/Task_T.i (msg_queue): If we override the existing definition
+ 	  of the Message_Queue in an ACE_Task then we need to delete the
+ 	  existing Message_queue (if necessary and mark the Message_Queue
+ 	  as no longer being a candidate for deletion (since we have
+ 	  supplied our own definition).  Irfan had added this earlier, but
+ 	  it seemed to get lost...
+
+	* examples/Reactor/Proactor/test_proactor.cpp: The class called
+ 	  STDIN_HANDLEr is misnamed since we don't read from stdin, we
+ 	  read from a file.  Therefore, I've changed this to be
+ 	  Input_File_Handler.
+
+	* examples/Reactor/ReactorEx/test_{proactor,reactorEx}.cpp:
+ 	  Changed misspellings of transfered to transferred.
+
+	* ace/Memory_Pool.cpp (ACE_MMAP_Memory_Pool): Since NT doesn't support
+	  SIGSEGV thre's no point in even trying to register for this
+	  signal!
+
+	* ace/OS.i: Reverted some lost UNICODE fixes -- thanks to Irfan
+	  for finding these.
+
+	* ace/Local_Name_Space_T.cpp (create_manager_i): Removed a
+	  debug statement since it may be causing problems with printing
+	  UNICODE.
+
+Mon Dec 16 11:25:55 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i (cuserid): Fixed the definition to ACE_OS::cuserid() so
+	  that it uses LPTSTR.  Thanks to Irfan for this fix.
+
+	* ace/Task.cpp (activate): In ACE_Task::activate() there is a possibility to actually 
+	  "reactivate" the task using the <force_activate> flag. The following 
+	  illustrates that ability:
+     
+          if (this->thr_count_ > 0 && force_active == 0)
+            return 1; // Already active.
+          else
+            this->thr_count_ = n_threads; 
+     
+         The thing is that, when the task is running and we reactivate it 
+	 (actually we add threads) the command should be:
+     
+         this->thr_count_ +=  n_threads; 
+     
+         rather than
+     
+         this->thr_count_ = n_threads;
+     
+         That way <this->thr_count_> holds the new number of threads currently 
+	 associated with the task.  Thanks to Hamual for this fix.
+
+	* ace/OS.i (inet_aton): Placed the return 1 within the curly
+	  braces to make the HP/UX compiler happy.  Thanks to Kenny Want
+	  for reporting this.
+
+=======
 Mon Dec 16 12:56:43 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.i: removed spurious "*/" after an #endif.  Thanks to
@@ -44,6 +123,7 @@ Sun Dec 15 13:01:17 1996  David L. Levine  <levine@cs.wustl.edu>
 	  which causes a core dump with the g++/SunOS5.5 build if the string
 	  is in the text segment.
 
+>>>>>>> 4.110
 Sun Dec 15 10:29:20 1996  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* netsvcs/servers/svc.conf: Removed the "lib" prefix for the

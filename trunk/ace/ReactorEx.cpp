@@ -123,7 +123,8 @@ ACE_ReactorEx::schedule_timer (ACE_Event_Handler *handler,
 // how_long expired, and 1 if events were dispatched.
 int 
 ACE_ReactorEx::handle_events (ACE_Time_Value *how_long,
-			      int wait_all)
+			      int wait_all,
+			      ACE_Event_Handler *wait_all_callback)
 {
   ACE_TRACE ("ACE_ReactorEx::handle_events");
 
@@ -169,61 +170,87 @@ ACE_ReactorEx::handle_events (ACE_Time_Value *how_long,
       errno = ETIME;
       return 0;
     case WAIT_ABANDONED_0:
-      // We'll let dispatch_all worry about abandoned mutexes.
+      // We'll let dispatch worry about abandoned mutexes.
     default:  // Dispatch.
-      return this->dispatch_all (wait_status - WAIT_OBJECT_0, wait_all);
+      if (wait_all != 0)
+	return this->dispatch (wait_all_callback);
+      else
+	return this->dispatch (wait_status - WAIT_OBJECT_0);
+    }
+}
+
+int
+ACE_ReactorEx::dispatch (ACE_Event_Handler *wait_all_callback)
+{
+  if (wait_all_callback != 0)
+    {
+      siginfo_t handles (this->handles_);
+      if (wait_call_callback->handle_signal (0, &handles) == -1)
+	// Tim, what should happen if this call fails?  Should all of
+	// the handles be removed?
+	return -1;
+    }
+  else
+    {
+      int result = 0;
+
+      for (int i = 0; i < this->active_handles_; i++)
+	if (this->dispatch_handler (i) == -1)
+	  result = -1;
+
+      // Tim, if a result is != 0 should it contain a single -1, or
+      // perhaps the number of bad handler dispatches (negated, of
+      // course!).
+      return result;
     }
 }
 
 // Dispatches any active handles from handles_[-index-] to
 // handles_[active_handles_] using WaitForMultipleObjects to poll
 // through our handle set looking for active handles.
+
 int
-ACE_ReactorEx::dispatch_all (size_t index, int wait_all)
+ACE_ReactorEx::dispatch (size_t index)
 {
-  while (1)
+  while (index < active_handles_)
     {
-      if (this->dispatch_handler (index) == 0)
-	index++;
+      // Tim, if this call fails is there really anything we
+      // can/should do about it? It seems that regardless of the
+      // success or failure, we should increment the index since
+      // otherwise we might just iterate endlessly!
+      this->dispatch_handler (index);
+      index++;
 
-      // Check if we're all out of handles.
-      if (index == active_handles_)
-	return 0;
+      DWORD wait_status = 
+	::WaitForMultipleObjects (active_handles_ - index,
+				  &handles_[index],
+				  FALSE, 0); // We're polling.
 
-      // If wait_all is TRUE, then we know that every handle is active
-      // and there's no need to call WaitForMultipleObjects; We just
-      // iterate through and dispatch each handler.
-      if (wait_all == 0)
+      switch (wait_status)
 	{
-	  DWORD wait_status = 
-	    ::WaitForMultipleObjects (active_handles_ - index,
-				      &(handles_[index]),
-				      FALSE, 0); // We're polling.
-
-	  switch (wait_status)
-	    {
-	    case WAIT_FAILED: // Failure.
-	      errno = ::GetLastError ();
-	      return -1;
-	    case WAIT_TIMEOUT:
-	      // There are no more handles ready, we can return.
-	      return 0;
-	    default:  // Dispatch.
-	      // Check if a handle successfully became signaled.
-	      if ((wait_status >= WAIT_OBJECT_0) &&
-		  (wait_status < WAIT_OBJECT_0 + active_handles_))
-		index += (wait_status - WAIT_OBJECT_0);
-	      else
-		// Otherwise, a handle was abandoned.
-		index += (wait_status - WAIT_ABANDONED_0);
-	    }
+	case WAIT_FAILED: // Failure.
+	  errno = ::GetLastError ();
+	  return -1;
+	case WAIT_TIMEOUT:
+	  // There are no more handles ready, we can return.
+	  return 0;
+	default:  // Dispatch.
+	  // Check if a handle successfully became signaled.
+	  if (wait_status >= WAIT_OBJECT_0 &&
+	      wait_status < WAIT_OBJECT_0 + active_handles_)
+	    index += wait_status - WAIT_OBJECT_0;
+	  else
+	    // Otherwise, a handle was abandoned.
+	    index += waitstatus - WAIT_ABANDONED_0;
 	}
     }
-}
 
+  return 0;
+}
 
 // Dispatches a single handler.  Returns 0 on success, -1 if the
 // handler was removed.
+
 int
 ACE_ReactorEx::dispatch_handler (int index)
 {

@@ -1827,6 +1827,9 @@ struct ACE_Export siginfo_t
 
   ACE_HANDLE si_handle_;
   // Win32 HANDLE that has become signaled.
+
+  ACE_HANDLE *si_handles_;
+  // Array of Win32 HANDLEs all of which have become signaled.
 };
 #endif /* ACE_HAS_SIGINFO_T */
 

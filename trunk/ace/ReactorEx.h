@@ -130,25 +130,30 @@ public:
   virtual ~ACE_ReactorEx (void);
   // Close down the ReactorEx and release all of its resources.
   
-  // = Event loop drivers. 
-  // Main event loop driver that blocks for -how_long- before
-  // returning (will return earlier if I/O or signal events occur).
-  // Note that -how_long- can be 0, in which case this method blocks
-  // until I/O events or signals occur.  Returns 0 if timed out, 1 if
-  // an event occurred, and -1 if an error occured.  -how_long- is
-  // decremented to reflect how much time the call to handle_events
-  // took.  For instance, if a time value of 3 seconds is passed to
-  // handle_events and an event occurs after 2 seconds, -how_long-
-  // will equal 1 second.  This can be used if an application wishes
-  // to handle events for some fixed amount of time.  If wait_all is
-  // TRUE, then handle_events will only dispatch the handlers if *all*
-  // handles become active.  If a timeout occurs, then no handlers
-  // will be dispatched.
+  // = Event loop drivers.  Main event loop driver that blocks for
+  // -how_long- before returning (will return earlier if I/O or signal
+  // events occur).  Note that -how_long- can be 0, in which case this
+  // method blocks until I/O events or signals occur.  Returns 0 if
+  // timed out, 1 if an event occurred, and -1 if an error occured.
+  // -how_long- is decremented to reflect how much time the call to
+  // handle_events took.  For instance, if a time value of 3 seconds
+  // is passed to handle_events and an event occurs after 2 seconds,
+  // -how_long- will equal 1 second.  This can be used if an
+  // application wishes to handle events for some fixed amount of
+  // time.  If wait_all is TRUE, then handle_events will only dispatch
+  // the handlers if *all* handles become active.  If a timeout
+  // occurs, then no handlers will be dispatched.  If
+  // <wait_all_callback> is NULL then we dispatch the <handle_signal>
+  // method on each and every HANDLE in the dispatch array.
+  // Otherwise, we just call back the <handle_signal> method of the
+  // <wait_all_callback> object, after first assigning the siginfo_t
+  // <si_handles_> argument to point to the array of signaled handles.
   virtual int handle_events (ACE_Time_Value *how_long = 0,
-			     int wait_all = 0);
+			     int wait_all = 0,
+			     ACE_Event_Handler *wait_all_callback = 0);
   virtual int handle_events (ACE_Time_Value &how_long,
-			     int wait_all = 0);
-
+			     int wait_all = 0,
+			     ACE_Event_Handler *wait_all_callback = 0);
 
   // = Register and remove Handlers. 
   virtual int register_handler (ACE_Event_Handler *eh, 
@@ -204,10 +209,20 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  int dispatch_all (size_t index, int wait_all);
+  int dispatch (size_t index);
   // Dispatches any active handles from handles_[-index-] to
-  // handles_[active_handles_] using WaitForMultipleObjects to poll
+  // handles_[active_handles_] using <WaitForMultipleObjects> to poll
   // through our handle set looking for active handles.
+
+  int dispatch (ACE_Event_Handler *wait_all_callback);
+  // This is called when the user called handle_events() with the
+  // <wait_all> parameter enabled.  In this case, all the handlers are
+  // now signaled.  If <wait_all_callback> is NULL then we dispatch
+  // the <handle_signal> method on each and every HANDLE in the
+  // dispatch array.  Otherwise, we just call back the <handle_signal>
+  // method of the <wait_all_callback> object, after first assigning
+  // the siginfo_t <si_handles_> argument to point to the array of
+  // signaled handles.
 
   int dispatch_handler (int index);
   // Dispatches a single handler.  Returns 0 on success, -1 if the
