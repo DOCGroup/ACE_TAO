@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(DT_Spawn) : rtscheduling_client {
  Source_Files {
     ../Scheduler.cpp

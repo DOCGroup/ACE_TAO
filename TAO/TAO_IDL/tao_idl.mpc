@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(TAO_IDL_EXE) : aceexe, core, tao_output, crosscompile {
   exename   = tao_idl
   libs     += TAO_IDL_BE TAO_IDL_FE

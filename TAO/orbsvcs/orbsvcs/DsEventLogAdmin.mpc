@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(DsEventLogAdmin) : orbsvcslib, core, dslogadmin, event {
   sharedname   = TAO_DsEventLogAdmin
   idlflags    += -Wb,export_macro=TAO_EventLog_Export -Wb,export_include=Log/eventlog_export.h

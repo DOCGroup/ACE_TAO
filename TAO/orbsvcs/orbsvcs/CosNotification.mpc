@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(CosNotification) : orbsvcslib, core, etcl, dynamicany, portableserver {
   sharedname   = TAO_CosNotification
   // Warning : The idlflags must match exactly those used in CosEvent, because

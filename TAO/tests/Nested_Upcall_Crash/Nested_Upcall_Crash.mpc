@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Server): messaging, taoexe, portableserver {
   Source_Files {
     Clock_Ticks.cpp

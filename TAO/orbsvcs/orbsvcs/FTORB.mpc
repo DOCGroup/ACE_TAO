@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver, messaging, portablegroup {
   sharedname   = TAO_FTORB_Utils
   idlflags    += -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=FaultTolerance/FT_ORB_Utils_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Server): taoserver {
   idlflags  = -Ge 0
   requires += exceptions

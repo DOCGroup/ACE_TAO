@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*security server): taoexe, portableserver, ssl {
   Source_Files {
     TX_Object_i.cpp

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(ETCL) : orbsvcslib, core {
   sharedname   = TAO_ETCL
   dynamicflags = TAO_ETCL_BUILD_DLL

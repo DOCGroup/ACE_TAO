@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Server): taoserver, orbsvcsexe, iormanip, ftorb, messaging{
   requires += interceptors
   idlflags += -Gv -DCORBA3 -I$(TAO_ROOT)

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(* sequence server): server, strategies {
   Source_Files {
     Roundtrip.cpp

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(fp_server): kokyu_dsrt_scheduler_server {
   exename = fp_server
   Source_Files {

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(airplane server) : portableserver, orbsvcsexe, minimum_corba, iortable {
   IDL_Files {
     Airplane.idl

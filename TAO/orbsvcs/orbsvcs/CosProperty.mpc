@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(CosProperty) : orbsvcslib, core, portableserver {
   sharedname   = TAO_CosProperty
   idlflags    += -Wb,export_macro=TAO_Property_Export -Wb,export_include=Property/property_export.h

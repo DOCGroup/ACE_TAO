@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Server): taoserver {
   libpaths += ../../../../ace,../../../tao,../../../tao/PortableServer,../../../tao/Valuetype,../../../tao/ObjRefTemplate,../../../tao/IORInterceptor
   requires += interceptors

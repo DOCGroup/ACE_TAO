@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 workspace {
   ciao
 //  CCF/CCF.mwc

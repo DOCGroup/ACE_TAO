@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(Bug 1330 Server): server {
   libs    += TAO_IORTable
   libpaths += $(TAO_ROOT)/tao/IORTable

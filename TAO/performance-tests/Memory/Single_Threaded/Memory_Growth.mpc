@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*server): taoexe, portableserver {
   Source_Files {
     Memory_Growth.cpp

@@ -1,3 +1,8 @@
+Tue Dec 23 21:01:52 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * *.{mpc,mwc}:
+          Added $Id to MPC files to fix fuzz errors.
+
 Tue Dec 23 14:51:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/examples/FaultTolerance/RolyPoly/Makefile:

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(RTCosScheduling_Server): rtcosscheduling, rt_server, orbsvcsexe {
   requires += interceptors
   after += commonlib

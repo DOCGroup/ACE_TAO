@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*balancer): taoexe, portableserver {
   avoids += minimum_corba repo
   exename = load_balancer

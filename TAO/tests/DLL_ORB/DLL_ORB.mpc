@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Test Client Module): taolib_with_idl {
   sharedname    = Test_Client_Module
   dynamicflags  = TEST_CLIENT_MODULE_BUILD_DLL

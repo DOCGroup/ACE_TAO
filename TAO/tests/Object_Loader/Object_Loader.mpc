@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Test): taolib_with_idl, portableserver {
   sharedname   = Test_DLL
   dynamicflags = OLT_BUILD_DLL

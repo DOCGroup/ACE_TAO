@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Server): taoexe, portableserver, messaging {
   Source_Files {
     Service.cpp

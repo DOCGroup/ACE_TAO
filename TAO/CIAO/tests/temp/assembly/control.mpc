@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project : ciao_server, server {
   idlflags += -I$(TAO_ROOT) -I../../../ciao -I../../../..
 

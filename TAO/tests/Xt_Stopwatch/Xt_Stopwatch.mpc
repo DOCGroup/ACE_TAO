@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Server): taoexe, portableserver {
   requires += xt_reactor
   Source_Files {

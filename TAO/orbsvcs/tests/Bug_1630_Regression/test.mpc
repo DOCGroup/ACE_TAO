@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(Bug_1630_testclient ) : client {
    exename = testclient
    libs += TAO_IFR_Client

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(FTRTEC_Factory_Service): orbsvcsexe, fault_tolerance, notify {
   after    += FaultTolerance
   exename   = ftrtec_factory_service

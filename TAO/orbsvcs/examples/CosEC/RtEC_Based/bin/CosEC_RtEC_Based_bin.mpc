@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project : orbsvcsexe, rtevent, event {
   after += CosEC_RtEC_Based_lib
   includes += ../lib

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*server): taoserver {
   avoids += repo
 

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Test Stub): taolib_with_idl {
   sharedname   = Collocation_Test_Stub
   idlflags    += -Wb,skel_export_macro=Diamond_Export -Wb,stub_export_macro=MY_Stub_Export -Wb,skel_export_include=diamond_export.h -Wb,stub_export_include=stub_export.h -Gd

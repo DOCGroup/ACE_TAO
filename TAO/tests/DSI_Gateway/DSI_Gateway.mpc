@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Server): taoexe, portableserver, messaging, minimum_corba, dynamicinterface {
   Source_Files {
     test_i.cpp

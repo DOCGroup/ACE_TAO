@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*ts) : orbsvcslib, portableserver, avstreams, naming {
   sharedname   = TAO_TS
   dynamicflags = TAO_AV_BUILD_DLL
