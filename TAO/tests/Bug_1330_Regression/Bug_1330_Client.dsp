@@ -114,12 +114,11 @@ SOURCE=.\Test.idl
 !IF  "$(CFG)" == "Bug 1330 Client EXE - Win32 Release"
 
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
-OutDir=.\Release
 InputPath=.\Test.idl
 InputName=Test
 
 BuildCmds= \
-	..\..\..\bin\release\tao_idl -o $(OutDir) -Ge 1 -Sc $(InputPath)
+	..\..\..\bin\release\tao_idl -Ge 1 -Sc $(InputPath)
 
 ".\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
