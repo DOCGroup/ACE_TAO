@@ -1,6 +1,8 @@
 Wed Jun 24 21:41:21 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tao/GIOP.cpp: Added a lock to the access of the 
+	* tao/GIOP.cpp: Added a lock to 
+
+	* tao/Connect.cpp: Added a lock to the access of the 
 	  forwarding profile. Some overhead might be due to that,
 	  but we don't want to sacrifice stability.
 
