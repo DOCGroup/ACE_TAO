@@ -1,6 +1,33 @@
 /* -*- C++ -*- */
 //$Id$
 
+ACE_INLINE int
+TAO_Connection_Cache_Manager::bind (TAO_Cache_ExtId &ext_id,
+                                    TAO_Cache_IntId &int_id)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                            guard,
+                            *this->cache_lock_,
+                            -1));
+
+  return this->bind_i (ext_id,
+                       int_id);
+}
+
+
+ACE_INLINE int
+TAO_Connection_Cache_Manager::find (const TAO_Cache_ExtId &key,
+                                    TAO_Cache_IntId &value)
+{
+  ACE_MT (ACE_GUARD_RETURN  (ACE_Lock,
+                             guard,
+                             *this->cache_lock_,
+                             -1));
+
+  return this->find_i (key,
+                       value);
+}
+
 
 ACE_INLINE int
 TAO_Connection_Cache_Manager::
@@ -33,33 +60,6 @@ TAO_Connection_Cache_Manager::
     }
 
   return retval;
-}
-
-ACE_INLINE int
-TAO_Connection_Cache_Manager::bind (TAO_Cache_ExtId &ext_id,
-                                    TAO_Cache_IntId &int_id)
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->cache_lock_,
-                            -1));
-
-  return this->bind_i (ext_id,
-                       int_id);
-}
-
-
-ACE_INLINE int
-TAO_Connection_Cache_Manager::find (const TAO_Cache_ExtId &key,
-                                    TAO_Cache_IntId &value)
-{
-  ACE_MT (ACE_GUARD_RETURN  (ACE_Lock,
-                             guard,
-                             *this->cache_lock_,
-                             -1));
-
-  return this->find_i (key,
-                       value);
 }
 
 ACE_INLINE int

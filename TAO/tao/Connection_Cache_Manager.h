@@ -35,6 +35,7 @@
 #endif /* _MSC_VER */
 
 class TAO_ORB_Core;
+class ACE_Handle_Set;
 
 class TAO_Export TAO_Connection_Cache_Manager
 {
