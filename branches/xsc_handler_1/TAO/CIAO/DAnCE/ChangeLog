@@ -16,7 +16,8 @@ Wed Jan 26 12:02:41 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
           Added the abstraction layer of container interface. Reorganize
           the functionality between NodeApplication and Container.
 
-	* tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp
 
           Modified this to test against the above change. This test
           could run successfully when we have 1 component hosted in
