@@ -19,9 +19,9 @@ BIN2 =   Service \
 #### If the orbsvcs library wasn't built with all components, don't
 #### try to build certain tests.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Event2,$(findstring Event2,$(TAO_ORBSVCS)))
+ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
-endif # Event2
+endif # RTEvent
 
 PSRC=$(addsuffix .cpp,$(BIN))
 LDLIBS = -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO

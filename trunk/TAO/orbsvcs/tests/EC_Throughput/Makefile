@@ -1,6 +1,6 @@
 # $Id$
 
-LDLIBS = -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
+LDLIBS = -lTAO_RTOLDEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_RTEvent -lTAO_Svc_Utils -lTAO
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -22,13 +22,11 @@ BIN2 = ECT_Supplier ECT_Consumer ECT_Throughput
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Event2,$(findstring Event2,$(TAO_ORBSVCS)))
-  ifeq (Event,$(findstring Event,$(TAO_ORBSVCS)))
-    ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
-      BIN = $(BIN2)
-    endif # Naming
-  endif # Event
-endif # Event2
+ifeq (RTOLDEvent,$(findstring RTOLDEvent,$(TAO_ORBSVCS)))
+  ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+    BIN = $(BIN2)
+  endif # Naming
+endif # RTOLDEvent
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
