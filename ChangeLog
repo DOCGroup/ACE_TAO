@@ -1,3 +1,10 @@
+Wed Dec 18 08:29:04 2002  Rich Seibel <seibel_r@ociweb.com>
+
+        * ace/Timer_Wheel_T.cpp:
+
+          Changed types from int to long to match the return
+          for timer ids.
+
 Wed Dec 18 05:42:52 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/High_Res_Timer.cpp (global_scale_factor): The INTEL compiler
