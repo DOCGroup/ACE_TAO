@@ -6,7 +6,7 @@
 //    TAO/tests/IDL_Cubit
 //
 // = FILENAME
-//    Cubit_Client.cpp
+//    Cubit_i.cpp
 //
 // = AUTHOR
 //    Andy Gokhale, Sumedh Mungee and Sergio Flores-Gaitan
@@ -21,7 +21,7 @@
 #include "tao/Timeprobe.h"
 #include "RTI_IO.h"
 
-ACE_RCSID(IDL_Cubit, Cubit_Client, "$Id$")
+ACE_RCSID(IDL_Cubit, Cubit_Client, "Cubit_i.cpp,v 1.8 1999/07/07 15:01:28 irfan Exp")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -56,6 +56,12 @@ static const char *Cubit_i_Timeprobe_Description[] =
 
   "Cubit_i::cube_many_sequence - start",
   "Cubit_i::cube_many_sequence - end"
+
+  "Cubit_i::cube_any - start",
+  "Cubit_i::cube_any - end",
+
+  "Cubit_i::cube_any_struct - start",
+  "Cubit_i::cube_any_struct - end",
 };
 
 enum
@@ -90,6 +96,12 @@ enum
 
   CUBIT_I_CUBE_MANY_SEQUENCE_START,
   CUBIT_I_CUBE_MANY_SEQUENCE_END
+
+  CUBIT_I_CUBE_ANY_START,
+  CUBIT_I_CUBE_ANY_END,
+
+  CUBIT_I_CUBE_ANY_STRUCT_START,
+  CUBIT_I_CUBE_ANY_STRUCT_END,
 };
 
 // Setup Timeprobes
@@ -385,6 +397,46 @@ Cubit_i::cube_rti_data (const Cubit::RtiPacket &input,
                   "Output: \n"));
       print_RtiPacket (*output.ptr ());
     }
+}
+
+// Cube a long contained in an any
+
+CORBA::Any *
+Cubit_i::cube_any (const CORBA::Any & any,
+                   CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_ANY_START);
+
+  ACE_UNUSED_ARG (env);
+  CORBA::Long l;
+  any >>= l;
+  l = l * l * l;
+  CORBA::Any * ret_any = new CORBA::Any();
+  *ret_any <<= l;
+  return ret_any;
+}
+
+// Cube a struct contained in an any
+
+CORBA::Any *
+Cubit_i::cube_any_struct (const CORBA::Any & any,
+                          CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_ANY_STRUCT_START);
+  Cubit::Many * arg_struct;
+  Cubit::Many ret_struct;
+  ACE_UNUSED_ARG (env);
+  any >>= arg_struct;
+
+  ret_struct.o = arg_struct->o * arg_struct->o * arg_struct->o;
+  ret_struct.s = arg_struct->s * arg_struct->s * arg_struct->s;
+  ret_struct.l = arg_struct->l * arg_struct->l * arg_struct->l;
+
+  CORBA::Any * ret_any = new CORBA::Any();
+  *ret_any <<= ret_struct;
+  return ret_any;
 }
 
 // Shutdown.
