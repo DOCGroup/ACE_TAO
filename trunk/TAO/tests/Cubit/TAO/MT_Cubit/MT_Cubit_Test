@@ -15,8 +15,8 @@ iterations=100
 ########
 while getopts ?n: arg; do
   case $arg in
-      '?' ) echo $usage; exit 0 ;;
       n   ) iterations=$OPTARG ;;
+      '?' ) echo $usage; exit 0 ;;
   esac
 done
 shift `expr $OPTIND - 1`
