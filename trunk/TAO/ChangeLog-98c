@@ -1,3 +1,58 @@
+Tue Dec  2 15:47:09 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.h: Added some helper methods to generate
+	additional code in the form of larger operation tables, and
+	skeletons. This situation arises when we have single/multiple
+	inheritance of interfaces.
+
+	* TAO_IDL/be_include/be.h: Included ace/Containers.h for the
+	ACE_Unbounded_Queue that uses the breadth-first strategy used in
+	be_interface.cpp
+
+	* TAO_IDL/be/{be_interface,be_operation,be_attribute}.cpp: Added code
+	to generate a new "virtual void dispatch" method on the skeleton
+	classes. The dispatch method enables us to access the most derived
+	type when invoking the skeleton for a method. The skeletons
+	instead of taking a CORBA::Object_ptr, now take void*. The
+	skeletons themselves cast this void* to the appropriate POA_*
+	type.
+
+	In addition to the above, for the case of inheritance of
+	interfaces, it is not appropriate to pass a pointer to the most
+	derived class as a void* to the skeleton of a base class and cast
+	that to the POA_* of the base class. So we generate inlined code
+	for skeletons of methods in the most derived class even if those
+	methods were defined in the base classes. These inlined skeletons
+	simply cast the object pointer to the right type and invoke the
+	corresponding skeleton of the base class method.
+
+	be_interface.cpp defines a template method to traverse the entire
+	inheritance graph. This traversal is done using a breadth-first
+	traversal. This traverse method takes a pointer to one of the
+	static helper methods defined on class be_interface. Each helper
+	achieves a different purpose such as generation of extended
+	operation tables, providing comparisons of repositoryIDs of base
+	classes in the _is_a methods of derived classes.
+
+	The client-side class now defines a virtual CORBA::Boolean _is_a
+	method. This uses local knowledge of repository ids thereby
+	preventing the expensive remote call in most cases. All changes
+	made in be_interface.cpp
+
+	* TAO/tao/corbacom.h: Changed the signature of TAO_Skeleton so that
+	it uses void*obj and a void *context.
+
+	* TAO/tao/object.h: Added a virtual dispatch method as explained
+	above.
+
+	* TAO/tao/orb.h: Redefinition of TAO_Skeleton removed.
+
+	* TAO/tao/poa.cpp: Changed the demultiplexing code to reflect the
+	change made with the dispatch method. The poa on finding the right
+	object corresponding to the key, now invokes the dispatch method
+	on that object which by dynamic binding invokes the dispatch
+	method of the POA_* class.
+
 Tue Dec 02 15:29:41 1997    <nw1@CHA-CHA>
 
 	* tao/{connect,orb_core}.h: Moved Win32 specific template
@@ -7,36 +62,36 @@ Tue Dec 02 15:29:41 1997    <nw1@CHA-CHA>
 	* tao/object.cpp: Removed conditional directives around
 	  DEFINE_GUID for IID_IUnknown.  This is now defined for Win32
 	  also.
- 	
+
 	* tao/TAO.dsp: Removed macro definition __IIOP_BUILD.  It was not
 	  used anywhere.
 
 Tue Dec  2 10:25:47 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* tao/corba.h: 
+	* tao/corba.h:
 	  Fixed some problems with the ACE_RETHROW macros.
 
-	* orbsvcs/lib/Makefile: 
-	* orbsvcs/lib/Timeprobe.h: 
-	* orbsvcs/lib/Timeprobe.i: 
-	* orbsvcs/lib/Timeprobe.cpp: 
+	* orbsvcs/lib/Makefile:
+	* orbsvcs/lib/Timeprobe.h:
+	* orbsvcs/lib/Timeprobe.i:
+	* orbsvcs/lib/Timeprobe.cpp:
 	  Added a high resolution timer facility, to measure the delays in
 	  the Event Channel and in its client.
 
-	* orbsvcs/lib/RtecEventComm.idl: 
+	* orbsvcs/lib/RtecEventComm.idl:
 	  Changed the time_ field of Event to a double. It should be an
-	  structure or a long long, but double is big enough to store 
+	  structure or a long long, but double is big enough to store
 
-	* orbsvcs/lib/RtecEventChannelAdminC.cpp: 
-	* orbsvcs/lib/RtecEventChannelAdminS.cpp: 
-	* orbsvcs/lib/RtecEventCommC.cpp: 
-	* orbsvcs/lib/RtecEventCommC.h: 
-	* orbsvcs/lib/RtecEventCommS.cpp: 
-	* orbsvcs/lib/RtecSchedulerC.cpp: 
-	* orbsvcs/lib/RtecSchedulerC.h: 
-	* orbsvcs/lib/RtecSchedulerC.i: 
-	* orbsvcs/lib/RtecSchedulerS.cpp: 
-	* orbsvcs/lib/RtecSchedulerS.h: 
+	* orbsvcs/lib/RtecEventChannelAdminC.cpp:
+	* orbsvcs/lib/RtecEventChannelAdminS.cpp:
+	* orbsvcs/lib/RtecEventCommC.cpp:
+	* orbsvcs/lib/RtecEventCommC.h:
+	* orbsvcs/lib/RtecEventCommS.cpp:
+	* orbsvcs/lib/RtecSchedulerC.cpp:
+	* orbsvcs/lib/RtecSchedulerC.h:
+	* orbsvcs/lib/RtecSchedulerC.i:
+	* orbsvcs/lib/RtecSchedulerS.cpp:
+	* orbsvcs/lib/RtecSchedulerS.h:
 	  Regenerated the files using the newest IDL compiler; still some
 	  hand crafting due to inherited classes.
 
@@ -45,22 +100,22 @@ Tue Dec  2 03:12:50 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 	* tao/orbobj.cpp (resolve_name_service): Check for errors when
  	resolving using the "NameService" environment variable.
 
-	* orbsvcs/bin/Naming_Service/CosNaming_i.cpp (NS_NamingContext): 		
+	* orbsvcs/bin/Naming_Service/CosNaming_i.cpp (NS_NamingContext):
 	* orbsvcs/bin/Naming_Service/CosNaming_i.h (NS_NamingContext):
  	- Added constructor that takes a key to initialize the object,
- 	instead of using the default name generation.  	
+ 	instead of using the default name generation.
 	- Enabled some exceptions that are already supported.
 
 	* orbsvcs/bin/Naming_Service/svr.cpp (main): Create first naming
  	context with key "NamingContext".  And minor changes.
 
-	* tests/Cubit/CORBAplus/IDL_Cubit/Makefile: 
-	* tests/Cubit/CORBAplus/IDL_Cubit/README: 
-	* tests/Cubit/CORBAplus/IDL_Cubit/clnt.cpp: 
-	* tests/Cubit/CORBAplus/IDL_Cubit/clnt.h: 
-	* tests/Cubit/CORBAplus/IDL_Cubit/cubit.idl: 
-	* tests/Cubit/CORBAplus/IDL_Cubit/cubit_i.cpp: 
-	* tests/Cubit/CORBAplus/IDL_Cubit/cubit_i.h: 
+	* tests/Cubit/CORBAplus/IDL_Cubit/Makefile:
+	* tests/Cubit/CORBAplus/IDL_Cubit/README:
+	* tests/Cubit/CORBAplus/IDL_Cubit/clnt.cpp:
+	* tests/Cubit/CORBAplus/IDL_Cubit/clnt.h:
+	* tests/Cubit/CORBAplus/IDL_Cubit/cubit.idl:
+	* tests/Cubit/CORBAplus/IDL_Cubit/cubit_i.cpp:
+	* tests/Cubit/CORBAplus/IDL_Cubit/cubit_i.h:
 	* tests/Cubit/CORBAplus/IDL_Cubit/svr.cpp: Ported the IDL cubit
  	example to CORBAplus.  Currently, the calls using DII are not
  	ported, so only the "cube average" and the "cube_union_stub" stats
@@ -76,17 +131,17 @@ Mon Dec  1 16:51:08 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 Sun Nov 30 17:08:56 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* orbsvcs/lib/RtecSchedulerC.cpp: 
+	* orbsvcs/lib/RtecSchedulerC.cpp:
 	  Added missed parameter in do_call() for
 	  RtecScheduler::Scheduler::set().
 
 Sat Nov 29 13:34:58 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* tao/stub.i (STUB_Object): 
+	* tao/stub.i (STUB_Object):
 	  No need to release type_id, since it is a String_var now. Thanks
 	  to Wei Chiang <chiang@tele.nokia.fi> for pointing this out.
 
-	* giop.cpp: 
+	* giop.cpp:
 	  If things go wrong TAO_GIOP::send_request will close the
 	  handler and set it to zero, but only a temporary was
 	  affected, I decided to set the original value to zero also;
@@ -148,39 +203,39 @@ Sat Dec 20 14:57:30 1997    <nw1@CHA-CHA>
 
 Tue Nov 25 20:49:24 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* tao/orbobj.h: 
-	* tao/orbobj.cpp: 
-	* tao/orb_core.cpp: 
-	* tao/params.h: 
-	* tao/params.cpp: 
+	* tao/orbobj.h:
+	* tao/orbobj.cpp:
+	* tao/orb_core.cpp:
+	* tao/params.h:
+	* tao/params.cpp:
 	  Removed the parameters to specify the event service and schedule
 	  service IOR, the naming service is working now so it can be
 	  used. And the support in "resolve_initial_references".
 
-	* tao/corbacom.i: 
-	* tao/decode.cpp: 
+	* tao/corbacom.i:
+	* tao/decode.cpp:
 	  Reverted the previous change, but this time added proper
-	  comments: the spec says that a Naming_var taking a <char*> is 
+	  comments: the spec says that a Naming_var taking a <char*> is
 	  *not* supposed to copy it. Hence the ObjRef decoder cannot
 	  release the string it just read.
 
 Mon Nov 24 20:40:47 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* tao/corbacom.i: 
+	* tao/corbacom.i:
 	  Fixed string allocation problem for String_var(char*): if it
 	  does not copy the string we run into problems with the
 	  demarshalling code.
 
-	* orbsvcs/lib/Event_Utilities.cpp: 
-	* orbsvcs/lib/Event_Utilities.h: 
-	* orbsvcs/lib/Event_Utilities.i: 
-	* orbsvcs/lib/RtecEventChannelAdmin.idl: 
-	* orbsvcs/lib/RtecEventChannelAdminC.cpp: 
-	* orbsvcs/lib/RtecEventChannelAdminC.h: 
+	* orbsvcs/lib/Event_Utilities.cpp:
+	* orbsvcs/lib/Event_Utilities.h:
+	* orbsvcs/lib/Event_Utilities.i:
+	* orbsvcs/lib/RtecEventChannelAdmin.idl:
+	* orbsvcs/lib/RtecEventChannelAdminC.cpp:
+	* orbsvcs/lib/RtecEventChannelAdminC.h:
 	  Removed the unused forward_event parameter in the ConsumerQoS.
 
-	* orbsvcs/lib/RtecSchedulerC.h: 
-	* orbsvcs/lib/RtecSchedulerC.i: 
+	* orbsvcs/lib/RtecSchedulerC.h:
+	* orbsvcs/lib/RtecSchedulerC.i:
 	  Hand crafted the T_out constructors to take a "const T_out&"
 	  instead of just "T_out&".
 
