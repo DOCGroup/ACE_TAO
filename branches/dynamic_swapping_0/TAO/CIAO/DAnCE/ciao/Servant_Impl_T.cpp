@@ -162,7 +162,6 @@ namespace CIAO
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG, "BEING CALLED\n"));
     ::Components::SessionComponent_var temp =
       ::Components::SessionComponent::_narrow (
           this->executor_.in ()
