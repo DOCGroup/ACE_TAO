@@ -193,11 +193,13 @@ class TAO_Export CORBA
   //    This class allows the use of CORBA::Foo, as well as CORBA_Foo
   //    for all standard types Foo.
 public:
-  enum { B_FALSE = 0, B_TRUE = 1 };
 
   typedef CORBA_Boolean Boolean;
   typedef Boolean &Boolean_out;
   // Out type for boolean.
+
+  static Boolean B_FALSE;
+  static Boolean B_TRUE;
 
   typedef u_char Octet;
   typedef Octet  &Octet_out;

@@ -1192,7 +1192,7 @@ template class ACE_TSS<TAO_Resource_Factory::Pre_Allocated>;
 template class ACE_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>;
 template class ACE_TSS_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>;
 template class ACE_TSS<TAO_Resource_Factory::App_Allocated>;
-template class ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA*, TAO_COLTBL_Lock>;
+template class ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>;
 template class ACE_Hash_Map_Entry<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *>;
 template class ACE_Hash_Map_Iterator_Base<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>;
 template class ACE_Hash_Map_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>;
@@ -1231,7 +1231,7 @@ template class ACE_Singleton<TAO_GLOBAL_COLTBL, ACE_SYNCH_MUTEX>;
 #pragma instantiate ACE_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS<TAO_Resource_Factory::App_Allocated>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA*, TAO_COLTBL_Lock>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>
 #pragma instantiate ACE_Hash_Map_Entry<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *>
 #pragma instantiate ACE_Hash_Map_Iterator_Base<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>
 #pragma instantiate ACE_Hash_Map_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>

@@ -138,25 +138,25 @@ public:
   // These are needed for insertion and extraction of booleans,
   // octets, chars, and bounded strings.
 
-  struct from_boolean
+  struct TAO_Export from_boolean
   {
     from_boolean (CORBA::Boolean b);
     CORBA::Boolean val_;
   };
 
-  struct from_octet
+  struct TAO_Export from_octet
   {
     from_octet (CORBA::Octet o);
     CORBA::Octet val_;
   };
 
-  struct from_char
+  struct TAO_Export from_char
   {
     from_char (CORBA::Char c);
     CORBA::Char val_;
   };
 
-  struct from_string
+  struct TAO_Export from_string
   {
     from_string (char* s,
                  CORBA::ULong b,
@@ -183,32 +183,32 @@ public:
   // These extract octets, chars, booleans, bounded strings, and
   // object references
 
-  struct to_boolean
+  struct TAO_Export to_boolean
   {
     to_boolean (CORBA::Boolean &b);
     CORBA::Boolean &ref_;
   };
 
-  struct to_char
+  struct TAO_Export to_char
   {
     to_char (CORBA::Char &c);
     CORBA::Char &ref_;
   };
 
-  struct to_octet
+  struct TAO_Export to_octet
   {
     to_octet (CORBA::Octet &o);
     CORBA::Octet &ref_;
   };
 
-  struct to_string
+  struct TAO_Export to_string
   {
     to_string (char *&s, CORBA::ULong b);
     char *&val_;
     CORBA::ULong bound_;
   };
 
-  struct to_object
+  struct TAO_Export to_object
   {
     to_object (CORBA::Object_ptr &obj);
     CORBA::Object_ptr &ref_;
