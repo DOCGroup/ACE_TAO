@@ -106,6 +106,7 @@ FILES= $(IDL_FILES) \
 	Event/RT_Task \
 	Event/ReactorTask \
 	Event/Task_Manager \
+	Event/EC_Gateway \
 	\
 	Sched/Config_Scheduler \
 	Sched/DynSched \
@@ -125,7 +126,6 @@ FILES= $(IDL_FILES) \
 	\
 	tmplinst-orbsvcs
 
-#### Causes link failure:  Event/EC_Gateway \
 #### Does not compile:	Property/CosPropertyService_i \
 
 VPATH=.:Naming:Event:Sched:AV:Property:Trader:Concurrency:Log
