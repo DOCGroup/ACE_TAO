@@ -16,6 +16,7 @@
 //
 // ============================================================================
 
+#include "helper.h"
 #include "typecode.h"
 
 ACE_RCSID(Param_Test, typecode, "$Id$")

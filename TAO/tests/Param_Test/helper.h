@@ -22,8 +22,6 @@
 
 #include "param_testC.h"
 
-#define TEST_BUFSIZE 128
-
 class Generator
 {
 public:

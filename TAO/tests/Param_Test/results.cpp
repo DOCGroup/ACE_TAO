@@ -16,6 +16,7 @@
 //
 // ============================================================================
 
+#include "ace/Log_Msg.h"
 #include "results.h"
 
 ACE_RCSID(Param_Test, results, "$Id$")

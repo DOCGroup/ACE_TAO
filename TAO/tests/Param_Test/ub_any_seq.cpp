@@ -16,6 +16,7 @@
 //
 // ============================================================================
 
+#include "helper.h"
 #include "ub_any_seq.h"
 
 const CORBA::ULong TEST_SEQ_LENGTH = 1;

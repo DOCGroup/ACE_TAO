@@ -16,6 +16,7 @@
 //
 // ============================================================================
 
+#include "ace/Read_Buffer.h"
 #include "options.h"
 
 ACE_RCSID(Param_Test, options, "$Id$")

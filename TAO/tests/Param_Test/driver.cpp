@@ -16,6 +16,10 @@
 //
 // ============================================================================
 
+#include "results.h"
+#include "client.h"
+#include "tests.h"
+#include "ace/Get_Opt.h"
 #include "driver.h"
 
 ACE_RCSID(Param_Test, driver, "$Id$")

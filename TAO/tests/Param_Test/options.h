@@ -21,7 +21,6 @@
 #define OPTIONS_H
 
 #include "ace/Singleton.h"
-#include "ace/Read_Buffer.h"
 #include "tao/corba.h"
 
 class Options
