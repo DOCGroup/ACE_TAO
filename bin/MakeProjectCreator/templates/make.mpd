@@ -104,7 +104,7 @@ $(BIN): $(OBJS)
 
 <%endif%>
 <%if(sharedname)%>
-all: $(SHLIB) <%if(install)%>install<%else%><%if(!exename)%>install<%endif%><%endif%>
+all: $(INSTARGET) <%if(install)%>install<%else%><%if(!exename)%>install<%endif%><%endif%>
 
 $(SHLIB): $(OBJS)
 	$(LINK.cc) $(SHFLAGS) $(OUTPUT_OPTION) $(OBJS) $(LDLIBS)
