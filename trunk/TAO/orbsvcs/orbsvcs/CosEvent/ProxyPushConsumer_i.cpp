@@ -150,22 +150,18 @@ TAO_CosEC_ProxyPushConsumer_i::disconnect_push_consumer (CORBA::Environment &TAO
 
 void
 TAO_CosEC_ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier,
-                                                      CORBA::Environment &TAO_TRY_ENV)
+                                                      CORBA::Environment &TAO_IN_ENV)
 {
   if (this->connected ())
-    TAO_THROW_ENV (CosEventChannelAdmin::AlreadyConnected (),
-                   TAO_TRY_ENV);
+    TAO_THROW (CosEventChannelAdmin::AlreadyConnected ());
 
-  CORBA::Environment &_env = TAO_TRY_ENV;
-  // @@ The ACE_NEW_THROW macro uses TAO_THROW which assumes an _env declared.
-  // what i need here is an ACE_NEW_THROW_ENV macro.
   ACE_NEW_THROW (this->wrapper_,
                  TAO_CosEC_PushSupplierWrapper (push_supplier),
                  CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
-  this->ppc_->connect_push_supplier (this->wrapper_->_this (TAO_TRY_ENV),
+  this->ppc_->connect_push_supplier (this->wrapper_->_this (TAO_IN_ENV),
                                      this->qos_,
-                                     TAO_TRY_ENV);
+                                     TAO_IN_ENV);
 }
 
 int
