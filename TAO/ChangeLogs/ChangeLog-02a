@@ -1,3 +1,14 @@
+Thu Oct 12 15:29:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.i:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: Did
+	  some clean up of the code. Added a pointer to the ORB_Core in
+	  the TAO_FT_Service_Callback class so that the class is aware of
+	  the ORB_Core that activated him.
+
 Thu Oct 12 15:25:21 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Stub.i: Removed a lock on the critical path.
