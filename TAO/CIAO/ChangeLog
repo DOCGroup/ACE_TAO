@@ -1,3 +1,9 @@
+Wed Jun  9 11:17:31 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DnC/DomainApplicationManager_Impl.cpp
+
+          Fixed a bug which is caused by initialzing ulong sequence type.
+
 Tue Jun  8 20:53:12 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/NodeApplicationManager/ImplementationInfo.cpp:
