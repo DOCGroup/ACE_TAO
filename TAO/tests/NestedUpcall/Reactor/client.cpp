@@ -114,21 +114,7 @@ NestedUpCalls_Client::run (void)
       auto_ptr<EventHandler_i> eh_impl (new EventHandler_i);
       EventHandler_var eh = eh_impl->_this (TAO_TRY_ENV);
 
-      // Get into the event loop briefly...just to make sure that the
-      // ORB gets a chance to set things up for us to be a server.
-      // What this really means is that there's a listening port.
-      //
-      // The bad thing is that we have to do something non-standard
-      // such as call orb->run() with a zero timeout.  It would be
-      // nice if the spec gave us a standard way to do this.
-      if (orb_->run (ACE_Time_Value::zero) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%s: %p\n",
-                           argv_[0], "unable to get the ORB Core to listen"),
-                          -1);
-
-      // Now, after all that, we can invoke an operation on the remote
-      // side.
+      // Now, we can invoke an operation on the remote side.
       CORBA::Long r = this->reactor_->register_handler (eh.in (), TAO_TRY_ENV);
 
       // We ought to have a result!
