@@ -149,7 +149,7 @@ endif
 #### Old versions of cpio might not, but the version that's shipped with
 #### Solaris 2.5.1, and gnu cpio 2.3, do support that option.
 
-FILTER = -name CVS -prune -o ! -name '.\#*' ! -name '\#*' ! -name '*~' -print
+FILTER = -name CVS -prune -o ! -name '.\#*' ! -name '\#*' ! -name '*~'! -name '*.MAK' -print
 
 cleanrelease:
 	@$(TIMESTAMP) (make realclean; cd ..; \
