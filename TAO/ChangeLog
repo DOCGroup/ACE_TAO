@@ -3,7 +3,7 @@ Tue Jan 11 23:19:33 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/GIOP_Message_Base.cpp:
 
 	  Fixed a debug output which was appearing without the debug level
-	  being set. Thanks to Thomas Lockhart for reporting this.
+	  being set. Thanks to Lother Werzinger for reporting this.
 
 Tue Jan 11 20:44:30 2005 Huang-Ming Huang <hh1@cse.wustl.edu>
   
