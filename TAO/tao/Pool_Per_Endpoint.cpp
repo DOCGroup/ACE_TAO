@@ -16,10 +16,12 @@ ACE_RCSID(tao, Pool_Per_Endpoint, "$Id$")
 
 TAO_Pool_Per_Endpoint::TAO_Pool_Per_Endpoint (CORBA::ORB_ptr orb,
                                               int policy,
-                                              int poolsize)
+                                              int poolsize,
+                                              int flags)
   :  orb_ (CORBA::ORB::_duplicate (orb)),
      policy_ (policy),
-     poolsize_ (poolsize)
+     poolsize_ (poolsize),
+     flags_ (flags)
 {
   this->thr_mgr (&this->thread_manager_);
 }
@@ -51,8 +53,7 @@ TAO_Pool_Per_Endpoint::run (CORBA::Environment &ACE_TRY_ENV)
                   "TAO (%P|%t) - creating thread at priority %d:%d\n",
                   priority, corba_priority));
 #endif /* TAO_HAS_RT_CORBA */
-      if (this->activate (THR_NEW_LWP | THR_JOINABLE
-                          | THR_BOUND | THR_SCHED_FIFO,
+      if (this->activate (this->flags_,
                           this->poolsize_, /* number of threads */
                           1, /* force active */
                           priority) == -1)
@@ -70,7 +71,7 @@ TAO_Pool_Per_Endpoint::svc (void)
               "TAO (%P|%t) - TAO_Pool_Per_Endpoint::svc: "
               " using reactor <%x> in this thread\n",
               this->orb_->orb_core ()->reactor ()));
-  this->orb_->run (); 
+  this->orb_->run ();
   ACE_DEBUG ((LM_DEBUG,
               "TAO (%P|%t) - TAO_Pool_Per_Endpoint::svc: "
               " ORB::run() finished\n"));

@@ -45,6 +45,7 @@ int
 main (int argc, char *argv[])
 {
   int policy = ACE_SCHED_FIFO;
+  int flags = THR_NEW_LWP|THR_JOINABLE|THR_SCHED_FIFO;
   int priority =
     (ACE_Sched_Params::priority_min (policy)
      + ACE_Sched_Params::priority_max (policy)) / 2;
@@ -66,6 +67,7 @@ main (int argc, char *argv[])
                       "server (%P|%t): user is not superuser, "
                       "test runs in time-shared class\n"));
           policy = ACE_SCHED_OTHER;
+          flags = THR_NEW_LWP|THR_JOINABLE|THR_SCHED_DEFAULT;
         }
       else
         ACE_ERROR ((LM_ERROR,
@@ -126,7 +128,8 @@ main (int argc, char *argv[])
 
       TAO_Pool_Per_Endpoint pool (orb.in (),
                                   policy,
-                                  nthreads);
+                                  nthreads,
+                                  flags);
 
       pool.run ();
 
