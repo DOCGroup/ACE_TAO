@@ -274,6 +274,15 @@ public:
     ACE_UINT64 valuetype_seen_;
     ACE_UINT64 abstract_iface_seen_;
     ACE_UINT64 iface_seq_seen_;
+    ACE_UINT64 basic_arg_seen_;
+    ACE_UINT64 bd_string_arg_seen_;
+    ACE_UINT64 fixed_array_arg_seen_;
+    ACE_UINT64 fixed_size_arg_seen_;
+    ACE_UINT64 object_arg_seen_;
+    ACE_UINT64 special_basic_arg_seen_;
+    ACE_UINT64 ub_string_arg_seen_;
+    ACE_UINT64 var_array_arg_seen_;
+    ACE_UINT64 var_size_arg_seen_;
   } decls_seen_masks;
 
   // Constructor

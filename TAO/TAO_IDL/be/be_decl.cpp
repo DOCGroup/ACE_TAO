@@ -37,7 +37,10 @@
 #include "be_factory.h"
 #include "be_sequence.h"
 #include "be_visitor.h"
+#include "ast_structure_fwd.h"
+#include "ast_string.h"
 #include "utl_identifier.h"
+#include "global_extern.h"
 #include "ace/Log_Msg.h"
 #include "ace/String_Base.h"
 
@@ -453,6 +456,134 @@ int
 be_decl::accept (be_visitor *visitor)
 {
   return visitor->visit_decl (this);
+}
+
+void
+be_decl::set_arg_seen_bit (be_type *bt)
+{
+  if (bt == 0)
+    {
+      return;
+    }
+
+  switch (bt->node_type ())
+    {
+      case NT_typedef:
+        {
+          AST_Typedef *td = AST_Typedef::narrow_from_decl (bt);
+          this->set_arg_seen_bit (
+                    be_type::narrow_from_decl (td->primitive_base_type ())
+                  );
+          break;
+        }
+      case NT_interface:
+      case NT_interface_fwd:
+      case NT_valuetype:
+      case NT_valuetype_fwd:
+      case NT_component:
+      case NT_component_fwd:
+      case NT_home:
+      case NT_eventtype:
+      case NT_eventtype_fwd:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.object_arg_seen_);
+        break;        
+      case NT_union:
+      case NT_struct:
+        if (bt->size_type () == AST_Type::FIXED)
+          {
+            ACE_SET_BITS (idl_global->decls_seen_info_,
+                          idl_global->decls_seen_masks.fixed_size_arg_seen_);
+          }
+        else
+          {
+            ACE_SET_BITS (idl_global->decls_seen_info_,
+                          idl_global->decls_seen_masks.var_size_arg_seen_);
+          }
+
+        break;
+      case NT_struct_fwd:
+      case NT_union_fwd:
+        {
+          AST_StructureFwd *fwd = AST_StructureFwd::narrow_from_decl (bt);
+          be_type *fd = be_type::narrow_from_decl (fwd->full_definition ());
+          this->set_arg_seen_bit (fd);
+          break;
+        }
+      case NT_enum:
+      case NT_enum_val:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.basic_arg_seen_);
+        break;        
+      case NT_string:
+      case NT_wstring:
+        {
+          AST_String *str = AST_String::narrow_from_decl (bt);
+
+          if (str->max_size ()->ev ()->u.ulval == 0)
+            {
+              ACE_SET_BITS (idl_global->decls_seen_info_,
+                            idl_global->decls_seen_masks.ub_string_arg_seen_);
+            }
+          else
+            {
+              ACE_SET_BITS (idl_global->decls_seen_info_,
+                            idl_global->decls_seen_masks.bd_string_arg_seen_);
+            }
+
+          break;
+        }
+      case NT_array:
+        if (bt->size_type () == AST_Type::FIXED)
+          {
+            ACE_SET_BITS (idl_global->decls_seen_info_,
+                          idl_global->decls_seen_masks.fixed_array_arg_seen_);
+          }
+        else
+          {
+            ACE_SET_BITS (idl_global->decls_seen_info_,
+                          idl_global->decls_seen_masks.var_array_arg_seen_);
+          }
+
+        break;
+      case NT_sequence:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.var_size_arg_seen_);
+        break;        
+      case NT_pre_defined:
+        {
+          AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (bt);
+          
+          switch (pdt->pt ())
+            {
+              case AST_PredefinedType::PT_object:
+              case AST_PredefinedType::PT_pseudo:
+              case AST_PredefinedType::PT_value:
+                ACE_SET_BITS (idl_global->decls_seen_info_,
+                              idl_global->decls_seen_masks.object_arg_seen_);
+                break;        
+              case AST_PredefinedType::PT_any:
+                ACE_SET_BITS (idl_global->decls_seen_info_,
+                              idl_global->decls_seen_masks.var_size_arg_seen_);
+                break;        
+              case AST_PredefinedType::PT_char:
+              case AST_PredefinedType::PT_wchar:
+              case AST_PredefinedType::PT_octet:
+              case AST_PredefinedType::PT_boolean:
+                ACE_SET_BITS (
+                    idl_global->decls_seen_info_,
+                    idl_global->decls_seen_masks.special_basic_arg_seen_
+                  );
+                break;
+             default:
+                ACE_SET_BITS (idl_global->decls_seen_info_,
+                              idl_global->decls_seen_masks.basic_arg_seen_);
+                break;
+            }
+        }
+      default:
+        break;
+    }
 }
 
 // Narrowing methods.

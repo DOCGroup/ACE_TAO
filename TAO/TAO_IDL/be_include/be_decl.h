@@ -26,6 +26,7 @@
 
 class be_scope;
 class be_visitor;
+class be_type;
 
 class be_decl : public virtual AST_Decl
 {
@@ -107,6 +108,10 @@ public:
   // Narrowing
   DEF_NARROW_METHODS1 (be_decl, AST_Decl);
   DEF_NARROW_FROM_DECL (be_decl);
+
+protected:
+  // Called by be_operation (for the return type) and be_argument.
+  void set_arg_seen_bit (be_type *);
 
 private:
   // Variables that indicate if the code generation for that node is already

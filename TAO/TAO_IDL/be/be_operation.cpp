@@ -65,6 +65,7 @@ be_operation::be_operation (AST_Type *rt,
 
   be_type *bt = be_type::narrow_from_decl (rt);
   bt->seen_in_operation (I_TRUE);
+  this->set_arg_seen_bit (bt);
 }
 
 
