@@ -337,6 +337,272 @@ class CORBA_ORB_ObjectIdList_var;
 class CORBA_ORB_ObjectIdList_out;
 typedef CORBA_ORB_ObjectIdList *CORBA_ORB_ObjectIdList_ptr;
 
+// Forward declarations for INTERFACE REPO..Bala
+class CORBA_IRObject;
+class CORBA_IRObject_var;
+class CORBA_IRObject_out;
+typedef CORBA_IRObject *CORBA_IRObject_ptr;
+
+class CORBA_Contained;
+class CORBA_Contained_out;
+class CORBA_Contained_var;
+typedef CORBA_Contained *CORBA_Contained_ptr;
+
+class CORBA_Repository;
+class CORBA_Repository_var;
+class CORBA_Repository_out;
+typedef CORBA_Repository *CORBA_Repository_ptr;
+
+class CORBA_Container;
+class CORBA_Container_var;
+class CORBA_Container_out;
+typedef CORBA_Container *CORBA_Container_ptr;
+
+class CORBA_ModuleDef;
+class CORBA_ModuleDef_out;
+class CORBA_ModuleDef_var;
+typedef CORBA_ModuleDef *CORBA_ModuleDef_ptr;
+
+class CORBA_ConstantDef;
+class CORBA_ConstantDef_out;
+class CORBA_ConstantDef_var;
+typedef CORBA_ConstantDef *CORBA_ConstantDef_ptr;
+
+class CORBA_IDLType;
+class CORBA_IDLType_out;
+class CORBA_IDLType_var;
+typedef CORBA_IDLType *CORBA_IDLType_ptr;
+
+class CORBA_StructDef;
+class CORBA_StructDef_var;
+class CORBA_StructDef_out;
+typedef  CORBA_StructDef *CORBA_StructDef_ptr;
+
+class CORBA_UnionDef;
+class CORBA_UnionDef_var;
+class CORBA_UnionDef_out;
+typedef CORBA_UnionDef *CORBA_UnionDef_ptr;
+
+class CORBA_EnumDef;
+class CORBA_EnumDef_var;
+class CORBA_EnumDef_out;
+typedef CORBA_EnumDef *CORBA_EnumDef_ptr;
+
+class CORBA_AliasDef;
+class CORBA_AliasDef_var;
+class CORBA_AliasDef_out;
+typedef CORBA_AliasDef *CORBA_AliasDef_ptr;
+
+class CORBA_ExceptionDef;
+class CORBA_ExceptionDef_out;
+class CORBA_ExceptionDef_var;
+typedef CORBA_ExceptionDef *CORBA_ExceptionDef_ptr;
+
+class CORBA_NativeDef;
+class CORBA_NativeDef_out;
+class CORBA_NativeDef_var;
+typedef CORBA_NativeDef *CORBA_NativeDef_ptr;
+
+class CORBA_InterfaceDefSeq;
+class CORBA_InterfaceDefSeq_out;
+class CORBA_InterfaceDefSeq_var;
+typedef CORBA_InterfaceDefSeq *CORBA_InterfaceDefSeq_ptr;
+
+class CORBA_ValueDef;
+class CORBA_ValueDef_out;
+class CORBA_ValueDef_var;
+typedef CORBA_ValueDef *CORBA_ValueDef_ptr;
+
+class CORBA_ValueDefSeq;
+class CORBA_ValueDefSeq_out;
+class CORBA_ValueDefSeq_var;
+typedef CORBA_ValueDefSeq *CORBA_ValueDefSeq_ptr;
+
+class CORBA_ValueBoxDef;
+class CORBA_ValueBoxDef_out;
+class CORBA_ValueBoxDef_var;
+typedef CORBA_ValueBoxDef *CORBA_ValueBoxDef_ptr;
+
+class CORBA_ContainedSeq;
+class CORBA_ContainedSeq_out;
+class CORBA_ContainedSeq_var;
+typedef CORBA_ContainedSeq *CORBA_ContainedSeq_ptr;
+
+struct CORBA_StructMember;
+class CORBA_StructMember_out;
+class CORBA_StructMember_var;
+typedef CORBA_StructMember *CORBA_StructMember_ptr;
+
+class CORBA_StructMemberSeq;
+class CORBA_StructMemberSeq_out;
+class CORBA_StructMemberSeq_var;
+typedef CORBA_StructMemberSeq *CORBA_StructMemberSeq_ptr;
+
+struct CORBA_Initializer;
+class CORBA_Initializer_out;
+class CORBA_Initializer_var;
+typedef CORBA_Initializer *CORBA_Initializer_ptr;
+
+class CORBA_InitializerSeq;
+class CORBA_InitializerSeq_out;
+class CORBA_InitializerSeq_var;
+typedef CORBA_InitializerSeq *CORBA_InitializerSeq_ptr;
+
+struct CORBA_UnionMember;
+class CORBA_UnionMember_out;
+class CORBA_UnionMember_var;
+typedef CORBA_UnionMember *CORBA_UnionMember_ptr;
+
+class CORBA_UnionMemberSeq;
+class CORBA_UnionMemberSeq_out;
+class CORBA_UnionMemberSeq_var;
+typedef CORBA_UnionMemberSeq *CORBA_UnionMemberSeq_ptr;
+
+class CORBA_PrimitiveDef;
+class CORBA_PrimitiveDef_out;
+class CORBA_PrimitiveDef_var;
+typedef CORBA_PrimitiveDef *CORBA_PrimitiveDef_ptr;
+
+class CORBA_StringDef;
+class CORBA_StringDef_out;
+class CORBA_StringDef_var;
+typedef CORBA_StringDef *CORBA_StringDef_ptr;
+
+class CORBA_SequenceDef;
+class CORBA_SequenceDef_out;
+class CORBA_SequenceDef_var;
+typedef CORBA_SequenceDef *CORBA_SequenceDef_ptr;
+
+class CORBA_ArrayDef;
+class CORBA_ArrayDef_out;
+class CORBA_ArrayDef_var;
+typedef CORBA_ArrayDef *CORBA_ArrayDef_ptr;
+
+class CORBA_WstringDef;
+class CORBA_WstringDef_out;
+class CORBA_WstringDef_var;
+typedef CORBA_WstringDef *CORBA_WstringDef_ptr;
+
+class CORBA_FixedDef;
+class CORBA_FixedDef_out;
+class CORBA_FixedDef_var;
+typedef CORBA_FixedDef *CORBA_FixedDef_ptr;
+
+struct CORBA_ModuleDescription;
+class CORBA_ModuleDescription_out;
+class CORBA_ModuleDescription_var;
+typedef CORBA_ModuleDescription *CORBA_ModuleDescription_ptr;
+
+struct CORBA_ConstantDescription;
+class CORBA_ConstantDescription_out;
+class CORBA_ConstantDescription_var;
+typedef CORBA_ConstantDescription *CORBA_ConstantDescription_ptr;
+
+class CORBA_TypedefDef;
+class CORBA_TypedefDef_out;
+class CORBA_TypedefDef_var;
+typedef CORBA_TypedefDef *CORBA_TypedefDef_ptr;
+
+struct CORBA_TypeDescription;
+class CORBA_TypeDescription_out;
+class CORBA_TypeDescription_var;
+typedef CORBA_TypeDescription *CORBA_TypeDescription_ptr;
+
+struct CORBA_ExceptionDescription;
+class CORBA_ExceptionDescription_out;
+class CORBA_ExceptionDescription_var;
+typedef CORBA_ExceptionDescription *CORBA_ExceptionDescription_ptr;
+
+class CORBA_AttributeDef;
+class CORBA_AttributeDef_out;
+class CORBA_AttributeDef_var;
+typedef CORBA_AttributeDef *CORBA_AttributeDef_ptr;
+
+struct CORBA_AttributeDescription;
+class CORBA_AttributeDescription_out;
+class CORBA_AttributeDescription_var;
+typedef CORBA_AttributeDescription *CORBA_AttributeDescription_ptr;
+
+struct CORBA_ParameterDescription;
+class CORBA_ParameterDescription_out;
+class CORBA_ParameterDescription_var;
+typedef CORBA_ParameterDescription *CORBA_ParameterDescription_ptr;
+
+class CORBA_ParDescriptionSeq;
+class CORBA_ParDescriptionSeq_out;
+class CORBA_ParDescriptionSeq_var;
+typedef CORBA_ParDescriptionSeq *CORBA_ParDescriptionSeq_ptr;
+
+class CORBA_ContextIdSeq;
+class CORBA_ContextIdSeq_out;
+class CORBA_ContextIdSeq_var;
+typedef CORBA_ContextIdSeq *CORBA_ContextIdSeq_ptr;
+
+class CORBA_ExceptionDefSeq;
+class CORBA_ExceptionDefSeq_out;
+class CORBA_ExceptionDefSeq_var;
+typedef CORBA_ExceptionDefSeq *CORBA_ExceptionDefSeq_ptr;
+
+class CORBA_ExcDescriptionSeq;
+class CORBA_ExcDescriptionSeq_out;
+class CORBA_ExcDescriptionSeq_var;
+typedef CORBA_ExcDescriptionSeq *CORBA_ExcDescriptionSeq_ptr;
+
+class CORBA_OperationDef;
+class CORBA_OperationDef_out;
+class CORBA_OperationDef_var;
+typedef CORBA_OperationDef *CORBA_OperationDef_ptr;
+
+class CORBA_OperationDescription;
+class CORBA_OperationDescription_out;
+class CORBA_OperationDescription_var;
+typedef CORBA_OperationDescription *CORBA_OperationDescription_ptr;
+
+class CORBA_RepositoryIdSeq;
+class CORBA_RepositoryIdSeq_out;
+class CORBA_RepositoryIdSeq_var;
+typedef CORBA_RepositoryIdSeq *CORBA_RepositoryIdSeq_ptr;
+
+class CORBA_OpDescriptionSeq;
+class CORBA_OpDescriptionSeq_out;
+class CORBA_OpDescriptionSeq_var;
+typedef CORBA_OpDescriptionSeq *CORBA_OpDescriptionSeq_ptr;
+
+class CORBA_AttrDescriptionSeq;
+class CORBA_AttrDescriptionSeq_out;
+class CORBA_AttrDescriptionSeq_var;
+typedef CORBA_AttrDescriptionSeq *CORBA_AttrDescriptionSeq_ptr;
+
+struct CORBA_InterfaceDescription;
+class CORBA_InterfaceDescription_out;
+class CORBA_InterfaceDescription_var;
+typedef CORBA_InterfaceDescription *CORBA_InterfaceDescription_ptr;
+
+struct CORBA_ValueMember;
+class CORBA_ValueMember_out;
+class CORBA_ValueMember_var;
+typedef CORBA_ValueMember *CORBA_ValueMember_ptr;
+
+class CORBA_ValueMemberSeq;
+class CORBA_ValueMemberSeq_out;
+class CORBA_ValueMemberSeq_var;
+typedef CORBA_ValueMemberSeq *CORBA_ValueMemberSeq_ptr;
+
+class CORBA_ValueMemberDef;
+class CORBA_ValueMemberDef_out;
+class CORBA_ValueMemberDef_var;
+typedef CORBA_ValueMemberDef *CORBA_ValueMemberDef_ptr;
+
+struct CORBA_ValueDescription;
+class CORBA_ValueDescription_out;
+class CORBA_ValueDescription_var;
+typedef CORBA_ValueDescription *CORBA_ValueDescription_ptr;
+
+class CORBA_EnumMemberSeq;
+class CORBA_EnumMemberSeq_out;
+class CORBA_EnumMemberSeq_var;
+typedef CORBA_EnumMemberSeq *CORBA_EnumMemberSeq_ptr;
+
 // enum values defined in tao/NVList.h, bitwise ORed.
 typedef u_int CORBA_Flags;
 
@@ -529,6 +795,271 @@ TAO_NAMESPACE CORBA
   typedef CORBA_Current_var Current_var;
   typedef CORBA_Current_out Current_out;
 
+  // Interface Repository Bala===========
+  typedef CORBA_IRObject IRObject;
+  typedef CORBA_IRObject *IRObject_ptr;
+  typedef CORBA_IRObject_out IRObject_out;
+  typedef CORBA_IRObject_var IRObject_var;
+  
+  typedef CORBA_Contained Contained;
+  typedef CORBA_Contained *Contained_ptr;
+  typedef CORBA_Contained_out Contained_out;
+  typedef CORBA_Contained_var Contained_var;
+  
+  typedef CORBA_Repository Repository;
+  typedef CORBA_Repository *Repository_ptr;
+  typedef CORBA_Repository_out Repository_out;
+  typedef CORBA_Repository_var Repository_var;
+
+  typedef CORBA_Container Container;
+  typedef CORBA_Container *Container_ptr;
+  typedef CORBA_Container_out Container_out;
+  typedef CORBA_Container_var Container_var;
+  
+  typedef CORBA_ModuleDef ModuleDef;
+  typedef CORBA_ModuleDef *ModuleDef_ptr;
+  typedef CORBA_ModuleDef_out ModuleDef_out;
+  typedef CORBA_ModuleDef_var  ModuleDef_var;
+
+  typedef CORBA_ConstantDef ConstantDef;
+  typedef CORBA_ConstantDef *ConstantDef_ptr;
+  typedef CORBA_ConstantDef_out ConstantDef_out;
+  typedef CORBA_ConstantDef_var ConstantDef_var;
+  
+  typedef CORBA_IDLType IDLType; 
+  typedef CORBA_IDLType *IDLType_ptr; 
+  typedef CORBA_IDLType_out IDLType_out; 
+  typedef CORBA_IDLType_var IDLType_var;
+ 
+  typedef CORBA_StructDef StructDef;
+  typedef CORBA_StructDef *StructDef_ptr;
+  typedef CORBA_StructDef_out StructDef_out;
+  typedef CORBA_StructDef_var StructDef_var;
+
+  typedef CORBA_UnionDef  UnionDef;
+  typedef CORBA_UnionDef *UnionDef_ptr;
+  typedef CORBA_UnionDef_out UnionDef_out;
+  typedef CORBA_UnionDef_var UnionDef_var;
+
+  typedef CORBA_EnumDef  EnumDef;
+  typedef CORBA_EnumDef *EnumDef_ptr;
+  typedef CORBA_EnumDef_out EnumDef_out;
+  typedef CORBA_EnumDef_var EnumDef_var;
+
+  typedef CORBA_AliasDef AliasDef;
+  typedef CORBA_AliasDef *AliasDef_ptr;
+  typedef CORBA_AliasDef_out AliasDef_out;
+  typedef CORBA_AliasDef_var AliasDef_var;
+
+  typedef CORBA_ExceptionDef ExceptionDef;
+  typedef CORBA_ExceptionDef *ExceptionDef_ptr;
+  typedef CORBA_ExceptionDef_out ExceptionDef_out;
+  typedef CORBA_ExceptionDef_var ExceptionDef_var;
+
+  typedef CORBA_NativeDef NativeDef;
+  typedef CORBA_NativeDef *NativeDef_ptr;
+  typedef CORBA_NativeDef_out NativeDef_out;
+  typedef CORBA_NativeDef_var NativeDef_var;
+
+  typedef CORBA_InterfaceDefSeq InterfaceDefSeq;
+  typedef CORBA_InterfaceDefSeq *InterfaceDefSeq_ptr;
+  typedef CORBA_InterfaceDefSeq_out InterfaceDefSeq_out;
+  typedef CORBA_InterfaceDefSeq_var InterfaceDefSeq_var;
+
+  typedef CORBA_ValueDef ValueDef;
+  typedef CORBA_ValueDef *ValueDef_ptr;
+  typedef CORBA_ValueDef_out ValueDef_out;
+  typedef CORBA_ValueDef_var ValueDef_var;
+
+  typedef CORBA_ValueDefSeq ValueDefSeq;
+  typedef CORBA_ValueDefSeq *ValueDefSeq_ptr;
+  typedef CORBA_ValueDefSeq_out ValueDefSeq_out;
+  typedef CORBA_ValueDefSeq_var ValueDefSeq_var;
+
+  typedef CORBA_ValueBoxDef ValueBoxDef;
+  typedef CORBA_ValueBoxDef *ValueBoxDef_ptr;
+  typedef CORBA_ValueBoxDef_out ValueBoxDef_out;
+  typedef CORBA_ValueBoxDef_var ValueBoxDef_var;
+
+  typedef CORBA_ContainedSeq ContainedSeq;
+  typedef CORBA_ContainedSeq *ContainedSeq_ptr;
+  typedef CORBA_ContainedSeq_out ContainedSeq_out;
+  typedef CORBA_ContainedSeq_var ContainedSeq_var;
+
+  typedef CORBA_StructMember StructMember;
+  typedef CORBA_StructMember *StructMember_ptr;
+  typedef CORBA_StructMember_out StructMember_out;
+  typedef CORBA_StructMember_var StructMember_var;
+
+  typedef CORBA_StructMemberSeq StructMemberSeq;
+  typedef CORBA_StructMemberSeq *StructMemberSeq_ptr;
+  typedef CORBA_StructMemberSeq_out StructMemberSeq_out;
+  typedef CORBA_StructMemberSeq_var StructMemberSeq_var;
+
+  typedef CORBA_Initializer Initializer;
+  typedef CORBA_Initializer *Initializer_ptr;
+  typedef CORBA_Initializer_out Initializer_out;
+  typedef CORBA_Initializer_var Initializer_var;
+
+  typedef CORBA_InitializerSeq InitializerSeq;
+  typedef CORBA_InitializerSeq *InitializerSeq_ptr;
+  typedef CORBA_InitializerSeq_out InitializerSeq_out;
+  typedef CORBA_InitializerSeq_var InitializerSeq_var;
+
+  typedef CORBA_UnionMember UnionMember;
+  typedef CORBA_UnionMember *UnionMember_ptr;
+  typedef CORBA_UnionMember_out UnionMember_out;
+  typedef CORBA_UnionMember_var UnionMember_var;
+
+  typedef CORBA_UnionMemberSeq UnionMemberSeq;
+  typedef CORBA_UnionMemberSeq *UnionMemberSeq_ptr;
+  typedef CORBA_UnionMemberSeq_out UnionMemberSeq_out;
+  typedef CORBA_UnionMemberSeq_var UnionMemberSeq_var;
+
+  typedef CORBA_PrimitiveDef PrimitiveDef;
+  typedef CORBA_PrimitiveDef *PrimitiveDef_ptr;
+  typedef CORBA_PrimitiveDef_out PrimitiveDef_out;
+  typedef CORBA_PrimitiveDef_var PrimitiveDef_var;
+
+  typedef CORBA_StringDef StringDef;
+  typedef CORBA_StringDef *StringDef_ptr;
+  typedef CORBA_StringDef_out StringDef_out;
+  typedef CORBA_StringDef_var StringDef_var;
+  
+  typedef CORBA_SequenceDef SequenceDef;
+  typedef CORBA_SequenceDef *SequenceDef_ptr;
+  typedef CORBA_SequenceDef_out SequenceDef_out;
+  typedef CORBA_SequenceDef_var SequenceDef_var;
+
+  typedef CORBA_ArrayDef ArrayDef;
+  typedef CORBA_ArrayDef *ArrayDef_ptr;
+  typedef CORBA_ArrayDef_out ArrayDef_out;
+  typedef CORBA_ArrayDef_var ArrayDef_var;
+
+  typedef CORBA_WstringDef WstringDef;
+  typedef CORBA_WstringDef *WstringDef_ptr;
+  typedef CORBA_WstringDef_out WstringDef_out;
+  typedef CORBA_WstringDef_var WstringDef_var;
+
+  typedef CORBA_FixedDef FixedDef;
+  typedef CORBA_FixedDef *FixedDef_ptr;
+  typedef CORBA_FixedDef_out FixedDef_out;
+  typedef CORBA_FixedDef_var FixedDef_var;
+  
+  typedef CORBA_ModuleDescription ModuleDescription;
+  typedef CORBA_ModuleDescription *ModuleDescription_ptr;
+  typedef CORBA_ModuleDescription_out ModuleDescription_out;
+  typedef CORBA_ModuleDescription_var ModuleDescription_var;
+
+  typedef CORBA_ConstantDescription ConstantDescription;
+  typedef CORBA_ConstantDescription *ConstantDescription_ptr;
+  typedef CORBA_ConstantDescription_out ConstantDescription_out;
+  typedef CORBA_ConstantDescription_var ConstantDescription_var;
+
+  typedef CORBA_TypedefDef TypedefDef;
+  typedef CORBA_TypedefDef *TypedefDef_ptr;
+  typedef CORBA_TypedefDef_out TypedefDef_out;
+  typedef CORBA_TypedefDef_var TypedefDef_var;
+
+  typedef CORBA_TypeDescription TypeDescription;
+  typedef CORBA_TypeDescription *TypeDescription_ptr;
+  typedef CORBA_TypeDescription_out TypeDescription_out;
+  typedef CORBA_TypeDescription_var TypeDescription_var;
+
+  typedef CORBA_ExceptionDescription ExceptionDescription;
+  typedef CORBA_ExceptionDescription *ExceptionDescription_ptr;
+  typedef CORBA_ExceptionDescription_out ExceptionDescription_out;
+  typedef CORBA_ExceptionDescription_var ExceptionDescription_var;
+
+  typedef CORBA_AttributeDef AttributeDef;
+  typedef CORBA_AttributeDef *AttributeDef_ptr;
+  typedef CORBA_AttributeDef_out AttributeDef_out;
+  typedef CORBA_AttributeDef_var AttributeDef_var;
+
+  typedef CORBA_AttributeDescription AttributeDescription;
+  typedef CORBA_AttributeDescription *AttributeDescription_ptr;
+  typedef CORBA_AttributeDescription_out AttributeDescription_out;
+  typedef CORBA_AttributeDescription_var AttributeDescription_var;
+
+  typedef CORBA_ParameterDescription ParameterDescription;
+  typedef CORBA_ParameterDescription *ParameterDescription_ptr;
+  typedef CORBA_ParameterDescription_out ParameterDescription_out;
+  typedef CORBA_ParameterDescription_var ParameterDescription_var;
+
+  typedef CORBA_ParDescriptionSeq ParDescriptionSeq;
+  typedef CORBA_ParDescriptionSeq *ParDescriptionSeq_ptr;
+  typedef CORBA_ParDescriptionSeq_out ParDescriptionSeq_out;
+  typedef CORBA_ParDescriptionSeq_var ParDescriptionSeq_var;
+
+  typedef CORBA_ContextIdSeq ContextIdSeq;
+  typedef CORBA_ContextIdSeq *ContextIdSeq_ptr;
+  typedef CORBA_ContextIdSeq_out ContextIdSeq_out;
+  typedef CORBA_ContextIdSeq_var ContextIdSeq_var;
+
+  typedef CORBA_ExceptionDefSeq ExceptionDefSeq;
+  typedef CORBA_ExceptionDefSeq *ExceptionDefSeq_ptr;
+  typedef CORBA_ExceptionDefSeq_out ExceptionDefSeq_out;
+  typedef CORBA_ExceptionDefSeq_var ExceptionDefSeq_var;
+
+  typedef CORBA_ExcDescriptionSeq ExcDescriptionSeq;
+  typedef CORBA_ExcDescriptionSeq *ExcDescriptionSeq_ptr;
+  typedef CORBA_ExcDescriptionSeq_out ExcDescriptionSeq_out;
+  typedef CORBA_ExcDescriptionSeq_var ExcDescriptionSeq_var;
+  
+  typedef CORBA_OperationDef OperationDef;
+  typedef CORBA_OperationDef *OperationDef_ptr;
+  typedef CORBA_OperationDef_out OperationDef_out;
+  typedef CORBA_OperationDef_var OperationDef_var;
+
+  typedef CORBA_OperationDescription OperationDescription;
+  typedef CORBA_OperationDescription *OperationDescription_ptr;
+  typedef CORBA_OperationDescription_out OperationDescription_out;
+  typedef CORBA_OperationDescription_var OperationDescription_var;
+
+  typedef CORBA_RepositoryIdSeq RepositoryIdSeq;
+  typedef CORBA_RepositoryIdSeq *RepositoryIdSeq_ptr;
+  typedef CORBA_RepositoryIdSeq_out RepositoryIdSeq_out;
+  typedef CORBA_RepositoryIdSeq_var RepositoryIdSeq_var;
+
+  typedef CORBA_OpDescriptionSeq OpDescriptionSeq;
+  typedef CORBA_OpDescriptionSeq *OpDescriptionSeq_ptr;
+  typedef CORBA_OpDescriptionSeq_out OpDescriptionSeq_out;
+  typedef CORBA_OpDescriptionSeq_var OpDescriptionSeq_var;
+
+  typedef CORBA_AttrDescriptionSeq AttrDescriptionSeq;
+  typedef CORBA_AttrDescriptionSeq *AttrDescriptionSeq_ptr;
+  typedef CORBA_AttrDescriptionSeq_out AttrDescriptionSeq_out;
+  typedef CORBA_AttrDescriptionSeq_var AttrDescriptionSeq_var;
+
+  typedef CORBA_InterfaceDescription InterfaceDescription;
+  typedef CORBA_InterfaceDescription *InterfaceDescription_ptr;
+  typedef CORBA_InterfaceDescription_out InterfaceDescription_out;
+  typedef CORBA_InterfaceDescription_var InterfaceDescription_var;
+
+  typedef CORBA_ValueMember ValueMember;
+  typedef CORBA_ValueMember *ValueMember_ptr;
+  typedef CORBA_ValueMember_out ValueMember_out;
+  typedef CORBA_ValueMember_var ValueMember_var;
+
+  typedef CORBA_ValueMemberSeq ValueMemberSeq;
+  typedef CORBA_ValueMemberSeq *ValueMemberSeq_ptr;
+  typedef CORBA_ValueMemberSeq_out ValueMemberSeq_out;
+  typedef CORBA_ValueMemberSeq_var ValueMemberSeq_var;
+
+  typedef CORBA_ValueMemberDef ValueMemberDef;
+  typedef CORBA_ValueMemberDef *ValueMemberDef_ptr;
+  typedef CORBA_ValueMemberDef_out ValueMemberDef_out;
+  typedef CORBA_ValueMemberDef_var ValueMemberDef_var;
+  
+  typedef CORBA_ValueDescription ValueDescription;
+  typedef CORBA_ValueDescription *ValueDescription_ptr;
+  typedef CORBA_ValueDescription_out ValueDescription_out;
+  typedef CORBA_ValueDescription_var ValueDescription_var;
+  
+  typedef CORBA_EnumMemberSeq EnumMemberSeq;
+  typedef CORBA_EnumMemberSeq *EnumMemberSeq_ptr;
+  typedef CORBA_EnumMemberSeq_out EnumMemberSeq_out;
+  typedef CORBA_EnumMemberSeq_var EnumMemberSeq_var;
 #ifdef TAO_HAS_VALUETYPE
   typedef CORBA_ValueBase ValueBase;
   typedef CORBA_ValueFactoryBase ValueFactoryBase;
@@ -646,6 +1177,11 @@ TAO_NAMESPACE CORBA
     tk_longdouble         = 25,
     tk_wchar              = 26,
     tk_wstring            = 27,
+    tk_fixed              = 28,
+    tk_value              = 29,
+    tk_value_box          = 30,
+    tk_native             = 31,
+    tk_abstract_interface = 32,
 
     // This symbol is not defined by CORBA 2.0.  It's used to speed up
     // dispatch based on TCKind values, and lets many important ones
@@ -715,15 +1251,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA::String_out ORBid_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ORBid;
 
-  typedef char *Identifier;
-  typedef CORBA::String_var Identifier_var;
-  typedef CORBA::String_out Identifier_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Identifier;
-
-  typedef char *RepositoryId;
-  typedef CORBA::String_var RepositoryId_var;
-  typedef CORBA::String_out RepositoryId_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RepositoryId;
+  
 
   typedef CORBA::Short PolicyErrorCode;
   typedef CORBA::Short_out PolicyErrorCode_out;
@@ -885,8 +1413,191 @@ TAO_NAMESPACE CORBA
   typedef CORBA_DIIPollable_ptr DIIPollable_ptr;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_DIIPollable;
 
-  // ****************************************************************
+    // ****************************************************************
 
+  // ------------------------------Interface REPOS Bala
+
+  // =================== Interface Repository =====================
+  typedef char * ScopedName;
+  typedef CORBA_String_var ScopedName_var;
+  typedef CORBA_String_out ScopedName_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ScopedName;
+
+  typedef char *Identifier;
+  typedef CORBA::String_var Identifier_var;
+  typedef CORBA::String_out Identifier_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Identifier;
+
+  typedef char *RepositoryId;
+  typedef CORBA::String_var RepositoryId_var;
+  typedef CORBA::String_out RepositoryId_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RepositoryId;
+
+  enum DefinitionKind
+  {
+    dk_none,
+    dk_all,
+    dk_Attribute,
+    dk_Constant,
+    dk_Exception,
+    dk_Interface,
+    dk_Module,
+    dk_Operation,
+    dk_Typedef,
+    dk_Alias,
+    dk_Struct,
+    dk_Union,
+    dk_Enum,
+    dk_Primitive,
+    dk_String,
+    dk_Sequence,
+    dk_Array,
+    dk_Repository,
+    dk_Wstring,
+    dk_Fixed,
+    dk_Value,
+    dk_ValueBox,
+    dk_ValueMember,
+    dk_Native  
+  };
+  
+  typedef DefinitionKind &DefinitionKind_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_DefinitionKind;
+
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_IRObject;
+
+  typedef char * VersionSpec;
+  typedef CORBA_String_var VersionSpec_var;
+  typedef CORBA_String_out VersionSpec_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_VersionSpec;
+  
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Container;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Contained;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InterfaceDefSeq;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ValueDefSeq;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ContainedSeq;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_StructMember;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_StructMemberSeq;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Initializer;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InitializerSeq;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_UnionMember;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_UnionMemberSeq;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_EnumMemberSeq;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_IDLType;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Repository;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ModuleDef;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ModuleDescription;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ConstantDef;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ConstantDescription;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_TypedefDef;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_TypeDescription;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_StructDef;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_UnionDef;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_EnumDef;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AliasDef;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PrimitiveDef;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_StringDef;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_WstringDef;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_FixedDef;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_SequenceDef;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ArrayDef;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ExceptionDef;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ExceptionDescription;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AttributeDef;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AttributeDescription;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ParameterDescription;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ParDescriptionSeq;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ContextIdSeq;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ExceptionDefSeq;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ExcDescriptionSeq;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_OperationDef;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_OperationDescription;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RepositoryIdSeq;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_OpDescriptionSeq;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AttrDescriptionSeq;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InterfaceDef;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InterfaceDescription;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ValueMember;  
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ValueMemberSeq;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ValueMemberDef;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ValueDef;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ValueDescription; 
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ValueBoxDef;
+  
+  enum PrimitiveKind
+  {
+    pk_null,
+    pk_void,
+    pk_short,
+    pk_long,
+    pk_ushort,
+    pk_ulong,
+    pk_float,
+    pk_double,
+    pk_boolean,
+    pk_char,
+    pk_octet,
+    pk_any,
+    pk_TypeCode,
+    pk_Principal,
+    pk_string,
+    pk_objref,
+    pk_longlong,
+    pk_ulonglong,
+    pk_longdouble,
+    pk_wchar,
+    pk_wstring  
+  };
+   typedef PrimitiveKind &PrimitiveKind_out;
+   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PrimitiveKind;
+
+   enum AttributeMode
+  {
+    ATTR_NORMAL,
+    ATTR_READONLY  
+  };
+  typedef AttributeMode &AttributeMode_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AttributeMode;
+
+  enum OperationMode
+  {
+    OP_NORMAL,
+    OP_ONEWAY 
+  };
+  typedef OperationMode &OperationMode_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_OperationMode;
+
+  enum ParameterMode
+  {
+    PARAM_IN,
+    PARAM_OUT,
+    PARAM_INOUT  
+  };
+  typedef ParameterMode &ParameterMode_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ParameterMode;
+
+  typedef char * ContextIdentifier;
+  typedef CORBA::String_var ContextIdentifier_var;
+  typedef CORBA::String_out ContextIdentifier_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ContextIdentifier;
+
+  typedef CORBA::Short Visibility;
+  typedef CORBA::Short_out Visibility_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Visibility;
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short PRIVATE_MEMBER;
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short PUBLIC_MEMBER;
+  
+  typedef CORBA::Short ValueModifier;
+  typedef CORBA::Short_out ValueModifier_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ValueModifier;
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short VM_NONE;
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short VM_CUSTOM;
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short VM_ABSTRACT;
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short VM_TRUNCATABLE;
+  // ================== Interface Repository =====================
   // There could be a single version of these methods, but g++ 2.7.2
   // gets horribly confused if we used CORBA::default_environment() at
   // this point.
