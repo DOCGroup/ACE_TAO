@@ -6,6 +6,23 @@
 
 #include "ReactorTask.h"
 
+static const char *TAO_Reactor_Task_Timeprobe_Description[] = 
+{ 
+  "Reactor_Task - waiting for events",
+  "Reactor_Task - events handled"
+};
+
+enum 
+{
+  TAO_REACTOR_TASK_WAITING_FOR_EVENTS = 5300,
+  TAO_REACTOR_TASK_EVENTS_HANDLED
+};
+
+// Setup Timeprobes
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Reactor_Task_Timeprobe_Description, 
+                                  TAO_REACTOR_TASK_WAITING_FOR_EVENTS);
+
+
 ACE_ES_Reactor_Task::ACE_ES_Reactor_Task() :
   //  reactor_ (0, &timer_queue_),
   done_ (0)

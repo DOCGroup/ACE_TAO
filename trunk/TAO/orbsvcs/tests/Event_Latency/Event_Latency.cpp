@@ -9,13 +9,34 @@
 #include "ace/Sched_Params.h"
 #include "ace/Profile_Timer.h"
 
-#include "tao/Timeprobe.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "Event_Latency.h"
+
+#include "tao/Timeprobe.h"
+
+static const char *Event_Latency_Timeprobe_Description[] = 
+{ 
+  "push event to consumer",
+  "start with new event in Supplier",
+  "supplier starts pushing event",
+  "supplier ends pushing event"
+};
+
+enum 
+{
+  EVENT_LATENCY_PUSH_EVENT_TO_CONSUMER = 20000,
+  EVENT_LATENCY_START_WITH_NEW_EVENT_IN_SUPPLIER,
+  EVENT_LATENCY_SUPPLIER_STARTS_PUSHING_EVENT,
+  EVENT_LATENCY_SUPPLIER_ENDS_PUSHING_EVENT
+};
+
+// Setup Timeprobes
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Event_Latency_Timeprobe_Description, 
+                                  EVENT_LATENCY_PUSH_EVENT_TO_CONSUMER);
 
 static const char usage [] = "[-? |\n"
 "            [-c <consumers> [4]]\n"
@@ -138,7 +159,7 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
                         CORBA::Environment &)
 {
   // ACE_DEBUG ((LM_DEBUG, "Latency_Consumer:push - "));
-  ACE_TIMEPROBE ("push event to consumer");
+  ACE_TIMEPROBE (EVENT_LATENCY_PUSH_EVENT_TO_CONSUMER);
 
   if (events.length () == 0)
     {
@@ -525,7 +546,7 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
             }
 
           // @@ ACE_TIMEPROBE_RESET;
-          // @@ ACE_TIMEPROBE ("start with new event in Supplier");
+          // @@ ACE_TIMEPROBE (EVENT_LATENCY_START_WITH_NEW_EVENT_IN_SUPPLIER);
 
           TAO_TRY
             {
@@ -548,14 +569,14 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
                     }
 #endif /* quantify */
 
-                  ACE_TIMEPROBE ("  supplier starts pushing event");
+                  ACE_TIMEPROBE (EVENT_LATENCY_SUPPLIER_STARTS_PUSHING_EVENT);
 
                   RtecEventComm::EventSet events (1);
                   events.length (1);
                   events[0] = event;
                   consumers_->push (events, TAO_TRY_ENV);
 
-                  ACE_TIMEPROBE ("  supplier ends pushing event");
+                  ACE_TIMEPROBE (EVENT_LATENCY_SUPPLIER_ENDS_PUSHING_EVENT);
                 }
               TAO_CHECK_ENV;
             }

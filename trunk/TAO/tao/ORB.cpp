@@ -11,14 +11,15 @@
 #include "ace/Object_Manager.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "tao/TAO_Internal.h"
-#include "tao/Timeprobe.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ORB.i"
 #endif /* ! __ACE_INLINE__ */
 
-static const char *TAO_ORB_Timeprobe_Description[] =
-{
+#include "tao/Timeprobe.h"
+
+static const char *TAO_ORB_Timeprobe_Description[] = 
+{ 
   "CORBA_ORB::run - start",
   "CORBA_ORB::run - end",
 };

@@ -11,6 +11,28 @@
 #include "RT_Task.i"
 #endif /* __ACE_INLINE__ */
 
+#include "tao/Timeprobe.h"
+
+static const char *TAO_RT_Task_Timeprobe_Description[] = 
+{ 
+  "RT_Task - start execute",
+  "RT_Task - end execute",
+  "synch_threads - priority requested",
+  "synch_threads - priority obtained"
+};
+
+enum 
+{
+  TAO_RT_TASK_START_EXECUTE = 5200,
+  TAO_RT_TASK_END_EXECUTE,
+  TAO_RT_TASK_SYNCH_THREADS_PRIORITY_REQUESTED,
+  TAO_RT_TASK_SYNCH_THREADS_PRIORITY_OBTAINED
+};
+
+// Setup Timeprobes
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_RT_Task_Timeprobe_Description, 
+                                  TAO_RT_TASK_START_EXECUTE);
+
 class ACE_RT_Task_Shutdown : public ACE_RT_Task_Command
 // = TITLE
 //    Flush Queue Command.
@@ -133,12 +155,12 @@ ACE_RT_Task::svc_one (void)
   int result;
   u_long command_action = ACE_RT_Task_Command::RELEASE;
 
-  ACE_TIMEPROBE (" RT_Task - start execute");
+  {
+    ACE_FUNCTION_TIMEPROBE (TAO_RT_TASK_START_EXECUTE);
 
-  // @@ Put exception handling around this!
-  result = command->execute (command_action);
-
-  ACE_TIMEPROBE (" RT_Task - end execute");
+    // @@ Put exception handling around this!
+    result = command->execute (command_action);
+  }
 
   switch (command_action)
     {
@@ -237,15 +259,16 @@ ACE_RT_Task::synch_threads (size_t threads)
 
       TAO_TRY
         {
-          // @@ TODO handle exceptions
-          ACE_TIMEPROBE ("  synch_threads - priority requested");
-          ACE_Scheduler_Factory::server ()->priority
-            (rt_info_,
-             thread_priority,
-             subpriority,
-             preemption_priority, TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-          ACE_TIMEPROBE ("  synch_threads - priority obtained");
+          {
+            // @@ TODO handle exceptions
+            ACE_FUNCTION_TIMEPROBE (TAO_RT_TASK_SYNCH_THREADS_PRIORITY_REQUESTED);
+            ACE_Scheduler_Factory::server ()->priority
+              (rt_info_,
+               thread_priority,
+               subpriority,
+               preemption_priority, TAO_TRY_ENV);
+            TAO_CHECK_ENV;
+          }
 
           ACE_DEBUG ((LM_DEBUG, "(%t) spawning %d threads at os thread"
                       " priority %d.\n",
