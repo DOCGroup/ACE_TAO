@@ -6,7 +6,7 @@ ACE_RCSID (ace,
            ACE_crc_ccitt,
            "$Id$")
 
-namespace 
+namespace
 {
   /*****************************************************************/
   /*                                                               */
@@ -67,7 +67,7 @@ namespace
   /*****************************************************************/
   /*                   End of CRC Lookup Table                     */
   /*****************************************************************/
-};
+}
 
 #define COMPUTE(var, ch) (var) = (crc_table[(var ^ ch) & 0xFF] ^ (var >> 8))
 
@@ -98,7 +98,7 @@ ACE::crc_ccitt (const void *buffer, size_t len, ACE_UINT16 crc)
     {
       COMPUTE (crc, *p);
     }
-  
+
   return ~crc;
 }
 
