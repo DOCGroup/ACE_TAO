@@ -1,3 +1,11 @@
+Fri Jul  2 14:50:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+	  Use close() instead of unsubscribe() to close the
+	  SOCK_Dgram_Mcast in the TAO_ECG_Mcast_EH class. Thanks to Robert 
+	  V. Head <rhead@virtc.com> for tracking down this problem and
+	  suggesting the fix.
+
 Fri Jul  2 14:14:28 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/{IIOP,UIOP}_Profile.cpp (parse_string):
