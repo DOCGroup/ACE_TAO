@@ -26,6 +26,10 @@ Mon Feb 23 11:40:37 1998  David L. Levine  <levine@cs.wustl.edu>
           with padding by default, unless TAO_HAS_FIXED_BYTE_ALIGNMENT is
           #defined.
 
+        * tao/corba.h: added ACE_UNUSED_ARG (VAR); to TAO_CATCH macro
+          for platforms without ACE_HAS_EXCEPTIONS, to avoid compiler
+          warning about unused variable if VAR isn't used anywhere.
+
         * TAO_IDL/Makefile: added clean and realclean targets for
           CROSS-COMPILE platforms.
 
