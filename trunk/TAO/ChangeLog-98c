@@ -1,5 +1,8 @@
 Mon Oct  5 22:12:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
+	  Added some template instantiations.
+
 	* docs/Options.html: 
 	* docs/configurations.html: 
 	  Added a few comments for the latest options.
