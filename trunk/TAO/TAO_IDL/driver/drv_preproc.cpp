@@ -306,19 +306,36 @@ DRV_cpp_init (void)
           ACE_OS::strcat (option, 
                           TAO_IDL_INCLUDE_DIR);
 #else
-          const char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
+          char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
+          size_t len = 0;
 
           if (TAO_ROOT != 0)
             {
+              len = ACE_OS::strlen (TAO_ROOT);
+
+              // Some compilers choke on "//" separators.
+              if (TAO_ROOT[len - 1] == '/')
+                {
+                  TAO_ROOT[len - 1] = '\0';
+                }
+
               ACE_OS::strcat (option, TAO_ROOT);
               ACE_OS::strcat (option, "/tao");
             }
           else
             {
-              const char* ACE_ROOT = ACE_OS::getenv ("ACE_ROOT");
+              char* ACE_ROOT = ACE_OS::getenv ("ACE_ROOT");
 
               if (ACE_ROOT != 0)
                 {
+                  len = ACE_OS::strlen (ACE_ROOT);
+
+                  // Some compilers choke on "//" separators.
+                  if (ACE_ROOT[len - 1] == '/')
+                    {
+                      ACE_ROOT[len - 1] = '\0';
+                    }
+
                   ACE_OS::strcat (option, ACE_ROOT);
                   ACE_OS::strcat (option, "/TAO/tao");
                 }
