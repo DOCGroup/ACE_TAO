@@ -1675,16 +1675,6 @@ if test -n "$GXX"; then
     ])
 fi
 
-dnl Check for working "const"
-dnl This test doesn't always work.
-dnl AC_C_CONST
-
-dnl Check for working "inline"
-dnl AC_C_INLINE  dnl This test now appears to be broken!!!
-if test "$ac_cv_c_inline" = no; then
-  AC_DEFINE([ACE_LACKS_INLINE_FUNCTIONS])
-fi
-
 dnl Check to see if we are running on a big endian platform
 dnl "ace/Basic_Types.h" should perhaps be modified to take advantage
 dnl of the results of this test.
@@ -4494,7 +4484,36 @@ if test "$ace_user_enable_reentrant_funcs" = yes; then
         ],, [AC_DEFINE([ACE_LACKS_STRTOK_R_PROTOTYPE])])
     ],)
 
-  AC_CHECK_FUNC([getpwnam_r],,[AC_DEFINE([ACE_LACKS_PWD_REENTRANT_FUNCTIONS])])
+  AC_CHECK_FUNC([getpwnam_r],
+                [
+                 AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#ifndef _REENTRANT
+# define _REENTRANT
+#endif
+#ifdef HAVE_PWD_H
+# include <pwd.h>
+#endif
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+                 ]],
+                 [[
+  const char * name;
+  struct passwd * pwent;
+  char * buffer;
+  int buflen;
+  struct passwd * result;
+
+  int status = getpwnam_r (name, pwent, buffer, buflen, &result);
+                 ]])],
+                 [
+                  AC_DEFINE([ACE_HAS_POSIX_GETPWNAM_R])
+                 ],
+                 [
+                  dnl Nothing to do!
+                 ])
+                ],
+                [AC_DEFINE([ACE_LACKS_PWD_REENTRANT_FUNCTIONS])])
 
   AC_CHECK_FUNC([ctime_r],,)
 
@@ -6413,6 +6432,10 @@ if test "$ace_user_enable_reentrant_funcs" = yes &&
    test "$ac_cv_func_gmtime_r" = yes &&
    test "$ac_cv_func_asctime_r" = yes; then
   AC_DEFINE([ACE_HAS_REENTRANT_FUNCTIONS])
+  # Explicitly enable reentrant functions if thread support is not enabled.
+  if test "$ace_user_enable_threads" = no; then
+    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_REENTRANT"
+  fi
 fi
 
 dnl Don't bother with reentrant functions if they are disabled by the user.

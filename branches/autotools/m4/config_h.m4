@@ -618,6 +618,9 @@ AH_TEMPLATE([ACE_HAS_POSITION_INDEPENDENT_POINTERS],
 [Platform supports "position-independent" features provided by
    ACE_Based_Pointer<>.])
 
+AH_TEMPLATE([ACE_HAS_POSIX_GETPWNAM_R],
+[Platform supports POSIX getpwnam_r() function])
+
 AH_TEMPLATE([ACE_HAS_POSIX_NONBLOCK],
 [Platform supports POSIX O_NONBLOCK semantics])
 
