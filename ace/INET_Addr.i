@@ -39,7 +39,8 @@ ACE_INET_Addr::get_host_addr (void) const
   // on vxworks or lack of thread safety.
   //
   // So, we use the way that vxworks suggests.
-  inet_ntoa_b (this->inet_addr_.sin_addr, this->buf_);
+  ACE_INET_Addr *ncthis = ACE_const_cast (ACE_INET_Addr *, this);
+  inet_ntoa_b (this->inet_addr_.sin_addr, ncthis->buf_);
   return &buf_[0];
 #else /* VXWORKS */
   return ACE_OS::inet_ntoa (this->inet_addr_.sin_addr);  
