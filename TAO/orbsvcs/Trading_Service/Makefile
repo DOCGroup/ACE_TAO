@@ -7,6 +7,13 @@
 #   STL (start)
 #---------------
 
+ifndef STL_ROOT
+STL_ROOT=/project/doc/irfan/ObjectSpace/SC4.0
+endif
+
+STD=$(STL_ROOT)/ospace/std
+STL=$(STL_ROOT)/stl
+
 include $(STL_ROOT)/config/local.cfg
 
 CC_INCLUDES += -I$(STD)
@@ -44,7 +51,7 @@ LDLIBS  = -lorbsvcs -lTAO -lospace
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BUILD = $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN) 
+BUILD = $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
 
 #--------------------------------------------------------------------------
 #	Include macros and targets
