@@ -1,4 +1,11 @@
-Wed Sep 25 17:58:43 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl
+Thu Sep 26 05:42:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Since mingw can now handle exceptions across dll boundries
+          removed that restriction. Thanks for Vince Mounts <vince@mounts.cc>
+          for reporting this.
+
+Wed Sep 25 17:58:43 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Basic_Stats.h:
         * ace/Connector.h:
