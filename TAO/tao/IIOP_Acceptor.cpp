@@ -174,12 +174,12 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   if (ACE_OS::strchr (address, ':') == address)
     {
-      // The address is a port number or port name, and obtain the
-      // fully qualified domain name.  No hostname was specified.
+      // The address is a port number or port name.  No hostname was
+      // specified.  The hostname for each network interface and the
+      // fully qualified domain name must be obtained.
 
-      char buffer[MAXHOSTNAMELEN + 1];
-      if (addr.get_host_name (buffer,
-                              sizeof (buffer)) != 0)
+      // Check for multiple network interfaces.
+      if (this->probe_interfaces (orb_core) == -1)
         return -1;
 
       // First convert the port into a usable form.
@@ -188,9 +188,11 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
       // Now reset the port and set the host.
       if (addr.set (addr.get_port_number (),
-                    buffer,
+                    ACE_static_cast (ACE_UINT32, INADDR_ANY),
                     1) != 0)
         return -1;
+      else
+        return this->open_i (orb_core, addr);
     }
   else if (ACE_OS::strchr (address, ':') == 0)
     {
@@ -246,101 +248,9 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   if (this->parse_options (options) == -1)
     return -1;
 
-  // Extract the hostname for each network interface, and then cache
-  // it.  The hostnames will then be used when creating a
-  // TAO_IIOP_Profile for each endpoint setup on the probed
-  // network interfaces.
-  ACE_INET_Addr *if_addrs = 0;
-  size_t if_cnt = 0;
-
-  if (ACE::get_ip_interfaces (if_cnt,
-                              if_addrs) != 0
-      && errno != ENOTSUP)
-    {
-      // In the case of errno == ENOTSUP, if_cnt and if_addrs will not
-      // be modified, and will each remain equal to zero.  This causes
-      // the default interface to be used.
-      return -1;
-    }
-
-  if (if_cnt == 0 || if_addrs == 0)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_WARNING,
-                      ASYS_TEXT ("TAO (%P|%t) Unable to probe network ")
-                      ASYS_TEXT ("interfaces.  Using default.")));
-        }
-
-      if_cnt = 1; // Force the network interface count to be one.
-      delete [] if_addrs;
-      ACE_NEW_RETURN (if_addrs,
-                      ACE_INET_Addr[if_cnt],
-                      -1);
-    }
-
-  // Scan for the loopback interface since it shouldn't be included in
-  // the list of cached hostnames unless it is the only interface.
-  size_t lo_cnt = 0;  // Loopback interface count
-  for (size_t j = 0; j < if_cnt; ++j)
-    if (if_addrs[j].get_ip_address() == INADDR_LOOPBACK)
-      lo_cnt++;
-
-
-  { // Begin ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> scope.
-
-    // @@ It's either this or release the array from the
-    //    ACE_Auto_Basic_Array_Ptr<> and delete it manually.  This
-    //    seemed like a more elegant solution, i.e. create a scope for
-    //    it.
-    //          -Ossama
-
-    // The instantiation for this template is in
-    // tao/IIOP_Connector.cpp.
-    ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_if_addrs (if_addrs);
-
-    // If the loopback interface is the only interface then include it
-    // in the list of interfaces to query for a hostname, otherwise
-    // exclude it from the list.
-    if (if_cnt == lo_cnt)
-      this->num_hosts_ = if_cnt;
-    else
-      this->num_hosts_ = if_cnt - lo_cnt;
-
-    ACE_NEW_RETURN (this->addrs_,
-                    ACE_INET_Addr[this->num_hosts_],
-                    -1);
-
-    ACE_NEW_RETURN (this->hosts_,
-                    ACE_CString[this->num_hosts_],
-                    -1);
-
-    // The number of hosts/interfaces we want to cache may not be the
-    // same as the number of detected interfaces so keep a separate
-    // count.
-    size_t host_cnt = 0;
-
-    for (size_t i = 0; i < if_cnt; ++i)
-      {
-        // Ignore any loopback interface if there are other
-        // non-loopback interfaces.
-        if (if_cnt != lo_cnt &&
-            if_addrs[i].get_ip_address() == INADDR_LOOPBACK)
-          continue;
-
-        if (this->hostname (orb_core,
-                            if_addrs[i],
-                            this->hosts_[host_cnt]) != 0)
-          return -1;
-
-        // Copy the addr.  The port is (re)set in
-        // TAO_IIOP_Acceptor::open_i().
-        if (this->addrs_[host_cnt].set (if_addrs[i]) != 0)
-          return -1;
-
-        host_cnt++;
-      }
-  } // End ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> scope.
+  // Check for multiple network interfaces.
+  if (this->probe_interfaces (orb_core) == -1)
+    return -1;
 
   // Now that each network interface's hostname has been cached, open
   // an endpoint on each network interface using the INADDR_ANY
@@ -464,6 +374,99 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
         }
 
       host = tmp_host;
+    }
+
+  return 0;
+}
+
+int
+TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
+{
+  // Extract the hostname for each network interface, and then cache
+  // it.  The hostnames will then be used when creating a
+  // TAO_IIOP_Profile for each endpoint setup on the probed
+  // network interfaces.
+  ACE_INET_Addr *if_addrs = 0;
+  size_t if_cnt = 0;
+
+  if (ACE::get_ip_interfaces (if_cnt,
+                              if_addrs) != 0
+      && errno != ENOTSUP)
+    {
+      // In the case where errno == ENOTSUP, if_cnt and if_addrs will
+      // not be modified, and will each remain equal to zero.  This
+      // causes the default interface to be used.
+      return -1;
+    }
+
+  if (if_cnt == 0 || if_addrs == 0)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_WARNING,
+                      ASYS_TEXT ("TAO (%P|%t) Unable to probe network
+ ")
+                      ASYS_TEXT ("interfaces.  Using default.")));
+        }
+
+      if_cnt = 1; // Force the network interface count to be one.
+      delete [] if_addrs;
+      ACE_NEW_RETURN (if_addrs,
+                      ACE_INET_Addr[if_cnt],
+                      -1);
+    }
+
+  // Scan for the loopback interface since it shouldn't be included in
+  // the list of cached hostnames unless it is the only interface.
+  size_t lo_cnt = 0;  // Loopback interface count
+  for (size_t j = 0; j < if_cnt; ++j)
+    if (if_addrs[j].get_ip_address () == INADDR_LOOPBACK)
+      lo_cnt++;
+
+  // The instantiation for this template is in
+  // tao/IIOP_Connector.cpp.
+  ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_if_addrs (if_addrs);
+
+  // If the loopback interface is the only interface then include it
+  // in the list of interfaces to query for a hostname, otherwise
+  // exclude it from the list.
+  if (if_cnt == lo_cnt)
+    this->num_hosts_ = if_cnt;
+  else
+    this->num_hosts_ = if_cnt - lo_cnt;
+
+  ACE_NEW_RETURN (this->addrs_,
+                  ACE_INET_Addr[this->num_hosts_],
+                  -1);
+
+  ACE_NEW_RETURN (this->hosts_,
+                  ACE_CString[this->num_hosts_],
+                  -1);
+
+  // The number of hosts/interfaces we want to cache may not be the
+  // same as the number of detected interfaces so keep a separate
+  // count.
+  size_t host_cnt = 0;
+
+  for (size_t i = 0; i < if_cnt; ++i)
+    {
+      // Ignore any loopback interface if there are other
+      // non-loopback interfaces.
+      if (if_cnt != lo_cnt &&
+          if_addrs[i].get_ip_address() == INADDR_LOOPBACK)
+        continue;
+
+      if (this->hostname (orb_core,
+                          if_addrs[i],
+                          this->hosts_[host_cnt]) != 0)
+        return -1;
+
+      // Copy the addr.  The port is (re)set in
+      // TAO_IIOP_Acceptor::open_i().
+      if (this->addrs_[host_cnt].set (if_addrs[i]) != 0)
+        return -1;
+
+      host_cnt++;
     }
 
   return 0;
