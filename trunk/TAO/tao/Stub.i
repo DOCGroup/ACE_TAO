@@ -254,17 +254,24 @@ TAO_Stub::orb_core (void) const
   return this->orb_core_;
 }
 
-ACE_INLINE CORBA::ORB_ptr
-TAO_Stub::servant_orb (void)
+ACE_INLINE CORBA::ORB_var &
+TAO_Stub::servant_orb_var (void)
 {
   // Simply pass back the ORB pointer for temporary use.
-  return this->servant_orb_.ptr ();
+  return this->servant_orb_;
+}
+
+ACE_INLINE CORBA::ORB_ptr
+TAO_Stub::servant_orb_ptr (void)
+{
+  // Simply pass back the ORB pointer for temporary use.
+  return CORBA::ORB::_duplicate (this->servant_orb_.in ());
 }
 
 ACE_INLINE void
 TAO_Stub::servant_orb (CORBA::ORB_ptr orb)
 {
-  this->servant_orb_ = orb;
+  this->servant_orb_ = CORBA::ORB::_duplicate (orb);
 }
 
 // Creator methods for TAO_Stub_Auto_Ptr (TAO_Stub Auto Pointer)
