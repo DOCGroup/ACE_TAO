@@ -13,6 +13,10 @@ project (Config_Handlers) : taolib {
   Source_Files {
     Any_Handler.cpp
     DT_Handler.cpp
+    SP_Handler.cpp
+    Requirement_Handler.cpp
+    Property_Handler.cpp
+    SPK_Handler.cpp
     ACD_Handler.cpp
     APM_Handler.cpp
     CAD_Handler.cpp
@@ -32,13 +36,9 @@ project (Config_Handlers) : taolib {
     NIA_Handler.cpp
     PC_Handler.cpp
     PCI_Handler.cpp
-    Property_Handler.cpp
-    Requirement_Handler.cpp
     RS_Handler.cpp
     SID_Handler.cpp
-    SP_Handler.cpp
     SPE_Handler.cpp
-    SPK_Handler.cpp
     SPR_Handler.cpp
     Domain_Handler.cpp
     Plan_Handler.cpp
