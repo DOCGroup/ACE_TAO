@@ -3,6 +3,10 @@ Fri Aug 14 22:09:41 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/tests/Logger/Logging_Test_i.cpp (init_naming_service):
           dereferenced orb_ with .in () to please g++.
 
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp (run):
+          dereferenced local_ec with .in () to please g++.
+          (shutdown): added ACE_UNUSED_ARG (_env).
+
 Fri Aug 14 20:13:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/CDR.h:
