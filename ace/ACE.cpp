@@ -1992,6 +1992,7 @@ ACE::daemonize (const char pathname[],
 #else
   ACE_UNUSED_ARG (pathname);
   ACE_UNUSED_ARG (close_all_handles);
+  ACE_UNUSED_ARG (program_name);
 
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_LACKS_FORK */
