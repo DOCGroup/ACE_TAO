@@ -7,6 +7,9 @@ Tue Mar 17 13:20:05 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/orbconf.h,interp.cpp: renamed TAO_ALIGNMENT_MAGIC_NUMBER to
           TAO_MAXIMUM_NATIVE_TYPE_SIZE.
 
+        * tao/sequence.i,sequence_T.{i,cpp}: removed "const" from some
+          ACE_reinterpret_casts, because ghs warned that it's "meaningless".
+
 Tue Mar 17 11:26:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_sequence.cpp:
