@@ -1,0 +1,4 @@
+project : ciao_component {
+  depends += CIAO_Server
+  libs    += CIAO_Server
+}
