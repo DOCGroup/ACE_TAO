@@ -1,0 +1,58 @@
+// $Id$
+
+/**
+ * @file CIAO_Events.idl
+ *
+ * @author George Edwards
+ *
+ * @brief Interfaces for configuring CIAO's event mechanism.
+ */
+
+#include "CCM_Event.idl"
+#include "RtecEventChannelAdmin.idl"
+
+module CIAO_Events
+{
+  typedef long CONNECTION_ID;
+
+  enum EventServiceType
+  {
+    DIRECT,
+    EC,
+    RTEC,
+    NS,
+    RTNS
+  };
+
+  interface Consumer_Config
+  {
+    void set_consumer_id (in CONNECTION_ID connection_id);
+
+    void set_supplier_id (in CONNECTION_ID connection_id);
+
+    void set_consumer (in Components::EventConsumerBase consumer);
+
+    CONNECTION_ID get_consumer_id ();
+
+    CONNECTION_ID get_supplier_id ();
+
+    Components::EventConsumerBase get_consumer ();
+
+    EventServiceType get_service_type ();
+
+    RtecEventChannelAdmin::ConsumerQOS get_rt_event_qos ();
+  };
+
+
+  interface Supplier_Config
+  {
+    void set_supplier_id (in CONNECTION_ID connection_id);
+
+    CONNECTION_ID get_supplier_id ();
+
+    EventServiceType get_service_type ();
+
+    RtecEventChannelAdmin::SupplierQOS get_rt_event_qos ();
+  };
+
+};

@@ -22,152 +22,371 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "CCM_ContainerC.h"
+#include "ace/Active_Map_Manager.h"
+#include "CIAO_EventsS.h"
 
-namespace CIAO
+namespace CIAO_Events
 {
 
-  class CIAO_EventServiceBase
+  class EventServiceBase;
+  class Events_Manager;
+
+  struct EventServiceInfo
+  {
+    EventServiceType type;
+    EventServiceBase * service;
+    union
+      {
+        RtecEventComm::PushConsumer_ptr push_consumer;
+        ACE_Active_Map_Manager_Key * consumer_key;
+      } connection;
+  };
+
+  class EventServiceBase
   {
 
   public:
 
-    virtual ::Components::Cookie * specify_event_service (
-        const char * event_name,
-        const char * publisher_name,
-        const char * service_name
+    virtual void connect_event_supplier (
+        CIAO_Events::Supplier_Config_ptr supplier_config
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException)) = 0;
 
-    virtual ::Components::Cookie * connect_event_supplier (
-        ::CIAO::EventServiceInfo service_info
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException)) = 0;
-
-    virtual ::Components::Cookie * connect_event_consumer (
-        ::Components::EventConsumerBase_ptr c,
-        ::CIAO::EventServiceInfo service_info
+    virtual CIAO_Events::EventServiceInfo connect_event_consumer (
+        CIAO_Events::Consumer_Config_ptr consumer_config
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException)) = 0;
 
     virtual void disconnect_event_consumer (
-        ::Components::Cookie *ck
+        CIAO_Events::EventServiceInfo service_info
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::InvalidName,
-        ::Components::InvalidConnection)) = 0;
+        CORBA::SystemException,
+        Components::InvalidName,
+        Components::InvalidConnection)) = 0;
 
     virtual void disconnect_event_supplier (
-        ::Components::Cookie *ck
-        ACE_ENV_ARG_DECL)
+        ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::InvalidName,
-        ::Components::InvalidConnection)) = 0;
+        CORBA::SystemException,
+        Components::InvalidName,
+        Components::InvalidConnection)) = 0;
 
     virtual void push_event (
-        ::Components::EventBase *ev,
-        ::Components::Cookie *ck
+        Components::EventBase *ev
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException)) = 0;
 
   };
 
-  class CIAO_RTEventService :
-    public virtual CIAO_EventServiceBase
+  class RTEventService :
+    public virtual EventServiceBase
   {
 
   public:
 
-    virtual ::Components::Cookie * specify_event_service (
-        const char * event_name,
-        const char * publisher_name,
-        const char * service_name
+    RTEventService (CORBA::ORB_ptr orb, RtecEventChannelAdmin::EventChannel_ptr ec);
+
+    virtual void connect_event_supplier (
+        CIAO_Events::Supplier_Config_ptr supplier_config
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
-    virtual ::Components::Cookie * connect_event_supplier (
-        CIAO_EventServiceInfo service_info
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException));
-
-    virtual ::Components::Cookie * connect_event_consumer (
-        ::Components::EventConsumerBase_ptr c,
-        CIAO_EventServiceInfo service_info
+    virtual CIAO_Events::EventServiceInfo connect_event_consumer (
+        CIAO_Events::Consumer_Config_ptr consumer_config
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
     virtual void disconnect_event_consumer (
-        ::Components::Cookie *ck
+        CIAO_Events::EventServiceInfo service_info
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::InvalidName,
-        ::Components::InvalidConnection));
+        CORBA::SystemException,
+        Components::InvalidName,
+        Components::InvalidConnection));
 
     virtual void disconnect_event_supplier (
-        ::Components::Cookie *ck
-        ACE_ENV_ARG_DECL)
+        ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::InvalidName,
-        ::Components::InvalidConnection));
+        CORBA::SystemException,
+        Components::InvalidName,
+        Components::InvalidConnection));
 
     virtual void push_event (
-        ::Components::EventBase *ev,
-        ::Components::Cookie *ck
+        Components::EventBase *ev
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
   private:
 
-    /// Map of event types
-    ACE_Hash_Map_Manager<const char *, RtecEventComm::EventType, ACE_Null_Mutex>
-      ciao_event_types_map_;
+    CORBA::ORB_var orb_;
 
-    /// Map of suppliers
-    ACE_Hash_Map_Manager<const char *, RtecEventComm::EventSourceID, ACE_Null_Mutex>
-      ciao_publishers_map_;
+    // Reference to the Root POA
+    PortableServer::POA_var root_poa_;
 
     /// Reference to the RT event channel
-    RtecEventChannelAdmin::EventChannel_var ciao_rt_event_channel_;
+    RtecEventChannelAdmin::EventChannel_var rt_event_channel_;
+
+    RtecEventComm::EventType type_id_;
+
+    RtecEventComm::EventSourceID source_id_;
+
+    RtecEventComm::PushSupplier_var push_supplier_;
+
+    RtecEventChannelAdmin::ProxyPushConsumer_var proxy_consumer_;
 
   };
-      
 
-  enum CIAO_EventServiceType
+  class DirectEventService :
+    public virtual EventServiceBase
   {
-    DIRECT,
-    EC,
-    RTEC,
-    NS,
-    RTNS
+
+  public:
+
+    virtual void connect_event_supplier (
+        CIAO_Events::Supplier_Config_ptr supplier_config
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
+    virtual CIAO_Events::EventServiceInfo connect_event_consumer (
+        CIAO_Events::Consumer_Config_ptr consumer_config
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
+    virtual void disconnect_event_consumer (
+        CIAO_Events::EventServiceInfo service_info
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        Components::InvalidName,
+        Components::InvalidConnection));
+
+    virtual void disconnect_event_supplier (
+        ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        Components::InvalidName,
+        Components::InvalidConnection));
+
+    virtual void push_event (
+        Components::EventBase *ev
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
+  private:
+
+    /// Map of consumers
+    ACE_Active_Map_Manager<Components::EventConsumerBase_ptr> consumer_map_;
+    
   };
 
-  struct CIAO_EventServiceInfo
+  class RTEvent_Consumer_Config :
+    public virtual POA_CIAO_Events::Consumer_Config
   {
-    EventServiceType service_type;
-    RtecEventComm::EventType event_type_id;
-    RtecEventComm::EventSourceID event_source_id;
+
+  public:
+
+    RTEvent_Consumer_Config (Events_Manager * em);
+
+    void set_consumer_id (CONNECTION_ID connection_id ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    void set_supplier_id (CONNECTION_ID connection_id ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    void set_consumer (Components::EventConsumerBase_ptr consumer ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CONNECTION_ID get_consumer_id (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CONNECTION_ID get_supplier_id (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    EventServiceType get_service_type (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    Components::EventConsumerBase_ptr get_consumer (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    RtecEventChannelAdmin::ConsumerQOS * get_rt_event_qos (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+
+    CONNECTION_ID consumer_id_;
+    
+    CONNECTION_ID supplier_id_;
+
+    Components::EventConsumerBase_ptr consumer_;
+
+    EventServiceType service_type_;
+
+    Events_Manager * events_manager_;
   };
 
-  class CIAO_RTEventServiceSupplier_impl :
+  class RTEvent_Supplier_Config :
+    public virtual POA_CIAO_Events::Supplier_Config
+  {
+
+  public:
+
+    RTEvent_Supplier_Config (Events_Manager * em);
+
+    void set_supplier_id (CONNECTION_ID connection_id ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CONNECTION_ID get_supplier_id (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    EventServiceType get_service_type (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    RtecEventChannelAdmin::SupplierQOS * get_rt_event_qos (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+
+    CONNECTION_ID supplier_id_;
+
+    EventServiceType service_type_;
+
+    Events_Manager * events_manager_;
+  };
+
+  class Direct_Consumer_Config :
+    public virtual POA_CIAO_Events::Consumer_Config
+  {
+
+  public:
+
+    Direct_Consumer_Config (Events_Manager * em);
+
+    void set_consumer_id (CONNECTION_ID connection_id ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    void set_supplier_id (CONNECTION_ID connection_id ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    void set_consumer (Components::EventConsumerBase_ptr consumer ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CONNECTION_ID get_consumer_id (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CONNECTION_ID get_supplier_id (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    EventServiceType get_service_type (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    Components::EventConsumerBase_ptr get_consumer (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    RtecEventChannelAdmin::ConsumerQOS * get_rt_event_qos (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+
+    CONNECTION_ID consumer_id_;
+    
+    CONNECTION_ID supplier_id_;
+
+    Components::EventConsumerBase_ptr consumer_;
+
+    EventServiceType service_type_;
+
+    Events_Manager * events_manager_;
+  };
+
+  class Direct_Supplier_Config :
+    public virtual POA_CIAO_Events::Supplier_Config
+  {
+
+  public:
+
+    Direct_Supplier_Config (Events_Manager * em);
+
+    void set_supplier_id (CONNECTION_ID connection_id ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CONNECTION_ID get_supplier_id (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    EventServiceType get_service_type (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    RtecEventChannelAdmin::SupplierQOS * get_rt_event_qos (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+
+    CONNECTION_ID supplier_id_;
+
+    EventServiceType service_type_;
+
+    Events_Manager * events_manager_;
+  };
+
+  class Events_Manager
+  {
+
+  public:
+
+    Events_Manager (CORBA::ORB_ptr orb);
+
+    Consumer_Config_ptr create_consumer_config (const char * service_type);
+
+    Supplier_Config_ptr create_supplier_config (const char * service_type);
+
+    EventServiceBase * create_supplier (Supplier_Config * supplier_config);
+
+    RtecEventComm::EventType get_rtec_type_id (CONNECTION_ID connection_id);
+
+    RtecEventComm::EventSourceID get_rtec_source_id (CONNECTION_ID connection_id);
+
+  private:
+
+    void create_rt_event_channel (
+        ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
+    CORBA::ORB_var orb_;
+
+    PortableServer::POA_var root_poa_;
+
+    /// Reference to the RT event channel
+    RtecEventChannelAdmin::EventChannel_var rt_event_channel_;
+
+    /// Map of event type ids
+    ACE_Hash_Map_Manager<CONNECTION_ID, RtecEventComm::EventType, ACE_Null_Mutex>
+      event_types_map_;
+
+    /// Map of supplier ids
+    ACE_Hash_Map_Manager<CONNECTION_ID, RtecEventComm::EventSourceID, ACE_Null_Mutex>
+      publishers_map_;
+
+  };
+
+  class RTEventServiceSupplier_impl :
     public virtual POA_RtecEventComm::PushSupplier,
     public virtual PortableServer::RefCountServantBase
   {
 
   public:
-    CIAO_RTEventServiceSupplier_impl (void);
+    RTEventServiceSupplier_impl (void);
 
-    CIAO_RTEventServiceSupplier_impl (CORBA::ORB_ptr orb);
+    RTEventServiceSupplier_impl (CORBA::ORB_ptr orb);
 
     virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -176,15 +395,15 @@ namespace CIAO
     CORBA::ORB_var orb_;
   };
 
-  class CIAO_RTEventServiceConsumer_impl :
+  class RTEventServiceConsumer_impl :
     public virtual POA_RtecEventComm::PushConsumer,
     public virtual PortableServer::RefCountServantBase
   {
 
   public:
-    CIAO_RTEventServiceConsumer_impl (void);
+    RTEventServiceConsumer_impl (void);
 
-    CIAO_RTEventServiceConsumer_impl (CORBA::ORB_ptr orb,
+    RTEventServiceConsumer_impl (CORBA::ORB_ptr orb,
       Components::EventConsumerBase_ptr consumer);
 
     virtual void push (const RtecEventComm::EventSet& events);

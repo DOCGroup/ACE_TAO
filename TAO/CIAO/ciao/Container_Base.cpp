@@ -10,8 +10,9 @@
 
 ////////////////////////////////////////////////////////////////
 
-CIAO::Container::Container (CORBA::ORB_ptr o)
-  : orb_ (CORBA::ORB::_duplicate (o))
+CIAO::Container::Container (CORBA::ORB_ptr o) :
+  orb_ (CORBA::ORB::_duplicate (o)),
+  events_manager_ (o)
 {
 }
 
@@ -31,6 +32,25 @@ CIAO::Container::_ciao_the_ORB ()
   return this->orb_.in ();
 }
 
+CIAO_Events::Consumer_Config_ptr CIAO::Container::_ciao_create_event_consumer_config (
+        const char * service_type
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException))
+{
+  return this->events_manager_.create_consumer_config (service_type);
+}
+
+CIAO_Events::Supplier_Config_ptr CIAO::Container::_ciao_create_event_supplier_config (
+        const char * service_type
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException))
+{
+  return this->events_manager_.create_supplier_config (service_type);
+}
+
+/*
 ::Components::Cookie * CIAO::Container::_ciao_specify_event_service (
     const char * event_name,
     const char * publisher_name,
@@ -42,105 +62,132 @@ CIAO::Container::_ciao_the_ORB ()
 
   ACE_DEBUG ((LM_DEBUG, "CIAO::Container::_ciao_specify_event_service\n"));
 
-  CIAO::EventServiceInfo service_info;
+  CIAO_EventServiceInfo service_info;
 
   if (ACE_OS::strcmp (service_name, "EC") == 0)
   {
-    service_info.service_type = EC;
+    service_info.type = EC;
+    if (this->event_service_ == 0)
+      {
+        ACE_NEW_RETURN (this->event_service_, CIAO_EventService, 0);
+      }
+    service_info.service = this->event_service_;
   }
   else if (ACE_OS::strcmp (service_name, "RTEC") == 0)
   {
-    service_info.service_type = RTEC;
+    service_info.type = RTEC;
+    if (this->rt_event_service_ == 0)
+      {
+        ACE_NEW_RETURN (this->rt_event_service_, CIAO_RTEventService (this->orb_.in ()), 0);
+      }
+    service_info.service = this->rt_event_service_;
   }
   else if (ACE_OS::strcmp (service_name, "NS") == 0)
   {
-    service_info.service_type = NS;
+    service_info.type = NS;
+    if (this->notify_service_ == 0)
+      {
+        ACE_NEW_RETURN (this->notify_service_, CIAO_NotificationService, 0);
+      }
+    service_info.service = this->notify_service_;
   }
   else if (ACE_OS::strcmp (service_name, "RTNS") == 0)
   {
-    service_info.service_type = RTNS;
+    service_info.type = RTNS;
+    if (this->rt_notify_service_ == 0)
+      {
+        ACE_NEW_RETURN (this->rt_notify_service_, CIAO_RTNotificationService, 0);
+      }
+    service_info.service = this->rt_notify_service_;
   }
   else if (ACE_OS::strcmp (service_name, "DIRECT") == 0)
   {
-    service_info.service_type = DIRECT;
+    service_info.type = DIRECT;
+    if (this->direct_event_service_ == 0)
+      {
+        ACE_NEW_RETURN (this->direct_event_service_, CIAO_DirectEventService, 0);
+      }
+    service_info.service = this->direct_event_service_;
   }
 
-  if (this->ciao_event_types_map_.find (event_name, service_info.event_type_id) == -1)
-    {
-      service_info.event_type_id =
-        ACE_ES_EVENT_ANY + 1 + this->ciao_event_types_map_.current_size ();
-      this->ciao_event_types_map_.bind (event_name, service_info.event_type_id);
-    }
+  service_info.service->specify_event_service (service_info,
+                                               event_name,
+                                               publisher_name
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  if (this->ciao_publishers_map_.find (publisher_name, service_info.event_source_id) == -1)
-    {
-      service_info.event_source_id =
-        ACE_ES_EVENT_SOURCE_ANY + 1 + this->ciao_publishers_map_.current_size ();
-      this->ciao_publishers_map_.bind (publisher_name, service_info.event_source_id);
-    }
-
-  ACE_DEBUG ((LM_DEBUG, "service: %i\n", service_info.service_type));
-  ACE_DEBUG ((LM_DEBUG, "event: %i\n", service_info.event_type_id));
-  ACE_DEBUG ((LM_DEBUG, "source: %i\n", service_info.event_source_id));
-
-  ::Components::Cookie * return_cookie;
-  ACE_NEW_RETURN (return_cookie,
-                 ::CIAO::EventServiceInfo_Cookie (service_info),
-                 0);
+  ACE_Active_Map_Manager_Key key;
+  this->event_info_map_.bind (service_info, key);
+  ::CIAO::Map_Key_Cookie * return_cookie;
+  ACE_NEW_RETURN (return_cookie, ::CIAO::Map_Key_Cookie (key), 0);
   return return_cookie;
-
 }
+*/
 
-
-::Components::Cookie * CIAO::Container::_ciao_connect_event_consumer (
-    ::Components::EventConsumerBase_ptr c,
-    ::Components::Cookie *ck
+void CIAO::Container::_ciao_connect_event_consumer (
+    CIAO_Events::Consumer_Config_ptr consumer_config
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
-    CORBA::SystemException ))
+    CORBA::SystemException))
 {
 
   ACE_DEBUG ((LM_DEBUG, "CIAO::Container::_ciao_connect_event_consumer\n"));
 
-  CIAO::EventServiceInfo service_info;
+  CIAO_Events::EventServiceBase * event_service = 0;
 
-  if (CORBA::is_nil (c))
-    {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
-    }
-
-  if (ck == 0 || ::CIAO::EventServiceInfo_Cookie::extract (ck, service_info) == -1)
+  if (this->event_service_map_.find (consumer_config->get_supplier_id (), event_service) != 0)
     {
       ACE_THROW (
       ::Components::InvalidConnection ());
     }
 
-  ACE_DEBUG ((LM_DEBUG, "service: %i\n", service_info.service_type));
-  ACE_DEBUG ((LM_DEBUG, "event: %i\n", service_info.event_type_id));
-  ACE_DEBUG ((LM_DEBUG, "source: %i\n", service_info.event_source_id));
+  CIAO_Events::EventServiceInfo service_info =
+    event_service->connect_event_consumer (consumer_config ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  switch (service_info.service_type)
-  {
-  case EC:
-    break;
-  case RTEC:
-    return this->connect_rt_event_consumer (c, service_info);
-    break;
-  case NS:
-    break;
-  case RTNS:
-    break;
-  case DIRECT:
-    break;
-  }
+  this->event_info_map_.bind (consumer_config->get_consumer_id (),
+                              service_info);
 
-  return 0;
+  /*
+
+  CIAO_EventServiceInfo service_info;
+  ACE_Active_Map_Manager_Key key;
+
+  if (ck == 0 || ::CIAO::Map_Key_Cookie::extract (ck, key) == -1)
+    {
+      ACE_THROW_RETURN (
+      ::Components::InvalidConnection (),
+      0);
+    }
+
+  if (this->event_info_map_.find (key, service_info) != 0)
+    {
+      ACE_THROW_RETURN (
+      ::Components::InvalidConnection (),
+      0);
+    }
+
+  if (CORBA::is_nil (consumer))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+    }
+
+  service_info.service->connect_event_consumer (consumer, service_info ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  ACE_Active_Map_Manager_Key new_key;
+  this->event_info_map_.bind (service_info, new_key);
+  ::CIAO::Map_Key_Cookie * return_cookie;
+  ACE_NEW_RETURN (return_cookie, ::CIAO::Map_Key_Cookie (new_key), 0);
+  return return_cookie;
+
+  */
 
 }
 
 
-::Components::Cookie * CIAO::Container::_ciao_connect_event_supplier (
-    ::Components::Cookie *ck
+void CIAO::Container::_ciao_connect_event_supplier (
+    CIAO_Events::Supplier_Config_ptr supplier_config
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
     CORBA::SystemException))
@@ -148,226 +195,107 @@ CIAO::Container::_ciao_the_ORB ()
 
   ACE_DEBUG ((LM_DEBUG, "CIAO::Container::_ciao_connect_event_supplier\n"));
 
-  CIAO::EventServiceInfo service_info;
+  CIAO_Events::EventServiceBase * event_service =
+    this->events_manager_.create_supplier (supplier_config);
 
-  if (ck == 0 || ::CIAO::EventServiceInfo_Cookie::extract (ck, service_info) == -1)
+  event_service->connect_event_supplier (supplier_config ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->event_service_map_.bind (supplier_config->get_supplier_id (),
+                                 event_service);
+
+  /*
+  CIAO_EventServiceInfo service_info;
+  ACE_Active_Map_Manager_Key key;
+
+  if (ck == 0 || ::CIAO::Map_Key_Cookie::extract (ck, key) == -1)
     {
-      ACE_THROW (
-      ::Components::InvalidConnection ());
+      ACE_THROW_RETURN (
+      ::Components::InvalidConnection (),
+      0);
     }
 
-  switch (service_info.service_type)
-  {
-  case EC:
-    break;
-  case RTEC:
-    return this->connect_rt_event_supplier (service_info);
-    break;
-  case NS:
-    break;
-  case RTNS:
-    break;
-  case DIRECT:
-    break;
-  }
+  if (this->event_info_map_.find (key, service_info) != 0)
+    {
+      ACE_THROW_RETURN (
+      ::Components::InvalidConnection (),
+      0);
+    }
 
-  return 0;
+  service_info.service->connect_event_supplier (service_info ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  ACE_Active_Map_Manager_Key new_key;
+  this->event_info_map_.bind (service_info, new_key);
+  ::CIAO::Map_Key_Cookie * return_cookie;
+  ACE_NEW_RETURN (return_cookie, ::CIAO::Map_Key_Cookie (new_key), 0);
+  return return_cookie;
+  */
 
 }
 
 void CIAO::Container::_ciao_disconnect_event_consumer
-      (::Components::Cookie *ck
+      (CIAO_Events::CONNECTION_ID connection_id
        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((::CORBA::SystemException,
                        ::Components::InvalidName,
                        ::Components::InvalidConnection))
 {
-  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::_ciao_unsubscribe_event\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::_ciao_disconnect_event_consumer\n"));
 
-  CORBA::Object_var obj = CORBA::Object::_nil ();
-  PortableServer::ObjectId oid;
+  CIAO_Events::EventServiceInfo service_info;
 
-  if (ck == 0 || ::CIAO::ObjectId_Cookie::extract (ck, oid) == -1)
+  if (this->event_info_map_.unbind (connection_id, service_info) != 0)
     {
       ACE_THROW (
       ::Components::InvalidConnection ());
     }
 
-  obj = this->root_poa_->id_to_reference (oid ACE_ENV_ARG_PARAMETER);
+  service_info.service->disconnect_event_consumer (service_info ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  RtecEventComm::PushConsumer_var push_consumer =
-    RtecEventComm::PushConsumer::_narrow (obj.in ());
-  if (CORBA::is_nil (push_consumer.in ()))
-    {
-      ACE_THROW (
-        ::Components::InvalidConnection ());
-    }
-  push_consumer->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-	ACE_CHECK;
-  
 }
 
 void CIAO::Container::_ciao_disconnect_event_supplier
-      (::Components::Cookie *ck
+      (CIAO_Events::CONNECTION_ID connection_id
        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((::CORBA::SystemException,
                        ::Components::InvalidName,
                        ::Components::InvalidConnection))
 {
+  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::_ciao_disconnect_event_supplier\n"));
 
+  CIAO_Events::EventServiceBase * event_service;
+
+  if (this->event_service_map_.unbind (connection_id, event_service) != 0)
+    {
+      ACE_THROW (
+      ::Components::InvalidConnection ());
+    }
+
+  event_service->disconnect_event_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
-void CIAO::Container::_ciao_push_event (::Components::EventBase *ev,
-                                       ::Components::Cookie *ck
-                                       ACE_ENV_ARG_DECL)
-                                      ACE_THROW_SPEC
-                                      ((CORBA::SystemException))
+void CIAO::Container::_ciao_push_event (Components::EventBase *ev,
+                                        CIAO_Events::CONNECTION_ID connection_id
+                                        ACE_ENV_ARG_DECL)
+                                      ACE_THROW_SPEC ((
+                                        CORBA::SystemException))
 {
 
   ACE_DEBUG ((LM_DEBUG, "CIAO::Container::_ciao_push_event\n"));
 
-  RtecEventComm::EventSet events (1);
-  events.length (1);
-  events[0].header.source = ACE_ES_EVENT_SOURCE_ANY;
-  events[0].header.type = ACE_ES_EVENT_ANY;
-  events[0].data.any_value <<= ev;
-  ev->_add_ref ();
+  CIAO_Events::EventServiceBase * event_service;
 
-  CORBA::Object_var obj = CORBA::Object::_nil ();
-  PortableServer::ObjectId oid;
-
-  if (ck == 0 || ::CIAO::ObjectId_Cookie::extract (ck, oid) == -1)
+  if (this->event_service_map_.find (connection_id, event_service) != 0)
     {
       ACE_THROW (
       ::Components::InvalidConnection ());
     }
 
-  obj = this->root_poa_->id_to_reference (oid ACE_ENV_ARG_PARAMETER);
+  event_service->push_event (ev ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-
-  RtecEventChannelAdmin::ProxyPushConsumer_var proxy_consumer =
-    RtecEventChannelAdmin::ProxyPushConsumer::_narrow (obj.in ());
-  if (CORBA::is_nil (proxy_consumer.in ()))
-    {
-      ACE_THROW (
-        ::Components::InvalidConnection ());
-    }
-  proxy_consumer->push (events ACE_ENV_ARG_PARAMETER);
-	ACE_CHECK;
-}
-
-void CIAO::Container::create_rt_event_channel (void)
-{
-  TAO_EC_Event_Channel_Attributes attributes (this->root_poa_.in (),
-                                              this->root_poa_.in ());
-  TAO_EC_Event_Channel * ec_servant;
-  ACE_NEW (ec_servant, TAO_EC_Event_Channel (attributes));
-  ec_servant->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->ciao_rt_event_channel_ = ec_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-}
-
-::Components::Cookie * CIAO::Container::connect_rt_event_consumer (
-    ::Components::EventConsumerBase_ptr c,
-    ::CIAO::EventServiceInfo service_info
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-    CORBA::SystemException))
-{
-  if (CORBA::is_nil (this->ciao_rt_event_channel_.in ()))
-    {
-      this->create_rt_event_channel ();
-    }
-
-  ::Components::EventConsumerBase_var sub =
-    ::Components::EventConsumerBase::_duplicate (c);
-
-  RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    this->ciao_rt_event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  RtecEventChannelAdmin::ProxyPushSupplier_var proxy_supplier =
-    consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // Create and register consumer servant
-  CIAO::RTEventServiceConsumer_impl * consumer_servant;
-  ACE_NEW_RETURN (consumer_servant,
-                  CIAO::RTEventServiceConsumer_impl (orb_.in (), sub.in ()),
-                  0);
-  RtecEventComm::PushConsumer_var push_consumer =
-    consumer_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // Set QoS properties and connect
-  ACE_ConsumerQOS_Factory qos;
-  qos.start_logical_and_group (2);
-  qos.insert_type (service_info.event_type_id,
-                   0);
-  qos.insert_source (service_info.event_source_id,
-                     0);
-  proxy_supplier->connect_push_consumer (push_consumer.in (),
-                                         qos.get_ConsumerQOS ()
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  PortableServer::ObjectId_var oid = this->root_poa_->reference_to_id (push_consumer.in ());
-
-  ::Components::Cookie * return_cookie;
-  ACE_NEW_RETURN (return_cookie,
-                 ::CIAO::ObjectId_Cookie (oid.in ()),
-                 0);
-  return return_cookie;
-}
-
-::Components::Cookie * CIAO::Container::connect_rt_event_supplier (
-    ::CIAO::EventServiceInfo service_info
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-    CORBA::SystemException))
-{
-  if (CORBA::is_nil (this->ciao_rt_event_channel_.in ()))
-    {
-      this->create_rt_event_channel ();
-    }
-
-  RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    this->ciao_rt_event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  RtecEventChannelAdmin::ProxyPushConsumer_var proxy_consumer =
-    supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // Create and register supplier servant
-  CIAO::RTEventServiceSupplier_impl * supplier_servant;
-  ACE_NEW_RETURN (supplier_servant,
-                  CIAO::RTEventServiceSupplier_impl (orb_.in ()),
-                  0);
-  RtecEventComm::PushSupplier_var push_supplier =
-    supplier_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // Set QoS properties and connect
-  ACE_SupplierQOS_Factory qos;
-  qos.insert (service_info.event_source_id,
-              service_info.event_type_id,
-              0,
-              1);
-
-  proxy_consumer->connect_push_supplier (push_supplier.in (),
-                                         qos.get_SupplierQOS ()
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  PortableServer::ObjectId_var oid = this->root_poa_->reference_to_id (proxy_consumer.in ());
-
-    ::Components::Cookie * return_cookie;
-  ACE_NEW_RETURN (return_cookie,
-                 ::CIAO::ObjectId_Cookie (oid.in ()),
-                 0);
-  return return_cookie;
 
 }
 
@@ -414,7 +342,7 @@ CIAO::Session_Container::init (const char *name,
                         " (%P|%t) Unable to initialize the POA.\n"),
                        -1);
 
-   this->root_poa_ =
+   PortableServer::POA_var root_poa =
      PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
    ACE_CHECK_RETURN (-1);
 
@@ -428,7 +356,7 @@ CIAO::Session_Container::init (const char *name,
    if (more_policies != 0)
      policies = *more_policies;
 
-   this->poa_ = this->root_poa_->create_POA (name,
+   this->poa_ = root_poa->create_POA (name,
                                       PortableServer::POAManager::_nil (),
                                       policies
                                       ACE_ENV_ARG_PARAMETER);
@@ -600,71 +528,4 @@ CIAO::Session_Container::uninstall_component (CORBA::Object_ptr objref,
   ACE_CHECK;
 
   oid = id._retn ();
-}
-
-CIAO::RTEventServiceSupplier_impl::RTEventServiceSupplier_impl (void)
-{
-}
-
-CIAO::RTEventServiceSupplier_impl::RTEventServiceSupplier_impl (CORBA::ORB_ptr orb) :
-  orb_ (CORBA::ORB::_duplicate (orb))
-{
-}
-  
-void CIAO::RTEventServiceSupplier_impl::disconnect_push_supplier (void)
-{
-  CORBA::Object_var poa_object =
-    orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  PortableServer::POA_var root_poa =
-    PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  if (CORBA::is_nil (root_poa.in ()))
-    ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
-  PortableServer::ObjectId_var oid = root_poa->servant_to_id (this);
-  root_poa->deactivate_object (oid);
-}
-
-CIAO::RTEventServiceConsumer_impl::RTEventServiceConsumer_impl (void)
-{
-}
-
-CIAO::RTEventServiceConsumer_impl::RTEventServiceConsumer_impl
-  (CORBA::ORB_ptr orb,
-   Components::EventConsumerBase_ptr consumer) :
-    orb_ (CORBA::ORB::_duplicate (orb)),
-    event_consumer_ (Components::EventConsumerBase::_duplicate (consumer))
-{
-}
-
-void CIAO::RTEventServiceConsumer_impl::push (const RtecEventComm::EventSet& events)
-{
-  ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventServiceConsumer_impl::push\n"));
-  for (unsigned long i = 0; i < events.length (); ++i)
-    {
-      ::Components::EventBase * ev;
-      if (events[i].data.any_value >>= ev)
-        {
-          this->event_consumer_->push_event (ev
-                                           ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-        }
-    }
-}
-
-void CIAO::RTEventServiceConsumer_impl::disconnect_push_consumer (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventServiceConsumer_impl::disconnect_push_consumer\n"));
-
-  CORBA::Object_var poa_object =
-    orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  PortableServer::POA_var root_poa =
-    PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  if (CORBA::is_nil (root_poa.in ()))
-    ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
-  PortableServer::ObjectId_var oid = root_poa->servant_to_id (this);
-  root_poa->deactivate_object (oid);
 }

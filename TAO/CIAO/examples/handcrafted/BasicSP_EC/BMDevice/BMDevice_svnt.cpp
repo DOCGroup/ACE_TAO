@@ -203,7 +203,7 @@ namespace CIAO_GLUE_BasicSP
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     this->container_->_ciao_push_event (ev,
-                                        this->push_data_available_cookie_
+                                        0201
                                         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
@@ -240,31 +240,28 @@ namespace CIAO_GLUE_BasicSP
   ::Components::ExceededConnectionLimit))
   {
 
-    if (this->data_available_service_cookie_ == 0)
-      {
-        this->data_available_service_cookie_ =
-          this->container_->_ciao_specify_event_service (
-            "DataAvailable",
-            "data_available",
-            "RTEC"
-            ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-      }
-
-    if (this->push_data_available_cookie_ == 0)
-      {
-        this->push_data_available_cookie_ =
-          this->container_->_ciao_connect_event_supplier (
-          this->data_available_service_cookie_
-          ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-      }
-
-    return this->container_->_ciao_connect_event_consumer (
-      c,
-      this->data_available_service_cookie_
-      ACE_ENV_ARG_PARAMETER);
+    CIAO_Events::Supplier_Config_var supplier_config =
+      this->container_->_ciao_create_event_supplier_config ("DIRECT" ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
+    supplier_config->set_supplier_id (0201 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    CIAO_Events::Consumer_Config_var consumer_config =
+      this->container_->_ciao_create_event_consumer_config ("DIRECT" ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    consumer_config->set_supplier_id (0201 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    consumer_config->set_consumer_id (0202 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    consumer_config->set_consumer (c ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    this->container_->_ciao_connect_event_supplier (supplier_config.in () ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    this->container_->_ciao_connect_event_consumer (consumer_config.in () ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    return 0;
 
     /*
     if (CORBA::is_nil (c))
@@ -293,7 +290,7 @@ namespace CIAO_GLUE_BasicSP
   ::CORBA::SystemException,
   ::Components::InvalidConnection))
   {
-    this->container_->_ciao_disconnect_event_consumer (ck ACE_ENV_ARG_PARAMETER);
+    this->container_->_ciao_disconnect_event_consumer (0202 ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     return ::BasicSP::DataAvailableConsumer::_nil ();
