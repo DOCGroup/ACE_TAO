@@ -337,7 +337,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     be_visitor_operation_ss operation_visitor (this->ctx_);
 
     *os << "TAO::SArg_Traits< ";
-  
+
     operation_visitor.gen_arg_template_param_name (node,
                                                    &rt,
                                                    os);
