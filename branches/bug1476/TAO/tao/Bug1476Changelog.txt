@@ -1,3 +1,10 @@
+Thu Jul 21 15:03:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+
+        * tao/IIOP_Connector.cpp (make_connection):
+          Use timeout to change the sync_options, this way we don't change
+          the bitmask
+
 Thu Jul 21 14:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.h:

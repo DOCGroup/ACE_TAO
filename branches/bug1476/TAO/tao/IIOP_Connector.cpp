@@ -164,8 +164,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   // timeout to zero.
   if (!r->connected())
     {
-      synch_options.set (ACE_Synch_Options::USE_REACTOR,
-                         ACE_Time_Value::zero);
+      synch_options.timeout (ACE_Time_Value::zero);
     }
 
   TAO_IIOP_Connection_Handler *svc_handler = 0;
@@ -206,11 +205,11 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
           ACE_Time_Value zero(ACE_Time_Value::zero);
           result =
             this->active_connect_strategy_->wait (svc_handler,
-                                                  &zero);
+                                                    &zero);
 
 // testing, now it always returns a not connected transport, comment out the
 // wait above
-//          result = 1;
+    //      result = 1;
 
           if (TAO_debug_level > 2)
             {
