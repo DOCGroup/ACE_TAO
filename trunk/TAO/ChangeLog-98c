@@ -59,6 +59,9 @@ Wed Jan  7 12:00:14 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL: Did "make depend" on all the Makefiles.
 
+	* TAO/tests/Param_Test: Added tests for testing object
+	references. This is still incomplete.
+
 Tue Jan  6 19:48:45 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 	* TAO/tests/Cubit/TAO/MT_Cubit/README: Updated README to explain
