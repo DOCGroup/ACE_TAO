@@ -26,7 +26,7 @@ Sat Jun 19 12:59:28 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  option to IDL as -Ge 1
 
 	  - A case that is vice-versa to the above. The option for such a
-	  case id -Ge 0
+	  case is -Ge 0
 	
 	* docs/compiler.html: Added documentation for the -u option in the
 	  IDL compiler.
