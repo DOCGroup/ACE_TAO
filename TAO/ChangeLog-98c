@@ -1,37 +1,44 @@
+Sat Dec 12 09:15:14 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp
+          (print_latency_stats): "microseconds" instead of "seconds".
+          Also, added a call to ACE_OS::exit (), for the utilization
+          test only.  Otherwise, the program never terminates.when running the
+
 Fri Dec 11 16:53:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
-	  The UDP_Sender::init() method should only create the RT_Info if
-	  it is not there already. Thanks to Dave Meyer
-	  <dmeyer@std.saic.com> and J. Russell Noseworthy
-	  <rnosewor@objectsciences.com> for providing this fix.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+          The UDP_Sender::init() method should only create the RT_Info if
+          it is not there already. Thanks to Dave Meyer
+          <dmeyer@std.saic.com> and J. Russell Noseworthy
+          <rnosewor@objectsciences.com> for providing this fix.
 
 Fri Dec 11 12:39:22 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/tao_idl.1: 
-	* docs/compiler.html: Updated documentation for lookup
-	strategies. 
+        * TAO_IDL/tao_idl.1:
+        * docs/compiler.html: Updated documentation for lookup
+        strategies.
 
 Fri Dec 11 11:11:27 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
 
-	  For sequences of CORBA::Object, we were generating code such
-	  that the base class was the Pseudo_Sequence class in
-	  tao/sequence_T.h. However, these base template classes do not
-	  provide the _upcast and _downcast methods since they are not
-	  required for the pseudo objects. Thus, whenever the element type
-	  of a sequence is AST_PredefinedType::PT_pseudo, we check if it
-	  was a CORBA::Object or a true pseudo-object. If it is
-	  CORBA::Object, then the managed type becomes MNG_OBJREF instead
-	  of MNG_PSEUDO. Thus, now we generate the base template class to
-	  be Object_Sequence which have the _upcast and _downcast
-	  methods. 
+          For sequences of CORBA::Object, we were generating code such
+          that the base class was the Pseudo_Sequence class in
+          tao/sequence_T.h. However, these base template classes do not
+          provide the _upcast and _downcast methods since they are not
+          required for the pseudo objects. Thus, whenever the element type
+          of a sequence is AST_PredefinedType::PT_pseudo, we check if it
+          was a CORBA::Object or a true pseudo-object. If it is
+          CORBA::Object, then the managed type becomes MNG_OBJREF instead
+          of MNG_PSEUDO. Thus, now we generate the base template class to
+          be Object_Sequence which have the _upcast and _downcast
+          methods.
 
-	  Thanks to Ron Barack (rab@terminal.cz) for reporting that the
-	  _upcast and _downcast methods were not available for sequences
-	  of CORBA::Objects.
-	  
+          Thanks to Ron Barack (rab@terminal.cz) for reporting that the
+          _upcast and _downcast methods were not available for sequences
+          of CORBA::Objects.
+
 
 Fri Dec 11 08:54:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
