@@ -1,3 +1,16 @@
+Mon Sep 13 15:01:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_scope.cpp:
+	  Another tweak to the lookup_by_name() function. It
+	  was failing in a certain case of looking up the
+	  parent(s) of an interface when they are declared
+	  after the colon. Thanks to 
+	  Andreas Terstegge <Andreas.Terstegge@nokia.com>
+	  for sending in the example the showed the problem.
+
+	* TAO_IDL/fe/fe_interface_header.cpp:
+	  Cosmetic changes.
+
 Mon Sep 13 13:55:22 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Stub.i:
