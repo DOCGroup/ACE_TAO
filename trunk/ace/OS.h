@@ -83,14 +83,14 @@
 #   define ACE_dynamic_cast(TYPE, EXPR)                                ((TYPE) (EXPR))
 #   define ACE_dynamic_cast_1_ptr(TYPE, T1, EXPR)                      ((TYPE<T1> *) (EXPR))
 #   define ACE_dynamic_cast_2_ptr(TYPE, T1, T2, EXPR)                  ((TYPE<T1, T2> *) (EXPR))
-#   define ACE_dynamic_cast_3_ptr(TYPE, T1, T2, T3, EXPR)              ((TYPE<T1, T2, T3> *) (EXPR)) 
-#   define ACE_dynamic_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)          ((TYPE<T1, T2, T3, T4> *) (EXPR)) 
-#   define ACE_dynamic_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)      ((TYPE<T1, T2, T3, T4, T5> *) (EXPR)) 
+#   define ACE_dynamic_cast_3_ptr(TYPE, T1, T2, T3, EXPR)              ((TYPE<T1, T2, T3> *) (EXPR))
+#   define ACE_dynamic_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)          ((TYPE<T1, T2, T3, T4> *) (EXPR))
+#   define ACE_dynamic_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)      ((TYPE<T1, T2, T3, T4, T5> *) (EXPR))
 #   define ACE_dynamic_cast_1_ref(TYPE, T1, EXPR)                      ((TYPE<T1> &) (EXPR))
 #   define ACE_dynamic_cast_2_ref(TYPE, T1, T2, EXPR)                  ((TYPE<T1, T2> &) (EXPR))
-#   define ACE_dynamic_cast_3_ref(TYPE, T1, T2, T3, EXPR)              ((TYPE<T1, T2, T3> &) (EXPR)) 
-#   define ACE_dynamic_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)          ((TYPE<T1, T2, T3, T4> &) (EXPR)) 
-#   define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)      ((TYPE<T1, T2, T3, T4, T5> &) (EXPR)) 
+#   define ACE_dynamic_cast_3_ref(TYPE, T1, T2, T3, EXPR)              ((TYPE<T1, T2, T3> &) (EXPR))
+#   define ACE_dynamic_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)          ((TYPE<T1, T2, T3, T4> &) (EXPR))
+#   define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)      ((TYPE<T1, T2, T3, T4, T5> &) (EXPR))
 # endif /* ACE_HAS_ANSI_CASTS */
 
 # if !defined (ACE_CAST_CONST)
@@ -5975,6 +5975,11 @@ private:
    do { try { POINTER = new CONSTRUCTOR; } \
         catch (ACE_bad_alloc) { errno = ENOMEM; return; } \
    } while (0)
+#   define ACE_NEW_THROW_EX(POINTER,CONSTRUCTOR,EXCEPTION) \
+     do { try { POINTER = new CONSTRUCTOR; } \
+       catch (ACE_bad_alloc) { errno = ENOMEM; ACE_THROW_INT (EXCEPTION); } \
+     } while (0)
+// The following ACE_NEW_THROW* macros are to be depricated soon.
 #   define ACE_NEW_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
      do { try { POINTER = new CONSTRUCTOR; } \
        catch (ACE_bad_alloc) { errno = ENOMEM; TAO_THROW (EXCEPTION); } \
@@ -5998,6 +6003,11 @@ private:
    do { POINTER = new CONSTRUCTOR; \
      if (POINTER == 0) { errno = ENOMEM; return; } \
    } while (0)
+#   define ACE_NEW_THROW_EX(POINTER,CONSTRUCTOR,EXCEPTION) \
+     do { POINTER = new CONSTRUCTOR; \
+       if (POINTER == 0) { errno = ENOMEM; ACE_THROW_INT (EXCEPTION); } \
+     } while (0)
+// The following ACE_NEW_THROW* macros are to be depricated soon.
 #   define ACE_NEW_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
      do { POINTER = new CONSTRUCTOR; \
        if (POINTER == 0) { errno = ENOMEM; TAO_THROW (EXCEPTION); } \
@@ -6511,7 +6521,7 @@ ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 
 # endif /* ACE_HAS_AIO_CALLS */
 
-  // Wrapping around wait status <wstat> macros for platforms that 
+  // Wrapping around wait status <wstat> macros for platforms that
   // lack them.
 
   // Evaluates to a non-zero value if status was returned for a child
@@ -6562,10 +6572,10 @@ ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 
 // Stuff used by the ACE CDR classes.
 #if defined ACE_LITTLE_ENDIAN
-#  define ACE_CDR_BYTE_ORDER 1  
+#  define ACE_CDR_BYTE_ORDER 1
 // little endian encapsulation byte order has value = 1
 #else  /* ! ACE_LITTLE_ENDIAN */
-#  define ACE_CDR_BYTE_ORDER 0  
+#  define ACE_CDR_BYTE_ORDER 0
 // big endian encapsulation byte order has value = 0
 #endif /* ! ACE_LITTLE_ENDIAN */
 
@@ -6577,7 +6587,7 @@ ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 // more efficient just to copy the octet sequence, for instance, while
 // enconding a "small" octet sequence in a buffer that has enough
 // space. This parameter controls the default value for "small enough",
-// but an ORB may use a different value, set from a command line option. 
+// but an ORB may use a different value, set from a command line option.
 #define ACE_DEFAULT_CDR_MEMCPY_TRADEOFF 256
 
 // In some environments it is useful to swap the bytes on write, for
