@@ -7,6 +7,8 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#include "ace/config-linux-common.h"
+
 #if ! defined (__ACE_INLINE__)
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
@@ -22,6 +24,10 @@
   //  because of the i386 protection, so it can be ignored.)
 # define ACE_HAS_PENTIUM
 #endif /* i386 */
+
+#if defined (__alpha__)
+# define ACE_HAS_64BIT_LONGS
+#endif /* __alpha__ */
 
 // ONLY define this if you have config'd multicast into a 2.x kernel.
 // If you do anything else, we've never tested it!
@@ -125,14 +131,5 @@
 
 // Compiler doesn't support static data member templates.
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-
-// I added the following to support building on RedHat 4.2/Linux 2.0.30/Alpha.
-// Please let me know if any of these are inconsistent with other Linux
-// platforms.  David <levine@cs.wustl.edu>
-#define ACE_HAS_DLFCN_H_BROKEN_EXTERN_C
-#define ACE_HAS_SIGWAIT
-#define ACE_HAS_SIZET_SOCKET_LEN
-#define ACE_LACKS_RPC_H
-#define ACE_NEEDS_SYSTIME_H
 
 #endif /* ACE_CONFIG_H */
