@@ -135,8 +135,10 @@ be_structure::gen_client_header (void)
         {
           // we are in the ROOT scope
           ch->indent ();
-          *ch << "extern CORBA::TypeCode_ptr " << this->tc_name
-            ()->last_component () << ";\n\n";
+          *ch << "extern "
+	      << idl_global->export_macro ()
+	      << " CORBA::TypeCode_ptr "
+	      << this->tc_name ()->last_component () << ";\n\n";
         }
       this->cli_hdr_gen_ = I_TRUE;
       cg->pop (); // pop up the current state
@@ -271,7 +273,8 @@ be_structure::gen_var_defn (void)
   // for over here.
 
   ch->indent (); // start with whatever was our current indent level
-  *ch << "class " << namebuf << nl;
+  *ch << "class " << idl_global->export_macro ()
+      << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
   ch->incr_indent ();
@@ -578,7 +581,8 @@ be_structure::gen_out_defn (void)
   // generate the out definition (always in the client header)
   ch->indent (); // start with whatever was our current indent level
 
-  *ch << "class " << namebuf << nl;
+  *ch << "class " << idl_global->export_macro ()
+      << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
   ch->incr_indent ();
