@@ -5,11 +5,11 @@
 # components that were built in a library.  Intended to be used by
 # Makefiles and scripts.  See ACE_wrappers/ace/Makefile for an example.
 #
-usage="usage: $0 --ace | --orbsvcs | --tao \
+usage="usage: $0 --ace | --orbsvcs | --tao | --pace \
  [--remove | --set \" <components list> \"]"
 
 ####
-#### Make sure that ACE_ROOT and TAO_ROOT are set.
+#### Make sure that PACE_ROOT, ACE_ROOT, and TAO_ROOT are set.
 ####
 if [ ! "$ACE_ROOT" ]; then
   echo $0': your ACE_ROOT environment variable is not set!' 1>&2
@@ -18,6 +18,10 @@ fi
 if [ ! "$TAO_ROOT" ]; then
   TAO_ROOT=$ACE_ROOT/TAO
   export TAO_ROOT
+fi
+if [ ! "$PACE_ROOT" ]; then
+  PACE_ROOT=$ACE_ROOT/PACE
+  export PACE_ROOT
 fi
 
 ####
@@ -29,6 +33,7 @@ if [ $# -ge 1 ]; then
     --orbsvcs)
       components_file=$TAO_ROOT/orbsvcs/orbsvcs/ORBSVCS_COMPONENTS.list ;;
     --tao) components_file=$TAO_ROOT/tao/TAO_COMPONENTS.list ;;
+    --pace) components_file=$PACE_ROOT/PACE_COMPONENTS.list ;;
     *) echo $usage; exit -1 ;;
   esac
   shift
