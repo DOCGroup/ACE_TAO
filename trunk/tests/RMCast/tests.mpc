@@ -1,5 +1,5 @@
 project(RMCast Fragment Test) : aceexe {
-  depends += RMCast
+  depends += RMCast Test_Output
   exename  = RMCast_Fragment_Test
   libs    += ACE_RMCast Test_Output
 
@@ -9,7 +9,7 @@ project(RMCast Fragment Test) : aceexe {
 }
 
 project(RMCast Membership Test) : aceexe {
-  depends += RMCast
+  depends += RMCast Test_Output
   exename  = RMCast_Membership_Test
   libs    += ACE_RMCast Test_Output
 
@@ -19,7 +19,7 @@ project(RMCast Membership Test) : aceexe {
 }
 
 project(RMCast Reassembly Test) : aceexe {
-  depends += RMCast
+  depends += RMCast Test_Output
   exename  = RMCast_Reassembly_Test
   libs    += ACE_RMCast Test_Output
 
@@ -29,7 +29,7 @@ project(RMCast Reassembly Test) : aceexe {
 }
 
 project(RMCast Reordering Test) : aceexe {
-  depends += RMCast
+  depends += RMCast Test_Output
   exename  = RMCast_Reordering_Test
   libs    += ACE_RMCast Test_Output
 
@@ -39,7 +39,7 @@ project(RMCast Reordering Test) : aceexe {
 }
 
 project(RMCast Retransmission Test) : aceexe {
-  depends += RMCast
+  depends += RMCast Test_Output
   exename  = RMCast_Retransmission_Test
   libs    += ACE_RMCast Test_Output
 
@@ -49,7 +49,7 @@ project(RMCast Retransmission Test) : aceexe {
 }
 
 project(RMCast UDP Best Effort Test) : aceexe {
-  depends += RMCast
+  depends += RMCast Test_Output
   exename  = RMCast_UDP_Best_Effort_Test
   libs    += ACE_RMCast Test_Output
 

@@ -1,4 +1,4 @@
-project(Test Output) : acelib {
+project(Test_Output) : acelib {
   sharedname = Test_Output
   dllflags   = TEST_OUTPUT_BUILD_DLL
 
@@ -52,6 +52,7 @@ project(Service Config DLL) : acelib {
 project(ACE Test) : aceexe {
   exename = ACE_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     ACE_Test.cpp
     Main.cpp
@@ -63,6 +64,7 @@ project(ACE Test) : aceexe {
 project(Aio Platform Test) : aceexe {
   exename = Aio_Platform_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Aio_Platform_Test.cpp
     Main.cpp
@@ -74,6 +76,7 @@ project(Aio Platform Test) : aceexe {
 project(Arg Shifter Test) : aceexe {
   exename = Arg_Shifter_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Arg_Shifter_Test.cpp
     Main.cpp
@@ -85,6 +88,7 @@ project(Arg Shifter Test) : aceexe {
 project(ARGV Test) : aceexe {
   exename = ARGV_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     ARGV_Test.cpp
     Main.cpp
@@ -96,6 +100,7 @@ project(ARGV Test) : aceexe {
 project(Atomic Op Test) : aceexe {
   exename = Atomic_Op_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Atomic_Op_Test.cpp
     Main.cpp
@@ -107,6 +112,7 @@ project(Atomic Op Test) : aceexe {
 project(Auto IncDec Test) : aceexe {
   exename = Auto_IncDec_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Auto_IncDec_Test.cpp
     Main.cpp
@@ -118,6 +124,7 @@ project(Auto IncDec Test) : aceexe {
 project(Barrier Test) : aceexe {
   exename = Barrier_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Barrier_Test.cpp
     Main.cpp
@@ -129,6 +136,7 @@ project(Barrier Test) : aceexe {
 project(Basic Types Test) : aceexe {
   exename = Basic_Types_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Basic_Types_Test.cpp
     Main.cpp
@@ -140,6 +148,7 @@ project(Basic Types Test) : aceexe {
 project(Bound Ptr Test) : aceexe {
   exename = Bound_Ptr_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Bound_Ptr_Test.cpp
     Main.cpp
@@ -151,6 +160,7 @@ project(Bound Ptr Test) : aceexe {
 project(Buffer Stream Test) : aceexe {
   exename = Buffer_Stream_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Buffer_Stream_Test.cpp
     Main.cpp
@@ -162,6 +172,7 @@ project(Buffer Stream Test) : aceexe {
 project(Cache Map Manager Test) : aceexe {
   exename = Cache_Map_Manager_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Cache_Map_Manager_Test.cpp
     Main.cpp
@@ -173,6 +184,7 @@ project(Cache Map Manager Test) : aceexe {
 project(Cached Accept Conn Test) : aceexe {
   exename = Cached_Accept_Conn_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Cached_Accept_Conn_Test.cpp
     Main.cpp
@@ -184,6 +196,7 @@ project(Cached Accept Conn Test) : aceexe {
 project(Cached Allocator Test) : aceexe {
   exename = Cached_Allocator_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Cached_Allocator_Test.cpp
     Main.cpp
@@ -195,6 +208,7 @@ project(Cached Allocator Test) : aceexe {
 project(Cached Conn Test) : aceexe {
   exename = Cached_Conn_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Cached_Conn_Test.cpp
     Main.cpp
@@ -206,6 +220,7 @@ project(Cached Conn Test) : aceexe {
 project(Capabilities Test) : aceexe {
   exename = Capabilities_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Capabilities_Test.cpp
     Main.cpp
@@ -217,6 +232,7 @@ project(Capabilities Test) : aceexe {
 project(CDR File Test) : aceexe {
   exename = CDR_File_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     CDR_File_Test.cpp
     CE_fostream.cpp
@@ -229,6 +245,7 @@ project(CDR File Test) : aceexe {
 project(CDR Test) : aceexe {
   exename = CDR_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     CDR_Test.cpp
     Main.cpp
@@ -240,6 +257,7 @@ project(CDR Test) : aceexe {
 project(Collection Test) : aceexe {
   exename = Collection_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Collection_Test.cpp
     Main.cpp
@@ -251,6 +269,7 @@ project(Collection Test) : aceexe {
 project(Config Test) : aceexe {
   exename = Config_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Config_Test.cpp
     Main.cpp
@@ -262,6 +281,7 @@ project(Config Test) : aceexe {
 project(Conn Test) : aceexe {
   exename = Conn_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Conn_Test.cpp
     Main.cpp
@@ -273,6 +293,7 @@ project(Conn Test) : aceexe {
 project(Date Time Test) : aceexe {
   exename = Date_Time_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Date_Time_Test.cpp
     Main.cpp
@@ -284,6 +305,7 @@ project(Date Time Test) : aceexe {
 project(Dev Poll Reactor Test) : aceexe {
   exename = Dev_Poll_Reactor_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Dev_Poll_Reactor_Test.cpp
     Main.cpp
@@ -295,6 +317,7 @@ project(Dev Poll Reactor Test) : aceexe {
 project(Dirent Test) : aceexe {
   exename = Dirent_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Dirent_Test.cpp
     Main.cpp
@@ -306,6 +329,7 @@ project(Dirent Test) : aceexe {
 project(DLList Test) : aceexe {
   exename = DLList_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     DLList_Test.cpp
     Main.cpp
@@ -317,6 +341,7 @@ project(DLList Test) : aceexe {
 project(DLL Test) : aceexe {
   exename = DLL_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     DLL_Test.cpp
     Main.cpp
@@ -328,6 +353,7 @@ project(DLL Test) : aceexe {
 project(Enum Interfaces Test) : aceexe {
   exename = Enum_Interfaces_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Enum_Interfaces_Test.cpp
     Main.cpp
@@ -339,6 +365,7 @@ project(Enum Interfaces Test) : aceexe {
 project(Env Value Test) : aceexe {
   exename = Env_Value_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Env_Value_Test.cpp
     Main.cpp
@@ -350,6 +377,7 @@ project(Env Value Test) : aceexe {
 project(Future Test) : aceexe {
   exename = Future_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Future_Test.cpp
     Main.cpp
@@ -361,6 +389,7 @@ project(Future Test) : aceexe {
 project(Future Set Test) : aceexe {
   exename = Future_Set_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Future_Set_Test.cpp
     Main.cpp
@@ -372,6 +401,7 @@ project(Future Set Test) : aceexe {
 project(Get Opt Test) : aceexe {
   exename = Get_Opt_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Get_Opt_Test.cpp
     Main.cpp
@@ -383,6 +413,7 @@ project(Get Opt Test) : aceexe {
 project(Handle Set Test) : aceexe {
   exename = Handle_Set_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Handle_Set_Test.cpp
     Main.cpp
@@ -394,6 +425,7 @@ project(Handle Set Test) : aceexe {
 project(High Res Timer Test) : aceexe {
   exename = High_Res_Timer_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     High_Res_Timer_Test.cpp
     Main.cpp
@@ -405,6 +437,7 @@ project(High Res Timer Test) : aceexe {
 project(Hash Map Manager Test) : aceexe {
   exename = Hash_Map_Manager_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Hash_Map_Manager_Test.cpp
     Main.cpp
@@ -416,6 +449,7 @@ project(Hash Map Manager Test) : aceexe {
 project(Hash Map Bucket Iterator Test) : aceexe {
   exename = Hash_Map_Bucket_Iterator_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Hash_Map_Bucket_Iterator_Test.cpp
     Main.cpp
@@ -427,6 +461,7 @@ project(Hash Map Bucket Iterator Test) : aceexe {
 project(INET Addr Test) : aceexe {
   exename = INET_Addr_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     INET_Addr_Test.cpp
     Main.cpp
@@ -438,6 +473,7 @@ project(INET Addr Test) : aceexe {
 project(IOStream Test) : aceexe {
   exename = IOStream_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     IOStream_Test.cpp
     Main.cpp
@@ -449,6 +485,7 @@ project(IOStream Test) : aceexe {
 project(Lazy Map Manager Test) : aceexe {
   exename = Lazy_Map_Manager_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Lazy_Map_Manager_Test.cpp
     Main.cpp
@@ -460,6 +497,7 @@ project(Lazy Map Manager Test) : aceexe {
 project(Log Msg Test) : aceexe {
   exename = Log_Msg_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Log_Msg_Test.cpp
     Main.cpp
@@ -471,6 +509,7 @@ project(Log Msg Test) : aceexe {
 project(Logging Strategy Test) : aceexe {
   exename = Logging_Strategy_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Logging_Strategy_Test.cpp
     Main.cpp
@@ -482,6 +521,7 @@ project(Logging Strategy Test) : aceexe {
 project(Malloc Test) : aceexe {
   exename = Malloc_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Malloc_Test.cpp
     Main.cpp
@@ -493,6 +533,7 @@ project(Malloc Test) : aceexe {
 project(Map Test) : aceexe {
   exename = Map_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Map_Test.cpp
     Main.cpp
@@ -504,6 +545,7 @@ project(Map Test) : aceexe {
 project(Map Manager Test) : aceexe {
   exename = Map_Manager_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Map_Manager_Test.cpp
     Main.cpp
@@ -515,6 +557,7 @@ project(Map Manager Test) : aceexe {
 project(Max Default Port Test) : aceexe {
   exename = Max_Default_Port_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Max_Default_Port_Test.cpp
     Main.cpp
@@ -526,6 +569,7 @@ project(Max Default Port Test) : aceexe {
 project(MEM Stream Test) : aceexe {
   exename = MEM_Stream_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     MEM_Stream_Test.cpp
     Main.cpp
@@ -537,6 +581,7 @@ project(MEM Stream Test) : aceexe {
 project(Mem Map Test) : aceexe {
   exename = Mem_Map_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Mem_Map_Test.cpp
     Main.cpp
@@ -548,6 +593,7 @@ project(Mem Map Test) : aceexe {
 project(MM Shared Memory Test) : aceexe {
   exename = MM_Shared_Memory_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     MM_Shared_Memory_Test.cpp
     Main.cpp
@@ -559,6 +605,7 @@ project(MM Shared Memory Test) : aceexe {
 project(MT Reactor Timer Test) : aceexe {
   exename = MT_Reactor_Timer_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     MT_Reactor_Timer_Test.cpp
     Main.cpp
@@ -570,6 +617,7 @@ project(MT Reactor Timer Test) : aceexe {
 project(MT Reactor Upcall Test) : aceexe {
   exename = MT_Reactor_Upcall_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     MT_Reactor_Upcall_Test.cpp
     Main.cpp
@@ -581,6 +629,7 @@ project(MT Reactor Upcall Test) : aceexe {
 project(MT SOCK Test) : aceexe {
   exename = MT_SOCK_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     MT_SOCK_Test.cpp
     Main.cpp
@@ -592,6 +641,7 @@ project(MT SOCK Test) : aceexe {
 project(Message Block Test) : aceexe {
   exename = Message_Block_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Message_Block_Test.cpp
     Main.cpp
@@ -603,6 +653,7 @@ project(Message Block Test) : aceexe {
 project(Message Queue Test) : aceexe {
   exename = Message_Queue_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Message_Queue_Test.cpp
     Main.cpp
@@ -614,6 +665,7 @@ project(Message Queue Test) : aceexe {
 project(Message Queue Test Ex) : aceexe {
   exename = Message_Queue_Test_Ex
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Message_Queue_Test_Ex.cpp
     Main.cpp
@@ -625,6 +677,7 @@ project(Message Queue Test Ex) : aceexe {
 project(Message Queue Notifications Test) : aceexe {
   exename = Message_Queue_Notifications_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Message_Queue_Notifications_Test.cpp
     Main.cpp
@@ -636,6 +689,7 @@ project(Message Queue Notifications Test) : aceexe {
 project(Multicast Test) : aceexe {
   exename = Multicast_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Multicast_Test.cpp
     Main.cpp
@@ -647,6 +701,7 @@ project(Multicast Test) : aceexe {
 project(Multihomed INET Addr Test) : aceexe {
   exename = Multihomed_INET_Addr_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Multihomed_INET_Addr_Test.cpp
     Main.cpp
@@ -658,6 +713,7 @@ project(Multihomed INET Addr Test) : aceexe {
 project(New Fail Test) : aceexe {
   exename = New_Fail_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     New_Fail_Test.cpp
     Main.cpp
@@ -669,6 +725,7 @@ project(New Fail Test) : aceexe {
 project(Notify Performance Test) : aceexe {
   exename = Notify_Performance_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Notify_Performance_Test.cpp
     Main.cpp
@@ -680,6 +737,7 @@ project(Notify Performance Test) : aceexe {
 project(Object Manager Test) : aceexe {
   exename = Object_Manager_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Object_Manager_Test.cpp
     Main.cpp
@@ -691,6 +749,7 @@ project(Object Manager Test) : aceexe {
 project(Obstack Test) : aceexe {
   exename = Obstack_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Obstack_Test.cpp
     Main.cpp
@@ -702,6 +761,7 @@ project(Obstack Test) : aceexe {
 project(OrdMultiSet Test) : aceexe {
   exename = OrdMultiSet_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     OrdMultiSet_Test.cpp
     Main.cpp
@@ -713,6 +773,7 @@ project(OrdMultiSet Test) : aceexe {
 project(OS Test) : aceexe {
   exename = OS_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     OS_Test.cpp
     Main.cpp
@@ -724,6 +785,7 @@ project(OS Test) : aceexe {
 project(Proactor Scatter Gather Test) : aceexe {
   exename = Proactor_Scatter_Gather_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Proactor_Scatter_Gather_Test.cpp
     Main.cpp
@@ -735,6 +797,7 @@ project(Proactor Scatter Gather Test) : aceexe {
 project(Proactor Test) : aceexe {
   exename = Proactor_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Proactor_Test.cpp
     Main.cpp
@@ -746,6 +809,7 @@ project(Proactor Test) : aceexe {
 project(Proactor Timer Test) : aceexe {
   exename = Proactor_Timer_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Proactor_Timer_Test.cpp
     Main.cpp
@@ -757,6 +821,7 @@ project(Proactor Timer Test) : aceexe {
 project(Process Mutex Test) : aceexe {
   exename = Process_Mutex_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Process_Mutex_Test.cpp
     Main.cpp
@@ -768,6 +833,7 @@ project(Process Mutex Test) : aceexe {
 project(Process Strategy Test) : aceexe {
   exename = Process_Strategy_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Process_Strategy_Test.cpp
     Main.cpp
@@ -779,6 +845,7 @@ project(Process Strategy Test) : aceexe {
 project(Priority Buffer Test) : aceexe {
   exename = Priority_Buffer_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Priority_Buffer_Test.cpp
     Main.cpp
@@ -790,6 +857,7 @@ project(Priority Buffer Test) : aceexe {
 project(Dynamic Priority Test) : aceexe {
   exename = Dynamic_Priority_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Dynamic_Priority_Test.cpp
     Main.cpp
@@ -801,6 +869,7 @@ project(Dynamic Priority Test) : aceexe {
 project(Priority Task Test) : aceexe {
   exename = Priority_Task_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Priority_Task_Test.cpp
     Main.cpp
@@ -812,6 +881,7 @@ project(Priority Task Test) : aceexe {
 project(Priority Reactor Test) : aceexe {
   exename = Priority_Reactor_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Priority_Reactor_Test.cpp
     Main.cpp
@@ -823,6 +893,7 @@ project(Priority Reactor Test) : aceexe {
 project(Process Manager Test) : aceexe {
   exename = Process_Manager_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Process_Manager_Test.cpp
     Main.cpp
@@ -834,6 +905,7 @@ project(Process Manager Test) : aceexe {
 project(Pipe Test) : aceexe {
   exename = Pipe_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Pipe_Test.cpp
     Main.cpp
@@ -845,6 +917,7 @@ project(Pipe Test) : aceexe {
 project(RB Tree Test) : aceexe {
   exename = RB_Tree_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     RB_Tree_Test.cpp
     Main.cpp
@@ -856,6 +929,7 @@ project(RB Tree Test) : aceexe {
 project(Reactors Test) : aceexe {
   exename = Reactors_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Reactors_Test.cpp
     Main.cpp
@@ -867,6 +941,7 @@ project(Reactors Test) : aceexe {
 project(Reactor Exceptions Test) : aceexe {
   exename = Reactor_Exceptions_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Reactor_Exceptions_Test.cpp
     Main.cpp
@@ -878,6 +953,7 @@ project(Reactor Exceptions Test) : aceexe {
 project(Reactor Notify Test) : aceexe {
   exename = Reactor_Notify_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Reactor_Notify_Test.cpp
     Main.cpp
@@ -889,6 +965,7 @@ project(Reactor Notify Test) : aceexe {
 project(Reactor Dispatch Order Test) : aceexe {
   exename = Reactor_Dispatch_Order_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Reactor_Dispatch_Order_Test.cpp
     Main.cpp
@@ -900,6 +977,7 @@ project(Reactor Dispatch Order Test) : aceexe {
 project(Reactor Performance Test) : aceexe {
   exename = Reactor_Performance_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Reactor_Performance_Test.cpp
     Main.cpp
@@ -911,6 +989,7 @@ project(Reactor Performance Test) : aceexe {
 project(Reactor Timer Test) : aceexe {
   exename = Reactor_Timer_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Reactor_Timer_Test.cpp
     Main.cpp
@@ -922,6 +1001,7 @@ project(Reactor Timer Test) : aceexe {
 project(Reader Writer Test) : aceexe {
   exename = Reader_Writer_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Reader_Writer_Test.cpp
     Main.cpp
@@ -933,6 +1013,7 @@ project(Reader Writer Test) : aceexe {
 project(Recursive Condition Test) : aceexe {
   exename = Recursive_Condition_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Recursive_Condition_Test.cpp
     Main.cpp
@@ -944,6 +1025,7 @@ project(Recursive Condition Test) : aceexe {
 project(Recursive Condition Bug Test) : aceexe {
   exename = Recursive_Condition_Bug_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Recursive_Condition_Bug_Test.cpp
     Main.cpp
@@ -955,6 +1037,7 @@ project(Recursive Condition Bug Test) : aceexe {
 project(Recursive Mutex Test) : aceexe {
   exename = Recursive_Mutex_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Recursive_Mutex_Test.cpp
     Main.cpp
@@ -966,6 +1049,7 @@ project(Recursive Mutex Test) : aceexe {
 project(Refcounted Auto Ptr Test) : aceexe {
   exename = Refcounted_Auto_Ptr_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Refcounted_Auto_Ptr_Test.cpp
     Main.cpp
@@ -977,6 +1061,7 @@ project(Refcounted Auto Ptr Test) : aceexe {
 project(Reverse Lock Test) : aceexe {
   exename = Reverse_Lock_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Reverse_Lock_Test.cpp
     Main.cpp
@@ -988,6 +1073,7 @@ project(Reverse Lock Test) : aceexe {
 project(Semaphore Test) : aceexe {
   exename = Semaphore_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Semaphore_Test.cpp
     Main.cpp
@@ -999,6 +1085,7 @@ project(Semaphore Test) : aceexe {
 project(Signal Test) : aceexe {
   exename = Signal_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Signal_Test.cpp
     Main.cpp
@@ -1010,6 +1097,7 @@ project(Signal Test) : aceexe {
 project(Sigset Ops Test) : aceexe {
   exename = Sigset_Ops_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Sigset_Ops_Test.cpp
     Main.cpp
@@ -1021,6 +1109,7 @@ project(Sigset Ops Test) : aceexe {
 project(Simple Message Block Test) : aceexe {
   exename = Simple_Message_Block_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Simple_Message_Block_Test.cpp
     Main.cpp
@@ -1032,6 +1121,7 @@ project(Simple Message Block Test) : aceexe {
 project(SOCK Test) : aceexe {
   exename = SOCK_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     SOCK_Test.cpp
     Main.cpp
@@ -1043,6 +1133,7 @@ project(SOCK Test) : aceexe {
 project(SOCK Connector Test) : aceexe {
   exename = SOCK_Connector_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     SOCK_Connector_Test.cpp
     Main.cpp
@@ -1054,6 +1145,7 @@ project(SOCK Connector Test) : aceexe {
 project(SOCK Send Recv Test) : aceexe {
   exename = SOCK_Send_Recv_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     SOCK_Send_Recv_Test.cpp
     Main.cpp
@@ -1065,6 +1157,7 @@ project(SOCK Send Recv Test) : aceexe {
 project(SPIPE Test) : aceexe {
   exename = SPIPE_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     SPIPE_Test.cpp
     Main.cpp
@@ -1076,6 +1169,7 @@ project(SPIPE Test) : aceexe {
 project(SString Test) : aceexe {
   exename = SString_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     SString_Test.cpp
     Main.cpp
@@ -1087,6 +1181,7 @@ project(SString Test) : aceexe {
 project(SV Shared Memory Test) : aceexe {
   exename = SV_Shared_Memory_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     SV_Shared_Memory_Test.cpp
     Main.cpp
@@ -1098,6 +1193,7 @@ project(SV Shared Memory Test) : aceexe {
 project(Svc Handler Test) : aceexe {
   exename = Svc_Handler_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Svc_Handler_Test.cpp
     Main.cpp
@@ -1109,6 +1205,7 @@ project(Svc Handler Test) : aceexe {
 project(Task Test) : aceexe {
   exename = Task_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Task_Test.cpp
     Main.cpp
@@ -1120,6 +1217,7 @@ project(Task Test) : aceexe {
 project(Thread Manager Test) : aceexe {
   exename = Thread_Manager_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Thread_Manager_Test.cpp
     Main.cpp
@@ -1131,6 +1229,7 @@ project(Thread Manager Test) : aceexe {
 project(Thread Mutex Test) : aceexe {
   exename = Thread_Mutex_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Thread_Mutex_Test.cpp
     Main.cpp
@@ -1142,6 +1241,7 @@ project(Thread Mutex Test) : aceexe {
 project(Thread Pool Test) : aceexe {
   exename = Thread_Pool_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Thread_Pool_Test.cpp
     Main.cpp
@@ -1153,6 +1253,7 @@ project(Thread Pool Test) : aceexe {
 project(Timeprobe Test) : aceexe {
   exename = Timeprobe_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Timeprobe_Test.cpp
     Main.cpp
@@ -1164,6 +1265,7 @@ project(Timeprobe Test) : aceexe {
 project(Time Service Test) : aceexe {
   exename = Time_Service_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Time_Service_Test.cpp
     Main.cpp
@@ -1175,6 +1277,7 @@ project(Time Service Test) : aceexe {
 project(Time Value Test) : aceexe {
   exename = Time_Value_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Time_Value_Test.cpp
     Main.cpp
@@ -1186,6 +1289,7 @@ project(Time Value Test) : aceexe {
 project(Timer Queue Test) : aceexe {
   exename = Timer_Queue_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Timer_Queue_Test.cpp
     Main.cpp
@@ -1197,6 +1301,7 @@ project(Timer Queue Test) : aceexe {
 project(Token Strategy Test) : aceexe {
   exename = Token_Strategy_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Token_Strategy_Test.cpp
     Main.cpp
@@ -1208,6 +1313,7 @@ project(Token Strategy Test) : aceexe {
 project(TP Reactor Test) : aceexe {
   exename = TP_Reactor_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     TP_Reactor_Test.cpp
     Main.cpp
@@ -1219,6 +1325,7 @@ project(TP Reactor Test) : aceexe {
 project(TSS Test) : aceexe {
   exename = TSS_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     TSS_Test.cpp
     Main.cpp
@@ -1230,6 +1337,7 @@ project(TSS Test) : aceexe {
 project(Vector Test) : aceexe {
   exename = Vector_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Vector_Test.cpp
     Main.cpp
@@ -1241,6 +1349,7 @@ project(Vector Test) : aceexe {
 project(UPIPE SAP Test) : aceexe {
   exename = UPIPE_SAP_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     UPIPE_SAP_Test.cpp
     Main.cpp
@@ -1252,6 +1361,7 @@ project(UPIPE SAP Test) : aceexe {
 project(Upgradable RW Test) : aceexe {
   exename = Upgradable_RW_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Upgradable_RW_Test.cpp
     Main.cpp
@@ -1265,6 +1375,7 @@ project(Naming Test) : aceexe {
   compname = --ace
   comps   += Other
   libs    += Test_Output
+  depends += Test_Output
 
   Source_Files {
     Naming_Test.cpp
@@ -1279,6 +1390,7 @@ project(Thread Pool Reactor Test) : aceexe {
   compname = --ace
   comps   += Other
   libs    += Test_Output
+  depends += Test_Output
 
   Source_Files {
     Thread_Pool_Reactor_Test.cpp
@@ -1292,6 +1404,7 @@ project(Thread Pool Reactor Resume Test) : aceexe {
   compname = --ace
   comps   += Other
   libs    += Test_Output
+  depends += Test_Output
 
   Source_Files {
     Thread_Pool_Reactor_Resume_Test.cpp
@@ -1306,6 +1419,7 @@ project(XtReactor Test) : aceexe {
   compname = --ace
   comps   += Other
   libs    += Test_Output
+  depends += Test_Output
 
   Source_Files {
     XtReactor_Test.cpp
@@ -1320,6 +1434,7 @@ project(FlReactor Test) : aceexe {
   compname = --ace
   comps   += Other
   libs    += Test_Output
+  depends += Test_Output
 
   Source_Files {
     FlReactor_Test.cpp
@@ -1334,6 +1449,7 @@ project(TkReactor Test) : aceexe {
   compname = --ace
   comps   += Other
   libs    += Test_Output
+  depends += Test_Output
 
   Source_Files {
     TkReactor_Test.cpp
@@ -1348,6 +1464,7 @@ project(Codecs Test) : aceexe {
   compname = --ace
   comps   += Codecs
   libs    += Test_Output
+  depends += Test_Output
 
   Source_Files {
     Codecs_Test.cpp
@@ -1362,6 +1479,7 @@ project(Tokens Test) : aceexe {
   compname = --ace
   comps   += Token
   libs    += Test_Output
+  depends += Test_Output
 
   Source_Files {
     Tokens_Test.cpp
@@ -1374,6 +1492,7 @@ project(Tokens Test) : aceexe {
 project(FIFO Test) : aceexe {
   exename = FIFO_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     FIFO_Test.cpp
     Main.cpp
@@ -1384,6 +1503,7 @@ project(FIFO Test) : aceexe {
 project(CDR Array Test) : aceexe {
   exename = CDR_Array_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     CDR_Array_Test.cpp
     Main.cpp
@@ -1395,6 +1515,7 @@ project(CDR Array Test) : aceexe {
 project(Service Config Test) : aceexe {
   exename = Service_Config_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Service_Config_Test.cpp
     Main.cpp
@@ -1406,6 +1527,7 @@ project(Service Config Test) : aceexe {
 project(Framework Component Test) : aceexe {
   exename = Framework_Component_Test
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Framework_Component_Test.cpp
     Main.cpp
@@ -1417,6 +1539,7 @@ project(Framework Component Test) : aceexe {
 project(Unbounded Set Ex Test) : aceexe {
   exename = Unbounded_Set_Test_Ex
   libs    += Test_Output
+  depends += Test_Output
   Source_Files {
     Unbounded_Set_Test_Ex.cpp
     Main.cpp
