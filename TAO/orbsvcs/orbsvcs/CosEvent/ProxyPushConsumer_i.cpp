@@ -81,10 +81,10 @@ ProxyPushConsumer_i::push (const CORBA::Any &data,
   RtecEventComm::Event& e = events[0];
   // TODO: fill this..
   //e.header.source = ECB_SupplierID_Test::SUPPLIER_ID;
-  e.header.source = 5; // 5 is tmp.
+  e.header.source = 1;
   e.header.ttl = 1;
   // TODO: fill this..
-  e.header.type = ACE_ES_EVENT_ANY; // ACE_ES_EVENT_UNDEFINED + 1;
+  e.header.type = ACE_ES_EVENT_ANY;
 
   ACE_hrtime_t t = ACE_OS::gethrtime ();
   ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
@@ -100,6 +100,21 @@ void
 ProxyPushConsumer_i::disconnect_push_consumer (CORBA::Environment &TAO_TRY_ENV)
 {
   this->ppc_->disconnect_push_consumer (TAO_TRY_ENV);
+
+  // Deactivate the ProxyPushConsumer
+  PortableServer::POA_var poa =
+    this->_default_POA (TAO_TRY_ENV);
+
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
+
+  PortableServer::ObjectId_var id =
+    poa->servant_to_id (this, TAO_TRY_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
+
+  poa->deactivate_object (id.in (), TAO_TRY_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
+
+  delete this;
 }
 
 void
