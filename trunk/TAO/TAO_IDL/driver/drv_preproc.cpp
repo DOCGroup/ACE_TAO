@@ -165,7 +165,7 @@ DRV_get_line(FILE *f)
 static void
 DRV_copy_input(FILE *fin, char *fn, const char *orig_filename)
 {
-  FILE  *f = fopen(fn, "w");
+  FILE  *f = ACE_OS::fopen(fn, "w");
 
   if (f == NULL) {
     cerr << idl_global->prog_name()
@@ -197,7 +197,7 @@ DRV_copy_input(FILE *fin, char *fn, const char *orig_filename)
       d++;
     }
   *d = 0;
-  fprintf (f, "#line 1 \"%s\"\n", buf);
+  ACE_OS::fprintf (f, "#line 1 \"%s\"\n", buf);
 #endif /* ! ACE_WIN32 */
 
   while (DRV_get_line(fin))
@@ -209,11 +209,11 @@ DRV_copy_input(FILE *fin, char *fn, const char *orig_filename)
       DRV_check_for_include (drv_line);
 
       // Print the line to the temp file.
-      fprintf (f, "%s\n", drv_line);
+      ACE_OS::fprintf (f, "%s\n", drv_line);
     }
 
   // Close the temp file.
-  fclose(f);
+  ACE_OS::fclose(f);
 }
 
 /*
@@ -351,8 +351,17 @@ DRV_pre_proc(char *myfile)
   // version the current process would exit if the pre-processor
   // returned with error.
 
-
-  FILE * yyin = fopen(tmp_file, "r");
+#if defined (ACE_WIN32)
+  // @@ TODO: This is currently a quick hack to allow removal of
+  //          temp file properly on Win32.  We should reimplement
+  //          ACE_OS::fopen using these lower level APIs to
+  //          emulate the behavior.
+  ACE_HANDLE h = ACE_OS::open (tmp_file,  O_RDWR);
+  int fdx = _open_osfhandle ((long) h, _O_TEXT);
+  FILE *yyin = _fdopen (fdx, "r");
+#else
+  FILE * yyin = ACE_OS::fopen(tmp_file, "r");
+#endif /* ACE_WIN32 */
   if (yyin == NULL) {
     cerr << idl_global->prog_name()
          << GTDEVEL(": Could not open cpp output file ")
@@ -376,9 +385,6 @@ DRV_pre_proc(char *myfile)
     exit(99);
   }
 
-#if !defined (ACE_WIN32)
-  // TODO: This unlink fails every time under NT, it seems that you
-  // cannot remove an open file under that OS?
   if (ACE_OS::unlink(tmp_file) == -1) {
     cerr << idl_global->prog_name()
          << GTDEVEL(": Could not remove cpp output file ")
@@ -386,7 +392,7 @@ DRV_pre_proc(char *myfile)
          << "\n";
     exit(99);
   }
-#endif /* !ACE_WIN32 */
+
   if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC)
     exit(0);
 }
