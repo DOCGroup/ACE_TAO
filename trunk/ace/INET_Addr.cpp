@@ -9,7 +9,9 @@
 #include "ace/INET_Addr.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, INET_Addr, "$Id$")
+ACE_RCSID (ace,
+           INET_Addr,
+           "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_INET_Addr)
 
