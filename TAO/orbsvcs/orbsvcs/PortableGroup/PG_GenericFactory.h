@@ -26,6 +26,7 @@
 
 #include "tao/PortableServer/PortableServerC.h"
 #include "orbsvcs/PortableGroupC.h"
+#include "ace/Null_Mutex.h"
 
 
 /// Forward declarations.
