@@ -4,13 +4,13 @@
 # Spawns MT_Cubit server and client executables on a single host.
 
 usage="usage: $0 [-n <iterations>] [-r <host>] [-t] [-l] <# low priority threads>"
-usage2="    [-l] suppresses use of -ORBiioplite, [-r runs client on <host>], [-t] uses /tmp"
+usage2="    [-l] suppresses use of -ORBgioplite, [-r runs client on <host>], [-t] uses /tmp"
 
 user=`whoami`
 ior_file=/tmp/MT_Cubit-ior.${user}
 iterations=1000
 client_exec_prefix=time
-iiop_lite=-ORBiioplite
+gioplite=-ORBgioplite
 remote_host=
 
 if [ "$HOSTTYPE" = "lynxos" ]; then
@@ -30,7 +30,7 @@ fi
 ########
 while getopts ?ln:r:t arg; do
   case $arg in
-      l   ) iiop_lite= ;;
+      l   ) gioplite= ;;
       n   ) iterations=$OPTARG ;;
       r   ) remote_host=$OPTARG
             ior_file=MT_Cubit-ior ;;
@@ -56,7 +56,7 @@ trap 'kill -15 $server_pid; /bin/rm -f $ior_file' 0 1 2 15
 ########
 ######## Start server and save its pid.
 ########
-$server_exec_prefix ./server -f $ior_file -t $threads $iiop_lite > \
+$server_exec_prefix ./server -f $ior_file -t $threads $gioplite > \
   ${tmp}server.log 2>&1 &
 server_pid=$!
 
@@ -71,10 +71,10 @@ done
 if [ "$remote_host" ]; then
   rsh $remote_host \
     "cd $PWD; LD_LIBRARY_PATH=$LD_LIBRARY_PATH $client_exec_prefix \
-    ./client -f $ior_file -t $threads -n $iterations $iiop_lite" > \
+    ./client -f $ior_file -t $threads -n $iterations $gioplite" > \
     ${tmp}client-${threads}.log 2>&1
 else
   $client_exec_prefix \
-    ./client -f $ior_file -t $threads -n $iterations $iiop_lite  > \
+    ./client -f $ior_file -t $threads -n $iterations $gioplite  > \
     ${tmp}client-${threads}.log 2>&1
 fi
