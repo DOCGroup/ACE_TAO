@@ -92,6 +92,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 /*
+ * Construct a be_root node (a node representing the root of an AST of BE nodes)
+ */
+AST_Root *
+be_generator::create_root(UTL_ScopedName *n,
+			  UTL_StrList *p)
+{
+    return new be_root(n, p);
+}
+
+/*
  * Create a BE_PredefinedType node
  */
 AST_PredefinedType *

@@ -464,3 +464,15 @@ IDL_GlobalData::PredefinedTypeToExprType(AST_PredefinedType::PredefinedType pt)
     return AST_Expression::EV_any;
   }
 }
+
+// returns the IDL source file being copiled
+String* IDL_GlobalData::idl_src_file()
+{
+  return this->pd_idl_src_file;
+}
+
+// set the source IDL file that is being parsed
+void IDL_GlobalData::idl_src_file(String *s)
+{
+  this->pd_idl_src_file = s;
+}

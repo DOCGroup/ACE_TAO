@@ -286,6 +286,7 @@ public:
 				  AST_PredefinedType::PredefinedType
 				);
 
+  /**************** Added to serve the back end *************/
   virtual String                *idl_src_file();
   // returns the IDL source file being copiled
 

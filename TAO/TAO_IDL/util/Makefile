@@ -40,7 +40,7 @@ LDLIBS	= -lutil
 LIBS = -lACE
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BUILD	= $(VSHLIB) $(VLIB)
+BUILD	= $(VSHLIB) #$(VLIB)
 
 
 #----------------------------------------------------------------------------

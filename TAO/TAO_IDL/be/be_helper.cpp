@@ -1,9 +1,65 @@
-#include        "ace/ACE.h"
-#include        "ace/OS.h"
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
 
+/* BE global Data */
+TAO_BE_Params::TAO_BE_Params()
+  : pd_client_header(0),
+    pd_client_stubs(0),
+    pd_server_header(0),
+    pd_server_skeletons(0)
+{
+}
+
+// set the client header stream
+void TAO_BE_Params::client_header(streambuf *sbuf)
+{
+  this->pd_client_header = sbuf;
+}
+
+// get the client header stream
+streambuf* TAO_BE_Params::client_header()
+{
+  return this->pd_client_header;
+}
+
+// set the client stub stream
+void TAO_BE_Params::client_stubs(streambuf* f)
+{
+  this->pd_client_stubs = f;
+}
+
+// get the client stubs stream
+streambuf* TAO_BE_Params::client_stubs()
+{
+  return this->pd_client_stubs;
+}
+
+// set the server header stream
+void TAO_BE_Params::server_header(streambuf* f)
+{
+  this->pd_server_header = f;
+}
+
+// get the server header stream
+streambuf* TAO_BE_Params::server_header()
+{
+  return this->pd_server_header;
+}
+
+// set the server skeletons stream
+void TAO_BE_Params::server_skeletons(streambuf* f)
+{
+  this->pd_server_skeletons = f;
+}
+
+// get the server skeletons stream
+streambuf* TAO_BE_Params::server_skeletons()
+{
+  return this->pd_server_skeletons;
+}
+
+/************ Helper functions **************/
 const char* be_get_client_hdr_fname()
 {
   String *s;
@@ -23,7 +79,7 @@ const char* be_get_client_hdr_fname()
   return fname;
 }
 
-const char* be_get_client_impl_fname()
+const char* be_get_client_stub_fname()
 {
   String *s;
   char *base;
@@ -61,7 +117,7 @@ const char* be_get_server_hdr_fname()
   return fname;
 }
 
-const char* be_get_server_impl_fname()
+const char* be_get_server_skeleton_fname()
 {
   String *s;
   char *base;
