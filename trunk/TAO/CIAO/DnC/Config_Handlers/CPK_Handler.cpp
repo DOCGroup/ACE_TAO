@@ -19,22 +19,44 @@ process_CCMComponentPortKind (DOMNodeIterator * iter,
   XStr event_consumer ("EventConsumer");
 
   XStr kind_str = XStr (Utils::parse_string (iter));
+  ACE_DEBUG ((LM_DEBUG, " Kind Name is %s \n", XMLString::transcode
+(kind_str)));
 
-  if (kind_str == facet)
+  if ((ACE_OS::strcmp (XMLString::transcode (kind_str),
+                       XMLString::transcode (facet))) == 0)
+  {
     kind = Deployment::Facet;
-  if (kind_str == simplex_receptacle)
+  }
+  else if ((ACE_OS::strcmp (XMLString::transcode (kind_str),
+                       XMLString::transcode (simplex_receptacle))) == 0)
+  {
     kind = Deployment::SimplexReceptacle;
-  if (kind_str == multiplex_receptacle)
+  }
+  else if ((ACE_OS::strcmp (XMLString::transcode (kind_str),
+                       XMLString::transcode (multiplex_receptacle))) == 0)
+  {
     kind = Deployment::MultiplexReceptacle;
-  if (kind_str == event_emitter)
+  }
+  else if ((ACE_OS::strcmp (XMLString::transcode (kind_str),
+                       XMLString::transcode (event_emitter))) == 0)
+  {
     kind = Deployment::EventEmitter;
-  if (kind_str == event_publisher)
+  }
+  else if ((ACE_OS::strcmp (XMLString::transcode (kind_str),
+                       XMLString::transcode (event_publisher))) == 0)
+  {
     kind = Deployment::EventPublisher;
-  if (kind_str == event_consumer)
+  }
+  else if ((ACE_OS::strcmp (XMLString::transcode (kind_str),
+                       XMLString::transcode (event_consumer))) == 0)
+  {
     kind = Deployment::EventConsumer;
-
-  // Something wrong here.. Throw exception
+  }
+  else
+  {
+     // Something wrong here.. Throw exception
   ACE_DEBUG ((LM_DEBUG,
               "Config_Handler::CPK_Handler::process_CCMComponentPortKing illegal <CCMComponentPortKind> value found \n"));
   ACE_THROW (CORBA::INTERNAL ());
+  }
 }

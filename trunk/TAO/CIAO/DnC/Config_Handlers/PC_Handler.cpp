@@ -22,11 +22,15 @@ BEGIN_DEPLOYMENT_NAMESPACE
 /// handle the package configuration and populate it
 void PC_Handler::process_PackageConfiguration(::Deployment::PackageConfiguration &pc)
 {
+  this->iter_->nextNode();
   for (DOMNode* node = this->iter_->nextNode();
        node != 0;
        node = this->iter_->nextNode())
     {
       XStr node_name (node->getNodeName());
+
+      ACE_DEBUG ((LM_DEBUG, " Node Name is %s \n", XMLString::transcode
+        (node_name)));
 
       if (false);
       else if
