@@ -1,3 +1,21 @@
+Fri Jul 09 18:48:03 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Strategies_T.i (ACE_Refcounted_Hash_Recyclable<T>::operator==):
+	  The check should be for "and", not "or".
+
+	* tests/Conn_Test.cpp: Since timed accept is implemented using
+	  select(), and we use timed accepts with threads, we need a real
+	  lock even if the OS has thread-safe accept when using timed
+	  accepts.
+
+	  Also changed the default number of clients to 5.  Hopefully,
+	  this won't overrun the backlog on the listen socket.
+
+	* ace/Svc_Handler.cpp (shutdown): Remove self from Reactor only
+	  when we have a valid handle.  Otherwise, we lose our current
+	  errno, since the failed remove_handler will set the errno to
+	  EINVAL.
+
 Fri Jul  9 14:02:52 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Re-enabled ACE_LACKS_SETSCHED for AIX 4.3.
@@ -19,7 +37,7 @@ Fri Jul  9 14:27:10 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  messages.  Only reenable them if the -d option is given.  Thanks
  	  to Jerry De Master <jdemaste@ipdinc.com> for reporting this.
 
-	* ace/Based_Pointer_T: Factored out all but the operator-> into 
+	* ace/Based_Pointer_T: Factored out all but the operator-> into
 	  a new class called ACE_Based_Pointer_Basic so that we can use
  	  this for "basic types" like char *.  Thanks to Irfan for
  	  pointing this out.
@@ -27,7 +45,7 @@ Fri Jul  9 14:27:10 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* ace/Based_Pointer_Repository.cpp (unbind): Fixed a
 	  bug in the unbind() loop.  Thanks to David Levine and DEC UNIX
  	  C++ for noticing this!
-  
+
 	* ace/Reactor.i (schedule_wakeup): Fixed a misplaced assignment
 	  of Event_Handler->reator ().  Thanks to Carlos for reporting
  	  this.
@@ -45,12 +63,12 @@ Fri Jul 09 13:11:33 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Fri Jul  9 12:16:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Caching_Utility_T.cpp (minimum): 
+	* ace/Caching_Utility_T.cpp (minimum):
 	  Modified minimum () of ACE_Recyclable_Handler_Utility class so
 	  that the minimum value is also an entry which is purgable.
 
-	* tests/Cache_Map_Manager_Test.cpp: 
-	  SunC++4.0 compiler doesnt accept typedefs with templates and 
+	* tests/Cache_Map_Manager_Test.cpp:
+	  SunC++4.0 compiler doesnt accept typedefs with templates and
 	  having ::, for example: HASH_MAP::iterator. One has to typedef
 	  HASH_MAP::iterator and use it to typedef something else. Fixed
 	  this problem in the above test.
