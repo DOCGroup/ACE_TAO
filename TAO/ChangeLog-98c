@@ -1,3 +1,8 @@
+Wed Jan  6 13:44:29 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/Time_Service/Server_i.h (class Server_i): Addded the
+	IR related code.
+
 Wed Jan 06 13:29:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/DynStruct_i.cpp: removed ACE_Array_Base<CORBA_DynAny_var>

@@ -24,6 +24,8 @@
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/Time/TAO_Time_Service_Server.h"
 
+#include "IR_Helper.h"
+
 class Server_i
 {
   // = TITLE
@@ -64,6 +66,10 @@ public:
   // Check if this is the first server binding to the Naming
   // Service.
 
+  int init_IR (void);
+  // Initialize the Implementation Repository and register the
+  // server with it.
+
 private:
 
   TAO_ORB_Manager orb_manager_;
@@ -84,6 +90,15 @@ private:
 
   CosNaming::NamingContext_var time_service_server_context_;
   // Naming context for the Naming Service.
+
+  IR_Helper *ir_helper_;
+  // The Implementation Repository Helper.
+
+  int use_ir_;
+  // Use the Implementation Repository.
+
+  int register_with_ir_;
+  // Register with the Implementation Repository.
 
   CORBA::ORB_var orb_;
   // My orb.
