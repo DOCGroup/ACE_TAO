@@ -127,12 +127,19 @@ AST_Generator::create_root(UTL_ScopedName *n,
  * Construct an AST_Interface node (an interface)
  */
 AST_Interface   *
-AST_Generator::create_interface(UTL_ScopedName *n,
-                               AST_Interface **ih,
-                               long nih,
-                               UTL_StrList *p)
+AST_Generator::create_interface (UTL_ScopedName *n,
+                                 AST_Interface **ih,
+                                 long nih,
+                                 AST_Interface **ih_flat,
+                                 long nih_flat,
+                                 UTL_StrList *p)
 {
-  return new AST_Interface(n, ih, nih, p);
+  return new AST_Interface (n, 
+                            ih, 
+                            nih, 
+                            ih_flat, 
+                            nih_flat, 
+                            p);
 }
 
 /*
@@ -142,7 +149,7 @@ AST_Generator::create_interface(UTL_ScopedName *n,
 AST_InterfaceFwd *
 AST_Generator::create_interface_fwd(UTL_ScopedName *n, UTL_StrList *p)
 {
-  return new AST_InterfaceFwd (this->create_interface (n, 0, -1, p), n, p);
+  return new AST_InterfaceFwd (this->create_interface (n, 0, -1, 0, 0, p), n, p);
 }
 
 /*

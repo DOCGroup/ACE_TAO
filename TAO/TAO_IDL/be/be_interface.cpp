@@ -47,8 +47,10 @@ be_interface::be_interface (void)
 be_interface::be_interface (UTL_ScopedName *n,
                             AST_Interface **ih,
                             long nih,
+                            AST_Interface **ih_flat,
+                            long nih_flat,
                             UTL_StrList *p)
-  : AST_Interface (n, ih, nih, p),
+  : AST_Interface (n, ih, nih, ih_flat, nih_flat, p),
     AST_Decl (AST_Decl::NT_interface, n, p),
     UTL_Scope (AST_Decl::NT_interface),
     skel_count_ (0),

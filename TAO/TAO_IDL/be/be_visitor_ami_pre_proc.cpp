@@ -362,6 +362,8 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
   be_interface *inherit_intf = new be_interface (inherit_name,
                                                  0,  // inherited interfaces
                                                  0,  // number of inherited interfaces
+                                                 0,  // ancestors
+                                                 0,  // number of ancestors
                                                  0); // pragmas
   inherit_intf->set_name (inherit_name);
 
@@ -388,9 +390,11 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
   p_intf[0] = ACE_static_cast (AST_Interface *, inherit_intf);
 
   be_interface *reply_handler = new be_interface (reply_handler_name,  // name
-                                                       p_intf,             // list of inherited
-                                                       1,                  // number of inherited
-                                                       0);                 // pragmas
+                                                  p_intf,             // list of inherited
+                                                  1,                  // number of inherited
+                                                  0,                  // list of ancestors
+                                                  0,                  // number of ancestors
+                                                  0);                 // pragmas
   reply_handler->set_name (reply_handler_name);
 
   // Now our customized valuetype is created, we have to 
@@ -601,16 +605,23 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
       be_interface *field_type= new be_interface (field_name,
                                                   0,
                                                   0,
+                                                  0,
+                                                  0,
                                                   0);
       field_type->set_defined_in (node->defined_in ());
 
       // Create the argument
       be_argument *arg = new be_argument (AST_Argument::dir_IN,
                                           field_type, // is also a valuetype
-                                          new UTL_ScopedName 
-                                          (new Identifier
-                                              ("ami_handler", 1, 0, I_FALSE),
-                                            0),
+                                          new UTL_ScopedName (
+                                              new Identifier (
+                                                  "ami_handler", 
+                                                  1, 
+                                                  0, 
+                                                  I_FALSE
+                                                ),
+                                              0
+                                            ),
                                           0);
 
       // Add the reply handler to the argument list
