@@ -1,3 +1,31 @@
+Thu Dec  7 13:45:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynamicAny/DynAny_i.cpp:
+
+	  Cosmetic changes.
+
+	* tao/DynamicAny/DynArray_i.cpp:
+	* tao/DynamicAny/DynEnum_i.cpp:
+	* tao/DynamicAny/DynSequence_i.cpp:
+	* tao/DynamicAny/DynStruct_i.cpp:
+	* tao/DynamicAny/DynUnion_i.cpp:
+
+	  Fixed a bug in _tao_QueryInterface(). The last line
+	  was making a call to DynAny::_tao_QueryInterface()
+	  instead of the override in the immediate base class. Thanks 
+	  to Michael Rushton <miker@mbmnz.co.nz> for reporting
+	  the failure of DynStruct::_narrow(), which led to this
+	  discovery.
+
+	* tao/DynamicAny/DynamicAnyC.cpp:
+	* tao/DynamicAny/DynamicAnyC.h:
+	* tao/DynamicAny/DynamicAnyC.i:
+	* tao/DynamicAny/diffs/DynamicAnyC.cpp.diff:
+	* tao/DynamicAny/diffs/DynamicAnyC.h.diff:
+	* tao/DynamicAny/diffs/DynamicAnyC.i.diff:
+
+	  Regenerated the stub files updated the diff files.
+
 Thu Dec  7 03:01:02 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * TAO_IDL/TAO_IDL_BE_LIB.dsp:
