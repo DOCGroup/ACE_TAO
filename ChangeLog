@@ -1,5 +1,9 @@
 Sun Jun  9 08:51:04 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* ace/Configuration.{h,cpp}: Added support for the path separator
+	  ('\\') in key names.  Thanks to Eugene <eugenea@bremer-inc.com>
+ 	  for contributing this patch.
+
 	* ace/Date_Time.{h,i}: Added support for weekday.  Thanks to
 	  Eyal Lubetzky <eyall@BANDWIZ.COM> for reporting this.
 

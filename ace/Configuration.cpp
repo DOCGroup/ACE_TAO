@@ -212,19 +212,25 @@ ACE_Configuration::import_config (const ACE_TCHAR* filename)
 }
 
 int
-ACE_Configuration::validate_name (const ACE_TCHAR* name)
+ACE_Configuration::validate_name (const ACE_TCHAR* name, int allow_path)
 {
-  const ACE_TCHAR *pos;
+  // Invalid character set
+  const ACE_TCHAR* reject =
+    allow_path ? ACE_LIB_TEXT("][") : ACE_LIB_TEXT("\\][");
+  
+  // Position of the first invalid character or terminating null.
+  size_t pos = ACE_OS_String::strcspn (name, reject);
 
-  for (pos = name;
-       // Make sure it doesn't contain any invalid characters
-       *pos != '\0';
-       pos++)
-    if (ACE_OS::strchr (ACE_LIB_TEXT ("\\]["), *pos))
-      return -1;
+  // Check if it is an invalid character.
+  if (name[pos] != ACE_LIB_TEXT ('\0'))
+    return -1;
 
-  // Make sure its not too long.
-  if (pos - name > 255)
+  // The first character can never be a path separator.
+  if (name[0] == ACE_LIB_TEXT ('\\'))
+    return -1;
+
+  // Validate length.
+  if (pos == 0 || pos > 255)
     return -2;
 
   return 0;
@@ -510,7 +516,7 @@ ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_K
                                                int create,
                                                ACE_Configuration_Section_Key& result)
 {
-  if (validate_name (sub_section))
+  if (validate_name (sub_section, 1))
     return -1;
 
   HKEY base_key;

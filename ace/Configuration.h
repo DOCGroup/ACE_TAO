@@ -291,9 +291,10 @@ protected:
    * Tests to see if <name> is valid.  <name> must be < 255 characters
    * and not contain the path separator '\', brackets [] or = (maybe
    * just restrict to alphanumeric?) returns non zero if name is not
-   * valid
+   * valid.  The path separator is allowed, except for the first character,
+   * if <allow_path> is true.
    */
-  int validate_name (const ACE_TCHAR* name);
+  int validate_name (const ACE_TCHAR* name, int allow_path = 0);
 
   // Not used
   ACE_Configuration (const ACE_Configuration& rhs);
