@@ -99,7 +99,7 @@ DRV_cpp_putarg (const char *str)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s%s %d %s\n",
-                  ACE_TEXT (idl_global->prog_name ()),
+                  idl_global->prog_name (),
                   ACE_TEXT (": More than"),
                   max_argcount,
                   ACE_TEXT ("arguments to preprocessor")));
@@ -345,9 +345,9 @@ DRV_copy_input (FILE *fin,
     {
       ACE_ERROR ((LM_ERROR,
                   "%s%s%s%s",
-                  ACE_TEXT (idl_global->prog_name ()),
+                  idl_global->prog_name (),
                   ACE_TEXT (": cannot open temp file "),
-                  ACE_TEXT (fn),
+                  fn,
                   ACE_TEXT (" for writing\n")));
 
       ACE_OS::exit (99);
@@ -357,7 +357,7 @@ DRV_copy_input (FILE *fin,
     {
       ACE_ERROR ((LM_ERROR,
                   "%s%s",
-                  ACE_TEXT (idl_global->prog_name ()),
+                  idl_global->prog_name (),
                   ACE_TEXT (": cannot open input file\n")));
 
       ACE_OS::exit (99);
@@ -543,9 +543,9 @@ DRV_pre_proc (const char *myfile)
         {
           ACE_ERROR ((LM_ERROR,
                       "%s%s%s%s",
-                      ACE_TEXT (idl_global->prog_name ()),
+                      idl_global->prog_name (),
                       ACE_TEXT (": cannot open temp file "),
-                      ACE_TEXT (tmp_file),
+                      tmp_file,
                       ACE_TEXT (" for writing\n")));
 
           return;
@@ -558,9 +558,9 @@ DRV_pre_proc (const char *myfile)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s%s%s%s",
-                  ACE_TEXT (idl_global->prog_name ()),
+                  idl_global->prog_name (),
                   ACE_TEXT (": spawn of "),
-                  ACE_TEXT (arglist[0]),
+                  arglist[0],
                   ACE_TEXT (" failed\n")));
 
       return;
@@ -573,9 +573,9 @@ DRV_pre_proc (const char *myfile)
         {
           ACE_ERROR ((LM_ERROR,
                       "%s%s%s%s",
-                      ACE_TEXT (idl_global->prog_name ()),
+                      idl_global->prog_name (),
                       ACE_TEXT (": cannot close temp file"),
-                      ACE_TEXT (tmp_file),
+                      tmp_file,
                       ACE_TEXT (" on parent\n")));
 
           return;
@@ -591,7 +591,7 @@ DRV_pre_proc (const char *myfile)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s%s",
-                  ACE_TEXT (idl_global->prog_name ()),
+                  idl_global->prog_name (),
                   ACE_TEXT (": wait for child process failed\n")));
 
       return;
@@ -606,9 +606,9 @@ DRV_pre_proc (const char *myfile)
 
           ACE_ERROR ((LM_ERROR,
                       "%s%s%s%s",
-                      ACE_TEXT (idl_global->prog_name ()),
+                      idl_global->prog_name (),
                       ACE_TEXT (": preprocessor "),
-                      ACE_TEXT (arglist[0]),
+                      arglist[0],
                       ACE_TEXT (" returned with an error\n")));
 
           ACE_OS::exit (1);
@@ -621,9 +621,9 @@ DRV_pre_proc (const char *myfile)
 
       ACE_ERROR ((LM_ERROR,
                   "%s%s%s%s",
-                  ACE_TEXT (idl_global->prog_name ()),
+                  idl_global->prog_name (),
                   ACE_TEXT (": preprocessor "),
-                  ACE_TEXT (arglist[0]),
+                  arglist[0],
                   ACE_TEXT (" appears to have been interrupted\n")));
 
       ACE_OS::exit (1);
@@ -638,9 +638,9 @@ DRV_pre_proc (const char *myfile)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s%s %s\n",
-                  ACE_TEXT (idl_global->prog_name ()),
+                  idl_global->prog_name (),
                   ACE_TEXT (": Could not open cpp output file"),
-                  ACE_TEXT (tmp_file)));
+                  tmp_file));
 
       ACE_OS::exit (99);
     }
@@ -653,12 +653,12 @@ DRV_pre_proc (const char *myfile)
       char buffer[ACE_Log_Record::MAXLOGMSGLEN];
       int bytes;
 
-      if (preproc == NULL)
+      if (preproc == 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "%s: Could not open cpp output file: %s\n",
-                      ACE_TEXT (idl_global->prog_name ()),
-                      ACE_TEXT (tmp_file)));
+                      idl_global->prog_name (),
+                      tmp_file));
 
           ACE_OS::exit (99);
         }
@@ -692,9 +692,9 @@ DRV_pre_proc (const char *myfile)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s%s %s\n",
-                  ACE_TEXT (idl_global->prog_name ()),
+                  idl_global->prog_name (),
                   ACE_TEXT (": Could not remove cpp input file"),
-                  ACE_TEXT (tmp_ifile)));
+                  tmp_ifile));
 
       ACE_OS::exit (99);
     }
@@ -704,9 +704,9 @@ DRV_pre_proc (const char *myfile)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s%s %s\n",
-                  ACE_TEXT (idl_global->prog_name ()),
+                  idl_global->prog_name (),
                   ACE_TEXT (": Could not remove cpp output file"),
-                  ACE_TEXT (tmp_file)));
+                  tmp_file));
 
       ACE_OS::exit (99);
     }
