@@ -744,6 +744,82 @@ idd.implementationRef, "DeploymentPlan", &DeploymentPlan::implementation);
     //  CID->CAD->ACD->SPE
     //  CAD->instance is referred by ACD->internalEndpoint->instanceRef
     //    dump_ref_seq<Deployment::AssemblyConnectionDescription> ("instanceRef", bridge.connectionRef, "Domain", &Domain::bridge);
+
+    int value = spe.instanceRef;
+
+    // DnC_Dump::desc("ComponentImplementationDescription").assemblyImpl[i].connection[j].internalEndpoint[k].instanceRef;
+    ACE_DEBUG ((LM_DEBUG, "       Instance: %s \n",
+                Dump_Obj::desc<Deployment::ComponentAssemblyDescription>("ComponentAssemblyDescription").instance[value].name.in ()));
+    
+    /*
+    for (CORBA::ULong i = 0; i < cid.assemblyImpl.length (); ++i)
+      {
+        ACE_DEBUG ((LM_DEBUG, "\nAssemblyDescription %d: \n", i + 1));
+        for (CORBA::ULong j = 0; j < cid.assemblyImpl[i].instance.length ();
+             ++j)
+          {
+            ACE_DEBUG ((LM_DEBUG, "     Instance: %d: \n", j + 1));
+            ACE_DEBUG ((LM_DEBUG, "       Name: %s \n",
+                        cid.assemblyImpl[i].instance[j].name.in ()));
+            for (CORBA::ULong k = 0; 
+                 k < cid.assemblyImpl[i].instance[j].
+                     package.length ();
+                 ++k)
+              {
+                ACE_DEBUG ((LM_DEBUG, "     Package: %d: \n", k + 1));
+                ACE_DEBUG ((LM_DEBUG, "       UUID: %s \n", 
+                  cid.assemblyImpl[i].instance[j].package[k].UUID.in ()));
+                ACE_DEBUG ((LM_DEBUG, "       Label: %s \n", 
+                  cid.assemblyImpl[i].instance[j].package[k].label.in ()));
+                ACE_DEBUG ((LM_DEBUG, "       Realizes:\n"));
+                dump (cid.assemblyImpl[i].instance[j].package[k].realizes);
+                dump (cid.assemblyImpl[i].instance[j].package[k]);
+              }
+          }
+        for (CORBA::ULong j = 0; j < cid.assemblyImpl[i].connection.length ();
+             ++j)
+          {
+            ACE_DEBUG ((LM_DEBUG, "     Connection: %d: \n", j + 1));
+            ACE_DEBUG ((LM_DEBUG, "       Name: %s \n",
+                        cid.assemblyImpl[i].connection[j].name.in ()));
+            for (CORBA::ULong k = 0; 
+                 k < cid.assemblyImpl[i].connection[j].
+                     internalEndpoint.length ();
+                 ++k)
+              {
+                ACE_DEBUG ((LM_DEBUG, "     Endpoint: %d: \n", k + 1));
+                ACE_DEBUG ((LM_DEBUG, "       Portname: %s \n",
+                            cid.assemblyImpl[i].connection[j].
+                            internalEndpoint[k].portName.in ()));
+                int value = cid.assemblyImpl[i].connection[j].
+                            internalEndpoint[k].instanceRef;
+                ACE_DEBUG ((LM_DEBUG, "       Instance: %s \n",
+                        cid.assemblyImpl[i].instance[value].name.in ()));
+              }
+          }
+        for (CORBA::ULong j = 0; 
+             j < cid.assemblyImpl[i].externalProperty.length ();
+             ++j)
+          {
+            ACE_DEBUG ((LM_DEBUG, "     ExternalProperty: %d: \n", j + 1));
+          }
+      }
+    for (CORBA::ULong i = 0; i < cid.monolithicImpl.length (); ++i)
+      {
+        ACE_DEBUG ((LM_DEBUG, "\nMonolithicImplDescription %d: \n", i + 1));
+        for (CORBA::ULong j = 0; 
+             j < cid.monolithicImpl[i].primaryArtifact.length ();
+             ++j)
+          {
+            ACE_DEBUG ((LM_DEBUG, "     Artifact: %d: \n", j + 1));
+            ACE_DEBUG ((LM_DEBUG, "       Name: %s \n",
+                        cid.monolithicImpl[i].primaryArtifact[j].name.in ()));
+            dump (cid.monolithicImpl[i].primaryArtifact[j].
+                  referencedArtifact);
+          }
+      }
+    */
+
   }
 
   // AssemblyConnectionDescription
@@ -788,7 +864,7 @@ idd.implementationRef, "DeploymentPlan", &DeploymentPlan::implementation);
  
   void DnC_Dump::dump (const ::Deployment::ComponentAssemblyDescription& cad)
   {
-    Dump_Obj dump_obj("ComponentAssemblyDescription");
+    Dump_Obj dump_obj("ComponentAssemblyDescription", cad);
     
     dump_sequence ("instance", cad.instance);
     dump_sequence ("connection", cad.connection);
@@ -857,7 +933,7 @@ idd.implementationRef, "DeploymentPlan", &DeploymentPlan::implementation);
   void DnC_Dump::dump (
         const ::Deployment::ComponentImplementationDescription &cid)
   {
-    Dump_Obj dump_obj("ComponentImplementationDescription");
+    Dump_Obj dump_obj("ComponentImplementationDescription", cid);
 
     dump ("label", cid.label);
     dump ("UUID", cid.UUID);

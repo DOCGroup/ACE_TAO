@@ -1,3 +1,11 @@
+Fri Jun  4 11:19:45 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+	* DnC/Config_Handlers/DnC_Dump.cpp: 
+
+	Fixed the dump function for Deployment::SubcomponentPortEndpoint.
+	Prints out the instanceRef.
+
+
 Fri Jun  4 10:46:42 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/DnC_Dump.cpp:
