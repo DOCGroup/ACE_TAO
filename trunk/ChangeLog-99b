@@ -1,3 +1,9 @@
+Fri Jan 15 00:03:32 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Log_Msg/test_ostream.cpp: Added new example for
+ 	  Log_Msg. This program tests the Log_Msg abstraction wrt writing
+ 	  to stderr and to a file.
+
 Thu Jan 14 21:50:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/CORBA_macros.h: Added a new set of try macros which help
