@@ -174,17 +174,17 @@ public:
     int i = 0;
     while (true)
       {
-	int retval = ACE_OS::read (ACE_STDIN, &str[i], 1);
-	if (retval > 0)
-	  {
-	    if (str[i] == '\n')
-	      {
-		str[++i] = 0;
-		return str;
-	      }
-	    i++;
-	  }
-	else
+        int retval = ACE_OS::read (ACE_STDIN, &str[i], 1);
+        if (retval > 0)
+          {
+            if (str[i] == '\n')
+              {
+                str[++i] = 0;
+                return str;
+              }
+            i++;
+          }
+        else
           return str;
       }
   }
