@@ -88,15 +88,17 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
         {
           ++n_inherits_downcastable;
           *os << "if (rval == 0)" << be_idt_nl
-              << "// @@ Michael: This is necessary because of broken" << be_nl
-              << "// nested class access in MSVC++" << be_nl
-              <<   "// rval = " << inherited->name()
-              <<                "::_tao_obv_narrow (type_id);" << be_nl;
-          *os << "{" << be_idt_nl
-              << "void *(" << inherited->name () << "::* fd) (ptr_arith_t)"
-              << " = " << inherited->name () << "::_tao_obv_narrow;" << be_nl
-              <<   "rval = (this->*fd) (type_id);" << be_uidt_nl
-              << "}" << be_uidt_nl;
+              << "rval = "; 
+          if (inherited->defined_in ())
+            {
+              be_decl *scope = be_scope::narrow_from_scope (inherited->defined_in ())->decl ();
+              *os << "ACE_NESTED_CLASS ("
+                  << scope->name() << ","
+                  << inherited->local_name () << ")";
+            }
+          else
+            *os << inherited->name ();
+          *os << "::_tao_obv_narrow (type_id);" << be_uidt_nl;
         }
     }
 

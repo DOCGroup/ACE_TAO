@@ -89,11 +89,11 @@ public:
   int niterations_;
   // The number of iterations on each client thread.
 
-  A::AMI_AMI_Test_Handler_var the_handler_var_;
+  A::AMI_AMI_TestHandler_var the_handler_var_;
   // Var for AMI_AMI_Test_ReplyHandler object.
 };
 
-class Handler : public POA_A::AMI_AMI_Test_Handler
+class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
   Handler (void) {};

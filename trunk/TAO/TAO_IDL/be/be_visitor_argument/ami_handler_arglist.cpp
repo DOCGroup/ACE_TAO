@@ -58,8 +58,6 @@ be_visitor_args_ami_handler_arglist::visit_argument (be_argument *node)
                         -1);
     }
 
-  os->indent (); // start with current indentation level
-
   // Different types have different mappings when used as in/out or
   // inout parameters. Let this visitor deal with the type
 
@@ -89,6 +87,7 @@ be_visitor_args_ami_handler_arglist::visit_array (be_array *node)
     {
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
+      os->indent (); 
       *os << "const " << this->type_name (node);
       return 1;
       /* NOT REACHED */
@@ -108,6 +107,7 @@ be_visitor_args_ami_handler_arglist::visit_enum (be_enum *node)
     {
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
+      os->indent (); 
       *os << this->type_name (node);
       return 1;
       /* NOT REACHED */
@@ -127,6 +127,7 @@ be_visitor_args_ami_handler_arglist::visit_interface (be_interface *node)
     {
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
+      os->indent (); 
       *os << this->type_name (node, "_ptr");
       return 1;
       /* NOT REACHED */
@@ -146,6 +147,7 @@ be_visitor_args_ami_handler_arglist::visit_interface_fwd (be_interface_fwd *node
     {
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
+      os->indent (); 
       *os << this->type_name (node, "_ptr");
       return 1;
       /* NOT REACHED */
@@ -165,6 +167,7 @@ be_visitor_args_ami_handler_arglist::visit_native (be_native *node)
     {
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
+      os->indent (); 
       *os << this->type_name (node);
       return 1;
       /* NOT REACHED */
@@ -187,6 +190,7 @@ be_visitor_args_ami_handler_arglist::visit_predefined_type (be_predefined_type *
         {
         case AST_Argument::dir_INOUT:
         case AST_Argument::dir_OUT:
+          os->indent (); 
           *os << "const " << this->type_name (node) << " &";
           return 1;
           /* NOT REACHED */
@@ -201,6 +205,7 @@ be_visitor_args_ami_handler_arglist::visit_predefined_type (be_predefined_type *
         {
         case AST_Argument::dir_INOUT:
         case AST_Argument::dir_OUT:
+          os->indent (); 
           *os << this->type_name (node, "_ptr");
           return 1;
           /* NOT REACHED */
@@ -215,6 +220,7 @@ be_visitor_args_ami_handler_arglist::visit_predefined_type (be_predefined_type *
         {
         case AST_Argument::dir_INOUT:
         case AST_Argument::dir_OUT:
+          os->indent (); 
           *os << this->type_name (node);
           return 1;
           /* NOT REACHED */
@@ -236,6 +242,7 @@ be_visitor_args_ami_handler_arglist::visit_sequence (be_sequence *node)
     {
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
+      os->indent (); 
       *os << "const " << this->type_name (node) << " &";
       return 1;
       /* NOT REACHED */
@@ -257,10 +264,12 @@ be_visitor_args_ami_handler_arglist::visit_string (be_string *node)
     case AST_Argument::dir_OUT:
       if (node->width () == sizeof (char))
         {
+          os->indent (); 
           *os << "const char *";
         }
       else
         {
+          os->indent (); 
           *os << "const CORBA::WChar *";
         }
       return 1;
@@ -281,6 +290,7 @@ be_visitor_args_ami_handler_arglist::visit_structure (be_structure *node)
     {
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
+      os->indent (); 
       *os << "const " << this->type_name (node) << " &";
       return 1;
       /* NOT REACHED */
@@ -300,6 +310,7 @@ be_visitor_args_ami_handler_arglist::visit_union (be_union *node)
     {
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
+      os->indent (); 
       *os << "const " << this->type_name (node) << " &";
       return 1;
       /* NOT REACHED */
@@ -343,6 +354,7 @@ be_visitor_args_ami_handler_arglist::visit_valuetype (be_valuetype *node)
     {
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
+      os->indent (); 
       *os << this->type_name (node) << " *";
       return 1;
       /* NOT REACHED */
@@ -362,6 +374,7 @@ be_visitor_args_ami_handler_arglist::visit_valuetype_fwd (be_valuetype_fwd *node
     {
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:      
+      os->indent (); 
       *os << "const " << this->type_name (node) << " *";
       return 1;
       /* NOT REACHED */

@@ -72,7 +72,7 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-class Handler : public POA_A::AMI_AMI_Test_Handler
+class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
   Handler (void) {};
@@ -182,7 +182,7 @@ main (int argc, char *argv[])
 
       // Instantiate the ReplyHandler and register that with the POA. 
       Handler handler;
-      A::AMI_AMI_Test_Handler_var the_handler_var =
+      A::AMI_AMI_TestHandler_var the_handler_var =
         handler._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
