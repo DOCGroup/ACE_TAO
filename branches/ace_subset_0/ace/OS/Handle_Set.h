@@ -14,7 +14,7 @@
 #define ACE_HANDLE_SET_H
 #include "ace/pre.h"
 
-#include "OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -222,7 +222,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "Handle_Set.i"
+#include "ace/OS/Handle_Set.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

@@ -28,11 +28,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Include the split up ACE_OS classes
-#include "OS_Dirent.h"
-#include "OS_String.h"
-#include "OS_Memory.h"
-#include "OS_TLI.h"
-#include "OS_Errno.h"
+#include "ace/OS/OS_Dirent.h"
+#include "ace/OS/OS_String.h"
+#include "ace/OS/OS_Memory.h"
+#include "ace/OS/OS_TLI.h"
+#include "ace/OS/OS_Errno.h"
 
 class ACE_Timeout_Manager;
 
@@ -103,7 +103,7 @@ int const ACE_FD_SETSIZE = FD_SETSIZE;
 
 // Here are all ACE-specific global declarations needed throughout
 // ACE.
-#include "Global_Macros.h"
+#include "ace/OS/Global_Macros.h"
 
 #if !defined (ACE_WIN32)
 #define ACE_MAX_USERID L_cuserid

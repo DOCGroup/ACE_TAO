@@ -1,8 +1,8 @@
 // $Id$
 
-#include "OS_Thread_Adapter.h"
-#include "Thread_Hook.h"
-#include "OS.h"
+#include "ace/OS/OS_Thread_Adapter.h"
+#include "ace/OS/Thread_Hook.h"
+#include "ace/OS/OS.h"
 
 ACE_RCSID(ace, OS_Thread_Adapter, "$Id$")
 

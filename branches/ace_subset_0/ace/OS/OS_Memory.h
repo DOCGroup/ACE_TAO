@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "OS_Export.h"
+#include "ace/OS/OS_Export.h"
 #if defined (ACE_HAS_PACE)
 # include /**/ "pace/stdlib.h"
 #endif /* ACE_HAS_PACE */
@@ -116,7 +116,7 @@ public:
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "OS_Memory.inl"
+#   include "ace/OS/OS_Memory.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
 #include "ace/post.h"

@@ -1,9 +1,9 @@
 // $Id$
 
-#include "OS.h"
-#include "OS_Dirent.h"
-#include "OS_String.h"
-#include "OS_Memory.h"
+#include "ace/OS/OS.h"
+#include "ace/OS/OS_Dirent.h"
+#include "ace/OS/OS_String.h"
+#include "ace/OS/OS_Memory.h"
 
 #if 0
 #include "ace/Logging/Log_Msg.h"
@@ -12,7 +12,7 @@
 ACE_RCSID(ace, OS_Dirent, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "OS_Dirent.inl"
+# include "ace/OS/OS_Dirent.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
 ACE_DIR *

@@ -1,8 +1,8 @@
 // $Id$
 
-#include "OS.h"
+#include "ace/OS/OS.h"
 #if !defined (__ACE_INLINE__)
-# include "Basic_Types.i"
+# include "ace/OS/Basic_Types.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(ace, Basic_Types, "$Id$")

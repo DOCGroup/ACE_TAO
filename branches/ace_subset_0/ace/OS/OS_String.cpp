@@ -8,13 +8,13 @@
  */
 //=============================================================================
 
-#include "OS_String.h"
-#include "OS_Memory.h"
+#include "ace/OS/OS_String.h"
+#include "ace/OS/OS_Memory.h"
 
 ACE_RCSID (ace, OS_String, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "OS_String.inl"
+# include "ace/OS/OS_String.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
 #if defined (ACE_LACKS_WCSDUP_PROTOTYPE)

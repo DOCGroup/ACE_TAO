@@ -1,7 +1,7 @@
 // $Id$
 
-#include "Thread_Hook.h"
-#include "OS.h"
+#include "ace/OS/Thread_Hook.h"
+#include "ace/OS/OS.h"
 
 ACE_RCSID(ace, Thread_Hook, "$Id$")
 

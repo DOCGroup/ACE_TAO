@@ -17,7 +17,7 @@
 #define ACE_HANDLE_OPS_H
 #include "ace/pre.h"
 
-#include "OS.h"
+#include "ace/OS/OS.h"
 
 class ACE_Export ACE_Handle_Ops
 {
@@ -36,7 +36,7 @@ public:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "Handle_Ops.i"
+#include "ace/OS/Handle_Ops.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"

@@ -17,7 +17,7 @@
 #include "ace/pre.h"
 
 #include "ace/config-all.h"
-#include "OS_Export.h"
+#include "ace/OS/OS_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -123,7 +123,7 @@ private:
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "OS_Dirent.inl"
+#   include "ace/OS/OS_Dirent.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
 #include "ace/post.h"

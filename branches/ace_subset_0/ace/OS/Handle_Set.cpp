@@ -1,7 +1,7 @@
 // Handle_Set.cpp
 // $Id$
 
-#include "Handle_Set.h"
+#include "ace/OS/Handle_Set.h"
 
 #if 0
 #include "ace/Logging/Log_Msg.h"

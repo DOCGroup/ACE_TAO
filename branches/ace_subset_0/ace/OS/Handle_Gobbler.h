@@ -15,7 +15,7 @@
 #define ACE_HANDLE_GOBBLER_H
 #include "ace/pre.h"
 
-#include "OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -60,7 +60,7 @@ private:
   HANDLE_SET handle_set_;
 };
 
-#include "Handle_Gobbler.i"
+#include "ace/OS/Handle_Gobbler.i"
 
 #include "ace/post.h"
 #endif /* ACE_HANDLE_GOBBLER_H */

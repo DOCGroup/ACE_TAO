@@ -10,7 +10,6 @@ LIB      = $(LIBACE).a
 SHLIB    = $(LIBACE).$(SOEXT)
 
 OS_FILES = \
-  Basic_Types \
   OS \
   OS_Dirent \
   OS_Memory \
@@ -24,6 +23,7 @@ OS_FILES = \
   Thread_Hook \
   Sched_Params \
   Handle_Set
+
 UTILS_FILES = \
   ACE \
   Active_Map_Manager \
@@ -33,6 +33,7 @@ UTILS_FILES = \
   Containers \
   Configuration \
   Configuration_Import_Export \
+  Connection_Recycling_Strategy \
   Dirent \
   Dirent_Selector \
   Dynamic \
@@ -40,17 +41,16 @@ UTILS_FILES = \
   Functor \
   Get_Opt \
   Hash_Map_Manager \
-  Connection_Recycling_Strategy \
   Hashable \
-  Notification_Strategy \
-  Recyclable \
   Refcountable \
   Handle_Ops \
   Init_ACE \
   Lib_Find \
   Message_Block \
   Method_Request \
+  Notification_Strategy \
   Object_Manager \
+  Recyclable \
   Registry \
   String_Base_Const \
   SString \
@@ -305,6 +305,22 @@ TEMPLATE_FILES = \
            Timer_Wheel_T \
            Typed_SV_Message \
            Typed_SV_Message_Queue
+SUBDIRS= \
+  ATM \
+  Basic_Types \
+  Connection \
+  Demux \
+  IPC \
+  Logging \
+  Memory \
+  OS \
+  QoS \
+  RMCast \
+  SSL \
+  Svcconf \
+  Threads \
+  Token \
+  Utils
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

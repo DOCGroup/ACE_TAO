@@ -10,7 +10,7 @@
 // */
 //=============================================================================
 
-#include "OS_QoS.h"
+#include "ace/OS/OS_QoS.h"
 
 ACE_Flow_Spec::ACE_Flow_Spec (u_long token_rate,
                               u_long token_bucket_size,

@@ -1,9 +1,9 @@
 // $Id$
 
-#include "Handle_Ops.h"
+#include "ace/OS/Handle_Ops.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "Handle_Ops.i"
+#include "ace/OS/Handle_Ops.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 ACE_RCSID(ace, Handle_Ops, "$Id$")

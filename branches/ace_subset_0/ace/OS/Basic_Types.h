@@ -603,7 +603,7 @@ typedef ACE_UINT16 ACE_USHORT16;
 # endif /* ! BYTE_ORDER && ! __BYTE_ORDER */
 
 # if defined (__ACE_INLINE__)
-#   include "Basic_Types.i"
+#   include "ace/OS/Basic_Types.i"
 # endif /* __ACE_INLINE__ */
 
 # include "ace/post.h"
