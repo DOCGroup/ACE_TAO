@@ -80,6 +80,15 @@
 // By default, it is set in wrapper_macros.GNU.
 // #    define ACE_HAS_EXCEPTIONS 1
 
+// If the platform_macros.GNU file turned on ACE_HAS_STANDARD_CPP_LIBRARY
+// then we're using the -AA option, so we have standard C++ library,
+// including the standard iostreams. Else, we have the old iostreams.
+#    if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+#      define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+#    else
+#      define ACE_USES_OLD_IOSTREAMS
+#    endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+
 #    define ACE_HAS_TYPENAME_KEYWORD
 
 // Compiler implements templates that support typedefs inside of classes

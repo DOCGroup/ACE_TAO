@@ -26,7 +26,7 @@
 
 ACE_RCSID (tests, IOStream_Test, "$Id$")
 
-#if !defined (ACE_LACKS_ACE_IOSTREAM)
+#if !defined (ACE_LACKS_ACE_IOSTREAM) && defined (ACE_USES_OLD_IOSTREAMS)
 
 typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;
 
@@ -479,26 +479,26 @@ spawn (void)
 
   return 0;
 }
-#endif /* !ACE_LACKS_ACE_IOSTREAM */
+#endif /* !ACE_LACKS_ACE_IOSTREAM && ACE_USES_OLD_IOSTREAMS */
 
 int
 main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("IOStream_Test"));
 
-#if !defined (ACE_LACKS_ACE_IOSTREAM)
+#if !defined (ACE_LACKS_ACE_IOSTREAM) && defined (ACE_USES_OLD_IOSTREAMS)
   ACE_INIT_LOG (ACE_TEXT ("IOStream_Test-children"));
   spawn ();
 #else
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("ACE_IOSTREAM not supported on this platform\n")));
-#endif /* !ACE_LACKS_ACE_IOSTREAM */
+#endif /* !ACE_LACKS_ACE_IOSTREAM && ACE_USES_OLD_IOSTREAMS */
   ACE_END_TEST;
   return 0;
 }
 
 
-#if !defined (ACE_LACKS_ACE_IOSTREAM)
+#if !defined (ACE_LACKS_ACE_IOSTREAM) && defined (ACE_USES_OLD_IOSTREAMS)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_IOStream<ACE_SOCK_Stream>;
 template class ACE_Streambuf_T<ACE_SOCK_Stream>;
@@ -507,4 +507,4 @@ template class ACE_Streambuf_T<ACE_SOCK_Stream>;
 #pragma instantiate ACE_Streambuf_T<ACE_SOCK_Stream>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* !ACE_LACKS_ACE_IOSTREAM */
+#endif /* !ACE_LACKS_ACE_IOSTREAM && ACE_USES_OLD_IOSTREAMS */

@@ -45,6 +45,10 @@
 #    define ACE_HAS_TYPENAME_KEYWORD
 #    undef WIFEXITED
 #    undef WEXITSTATUS
+#    if (__IBMCPP__ >= 500)  /* Visual Age C++ 5 */
+#      define ACE_HAS_STANDARD_CPP_LIBRARY 1
+#      define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+#    endif /* __IBMCPP__ >= 500 */
 #  endif /* __IBMCPP__ */
 
 #elif defined (__GNUG__)
