@@ -204,7 +204,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  int dispatch_all (int index, int wait_all);
+  int dispatch_all (size_t index, int wait_all);
   // Dispatches any active handles from handles_[-index-] to
   // handles_[active_handles_] using WaitForMultipleObjects to poll
   // through our handle set looking for active handles.
