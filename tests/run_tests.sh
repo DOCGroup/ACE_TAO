@@ -159,10 +159,10 @@ run Reactor_Exceptions_Test             # tests ACE_Reactor and C++ exceptions
 run Reactor_Notify_Test                 # tests ACE_Reactor's notify() method, ACE_Task
 run Reactor_Timer_Test                  # tests ACE_Event_Handler, ACE_Reactor
 # test $OTHER && run Thread_Pool_Reactor_Test            # tests ACE_TP_Reactor, ACE_Select_Reactor, ACE_Acceptor...
-test $chorus || run Reactor_Performance_Test # tests ACE_Event_Handler, ACE_Reactor
+test $chorus || test $LynxOS || run Reactor_Performance_Test # tests ACE_Event_Handler, ACE_Reactor
 run Notify_Performance_Test             # tests ACE_Event_Handler, ACE_Reactor
 run Reader_Writer_Test                  # tests ACE_Thread_Manager, ACE_Mutex
-test $chorus || run Priority_Reactor_Test # tests ACE_Priority_Reactor, ACE_Acceptor/ACE_Connector...
+test $chorus || test $LynxOS || run Priority_Reactor_Test # tests ACE_Priority_Reactor, ACE_Acceptor/ACE_Connector...
 test $chorus || run SOCK_Test           # tests ACE_Thread_Manager, ACE_SOCK_SAP
 test $chorus || run MT_SOCK_Test        # tests ACE_Thread_Manager, ACE_Acceptor/ACE_Connector
 
@@ -175,14 +175,13 @@ run Buffer_Stream_Test                  # tests ACE_Service_Config, ACE_Stream (
 run Priority_Buffer_Test                # tests ACE_Service_Config, ACE_Message_Queue
 run Dynamic_Priority_Test               # tests ACE_ACE_Message_Queue, ACE_Dynamic_Message_Queue
 run Recursive_Mutex_Test                # tests ACE_Service_Config, ACE_Recursive_Thread_Mutex
-run Reverse_Lock_Test                   # tests ACE_Reverse_Lock
 
 # Time_Service_Test: UNICOS fails dlopen() - no shared libs on UNICOS
 if [ -f ../netsvcs/servers/main ]; then
-  test $TOKEN && (test $chorus || test $Unicos || run Time_Service_Test) # tests libnetsvcs
+  test $TOKEN && (test $chorus || test $LynxOS || test $Unicos || run Time_Service_Test) # tests libnetsvcs
 fi
 # Tokens_Test: UNICOS fails dlopen() - no shared libs on UNICOS
-test $TOKEN && (test $chorus || test $Unicos || run Tokens_Test) # tests ACE_Token
+test $TOKEN && (test $chorus || test $LynxOS || test $Unicos || run Tokens_Test) # tests ACE_Token
 
 run Map_Manager_Test                    # tests ACE_Map Manager and ACE_Hash_Map_Manager + Forward and Reverse Map Iterators.
 run Map_Test                            # tests ACE_Map + Forward and Reverse Map Iterators.
@@ -201,7 +200,6 @@ run IOStream_Test                       # tests ACE_IOStream and ACE_SOCK_Stream
 run Enum_Interfaces_Test                # tests ACE_ACE::get_ip_interfaces()
 test $chorus || run Upgradable_RW_Test  # tests ACE_RW locks
 test $chorus || run Conn_Test           # tests ACE_Thread_Manager, ACE_Acceptor/ACE_Connector, ACE_SOCK_SAP
-run New_Fail_Test                       # tests correct ACE_NEW[_RETURN]
 
 echo "Finished ACE version $ace_version tests."
 

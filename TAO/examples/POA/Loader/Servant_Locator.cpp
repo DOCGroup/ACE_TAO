@@ -72,7 +72,7 @@ ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
       return servant;
     }
   else
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO),
                       0);
 }
 

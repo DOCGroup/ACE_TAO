@@ -118,7 +118,7 @@ TAO_Marshal_Primitive::decode (CORBA::TypeCode_ptr  tc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Primitive::decode detected error\n"));
-      TAO_THROW_ENV_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), env,
+      TAO_THROW_ENV_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_MAYBE), env,
                             CORBA::TypeCode::TRAVERSE_STOP);
     }
 }
@@ -210,10 +210,6 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
 
   any->cdr_ = ACE_Message_Block::duplicate (out.begin ());
   any->value_ = 0;
-
-  if (any->type_)
-    CORBA::release (any->type_);
-
   any->type_ = elem_tc._retn ();
   any->any_owns_data_ = 1;
 
@@ -222,7 +218,7 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Any::decode detected error\n"));
-      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
     }
   return retval;
 }
@@ -313,7 +309,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
               // have nonempty parameter lists ...
             default:
               // Error: missed a case!
-              env.exception (new CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+              env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_MAYBE));
               return CORBA::TypeCode::TRAVERSE_STOP;
 
               // Some have "simple" parameter lists ... some of these
@@ -393,7 +389,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
               {
                 if (parent_typecode == 0)
                   {
-                    env.exception (new CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+                    env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_MAYBE));
                     return CORBA::TypeCode::TRAVERSE_STOP;
                   }
 
@@ -440,12 +436,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                 // constructing indir_stream by subtracting 4 (length
                 // of the offset parameter itself).
 
-                //                TAO_InputCDR indir_stream (*stream, 8, offset
-                //                - 4);
-                ACE_Message_Block *mb = (ACE_Message_Block *)stream->start ();
-                TAO_InputCDR indir_stream (mb->rd_ptr () + offset - 4,
-                                           -1 * (offset - 4));
-
+                TAO_InputCDR indir_stream (*stream, 8, offset - 4);
 
                 continue_decoding = indir_stream.good_bit ();
 
@@ -523,7 +514,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
         }
       else // bad kind_ value to be decoded
         {
-          env.exception (new CORBA::BAD_TYPECODE ());
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
                         "TAO_Marshal_TypeCode:decode: "
@@ -539,7 +530,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_TypeCode::decode detected error\n"));
-      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -561,7 +552,7 @@ TAO_Marshal_Principal::decode (CORBA::TypeCode_ptr,
   if ((*stream >> x) == 0)
     {
       *(CORBA_Principal_ptr*)data = CORBA::Principal::_nil ();
-      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 
@@ -585,7 +576,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
   if ((*stream >> object) == 0)
     {
       *(CORBA_Object_ptr*)data = CORBA::Object::_nil ();
-      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 
@@ -732,7 +723,7 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Struct::decode detected error\n"));
-      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -868,7 +859,7 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
                                   }
                                   break;
                                 default:
-                                  env.exception (new CORBA::BAD_TYPECODE ());
+                                  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
                                   return CORBA::TypeCode::TRAVERSE_STOP;
                                 }// end of switch
 
@@ -884,32 +875,19 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
                                     {
                                       member_val = base_union->_access (1);
                                       // marshal according to the matched typecode
-                                      if (member_tc->kind () == CORBA::tk_objref)
-                                        {
-                                          // we know that the object pointer is stored in a
-                                          // TAO_Object_Field_T parametrized type
-                                          TAO_Object_Field_T<CORBA_Object>* field =
-                                            ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
-                                                                  member_val);
-                                          CORBA::Object_ptr ptr = field->_upcast ();
-                                          return stream->decode (member_tc, &ptr, data2, env);
-                                        }
-                                      else
-                                        {
-                                          return stream->decode (member_tc, member_val,
-                                                                 data2, env);
-                                        }
+                                      return stream->decode (member_tc, member_val,
+                                                           data2, env);
                                     }
                                 }
                               else
                                 {
-                                  env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+                                  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
                                   return CORBA::TypeCode::TRAVERSE_STOP;
                                 }
                             }
                           else
                             {
-                              env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+                              env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
                               return CORBA::TypeCode::TRAVERSE_STOP;
                             }
                         } // end of for loop
@@ -917,52 +895,38 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
                       if (default_tc)
                         {
                           member_val = base_union->_access (1);
-                          if (default_tc->kind () == CORBA::tk_objref)
-                            {
-                              // we know that the object pointer is stored in a
-                              // TAO_Object_Field_T parametrized type
-                              TAO_Object_Field_T<CORBA_Object>* field =
-                                ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
-                                                      member_val);
-                              CORBA::Object_ptr ptr = field->_upcast ();
-                              return stream->decode (default_tc, &ptr, data2, env);
-                            }
-                          else
-                            {
-                              return stream->decode (default_tc, member_val,
-                                                     data2, env);
-                            }
+                          return stream->decode (default_tc, member_val, data2, env);
                         }
                       else
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                     }
                   else
                     {
-                      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+                      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
                       return CORBA::TypeCode::TRAVERSE_STOP;
                     }
                 }
               else
                 {
-                  env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+                  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
                   return CORBA::TypeCode::TRAVERSE_STOP;
                 }
             }
           else
             {
-              env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+              env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
               return CORBA::TypeCode::TRAVERSE_STOP;
             }
         }
       else
         {
-          env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+          env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
           return CORBA::TypeCode::TRAVERSE_STOP;
         }
     }
   else
     {
-      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -997,7 +961,7 @@ TAO_Marshal_String::decode (CORBA::TypeCode_ptr,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_String::decode detected error\n"));
-      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -1218,7 +1182,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
   // If an error was detected but no exception was raised then raise a
   // marshal exception.
   if (env.exception () == 0)
-    env.exception (new CORBA::MARSHAL ());
+    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
@@ -1369,7 +1333,7 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO_Marshal_Sequence::decode detected error\n"));
-  env.exception (new CORBA::MARSHAL ());
+  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
@@ -1466,7 +1430,7 @@ TAO_Marshal_Alias::decode (CORBA::TypeCode_ptr  tc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Alias::decode detected error\n"));
-      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -1596,7 +1560,7 @@ TAO_Marshal_Except::decode (CORBA::TypeCode_ptr  tc,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Except::decode detected error\n"));
-      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -1643,7 +1607,7 @@ TAO_Marshal_WString::decode (CORBA::TypeCode_ptr,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_WString::decode detected error\n"));
-      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }

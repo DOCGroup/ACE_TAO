@@ -90,8 +90,6 @@ FILES = tao_idl \
 	be/be_field \
 	be/be_interface \
 	be/be_interface_fwd \
-	be/be_valuetype \
-	be/be_valuetype_fwd\
 	be/be_module \
 	be/be_native \
 	be/be_operation \
@@ -128,8 +126,6 @@ FILES = tao_idl \
 	be/be_visitor_field \
 	be/be_visitor_interface \
 	be/be_visitor_interface_fwd \
-	be/be_visitor_valuetype \
-	be/be_visitor_valuetype_fwd \
 	be/be_visitor_module \
 	be/be_visitor_operation \
 	be/be_visitor_root \
@@ -175,6 +171,22 @@ else  # ! CROSS-COMPILE
 
   ifeq ($(findstring g++,$(CXX)),g++)
     CCFLAGS += -Wno-switch
+  else
+  ifeq ($(findstring cxx,$(CXX)),cxx)
+    # Digital Unix cxx
+    # 111: statement is unreachable
+    # 177: variable was declared but not referenced
+    # 550: variable set but never used
+    ifneq ($(CXX_VER),CXX_5)
+      WARNING_FLAGS += -msg_disable 111,177,550
+    endif # CXX_5
+  else
+  ifeq ($(findstring gcx,$(CXX)),gcx)
+    # GreenHills gcx, to suppress many warnings about TAO_YY_BREAK
+    # statements being unreachable.
+    CCFLAGS += -w
+  endif # gcx
+  endif # cxx
   endif # g++
 
   CPPFLAGS += -Iinclude -Ibe_include -Ife \
@@ -213,7 +225,6 @@ lex.yy.cpp.target:
 		    -e "/#include </d" \
 		    -e "s@ECHO@TAO_YY_ECHO@" \
 		    -e 's/\$$Hea''der.*\$$/$$I''d$$/' > fe/lex.yy.cpp
-		(cd fe ; patch < lex.yy.cpp.diff)
 
 fe/y.tab.cpp:	fe/idl.yy
 	@echo "WARNING: Potentially outdated fe/y.tab.cpp"
@@ -266,6 +277,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -274,7 +288,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -316,8 +329,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -349,6 +360,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -357,7 +371,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -399,8 +412,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -432,6 +443,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -440,7 +454,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -482,8 +495,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -515,6 +526,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -523,7 +537,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -565,8 +578,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -593,8 +604,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -619,6 +629,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -627,7 +640,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -669,8 +681,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -706,6 +716,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -714,7 +727,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -756,8 +768,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -789,6 +799,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -797,7 +810,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -839,8 +851,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -879,6 +889,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -887,7 +900,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -929,8 +941,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -963,6 +973,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -971,7 +984,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -1013,8 +1025,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1047,6 +1057,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1055,7 +1068,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -1097,8 +1109,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1131,6 +1141,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1139,7 +1152,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -1181,8 +1193,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1215,6 +1225,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1223,7 +1236,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -1265,8 +1277,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1299,6 +1309,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1307,7 +1320,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -1349,8 +1361,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1383,6 +1393,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1391,7 +1404,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -1433,8 +1445,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1467,6 +1477,9 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/idl.h include/intlmacros.h include/idl_narrow.h \
  include/idl_defines.h include/idl_fwd.h include/idl_bool.h \
@@ -1475,7 +1488,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -1517,8 +1529,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1551,6 +1561,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1559,7 +1572,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -1601,8 +1613,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1633,6 +1643,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1641,7 +1654,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -1683,8 +1695,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1715,6 +1725,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1723,7 +1736,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -1765,8 +1777,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1797,6 +1807,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1805,7 +1818,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -1847,8 +1859,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1879,6 +1889,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1887,7 +1900,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -1929,8 +1941,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1961,6 +1971,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -1969,7 +1982,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -2011,8 +2023,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -2043,6 +2053,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2051,7 +2064,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -2093,8 +2105,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -2125,6 +2135,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2133,7 +2146,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -2175,8 +2187,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -2207,6 +2217,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2215,7 +2228,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -2257,8 +2269,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -2289,6 +2299,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2297,7 +2310,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -2339,8 +2351,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -2371,6 +2381,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2379,7 +2392,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -2421,8 +2433,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -2453,6 +2463,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2461,7 +2474,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -2503,8 +2515,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -2535,6 +2545,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2543,7 +2556,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -2585,8 +2597,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -2617,6 +2627,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2625,7 +2638,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -2667,8 +2679,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -2699,6 +2709,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2707,7 +2720,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -2749,8 +2761,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -2781,6 +2791,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2789,7 +2802,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -2831,8 +2843,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -2863,6 +2873,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2871,7 +2884,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -2913,8 +2925,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -2945,6 +2955,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -2953,7 +2966,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -2995,8 +3007,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3027,6 +3037,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3035,7 +3048,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -3077,8 +3089,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3109,6 +3119,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3117,7 +3130,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -3159,8 +3171,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3191,6 +3201,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3199,7 +3212,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -3241,8 +3253,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3273,6 +3283,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3281,7 +3294,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -3323,8 +3335,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3355,6 +3365,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3363,7 +3376,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -3405,8 +3417,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3437,6 +3447,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3445,7 +3458,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -3487,8 +3499,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3519,6 +3529,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3527,7 +3540,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -3569,8 +3581,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3601,6 +3611,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3609,7 +3622,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -3651,8 +3663,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3683,6 +3693,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3691,7 +3704,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -3733,8 +3745,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3765,6 +3775,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3773,7 +3786,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -3815,8 +3827,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3847,6 +3857,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3855,7 +3868,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -3897,8 +3909,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3929,6 +3939,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -3937,7 +3950,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -3979,8 +3991,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4011,6 +4021,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4019,7 +4032,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -4061,8 +4073,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4093,6 +4103,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4101,7 +4114,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -4143,8 +4155,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4175,6 +4185,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4183,7 +4196,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -4225,8 +4237,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4257,6 +4267,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4265,7 +4278,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -4307,8 +4319,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4339,6 +4349,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4347,7 +4360,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -4389,8 +4401,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4421,6 +4431,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4429,7 +4442,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -4471,8 +4483,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4503,6 +4513,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4511,7 +4524,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -4553,8 +4565,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4585,6 +4595,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4593,7 +4606,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -4635,8 +4647,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4667,6 +4677,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4675,7 +4688,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -4717,8 +4729,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4749,6 +4759,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4757,7 +4770,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -4799,8 +4811,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4831,6 +4841,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4839,7 +4852,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -4881,8 +4893,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4913,6 +4923,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -4921,7 +4934,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -4963,8 +4975,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4995,6 +5005,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5003,7 +5016,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -5045,8 +5057,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -5077,6 +5087,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5085,7 +5098,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -5127,8 +5139,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -5159,6 +5169,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5167,7 +5180,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -5209,8 +5221,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -5241,6 +5251,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5249,7 +5262,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -5291,8 +5303,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -5323,6 +5333,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5331,7 +5344,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -5373,8 +5385,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -5401,8 +5411,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -5427,6 +5436,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5435,7 +5447,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -5477,8 +5488,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -5505,8 +5514,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -5531,6 +5539,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5539,7 +5550,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -5581,8 +5591,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -5609,8 +5617,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -5635,6 +5642,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5643,7 +5653,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -5685,8 +5694,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -5713,8 +5720,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -5739,6 +5745,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5747,7 +5756,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -5789,8 +5797,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -5817,8 +5823,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -5843,6 +5848,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5851,7 +5859,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -5893,8 +5900,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -5921,8 +5926,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -5947,6 +5951,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -5955,7 +5962,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -5997,8 +6003,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -6025,8 +6029,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -6051,6 +6054,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -6059,7 +6065,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -6101,8 +6106,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -6129,8 +6132,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -6155,6 +6157,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -6163,7 +6168,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -6205,8 +6209,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -6233,8 +6235,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -6259,6 +6260,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -6267,7 +6271,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -6309,8 +6312,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -6355,8 +6356,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -6381,6 +6381,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -6389,7 +6392,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -6431,8 +6433,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -6459,216 +6459,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
- be_include/be_argument.h be_include/be_attribute.h \
- be_include/be_union.h be_include/be_union_branch.h \
- be_include/be_union_label.h be_include/be_constant.h \
- be_include/be_enum_val.h be_include/be_array.h \
- be_include/be_sequence.h be_include/be_string.h \
- be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
- be_include/be_helper.h be_include/be_codegen.h \
- be_include/be_stream_factory.h be_include/be_visitor.h \
- be_include/be_visitor_factory.h be_include/be_visitor_context.h
-.obj/be_valuetype.o .obj/be_valuetype.so .shobj/be_valuetype.o .shobj/be_valuetype.so: be/be_valuetype.cpp include/idl.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
- include/idl_fwd.h include/idl_bool.h include/utl_string.h \
- include/utl_identifier.h include/ast.h include/utl_scoped_name.h \
- include/ast_decl.h include/ast_expression.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
- include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
- include/ast_interface.h include/ast_interface_fwd.h \
- include/ast_structure.h include/ast_exception.h include/ast_enum.h \
- include/ast_operation.h include/utl_list.h include/ast_field.h \
- include/ast_argument.h include/ast_attribute.h include/ast_union.h \
- include/ast_union_branch.h include/ast_union_label.h \
- include/ast_constant.h include/ast_enum_val.h include/ast_array.h \
- include/ast_sequence.h include/ast_string.h include/ast_typedef.h \
- include/ast_native.h include/utl_strlist.h include/utl_exprlist.h \
- include/ast_generator.h include/util.h include/utl_stack.h \
- include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
- include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
- include/fe_extern.h include/be_extern.h include/drv_extern.h \
- include/ast_extern.h include/nr_extern.h include/global_extern.h \
- be_include/be.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
- be_include/be_argument.h be_include/be_attribute.h \
- be_include/be_union.h be_include/be_union_branch.h \
- be_include/be_union_label.h be_include/be_constant.h \
- be_include/be_enum_val.h be_include/be_array.h \
- be_include/be_sequence.h be_include/be_string.h \
- be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
- be_include/be_helper.h be_include/be_codegen.h \
- be_include/be_stream_factory.h be_include/be_visitor.h \
- be_include/be_visitor_factory.h be_include/be_visitor_context.h
-.obj/be_valuetype_fwd.o .obj/be_valuetype_fwd.so .shobj/be_valuetype_fwd.o .shobj/be_valuetype_fwd.so: be/be_valuetype_fwd.cpp include/idl.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
- include/idl_fwd.h include/idl_bool.h include/utl_string.h \
- include/utl_identifier.h include/ast.h include/utl_scoped_name.h \
- include/ast_decl.h include/ast_expression.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
- include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
- include/ast_interface.h include/ast_interface_fwd.h \
- include/ast_structure.h include/ast_exception.h include/ast_enum.h \
- include/ast_operation.h include/utl_list.h include/ast_field.h \
- include/ast_argument.h include/ast_attribute.h include/ast_union.h \
- include/ast_union_branch.h include/ast_union_label.h \
- include/ast_constant.h include/ast_enum_val.h include/ast_array.h \
- include/ast_sequence.h include/ast_string.h include/ast_typedef.h \
- include/ast_native.h include/utl_strlist.h include/utl_exprlist.h \
- include/ast_generator.h include/util.h include/utl_stack.h \
- include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
- include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
- include/fe_extern.h include/be_extern.h include/drv_extern.h \
- include/ast_extern.h include/nr_extern.h include/global_extern.h \
- be_include/be.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -6693,6 +6484,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -6701,7 +6495,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -6743,8 +6536,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -6771,8 +6562,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -6797,6 +6587,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -6805,7 +6598,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -6847,8 +6639,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -6875,8 +6665,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -6901,6 +6690,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -6909,7 +6701,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -6951,8 +6742,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -6979,8 +6768,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -7005,6 +6793,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -7013,7 +6804,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -7055,8 +6845,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -7083,8 +6871,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -7109,6 +6896,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -7117,7 +6907,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -7159,8 +6948,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -7187,8 +6974,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -7213,6 +6999,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -7221,7 +7010,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -7263,8 +7051,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -7291,8 +7077,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -7328,6 +7113,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -7336,7 +7124,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -7378,8 +7165,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -7406,8 +7191,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -7432,6 +7216,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -7440,7 +7227,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -7482,8 +7268,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -7510,8 +7294,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -7536,6 +7319,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -7544,7 +7330,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -7586,8 +7371,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -7614,8 +7397,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -7640,6 +7422,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -7648,7 +7433,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -7690,8 +7474,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -7718,8 +7500,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -7744,6 +7525,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -7752,7 +7536,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -7794,8 +7577,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -7822,8 +7603,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -7848,6 +7628,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -7856,7 +7639,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -7898,8 +7680,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -7926,8 +7706,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -7952,6 +7731,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -7960,7 +7742,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -8002,8 +7783,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -8030,8 +7809,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -8056,6 +7834,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -8064,7 +7845,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -8106,8 +7886,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -8134,8 +7912,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -8160,6 +7937,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -8168,7 +7948,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -8210,8 +7989,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -8238,8 +8015,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -8265,6 +8041,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -8273,7 +8052,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -8315,8 +8093,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -8343,8 +8119,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -8369,6 +8144,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -8377,7 +8155,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -8419,8 +8196,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -8447,8 +8222,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -8473,6 +8247,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -8481,7 +8258,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -8523,8 +8299,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -8551,8 +8325,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -8577,6 +8350,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -8585,7 +8361,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -8627,8 +8402,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -8655,8 +8428,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -8681,6 +8453,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -8689,7 +8464,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -8731,8 +8505,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -8759,8 +8531,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -8786,6 +8557,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -8794,7 +8568,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -8836,8 +8609,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -8864,8 +8635,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -8890,6 +8660,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -8898,7 +8671,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -8940,8 +8712,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -8968,8 +8738,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -8994,6 +8763,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -9002,7 +8774,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -9044,8 +8815,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -9072,8 +8841,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -9099,6 +8867,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -9107,7 +8878,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -9149,8 +8919,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -9177,8 +8945,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -9191,7 +8958,6 @@ tags:
  be_include/be_stream_factory.h be_include/be_visitor.h \
  be_include/be_visitor_factory.h be_include/be_visitor_context.h \
  be_include/be_visitor_argument.h be_include/be_visitor_decl.h \
- be_include/be_visitor_scope.h \
  be_include/be_visitor_argument/argument.h \
  be_include/be_visitor_argument/arglist.h \
  be_include/be_visitor_argument/pre_docall_cs.h \
@@ -9215,7 +8981,7 @@ tags:
  be_include/be_visitor_array/any_op_cs.h \
  be_include/be_visitor_array/cdr_op_ch.h \
  be_include/be_visitor_array/cdr_op_cs.h \
- be_include/be_visitor_attribute.h \
+ be_include/be_visitor_attribute.h be_include/be_visitor_scope.h \
  be_include/be_visitor_attribute/attribute.h \
  be_include/be_visitor_constant.h \
  be_include/be_visitor_constant/constant_ch.h \
@@ -9264,26 +9030,6 @@ tags:
  be_include/be_visitor_interface_fwd/interface_fwd_ch.h \
  be_include/be_visitor_interface_fwd/interface_fwd_ci.h \
  be_include/be_visitor_interface_fwd/cdr_op_ci.h \
- be_include/be_visitor_valuetype.h \
- be_include/be_visitor_valuetype/valuetype.h \
- be_include/be_visitor_valuetype/valuetype_ch.h \
- be_include/be_visitor_valuetype/valuetype_obv_ch.h \
- be_include/be_visitor_valuetype/valuetype_obv_cs.h \
- be_include/be_visitor_valuetype/valuetype_ci.h \
- be_include/be_visitor_valuetype/valuetype_cs.h \
- be_include/be_visitor_valuetype/cdr_op_ch.h \
- be_include/be_visitor_valuetype/cdr_op_cs.h \
- be_include/be_visitor_valuetype/marshal_ch.h \
- be_include/be_visitor_valuetype/marshal_cs.h \
- be_include/be_visitor_valuetype/arglist.h \
- be_include/be_visitor_valuetype/field_ch.h \
- be_include/be_visitor_valuetype/field_cs.h \
- be_include/be_visitor_valuetype/field_cdr_ci.h \
- be_include/be_visitor_valuetype/obv_module.h \
- be_include/be_visitor_valuetype_fwd.h \
- be_include/be_visitor_valuetype_fwd/valuetype_fwd_ch.h \
- be_include/be_visitor_valuetype_fwd/valuetype_fwd_ci.h \
- be_include/be_visitor_valuetype_fwd/cdr_op_ci.h \
  be_include/be_visitor_module.h be_include/be_visitor_module/module.h \
  be_include/be_visitor_module/module_ch.h \
  be_include/be_visitor_module/module_sh.h \
@@ -9396,6 +9142,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -9404,7 +9153,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -9446,8 +9194,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -9471,8 +9217,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -9497,6 +9242,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -9505,7 +9253,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -9547,8 +9294,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -9572,8 +9317,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -9586,7 +9330,6 @@ tags:
  be_include/be_stream_factory.h be_include/be_visitor.h \
  be_include/be_visitor_factory.h be_include/be_visitor_context.h \
  be_include/be_visitor_argument.h be_include/be_visitor_decl.h \
- be_include/be_visitor_scope.h \
  be_include/be_visitor_argument/argument.h \
  be_include/be_visitor_argument/arglist.h \
  be_include/be_visitor_argument/pre_docall_cs.h \
@@ -9630,6 +9373,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -9638,7 +9384,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -9680,8 +9425,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -9708,8 +9451,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -9747,6 +9489,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -9755,7 +9500,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -9797,8 +9541,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -9825,8 +9567,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -9855,6 +9596,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -9863,7 +9607,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -9905,8 +9648,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -9933,8 +9674,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -9965,6 +9705,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -9973,7 +9716,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -10015,8 +9757,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -10043,8 +9783,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -10069,6 +9808,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -10077,7 +9819,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -10119,8 +9860,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -10147,8 +9886,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -10174,6 +9912,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -10182,7 +9923,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -10224,8 +9964,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -10252,8 +9990,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -10288,6 +10025,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -10296,7 +10036,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -10338,8 +10077,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -10366,8 +10103,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -10419,6 +10155,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -10427,7 +10166,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -10469,8 +10207,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -10497,8 +10233,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -10532,6 +10267,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -10540,7 +10278,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -10582,8 +10319,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -10610,8 +10345,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -10672,6 +10406,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -10680,7 +10417,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -10722,8 +10458,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -10750,8 +10484,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -10771,286 +10504,6 @@ tags:
  be/be_visitor_interface_fwd/interface_fwd_ch.cpp \
  be/be_visitor_interface_fwd/interface_fwd_ci.cpp \
  be/be_visitor_interface_fwd/cdr_op_ci.cpp
-.obj/be_visitor_valuetype.o .obj/be_visitor_valuetype.so .shobj/be_visitor_valuetype.o .shobj/be_visitor_valuetype.so: be/be_visitor_valuetype.cpp include/idl.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
- include/idl_fwd.h include/idl_bool.h include/utl_string.h \
- include/utl_identifier.h include/ast.h include/utl_scoped_name.h \
- include/ast_decl.h include/ast_expression.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
- include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
- include/ast_interface.h include/ast_interface_fwd.h \
- include/ast_structure.h include/ast_exception.h include/ast_enum.h \
- include/ast_operation.h include/utl_list.h include/ast_field.h \
- include/ast_argument.h include/ast_attribute.h include/ast_union.h \
- include/ast_union_branch.h include/ast_union_label.h \
- include/ast_constant.h include/ast_enum_val.h include/ast_array.h \
- include/ast_sequence.h include/ast_string.h include/ast_typedef.h \
- include/ast_native.h include/utl_strlist.h include/utl_exprlist.h \
- include/ast_generator.h include/util.h include/utl_stack.h \
- include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
- include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
- include/fe_extern.h include/be_extern.h include/drv_extern.h \
- include/ast_extern.h include/nr_extern.h include/global_extern.h \
- be_include/be.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
- be_include/be_argument.h be_include/be_attribute.h \
- be_include/be_union.h be_include/be_union_branch.h \
- be_include/be_union_label.h be_include/be_constant.h \
- be_include/be_enum_val.h be_include/be_array.h \
- be_include/be_sequence.h be_include/be_string.h \
- be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
- be_include/be_helper.h be_include/be_codegen.h \
- be_include/be_stream_factory.h be_include/be_visitor.h \
- be_include/be_visitor_factory.h be_include/be_visitor_context.h \
- be_include/be_visitor_valuetype.h be_include/be_visitor_scope.h \
- be_include/be_visitor_decl.h \
- be_include/be_visitor_valuetype/valuetype.h \
- be_include/be_visitor_valuetype/valuetype_ch.h \
- be_include/be_visitor_valuetype/valuetype_obv_ch.h \
- be_include/be_visitor_valuetype/valuetype_obv_cs.h \
- be_include/be_visitor_valuetype/valuetype_ci.h \
- be_include/be_visitor_valuetype/valuetype_cs.h \
- be_include/be_visitor_valuetype/cdr_op_ch.h \
- be_include/be_visitor_valuetype/cdr_op_cs.h \
- be_include/be_visitor_valuetype/marshal_ch.h \
- be_include/be_visitor_valuetype/marshal_cs.h \
- be_include/be_visitor_valuetype/arglist.h \
- be_include/be_visitor_valuetype/field_ch.h \
- be_include/be_visitor_valuetype/field_cs.h \
- be_include/be_visitor_valuetype/field_cdr_ci.h \
- be_include/be_visitor_valuetype/obv_module.h \
- be/be_visitor_valuetype/valuetype.cpp \
- be/be_visitor_valuetype/valuetype_ch.cpp \
- be/be_visitor_valuetype/valuetype_obv_ch.cpp \
- be/be_visitor_valuetype/valuetype_obv_cs.cpp \
- be/be_visitor_valuetype/valuetype_ci.cpp \
- be/be_visitor_valuetype/valuetype_cs.cpp \
- be/be_visitor_valuetype/cdr_op_ch.cpp \
- be/be_visitor_valuetype/cdr_op_cs.cpp \
- be/be_visitor_valuetype/marshal_ch.cpp \
- be/be_visitor_valuetype/marshal_cs.cpp \
- be/be_visitor_valuetype/arglist.cpp be_include/be_visitor_operation.h \
- be_include/be_visitor_operation/operation.h \
- be_include/be_visitor_operation/operation_ch.h \
- be_include/be_visitor_operation/operation_cs.h \
- be_include/be_visitor_operation/operation_sh.h \
- be_include/be_visitor_operation/operation_ih.h \
- be_include/be_visitor_operation/operation_ss.h \
- be_include/be_visitor_operation/operation_is.h \
- be_include/be_visitor_operation/tie_sh.h \
- be_include/be_visitor_operation/tie_si.h \
- be_include/be_visitor_operation/collocated_sh.h \
- be_include/be_visitor_operation/collocated_ss.h \
- be_include/be_visitor_operation/arglist.h \
- be_include/be_visitor_operation/rettype.h \
- be_include/be_visitor_operation/rettype_is.h \
- be_include/be_visitor_operation/rettype_vardecl_cs.h \
- be_include/be_visitor_operation/rettype_pre_docall_cs.h \
- be_include/be_visitor_operation/rettype_docall_cs.h \
- be_include/be_visitor_operation/rettype_post_docall_cs.h \
- be_include/be_visitor_operation/rettype_return_cs.h \
- be_include/be_visitor_operation/exceptlist_cs.h \
- be_include/be_visitor_operation/argument.h \
- be_include/be_visitor_operation/argument_invoke.h \
- be_include/be_visitor_operation/argument_marshal.h \
- be_include/be_visitor_operation/rettype_vardecl_ss.h \
- be_include/be_visitor_operation/rettype_assign_ss.h \
- be_include/be_visitor_operation/rettype_post_upcall_ss.h \
- be_include/be_visitor_operation/rettype_marshal_ss.h \
- be_include/be_visitor_operation/compiled_marshal.h \
- be_include/be_visitor_operation/rettype_pre_invoke_cs.h \
- be/be_visitor_valuetype/field_ch.cpp \
- be/be_visitor_valuetype/field_cs.cpp \
- be/be_visitor_valuetype/field_cdr_ci.cpp \
- be_include/be_visitor_field.h be_include/be_visitor_field/field_ch.h \
- be_include/be_visitor_field/field_ci.h \
- be_include/be_visitor_field/field_cs.h \
- be_include/be_visitor_field/cdr_op_ch.h \
- be_include/be_visitor_field/cdr_op_cs.h \
- be/be_visitor_valuetype/obv_module.cpp
-.obj/be_visitor_valuetype_fwd.o .obj/be_visitor_valuetype_fwd.so .shobj/be_visitor_valuetype_fwd.o .shobj/be_visitor_valuetype_fwd.so: be/be_visitor_valuetype_fwd.cpp \
- include/idl.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
- include/idl_fwd.h include/idl_bool.h include/utl_string.h \
- include/utl_identifier.h include/ast.h include/utl_scoped_name.h \
- include/ast_decl.h include/ast_expression.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
- include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
- include/ast_interface.h include/ast_interface_fwd.h \
- include/ast_structure.h include/ast_exception.h include/ast_enum.h \
- include/ast_operation.h include/utl_list.h include/ast_field.h \
- include/ast_argument.h include/ast_attribute.h include/ast_union.h \
- include/ast_union_branch.h include/ast_union_label.h \
- include/ast_constant.h include/ast_enum_val.h include/ast_array.h \
- include/ast_sequence.h include/ast_string.h include/ast_typedef.h \
- include/ast_native.h include/utl_strlist.h include/utl_exprlist.h \
- include/ast_generator.h include/util.h include/utl_stack.h \
- include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
- include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_error.h include/utl_indenter.h include/idl_extern.h \
- include/fe_extern.h include/be_extern.h include/drv_extern.h \
- include/ast_extern.h include/nr_extern.h include/global_extern.h \
- be_include/be.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
- be_include/be_exception.h be_include/be_expression.h \
- be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
- be_include/be_argument.h be_include/be_attribute.h \
- be_include/be_union.h be_include/be_union_branch.h \
- be_include/be_union_label.h be_include/be_constant.h \
- be_include/be_enum_val.h be_include/be_array.h \
- be_include/be_sequence.h be_include/be_string.h \
- be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
- be_include/be_helper.h be_include/be_codegen.h \
- be_include/be_stream_factory.h be_include/be_visitor.h \
- be_include/be_visitor_factory.h be_include/be_visitor_context.h \
- be_include/be_visitor_valuetype_fwd.h be_include/be_visitor_scope.h \
- be_include/be_visitor_decl.h \
- be_include/be_visitor_valuetype_fwd/valuetype_fwd_ch.h \
- be_include/be_visitor_valuetype_fwd/valuetype_fwd_ci.h \
- be_include/be_visitor_valuetype_fwd/cdr_op_ci.h
 .obj/be_visitor_module.o .obj/be_visitor_module.so .shobj/be_visitor_module.o .shobj/be_visitor_module.so: be/be_visitor_module.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -11064,6 +10517,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -11072,7 +10528,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -11114,8 +10569,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -11142,8 +10595,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -11178,6 +10630,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -11186,7 +10641,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -11228,8 +10682,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -11256,8 +10708,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -11313,22 +10764,6 @@ tags:
  be/be_visitor_operation/operation_sh.cpp \
  be/be_visitor_operation/operation_ih.cpp \
  be/be_visitor_operation/operation_ss.cpp \
- be_include/be_visitor_argument.h \
- be_include/be_visitor_argument/argument.h \
- be_include/be_visitor_argument/arglist.h \
- be_include/be_visitor_argument/pre_docall_cs.h \
- be_include/be_visitor_argument/docall_cs.h \
- be_include/be_visitor_argument/post_docall_cs.h \
- be_include/be_visitor_argument/post_docall_compiled_cs.h \
- be_include/be_visitor_argument/vardecl_ss.h \
- be_include/be_visitor_argument/pre_upcall_ss.h \
- be_include/be_visitor_argument/upcall_ss.h \
- be_include/be_visitor_argument/post_upcall_ss.h \
- be_include/be_visitor_argument/marshal_ss.h \
- be_include/be_visitor_argument/post_marshal_ss.h \
- be_include/be_visitor_argument/compiled_marshal_cs.h \
- be_include/be_visitor_argument/compiled_marshal_ss.h \
- be_include/be_visitor_argument/pre_invoke_cs.h \
  be/be_visitor_operation/operation_is.cpp \
  be/be_visitor_operation/rettype.cpp \
  be/be_visitor_operation/rettype_is.cpp \
@@ -11357,6 +10792,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -11365,7 +10803,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -11407,8 +10844,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -11435,8 +10870,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -11478,6 +10912,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -11486,7 +10923,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -11528,8 +10964,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -11556,8 +10990,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -11583,6 +11016,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -11591,7 +11027,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -11633,8 +11068,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -11661,8 +11094,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -11725,6 +11157,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -11733,7 +11168,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -11775,8 +11209,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -11803,8 +11235,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -11852,6 +11283,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -11860,7 +11294,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -11902,8 +11335,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -11930,8 +11361,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -11944,7 +11374,6 @@ tags:
  be_include/be_stream_factory.h be_include/be_visitor.h \
  be_include/be_visitor_factory.h be_include/be_visitor_context.h \
  be_include/be_visitor_typecode.h be_include/be_visitor_decl.h \
- be_include/be_visitor_scope.h \
  be_include/be_visitor_typecode/typecode_decl.h \
  be_include/be_visitor_typecode/typecode_defn.h \
  be/be_visitor_typecode/typecode_decl.cpp \
@@ -11962,6 +11391,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -11970,7 +11402,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -12012,8 +11443,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -12040,8 +11469,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -12083,6 +11511,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -12091,7 +11522,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -12133,8 +11563,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -12161,8 +11589,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \
@@ -12207,6 +11634,9 @@ tags:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
  include/idl_fwd.h include/idl_bool.h include/utl_string.h \
@@ -12215,7 +11645,6 @@ tags:
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -12257,8 +11686,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -12285,8 +11712,7 @@ tags:
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_type.h be_include/be_predefined_type.h \
  be_include/be_module.h be_include/be_interface.h \
- be_include/be_interface_fwd.h be_include/be_valuetype.h \
- be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_interface_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
  be_include/be_enum.h be_include/be_operation.h be_include/be_field.h \
  be_include/be_argument.h be_include/be_attribute.h \

@@ -126,31 +126,14 @@ ACE_INET_Addr::string_to_addr (const ASYS_TCHAR s[])
 
   if (ip_addr == 0) // Assume it's a port number.
     {
-      if (ACE_OS::strspn (t, "1234567890") 
-          == ACE_OS::strlen (t))
-        { // port number
-          u_short port = (u_short) ACE_OS::atoi (t);
-          result = this->set (port,
-                              ACE_UINT32 (INADDR_ANY));
-        }
-      else // port name
-        result = this->set (t, 
-                            ACE_UINT32 (INADDR_ANY));
+      u_short port = (u_short) ACE_OS::atoi (t);
+      result = this->set (port, ACE_UINT32 (INADDR_ANY));
     }
   else
     {
-      *ip_addr = '\0'; ++ip_addr; // skip over ':'
-
-      if (ACE_OS::strspn (ip_addr,
-                         "1234567890") ==          
-          ACE_OS::strlen (ip_addr))
-        {
-          u_short port = 
-            (u_short) ACE_OS::atoi (ip_addr);
-          result = this->set (port, t);
-        }
-      else
-        result = this->set (ip_addr, t);
+      *ip_addr = '\0';
+      u_short port = (u_short) ACE_OS::atoi (ip_addr + 1); // Skip over ':'
+      result = this->set (port, t);
     }
 
   ACE_OS::free (ACE_MALLOC_T (t));
@@ -223,6 +206,7 @@ ACE_INET_Addr::set (u_short port_number,
   this->ACE_Addr::base_set (AF_INET, sizeof this->inet_addr_);
   (void) ACE_OS::memset ((void *) &this->inet_addr_, 0, sizeof
                          this->inet_addr_);
+  const char *hostname_ch = ASYS_ONLY_MULTIBYTE_STRING (host_name);
 
   // Yow, someone gave us a NULL host_name!
   if (host_name == 0)
@@ -230,7 +214,7 @@ ACE_INET_Addr::set (u_short port_number,
       errno = EINVAL;
       return -1;
     }
-  else if (ACE_OS::inet_aton (ASYS_ONLY_MULTIBYTE_STRING (host_name), (struct in_addr *) &addr) == 1)
+  else if (ACE_OS::inet_aton (hostname_ch, (struct in_addr *) &addr) == 1)
     return this->set (port_number, encode ? ntohl (addr) : addr, encode);
 
   else
@@ -242,7 +226,7 @@ ACE_INET_Addr::set (u_short port_number,
       ACE_HOSTENT_DATA buf;
       int error;
 
-      hostent *hp = ACE_OS::gethostbyname_r (ASYS_ONLY_MULTIBYTE_STRING (host_name), &hentry,
+      hostent *hp = ACE_OS::gethostbyname_r (hostname_ch, &hentry,
                                              buf, &error);
 #endif /* VXWORKS */
 
@@ -493,8 +477,7 @@ ACE_INET_Addr::get_host_name (void) const
   ACE_TRACE ("ACE_INET_Addr::get_host_name");
 
   static ASYS_TCHAR name[MAXHOSTNAMELEN + 1];
-  if (this->get_host_name (name, MAXHOSTNAMELEN + 1) == -1)
-    ACE_OS::strcpy (name, "<unknown>");
+  this->get_host_name (name, MAXHOSTNAMELEN + 1);
   return name;
 }
 

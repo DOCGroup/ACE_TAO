@@ -38,6 +38,8 @@ ACE_RCSID(ace, Object_Manager, "$Id$")
 # define ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS
 #endif /* ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS */
 
+u_int ACE_Object_Manager::init_fini_count_ = 0;
+
 // Singleton pointer.
 ACE_Object_Manager *ACE_Object_Manager::instance_ = 0;
 
@@ -164,59 +166,47 @@ ACE_Object_Manager::shutting_down (void)
   return ACE_Object_Manager::instance_  ?  instance_->shutting_down_i ()  :  1;
 }
 
-// Initialize an ACE_Object_Manager.  There can be instances of this object
-// other than The Instance.  This can happen if a user creates one for some
-// reason.  All objects set up their per-object information and managed
-// objects, but only The Instance sets up the static preallocated objects and
-// the (static) ACE_Service_Config signal handler.
 int
 ACE_Object_Manager::init (void)
 {
+  ++init_fini_count_;
+
   if (starting_up_i ())
     {
       // First, indicate that the ACE_Object_Manager instance is being
       // initialized.
       object_manager_state_ = OBJ_MAN_INITIALIZING;
 
-      // Only The Instance sets up with ACE_OS_Object_Manager and initializes
-      // the preallocated objects.
-      if (this == instance_)
-        {
-          // Make sure that the ACE_OS_Object_Manager has been created,
-          // and register with it for chained fini ().
-          ACE_OS_Object_Manager::instance ()->next_ = this;
+      // Make sure that the ACE_OS_Object_Manager has been created,
+      // and register with it for chained fini ().
+      ACE_OS_Object_Manager::instance ()->next_ = this;
 
-          // Construct the ACE_Service_Config's signal handler.
-          ACE_NEW_RETURN (ace_service_config_sig_handler_,
-                     ACE_Sig_Adapter (&ACE_Service_Config::handle_signal), -1);
-          ACE_Service_Config::signal_handler (ace_service_config_sig_handler_);
+      // Construct the ACE_Service_Config's signal handler.
+      ACE_NEW_RETURN (ace_service_config_sig_handler_,
+        ACE_Sig_Adapter (&ACE_Service_Config::handle_signal), -1);
+      ACE_Service_Config::signal_handler (ace_service_config_sig_handler_);
 
-          // Allocate the preallocated (hard-coded) object instances.
-          ACE_PREALLOCATE_OBJECT (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_LOCK)
+      // Allocate the preallocated (hard-coded) object instances.
+      ACE_PREALLOCATE_OBJECT (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_LOCK)
 #     if defined (ACE_HAS_THREADS)
-          ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex,
-                                  ACE_STATIC_OBJECT_LOCK)
+        ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex,
+                                ACE_STATIC_OBJECT_LOCK)
 #     endif /* ACE_HAS_THREADS */
 #     if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-          ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex,
-                                  ACE_LOG_MSG_INSTANCE_LOCK)
-          ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex,
-                                  ACE_MT_CORBA_HANDLER_LOCK)
-          ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_DUMP_LOCK)
-          ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex,
-                                  ACE_SIG_HANDLER_LOCK)
-          ACE_PREALLOCATE_OBJECT (ACE_Null_Mutex, ACE_SINGLETON_NULL_LOCK)
-          ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex,
-                                  ACE_SINGLETON_RECURSIVE_THREAD_LOCK)
-          ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_THREAD_EXIT_LOCK)
-          ACE_PREALLOCATE_OBJECT (ACE_TOKEN_CONST::MUTEX,
-                                  ACE_TOKEN_MANAGER_CREATION_LOCK)
-          ACE_PREALLOCATE_OBJECT (ACE_TOKEN_CONST::MUTEX,
-                                  ACE_TOKEN_INVARIANTS_CREATION_LOCK)
-          ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex,
-                                  ACE_PROACTOR_EVENT_LOOP_LOCK)
+        ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_LOG_MSG_INSTANCE_LOCK)
+        ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_MT_CORBA_HANDLER_LOCK)
+        ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_DUMP_LOCK)
+        ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex,
+                                ACE_SIG_HANDLER_LOCK)
+        ACE_PREALLOCATE_OBJECT (ACE_Null_Mutex, ACE_SINGLETON_NULL_LOCK)
+        ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex,
+                                ACE_SINGLETON_RECURSIVE_THREAD_LOCK)
+        ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_THREAD_EXIT_LOCK)
+        ACE_PREALLOCATE_OBJECT (ACE_TOKEN_CONST::MUTEX,
+                                ACE_TOKEN_MANAGER_CREATION_LOCK)
+        ACE_PREALLOCATE_OBJECT (ACE_TOKEN_CONST::MUTEX,
+                                ACE_TOKEN_INVARIANTS_CREATION_LOCK)
 #     endif /* ACE_MT_SAFE */
-        }
 
       // Do this after the allocation of ACE_STATIC_OBJECT_LOCK.  It
       // shouldn't matter, but just in case
@@ -224,23 +214,19 @@ ACE_Object_Manager::init (void)
       ACE_NEW_RETURN (registered_objects_,
                       ACE_Unbounded_Queue<ACE_Cleanup_Info>, -1);
 
-      if (this == instance_)
-        {
-          // Hooks for preallocated objects and arrays provided by application.
-          ACE_APPLICATION_PREALLOCATED_OBJECT_DEFINITIONS
-          ACE_APPLICATION_PREALLOCATED_ARRAY_DEFINITIONS
+      // Hooks for preallocated objects and arrays provided by application.
+      ACE_APPLICATION_PREALLOCATED_OBJECT_DEFINITIONS
+      ACE_APPLICATION_PREALLOCATED_ARRAY_DEFINITIONS
 
 #     if defined (ACE_HAS_TSS_EMULATION)
-          // Initialize the main thread's TS storage.
-          ACE_TSS_Emulation::tss_open (ts_storage_);
+        // Initialize the main thread's TS storage.
+        ACE_TSS_Emulation::tss_open (ts_storage_);
 #     endif /* ACE_HAS_TSS_EMULATION */
 
-          ACE_NEW_RETURN (preallocations_, ACE_Object_Manager_Preallocations,
-                          -1);
+      ACE_NEW_RETURN (preallocations_, ACE_Object_Manager_Preallocations, -1);
 
-          // Open the main thread's ACE_Log_Msg.
-          (void) ACE_LOG_MSG;
-        }
+      // Open the main thread's ACE_Log_Msg.
+      (void) ACE_LOG_MSG;
 
       ACE_NEW_RETURN (default_mask_, ACE_Sig_Set (1), -1);
 
@@ -268,25 +254,21 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   , singleton_recursive_lock_ (0)
 # endif /* ACE_MT_SAFE */
 {
-  // If instance_ was not 0, then another ACE_Object_Manager has
-  // already been instantiated (it is likely to be one initialized by way
-  // of library/DLL loading).  Let this one go through construction in
-  // case there really is a good reason for it (like, ACE is a static/archive
-  // library, and this one is the non-static instance (with
-  // ACE_HAS_NONSTATIC_OBJECT_MANAGER, or the user has a good reason for
-  // creating a separate one) but the original one will be the one retrieved
-  // from calls to ACE_Object_Manager::instance().
+  // If Instance_ was not 0, then another ACE_Object_Manager has
+  // already been instantiated.  Because this might be the non-static
+  // instance (with ACE_HAS_NONSTATIC_OBJECT_MANAGER), use it and leak
+  // the old one.  We can't destroy it, because the application might
+  // be using some of its resources, via static constructors.
 
-  // Be sure that no further instances are created via instance ().
-  if (instance_ == 0)
-    instance_ = this;
+  // Store the address of the instance so that instance () doesn't
+  // allocate a new one when called.
+  instance_ = this;
 
   init ();
 }
 
 ACE_Object_Manager::~ACE_Object_Manager (void)
 {
-  dynamically_allocated_ = 0;   // Don't delete this again in fini()
   fini ();
 }
 
@@ -304,7 +286,9 @@ ACE_Object_Manager::instance (void)
       ACE_NEW_RETURN (instance_pointer, ACE_Object_Manager, 0);
       ACE_ASSERT (instance_pointer == instance_);
 
+#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
       instance_pointer->dynamically_allocated_ = 1;
+#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
       return instance_pointer;
     }
@@ -575,16 +559,19 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
 // NOTE:  this function needs to appear _after_ the
 // get_singleton_lock () functions in order to compile with
 // g++ 2.7.2.3.
-//
-// Clean up an ACE_Object_Manager.  There can be instances of this object
-// other than The Instance.  This can happen if (on Win32) the ACE DLL
-// causes one to be created, or if a user creates one for some reason.
-// Only The Instance cleans up the static preallocated objects.  All objects
-// clean up their per-object information and managed objects.
 int
 ACE_Object_Manager::fini (void)
 {
-  if (shutting_down_i ())
+  if (init_fini_count_ > 0)
+    {
+      if (--init_fini_count_ > 0)
+        // Wait for remaining fini () calls.
+        return 1;
+    }
+  else
+    return -1;
+
+  if (instance_ == 0  ||  shutting_down_i ())
     // Too late.  Or, maybe too early.  Either fini () has already
     // been called, or init () was never called.
     return -1;
@@ -592,13 +579,20 @@ ACE_Object_Manager::fini (void)
   // No mutex here.  Only the main thread should destroy the singleton
   // ACE_Object_Manager instance.
 
-  // First, indicate that this ACE_Object_Manager instance is being
+  // First, indicate that the ACE_Object_Manager instance is being
   // shut down.
   object_manager_state_ = OBJ_MAN_SHUTTING_DOWN;
 
+  ACE_Trace::stop_tracing ();
+
+  ACE_Cleanup_Info info;
+
+  // Close and possibly delete all service instances in the Service
+  // Repository.
+  ACE_Service_Config::fini_svcs ();
+
   // Call all registered cleanup hooks, in reverse order of
   // registration.
-  ACE_Cleanup_Info info;
   while (registered_objects_ &&
          registered_objects_->dequeue_head (info) != -1)
     {
@@ -609,72 +603,60 @@ ACE_Object_Manager::fini (void)
         (*info.cleanup_hook_) (info.object_, info.param_);
     }
 
-  if (this == instance_)
-    {
-      delete preallocations_;
-      preallocations_ = 0;
+  // Close the main thread's TSS, including its Log_Msg instance.
+  ACE_OS::cleanup_tss (1 /* main thread */);
 
-      ACE_Trace::stop_tracing ();
+  //
+  // Note:  Do not access Log Msg after this since it is gone
+  //
 
-      // Close and possibly delete all service instances in the Service
-      // Repository.
-      ACE_Service_Config::fini_svcs ();
+  // Unlink all services in the Service Repository and close/delete
+  // all ACE library services and singletons.
+  ACE_Service_Config::close ();
 
-      // Close the main thread's TSS, including its Log_Msg instance.
-      ACE_OS::cleanup_tss (1 /* main thread */);
+  delete preallocations_;
+  preallocations_ = 0;
 
-      //
-      // Note:  Do not access Log Msg after this since it is gone
-      //
-
-      // Unlink all services in the Service Repository and close/delete
-      // all ACE library services and singletons.
-      ACE_Service_Config::close ();
-
-      // Close the ACE_Allocator.
-      ACE_Allocator::close_singleton ();
+  // Close the ACE_Allocator.
+  ACE_Allocator::close_singleton ();
 
 #if ! defined (ACE_HAS_STATIC_PREALLOCATION)
-      // Hooks for deletion of preallocated objects and arrays provided by
-      // application.
-      ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS
-      ACE_APPLICATION_PREALLOCATED_OBJECT_DELETIONS
+  // Hooks for deletion of preallocated objects and arrays provided by
+  // application.
+  ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS
+  ACE_APPLICATION_PREALLOCATED_OBJECT_DELETIONS
 
-      // Cleanup the dynamically preallocated arrays.
-      // (none)
+  // Cleanup the dynamically preallocated arrays.
+  // (none)
 
-      // Cleanup the dynamically preallocated objects.
-      ACE_DELETE_PREALLOCATED_OBJECT (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_LOCK)
+  // Cleanup the dynamically preallocated objects.
+  ACE_DELETE_PREALLOCATED_OBJECT (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_LOCK)
 #if defined (ACE_HAS_THREADS)
-      ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
-                                      ACE_STATIC_OBJECT_LOCK)
+  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
+                                  ACE_STATIC_OBJECT_LOCK)
 #endif /* ACE_HAS_THREADS */
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-      ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex,
-                                      ACE_LOG_MSG_INSTANCE_LOCK)
-      ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex,
-                                      ACE_MT_CORBA_HANDLER_LOCK)
-      ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_DUMP_LOCK)
-      ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
-                                      ACE_SIG_HANDLER_LOCK)
-      ACE_DELETE_PREALLOCATED_OBJECT (ACE_Null_Mutex,
-                                      ACE_SINGLETON_NULL_LOCK)
-      ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
-                                      ACE_SINGLETON_RECURSIVE_THREAD_LOCK)
-      ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_THREAD_EXIT_LOCK)
-      ACE_DELETE_PREALLOCATED_OBJECT (ACE_TOKEN_CONST::MUTEX,
-                                      ACE_TOKEN_MANAGER_CREATION_LOCK)
-      ACE_DELETE_PREALLOCATED_OBJECT (ACE_TOKEN_CONST::MUTEX,
-                                      ACE_TOKEN_INVARIANTS_CREATION_LOCK)
-      ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex,
-                                      ACE_PROACTOR_EVENT_LOOP_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex,
+                                    ACE_LOG_MSG_INSTANCE_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex,
+                                    ACE_MT_CORBA_HANDLER_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_DUMP_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
+                                    ACE_SIG_HANDLER_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_Null_Mutex, ACE_SINGLETON_NULL_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
+                                    ACE_SINGLETON_RECURSIVE_THREAD_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_THREAD_EXIT_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_TOKEN_CONST::MUTEX,
+                                    ACE_TOKEN_MANAGER_CREATION_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_TOKEN_CONST::MUTEX,
+                                    ACE_TOKEN_INVARIANTS_CREATION_LOCK)
 # endif /* ACE_MT_SAFE */
 #endif /* ! ACE_HAS_STATIC_PREALLOCATION */
 
 #if defined (ACE_HAS_THREADS)
-      ACE_Static_Object_Lock::cleanup_lock ();
+  ACE_Static_Object_Lock::cleanup_lock ();
 #endif /* ACE_HAS_THREADS */
-    }
 
   delete default_mask_;
   default_mask_ = 0;
@@ -696,20 +678,20 @@ ACE_Object_Manager::fini (void)
   singleton_recursive_lock_ = 0;
 #endif /* ACE_MT_SAFE */
 
-  // Indicate that this ACE_Object_Manager instance has been shut down.
+  // Indicate that the ACE_Object_Manager instance has been shut down.
   object_manager_state_ = OBJ_MAN_SHUT_DOWN;
 
   // Then, ensure that the ACE_OS_Object_Manager gets shut down.
-  if (this == instance_ && ACE_OS_Object_Manager::instance_)
+  if (ACE_OS_Object_Manager::instance_)
     ACE_OS_Object_Manager::instance_->fini ();
 
+#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
   if (dynamically_allocated_)
     {
-      delete this;
+      delete instance_;
+      instance_ = 0;
     }
-
-  if (this == instance_)
-    instance_ = 0;
+#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
   return 0;
 }

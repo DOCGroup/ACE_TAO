@@ -63,6 +63,9 @@ public:
   virtual ~TAO_EC_SupplierAdmin (void);
   // destructor...
 
+  void set_default_POA (PortableServer::POA_ptr poa);
+  // Set this servant's default POA
+
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
   // Override the ServantBase method.
 
@@ -79,10 +82,6 @@ public:
                              CORBA::Environment&);
   // Used to inform the EC that a Supplier has connected or
   // disconnected from it.
-
-  virtual void shutdown (CORBA::Environment&);
-  // The event channel is shutting down, inform all the consumers of
-  // this
 
   // = The RtecEventChannelAdmin::SupplierAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr
@@ -101,9 +100,6 @@ private:
 
   PortableServer::POA_var default_POA_;
   // Store the default POA.
-
-  ACE_Lock* lock_;
-  // The locking strategy
 
   ConsumerSet all_consumers_;
   // The set of consumers...

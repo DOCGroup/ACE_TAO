@@ -177,9 +177,7 @@ public:
 
   static int end_event_loop (void);
   // Instruct the <ACE_Proactor::instance> to terminate its event
-  // loop. 
-  // This method wakes up all the threads blocked on waiting for
-  // completions and end the event loop.
+  // loop.
 
   static int event_loop_done (void);
   // Report if the <ACE_Proactor::instance> event loop is finished.
@@ -306,9 +304,8 @@ public:
                                                                                 ACE_Message_Block &message_block,
                                                                                 u_long bytes_to_read,
                                                                                 const void* act,
-                                                                                ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                                int priority = 0,
-                                                                                int signal_number = ACE_SIGRTMIN);
+                                                                                ACE_HANDLE event,
+                                                                                int priority);
   // Create the correct implementation class for ACE_Asynch_Read_Stream::Result class.
 
   virtual ACE_Asynch_Write_Stream_Result_Impl *create_asynch_write_stream_result (ACE_Handler &handler,
@@ -316,9 +313,8 @@ public:
                                                                                   ACE_Message_Block &message_block,
                                                                                   u_long bytes_to_write,
                                                                                   const void* act,
-                                                                                  ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                                  int priority = 0,
-                                                                                  int signal_number = ACE_SIGRTMIN);
+                                                                                  ACE_HANDLE event,
+                                                                                  int priority);
   // Create the correct implementation class for ACE_Asynch_Write_Stream::Result.
 
   virtual ACE_Asynch_Read_File_Result_Impl *create_asynch_read_file_result (ACE_Handler &handler,
@@ -328,9 +324,8 @@ public:
                                                                             const void* act,
                                                                             u_long offset,
                                                                             u_long offset_high,
-                                                                            ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                            int priority = 0,
-                                                                            int signal_number = ACE_SIGRTMIN);
+                                                                            ACE_HANDLE event,
+                                                                            int priority);
   // Create the correct implementation class for ACE_Asynch_Read_File::Result.
 
   virtual ACE_Asynch_Write_File_Result_Impl *create_asynch_write_file_result (ACE_Handler &handler,
@@ -340,9 +335,8 @@ public:
                                                                               const void* act,
                                                                               u_long offset,
                                                                               u_long offset_high,
-                                                                              ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                              int priority = 0,
-                                                                              int signal_number = ACE_SIGRTMIN);
+                                                                              ACE_HANDLE event,
+                                                                              int priority);
   // Create the correct implementation class for ACE_Asynch_Write_File::Result.
 
   virtual ACE_Asynch_Accept_Result_Impl *create_asynch_accept_result (ACE_Handler &handler,
@@ -351,9 +345,8 @@ public:
                                                                       ACE_Message_Block &message_block,
                                                                       u_long bytes_to_read,
                                                                       const void* act,
-                                                                      ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                      int priority = 0,
-                                                                      int signal_number = ACE_SIGRTMIN);
+                                                                      ACE_HANDLE event,
+                                                                      int priority);
   // Create the correct implementation class for ACE_Asynch_Accept::Result.
 
   virtual ACE_Asynch_Transmit_File_Result_Impl *create_asynch_transmit_file_result (ACE_Handler &handler,
@@ -366,30 +359,19 @@ public:
                                                                                     u_long bytes_per_send,
                                                                                     u_long flags,
                                                                                     const void *act,
-                                                                                    ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                                                    int priority = 0,
-                                                                                    int signal_number = ACE_SIGRTMIN);
+                                                                                    ACE_HANDLE event,
+                                                                                    int priority);
   // Create the correct implementation class for ACE_Asynch_Transmit_File::Result. 
-  
+
   virtual ACE_Asynch_Result_Impl *create_asynch_timer (ACE_Handler &handler,
                                                        const void *act,
                                                        const ACE_Time_Value &tv,
-                                                       ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                       int priority = 0,
-                                                       int signal_number = ACE_SIGRTMIN);
+                                                       ACE_HANDLE event,
+                                                       int priority = 0);
   // Create a timer result object which can be used with the Timer
-  // mechanism of the Proactor. 
-  // If <signal_number> is -1, <POSIX_SIG_Proactor> will create a
-  // Timer object with a meaningful signal number, choosing the
-  // largest signal number from the signal mask of the Proactor.
+  // mechanism of the Proactor.
 
 protected:
-
-  static int post_wakeup_completions (int how_many);
-  // Post <how_many> completions to the completion port so that all
-  // threads can wake up. This is used in conjunction with the
-  // <run_event_loop>. 
-
   virtual void implementation (ACE_Proactor_Impl *implementation);
   // Set the implementation class.
 
@@ -421,9 +403,6 @@ protected:
 
   static sig_atomic_t end_event_loop_;
   // Terminate the proactor event loop.
-
-  static sig_atomic_t event_loop_thread_count_;
-  // Number of threads in the event loop.
 
 private:
   ACE_Proactor (const ACE_Proactor &);

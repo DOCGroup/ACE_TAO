@@ -17,7 +17,6 @@ CROSS-COMPILE = 1
 
 debug = 1
 optimize = 1
-rtti =
 shared_libs =
 static_libs = 1
 
@@ -77,13 +76,6 @@ ifeq ($(CPU),PPC604)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = ppc
 else
-ifeq ($(CPU),PPC860)
-  BINXSYM_NAME = xsym
-  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC860 -mcpu=860
-  CCFLAGS += -fno-implicit-templates
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
-  TOOLENV = ppc
-else
 ifeq ($(CPU),I80486)
   #### Note: -fno-implicit-templates doesn't seem to work well with g++
   #### cygnus-2.7.2-960126 for pc486 target.  Some member functions don't
@@ -101,7 +93,6 @@ else
   CCFLAGS += -fno-implicit-templates
 endif # I80386
 endif # I80486
-endif # PPC860
 endif # PPC604
 
 
@@ -116,38 +107,12 @@ else  # ! x86-win32
   PIPE_OPT = -pipe
 endif # ! x86-win32
 
-ifeq ($(shared_libs),1)
-  SHARED_LIBS = 1
-endif
-ifeq ($(shared_libs_only),1)
-  SHARED_LIBS = 1
-endif
-
-ifeq ($(SHARED_LIBS),1)
-  ACELIB = -L./
-  #### There's no difference between non-shared and shared object code.
-  VSHDIR = .obj/
-endif # shared_libs
-
-ifeq ($(static_libs),1)
-  AR              = ar$(TOOLENV)
-  ARFLAGS         = rv
-else  # ! static_libs
-  AR              = echo
-  ARFLAGS         = "build shared lib only"
-endif # ! static_libs
 
 CC              = cc$(TOOLENV)
 CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop \
                    -fvolatile -nostdinc -nostdlib $(PIPE_OPT) -Wall
 CCFLAGS         += $(CFLAGS)
-ifeq (,$(rtti))
-  #### Don't use RTTI even with egcs, because Tornado 1.0.x libraries
-  #### don't support it.
-  CCFLAGS += -fno-rtti -DACE_LACKS_RTTI
-endif # rtti
 DCFLAGS         += -g
-DLD             = $(LD)
 INCLDIRS        += -I$(WIND_BASE)/target/h
 LD              = $(PERL_PATH) $(ACE_ROOT)/bin/ace_ld -c \
                   $(ACE_QUOTE)$(COMPILE.c) -traditional$(ACE_QUOTE) \
@@ -157,6 +122,8 @@ LDFLAGS         += -X -r
 #### the i386 family.  And -O2 causes some compilation failures.
 OCFLAGS         += -O
 PIC             =
+AR              = ar$(TOOLENV)
+ARFLAGS         = rv
 
 
 #### ld can't handle INCLDIRS, so override LINK definitions.
