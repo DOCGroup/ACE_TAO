@@ -133,6 +133,26 @@ function MM_nbGroup(event, grpName) { //v3.0
         Due to limitations in the SSL protocol <code>CLIENT</code> implies that
         the server is authenticated too. </td>
     </tr>
+    <tr>
+      <td><code>-SSLAcceptTimeout</code> <em>which</em></td>
+      <td>Set the maximum amount of time to allow for establishing a
+	    SSL/TLS passive connection, <em>i.e.</em> for accepting a
+	    SSL/TLS connection.  The default value is <code>10</code>
+	    seconds.
+	    <p>See the discussion in <a
+	      href="http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1348">Bug 1348</a> in our <a href="http://deuce.doc.wustl.edu/bugzilla/index.cgi">bug
+	    tracking system</a> for the rationale behind this option.</td>
+    </tr>
+    <tr>
+      <td><code>-SSLDHParams</code> <em>filename</em></td>
+      <td>Set the filename containing the Diffie-Hellman parameters to
+	  be used when using DSS-based certificates.  The specified
+	    file may be a file containing only Diffie-Hellman
+	    parameters created by "<code>openssl dhparam</code>", or
+	    it can be a certificate containing a PEM encoded set of
+	    Diffie-Hellman parameters.</td>
+    </tr>
+
   </table>
   <h4>Environment variables</h4>
   <p>The SSLIOP protocol uses the following environment variables to control its
