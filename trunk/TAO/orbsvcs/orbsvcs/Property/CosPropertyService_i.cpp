@@ -22,9 +22,8 @@ CosProperty_Hash_Key::CosProperty_Hash_Key (void)
 }
 
 CosProperty_Hash_Key::CosProperty_Hash_Key (const char * &name)
-  pname_ = CORBA::string_dup (name)
+  : pname_ (CORBA::string_dup (name))
 {
-
 }
 
 CosProperty_Hash_Key::CosProperty_Hash_Key (const CosPropertyService::PropertyName &name)
