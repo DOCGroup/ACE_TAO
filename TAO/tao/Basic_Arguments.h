@@ -15,21 +15,23 @@
 #define TAO_BASIC_ARGUMENTS_H
 
 #include "ace/pre.h"
-#include "Basic_Argument_T.h"
+#include "tao/Basic_Argument_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Arg_Traits_T.h"
+
 namespace TAO
 {
   /**
    *
-   * @brief Specializations for void return type.
+   * @brief Specialization for void return type.
    *
    */
-
-  struct Void_Arg_Traits
+  template<>
+  class TAO_Export Arg_Traits<void>
   {
     typedef void        ret_type;
 
@@ -41,27 +43,63 @@ namespace TAO
 
   /**
    *
-   * @brief Typedefs for basic IDL arg types, except (w)char/boolean/octet.
+   * @brief Specializations for basic arg types, except (w)char/boolean/octet.
    *
    */
 
-  typedef Basic_Arg_Traits_T<CORBA::Short>        Short_Arg_Traits;
+  template<>
+  class TAO_Export Arg_Traits<CORBA::Short>
+    : public Basic_Arg_Traits_T<CORBA::Short>
+  {
+  };
 
-  typedef Basic_Arg_Traits_T<CORBA::Long>         Long_Arg_Traits;
+  template<>
+  class TAO_Export Arg_Traits<CORBA::Long>
+    : public Basic_Arg_Traits_T<CORBA::Long>
+  {
+  };
 
-  typedef Basic_Arg_Traits_T<CORBA::UShort>       UShort_Arg_Traits;
+  template<>
+  class TAO_Export Arg_Traits<CORBA::UShort>
+    : public Basic_Arg_Traits_T<CORBA::UShort>
+  {
+  };
 
-  typedef Basic_Arg_Traits_T<CORBA::ULong>        ULong_Arg_Traits;
+  template<>
+  class TAO_Export Arg_Traits<CORBA::ULong>
+    : public Basic_Arg_Traits_T<CORBA::Short>
+  {
+  };
 
-  typedef Basic_Arg_Traits_T<CORBA::Float>        Float_Arg_Traits;
+  template<>
+  class TAO_Export Arg_Traits<CORBA::Float>
+    : public Basic_Arg_Traits_T<CORBA::Float>
+  {
+  };
 
-  typedef Basic_Arg_Traits_T<CORBA::Double>       Double_Arg_Traits;
+  template<>
+  class TAO_Export Arg_Traits<CORBA::Double>
+    : public Basic_Arg_Traits_T<CORBA::Double>
+  {
+  };
 
-  typedef Basic_Arg_Traits_T<CORBA::LongLong>     LongLong_Arg_Traits;
+  template<>
+  class TAO_Export Arg_Traits<CORBA::LongLong>
+    : public Basic_Arg_Traits_T<CORBA::LongLong>
+  {
+  };
 
-  typedef Basic_Arg_Traits_T<CORBA::ULongLong>    ULongLong_Arg_Traits;
+  template<>
+  class TAO_Export Arg_Traits<CORBA::ULongLong>
+    : public Basic_Arg_Traits_T<CORBA::ULongLong>
+  {
+  };
 
-  typedef Basic_Arg_Traits_T<CORBA::LongDouble>   LongDouble_Arg_Traits;
+  template<>
+  class TAO_Export Arg_Traits<CORBA::LongDouble>
+    : public Basic_Arg_Traits_T<CORBA::LongDouble>
+  {
+  };
 };
 
 #include "ace/post.h"

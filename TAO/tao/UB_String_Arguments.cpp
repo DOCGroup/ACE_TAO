@@ -8,6 +8,9 @@ ACE_RCSID (tao,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class TAO::Arg_Traits<CORBA::String>;
+template class TAO::Arg_Traits<CORBA::WString>;
+
 template class TAO::UB_String_Arg_Traits_T<CORBA::Char, 
                                            CORBA::String_var, 
                                            CORBA::String_out>;
@@ -16,6 +19,9 @@ template class TAO::UB_String_Arg_Traits_T<CORBA::WChar,
                                            CORBA::WString_out>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate TAO::Arg_Traits<CORBA::String>
+# pragma instantiate TAO::Arg_Traits<CORBA::WString>
 
 # pragma instantiate TAO::UB_String_Arg_Traits_T<CORBA::Char, \
                                                  CORBA::String_var, \

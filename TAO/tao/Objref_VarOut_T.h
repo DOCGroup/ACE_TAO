@@ -24,6 +24,28 @@
 
 #include "ace/CORBA_macros.h"
 
+template<typename T>
+struct TAO_Life
+{
+  static T * tao_duplicate (T *);
+  static void tao_release (T *);
+  static T * tao_nil (void);
+  static CORBA::Boolean tao_marshal (
+      T *,
+      TAO_OutputCDR &
+    );
+};
+
+template<typename T>
+struct TAO_Cast
+{
+  static T * tao_narrow (
+      CORBA::Object_ptr
+      ACE_ENV_ARG_DECL
+    );
+  static CORBA::Object_ptr tao_upcast (void *);
+};
+
 /**
  * @class TAO_Objref_Var_T
  *
