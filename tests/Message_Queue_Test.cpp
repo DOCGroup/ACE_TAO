@@ -41,6 +41,15 @@ typedef ACE_Message_Queue<ACE_NULL_SYNCH> QUEUE;
 typedef ACE_Message_Queue_Iterator<ACE_NULL_SYNCH> ITERATOR;
 typedef ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH> REVERSE_ITERATOR;
 
+const int MAX_MESSAGES = 10000;
+const int MAX_MESSAGE_SIZE = 32;
+const ASYS_TCHAR test_message[] = "ACE_Message_Queue Test Message";
+
+int messages = MAX_MESSAGES;
+
+// Dynamically allocate to avoid a static.
+static ACE_High_Res_Timer *timer = 0;
+
 #if defined (ACE_HAS_THREADS)
 typedef ACE_Message_Queue<ACE_SYNCH> SYNCH_QUEUE;
 
@@ -70,14 +79,6 @@ struct Queue_Wrapper
   // Default constructor.
 };
 
-const int MAX_MESSAGES = 10000;
-const int MAX_MESSAGE_SIZE = 32;
-const ASYS_TCHAR test_message[] = "ACE_Message_Queue Test Message";
-
-int messages = MAX_MESSAGES;
-
-// Dynamically allocate to avoid a static.
-static ACE_High_Res_Timer *timer = 0;
 #endif /* ACE_HAS_THREADS */
 
 #if !defined (VXWORKS)
