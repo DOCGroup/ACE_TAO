@@ -220,7 +220,7 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
     {
       //new QosDescriptor, so just simulate last release as now minus period
       last_release.set(0,0);
-      last_release += now - qos_info.period_;
+      //last_release += now - qos_info.period_;
     }
   /*
   //TODO WARNING! This is a hack for EDF only to drop events
