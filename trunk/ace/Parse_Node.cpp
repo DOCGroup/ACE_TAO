@@ -12,6 +12,7 @@
 #include "ace/Task.h"
 #include "ace/DLL.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (ace,
            Parse_Node,

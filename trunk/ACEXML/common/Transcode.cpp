@@ -1,6 +1,7 @@
 // -*- C++ -*-  $Id$
 
 #include "ACEXML/common/Transcode.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (__ACEXML_INLINE__)
 # include "ACEXML/common/Transcode.i"

@@ -1,6 +1,7 @@
 // -*- C++ -*-  $Id$
 
 #include "ACEXML/common/NamespaceSupport.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (__ACEXML_INLINE__)
 # include "ACEXML/common/NamespaceSupport.i"

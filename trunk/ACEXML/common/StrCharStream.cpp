@@ -4,6 +4,7 @@
 #include "ACEXML/common/Encoding.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
 
 ACEXML_StrCharStream::ACEXML_StrCharStream (void)
   : start_ (0), ptr_ (0), end_ (0), encoding_ (0), name_ (0)
