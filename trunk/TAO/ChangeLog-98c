@@ -1,3 +1,8 @@
+Fri Nov 07 15:42:45 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/default_server.cpp (parse_args): check for 0 argv[curarg]
+          before calling strcmp on it.
+
 Fri Nov  7 10:30:59 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/tao_internals.cpp (fake_service_entries_i): Updated faked
