@@ -224,8 +224,7 @@ CosEvent_Service::start_Scheduler (void)
           TAO_CHECK_ENV;
 
           // The CORBA::Object_var object is downcast to
-          // RtecEventChannelAdmin::EventChannel
-          // using the <_narrow> method.
+          // RtecScheduler::Scheduler using the <_narrow> method.
           this->scheduler_ =
             RtecScheduler::Scheduler::_narrow (sched_obj.in (),
                                                TAO_TRY_ENV);
