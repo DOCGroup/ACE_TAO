@@ -38,12 +38,12 @@ namespace TAO
   {
     class ThreadPolicyValue;
 
-    class TAO_PortableServer_Export POA_ThreadPolicy
+    class TAO_PortableServer_Export ThreadPolicy
       : public virtual ::PortableServer::ThreadPolicy,
         public virtual TAO_Local_RefCounted_Object
     {
     public:
-      POA_ThreadPolicy ();
+      ThreadPolicy ();
 
       CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));

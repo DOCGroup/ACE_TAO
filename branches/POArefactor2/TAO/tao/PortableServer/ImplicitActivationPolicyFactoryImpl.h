@@ -42,12 +42,14 @@ namespace TAO
        * as pure virtual in the base. This is something for the future.
        */
       virtual ::PortableServer::ImplicitActivationPolicy_ptr create (
-        ::PortableServer::ImplicitActivationPolicyValue value);
+        ::PortableServer::ImplicitActivationPolicyValue value ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
       /// Create a new servant retention policy
       virtual ::PortableServer::ImplicitActivationPolicy_ptr create (
         const CORBA::Any &value ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::PolicyError));
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         CORBA::PolicyError));
     };
 
     ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ImplicitActivationPolicyFactoryImpl)

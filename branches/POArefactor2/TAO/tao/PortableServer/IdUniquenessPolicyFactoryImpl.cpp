@@ -18,13 +18,17 @@ namespace TAO
 
     ::PortableServer::IdUniquenessPolicy_ptr
     IdUniquenessPolicyFactoryImpl::create (
-      ::PortableServer::IdUniquenessPolicyValue value)
+      ::PortableServer::IdUniquenessPolicyValue value
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException))
     {
       IdUniquenessPolicy* policy = 0;
 
-      ACE_NEW_RETURN (policy,
-                      IdUniquenessPolicy,
-                      ::PortableServer::IdUniquenessPolicy::_nil ());
+      ACE_NEW_THROW_EX (policy,
+                        IdUniquenessPolicy,
+                        CORBA::NO_MEMORY ());
+
+      ACE_CHECK_RETURN (::PortableServer::IdUniquenessPolicy::_nil ());
 
       (void) policy->init (value);
 
@@ -35,13 +39,18 @@ namespace TAO
     IdUniquenessPolicyFactoryImpl::create (
       const CORBA::Any &value
       ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::PolicyError))
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         CORBA::PolicyError))
     {
       IdUniquenessPolicy* policy = 0;
 
-      ACE_NEW_RETURN (policy,
-                      IdUniquenessPolicy,
-                      ::PortableServer::IdUniquenessPolicy::_nil ());
+      ACE_NEW_THROW_EX (policy,
+                        IdUniquenessPolicy,
+                        CORBA::NO_MEMORY ());
+
+      ACE_CHECK_RETURN (::PortableServer::IdUniquenessPolicy::_nil ());
+
+      // @todo, possible memory leak
 
       (void) policy->init (value ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (::PortableServer::IdUniquenessPolicy::_nil ());

@@ -17,13 +17,13 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    POA_ThreadPolicy::POA_ThreadPolicy () :
+    ThreadPolicy::ThreadPolicy () :
       value_ (0)
     {
     }
 
     void
-    POA_ThreadPolicy::init (
+    ThreadPolicy::init (
       const CORBA::Any &value ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::PolicyError))
     {
@@ -35,7 +35,7 @@ namespace TAO
     }
 
     void
-    POA_ThreadPolicy::init (
+    ThreadPolicy::init (
       ::PortableServer::ThreadPolicyValue value)
     {
       switch (value)
@@ -77,12 +77,12 @@ namespace TAO
     }
 
     CORBA::Policy_ptr
-    POA_ThreadPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
+    ThreadPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
-      POA_ThreadPolicy *copy = 0;
+      ThreadPolicy *copy = 0;
       ACE_NEW_THROW_EX (copy,
-                        POA_ThreadPolicy,
+                        ThreadPolicy,
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
@@ -92,33 +92,33 @@ namespace TAO
     }
 
     void
-    POA_ThreadPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ThreadPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
     }
 
     ::PortableServer::ThreadPolicyValue
-    POA_ThreadPolicy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ThreadPolicy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return value_->policy_type ();
     }
 
     CORBA::PolicyType
-    POA_ThreadPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ThreadPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return ::PortableServer::THREAD_POLICY_ID;
     }
 
     TAO_Cached_Policy_Type
-    POA_ThreadPolicy::_tao_cached_type (void) const
+    ThreadPolicy::_tao_cached_type (void) const
     {
       return TAO_CACHED_POLICY_THREAD;
     }
 
     TAO_Policy_Scope
-    POA_ThreadPolicy::_tao_scope (void) const
+    ThreadPolicy::_tao_scope (void) const
     {
       return TAO_POLICY_POA_SCOPE;
     }

@@ -8,20 +8,20 @@
 #undef TAO_PORTABLESERVER_SAFE_INCLUDE
 
 ACE_RCSID (PortableServer,
-           POA_LifespanPolicy,
+           LifespanPolicy,
            "$Id$")
 
 namespace TAO
 {
   namespace Portable_Server
   {
-    POA_LifespanPolicy::POA_LifespanPolicy () :
+    LifespanPolicy::LifespanPolicy () :
       value_ (0)
     {
     }
 
     void
-    POA_LifespanPolicy::init (
+    LifespanPolicy::init (
       const CORBA::Any &value ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::PolicyError))
     {
@@ -33,7 +33,7 @@ namespace TAO
     }
 
     void
-    POA_LifespanPolicy::init (
+    LifespanPolicy::init (
       ::PortableServer::LifespanPolicyValue value)
     {
       switch (value)
@@ -75,12 +75,12 @@ namespace TAO
     }
 
     CORBA::Policy_ptr
-    POA_LifespanPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
+    LifespanPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
-      POA_LifespanPolicy *copy = 0;
+      LifespanPolicy *copy = 0;
       ACE_NEW_THROW_EX (copy,
-                        POA_LifespanPolicy,
+                        LifespanPolicy,
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
@@ -90,33 +90,33 @@ namespace TAO
     }
 
     void
-    POA_LifespanPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    LifespanPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
     }
 
     ::PortableServer::LifespanPolicyValue
-    POA_LifespanPolicy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    LifespanPolicy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return value_->policy_type ();
     }
 
     CORBA::PolicyType
-    POA_LifespanPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    LifespanPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return ::PortableServer::LIFESPAN_POLICY_ID;
     }
 
     TAO_Cached_Policy_Type
-    POA_LifespanPolicy::_tao_cached_type (void) const
+    LifespanPolicy::_tao_cached_type (void) const
     {
       return TAO_CACHED_POLICY_LIFESPAN;
     }
 
     TAO_Policy_Scope
-    POA_LifespanPolicy::_tao_scope (void) const
+    LifespanPolicy::_tao_scope (void) const
     {
       return TAO_POLICY_POA_SCOPE;
     }

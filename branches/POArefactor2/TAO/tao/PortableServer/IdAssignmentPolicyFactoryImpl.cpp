@@ -18,13 +18,15 @@ namespace TAO
 
     ::PortableServer::IdAssignmentPolicy_ptr
     IdAssignmentPolicyFactoryImpl::create (
-      ::PortableServer::IdAssignmentPolicyValue value)
+      ::PortableServer::IdAssignmentPolicyValue value ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException))
     {
       IdAssignmentPolicy* policy = 0;
 
-      ACE_NEW_RETURN (policy,
-                      IdAssignmentPolicy,
-                      ::PortableServer::IdAssignmentPolicy::_nil ());
+      ACE_NEW_THROW_EX (policy,
+                        IdAssignmentPolicy,
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (::PortableServer::IdAssignmentPolicy::_nil ());
 
       (void) policy->init (value);
 
@@ -35,13 +37,15 @@ namespace TAO
     IdAssignmentPolicyFactoryImpl::create (
       const CORBA::Any &value
       ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::PolicyError))
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         CORBA::PolicyError))
     {
       IdAssignmentPolicy* policy = 0;
 
-      ACE_NEW_RETURN (policy,
-                      IdAssignmentPolicy,
-                      ::PortableServer::IdAssignmentPolicy::_nil ());
+      ACE_NEW_THROW_EX (policy,
+                        IdAssignmentPolicy,
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (::PortableServer::IdAssignmentPolicy::_nil ());
 
       (void) policy->init (value ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (::PortableServer::IdAssignmentPolicy::_nil ());

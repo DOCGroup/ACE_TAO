@@ -40,12 +40,14 @@ namespace TAO
        * as pure virtual in the base. This is something for the future.
        */
       virtual ::PortableServer::IdUniquenessPolicy_ptr create (
-        ::PortableServer::IdUniquenessPolicyValue value);
+        ::PortableServer::IdUniquenessPolicyValue value ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
       /// Create a new id uniqueness policy
       virtual ::PortableServer::IdUniquenessPolicy_ptr create (
         const CORBA::Any &value ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::PolicyError));
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         CORBA::PolicyError));
     };
 
     ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, IdUniquenessPolicyFactoryImpl)

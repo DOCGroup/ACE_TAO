@@ -18,13 +18,17 @@ namespace TAO
 
     ::PortableServer::LifespanPolicy_ptr
     LifespanPolicyFactoryImpl::create (
-      ::PortableServer::LifespanPolicyValue value)
+      ::PortableServer::LifespanPolicyValue value
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException))
     {
-      POA_LifespanPolicy* policy = 0;
+      LifespanPolicy* policy = 0;
 
-      ACE_NEW_RETURN (policy,
-                      POA_LifespanPolicy,
-                      ::PortableServer::LifespanPolicy::_nil ());
+      ACE_NEW_THROW_EX (policy,
+                        LifespanPolicy,
+                        CORBA::NO_MEMORY ());
+
+      ACE_CHECK_RETURN (::PortableServer::LifespanPolicy::_nil ());
 
       (void) policy->init (value);
 
@@ -35,13 +39,16 @@ namespace TAO
     LifespanPolicyFactoryImpl::create (
       const CORBA::Any &value
       ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::PolicyError))
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         CORBA::PolicyError))
     {
-      POA_LifespanPolicy* policy = 0;
+      LifespanPolicy* policy = 0;
 
-      ACE_NEW_RETURN (policy,
-                      POA_LifespanPolicy,
-                      ::PortableServer::LifespanPolicy::_nil ());
+      ACE_NEW_THROW_EX (policy,
+                        LifespanPolicy,
+                        CORBA::NO_MEMORY ());
+
+      ACE_CHECK_RETURN (::PortableServer::LifespanPolicy::_nil ());
 
       (void) policy->init (value ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (::PortableServer::LifespanPolicy::_nil ());

@@ -40,12 +40,14 @@ namespace TAO
        * as pure virtual in the base. This is something for the future.
        */
       virtual ::PortableServer::LifespanPolicy_ptr create (
-        ::PortableServer::LifespanPolicyValue value);
+        ::PortableServer::LifespanPolicyValue value ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
       /// Create a new lifespan policy
       virtual ::PortableServer::LifespanPolicy_ptr create (
         const CORBA::Any &value ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::PolicyError));
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         CORBA::PolicyError));
     };
 
     ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, LifespanPolicyFactoryImpl)

@@ -40,12 +40,14 @@ namespace TAO
        * as pure virtual in the base. This is something for the future.
        */
       virtual ::PortableServer::ServantRetentionPolicy_ptr create (
-        ::PortableServer::ServantRetentionPolicyValue value) = 0;
+        ::PortableServer::ServantRetentionPolicyValue value ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
       /// Create a new servant retention policy
       virtual ::PortableServer::ServantRetentionPolicy_ptr create (
         const CORBA::Any &value ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::PolicyError)) = 0;
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         CORBA::PolicyError)) = 0;
     };
   }
 }

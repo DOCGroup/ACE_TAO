@@ -35,12 +35,12 @@ namespace TAO
   {
     class LifespanPolicyValue;
 
-    class TAO_PortableServer_Export POA_LifespanPolicy
+    class TAO_PortableServer_Export LifespanPolicy
       : public virtual ::PortableServer::LifespanPolicy,
         public virtual TAO_Local_RefCounted_Object
     {
     public:
-      POA_LifespanPolicy ();
+      LifespanPolicy ();
 
       CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));

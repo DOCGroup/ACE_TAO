@@ -20,13 +20,16 @@ namespace TAO
 
     ::PortableServer::ThreadPolicy_ptr
     ThreadPolicyFactoryImpl::create (
-      ::PortableServer::ThreadPolicyValue value)
+      ::PortableServer::ThreadPolicyValue value ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException))
     {
-      POA_ThreadPolicy* policy = 0;
+      ThreadPolicy* policy = 0;
 
-      ACE_NEW_RETURN (policy,
-                      POA_ThreadPolicy,
-                      ::PortableServer::ThreadPolicy::_nil ());
+      ACE_NEW_THROW_EX (policy,
+                        ThreadPolicy,
+                        CORBA::NO_MEMORY ());
+
+      ACE_CHECK_RETURN (::PortableServer::ThreadPolicy::_nil ());
 
       (void) policy->init (value);
 
@@ -37,13 +40,16 @@ namespace TAO
     ThreadPolicyFactoryImpl::create (
       const CORBA::Any &value
       ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::PolicyError))
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         CORBA::PolicyError))
     {
-      POA_ThreadPolicy* policy = 0;
+      ThreadPolicy* policy = 0;
 
-      ACE_NEW_RETURN (policy,
-                      POA_ThreadPolicy,
-                      ::PortableServer::ThreadPolicy::_nil ());
+      ACE_NEW_THROW_EX (policy,
+                        ThreadPolicy,
+                        CORBA::NO_MEMORY ());
+
+      ACE_CHECK_RETURN (::PortableServer::LifespanPolicy::_nil ());
 
       (void) policy->init (value ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (::PortableServer::ThreadPolicy::_nil ());

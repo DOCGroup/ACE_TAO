@@ -20,13 +20,17 @@ namespace TAO
 
     ::PortableServer::RequestProcessingPolicy_ptr
     RequestProcessingPolicyFactoryImpl::create (
-      ::PortableServer::RequestProcessingPolicyValue value)
+      ::PortableServer::RequestProcessingPolicyValue value
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException))
     {
       RequestProcessingPolicy* policy = 0;
 
-      ACE_NEW_RETURN (policy,
-                      RequestProcessingPolicy,
-                      ::PortableServer::RequestProcessingPolicy::_nil ());
+      ACE_NEW_THROW_EX (policy,
+                        RequestProcessingPolicy,
+                        CORBA::NO_MEMORY ());
+
+      ACE_CHECK_RETURN (::PortableServer::RequestProcessingPolicy::_nil ());
 
       (void) policy->init (value);
 
@@ -37,13 +41,16 @@ namespace TAO
     RequestProcessingPolicyFactoryImpl::create (
       const CORBA::Any &value
       ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::PolicyError))
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         CORBA::PolicyError))
     {
       RequestProcessingPolicy* policy = 0;
 
-      ACE_NEW_RETURN (policy,
-                      RequestProcessingPolicy,
-                      ::PortableServer::RequestProcessingPolicy::_nil ());
+      ACE_NEW_THROW_EX (policy,
+                        RequestProcessingPolicy,
+                        CORBA::NO_MEMORY ());
+
+      ACE_CHECK_RETURN (::PortableServer::RequestProcessingPolicy::_nil ());
 
       (void) policy->init (value ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (::PortableServer::RequestProcessingPolicy::_nil ());

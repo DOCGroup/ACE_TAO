@@ -39,15 +39,15 @@ namespace TAO
        * change this to a CORBA::Policy_ptr create() call, which is defined
        * as pure virtual in the base. This is something for the future.
        */
-      // @@Johnny, just a thought -- could you may be pass
-      // ACE_ENV_ARG_DECL in both the calls or just none of 'em?
       virtual ::PortableServer::ImplicitActivationPolicy_ptr create (
-        ::PortableServer::ImplicitActivationPolicyValue value) = 0;
+        ::PortableServer::ImplicitActivationPolicyValue value ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
       /// Create a new servant retention policy
       virtual ::PortableServer::ImplicitActivationPolicy_ptr create (
         const CORBA::Any &value ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::PolicyError)) = 0;
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         CORBA::PolicyError)) = 0;
     };
   }
 }

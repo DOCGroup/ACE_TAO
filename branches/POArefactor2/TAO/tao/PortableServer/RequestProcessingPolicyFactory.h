@@ -40,12 +40,14 @@ namespace TAO
        * as pure virtual in the base. This is something for the future.
        */
       virtual ::PortableServer::RequestProcessingPolicy_ptr create (
-        ::PortableServer::RequestProcessingPolicyValue value) = 0;
+        ::PortableServer::RequestProcessingPolicyValue value ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
       /// Create a new request processing policy
       virtual ::PortableServer::RequestProcessingPolicy_ptr create (
         const CORBA::Any &value ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::PolicyError)) = 0;
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         CORBA::PolicyError)) = 0;
     };
   }
 }
