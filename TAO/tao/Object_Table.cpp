@@ -38,18 +38,21 @@ TAO_Object_Table_Impl::find (const PortableServer::Servant servant,
     {
       const TAO_Object_Table_Entry &item = i->item ();
 
-      if (item.servant_ == servant)
+      if (!item.is_free_)
         {
-          if (id.ptr () != 0)
+          if (item.servant_ == servant)
             {
-              // More than one match return -1.
-              delete id.ptr ();
-              return -1;
+              if (id.ptr () != 0)
+                {
+                  // More than one match return -1.
+                  delete id.ptr ();
+                  return -1;
+                }
+              // Store the match....
+              ACE_NEW_RETURN (id.ptr (),
+                              PortableServer::ObjectId (item.id_),
+                              -1);
             }
-          // Store the match....
-          ACE_NEW_RETURN (id.ptr (),
-                          PortableServer::ObjectId (item.id_),
-                          -1);
         }
     }
 

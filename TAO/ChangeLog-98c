@@ -1,3 +1,9 @@
+Thu Nov 05 15:52:50 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Object_Table.cpp (find): Added a check for is_free in the
+ 	  find algorithm.  Thanks to Frank Patz <frank@contact.de> for
+ 	  sending the bug report.
+
 Thu Nov 05 04:03:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB.cpp (multicast_to_service): Make sure that the multicast
