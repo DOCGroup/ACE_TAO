@@ -16,13 +16,7 @@
 
 #ifndef DYNAMIC_SUPPLIER_H
 #define DYNAMIC_SUPPLIER_H
-/*
-#include "ace/Event_Handler.h"
 
-#include "orbsvcs/RtecEventCommS.h"
-#include "orbsvcs/RtecSchedulerC.h"
-#include "orbsvcs/Event/EC_Event_Channel.h"
-*/
 #include "Supplier.h"
 #include "Service_Handler.h"
 

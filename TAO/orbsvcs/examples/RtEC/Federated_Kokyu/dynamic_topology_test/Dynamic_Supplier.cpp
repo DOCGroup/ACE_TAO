@@ -85,19 +85,21 @@ Dynamic_Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (id %d) in thread %t ONE_WAY_CALL_START at %u\n",this->id_,ACE_OS::gettimeofday().msec()));
   oid.type = eventA[0].header.type;
   DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
-  //TODO: BUG? This code pushes eventA/B to ALL consumers!
 
   ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (id %d) in thread %t pushing eventA %d\n",this->id_,eventA[0].header.type));
   this->consumer_proxy_->push (eventA ACE_ENV_ARG_PARAMETER);
   DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid);
 
-  oid.type = eventB[0].header.type;
-  DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
+  if (FAULT_TOLERANT == this->mode_) {
+    //only push to both if in FAULT_TOLERANT mode
+    oid.type = eventB[0].header.type;
+    DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
 
-  ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (id %d) in thread %t pushing eventB %d\n",this->id_,eventB[0].header.type));
-  this->consumer_proxy_->push (eventB ACE_ENV_ARG_PARAMETER);
-  ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (id %d) in thread %t ONE_WAY_CALL_DONE at %u\n",this->id_,ACE_OS::gettimeofday().msec()));
-  DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid);
+    ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (id %d) in thread %t pushing eventB %d\n",this->id_,eventB[0].header.type));
+    this->consumer_proxy_->push (eventB ACE_ENV_ARG_PARAMETER);
+    ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (id %d) in thread %t ONE_WAY_CALL_DONE at %u\n",this->id_,ACE_OS::gettimeofday().msec()));
+    DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid);
+  }
 
   if (this->handler_ != 0)
     {

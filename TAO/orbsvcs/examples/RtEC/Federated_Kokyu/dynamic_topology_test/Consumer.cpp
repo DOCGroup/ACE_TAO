@@ -20,8 +20,8 @@
 
 ACE_RCSID(EC_Examples, Consumer, "$Id$")
 
-Consumer::Consumer (RtecEventComm::EventSourceID normal_type,
-                    RtecEventComm::EventSourceID ft_type,
+Consumer::Consumer (SourceID normal_type,
+                    SourceID ft_type,
                     Supplier *fwddest, Service_Handler * handler)
   : worktime_(0,0)
   , fwddest_(fwddest)
@@ -31,8 +31,8 @@ Consumer::Consumer (RtecEventComm::EventSourceID normal_type,
 {
 }
 
-Consumer::Consumer (RtecEventComm::EventSourceID normal_type,
-                    RtecEventComm::EventSourceID ft_type,
+Consumer::Consumer (SourceID normal_type,
+                    SourceID ft_type,
                     ACE_Time_Value& worktime,
                     Supplier *fwddest, Service_Handler *handler)
   : worktime_(worktime)
@@ -40,6 +40,10 @@ Consumer::Consumer (RtecEventComm::EventSourceID normal_type,
   , handler_(handler)
   , norm_type_(normal_type)
   , ft_type_(ft_type)
+{
+}
+
+Consumer::~Consumer(void)
 {
 }
 

@@ -9,6 +9,7 @@ project(Consumer_Dynamic): orbsvcsexe, rtevent, rtsched, rtschedevent, rtrgkokyu
     Consumer_EC.cpp
     Consumer.cpp
     Supplier.cpp
+    Dynamic_Consumer.cpp
     federated_dsui_vars.cpp
   }
 }

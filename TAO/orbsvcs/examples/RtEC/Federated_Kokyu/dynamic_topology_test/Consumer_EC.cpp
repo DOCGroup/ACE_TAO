@@ -17,7 +17,7 @@
 #include "tao/ORB_Core.h"
 
 #include "Kokyu_EC.h"
-#include "Consumer.h"
+#include "Dynamic_Consumer.h"
 #include "Service_Handler.h"
 
 #ifdef ACE_HAS_DSUI
@@ -34,82 +34,6 @@ namespace
   ACE_CString ior_output_filename;
   FILE * ior_output_file;
 }
-/*
-class Once_Handler: public Service_Handler
-{
-public:
-  Once_Handler(void)
-    : handled_start_(0)
-    , handled_stop_(0)
-  {
-  }
-
-  virtual ~Once_Handler(void)
-  {
-    this->reactor_->cancel_timer(this->timer_handle_);
-
-    delete timeout_handler_impl_;
-  }
-
-  ///Takes ownership of the Timeout_Handler ONLY.
-  void init (
-             ACE_Reactor * reactor
-             , ACE_Event_Handler *timeout_handler_impl
-             , ACE_Time_Value period
-             )
-  {
-    this->reactor_ = reactor;
-    this->timeout_handler_impl_ = timeout_handler_impl;
-    this->period_ = period;
-  }
-
-  virtual void handle_service_start(ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     , RtecScheduler::UNKNOWN_TASK
-                     , RtecScheduler::INTERNAL
-                     , RtecScheduler::SYNCHRONIZATION_FAILURE
-                     ))
-  {
-    if (this->handled_start_ == 0)
-      {
-        ACE_DEBUG((LM_DEBUG,"Once_Handler (%P|%t) handle_service_start() START\n"));
-        this->handled_start_++; //set to true
-
-        //WARNING: depending on Reactor, might not be a RT solution!
-
-        this->timer_handle_ = this->reactor_->schedule_timer(this->timeout_handler_impl_,
-                                                             0, //arg
-                                                             ACE_Time_Value::zero, //delay
-                                                             this->period_ //period
-                                                             );
-
-        ACE_DEBUG((LM_DEBUG,"Once_Handler (%P|%t) handle_service_start() END\n"));
-      }
-  }
-
-  virtual void handle_service_stop(const RtecEventComm::EventSet&
-                                    ACE_ENV_ARG_DECL)
-  {
-    if (this->handled_stop_ == 0)
-      {
-        ACE_DEBUG((LM_DEBUG,"Once_Handler (%P|%t) handle_service_stop() START\n"));
-        this->handled_stop_++; //set to true
-        ACE_DEBUG((LM_DEBUG,"Once_Handler (%P|%t) handle_service_stop() END\n"));
-      }
-  }
-
-private:
-  int handled_start_;
-  int handled_stop_;
-
-  ACE_Reactor *reactor_;
-  ACE_Event_Handler *timeout_handler_impl_;
-  ACE_Time_Value period_;
-  long timer_handle_;
-
-};
-*/
 
 class Consumer_EC : public Kokyu_EC
 {
@@ -137,15 +61,20 @@ public:
     //TODO: Create Dynamic_Consumer for merging fault-tolerant case!
 
     //// CONSUMER 3 ////
-    RtecEventComm::EventType cons_normal_type = ACE_ES_EVENT_UNDEFINED+6;
-    RtecEventComm::EventType cons_ft_type = ACE_ES_EVENT_UNDEFINED+8;
+    Consumer::EventType cons_normal_type  = ACE_ES_EVENT_UNDEFINED+6;
+    Consumer::EventType cons_normal_type2 = ACE_ES_EVENT_UNDEFINED+7;
+    Consumer::EventType cons_ft_type  = ACE_ES_EVENT_UNDEFINED+8;
+    Consumer::EventType cons_ft_type2 = ACE_ES_EVENT_UNDEFINED+9;
     Kokyu_EC::EventType_Vector cons1_3_types(2);
     cons1_3_types.push_back(cons_normal_type);
     cons1_3_types.push_back(cons_ft_type);
+    cons1_3_types.push_back(cons_normal_type2);
+    cons1_3_types.push_back(cons_ft_type2);
 
-    Consumer * consumer_impl1_3;
+    Dynamic_Consumer * consumer_impl1_3;
     ACE_NEW(consumer_impl1_3,
-            Consumer(cons_normal_type,cons_ft_type));
+            Dynamic_Consumer(cons_normal_type,cons_ft_type,
+                             cons_normal_type2,cons_ft_type2));
 
     tv.set(0,50000);
     consumer_impl1_3->setWorkTime(tv);
