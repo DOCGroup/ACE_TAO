@@ -594,8 +594,9 @@ public:
 
   SUBSECTION_MAP* section_hash_map_;
 };
+
 typedef ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId,
-        ACE_Configuration_Section_IntId>
+                                    ACE_Configuration_Section_IntId>
         SECTION_MAP;
 typedef ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId,
                                 ACE_Configuration_Section_IntId,

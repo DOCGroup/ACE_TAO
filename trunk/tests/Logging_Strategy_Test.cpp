@@ -89,12 +89,15 @@ static int order_state = 0;
 static int num_files = 0;
 static int wipeout_logfile = 0;
 
-void
+// This adapter function runs the Reactor's event loop in a separate
+// thread of control.
+
+static void *
 run_reactor (void *)
 {
   ACE_Reactor::instance ()->owner 
     (ACE_Thread_Manager::instance ()->thr_self ());
-  ACE_Reactor::instance ()->run_event_loop ();
+  ACE_Reactor::instance ()->run_reactor_event_loop ();
 }
 
 // Initiate the cycle of messages.
@@ -118,14 +121,18 @@ void print_till_death (void)
                     " (%t) %d message\n",
                     i));
     }
-  ACE_Reactor::instance ()->end_event_loop ();
+
+  if (ACE_Reactor::instance ()->end_reactor_event_loop () == -1)
+    ACE_ERROR ((LM_ERROR,
+                "Error ending reactor.\n"));
 
   ACE_DEBUG ((LM_DEBUG,
               "-< generating messages finished \n\n"));
 }
 
-// count the generated files
-void
+// Count the generated files.
+
+static void
 count_files (void)
 {
   int i = 0;
@@ -186,8 +193,9 @@ count_files (void)
 }
 
 // get the file statistics
+
 static int
-get_statistic (ACE_TCHAR *f_name)
+get_statistics (ACE_TCHAR *f_name)
 {
   ACE_stat buf;
   int result;
@@ -224,7 +232,7 @@ order (void)
   if (num_files <= 2)
     {
       if (num_files == 1)
-        get_statistic (file_name);
+        get_statistics (file_name);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("      Ordering...OK! - ")
                   ACE_TEXT (" Only %d file (s) was (were) generated"),
@@ -244,10 +252,10 @@ order (void)
                        file_name,
                        num_files - 1);
 
-      tm_bk_1 = get_statistic (backup_1);
-      tm_bk_2 = get_statistic (backup_2);
+      tm_bk_1 = get_statistics (backup_1);
+      tm_bk_2 = get_statistics (backup_2);
 
-      if ((tm_bk_1 > tm_bk_2) && !order_state)
+      if (tm_bk_1 > tm_bk_2 && !order_state)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("      %s (newest) ; %s (oldest)\n"),
@@ -258,7 +266,7 @@ order (void)
         }
       else
         {
-          if ((tm_bk_1 < tm_bk_2) && order_state)
+          if (tm_bk_1 < tm_bk_2 && order_state)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("      %s (newest);")
@@ -280,6 +288,7 @@ order (void)
 }
 
 // remove log_files
+
 static void
 remove_files (void)
 {
@@ -412,7 +421,7 @@ int main (int argc, ACE_TCHAR *argv [])
       argc = 3;
     }
 
-  // Remove the existent files
+  // Remove existing files.
   remove_files ();
 
   // This is necessary only if the provided logfile name is the same
@@ -466,7 +475,7 @@ int main (int argc, ACE_TCHAR *argv [])
 
   // launch a new Thread
   if (ACE_Thread_Manager::instance ()->spawn 
-      (ACE_THR_FUNC (run_reactor)) < 0)
+      (ACE_THR_FUNC (run_reactor)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Spawning Reactor.\n"),
                       1);
@@ -480,11 +489,8 @@ int main (int argc, ACE_TCHAR *argv [])
   // Get the file order
   order ();
 
-  if (ACE_Reactor::instance ()->end_event_loop ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error ending reactor.\n"),
-                      1);
-
+  // Wait for the thread to exit before we exit.
+  ACE_Thread_Manager::instance ()->wait ();
   ACE_END_TEST;
   return 0;
 }

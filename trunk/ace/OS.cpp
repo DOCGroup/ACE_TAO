@@ -6456,16 +6456,15 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
     return -1;
 
   // Wait to be awakened by a ACE_OS::signal() or ACE_OS::broadcast().
-#     if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
-  result = ::WaitForSingleObject (cv->sema_, msec_timeout);
-#     else
+#     if defined (ACE_USES_WINCE_SEMA_SIMULATION)
   // Can't use Win32 API on simulated semaphores.
   result = ACE_OS::sema_wait (&cv->sema_,
                               ACE_Time_Value (0, msec_timeout * 1000));
 
-  if (result != WAIT_OBJECT_0 && errno == ETIME)
+  if (result == -1 && errno == ETIME)
     result = WAIT_TIMEOUT;
-
+#     else
+  result = ::WaitForSingleObject (cv->sema_, msec_timeout);
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 
   // Reacquire lock to avoid race conditions.

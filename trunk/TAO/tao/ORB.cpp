@@ -943,16 +943,14 @@ CORBA_ORB::resolve_policy_current (CORBA::Environment &)
   return CORBA_Object::_nil ();
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
 }
-
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id,
                             ACE_Time_Value * /*timeout*/,
                             CORBA::Environment& ACE_TRY_ENV)
 {
-  const char * env_service_ior [] =
+  const char *env_service_ior [] =
   {
     "NameServiceIOR",
     "TradingServiceIOR",
@@ -1026,15 +1024,13 @@ CORBA_ORB::resolve_initial_references (const char *name,
   else if (ACE_OS::strcmp (name, TAO_OBJID_TYPECODEFACTORY) == 0)
     return this->orb_core ()->resolve_typecodefactory (ACE_TRY_ENV);
 
-
   // -----------------------------------------------------------------
 
   // Search the object reference table.  This search must occur before
   // the InitRef table search, since it may contain local objects.
   CORBA::Object_var result =
-    this->orb_core ()->object_ref_table ().resolve_initial_references (
-      name,
-      ACE_TRY_ENV);
+    this->orb_core ()->object_ref_table ().resolve_initial_references (name,
+                                                                       ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   if (!CORBA::is_nil (result.in ()))
@@ -1091,9 +1087,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
     return result._retn ();
   // -----------------------------------------------------------------
   
-  
   ACE_THROW_RETURN (CORBA::ORB::InvalidName (), CORBA::Object::_nil ());
-
 }
 
 CORBA_ORB_ObjectIdList_ptr
