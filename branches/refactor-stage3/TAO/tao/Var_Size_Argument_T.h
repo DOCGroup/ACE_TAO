@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    UB_String_Argument_T.h
+ *  @file    Basic_Argument_T.h
  *
  *  $Id$
  *
@@ -11,8 +11,8 @@
 //=============================================================================
 
 
-#ifndef TAO_UB_STRING_ARGUMENT_T_H
-#define TAO_UB_STRING_ARGUMENT_T_H
+#ifndef TAO_VAR_SIZE_ARGUMENT_T_H
+#define TAO_VAR_SIZE_ARGUMENT_T_H
 
 #include "ace/pre.h"
 #include "tao/Argument.h"
@@ -24,16 +24,16 @@
 namespace TAO
 {
   /**
-   * @class In_UB_String_Argument_T
+   * @class In_Var_Size_Argument_T
    *
-   * @brief Template class for IN unbounded (w)string argument.
+   * @brief Template class for IN stub argument of fixed size IDL types.
    *
    */
   template<typename S>
-  class In_UB_String_Argument_T : public Argument
+  class In_Var_Size_Argument_T : public Argument
   {
   public:
-    In_UB_String_Argument_T (const S * x);
+    In_Var_Size_Argument_T (S const & x);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
 
@@ -45,16 +45,16 @@ namespace TAO
   };
 
   /**
-   * @class Inout_UB_String_Argument_T
+   * @class Inout_Var_Size_Argument_T
    *
-   * @brief Template class for INOUT unbounded (w)string argument.
+   * @brief Template class for INOUT stub argument of fixed size IDL types.
    *
    */
   template<typename S>
-  class Inout_UB_String_Argument_T : public Argument
+  class Inout_Var_Size_Argument_T : public Argument
   {
   public:
-    Inout_UB_String_Argument_T (S *& x);
+    Inout_Var_Size_Argument_T (S & x);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
@@ -63,38 +63,38 @@ namespace TAO
     virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
 
   private:
-    mutable S *& x_;
+    S * x_;
   };
 
   /**
-   * @class Out_UB_String_Argument_T
+   * @class Out_Var_Size_Argument_T
    *
-   * @brief Template class for INOUT unbounded (w)string argument.
+   * @brief Template class for OUT stub argument of fixed size IDL types.
    *
    */
   template<typename S, typename S_out>
-  class Out_UB_String_Argument_T : public Argument
+  class Out_Var_Size_Argument_T : public Argument
   {
   public:
-    Out_UB_String_Argument_T (S_out & x);
+    Out_Var_Size_Argument_T (S_out x);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 
   private:
-    mutable S *& x_;
+    S *& x_;
   };
 
   /**
-   * @class Ret_UB_String_Argument_T
+   * @class Ret_Var_Size_Argument_T
    *
-   * @brief Template class for return stub value of ub (w)string argument.
+   * @brief Template class for return stub value of fixed size IDL types.
    *
    */
   template<typename S, typename S_var>
-  class Ret_UB_String_Argument_T : public Argument
+  class Ret_Var_Size_Argument_T : public Argument
   {
   public:
-    Ret_UB_String_Argument_T (void);
+    Ret_Var_Size_Argument_T (void);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 
@@ -104,50 +104,70 @@ namespace TAO
     S * excp (void);
     S * retn (void);
 
-  private:
+  protected:
     S_var x_;
   };
 
   /**
-   * @class In_UB_String_SArgument_T
+   * @class In_Var_Size_SArgument_T
    *
-   * @brief Template class for IN skeleton UB (w)string argument.
+   * @brief Template class for IN skeleton argument of fixed size IDL types.
    *
    */
-  template<typename S, typename S_var>
-  class In_UB_String_SArgument_T : public Argument
+  template<typename S>
+  class In_Var_Size_SArgument_T : public Argument
   {
   public:
-    In_UB_String_SArgument_T (void);
+    In_Var_Size_SArgument_T (void);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 
     virtual void interceptor_param (Dynamic::Parameter &);
     virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
 
-    const S * arg (void) const;
+    const S & arg (void) const;
 
   private:
-    S_var x_;
+    S * x_;
   };
 
   /**
-   * @class Inout_UB_String_SArgument_T
+   * @class Inout_Var_Size_SArgument_T
    *
-   * @brief Template class for INOUT skeleton UB (w)string argument.
+   * @brief Template class for INOUT skeleton arg of fixed size IDL types.
    *
    */
-  template<typename S, typename S_var>
-  class Inout_UB_String_SArgument_T : public Argument
+  template<typename S>
+  class Inout_Var_Size_SArgument_T : public Argument
   {
   public:
-    Inout_UB_String_SArgument_T (void);
+    Inout_Var_Size_SArgument_T (void);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 
     virtual void interceptor_param (Dynamic::Parameter &);
     virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
+
+    S & arg (void);
+
+  private:
+    S * x_;
+  };
+
+  /**
+   * @class Out_Var_Size_SArgument_T
+   *
+   * @brief Template class for OUT skeleton argument of fixed size IDL types.
+   *
+   */
+  template<typename S, typename S_var>
+  class Out_Var_Size_SArgument_T : public Argument
+  {
+  public:
+    Out_Var_Size_SArgument_T (void);
+
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
 
     S *& arg (void);
 
@@ -156,36 +176,16 @@ namespace TAO
   };
 
   /**
-   * @class Out_UB_String_SArgument_T
+   * @class Ret_Var_Size_SArgument_T
    *
-   * @brief Template class for INOUT skeleton UB (w)string argument.
-   *
-   */
-  template<typename S, typename S_var>
-  class Out_UB_String_SArgument_T : public Argument
-  {
-  public:
-    Out_UB_String_SArgument_T (void);
-
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-
-    S *& arg (void);
-
-  private:
-    S_var x_;
-  };
-
-  /**
-   * @class Ret_UB_String_SArgument_T
-   *
-   * @brief Template class for return skeleton value of UB (w)string.
+   * @brief Template class for return skeleton value of fixed size IDL types.
    *
    */
   template<typename S, typename S_var>
-  class Ret_UB_String_SArgument_T : public Argument
+  class Ret_Var_Size_SArgument_T : public Argument
   {
   public:
-    Ret_UB_String_SArgument_T (void);
+    Ret_Var_Size_SArgument_T (void);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
 
@@ -199,38 +199,38 @@ namespace TAO
   };
 
   /**
-   * @struct UB_String_Tag
+   * @struct Basic_Tag
    *
-   * @brief Struct for unbounded (w)string arguments id tag.
+   * @brief Struct for fixed size IDL type arguments id tag.
    *
    */
-  struct TAO_Export UB_String_Tag {};
+  struct TAO_Export Var_Size_Tag {};
 
   /**
    * @struct Basic_Arg_Traits_T
    *
-   * @brief Template class for argument traits of unbounded (w)strings.
+   * @brief Template class for argument traits of fixed size IDL types.
    *
    */
   template<typename T, typename T_var, typename T_out>
-  struct UB_String_Arg_Traits_T
+  struct Var_Size_Arg_Traits_T
   {
     typedef T *                                         ret_type;
-    typedef const T *                                   in_type;
-    typedef T *&                                        inout_type;
+    typedef const T &                                   in_type;
+    typedef T &                                         inout_type;
     typedef T_out                                       out_type;
 
-    typedef In_UB_String_Argument_T<T>                  in_arg_val;
-    typedef Inout_UB_String_Argument_T<T>               inout_arg_val;
-    typedef Out_UB_String_Argument_T<T,T_out>           out_arg_val;
-    typedef Ret_UB_String_Argument_T<T,T_var>           stub_ret_val;
+    typedef In_Var_Size_Argument_T<T>                   in_arg_val;
+    typedef Inout_Var_Size_Argument_T<T>                inout_arg_val;
+    typedef Out_Var_Size_Argument_T<T,T_out>            out_arg_val;
+    typedef Ret_Var_Size_Argument_T<T,T_var>            stub_ret_val;
 
-    typedef In_UB_String_SArgument_T<T,T_var>           in_sarg_val;
-    typedef Inout_UB_String_SArgument_T<T,T_var>        inout_sarg_val;
-    typedef Out_UB_String_SArgument_T<T,T_var>          out_sarg_val;
-    typedef Ret_UB_String_SArgument_T<T,T_var>          skel_ret_val;
+    typedef In_Var_Size_SArgument_T<T>                  in_sarg_val;
+    typedef Inout_Var_Size_SArgument_T<T>               inout_sarg_val;
+    typedef Out_Var_Size_SArgument_T<T,T_var>           out_sarg_val;
+    typedef Ret_Var_Size_SArgument_T<T,T_var>           skel_ret_val;
 
-    typedef UB_String_Tag                               idl_tag;
+    typedef Var_Size_Tag                                idl_tag;
   };
 };
 
@@ -239,14 +239,13 @@ namespace TAO
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/UB_String_Argument_T.cpp"
+#include "tao/Var_Size_Argument_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("UB_String_Argument_T.cpp")
+#pragma implementation ("Var_Size_Argument_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
 
-#endif /* TAO_UB_STRING_ARGUMENT_T_H */
-
+#endif /* TAO_VAR_SIZE_ARGUMENT_T_H */

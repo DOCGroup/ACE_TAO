@@ -332,6 +332,8 @@ TEMPLATE_FILES = \
   Object_Argument_T \
   Special_Basic_Argument_T \
   UB_String_Argument_T \
+  Fixed_Size_Argument_T \
+  Var_Size_Argument_T \
   TAO_Singleton
 
 ifndef TAO_ROOT

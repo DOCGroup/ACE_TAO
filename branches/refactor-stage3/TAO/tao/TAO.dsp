@@ -1328,6 +1328,10 @@ SOURCE=.\FILE_Parser.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Fixed_Size_Argument_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Flushing_Strategy.h
 # End Source File
 # Begin Source File
@@ -1965,6 +1969,10 @@ SOURCE=.\UB_String_Arguments.h
 # Begin Source File
 
 SOURCE=.\Valuetype_Adapter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_Argument_T.h
 # End Source File
 # Begin Source File
 
@@ -2666,6 +2674,11 @@ SOURCE=.\Codeset_Translator_Factory_T.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Fixed_Size_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=.\Object_Argument_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
@@ -2702,6 +2715,11 @@ SOURCE=.\Special_Basic_Argument_T.cpp
 # Begin Source File
 
 SOURCE=.\UB_String_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_Argument_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
