@@ -56,7 +56,7 @@ project (Config_Handlers) : acelib, ciao_deployment_stub {
 }
 
 project (XSC_Config_Handlers_Tests) : ciao_deployment_stub {
-  requires += dummy
+  requires += dummy_label
   exename = test
   dynamicflags   = CONFIG_HANDLER_BUILD_DLL
   macros   += XML_USE_PTHREADS
