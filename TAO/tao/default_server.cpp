@@ -48,7 +48,7 @@ TAO_Default_Server_Strategy_Factory::create_poa_lock (void)
                       0);
       break;
 #endif /* ACE_HAS_THREADS */
-    case TAO_NULL_LOCK:
+    default:
       ACE_NEW_RETURN (the_lock,
                       ACE_Lock_Adapter<ACE_Null_Mutex> (),
                       0);
@@ -72,7 +72,7 @@ TAO_Default_Server_Strategy_Factory::create_poa_mgr_lock (void)
                       0);
       break;
 #endif /* ACE_HAS_THREADS */
-    case TAO_NULL_LOCK:
+    default:
       ACE_NEW_RETURN (the_lock,
                       ACE_Lock_Adapter<ACE_Null_Mutex> (),
                       0);
@@ -89,7 +89,8 @@ TAO_Default_Server_Strategy_Factory::create_servant_lock (void)
   ACE_Lock *the_lock = 0;
 
 #if defined (ACE_HAS_THREADS)
-  if (this->concurrency_strategy_ != &this->reactive_strategy_)
+  if (this->concurrency_strategy_ != &this->reactive_strategy_ &&
+      this->concurrency_strategy_ != 0)
       ACE_NEW_RETURN (the_lock,
                       ACE_Lock_Adapter<ACE_Thread_Mutex> (),
                       0);
