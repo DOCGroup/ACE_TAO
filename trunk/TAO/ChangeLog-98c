@@ -1,3 +1,9 @@
+Wed Dec 30 12:22:58 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Any.cpp (CORBA_Any): Removed sharing of <value_> in the copy
+	  constructor.  It'd nice to have it but according to CORBA spec.
+	  Any always performs a deep_copy and owns the object.
+
 Wed Dec 30 02:47:46 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/IIOP_Object (Profile): Removed the 1001 different
@@ -24,18 +30,18 @@ Wed Dec 30 02:47:46 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* tao/Active_Object_Map.i (TAO_Active_Object_Map): Added the
  	  deletion of the reverse map.
 
-	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp:   
+	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
 	  New test to measure the time it takes to register and activate
  	  an object in the POA.
 
-	* examples/POA/DSI/run_test.pl: 
-	* examples/POA/Default_Servant/run_test.pl: 
-	* examples/POA/On_Demand_Loading/run_test.pl: 
-	* examples/POA/On_Demand_Activation/run_test.pl: 
-	* examples/POA/Explicit_Activation/run_test.pl: 
-	
-	  Unlink ior files before starting the server.  
-	
+	* examples/POA/DSI/run_test.pl:
+	* examples/POA/Default_Servant/run_test.pl:
+	* examples/POA/On_Demand_Loading/run_test.pl:
+	* examples/POA/On_Demand_Activation/run_test.pl:
+	* examples/POA/Explicit_Activation/run_test.pl:
+
+	  Unlink ior files before starting the server.
+
 Wed Dec 30 01:17:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/DynAny_Test/basic_test.dsp: Fixed project configurations.
