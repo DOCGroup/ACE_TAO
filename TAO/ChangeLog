@@ -1,3 +1,9 @@
+Mon Mar 10 07:56:12 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/nslist/Makefile.bor: Adding missing libraries to link with
+          to fix BCB5 Static Link Errors. Also build the nsadd and nsdel
+          executables.
+
 Sun Mar  9 16:04:27 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/DynamicInterface/DII_ClientRequestInfo.cpp: The ctor takes
