@@ -27,9 +27,10 @@ TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc,
                              CORBA::Environment &env)
 {
   CORBA::Boolean continue_skipping = CORBA::B_TRUE;
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
+  TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
+
   // status of skip operation
-  CORBA::TypeCode::traverse_status   retval =
+  CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
 
   switch (tc->kind_)
@@ -89,14 +90,14 @@ TAO_Marshal_Any::skip (CORBA::TypeCode_ptr,
   CORBA::TypeCode_ptr elem_tc;
 
   // Context is the CDR stream.
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
+  TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
 
   // Status of encode operation.
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
 
-  // first retrieve the TypeCode for the element so that we can skip the value
-  // based on this typecode
+  // First retrieve the TypeCode for the element so that we can skip
+  // the value based on this typecode.
   if (stream->decode (CORBA::_tc_TypeCode,
                       &elem_tc,
                       0,
@@ -118,7 +119,7 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
   CORBA::Boolean continue_skipping = CORBA::B_TRUE;
 
   // Context is the CDR stream.
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
+  TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
 
 #if 0
   // Typecode to be decoded.
@@ -128,7 +129,7 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
   // Typecode kind.
   CORBA::ULong kind;
 
-  // Decode the "kind" field of the typecode from the stream
+  // Decode the "kind" field of the typecode from the stream.
   continue_skipping = stream->read_ulong (kind);
 
   if (continue_skipping == CORBA::B_TRUE)
@@ -213,7 +214,7 @@ TAO_Marshal_Principal::skip (CORBA::TypeCode_ptr,
   CORBA::Boolean continue_skipping = CORBA::B_TRUE;
 
   // Context is the CDR stream.
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
+  TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
 
   // specifies the number of bytes in the Principal
   CORBA::ULong len;
@@ -242,7 +243,7 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
   CORBA::Boolean continue_skipping = CORBA::B_TRUE;
 
   // Context is the CDR stream.
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
+  TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
   // return status
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
 
@@ -343,7 +344,7 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc,
                             void *context,
                             CORBA::Environment &env)
 {
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
+  TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::TypeCode_ptr param;
@@ -384,7 +385,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                          CORBA::Environment &env)
 {
   // Context is the CDR stream.
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
+  TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
 
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
@@ -565,7 +566,7 @@ TAO_Marshal_String::skip (CORBA::TypeCode_ptr,
 {
   CORBA::Boolean continue_skipping = CORBA::B_TRUE;
   // Context is the CDR stream.
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
+  TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
 
 
   // On decode, omit the check against specified string bounds, and
@@ -595,7 +596,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
                             CORBA::Environment &env)
 {
   CORBA::Boolean continue_skipping = CORBA::B_TRUE;
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
+  TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
   // Typecode of the element.
   CORBA::TypeCode_ptr tc2;
   // Size of element.
@@ -642,7 +643,7 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
                            CORBA::Environment &env)
 {
   CORBA::Boolean continue_skipping = CORBA::B_TRUE;
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
+  TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
 
   // Typecode of the element.
   CORBA::TypeCode_ptr tc2;
@@ -682,7 +683,7 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
   CORBA::Boolean continue_skipping = CORBA::B_TRUE;
 
   // Context is the CDR stream.
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
+  TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
 
   // Status of decode operation.
   CORBA::TypeCode::traverse_status retval =
@@ -717,7 +718,7 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr  tc,
                           void *context,
                           CORBA::Environment &env)
 {
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
+  TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::TypeCode_ptr param;
@@ -763,7 +764,7 @@ TAO_Marshal_WString::skip (CORBA::TypeCode_ptr,
                            CORBA::Environment &env)
 {
   CORBA::Boolean continue_skipping = CORBA::B_TRUE;
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
+  TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
   CORBA::ULong len;
 
   // On decode, omit the check against specified wstring bounds, and
