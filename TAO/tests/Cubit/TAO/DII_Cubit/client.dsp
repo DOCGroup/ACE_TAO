@@ -13,12 +13,14 @@ CFG=DII_Cubit Client - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "client.mak" CFG="DII_Cubit Client - Win32 Release"
+!MESSAGE NMAKE /f "client.mak" CFG="DII_Cubit Client - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "DII_Cubit Client - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "DII_Cubit Client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "DII_Cubit Client - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "DII_Cubit Client - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -36,12 +38,13 @@ RSC=rc.exe
 # PROP BASE Target_Dir ".\client"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir ""
-# PROP Intermediate_Dir ".\Release"
+# PROP Output_Dir "Release"
+# PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ".\client"
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\\" /I "..\..\..\..\..\\" /I "..\IDL_Cubit" /I "..\..\..\..\orbsvcs" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\\" /I "..\..\..\..\..\\" /I "..\IDL_Cubit" /I "..\..\..\..\orbsvcs" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -49,7 +52,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO.lib ace.lib orbsvcs.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao\\" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 TAO.lib ace.lib orbsvcs.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\orbsvcs\orbsvcs"
 
 !ELSEIF  "$(CFG)" == "DII_Cubit Client - Win32 Debug"
 
