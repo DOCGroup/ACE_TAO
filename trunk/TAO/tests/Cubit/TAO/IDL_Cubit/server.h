@@ -26,18 +26,30 @@
 #include "tao/tao_util.h"
 #include "orbsvcs/CosNamingC.h"
 #include "cubit_i.h"
-#include "Naming_Server.h"
+#include "orbsvcs/Naming_Service/Naming_Utils.h"
 
 class Cubit_Server : public TAO_ORB_Manager
-// @@ Naga, can you please add comments here and on all the methods?
 {
+  // =TITLE
+  //   Defines a Cubit Server class that implements the functionality
+  //   of a server process as an object.
+  //
+  // =DESCRIPTION
+  //   The interface is quite simple. A server program has to call
+  //   init to initialize the cubit_server's state and then call run
+  //   to run the orb.
 public:
+  // Default constructor
   Cubit_Server (void);
+
+  // Destructor
   ~Cubit_Server (void);
   
+  // Initialize the Cubit_Server state - parsing arguments and ...
   int init (int argc,
             char **argv,CORBA::Environment &env);
 
+  // Run the orb 
   int run (CORBA::Environment &env);
 
 private:
