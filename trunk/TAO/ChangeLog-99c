@@ -1,157 +1,162 @@
+Wed May 05 09:52:18 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/CosEvent_Service/Makefile: added subset dependency
+          on Event2, because it needs the TAO_EC_Event_Channel ctor.
+
 Wed May  5 02:20:15 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/corbafwd.h:
-	* tao/Environment.{h,i,cpp}:
-	  Added _var and _out classes.
+        * tao/corbafwd.h:
+        * tao/Environment.{h,i,cpp}:
+          Added _var and _out classes.
 
-	* tao/Any.{h,i,cpp}:
-	  Edited the comment for the Any_var extraction
-	  operators, added the Any_out -> operator, which
-	  was missing, and made a cosmetic change to Any.cpp.
+        * tao/Any.{h,i,cpp}:
+          Edited the comment for the Any_var extraction
+          operators, added the Any_out -> operator, which
+          was missing, and made a cosmetic change to Any.cpp.
 
-	* tao/Typecode.{h,i}:
-	  Moved the operator assigning a TypeCode_var to a
-	  TypeCode_out to private: and removed the 
-	  implementation - it's not allowed.
+        * tao/Typecode.{h,i}:
+          Moved the operator assigning a TypeCode_var to a
+          TypeCode_out to private: and removed the
+          implementation - it's not allowed.
 
 Tue May  4 23:50:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/corbafwd.h:
-	* tao/ORB.{h,cpp}:
-	* tao/Typecode_Constants.cpp:
-	  Added typedef'd strings ORBid to CORBA and
-	  ObjectId to CORBA_ORB, along with their typecodes.
-	  
-	  Also moved the typecode initialization for the exception
-	  InconsistentTypeCode out of ORB.cpp and into
-	  Typecode_Constants. Also cosmetized Typecode_Constants
-	  a little.
+        * tao/corbafwd.h:
+        * tao/ORB.{h,cpp}:
+        * tao/Typecode_Constants.cpp:
+          Added typedef'd strings ORBid to CORBA and
+          ObjectId to CORBA_ORB, along with their typecodes.
+
+          Also moved the typecode initialization for the exception
+          InconsistentTypeCode out of ORB.cpp and into
+          Typecode_Constants. Also cosmetized Typecode_Constants
+          a little.
 
 Tue May  4 21:46:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_preproc.cpp:
-	  Fixed memory managment problems with the new implicit option
-	  -I$TAO_ROOT/tao, also use $ACE_ROOT/TAO if TAO_ROOT is not
-	  defined and print a warning message if none is defined.
+        * TAO_IDL/driver/drv_preproc.cpp:
+          Fixed memory managment problems with the new implicit option
+          -I$TAO_ROOT/tao, also use $ACE_ROOT/TAO if TAO_ROOT is not
+          defined and print a warning message if none is defined.
 
 Tue May  4 21:15:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
-	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.i:
-	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.h:
-	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.i:
-	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
-	  Added new Dispatching strategy that uses multiple threads (one
-	  per priority) and a queues to dispatch the events. This strategy 
-	  allows invocations from high-priority suppliers to low-priority
-	  consumers or vice-versa with minimum priority inversion.
-	  It also decouples the collocated suppliers from the time spent
-	  in the collocated consumers.
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.i:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.i:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+          Added new Dispatching strategy that uses multiple threads (one
+          per priority) and a queues to dispatch the events. This strategy
+          allows invocations from high-priority suppliers to low-priority
+          consumers or vice-versa with minimum priority inversion.
+          It also decouples the collocated suppliers from the time spent
+          in the collocated consumers.
 
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-	  Added support for the new dispatching strategy and for Immediate
-	  changes in the supplier sets, but with locking.
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+          Added support for the new dispatching strategy and for Immediate
+          changes in the supplier sets, but with locking.
 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	  Before passing data to the dispatching module we increment the
-	  reference count, that way the dispatching module doesn't have to 
-	  do it and we minimize locking overhead.
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Before passing data to the dispatching module we increment the
+          reference count, that way the dispatching module doesn't have to
+          do it and we minimize locking overhead.
 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
-	  Minor cosmetic changes.
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+          Minor cosmetic changes.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
-	  Enabled debug message if an empty event is received.
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+          Enabled debug message if an empty event is received.
 
-	* orbsvcs/tests/EC_Throughput/ec.conf:
-	* orbsvcs/tests/EC_Throughput/ec.mt.conf:
-	  Added new configuration for Priority_Dispatching strategy.
-	  Re-ordered options in old configuration to match the new one.
+        * orbsvcs/tests/EC_Throughput/ec.conf:
+        * orbsvcs/tests/EC_Throughput/ec.mt.conf:
+          Added new configuration for Priority_Dispatching strategy.
+          Re-ordered options in old configuration to match the new one.
 
 Tue May  4 20:23:37 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Any.{h.cpp}:
-	  Change the signature of the constructor 
-	    CORBA_Any (CORBA::TypeCode_ptr type,
-		       const ACE_Message_Block* mb)
+        * tao/Any.{h.cpp}:
+          Change the signature of the constructor
+            CORBA_Any (CORBA::TypeCode_ptr type,
+                       const ACE_Message_Block* mb)
 
-	  to
+          to
 
-	    CORBA_Any (CORBA::TypeCode_ptr type,
-		       COREBA::UShort dummy,
-		       const ACE_Message_Block* mb)
-	 
-	  in order to avoid ambiguity with a call to
+            CORBA_Any (CORBA::TypeCode_ptr type,
+                       COREBA::UShort dummy,
+                       const ACE_Message_Block* mb)
 
-	    CORBA_Any (CORBA::TypeCode_ptr type,
+          in order to avoid ambiguity with a call to
+
+            CORBA_Any (CORBA::TypeCode_ptr type,
              void *value = 0,
              CORBA::Boolean any_owns_data = 0)
 
-	  where the second arg is NULL and the third arg
-	  is left out.
-	
-	* tao/DynArray_i.cpp:
-	* tao/DynEnum_i.cpp:
-	* tao/DynSequence_i.cpp:
-	* tao/DynStruct_i.cpp:
-	* tao/DynUnion_i.cpp:
-	* tao/Invocation.cpp:
-	* tao/Typecode.cpp:
-	  Changed the signature of all the calls to the above
-	  constructor.
+          where the second arg is NULL and the third arg
+          is left out.
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-	  Fixed the '*/ outside of comment' warning.
+        * tao/DynArray_i.cpp:
+        * tao/DynEnum_i.cpp:
+        * tao/DynSequence_i.cpp:
+        * tao/DynStruct_i.cpp:
+        * tao/DynUnion_i.cpp:
+        * tao/Invocation.cpp:
+        * tao/Typecode.cpp:
+          Changed the signature of all the calls to the above
+          constructor.
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+          Fixed the '*/ outside of comment' warning.
 
 Tue May  4 20:17:41 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/CORBA.pidl: 
-	New file for adding entries that would generate new typecodes
+        * tao/CORBA.pidl:
+        New file for adding entries that would generate new typecodes
 
 1999-05-04  Seth Widoff  <swidoff@cs.cmu.edu>
 
-	* orbsvcs/orbsvcs/Makefile:
-	* orbsvcs/orbsvcs/CosTrading.idl:	
-	* orbsvcs/orbsvcs/CosTradingRepos.idl:		
-	* orbsvcs/orbsvcs/CosTradingDynamic.idl:			
-	  Broke the CosTrading.idl file up so that each idl file
-	  gets one module.
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/CosTrading.idl:
+        * orbsvcs/orbsvcs/CosTradingRepos.idl:
+        * orbsvcs/orbsvcs/CosTradingDynamic.idl:
+          Broke the CosTrading.idl file up so that each idl file
+          gets one module.
 
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Trader.h:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
-	  For the stem_id used in federated query, obliterated the calls
-	  to rand_r, since they apparently return -1 on NT. Since random
-	  numbers were kind of a cludge anyway, the trader now establishes 
-	  a unique sequence number space by generating a prefix consisting 
-	  of IP address and process id. If the trader is running on a
-	  machine without an IP address, then it defaults to a random
-	  prefix (using plain old rand, this time). Thanks to 
-          Ulf Jährig <ujaehrig@desys.com> for pointing this problem out. 
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Trader.h:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
+          For the stem_id used in federated query, obliterated the calls
+          to rand_r, since they apparently return -1 on NT. Since random
+          numbers were kind of a cludge anyway, the trader now establishes
+          a unique sequence number space by generating a prefix consisting
+          of IP address and process id. If the trader is running on a
+          machine without an IP address, then it defaults to a random
+          prefix (using plain old rand, this time). Thanks to
+          Ulf Jährig <ujaehrig@desys.com> for pointing this problem out.
 
-	  I also adapted all servants in the trader to use POA reference
-	  counting. 
- 	
-	* orbsvcs/tests/Offer_Exporter.cpp:
-	* orbsvcs/tests/TT_Info.cpp: 
-	  Fixed the includes to respect the new idl file schema. 
+          I also adapted all servants in the trader to use POA reference
+          counting.
+
+        * orbsvcs/tests/Offer_Exporter.cpp:
+        * orbsvcs/tests/TT_Info.cpp:
+          Fixed the includes to respect the new idl file schema.
 
 Tue May  4 17:45:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tao/orb.idl:
-	  Added this file as required by CORBA spec. Contains only
-	  empty interface defs for ORB, TypeCode and Object, inside
-	  module CORBA, so the IDL compiler can recognize 'CORBA::'
-	  scoped versions of the above. Interface defs suggested by
-	  Carlos, who also says we may need to add to them later.
+        * TAO/tao/orb.idl:
+          Added this file as required by CORBA spec. Contains only
+          empty interface defs for ORB, TypeCode and Object, inside
+          module CORBA, so the IDL compiler can recognize 'CORBA::'
+          scoped versions of the above. Interface defs suggested by
+          Carlos, who also says we may need to add to them later.
 
-	* TAO_IDL/driver/drv_preproc.cpp:
-	  Added a line to include the $TAO_ROOT/tao directory in the
-	  preprocessor invocation, so it can find orb.idl.
+        * TAO_IDL/driver/drv_preproc.cpp:
+          Added a line to include the $TAO_ROOT/tao directory in the
+          preprocessor invocation, so it can find orb.idl.
 
 Tue May  4 14:11:43 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
@@ -262,10 +267,10 @@ Mon May  3 17:19:26 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/Any.{h,i}:
           Added insertion and extraction operators for Any_var.
-          CORBA spec requires these for all copying insertion 
-	  operators defined as members of Any. The extraction
-	  operators are there as a tip of the hat to user of
-	  other ORBs that may be used to them.
+          CORBA spec requires these for all copying insertion
+          operators defined as members of Any. The extraction
+          operators are there as a tip of the hat to user of
+          other ORBs that may be used to them.
 
 Mon May  3 16:09:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
