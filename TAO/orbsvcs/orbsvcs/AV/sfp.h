@@ -25,10 +25,10 @@ class SFP_Encoder
 //     This class uses the CDR encoding format internally.
 {
  public:
-  SFP_Encoder ();
+  SFP_Encoder (void);
   // Default Constructor
   
-  ACE_Message_Block *encode_start_message ();
+  ACE_Message_Block *encode_start_message (void);
   // returns a SFP start message. it is the users responsibility
   // to delete this message block after using it.
 
@@ -40,6 +40,13 @@ class SFP_Encoder
   // delete this message block after using it.
 
   ~SFP_Encoder ();
+  // Destructor
+
+ protected:
+  ACE_Message_Block *create_message_block (void);
+  // Helper method - copies the buffer in encoder_
+  // into a new ACE_Message_Block and returns it.
+  // Returns 0 on failure
 
  private:
 

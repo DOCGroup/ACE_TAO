@@ -38,7 +38,7 @@ SFP_Encoder::encode_start_message ()
     {
       // construct the start message
       SFP::start_message start;
-
+      
       // copy the magic number into the message
       start.magic_number = 4;
       
@@ -71,25 +71,11 @@ SFP_Encoder::encode_start_message ()
       return 0;
     }
   TAO_ENDTRY;
-
-  // put the cdr encoded buffer into the message block
-  ACE_Message_Block *message;
   
-  ACE_NEW_RETURN (message, 
-                  ACE_Message_Block (encoder_->length ()),
-                  0);
-  
-  if (message->copy ((char *) encoder_->buffer (),
-                     encoder_->length ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "SFP_Encoder: Could not copy"
-                       " start message into ACE_Message_Block"),
-                      0);
-
-  return message;
-  
+  return this->create_message_block ();
 }
 
+// Encodes a simple frame, i.e. just frameheader and data
 ACE_Message_Block *
 SFP_Encoder::encode_simple_frame (ACE_Message_Block *data)
 {
@@ -98,31 +84,29 @@ SFP_Encoder::encode_simple_frame (ACE_Message_Block *data)
       // construct the frame header
       SFP::frame_header frame_header;
       // copy the magic number into the message
-      frame_header.magic_number.length (4);
-      for (int i = 0; i < 4; i++)
-        frame_header.magic_number [i] = TAO_SFP_MAGIC_NUMBER [i];
+      frame_header.magic_number = 4;
       
       // flags field is all zeroes
       frame_header.flags = 0;
       
       // put the message type 
-      frame_header.message_type = 2;
+      frame_header.message_type = SFP::SIMPLEFRAME;
 
       // size
       frame_header.message_size = data->length ();
       
       // encode the frame
       if (encoder_->encode (SFP::_tc_frame_header,
-                           &frame_header,
-                           0,
-                           TAO_TRY_ENV) 
+                            &frame_header,
+                            0,
+                            TAO_TRY_ENV) 
           == CORBA_TypeCode::TRAVERSE_CONTINUE)
         {
           ACE_DEBUG ((LM_DEBUG, 
                       "(%P|%t) encode of simple frame succeeded:"
                       "length == %d\n",
                       encoder_->length ()));
-
+          
         }
       TAO_CHECK_ENV;
     }
@@ -134,6 +118,24 @@ SFP_Encoder::encode_simple_frame (ACE_Message_Block *data)
     }
   TAO_ENDTRY;
 
+  ACE_Message_Block *mb = this->create_message_block ();
+
+  // set the next pointer to point to the data
+  mb->next (data);
+
+  return mb;
+}
+
+SFP_Encoder::~SFP_Encoder ()
+{
+
+}
+
+// This method copies the CDR buffer into a new
+// ACE_Message_Block and returns it.
+ACE_Message_Block *
+SFP_Encoder::create_message_block ()
+{
   // put the cdr encoded buffer into the message block
   ACE_Message_Block *message;
   
@@ -145,20 +147,14 @@ SFP_Encoder::encode_simple_frame (ACE_Message_Block *data)
                      (size_t) encoder_->length ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
                        "SFP_Encoder: Could not copy"
-                       " header for simpleframe into "
+                       "CDR::buffer () into "
                        "ACE_Message_Block"),
                       0);
-
-  // set the next pointer to point to the data
-  message->next (data);
-
+  
   return message;
 }
 
-SFP_Encoder::~SFP_Encoder ()
-{
-
-}
+// ----------------------------------------------------------------------
 
 SFP_Decoder::SFP_Decoder ()
 {
