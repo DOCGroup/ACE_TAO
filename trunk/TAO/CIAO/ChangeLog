@@ -1,3 +1,10 @@
+Tue Jun  8 10:35:32 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
+
+	  Added dump function to dump connections.
+
 Tue Jun  8 10:16:48 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/RepositoryManager/Repository_Manager.cpp:
