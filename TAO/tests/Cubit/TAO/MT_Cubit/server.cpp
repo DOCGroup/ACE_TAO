@@ -320,6 +320,8 @@ start_servants ()
   return 0;
 }
 
+// main routine.
+
 int
 main (int argc, char *argv[])
 {
