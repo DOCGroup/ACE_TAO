@@ -1,3 +1,11 @@
+Thu Dec 25 18:08:42 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/XtReactor.cpp: Removed g++ warning about initialization
+ 	  order, enabled read/write masks for
+ 	  ACE_Event_Handler::CONNECT_MASK; fixed typo that checks a write
+ 	  mask, but sets a read mask; removed unused variable "zero."
+  	  Thanks to Eric Newton for these fixes.
+
 Thu Dec 25 17:17:16 1997    <nw1@JIG>
 
 	* ace/config-win32.h: * ace/config-win32-common.h: Added macro
