@@ -1,7 +1,8 @@
 Tue Jan 12 22:41:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-freebsd.h: Uncommented ACE_HAS_SIGWAIT.  This is
-	  required for FreeBSD 2.2.8.
+	  required for FreeBSD 2.2.8. Thanks to John Aughey
+	  <jha@FreeBSD.ORG> for reporting this.
 
 	* ace/SOCK_IO.{h,i}:
 	* ace/SOCK_Stream.{h,i} (sendv_n/recvv_n): Moved these functions
