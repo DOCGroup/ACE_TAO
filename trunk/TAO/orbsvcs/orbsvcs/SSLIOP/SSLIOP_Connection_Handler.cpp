@@ -10,9 +10,11 @@
 #include "tao/CDR.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/IIOP_Endpoint.h"
+#include "tao/IIOP_Connection_Handler.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Resume_Handle.h"
 #include "tao/Thread_Lane_Resources.h"
+#include "tao/Wait_Strategy.h"
 
 #if !defined (__ACE_INLINE__)
 # include "SSLIOP_Connection_Handler.i"

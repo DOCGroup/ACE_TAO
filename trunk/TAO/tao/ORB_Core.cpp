@@ -1082,7 +1082,7 @@ TAO_ORB_Core::fini (void)
     {
       // Shutdown the ORB and block until the shutdown is complete.
       this->shutdown (1
-                       ACE_ENV_ARG_PARAMETER);
+                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -1126,7 +1126,18 @@ TAO_ORB_Core::fini (void)
     }
 
   // Finalize lane resources.
-  this->thread_lane_resources_manager ().finalize ();
+  //
+  // @@ Do not call this->thread_lane_resources_manager().finalize().
+  // this->thread_lane_manager_resources() can seg fault if the
+  // factory method it invokes returns a zero pointer, which can
+  // easily occur if the ORB is partially initialized due to a Service
+  // Configurator initialization failure.  Instead check if the
+  // cached pointer is non-zero and then finalize.
+  //
+  // @todo Fix potential seg fault in
+  //       TAO_ORB_Core::thread_lane_resources_manager().
+  if (this->thread_lane_resources_manager_ != 0)
+    this->thread_lane_resources_manager_->finalize ();
 
   (void) TAO_Internal::close_services ();
 

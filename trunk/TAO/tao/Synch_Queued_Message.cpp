@@ -1,9 +1,11 @@
-// -*- C++ -*-
-// $Id$
-
 #include "Synch_Queued_Message.h"
+#include "ace/Log_Msg.h"
 
-ACE_RCSID(tao, Synch_Queued_Message, "$Id$")
+
+ACE_RCSID (tao,
+           Synch_Queued_Message,
+           "$Id$")
+
 
 TAO_Synch_Queued_Message::
     TAO_Synch_Queued_Message (const ACE_Message_Block *contents)

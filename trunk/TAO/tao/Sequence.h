@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -6,13 +6,15 @@
  *
  *  $Id$
  *
- *  @author Carlos O'Ryan and Aniruddha Gokhale
+ *  @author Carlos O'Ryan
+ *  @author Aniruddha Gokhale
  */
 //=============================================================================
 
 
 #ifndef TAO_SEQUENCE_H
 #define TAO_SEQUENCE_H
+
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
@@ -22,6 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Managed_Types.h"
+#include "ace/Log_Msg.h"        /* For "ACE_ASSERT" */
 
 class CORBA_Object;
 class CORBA_Environment;
@@ -651,4 +654,5 @@ TAO_Export int operator!= (const TAO_Unbounded_Sequence<CORBA::Octet> &l,
 #include "tao/Sequence_T.h"
 
 #include "ace/post.h"
+
 #endif /* TAO_SEQUENCE_H */
