@@ -4,7 +4,7 @@ K// $Id$
 #define ACE_BOOL_H
 
 #if defined (_MSC_VER)
-// Define bool out of the std namespace.
+  // Define bool out of the std namespace.
 # if _MSC_VER > 1010
 #   include /**/ <yvals.h>
 # else  /* _MSC_VER <= 1010 */
