@@ -1,3 +1,19 @@
+Wed Oct 16 17:16:38 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+          Fixed a problem with MSVC not being able to invoke fully
+          qualified member methods (except in the initializer), which
+          appeared when the _tao_obv_narrow() method calls the 
+          corresponding method of a base class. If the base class has
+          the same local name, the ACE_NESTED_CLASS macro breaks and
+          the call goes into an endless loop. For MSVC, identical
+          methods using the flat name are generated for each class,
+          and called by derived classes. Thanks to Don Hinton
+          <dhinton@ieee.org> for reporting the bug and for sending in
+          a patch.
+
 Wed Oct 16 12:37:07 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Makefile:
