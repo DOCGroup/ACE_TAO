@@ -478,10 +478,10 @@ ACE_Push_Consumer_Proxy::shutdown (void)
 
 // ************************************************************
 
-ACE_EventChannel::ACE_EventChannel (CORBA::Boolean activate_threads,
+ACE_EventChannel::ACE_EventChannel (RtecScheduler::Scheduler_ptr scheduler,
+                                    CORBA::Boolean activate_threads,
                                     u_long type,
-                                    TAO_Module_Factory* factory,
-                                    RtecScheduler::Scheduler_ptr scheduler)
+                                    TAO_Module_Factory* factory)
   : rtu_manager_ (0),
     type_ (type),
     state_ (INITIAL_STATE),
@@ -490,20 +490,35 @@ ACE_EventChannel::ACE_EventChannel (CORBA::Boolean activate_threads,
     own_factory_ (0),
     module_factory_ (factory)
 {
+  this->scheduler_ = 
+    RtecScheduler::Scheduler::_duplicate (scheduler);
+
+  this->init (activate_threads);
+}
+
+ACE_EventChannel::ACE_EventChannel (CORBA::Boolean activate_threads,
+                                    u_long type,
+                                    TAO_Module_Factory* factory)
+  : rtu_manager_ (0),
+    type_ (type),
+    state_ (INITIAL_STATE),
+    destroyed_ (0),
+    handle_generator_ (0),
+    own_factory_ (0),
+    module_factory_ (factory)
+{
+  this->scheduler_ = 
+    RtecScheduler::Scheduler::_duplicate (ACE_Scheduler_Factory::server ());
+  this->init (activate_threads);
+}
+
+void
+ACE_EventChannel::init (int activate_threads)
+{
   if (this->module_factory_ == 0)
     {
       this->own_factory_ = 1;
       ACE_NEW (this->module_factory_, TAO_Default_Module_Factory);
-    }
-  if (CORBA::is_nil (scheduler))
-    {
-      this->scheduler_ = 
-        RtecScheduler::Scheduler::_duplicate (ACE_Scheduler_Factory::server ());
-    }
-  else
-    {
-      this->scheduler_ = 
-        RtecScheduler::Scheduler::_duplicate (scheduler);
     }
 
   consumer_module_ =
