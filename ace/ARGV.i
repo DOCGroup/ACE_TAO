@@ -31,19 +31,6 @@ ACE_ARGV::buf (void)
   return (const char *)this->buf_;
 }
 
-// Subscript operator.  
-ACE_INLINE const char *
-ACE_ARGV::operator[] (int i)
-{
-  ACE_TRACE ("ACE_ARGV::operator[]");
-
-  // Don't go out of bounds
-  if (i >= this->argc_)
-    return 0;
-
-  return (const char *)(this->argv()[i]);
-}
-
 // Return the arguments in an entry-per-argument array
 ACE_INLINE char **
 ACE_ARGV::argv (void)
@@ -62,5 +49,19 @@ ACE_ARGV::argv (void)
 
   return this->argv_;
 }
+
+// Subscript operator.  
+ACE_INLINE const char *
+ACE_ARGV::operator[] (size_t i)
+{
+  ACE_TRACE ("ACE_ARGV::operator[]");
+
+  // Don't go out of bounds
+  if (i >= this->argc_)
+    return 0;
+
+  return (const char *)(this->argv()[i]);
+}
+
 
 

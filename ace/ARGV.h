@@ -53,7 +53,7 @@ public:
   // Destructor.
 
   // = Accessor arguments.
-  const char *operator[] (int index);
+  const char *operator[] (size_t index);
   // Returns the <index>th string in the ARGV array.  
 
   char **argv (void);
@@ -91,17 +91,17 @@ public:
 
 private:
 
-  int substitute_env_args_;
-  // Replace args with environment variable values?
-
-  int state_;
-  // Current state marker
-
   int create_buf_from_queue(void);
   // Creates buf_ from the queue, deletes previous buf_
 
   void string_to_array(void);
   // Converts buf_ into the char *argv[] format
+
+  int substitute_env_args_;
+  // Replace args with environment variable values?
+
+  int state_;
+  // Current state marker
 
   size_t argc_;
   // Number of arguments in the ARGV array. 
