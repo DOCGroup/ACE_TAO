@@ -37,7 +37,7 @@ Oneway_Buffering_Admin::request_received (CORBA::ULong payload_length,
 
 void
 Oneway_Buffering_Admin::flush (CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
