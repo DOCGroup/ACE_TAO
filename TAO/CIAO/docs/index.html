@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<!-- $Id$ -->
+<html> <head>
+<title>CIAO - Component-Integrated ACE ORB</title>
+</head>
+
+<body>
+<h1>CIAO - Component-Integrated ACE ORB</h1>
+
+<h2>Introduction</h2>
+CIAO is TAO's implementation of <a
+href="http://cgi.omg.org/cgi-bin/doc?ptc/01-11-03"> CORBA Component
+Model (CCM)</a> specially optimized for distributed real-time embedded
+(DRE) systems.  This page contains links to other documents and
+resources for using <i>CIAO</i>.
+
+<h2>Documents</h2>
+Here is a set of UML diagrams that we use to figure out the
+relationship among all the different classes in CCM.  You can browse
+the related part from the following list:
+<UL>
+  <li><a href="imgs/component-basic.png"> Basic component interfaces
+      </a></li>
+  <li><a href="imgs/home-config.png"> Home and configuration interfaces
+      </a></li>
+  <li><a href="imgs/basic-container.png"> Basic container interfaces
+      </a></li>
+  <li><a href="imgs/extended-container.png"> Extended container
+      interfaces </a></li>
+  <li><a href="img/deployment.png"> Deployment and installation
+      interfaces </a></li>
+</UL>
+All these diagrams are generating from the <a href="imgs/CCM.vsd">CCM.vsd
+Visio file</a>.
+
+
+<h2>Project Status</h2>
+<table border="1" width="90%">
+  <th> Modules </th>
+  <th> Status </th>
+
+  <tr>
+    <td>TAO_IDL</td>
+    <td>
+        TAO_IDL front-end has been extended to handle the keyword
+        extension added by compnent model specification.  (It is still
+        in Jeff's branch, however.)  The next stage will be to start
+        implementing the code for backend code generation.
+    </td>
+  </tr>
+
+  <tr>
+    <td>CIAO_CIDL</td>
+    <td>
+        CIAO_CIDL is still an unknown at this point.  We do know that
+        we have no plan to support persistentstate service in the near
+        future.  For starter, we will probably only support a simple
+        construct like the followingsee :
+<pre>
+        import &lt;some_component.idl&gt;;
+
+        module component_composit_nasee me {
+          composition session component_home_executor {
+            implements component_home;
+            manages component_executor;
+          };
+        };
+</pre>
+        We will need to generate the implementation for the following
+        interfaces/operations (also see this <a
+        href="imgs/executor-example.png"> example </a>):
+        <ul>
+          <li><code>Navigation</code>
+          <li><code>Receptacle</code>
+          <li><code>Event</code>
+          <li>Internal/callback interface?
+          <li>Executor stuff?
+        </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td>CCM Core</td>
+    <td>We are currently working on the prototype that can install a
+        component remotely using the CCM
+        <code>ComponentInstallation</code> interface.  Since TAO_IDL
+        still doesn't generate component specific code yet, and we
+        still don't have a CIDL implementation, we will also write up
+        an example to show how the code should be generated in both
+        TAO_IDL and CIAO_CIDL compiler.</td>
+  </tr>
+
+</table>
+
+<hr>
+<!-- hhmts start -->
+Last modified: Mon Jun 17 17:34:20 Central Daylight Time 2002
+<!-- hhmts end -->
+<address>Nanbor Wang &lt;nanbor@cs.wustl.edu&gt;</address>
+</body> </html>

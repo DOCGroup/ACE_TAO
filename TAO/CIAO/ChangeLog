@@ -1,0 +1,9 @@
+Mon Jun 17 17:35:31 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/index.html:
+	* docs/imgs/CCM.vsd:
+	* docs/imgs/basic-container.png:
+	* docs/imgs/component-basic.png:
+	* docs/imgs/deployment.png:
+	* docs/imgs/extended-container.png:
+	* docs/imgs/home-config.png: Added CIAO documentation.
