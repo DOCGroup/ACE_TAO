@@ -180,11 +180,11 @@ Gateway::init (int argc, char *argv[])
   // down gracefully via signals.
   
 #if defined (ACE_WIN32)
-  if (ACE_Reactor::instance()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler 
       (SIGINT, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
 #else
-  if (ACE_Reactor::instance()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler 
       (sig_set, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
 #endif
@@ -192,15 +192,15 @@ Gateway::init (int argc, char *argv[])
   // Register this handler to receive events on stdin.  We use this to
   // shutdown the Gateway gracefully.
   if (ACE::register_stdin_handler (this,
-				   ACE_Reactor::instance(),
-				   ACE_Thread_Manager::instance ()) == -1)
+				   ACE_Reactor::instance (),
+				   ACE_Thread_Manager::instance () ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_stdin_handler"), -1);
 
   // If this->performance_window_ > 0 start a timer.
 
   if (this->event_channel_.options ().performance_window_ > 0)
     {
-      if (ACE_Reactor::instance()->schedule_timer 
+      if (ACE_Reactor::instance ()->schedule_timer 
 	  (&this->event_channel_, 0, 
 	   this->event_channel_.options ().performance_window_) == -1)
 	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "schedule_timer"));

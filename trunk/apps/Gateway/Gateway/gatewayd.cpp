@@ -42,7 +42,7 @@ main (int argc, char *argv[])
 	  // Run forever, performing the configured services until we are
 	  // shut down by a SIGINT/SIGQUIT signal.
 
-	  ACE_Reactor::run_event_loop();
+	  ACE_Reactor::run_event_loop ();
 
 	  // Destructors of Service_Ptr's automagically call fini().
 	}
@@ -52,7 +52,7 @@ main (int argc, char *argv[])
     // Run forever, performing the configured services until we are
     // shut down by a SIGINT/SIGQUIT signal.
 
-    ACE_Reactor::run_event_loop();
+    ACE_Reactor::run_event_loop ();
 
   return 0;
 }
