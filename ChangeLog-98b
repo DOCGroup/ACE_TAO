@@ -1,3 +1,12 @@
+Wed Jan  6 14:27:24 EST 1999  James CE Johnson  <jcej@lads.com
+
+        * docs/tutorials/021/*:
+        Completed the ACE_Malloc<> tutorial.  It could be a lot better
+        than it is but I'm still new to ACE_Malloc...
+      
+        * docs/tutorials/021/online-tutorials.html:
+        Added the link for #21
+      
 Tue Jan 05 22:55:07 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Strategies_T.cpp (cleanup_hint_i and check_hint_i): Since we
