@@ -96,8 +96,10 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <a href="#security">CORBA Security Service</a></li>
 
 <li>
-<a href="ec.html">TAO's Real-time Event Service</a></li>
+<a href="#miop">Multicast InterORB Protocol (MIOP)</a></li>
 
+<li>
+<a href="ec.html">TAO's Real-time Event Service</a></li>
 
 <li>
 <a href="#scheduling">TAO's Scheduling Service</a></li>
@@ -401,7 +403,7 @@ BE initialization.</li>
 <li>
 The IDL compiler can how handle interfaces forward declared in one IDL
 file and defined in another. It will handle interfaces that are
-mutually dependent across two IDL files, as long as code generated from both IDL 
+mutually dependent across two IDL files, as long as code generated from both IDL
 files is included in the same C++ build. </li>
 
 <li>
@@ -426,11 +428,11 @@ be treated as a filename.</li>
 <ul>
 
 <li>
-Implement the complete <A HREF="../ReleaseNotes/OBV.html">Object-by-Value</A> 
+Implement the complete <A HREF="../ReleaseNotes/OBV.html">Object-by-Value</A>
 specification. Originally implemented solely for use in holding exceptions
-raised in <A HREF="../../../PDFs/ami1.pdf">asynchronous</A> invocations, 
+raised in <A HREF="../../../PDFs/ami1.pdf">asynchronous</A> invocations,
 work is now ongoing to extend TAO's OBV implementation until it includes
-the complete CORBA value type specification. Some of the items yet to be 
+the complete CORBA value type specification. Some of the items yet to be
 implemented include:<p>
 
 <ul>
@@ -447,7 +449,7 @@ Value types as members of a constructed type (struct, union or sequence).<p>
 Boxed value types.<p>
 </ul>
 
-For a complete description of value type semantics, see chapter 5 in the 
+For a complete description of value type semantics, see chapter 5 in the
 CORBA specification.<p>
 
 <li>
@@ -456,21 +458,21 @@ appeared in CORBA 2.4, as a way to improve the semantics for recursive
 types in IDL. In IDL, a recursive struct or union is one that has a member
 which is an IDL sequence of the struct or union itself, or contains such a
 sequence. Without forward declaration of structs or unions, the only way to
-accomplish this was by use of so-called anonymous sequences, that is, 
-sequences that are simply declared where they are used and not given a 
+accomplish this was by use of so-called anonymous sequences, that is,
+sequences that are simply declared where they are used and not given a
 name in a previous typedef declaration. The use of forward declared structs
 and unions to create recursive types makes the use of anonymous sequences
 unnecessary, and their use is now deprecated by the OMG. Note that, unlike
 IDL interfaces and value types, forward declared structs and unions must be
-defined in the same IDL file. For more information about recursive, 
+defined in the same IDL file. For more information about recursive,
 anonymous, constructed and template types in IDL, see section 3.10 in the
 CORBA specification.<p>
 
 <li>
 Support for CORBA Components in the TAO IDL compiler. As the implementation
-of CORBA Components in TAO progresses, the extensions to IDL that go with 
-CORBA Components must be integrated into the IDL compiler. The CORBA 
-Components specification is a separate OMG document from the CORBA 
+of CORBA Components in TAO progresses, the extensions to IDL that go with
+CORBA Components must be integrated into the IDL compiler. The CORBA
+Components specification is a separate OMG document from the CORBA
 specification, and a very large document in its own right. Implementation of
 CORBA Components in TAO is a long-term ongoing project. Note that, unlike
 the other items in the list, this item does not represent a CORBA
@@ -488,15 +490,15 @@ Updated and portable support for wide characters and wide strings. The original
 implementation supports Unicode only. At the time, the CORBA specification required
 wide characters, whether standalone or in a wide string, to be marshaled
 as 16-bit quantities. This is the same size as the native wchar_t type on
-Win32 platforms. However, the wchar_t type on UNIX and related platforms 
+Win32 platforms. However, the wchar_t type on UNIX and related platforms
 is 32 bits in size. In addition, the General Inter-ORB Protocol (GIOP) version 1.2
 has changed the CDR transfer syntax for wide characters. In the new version,
 a wide character is marshaled as a single byte indicating the size of the
 wide character representation, followed by the specified nunber of bytes. The
-IDL compiler's handling of wide characters needs to be updated, both to 
+IDL compiler's handling of wide characters needs to be updated, both to
 handle the GIOP 1.2 CDR transfer syntax, and to be portable under previous
 versions of GIOP. For more information about GIOP CDR transfer syntax, see
-section 15.3 in the CORBA specification. and for information about the 
+section 15.3 in the CORBA specification. and for information about the
 marshaling of IDL character types specifically, see section 15.3.1.6.<p>
 
 </ul>
@@ -1053,7 +1055,7 @@ discovery as the default.  Use <code>-m1</code> option to turn it on.
 </ul>
 Recent work:
 <ul>
-<li>Changed default for multicast discovery to 
+<li>Changed default for multicast discovery to
 </ul>
 Features:
 <ul>
@@ -1850,7 +1852,7 @@ for CORBA Objects. The details of the ORB level support is described
 in the  <a href="http://cgi.omg.org/cgi-bin/doc?ptc/00-04-04"> FT spec
 </a>. Specifically TAO
 implements the sections 27.2.2, 27.2.3, 27.2.6 thru 27.2.8 of the
-document. 
+document.
 
 <h4>Future Work:</h4>
 <ul>
@@ -1922,6 +1924,44 @@ balancers at run-time, rather than at application start up time.</li>
       balancer listens for load reports from the replicas.
   </ul>
 </li>
+</ul>
+
+<hr>
+
+<h3><a NAME="miop"></a>Multicast InterORB Protocol (MIOP)</h3>
+
+<p>
+Point of contact: <a href="mailto:fhunleth@cs.wustl.edu">Frank Hunleth</a>
+
+<h4>Current Status:</h4>
+<p>TAO's MIOP support (located in $TAO_ROOT/orbsvcs/orbsvcs/PortableGroup)
+enables servants to receive requests sent to multicast addresses.  This is
+performed by creating a GroupId that identifies the multicast group and
+associating it with one or more servants.  Additionally, the Unreliable
+IP Multicast (UIPMC) pluggable protocol is used to send and receive
+multicast requests.  Multicast endpoints can be created dynamically at
+runtime.
+
+<h4>Known Issues:</h4>
+<ul>
+<li>The final MIOP specification has not been completely implemented.
+    Despite this, applications that do not need multicast gateways or group
+    managers should be able to use the current implementation. </li>
+<li>MIOP packet reassembly is not performed yet, so the maximum
+    request size is limited to about 5-6kb depending on the platform.</li>
+</ul>
+
+<h4>Recent Work:</h4>
+<ul>
+<li>Initial check in of MIOP implementation.</li>
+</ul>
+
+<h4>Future Work:</h4>
+<ul>
+<li>Allow group references to be disassociated when no longer needed.</li>
+<li>Implement MIOP packet reassembly.</li>
+<li>Implement a Multicast Group Manager (MGM).</li>
+<li>Implement a Multicast Gateway (MG).</li>
 </ul>
 
 <hr>
