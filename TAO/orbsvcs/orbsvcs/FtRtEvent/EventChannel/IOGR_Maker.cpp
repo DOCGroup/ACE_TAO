@@ -9,6 +9,7 @@
 #include "tao/Tagged_Components.h"
 #include <algorithm>
 #include "../Utils/resolve_init.h"
+#include "../Utils/Safe_InputCDR.h"
 #include "orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "GroupInfoPublisher.h"
 
@@ -196,7 +197,7 @@ IOGR_Maker::copy_ft_group_component(CORBA::Object_ptr ior)
           // Grab the object group version
           // @@ NOTE: This involves an allocation and a dellocation. This is
           // really bad.
-          TAO_InputCDR cdr (
+          Safe_InputCDR cdr (
             ACE_reinterpret_cast (const char*,
                                   tagged_components.component_data.get_buffer ()),
             tagged_components.component_data.length ());
