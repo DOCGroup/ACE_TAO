@@ -1,9 +1,10 @@
-// $Id$
-// Automatically generated header file "ec_dsui_families.h"  by dsui-parse.py 
+$Id$
+
+// Automatically generated header file "ec_dsui_families.h"  by dsui-parse.py
 #ifndef _ec_DSUI_FAMILIES_H
 #define _ec_DSUI_FAMILIES_H
 
-#define ec_NUM_FAMILIES 2
+#define NUM_FAMILIES 2
 
 /* DSUI Family: EC2_GROUP
  * "EC DSUI group"
@@ -30,7 +31,7 @@
 #define NUM_COUNTERS_TIMEOUT 0
 #define NUM_HISTOGRAMS_TIMEOUT 0
 
-#define TIMEOUT_EVENT 0
+#define PROGRAM_STOP 0
 
 
 

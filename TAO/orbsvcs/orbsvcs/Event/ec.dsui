@@ -15,4 +15,4 @@ DSTRM_EVENT     EC2_GROUP     	11      ENTER_TIMEOUT_GENERATOR			5	"ENTER_TIMEOU
 ###################
 # DATA Collection
 ###################
-DSTRM_EVENT     TIMEOUT         12       TIMEOUT_EVENT   0       "Last meaningful event"     object_id_handler
+DSTRM_EVENT     TIMEOUT         12       PROGRAM_STOP   0       "Last meaningful event"     object_id_handler
