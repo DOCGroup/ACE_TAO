@@ -8,7 +8,7 @@
 
 #include "orbsvcs/CosTimeBaseC.h"
 
-class ORBSVCS_Time
+class TAO_ORBSVCS_Export ORBSVCS_Time
 {
   // = TITLE
   //   Time conversion utilities.
@@ -51,20 +51,20 @@ public:
 
 #if !defined (__ACE_INLINE__)
 
-extern int operator== (const TimeBase::TimeT &lhs,
-		       const TimeBase::TimeT &rhs);
-extern int operator!= (const TimeBase::TimeT &lhs,
-		       const TimeBase::TimeT &rhs);
-extern int operator< (const TimeBase::TimeT &lhs,
-		      const TimeBase::TimeT &rhs);
-extern int operator<= (const TimeBase::TimeT &lhs,
-		       const TimeBase::TimeT &rhs);
-extern int operator< (const TimeBase::TimeT &lhs,
-		      const TimeBase::TimeT &rhs);
-extern int operator> (const TimeBase::TimeT &lhs,
-		      const TimeBase::TimeT &rhs);
-extern int operator>= (const TimeBase::TimeT &lhs,
-		       const TimeBase::TimeT &rhs);
+extern TAO_ORBSVCS_Export int operator== (const TimeBase::TimeT &lhs,
+					  const TimeBase::TimeT &rhs);
+extern TAO_ORBSVCS_Export int operator!= (const TimeBase::TimeT &lhs,
+					  const TimeBase::TimeT &rhs);
+extern TAO_ORBSVCS_Export int operator< (const TimeBase::TimeT &lhs,
+					 const TimeBase::TimeT &rhs);
+extern TAO_ORBSVCS_Export int operator<= (const TimeBase::TimeT &lhs,
+					  const TimeBase::TimeT &rhs);
+extern TAO_ORBSVCS_Export int operator< (const TimeBase::TimeT &lhs,
+					 const TimeBase::TimeT &rhs);
+extern TAO_ORBSVCS_Export int operator> (const TimeBase::TimeT &lhs,
+					 const TimeBase::TimeT &rhs);
+extern TAO_ORBSVCS_Export int operator>= (const TimeBase::TimeT &lhs,
+					  const TimeBase::TimeT &rhs);
 
 #else /* defined (__ACE_INLINE__) */
 #include "orbsvcs/Time_Utilities.i"
