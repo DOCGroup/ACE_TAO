@@ -112,14 +112,6 @@ else
   #### is empty).
   BIN2 += Tokens_Test
 endif # ! Token
-
-ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-BIN += \
-  CDR_Array_Test
-endif
-
-PSRC=$(addsuffix .cpp,$(BIN))
-
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -129,6 +121,16 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+
+
+ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
+  ifeq ($(LYNXTARGET),)
+    BIN += \
+     CDR_Array_Test
+  endif
+endif
+
+PSRC=$(addsuffix .cpp,$(BIN))
 
 ifdef purify
   #### SIGINT is used by Thread_Manager_Test.
