@@ -68,7 +68,6 @@ add_type (const char * name,
 {
   PROP_MAP prop_map;
   SUPER_TYPE_MAP super_map;
-  CosTradingRepos::ServiceTypeRepository::TypeStruct info;
   SERVICE_TYPE_MAP::iterator type_iterator;
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber inc_num;
   
@@ -114,12 +113,7 @@ add_type (const char * name,
   
   // we can now use prop_map to construct a sequence of all properties the
   // this type.
-  info.if_name = if_name;
-  info.props = props;
-  info.super_types = super_types;
-  info.masked = 0;
-  info.incarnation = this->incarnation_; 
-  this->update_type_map (name, info, prop_map, super_map);
+  this->update_type_map (name, if_name, props, super_types, prop_map, super_map);
 
   // increment incarnation number
   this->incarnation_.low++;
@@ -358,7 +352,7 @@ unmask_type (const char * name,
     mask = 0;
 }
 
- void
+void
 TAO_Service_Type_Repository::
 validate_properties (const CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
 		     PROP_MAP& prop_map,
@@ -377,8 +371,7 @@ validate_properties (const CosTradingRepos::ServiceTypeRepository::PropStructSeq
 	  CosTradingRepos::ServiceTypeRepository::PropStruct* prop_struct =
 	    (CosTradingRepos::ServiceTypeRepository::PropStruct *) &props[i];
 
-	  if (! prop_map.insert
-	      (make_pair (prop_name, prop_struct)).second)
+	  if (! prop_map.insert (make_pair (prop_name, prop_struct)).second)
 	    TAO_THROW (CosTrading::DuplicatePropertyName (n));
 	}
     }
@@ -467,7 +460,9 @@ TAO_Service_Type_Repository
 void
 TAO_Service_Type_Repository::
 update_type_map (const char* name,
-		 CosTradingRepos::ServiceTypeRepository::TypeStruct& info,
+		 const char * if_name, 
+		 const CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
+		 const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types,
 		 PROP_MAP& prop_map,
 		 SUPER_TYPE_MAP& super_map)
 {
@@ -496,8 +491,11 @@ update_type_map (const char* name,
 
   // all parameters are valid, create an entry for this service type
   // in the this->type_map_. 
-  type.type_info_ = info;
+  type.type_info_.if_name = if_name;
+  type.type_info_.props = props;
+  type.type_info_.super_types = super_types;
+  type.type_info_.masked = CORBA::B_FALSE;
+  type.type_info_.incarnation = this->incarnation_;
   type.all_prop_ = all_prop;
   this->type_map_[name] = type;
-
 }

@@ -20,6 +20,7 @@
 #define TAO_TRADER_BASE_H
 
 #include "stl.h"
+#include "ace/Hash_Map_Manager.h"
 #include "Attributes.h"
 #include "Monitor.h"
 
@@ -102,6 +103,40 @@ protected:
   TAO_Link_Attributes_Impl link_attributes_;
   // Stores and allows access/modification of trader's link attributes.
 };
+
+// Miscellaneous Utilities
+
+// =  Classes to deal with the ACE_Hash_Map_Manager.
+
+class TAO_ORBSVCS_Export TAO_String_Hash_Key : public CORBA::String_var
+{
+  // = TITLE 
+  //     Key for the Hash Table. The EXT_ID of the 
+  //     ACE_Hash_Map_Manager. 
+public:
+  // = Initialization and termination methods. 
+  TAO_String_Hash_Key (void);  
+  // Default constructor. 
+
+  TAO_String_Hash_Key (char * name); 
+  // Constructor from a const string. 
+
+  TAO_String_Hash_Key (const char * name); 
+  // Constructor from a const string. 
+
+  TAO_String_Hash_Key (const CORBA::String_var &hash_key); 
+  // Copy constructor. 
+
+  ~TAO_String_Hash_Key (void);
+  // Destructor. 
+
+  int operator == (const TAO_String_Hash_Key &hash_key) const; 
+  // The operator for hash binding and "find"ing. 
+
+  u_long hash (void) const; 
+  // The function that computes a hash value. 
+};
+
 
 int
 operator> (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
