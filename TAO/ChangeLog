@@ -1,3 +1,13 @@
+Sun Nov  3 16:02:55 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvsc/Makefile.PortableGroup:
+	* orbsvcs/orbsvsc/PortableGroup.bor:
+	* orbsvcs/orbsvsc/PortableGroup.dsp:
+	* orbsvcs/orbsvsc/PortableGroup_Static.dsp:
+
+	  Removed PG_Group_Guard.{h,cpp} from these Makefiles and project
+	  files.  Those files no longer exist.
+
 Sun Nov  3 15:59:59 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LB_ORT.idl:
