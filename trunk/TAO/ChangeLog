@@ -7,8 +7,8 @@ Fri Nov 15 18:29:28 2002  Ossama Othman  <ossama@uci.edu>
 	  Refactored random member selection code into a TAO-specific
 	  static method.  This is possible since this random load
 	  balancing strategy implementation is stateless.  This allows
-	  other strategies to reuse the random member selection code with
-	  instantiating the TAO_LB_Random class.
+	  other strategies to reuse the random member selection code
+	  without instantiating the TAO_LB_Random class.
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp (next_member):
 
