@@ -1,3 +1,16 @@
+Mon Jun 21 17:06:32 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Makefile:
+	* examples/Event_Comm/Makefile:
+	* examples/OBV/Typed_Events/Makefile:
+	* examples/POA/Adapter_Activator/Makefile:
+	* examples/POA/DSI/Makefile:
+	* examples/POA/Default_Servant/Makefile:
+	* examples/POA/Explicit_Activation/Makefile:
+	* examples/POA/FindPOA/Makefile:
+	* examples/POA/Forwarding/Makefile:
+	* examples/POA/Generic_Servant/Makefile:
+	* examples/POA/TIE/Makefile: Added -Ge 1 to these Makefiles
 Mon Jun 21 16:11:02 1999 Fred Kuhns <fredk@cs.wustl.edu>
         * tao/IORManipultion.cpp
           Added workaround for the MS C++ lib which does not
