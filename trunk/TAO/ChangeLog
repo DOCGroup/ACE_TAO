@@ -4,6 +4,12 @@ Sun Jun  8 18:50:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  tracking performance of sequence<basic types>. Our code
 	  generatiom for sequence<> were broken for 1.3.2. 
 
+	* performance-tests/Makefile:
+	* performance-tests/Makefile.bor: Added the new test directory
+
+	* performance-tests/Sequence_Latency/Makefile: New makefile for
+	  recursing into every test.
+
 Sun Jun  8 13:39:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
