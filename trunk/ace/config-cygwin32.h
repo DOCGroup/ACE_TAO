@@ -120,11 +120,6 @@
 #define ACE_HAS_DIRENT
 #define ACE_HAS_STRPTIME
 
-// Turns off the tracing feature.
-#if !defined (ACE_NTRACE)
-# define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 #define ACE_LACKS_MKFIFO
 
 // Cygwin has no siginfo.h

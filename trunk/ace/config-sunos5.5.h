@@ -331,11 +331,6 @@
 
 #define ACE_HAS_STRPTIME
 
-// Turns off the tracing feature.
-#if !defined (ACE_NTRACE)
-# define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 #define ACE_HAS_GETPAGESIZE 1
 
 #define ACE_HAS_STL_MAP_CONFLICT

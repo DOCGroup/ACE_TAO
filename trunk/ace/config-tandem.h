@@ -418,7 +418,6 @@
 //use our own
 //ACE_NLOGGING                          Turns off the LM_DEBUG and LM_ERROR
 //logging macros...
-//ACE_NTRACE                            Turns off the tracing feature.
 //ACE_REDEFINES_XTI_FUNCTIONS           Platform redefines the t_... names
 //(UnixWare)
 //ACE_SELECT_USES_INT                   Platform uses int for select()
@@ -433,12 +432,6 @@
 //patches.
 //ACE_USE_POLL                          Use the poll() event demultiplexor
 //rather than select().
-
-// Turns off the tracing feature.
-// #define ACE_NTRACE 0
-#if !defined (ACE_NTRACE)
-# define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
 
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096

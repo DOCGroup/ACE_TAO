@@ -91,11 +91,6 @@
 # define UNIXWARE_2_1
 #endif /* ! UNIXWARE */
 
-// Turns off the tracing feature.
-#if !defined (ACE_NTRACE)
-# define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 #define ACE_HAS_IDTYPE_T
 
 #include /**/ "ace/post.h"

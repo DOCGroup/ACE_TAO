@@ -247,9 +247,4 @@ extern int h_errno;     /* This isn't declared in a header file on HP-UX */
 #define ACE_CONTROL_BLOCK_ALIGN_LONGS 0
 #define ACE_PI_CONTROL_BLOCK_ALIGN_LONGS 2
 
-// Turns off the tracing feature.
-// To build with tracing enabled, make sure ACE_NTRACE is not defined
-#if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
 #include /**/ "ace/post.h"
-#endif /* ACE_NTRACE */

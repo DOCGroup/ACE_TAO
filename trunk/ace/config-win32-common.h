@@ -301,12 +301,6 @@ typedef unsigned long long ACE_UINT64;
 // No system support for replacing any previous mappings.
 #define ACE_LACKS_AUTO_MMAP_REPLACEMENT
 
-// Turns off the tracing feature.
-#if !defined (ACE_NTRACE)
-# define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-// #define ACE_NLOGGING
-
 // MFC itself defines STRICT.
 #if defined( ACE_HAS_MFC ) && (ACE_HAS_MFC != 0)
 # if !defined(ACE_HAS_STRICT)

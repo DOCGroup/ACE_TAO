@@ -440,9 +440,6 @@
 /* Turns off the LM_DEBUG and LM_ERROR logging macros... */
 /* #undef ACE_NLOGGING */
 
-/* Turns off the tracing feature. */
-#define ACE_NTRACE 1
-
 /* The OS/platform supports the poll() event demultiplexor */
 #define ACE_USE_POLL 1
 

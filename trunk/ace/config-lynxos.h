@@ -166,11 +166,6 @@
 
 #define ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK 1
 
-// Turns off the tracing feature.
-#if !defined (ACE_NTRACE)
-# define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 // Looks like the modern compilers  have support for namespaces. Or
 // rather we dont support any compiler without this support. Need to
 // get this macro off of ACE.

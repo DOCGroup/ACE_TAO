@@ -326,11 +326,6 @@
 # define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
 #endif /* __ia64 */
 
-// Turns off the tracing feature.
-#if !defined (ACE_NTRACE)
-# define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 #define ACE_SIZEOF_WCHAR 4
 
 #include /**/ "ace/post.h"

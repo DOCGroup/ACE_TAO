@@ -42,9 +42,5 @@
 #define ACE_SIZEOF_DOUBLE   8
 #define ACE_SIZEOF_FLOAT    4
 
-#if !defined (ACE_NTRACE)
-# define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_QNX_RTP_COMMON_H */
