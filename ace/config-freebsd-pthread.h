@@ -26,6 +26,10 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
+#if defined (ACE_HAS_PENTIUM)
+# undef ACE_HAS_PENTIUM
+#endif /* ACE_HAS_PENTIUM */
+
 // Platform specific directives
 // gcc defines __FreeBSD__ automatically for us.
 #if !defined (_THREAD_SAFE)
