@@ -1,3 +1,9 @@
+Wed Apr 30 16:44:12 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
+
+          Removed attic'ed files. 
+
 Wed Apr 30 10:40:31 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp:
