@@ -1,3 +1,14 @@
+Fri Dec  5 11:42:25 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/object.h: Minor corrections to header comments.
+
+	* tao/{orb_core,orbobj}.{h,cpp}: Moved server_factory and
+ 	client_factory ptr storage from CORBA_ORB to TAO_ORB_Core.  It
+ 	really didn't belong there in the first place.
+
+	* tao/poa.cpp: CTOR now fetches server factory ptr from the
+ 	TAO_ORB_Core rather than from the ORB.
+
 Thu Dec  4 18:20:55 1997  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* TAO_IDL/tao_idl.dsp: Changed hard coded path for cl.exe to CPP_PATH 
