@@ -1,3 +1,32 @@
+Wed Sep 12 13:53:14 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/SString.cpp:
+	* ace/SString.h:
+	* ace/SString.i: Changed ACE_WString to be a typedef of
+	  ACE_String_Base<ACE_WSTRING_TYPE> and added a subclass of it
+	  called ACE_NS_WString to maintain backward compatibility.
+
+
+	* tests/Naming_Test.cpp:
+	* ace/Local_Name_Space.cpp:
+	* ace/Local_Name_Space.h:
+	* ace/Local_Name_Space_T.cpp:
+	* ace/Local_Name_Space_T.h:
+	* ace/Name_Space.cpp:
+	* ace/Name_Space.h:
+	* ace/Naming_Context.cpp:
+	* ace/Naming_Context.h:
+	* ace/Remote_Name_Space.cpp:
+	* ace/Remote_Name_Space.h:
+	* netsvcs/clients/Naming/Client/Client_Test.cpp:
+	* netsvcs/lib/Name_Handler.cpp:
+	* netsvcs/lib/Name_Handler.h:  Changed the use of ACE_WString to
+	  ACE_NS_WString.
+
+	* tests/SString_Test.cpp: Added ACE_TEXT_WIDE to convert char
+	  strings to wchar strings for initializing ACE_WString as you can
+	  no longer initialize a ACE_WString with a char string.
+
 Tue Sep 11 01:22:40 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/String_Base.h:
