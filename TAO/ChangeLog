@@ -1,8 +1,31 @@
+Sat Nov  8 22:00:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Acceptor_Impl.cpp:
+	  
+	   #included debug.h. This should fix compilation errorson HPUX. 
+	
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+
+	  #included os_include/netinet/os_tcp.h to get the declaration of
+	  TCP_NODELAY on HPUX.
+
+	* tao/TAO.pidl:
+	  
+	  Improved comments in the file. 
+
+	* tao/TAOC.cpp:
+	* tao/TAOC.h:
+	* tao/TAOC.i:
+
+	  Regenerated the code to fix warnings in HPUX and Solaris. 
+
 Sat Nov  8 17:51:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * TAO/orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Client:
         * TAO/orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Server:
         * TAO/orbsvcs/tests/RTCosScheduling/Makefile.commonlib:
+	
           Removed DEPENENCY_FILE variable and updated dependencies.  This
           should cause the library to get rebuilt and relinked and clear
           up the autobuild errors.  This particular lib hasn't been

@@ -19,7 +19,7 @@
  *       -Wb,export_macro=TAO_Export
  *       -Wb,pre_include="ace/pre.h"
  *       -Wb,post_include="ace/post.h"
- *       -Wb,export_include="tao/corbafwd.h" TAO.pidl
+ *       TAO.pidl
  *
  *   2. Then patch the generated code.  The patch fixes the interface
  *   repository IDs, disables the code under certain configurations,
@@ -33,9 +33,11 @@
  *
  *   @note The diffs were generated with these commands:
  *
- *   diff -wBbu orig/TAOC.h TAOC.h > diffs/TAOC.h.diff
- *   diff -wBbu orig/TAOC.i TAOC.i > diffs/TAOC.i.diff
- *   diff -wBbu orig/TAOC.cpp TAOC.cpp > diffs/TAOC.cpp.diff
+ *   * Note: to update the patch file after re-generating the code use:
+ *
+ *   for i in TAO{C,S,S_T}.{h,i,cpp}; do
+ *     diff -uBbw orig/$i $i;
+  *   done > diffs/TAO.diff
  */
 // ================================================================
 
