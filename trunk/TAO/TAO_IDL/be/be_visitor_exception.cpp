@@ -687,7 +687,9 @@ int be_visitor_exception_ctor::visit_union (be_union *node)
 int be_visitor_exception_ctor::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
-  return node->primitive_base_type ()->accept (this);
+  (void) node->primitive_base_type ()->accept (this);
+  this->ctx_->alias (0);
+  return 0;
 }
 
 // ************************************************************************
