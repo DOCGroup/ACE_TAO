@@ -58,6 +58,7 @@ class TAO_RT_ORB;
 class TAO_RT_Current;
 class TAO_MProfile;
 class TAO_Profile;
+class TAO_GIOP_Invocation;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -573,12 +574,27 @@ public:
 
   void service_context_list (TAO_Stub *&stub,
                              IOP::ServiceContextList &service_list,
+                             CORBA::Boolean retstart,
                              CORBA::Environment &ACE_TRY_ENV);
   // Call the service layers with the IOP::ServiceContext to check
   // whether they would like to add something to the list.
 
   TAO_Fault_Tolerance_Service &fault_tolerance_service (void);
   // Return a reference to the Fault Tolerant service object
+
+  int service_raise_comm_failure (TAO_GIOP_Invocation *invoke,
+                                  TAO_Profile *profile,
+                                  CORBA::Environment &ACE_TRY_ENV);
+  // Raise a comm failure exception if a service is not loaded, else
+  // delegate to the service to see what the service has to do for
+  // this case.
+
+  int service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
+                                       TAO_Profile *profile,
+                                       CORBA::Environment &ACE_TRY_ENV);
+  // Raise a transient failure exception if a service is not loaded, else
+  // delegate to the service to see what the service has to do for
+  // this case.
 
 protected:
 
@@ -606,7 +622,7 @@ protected:
   int set_default_policies (void);
   // Set ORB-level policy defaults for this ORB.  Currently sets
   // default RTCORBA policies: ServerProtocolPolicy &
-  // ClientProtocolPolicy. 
+  // ClientProtocolPolicy.
 
   void resolve_typecodefactory_i (CORBA::Environment &ACE_TRY_ENV);
   // Obtain and cache the dynamic any factory object reference

@@ -36,7 +36,7 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
 #include "tao/Services_Activate.h"
-
+#include "tao/Invocation.h"
 
 
 #if defined(ACE_MVS)
@@ -1370,6 +1370,50 @@ TAO_ORB_Core::services_callbacks_init (void)
   this->ft_service_.init (this);
 
   // @@ Other service callbacks can be added here
+}
+
+int
+TAO_ORB_Core::service_raise_comm_failure (TAO_GIOP_Invocation *invoke,
+                                          TAO_Profile *profile,
+                                          CORBA::Environment &ACE_TRY_ENV)
+{
+  if (this->ft_service_.service_callback ())
+    {
+      return this->ft_service_.service_callback ()->
+                 raise_comm_failure (invoke,
+                                     profile,
+                                     ACE_TRY_ENV);
+    }
+
+  invoke->close_connection ();
+
+  ACE_THROW_RETURN (CORBA::COMM_FAILURE (
+      CORBA_SystemException::_tao_minor_code (
+          TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
+          errno),
+      CORBA::COMPLETED_MAYBE),
+      TAO_INVOKE_EXCEPTION);
+}
+
+int
+TAO_ORB_Core::service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
+                                               TAO_Profile *profile,
+                                               CORBA::Environment &ACE_TRY_ENV)
+{
+  if (this->ft_service_.service_callback ())
+    {
+      return this->ft_service_.service_callback ()->
+                 raise_transient_failure (invoke,
+                                          profile,
+                                          ACE_TRY_ENV);
+    }
+
+  ACE_THROW_RETURN (CORBA::TRANSIENT (
+        CORBA_SystemException::_tao_minor_code (
+          TAO_INVOCATION_SEND_REQUEST_MINOR_CODE,
+          errno),
+        CORBA::COMPLETED_MAYBE),
+        TAO_INVOKE_EXCEPTION);
 }
 
 

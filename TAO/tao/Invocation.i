@@ -21,13 +21,20 @@ TAO_GIOP_Invocation::out_stream (void)
   return this->out_stream_;
 }
 
+ACE_INLINE void
+TAO_GIOP_Invocation::restart_flag (CORBA::Boolean flag)
+{
+  // Set the flag
+  this->restart_flag_ = flag;
+}
+
 // ****************************************************************
 
 ACE_INLINE
 TAO_GIOP_Twoway_Invocation::
 TAO_GIOP_Twoway_Invocation (TAO_Stub *stub,
                             const char *operation,
-			    CORBA::ULong opname_len,
+                            CORBA::ULong opname_len,
                             TAO_ORB_Core *orb_core)
   : TAO_GIOP_Invocation (stub, operation, opname_len, orb_core),
     rd_ (orb_core, this->op_details_.service_info ())

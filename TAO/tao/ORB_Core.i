@@ -148,6 +148,7 @@ ACE_INLINE void
 TAO_ORB_Core::service_context_list (
     TAO_Stub *&stub,
     IOP::ServiceContextList &service_list,
+    CORBA::Boolean restart,
     CORBA::Environment &ACE_TRY_ENV)
 {
   // @@ We look at the services if they are loaded. But if more
@@ -158,6 +159,7 @@ TAO_ORB_Core::service_context_list (
     {
       this->ft_service_.service_callback ()->service_context_list (stub,
                                                                    service_list,
+                                                                   restart,
                                                                    ACE_TRY_ENV);
       ACE_CHECK;
     }
