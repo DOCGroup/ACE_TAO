@@ -1,3 +1,39 @@
+Mon Mar  3 14:36:53 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Exception.h:
+	* tao/Exception.cpp:
+
+	  Uninlined SystemException subclass constructors.  There was no
+	  real advantage to inlining them.  Inlining them only served to
+	  increase footprint.
+
+	  (operator<<=, operator>>=):
+
+	  Placed the definitions of these Any insertion and extraction
+	  operators in the CORBA namespace.  Fixes "unresolved symbol"
+	  link-time errors when using these operators.
+
+	  (_info, _tao_get_omg_exception_description):
+
+	  Improved const-correctness.  Variables that are really constants
+	  are now marked as such.
+
+	  (make_standard_typecode):
+
+	  Improved exception-safety.  Manage memory using a
+	  CORBA::String_var instead of the raw
+	  CORBA::string_{alloc,release} functions.
+
+Mon Mar  3 11:46:59 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/DynamicInterface/Request.h:
+
+	  Explicitly qualify the TAO_Dynamic_Adapter_Impl friend
+	  declaration with a global scope qualifier in an attempt to work
+	  around a problem where some compilers assume that the friend
+	  declaration refers to a class in the local scope or current
+	  namespace.
+
 Mon Mar  3 15:42:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynStruct_i.cpp (get_members):
