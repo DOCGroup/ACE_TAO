@@ -1,3 +1,10 @@
+Thu Jul 16 12:55:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Connect.cpp: 
+	  Added the close-on-exec flag the Client and Server
+	  Connection_Handlers, this avoid resource leaks in the event of
+	  fork/execs.
+
 Thu Jul 16 12:57:08 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: Fixed explicit template instantiation of
