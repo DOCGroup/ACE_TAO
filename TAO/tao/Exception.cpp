@@ -567,7 +567,7 @@ CORBA_SystemException::_info (void) const
 
       CORBA::ULong minor_code = this->minor () & 0xFFFU;
 
-      if (this->_is_a ("IDL:omg.org/CORBA/BAD_PARAM"))
+      if (this->_is_a ("IDL:omg.org/CORBA/BAD_PARAM:1.0"))
         {
 
           switch (minor_code)
@@ -575,7 +575,7 @@ CORBA_SystemException::_info (void) const
             case TAO_OMG_MINOR_BAD_PARAM_10:
               minor_description =
                 "string_to_object conversion failed due "
-                "to non specific reason";
+                "to non-specific reason";
               break;
             default:
               break;
