@@ -24,7 +24,7 @@ Startup_Callback::process_has_started (Test::Process_out the_process)
 void
 Startup_Callback::started (Test::Process_ptr process,
                            CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException,Test::Spawn_Failed))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->process_ = Test::Process::_duplicate (process);
