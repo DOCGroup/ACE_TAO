@@ -1,3 +1,14 @@
+Mon Nov 02 00:26:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace: Since connectors really don't have any state, they don't
+	  need to inherit from the SAP classes. Therefore, modified the
+	  following to be simpler:
+
+	  TLI_Connector
+	  DEV_Connector
+	  SPIPE_Connector
+	  UPIPE_Connector
+
 Sun Nov 01 21:18:24 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/WFMO_Reactor.cpp (upcall): Before handle_input is called
