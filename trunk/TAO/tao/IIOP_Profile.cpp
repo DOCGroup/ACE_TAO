@@ -205,7 +205,14 @@ TAO_IIOP_Profile::parse_string (const char *string,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
   if (!string || !*string)
-    return 0;
+    {
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (
+        CORBA_SystemException::_tao_minor_code (
+          TAO_NULL_POINTER_MINOR_CODE,
+          0),
+        CORBA::COMPLETED_NO),
+        -1);
+    }
 
   // Remove the "N.n@" version prefix, if it exists, and verify the
   // version is one that we accept.
@@ -239,7 +246,12 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   if (cp == 0)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (
+        CORBA_SystemException::_tao_minor_code (
+          TAO_NULL_POINTER_MINOR_CODE,
+          0),
+        CORBA::COMPLETED_NO),
+        -1);
     }
 
   CORBA::String_var tmp = CORBA::string_alloc (cp - start + 1);
@@ -253,7 +265,12 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   if (cp == 0)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (
+        CORBA_SystemException::_tao_minor_code (
+          TAO_NULL_POINTER_MINOR_CODE,
+          0),
+        CORBA::COMPLETED_NO),
+        -1);
     }
 
   this->host_ = tmp._retn ();
