@@ -11,7 +11,6 @@ ACE_RCSID(tao, Asynch_Invocation, "$Id$")
 #include "tao/Transport_Mux_Strategy.h"
 #include "tao/Transport.h"
 #include "tao/Asynch_Timeout_Handler.h"
-#include "tao/try_macros.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Asynch_Invocation.i"

@@ -1,3 +1,13 @@
+Sat Jan 26 22:53:04 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* examples/Callback_Quoter/Notifier_i.cpp:
+	* tao/Asynch_Invocation.cpp:
+	* tao/corbafwd.h:
+	* tao/PortableServer/poa_macros.h:
+	  Removed dependence on tao/try_macros.h.
+
+	* tao/orbconf.h: Added back special comment line for Doxygen.
+
 Sat Jan 26 13:44:39 2002  Ossama Othman  <ossama@uci.edu>
 
 	* docs/releasenotes/TODO.html:
