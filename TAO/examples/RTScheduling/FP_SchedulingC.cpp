@@ -26,12 +26,18 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// be\be_codegen.cpp:302
 
 
 #include "FP_SchedulingC.h"
-#include "tao/Typecode.h"
+#include "tao/CDR.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Objref_TypeCode.h"
+#include "tao/String_TypeCode.h"
 #include "tao/Any_Impl_T.h"
+#include "tao/Basic_Arguments.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -39,24 +45,25 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "FP_SchedulingC.i"
+#include "FP_SchedulingC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:60
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
 {
 }
 
+
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for FP_Scheduling::SegmentSchedulingParameterPolicy.
 
 FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
-TAO::Objref_Traits<FP_Scheduling::SegmentSchedulingParameterPolicy>::tao_duplicate (
+TAO::Objref_Traits<FP_Scheduling::SegmentSchedulingParameterPolicy>::duplicate (
     FP_Scheduling::SegmentSchedulingParameterPolicy_ptr p
   )
 {
@@ -64,7 +71,7 @@ TAO::Objref_Traits<FP_Scheduling::SegmentSchedulingParameterPolicy>::tao_duplica
 }
 
 void
-TAO::Objref_Traits<FP_Scheduling::SegmentSchedulingParameterPolicy>::tao_release (
+TAO::Objref_Traits<FP_Scheduling::SegmentSchedulingParameterPolicy>::release (
     FP_Scheduling::SegmentSchedulingParameterPolicy_ptr p
   )
 {
@@ -72,25 +79,19 @@ TAO::Objref_Traits<FP_Scheduling::SegmentSchedulingParameterPolicy>::tao_release
 }
 
 FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
-TAO::Objref_Traits<FP_Scheduling::SegmentSchedulingParameterPolicy>::tao_nil (void)
+TAO::Objref_Traits<FP_Scheduling::SegmentSchedulingParameterPolicy>::nil (void)
 {
   return FP_Scheduling::SegmentSchedulingParameterPolicy::_nil ();
 }
 
 CORBA::Boolean
-TAO::Objref_Traits<FP_Scheduling::SegmentSchedulingParameterPolicy>::tao_marshal (
+TAO::Objref_Traits<FP_Scheduling::SegmentSchedulingParameterPolicy>::marshal (
     FP_Scheduling::SegmentSchedulingParameterPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
-
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*FP_Scheduling__TAO_SegmentSchedulingParameterPolicy_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
 
 FP_Scheduling::SegmentSchedulingParameterPolicy::SegmentSchedulingParameterPolicy (void)
 {}
@@ -98,7 +99,7 @@ FP_Scheduling::SegmentSchedulingParameterPolicy::SegmentSchedulingParameterPolic
 FP_Scheduling::SegmentSchedulingParameterPolicy::~SegmentSchedulingParameterPolicy (void)
 {}
 
-void
+void 
 FP_Scheduling::SegmentSchedulingParameterPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   SegmentSchedulingParameterPolicy *_tao_tmp_pointer =
@@ -116,10 +117,27 @@ FP_Scheduling::SegmentSchedulingParameterPolicy::_narrow (
     {
       return SegmentSchedulingParameterPolicy::_nil ();
     }
-
+  
   SegmentSchedulingParameterPolicy_ptr proxy =
     dynamic_cast<SegmentSchedulingParameterPolicy_ptr> (_tao_objref);
+  
+  return SegmentSchedulingParameterPolicy::_duplicate (proxy);
+}
 
+FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
+FP_Scheduling::SegmentSchedulingParameterPolicy::_unchecked_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return SegmentSchedulingParameterPolicy::_nil ();
+    }
+  
+  SegmentSchedulingParameterPolicy_ptr proxy =
+    dynamic_cast<SegmentSchedulingParameterPolicy_ptr> (_tao_objref);
+  
   return SegmentSchedulingParameterPolicy::_duplicate (proxy);
 }
 
@@ -130,8 +148,14 @@ FP_Scheduling::SegmentSchedulingParameterPolicy::_duplicate (SegmentSchedulingPa
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
+}
+
+void
+FP_Scheduling::SegmentSchedulingParameterPolicy::_tao_release (SegmentSchedulingParameterPolicy_ptr obj)
+{
+  CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -142,28 +166,28 @@ FP_Scheduling::SegmentSchedulingParameterPolicy::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Policy:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:FP_Scheduling/SegmentSchedulingParameterPolicy:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -175,63 +199,34 @@ const char* FP_Scheduling::SegmentSchedulingParameterPolicy::_interface_reposito
 CORBA::Boolean
 FP_Scheduling::SegmentSchedulingParameterPolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/objref_typecode.cpp:73
 
-static const CORBA::Long _oc_FP_Scheduling_SegmentSchedulingParameterPolicy[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  55,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x46505f53),
-  ACE_NTOHL (0x63686564),
-  ACE_NTOHL (0x756c696e),
-  ACE_NTOHL (0x672f5365),
-  ACE_NTOHL (0x676d656e),
-  ACE_NTOHL (0x74536368),
-  ACE_NTOHL (0x6564756c),
-  ACE_NTOHL (0x696e6750),
-  ACE_NTOHL (0x6172616d),
-  ACE_NTOHL (0x65746572),
-  ACE_NTOHL (0x506f6c69),
-  ACE_NTOHL (0x63793a31),
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:FP_Scheduling/SegmentSchedulingParameterPolicy:1.0
-    33,
-  ACE_NTOHL (0x5365676d), 
-  ACE_NTOHL (0x656e7453), 
-  ACE_NTOHL (0x63686564), 
-  ACE_NTOHL (0x756c696e), 
-  ACE_NTOHL (0x67506172), 
-  ACE_NTOHL (0x616d6574), 
-  ACE_NTOHL (0x6572506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x0),  // name = SegmentSchedulingParameterPolicy
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_FP_Scheduling_SegmentSchedulingParameterPolicy (
-    CORBA::tk_objref,
-    sizeof (_oc_FP_Scheduling_SegmentSchedulingParameterPolicy),
-    (char *) &_oc_FP_Scheduling_SegmentSchedulingParameterPolicy,
-    0,
-    sizeof (FP_Scheduling::SegmentSchedulingParameterPolicy)
-  );
-
+static TAO::TypeCode::Objref<char const *,
+                             CORBA::tk_local_interface,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_FP_Scheduling_SegmentSchedulingParameterPolicy (
+    "IDL:FP_Scheduling/SegmentSchedulingParameterPolicy:1.0",
+    "SegmentSchedulingParameterPolicy");
+  
 namespace FP_Scheduling
 {
-  ::CORBA::TypeCode_ptr _tc_SegmentSchedulingParameterPolicy =
-    &_tc_TAO_tc_FP_Scheduling_SegmentSchedulingParameterPolicy;
+  ::CORBA::TypeCode_ptr const _tc_SegmentSchedulingParameterPolicy =
+    &_tao_tc_FP_Scheduling_SegmentSchedulingParameterPolicy;
 }
 
+
+
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for FP_Scheduling::FP_Scheduler.
 
 FP_Scheduling::FP_Scheduler_ptr
-TAO::Objref_Traits<FP_Scheduling::FP_Scheduler>::tao_duplicate (
+TAO::Objref_Traits<FP_Scheduling::FP_Scheduler>::duplicate (
     FP_Scheduling::FP_Scheduler_ptr p
   )
 {
@@ -239,7 +234,7 @@ TAO::Objref_Traits<FP_Scheduling::FP_Scheduler>::tao_duplicate (
 }
 
 void
-TAO::Objref_Traits<FP_Scheduling::FP_Scheduler>::tao_release (
+TAO::Objref_Traits<FP_Scheduling::FP_Scheduler>::release (
     FP_Scheduling::FP_Scheduler_ptr p
   )
 {
@@ -247,25 +242,19 @@ TAO::Objref_Traits<FP_Scheduling::FP_Scheduler>::tao_release (
 }
 
 FP_Scheduling::FP_Scheduler_ptr
-TAO::Objref_Traits<FP_Scheduling::FP_Scheduler>::tao_nil (void)
+TAO::Objref_Traits<FP_Scheduling::FP_Scheduler>::nil (void)
 {
   return FP_Scheduling::FP_Scheduler::_nil ();
 }
 
 CORBA::Boolean
-TAO::Objref_Traits<FP_Scheduling::FP_Scheduler>::tao_marshal (
+TAO::Objref_Traits<FP_Scheduling::FP_Scheduler>::marshal (
     FP_Scheduling::FP_Scheduler_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
-
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
-(*FP_Scheduling__TAO_FP_Scheduler_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
 
 FP_Scheduling::FP_Scheduler::FP_Scheduler (void)
 {}
@@ -299,6 +288,23 @@ FP_Scheduling::FP_Scheduler::_narrow (
 }
 
 FP_Scheduling::FP_Scheduler_ptr
+FP_Scheduling::FP_Scheduler::_unchecked_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return FP_Scheduler::_nil ();
+    }
+  
+  FP_Scheduler_ptr proxy =
+    dynamic_cast<FP_Scheduler_ptr> (_tao_objref);
+  
+  return FP_Scheduler::_duplicate (proxy);
+}
+
+FP_Scheduling::FP_Scheduler_ptr
 FP_Scheduling::FP_Scheduler::_duplicate (FP_Scheduler_ptr obj)
 {
   if (! CORBA::is_nil (obj))
@@ -309,6 +315,12 @@ FP_Scheduling::FP_Scheduler::_duplicate (FP_Scheduler_ptr obj)
   return obj;
 }
 
+void
+FP_Scheduling::FP_Scheduler::_tao_release (FP_Scheduler_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 FP_Scheduling::FP_Scheduler::_is_a (
     const char *value
@@ -317,28 +329,28 @@ FP_Scheduling::FP_Scheduler::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:RTScheduling/Scheduler:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:FP_Scheduling/FP_Scheduler:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -350,50 +362,31 @@ const char* FP_Scheduling::FP_Scheduler::_interface_repository_id (void) const
 CORBA::Boolean
 FP_Scheduling::FP_Scheduler::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/objref_typecode.cpp:73
 
-static const CORBA::Long _oc_FP_Scheduling_FP_Scheduler[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x46505f53), 
-  ACE_NTOHL (0x63686564), 
-  ACE_NTOHL (0x756c696e), 
-  ACE_NTOHL (0x672f4650), 
-  ACE_NTOHL (0x5f536368), 
-  ACE_NTOHL (0x6564756c), 
-  ACE_NTOHL (0x65723a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:FP_Scheduling/FP_Scheduler:1.0
-    13,
-  ACE_NTOHL (0x46505f53), 
-  ACE_NTOHL (0x63686564), 
-  ACE_NTOHL (0x756c6572), 
-  ACE_NTOHL (0x0),  // name = FP_Scheduler
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_FP_Scheduling_FP_Scheduler (
-    CORBA::tk_objref,
-    sizeof (_oc_FP_Scheduling_FP_Scheduler),
-    (char *) &_oc_FP_Scheduling_FP_Scheduler,
-    0,
-    sizeof (FP_Scheduling::FP_Scheduler)
-  );
-
+static TAO::TypeCode::Objref<char const *,
+                             CORBA::tk_local_interface,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_FP_Scheduling_FP_Scheduler (
+    "IDL:FP_Scheduling/FP_Scheduler:1.0",
+    "FP_Scheduler");
+  
 namespace FP_Scheduling
 {
-  ::CORBA::TypeCode_ptr _tc_FP_Scheduler =
-    &_tc_TAO_tc_FP_Scheduling_FP_Scheduler;
+  ::CORBA::TypeCode_ptr const _tc_FP_Scheduler =
+    &_tao_tc_FP_Scheduling_FP_Scheduler;
 }
 
-// TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
 
-ACE_TEMPLATE_SPECIALIZATION
+
+// TAO_IDL - Generated from
+// be\be_visitor_interface/any_op_cs.cpp:50
+
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<FP_Scheduling::SegmentSchedulingParameterPolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -403,18 +396,18 @@ TAO::Any_Impl_T<FP_Scheduling::SegmentSchedulingParameterPolicy>::to_object (
   return 1;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<FP_Scheduling::SegmentSchedulingParameterPolicy>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<FP_Scheduling::SegmentSchedulingParameterPolicy>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.
@@ -460,9 +453,9 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<FP_Scheduling::FP_Scheduler>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -472,18 +465,18 @@ TAO::Any_Impl_T<FP_Scheduling::FP_Scheduler>::to_object (
   return 1;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<FP_Scheduling::FP_Scheduler>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<FP_Scheduling::FP_Scheduler>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.
@@ -527,93 +520,3 @@ operator>>= (
         _tao_elem
       );
 }
-
-// TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1702
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Objref_Traits<
-        FP_Scheduling::SegmentSchedulingParameterPolicy
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        FP_Scheduling::SegmentSchedulingParameterPolicy
-      >;
-  
-  template class
-    TAO_Objref_Out_T<
-        FP_Scheduling::SegmentSchedulingParameterPolicy
-      >;
-
-  template class
-    TAO::Any_Impl_T<
-        FP_Scheduling::SegmentSchedulingParameterPolicy
-      >;
-
-  template class
-    TAO::Objref_Traits<
-        FP_Scheduling::FP_Scheduler
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        FP_Scheduling::FP_Scheduler
-      >;
-  
-  template class
-    TAO_Objref_Out_T<
-        FP_Scheduling::FP_Scheduler
-      >;
-
-  template class
-    TAO::Any_Impl_T<
-        FP_Scheduling::FP_Scheduler
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        FP_Scheduling::SegmentSchedulingParameterPolicy \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        FP_Scheduling::SegmentSchedulingParameterPolicy
-      >
-  
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        FP_Scheduling::SegmentSchedulingParameterPolicy
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        FP_Scheduling::SegmentSchedulingParameterPolicy \
-      >
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        FP_Scheduling::FP_Scheduler \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        FP_Scheduling::FP_Scheduler
-      >
-  
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        FP_Scheduling::FP_Scheduler
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        FP_Scheduling::FP_Scheduler \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-

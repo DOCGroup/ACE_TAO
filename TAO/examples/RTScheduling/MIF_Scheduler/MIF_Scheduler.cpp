@@ -45,6 +45,28 @@ Segment_Sched_Param_Policy::importance (CORBA::Short importance
   this->importance_ = importance;
 }
 
+CORBA::Policy_ptr
+Segment_Sched_Param_Policy::copy (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  Segment_Sched_Param_Policy *copy = 0;
+  ACE_NEW_THROW_EX (copy,
+                    Segment_Sched_Param_Policy,
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  copy->importance (this->importance_ ACE_ENV_ARG_PARAMETER)
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  return copy;
+}
+
+void
+Segment_Sched_Param_Policy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+}
+
 MIF_Scheduler::MIF_Scheduler (CORBA::ORB_ptr orb)
   : wait_cond_ (lock_),
     wait_ (0)

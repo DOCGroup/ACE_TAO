@@ -22,6 +22,28 @@ Segment_Sched_Param_Policy::value (RTCORBA::Priority value
   this->value_ = value;
 }
 
+CORBA::Policy_ptr
+Segment_Sched_Param_Policy::copy (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  Segment_Sched_Param_Policy *copy = 0;
+  ACE_NEW_THROW_EX (copy,
+                    Segment_Sched_Param_Policy,
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  copy->value (this->value_ ACE_ENV_ARG_PARAMETER)
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  return copy;
+}
+
+void
+Segment_Sched_Param_Policy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+}
+
 Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (CORBA::ORB_ptr orb)
 {
   ACE_TRY_NEW_ENV
