@@ -10,14 +10,6 @@ Sat Apr 11 10:00:09 1998  Michael Kircher  <mk1@cs.wustl.edu>
         * orbsvcs/tests/Simulator/DOVEBrowser/*: minor changes to handle
 	  the afore mentioned changes.
 
-Fri Apr 10 22:55:09 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-        * TAO version 0.0.1 released.
-
-Fri Apr 10 22:36:48 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-        * TAO version 0.0.1 released.
-
 Fri Apr 10 15:11:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/GIOP.cpp (message_name): Fixed a missing increment by 1
