@@ -1,3 +1,9 @@
+1999-09-07  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* tests/Signal_Test.cpp (main): Fixed the test so that it won't
+	  try to run the "synchronous signal handler in a separate thread"
+	  on Linux because Linux threads are non-standard wrt signals.
+
 Mon Sep  6 21:19:27 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Signal_Test.cpp (run_test): Added an ACE_UNUSED_ARG
