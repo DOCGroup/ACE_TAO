@@ -94,6 +94,11 @@ public:
       create_observer_strategy (TAO_EC_Event_Channel*);
   virtual void
       destroy_observer_strategy (TAO_EC_ObserverStrategy*);
+  virtual TAO_EC_ProxyPushSupplier_Set*
+      create_proxy_push_supplier_set (TAO_EC_Event_Channel*);
+  virtual void
+      destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_Set*);
+
   virtual PortableServer::POA_ptr
        consumer_poa (CORBA::Environment& env);
   virtual PortableServer::POA_ptr

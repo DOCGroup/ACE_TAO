@@ -48,6 +48,18 @@ TAO_EC_Event_Channel::create_proxy_push_consumer (void)
   return this->factory_->create_proxy_push_consumer (this);
 }
 
+ACE_INLINE TAO_EC_ProxyPushSupplier_Set*
+TAO_EC_Event_Channel::create_proxy_push_supplier_set (void)
+{
+  return this->factory_->create_proxy_push_supplier_set (this);
+}
+
+ACE_INLINE void
+TAO_EC_Event_Channel::destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_Set* x)
+{
+  this->factory_->destroy_proxy_push_supplier_set (x);
+}
+
 ACE_INLINE void
 TAO_EC_Event_Channel::destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer* consumer)
 {

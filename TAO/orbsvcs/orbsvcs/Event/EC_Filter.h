@@ -38,13 +38,11 @@
 #ifndef TAO_EC_FILTER_H
 #define TAO_EC_FILTER_H
 
-#include "ace/RB_Tree.h"
+#include "orbsvcs/RtecEventCommC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "orbsvcs/RtecEventCommC.h"
 
 class TAO_EC_QOS_Info;
 
@@ -106,17 +104,10 @@ public:
   virtual CORBA::ULong max_event_size (void) const = 0;
   // Returns the maximum size of the events pushed by this filter.
 
-  struct Header_Compare {
-    int operator () (const RtecEventComm::EventHeader& lhs,
-                     const RtecEventComm::EventHeader& rhs) const;
-  };
-
-  typedef ACE_RB_Tree<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex> Headers;
-  typedef ACE_RB_Tree_Iterator<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex> HeadersIterator;
-
-  virtual void event_ids (Headers& headers) = 0;
-  // Compute the disjunction of all the event types that could be of
-  // interest for this filter (and its children).
+  virtual int can_match (const RtecEventComm::EventHeader& header) const = 0;
+  // Returns 0 if an event with that header could never be accepted.
+  // This can used by the suppliers to filter out consumers that
+  // couldn't possibly be interested in their events.
 
 private:
   TAO_EC_Filter* parent_;
@@ -161,7 +152,7 @@ public:
                             CORBA::Environment& env);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
-  virtual void event_ids (TAO_EC_Filter::Headers& headers);
+  virtual int can_match (const RtecEventComm::EventHeader& header) const;
 };
 
 // ****************************************************************

@@ -3,7 +3,7 @@
 #include "EC_Type_Filter.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_Filter.i"
+#include "EC_Type_Filter.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Type_Filter, "$Id$")
@@ -76,8 +76,9 @@ TAO_EC_Type_Filter::max_event_size (void) const
   return 1;
 }
 
-void
-TAO_EC_Type_Filter::event_ids(TAO_EC_Filter::Headers& headers)
+int
+TAO_EC_Type_Filter::can_match (
+      const RtecEventComm::EventHeader& header) const
 {
-  headers.insert (this->header_, 1);
+  return TAO_EC_Filter::matches (this->header_, header);
 }
