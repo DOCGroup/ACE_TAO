@@ -160,12 +160,12 @@ ACE_Multihomed_INET_Addr::get_secondary_addresses(ACE_INET_Addr *secondary_addrs
 }
 
 void
-ACE_Multihomed_INET_Addr::get_addresses(sockaddr *addrs,
+ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in *addrs,
                                         size_t size) const
 {
   // Copy primary address to the first slot of the user-supplied array
   if (size > 0) {
-    addrs[0] = *ACE_reinterpret_cast (sockaddr*, this->get_addr());
+    addrs[0] = *ACE_reinterpret_cast (sockaddr_in*, this->get_addr());
   }
   
   // Copy secondary addresses to remaining slots of the user-supplied
@@ -175,7 +175,7 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr *addrs,
     size - 1 : this->secondaries.size();
 
   for (size_t i = 0; i < top; ++i) {
-    addrs[i+1] = *ACE_reinterpret_cast (sockaddr*, this->secondaries[i].get_addr());
+    addrs[i+1] = *ACE_reinterpret_cast (sockaddr_in*, this->secondaries[i].get_addr());
   }
 }
 

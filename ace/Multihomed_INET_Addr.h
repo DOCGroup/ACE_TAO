@@ -126,10 +126,10 @@ public:
 
   /**
    * Initialize user-supplied array <addrs> with the the current
-   * primary and secondary addresses.  <isze> is taken as the size of
+   * primary and secondary addresses.  <size> is taken as the size of
    * this array.  
    */
-  void get_addresses(sockaddr *addrs,
+  void get_addresses(sockaddr_in *addrs,
                      size_t size) const;
 
 private:
