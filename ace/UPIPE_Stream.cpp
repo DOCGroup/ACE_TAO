@@ -28,11 +28,11 @@ ACE_UPIPE_Stream::~ACE_UPIPE_Stream (void)
 }
 
 int
-ACE_UPIPE_Stream::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd, 
-			   void * val)
+ACE_UPIPE_Stream::control (int cmd,
+			   void * val) const
 {
   ACE_TRACE ("ACE_UPIPE_Stream::control");
-  return this->stream_.control (cmd, val);
+  return this->stream_.control ((ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds) cmd, val);
 }
 
 void

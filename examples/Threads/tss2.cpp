@@ -39,8 +39,13 @@ private:
   void *data_;
 };
 
-typedef ACE_SingletonEx<TSS_Data, ACE_SYNCH_MUTEX, ACE_SINGLETON_TSS>
+#if 0
+typedef ACE_SingletonEx<ACE_TSS <TSS_Data>, ACE_SYNCH_MUTEX, ACE_SINGLETON_TSS>
 	TSS_DATA;
+#else
+typedef ACE_Singleton<TSS_Data, ACE_SYNCH_MUTEX>
+	TSS_DATA;
+#endif
 
 class TSS_Obj
   // = TITLE
@@ -137,7 +142,9 @@ Test_Task::svc (void *arg)
   ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting finished (data = %u)\n", 
 	      arg));
 
-  ACE_ASSERT (TSS_DATA::instance ()->data () == arg;
+#if 0
+  ACE_ASSERT (TSS_DATA::instance ()->data () == arg);
+#endif
 
   delete (Test_Task *) arg;
 
@@ -212,11 +219,15 @@ main (int argc, char *argv[])
   return 0;
 }
 
-
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 template class ACE_Atomic_Op<ACE_Token, int>;
 template class ACE_TSS<TSS_Obj>;
+#if 0
+template class ACE_SingletonEx<TSS_Data, ACE_SYNCH_MUTEX, ACE_SINGLETON_TSS>;
+#else
+template class ACE_Singleton<TSS_Data, ACE_SYNCH_MUTEX>;
+#endif
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
 #else
