@@ -61,7 +61,7 @@ TAO_Notify_SequencePushConsumer::release (void)
 void
 TAO_Notify_SequencePushConsumer::qos_changed (const TAO_Notify_QoSProperties& qos_properties)
 {
-  this->max_batch_size_ = qos_properties.maximum_batch_size ().value ();
+  this->max_batch_size_ = qos_properties.maximum_batch_size ();
 
   if (this->max_batch_size_.is_valid ())
     {// set the max batch size.

@@ -25,19 +25,9 @@ SequencePushConsumer::push_structured_events (
   this->test_client_->events_received_ += batch.length ();
 
   if (batch.length () > this->test_client_->consumer_batch_size_)
-    if (TAO_debug_level)
       ACE_DEBUG ((LM_ERROR,
                   "Error: Received more than max event batch %d\n",
                   batch.length ()));
-
-  /*  int event_num;
-  notification.filterable_data[0].value >>= event_num;
-
-  if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "Received event# %d\n",
-                event_num));
-  */
 
   this->test_client_->on_event_received ();
 
@@ -61,7 +51,7 @@ SequencePushSupplier::~SequencePushSupplier (void)
 Sequence::Sequence (void)
   : event_count_ (15), supplier_batch_size_ (5), consumer_batch_size_ (3),
     pacing_ (2), order_policy_ (CosNotification::PriorityOrder), events_received_ (0),
-    consumer_delay_ (ACE_Time_Value (1, 0))
+    consumer_delay_ (1)
 {
 }
 
@@ -74,6 +64,21 @@ Sequence::init (int argc,
                    char* argv []
                    ACE_ENV_ARG_DECL)
 {
+  if (TAO_debug_level)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Options: event count = %d \n"
+                  "supplier batch size = %d \n"
+                  "consumer batch size = %d \n"
+                  "pacing = %d \n"
+                  , event_count_
+                  , supplier_batch_size_
+                  , consumer_batch_size_
+                  , pacing_));
+
+      ACE_DEBUG ((LM_DEBUG, "consumer delay = %d\n", consumer_delay_.sec ()));
+    }
+
   // Initialize the base class.
   Notify_Test_Client::init (argc,
                             argv

@@ -81,11 +81,11 @@ TAO_Notify_QoSProperties::init (const CosNotification::PropertySeq& prop_seq, Co
 int
 TAO_Notify_QoSProperties::copy (TAO_Notify_QoSProperties& qos_properties)
 {
-  qos_properties.priority_ = this->priority_.value ();
-  qos_properties.timeout_ = this->timeout_.value ();
-  qos_properties.stop_time_supported_ = this->stop_time_supported_.value ();
-  qos_properties.maximum_batch_size_ = this->maximum_batch_size_.value ();
-  qos_properties.pacing_interval_ = this->pacing_interval_.value ();
+  qos_properties.priority_ = this->priority_;
+  qos_properties.timeout_ = this->timeout_;
+  qos_properties.stop_time_supported_ = this->stop_time_supported_;
+  qos_properties.maximum_batch_size_ = this->maximum_batch_size_;
+  qos_properties.pacing_interval_ = this->pacing_interval_;
 
   PROPERTY_MAP::ITERATOR iter (this->property_map_);
   PROPERTY_MAP::ENTRY *entry;

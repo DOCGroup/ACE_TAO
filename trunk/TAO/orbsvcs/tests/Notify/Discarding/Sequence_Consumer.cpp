@@ -20,7 +20,7 @@
 static const char* ior = "file://supplier.ior";
 static CORBA::Short discard_policy = CosNotification::FifoOrder;
 static unsigned int low = 2;
-static unsigned int high = 20;
+static unsigned int high = 4;
 
 // ******************************************************************
 // Subroutine Section
