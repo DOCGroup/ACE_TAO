@@ -3035,8 +3035,8 @@ Mon Jul 28 16:23:26 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.i: (strtok_r): replaced NULL with 0.  NULL is #defined
 	  as (void *) 0 on VxWorks, so it causes compile warnings.
-	  Thanks to Dave Mayerhoefer <mayerhoefer@svappl36.mdc.com> for
-	  reporting this problem.
+	  Thanks to Dave Mayerhoefer <davem@lynx.com> for reporting
+	  this problem.
 
 	* ace/Object_Manager.{h,cpp},Makefile: added this class to
 	  shutdown ACE library services, and reclaim their storage,
@@ -3276,8 +3276,8 @@ Fri Jul 25 12:08:47 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Process.cpp (spawn): with GreenHills compiler only (for
 	  VxWorks), call ACE_NOTSUP_RETURN instead of spawning via execve.
 	  GreenHills 1.8.8 loses its lunch on the ACE_OS::execve () call.
-	  Thanks to Dave Mayerhoefer <mayerhoefer@svappl36.mdc.com> for
-	  reporting this problem.
+	  Thanks to Dave Mayerhoefer <davem@lynx.com> for reporting
+	  this problem.
 
 	* tests/Mem_Map_Test.cpp (create_test_file): delete array "mybuf"
 	  to prevent memory leak.
