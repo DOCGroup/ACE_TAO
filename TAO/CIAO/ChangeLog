@@ -1,9 +1,16 @@
+Mon Jun 28 08:03:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* CIDLC/ServantSourceGenerator.cpp:
+
+	  Fixed a bug with code generation for uses multiple. Thanks to Ed
+	  Mulholland for reporting the problem.
+
 Mon Jun 28 00:18:04 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* CIAO\performance-tests\Protocols: 
+	* CIAO/performance-tests/Protocols: 
 
 	  Added new test.  Closely mirrors
-	  $TAO_ROOT\performance-tests\Protocols but uses CCM components
+	  $TAO_ROOT/performance-tests/Protocols but uses CCM components
 	  rather that TAO applications.
 
 Sun Jun 27 12:59:04 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
