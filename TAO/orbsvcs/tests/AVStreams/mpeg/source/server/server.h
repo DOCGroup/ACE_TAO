@@ -1,3 +1,4 @@
+/* -*- c++ -*- */
 
 #if !defined (_MPEG_SERVER_H)
 #define      _MPEG_SERVER_H
@@ -24,9 +25,36 @@
 #include "com.h"
 #include "ace/Get_Opt.h"
 
+#include "ace/Acceptor.h"
+#include "ace/Svc_Handler.h"
+#include "ace/SOCK_Acceptor.h"
+#include "ace/INET_Addr.h"
+
 #ifdef NATIVE_ATM
 #include "atmcom.h"
 #endif
+
+class Mpeg_Svc_Handler 
+  : public virtual ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+    
+{
+public:
+  // = Initialization method.
+  Mpeg_Svc_Handler (ACE_Reactor * = 0);
+
+  virtual int open (void *);
+  // Perform the work of the SVC_HANDLER.
+  
+  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
+  // Handle data from the client.
+
+  virtual int close (u_long);
+  // Called if ACE_Svc_Handler is closed down unexpectedly.
+
+  virtual int handle_timeout (const ACE_Time_Value &, const void *arg);
+  // Handles acceptor timeouts.
+
+};
 
 class Mpeg_Server
 {
@@ -51,8 +79,16 @@ public:
 
   ~Mpeg_Server ();
 private:
+
+  ACE_Acceptor <Mpeg_Svc_Handler, ACE_SOCK_ACCEPTOR> acceptor_;
+  // the acceptor
+
+  ACE_INET_Addr server_addr_;
+  // Address of this server.
+
   int parse_args (int argcs,
                   char **argv);
+  // parse the arguments
 
   int set_signals (void);
 
