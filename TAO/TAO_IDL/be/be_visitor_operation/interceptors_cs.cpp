@@ -197,6 +197,13 @@ be_visitor_operation_interceptors_cs::generate_class_declaration (
   // Store the result for later use.
   // generate the return type.
   bt = be_type::narrow_from_decl (node->return_type ());
+  AST_Decl::NodeType nt = bt->node_type ();
+
+  if (nt == AST_Decl::NT_typedef)
+    {
+      be_typedef *td = be_typedef::narrow_from_decl (bt);
+      nt = td->base_node_type ();
+    }
 
   if (!bt)
     {
@@ -207,12 +214,18 @@ be_visitor_operation_interceptors_cs::generate_class_declaration (
                         -1);
     }
 
+  idl_bool void_return_type = this->void_return_type (bt);
+
   // Grab the right visitor to generate the return type if its not
   // void since we can't have a private member to be of void type.
-  if (!this->void_return_type (bt))
+  if (! void_return_type)
     {
-      // The double colon guards against a return type called 'result'.
-      *os << be_nl << "void result (::";
+      *os << be_nl << "void result (";
+
+      if (nt != AST_Decl::NT_string)
+        {
+          *os << "::";
+        }
 
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH);
@@ -227,7 +240,7 @@ be_visitor_operation_interceptors_cs::generate_class_declaration (
                             -1);
         }
 
-      *os << " result);\n";
+      *os << " result);" << be_nl;
     }
 
   *os << be_uidt_nl << "private:" << be_idt_nl;
@@ -240,20 +253,9 @@ be_visitor_operation_interceptors_cs::generate_class_declaration (
   // generated for attributes.
   if (this->ctx_->attribute ())
     {
-      bt = be_type::narrow_from_decl (node->return_type ());
-
-      if (!bt)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interceptors_ch::"
-                             "visit_operation - "
-                             "Bad return type\n"),
-                            -1);
-        }
-
       // Grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
-      if (!this->void_return_type (bt))
+      if (! void_return_type)
         {
           *os << "_get";
         }
@@ -272,20 +274,9 @@ be_visitor_operation_interceptors_cs::generate_class_declaration (
   // generated for attributes.
   if (this->ctx_->attribute ())
     {
-      bt = be_type::narrow_from_decl (node->return_type ());
-
-      if (!bt)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interceptors_ch::"
-                             "visit_operation - "
-                             "Bad return type\n"),
-                            -1);
-        }
-
       // Grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
-      if (!this->void_return_type (bt))
+      if (! void_return_type)
         {
           *os << "_get";
         }
@@ -306,20 +297,9 @@ be_visitor_operation_interceptors_cs::generate_class_declaration (
   // generated for attributes.
   if (this->ctx_->attribute ())
     {
-      bt = be_type::narrow_from_decl (node->return_type ());
-
-      if (!bt)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interceptors_ch::"
-                             "visit_operation - "
-                             "Bad return type\n"),
-                            -1);
-        }
-
       // Grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
-      if (!this->void_return_type (bt))
+      if (! void_return_type)
         {
           *os << "_get";
         }
@@ -349,25 +329,17 @@ be_visitor_operation_interceptors_cs::generate_class_declaration (
 
   // Generate the result data member.
   // Generate the return type.
-  bt = be_type::narrow_from_decl (node->return_type ());
-
-  if (!bt)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interceptors_ch::"
-                         "visit_operation - "
-                         "Bad return type\n"),
-                        -1);
-    }
-
   // Grab the right visitor to generate the return type if it's not
   // void since we can't have a private member to be of void type.
-  if (!this->void_return_type (bt))
+  if (! void_return_type)
     {
       *os << be_nl << be_nl;
 
       // Guards against a return type called 'result'.
-      *os << "::";
+      if (nt != AST_Decl::NT_string)
+        {
+          *os << "::";
+        }
 
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH);
