@@ -34,6 +34,7 @@
 #include "be_visitor_typedef/any_op_ch.h"
 #include "be_visitor_typedef/any_op_cs.h"
 #include "be_visitor_typedef/cdr_op_ch.h"
+#include "be_visitor_typedef/cdr_op_ci.h"
 #include "be_visitor_typedef/cdr_op_cs.h"
 
 #endif // TAO_BE_VISITOR_TYPEDEF_H

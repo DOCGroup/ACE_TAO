@@ -1,3 +1,103 @@
+Thu May 27 21:02:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/Makefile:
+	* TAO_IDL/be/be_decl.cpp:
+	* TAO_IDL/be/be_visitor_array.cpp:
+	* TAO_IDL/be/be_visitor_enum.cpp:
+	* TAO_IDL/be/be_visitor_exception.cpp:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_visitor_field.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be/be_visitor_root.cpp:
+	* TAO_IDL/be/be_visitor_sequence.cpp:
+	* TAO_IDL/be/be_visitor_structure.cpp:
+	* TAO_IDL/be/be_visitor_typedef.cpp:
+	* TAO_IDL/be/be_visitor_union.cpp:
+	* TAO_IDL/be/be_visitor_union_branch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype.cpp:
+	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_enum/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_enum/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_exception/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception.cpp:
+	* TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+	* TAO_IDL/be/be_visitor_module/module.cpp:
+	* TAO_IDL/be/be_visitor_root/root.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_structure/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_structure/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_structure/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_structure/structure.cpp:
+	* TAO_IDL/be/be_visitor_typedef/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_typedef/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_typedef/typedef.cpp:
+	* TAO_IDL/be/be_visitor_union/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_union/union.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/field_cdr_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+	* TAO_IDL/be_include/be_codegen.h:
+	* TAO_IDL/be_include/be_visitor_array.h:
+	* TAO_IDL/be_include/be_visitor_enum.h:
+	* TAO_IDL/be_include/be_visitor_exception.h:
+	* TAO_IDL/be_include/be_visitor_field.h:
+	* TAO_IDL/be_include/be_visitor_interface.h:
+	* TAO_IDL/be_include/be_visitor_sequence.h:
+	* TAO_IDL/be_include/be_visitor_structure.h:
+	* TAO_IDL/be_include/be_visitor_typedef.h:
+	* TAO_IDL/be_include/be_visitor_union.h:
+	* TAO_IDL/be_include/be_visitor_union_branch.h:
+	* TAO_IDL/be_include/be_visitor_valuetype.h:
+	* TAO_IDL/be_include/be_visitor_array/cdr_op_ci.h:
+	* TAO_IDL/be_include/be_visitor_array/cdr_op_cs.h:
+	* TAO_IDL/be_include/be_visitor_enum/cdr_op_ci.h:
+	* TAO_IDL/be_include/be_visitor_enum/cdr_op_cs.h:
+	* TAO_IDL/be_include/be_visitor_exception/cdr_op_ci.h:
+	* TAO_IDL/be_include/be_visitor_exception/cdr_op_cs.h:
+	* TAO_IDL/be_include/be_visitor_field/cdr_op_ci.h:
+	* TAO_IDL/be_include/be_visitor_field/cdr_op_cs.h:
+	* TAO_IDL/be_include/be_visitor_interface/cdr_op_ci.h:
+	* TAO_IDL/be_include/be_visitor_sequence/cdr_op_ci.h:
+	* TAO_IDL/be_include/be_visitor_structure/cdr_op_ci.h:
+	* TAO_IDL/be_include/be_visitor_structure/cdr_op_cs.h:
+	* TAO_IDL/be_include/be_visitor_typedef/cdr_op_ch.h:
+	* TAO_IDL/be_include/be_visitor_typedef/cdr_op_ci.h:
+	* TAO_IDL/be_include/be_visitor_typedef/cdr_op_cs.h:
+	* TAO_IDL/be_include/be_visitor_union/cdr_op_ci.h:
+	* TAO_IDL/be_include/be_visitor_union/cdr_op_cs.h:
+	* TAO_IDL/be_include/be_visitor_union_branch/cdr_op_ci.h:
+	* TAO_IDL/be_include/be_visitor_union_branch/cdr_op_cs.h:
+	* TAO_IDL/be_include/be_visitor_valuetype/cdr_op_ch.h:
+	* TAO_IDL/be_include/be_visitor_valuetype/cdr_op_ci.h:
+	* TAO_IDL/be_include/be_visitor_valuetype/cdr_op_cs.h:
+	* TAO_IDL/be_include/be_visitor_valuetype/field_cdr_ci.h:
+	  Moved all the code to generate CDR extraction and insertion
+	  operators to the _ci files (and classes), they were in the _cs
+	  files due to an historic accident.
+	  This was no big deal, but I needed to move the CDR operators for 
+	  sequences generated into the *C.cpp files, so I needed to
+	  separate the code for the C.i file from the code to the C.cpp
+	  file.
+	  With this change Param_Test compiles with both compiled and
+	  interpretive marshaling.
+
+	* tests/Multiple_Profiles/Makefile:
+	* tests/Multiple_Profiles/forward.cpp:
+	  Removed, the test was obsolete.
+
 Thu May 27 19:16:47 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/orb.idl:

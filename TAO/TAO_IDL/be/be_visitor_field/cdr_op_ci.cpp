@@ -8,14 +8,13 @@
 //    TAO IDL
 //
 // = FILENAME
-//    field_cdr_ci.cpp
+//    field_cdr_op_ci.cpp
 //
 // = DESCRIPTION
 //    Visitor generating code for Field in the client stubs file.
 //
 // = AUTHOR
-//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//    derived from be_visitor_field/cdr_op_ci.cpp
+//    Aniruddha Gokhale
 //
 // ============================================================================
 
@@ -25,7 +24,7 @@
 
 #include "be_visitor_field.h"
 
-ACE_RCSID(be_visitor_valuetype, field_cdr_op_ci, "$Id$")
+ACE_RCSID(be_visitor_field, cdr_op_ci, "$Id$")
 
 
 // **********************************************
@@ -33,26 +32,25 @@ ACE_RCSID(be_visitor_valuetype, field_cdr_op_ci, "$Id$")
 // **********************************************
 
 // constructor
-be_visitor_valuetype_field_cdr_ci::be_visitor_valuetype_field_cdr_ci (be_visitor_context *ctx)
-  : be_visitor_decl (ctx),
-    pre_ (""), post_ ("")
+be_visitor_field_cdr_op_ci::be_visitor_field_cdr_op_ci (be_visitor_context *ctx)
+  : be_visitor_decl (ctx)
 {
 }
 
 // destructor
-be_visitor_valuetype_field_cdr_ci::~be_visitor_valuetype_field_cdr_ci (void)
+be_visitor_field_cdr_op_ci::~be_visitor_field_cdr_op_ci (void)
 {
 }
 
 // visit the field node
 int
-be_visitor_valuetype_field_cdr_ci::visit_field (be_field *node)
+be_visitor_field_cdr_op_ci::visit_field (be_field *node)
 {
   be_type *bt = be_type::narrow_from_decl (node->field_type ());
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_field - "
                          "Bad field type\n"
                          ), -1);
@@ -62,7 +60,7 @@ be_visitor_valuetype_field_cdr_ci::visit_field (be_field *node)
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_field - "
                          "codegen for field type failed\n"
                          ), -1);
@@ -72,7 +70,7 @@ be_visitor_valuetype_field_cdr_ci::visit_field (be_field *node)
 
 // visit array
 int
-be_visitor_valuetype_field_cdr_ci::visit_array (be_array *node)
+be_visitor_field_cdr_op_ci::visit_array (be_array *node)
 {
   TAO_OutStream *os; // output stream
   os = this->ctx_->stream ();
@@ -82,7 +80,7 @@ be_visitor_valuetype_field_cdr_ci::visit_array (be_array *node)
   if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_array - "
                          "cannot retrieve field node\n"
                          ), -1);
@@ -127,11 +125,11 @@ be_visitor_valuetype_field_cdr_ci::visit_array (be_array *node)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << "(strm >> "
-          << "_tao_" << pre_ << f->local_name () << post_ << ")";
+          << "_tao_aggregate_" << f->local_name () << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << "(strm << "
-          << "_tao_" << pre_ << f->local_name () << post_ << ")";
+          << "_tao_aggregate_" << f->local_name () << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // proceed further
@@ -139,7 +137,7 @@ be_visitor_valuetype_field_cdr_ci::visit_array (be_array *node)
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_array - "
                          "bad sub state\n"
                          ), -1);
@@ -165,7 +163,7 @@ be_visitor_valuetype_field_cdr_ci::visit_array (be_array *node)
       if (!visitor)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                             "(%N:%l) be_visitor_field_cdr_op_ci::"
                              "visit_array - "
                              "Bad visitor\n"
                              ), -1);
@@ -173,7 +171,7 @@ be_visitor_valuetype_field_cdr_ci::visit_array (be_array *node)
       if (node->accept (visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                             "(%N:%l) be_visitor_field_cdr_op_ci::"
                              "visit_array - "
                              "codegen failed\n"
                              ), -1);
@@ -185,7 +183,7 @@ be_visitor_valuetype_field_cdr_ci::visit_array (be_array *node)
 
 // visit enum type
 int
-be_visitor_valuetype_field_cdr_ci::visit_enum (be_enum *node)
+be_visitor_field_cdr_op_ci::visit_enum (be_enum *node)
 {
   TAO_OutStream *os; // output stream
   os = this->ctx_->stream ();
@@ -195,7 +193,7 @@ be_visitor_valuetype_field_cdr_ci::visit_enum (be_enum *node)
   if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_array - "
                          "cannot retrieve field node\n"
                          ), -1);
@@ -206,10 +204,10 @@ be_visitor_valuetype_field_cdr_ci::visit_enum (be_enum *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << pre_ << f->local_name () << post_ << ")";
+      *os << "(strm >> _tao_aggregate." << f->local_name () << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ")";
+      *os << "(strm << _tao_aggregate." << f->local_name () << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // proceed further
@@ -217,7 +215,7 @@ be_visitor_valuetype_field_cdr_ci::visit_enum (be_enum *node)
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_enum - "
                          "bad sub state\n"
                          ), -1);
@@ -239,7 +237,7 @@ be_visitor_valuetype_field_cdr_ci::visit_enum (be_enum *node)
       if (!visitor)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                             "(%N:%l) be_visitor_field_cdr_op_ci::"
                              "visit_enum - "
                              "Bad visitor\n"
                              ), -1);
@@ -247,7 +245,7 @@ be_visitor_valuetype_field_cdr_ci::visit_enum (be_enum *node)
       if (node->accept (visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                             "(%N:%l) be_visitor_field_cdr_op_ci::"
                              "visit_enum - "
                              "codegen failed\n"
                              ), -1);
@@ -259,7 +257,7 @@ be_visitor_valuetype_field_cdr_ci::visit_enum (be_enum *node)
 
 // visit interface type
 int
-be_visitor_valuetype_field_cdr_ci::visit_interface (be_interface *)
+be_visitor_field_cdr_op_ci::visit_interface (be_interface *)
 {
   TAO_OutStream *os; // output stream
   os = this->ctx_->stream ();
@@ -269,7 +267,7 @@ be_visitor_valuetype_field_cdr_ci::visit_interface (be_interface *)
   if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_interface - "
                          "cannot retrieve field node\n"
                          ), -1);
@@ -280,10 +278,10 @@ be_visitor_valuetype_field_cdr_ci::visit_interface (be_interface *)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << pre_ << f->local_name () << post_ << ".out ())";
+      *os << "(strm >> _tao_aggregate." << f->local_name () << ".out ())";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ".in ())";
+      *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // nothing to be done because an interface cannit be declared inside a
@@ -292,7 +290,7 @@ be_visitor_valuetype_field_cdr_ci::visit_interface (be_interface *)
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_interface - "
                          "bad sub state\n"
                          ), -1);
@@ -302,7 +300,7 @@ be_visitor_valuetype_field_cdr_ci::visit_interface (be_interface *)
 
 // visit interface forward type
 int
-be_visitor_valuetype_field_cdr_ci::visit_interface_fwd (be_interface_fwd *)
+be_visitor_field_cdr_op_ci::visit_interface_fwd (be_interface_fwd *)
 {
   TAO_OutStream *os; // output stream
   os = this->ctx_->stream ();
@@ -312,7 +310,7 @@ be_visitor_valuetype_field_cdr_ci::visit_interface_fwd (be_interface_fwd *)
   if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_interface_fwd - "
                          "cannot retrieve field node\n"
                          ), -1);
@@ -323,10 +321,10 @@ be_visitor_valuetype_field_cdr_ci::visit_interface_fwd (be_interface_fwd *)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << pre_ << f->local_name () << post_ << ").out ()";
+      *os << "(strm >> _tao_aggregate." << f->local_name () << ").out ()";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ").in ()";
+      *os << "(strm << _tao_aggregate." << f->local_name () << ").in ()";
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // nothing to be done because an interface cannit be declared inside a
@@ -335,94 +333,8 @@ be_visitor_valuetype_field_cdr_ci::visit_interface_fwd (be_interface_fwd *)
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_interface_fwd - "
-                         "bad sub state\n"
-                         ), -1);
-    }
-  return 0;
-}
-
-// visit valuetype type
-int
-be_visitor_valuetype_field_cdr_ci::visit_valuetype (be_valuetype *)
-{
-  TAO_OutStream *os; // output stream
-  os = this->ctx_->stream ();
-
-  // retrieve the field node
-  be_field *f = this->ctx_->be_node_as_field ();
-  if (!f)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
-                         "visit_valuetype - "
-                         "cannot retrieve field node\n"
-                         ), -1);
-    }
-
-  // check what is the code generations substate. Are we generating code for
-  // the in/out operators for our parent or for us?
-  switch (this->ctx_->sub_state ())
-    {
-    case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << pre_ << f->local_name () << post_ << ".out ())";
-      break;
-    case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ".in ())";
-      break;
-    case TAO_CodeGen::TAO_CDR_SCOPE:
-      // nothing to be done because an valuetype cannit be declared inside a
-      // structure
-      break;
-    default:
-      // error
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
-                         "visit_valuetype - "
-                         "bad sub state\n"
-                         ), -1);
-    }
-  return 0;
-}
-
-// visit valuetype forward type
-int
-be_visitor_valuetype_field_cdr_ci::visit_valuetype_fwd (be_valuetype_fwd *)
-{
-  TAO_OutStream *os; // output stream
-  os = this->ctx_->stream ();
-
-  // retrieve the field node
-  be_field *f = this->ctx_->be_node_as_field ();
-  if (!f)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
-                         "visit_valuetype_fwd - "
-                         "cannot retrieve field node\n"
-                         ), -1);
-    }
-
-  // check what is the code generations substate. Are we generating code for
-  // the in/out operators for our parent or for us?
-  switch (this->ctx_->sub_state ())
-    {
-    case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << pre_ << f->local_name () << post_ << ").out ()";
-      break;
-    case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ").in ()";
-      break;
-    case TAO_CodeGen::TAO_CDR_SCOPE:
-      // nothing to be done because an valuetype cannit be declared inside a
-      // structure
-      break;
-    default:
-      // error
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
-                         "visit_valuetype_fwd - "
                          "bad sub state\n"
                          ), -1);
     }
@@ -431,7 +343,7 @@ be_visitor_valuetype_field_cdr_ci::visit_valuetype_fwd (be_valuetype_fwd *)
 
 // visit predefined type
 int
-be_visitor_valuetype_field_cdr_ci::visit_predefined_type (be_predefined_type *node)
+be_visitor_field_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os; // output stream
   os = this->ctx_->stream ();
@@ -441,7 +353,7 @@ be_visitor_valuetype_field_cdr_ci::visit_predefined_type (be_predefined_type *no
   if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_predefined_type - "
                          "cannot retrieve field node\n"
                          ), -1);
@@ -454,41 +366,41 @@ be_visitor_valuetype_field_cdr_ci::visit_predefined_type (be_predefined_type *no
     case TAO_CodeGen::TAO_CDR_INPUT:
       // is a psuedo obj
       if (node->pt () == AST_PredefinedType::PT_pseudo)
-        *os << "(strm >> " << pre_ << f->local_name () << post_
+        *os << "(strm >> _tao_aggregate." << f->local_name ()
             << ".out ())";
       else if (node->pt () == AST_PredefinedType::PT_char)
-        *os << "(strm >> CORBA::Any::to_char (" << pre_
-            << f->local_name () << post_ << "))";
+        *os << "(strm >> CORBA::Any::to_char (_tao_aggregate."
+            << f->local_name () << "))";
       else if (node->pt () == AST_PredefinedType::PT_wchar)
-        *os << "(strm >> CORBA::Any::to_wchar (" << pre_
-            << f->local_name () << post_ << "))";
+        *os << "(strm >> CORBA::Any::to_wchar (_tao_aggregate."
+            << f->local_name () << "))";
       else if (node->pt () == AST_PredefinedType::PT_octet)
-        *os << "(strm >> CORBA::Any::to_octet (" << pre_
-            << f->local_name () << post_ << "))";
+        *os << "(strm >> CORBA::Any::to_octet (_tao_aggregate."
+            << f->local_name () << "))";
       else if (node->pt () == AST_PredefinedType::PT_boolean)
-        *os << "(strm >> CORBA::Any::to_boolean (" << pre_
-            << f->local_name () << post_ << "))";
+        *os << "(strm >> CORBA::Any::to_boolean (_tao_aggregate."
+            << f->local_name () << "))";
       else
-        *os << "(strm >> " << pre_ << f->local_name () << post_ << ")";
+        *os << "(strm >> _tao_aggregate." << f->local_name () << ")";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       // is a psuedo obj
       if (node->pt () == AST_PredefinedType::PT_pseudo)
-        *os << "(strm << " << pre_ << f->local_name () << post_ << ".in ())";
+        *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
       else if (node->pt () == AST_PredefinedType::PT_char)
-        *os << "(strm << CORBA::Any::from_char (" << pre_
-            << f->local_name () << post_ << "))";
+        *os << "(strm << CORBA::Any::from_char (_tao_aggregate."
+            << f->local_name () << "))";
       else if (node->pt () == AST_PredefinedType::PT_wchar)
-        *os << "(strm << CORBA::Any::from_wchar (" << pre_
-            << f->local_name () << post_ << "))";
+        *os << "(strm << CORBA::Any::from_wchar (_tao_aggregate."
+            << f->local_name () << "))";
       else if (node->pt () == AST_PredefinedType::PT_octet)
-        *os << "(strm << CORBA::Any::from_octet (" << pre_
-            << f->local_name () << post_ << "))";
+        *os << "(strm << CORBA::Any::from_octet (_tao_aggregate."
+            << f->local_name () << "))";
       else if (node->pt () == AST_PredefinedType::PT_boolean)
-        *os << "(strm << CORBA::Any::from_boolean (" << pre_
-            << f->local_name () << post_ << "))";
+        *os << "(strm << CORBA::Any::from_boolean (_tao_aggregate."
+            << f->local_name () << "))";
       else
-        *os << "(strm << " << pre_ << f->local_name () << post_ << ")";
+        *os << "(strm << _tao_aggregate." << f->local_name () << ")";
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // nothing to be done
@@ -496,7 +408,7 @@ be_visitor_valuetype_field_cdr_ci::visit_predefined_type (be_predefined_type *no
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_array - "
                          "bad sub state\n"
                          ), -1);
@@ -506,7 +418,7 @@ be_visitor_valuetype_field_cdr_ci::visit_predefined_type (be_predefined_type *no
 }
 
 int
-be_visitor_valuetype_field_cdr_ci::visit_sequence (be_sequence *node)
+be_visitor_field_cdr_op_ci::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os; // output stream
   os = this->ctx_->stream ();
@@ -516,7 +428,7 @@ be_visitor_valuetype_field_cdr_ci::visit_sequence (be_sequence *node)
   if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_sequence - "
                          "cannot retrieve field node\n"
                          ), -1);
@@ -527,10 +439,10 @@ be_visitor_valuetype_field_cdr_ci::visit_sequence (be_sequence *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << pre_ << f->local_name () << post_ << ")";
+      *os << "(strm >> _tao_aggregate." << f->local_name () << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ")";
+      *os << "(strm << _tao_aggregate." << f->local_name () << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // proceed further
@@ -538,7 +450,7 @@ be_visitor_valuetype_field_cdr_ci::visit_sequence (be_sequence *node)
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_sequence - "
                          "bad sub state\n"
                          ), -1);
@@ -553,8 +465,8 @@ be_visitor_valuetype_field_cdr_ci::visit_sequence (be_sequence *node)
       // instantiate a visitor context with a copy of our context. This info
       // will be modified based on what type of node we are visiting
       be_visitor_context ctx (*this->ctx_);
-      ctx.node (node); // set the node to be the node being visited.
-      // The scope is still the same
+      ctx.node (node); // set the node to be the node being visited. The scope is
+      // still the same
 
       // generate the inline code for structs
       ctx.state (TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CI);
@@ -562,7 +474,7 @@ be_visitor_valuetype_field_cdr_ci::visit_sequence (be_sequence *node)
       if (!visitor)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                             "(%N:%l) be_visitor_field_cdr_op_ci::"
                              "visit_sequence - "
                              "Bad visitor\n"
                              ), -1);
@@ -570,7 +482,7 @@ be_visitor_valuetype_field_cdr_ci::visit_sequence (be_sequence *node)
       if (node->accept (visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                             "(%N:%l) be_visitor_field_cdr_op_ci::"
                              "visit_sequence - "
                              "codegen failed\n"
                              ), -1);
@@ -582,7 +494,7 @@ be_visitor_valuetype_field_cdr_ci::visit_sequence (be_sequence *node)
 
 // visit string type
 int
-be_visitor_valuetype_field_cdr_ci::visit_string (be_string *)
+be_visitor_field_cdr_op_ci::visit_string (be_string *)
 {
   TAO_OutStream *os; // output stream
   os = this->ctx_->stream ();
@@ -592,7 +504,7 @@ be_visitor_valuetype_field_cdr_ci::visit_string (be_string *)
   if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_string - "
                          "cannot retrieve field node\n"
                          ), -1);
@@ -603,10 +515,10 @@ be_visitor_valuetype_field_cdr_ci::visit_string (be_string *)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << pre_ << f->local_name () << post_ << ".out ())";
+      *os << "(strm >> _tao_aggregate." << f->local_name () << ".out ())";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ".in ())";
+      *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // nothing to be done
@@ -614,7 +526,7 @@ be_visitor_valuetype_field_cdr_ci::visit_string (be_string *)
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_array - "
                          "bad sub state\n"
                          ), -1);
@@ -625,7 +537,7 @@ be_visitor_valuetype_field_cdr_ci::visit_string (be_string *)
 
 // visit structure type
 int
-be_visitor_valuetype_field_cdr_ci::visit_structure (be_structure *node)
+be_visitor_field_cdr_op_ci::visit_structure (be_structure *node)
 {
   TAO_OutStream *os; // output stream
   os = this->ctx_->stream ();
@@ -635,7 +547,7 @@ be_visitor_valuetype_field_cdr_ci::visit_structure (be_structure *node)
   if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_structure - "
                          "cannot retrieve field node\n"
                          ), -1);
@@ -646,10 +558,10 @@ be_visitor_valuetype_field_cdr_ci::visit_structure (be_structure *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << pre_ << f->local_name () << post_ << ")";
+      *os << "(strm >> _tao_aggregate." << f->local_name () << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ")";
+      *os << "(strm << _tao_aggregate." << f->local_name () << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // proceed further
@@ -657,7 +569,7 @@ be_visitor_valuetype_field_cdr_ci::visit_structure (be_structure *node)
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_structure - "
                          "bad sub state\n"
                          ), -1);
@@ -679,7 +591,7 @@ be_visitor_valuetype_field_cdr_ci::visit_structure (be_structure *node)
       if (!visitor)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                             "(%N:%l) be_visitor_field_cdr_op_ci::"
                              "visit_struct - "
                              "Bad visitor\n"
                              ), -1);
@@ -687,7 +599,7 @@ be_visitor_valuetype_field_cdr_ci::visit_structure (be_structure *node)
       if (node->accept (visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                             "(%N:%l) be_visitor_field_cdr_op_ci::"
                              "visit_struct - "
                              "codegen failed\n"
                              ), -1);
@@ -699,7 +611,7 @@ be_visitor_valuetype_field_cdr_ci::visit_structure (be_structure *node)
 
 // visit typedef type
 int
-be_visitor_valuetype_field_cdr_ci::visit_typedef (be_typedef *node)
+be_visitor_field_cdr_op_ci::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node); // save the typedef node for use in code generation
                            // as we visit the base type
@@ -709,7 +621,7 @@ be_visitor_valuetype_field_cdr_ci::visit_typedef (be_typedef *node)
   if (!bt || (bt->accept (this) == -1))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_branch_public_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_typedef - "
                          "Bad primitive type\n"
                          ), -1);
@@ -721,7 +633,7 @@ be_visitor_valuetype_field_cdr_ci::visit_typedef (be_typedef *node)
 
 // visit union type
 int
-be_visitor_valuetype_field_cdr_ci::visit_union (be_union *node)
+be_visitor_field_cdr_op_ci::visit_union (be_union *node)
 {
   TAO_OutStream *os; // output stream
   os = this->ctx_->stream ();
@@ -731,7 +643,7 @@ be_visitor_valuetype_field_cdr_ci::visit_union (be_union *node)
   if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_union - "
                          "cannot retrieve field node\n"
                          ), -1);
@@ -742,10 +654,10 @@ be_visitor_valuetype_field_cdr_ci::visit_union (be_union *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << pre_ << f->local_name () << post_ << ")";
+      *os << "(strm >> _tao_aggregate." << f->local_name () << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ")";
+      *os << "(strm << _tao_aggregate." << f->local_name () << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // proceed further
@@ -753,7 +665,7 @@ be_visitor_valuetype_field_cdr_ci::visit_union (be_union *node)
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_union - "
                          "bad sub state\n"
                          ), -1);
@@ -775,7 +687,7 @@ be_visitor_valuetype_field_cdr_ci::visit_union (be_union *node)
       if (!visitor)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                             "(%N:%l) be_visitor_field_cdr_op_ci::"
                              "visit_union - "
                              "Bad visitor\n"
                              ), -1);
@@ -783,7 +695,7 @@ be_visitor_valuetype_field_cdr_ci::visit_union (be_union *node)
       if (node->accept (visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_field_cdr_ci::"
+                             "(%N:%l) be_visitor_field_cdr_op_ci::"
                              "visit_union - "
                              "codegen failed\n"
                              ), -1);
@@ -793,11 +705,10 @@ be_visitor_valuetype_field_cdr_ci::visit_union (be_union *node)
   return 0;
 }
 
-
 // ****************************************************************
 
-be_visitor_valuetype_field_cdr_decl::
-    be_visitor_valuetype_field_cdr_decl (be_visitor_context *ctx)
+be_visitor_cdr_op_field_decl::
+    be_visitor_cdr_op_field_decl (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }
@@ -811,13 +722,13 @@ be_visitor_valuetype_field_cdr_decl::
 // generate the code of each field, because visit_struct already has a
 // meaning in that visitor.
 int
-be_visitor_valuetype_field_cdr_decl::visit_field (be_field *node)
+be_visitor_cdr_op_field_decl::visit_field (be_field *node)
 {
   be_type *bt = be_type::narrow_from_decl (node->field_type ());
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_decl::"
+                         "(%N:%l) be_visitor_cdr_op_field_decl::"
                          "visit_field - "
                          "Bad field type\n"
                          ), -1);
@@ -828,7 +739,7 @@ be_visitor_valuetype_field_cdr_decl::visit_field (be_field *node)
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_decl::"
+                         "(%N:%l) be_visitor_cdr_op_field_decl::"
                          "visit_field - "
                          "codegen for field type failed\n"
                          ), -1);
@@ -838,7 +749,7 @@ be_visitor_valuetype_field_cdr_decl::visit_field (be_field *node)
 
 // visit array
 int
-be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
+be_visitor_cdr_op_field_decl::visit_array (be_array *node)
 {
   TAO_OutStream *os; // output stream
   os = this->ctx_->stream ();
@@ -848,21 +759,9 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
   if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_decl::"
+                         "(%N:%l) be_visitor_cdr_op_field_decl::"
                          "visit_array - "
                          "cannot retrieve field node\n"
-                         ), -1);
-    }
-
-  // retrieve the valuetype scope in which the code is generated
-  be_decl *sc = this->ctx_->scope ();
-  be_valuetype *vt = be_valuetype::narrow_from_decl (sc);
-  if (!vt)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_decl::"
-                         "visit_array - "
-                         "cannot retrieve valuetype node\n"
                          ), -1);
     }
 
@@ -903,12 +802,10 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
     case TAO_CodeGen::TAO_CDR_INPUT:
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << fname << "_forany "
-          << "_tao_" << vt->field_pd_prefix () << f->local_name ()
-          << vt->field_pd_postfix () << be_idt << be_idt_nl
+          << "_tao_aggregate_" << f->local_name () << be_idt << be_idt_nl
           << "(ACE_const_cast (" << be_idt << be_idt_nl
           << fname << "_slice*," << be_nl
-          << vt->field_pd_prefix () << f->local_name ()
-          << vt->field_pd_postfix () << be_uidt_nl
+          << "_tao_aggregate." << f->local_name () << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
           << ");" << be_uidt_nl;
       return 0;
@@ -916,7 +813,7 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_cdr_decl::"
+                         "(%N:%l) be_visitor_cdr_op_field_decl::"
                          "visit_array - "
                          "bad sub state\n"
                          ), -1);
@@ -924,9 +821,10 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
   ACE_NOTREACHED (return 0);
 }
 
+
 // visit typedef type
 int
-be_visitor_valuetype_field_cdr_decl::visit_typedef (be_typedef *node)
+be_visitor_cdr_op_field_decl::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node); // save the typedef node for use in code generation
                            // as we visit the base type

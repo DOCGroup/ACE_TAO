@@ -37,6 +37,7 @@
 #include "be_visitor_interface/any_op_ch.h"
 #include "be_visitor_interface/any_op_cs.h"
 #include "be_visitor_interface/cdr_op_ch.h"
+#include "be_visitor_interface/cdr_op_ci.h"
 #include "be_visitor_interface/cdr_op_cs.h"
 #include "be_visitor_interface/tie_sh.h"
 #include "be_visitor_interface/tie_si.h"

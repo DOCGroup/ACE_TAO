@@ -8,7 +8,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    cdr_op_cs.cpp
+//    cdr_op_ci.cpp
 //
 // = DESCRIPTION
 //    Concrete visitor for valuetypes.
@@ -28,23 +28,23 @@
 #include "be_visitor_valuetype.h"
 // #include "be_visitor_field.h"
 
-ACE_RCSID(be_visitor_valuetype, cdr_op_cs, "$Id$")
+ACE_RCSID(be_visitor_valuetype, cdr_op_ci, "$Id$")
 
-be_visitor_valuetype_cdr_op_cs::be_visitor_valuetype_cdr_op_cs
+be_visitor_valuetype_cdr_op_ci::be_visitor_valuetype_cdr_op_ci
 (be_visitor_context *ctx)
   : be_visitor_valuetype (ctx)
 {
 }
 
-be_visitor_valuetype_cdr_op_cs::~be_visitor_valuetype_cdr_op_cs (void)
+be_visitor_valuetype_cdr_op_ci::~be_visitor_valuetype_cdr_op_ci (void)
 {
 }
 
 int
-be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
+be_visitor_valuetype_cdr_op_ci::visit_valuetype (be_valuetype *node)
 {
   // already generated and/or we are imported. Don't do anything.
-  if (node->cli_stub_cdr_op_gen () || node->imported ())
+  if (node->cli_inline_cdr_op_gen () || node->imported ())
     return 0;
 
   TAO_OutStream *os = this->ctx_->stream ();
@@ -59,7 +59,7 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_cdr_op_cs"
+                         "(%N:%l) be_visitor_valuetype_cdr_op_ci"
                          "::visit_valuetype - "
                          "codegen for scope failed\n"), -1);
     }
@@ -108,6 +108,6 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
       visitor.visit_valuetype (node);
     }
 
-  node->cli_stub_cdr_op_gen (1);
+  node->cli_inline_cdr_op_gen (1);
   return 0;
 }

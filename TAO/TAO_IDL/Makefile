@@ -6344,6 +6344,7 @@ tags:
  be_include/be_visitor_interface/any_op_ch.h \
  be_include/be_visitor_interface/any_op_cs.h \
  be_include/be_visitor_interface/cdr_op_ch.h \
+ be_include/be_visitor_interface/cdr_op_ci.h \
  be_include/be_visitor_interface/cdr_op_cs.h \
  be_include/be_visitor_interface/tie_sh.h \
  be_include/be_visitor_interface/tie_si.h be_include/be.h \
@@ -7314,6 +7315,7 @@ tags:
  be_include/be_visitor_sequence/any_op_ch.h \
  be_include/be_visitor_sequence/any_op_cs.h \
  be_include/be_visitor_sequence/cdr_op_ch.h \
+ be_include/be_visitor_sequence/cdr_op_ci.h \
  be_include/be_visitor_sequence/cdr_op_cs.h
 .obj/be_string.o .obj/be_string.so .shobj/be_string.o .shobj/be_string.so: be/be_string.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -9214,7 +9216,7 @@ tags:
  be_include/be_visitor_array/any_op_ch.h \
  be_include/be_visitor_array/any_op_cs.h \
  be_include/be_visitor_array/cdr_op_ch.h \
- be_include/be_visitor_array/cdr_op_cs.h \
+ be_include/be_visitor_array/cdr_op_ci.h \
  be_include/be_visitor_attribute.h \
  be_include/be_visitor_attribute/attribute.h \
  be_include/be_visitor_constant.h \
@@ -9225,7 +9227,7 @@ tags:
  be_include/be_visitor_enum/any_op_ch.h \
  be_include/be_visitor_enum/any_op_cs.h \
  be_include/be_visitor_enum/cdr_op_ch.h \
- be_include/be_visitor_enum/cdr_op_cs.h \
+ be_include/be_visitor_enum/cdr_op_ci.h \
  be_include/be_visitor_exception.h \
  be_include/be_visitor_exception/exception.h \
  be_include/be_visitor_exception/exception_ch.h \
@@ -9236,11 +9238,13 @@ tags:
  be_include/be_visitor_exception/any_op_ch.h \
  be_include/be_visitor_exception/any_op_cs.h \
  be_include/be_visitor_exception/cdr_op_ch.h \
+ be_include/be_visitor_exception/cdr_op_ci.h \
  be_include/be_visitor_exception/cdr_op_cs.h \
  be_include/be_visitor_field.h be_include/be_visitor_field/field_ch.h \
  be_include/be_visitor_field/field_ci.h \
  be_include/be_visitor_field/field_cs.h \
  be_include/be_visitor_field/cdr_op_ch.h \
+ be_include/be_visitor_field/cdr_op_ci.h \
  be_include/be_visitor_field/cdr_op_cs.h \
  be_include/be_visitor_interface.h \
  be_include/be_visitor_interface/interface.h \
@@ -9257,6 +9261,7 @@ tags:
  be_include/be_visitor_interface/any_op_ch.h \
  be_include/be_visitor_interface/any_op_cs.h \
  be_include/be_visitor_interface/cdr_op_ch.h \
+ be_include/be_visitor_interface/cdr_op_ci.h \
  be_include/be_visitor_interface/cdr_op_cs.h \
  be_include/be_visitor_interface/tie_sh.h \
  be_include/be_visitor_interface/tie_si.h \
@@ -9272,7 +9277,7 @@ tags:
  be_include/be_visitor_valuetype/valuetype_ci.h \
  be_include/be_visitor_valuetype/valuetype_cs.h \
  be_include/be_visitor_valuetype/cdr_op_ch.h \
- be_include/be_visitor_valuetype/cdr_op_cs.h \
+ be_include/be_visitor_valuetype/cdr_op_ci.h \
  be_include/be_visitor_valuetype/marshal_ch.h \
  be_include/be_visitor_valuetype/marshal_cs.h \
  be_include/be_visitor_valuetype/arglist.h \
@@ -9340,6 +9345,7 @@ tags:
  be_include/be_visitor_sequence/any_op_ch.h \
  be_include/be_visitor_sequence/any_op_cs.h \
  be_include/be_visitor_sequence/cdr_op_ch.h \
+ be_include/be_visitor_sequence/cdr_op_ci.h \
  be_include/be_visitor_sequence/cdr_op_cs.h \
  be_include/be_visitor_structure.h \
  be_include/be_visitor_structure/structure.h \
@@ -9349,6 +9355,7 @@ tags:
  be_include/be_visitor_structure/any_op_ch.h \
  be_include/be_visitor_structure/any_op_cs.h \
  be_include/be_visitor_structure/cdr_op_ch.h \
+ be_include/be_visitor_structure/cdr_op_ci.h \
  be_include/be_visitor_structure/cdr_op_cs.h \
  be_include/be_visitor_typecode.h \
  be_include/be_visitor_typecode/typecode_decl.h \
@@ -9361,6 +9368,7 @@ tags:
  be_include/be_visitor_typedef/any_op_ch.h \
  be_include/be_visitor_typedef/any_op_cs.h \
  be_include/be_visitor_typedef/cdr_op_ch.h \
+ be_include/be_visitor_typedef/cdr_op_ci.h \
  be_include/be_visitor_typedef/cdr_op_cs.h \
  be_include/be_visitor_union.h be_include/be_visitor_union/union.h \
  be_include/be_visitor_union/union_ch.h \
@@ -9372,6 +9380,7 @@ tags:
  be_include/be_visitor_union/any_op_ch.h \
  be_include/be_visitor_union/any_op_cs.h \
  be_include/be_visitor_union/cdr_op_ch.h \
+ be_include/be_visitor_union/cdr_op_ci.h \
  be_include/be_visitor_union/cdr_op_cs.h \
  be_include/be_visitor_union_branch.h \
  be_include/be_visitor_union_branch/public_ch.h \
@@ -9382,6 +9391,7 @@ tags:
  be_include/be_visitor_union_branch/public_access_cs.h \
  be_include/be_visitor_union_branch/private_ch.h \
  be_include/be_visitor_union_branch/cdr_op_ch.h \
+ be_include/be_visitor_union_branch/cdr_op_ci.h \
  be_include/be_visitor_union_branch/cdr_op_cs.h
 .obj/be_visitor.o .obj/be_visitor.so .shobj/be_visitor.o .shobj/be_visitor.so: be/be_visitor.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -9729,11 +9739,11 @@ tags:
  be_include/be_visitor_array/any_op_ch.h \
  be_include/be_visitor_array/any_op_cs.h \
  be_include/be_visitor_array/cdr_op_ch.h \
- be_include/be_visitor_array/cdr_op_cs.h be/be_visitor_array/array.cpp \
+ be_include/be_visitor_array/cdr_op_ci.h be/be_visitor_array/array.cpp \
  be/be_visitor_array/array_ch.cpp be/be_visitor_array/array_ci.cpp \
  be/be_visitor_array/array_cs.cpp be/be_visitor_array/any_op_ch.cpp \
  be/be_visitor_array/any_op_cs.cpp be/be_visitor_array/cdr_op_ch.cpp \
- be/be_visitor_array/cdr_op_cs.cpp
+ be/be_visitor_array/cdr_op_ci.cpp
 .obj/be_visitor_attribute.o .obj/be_visitor_attribute.so .shobj/be_visitor_attribute.o .shobj/be_visitor_attribute.so: be/be_visitor_attribute.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -10271,10 +10281,10 @@ tags:
  be_include/be_visitor_enum/any_op_ch.h \
  be_include/be_visitor_enum/any_op_cs.h \
  be_include/be_visitor_enum/cdr_op_ch.h \
- be_include/be_visitor_enum/cdr_op_cs.h be/be_visitor_enum/enum_ch.cpp \
+ be_include/be_visitor_enum/cdr_op_ci.h be/be_visitor_enum/enum_ch.cpp \
  be/be_visitor_enum/enum_cs.cpp be/be_visitor_enum/any_op_ch.cpp \
  be/be_visitor_enum/any_op_cs.cpp be/be_visitor_enum/cdr_op_ch.cpp \
- be/be_visitor_enum/cdr_op_cs.cpp
+ be/be_visitor_enum/cdr_op_ci.cpp
 .obj/be_visitor_exception.o .obj/be_visitor_exception.so .shobj/be_visitor_exception.o .shobj/be_visitor_exception.so: be/be_visitor_exception.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -10390,6 +10400,7 @@ tags:
  be_include/be_visitor_exception/any_op_ch.h \
  be_include/be_visitor_exception/any_op_cs.h \
  be_include/be_visitor_exception/cdr_op_ch.h \
+ be_include/be_visitor_exception/cdr_op_ci.h \
  be_include/be_visitor_exception/cdr_op_cs.h \
  be/be_visitor_exception/exception.cpp \
  be/be_visitor_exception/exception_ch.cpp \
@@ -10400,12 +10411,14 @@ tags:
  be/be_visitor_exception/any_op_ch.cpp \
  be/be_visitor_exception/any_op_cs.cpp \
  be/be_visitor_exception/cdr_op_ch.cpp \
- be/be_visitor_exception/cdr_op_cs.cpp be_include/be_visitor_field.h \
+ be/be_visitor_exception/cdr_op_ci.cpp be_include/be_visitor_field.h \
  be_include/be_visitor_field/field_ch.h \
  be_include/be_visitor_field/field_ci.h \
  be_include/be_visitor_field/field_cs.h \
  be_include/be_visitor_field/cdr_op_ch.h \
- be_include/be_visitor_field/cdr_op_cs.h
+ be_include/be_visitor_field/cdr_op_ci.h \
+ be_include/be_visitor_field/cdr_op_cs.h \
+ be/be_visitor_exception/cdr_op_cs.cpp
 .obj/be_visitor_field.o .obj/be_visitor_field.so .shobj/be_visitor_field.o .shobj/be_visitor_field.so: be/be_visitor_field.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -10515,10 +10528,11 @@ tags:
  be_include/be_visitor_field/field_ci.h \
  be_include/be_visitor_field/field_cs.h \
  be_include/be_visitor_field/cdr_op_ch.h \
- be_include/be_visitor_field/cdr_op_cs.h be_include/be_visitor_scope.h \
+ be_include/be_visitor_field/cdr_op_ci.h be_include/be_visitor_scope.h \
+ be_include/be_visitor_field/cdr_op_cs.h \
  be/be_visitor_field/field_ch.cpp be/be_visitor_field/field_ci.cpp \
  be/be_visitor_field/field_cs.cpp be/be_visitor_field/cdr_op_ch.cpp \
- be/be_visitor_field/cdr_op_cs.cpp
+ be/be_visitor_field/cdr_op_ci.cpp be/be_visitor_field/cdr_op_cs.cpp
 .obj/be_visitor_interface.o .obj/be_visitor_interface.so .shobj/be_visitor_interface.o .shobj/be_visitor_interface.so: be/be_visitor_interface.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -10639,6 +10653,7 @@ tags:
  be_include/be_visitor_interface/any_op_ch.h \
  be_include/be_visitor_interface/any_op_cs.h \
  be_include/be_visitor_interface/cdr_op_ch.h \
+ be_include/be_visitor_interface/cdr_op_ci.h \
  be_include/be_visitor_interface/cdr_op_cs.h \
  be_include/be_visitor_interface/tie_sh.h \
  be_include/be_visitor_interface/tie_si.h \
@@ -10657,9 +10672,11 @@ tags:
  be/be_visitor_interface/any_op_ch.cpp \
  be/be_visitor_interface/any_op_cs.cpp \
  be/be_visitor_interface/cdr_op_ch.cpp \
+ be/be_visitor_interface/cdr_op_ci.cpp \
  be/be_visitor_interface/cdr_op_cs.cpp
 .obj/be_visitor_interface_fwd.o .obj/be_visitor_interface_fwd.so .shobj/be_visitor_interface_fwd.o .shobj/be_visitor_interface_fwd.so: be/be_visitor_interface_fwd.cpp \
- include/idl.h $(ACE_ROOT)/ace/ACE.h \
+ include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -10883,7 +10900,7 @@ tags:
  be_include/be_visitor_valuetype/valuetype_ci.h \
  be_include/be_visitor_valuetype/valuetype_cs.h \
  be_include/be_visitor_valuetype/cdr_op_ch.h \
- be_include/be_visitor_valuetype/cdr_op_cs.h \
+ be_include/be_visitor_valuetype/cdr_op_ci.h \
  be_include/be_visitor_valuetype/marshal_ch.h \
  be_include/be_visitor_valuetype/marshal_cs.h \
  be_include/be_visitor_valuetype/arglist.h \
@@ -10898,7 +10915,7 @@ tags:
  be/be_visitor_valuetype/valuetype_ci.cpp \
  be/be_visitor_valuetype/valuetype_cs.cpp \
  be/be_visitor_valuetype/cdr_op_ch.cpp \
- be/be_visitor_valuetype/cdr_op_cs.cpp \
+ be/be_visitor_valuetype/cdr_op_ci.cpp \
  be/be_visitor_valuetype/marshal_ch.cpp \
  be/be_visitor_valuetype/marshal_cs.cpp \
  be/be_visitor_valuetype/arglist.cpp be_include/be_visitor_operation.h \
@@ -10938,10 +10955,12 @@ tags:
  be_include/be_visitor_field/field_ci.h \
  be_include/be_visitor_field/field_cs.h \
  be_include/be_visitor_field/cdr_op_ch.h \
+ be_include/be_visitor_field/cdr_op_ci.h \
  be_include/be_visitor_field/cdr_op_cs.h \
  be/be_visitor_valuetype/obv_module.cpp
 .obj/be_visitor_valuetype_fwd.o .obj/be_visitor_valuetype_fwd.so .shobj/be_visitor_valuetype_fwd.o .shobj/be_visitor_valuetype_fwd.so: be/be_visitor_valuetype_fwd.cpp \
- include/idl.h $(ACE_ROOT)/ace/ACE.h \
+ include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -11682,10 +11701,12 @@ tags:
  be_include/be_visitor_sequence/any_op_ch.h \
  be_include/be_visitor_sequence/any_op_cs.h \
  be_include/be_visitor_sequence/cdr_op_ch.h \
+ be_include/be_visitor_sequence/cdr_op_ci.h \
  be_include/be_visitor_sequence/cdr_op_cs.h \
  be/be_visitor_sequence/any_op_ch.cpp \
  be/be_visitor_sequence/any_op_cs.cpp \
  be/be_visitor_sequence/cdr_op_ch.cpp \
+ be/be_visitor_sequence/cdr_op_ci.cpp \
  be/be_visitor_sequence/cdr_op_cs.cpp \
  be/be_visitor_sequence/buffer_type.cpp \
  be/be_visitor_sequence/elemtype.cpp \
@@ -11823,6 +11844,7 @@ tags:
  be_include/be_visitor_structure/any_op_ch.h \
  be_include/be_visitor_structure/any_op_cs.h \
  be_include/be_visitor_structure/cdr_op_ch.h \
+ be_include/be_visitor_structure/cdr_op_ci.h \
  be_include/be_visitor_structure/cdr_op_cs.h \
  be/be_visitor_structure/structure.cpp \
  be/be_visitor_structure/structure_ch.cpp \
@@ -11831,12 +11853,14 @@ tags:
  be/be_visitor_structure/any_op_ch.cpp \
  be/be_visitor_structure/any_op_cs.cpp \
  be/be_visitor_structure/cdr_op_ch.cpp \
- be/be_visitor_structure/cdr_op_cs.cpp be_include/be_visitor_field.h \
+ be/be_visitor_structure/cdr_op_ci.cpp be_include/be_visitor_field.h \
  be_include/be_visitor_field/field_ch.h \
  be_include/be_visitor_field/field_ci.h \
  be_include/be_visitor_field/field_cs.h \
  be_include/be_visitor_field/cdr_op_ch.h \
- be_include/be_visitor_field/cdr_op_cs.h
+ be_include/be_visitor_field/cdr_op_ci.h \
+ be_include/be_visitor_field/cdr_op_cs.h \
+ be/be_visitor_structure/cdr_op_cs.cpp
 .obj/be_visitor_typecode.o .obj/be_visitor_typecode.so .shobj/be_visitor_typecode.o .shobj/be_visitor_typecode.so: be/be_visitor_typecode.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -12059,6 +12083,7 @@ tags:
  be_include/be_visitor_typedef/any_op_ch.h \
  be_include/be_visitor_typedef/any_op_cs.h \
  be_include/be_visitor_typedef/cdr_op_ch.h \
+ be_include/be_visitor_typedef/cdr_op_ci.h \
  be_include/be_visitor_typedef/cdr_op_cs.h \
  be/be_visitor_typedef/typedef.cpp \
  be/be_visitor_typedef/typedef_ch.cpp \
@@ -12067,6 +12092,7 @@ tags:
  be/be_visitor_typedef/any_op_ch.cpp \
  be/be_visitor_typedef/any_op_cs.cpp \
  be/be_visitor_typedef/cdr_op_ch.cpp \
+ be/be_visitor_typedef/cdr_op_ci.cpp \
  be/be_visitor_typedef/cdr_op_cs.cpp
 .obj/be_visitor_union.o .obj/be_visitor_union.so .shobj/be_visitor_union.o .shobj/be_visitor_union.so: be/be_visitor_union.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -12183,6 +12209,7 @@ tags:
  be_include/be_visitor_union/any_op_ch.h \
  be_include/be_visitor_union/any_op_cs.h \
  be_include/be_visitor_union/cdr_op_ch.h \
+ be_include/be_visitor_union/cdr_op_ci.h \
  be_include/be_visitor_union/cdr_op_cs.h \
  be/be_visitor_union/discriminant_ch.cpp \
  be/be_visitor_union/discriminant_ci.cpp \
@@ -12190,9 +12217,10 @@ tags:
  be/be_visitor_union/union_ch.cpp be/be_visitor_union/union_ci.cpp \
  be/be_visitor_union/union_cs.cpp be/be_visitor_union/any_op_ch.cpp \
  be/be_visitor_union/any_op_cs.cpp be/be_visitor_union/cdr_op_ch.cpp \
- be/be_visitor_union/cdr_op_cs.cpp
+ be/be_visitor_union/cdr_op_ci.cpp be/be_visitor_union/cdr_op_cs.cpp
 .obj/be_visitor_union_branch.o .obj/be_visitor_union_branch.so .shobj/be_visitor_union_branch.o .shobj/be_visitor_union_branch.so: be/be_visitor_union_branch.cpp \
- include/idl.h $(ACE_ROOT)/ace/ACE.h \
+ include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -12304,6 +12332,7 @@ tags:
  be_include/be_visitor_union_branch/public_access_cs.h \
  be_include/be_visitor_union_branch/private_ch.h \
  be_include/be_visitor_union_branch/cdr_op_ch.h \
+ be_include/be_visitor_union_branch/cdr_op_ci.h \
  be_include/be_visitor_union_branch/cdr_op_cs.h \
  be/be_visitor_union_branch/private_ch.cpp \
  be/be_visitor_union_branch/public_assign_cs.cpp \
@@ -12313,6 +12342,7 @@ tags:
  be/be_visitor_union_branch/public_ci.cpp \
  be/be_visitor_union_branch/public_cs.cpp \
  be/be_visitor_union_branch/cdr_op_ch.cpp \
+ be/be_visitor_union_branch/cdr_op_ci.cpp \
  be/be_visitor_union_branch/cdr_op_cs.cpp
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

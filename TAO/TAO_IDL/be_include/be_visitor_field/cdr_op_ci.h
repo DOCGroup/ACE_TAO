@@ -1,43 +1,43 @@
-/* -*- c++ -*- */
 //
 // $Id$
 //
+/* -*- c++ -*- */
 // ============================================================================
 //
 // = LIBRARY
 //    TAO IDL
 //
 // = FILENAME
-//    field_cdr_ci.h
+//    cdr_op_ci.h
 //
 // = DESCRIPTION
-//    Visitor generating code for Field in the client stubs file.
+//    Concrete visitor for the base "BE_Field" node
+//    This generates code for structure members in the client header.
 //
 // = AUTHOR
-//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//    derived from be_visitor_field/cdr_op_ci.h
+//    Aniruddha Gokhale
 //
 // ============================================================================
 
-#ifndef _BE_VISITOR_VALUETYPE_FIELD_CDR_CI_H_
-#define _BE_VISITOR_VALUETYPE_FIELD_CDR_CI_H_
+#ifndef _BE_VISITOR_FIELD_CDR_OP_CI_H_
+#define _BE_VISITOR_FIELD_CDR_OP_CI_H_
 
 #include "be_visitor_scope.h"
 
-class be_visitor_valuetype_field_cdr_ci : public be_visitor_decl
+class be_visitor_field_cdr_op_ci : public be_visitor_decl
 {
   //
   // = TITLE
-  //    be_visitor_valuetype_field_cdr_ci
+  //    be_visitor_field_cdr_op_ci
   //
   // = DESCRIPTION
   //   This is a concrete visitor for the be_field node for the client header.
   //
 public:
-  be_visitor_valuetype_field_cdr_ci (be_visitor_context *ctx);
+  be_visitor_field_cdr_op_ci (be_visitor_context *ctx);
   // constructor
 
-  ~be_visitor_valuetype_field_cdr_ci (void);
+  ~be_visitor_field_cdr_op_ci (void);
   // destructor
 
   virtual int visit_field (be_field *node);
@@ -57,12 +57,6 @@ public:
   virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit interface forward type
 
-  virtual int visit_valuetype (be_valuetype *node);
-  // visit valuetype type
-
-  virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
-  // visit valuetype forward type
-
   virtual int visit_predefined_type (be_predefined_type *node);
   // visit predefined type
 
@@ -81,14 +75,13 @@ public:
   virtual int visit_union (be_union *node);
   // visit union type
 
-  const char *pre_, *post_;
 };
 
-class be_visitor_valuetype_field_cdr_decl : public be_visitor_scope
+class be_visitor_cdr_op_field_decl : public be_visitor_scope
 {
   //
   // = TITLE
-  //   be_visitor_cdr_valuetype_field_cdr_decl
+  //   be_visitor_cdr_op_ci_field_decl
   //
   // = DESCRIPTION
   //   When generating CDR operators for fields of structures and/or
@@ -97,7 +90,7 @@ class be_visitor_valuetype_field_cdr_decl : public be_visitor_scope
   //   generates that code.
   //
 public:
-  be_visitor_valuetype_field_cdr_decl (be_visitor_context *ctx);
+  be_visitor_cdr_op_field_decl (be_visitor_context *ctx);
   // constructor
 
   virtual int visit_field (be_field *node);
@@ -112,4 +105,4 @@ public:
   // visit typedef type
 };
 
-#endif /*  _BE_VISITOR_VALUETYPE_FIELD_CDR_CI_H_ */
+#endif /*  _BE_VISITOR_FIELD_CDR_OP_CI_H_ */

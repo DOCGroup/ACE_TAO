@@ -139,9 +139,9 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
       return new be_visitor_module_any_op (new_ctx);
     case TAO_CodeGen::TAO_MODULE_CDR_OP_CH:
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CI:
     case TAO_CodeGen::TAO_MODULE_CDR_OP_CS:
-      return new be_visitor_module_any_op (new_ctx);
-
+      return new be_visitor_module_cdr_op (new_ctx);
 
     case TAO_CodeGen::TAO_INTERFACE_CH:
       return new be_visitor_interface_ch (new_ctx);
@@ -149,6 +149,7 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_interface_ci (new_ctx);
     case TAO_CodeGen::TAO_INTERFACE_CS:
       return new be_visitor_interface_cs (new_ctx);
+
     case TAO_CodeGen::TAO_INTERFACE_SH:
       return new be_visitor_interface_sh (new_ctx);
     case TAO_CodeGen::TAO_INTERFACE_IH:
@@ -173,6 +174,8 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_interface_tie_si (new_ctx);
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CH:
       return new be_visitor_interface_cdr_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CI:
+      return new be_visitor_interface_cdr_op_ci (new_ctx);
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CS:
       return new be_visitor_interface_cdr_op_cs (new_ctx);
 
@@ -182,6 +185,8 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_interface_fwd_ci (new_ctx);
     case TAO_CodeGen::TAO_INTERFACE_FWD_CDR_OP_CI:
       return new be_visitor_interface_fwd_cdr_op_ci (new_ctx);
+    case TAO_CodeGen::TAO_INTERFACE_FWD_CDR_OP_CS:
+      return new be_visitor_decl (new_ctx); // noop
 
 #   ifdef IDL_HAS_VALUETYPE
 
@@ -216,12 +221,14 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
 
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH:
       return new be_visitor_valuetype_cdr_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CI:
+      return new be_visitor_valuetype_cdr_op_ci (new_ctx);
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS:
-      return new be_visitor_valuetype_cdr_op_cs (new_ctx);
+      return new be_visitor_decl (new_ctx); // noop
 
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CH:
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CS:
-      return new be_visitor_decl (new_ctx);  // is TODO
+      return new be_visitor_decl (new_ctx);  // @@ TODO
 
 #   endif /* IDL_HAS_VALUETYPE */
 
@@ -237,6 +244,8 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_structure_any_op_cs (new_ctx);
     case TAO_CodeGen::TAO_STRUCT_CDR_OP_CH:
       return new be_visitor_structure_cdr_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_STRUCT_CDR_OP_CI:
+      return new be_visitor_structure_cdr_op_ci (new_ctx);
     case TAO_CodeGen::TAO_STRUCT_CDR_OP_CS:
       return new be_visitor_structure_cdr_op_cs (new_ctx);
 
@@ -255,8 +264,10 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_enum_any_op_cs (new_ctx);
     case TAO_CodeGen::TAO_ENUM_CDR_OP_CH:
       return new be_visitor_enum_cdr_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_ENUM_CDR_OP_CI:
+      return new be_visitor_enum_cdr_op_ci (new_ctx);
     case TAO_CodeGen::TAO_ENUM_CDR_OP_CS:
-      return new be_visitor_enum_cdr_op_cs (new_ctx);
+      return new be_visitor_decl (new_ctx);
 
     case TAO_CodeGen::TAO_FIELD_CH:
       return new be_visitor_field_ch (new_ctx);
@@ -266,6 +277,8 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_field_ci (new_ctx);
     case TAO_CodeGen::TAO_FIELD_CDR_OP_CH:
       return new be_visitor_field_cdr_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_FIELD_CDR_OP_CI:
+      return new be_visitor_field_cdr_op_ci (new_ctx);
     case TAO_CodeGen::TAO_FIELD_CDR_OP_CS:
       return new be_visitor_field_cdr_op_cs (new_ctx);
 
@@ -301,10 +314,14 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       break;
     case TAO_CodeGen::TAO_UNION_CDR_OP_CH:
       return new be_visitor_union_cdr_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_UNION_CDR_OP_CI:
+      return new be_visitor_union_cdr_op_ci (new_ctx);
     case TAO_CodeGen::TAO_UNION_CDR_OP_CS:
       return new be_visitor_union_cdr_op_cs (new_ctx);
     case TAO_CodeGen::TAO_UNION_BRANCH_CDR_OP_CH:
       return new be_visitor_union_branch_cdr_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_UNION_BRANCH_CDR_OP_CI:
+      return new be_visitor_union_branch_cdr_op_ci (new_ctx);
     case TAO_CodeGen::TAO_UNION_BRANCH_CDR_OP_CS:
       return new be_visitor_union_branch_cdr_op_cs (new_ctx);
 
@@ -331,6 +348,8 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_sequence_any_op_cs (new_ctx);
     case TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CH:
       return new be_visitor_sequence_cdr_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CI:
+      return new be_visitor_sequence_cdr_op_ci (new_ctx);
     case TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CS:
       return new be_visitor_sequence_cdr_op_cs (new_ctx);
 
@@ -346,6 +365,8 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_typedef_any_op_cs (new_ctx);
     case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CH:
       return new be_visitor_typedef_cdr_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CI:
+      return new be_visitor_typedef_cdr_op_ci (new_ctx);
     case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
       return new be_visitor_typedef_cdr_op_cs (new_ctx);
 
@@ -393,6 +414,8 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_exception_any_op_cs (new_ctx);
     case TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CH:
       return new be_visitor_exception_cdr_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CI:
+      return new be_visitor_exception_cdr_op_ci (new_ctx);
     case TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CS:
       return new be_visitor_exception_cdr_op_cs (new_ctx);
 
@@ -408,8 +431,10 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_array_any_op_cs (new_ctx);
     case TAO_CodeGen::TAO_ARRAY_CDR_OP_CH:
       return new be_visitor_array_cdr_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_ARRAY_CDR_OP_CI:
+      return new be_visitor_array_cdr_op_ci (new_ctx);
     case TAO_CodeGen::TAO_ARRAY_CDR_OP_CS:
-      return new be_visitor_array_cdr_op_cs (new_ctx);
+      return new be_visitor_decl (new_ctx);
 
     default:
       // an error

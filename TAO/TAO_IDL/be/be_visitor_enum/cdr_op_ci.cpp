@@ -8,7 +8,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    cdr_op_cs.cpp
+//    cdr_op_ci.cpp
 //
 // = DESCRIPTION
 //    Visitors for generation of code for Enum for the CDR operators
@@ -18,13 +18,13 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_enum.h"
 
-ACE_RCSID(be_visitor_enum, cdr_op_cs, "$Id$")
+ACE_RCSID(be_visitor_enum, cdr_op_ci, "$Id$")
 
 
 // ***************************************************************************
@@ -32,20 +32,20 @@ ACE_RCSID(be_visitor_enum, cdr_op_cs, "$Id$")
 // stubs file
 // ***************************************************************************
 
-be_visitor_enum_cdr_op_cs::be_visitor_enum_cdr_op_cs
+be_visitor_enum_cdr_op_ci::be_visitor_enum_cdr_op_ci
 (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }
 
-be_visitor_enum_cdr_op_cs::~be_visitor_enum_cdr_op_cs (void)
+be_visitor_enum_cdr_op_ci::~be_visitor_enum_cdr_op_ci (void)
 {
 }
 
 int
-be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
+be_visitor_enum_cdr_op_ci::visit_enum (be_enum *node)
 {
-  if (node->cli_stub_cdr_op_gen () || node->imported ())
+  if (node->cli_inline_cdr_op_gen () || node->imported ())
     return 0;
 
   TAO_OutStream *os = this->ctx_->stream ();
@@ -65,7 +65,7 @@ be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
       << "CORBA::ULong _tao_temp;" << be_nl
       << "if (strm.read_ulong (_tao_temp))" << be_nl
       << "{" << be_idt_nl
-      << "ACE_OS::memcpy (&_tao_enumval, &_tao_temp, sizeof (CORBA::ULong));" 
+      << "ACE_OS::memcpy (&_tao_enumval, &_tao_temp, sizeof (CORBA::ULong));"
       << be_nl
       << "return 1;" << be_uidt_nl
       << "}" << be_nl
@@ -73,6 +73,6 @@ be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
       << "return 0;" << be_uidt << be_uidt_nl
       << "}\n\n";
 
-  node->cli_stub_cdr_op_gen (1);
+  node->cli_inline_cdr_op_gen (1);
   return 0;
 }
