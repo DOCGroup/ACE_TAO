@@ -1,3 +1,20 @@
+Sat Sep 11 17:43:34 2004  Jules White <jules@dre.vanderbilt.edu>
+
+  * PSPE_Handler.h:
+  * PSPE_Handler.cpp:
+  * PCD_Handler.cpp:
+  * PCD_Handler.h
+  
+    Created a class to handle PlanSubcomponentPortEndpoint.
+    Created a class to hanlde PlanConnectionDescription.
+
+Thu Sep  9 14:34:02 2004  Jules White <jules@dre.vanderbilt.edu>
+
+  * DAnCE/Config_Handlers/CEPE_Handler.h:
+  * DAnCE/Config_Handlers/CEPE_Handler.cpp:
+  
+    Added a class to handle ComponentExternalPortEndpoints.
+    
 Wed Sep  8 17:23:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Dance/Config_Handlers/Config_Handlers.mpc: 
