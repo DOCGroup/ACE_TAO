@@ -1,3 +1,8 @@
+Wed Mar 28 10:13:16 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Makefile.bor: Don't try to build the SSL directory if
+          SSL_ROOT is not set.
+
 Tue Mar 27 19:54:11 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_run_tests.lst:
