@@ -61,6 +61,8 @@ Dispatcher_Task::enqueue (Dispatch_Queue_Item *qitem)
 #endif //KOKYU_HAS_RELEASE_GUARD
 
   this->putq (qitem);
+  //@BT INSTRUMENT with event ID: EVENT_ENQUEUED Measure time from
+  //event enqueue into dispatch queue to actual dispatch
 
 #ifdef KOKYU_HAS_RELEASE_GUARD
   //if qos_info is not in map, this should add it
