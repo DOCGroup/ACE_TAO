@@ -1,9 +1,12 @@
 Mon Dec 18 19:14:25 2000  Ossama Othman  <ossama@uci.edu>
 
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
+	  (visit_operation):
 	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp
 	  (visit_operation):
 
-	  Fixed "unused variable" warnings in the generated skeleton.
+	  Fixed "unused variable" warnings in the generated stub and
+	  skeleton.
 
 Mon Dec 18 18:58:00 2000  Ossama Othman  <ossama@uci.edu>
 
