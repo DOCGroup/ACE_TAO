@@ -127,7 +127,7 @@ ACE_Task_Base::cleanup (void *object, void *)
 extern "C" void
 ACE_Task_Base_cleanup (void *object, void *)
 {
-  ACE_Task_Base::cleanup (object);
+  ACE_Task_Base::cleanup (object, 0);
 }
 #endif /* ACE_HAS_SIG_C_FUNC */
 
