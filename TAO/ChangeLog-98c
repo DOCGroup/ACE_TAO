@@ -1,30 +1,35 @@
+Tue Jul 14 14:40:36 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp (print_stats):
+          when short-circuiting, don't print out time breakdowns to/in/from EC.
+
 Tue Jul 14 13:30:01 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp
           orbsvcs/orbsvcs/Event/RT_Task.h:
 
-	Added conditional compilation logic to cause EC to use dynamic queues 
-	with appropriate dispatching strategies when the MUF, EDF, or MLF
-	strategies are defined.  This is a temporary measure to allow
-	testing of the EC performance with the dynamic queues, and will
-	be relaced with a better configuration mechanism, based on the results
-	of the off-line scheduling run, in the very near future.
+        Added conditional compilation logic to cause EC to use dynamic queues
+        with appropriate dispatching strategies when the MUF, EDF, or MLF
+        strategies are defined.  This is a temporary measure to allow
+        testing of the EC performance with the dynamic queues, and will
+        be relaced with a better configuration mechanism, based on the results
+        of the off-line scheduling run, in the very near future.
 
 Tue Jul 14 12:00:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp: 
-	* TAO_IDL/be/be_visitor_interface/be_interface.cpp: 
-	  Added server side support for CORBA::Object::_non_existent, in
-	  the future it could be implemented in the POA, saving an
-	  operation lookup and reducing the footprint somewhat.
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/be_interface.cpp:
+          Added server side support for CORBA::Object::_non_existent, in
+          the future it could be implemented in the POA, saving an
+          operation lookup and reducing the footprint somewhat.
 
-	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.h: 
-	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp: 
-	* orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.h: 
-	* orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp: 
-	  Replaced ACE_Thread_Mutex with ACE_SYNCH_MUTEX so it compiles in
-	  platforms without threads, not that it will work though.
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSet.h:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.h:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp:
+          Replaced ACE_Thread_Mutex with ACE_SYNCH_MUTEX so it compiles in
+          platforms without threads, not that it will work though.
 
 Tue Jul 14 12:30:45 1998  David L. Levine  <levine@cs.wustl.edu>
 
