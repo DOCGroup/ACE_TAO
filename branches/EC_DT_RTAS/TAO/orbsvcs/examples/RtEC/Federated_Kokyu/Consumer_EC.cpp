@@ -44,9 +44,9 @@ main (int argc, char* argv[])
 #ifdef ACE_HAS_DSUI
   ds_control* ds_cntl = new ds_control ("Federated_Test_Consumer","consumer_enabled.dsui");
   int result = system("dstream_daemon -y d 300 -r 305 -v /tmp/Federated_Test_DSKI.binary -f 2 -e 3 -f 2 -e 4");
-  if (WIFSIGNALED(ret) && (WTERMSIG(ret) == SIGINT || WTERMSIG(ret) == SIGQUIT))
+  if (WIFSIGNALED(result) && (WTERMSIG(result) == SIGINT || WTERMSIG(result) == SIGQUIT))
     {
-      ACE_DEUBG((LM_ERROR, "Unable to access DSKI daemon. Please double check the kernel was configured with DSKI.\n"));
+      ACE_DEBUG((LM_ERROR, "Unable to access DSKI daemon. Please double check the kernel was configured with DSKI.\n"));
     }
 
 #endif // ACE_HAS_DSUI

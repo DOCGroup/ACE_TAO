@@ -8,6 +8,7 @@
 #include "ace/ACE.h" //for is_prime()
 #include "orbsvcs/orbsvcs/Time_Utilities.h" //ORBSVCS_Time
 #include <ace/Counter.h>
+#include <ace/OS_NS_sys_time.h>
 
 #if defined (ACE_HAS_DSUI)
 #include <dsui.h>
