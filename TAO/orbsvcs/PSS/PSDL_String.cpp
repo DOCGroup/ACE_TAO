@@ -103,7 +103,7 @@ TAO_PSDL_String::hash (void) const
 // (caller owns storage of return values)
 TAO_PSDL_String::operator ACE_CString *() const
 {
-  ACE_CString *str;
+  ACE_CString *str = 0;
 
   char * dest = str->rep ();
   const char * src = this->buffer_;
@@ -115,7 +115,7 @@ TAO_PSDL_String::operator ACE_CString *() const
 
 TAO_PSDL_String::operator ACE_CString *()
 {
-  ACE_CString *str;
+  ACE_CString *str = 0;
 
   char * dest = str->rep ();
   const char * src = this->buffer_;
