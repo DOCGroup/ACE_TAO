@@ -1,3 +1,15 @@
+Thu Sep 12 11:31:13 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * tests/Bug_1269_Regression/Echo.cpp:
+	* tests/Bug_1269_Regression/Echo_Caller.cpp:
+	* tests/Bug_1269_Regression/ORB_Task.cpp:
+	* tests/Bug_1269_Regression/Server_Timer.cpp:
+	* tests/Bug_1270_Regression/Echo.cpp:
+	* tests/Bug_1270_Regression/Echo.h:
+	* tests/Bug_1270_Regression/Echo_Caller.h:
+	* tests/Bug_1270_Regression/ORB_Task.h:
+	* tests/Bug_1270_Regression/Server_Timer.h: Fixed fuzz errors.
+
 Wed Sep 11 09:22:25 2002  Priyanka Gontla  <pgontla@ociweb.com>
 
 	* orbsvcs/ImplRepo_Service/Makefile.bor: 
