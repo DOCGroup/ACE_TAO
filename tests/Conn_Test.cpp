@@ -345,28 +345,6 @@ Svc_Handler::idle (u_long flags)
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::idle (flags);
 }
 
-struct Client_Info
-  // = TITLE
-  //   Information passed to the client so it can communicate with the
-  //   server.
-{
-  ACE_INET_Addr *server_addr_;
-  // Address of the server to connect with.
-
-  CONNECTOR *connector_;
-  // Connection factory.
-
-  STRAT_CONNECTOR *strat_connector_;
-  // Strategy for connecting.
-
-#if defined (ACE_HAS_THREADS)
-  ACE_Barrier *barrier_;
-  // Performs barrier synchronization.
-#endif /* ACE_HAS_THREADS */
-};
-
-#if !defined (ACE_LACKS_FORK) || defined (ACE_HAS_THREADS)
-
 static void
 timed_blocking_connect (CONNECTOR &con,
                         const ACE_INET_Addr &server_addr)
@@ -465,6 +443,26 @@ cached_connect (STRAT_CONNECTOR &con,
     }
 }
 
+struct Client_Info
+  // = TITLE
+  //   Information passed to the client so it can communicate with the
+  //   server.
+{
+  ACE_INET_Addr *server_addr_;
+  // Address of the server to connect with.
+
+  CONNECTOR *connector_;
+  // Connection factory.
+
+  STRAT_CONNECTOR *strat_connector_;
+  // Strategy for connecting.
+
+#if defined (ACE_HAS_THREADS)
+  ACE_Barrier *barrier_;
+  // Performs barrier synchronization.
+#endif /* ACE_HAS_THREADS */
+};
+
 static void *
 client_connections (void *arg)
 {
@@ -540,8 +538,7 @@ client (void *arg)
        THR_NEW_LWP) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) %p\n%a"),
-                ACE_TEXT ("client thread spawn failed"),
-                1));
+                ACE_TEXT ("client thread spawn failed")));
 
   // Wait for the threads to exit.
   client_manager.wait ();
@@ -619,8 +616,6 @@ server (void *arg)
   ACE_NOTREACHED (return 0);
 }
 
-#endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
-
 #if !defined (ACE_LACKS_FORK)
 static void
 handler (int /* signum */)
@@ -653,8 +648,7 @@ spawn_processes (ACCEPTOR *acceptor,
         case -1:
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) %p\n%a"),
-                      ACE_TEXT ("fork failed"),
-                      1));
+                      ACE_TEXT ("fork failed")));
           ACE_OS::exit (-1);
           /* NOTREACHED */
         case 0:             // In the child.
@@ -765,8 +759,7 @@ spawn_threads (ACCEPTOR *acceptor,
        ) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) %p\n%a"),
-                ACE_TEXT ("server thread create failed"),
-                1));
+                ACE_TEXT ("server thread create failed")));
 
   if (ACE_Thread_Manager::instance ()->spawn
       ((ACE_THR_FUNC) client,
@@ -778,8 +771,7 @@ spawn_threads (ACCEPTOR *acceptor,
        ) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) %p\n%a"),
-                ACE_TEXT ("client thread create failed"),
-                1));
+                ACE_TEXT ("client thread create failed")));
 
   // Wait for the threads to exit.
   // But, wait for a limited time because sometimes the test hangs on Irix.
@@ -862,10 +854,9 @@ main (int argc, ACE_TCHAR *argv[])
 #elif defined (ACE_HAS_THREADS)
       status = spawn_threads (&acceptor, &server_addr);
 #else  /* ACE_LACKS_FORK && ! ACE_HAS_THREADS */
-      ACE_ERROR ((LM_INFO,
-                  ACE_TEXT ("(%P|%t) ")
-                  ACE_TEXT ("only one thread may be run")
-                  ACE_TEXT (" in a process on this platform")));
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"),
+                  1));
 #endif /* ACE_LACKS_FORK && ! ACE_HAS_THREADS */
     }
 

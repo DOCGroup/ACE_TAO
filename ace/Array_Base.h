@@ -21,8 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ACE_Allocator;
-
 // Forward declaration.
 template <class T> class ACE_Array_Iterator;
 

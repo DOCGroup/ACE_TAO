@@ -59,11 +59,6 @@ rename_test (void)
     }
   ACE_OS::fclose (f);
 
-#if defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && ACE_HAS_WINNT4 == 0
-  // Can't rename if new_file exists already.
-  ACE_OS::unlink (new_file);
-#endif
-
   if (ACE_OS::rename (old_file, new_file) != 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("rename test 1")));
@@ -130,7 +125,7 @@ rename_test (void)
 #endif /* ACE_LACKS_RENAME */
 }
 
-//
+// 
 int
 string_emulation_test (void)
 {
@@ -141,12 +136,12 @@ string_emulation_test (void)
 
     const char *memchr1 = "abcdefghijklmnopqrstuvwxyz";
 
-    ACE_ASSERT (ACE_OS_String::memchr (ACE_static_cast (const void *, NULL),
-                                       'a',
+    ACE_ASSERT (ACE_OS_String::memchr (ACE_static_cast (const void *, NULL), 
+                                       'a', 
                                        0) == NULL);
     ACE_ASSERT (ACE_OS_String::memchr (memchr1, 'a', sizeof (memchr1)) != NULL);
     ACE_ASSERT (ACE_OS_String::memchr (memchr1, '1', sizeof (memchr1)) == NULL);
-
+  
     // ========================================================================
     // Test strchr
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strchr\n")));
@@ -200,20 +195,20 @@ string_emulation_test (void)
     char *strtok_r2;
 
 
-    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok_r (strtok_r1,
-                                                                " ",
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok_r (strtok_r1, 
+                                                                " ", 
                                                                 &strtok_r2),
                                        "A") == 0);
-    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok_r (0,
-                                                                " ",
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok_r (0, 
+                                                                " ", 
                                                                 &strtok_r2),
                                        "string") == 0);
     ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok_r (0,
-                                                                " ",
+                                                                " ", 
                                                                 &strtok_r2),
                                        "of") == 0);
     ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok_r (0,
-                                                                " ",
+                                                                " ", 
                                                                 &strtok_r2),
                                        "tokens") == 0);
     ACE_ASSERT (ACE_OS_String::strtok_r (0, " ", &strtok_r2) == 0);
@@ -234,7 +229,7 @@ string_emulation_test (void)
                                        "2a") == 0);
   }
 
-#if defined (ACE_HAS_WCHAR)
+#if defined (ACE_HAS_WCHAR)  
   {
     // ========================================================================
     // Test itoa (wchar_t version)
@@ -257,10 +252,10 @@ string_emulation_test (void)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcmp (wchar_t version)\n")));
 
     const wchar_t *strcmp1 = ACE_TEXT_WIDE ("stringf");
-    const wchar_t *strcmp2 = ACE_TEXT_WIDE ("stringfe");
-    const wchar_t *strcmp3 = ACE_TEXT_WIDE ("stringg");
-    const wchar_t *strcmp4 = ACE_TEXT_WIDE ("STRINGF");
-    const wchar_t *strcmp5 = ACE_TEXT_WIDE ("stringe");
+    const wchar_t *strcmp2 = ACE_TEXT_WIDE ("stringfe");  
+    const wchar_t *strcmp3 = ACE_TEXT_WIDE ("stringg");   
+    const wchar_t *strcmp4 = ACE_TEXT_WIDE ("STRINGF");   
+    const wchar_t *strcmp5 = ACE_TEXT_WIDE ("stringe");   
 
     ACE_ASSERT (ACE_OS_String::strcmp (strcmp1, strcmp1) == 0);
     ACE_ASSERT (ACE_OS_String::strcmp (strcmp1, strcmp2) < 0);
@@ -275,7 +270,7 @@ string_emulation_test (void)
     const wchar_t *strcpy1 = ACE_TEXT_WIDE ("abcdefghijklmnopqrstuvwxyz");
     wchar_t strcpy2[27];
 
-    ACE_ASSERT
+    ACE_ASSERT 
       (ACE_OS_String::strcmp (ACE_OS_String::strcpy (strcpy2, strcpy1),
                               strcpy1) == 0);
     ACE_ASSERT (ACE_OS_String::strcmp (strcpy2, strcpy1) == 0);
@@ -288,7 +283,7 @@ string_emulation_test (void)
     wchar_t strcat2[27] = ACE_TEXT_WIDE ("abcdefghijkl");
     const wchar_t *strcat3 = ACE_TEXT_WIDE ("mnopqrstuvwxyz");
 
-    ACE_ASSERT
+    ACE_ASSERT 
       (ACE_OS_String::strcmp (ACE_OS_String::strcat (strcat2, strcat3),
                               strcat1) == 0);
     ACE_ASSERT (ACE_OS_String::strcmp (strcat2, strcat1) == 0);
@@ -301,7 +296,7 @@ string_emulation_test (void)
     wchar_t strncat2[27] = ACE_TEXT_WIDE ("abcdefghijkl");
     const wchar_t *strncat3 = ACE_TEXT_WIDE ("mnopqrstuvwxyzabc");
 
-    ACE_ASSERT
+    ACE_ASSERT 
       (ACE_OS_String::strcmp (ACE_OS_String::strncat (strncat2, strncat3, 14),
                               strncat1) == 0);
     ACE_ASSERT (ACE_OS_String::strcmp (strncat2, strncat1) == 0);
@@ -312,9 +307,9 @@ string_emulation_test (void)
 
     const wchar_t *strspn1 = ACE_TEXT_WIDE ("abcdefghijkabcdefghijk");
 
-    ACE_ASSERT (ACE_OS_String::strspn (strspn1,
+    ACE_ASSERT (ACE_OS_String::strspn (strspn1, 
                                        ACE_TEXT_WIDE ("abcdf")) == 4);
-    ACE_ASSERT (ACE_OS_String::strspn (strspn1,
+    ACE_ASSERT (ACE_OS_String::strspn (strspn1, 
                                        ACE_TEXT_WIDE ("mno")) == 0);
 
     // ========================================================================
@@ -323,9 +318,9 @@ string_emulation_test (void)
 
     const wchar_t *strchr1 = ACE_TEXT_WIDE ("abcdefghijkabcdefghijk");
 
-    ACE_ASSERT (*ACE_OS_String::strchr (strchr1, ACE_TEXT_WIDE ('h'))
+    ACE_ASSERT (*ACE_OS_String::strchr (strchr1, ACE_TEXT_WIDE ('h')) 
                   == ACE_TEXT_WIDE ('h'));
-    ACE_ASSERT (ACE_OS_String::strchr (strchr1, ACE_TEXT_WIDE ('h'))
+    ACE_ASSERT (ACE_OS_String::strchr (strchr1, ACE_TEXT_WIDE ('h')) 
                   == strchr1 + 7);
     ACE_ASSERT (ACE_OS_String::strchr (strchr1, ACE_TEXT_WIDE ('1')) == NULL);
 
@@ -337,10 +332,10 @@ string_emulation_test (void)
 
     ACE_ASSERT (ACE_OS_String::strncmp (
                   ACE_OS_String::strstr (strstr1, ACE_TEXT_WIDE ("def")),
-                  ACE_TEXT_WIDE ("def"),
+                  ACE_TEXT_WIDE ("def"), 
                   3)
                   == 0);
-    ACE_ASSERT (ACE_OS_String::strstr (strstr1,
+    ACE_ASSERT (ACE_OS_String::strstr (strstr1, 
                                        ACE_TEXT_WIDE ("mno")) == 0);
 
     // ========================================================================
@@ -359,9 +354,9 @@ string_emulation_test (void)
 
     const wchar_t *strpbrk1 = ACE_TEXT_WIDE ("abcdefghijkabcdefghijk");
 
-    ACE_ASSERT (ACE_OS_String::strpbrk (strpbrk1,  ACE_TEXT_WIDE ("ijkb"))
+    ACE_ASSERT (ACE_OS_String::strpbrk (strpbrk1,  ACE_TEXT_WIDE ("ijkb")) 
                   == strpbrk1 + 1);
-    ACE_ASSERT (ACE_OS_String::strpbrk (strpbrk1,
+    ACE_ASSERT (ACE_OS_String::strpbrk (strpbrk1, 
                                         ACE_TEXT_WIDE ("mno")) == 0);
 
     // ========================================================================
@@ -370,11 +365,11 @@ string_emulation_test (void)
 
     const wchar_t *strrchr1 = ACE_TEXT_WIDE ("abcdefghijkabcdefghijk");
 
-    ACE_ASSERT (*ACE_OS_String::strrchr (strrchr1, ACE_TEXT_WIDE ('h'))
+    ACE_ASSERT (*ACE_OS_String::strrchr (strrchr1, ACE_TEXT_WIDE ('h')) 
                   == ACE_TEXT_WIDE ('h'));
-    ACE_ASSERT (ACE_OS_String::strrchr (strrchr1, ACE_TEXT_WIDE ('h'))
+    ACE_ASSERT (ACE_OS_String::strrchr (strrchr1, ACE_TEXT_WIDE ('h')) 
                   == strrchr1 + 18);
-    ACE_ASSERT (ACE_OS_String::strrchr (strrchr1, ACE_TEXT_WIDE ('1'))
+    ACE_ASSERT (ACE_OS_String::strrchr (strrchr1, ACE_TEXT_WIDE ('1')) 
                   == NULL);
 
     // ========================================================================
@@ -383,9 +378,9 @@ string_emulation_test (void)
 
     const wchar_t *strcasecmp1 = ACE_TEXT_WIDE ("stringf");
     const wchar_t *strcasecmp2 = ACE_TEXT_WIDE ("stringfe");
-    const wchar_t *strcasecmp3 = ACE_TEXT_WIDE ("stringg");
-    const wchar_t *strcasecmp4 = ACE_TEXT_WIDE ("STRINGF");
-    const wchar_t *strcasecmp5 = ACE_TEXT_WIDE ("stringe");
+    const wchar_t *strcasecmp3 = ACE_TEXT_WIDE ("stringg"); 
+    const wchar_t *strcasecmp4 = ACE_TEXT_WIDE ("STRINGF"); 
+    const wchar_t *strcasecmp5 = ACE_TEXT_WIDE ("stringe"); 
 
     ACE_ASSERT (ACE_OS_String::strcasecmp (strcasecmp1, strcasecmp1) == 0);
     ACE_ASSERT (ACE_OS_String::strcasecmp (strcasecmp1, strcasecmp2) < 0);
@@ -399,19 +394,19 @@ string_emulation_test (void)
 
     const wchar_t *strncasecmp1 = ACE_TEXT_WIDE ("stringf");
     const wchar_t *strncasecmp2 = ACE_TEXT_WIDE ("stringfe");
-    const wchar_t *strncasecmp3 = ACE_TEXT_WIDE ("stringg");
-    const wchar_t *strncasecmp4 = ACE_TEXT_WIDE ("STRINGF");
-    const wchar_t *strncasecmp5 = ACE_TEXT_WIDE ("stringe");
+    const wchar_t *strncasecmp3 = ACE_TEXT_WIDE ("stringg"); 
+    const wchar_t *strncasecmp4 = ACE_TEXT_WIDE ("STRINGF"); 
+    const wchar_t *strncasecmp5 = ACE_TEXT_WIDE ("stringe"); 
 
-    ACE_ASSERT
+    ACE_ASSERT 
       (ACE_OS_String::strncasecmp (strncasecmp1, strncasecmp2, 7) == 0);
-    ACE_ASSERT
+    ACE_ASSERT 
       (ACE_OS_String::strncasecmp (strncasecmp1, strncasecmp2, 8) < 0);
-    ACE_ASSERT
+    ACE_ASSERT 
       (ACE_OS_String::strncasecmp (strncasecmp1, strncasecmp3, 7) < 0);
-    ACE_ASSERT
+    ACE_ASSERT 
       (ACE_OS_String::strncasecmp (strncasecmp1, strncasecmp4, 7) == 0);
-    ACE_ASSERT
+    ACE_ASSERT 
       (ACE_OS_String::strncasecmp (strncasecmp1, strncasecmp5, 7) > 0);
 
     // ========================================================================
@@ -420,9 +415,9 @@ string_emulation_test (void)
 
     const wchar_t *strncmp1 = ACE_TEXT_WIDE ("stringf");
     const wchar_t *strncmp2 = ACE_TEXT_WIDE ("stringfe");
-    const wchar_t *strncmp3 = ACE_TEXT_WIDE ("stringg");
-    const wchar_t *strncmp4 = ACE_TEXT_WIDE ("STRINGF");
-    const wchar_t *strncmp5 = ACE_TEXT_WIDE ("stringe");
+    const wchar_t *strncmp3 = ACE_TEXT_WIDE ("stringg"); 
+    const wchar_t *strncmp4 = ACE_TEXT_WIDE ("STRINGF"); 
+    const wchar_t *strncmp5 = ACE_TEXT_WIDE ("stringe"); 
 
     ACE_ASSERT (ACE_OS_String::strncmp (strncmp1, strncmp2, 7) == 0);
     ACE_ASSERT (ACE_OS_String::strncmp (strncmp1, strncmp2, 8) < 0);
@@ -437,9 +432,9 @@ string_emulation_test (void)
     wchar_t strncpy1[] = ACE_TEXT_WIDE ("abcdefghijklmnopqrstuvwxyzabc");
     wchar_t strncpy2[27];
 
-    ACE_ASSERT
-      (ACE_OS_String::strncmp (ACE_OS_String::strncpy (strncpy2,
-                                                       strncpy1,
+    ACE_ASSERT 
+      (ACE_OS_String::strncmp (ACE_OS_String::strncpy (strncpy2, 
+                                                       strncpy1, 
                                                        26),
                               strncpy1,
                               26) == 0);
@@ -454,7 +449,7 @@ string_emulation_test (void)
   return 0;
 }
 
-int
+int 
 main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("OS_Test"));

@@ -13,8 +13,7 @@
 //      <ACE_Configuration_Heap> class works correctly.
 //
 // = AUTHOR
-//    Michael Searles <msearles@base16.com> and
-//    Jerry D. Odenwelder Jr. <jerry.o@mindspring.com>
+//    Michael Searles <msearles@base16.com>
 //
 // ============================================================================
 
@@ -27,47 +26,38 @@ const int TEST_MAX_STRING = 256;
 
 class Config_Test
 {
+  ACE_Configuration_Heap m_ConfigurationHeap;
+
+  int m_nTimeToLive;
+  int m_bDelay;
+  ACE_TCHAR m_pszDestIPAddress[TEST_MAX_STRING];
+  int m_nDestPort;
+  int m_nReconnectInterval;
+
+  ACE_TCHAR m_pszLogFilePath[TEST_MAX_STRING];
+  ACE_TCHAR m_pszTransactionFilePath[TEST_MAX_STRING];
+  ACE_TCHAR m_pszHeading[TEST_MAX_STRING];
+  int m_nTraceLevel;
+  ACE_TCHAR m_pszJustification[TEST_MAX_STRING];
+
 public:
-  Config_Test (void): equality_tested_ (0) { }
+  Config_Test (void) { }
   ~Config_Test (void) { }
-
-  // Used to test the equality and inequality operations.
-  int testEquality ();
-
-  // Used to test INI Import Export class
-  int testIniFormat ();
-
-  // Used to test Regiastry Import Export class
-  //  1. Creates an ACE_Configuration_Heap object
-  //  2. Calls buildConfigObject to populate
-  //  3. Exports
-  //  5. Creates a new ACE_Configuration_Heap object
-  //  6. Imports
-  //  7. Compares to origional.
-  //  8. Clean-up
-  int testRegFormat ();
+  void read_config (void);
 
 private:
-  void get_section_string (ACE_Configuration&             config,
-                           ACE_Configuration_Section_Key& SectionKey,
-                           const ACE_TCHAR*               pszName,
-                           ACE_TCHAR*                     pszVariable,
-                           int                            nMaxLength);
-
-  void get_section_integer (ACE_Configuration&             config,
-                            ACE_Configuration_Section_Key& SectionKey,
-                            const ACE_TCHAR*               pszName,
-                            int*                           nVariable,
-                            int                            nMinValue,
-                            int                            nMaxValue);
-
-  void get_section_boolean (ACE_Configuration&             config,
-                            ACE_Configuration_Section_Key& SectionKey,
-                            const ACE_TCHAR*               pszName,
-                            int*                           pVariable);
-
-private:
-  int equality_tested_; // make sure the equality operator works before proceeding.
+  void get_section_string (ACE_Configuration_Section_Key& SectionKey,
+                           const ACE_TCHAR *pszName,
+                           ACE_TCHAR *pszVariable,
+                           int nMaxLength);
+  void get_section_integer (ACE_Configuration_Section_Key& SectionKey,
+                            const ACE_TCHAR *pszName,
+                            int *nVariable,
+                            int nMinValue,
+                            int nMaxValue);
+  void get_section_boolean (ACE_Configuration_Section_Key& SectionKey,
+                            const ACE_TCHAR *pszName,
+                            int *pVariable);
 };
 
 #endif /* __CONFIG_TEST_H */

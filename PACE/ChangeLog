@@ -1,66 +1,3 @@
-Mon Apr 23 10:43:23 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * pace/config/compiler.h:
-          Reverted on of Cristian's changes.  He agrees that it is not
-          worthwhile to use the C9X 'inline' feature when only a few
-          versions of gcc support it, while inlining static functions with
-          -O3 is supported by all versions.
-
-Mon Apr 23 09:45:13 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * pace/win32/pthread.c (pthread_getschedparam):
-          Fixed syntax error, thanks to Cristian Ferretti
-          <cristian_ferretti@yahoo.com> for keeping track of the builds
-          and providing the patch.
-
-Sun Apr 22 18:53:28 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * pace/win32/ctype.h:
-          ctype.inl is already #included in pace/ctype.h, no need to
-          #include it again.
-
-Sun Apr 22 15:03:11 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * pace/ctype.h:
-          Add missing #includes that were causing compilation warnings.
-
-Sat Apr 21 17:37:40 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * pace/win32/socket.inl:
-        * pace/win32/socket.c:
-          Make Fuzz happy, some RCS ids went missing.
-
-Sat Apr 21 15:31:27 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * PACE/pace/ctype.h:
-        * PACE/pace/config/compiler.h:
-        * PACE/pace/config/platform.h:
-        * PACE/pace/win32/pthread.c:
-        * PACE/pace/win32/pthread.inl:
-        * PACE/pace/win32/semaphore.c:
-        * PACE/pace/win32/semaphore.h:
-        * PACE/pace/win32/signal.inl:
-        * PACE/pace/win32/socket.c:
-        * PACE/pace/win32/socket.h:
-        * PACE/pace/win32/socket.inl:
-        * PACE/pace/win32/stdlib.inl:
-        * PACE/pace/win32/unistd.h:
-        * PACE/pace/win32/unistd.inl:
-        * PACE/pace/win32/utime.c:
-        * PACE/pace/win32/utsname.c:
-        * PACE/pace/win32/utsname.inl:
-        * PACE/pace/win32/wait.inl:
-          Add support for mingw (www.mingw.org) and partial support for
-          cygwin (http://cygwin.com/).  Many thanks to Cristian Ferretti
-          <cristian_ferretti@yahoo.com>
-
-Mon Apr 16 16:17:35 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * pace/posix/socket.h:
-        * pace/config/platform.h:
-        * include/makeinclude/rules.common.GNU:
-          Add support for QNX, it behaves like other POSIX platforms.
-
 Wed Mar 21 09:26:38 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * pace/posix/socket.h:
@@ -70,15 +7,15 @@ Wed Mar 21 09:26:38 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 Mon Mar 19 16:56:47 2001  Luther Baker  <luther@cs.wustl.edu>
 
         * pace/win32/unistd.c:
-        * pace/win32/unistd.inl:
-        * pace/win32/stdio.c:
-        * pace/win32/time.inl:
+        * pace/win32/unistd.inl:	
+	* pace/win32/stdio.c:
+	* pace/win32/time.inl:
           Removed ::MsvcFoo punctuation. Since PACE is a c-library,
-          it doesn't recognize this C++ism. (::)
-
-        * pace/win32/unistd.h:
-          Added signature for pace_win32_read (needs to be visible
-          before unistd.inl).
+	  it doesn't recognize this C++ism. (::)
+	
+	* pace/win32/unistd.h:
+	  Added signature for pace_win32_read (needs to be visible
+	  before unistd.inl).
 
 Tue Mar 13 12:58:09 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 

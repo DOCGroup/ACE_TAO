@@ -46,7 +46,6 @@ group UTILS_FILES =
   "Capabilities.cpp",
   "Containers.cpp",
   "Configuration.cpp",
-  "Configuration_Import_Export.cpp",
   "Dirent.cpp",
   "Dynamic.cpp",
   "Dynamic_Service_Base.cpp",
@@ -84,7 +83,6 @@ group UTILS_INCLUDES =
   "Capabilities.h",
   "Containers.h",
   "Configuration.h",
-  "Configuration_Import_Export.h",
   "Dirent.h",
   "Dynamic.h",
   "Dynamic_Service_Base.h",
@@ -529,9 +527,9 @@ option
     link(linkWithMultiThreadLib,yes),
     incl(searchpath, "..")
     {
-        target type ( shr ) "shr.o"
+        target type ( shr ) "libACE.a"
         {
-            run after sources("shr.o") targets ("libACE.a") "ar -r -u libACE.a shr.o", "rm -rf shr.o"
+//            run after sources("shr.o") targets ("libACE.a") "ar -r -u libACE.a shr.o", "rm -rf shr.o"
             run cleanup "rm -rf libACE.a shr.o"
 
             option macros(global)

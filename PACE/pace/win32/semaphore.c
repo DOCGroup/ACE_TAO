@@ -47,8 +47,6 @@ sem_destroy (pace_sem_t * sem)
 int
 sem_init (pace_sem_t * sem, int pshared, unsigned int value)
 {
-  PACE_UNUSED_ARG (pshared);
-
   /* Create the semaphore with its value initialized to <count> and
      its maximum value initialized to <max>.
 

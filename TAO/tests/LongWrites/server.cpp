@@ -8,23 +8,37 @@ ACE_RCSID(LongWrites, server, "$Id$")
 
 const char *ior_output_file = "test.ior";
 
+CORBA::ULong initial_event_size = 64 * 1024;
+CORBA::Long test_iterations = 50;
+
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, "o:p:i:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-	ior_output_file = get_opts.optarg;
-	break;
+        ior_output_file = get_opts.optarg;
+        break;
+
+      case 'p':
+        initial_event_size = ACE_OS::atoi (get_opts.optarg);
+        break;
+
+      case 'i':
+        test_iterations =  ACE_OS::atoi (get_opts.optarg);
+        break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-			   "-o <iorfile>"
+                           "-o <iorfile> "
+                           "-p <payload_size> "
+                           "-i <test_iterations> "
                            "\n",
                            argv [0]),
                           -1);
@@ -64,7 +78,8 @@ main (int argc, char *argv[])
 
       Coordinator *coordinator_impl;
       ACE_NEW_RETURN (coordinator_impl,
-                      Coordinator,
+                      Coordinator (initial_event_size,
+                                   test_iterations),
                       1);
       PortableServer::ServantBase_var coordinator_owner_transfer(coordinator_impl);
 
@@ -73,7 +88,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-	orb->object_to_string (coordinator.in (), ACE_TRY_ENV);
+        orb->object_to_string (coordinator.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // If the ior_output_file exists, output the ior to it
@@ -82,7 +97,7 @@ main (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
-			      1);
+                              1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 

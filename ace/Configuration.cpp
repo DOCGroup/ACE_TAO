@@ -165,295 +165,305 @@ ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
                                 ACE_Configuration_Section_Key& key_out,
                                 int create)
 {
-  const ACE_TCHAR* begin = path_in.fast_rep ();
-  const ACE_TCHAR* end = 0;
-
   // Make a copy of key
   ACE_Configuration_Section_Key current_section = key;
+  ACE_TString data (path_in);
+  ACE_TCHAR *pData = (ACE_TCHAR *) data.c_str ();
+  ACE_Tokenizer parser (pData);
+  parser.delimiter_replace ('\\', '\0');
+  parser.delimiter_replace ('/', '\0');
 
-  // recurse through the path
-  while (1)
+  for (ACE_TCHAR *temp = parser.next ();
+       temp != 0;
+       temp = parser.next ())
     {
-      // Detmine the begin/ending of the key name
-      end = ACE_OS::strchr (begin, ACE_LIB_TEXT ('\\'));
-      size_t length = end ? (size_t) (end-begin) : ACE_OS::strlen (begin);
-
-      // Make sure length is not 0
-      if (!length)
-        return -1;
-
-      ACE_TString section (begin, length);
-
       // Open the section
-      ACE_Configuration_Section_Key child_section;
       if (open_section (current_section,
-                        section.fast_rep (),
+                        temp,
                         create,
-                        child_section))
+                        key_out))
         return -1;
-
-      current_section = child_section;
-
-      // If end is NULL, we are done, return the result
-      if (!end)
-        {
-          key_out = current_section;
-          break;
-        }
-      begin = end + 1;
+      current_section = key_out;
     }
 
   return 0;
 }
 
 int
-ACE_Configuration::validate_name (const ACE_TCHAR* name)
+ACE_Configuration::validate_name (const ACE_TCHAR *name)
 {
-  const ACE_TCHAR* pos = name;
-  // make sure it doesn't contain any invalid characters
-  while (*pos)
-    {
-      if (ACE_OS::strchr (ACE_LIB_TEXT ("\\]["), *pos))
-        return -1;
+  const ACE_TCHAR *pos;
 
-      pos++;
-    }
+  for (pos = name;
+       // Make sure it doesn't contain any invalid characters
+       *pos != '\0';
+       pos++)
+    if (ACE_OS::strchr (ACE_LIB_TEXT ("\\]["), *pos))
+      return -1;
 
-  // Make sure its not too long
-  if (pos - name > 255)
+  // Make sure its not too long.
+  if (pos - name > ACE_Configuration::MAX_NAME_LEN)
     return -2;
 
   return 0;
 }
 
+int
+ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
+                                   const ACE_TString& path,
+                                   FILE* out)
+{
+  // don't export the root
+  if (path.length ())
+    {
+      // Write out the section header
+      ACE_TString header = ACE_LIB_TEXT ("[");
+      header += path;
+      header += ACE_LIB_TEXT ("]");
+      header += ACE_LIB_TEXT (" \n");
+      if (ACE_OS::fputs (header.fast_rep (), out) < 0)
+        return -1;
+
+      // Write out each value
+      int index = 0;
+      ACE_TString name;
+      VALUETYPE type;
+      ACE_TString line;
+      ACE_TCHAR int_value[32];
+      ACE_TCHAR bin_value[3];
+      void* binary_data;
+      u_int binary_length;
+      ACE_TString string_value;
+
+      while (!enumerate_values (section, index, name, type))
+        {
+          line = ACE_LIB_TEXT ("\"") + name + ACE_LIB_TEXT ("\"=");
+          switch (type)
+            {
+            case INTEGER:
+              {
+                u_int value;
+                if (get_integer_value (section, name.fast_rep (), value))
+                  return -2;
+
+                ACE_OS::sprintf (int_value, ACE_LIB_TEXT ("%08x"), value);
+                line += ACE_LIB_TEXT ("dword:");
+                line += int_value;
+                break;
+              }
+            case STRING:
+              {
+                if (get_string_value (section,
+                                      name.fast_rep (),
+                                      string_value))
+                  return -2;
+
+                line += ACE_LIB_TEXT ("\"");
+                line += string_value + ACE_LIB_TEXT ("\"");
+                break;
+              }
+#if defined (ACE_WIN32)
+            case INVALID:
+#endif /* ACE_WIN32 */
+            case BINARY:
+              {
+                // not supported yet - maybe use BASE64 codeing?
+                if (get_binary_value (section,
+                                      name.fast_rep (),
+                                      binary_data,
+                                      binary_length))
+                  return -2;
+
+                line += ACE_LIB_TEXT ("hex:");
+
+                u_char *ptr = (u_char *) binary_data;
+                while (binary_length)
+                  {
+                    if (ptr != binary_data)
+                      line += ACE_LIB_TEXT (",");
+
+                    ACE_OS::sprintf (bin_value, ACE_LIB_TEXT ("%02x"), *ptr);
+                    line += bin_value;
+                    --binary_length;
+                    ++ptr;
+                  }
+                delete (char *) binary_data;
+                break;
+              }
+            default:
+              return -3;
+            }
+
+          line += ACE_LIB_TEXT ("\n");
+          if (ACE_OS::fputs (line.fast_rep (), out) < 0)
+            return -4;
+
+          index++;
+        }
+    }
+
+  // Export all sub sections
+  int index = 0;
+  ACE_TString name;
+  ACE_Configuration_Section_Key sub_key;
+  ACE_TString sub_section;
+
+  while (!enumerate_sections (section, index, name))
+    {
+      ACE_TString sub_section (path);
+      if (path.length ())
+        sub_section += ACE_LIB_TEXT ("\\");
+
+      sub_section += name;
+      if (open_section (section, name.fast_rep (), 0, sub_key))
+        return -5;
+
+      if (export_section (sub_key, sub_section.fast_rep (), out))
+        return -6;
+
+      index++;
+    }
+
+  return 0;
+}
+
+int
+ACE_Configuration::export_config (const ACE_TCHAR* filename)
+{
+  FILE *out = ACE_OS::fopen (filename, ACE_LIB_TEXT ("w"));
+  if (!out)
+    return -1;
+
+  int result = export_section (root_, ACE_LIB_TEXT (""), out);
+  ACE_OS::fclose (out);
+  return result;
+}
+
+int
+ACE_Configuration::import_config (const ACE_TCHAR* filename)
+{
+  FILE* in = ACE_OS::fopen (filename, ACE_LIB_TEXT ("r"));
+  if (!in)
+    return -1;
+
+  // @@ XXX - change this to a dynamic buffer
+  ACE_TCHAR buffer[4096];
+  ACE_Configuration_Section_Key section;
+  while (ACE_OS::fgets (buffer, 4096, in))
+    {
+      // Check for a comment
+      if (buffer[0] == ACE_LIB_TEXT (';') || buffer[0] == ACE_LIB_TEXT ('#'))
+        continue;
+
+      if (buffer[0] == ACE_LIB_TEXT ('['))
+        {
+          // We have a new section here, strip out the section name
+          ACE_TCHAR* end = ACE_OS::strrchr (buffer, ACE_LIB_TEXT (']'));
+          if (!end)
+            {
+              ACE_OS::fclose (in);
+              return -3;
+            }
+          *end = 0;
+
+          if (expand_path (root_, buffer + 1, section, 1))
+            {
+              ACE_OS::fclose (in);
+              return -3;
+            }
+
+          continue;
+        }
+
+      if (buffer[0] == ACE_LIB_TEXT ('"'))
+        {
+          // we have a value
+          ACE_TCHAR* end = ACE_OS::strchr (buffer+1, '"');
+          if (!end)  // no closing quote, not a value so just skip it
+            continue;
+
+          // null terminate the name
+          *end = 0;
+          ACE_TCHAR* name = buffer + 1;
+          end+=2;
+          // determine the type
+          if (*end == '\"')
+            {
+              // string type
+              // truncate trailing "
+              ++end;
+              ACE_TCHAR* trailing = ACE_OS::strrchr (end, '"');
+              if (trailing)
+                *trailing = 0;
+              if (set_string_value (section, name, end))
+                {
+                  ACE_OS::fclose (in);
+                  return -4;
+                }
+            }
+          else if (ACE_OS::strncmp (end, ACE_LIB_TEXT ("dword:"), 6) == 0)
+            {
+              // number type
+              ACE_TCHAR* endptr = 0;
+              u_int value = ACE_OS::strtoul (end + 6, &endptr, 16);
+              if (set_integer_value (section, name, value))
+                {
+                  ACE_OS::fclose (in);
+                  return -4;
+                }
+            }
+          else if (ACE_OS::strncmp (end, ACE_LIB_TEXT ("hex:"), 4) == 0)
+            {
+              // binary type
+              u_int string_length = ACE_OS::strlen (end + 4);
+              // divide by 3 to get the actual buffer length
+              u_int length = string_length / 3;
+              u_int remaining = length;
+              u_char* data = new u_char[length];
+              u_char* out = data;
+              ACE_TCHAR* inb = end + 4;
+              ACE_TCHAR* endptr = 0;
+              while (remaining)
+                {
+                  u_char charin = (u_char) ACE_OS::strtoul (inb, &endptr, 16);
+                  *out = charin;
+                  ++out;
+                  --remaining;
+                  inb += 3;
+                }
+              if (set_binary_value (section, name, data, length))
+                {
+                  ACE_OS::fclose (in);
+                  return -4;
+                }
+            }
+          else
+            // invalid type, ignore
+            continue;
+        }
+    }
+
+  if (ferror (in))
+    {
+      ACE_OS::fclose (in);
+      return -1;
+    }
+
+  ACE_OS::fclose (in);
+  return 0;
+}
 
 const ACE_Configuration_Section_Key&
-ACE_Configuration::root_section (void) const
+ACE_Configuration::root_section (void)
 {
   return root_;
 }
-
-/**
- * Determine if the contents of this object is the same as the
- * contents of the object on the right hand side.
- * Returns 1 (True) if they are equal and 0 (False) if they are not equal
- */
-int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
-{
-  int                rc           = 1;
-  int                sectionIndex = 0;
-  ACE_TString        sectionName;
-  ACE_Configuration *nonconst_this = ACE_const_cast (ACE_Configuration*, this);
-  ACE_Configuration &nonconst_rhs  = ACE_const_cast (ACE_Configuration&, rhs);
-
-  const ACE_Configuration_Section_Key& rhsRoot = rhs.root_section ();
-  ACE_Configuration_Section_Key rhsSection;
-  ACE_Configuration_Section_Key thisSection;
-
-  // loop through each section in this object
-  while ((rc) && nonconst_this->enumerate_sections (this->root_,
-                                                    sectionIndex,
-                                                    sectionName))
-    {
-      // find that section in the rhs object
-      if (nonconst_rhs.open_section (rhsRoot,
-                                     sectionName.c_str (),
-                                     0,
-                                     rhsSection) != 0)
-        {
-          // If the rhs object does not contain the section then we are
-          // not equal.
-          rc = 0;
-        }
-      else if (nonconst_this->open_section (this->root_,
-                                            sectionName.c_str (),
-                                            0,
-                                            thisSection) != 0)
-        {
-          // if there is some error opening the section in this object
-          rc = 0;
-        }
-      else
-        {
-          // Well the sections match
-          int         valueIndex = 0;
-          ACE_TString valueName;
-          VALUETYPE   valueType;
-          VALUETYPE   rhsType;
-
-          // Enumerate each value in this section
-          while ((rc) && nonconst_this->enumerate_values (thisSection,
-                                                          valueIndex,
-                                                          valueName,
-                                                          valueType))
-            {
-              // look for the same value in the rhs section
-              if (nonconst_rhs.find_value (rhsSection,
-                                           valueName.c_str (),
-                                           rhsType) != 0)
-                {
-                  // We're not equal if the same value cannot
-                  // be found in the rhs object.
-                  rc = 0;
-                }
-              else if (valueType != rhsType)
-                {
-                  // we're not equal if the types do not match.
-                  rc = 0;
-                }
-              else
-                {
-                  // finally compare values.
-                  if (valueType == STRING)
-                    {
-                      ACE_TString thisString, rhsString;
-                      if (nonconst_this->get_string_value (thisSection,
-                                                           valueName.c_str (),
-                                                           thisString) != 0)
-                        {
-                          // we're not equal if we cannot get this string
-                          rc = 0;
-                        }
-                      else if (nonconst_rhs.get_string_value (rhsSection,
-                                                              valueName.c_str (),
-                                                              rhsString) != 0)
-                        {
-                          // we're not equal if we cannot get rhs string
-                          rc = 0;
-                        }
-                      rc = thisString == rhsString;
-                    }
-                  else if (valueType == INTEGER)
-                    {
-                      u_int thisInt, rhsInt;
-                      if (nonconst_this->get_integer_value (thisSection,
-                                                            valueName.c_str (),
-                                                            thisInt) != 0)
-                        {
-                          // we're not equal if we cannot get this int
-                          rc = 0;
-                        }
-                      else if (nonconst_rhs.get_integer_value (rhsSection,
-                                                               valueName.c_str (),
-                                                               rhsInt) != 0)
-                        {
-                          // we're not equal if we cannot get rhs int
-                          rc = 0;
-                        }
-                      rc = thisInt == rhsInt;
-                    }
-                  else if (valueType == BINARY)
-                    {
-                      void* thisData;
-                      void* rhsData;
-                      u_int thisLength, rhsLength;
-                      if (nonconst_this->get_binary_value (thisSection,
-                                                           valueName.c_str (),
-                                                           thisData,
-                                                           thisLength) != 0)
-                        {
-                          // we're not equal if we cannot get this data
-                          rc = 0;
-                        }
-                      else if (nonconst_rhs.get_binary_value (rhsSection,
-                                                              valueName.c_str (),
-                                                              rhsData,
-                                                              rhsLength) != 0)
-                        {
-                          // we're not equal if we cannot get this data
-                          rc = 0;
-                        }
-
-                      rc = thisLength == rhsLength;
-                      // are the length's the same?
-
-                      if (rc)
-                        {
-                          unsigned char* thisCharData = (unsigned char*)thisData;
-                          unsigned char* rhsCharData = (unsigned char*)rhsData;
-                          // yes, then check each element
-                          for (u_int count = 0;
-                               (rc) && (count < thisLength);
-                               count++)
-                            {
-                              rc = (* (thisCharData + count) == * (rhsCharData + count));
-                            }
-                        }// end if the length's match
-                    }
-                  // We should never have valueTypes of INVALID, therefore
-                  // we're not comparing them.  How would we since we have
-                  // no get operation for invalid types.
-                  // So, if we have them, we guess they are equal.
-
-                }// end else if values match.
-
-              valueIndex++;
-
-            }// end value while loop
-
-          // look in the rhs for values not in this
-          valueIndex = 0;
-          while ((rc) &&
-                 (!nonconst_rhs.enumerate_values (rhsSection,
-                                                  valueIndex,
-                                                  valueName,
-                                                  rhsType)))
-            {
-              // look for the same value in this section
-              if (nonconst_this->find_value (thisSection,
-                                             valueName.c_str (),
-                                             valueType) != 0)
-                {
-                  // We're not equal if the same value cannot
-                  // be found in the rhs object.
-                  rc = 0;
-                }
-              valueIndex++;
-            }// end while for rhs values not in this.
-
-        }// end else if sections match.
-
-      sectionIndex++;
-
-    }// end section while loop
-
-  // Finally, make sure that there are no sections in rhs that do not
-  // exist in this
-  sectionIndex = 0;
-  while ((rc) &&
-         (!nonconst_rhs.enumerate_sections (rhsRoot,
-                                            sectionIndex,
-                                            sectionName)))
-    {
-      // find the section in this
-      if (nonconst_this->open_section (this->root_,
-                                       sectionName.c_str (),
-                                       0,
-                                       thisSection) != 0)
-        {
-          // if there is some error opening the section in this object
-          rc = 0;
-        }
-      else if (nonconst_rhs.open_section (rhsRoot,
-                                          sectionName.c_str (),
-                                          0,
-                                          rhsSection) != 0)
-        {
-          // If the rhs object does not contain the section then we
-          // are not equal.
-          rc = 0;
-        }
-      sectionIndex++;
-    }
-  return rc;
-}
-
 
 //////////////////////////////////////////////////////////////////////////////
 
 #if defined (WIN32)
 
-static const int ACE_DEFAULT_BUFSIZE = 256;
+static const int ACE_DEFAULT_BUFSIZE = ACE_Configuration::MAX_NAME_LEN + 1;
 
 ACE_Section_Key_Win32::ACE_Section_Key_Win32 (HKEY hKey)
   : hKey_ (hKey)
@@ -512,12 +522,7 @@ ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_K
                                    KEY_ALL_ACCESS,
                                    NULL,
                                    &result_key,
-#if defined(__MINGW32__)
-                                   (PDWORD) 0
-#else
-                                   NULL
-#endif /* __MINGW32__ */
-                                   ) != ERROR_SUCCESS)
+                                   NULL) != ERROR_SUCCESS)
         return -3;
     }
 
@@ -727,21 +732,36 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
   if (load_key (key, base_key))
     return -1;
 
-  ACE_TCHAR buffer[ACE_DEFAULT_BUFSIZE];
-  DWORD length = ACE_DEFAULT_BUFSIZE;
+  // Get the size of the binary data from windows
+  DWORD buffer_length = 0;
   DWORD type;
   if (ACE_TEXT_RegQueryValueEx (base_key,
-                                  name,
-                                  NULL,
-                                  &type,
- (BYTE*)buffer,
-                                  &length) != ERROR_SUCCESS)
+                                name,
+                                NULL,
+                                &type,
+ (BYTE*)0,
+                                &buffer_length) != ERROR_SUCCESS)
     return -2;
 
   if (type != REG_SZ)
     return -3;
 
+  ACE_TCHAR* buffer;
+  ACE_NEW_RETURN (buffer, ACE_TCHAR[buffer_length], -4);
+
+  if (ACE_TEXT_RegQueryValueEx (base_key,
+                                name,
+                                NULL,
+                                &type,
+ (BYTE*)buffer,
+                                &buffer_length) != ERROR_SUCCESS)
+  {
+    delete[] buffer;
+    return -5;
+  }
+
   value = buffer;
+  delete[] buffer;
   return 0;
 }
 
@@ -802,19 +822,19 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
 
   length = buffer_length;
 
-  ACE_NEW_RETURN (data, unsigned char[length], -4);
+  ACE_NEW_RETURN (data, u_char[length], -4);
 
   if (ACE_TEXT_RegQueryValueEx (base_key,
                                 name,
                                 NULL,
                                 &type,
-                                (BYTE*)data,
+ (BYTE*)data,
                                 &buffer_length) != ERROR_SUCCESS)
-    {
-      delete data;
-      data = 0;
-      return -5;
-    }
+  {
+    delete[] data;
+    data = 0;
+    return -5;
+  }
 
   return 0;
 }
@@ -830,16 +850,18 @@ int ACE_Configuration_Win32Registry::find_value (const ACE_Configuration_Section
   if (load_key (key, base_key))
     return -1;
 
-  unsigned char buffer[ACE_DEFAULT_BUFSIZE];
-  DWORD buffer_length = ACE_DEFAULT_BUFSIZE;
+  DWORD buffer_length=0;
   DWORD type;
-  if (ACE_TEXT_RegQueryValueEx (base_key,
+  int result=ACE_TEXT_RegQueryValueEx (base_key,
                                 name,
                                 NULL,
                                 &type,
- (BYTE*)&buffer,
-                                &buffer_length) != ERROR_SUCCESS)
+                                NULL,
+                                &buffer_length);
+  if (result != ERROR_SUCCESS)
+  {
     return -1;
+  }
 
   switch (type)
   {
@@ -924,18 +946,13 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
           // try creating it
           if (!create || ACE_TEXT_RegCreateKeyEx (result,
                                                   key.fast_rep (),
-                                                  0,
                                                   NULL,
-                                                  0,
+                                                  NULL,
+                                                  NULL,
                                                   KEY_ALL_ACCESS,
                                                   NULL,
                                                   &subkey,
-#if defined(__MINGW32__)
-                                                  (PDWORD) 0
-#else
-                                                  NULL
-#endif /* __MINGW32__ */
-                                                  ) != ERROR_SUCCESS)
+                                                  NULL) != ERROR_SUCCESS)
             {
               // error
               ::RegCloseKey (result);
@@ -952,16 +969,12 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
 
       begin = end + 1;
     }
-
+#if !defined (ghs)
   return 0;
+#endif // ghs
 }
 
-
-
 #endif // WIN_32
-
-
-
 
 ///////////////////////////////////////////////////////////////
 
@@ -1150,7 +1163,8 @@ ACE_Configuration_Section_Key_Heap::~ACE_Configuration_Section_Key_Heap ()
 ACE_Configuration_Heap::ACE_Configuration_Heap (void)
   : allocator_ (0),
     index_ (0),
-    default_map_size_ (0)
+    default_map_size_ (0),
+    persistent_ (0)
 {
   ACE_Configuration_Section_Key_Heap *temp = 0;
 
@@ -1161,8 +1175,11 @@ ACE_Configuration_Heap::ACE_Configuration_Heap (void)
 ACE_Configuration_Heap::~ACE_Configuration_Heap (void)
 {
   if (allocator_)
+  {
     allocator_->sync ();
-
+    if (!persistent_)
+      allocator_->remove ();
+  }
   delete allocator_;
 }
 
@@ -1176,6 +1193,7 @@ ACE_Configuration_Heap::open (int default_map_size)
   ACE_NEW_RETURN (this->allocator_,
                   HEAP_ALLOCATOR (),
                   -1);
+  persistent_ = 0;
   return create_index ();
 }
 
@@ -1185,6 +1203,7 @@ ACE_Configuration_Heap::open (const ACE_TCHAR* file_name,
                               void* base_address,
                               int default_map_size)
 {
+  persistent_ = 1;
   default_map_size_ = default_map_size;
 
   // Make sure that the file name is of the legal length.
@@ -1520,7 +1539,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
   // Now remove subkey from parent key
   ACE_Configuration_ExtId SubSExtId (sub_section);
   SUBSECTION_ENTRY* subsection_entry;
-  if (((SUBSECTION_HASH*)ParentIntId.section_hash_map_)->
+  if (( (SUBSECTION_HASH*)ParentIntId.section_hash_map_)->
       find (SubSExtId, subsection_entry))
     return -4;
 
@@ -1536,6 +1555,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
   // iterate over all values and free memory
   VALUE_HASH* value_hash_map = section_entry->int_id_.value_hash_map_;
   VALUE_HASH::ITERATOR value_iter = value_hash_map->begin ();
+
   while (!value_iter.done ())
     {
       VALUE_ENTRY* value_entry;
@@ -1582,9 +1602,11 @@ ACE_Configuration_Heap::enumerate_values (const ACE_Configuration_Section_Key& k
   // Handle iterator resets
   if (index == 0)
     {
-      ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId , ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>* hash_map = IntId.value_hash_map_;
-      // @@ This zero pointer check is redundant  -Ossama
-      // if (pKey->value_iter_)
+      ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId ,
+                              ACE_Configuration_Value_IntId,
+                              ACE_Hash<ACE_Configuration_ExtId>,
+                              ACE_Equal_To<ACE_Configuration_ExtId>,
+                              ACE_Null_Mutex>* hash_map = IntId.value_hash_map_;
       delete pKey->value_iter_;
 
       ACE_NEW_RETURN (pKey->value_iter_, VALUE_HASH::ITERATOR (hash_map->begin ()), -3);
@@ -1624,10 +1646,11 @@ ACE_Configuration_Heap::enumerate_sections (const ACE_Configuration_Section_Key&
   // Handle iterator resets
   if (index == 0)
     {
-      if (pKey->section_iter_)
-        delete pKey->section_iter_;
+      delete pKey->section_iter_;
 
-      ACE_NEW_RETURN (pKey->section_iter_, SUBSECTION_HASH::ITERATOR (IntId.section_hash_map_->begin ()), -3);
+      ACE_NEW_RETURN (pKey->section_iter_,
+                      SUBSECTION_HASH::ITERATOR (IntId.section_hash_map_->begin ()),
+                      -3);
     }
 
   // Get the next entry
@@ -1668,7 +1691,8 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
       // Free the old value
       entry->int_id_.free (allocator_);
       // Allocate the new value in this heap
-      ACE_TCHAR* pers_value = (ACE_TCHAR*)allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
+      ACE_TCHAR* pers_value =
+        (ACE_TCHAR*) allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_value, value.fast_rep ());
       ACE_Configuration_Value_IntId new_value_int (pers_value);
       entry->int_id_ = new_value_int;
@@ -1676,9 +1700,11 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
   else
     {
       // it doesn't exist, bind it
-      ACE_TCHAR* pers_name = (ACE_TCHAR*)allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
+      ACE_TCHAR* pers_name =
+        (ACE_TCHAR*) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, name);
-      ACE_TCHAR* pers_value = (ACE_TCHAR*)allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
+      ACE_TCHAR* pers_value =
+        (ACE_TCHAR*) allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_value, value.fast_rep ());
       ACE_Configuration_ExtId item_name (pers_name);
       ACE_Configuration_Value_IntId item_value (pers_value);
@@ -1725,7 +1751,8 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
   else
     {
       // it doesn't exist, bind it
-      ACE_TCHAR* pers_name = (ACE_TCHAR*)allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
+      ACE_TCHAR* pers_name =
+        (ACE_TCHAR*) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, name);
       ACE_Configuration_ExtId item_name (pers_name);
       ACE_Configuration_Value_IntId item_value (value);
@@ -1777,7 +1804,8 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
   else
     {
       // it doesn't exist, bind it
-      ACE_TCHAR* pers_name = (ACE_TCHAR*)allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
+      ACE_TCHAR* pers_name =
+        (ACE_TCHAR*) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, name);
       ACE_TCHAR* pers_value = (ACE_TCHAR*)allocator_->malloc (length);
       ACE_OS::memcpy (pers_value, data, length);
@@ -1805,7 +1833,8 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
   if (IntId.value_hash_map_->find (VExtIdFind, VIntIdFind, allocator_))
     {
       // it doesn't exist, bind it
-      ACE_TCHAR* pers_name = (ACE_TCHAR*)allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
+      ACE_TCHAR* pers_name =
+        (ACE_TCHAR*) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, name);
       ACE_TCHAR* pers_value = (ACE_TCHAR*)allocator_->malloc (length);
       ACE_OS::memcpy (pers_value, data, length);
@@ -1940,8 +1969,8 @@ ACE_Configuration_Heap::get_binary_value (const ACE_Configuration_Section_Key& k
 
 int
 ACE_Configuration_Heap::find_value (const ACE_Configuration_Section_Key& key,
-                                    const ACE_TCHAR* name,
-                                    VALUETYPE& type_out)
+                         const ACE_TCHAR* name,
+                         VALUETYPE& type_out)
 {
   if (validate_name (name))
     return -1;
@@ -1960,12 +1989,13 @@ ACE_Configuration_Heap::find_value (const ACE_Configuration_Section_Key& key,
   // Find it
   ACE_Configuration_ExtId ValueExtId (name);
   VALUE_ENTRY* value_entry;
-  if (((VALUE_HASH *) IntId.value_hash_map_)->find (ValueExtId, value_entry))
+  if (( (VALUE_HASH*)IntId.value_hash_map_)->find (ValueExtId, value_entry))
     return -1;  // value does not exist
 
   type_out = value_entry->int_id_.type_;
   return 0;
 }
+
 
 int
 ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,
@@ -1988,7 +2018,7 @@ ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,
   // Find it
   ACE_Configuration_ExtId ValueExtId (name);
   VALUE_ENTRY* value_entry;
-  if (((VALUE_HASH *) IntId.value_hash_map_)->find (ValueExtId, value_entry))
+  if (( (VALUE_HASH*)IntId.value_hash_map_)->find (ValueExtId, value_entry))
     return -4;
 
   // free it
@@ -2000,4 +2030,104 @@ ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,
     return -3;
 
   return 0;
+}
+
+int
+ACE_Configuration::import_config_as_strings (const ACE_TCHAR* filename)
+{
+  FILE* in = ACE_OS::fopen (filename, ACE_LIB_TEXT ("r"));
+  if (!in)
+    return -1;
+
+  // @@ Make this a dynamic size!
+  ACE_TCHAR buffer[4096];
+  ACE_Configuration_Section_Key section;
+  while (ACE_OS::fgets (buffer, sizeof buffer, in))
+    {
+      // Check for a comment and blank line
+      if (buffer[0] == ACE_LIB_TEXT (';')
+          || buffer[0] == ACE_LIB_TEXT ('#')
+          || buffer[0] == ACE_LIB_TEXT ('\r')
+          || buffer[0] == ACE_LIB_TEXT ('\n'))
+        continue;
+
+      if (buffer[0] == ACE_LIB_TEXT ('['))
+        {
+          // We have a new section here, strip out the section name
+          ACE_TCHAR* end = ACE_OS::strrchr (buffer, ACE_LIB_TEXT (']'));
+          if (!end)
+            {
+              ACE_OS::fclose (in);
+              return -3;
+            }
+          *end = 0;
+
+          if (expand_path (root_, buffer + 1, section, 1))
+            {
+              ACE_OS::fclose (in);
+              return -3;
+            }
+
+          continue;
+        }
+
+      // we have a line
+      const ACE_TCHAR *name = this->skip_whitespace (buffer);
+      if (name)
+        {
+          ACE_TCHAR *end = (ACE_TCHAR *) ACE_OS::strpbrk (name, ACE_LIB_TEXT ("= \t\n\r"));
+
+          // locate equal sign after name and retrieve value
+          const ACE_TCHAR *value = ACE_OS::strrchr (name, ACE_LIB_TEXT ('='));
+          if (value)
+            {
+              value++;  // jump over equal sign
+              value = this->skip_whitespace (value);
+              ACE_TCHAR *value_end;
+              if (value[0] != ACE_LIB_TEXT ('"'))
+                value_end = (ACE_TCHAR *) ACE_OS::strpbrk (value, ACE_LIB_TEXT (" \t\n\r"));
+              else
+                {
+                  // double quote delimited allows spaces and tabs in string
+                  value++;
+                  value_end = (ACE_TCHAR *) ACE_OS::strpbrk (value, ACE_LIB_TEXT ("\"\n\r"));
+                }
+              if (value_end)
+                *value_end = '\0'; // terminate value
+            }
+          else
+            value = ACE_LIB_TEXT ("");
+
+          if (end)
+            *end = '\0';     // terminate name now
+
+          if (set_string_value (section, name, value))
+            {
+              ACE_OS::fclose (in);
+              return -4;
+            }
+        }
+    }
+
+  if (ferror (in))
+    {
+      ACE_OS::fclose (in);
+      return -1;
+    }
+
+  ACE_OS::fclose (in);
+  return 0;
+}
+
+const ACE_TCHAR *
+ACE_Configuration::skip_whitespace (const ACE_TCHAR *src)
+{
+  const ACE_TCHAR *cp;
+
+  for (cp = src;
+       (*cp != '\0') && ((*cp == ' ') || (*cp == '\t'));
+       cp++)
+    continue;
+
+  return cp;
 }

@@ -35,8 +35,6 @@ ACE_RCSID(tests, MT_SOCK_Test, "$Id$")
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
-#if !defined (ACE_LACKS_FORK) || defined (ACE_HAS_THREADS)
-
 static void *
 client (void *arg)
 {
@@ -46,10 +44,10 @@ client (void *arg)
   ACE_INET_Addr client_addr;
   ACE_SOCK_Stream cli_stream;
   ACE_SOCK_Connector con;
+  ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
 #if defined (ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS)
   ACE_Time_Value *timeout = 0;
 #else
-  ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
   ACE_Time_Value *timeout = &tv;
 #endif /* ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS */
 
@@ -175,7 +173,7 @@ server (void *arg)
                       ACE_TEXT ("(%P|%t) client %s connected from %d\n"),
                       cli_addr.get_host_name (),
                       cli_addr.get_port_number ()));
-
+        
           // Enable non-blocking I/O.
           if (new_stream.enable (ACE_NONBLOCK) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -184,9 +182,9 @@ server (void *arg)
                               0);
           handle_set.reset ();
           handle_set.set_bit (new_stream.get_handle ());
-
+        
           // Read data from client (terminate on error).
-
+        
           for (ssize_t r_bytes; ;)
             {
               ACE_DEBUG ((LM_DEBUG,
@@ -203,7 +201,7 @@ server (void *arg)
                   ACE_ASSERT (*t == buf[0]);
                   t++;
                 }
-
+        
               if (r_bytes == 0)
                 {
                   // Handshake back with client.
@@ -249,8 +247,6 @@ server (void *arg)
   ACE_NOTREACHED (return 0);
 }
 
-#endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
-
 static void
 spawn (void)
 {
@@ -280,7 +276,7 @@ spawn (void)
             case -1:
               ACE_ERROR ((LM_ERROR,
                           "(%P|%t) %p\n", "fork failed"));
-              i = ACE_MAX_CLIENTS;
+              i = ACE_MAX_CLIENTS;      
               // Break out of 'for' loop.
               break;
             case 0:
@@ -309,8 +305,7 @@ spawn (void)
            THR_BOUND | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),
-                    ACE_TEXT ("spawn failed"),
-                    1));
+                    ACE_TEXT ("spawn failed")));
 
       if (ACE_Thread_Manager::instance ()->spawn_n
           (ACE_MAX_CLIENTS,
@@ -319,17 +314,15 @@ spawn (void)
            THR_BOUND | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),
-                    ACE_TEXT ("spawn failed"),
-                    1));
+                    ACE_TEXT ("spawn failed")));
 
       // Wait for the threads to exit.
       ACE_Thread_Manager::instance ()->wait ();
 #else
-      ACE_ERROR ((LM_INFO,
-                  ACE_TEXT ("(%P|%t) ")
-                  ACE_TEXT ("only one thread may be run")
-                  ACE_TEXT (" in a process on this platform\n")));
-#endif /* !ACE_LACKS_FORK */
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"),
+                  1));
+#endif /* !ACE_LACKS_FORK */    
       peer_acceptor.close ();
     }
 }

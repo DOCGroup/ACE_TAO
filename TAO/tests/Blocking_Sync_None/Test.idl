@@ -21,6 +21,6 @@ module Test
                                 in unsigned long sleep_microseconds);
 
     /// Shutdown the server
-    oneway void shutdown ();
+    void shutdown ();
   };
 };

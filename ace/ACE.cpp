@@ -1490,7 +1490,7 @@ ACE::send_n_i (ACE_HANDLE handle,
       if (n == -1)
         {
           // Check for possible blocking.
-          if (errno == EWOULDBLOCK || errno == ENOBUFS)
+          if (errno == EWOULDBLOCK)
             {
               // Wait for the blocking to subside.
               int result = ACE::handle_write_ready (handle,
@@ -1548,7 +1548,7 @@ ACE::send_n_i (ACE_HANDLE handle,
         {
           // Check for possible blocking.
           if (n == -1 &&
-              errno == EWOULDBLOCK || errno == ENOBUFS)
+              errno == EWOULDBLOCK)
             {
               // Wait upto <timeout> for the blocking to subside.
               int rtn = ACE::handle_write_ready (handle,
@@ -1610,7 +1610,7 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
       if (n == -1)
         {
           // Check for possible blocking.
-          if (errno == EWOULDBLOCK || errno == ENOBUFS)
+          if (errno == EWOULDBLOCK)
             {
               // Wait for the blocking to subside.
               int result = ACE::handle_write_ready (handle,
@@ -1668,7 +1668,7 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
         {
           // Check for possible blocking.
           if (n == -1 &&
-              errno == EWOULDBLOCK || errno == ENOBUFS)
+              errno == EWOULDBLOCK)
             {
               // Wait upto <timeout> for the blocking to subside.
               int rtn = ACE::handle_write_ready (handle,
@@ -1728,7 +1728,7 @@ ACE::send_n_i (ACE_HANDLE handle,
       if (n == -1)
         {
           // Check for possible blocking.
-          if (errno == EWOULDBLOCK || errno == ENOBUFS)
+          if (errno == EWOULDBLOCK)
             {
               // Wait for the blocking to subside.
               int result = ACE::handle_write_ready (handle,
@@ -1784,7 +1784,7 @@ ACE::send_n_i (ACE_HANDLE handle,
         {
           // Check for possible blocking.
           if (n == -1 &&
-              errno == EWOULDBLOCK || errno == ENOBUFS)
+              errno == EWOULDBLOCK)
             {
               // Wait upto <timeout> for the blocking to subside.
               int rtn = ACE::handle_write_ready (handle,
@@ -1908,7 +1908,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
       if (n == -1)
         {
           // Check for possible blocking.
-          if (errno == EWOULDBLOCK || errno == ENOBUFS)
+          if (errno == EWOULDBLOCK)
             {
               // Wait for the blocking to subside.
               int result = ACE::handle_write_ready (handle,
@@ -1981,7 +1981,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
         {
           // Check for possible blocking.
           if (n == -1 &&
-              errno == EWOULDBLOCK || errno == ENOBUFS)
+              errno == EWOULDBLOCK)
             {
               // Wait upto <timeout> for the blocking to subside.
               int rtn = ACE::handle_write_ready (handle,
@@ -2532,8 +2532,6 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 #endif /* !ACE_WIN32 && ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
 
 #if defined (ACE_WIN32)
-  // Winsock is different - it sets the exception bit for failed connect,
-  // unlike other platforms, where the read bit is set.
   ACE_Handle_Set ex_handles;
   ex_handles.set_bit (h);
 #endif /* ACE_WIN32 */
@@ -2542,7 +2540,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 
 #if defined (ACE_WIN32)
   int n = ACE_OS::select (int (h) + 1,
-                          0,
+                          rd_handles,
                           wr_handles,
                           ex_handles,
                           timeout);
@@ -2570,14 +2568,11 @@ ACE::handle_timed_complete (ACE_HANDLE h,
       return ACE_INVALID_HANDLE;
     }
 
-  // Usually, a ready-for-write handle is successfully connected, and
-  // ready-for-read (exception on Win32) is a failure. On fails, we
-  // need to grab the error code via getsockopt. On possible success for
-  // any platform where we can't tell just from select() (e.g. AIX),
-  // we also need to check for success/fail.
+  // Check if the handle is ready for reading and the handle is *not*
+  // ready for writing, which may indicate a problem.  But we need to
+  // make sure...
 #if defined (ACE_WIN32)
-  if (ex_handles.is_set (h))
-    need_to_check = 1;
+  need_to_check = rd_handles.is_set (h) || ex_handles.is_set (h);
 #elif defined (VXWORKS)
   ACE_UNUSED_ARG (is_tli);
 
@@ -2591,7 +2586,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 # if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
     need_to_check = (fds.revents & POLLIN) && !(fds.revents & POLLOUT);
 # else
-    need_to_check = rd_handles.is_set (h) && !wr_handles.is_set (h);
+  need_to_check = rd_handles.is_set (h) && !wr_handles.is_set (h);
 # endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
 
   else
@@ -2610,17 +2605,6 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 
   if (need_to_check)
     {
-#if defined (SOL_SOCKET) && defined (SO_ERROR)
-      int sock_err = 0;
-      int sock_err_len = sizeof (sock_err);
-      ACE_OS::getsockopt (h, SOL_SOCKET, SO_ERROR,
-                          (char *)&sock_err, &sock_err_len);
-      if (sock_err != 0)
-        {
-          h = ACE_INVALID_HANDLE;
-          errno = sock_err;
-        }
-#else
       char dummy;
 
       // The following recv() won't block provided that the
@@ -2640,7 +2624,6 @@ ACE::handle_timed_complete (ACE_HANDLE h,
           else if (errno != EWOULDBLOCK && errno != EAGAIN)
             h = ACE_INVALID_HANDLE;
         }
-#endif
     }
 
   // 1. The HANDLE is ready for writing and doesn't need to be checked or

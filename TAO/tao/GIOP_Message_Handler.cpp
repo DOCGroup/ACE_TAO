@@ -35,10 +35,9 @@ TAO_GIOP_Message_Handler::TAO_GIOP_Message_Handler (TAO_ORB_Core * orb_core,
 int
 TAO_GIOP_Message_Handler::read_parse_message (TAO_Transport *transport)
 {
-  int retval = this->read_messages (transport);
+  if (this->read_messages (transport) == -1)
+    return -1;
 
-  if (retval < 1)
-    return retval;
 
   // Check what message are we waiting for and take suitable action
   if (this->message_status_ == TAO_GIOP_WAITING_FOR_HEADER)
@@ -50,7 +49,7 @@ TAO_GIOP_Message_Handler::read_parse_message (TAO_Transport *transport)
         }
     }
 
-  return retval;
+  return 0;
 }
 
 int
@@ -173,7 +172,8 @@ TAO_GIOP_Message_Handler::parse_magic_bytes (void)
       // For the present...
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) bad header, magic word [%c%c%c%c]\n"),
+                    ACE_TEXT ("TAO (%P|%t) bad header, "
+                              "magic word [%2.2x,%2.2x,%2.2x,%2.2x]\n"),
                     buf[0],
                     buf[1],
                     buf[2],
@@ -310,8 +310,7 @@ TAO_GIOP_Message_Handler::is_message_ready (TAO_Transport *transport)
               "Recv msg",
               ACE_reinterpret_cast (u_char *,
                                     buf),
-              this->message_state_.message_size +
-              TAO_GIOP_MESSAGE_HEADER_LEN);
+              len + TAO_GIOP_MESSAGE_HEADER_LEN);
 
           this->supp_buffer_.data_block (
             this->current_buffer_.data_block ()->clone ());
@@ -488,11 +487,27 @@ TAO_GIOP_Message_Handler::read_messages (TAO_Transport *transport)
   // Now we have a succesful read. First adjust the write pointer
   this->current_buffer_.wr_ptr (n);
 
-  if (TAO_debug_level > 8)
+  if (TAO_debug_level == 2)
     {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - GIOP_Message_Handler::read_messages"
+                  " received %d bytes\n",
+                  n));
+
+      size_t len;
+      for (size_t offset = 0; offset < size_t(n); offset += len)
+        {
+          len = n - offset;
+          if (len > 512)
+            len = 512;
+          ACE_HEX_DUMP ((LM_DEBUG,
+                         this->current_buffer_.wr_ptr () + offset,
+                         len,
+                         "TAO (%P|%t) - read_messages "));
+        }
       ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - received %d bytes \n", n));
     }
 
-  // Success
-  return 1;
+  return 0;
+
 }

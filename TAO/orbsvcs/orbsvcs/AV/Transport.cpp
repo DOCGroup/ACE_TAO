@@ -11,10 +11,6 @@
 #include "FlowSpec_Entry.h"
 #include "AV_Core.h"
 
-#ifdef ACE_HAS_RAPI
-#include "QoS_UDP.h"
-#endif /*ACE_HAS_RAPI*/
-
 #include "tao/debug.h"
 
 #include "ace/Dynamic_Service.h"
@@ -119,7 +115,6 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                                                    av_core,
                                                    (*flow_factory)->factory ()) == -1)
                                 return -1;
-
                               TAO_AV_Transport *transport = 0;
                               if (connector->connect (entry,
                                                       transport) == -1)
@@ -276,7 +271,7 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO_AV_Acceptor_Registry::open \n"));
+                "TAO_AV_Acceptor_Registry::open"));
 
   TAO_AV_FlowSpecSetItor last_flowspec
     = flow_spec_set.end ();
@@ -294,15 +289,13 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
         flow_protocol = transport_protocol;
 
       if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,
-                                           "TAO_AV_Acceptor_Registry::protocol for flow %s is %s\n",
+                                           "TAO_AV_Acceptor_Registry::protocol for flow %s is %d",
                                            entry->flowname (),
                                            transport_protocol));
 
       if (address == 0)
         {
-          this->open_default (endpoint,
-			      av_core,
-			      entry);
+          this->open_default (endpoint,av_core, entry);
           continue;
         }
       else
@@ -320,13 +313,11 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                 {
                   TAO_AV_TransportFactorySetItor transport_factory_end =
                     av_core->transport_factories ()->end ();
-
                   for (TAO_AV_TransportFactorySetItor transport_factory =
                          av_core->transport_factories ()->begin ();
                        transport_factory != transport_factory_end;
                        ++transport_factory)
                     {
-
                       if ((*transport_factory)->factory ()->match_protocol (transport_protocol))
                         {
                           TAO_AV_Acceptor *acceptor =

@@ -61,7 +61,7 @@ public:
                      CORBA::Boolean response_expected,
                      CORBA::Boolean deferred_flag,
                      TAO_ObjectKey &object_key,
-                     const char *operation,
+                     const ACE_CString &operation,
                      TAO_OutputCDR &output,
                      TAO_Transport *transport,
                      TAO_ORB_Core *orb_core,
@@ -78,8 +78,10 @@ public:
   const char *operation (void) const;
 
   /// Set the operation name.
-  void operation (const char *operation,
-                  size_t length,
+  void operation (ACE_CString &operation);
+
+  /// Set the operation name.
+  void operation (const char * name,
                   int release);
 
   /// Return the legnth of the operation.

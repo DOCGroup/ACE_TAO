@@ -97,6 +97,10 @@ SOURCE=.\client.cpp
 
 SOURCE=.\FooC.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\FooS.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -104,6 +108,14 @@ SOURCE=.\FooC.cpp
 # Begin Source File
 
 SOURCE=.\FooC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FooS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FooS_T.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"

@@ -5,12 +5,12 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../../../bin';
+unshift @INC, '../../../../bin';
 require ACEutils;
 require Process;
 
 $status = 0;
-$iorfile = "test.ior";
+$iorfile = "time.ior";
 
 unlink $iorfile;
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "-o $iorfile -ORBendpoint diop://:12345");

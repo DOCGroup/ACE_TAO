@@ -83,9 +83,9 @@ protected:
   virtual TAO_Pluggable_Messaging *messaging_object (void);
 
   /// Write the complete Message_Block chain to the connection.
-  virtual ssize_t send_i (const ACE_Message_Block *mblk,
-                          const ACE_Time_Value *s = 0,
-                          size_t *bytes_transferred = 0);
+  virtual ssize_t send_i (iovec *iov, int iovcnt,
+                          size_t &bytes_transferred,
+                          const ACE_Time_Value *timeout = 0);
 
   /// Read len bytes from into buf.
   virtual ssize_t recv_i (char *buf,

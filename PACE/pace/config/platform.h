@@ -46,13 +46,6 @@
 # define PACE_LYNXOS 0
 # define PACE_VXWORKS 0
 # define PACE_WIN32 0
-#elif defined (PACE_QNX)
-# define PACE_HAS_POSIX PACE_QNX
-# define PACE_LINUX 0
-# define PACE_SUNOS 0
-# define PACE_LYNXOS 0
-# define PACE_VXWORKS 0
-# define PACE_WIN32 0
 
 /* These platforms are NOT POSIX compliant. */
 
@@ -64,7 +57,6 @@
 # define PACE_WIN32 0
 /* Doesn't use the makefile! */
 #elif defined (WIN32)
-# undef PACE_WIN32
 # define PACE_WIN32 2000
 # define PACE_LACKS_POSIX PACE_WIN32
 # define PACE_LINUX 0

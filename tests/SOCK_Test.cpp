@@ -211,10 +211,7 @@ spawn (void)
       switch (ACE_OS::fork ("child"))
         {
         case -1:
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %p\n%a"),
-                      ACE_TEXT ("fork failed"),
-                      1));
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n%a"), ACE_TEXT ("fork failed")));
           /* NOTREACHED */
         case 0:
           client (&server_addr);
@@ -226,30 +223,17 @@ spawn (void)
         }
 #elif defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (server),
-           (void *) &peer_acceptor,
-           THR_NEW_LWP | THR_DETACHED) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n%a"),
-                    ACE_TEXT ("thread create failed"),
-                    1));
+          (ACE_THR_FUNC (server), (void *) &peer_acceptor, THR_NEW_LWP | THR_DETACHED) == -1)
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n%a"), ACE_TEXT ("thread create failed")));
 
       if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (client),
-           (void *) &server_addr,
-           THR_NEW_LWP | THR_DETACHED) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n%a"),
-                    ACE_TEXT ("thread create failed"),
-                    1));
+          (ACE_THR_FUNC (client), (void *) &server_addr, THR_NEW_LWP | THR_DETACHED) == -1)
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n%a"), ACE_TEXT ("thread create failed")));
 
       // Wait for the threads to exit.
       ACE_Thread_Manager::instance ()->wait ();
 #else
-      ACE_ERROR ((LM_INFO,
-                  ACE_TEXT ("(%P|%t) ")
-                  ACE_TEXT ("only one thread may be run ")
-                  ACE_TEXT ("in a process on this platform\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"), 1));
 #endif /* ACE_HAS_THREADS */
 
       peer_acceptor.close ();
@@ -266,3 +250,4 @@ main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
+

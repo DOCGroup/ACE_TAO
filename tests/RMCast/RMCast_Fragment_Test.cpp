@@ -11,7 +11,6 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/Message_Block.h"
 #include "ace/Task.h"
 #include "ace/RMCast/RMCast_Fragment.h"
 
@@ -112,20 +111,20 @@ ACE_RMCast_Fragment_Tester::svc (void)
 
     const int n = 256;
     const int size = 512;
-    ACE_Message_Block smallb[n];
-    smallb[0].size (size);
-    smallb[0].wr_ptr (size);
+    ACE_Message_Block small[n];
+    small[0].size (size);
+    small[0].wr_ptr (size);
 
     for (int i = 1; i != n; ++i)
       {
-        smallb[i].size (size);
-        smallb[i].wr_ptr (size);
-        smallb[i - 1].cont (&smallb[i]);
+        small[i].size (size);
+        small[i].wr_ptr (size);
+        small[i - 1].cont (&small[i]);
       }
-    this->initialize (smallb);
+    this->initialize (small);
 
     ACE_RMCast::Data data;
-    data.payload = smallb;
+    data.payload = small;
     if (this->fragment_.data (data) == -1)
       return -1;
 
@@ -137,10 +136,10 @@ ACE_RMCast_Fragment_Tester::svc (void)
                          this->received_bytes_, total),
                         -1);
 
-    if (this->compare (smallb) == -1)
+    if (this->compare (small) == -1)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Mismatched smallb chain data\n")),
+                           ACE_TEXT ("Mismatched small chain data\n")),
                           -1);
       }
 
@@ -158,23 +157,23 @@ ACE_RMCast_Fragment_Tester::svc (void)
       ACE_static_cast(ACE_RANDR_TYPE,ACE_OS::time (0));
 
     int size = 64 + ACE_OS::rand_r(seed) % 128;
-    ACE_Message_Block smallb[n];
-    smallb[0].size (size);
-    smallb[0].wr_ptr (size);
+    ACE_Message_Block small[n];
+    small[0].size (size);
+    small[0].wr_ptr (size);
     total += size;
 
     for (int i = 1; i != n; ++i)
       {
         size = 64 + ACE_OS::rand_r(seed) % 128;
         total += size;
-        smallb[i].size (size);
-        smallb[i].wr_ptr (size);
-        smallb[i - 1].cont (&smallb[i]);
+        small[i].size (size);
+        small[i].wr_ptr (size);
+        small[i - 1].cont (&small[i]);
       }
-    this->initialize (smallb);
+    this->initialize (small);
 
     ACE_RMCast::Data data;
-    data.payload = smallb;
+    data.payload = small;
     if (this->fragment_.data (data) == -1)
       return -1;
 
@@ -185,10 +184,10 @@ ACE_RMCast_Fragment_Tester::svc (void)
                          this->received_bytes_, total),
                         -1);
 
-    if (this->compare (smallb) == -1)
+    if (this->compare (small) == -1)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Mismatched smallb chain data\n")),
+                           ACE_TEXT ("Mismatched small chain data\n")),
                           -1);
       }
 

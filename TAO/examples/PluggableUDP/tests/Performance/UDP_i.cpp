@@ -30,15 +30,21 @@ UDP_i::orb (CORBA::ORB_ptr orb)
 
 void
 UDP_i::setResponseHandler (UDP_ptr udpHandler,
-                           CORBA::Environment &)
+                           CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (CORBA::is_nil (udpHandler))
-    ACE_DEBUG ((LM_DEBUG,
-		"response handler is nil\n"));
-
-  this->responseHandler_ = UDP::_duplicate (udpHandler);
+  ACE_TRY
+    {
+      this->responseHandler_ = UDP::_duplicate (udpHandler);
+    }
+  ACE_CATCHANY
+    {
+       ACE_DEBUG ((LM_DEBUG,
+                   "UDP_i::svc: Received exception\n"));
+    }
+  ACE_ENDTRY;
 }
+
 
 void
 UDP_i::invoke (const char * client_name,
@@ -76,7 +82,7 @@ UDP_i::invoke (const char * client_name,
       request_id_table_.rebind (client_name,
                                 request_id);
 
-      if (!CORBA::is_nil (responseHandler_.in ()))
+      if (!CORBA::is_nil (responseHandler_))
         {
           responseHandler_->invoke (client_name,
                                     request_id,
@@ -106,7 +112,7 @@ UDP_i::reset (const char * client_name,
 
       request_id_table_.rebind (client_name,
                                 0);
-      if (!CORBA::is_nil (responseHandler_.in ()))
+      if (!CORBA::is_nil (responseHandler_))
         {
           responseHandler_->reset (client_name,
                                    ACE_TRY_ENV);
@@ -164,21 +170,3 @@ UDP_i::getMessagesCount ()
 
   return tmp;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Hash_Map_Manager_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<CORBA::String_var, int>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash_Map_Manager_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::String_var, int, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<CORBA::String_var, int>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1065,9 +1065,6 @@ ACE_WFMO_Reactor::ready_ops (ACE_Event_Handler *event_handler,
                              int ops)
 {
   // Don't have an implementation for this yet...
-  ACE_UNUSED_ARG (event_handler);
-  ACE_UNUSED_ARG (mask);
-  ACE_UNUSED_ARG (ops);
   ACE_NOTSUP_RETURN (-1);
 }
 
@@ -1077,8 +1074,6 @@ ACE_WFMO_Reactor::ready_ops (ACE_HANDLE handle,
                              int ops)
 {
   // Don't have an implementation for this yet...
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (ops);
   ACE_NOTSUP_RETURN (-1);
 }
 

@@ -16,7 +16,7 @@
 
 #define ACE_WIN32
 
-// Define this if you're running NT >= 4.0 (Win2K == NT 5).
+// Define this if you're running NT 4.x
 //  Setting applies to  : building ACE
 //  Runtime restrictions: System must be Windows NT => 4.0
 #if !defined (ACE_HAS_WINNT4)
@@ -27,11 +27,6 @@
 # if !defined (_WIN32_WINNT)
 #  define _WIN32_WINNT 0x0400
 # endif
-#else
-// On Win9X, a shared address SHOULD be between the 2nd and 3rd Gb.
-// Note this will not work for NT: The addresses above 2Gb are
-// reserved for the system, so this one will fail.
-# define ACE_DEFAULT_BASE_ADDR ((char*) ((2048UL+512UL)*1024UL*1024UL))
 #endif
 
 // Define ACE_HAS_MFC to 1, if you want ACE to use CWinThread. This should
@@ -161,7 +156,7 @@
 // By default WIN32 has FD_SETSIZE of 64, which places the limit
 // between 61 and 64 on the number of clients a server using the
 // Select Reactor can support at the same time (i.e., 64 - standard in,
-// out, error).  Here we raise the limit to 1024.  Adjust the definition
+// out, error).  He we raise the limit to 1024.  Adjust the definition
 // below if you need to raise or lower it.
 
 #if defined (FD_SETSIZE)
@@ -191,9 +186,7 @@
 #if !defined (ACE_HAS_WINCE)
 // Platform supports pread() and pwrite()
 # define ACE_HAS_P_READ_WRITE
-# if !defined (__MINGW32__)
-#  define ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
-# endif /* __MINGW32__ */
+# define ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
 #endif /* ! ACE_HAS_WINCE */
 
 #define ACE_DEFAULT_THREAD_PRIORITY 0
@@ -231,14 +224,9 @@
 
 #define ACE_SIZEOF_LONG_LONG 8
 // Green Hills Native x86 does not support __int64 keyword
-// Neither does mingw32.
-#if !defined (ghs) && !defined (__MINGW32__)
+#if !defined (ghs)
 typedef unsigned __int64 ACE_UINT64;
 #endif /* (ghs) */
-
-#if defined (__MINGW32__)
-typedef unsigned long long ACE_UINT64;
-#endif
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
@@ -298,6 +286,9 @@ typedef unsigned long long ACE_UINT64;
 
 #define ACE_LACKS_KEY_T
 
+// Platform support for non-blocking connects is broken
+#define ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS
+
 // No system support for replacing any previous mappings.
 #define ACE_LACKS_AUTO_MMAP_REPLACEMENT
 
@@ -321,7 +312,7 @@ typedef unsigned long long ACE_UINT64;
 // If you want to use highres timers, ensure that
 // Build.Settings.C++.CodeGeneration.Processor is
 // set to Pentium !
-#if !defined(ACE_HAS_PENTIUM) && (_M_IX86 > 400)
+#if (_M_IX86 > 400)
 # define ACE_HAS_PENTIUM
 #endif
 
@@ -469,11 +460,6 @@ typedef unsigned long long ACE_UINT64;
 // Version 1.1 of WinSock
 # define ACE_WSOCK_VERSION 1, 1
 #endif /* ACE_HAS_WINSOCK2 */
-
-// mingw32 doesn't define this (yet...)
-#if defined(__MINGW32__) && !defined(MWMO_ALERTABLE)
-# define MWMO_ALERTABLE 0x0002
-#endif
 
 // Platform supports IP multicast on Winsock 2
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)

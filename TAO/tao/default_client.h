@@ -50,10 +50,9 @@ public:
 
   // = Check Client_Strategy_Factory.h for the documentation of the
   //   following methods.
-  virtual ACE_Lock* create_profile_lock (void);
-  virtual TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport);
-  virtual int allow_callback (void);
-  virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
+  ACE_Lock* create_profile_lock (void);
+  TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport);
+  TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
   virtual ACE_Lock *create_ft_service_retention_id_lock (void);
 
 private:

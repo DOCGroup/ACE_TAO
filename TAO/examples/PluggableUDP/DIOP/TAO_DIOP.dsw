@@ -11,9 +11,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name Simple Performance Server
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -26,9 +23,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name TAO_DIOP
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -45,7 +39,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "UDP Basic Client"=..\tests\Basic\client.dsp - Package Owner=<4>
+Project: "UDP Client"=..\tests\Basic\client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -53,24 +47,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name UDP Basic Server
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "UDP Basic Server"=..\tests\Basic\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO_DIOP
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -83,6 +59,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_DIOP
+    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name UDP Performance Server
     End Project Dependency
@@ -98,9 +77,18 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name TAO_DIOP
-    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "UDP Server"=..\tests\Basic\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################

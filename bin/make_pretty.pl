@@ -172,14 +172,10 @@ sub is_error ()
       return 1;
     }
 
-    # AIX linking errors from ld
-    return 1 if (/^ld: \d+\-\d+/);
-
     # Look for linking errors too
     return 1 if (/undefined reference to/
                  || /: cannot open/
-                 || /: multiple definition of/
-                 || /path name does not exist/);
+                 || /: multiple definition of/);
 
     # Look for possible errors
     return 1 if ((/error/i && !/ error\(s\), / && !/error \(future\)/i)

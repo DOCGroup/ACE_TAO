@@ -1,4 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
+
 // ===================================================================
 /**
  *  @file   IIOP_Connection_Handler.h
@@ -114,11 +115,15 @@ public:
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg = 0);
 
+  /// Documented in ACE_Event_Handler
+  virtual int handle_output (ACE_HANDLE);
+
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);
 
   /// Process the <listen_list>
   int process_listen_point_list (IIOP::ListenPointList &listen_list);
+
 protected:
 
   /// = Event Handler overloads

@@ -31,9 +31,6 @@ pthread_create (pace_pthread_t * thread,
 		void * (*start_routine) (void*),
 		void * arg)
 {
-  /* Get around a gcc bug. */
-  typedef unsigned (__stdcall *bthrexr)(void*);
-
   unsigned flags = 0x0, thr_addr = 0x0;
   if (attr->sparam_.sched_priority != THREAD_PRIORITY_NORMAL)
     {
@@ -41,13 +38,12 @@ pthread_create (pace_pthread_t * thread,
       flags = CREATE_SUSPENDED;
     }
 
-  thread = (pace_pthread_t)
-    _beginthreadex (0,
-		    attr->stack_size_,
-		    (bthrexr) start_routine,
-		    arg,
-		    flags,
-		    &thr_addr);
+  thread = (pace_pthread_t) _beginthreadex (0,
+                                            attr->stack_size_,
+                                            (unsigned (__stdcall *)(void*))start_routine,
+                                            arg,
+                                            flags,
+                                            &thr_addr);
 
   if (flags == CREATE_SUSPENDED && thread != 0)
     {
@@ -81,7 +77,6 @@ pthread_getschedparam (pace_pthread_t thread,
 		       int * policy,
 		       pace_sched_param * param)
 {
-  PACE_UNUSED_ARG (policy);
   if (param != (pace_sched_param*)0)
     {
       param->sched_priority = GetThreadPriority (thread);
@@ -97,8 +92,6 @@ pthread_getschedparam (pace_pthread_t thread,
 			     int policy,
 			     const pace_sched_param * param)
 {
-  PACE_UNUSED_ARG(policy);
-
   if (SetThreadPriority (thread, param->sched_priority))
     {
       return 0;

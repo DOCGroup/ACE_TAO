@@ -279,13 +279,13 @@ endif
 
 ifeq ($(findstring g++,$(CXX)),g++)
   ifndef ACE_HAS_GNUG_PRE_2_8
-    ifeq ($(filter g++,$(notdir $(CXX))),g++)
+    ifeq ($(notdir $(CXX)),g++)
       ACE_HAS_GNUG_PRE_2_8 := \
         $(shell \
           if $(CXX) --version | egrep '^(cygnus-)?2\.[0-7]' > /dev/null; then \
           echo 1; else echo 0; fi)
     else  # ! g++
-    ifeq (eg++,$(filter g++,$(notdir $(CXX))),eg++)
+    ifeq (eg++,$(notdir $(CXX)),eg++)
       # Assume that eg++ is egcs.
       ACE_HAS_GNUG_PRE_2_8 := 0
     else  # ! plain g++ or eg++
@@ -568,7 +568,7 @@ ifdef shared_libs
         VDIR        = .shobj/
         ifeq ($(BIN),)
           #### No executables are being built, so don't create .obj/.
-          OBJDIRS     = $(VSHDIR)
+          OBJDIRS     = .shobj
         endif # BIN
       endif # ! VXWORKS
     endif # ! SHLIB

@@ -1,7 +1,8 @@
+#
 # Makefile for building the TAO POA examples
+#
 
 DIRS = \
-        Default_Servant \
         DSI \
         FindPOA \
         Forwarding \

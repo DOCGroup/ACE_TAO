@@ -51,7 +51,6 @@ ACE_NT_Service::~ACE_NT_Service (void)
 int
 ACE_NT_Service::open (void *args)
 {
-  ACE_UNUSED_ARG (args);
   report_status (SERVICE_START_PENDING, 0);
 
   int svc_return = this->svc ();
@@ -236,17 +235,16 @@ ACE_NT_Service::startup (DWORD startup)
   if (svc == 0)
     return -1;
 
-  BOOL ok =
-    ChangeServiceConfig (svc,
-                         (DWORD) SERVICE_NO_CHANGE,// No change to service type
-                         startup,                  // New startup type
-                         (DWORD) SERVICE_NO_CHANGE,// No change to error ctrl
-                         0,                        // No change to pathname
-                         0,                        // No change to load group
-                         0,                        // No change to tag
-                         0,                        // No change to dependencies
-                         0, 0,                     // No change to acct/passwd
-                         0);                       // No change to name
+  BOOL ok = ChangeServiceConfig (svc,
+                                 SERVICE_NO_CHANGE,// No change to service type
+                                 startup,          // New startup type
+                                 SERVICE_NO_CHANGE,// No change to error ctrl
+                                 0,                // No change to pathname
+                                 0,                // No change to load group
+                                 0,                // No change to tag
+                                 0,                // No change to dependencies
+                                 0, 0,             // No change to acct/passwd
+                                 0);               // No change to name
 
   return ok ? 0 : -1;
 }

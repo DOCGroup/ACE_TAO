@@ -123,7 +123,7 @@
 #   include /**/ <iostream.h>
 #   include /**/ <iomanip.h>
 
-#   if defined (ACE_WIN32) && !defined(__MINGW32__)
+#   if defined (ACE_WIN32)
 #     if defined(_MSC_VER) // VSB
 #       include /**/ <ios.h>
 #       include /**/ <streamb.h>
@@ -133,7 +133,7 @@
 #     include /**/ <strstrea.h> // VSB
 #   else
 #     include /**/ <strstream.h>
-#   endif /* ACE_WIN32 && !__MINGW32__ */
+#   endif /* ACE_WIN32 */
 
 # endif /* ! ACE_HAS_STANDARD_CPP_LIBRARY */
 

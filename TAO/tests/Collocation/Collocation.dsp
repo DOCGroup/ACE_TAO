@@ -93,7 +93,7 @@ SOURCE=.\Coll_Tester.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Collocation.cpp
+SOURCE=.\main.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"

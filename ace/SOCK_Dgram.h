@@ -146,7 +146,7 @@ public:
    */
   ssize_t send (const void *buf,
                 size_t n,
-                const ACE_Addr &addr,
+                ACE_Addr &addr,
                 int flags,
                 const ACE_Time_Value *timeout) const;
 

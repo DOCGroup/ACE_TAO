@@ -361,12 +361,8 @@ ACE_TTY_IO::control (Control_Mode cmd,
           timeouts.ReadTotalTimeoutMultiplier = MAXDWORD;
 
           // ensure specified timeout is below MAXDWORD
-
-          // We don't test arg->readtimeoutmsec against MAXDWORD
-          // directly to avoid a warning in the case DWORD is unsigned.
-          DWORD dw = arg->readtimeoutmsec;
-          if (dw < MAXDWORD)
-            timeouts.ReadTotalTimeoutConstant   = dw;
+          if(arg->readtimeoutmsec < MAXDWORD)
+            timeouts.ReadTotalTimeoutConstant   = arg->readtimeoutmsec ;
           else
             timeouts.ReadTotalTimeoutConstant   = MAXDWORD;
         }

@@ -59,23 +59,7 @@ TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core
 
 TAO_DIOP_Connection_Handler::~TAO_DIOP_Connection_Handler (void)
 {
-  if (this->transport () != 0) {
-    // If the socket has not already been closed.
-    if (this->get_handle () != ACE_INVALID_HANDLE)
-      {
-        // Cannot deal with errors, and therefore they are ignored.
-        this->transport ()->send_buffered_messages ();
-      }
-    else
-      {
-        // Dequeue messages and delete message blocks.
-        this->transport ()->dequeue_all ();
-      }
-  }
-  // @@ Frank: Added from DIOP_Connect.cpp
-  this->handle_cleanup ();
-
-  udp_socket_.close ();
+  this->udp_socket_.close ();
 }
 
 // DIOP Additions - Begin
@@ -247,9 +231,6 @@ TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
       // Close the handle..
       if (this->get_handle () != ACE_INVALID_HANDLE)
         {
-          // Send the buffered messages first
-          this->transport ()->send_buffered_messages ();
-
           // Purge the entry too
           this->transport ()->mark_invalid ();
 
@@ -257,11 +238,14 @@ TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
           // a reference to it.  This will eventually call
           // TAO_Transport::release ().
           this->transport (0);
+
+          this->peer ().close ();
         }
 
       // Follow usual Reactor-style lifecycle semantics and commit
       // suicide.
-      this->destroy ();
+      delete this;
+
     }
 
   return 0;
@@ -278,18 +262,11 @@ int
 TAO_DIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
                                              const void *)
 {
-  // This method is called when buffering timer expires.
-  //
-  ACE_Time_Value *max_wait_time = 0;
-
-  TAO_Stub *stub = 0;
-  int has_timeout;
-  this->orb_core ()->call_timeout_hook (stub,
-                                        has_timeout,
-                                        *max_wait_time);
-
   // Cannot deal with errors, and therefore they are ignored.
-  this->transport ()->send_buffered_messages (max_wait_time);
+  if (this->transport ()->handle_output () == -1)
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -385,10 +362,9 @@ TAO_DIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
   if (--this->pending_upcalls_ <= 0)
     result = -1;
 
-  // @@ Michael:
-  // We always return 0, as we do not have any
+  // We always return a positive number, as we do not have any
   // send errors.
-  return 0;
+  return 1;
 }
 
 // @@ Frank: From DIOP_Connect.cpp
@@ -419,13 +395,9 @@ TAO_DIOP_Connection_Handler::handle_cleanup (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class ACE_Concurrency_Strategy<TAO_DIOP_Connection_Handler>;
-template class ACE_Creation_Strategy<TAO_DIOP_Connection_Handler>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-#pragma instantiate ACE_Concurrency_Strategy<TAO_DIOP_Connection_Handler>
-#pragma instantiate ACE_Creation_Strategy<TAO_DIOP_Connection_Handler>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -15,7 +15,9 @@ OBJ     = $(SRC:%.cpp=$(VDIR)%.o)
 
 LSRC    = $(addsuffix .cpp,$(FILES))
 LOBJ    = $(LSRC:%.cpp=$(VDIR)%.o)
-SHOBJ   = $(addsuffix .$(SOEXT),$(FILES))
+SHOBJ   = $(addsuffix .so,$(FILES))
+
+VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BIN2    = main
 LIB2    = libClient_Test.a

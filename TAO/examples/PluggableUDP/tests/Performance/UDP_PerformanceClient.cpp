@@ -56,6 +56,7 @@ UDP_PerformanceClient::svc ()
       ACE_TRY_CHECK;
 
       ACE_High_Res_Timer timer;
+      ACE_UINT32 i = 0;
       while (1)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -130,30 +131,27 @@ UDP_PerformanceClient::svc ()
                           "\nError: No callbacks received!\n\n"));
             }
           
-
+          if (delta_micro_seconds <= final_delta_micro_seconds_
+           && current_wrong_messages == 0)
             {
               ACE_Time_Value tv;
               timer.elapsed_time (tv);
 
-              ACE_UINT32 calls_per_second = (1000L * burst_messages_) / tv.msec ();
+              ACE_UINT64 calls_per_second = 
+                (1000 * burst_messages_) / tv.msec ();
 
               ACE_DEBUG ((LM_DEBUG,
-                          "\n  Time needed %d s %d us  (%d ms) for %d messages"
-                          "\n  Performance = %d asynch calls per second\n\n",
+                          "\n  Time needed %u s %u us  (%d ms) for %d messages"
+                          "\n  Performance = %u asynch calls per second\n\n",
                           tv.sec (),
                           tv.usec (),
                           tv.msec (),
                           burst_messages_,
                           calls_per_second));
-	    }
-	  
-          if (delta_micro_seconds <= final_delta_micro_seconds_
-	      && current_wrong_messages == 0)
-	    {
               break;
             }
-	}
-      
+        }
+
       // shut down remote ORB
       udp_->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;

@@ -21,7 +21,6 @@ Client_Task::Client_Task (CORBA::ORB_ptr orb,
   , timeout_ (timeout)
   , successful_calls_ (0)
   , timed_out_calls_ (0)
-  , too_big_difference_ (0)
 {
 }
 
@@ -35,12 +34,6 @@ int
 Client_Task::timed_out_calls (void) const
 {
   return this->timed_out_calls_;
-}
-
-int
-Client_Task::too_big_difference_calls (void) const
-{
-  return this->too_big_difference_;
 }
 
 int
@@ -181,10 +174,10 @@ Client_Task::one_iteration (CORBA::Environment &ACE_TRY_ENV)
               // *way* off, this is an error.
               if (difference > 10)
                 {
-		  this->too_big_difference_++;
                   ACE_ERROR ((LM_ERROR,
-                              "(%P|%t) Elapsed time = %d, expected %d\n",
+                              "ERROR: Elapsed time = %d, expected %d\n",
                               elapsed_milliseconds, max_milliseconds));
+                  return -1;
                 }
             }
         }

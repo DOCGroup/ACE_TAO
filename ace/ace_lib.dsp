@@ -229,10 +229,6 @@ SOURCE=.\Configuration.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Configuration_Import_Export.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Containers.cpp
 # End Source File
 # Begin Source File
@@ -1154,10 +1150,6 @@ SOURCE=.\config.h
 # Begin Source File
 
 SOURCE=.\Configuration.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Configuration_Import_Export.h
 # End Source File
 # Begin Source File
 

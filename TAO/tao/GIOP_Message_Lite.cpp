@@ -16,6 +16,8 @@
 # include "tao/GIOP_Message_Lite.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(tao, GIOP_Message_Lite, "$Id$")
+
 static const size_t TAO_GIOP_LITE_HEADER_LEN = 5;
 static const size_t TAO_GIOP_LITE_MESSAGE_SIZE_OFFSET = 0;
 static const size_t TAO_GIOP_LITE_MESSAGE_TYPE_OFFSET = 4;
@@ -1165,6 +1167,8 @@ TAO_GIOP_Message_Lite::parse_request_header (TAO_ServerRequest &request)
       input.skip_bytes (key_length);
     }
 
+   ACE_CString operation_name;
+
   if (input.char_translator () == 0)
     {
       CORBA::ULong length = 0;
@@ -1175,14 +1179,10 @@ TAO_GIOP_Message_Lite::parse_request_header (TAO_ServerRequest &request)
           // Do not include NULL character at the end.
           // @@ This is not getting demarshaled using the codeset
           //    translators!
-
-          // Notice that there are no memory allocations involved
-          // here!
-
-          request.operation (input.rd_ptr (),
-                             length - 1,
-                             0 /* TAO_ServerRequest does NOT own string */);
-
+          operation_name.set (input.rd_ptr (),
+                              length - 1,
+                              0);
+          request.operation (operation_name);
           hdr_status = input.skip_bytes (length);
         }
     }
@@ -1195,10 +1195,8 @@ TAO_GIOP_Message_Lite::parse_request_header (TAO_ServerRequest &request)
       //    ISO8859-1.
       CORBA::String_var tmp;
       hdr_status = hdr_status && input.read_string (tmp.inout ());
-
-      request.operation (tmp._retn (),
-                         0,
-                         1 /* TAO_ServerRequest owns string */);
+      operation_name.set (tmp._retn (), 1);
+      request.operation (operation_name);
     }
 
   return hdr_status ? 0 : -1;
@@ -1369,7 +1367,9 @@ TAO_GIOP_Message_Lite::send_error (TAO_Transport *transport)
   ACE_Message_Block message_block(&data_block);
   message_block.wr_ptr (TAO_GIOP_LITE_HEADER_LEN);
 
-  int result = transport->send (&message_block);
+  size_t bt;
+  int result = transport->send_message_block_chain (&message_block,
+                                                    bt);
   if (result == -1)
     {
       if (TAO_debug_level > 0)

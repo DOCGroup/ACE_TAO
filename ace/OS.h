@@ -1927,7 +1927,7 @@ struct stat
 #else
 # if defined (ACE_HAS_EXCEPTIONS)
 #   define ACE_THROW_SPEC(X) throw X
-#   if defined (ACE_WIN32) && defined(_MSC_VER) && !defined (ghs)
+#   if defined (ACE_WIN32) && !defined (ghs)
 // @@ MSVC "supports" the keyword but doesn't implement it (Huh?).
 //    Therefore, we simply supress the warning for now.
 #     pragma warning( disable : 4290 )
@@ -3128,8 +3128,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 // Turn off warnings for /W4
 // To resume any of these warning: #pragma warning(default: 4xxx)
 // which should be placed after these defines
-
-#   if !defined (ALL_WARNINGS) && defined(_MSC_VER) && !defined(ghs) && !defined(__MINGW32__)
+#   if !defined (ALL_WARNINGS) && !defined(ghs)
 // #pragma warning(disable: 4101)  // unreferenced local variable
 #     pragma warning(disable: 4127)  /* constant expression for TRACE/ASSERT */
 #     pragma warning(disable: 4134)  /* message map member fxn casts */
@@ -3146,7 +3145,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 #     pragma warning(disable: 4251)  /* using non-exported as public in exported */
 #     pragma warning(disable: 4786)  /* identifier was truncated to '255' characters in the browser information */
 #     pragma warning(disable: 4097)  /* typedef-name used as synonym for class-name */
-#   endif /* !ALL_WARNINGS && _MSV_VER && !ghs && !__MINGW32__ */
+#   endif /*!ALL_WARNINGS */
 
 // STRICT type checking in WINDOWS.H enhances type safety for Windows
 // programs by using distinct types to represent all the different
@@ -3231,11 +3230,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 #   define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("PATH")
 #   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_LIB_TEXT (";")
 #   define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dll")
-#   if defined (__MINGW32__)
-#     define ACE_DLL_PREFIX ACE_LIB_TEXT ("lib")
-#   else /* __MINGW32__ */
-#     define ACE_DLL_PREFIX ACE_LIB_TEXT ("")
-#   endif /* __MINGW32__ */
+#   define ACE_DLL_PREFIX ACE_LIB_TEXT ("")
 
 // This will help until we figure out everything:
 #   define NFDBITS 32 /* only used in unused functions... */
@@ -3358,9 +3353,7 @@ PAGE_NOCACHE  */
 typedef OVERLAPPED ACE_OVERLAPPED;
 
 typedef DWORD ACE_thread_t;
-#   if !defined(__MINGW32__)
 typedef long pid_t;
-#   endif /* __MINGW32__ */
 typedef HANDLE ACE_hthread_t;
 
 #define ACE_INVALID_PID ((pid_t) -1)
@@ -3393,9 +3386,7 @@ typedef pace_uid_t uid_t;
 typedef pace_gid_t gid_t;
 #     else /* !ACE_HAS_PACE */
 typedef DWORD nlink_t;
-#       if !defined(__MINGW32__)
 typedef int mode_t;
-#       endif /* !__MINGW32__ */
 typedef int uid_t;
 typedef int gid_t;
 #     endif /* ACE_HAS_PACE */
@@ -4133,9 +4124,9 @@ typedef fd_set ACE_FD_SET_TYPE;
 # if defined (ACE_LACKS_SIGSET)
 #    if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
 typedef pace_sigset_t sigset_t;
-#    elif !defined(__MINGW32__)
+#    else
 typedef u_int sigset_t;
-#    endif /* !ACE_HAS_PACE && !__MINGW32__*/
+#    endif /* ACE_HAS_PACE */
 # endif /* ACE_LACKS_SIGSET */
 
 # if defined (ACE_LACKS_SIGACTION)

@@ -1,441 +1,53 @@
-Mon Apr 23 17:18:35 2001  Steve Huston  <shuston@riverace.com>
-
-        * ace/ACE.cpp (ACE::handle_timed_complete): Set need_to_check for
-          any non-success result, or on a system where you can't tell (AIX).
-          Also, to check, use getsockopt to retrieve the status/error if
-          SOL_SOCKET and SO_ERROR are defined; else use the old recv method.
-          This gets you a real error code on a failed connect, if the platform
-          supports it.
-
-        * tests/SOCK_Connector_Test.cpp: For an expected success, allow test
-          to pass if socket gets a reset but not if it says ENOTCONN. If there
-          are platforms that can't do SOL_SOCKET/SO_ERROR (above) then this
-          other code may need to be re-enabled.
-
-Mon Apr 23 13:36:27 2001  Steve Huston  <shuston@riverace.com>
-
-        * ace/ACE.cpp (ACE::handle_timed_complete): Winsock (ACE_WIN32) sets
-          the exception bit (not the read bit) for a failed async connect.
-          So on fail, don't bother to do the recv trick to see if the socket
-          really did fail.
-
-        * ace/Connector.cpp (ACE_Connector::handle_output):
-        * ace/SOCK_Connector.cpp (complete): Apparantly, Win2000 has
-          fixed the problem where a connection succeeds but can't be used
-          for a time. So, the sleep workaround is restructured for ACE_WIN32
-          to try the new socket first, and only do the sleep if it fails.
-          Don't try to do this check (e.g. building on Win2000) at compile
-          time, since we want to be able to build on NT and run on Win2000.
-
-        * ace/README:
-        * ace/config-win32-common.h: Removed the macro,
-          ACE_HAS_BROKEN_NONBLOCKING_CONNECTS. It was only used in the two
-          cases above, and is not needed any longer.
-
-Mon Apr 23 07:08:09 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
-
-	* ace/Based_Pointer_T.h: Updated the documentation to 
-	  explain how ACE_Based_Pointer<T> (NULL) behaves.  Thanks to Tom
- 	  Moog <tmoog@polhode.com> for motivating this.
-
-Sun Apr 22 14:26:56 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * ace/OS.h:
-          Some warnings are automatically disabled, but the pragmas only
-          make sense for MSVC.
-
-        * ace/streams.h:
-          Fixed problems for Sun/CC-4.2, the trick is to include
-          strstream.h on MINGW32 *and* unix-like platforms, while
-          strstrea.h is included for all other WinXX-based compilers.
-
-Sat Apr 21 19:02:27 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * netsvcs/clients/Naming/Dump_Restore/Makefile:
-        * netsvcs/clients/Naming/Client/Makefile: Removed duplicated ACE
-          library.  I thought I removed them all.
-
-Sat Apr 21 15:31:27 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * ace/ACE.cpp:
-        * ace/Basic_Types.h:
-        * ace/Configuration.cpp:
-        * ace/Handle_Gobbler.i:
-        * ace/Lib_Find.cpp:
-        * ace/Local_Name_Space_T.cpp:
-        * ace/Log_Msg.cpp:
-        * ace/Makefile:
-        * ace/Mem_Map.cpp:
-        * ace/Memory_Pool.cpp:
-        * ace/Message_Queue.i:
-        * ace/NT_Service.cpp:
-        * ace/OS.cpp:
-        * ace/OS.h:
-        * ace/OS.i:
-        * ace/OS_String.cpp:
-        * ace/Process.cpp:
-        * ace/Process_Manager.cpp:
-        * ace/Registry.cpp:
-        * ace/SOCK_Connector.i:
-        * ace/Sock_Connect.cpp:
-        * ace/TTY_IO.cpp:
-        * ace/WFMO_Reactor.cpp:
-        * ace/WFMO_Reactor.i:
-        * ace/WIN32_Asynch_IO.cpp:
-        * ace/config-cygwin32-common.h:
-        * ace/config-g++-common.h:
-        * ace/config-win32-common.h:
-        * ace/config-win32-mingw.h:
-        * ace/config-win32.h:
-        * ace/streams.h:
-        * examples/NT_Service/Makefile:
-        * examples/NT_Service/main.cpp:
-        * examples/NT_Service/ntsvc.cpp:
-        * include/makeinclude/platform_cygwin32.GNU:
-        * include/makeinclude/platform_gnuwin32_common.GNU:
-        * include/makeinclude/platform_mingw32.GNU:
-        * include/makeinclude/rules.local.GNU:
-        * include/makeinclude/wrapper_macros.GNU:
-        * tests/CDR_File_Test.cpp:
-        * tests/Cached_Accept_Conn_Test.cpp:
-        * tests/Cached_Conn_Test.cpp:
-        * tests/Conn_Test.cpp:
-        * tests/Handle_Set_Test.cpp:
-        * tests/MEM_Stream_Test.cpp:
-        * tests/MEM_Stream_Test.h:
-        * tests/MM_Shared_Memory_Test.cpp:
-        * tests/MT_SOCK_Test.cpp:
-        * tests/Malloc_Test.cpp:
-        * tests/Mem_Map_Test.cpp:
-        * tests/OS_Test.cpp:
-        * tests/Priority_Reactor_Test.cpp:
-        * tests/Process_Strategy_Test.cpp:
-        * tests/Reactor_Exceptions_Test.cpp:
-        * tests/Reactor_Notify_Test.cpp:
-        * tests/SOCK_Send_Recv_Test.cpp:
-        * tests/SOCK_Test.cpp:
-        * tests/SPIPE_Test.cpp:
-        * tests/Svc_Handler_Test.cpp:
-        * tests/run_tests.bat:
-        * tests/run_tests.sh:
-        * tests/RMCast/RMCast_Fragment_Test.cpp:
-          Add support for mingw (www.mingw.org) and partial support for
-          cygwin (http://cygwin.com/).  Many thanks to Cristian Ferretti
-          <cristian_ferretti@yahoo.com>
-
-Fri Apr 20 18:21:41 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * ace/CDR_Stream.i (align_write_ptr):
-          Don't use grow_and_adjust() here because it forces an
-          allocation, using simply adjust() is better.
-
-Fri Apr 20 19:37:53 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
-
-        * ace/Get_Opt.h: Updated the documentation to match the constructor
-          arguments for ACE_Get_Opt.  Thanks to Benot Desmeules
-          <bdesmeules@eurekium.com> for reporting this.
-
-        * ace/TP_Reactor.cpp: Added a workaround for compiling ACE on
-          Linux for the OS/390 OS.  Thanks to James Dorsey
-          <James.Dorsey@acxiom.com> for reporting this.
-
-Fri Apr 20 00:57:24 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
-
-        * ace/Containers_T.cpp (operator=): Added a missing assignment to
-          this->size_ = s.size_.  Thanks to Juan Jose Comellas
-          <jcomellas@novamens.com> for reporting this.
-
-        * ace/SOCK_Dgram: One of the send() methods was lacking a "const"
-          in front of the ACE_Addr &.  This has been fixed.  Thanks to
-          Victor Poznyak <VictorP@Webley.COM> for reporting this.
-
-Thu Apr 19 16:18:33 2001  Steve Huston  <shuston@riverace.com>
-
-        * ace/Log_Msg.h: Doxygen-ized some function arguments; other
-          minor doc cleanups.
-
-Thu Apr 19 11:08:15 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
-
-        * ACE-INSTALL.html: Point out that ACE supports Solaris 8.
-          Thanks to Logan Modahala <lmodahal@cisco.com> for motivating
-          this.
-
-Wed Apr 18 13:57:40 2001  Chad Elliott  <elliott_c@ociweb.com>
-
-        * ace/ACE.cpp:
-
-          Modification to check errno for ENOBUFS (in addition to
-          EWOULDBLOCK) after writing to a file descriptor.  This will happen
-          on VxWorks when a client sends data faster than the server can
-          receive it.  This modification causes this to be a retry situation
-          instead of an error.   [Bug 866]
-
-Wed Apr 18 11:33:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * bin/auto_run_tests.lst: Added the BiDirectional tests to the
-          nightly builds. There is no reason why it did not go in so far.
-
-Wed Apr 18 10:25:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * bin/auto_run_tests.lst: Changed the name of the -config option
-          for SUNCC5.1.  Removed the dot and replaced it with a '_'.
-
-Wed Apr 18 05:23:53 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
-
-        * tests/Config_Test.cpp: Fixed several warnings related to
-          not using ACE_TEXT for wide-strings.  Thanks to Bala for
-          reporting this.
-
-Wed Apr 18 02:08:16 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * examples/Synch/proc_sema.dsp:  Fixed release build settings.
-
-Tue Apr 17 12:33:49 2001  Steve Huston  <shuston@riverace.com>
-
-        * ace/Service_Config.cpp (open_i): If the caller supplies a
-          logger key, enable the ACE_Log_Msg::LOGGER bit when opening
-          the ACE_Log_Msg instance, else the logger key is ignored.
-
-Tue Apr 17 06:15:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
-
-        * bin/auto_run_tests.lst:
-
-          Added the UDP Pluggable Protocol test to the list of executed tests.
-
-Mon Apr 16 20:42:46 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
-          Remove obsolete comments and raise the optimization level from
-          -O2 to -O3, the latter disables a huge number of warnings for
-          PACE.
-
-Mon Apr 16 22:15:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * bin/auto_run_tests.lst: Commented out some tests that are
-          failing on SUNCC 5.1. The failure is because of a compiler
-          bug. The problem is that the compiler seems to have difficulty
-          in calling the virtual method in a class hierarchy which is
-          built with multiple inheritance.
-
-Mon Apr 16 20:24:11 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
-
-        * tests/Config_Test.cpp (main): Remoted the test_io() function.
-          Thanks to Jerry Odenwelder <jerry.o@mindspring.com> for
-          confirming this.
-
-Mon Apr 16 16:18:57 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * ace/config-qnx-rtp.h:
-          Add support for gperf under QNX
-
-        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
-          The -fexceptions flag has no place in the CPPFLAGS macros, it
-          should go in CCFLAGS (though I could be convinced to put it in
-          CFLAGS)
-
-Mon Apr 16 16:13:29 2001  Steve Huston  <shuston@riverace.com>
-
-        * ace/Configuration.h (ACE_Configuration::root_section): Made this
-          method 'const'; makes today's changes easier to deal with.
-
-        * ace/Configuration_Import_Export.cpp (string_has_white_space):
-        * ace/Configuration.cpp (operator==): Replaced 'true' with 1 and
-          'false' with 0; replace const_cast<> with ACE_const_cast (),
-          per docs/ACE-guidelines.html, and IBM C++ :-)  Also, use two
-          non-const local variables instead of const_casting 'this' and
-          'rhs' on every use.
-          Made ACE_Configuration::root_section (void) const.
-
-        * ace/ace.icc: This was an early hack attempt to use library or DLL
-          build for Visual Age C++ 4. It is now the Visual Age C++ 5
-          configuration for building ACE on AIX. The ace-dll.icc and
-          ace-lib.icc are still around for Visual Age C++ 4 users, but may
-          not work and will be removed in a future ACE release. This
-          config is for Visual Age C++ 5 only and can/will be extended to
-          do subset builds as well as debug/optimize/etc variants.
-
-        * bin/make_pretty.pl: Pick out AIX ld errors correctly.
-
-        * include/makeinclude/platform_hpux_aCC.GNU: Note HP problem report
-          number and disposition for inability to use -AA and +noeh together.
-
-Mon Apr 16 12:32:48 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * tests/MEM_Stream_Test.cpp: Limited the concurrent connections
-          used in the multithreaded test on platforms without POSIX or
-          Win32 semaphores.  In this case, SysV semaphores are used and
-          a user can only instantiate very limited number of them.  The
-          test will also print out an INFO in this case as it implies
-          there can only be one "multithreaded" connection in one host at
-          any instance.  This fixed the test on some obsolete UNIX
-          platforms.
-
-Mon Apr 16 09:58:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * tests/Config_Test.cpp: Fixed a warning with g++ builds. The
-          warning was  because of an unused function.
-
-Sun Apr 15 21:27:19 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * ace/ace_dll.dsp:
-        * ace/ace_lib.dsp: Added new Configuration_Import_Export.{h,cpp}
-          files.
-
-Sun Apr 15 19:33:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
-
-        * ace/Configuration.cpp,
-        * ace/Configuration_Import_Export.cpp: Fixed some warnings
-          that show up with G++.  Thanks to Carlos for reporting this.
-
-Sun Apr 15 17:13:40 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * bin/auto_run_tests.lst:
-          Disabled TAO/tests/Client_Leaks on all configurations, it is
-          failing systematically because it cannot create processes fast
-          enough.
-
-Sat Apr 14 18:08:16 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * ace/Configuration_Import_Export.h:
-          Fixed small typo in the @file comment for
-          Configuration_Import_Export.h
-
-Sat Apr 14 18:31:15 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
-
-        * ace/Makefile.bor: Added new Configuration_Import_Export.obj file.
-
-        * tests/Config_Test.cpp: Added tests for the new ACE_Configuration*
-          stuff.  Thanks to Jerry Odenwelder <jerry.o@mindspring.com> for
-          contributing these.
-
-        * ace/Configuration_Import_Export.{h,cpp}: Added two new files that
-          do the following:
-
-          1. Remove the import and export functionality from the
-             ACE_Configuration object.
-          2. Provide two new classes to import/export ACE_Configuration
-             objects:
-
-             * ACE_Registry_ImpExp import and exports in the Win32
-               Registry format - this was the old import/export routine on
-               ACE_Configuration.
-             * ACE_Ini_ImpExp imports and exports in an INI format.  The
-               import part of this was called import_config_as_strings in
-               the old ACE_Configuration object.  While this object will
-               export any ACE_Configuration object, it can only import data as
-               strings.  This is due to the inability to distinguish type
-               in the INI format.
-          3. Added operator== to ACE_Configuration.  This is to compare
-             contents not type.
-          4. Test programs were modified to exercise this new functionality.
-
-          Thanks to Jerry Odenwelder <jerry.o@mindspring.com> for
-          contributing these.
-
-Sat Apr 14 12:44:17 2001  Carlos O'Ryan  <coryan@uci.edu>
-
-        * ace/MEM_IO.i:
-          Reorder operations to eliminate warnings on Tru64/CXX
-
-Sat Apr 14 11:12:26 2001  Steve Huston  <shuston@riverace.com>
-
-        * tests/CLASSIX_Addr_Test.icc:
-        * tests/CLASSIX_CLD_Connector_Test.icc:
-        * tests/CLASSIX_Con_Acc_Test.icc:
-        * tests/CLASSIX_Group_Test.icc:
-        * tests/CLASSIX_Notify_Test.icc:
-        * tests/CLASSIX_OS_Test.icc:
-        * tests/CLASSIX_Reactor_Test.icc:
-        * tests/CLASSIX_Select_Reactor_Test.icc:
-        * tests/CLASSIX_Stream_Test.icc:
-          Removed these files. They were moved/copied to tests/CLASSIX some
-          time back and don't belong here.
-
-        * tests/t.icc: Removed. This is not used for anything.
-
-        * tests/Makefile.vac: Corrected 'realclean' actions.
-
-Sat Apr 14 09:17:32 2001  Steve Huston  <shuston@riverace.com>
-
-        * examples/QOS/Change_Sender_TSpec/sender.dsp: Added extra level of
-          directory for include and lib - missed this one in yesterday's
-          set of changes.
-
-Sat Apr 14 09:08:33 2001  Steve Huston  <shuston@riverace.com>
-
-        * ace/Array_Base.h: Added forward declaration for ACE_Allocator.
-        * ace/Array_Base.cpp: Added #include "Malloc_Base.h" so IBM C++
-          can find ACE_Allocator when instantiating templates.
-
-        * ace/config-hpux-10.x-hpc++.h: When using standard C++ lib,
-          set the value of ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB to 1.
-
-        * netsvcs/clients/Naming/Dump_Restore/Makefile:
-        * netsvcs/clients/Naming/Client/Makefile: Add ACELIB to LIBS. This
-          allows IBM C++ compilers to build the library clean.
-
-        * tests/Makefile.vac: Don't try to use vacbld_r on the entire
-          project. It can take so long that make gives up and kills
-          off the build, making a real mess of the .ics files and leaving
-          random numbers of tests unbuilt. Instead, run vacbld_r on
-          each .icc file in the directory. Similarly for clean, don't
-          reply on vacbld_r on the project file - run through all the
-          ics files and executables based on existing .icc files.
-
-Fri Apr 13 12:44:21 2001  Steve Huston  <shuston@riverace.com>
-
-        * netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record):
-          If logging to STDERR is not enabled, don't dump the log record
-          there either.
-
-Fri Apr 13 12:21:01 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * ace/Malloc_T.h: Added an explanation on the requirement about
-          sizeof (TYPE)link of ACE_Cached_Allocator and a link to
-          ACE_Cached_Mem_Pool_Node where this stuff was explained.  Thanks
-          to Rachel G. Smith <Rachel_G_Smith@raytheon.com> for motivating
-          the change.
-
-Fri Apr 13 12:05:38 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * tests/MEM_Stream_Test.h:
-        * tests/MEM_Stream_Test.cpp: Borland C++ has problem cleaning up
-          the static Atomic_Op object in Echo_Handler in the right order.
-          Made that an ACE_Singleton and re-organized the test a big.
-          Thanks to Chris Kohlhoff <chris@kohlhoff.com> for reporting and
-          suggesting the fix.   [Bug 862]
+Sat Apr 14 10:51:39 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Log_Msg.h:
+          Document the lock related functions in a separate Doxygen
+          section.
 
 Fri Apr 13 11:58:58 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-        * ace/OS.i (gethrtime):
-          Add support for the the clock tick register as a high resolution
-          timer under KCC/Linux.  Thanks to David Levine for help on this.
+	* ace/OS.i (gethrtime): 
+	  Add support for the the clock tick register as a high resolution
+	  timer under KCC/Linux.
+
+Fri Apr 13 12:21:01 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc_T.h: Added an explanation on the requirement about
+	  sizeof (TYPE)link of ACE_Cached_Allocator and a link to
+	  ACE_Cached_Mem_Pool_Node where this stuff was explained.  Thanks
+	  to Rachel G. Smith <Rachel_G_Smith@raytheon.com> for motivating
+	  the change.
+
+Fri Apr 13 12:05:38 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/MEM_Stream_Test.h:
+	* tests/MEM_Stream_Test.cpp: Borland C++ has problem cleaning up
+	  the static Atomic_Op object in Echo_Handler in the right order.
+	  Made that an ACE_Singleton and re-organized the test a big.
+	  Thanks to Chris Kohlhoff <chris@kohlhoff.com> for reporting and
+	  suggesting the fix.   [Bug 862]
 
 Fri Apr 13 05:30:04 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-        * ace/OS.i: Make sure that the PTHREADS version of ACE_OS::thr_yield()
-          gets top priority over the STHREADS version.  Thanks to Munagala
-          Ramanath <amberarrow@yahoo.com> for reporting this.
+	* ace/Malloc_T.{h,i}: Added support for one of the calloc() methods
+	  to ACE_Cached_Allocator.  Thanks to Rachel G Smith
+ 	  <Rachel_G_Smith@raytheon.com> for motivating this change.
 
-        * ace/Malloc_T.{h,i}: Added support for one of the calloc() methods
-          to ACE_Cached_Allocator.  Thanks to Rachel G Smith
-          <Rachel_G_Smith@raytheon.com> for motivating this change.
+	* ace/Malloc_Allocator.h: Updated the comments for ACE_New_Allocator
+	  to indicate that the calloc() methods are also supported.
+  	  Thanks to Rachel G Smith <Rachel_G_Smith@raytheon.com> for
+ 	  motivating this change.
 
-        * ace/Malloc_Allocator.h: Updated the comments for ACE_New_Allocator
-          to indicate that the calloc() methods are also supported.
-          Thanks to Rachel G Smith <Rachel_G_Smith@raytheon.com> for
-          motivating this change.
-
-        * docs/ACE-bug-process.html: Updated this document to explain how
-          bugs pertaining to OCI's TAO releases should be handled.  Thanks
-          to Georg Lohrer <GeorgLohrer@web.de> for motivating this.
+	* docs/ACE-bug-process.html: Updated this document to explain how
+	  bugs pertaining to OCI's TAO releases should be handled.  Thanks
+ 	  to Georg Lohrer <GeorgLohrer@web.de> for motivating this.
 
 Thu Apr 12 20:36:30 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-        * ace/OS.i (thr_getspecific): Reorder the way in which we check
-          the flags so that ACE_HAS_PTHREADS takes precedence over
-          ACE_HAS_STHREADS.  Thanks to Munagala Ramanath
-          <amberarrow@yahoo.com> for reporting this.
+	* ace/OS.i (thr_getspecific): Reorder the way in which we check
+	  the flags so that ACE_HAS_PTHREADS takes precedence over
+ 	  ACE_HAS_STHREADS.  Thanks to Munagala Ramanath
+ 	  <amberarrow@yahoo.com> for reporting this.
 
 Thu Apr 12 21:18:44 2001  Steve Huston  <shuston@riverace.com>
 
@@ -471,24 +83,24 @@ Thu Apr 12 15:48:22 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Thu Apr 12 13:06:27 2001 Joel Sherrill <joel@OARcorp.com>
 
-        * include/makeinclude/Makefile.rtems: Replaced debug version
-          with real version that queries RTEMS application Makefile
-          infrastructure.
+       	* include/makeinclude/Makefile.rtems: Replaced debug version
+	  with real version that queries RTEMS application Makefile
+	  infrastructure.
 
         * include/makeinclude/platform_rtems.x_g++.GNU: Added
           --no-print-directory option to all invocations of recursive
-          make to determine information from Makefile.rtems.  This
-          avoids getting the "entering/exiting directory" messages
-          included in the results.
+ 	  make to determine information from Makefile.rtems.  This
+ 	  avoids getting the "entering/exiting directory" messages
+ 	  included in the results.
 
         * ACE-RTEMS.README: Added requirement to configure C++
           support in RTEMS.  Updated to reflect also compiling for mc68360
-          target.
+ 	  target.
 
 Wed Apr 11 20:36:36 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-        * examples/Synch/proc_sema.cpp (main): Fixd an assigning string
-          literal to char* warning.
+	* examples/Synch/proc_sema.cpp (main): Fixd an assigning string
+	  literal to char* warning.
 
 Wed Apr 11 18:04:33 2001  Steve Huston  <shuston@riverace.com>
 
@@ -498,9 +110,9 @@ Wed Apr 11 18:04:33 2001  Steve Huston  <shuston@riverace.com>
 
 Wed Apr 11 11:00:50 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-        * ACE-INSTALL.html: Added a section illustrating how to build
-          ACE+TAO for RTEMS.  Thanks to Joel Sherrill <joel@OARcorp.com>
-          for this build procedure.
+	* ACE-INSTALL.html: Added a section illustrating how to build
+	  ACE+TAO for RTEMS.  Thanks to Joel Sherrill <joel@OARcorp.com>
+ 	  for this build procedure.
 
 Wed Apr 11 11:38:37 2001  Steve Huston  <shuston@riverace.com>
 

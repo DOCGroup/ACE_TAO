@@ -31,9 +31,7 @@
 # include "Invocation.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (TAO,
-           Invocation,
-           "$Id$")
+ACE_RCSID(tao, Invocation, "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -390,7 +388,7 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
 
 // Send request.
 int
-TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
+TAO_GIOP_Invocation::invoke (CORBA::Boolean is_synchronous,
                              CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -402,18 +400,11 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
                         TAO_INVOKE_EXCEPTION);
     }
 
-  // @@ Alex: the <is_roundtrip> flag will be tricky when we move to
-  //    AMI: now it is used both to indicate the the CORBA request in
-  //    a twoway and that the send_request() operation should block.
-  //    Even for oneways: with AMI it is possible to wait for a
-  //    response (empty) for oneways, just to make sure that they
-  //    arrive, there are policies to control that.
-
   int result =
     this->transport_->send_request (this->stub_,
                                     this->orb_core_,
                                     this->out_stream_,
-                                    is_roundtrip,
+                                    is_synchronous,
                                     this->max_wait_time_);
 
   //
@@ -623,8 +614,7 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request,
     }
 
   // Just send the request, without trying to wait for the reply.
-  int retval = TAO_GIOP_Invocation::invoke (1,
-                                            ACE_TRY_ENV);
+  int retval = TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
 
   if (retval != TAO_INVOKE_OK)
@@ -662,7 +652,8 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request,
       CORBA::ULong msecs = this->max_wait_time_->msec ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Timeout on recv is <%u>\n"),
+                  "TAO (%P|%t) - Synch_Invocation::invoke_i, "
+                  "timeout on recv is <%u>\n",
                   msecs));
     }
 
@@ -676,7 +667,8 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request,
       CORBA::ULong msecs = this->max_wait_time_->msec ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Timeout after recv is <%u> status <%d>\n"),
+                  "TAO (%P|%t) Synch_Invocation::invoke_i, "
+                  "timeout after recv is <%u> status <%d>\n",
                   msecs,
                   reply_error));
     }
@@ -853,8 +845,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
 
-  int retval = this->invoke_i (0,
-                               ACE_TRY_ENV);
+  int retval = this->invoke_i (0, ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
 
   // A TAO_INVOKE_EXCEPTION status, but no exception raised means that
@@ -946,7 +937,7 @@ TAO_GIOP_Oneway_Invocation::TAO_GIOP_Oneway_Invocation (
     sync_scope_ (TAO::SYNC_WITH_TRANSPORT)
 {
   int has_synchronization = 0;
-  int scope = 0;
+  int scope = this->sync_scope_;
   this->orb_core_->call_sync_scope_hook (this->stub_,
                                          has_synchronization,
                                          scope);
@@ -967,18 +958,19 @@ int
 TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (this->sync_scope_ == TAO::SYNC_WITH_TRANSPORT
-      || this->sync_scope_ == TAO::SYNC_NONE
+  if (this->sync_scope_ == TAO::SYNC_NONE
       || this->sync_scope_ == TAO::SYNC_EAGER_BUFFERING
       || this->sync_scope_ == TAO::SYNC_DELAYED_BUFFERING)
     {
-      return TAO_GIOP_Invocation::invoke (0,
-                                          ACE_TRY_ENV);
+      return TAO_GIOP_Invocation::invoke (0, ACE_TRY_ENV);
+    }
+  if (this->sync_scope_ == TAO::SYNC_WITH_TRANSPORT)
+    {
+      return TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
     }
 
-  int retval = this->invoke_i (0,
-                               ACE_TRY_ENV);
-  ACE_CHECK_RETURN (retval);
+  int retval = this->invoke_i (0, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
   // A TAO_INVOKE_EXCEPTION status, but no exception raised means that
   // we have a user exception.
@@ -1033,8 +1025,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
                         TAO_INVOKE_EXCEPTION);
     }
 
-  CORBA::ULong locate_status = this->invoke_i (1,
-                                               ACE_TRY_ENV);
+  CORBA::ULong locate_status = this->invoke_i (1, ACE_TRY_ENV);
   ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
   switch (locate_status)

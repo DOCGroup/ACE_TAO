@@ -26,7 +26,7 @@
 
 ACE_RCSID(AMI, server, "$Id$")
 
-const char *ior_output_file = "test.ior";
+const char *ior_output_file = 0;
 
 int
 parse_args (int argc, char *argv[])

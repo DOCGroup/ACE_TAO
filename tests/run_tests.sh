@@ -14,15 +14,6 @@
 # 4) Create a symlink to the "log" directory create in step 1) above.
 # 5) ./run_tests.sh <target_hostname>
 
-if [ -x /bin/rm ]; then
-  RM=/bin/rm
-elif [ -x /usr/bin/rm ]; then
-  RM=/usr/bin/rm
-else
-  echo "Can't find rm, aborting." 1>&2
-  exit 1
-fi
-
 usage="usage: $0 [-p] <target>
        -p: purify tests"
 
@@ -63,7 +54,6 @@ IFS="|"
 tmp=/tmp
 compilation_log="log/compilations.log"
 shlib_suffix=".so"
-
 LD_LIBRARY_PATH=$ACE_ROOT/ace:${LD_LIBRARY_PATH:-/usr/lib}
 export LD_LIBRARY_PATH
 
@@ -80,10 +70,6 @@ fi
 if [ $sysname = 'AIX' ]; then
   LIBPATH=$ACE_ROOT/ace:${LIBPATH:-/usr/lib:/lib}
   export LIBPATH
-fi
-
-if echo $sysname | grep -q CYGWIN; then
-  shlib_suffix=".dll"
 fi
 
 if [ $purify -eq 1 ]; then
@@ -115,7 +101,7 @@ fi
 
 run()
 {
-  $RM -f core log/$1.log
+  /bin/rm -f core log/$1.log
 
   if [ ! -f "$1" ]; then
     echo 1>&2 "Making $1 . . ."
@@ -230,7 +216,7 @@ done
 
 echo "Finished ACE version $ace_version tests."
 
-$RM -f ace_pipe_name pattern \
+/bin/rm -f ace_pipe_name pattern \
            $tmp/ace_temp_file* \
            $tmp/ace_test_file \
            $tmp/Naming_Test*
