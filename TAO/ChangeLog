@@ -1,3 +1,19 @@
+Tue Apr 13 13:36:27 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Dynamic_Parameter.pidl:
+          Updated regeneration message
+
+        * tao/Dynamic_ParameterA.cpp:
+        * tao/Dynamic_ParameterC.{h,cpp,i}:
+          Regenerated
+
+        * tao/Dynamic_ParameterA.h:
+        * tao/Dynamic_ParameterC.inl:
+          Removed, not needed
+
+        * tao/Makefile.h:
+          Removed Dynamic_ParameterA.h from dependencies
+
 Tue Apr 13 11:01:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DomainC.{h,cpp,i}:
