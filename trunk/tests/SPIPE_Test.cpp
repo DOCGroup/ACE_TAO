@@ -51,8 +51,8 @@ client (void *)
   if (con.connect (cli_stream, ACE_SPIPE_Addr (ACE_WIDE_STRING (rendezvous))) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", rendezvous));
 
-  for (char c = 'a'; c <= 'z'; c++)
-    if (cli_stream.send (&c, 1) == -1) 
+  for (char *c = ACE_ALPHABET; *c != '\0'; c++)
+    if (cli_stream.send (c, 1) == -1) 
       ACE_ERROR ((LM_ERROR, "%p\n", "send_n"));
 
   if (cli_stream.close () == -1)
@@ -74,7 +74,7 @@ server (void *)
   ACE_SPIPE_Acceptor acceptor;
   ACE_SPIPE_Stream new_stream;
   char buf[BUFSIZ];
-  char t = 'a';
+  char *t = ACE_ALPHABET;
 
   const char *rendezvous = PIPE_NAME;
 
@@ -93,7 +93,7 @@ server (void *)
 
   while (new_stream.recv (buf, 1) > 0)
     {
-      ACE_ASSERT (t == buf[0]);
+      ACE_ASSERT (*t == buf[0]);
       t++;
     }
   ACE_DEBUG ((LM_DEBUG, "End of connection. Closing handle\n"));

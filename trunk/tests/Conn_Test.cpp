@@ -66,8 +66,8 @@ Svc_Handler::send_data (void)
 {
   // Send data to server.
   
-  for (char c = 'a'; c <= 'z'; c++)
-    if (this->peer ().send_n (&c, 1) == -1) 
+  for (char *c = ACE_ALPHABET; *c != '\0'; c++)
+    if (this->peer ().send_n (c, 1) == -1) 
       ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "send_n"));
 }
 
@@ -79,7 +79,7 @@ Svc_Handler::recv_data (void)
   ACE_Handle_Set handle_set;
   handle_set.set_bit (new_stream.get_handle ());
 
-  char t = 'a';
+  char *t = ACE_ALPHABET;
 
   // Read data from client (terminate on error).
 	  
@@ -97,13 +97,13 @@ Svc_Handler::recv_data (void)
 
 	  while ((r_bytes = new_stream.recv (&c, 1)) > 0)
 	    {
-	      ACE_ASSERT (t == c);
+	      ACE_ASSERT (*t == c);
 
 	      // We need to guard against cached connections, which
 	      // will send multiple sequences of letters from 'a' ->
 	      // 'z' through the same connection.
-	      if (t == 'z')
-		t = 'a';
+	      if (*t == 'z')
+		t = ACE_ALPHABET;
 	      else
 		t++;
 	    }
