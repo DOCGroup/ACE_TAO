@@ -1751,10 +1751,18 @@ ACE_Log_Msg_Callback::~ACE_Log_Msg_Callback (void)
 
 int
 ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority,
-                                   const ACE_TCHAR *,
+                                   const char *,
                                    ...)
 {
-  return ACE_BIT_ENABLED (this->priority_mask_ |
-                          ACE_Log_Msg::process_priority_mask_,
-                          log_priority);
+  return this->log_priority_enabled (log_priority);
 }
+
+#if defined (ACE_USES_WCHAR)
+int
+ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority,
+                                   const wchar_t *,
+                                   ...)
+{
+  return this->log_priority_enabled (log_priority);
+}
+#endif /* ACE_USES_WCHAR */
