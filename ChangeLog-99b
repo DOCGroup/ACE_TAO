@@ -1,3 +1,9 @@
+Wed Apr 07 09:37:34 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_osf1_4.0.GNU: disable warning
+          1016 when optimization is enabled.  That gets rid of the
+          "D:incint" warning about bzero in sys/select.h.
+
 Wed Apr 07 02:42:50 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.35 released.
@@ -8,60 +14,60 @@ Wed Apr 07 02:04:30 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Apr  6 21:09:32 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/ATM_Addr: Added the ATM_Addr.* files into the CVS
- 	  respository.  However, we're not going to enable this in the
- 	  Makefile or project files until they are tested.
+        * ace/ATM_Addr: Added the ATM_Addr.* files into the CVS
+          respository.  However, we're not going to enable this in the
+          Makefile or project files until they are tested.
 
 Tue Apr  6 20:48:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/Basic_Types.h:
-	  Added max and min #defines for various ACE data types. Now,
-	  when using the ACE or ACE_CDR data types, we need not 
-	  depend on the vagaries of limits.h and float.
+        * ace/Basic_Types.h:
+          Added max and min #defines for various ACE data types. Now,
+          when using the ACE or ACE_CDR data types, we need not
+          depend on the vagaries of limits.h and float.
 
 Tue Apr  6 20:39:01 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Log_Record.cpp (format_msg): 
-	* ace/Log_Record.cpp (print): 
+        * ace/Log_Record.cpp (format_msg):
+        * ace/Log_Record.cpp (print):
 
-	  Changed host_name[] to *host_name since null pointers were being
-	  passed into the host_name array.  Strictly speaking, host_name
-	  should thus be a pointer, not an array.  Also cleaned up
-	  ternary operator in format_msg() by parenthesizing some
-	  expressions.
-	
+          Changed host_name[] to *host_name since null pointers were being
+          passed into the host_name array.  Strictly speaking, host_name
+          should thus be a pointer, not an array.  Also cleaned up
+          ternary operator in format_msg() by parenthesizing some
+          expressions.
+
 Tue Apr  6 20:19:23 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Makefile: Removed the ATM_Addr files until Joe can
-	  get them checked in.
+        * ace/Makefile: Removed the ATM_Addr files until Joe can
+          get them checked in.
 
 Tue Apr 06 19:36:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Active_Map_Manager.h (ACE_Active_Map_Manager_Key): Added a
-	  separate structure that holds the fields of the key.  This
-	  separate structure makes it easier to manage copying the index
-	  and the generation to and from the user buffer.
+        * ace/Active_Map_Manager.h (ACE_Active_Map_Manager_Key): Added a
+          separate structure that holds the fields of the key.  This
+          separate structure makes it easier to manage copying the index
+          and the generation to and from the user buffer.
 
 Tue Apr  6 16:07:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Synch.cpp (get_thread_id): If we have recursive mutexes then
- 	  it's not possible to get the id of the thread that's currently
- 	  holding the mutex.  Thanks to David for reporting this.
+        * ace/Synch.cpp (get_thread_id): If we have recursive mutexes then
+          it's not possible to get the id of the thread that's currently
+          holding the mutex.  Thanks to David for reporting this.
 
 Tue Apr  6 15:50:14 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/exceptions.html:
-	Updated the documentation.
+        * docs/exceptions.html:
+        Updated the documentation.
 
 Tue Apr  6 15:25:56 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/High_Res_Timer.{h,i,cpp}: On Win32, don't call calibrate if
- 	  we cannot get the scale factor.  Instead, just automatically
- 	  fall back on ACE_OS::gettimeofday ().
+          we cannot get the scale factor.  Instead, just automatically
+          fall back on ACE_OS::gettimeofday ().
 
           Also added another static variable to represent the conditions
- 	  where the global scale factor is not set yet or high resolution
- 	  timers are not supported.
+          where the global scale factor is not set yet or high resolution
+          timers are not supported.
 
 Tue Apr 06 15:14:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
