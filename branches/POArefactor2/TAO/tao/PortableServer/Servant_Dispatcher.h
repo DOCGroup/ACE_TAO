@@ -14,13 +14,14 @@
 #define TAO_SERVANT_DISPATCHER_H
 #include /**/ "ace/pre.h"
 
-#include "ace/SString.h"
 #include "portableserver_export.h"
-#include "Servant_Upcall.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/SStringfwd.h"
+#include "Servant_Upcall.h"
 
 // Forward references.
 class TAO_POA_Manager;

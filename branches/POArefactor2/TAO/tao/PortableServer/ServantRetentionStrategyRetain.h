@@ -15,13 +15,14 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "Active_Object_Map.h"
-#include "Servant_Location.h"
-#include "ServantRetentionStrategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "Active_Object_Map.h"
+#include "Servant_Location.h"
+#include "ServantRetentionStrategy.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 

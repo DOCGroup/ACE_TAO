@@ -15,12 +15,13 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "Policy_Strategy.h"
-#include "tao/Object_KeyC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "Policy_Strategy.h"
+#include "tao/Object_KeyC.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -29,13 +30,7 @@ namespace TAO
   namespace Portable_Server
   {
     class Temporary_Creation_Time;
-  }
-}
 
-namespace TAO
-{
-  namespace Portable_Server
-  {
     class TAO_PortableServer_Export LifespanStrategy :
        public virtual Policy_Strategy
     {
