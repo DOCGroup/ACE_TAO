@@ -46,8 +46,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs/lib -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(T
 svr:	$(addprefix $(VDIR),$(SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
 
-	-/bin/rm -f svr
-
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 

@@ -137,23 +137,23 @@ static CORBA::TypeCode_ptr _tc_TypeError;
   static CORBA::TypeCode_ptr _tc_Dependency;
 
 
-#if !defined (_RTECEVENTCHANNELADMIN_DEPENDENCYSET_CH_)
-#define _RTECEVENTCHANNELADMIN_DEPENDENCYSET_CH_
+#if !defined (_RTECEVENTCHANNELADMIN__TAO__SEQ_DEPENDENCYSET_CH_)
+#define _RTECEVENTCHANNELADMIN__TAO__SEQ_DEPENDENCYSET_CH_
 
 // *************************************************************
-  // class DependencySet
+  // class _tao__seq_DependencySet
   // *************************************************************
 
-  class DependencySet
+  class _tao__seq_DependencySet
   {
   public:
-    DependencySet (void); // default constructor
-    DependencySet (CORBA::ULong max);
-    DependencySet (CORBA::ULong max, CORBA::ULong length, 
+    _tao__seq_DependencySet (void); // default constructor
+    _tao__seq_DependencySet (CORBA::ULong max);
+    _tao__seq_DependencySet (CORBA::ULong max, CORBA::ULong length, 
     	ACE_NESTED_CLASS (RtecEventChannelAdmin,Dependency) *value, CORBA::Boolean release=CORBA::B_FALSE);
-    DependencySet(const DependencySet &); // copy constructor
-    ~DependencySet (void);
-    DependencySet &operator= (const DependencySet &);
+    _tao__seq_DependencySet(const _tao__seq_DependencySet &); // copy constructor
+    ~_tao__seq_DependencySet (void);
+    _tao__seq_DependencySet &operator= (const _tao__seq_DependencySet &);
     CORBA::ULong maximum (void) const;
     void length (CORBA::ULong);
     CORBA::ULong length (void) const;
@@ -167,76 +167,82 @@ static CORBA::TypeCode_ptr _tc_TypeError;
     ACE_NESTED_CLASS (RtecEventChannelAdmin,Dependency) *buffer_;
     CORBA::Boolean release_;
   };
-  typedef DependencySet* DependencySet_ptr;
-  static CORBA::TypeCode_ptr _tc_DependencySet;
+  typedef _tao__seq_DependencySet* _tao__seq_DependencySet_ptr;
+  static CORBA::TypeCode_ptr _tc__tao__seq_DependencySet;
 
 
 #endif // end #if !defined
 
 
-#if !defined (_RTECEVENTCHANNELADMIN_DEPENDENCYSET___VAR_CH_)
-#define _RTECEVENTCHANNELADMIN_DEPENDENCYSET___VAR_CH_
+#if !defined (_RTECEVENTCHANNELADMIN__TAO__SEQ_DEPENDENCYSET___VAR_CH_)
+#define _RTECEVENTCHANNELADMIN__TAO__SEQ_DEPENDENCYSET___VAR_CH_
 
 // *************************************************************
-  // class RtecEventChannelAdmin::DependencySet_var
+  // class RtecEventChannelAdmin::_tao__seq_DependencySet_var
   // *************************************************************
 
-  class DependencySet_var
+  class _tao__seq_DependencySet_var
   {
   public:
-    DependencySet_var (void); // default constructor
-    DependencySet_var (DependencySet *);
-    DependencySet_var (const DependencySet_var &); // copy constructor
-    ~DependencySet_var (void); // destructor
+    _tao__seq_DependencySet_var (void); // default constructor
+    _tao__seq_DependencySet_var (_tao__seq_DependencySet *);
+    _tao__seq_DependencySet_var (const _tao__seq_DependencySet_var &); // copy constructor
+    ~_tao__seq_DependencySet_var (void); // destructor
     
-    DependencySet_var &operator= (DependencySet *);
-    DependencySet_var &operator= (const DependencySet_var &);
-    DependencySet *operator-> (void);
-    const DependencySet *operator-> (void) const;
+    _tao__seq_DependencySet_var &operator= (_tao__seq_DependencySet *);
+    _tao__seq_DependencySet_var &operator= (const _tao__seq_DependencySet_var &);
+    _tao__seq_DependencySet *operator-> (void);
+    const _tao__seq_DependencySet *operator-> (void) const;
     
-    operator const DependencySet &() const;
-    operator DependencySet &();
-    operator DependencySet &() const;
+    operator const _tao__seq_DependencySet &() const;
+    operator _tao__seq_DependencySet &();
+    operator _tao__seq_DependencySet &() const;
     ACE_NESTED_CLASS (RtecEventChannelAdmin,Dependency) &operator[] (CORBA::ULong index);
     // in, inout, out, _retn 
-    const DependencySet &in (void) const;
-    DependencySet &inout (void);
-    DependencySet *&out (void);
-    DependencySet *_retn (void);
-    DependencySet *ptr (void) const;
+    const _tao__seq_DependencySet &in (void) const;
+    _tao__seq_DependencySet &inout (void);
+    _tao__seq_DependencySet *&out (void);
+    _tao__seq_DependencySet *_retn (void);
+    _tao__seq_DependencySet *ptr (void) const;
 
   private:
-    DependencySet *ptr_;
+    _tao__seq_DependencySet *ptr_;
   };
 
 
 #endif // end #if !defined
 
 
-#if !defined (_RTECEVENTCHANNELADMIN_DEPENDENCYSET___OUT_CH_)
-#define _RTECEVENTCHANNELADMIN_DEPENDENCYSET___OUT_CH_
+#if !defined (_RTECEVENTCHANNELADMIN__TAO__SEQ_DEPENDENCYSET___OUT_CH_)
+#define _RTECEVENTCHANNELADMIN__TAO__SEQ_DEPENDENCYSET___OUT_CH_
 
-  class DependencySet_out
+  class _tao__seq_DependencySet_out
   {
   public:
-    DependencySet_out (DependencySet *&);
-    DependencySet_out (DependencySet_var &);
-    DependencySet_out (DependencySet_out &);
-    DependencySet_out &operator= (DependencySet_out &);
-    DependencySet_out &operator= (DependencySet *);
-    operator DependencySet *&();
-    DependencySet *&ptr (void);
-    DependencySet *operator-> (void);
+    _tao__seq_DependencySet_out (_tao__seq_DependencySet *&);
+    _tao__seq_DependencySet_out (_tao__seq_DependencySet_var &);
+    _tao__seq_DependencySet_out (_tao__seq_DependencySet_out &);
+    _tao__seq_DependencySet_out &operator= (_tao__seq_DependencySet_out &);
+    _tao__seq_DependencySet_out &operator= (_tao__seq_DependencySet *);
+    operator _tao__seq_DependencySet *&();
+    _tao__seq_DependencySet *&ptr (void);
+    _tao__seq_DependencySet *operator-> (void);
     ACE_NESTED_CLASS (RtecEventChannelAdmin,Dependency) &operator[] (CORBA::ULong index);
     
   private:
-    DependencySet *&ptr_;
+    _tao__seq_DependencySet *&ptr_;
     // assignment from T_var not allowed
-    void operator= (const DependencySet_var &);
+    void operator= (const _tao__seq_DependencySet_var &);
   };
 
 
 #endif // end #if !defined
+
+  typedef ACE_NESTED_CLASS (RtecEventChannelAdmin,_tao__seq_DependencySet) DependencySet;
+  typedef ACE_NESTED_CLASS (RtecEventChannelAdmin,_tao__seq_DependencySet_var) DependencySet_var;
+  typedef ACE_NESTED_CLASS (RtecEventChannelAdmin,_tao__seq_DependencySet_out) DependencySet_out;
+
+  static CORBA::TypeCode_ptr _tc_DependencySet;
 
   struct ConsumerQOS
   {
@@ -368,23 +374,23 @@ static CORBA::TypeCode_ptr _tc_TypeError;
   static CORBA::TypeCode_ptr _tc_Publication;
 
 
-#if !defined (_RTECEVENTCHANNELADMIN_PUBLICATIONSET_CH_)
-#define _RTECEVENTCHANNELADMIN_PUBLICATIONSET_CH_
+#if !defined (_RTECEVENTCHANNELADMIN__TAO__SEQ_PUBLICATIONSET_CH_)
+#define _RTECEVENTCHANNELADMIN__TAO__SEQ_PUBLICATIONSET_CH_
 
 // *************************************************************
-  // class PublicationSet
+  // class _tao__seq_PublicationSet
   // *************************************************************
 
-  class PublicationSet
+  class _tao__seq_PublicationSet
   {
   public:
-    PublicationSet (void); // default constructor
-    PublicationSet (CORBA::ULong max);
-    PublicationSet (CORBA::ULong max, CORBA::ULong length, 
+    _tao__seq_PublicationSet (void); // default constructor
+    _tao__seq_PublicationSet (CORBA::ULong max);
+    _tao__seq_PublicationSet (CORBA::ULong max, CORBA::ULong length, 
     	ACE_NESTED_CLASS (RtecEventChannelAdmin,Publication) *value, CORBA::Boolean release=CORBA::B_FALSE);
-    PublicationSet(const PublicationSet &); // copy constructor
-    ~PublicationSet (void);
-    PublicationSet &operator= (const PublicationSet &);
+    _tao__seq_PublicationSet(const _tao__seq_PublicationSet &); // copy constructor
+    ~_tao__seq_PublicationSet (void);
+    _tao__seq_PublicationSet &operator= (const _tao__seq_PublicationSet &);
     CORBA::ULong maximum (void) const;
     void length (CORBA::ULong);
     CORBA::ULong length (void) const;
@@ -398,76 +404,82 @@ static CORBA::TypeCode_ptr _tc_TypeError;
     ACE_NESTED_CLASS (RtecEventChannelAdmin,Publication) *buffer_;
     CORBA::Boolean release_;
   };
-  typedef PublicationSet* PublicationSet_ptr;
-  static CORBA::TypeCode_ptr _tc_PublicationSet;
+  typedef _tao__seq_PublicationSet* _tao__seq_PublicationSet_ptr;
+  static CORBA::TypeCode_ptr _tc__tao__seq_PublicationSet;
 
 
 #endif // end #if !defined
 
 
-#if !defined (_RTECEVENTCHANNELADMIN_PUBLICATIONSET___VAR_CH_)
-#define _RTECEVENTCHANNELADMIN_PUBLICATIONSET___VAR_CH_
+#if !defined (_RTECEVENTCHANNELADMIN__TAO__SEQ_PUBLICATIONSET___VAR_CH_)
+#define _RTECEVENTCHANNELADMIN__TAO__SEQ_PUBLICATIONSET___VAR_CH_
 
 // *************************************************************
-  // class RtecEventChannelAdmin::PublicationSet_var
+  // class RtecEventChannelAdmin::_tao__seq_PublicationSet_var
   // *************************************************************
 
-  class PublicationSet_var
+  class _tao__seq_PublicationSet_var
   {
   public:
-    PublicationSet_var (void); // default constructor
-    PublicationSet_var (PublicationSet *);
-    PublicationSet_var (const PublicationSet_var &); // copy constructor
-    ~PublicationSet_var (void); // destructor
+    _tao__seq_PublicationSet_var (void); // default constructor
+    _tao__seq_PublicationSet_var (_tao__seq_PublicationSet *);
+    _tao__seq_PublicationSet_var (const _tao__seq_PublicationSet_var &); // copy constructor
+    ~_tao__seq_PublicationSet_var (void); // destructor
     
-    PublicationSet_var &operator= (PublicationSet *);
-    PublicationSet_var &operator= (const PublicationSet_var &);
-    PublicationSet *operator-> (void);
-    const PublicationSet *operator-> (void) const;
+    _tao__seq_PublicationSet_var &operator= (_tao__seq_PublicationSet *);
+    _tao__seq_PublicationSet_var &operator= (const _tao__seq_PublicationSet_var &);
+    _tao__seq_PublicationSet *operator-> (void);
+    const _tao__seq_PublicationSet *operator-> (void) const;
     
-    operator const PublicationSet &() const;
-    operator PublicationSet &();
-    operator PublicationSet &() const;
+    operator const _tao__seq_PublicationSet &() const;
+    operator _tao__seq_PublicationSet &();
+    operator _tao__seq_PublicationSet &() const;
     ACE_NESTED_CLASS (RtecEventChannelAdmin,Publication) &operator[] (CORBA::ULong index);
     // in, inout, out, _retn 
-    const PublicationSet &in (void) const;
-    PublicationSet &inout (void);
-    PublicationSet *&out (void);
-    PublicationSet *_retn (void);
-    PublicationSet *ptr (void) const;
+    const _tao__seq_PublicationSet &in (void) const;
+    _tao__seq_PublicationSet &inout (void);
+    _tao__seq_PublicationSet *&out (void);
+    _tao__seq_PublicationSet *_retn (void);
+    _tao__seq_PublicationSet *ptr (void) const;
 
   private:
-    PublicationSet *ptr_;
+    _tao__seq_PublicationSet *ptr_;
   };
 
 
 #endif // end #if !defined
 
 
-#if !defined (_RTECEVENTCHANNELADMIN_PUBLICATIONSET___OUT_CH_)
-#define _RTECEVENTCHANNELADMIN_PUBLICATIONSET___OUT_CH_
+#if !defined (_RTECEVENTCHANNELADMIN__TAO__SEQ_PUBLICATIONSET___OUT_CH_)
+#define _RTECEVENTCHANNELADMIN__TAO__SEQ_PUBLICATIONSET___OUT_CH_
 
-  class PublicationSet_out
+  class _tao__seq_PublicationSet_out
   {
   public:
-    PublicationSet_out (PublicationSet *&);
-    PublicationSet_out (PublicationSet_var &);
-    PublicationSet_out (PublicationSet_out &);
-    PublicationSet_out &operator= (PublicationSet_out &);
-    PublicationSet_out &operator= (PublicationSet *);
-    operator PublicationSet *&();
-    PublicationSet *&ptr (void);
-    PublicationSet *operator-> (void);
+    _tao__seq_PublicationSet_out (_tao__seq_PublicationSet *&);
+    _tao__seq_PublicationSet_out (_tao__seq_PublicationSet_var &);
+    _tao__seq_PublicationSet_out (_tao__seq_PublicationSet_out &);
+    _tao__seq_PublicationSet_out &operator= (_tao__seq_PublicationSet_out &);
+    _tao__seq_PublicationSet_out &operator= (_tao__seq_PublicationSet *);
+    operator _tao__seq_PublicationSet *&();
+    _tao__seq_PublicationSet *&ptr (void);
+    _tao__seq_PublicationSet *operator-> (void);
     ACE_NESTED_CLASS (RtecEventChannelAdmin,Publication) &operator[] (CORBA::ULong index);
     
   private:
-    PublicationSet *&ptr_;
+    _tao__seq_PublicationSet *&ptr_;
     // assignment from T_var not allowed
-    void operator= (const PublicationSet_var &);
+    void operator= (const _tao__seq_PublicationSet_var &);
   };
 
 
 #endif // end #if !defined
+
+  typedef ACE_NESTED_CLASS (RtecEventChannelAdmin,_tao__seq_PublicationSet) PublicationSet;
+  typedef ACE_NESTED_CLASS (RtecEventChannelAdmin,_tao__seq_PublicationSet_var) PublicationSet_var;
+  typedef ACE_NESTED_CLASS (RtecEventChannelAdmin,_tao__seq_PublicationSet_out) PublicationSet_out;
+
+  static CORBA::TypeCode_ptr _tc_PublicationSet;
 
   struct SupplierQOS
   {
@@ -542,7 +554,7 @@ class ProxyPushConsumer: public virtual RtecEventComm::PushConsumer
     static ProxyPushConsumer_ptr _duplicate (ProxyPushConsumer_ptr obj);
     static ProxyPushConsumer_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static ProxyPushConsumer_ptr _nil (void);
-    static ProxyPushConsumer_ptr _bind (const char *host, CORBA::ULong port, const char *key, CORBA::Environment &env);
+    static ProxyPushConsumer_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual void connect_push_supplier (RtecEventComm::PushSupplier_ptr  push_supplier, const ACE_NESTED_CLASS (RtecEventChannelAdmin,SupplierQOS) & qos, CORBA::Environment &env);
   protected:
@@ -635,7 +647,7 @@ class ProxyPullSupplier: public virtual RtecEventComm::PullSupplier
     static ProxyPullSupplier_ptr _duplicate (ProxyPullSupplier_ptr obj);
     static ProxyPullSupplier_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static ProxyPullSupplier_ptr _nil (void);
-    static ProxyPullSupplier_ptr _bind (const char *host, CORBA::ULong port, const char *key, CORBA::Environment &env);
+    static ProxyPullSupplier_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual void connect_pull_consumer (RtecEventComm::PullConsumer_ptr  pull_consumer, CORBA::Environment &env);
   protected:
@@ -728,7 +740,7 @@ class ProxyPullConsumer: public virtual RtecEventComm::PullConsumer
     static ProxyPullConsumer_ptr _duplicate (ProxyPullConsumer_ptr obj);
     static ProxyPullConsumer_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static ProxyPullConsumer_ptr _nil (void);
-    static ProxyPullConsumer_ptr _bind (const char *host, CORBA::ULong port, const char *key, CORBA::Environment &env);
+    static ProxyPullConsumer_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual void connect_pull_supplier (RtecEventComm::PullSupplier_ptr  pull_supplier, CORBA::Environment &env);
   protected:
@@ -821,7 +833,7 @@ class ProxyPushSupplier: public virtual RtecEventComm::PushSupplier
     static ProxyPushSupplier_ptr _duplicate (ProxyPushSupplier_ptr obj);
     static ProxyPushSupplier_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static ProxyPushSupplier_ptr _nil (void);
-    static ProxyPushSupplier_ptr _bind (const char *host, CORBA::ULong port, const char *key, CORBA::Environment &env);
+    static ProxyPushSupplier_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual void connect_push_consumer (RtecEventComm::PushConsumer_ptr  push_consumer, const ACE_NESTED_CLASS (RtecEventChannelAdmin,ConsumerQOS) & qos, CORBA::Environment &env);
   protected:
@@ -914,7 +926,7 @@ class ConsumerAdmin: public virtual ACE_CORBA_1 (Object)
     static ConsumerAdmin_ptr _duplicate (ConsumerAdmin_ptr obj);
     static ConsumerAdmin_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static ConsumerAdmin_ptr _nil (void);
-    static ConsumerAdmin_ptr _bind (const char *host, CORBA::ULong port, const char *key, CORBA::Environment &env);
+    static ConsumerAdmin_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual ACE_NESTED_CLASS (RtecEventChannelAdmin,ProxyPushSupplier_ptr)  obtain_push_supplier (CORBA::Environment &env);
   protected:
@@ -1007,7 +1019,7 @@ class SupplierAdmin: public virtual ACE_CORBA_1 (Object)
     static SupplierAdmin_ptr _duplicate (SupplierAdmin_ptr obj);
     static SupplierAdmin_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static SupplierAdmin_ptr _nil (void);
-    static SupplierAdmin_ptr _bind (const char *host, CORBA::ULong port, const char *key, CORBA::Environment &env);
+    static SupplierAdmin_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual ACE_NESTED_CLASS (RtecEventChannelAdmin,ProxyPushConsumer_ptr)  obtain_push_consumer (CORBA::Environment &env);
   protected:
@@ -1100,7 +1112,7 @@ class EventChannel: public virtual ACE_CORBA_1 (Object)
     static EventChannel_ptr _duplicate (EventChannel_ptr obj);
     static EventChannel_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static EventChannel_ptr _nil (void);
-    static EventChannel_ptr _bind (const char *host, CORBA::ULong port, const char *key, CORBA::Environment &env);
+    static EventChannel_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     
 #if !defined (_RTECEVENTCHANNELADMIN_EVENTCHANNEL_SYNCHRONIZATION_ERROR___PTR_CH_)

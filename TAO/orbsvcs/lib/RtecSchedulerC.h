@@ -13,12 +13,15 @@
 class RtecScheduler{
 public:
   typedef CORBA::Double Time;typedef CORBA::Double_out Time_out;
+
   static CORBA::TypeCode_ptr _tc_Time;
 
   typedef CORBA::Long Period;typedef CORBA::Long_out Period_out;
+
   static CORBA::TypeCode_ptr _tc_Period;
 
   typedef ACE_NESTED_CLASS (RtecScheduler,Time) Quantum;typedef ACE_NESTED_CLASS (RtecScheduler,Time_out) Quantum_out;
+
   static CORBA::TypeCode_ptr _tc_Quantum;
 
   static const CORBA::Long NO_QUANTUM;
@@ -35,6 +38,7 @@ public:
   static CORBA::TypeCode_ptr _tc_Importance;
 
   typedef CORBA::Long handle_t;typedef CORBA::Long_out handle_t_out;
+
   static CORBA::TypeCode_ptr _tc_handle_t;
 
   struct Dependency_Info
@@ -77,23 +81,23 @@ public:
   static CORBA::TypeCode_ptr _tc_Dependency_Info;
 
 
-#if !defined (_RTECSCHEDULER_DEPENDENCY_SET_CH_)
-#define _RTECSCHEDULER_DEPENDENCY_SET_CH_
+#if !defined (_RTECSCHEDULER__TAO__SEQ_DEPENDENCY_SET_CH_)
+#define _RTECSCHEDULER__TAO__SEQ_DEPENDENCY_SET_CH_
 
 // *************************************************************
-  // class Dependency_Set
+  // class _tao__seq_Dependency_Set
   // *************************************************************
 
-  class Dependency_Set
+  class _tao__seq_Dependency_Set
   {
   public:
-    Dependency_Set (void); // default constructor
-    Dependency_Set (CORBA::ULong max);
-    Dependency_Set (CORBA::ULong max, CORBA::ULong length, 
+    _tao__seq_Dependency_Set (void); // default constructor
+    _tao__seq_Dependency_Set (CORBA::ULong max);
+    _tao__seq_Dependency_Set (CORBA::ULong max, CORBA::ULong length, 
     	ACE_NESTED_CLASS (RtecScheduler,Dependency_Info) *value, CORBA::Boolean release=CORBA::B_FALSE);
-    Dependency_Set(const Dependency_Set &); // copy constructor
-    ~Dependency_Set (void);
-    Dependency_Set &operator= (const Dependency_Set &);
+    _tao__seq_Dependency_Set(const _tao__seq_Dependency_Set &); // copy constructor
+    ~_tao__seq_Dependency_Set (void);
+    _tao__seq_Dependency_Set &operator= (const _tao__seq_Dependency_Set &);
     CORBA::ULong maximum (void) const;
     void length (CORBA::ULong);
     CORBA::ULong length (void) const;
@@ -107,84 +111,93 @@ public:
     ACE_NESTED_CLASS (RtecScheduler,Dependency_Info) *buffer_;
     CORBA::Boolean release_;
   };
-  typedef Dependency_Set* Dependency_Set_ptr;
-  static CORBA::TypeCode_ptr _tc_Dependency_Set;
+  typedef _tao__seq_Dependency_Set* _tao__seq_Dependency_Set_ptr;
+  static CORBA::TypeCode_ptr _tc__tao__seq_Dependency_Set;
 
 
 #endif // end #if !defined
 
 
-#if !defined (_RTECSCHEDULER_DEPENDENCY_SET___VAR_CH_)
-#define _RTECSCHEDULER_DEPENDENCY_SET___VAR_CH_
+#if !defined (_RTECSCHEDULER__TAO__SEQ_DEPENDENCY_SET___VAR_CH_)
+#define _RTECSCHEDULER__TAO__SEQ_DEPENDENCY_SET___VAR_CH_
 
 // *************************************************************
-  // class RtecScheduler::Dependency_Set_var
+  // class RtecScheduler::_tao__seq_Dependency_Set_var
   // *************************************************************
 
-  class Dependency_Set_var
+  class _tao__seq_Dependency_Set_var
   {
   public:
-    Dependency_Set_var (void); // default constructor
-    Dependency_Set_var (Dependency_Set *);
-    Dependency_Set_var (const Dependency_Set_var &); // copy constructor
-    ~Dependency_Set_var (void); // destructor
+    _tao__seq_Dependency_Set_var (void); // default constructor
+    _tao__seq_Dependency_Set_var (_tao__seq_Dependency_Set *);
+    _tao__seq_Dependency_Set_var (const _tao__seq_Dependency_Set_var &); // copy constructor
+    ~_tao__seq_Dependency_Set_var (void); // destructor
     
-    Dependency_Set_var &operator= (Dependency_Set *);
-    Dependency_Set_var &operator= (const Dependency_Set_var &);
-    Dependency_Set *operator-> (void);
-    const Dependency_Set *operator-> (void) const;
+    _tao__seq_Dependency_Set_var &operator= (_tao__seq_Dependency_Set *);
+    _tao__seq_Dependency_Set_var &operator= (const _tao__seq_Dependency_Set_var &);
+    _tao__seq_Dependency_Set *operator-> (void);
+    const _tao__seq_Dependency_Set *operator-> (void) const;
     
-    operator const Dependency_Set &() const;
-    operator Dependency_Set &();
-    operator Dependency_Set &() const;
+    operator const _tao__seq_Dependency_Set &() const;
+    operator _tao__seq_Dependency_Set &();
+    operator _tao__seq_Dependency_Set &() const;
     ACE_NESTED_CLASS (RtecScheduler,Dependency_Info) &operator[] (CORBA::ULong index);
     // in, inout, out, _retn 
-    const Dependency_Set &in (void) const;
-    Dependency_Set &inout (void);
-    Dependency_Set *&out (void);
-    Dependency_Set *_retn (void);
-    Dependency_Set *ptr (void) const;
+    const _tao__seq_Dependency_Set &in (void) const;
+    _tao__seq_Dependency_Set &inout (void);
+    _tao__seq_Dependency_Set *&out (void);
+    _tao__seq_Dependency_Set *_retn (void);
+    _tao__seq_Dependency_Set *ptr (void) const;
 
   private:
-    Dependency_Set *ptr_;
+    _tao__seq_Dependency_Set *ptr_;
   };
 
 
 #endif // end #if !defined
 
 
-#if !defined (_RTECSCHEDULER_DEPENDENCY_SET___OUT_CH_)
-#define _RTECSCHEDULER_DEPENDENCY_SET___OUT_CH_
+#if !defined (_RTECSCHEDULER__TAO__SEQ_DEPENDENCY_SET___OUT_CH_)
+#define _RTECSCHEDULER__TAO__SEQ_DEPENDENCY_SET___OUT_CH_
 
-  class Dependency_Set_out
+  class _tao__seq_Dependency_Set_out
   {
   public:
-    Dependency_Set_out (Dependency_Set *&);
-    Dependency_Set_out (Dependency_Set_var &);
-    Dependency_Set_out (Dependency_Set_out &);
-    Dependency_Set_out &operator= (Dependency_Set_out &);
-    Dependency_Set_out &operator= (Dependency_Set *);
-    operator Dependency_Set *&();
-    Dependency_Set *&ptr (void);
-    Dependency_Set *operator-> (void);
+    _tao__seq_Dependency_Set_out (_tao__seq_Dependency_Set *&);
+    _tao__seq_Dependency_Set_out (_tao__seq_Dependency_Set_var &);
+    _tao__seq_Dependency_Set_out (_tao__seq_Dependency_Set_out &);
+    _tao__seq_Dependency_Set_out &operator= (_tao__seq_Dependency_Set_out &);
+    _tao__seq_Dependency_Set_out &operator= (_tao__seq_Dependency_Set *);
+    operator _tao__seq_Dependency_Set *&();
+    _tao__seq_Dependency_Set *&ptr (void);
+    _tao__seq_Dependency_Set *operator-> (void);
     ACE_NESTED_CLASS (RtecScheduler,Dependency_Info) &operator[] (CORBA::ULong index);
     
   private:
-    Dependency_Set *&ptr_;
+    _tao__seq_Dependency_Set *&ptr_;
     // assignment from T_var not allowed
-    void operator= (const Dependency_Set_var &);
+    void operator= (const _tao__seq_Dependency_Set_var &);
   };
 
 
 #endif // end #if !defined
 
+  typedef ACE_NESTED_CLASS (RtecScheduler,_tao__seq_Dependency_Set) Dependency_Set;
+  typedef ACE_NESTED_CLASS (RtecScheduler,_tao__seq_Dependency_Set_var) Dependency_Set_var;
+  typedef ACE_NESTED_CLASS (RtecScheduler,_tao__seq_Dependency_Set_out) Dependency_Set_out;
+
+  static CORBA::TypeCode_ptr _tc_Dependency_Set;
+
   typedef CORBA::Long OS_Priority;typedef CORBA::Long_out OS_Priority_out;
+
   static CORBA::TypeCode_ptr _tc_OS_Priority;
 
   typedef CORBA::Long Sub_Priority;typedef CORBA::Long_out Sub_Priority_out;
+
   static CORBA::TypeCode_ptr _tc_Sub_Priority;
 
   typedef CORBA::Long Preemption_Priority;typedef CORBA::Long_out Preemption_Priority_out;
+
   static CORBA::TypeCode_ptr _tc_Preemption_Priority;
 
   struct RT_Info
@@ -409,23 +422,23 @@ static CORBA::TypeCode_ptr _tc_INSUFFICIENT_THREAD_PRIORITY_LEVELS;
 static CORBA::TypeCode_ptr _tc_TASK_COUNT_MISMATCH;
 
 
-#if !defined (_RTECSCHEDULER_RT_INFO_SET_CH_)
-#define _RTECSCHEDULER_RT_INFO_SET_CH_
+#if !defined (_RTECSCHEDULER__TAO__SEQ_RT_INFO_SET_CH_)
+#define _RTECSCHEDULER__TAO__SEQ_RT_INFO_SET_CH_
 
 // *************************************************************
-  // class RT_Info_Set
+  // class _tao__seq_RT_Info_Set
   // *************************************************************
 
-  class RT_Info_Set
+  class _tao__seq_RT_Info_Set
   {
   public:
-    RT_Info_Set (void); // default constructor
-    RT_Info_Set (CORBA::ULong max);
-    RT_Info_Set (CORBA::ULong max, CORBA::ULong length, 
+    _tao__seq_RT_Info_Set (void); // default constructor
+    _tao__seq_RT_Info_Set (CORBA::ULong max);
+    _tao__seq_RT_Info_Set (CORBA::ULong max, CORBA::ULong length, 
     	ACE_NESTED_CLASS (RtecScheduler,RT_Info) *value, CORBA::Boolean release=CORBA::B_FALSE);
-    RT_Info_Set(const RT_Info_Set &); // copy constructor
-    ~RT_Info_Set (void);
-    RT_Info_Set &operator= (const RT_Info_Set &);
+    _tao__seq_RT_Info_Set(const _tao__seq_RT_Info_Set &); // copy constructor
+    ~_tao__seq_RT_Info_Set (void);
+    _tao__seq_RT_Info_Set &operator= (const _tao__seq_RT_Info_Set &);
     CORBA::ULong maximum (void) const;
     void length (CORBA::ULong);
     CORBA::ULong length (void) const;
@@ -439,76 +452,82 @@ static CORBA::TypeCode_ptr _tc_TASK_COUNT_MISMATCH;
     ACE_NESTED_CLASS (RtecScheduler,RT_Info) *buffer_;
     CORBA::Boolean release_;
   };
-  typedef RT_Info_Set* RT_Info_Set_ptr;
-  static CORBA::TypeCode_ptr _tc_RT_Info_Set;
+  typedef _tao__seq_RT_Info_Set* _tao__seq_RT_Info_Set_ptr;
+  static CORBA::TypeCode_ptr _tc__tao__seq_RT_Info_Set;
 
 
 #endif // end #if !defined
 
 
-#if !defined (_RTECSCHEDULER_RT_INFO_SET___VAR_CH_)
-#define _RTECSCHEDULER_RT_INFO_SET___VAR_CH_
+#if !defined (_RTECSCHEDULER__TAO__SEQ_RT_INFO_SET___VAR_CH_)
+#define _RTECSCHEDULER__TAO__SEQ_RT_INFO_SET___VAR_CH_
 
 // *************************************************************
-  // class RtecScheduler::RT_Info_Set_var
+  // class RtecScheduler::_tao__seq_RT_Info_Set_var
   // *************************************************************
 
-  class RT_Info_Set_var
+  class _tao__seq_RT_Info_Set_var
   {
   public:
-    RT_Info_Set_var (void); // default constructor
-    RT_Info_Set_var (RT_Info_Set *);
-    RT_Info_Set_var (const RT_Info_Set_var &); // copy constructor
-    ~RT_Info_Set_var (void); // destructor
+    _tao__seq_RT_Info_Set_var (void); // default constructor
+    _tao__seq_RT_Info_Set_var (_tao__seq_RT_Info_Set *);
+    _tao__seq_RT_Info_Set_var (const _tao__seq_RT_Info_Set_var &); // copy constructor
+    ~_tao__seq_RT_Info_Set_var (void); // destructor
     
-    RT_Info_Set_var &operator= (RT_Info_Set *);
-    RT_Info_Set_var &operator= (const RT_Info_Set_var &);
-    RT_Info_Set *operator-> (void);
-    const RT_Info_Set *operator-> (void) const;
+    _tao__seq_RT_Info_Set_var &operator= (_tao__seq_RT_Info_Set *);
+    _tao__seq_RT_Info_Set_var &operator= (const _tao__seq_RT_Info_Set_var &);
+    _tao__seq_RT_Info_Set *operator-> (void);
+    const _tao__seq_RT_Info_Set *operator-> (void) const;
     
-    operator const RT_Info_Set &() const;
-    operator RT_Info_Set &();
-    operator RT_Info_Set &() const;
+    operator const _tao__seq_RT_Info_Set &() const;
+    operator _tao__seq_RT_Info_Set &();
+    operator _tao__seq_RT_Info_Set &() const;
     ACE_NESTED_CLASS (RtecScheduler,RT_Info) &operator[] (CORBA::ULong index);
     // in, inout, out, _retn 
-    const RT_Info_Set &in (void) const;
-    RT_Info_Set &inout (void);
-    RT_Info_Set *&out (void);
-    RT_Info_Set *_retn (void);
-    RT_Info_Set *ptr (void) const;
+    const _tao__seq_RT_Info_Set &in (void) const;
+    _tao__seq_RT_Info_Set &inout (void);
+    _tao__seq_RT_Info_Set *&out (void);
+    _tao__seq_RT_Info_Set *_retn (void);
+    _tao__seq_RT_Info_Set *ptr (void) const;
 
   private:
-    RT_Info_Set *ptr_;
+    _tao__seq_RT_Info_Set *ptr_;
   };
 
 
 #endif // end #if !defined
 
 
-#if !defined (_RTECSCHEDULER_RT_INFO_SET___OUT_CH_)
-#define _RTECSCHEDULER_RT_INFO_SET___OUT_CH_
+#if !defined (_RTECSCHEDULER__TAO__SEQ_RT_INFO_SET___OUT_CH_)
+#define _RTECSCHEDULER__TAO__SEQ_RT_INFO_SET___OUT_CH_
 
-  class RT_Info_Set_out
+  class _tao__seq_RT_Info_Set_out
   {
   public:
-    RT_Info_Set_out (RT_Info_Set *&);
-    RT_Info_Set_out (RT_Info_Set_var &);
-    RT_Info_Set_out (RT_Info_Set_out &);
-    RT_Info_Set_out &operator= (RT_Info_Set_out &);
-    RT_Info_Set_out &operator= (RT_Info_Set *);
-    operator RT_Info_Set *&();
-    RT_Info_Set *&ptr (void);
-    RT_Info_Set *operator-> (void);
+    _tao__seq_RT_Info_Set_out (_tao__seq_RT_Info_Set *&);
+    _tao__seq_RT_Info_Set_out (_tao__seq_RT_Info_Set_var &);
+    _tao__seq_RT_Info_Set_out (_tao__seq_RT_Info_Set_out &);
+    _tao__seq_RT_Info_Set_out &operator= (_tao__seq_RT_Info_Set_out &);
+    _tao__seq_RT_Info_Set_out &operator= (_tao__seq_RT_Info_Set *);
+    operator _tao__seq_RT_Info_Set *&();
+    _tao__seq_RT_Info_Set *&ptr (void);
+    _tao__seq_RT_Info_Set *operator-> (void);
     ACE_NESTED_CLASS (RtecScheduler,RT_Info) &operator[] (CORBA::ULong index);
     
   private:
-    RT_Info_Set *&ptr_;
+    _tao__seq_RT_Info_Set *&ptr_;
     // assignment from T_var not allowed
-    void operator= (const RT_Info_Set_var &);
+    void operator= (const _tao__seq_RT_Info_Set_var &);
   };
 
 
 #endif // end #if !defined
+
+  typedef ACE_NESTED_CLASS (RtecScheduler,_tao__seq_RT_Info_Set) RT_Info_Set;
+  typedef ACE_NESTED_CLASS (RtecScheduler,_tao__seq_RT_Info_Set_var) RT_Info_Set_var;
+  typedef ACE_NESTED_CLASS (RtecScheduler,_tao__seq_RT_Info_Set_out) RT_Info_Set_out;
+
+  static CORBA::TypeCode_ptr _tc_RT_Info_Set;
 
   
 #if !defined (_RTECSCHEDULER_SCHEDULER___PTR_CH_)
@@ -530,7 +549,7 @@ class Scheduler: public virtual ACE_CORBA_1 (Object)
     static Scheduler_ptr _duplicate (Scheduler_ptr obj);
     static Scheduler_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static Scheduler_ptr _nil (void);
-    static Scheduler_ptr _bind (const char *host, CORBA::ULong port, const char *key, CORBA::Environment &env);
+    static Scheduler_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual RtecScheduler::handle_t create (const char * entry_point, CORBA::Environment &env);
     virtual RtecScheduler::handle_t lookup (const char * entry_point, CORBA::Environment &env);
