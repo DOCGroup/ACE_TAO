@@ -37,16 +37,16 @@ endif # ! PERL_PATH
 #### BEGIN target CPU-specific settings
 
 # look them up
-CFLAGS = $(shell make -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cflags)
-#CCFLAGS = $(shell make -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cflags) -fno-implicit-templates
+CFLAGS = $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cflags)
+#CCFLAGS = $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cflags) -fno-implicit-templates
 CCFLAGS = -fno-implicit-templates
 
 #### END target CPU-specific settings
 
-CXX := $(shell make -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cxx)
+CXX := $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cxx)
 
 ifndef ACE_CC
-ACE_CC := $(shell make -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cc)
+ACE_CC := $(shell make --no-print-directory -f $(ACE_ROOT)/include/makeinclude/Makefile.rtems print_cc)
 endif # ! ACE_CC
 ifndef ACE_CC_VERSION
   ACE_CC_VERSION := $(shell $(ACE_CC) --version)
@@ -82,6 +82,7 @@ LD              = $(CXX) $(CCFLAGS) $(ACE_ROOT)/tests/rtems_init.o
 LDFLAGS         += #-Wl,-X -Wl,-r
 OCFLAGS         += -O
 PIC             =
+
 
 #### ld can't handle INCLDIRS, so override LINK definitions.
 LINK.c           = override
