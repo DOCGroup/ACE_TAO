@@ -22,10 +22,10 @@
 #include "ace/Free_List.h"
 
 // Forward declaration.
-template <class TYPE, class FUNCTOR, class LOCK, class BUCKET>
+template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET>
 class ACE_Timer_Hash_T;
 
-template <class TYPE, class FUNCTOR, class LOCK>
+template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Hash_Upcall
   // = TITLE 
   //      Functor for Timer_Hash
@@ -36,7 +36,7 @@ class ACE_Timer_Hash_Upcall
 {
 public:
   typedef ACE_Timer_Queue_T<ACE_Event_Handler *, 
-                            ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>, 
+                            ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>, 
                             ACE_Null_Mutex>
           TIMER_QUEUE;
   
@@ -44,7 +44,7 @@ public:
   // Default constructor (creates an invalid object, but needs to be here
   // so timer queues using this functor can be constructed)
 
-  ACE_Timer_Hash_Upcall (ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK> *timer_hash);
+  ACE_Timer_Hash_Upcall (ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> *timer_hash);
   // Constructor that specifies a Timer_Hash to call up to
 
   int timeout (TIMER_QUEUE &timer_queue,
@@ -64,16 +64,16 @@ public:
   // the timer is still contained in it
 
 private:
-  ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK> *timer_hash_;
+  ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> *timer_hash_;
   // Timer Queue to do the calling up to
 
   // = Don't allow these operations for now.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Hash_Upcall (const ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Hash_Upcall (const ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK> &))
 };
 
-template <class TYPE, class FUNCTOR, class LOCK, class BUCKET>
-class ACE_Timer_Hash_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR, LOCK>
+template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET>
+class ACE_Timer_Hash_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR, ACE_LOCK>
   // = TITLE
   //     Iterates over an <ACE_Timer_Hash>.
   //
@@ -83,7 +83,7 @@ class ACE_Timer_Hash_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCT
   //     in the order of timeout values.  
 {
 public:
-  ACE_Timer_Hash_Iterator_T (ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET> &);
+  ACE_Timer_Hash_Iterator_T (ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &);
   // Constructor.
 
   virtual void first (void);
@@ -99,18 +99,18 @@ public:
   // Returns the node at the current position in the sequence
 
 protected:
-  ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET> &timer_hash_;
+  ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &timer_hash_;
   // Pointer to the <ACE_Timer_Hash> that we are iterating over.
 
   size_t position_;
   // Current position in <timer_hash_>'s table
 
-  ACE_Timer_Queue_Iterator_T<TYPE, ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>, ACE_Null_Mutex> *iter_;
+  ACE_Timer_Queue_Iterator_T<TYPE, ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>, ACE_Null_Mutex> *iter_;
   // Current iterator used on <position>'s bucket
 };
 
-template <class TYPE, class FUNCTOR, class LOCK, class BUCKET>
-class ACE_Timer_Hash_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>
+template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET>
+class ACE_Timer_Hash_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>
   // = TITLE 
   //      Provides a hash table of <BUCKET>s as an implementation for
   //      a timer queue.
@@ -121,13 +121,13 @@ class ACE_Timer_Hash_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>
   //      Queues, ACE_Timer_Hash does not expire events in order.  
 {
 public: 
-  typedef ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, LOCK, BUCKET> HASH_ITERATOR;
+  typedef ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> HASH_ITERATOR;
   // Type of iterator
 
-  friend class ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, LOCK, BUCKET>;
+  friend class ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>;
   // Iterator is a friend
 
-  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK> INHERITED;
+  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> INHERITED;
   // Type inherited from 
 
   // = Initialization and termination methods.
@@ -194,7 +194,7 @@ public:
   // This does not account for <timer_skew>.  Returns the number of
   // timers canceled.
 
-  virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK> &iter (void);
+  virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> &iter (void);
   // Returns a pointer to this <ACE_Timer_Queue>'s iterator.
 
   virtual ACE_Timer_Node_T<TYPE> *remove_first (void);
@@ -216,7 +216,7 @@ private:
   size_t table_size_;
   // Keeps track of the size of <table>
 
-  ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK> table_functor_;
+  ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK> table_functor_;
   // Functor used for the table's timer queues
   
   size_t earliest_position_;
@@ -226,8 +226,8 @@ private:
   // Iterator used to expire timers.
 
   // = Don't allow these operations for now.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Hash_T (const ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET> &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Hash_T (const ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &))
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

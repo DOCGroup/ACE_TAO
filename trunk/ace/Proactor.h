@@ -165,7 +165,7 @@ public:
   static int end_event_loop (void);
   // Instruct the <ACE_Proactor::instance> to terminate its event loop.
 
-  static sig_atomic_t event_loop_done (void);
+  static int event_loop_done (void);
   // Report if the <ACE_Proactor::instance> event loop is finished.
 
   virtual int close (void);

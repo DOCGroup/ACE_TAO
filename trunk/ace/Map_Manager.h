@@ -48,14 +48,14 @@ struct ACE_Map_Entry
 };
 
 // Forward decl.
-template <class EXT_ID, class INT_ID, class LOCK>
+template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Iterator;
 
 // Forward decl.
-template <class EXT_ID, class INT_ID, class LOCK>
+template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Reverse_Iterator;
 
-template <class EXT_ID, class INT_ID, class LOCK>
+template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Manager
   // = TITLE
   //     Define a map abstraction that associates <EXT_ID>s with
@@ -73,13 +73,13 @@ class ACE_Map_Manager
   //     <ACE_Hash_Map_Manager>.
 
 {
-friend class ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>;
-friend class ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>;
+friend class ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
+friend class ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
 public:
   // = Traits.
   typedef ACE_Map_Entry<EXT_ID, INT_ID> ENTRY;
-  typedef ACE_Map_Iterator<EXT_ID, INT_ID, LOCK> ITERATOR;
-  typedef ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK> REVERSE_ITERATOR;
+  typedef ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> ITERATOR;
+  typedef ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> REVERSE_ITERATOR;
 
   // = Initialization and termination methods.
   ACE_Map_Manager (ACE_Allocator *alloc = 0);
@@ -244,7 +244,7 @@ private:
   // Index of highest active elementin this->search_structure_.
 };
 
-template <class EXT_ID, class INT_ID, class LOCK>
+template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Iterator
   // = TITLE
   //     Iterator for the ACE_Map_Manager.
@@ -253,7 +253,7 @@ class ACE_Map_Iterator
 {
 public:
   // = Initialization method.
-  ACE_Map_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, LOCK> &mm);
+  ACE_Map_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm);
 
   // = Iteration methods.
 
@@ -275,14 +275,14 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Map_Manager <EXT_ID, INT_ID, LOCK> &map_man_;
+  ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &map_man_;
   // Map we are iterating over.
 
   ssize_t next_;
   // Keeps track of how far we've advanced...
 };
 
-template <class EXT_ID, class INT_ID, class LOCK>
+template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Reverse_Iterator
   // = TITLE
   //     Reverse Iterator for the ACE_Map_Manager.
@@ -291,7 +291,7 @@ class ACE_Map_Reverse_Iterator
 {
 public:
   // = Initialization method.
-  ACE_Map_Reverse_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, LOCK> &mm);
+  ACE_Map_Reverse_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm);
 
   // = Iteration methods.
 
@@ -313,7 +313,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Map_Manager <EXT_ID, INT_ID, LOCK> &map_man_;
+  ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &map_man_;
   // Map we are iterating over.
 
   ssize_t next_;

@@ -4,8 +4,8 @@
 // elements withing and it pasts the high water mark, delete the
 // element)
 
-template <class T, class LOCK> ACE_INLINE void 
-ACE_Locked_Free_List<T, LOCK>::add (T *element)
+template <class T, class ACE_LOCK> ACE_INLINE void 
+ACE_Locked_Free_List<T, ACE_LOCK>::add (T *element)
 {
   ACE_MT (ACE_GUARD (LOCK, ace_mon, this->mutex_));
 
@@ -25,8 +25,8 @@ ACE_Locked_Free_List<T, LOCK>::add (T *element)
 // new elements if we are allowed to do it and the size is at the low
 // water mark.
 
-template <class T, class LOCK> ACE_INLINE T *
-ACE_Locked_Free_List<T, LOCK>::remove (void)
+template <class T, class ACE_LOCK> ACE_INLINE T *
+ACE_Locked_Free_List<T, ACE_LOCK>::remove (void)
 {
   ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, 0));
 
@@ -49,16 +49,16 @@ ACE_Locked_Free_List<T, LOCK>::remove (void)
 
 // Returns the current size of the free list
 
-template <class T, class LOCK> ACE_INLINE size_t 
-ACE_Locked_Free_List<T, LOCK>::size (void)
+template <class T, class ACE_LOCK> ACE_INLINE size_t 
+ACE_Locked_Free_List<T, ACE_LOCK>::size (void)
 {
   return this->size_;
 }
 
 // Resizes the free list to <newsize>
 
-template <class T, class LOCK> ACE_INLINE void 
-ACE_Locked_Free_List<T, LOCK>::resize (size_t newsize)
+template <class T, class ACE_LOCK> ACE_INLINE void 
+ACE_Locked_Free_List<T, ACE_LOCK>::resize (size_t newsize)
 {
   ACE_MT (ACE_GUARD (LOCK, ace_mon, this->mutex_));
 

@@ -206,10 +206,10 @@ public:
   // is invalid.
 
   // Set/get signal status.
-  static sig_atomic_t sig_pending (void);
+  static int sig_pending (void);
   // True if there is a pending signal. 
 
-  static void sig_pending (sig_atomic_t);
+  static void sig_pending (int);
   // Reset the value of <sig_pending_> so that no signal is pending. 
 
   // = Set/get the handler associated with a particular signal.

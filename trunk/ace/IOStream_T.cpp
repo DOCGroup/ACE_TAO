@@ -4,6 +4,9 @@
 #if !defined (ACE_IOSTREAM_T_C)
 #define ACE_IOSTREAM_T_C
 
+#include "ace/config.h"
+#if !defined (ACE_LACKS_ACE_IOSTREAM)
+
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION) && defined (__GNUG__)
 # if ! defined (ACE_IOSTREAM_T_H)
     // _Only_ define this when compiling this .cpp file standalone, not
@@ -189,5 +192,5 @@ operator<< (STREAM &stream,
 }
 
 #endif /* ACE_HAS_STRING_CLASS */
-
+#endif /* ACE_LACKS_ACE_IOSTREAM */
 #endif /* ACE_IOSTREAM_T_C */

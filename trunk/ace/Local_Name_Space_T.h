@@ -87,7 +87,7 @@ public:
 private:
 };
 
-template <ACE_MEM_POOL_1, class LOCK>
+template <ACE_MEM_POOL_1, class ACE_LOCK>
 class ACE_Local_Name_Space : public ACE_Name_Space
   // = TITLE
   //     Maintaining accesses Local Name Server Database.  Allows to
@@ -197,7 +197,7 @@ public:
   // Dump the state of the object
 
   // = I just know this is going to cause problems on some platform...
-  typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MEM_POOL_2, LOCK> > ALLOCATOR;
+  typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MEM_POOL_2, ACE_LOCK> > ALLOCATOR;
 
 private:
 #if defined (ACE_WIN32)

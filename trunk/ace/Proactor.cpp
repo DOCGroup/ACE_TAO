@@ -334,11 +334,11 @@ ACE_Proactor::end_event_loop (void)
 }
 
 /* static */
-sig_atomic_t
+int
 ACE_Proactor::event_loop_done (void)
 {
   ACE_TRACE ("ACE_Proactor::event_loop_done");
-  return ACE_Proactor::end_event_loop_;
+  return ACE_Proactor::end_event_loop_ != 0;
 }
 
 ACE_Proactor::~ACE_Proactor (void)

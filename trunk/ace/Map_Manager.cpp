@@ -34,10 +34,10 @@ ACE_Map_Entry<EXT_ID, INT_ID>::dump (void) const
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Manager)
 
-template <class EXT_ID, class INT_ID, class LOCK> void
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::dump (void) const
+template <class EXT_ID, class INT_ID, class ACE_LOCK> void
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::dump");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, "total_size_ = %d", this->total_size_));
@@ -47,61 +47,61 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-template <class EXT_ID, class INT_ID, class LOCK>
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager (size_t size,
+template <class EXT_ID, class INT_ID, class ACE_LOCK>
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Manager (size_t size,
                                                         ACE_Allocator *alloc)
   : search_structure_ (0),
     allocator_ (0),
     total_size_ (0),
     cur_size_ (0)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Manager");
 
   if (this->open (size, alloc) == -1)
     ACE_ERROR ((LM_ERROR, "ACE_Map_Manager\n"));
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> 
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager (ACE_Allocator *alloc)
+template <class EXT_ID, class INT_ID, class ACE_LOCK> 
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Manager (ACE_Allocator *alloc)
   : search_structure_ (0),
     allocator_ (0),
     total_size_ (0),
     cur_size_ (0)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Manager");
   if (this->open (ACE_DEFAULT_MAP_SIZE, alloc) == -1)
     ACE_ERROR ((LM_ERROR, "ACE_Map_Manager\n"));
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::close_i (void)
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i (void)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::close_i");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i");
 
   this->free_search_structure ();
   return 0;
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::close (void)
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close (void)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::close");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close");
   ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   return this->close_i ();
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> 
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::~ACE_Map_Manager (void)
+template <class EXT_ID, class INT_ID, class ACE_LOCK> 
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::~ACE_Map_Manager (void)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::~ACE_Map_Manager");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::~ACE_Map_Manager");
   this->close ();
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::resize_i (size_t size)
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::resize_i (size_t size)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::resize_i");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::resize_i");
 
   // If we need to grow buffer, then remove the existing buffer.
   void *ptr;
@@ -137,8 +137,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::resize_i (size_t size)
   return 0;  
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> void
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::free_search_structure (void)
+template <class EXT_ID, class INT_ID, class ACE_LOCK> void
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::free_search_structure (void)
 {
   if (this->search_structure_ != 0)
     {
@@ -157,11 +157,11 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::free_search_structure (void)
 
 // Create a new search_structure of size SIZE.
 
-template <class EXT_ID, class INT_ID, class LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::open (size_t size,
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::open (size_t size,
 					     ACE_Allocator *alloc)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::open");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::open");
   ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   if (alloc == 0)
@@ -176,8 +176,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::open (size_t size,
     return 0;
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_find (const EXT_ID &ext_id,
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_find (const EXT_ID &ext_id,
                                                     int &first_free)
 {
   // See if the entry is already there, keeping track of the first
@@ -200,8 +200,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_find (const EXT_ID &ext_id,
   return -1;
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::equal (const EXT_ID &id1,
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::equal (const EXT_ID &id1,
 					      const EXT_ID &id2)
 {
   return id1 == id2;
@@ -209,10 +209,10 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::equal (const EXT_ID &id1,
 
 // Find the <int_id> corresponding to the <ext_id>.
 
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_find (const EXT_ID &ext_id)
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_find (const EXT_ID &ext_id)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_find");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_find");
 
   for (size_t i = 0; i < this->cur_size_; i++)
     {
@@ -229,8 +229,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_find (const EXT_ID &ext_id)
   return -1;
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_bind (const EXT_ID &ext_id,
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_bind (const EXT_ID &ext_id,
                                                     const INT_ID &int_id,
                                                     int first_free)
 {
@@ -266,11 +266,11 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_bind (const EXT_ID &ext_id,
   return 0;
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::trybind_i (const EXT_ID &ext_id,
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind_i (const EXT_ID &ext_id,
 						  INT_ID &int_id)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::trybind_i");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind_i");
   int first_free = -1;
   int index = this->shared_find (ext_id, first_free);
 
@@ -287,29 +287,29 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::trybind_i (const EXT_ID &ext_id,
     return this->shared_bind (ext_id, int_id, first_free);
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::trybind (const EXT_ID &ext_id,
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind (const EXT_ID &ext_id,
                                                 INT_ID &int_id)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::trybind");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind");
   ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   return this->trybind_i (ext_id, int_id);
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::find_i (const EXT_ID &ext_id)
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_i (const EXT_ID &ext_id)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::find_i");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_i");
   return this->shared_find (ext_id);
 }
 
 // Find the INT_ID corresponding to the EXT_ID. 
 
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::find (const EXT_ID &ext_id)
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find (const EXT_ID &ext_id)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::find");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find");
   ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   return this->find_i (ext_id);
@@ -320,11 +320,11 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::find (const EXT_ID &ext_id)
 // structure.  Thus, if there is dynamic memory associated with this,
 // the caller is responsible for freeing this memory.
 
-template <class EXT_ID, class INT_ID, class LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind_i (const EXT_ID &ext_id,
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (const EXT_ID &ext_id,
 						 INT_ID &int_id)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind_i");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i");
 
   ssize_t index = this->shared_unbind (ext_id);
 
@@ -342,11 +342,11 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind_i (const EXT_ID &ext_id,
 // entry is bound successfully, returns 1 if an attempt is made to 
 // bind an existing entry, and returns -1 if failures occur.
 
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::bind_i (const EXT_ID &ext_id,
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::bind_i (const EXT_ID &ext_id,
 					       const INT_ID &int_id)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::bind_i");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::bind_i");
 
   int first_free = -1;
   // We need to save errno since <shared_find> may set errno to
@@ -376,13 +376,13 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::bind_i (const EXT_ID &ext_id,
 // bound successfully, returns 1 if an existing entry was rebound,
 // and returns -1 if failures occur. 
 
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::rebind_i (const EXT_ID &ext_id,
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
 						 const INT_ID &int_id,
 						 EXT_ID &old_ext_id, 
 						 INT_ID &old_int_id)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::rebind_i");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i");
 
   int first_free = -1;
   int index = this->shared_find (ext_id, first_free);
@@ -408,11 +408,11 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::rebind_i (const EXT_ID &ext_id,
 
 // Find the INT_ID corresponding to the EXT_ID. 
 
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::find_i (const EXT_ID &ext_id,
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_i (const EXT_ID &ext_id,
 					       INT_ID &int_id)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::find_i");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_i");
 
   int index = this->shared_find (ext_id);
 
@@ -431,10 +431,10 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::find_i (const EXT_ID &ext_id,
 // the EXT_ID was found so that this->unbind (EXT_ID, INT_ID)
 // can return it to the caller.
 
-template <class EXT_ID, class INT_ID, class LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_unbind (const EXT_ID &ext_id)
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_unbind (const EXT_ID &ext_id)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_unbind");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_unbind");
   for (size_t i = 0; i < this->cur_size_; i++)
     {
       ACE_Map_Entry<EXT_ID, INT_ID> &ss = this->search_structure_[i];
@@ -471,43 +471,43 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_unbind (const EXT_ID &ext_id)
   return -1;
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind (const EXT_ID &ext_id,
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind (const EXT_ID &ext_id,
                                                INT_ID &int_id)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind");
   ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   return this->unbind_i (ext_id, int_id);
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::bind (const EXT_ID &ext_id,
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::bind (const EXT_ID &ext_id,
                                              const INT_ID &int_id)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::bind");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::bind");
   ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   return this->bind_i (ext_id, int_id);
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::rebind (const EXT_ID &ext_id,
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind (const EXT_ID &ext_id,
                                                const INT_ID &int_id,
                                                EXT_ID &old_ext_id, 
                                                INT_ID &old_int_id)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::rebind");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind");
   ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   return this->rebind_i (ext_id, int_id, old_ext_id, old_int_id);
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::find (const EXT_ID &ext_id,
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find (const EXT_ID &ext_id,
                                              INT_ID &int_id)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::find");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find");
   ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   return this->find_i (ext_id, int_id);
@@ -517,31 +517,31 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::find (const EXT_ID &ext_id,
 // to the caller (this is useful for collections where the INT_IDs are
 // *not* dynamically allocated...)
 
-template <class EXT_ID, class INT_ID, class LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind_i (const EXT_ID &ext_id)
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (const EXT_ID &ext_id)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind_i");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i");
   return this->shared_unbind (ext_id) == -1 ? -1 : 0;
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind (const EXT_ID &ext_id)
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind (const EXT_ID &ext_id)
 {
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind");
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind");
   ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
   return this->unbind_i (ext_id) == -1 ? -1 : 0;
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> size_t
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::current_size (void)
+template <class EXT_ID, class INT_ID, class ACE_LOCK> size_t
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::current_size (void)
 {
   ACE_TRACE ("ACE_Map_Manager::current_size");
   ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, (size_t) -1);
   return this->cur_size_;
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> size_t
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::total_size (void)
+template <class EXT_ID, class INT_ID, class ACE_LOCK> size_t
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::total_size (void)
 {
   ACE_TRACE ("ACE_Map_Manager::total_size");
   ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, (size_t) -1);
@@ -550,30 +550,30 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::total_size (void)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Iterator)
 
-template <class EXT_ID, class INT_ID, class LOCK> void
-ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::dump (void) const
+template <class EXT_ID, class INT_ID, class ACE_LOCK> void
+ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
 {
-  ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::dump");
+  ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, "next_ = %d", this->next_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> 
-ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::ACE_Map_Iterator (ACE_Map_Manager<EXT_ID, INT_ID, LOCK> &mm)
+template <class EXT_ID, class INT_ID, class ACE_LOCK> 
+ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Iterator (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm)
   : map_man_ (mm), 
     next_ (-1)
 {
-  ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::ACE_Map_Iterator");
+  ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Iterator");
   if (this->map_man_.search_structure_ != 0)
     this->advance ();
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::next (ACE_Map_Entry<EXT_ID, INT_ID> *&mm) 
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
+ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Map_Entry<EXT_ID, INT_ID> *&mm) 
 {
-  ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::next");
+  ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::next");
   ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->map_man_.lock_, -1);
 
   if (this->map_man_.search_structure_ != 0 
@@ -587,10 +587,10 @@ ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::next (ACE_Map_Entry<EXT_ID, INT_ID> *&mm
     return 0;
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::done (void) const
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
+ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::done (void) const
 {
-  ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::done");
+  ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::done");
   ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->map_man_.lock_, -1);
 
   return this->map_man_.search_structure_ == 0
@@ -598,10 +598,10 @@ ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::done (void) const
     || size_t (this->next_) >= this->map_man_.cur_size_;
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int
-ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::advance (void) 
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int
+ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::advance (void) 
 {
-  ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::advance");
+  ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::advance");
   ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->map_man_.lock_, -1);
 
   for (++this->next_;
@@ -614,31 +614,31 @@ ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::advance (void)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Reverse_Iterator)
 
-template <class EXT_ID, class INT_ID, class LOCK> void
-ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::dump (void) const
+template <class EXT_ID, class INT_ID, class ACE_LOCK> void
+ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
 {
-  ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::dump");
+  ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, "next_ = %d", this->next_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> 
-ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::ACE_Map_Reverse_Iterator (ACE_Map_Manager<EXT_ID, INT_ID, LOCK> &mm)
+template <class EXT_ID, class INT_ID, class ACE_LOCK> 
+ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Reverse_Iterator (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm)
   : map_man_ (mm), 
     next_ (this->map_man_.cur_size_)
 {
-  ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::ACE_Map_Reverse_Iterator");
+  ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Reverse_Iterator");
 
   if (this->map_man_.search_structure_ != 0)
     this->advance ();
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::next (ACE_Map_Entry<EXT_ID, INT_ID> *&mm) 
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
+ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Map_Entry<EXT_ID, INT_ID> *&mm) 
 {
-  ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::next");
+  ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::next");
   ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->map_man_.lock_, -1);
 
   if (this->map_man_.search_structure_ != 0 && this->next_ >= 0)
@@ -650,19 +650,19 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::next (ACE_Map_Entry<EXT_ID, INT_
     return 0;
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::done (void) const
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int 
+ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::done (void) const
 {
-  ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::done");
+  ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::done");
   ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->map_man_.lock_, -1);
 
   return this->map_man_.search_structure_ == 0 || this->next_ < 0;
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int
-ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::advance (void) 
+template <class EXT_ID, class INT_ID, class ACE_LOCK> int
+ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::advance (void) 
 {
-  ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::advance");
+  ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::advance");
   ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->map_man_.lock_, -1);
 
   for (--this->next_;
