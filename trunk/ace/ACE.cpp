@@ -3024,10 +3024,16 @@ ACE::get_ip_interfaces (size_t &count,
         {
           struct sockaddr_in *addr =
             ACE_reinterpret_cast(sockaddr_in *, &pcur->ifr_addr);
-          addrs[count].set ((u_short) 0,
-                            addr->sin_addr.s_addr,
-                            0);
-          count++;
+
+          // Sometimes the kernel returns 0.0.0.0 as the interface
+          // address, skip those...
+          if (addr->sin_addr.s_addr != 0)
+            {
+              addrs[count].set ((u_short) 0,
+                                addr->sin_addr.s_addr,
+                                0);
+              count++;
+            }
         }
 
       pcur++;
