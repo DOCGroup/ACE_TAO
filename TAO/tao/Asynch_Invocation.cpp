@@ -8,6 +8,7 @@
 #include "tao/Stub.h"
 #include "tao/Principal.h"
 #include "tao/Object_KeyC.h"
+#include "tao/Transport_Mux_Strategy.h"
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
@@ -67,30 +68,24 @@ TAO_GIOP_Twoway_Asynch_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 }
 
 int
-TAO_GIOP_Twoway_Asynch_Invocation::invoke (CORBA::ExceptionList &exceptions,
+TAO_GIOP_Twoway_Asynch_Invocation::invoke (CORBA::ExceptionList & /*exceptions*/,
                                            CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,CORBA::UnknownUserException))
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_ASYNCH_INVOCATION_INVOKE_START);
 
-  int retval = this->invoke_i (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (retval);
-
-  return retval;
+  return this->invoke_i (ACE_TRY_ENV);
 }
 
 int
-TAO_GIOP_Twoway_Asynch_Invocation::invoke (TAO_Exception_Data *excepts,
-                                           CORBA::ULong except_count,
+TAO_GIOP_Twoway_Asynch_Invocation::invoke (TAO_Exception_Data * /*excepts*/,
+                                           CORBA::ULong /*except_count*/,
                                            CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::Exception))
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_ASYNCH_INVOCATION_INVOKE_START);
 
-  int retval = this->invoke_i (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (retval);
-
-  return retval;
+  return this->invoke_i (ACE_TRY_ENV);
 }
 
 int

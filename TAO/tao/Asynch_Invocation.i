@@ -19,22 +19,8 @@ TAO_GIOP_Twoway_Asynch_Invocation (TAO_Stub *stub,
                                         reply_handler_ptr));
 }
 
-// ACE_INLINE TAO_InputCDR &
-// TAO_GIOP_Twoway_Asynch_Invocation::inp_stream (void)
-// {
-//   return this->message_state_->cdr;
-// }
-//
-// ACE_INLINE void
-// TAO_GIOP_Twoway_Asynch_Invocation::get_value (CORBA::TypeCode_ptr tc,
-//                                               void *value,
-//                                               CORBA::Environment &ACE_TRY_ENV)
-// {
-//   (void) this->inp_stream ().decode (tc, value, 0, ACE_TRY_ENV);
-// }
-
 ACE_INLINE const IOP::ServiceContextList &
 TAO_GIOP_Twoway_Asynch_Invocation::reply_service_info (void) const
 {
-  return this->rd_.reply_service_info ();
+  return this->rd_->reply_service_info ();
 }
