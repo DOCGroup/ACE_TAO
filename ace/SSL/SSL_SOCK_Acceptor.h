@@ -1,16 +1,17 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 // $Id$
 
 // ============================================================================
 //
 // = LIBRARY
-//    ace
+//    ACE_SSL
 //
 // = FILENAME
 //    SSL_SOCK_Acceptor.h
 //
 // = AUTHOR
 //    John Heitmann and Chris Zimman
+//    Ossama Othman <ossama@ece.uci.edu>
 //
 // ============================================================================
 
@@ -26,15 +27,16 @@
 
 #if defined (ACE_HAS_SSL)
 
-class ACE_SSL_Export ACE_SSL_SOCK_Acceptor
+class ACE_SSL_Export ACE_SSL_SOCK_Acceptor : public ACE_SSL_SOCK
 {
   // = TITLE
-  //   Defines a factory that creates new <ACE_SSL_SOCK_Stream>s passively.
+  //     Defines a factory that creates new <ACE_SSL_SOCK_Stream>s
+  //     passively.
   //
   // = DESCRIPTION
-  //   The <ACE_SSL_SOCK_Acceptor> has its own <ACE_SOCK_Acceptor> which
-  //   handles virtually all of the socket acceptance. This class is a wrapper
-  //   which only adds the ssl acceptance.
+  //     The <ACE_SSL_SOCK_Acceptor> has its own <ACE_SOCK_Acceptor>
+  //     which handles virtually all of the socket acceptance. This
+  //     class is a wrapper which only adds the SSL acceptance.
 public:
   // = Initialization and termination methods.
   ACE_SSL_SOCK_Acceptor (void);
@@ -65,7 +67,7 @@ public:
             int protocol_family = PF_INET,
             int backlog = ACE_DEFAULT_BACKLOG,
             int protocol = 0);
-  // Initiate a passive mode ssl/BSD-style acceptor socket.
+  // Initiate a passive mode SSL/BSD-style acceptor socket.
   // <local_sap> is the address that we-re going to listen for
   // connections on.
 
@@ -95,36 +97,9 @@ public:
   // forever, a <timeout> of {0, 0} means poll.  <restart> == 1 means
   // "restart if interrupted," i.e., if errno == EINTR.
 
-  int control (int cmd, void *) const;
-  // Interface for ioctl.
-
-  // = Common I/O handle options related to sockets.
-
-  int enable (int value) const;
-  // Enable asynchronous I/O (ACE_SIGIO), urgent data (ACE_SIGURG),
-  // non-blocking I/O (ACE_NONBLOCK), or close-on-exec (ACE_CLOEXEC),
-  // which is passed as the <value>.
-
-  int disable (int value) const;
-  // Disable asynchronous I/O (ACE_SIGIO), urgent data (ACE_SIGURG),
-  // non-blocking I/O (ACE_NONBLOCK), or close-on-exec (ACE_CLOEXEC),
-  // which is passed as the <value>.
-
-  ACE_HANDLE get_handle (void) const;
-  // Get the underlying handle.
-
-  void set_handle (ACE_HANDLE handle);
-  // Set the underlying handle.
-
-  int get_local_addr (ACE_Addr &) const;
-  // Gets the address which is being listened on.
-
   // = Meta-type info
   typedef ACE_INET_Addr PEER_ADDR;
   typedef ACE_SSL_SOCK_Stream PEER_STREAM;
-
-  void dump (void) const;
-  // Dump the state of an object.
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
@@ -137,11 +112,14 @@ protected:
   // Perform operations that must occur before <ACE_OS::accept> is
   // called.
 
-  int shared_accept_finish (ACE_SSL_SOCK_Stream& new_stream,
+  int shared_accept_finish (ACE_SSL_SOCK_Stream &new_stream,
 			    int in_blocking_mode,
 			    int reset_new_handle) const;
   // Perform operations that must occur after <ACE_OS::accept> is
   // called.
+
+  int ssl_accept (ACE_SSL_SOCK_Stream &new_stream) const;
+  // Complete SSL passive connection establishment.
 
 private:
   ACE_SOCK_Acceptor acceptor_;

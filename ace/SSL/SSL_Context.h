@@ -121,7 +121,7 @@ public:
   // function has no effect and returns -1.
   // Once the mode is set the underlying SSL_CTX is initialized and
   // the class can be used.
-  // If the mode is not set, the the class automatically initializes
+  // If the mode is not set, then the class automatically initializes
   // itself to the default mode.
 
   int get_mode (void) const;

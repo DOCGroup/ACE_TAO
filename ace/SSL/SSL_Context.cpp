@@ -1,21 +1,20 @@
 // -*- C++ -*-
 // $Id$
 
-//
-// ========================================================================
+// ==========================================================================
 //
 // = LIBRARY
-//    ace
+//    ACE_SSL
 //
 // = FILENAME
 //    SSL_Context.cpp
 //
 // = AUTHOR
 //    Chris Zimman
-//    Carlos O'Ryan <coryan@ece.uciedu>
-//    Ossama Othman <ossama@ece.uci.du>
+//    Carlos O'Ryan <coryan@ece.uci.edu>
+//    Ossama Othman <ossama@ece.uci.edu>
 //
-// ========================================================================
+// ==========================================================================
 
 #if defined (ACE_HAS_SSL)
 
@@ -46,7 +45,7 @@ static const char rnd_seed[] = "string to make the random number generator think
 
 int ACE_SSL_Context::library_init_count_ = 0;
 
-ACE_SSL_Context::ACE_SSL_Context ()
+ACE_SSL_Context::ACE_SSL_Context (void)
   : context_ (0),
     mode_ (-1),
     default_verify_mode_ (SSL_VERIFY_NONE)
@@ -54,18 +53,19 @@ ACE_SSL_Context::ACE_SSL_Context ()
   ACE_SSL_Context::ssl_library_init ();
 }
 
-ACE_SSL_Context::~ACE_SSL_Context ()
+ACE_SSL_Context::~ACE_SSL_Context (void)
 {
   if (this->context_)
     {
-      ::SSL_CTX_free(this->context_);
+      ::SSL_CTX_free (this->context_);
       this->context_ = 0;
     }
+
   ACE_SSL_Context::ssl_library_fini ();
 }
 
 void
-ACE_SSL_Context::ssl_library_init ()
+ACE_SSL_Context::ssl_library_init (void)
 {
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex,
                      ace_ssl_mon,
@@ -112,7 +112,7 @@ ACE_SSL_Context::ssl_library_init ()
 }
 
 void
-ACE_SSL_Context::ssl_library_fini ()
+ACE_SSL_Context::ssl_library_fini (void)
 {
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex,
                      ace_ssl_mon,
@@ -130,6 +130,8 @@ ACE_SSL_Context::ssl_library_fini ()
 
       delete [] ACE_SSL_Context::lock_;
 #endif  /* ACE_HAS_THREADS */
+
+      ::EVP_cleanup ();
     }
 }
 
@@ -227,6 +229,7 @@ ACE_SSL_Context::set_mode (int mode)
       // ACE_ERROR ((LM_ERROR, "Mismatch in key/certificate\n"));
       return -1;
     }
+
   return 0;
 }
 

@@ -1,4 +1,4 @@
-// SSL_SOCK_Connector.cpp
+// -*- C++ -*-
 // $Id$
 
 
@@ -90,6 +90,33 @@ ACE_SSL_SOCK_Connector::shared_connect_finish (ACE_SSL_SOCK_Stream &new_stream,
 }
 
 int
+ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream)
+{
+  if (SSL_is_init_finished (new_stream.ssl ()))
+    return 0;
+
+  // @@ This is awkward.
+  new_stream.set_handle (new_stream.peer ().get_handle ());
+
+  int status = ::SSL_connect (new_stream.ssl ());
+  if (status < 0)
+    {
+      // ACE_DEBUG ((LM_DEBUG, "  ACE_SSL::connect - failed (%d)\n",
+      //             status));
+      if (::BIO_sock_should_retry (status))
+        {
+          errno = EAGAIN;
+        }
+      else
+        ERR_print_errors_fp (stderr);
+
+      return -1;
+    }
+
+  return 0;
+}
+
+int
 ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
                                  const ACE_Addr &remote_sap,
                                  ACE_Time_Value *timeout,
@@ -114,16 +141,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
     return -1;
   }
 
-  if (new_stream.get_SSL_fd () != new_stream.get_handle ())
-    {
-      new_stream.set_SSL_fd (new_stream.get_handle ());
-
-      if (timeout)
-        new_stream.disable (ACE_NONBLOCK);
-    }
-
-  return new_stream.connect ();
-
+  return this->ssl_connect (new_stream);
 }
 
 int
@@ -157,15 +175,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
     return -1;
   }
 
-  if (new_stream.get_SSL_fd () != new_stream.get_handle ())
-    {
-      new_stream.set_SSL_fd (new_stream.get_handle ());
-
-      if (timeout)
-        new_stream.disable (ACE_NONBLOCK);
-    }
-
-  return new_stream.connect ();
+  return this->ssl_connect (new_stream);
 }
 
 // Try to complete a non-blocking connection.
@@ -182,15 +192,7 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
     return -1;
   }
 
-  if (new_stream.get_SSL_fd () != new_stream.get_handle ())
-    {
-      new_stream.set_SSL_fd (new_stream.get_handle ());
-
-      if (tv)
-        new_stream.disable (ACE_NONBLOCK);
-    }
-
-  return new_stream.connect ();
+  return this->ssl_connect (new_stream);
 }
 
 
@@ -222,35 +224,7 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
 		ASYS_TEXT (
                   "ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector"
                )));
-  else
-    {
-      if (new_stream.get_SSL_fd () != new_stream.get_handle ())
-        {
-          if (new_stream.set_SSL_fd (new_stream.get_handle ())
-              == -1)
-            ACE_ERROR ((LM_ERROR,
-                        ASYS_TEXT ("ACE_SSL_SOCK_Connector::"
-                                   "ACE_SSL_SOCK_Connector: "
-                                   "invalid handle\n")));
-
-          if (timeout)
-            new_stream.disable (ACE_NONBLOCK);
-        }
-
-      if (new_stream.connect () != 0)
-        {
-//           ACE_ERROR ((LM_ERROR,
-//                       ASYS_TEXT ("%p\n"),
-//                       ASYS_TEXT ("ACE_SSL_SOCK_Connector::"
-//                                  "ACE_SSL_SOCK_Connector"
-//                                  )));
-
-          ::ERR_print_errors_fp (stderr);
-        }
-    }
 }
-
-
 
 ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
                                         ACE_SSL_SOCK_Stream &new_stream,
@@ -287,32 +261,6 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
 		ASYS_TEXT (
                   "ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector"
               )));
-  else
-    {
-      if (new_stream.get_SSL_fd () != new_stream.get_handle())
-        {
-          if (new_stream.set_SSL_fd (new_stream.get_handle ())
-              == -1)
-            ACE_ERROR ((LM_ERROR,
-                        ASYS_TEXT ("ACE_SSL_SOCK_Connector::"
-                                   "ACE_SSL_SOCK_Connector: "
-                                   "invalid handle\n")));
-
-          if (timeout)
-            new_stream.disable (ACE_NONBLOCK);
-        }
-
-      if (new_stream.connect () != 0)
-        {
-//           ACE_ERROR ((LM_ERROR,
-//                       ASYS_TEXT ("%p\n"),
-//                       ASYS_TEXT ("ACE_SSL_SOCK_Connector::"
-//                                  "ACE_SSL_SOCK_Connector"
-//                                  )));
-
-          ::ERR_print_errors_fp (stderr);
-        }
-    }
 }
 
 #endif /* ACE_HAS_SSL */
