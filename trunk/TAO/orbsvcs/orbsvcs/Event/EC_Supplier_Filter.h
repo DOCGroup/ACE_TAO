@@ -96,17 +96,19 @@ public:
   // information can simply ignore the message.
 
   virtual void connected (TAO_EC_ProxyPushSupplier *supplier,
-                          CORBA::Environment &env = TAO_default_environment ()) = 0;
+                          CORBA::Environment &env) = 0; 
+  virtual void reconnected (TAO_EC_ProxyPushSupplier *supplier,
+                          CORBA::Environment &env) = 0;
   virtual void disconnected (TAO_EC_ProxyPushSupplier *supplier,
-                             CORBA::Environment &env = TAO_default_environment ()) = 0;
+                             CORBA::Environment &env) = 0;
   // Concrete implementations can use this methods to keep track of
   // the consumers interested in this events.
 
-  virtual void shutdown (CORBA::Environment &env = TAO_default_environment ()) = 0;
+  virtual void shutdown (CORBA::Environment &env) = 0;
   // The event channel is shutting down.
 
   virtual void push (const RtecEventComm::EventSet &event,
-                     CORBA::Environment & = TAO_default_environment ()) = 0;
+                     CORBA::Environment &) = 0;
   // The ProxyPushConsumer delegates on this class to actually send
   // the event.
 
