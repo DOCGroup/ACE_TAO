@@ -102,9 +102,12 @@ be_structure::gen_client_header (void)
     {
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-      cg->push (TAO_CodeGen::TAO_STRUCT); // set current code gen state
+      cg->push (TAO_CodeGen::TAO_STRUCT_CH); // set current code gen state
 
       ch = cg->client_header ();
+      // pass info
+      cg->node (this);
+      cg->outstream (ch);
 
       ch->indent (); // start from whatever indentation level we were at
       *ch << "struct " << local_name () << nl;
@@ -138,7 +141,7 @@ be_structure::gen_client_header (void)
         }
 
       // generate the typecode decl
-      if (this->name ()->length () > 2)
+      if (this->is_nested ())
         {
           // we have a scoped name
           ch->indent ();
@@ -153,7 +156,7 @@ be_structure::gen_client_header (void)
             ()->last_component () << ";\n\n";
         }
       this->cli_hdr_gen_ = I_TRUE;
-      cg->pop ();
+      cg->pop (); // pop up the current state
     }
   return 0;
 }
@@ -170,10 +173,12 @@ be_structure::gen_client_stubs (void)
     {
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-      cg->push (TAO_CodeGen::TAO_STRUCT); // set current code gen state
+      cg->push (TAO_CodeGen::TAO_STRUCT_CS); // set current code gen state
 
       cs = cg->client_stubs ();
+      // pass info
       cg->outstream (cs);
+      cg->node (this);
 
       // generate the typecode information here
       cs->indent (); // start from current indentation level
@@ -181,9 +186,11 @@ be_structure::gen_client_stubs (void)
         nl; 
       *cs << "{\n";
       cs->incr_indent (0);
-      if (this->gen_typecode () == -1)
+      // note that we just need the parameters here and hence we generate the
+      // encapsulation for the parameters
+      if (this->gen_encapsulation () == -1)
         {
-          ACE_ERROR ((LM_ERROR, "Error generating typecode\n\n"));
+          ACE_ERROR ((LM_ERROR, "Error generating encapsulation\n\n"));
           return -1;
         }
       cs->decr_indent ();
@@ -196,6 +203,7 @@ be_structure::gen_client_stubs (void)
       *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
         this->flatname () << ";\n\n";
       this->cli_stub_gen_;
+      cg->pop ();
     }
 
   return 0;
@@ -251,8 +259,39 @@ be_structure::gen_server_inline (void)
   return 0;
 }
 
+// generate typecode.
+// Typecode for structures comprises the enumerated value followed by the
+// encapsulation of the parameters
+
 int
 be_structure::gen_typecode (void)
+{
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  cs = cg->client_stubs ();
+  cs->indent (); // start from whatever indentation level we were at
+
+  *cs << "CORBA::tk_struct, // typecode kind" << nl;
+  *cs << this->tc_size () << ", // encapsulation length\n";
+  // now emit the encapsulation
+  cs->incr_indent (0);
+  if (this->gen_encapsulation () == -1)
+    {
+      return -1;
+    }
+  cs->decr_indent ();
+  return 0;
+}
+
+// generate encapsulation
+// An encapsulation for ourselves will be necessary when we are part of some
+// other IDL type and a typecode for that other type is being generated. This
+// will comprise our typecode kind. IDL types with parameters will additionally
+// have the encapsulation length and the entire typecode description
+int
+be_structure::gen_encapsulation (void)
 {
   TAO_OutStream *cs; // output stream
   TAO_NL  nl;        // end line
@@ -260,7 +299,7 @@ be_structure::gen_typecode (void)
   long i, arrlen;
   long *arr;  // an array holding string names converted to array of longs
 
-  cs = cg->outstream ();
+  cs = cg->client_stubs ();
   cs->indent (); // start from whatever indentation level we were at
 
   // XXXASG - byte order must be based on what m/c we are generating code -
@@ -286,13 +325,22 @@ be_structure::gen_typecode (void)
   *cs << this->member_count () << ", // member count\n";
   cs->incr_indent (0);
   // hand over to the scope to generate the typecode for elements
-  if (be_scope::gen_typecode () == -1)
+  if (be_scope::gen_encapsulation () == -1)
     {
-      ACE_ERROR ((LM_ERROR, "be_structure: cannot generate code for members\n"));
+      ACE_ERROR ((LM_ERROR, "be_structure: cannot generate typecode for members\n"));
       return -1;
     }
   cs->decr_indent (0);
   return 0;
+}
+
+// compute typecode size
+long
+be_structure::tc_size (void)
+{
+  // 4 bytes for enumeration, 4 bytes for storing encap length val, followed by the
+  // actual encapsulation length
+  return 4 + 4 + this->tc_encap_len ();
 }
 
 // compute encapsulation length
@@ -301,20 +349,12 @@ be_structure::tc_encap_len (void)
 {
   if (this->encap_len_ == -1) // not computed yet
     {
-      long slen;
-
       this->encap_len_ = 4;  // holds the byte order flag
 
-      this->encap_len_ += 4; // store the size of repository ID
-      // compute bytes reqd to store repoID
-      slen = ACE_OS::strlen (this->repoID ()) + 1; // + 1 for NULL terminating char
-      this->encap_len_ += 4 * (slen/4 + (slen%4 ? 1:0)); // storage for the repoID
+      this->encap_len_ += this->repoID_encap_len (); // repoID
 
       // do the same thing for the local name
-      this->encap_len_ += 4; // store the size of name
-      slen = ACE_OS::strlen (this->local_name ()->get_string ()) + 1; 
-      // + 1 for  NULL 
-      this->encap_len_ += 4 * (slen/4 + (slen%4 ? 1:0)); // storage for the name
+      this->encap_len_ += this->name_encap_len ();
 
       this->encap_len_ += 4; // to hold the member count
 

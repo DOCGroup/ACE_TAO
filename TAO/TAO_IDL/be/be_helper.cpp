@@ -52,7 +52,7 @@ TAO_OutStream::~TAO_OutStream (void)
 }
 
 int
-TAO_OutStream::open (const char *fname)
+TAO_OutStream::open (const char *fname, TAO_OutStream::STREAM_TYPE st)
 {
   if (fname)
     {
@@ -60,6 +60,7 @@ TAO_OutStream::open (const char *fname)
       fp_ = ACE_OS::fopen (fname, "w");
       if (fp_)
         {
+          this->st_ = st;
           // put the copyright notice
           ACE_OS::fprintf (fp_, "%s\n", copyright);
           return 0;
@@ -71,6 +72,19 @@ TAO_OutStream::open (const char *fname)
     {
       return -1;
     }
+}
+
+// set and get the stream type
+void
+TAO_OutStream::stream_type (TAO_OutStream::STREAM_TYPE st)
+{
+  this->st_ = st;
+}
+
+TAO_OutStream::STREAM_TYPE
+TAO_OutStream::stream_type (void)
+{
+  return this->st_;
 }
 
 // indentation
@@ -139,9 +153,9 @@ TAO_OutStream::operator<< (const char *str)
 }
 
 TAO_OutStream &
-TAO_OutStream::operator<< (const int num)
+TAO_OutStream::operator<< (const long num)
 {
-  ACE_OS::fprintf (this->fp_, "%d", num);
+  ACE_OS::fprintf (this->fp_, "%ld", num);
   return *this;
 }
 

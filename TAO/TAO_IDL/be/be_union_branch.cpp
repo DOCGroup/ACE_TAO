@@ -40,9 +40,6 @@ be_union_branch::be_union_branch (AST_UnionLabel *lab, AST_Type *ft,
   // computes the fully scoped name
   compute_fullname ();
 
-  // computes the fully scoped typecode name
-  compute_tc_name ();
-
   // compute the flattened fully scoped name 
   compute_flatname ();
 }
@@ -56,14 +53,14 @@ int
 be_union_branch::gen_client_header (void)
 {
   be_type *bt;  // the union_branch type
+  be_state *s;  // state based code gen object
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
-  cg->node (this); // pass info thru singleton
   bt = be_type::narrow_from_decl (this->field_type ());
-  if ((bt == NULL) ||
-      ((bt != NULL) && (bt->be_type::gen_client_header () == -1)))
+  s   = cg->make_state ();
+  if (!s || !bt || (s->gen_code (bt, this) ==  -1))
     {
       ACE_ERROR ((LM_ERROR, "be_union_branch: error generating type\n"));
       return -1;
@@ -98,11 +95,21 @@ be_union_branch::gen_server_skeletons (void)
 int 
 be_union_branch::gen_client_inline (void)
 {
-  // base type may need inline definitions
-  be_type *bt;
+  be_type *bt;  // the union_branch type
+  be_state *s;  // state based code gen object
+
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
   bt = be_type::narrow_from_decl (this->field_type ());
-  return bt->be_type::gen_client_inline ();
+  s = cg->make_state ();
+  if (!s || !bt || (s->gen_code (bt, this) ==  -1))
+    {
+      ACE_ERROR ((LM_ERROR, 
+        "be_union_branch: error generating impl of access methods\n"));
+      return -1;
+    }
+  return 0;
 }
 
 // Generates the server-side inline
@@ -114,7 +121,7 @@ be_union_branch::gen_server_inline (void)
 }
 
 int
-be_union_branch::gen_typecode (void)
+be_union_branch::gen_encapsulation (void)
 {
   TAO_OutStream *cs; // output stream
   TAO_NL  nl;        // end line
@@ -123,12 +130,12 @@ be_union_branch::gen_typecode (void)
   long i, arrlen;
   long *arr;  // an array holding string names converted to array of longs
 
-  cs = cg->outstream ();
+  cs = cg->client_stubs ();
   cg->node (this); // pass ourselves in case we are needed
   cs->indent (); // start from whatever indentation level we were at
 
   // emit the case label value
-  cs->print (this->label ()->label_val ());
+  *cs << this->label ()->label_val ();
   *cs << ", // union case label (evaluated)" << nl;
   // emit name
   *cs << (ACE_OS::strlen (this->local_name ()->get_string ())+1) << ", ";
@@ -141,13 +148,29 @@ be_union_branch::gen_typecode (void)
 
   // hand over code generation to our type node
   bt = be_type::narrow_from_decl (this->field_type ());
-  return bt->be_type::gen_typecode ();
+  if (!bt)
+    return -1;
+  return bt->gen_typecode ();
 }
 
 long
 be_union_branch::tc_encap_len (void)
 {
-  return 0;
+  if (this->encap_len_ == -1)
+    {
+      be_type *bt;
+
+      this->encap_len_ = 4; // case label;
+      this->encap_len_ += this->name_encap_len (); // for name
+      bt = be_type::narrow_from_decl (this->field_type ());
+      if (!bt)
+        {
+          ACE_ERROR ((LM_ERROR, "be_union_branch: bad field type\n"));
+          return -1;
+        }
+      this->encap_len_ += bt->tc_encap_len ();
+    }
+  return this->encap_len_;
 }
 
 // Narrowing

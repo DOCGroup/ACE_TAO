@@ -141,10 +141,12 @@ int be_interface::gen_client_header (void)
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_INTERFACE); // set the current code generation
-                                          // state 
-
+  cg->push (TAO_CodeGen::TAO_INTERFACE_CH); // set the current code generation
+                                            // state 
   ch = cg->client_header ();
+  // pass info
+  cg->outstream (ch);
+  cg->node (this);
 
   // == STEP 1:  generate the class name and class names we inherit ==
   ch->indent (); // start with whatever indentation level we are at
@@ -239,7 +241,8 @@ int be_interface::gen_client_header (void)
       return -1;
     }
 
-  // generate the typecode decl
+  // generate the typecode decl. If we are in the outermost scope, our typecode
+  // decl is extern
   if (this->name ()->length () > 2)
     {
       // we have a scoped name
@@ -268,10 +271,13 @@ int be_interface::gen_client_stubs (void)
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_INTERFACE); // set the current code generation
-                                          // state 
+  cg->push (TAO_CodeGen::TAO_INTERFACE_CS); // set the current code generation
+                                            // state 
 
   cs = cg->client_stubs ();
+  //pass info
+  cg->node (this);
+  cg->outstream (cs);
 
   cs->indent (); // start with whatever indentation level we are at
 
@@ -296,18 +302,16 @@ int be_interface::gen_client_stubs (void)
   *cs << "{\n";
   cs->incr_indent ();
   *cs << "CORBA::Environment env;" << nl;
-  *cs << "if (obj->_is_a (\"IDL:" << name () << ":1.0\", env))" <<
-    nl;
-  // XXASG: If it is a scoped name, the _is_a method takes in a parameter
-  // that has the form IDL:module1/module2/module3/interface1:1.0. This is
-  // the way an interface repository ID is specified. We need more than a
-  // call to name () above.
+  *cs << "if (obj->_is_a (\"" << this->repoID () << "\", env))" << nl;
   *cs << "{\n";
   cs->incr_indent ();
   *cs << "STUB_Object *istub;" << nl;
   *cs << name () << "_ptr new_obj; // to be returned " << nl;
+#if 0 // XXXASG - I was told that emitting this line of code is the root cause
+      // of all evil 
   *cs << "obj->Release ();" << 
     " // need this since _is_a grabbed an obj reference " << nl;
+#endif
   *cs << "if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) " <<
     "!= NOERROR)\n";
   cs->incr_indent ();
@@ -367,33 +371,52 @@ int be_interface::gen_client_stubs (void)
   return 0;
 }
 
+// generate server header
 int be_interface::gen_server_header (void)
 {
   TAO_OutStream *sh; // output stream
   long i;            // loop index
   TAO_NL  nl;        // end line
+  static char namebuf [MAXNAMELEN]; // holds the class name
+  AST_Decl *d;       // enclosing scope
 
+  ACE_OS::memset (namebuf, '\0', MAXNAMELEN);
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_INTERFACE); // set the current code generation
+  cg->push (TAO_CodeGen::TAO_INTERFACE_SH); // set the current code generation
                                           // state 
 
   sh = cg->server_header ();
+  // pass info
+  cg->node (this);
+  cg->outstream (sh);
 
   // generate the skeleton class name
 
   sh->indent (); // start with whatever indentation level we are at
 
+  // we shall have a POA_ prefix only if we are at the topmost level
   // generate the forward declaration
-  *sh << "class POA_" << local_name () << ";" << nl;
+  d = ScopeAsDecl (this->defined_in ());
+  if (d->node_type () == AST_Decl::NT_root)
+    {
+      // we are outermost
+      ACE_OS::sprintf (namebuf, "POA_%s", this->local_name ()->get_string ());
+    }
+  else
+    {
+      ACE_OS::sprintf (namebuf, "%s", this->local_name ()->get_string ());
+    }
+
+  *sh << "class " << namebuf << ";" << nl;
 
   // generate the _ptr declaration
-  *sh << "typedef POA_" << local_name () << " *POA_" << local_name ()
+  *sh << "typedef " << namebuf << " *" << namebuf
       << "_ptr;" << nl;
 
   // now generate the class definition
-  *sh << "class POA_" << local_name () << " : public virtual " << name ();
+  *sh << "class " << namebuf << " : public virtual " << name ();
   if (n_inherits () > 0)  // this interface inherits from other interfaces
     {
       be_interface *intf;
@@ -409,8 +432,8 @@ int be_interface::gen_server_header (void)
   *sh << "{" << nl;
   *sh << "protected:\n";
   sh->incr_indent ();
-  *sh << "POA_" << local_name () << " (const char *obj_name = 0);" << nl;
-  *sh << "virtual ~POA_" << local_name () << " (void);\n";
+  *sh << namebuf << " (const char *obj_name = 0);" << nl;
+  *sh << "virtual ~" << namebuf << " (void);\n";
   sh->decr_indent ();
   *sh << "public:\n";
   sh->incr_indent (0);
@@ -443,10 +466,13 @@ int be_interface::gen_server_skeletons (void)
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_INTERFACE); // set the current code generation
+  cg->push (TAO_CodeGen::TAO_INTERFACE_SS); // set the current code generation
                                           // state 
 
   ss = cg->server_skeletons ();
+  // pass info
+  cg->node (this);
+  cg->outstream (ss);
 
   // generate the skeleton class name
 
@@ -478,12 +504,13 @@ int be_interface::gen_server_skeletons (void)
   
   *ss << "{\n";
   ss->incr_indent ();
+  // code for the skeleton constructor
   *ss << "const CORBA::String repoID = \"" << this->repoID () << "\"; // repository ID" << nl;
   *ss << "IIOP_Object *data; // Actual object reference" << nl;
-  *ss << "CORBA::BOA_ptr oa = TAO_ORB_CORE::instance ()->root_poa (); " <<
-    "// underlying OA" << nl;
-  *ss << "CORBA::ORB_ptr orb = TAO_ORB_CORE::instance ()->orb (); " <<
+  *ss << "CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()->orb (); " <<
     "// underlying ORB" << nl;
+  *ss << "CORBA::BOA_ptr oa = TAO_ORB_Core_instance ()->root_poa (); " <<
+    "// underlying OA" << nl;
   *ss << "this->optable_ = &tao_" << local_name () << "_optable;" << nl <<
     nl; 
   *ss << "// set up an IIOP object" << nl;
@@ -608,10 +635,10 @@ be_interface::gen_operation_table (void)
   ss->decr_indent ();
   *ss << "};" << nl << nl;
 
-  // XXASG - this code should be based on using different strategies for
+  // XXXASG - this code should be based on using different strategies for
   // demux - for next release
   *ss << "TAO_Dynamic_Hash_OpTable tao_" << local_name () << "_optable " <<
-    "(" << local_name () << "_operations, " << count << "," << 2*count << ");"
+    "(" << local_name () << "_operations, " << count << ", " << 2*count << ");"
       << nl; 
   return 0;
 }
@@ -620,6 +647,32 @@ be_interface::gen_operation_table (void)
 int 
 be_interface::gen_client_inline (void)
 {
+  TAO_OutStream *ci; // output stream
+  TAO_NL  nl;        // end line
+
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  ci = cg->client_inline ();
+  ci->indent (); // start from the current indentation level
+
+  // generate the constructors and destructor
+  *ci << "ACE_INLINE" << nl;
+  *ci << this->name () << "::" << this->local_name () << 
+    " (void) // default constructor" << nl;
+  *ci << "{}" << nl << nl;
+
+  *ci << "ACE_INLINE" << nl;
+  *ci << this->name () << "::" << this->local_name () << 
+    " (STUB_Object *objref) // constructor" << nl;
+  *ci << "\t: CORBA::Object (objref)" << nl;
+  *ci << "{}" << nl << nl;
+  
+  *ci << "ACE_INLINE" << nl;
+  *ci << this->name () << "::~" << this->local_name () << 
+    " (void) // destructor" << nl;
+  *ci << "{}\n\n";
+
   if (this->gen_var_impl () == -1)
     {
       ACE_ERROR ((LM_ERROR, "be_interface: _var impl code gen failed\n"));
@@ -646,8 +699,313 @@ be_interface::gen_server_inline (void)
   return 0;
 }
 
+#if 0 // XXXASG - TODO
+// generate the var definition
+int
+be_interface::gen_var_defn (void)
+{
+  TAO_OutStream *ch; // output stream
+  long i;            // loop index
+  TAO_NL  nl;        // end line
+  char namebuf [MAXNAMELEN];  // names
+
+  ACE_OS::memset (namebuf, '\0', MAXNAMELEN);
+  ACE_OS::sprintf (namebuf, "%s_var", this->local_name ()->get_string ());
+
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  ch = cg->client_header ();
+
+  // generate the var definition (always in the client header).
+  // Depending upon the data type, there are some differences which we account
+  // for over here.
+
+  ch->indent (); // start with whatever was our current indent level
+  *ch << "class " << namebuf << nl;
+  *ch << "{" << nl;
+  *ch << "public:\n";
+  ch->incr_indent ();
+
+  // default constr
+  *ch << namebuf << " (void); // default constructor" << nl;
+  *ch << namebuf << " (" << local_name () << "_ptr);" << nl;
+
+  // copy constructor
+  *ch << namebuf << " (const " << namebuf << 
+    " &); // copy constructor" << nl;
+
+  // destructor
+  *ch << "~" << namebuf << " (void); // destructor" << nl;
+  *ch << nl;
+
+  // assignment operator from a pointer
+  *ch << namebuf << " &operator= (" << local_name () << "_ptr);" << nl;
+
+  // assignment from _var
+  *ch << namebuf << " &operator= (const " << namebuf << 
+    " &);" << nl;
+
+  // arrow operator
+  *ch << local_name () << "_ptr operator-> (void) const;" << nl;
+
+  *ch << nl;
+
+  // other extra types (cast operators, [] operator, and others)
+  *ch << "operator const " << local_name () << "_ptr &() const;" << nl;
+  *ch << "operator " << local_name () << "_ptr &();" << nl;
+
+  *ch << "// in, inout, out, _retn " << nl;
+  // the return types of in, out, inout, and _retn are based on the parameter
+  // passing rules and the base type
+  *ch << local_name () << "_ptr in (void) const;" << nl;
+  *ch << local_name () << "_ptr &inout (void);" << nl;
+  *ch << local_name () << "_ptr &out (void);" << nl;
+  *ch << local_name () << "_ptr _retn (void);" << nl;
+
+  *ch << "\n";
+  ch->decr_indent ();
+
+  // private
+  *ch << "private:\n";
+  ch->incr_indent ();
+  *ch << local_name () << "_ptr ptr_;\n";
+
+  ch->decr_indent ();
+  *ch << "};\n\n";
+  
+  return 0;
+}
+
+// implementation of the _var class. All of these get generated in the inline
+// file 
+int
+be_interface::gen_var_impl (void)
+{
+  TAO_OutStream *ci; // output stream
+  long i;            // loop index
+  TAO_NL  nl;        // end line
+  char fname [MAXNAMELEN];  // to hold the full and
+  char lname [MAXNAMELEN];  // local _var names
+
+  ACE_OS::memset (fname, '\0', MAXNAMELEN);
+  ACE_OS::sprintf (fname, "%s_var", this->fullname ());
+
+  ACE_OS::memset (lname, '\0', MAXNAMELEN);
+  ACE_OS::sprintf (lname, "%s_var", local_name ()->get_string ());
+
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  ci = cg->client_inline ();
+  cg->outstream (ci);
+
+  // generate the var implementation in the inline file
+  // Depending upon the data type, there are some differences which we account
+  // for over here.
+
+  ci->indent (); // start with whatever was our current indent level
+
+  *ci << "// *************************************************************" 
+      << nl;
+  *ci << "// Inline operations for class " << fname << nl;
+  *ci << "// *************************************************************\n\n";
+
+  // default constr
+  *ci << "ACE_INLINE" << nl;
+  *ci << fname << "::" << lname << 
+    " (void) // default constructor" << nl;
+  *ci << "\t" << ": ptr_ (" << this->name () << "::_nil ())" << nl;
+  *ci << "{}\n\n";
+
+  // constr from a _ptr
+  ci->indent ();
+  *ci << "ACE_INLINE" << nl;
+  *ci << fname << "::" << lname << " (" << name () << "_ptr p)" << nl;
+  *ci << "\t: ptr_ (p)" << nl;
+  *ci << "{}\n\n";
+
+  // copy constructor
+  ci->indent ();
+  *ci << "ACE_INLINE" << nl;
+  *ci << fname << "::" << lname << " (const " << fname << 
+    " &p) // copy constructor" << nl;
+  *ci << "\t: ptr_ (" << name () << "::_duplicate (p))" << nl; 
+  *ci << "{}\n\n";
+
+  // destructor
+  ci->indent ();
+  *ci << "ACE_INLINE" << nl;
+  *ci << fname << "::~" << lname << " (void) // destructor" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "CORBA::release (this->ptr_);\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // assignment operator
+  ci->indent ();
+  *ci << "ACE_INLINE " << fname << " &" << nl;
+  *ci << fname << "::operator= (" << name () <<
+    "_ptr p)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "CORBA::release (this->ptr_);" << nl;
+  *ci << "this->ptr_ = p;" << nl;
+  *ci << "return *this;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // assignment operator from _var
+  ci->indent ();
+  *ci << "ACE_INLINE " << fname << " &" << nl;
+  *ci << fname << "::operator= (const " << fname <<
+    " &p)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "if (this != &p)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "CORBA::release (this->ptr_);" << nl;
+  *ci << "this->ptr_ = " << name () << "::_duplicate (p);\n";
+  ci->decr_indent ();
+  *ci << "}" << nl;
+  *ci << "return *this;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // other extra methods - cast operator ()
+  ci->indent ();
+  *ci << "ACE_INLINE " << nl;
+  *ci << fname << "::operator const " << name () << 
+    "_ptr &() const // cast" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  ci->indent ();
+  *ci << "ACE_INLINE " << nl;
+  *ci << fname << "::operator " << name () << "_ptr &() // cast " << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // operator->
+  ci->indent ();
+  *ci << "ACE_INLINE " << name () << "_ptr " << nl;
+  *ci << fname << "::operator-> (void) const" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // in, inout, out, and _retn
+  ci->indent ();
+  *ci << "ACE_INLINE " << name () << "_ptr" << nl;
+  *ci << fname << "::in (void) const" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  ci->indent ();
+  *ci << "ACE_INLINE " << name () << "_ptr &" << nl;
+  *ci << fname << "::inout (void)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  ci->indent ();
+  *ci << "ACE_INLINE " << name () << "_ptr &" << nl;
+  *ci << fname << "::out (void)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "CORBA::release (this->ptr_);" << nl;
+  *ci << "this->ptr_ = " << this->name () << "::_nil ();" << nl;
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  ci->indent ();
+  *ci << "ACE_INLINE " << name () << "_ptr " << nl;
+  *ci << fname << "::_retn (void)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "// yield ownership of managed obj reference" << nl;
+  *ci << this->name () << "_ptr val = this->ptr_;" << nl;
+  *ci << "this->ptr_ = " << this->name () << "::_nil ();" << nl;
+  *ci << "return val;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+  return 0;
+}
+
+// generate the _out definition
+int
+be_interface::gen_out_defn (void)
+{
+  TAO_OutStream *ch; // output stream
+  long i;            // loop index
+  TAO_NL  nl;        // end line
+  char namebuf [MAXNAMELEN];  // to hold the _out name
+
+  ACE_OS::memset (namebuf, '\0', MAXNAMELEN);
+  ACE_OS::sprintf (namebuf, "%s_out", local_name ()->get_string ());
+
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  ch = cg->client_header ();
+
+  // generate the out definition (always in the client header)
+  ch->indent (); // start with whatever was our current indent level
+
+  *ch << "class " << namebuf << nl;
+  *ch << "{" << nl;
+  *ch << "public:\n";
+  ch->incr_indent ();
+
+  // No default constructor
+
+  return 0;
+}
+#endif
+
+// generate typecode.
+// Typecode for interface comprises the enumerated value followed by the
+// encapsulation of the parameters
+
 int
 be_interface::gen_typecode (void)
+{
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  cs = cg->client_stubs ();
+  cs->indent (); // start from whatever indentation level we were at
+
+  *cs << "CORBA::tk_objref, // typecode kind" << nl;
+  *cs << this->tc_size () << ", // encapsulation length\n";
+  // now emit the encapsulation
+  return this->gen_encapsulation ();
+}
+
+// generate encapsulation
+// An encapsulation for ourselves will be necessary when we are part of some
+// other IDL type and a typecode for that other type is being generated. This
+// will comprise our typecode kind. IDL types with parameters will additionally
+// have the encapsulation length and the entire typecode description
+int
+be_interface::gen_encapsulation (void)
 {
   TAO_OutStream *cs; // output stream
   TAO_NL  nl;        // end line
@@ -655,7 +1013,7 @@ be_interface::gen_typecode (void)
   long i, arrlen;
   long *arr;  // an array holding string names converted to array of longs
 
-  cs = cg->outstream ();
+  cs = cg->client_stubs ();
   cs->indent (); // start from whatever indentation level we were at
 
   // XXXASG - byte order must be based on what m/c we are generating code -
@@ -681,6 +1039,14 @@ be_interface::gen_typecode (void)
   return 0;
 }
 
+// compute size of typecode
+long
+be_interface::tc_size (void)
+{
+   return 4 + 4 + this->tc_encap_len ();
+}
+
+// compute the encapsulation length
 long
 be_interface::tc_encap_len (void)
 {
@@ -690,16 +1056,10 @@ be_interface::tc_encap_len (void)
 
       this->encap_len_ = 4;  // holds the byte order flag
 
-      this->encap_len_ += 4; // store the size of repository ID
-      // compute bytes reqd to store repoID
-      slen = ACE_OS::strlen (this->repoID ()) + 1; // + 1 for NULL terminating char
-      this->encap_len_ += 4 * (slen/4 + (slen%4 ? 1:0)); // storage for the repoID
+      this->encap_len_ += this->repoID_encap_len (); // for repoID
 
       // do the same thing for the local name
-      this->encap_len_ += 4; // store the size of name
-      slen = ACE_OS::strlen (this->local_name ()->get_string ()) + 1; 
-      // + 1 for  NULL 
-      this->encap_len_ += 4 * (slen/4 + (slen%4 ? 1:0)); // storage for the name
+      this->encap_len_ += this->name_encap_len ();
 
     }
   return this->encap_len_;

@@ -30,7 +30,7 @@ public:
 class TAO_OutStream
 {
   // =TITLE
-  /// TAO_OutStream
+  // TAO_OutStream
   // =DESCRIPTION
   //  Defines an interface by which the backend code generator can print its
   //  output to the underlying I/O handle. This is a helper class that will be
@@ -38,14 +38,32 @@ class TAO_OutStream
   //  classes that understand specific front ends must derive from this
   //  class.
 public:
+  
+  // Enumerated type to indicate the stream type
+  enum STREAM_TYPE
+    {
+      TAO_CLI_HDR,
+      TAO_CLI_INL,
+      TAO_CLI_IMPL,
+      TAO_SVR_HDR,
+      TAO_SVR_INL,
+      TAO_SVR_IMPL
+    };
+  
   TAO_OutStream (void);
   // constructor. 
-
+  
   ~TAO_OutStream (void);
   // destructor
-
-  int open (const char *fname);
+  
+  int open (const char *fname, TAO_OutStream::STREAM_TYPE st=TAO_OutStream::TAO_CLI_HDR);
   // open the underlying low-level handle for output
+
+  void stream_type (TAO_OutStream::STREAM_TYPE);
+  // set the stream type
+
+  TAO_OutStream::STREAM_TYPE stream_type (void);
+  // return the stream type
 
   int incr_indent (unsigned short flag=1);
   // increment the indentation level and by default actually indent the output
@@ -72,7 +90,7 @@ public:
   TAO_OutStream &operator<< (const char *str);
   // output the char string and return a reference to ourselves
 
-  TAO_OutStream &operator<< (const int num);
+  TAO_OutStream &operator<< (const long num);
   // output the integer and return a reference to ourselves
 
   TAO_OutStream &operator<< (const TAO_NL nl);
@@ -97,6 +115,9 @@ public:
 protected:
   FILE *fp_;
   // the underlying low-level I/O handle
+
+  TAO_OutStream::STREAM_TYPE st_;
+  // stream type
 
   int indent_level_;
   // indentation level

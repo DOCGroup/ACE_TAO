@@ -42,22 +42,42 @@ be_typedef::be_typedef (AST_Type *bt, UTL_ScopedName *n, UTL_StrList *p)
   compute_flatname ();
 }
 
+// given a typedef node, traverse the chain of base types until they are no
+// more typedefs, and return that most primitive base type
+be_type *
+be_typedef::primitive_base_type (void)
+{
+  be_type *d;
+
+  d = this;
+  while (d->node_type () == AST_Decl::NT_typedef)
+    {
+      be_typedef *temp; // temporary
+
+      temp = be_typedef::narrow_from_decl (d);
+      d = be_type::narrow_from_decl (temp->base_type ());
+    }
+  return d;
+}
+
 int
 be_typedef::gen_client_header (void)
 {
   be_type *bt;       // type node
+  be_state *s;       // state based code gen object
 
   if (!this->cli_hdr_gen_) // not already generated
     {
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-      cg->push (TAO_CodeGen::TAO_TYPEDEF);
+      cg->push (TAO_CodeGen::TAO_TYPEDEF_CH);
       cg->node (this); // pass ourselves
+      cg->outstream (cg->client_header ());
+      s = cg->make_state ();
 
       bt = be_type::narrow_from_decl (this->base_type ());
       // first generate the mapping for our type
-      if ((bt == NULL) || ((bt != NULL) && (bt->be_type::gen_client_header () ==
-                                            -1))) 
+      if (!s || !bt || (s->gen_code (bt, this) == -1))
         {
           ACE_ERROR ((LM_ERROR, "be_typedef: error generating code for base type\n"));
           return -1;
@@ -72,6 +92,49 @@ be_typedef::gen_client_header (void)
 int
 be_typedef::gen_client_stubs (void)
 {
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+  be_type *bt;
+
+
+  if (!this->cli_stub_gen_)
+    {
+      // retrieve a singleton instance of the code generator
+      TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+      cg->push (TAO_CodeGen::TAO_STRUCT_CS); // set current code gen state
+
+      cs = cg->client_stubs ();
+      // pass info
+      cg->outstream (cs);
+      cg->node (this);
+
+      // generate the typecode information here
+      cs->indent (); // start from current indentation level
+      *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
+        nl; 
+      *cs << "{\n";
+      cs->incr_indent (0);
+      // note that we just need the parameters here and hence we generate the
+      // encapsulation for the parameters
+      bt = this->primitive_base_type ();
+      if (bt->gen_encapsulation () == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "Error generating encapsulation\n\n"));
+          return -1;
+        }
+      cs->decr_indent ();
+      *cs << "};" << nl;
+
+      *cs << "static CORBA::TypeCode _tc__tc_" << this->flatname () << 
+        " (CORBA::tk_struct, sizeof (_oc_" <<  this->flatname () << 
+        "), (unsigned char *) &_oc_" << this->flatname () << 
+        ", CORBA::B_FALSE);" << nl;
+      *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
+        this->flatname () << ";\n\n";
+      this->cli_stub_gen_;
+      cg->pop ();
+    }
+
   return 0;
 }
 
@@ -91,15 +154,28 @@ be_typedef::gen_server_skeletons (void)
 int 
 be_typedef::gen_client_inline (void)
 {
-  be_type *bt;
+  be_type *bt;       // type node
+  be_state *s;       // state based code gen object
 
-  bt = be_type::narrow_from_decl (this->base_type ());
-
-  // generate the client inline methods for the base type
-  if (bt->be_type::gen_client_inline () == -1)
+  if (!this->cli_hdr_gen_) // not already generated
     {
-      ACE_ERROR ((LM_ERROR, "be_typedef: base type inline code gen failed\n"));
-      return -1;
+      // retrieve a singleton instance of the code generator
+      TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+      cg->push (TAO_CodeGen::TAO_TYPEDEF_CI);
+      cg->node (this); // pass ourselves
+      cg->outstream (cg->client_inline ());
+      s = cg->make_state ();
+
+      bt = be_type::narrow_from_decl (this->base_type ());
+      // first generate the mapping for our type
+      if (!s || !bt || (s->gen_code (bt, this) == -1))
+        {
+          ACE_ERROR ((LM_ERROR, "be_typedef: error generating code for base type\n"));
+          return -1;
+        }
+
+      cg->pop ();
+      this->cli_hdr_gen_ = I_TRUE;
     }
   return 0;
 }
@@ -114,6 +190,24 @@ be_typedef::gen_server_inline (void)
 
 int
 be_typedef::gen_typecode (void)
+{
+  return 0;
+}
+
+long
+be_typedef::tc_size (void)
+{
+  return 0;
+}
+
+int 
+be_typedef::gen_encapsulation  (void)
+{
+  return 0;
+}
+
+long
+be_typedef::tc_encap_len (void)
 {
   return 0;
 }

@@ -30,9 +30,8 @@ be_decl::be_decl (void)
     srv_skel_gen_ (I_FALSE),
     srv_inline_gen_ (I_FALSE),
     seq_names_ (NULL),
-    fullname_ (0),
-    tc_name_ (0),
     encap_len_ (-1),
+    fullname_ (0),
     size_type_ (be_decl::FIXED) // everybody is fixed size to start with
 {
 }
@@ -48,9 +47,8 @@ be_decl::be_decl (AST_Decl::NodeType type, UTL_ScopedName *n, UTL_StrList
     srv_skel_gen_ (I_FALSE),
     srv_inline_gen_ (I_FALSE),
     seq_names_ (NULL),
-    fullname_ (0),
-    tc_name_ (0),
     encap_len_ (-1),
+    fullname_ (0),
     size_type_ (be_decl::FIXED) // everybody is fixed size to start with
 {
 }
@@ -61,10 +59,16 @@ be_decl::~be_decl (void)
 }
 
 int
-be_decl::gen_typecode (void)
+be_decl::gen_encapsulation (void)
 {
   // do nothing
   return 0;
+}
+
+long
+be_decl::tc_encap_len (void)
+{
+  return -1;
 }
 
 // return our size type
@@ -83,6 +87,9 @@ be_decl::size_type (be_decl::SIZE_TYPE st)
 
   if (this->size_type_ == st) // already of that type.
     return; // nothing to do
+
+  // precondition
+  ACE_ASSERT (st == be_decl::VARIABLE);
 
   this->size_type_ = st;
 
@@ -321,63 +328,6 @@ be_decl::repoID (void)
   return this->repoID_;
 }
 
-// compute the typecode name. The idea is to use the fully scoped name,
-// however, prepend a _tc_ to the last component. A slightly different approach
-// is required of the predefined types. Hence this method is overridden for
-// predefined types.
-
-void
-be_decl::compute_tc_name (void)
-{
-  static char namebuf [200];
-  UTL_ScopedName *n;
-
-  this->tc_name_ = NULL;
-  ACE_OS::memset (namebuf, '\0', 200);
-  n = this->name ();
-  while (n->tail () != NULL)
-    {
-      if (!this->tc_name_)
-        {
-          // does not exist
-          this->tc_name_ = new UTL_ScopedName (n->head (), NULL);
-        }
-      else
-        {
-          this->tc_name_->nconc (new UTL_ScopedName (n->head (), NULL));
-        }
-      n = (UTL_ScopedName *)n->tail ();
-    }
-  ACE_OS::sprintf (namebuf, "_tc_%s", n->last_component ()->get_string ());
-  if (!this->tc_name_)
-    {
-      // does not exist
-      this->tc_name_ = new UTL_ScopedName (new Identifier (ACE_OS::strdup
-                                                           (namebuf), 1, 0, I_FALSE), NULL);
-    }
-  else
-    {
-      this->tc_name_->nconc (new UTL_ScopedName (new Identifier (ACE_OS::strdup
-                                                                 (namebuf), 1,
-                                                                 0, I_FALSE), NULL));
-    }
-  return;
-}
-
-// retrieve typecode name
-UTL_ScopedName *
-be_decl::tc_name (void)
-{
-  return this->tc_name_;
-}
-
-// return encapsulation length. Don't do anything here.
-long 
-be_decl::tc_encap_len (void)
-{
-  return 0;
-}
-
 int 
 be_decl::tc_name2long (const char *name, long *&larr, long &arrlen)
 {
@@ -523,7 +473,8 @@ be_decl::gen_var_defn (void)
         *ch << "operator " << local_name () << " &() const;" << nl;
         
         // overloaded [] operator. The const version is not required
-        bt->be_type::gen_client_header ();
+        //        bt->gen_type ();
+        // XXXASG
         *ch << " &operator[] (CORBA::ULong index);" << nl;
       }
     }
@@ -1247,7 +1198,8 @@ be_decl::gen_var_impl (void)
       // operator []
       ci->indent ();
       *ci << "ACE_INLINE ";
-      bt->be_type::gen_client_header ();
+      //bt->gen_type (); 
+      // XXXASG
       *ci << " " << nl;
       *ci << fname << "::operator[] (CORBA::ULong index)" << nl;
       *ci << "{\n";
@@ -1392,7 +1344,8 @@ be_decl::gen_out_defn (void)
 
           // overloaded [] operator only for sequence. The const version is not
           // required
-          bt->be_type::gen_client_header ();
+          // bt->gen_type ();
+          // XXXASG
           *ch << " &operator[] (CORBA::ULong index);" << nl;
         }
     }
@@ -1753,7 +1706,8 @@ be_decl::gen_out_impl (void)
             ci->indent ();
             *ci << "ACE_INLINE ";
             *ci << bt->name ();
-            bt->be_type::gen_client_header ();
+            //bt->gen_type ();
+            // XXXASG
             *ci << nl;
             *ci << fname << "::operator[] (CORBA::ULong index)" << nl;
             *ci << "{\n";
@@ -1793,6 +1747,49 @@ be_decl::add_seq_name (Identifier *id)
   // that callers have made sure to call a lookup
   this->seq_names_ = new UTL_IdList (id, this->seq_names_);
   return I_TRUE;
+}
+
+idl_bool
+be_decl::is_nested (void)
+{
+  AST_Decl *d;
+
+  d = ScopeAsDecl (this->defined_in ());
+  // if we have an outermost scope and if that scope is not that of the Root,
+  // then we are defined at some nesting level
+  if (d && d->node_type () != AST_Decl::NT_root)
+    return I_TRUE;
+
+  return I_FALSE;
+}
+
+// return the length in bytes to hold the repoID inside a typecode. This
+// comprises 4 bytes indicating the length of the string followed by the actual
+// string represented as longs.
+long
+be_decl::repoID_encap_len (void)
+{
+  long slen;
+
+  slen = ACE_OS::strlen (this->repoID ()) + 1; // + 1 for NULL terminating char
+  // the number of bytes to hold the string must be a multiple of 4 since this
+  // will be represented as an array of longs
+  return 4 + 4 * (slen/4 + (slen%4 ? 1:0));
+}
+
+// return the length in bytes to hold the name inside a typecode. This
+// comprises 4 bytes indicating the length of the string followed by the actual
+// string represented as longs.
+long
+be_decl::name_encap_len (void)
+{
+  long slen;
+
+  slen = ACE_OS::strlen (this->local_name ()->get_string ()) + 1; // + 1 for
+                                                    // NULL terminating char 
+  // the number of bytes to hold the string must be a multiple of 4 since this
+  // will be represented as an array of longs
+  return 4 + 4 * (slen/4 + (slen%4 ? 1:0));
 }
 
 // narrowing methods
