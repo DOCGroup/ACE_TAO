@@ -1,3 +1,13 @@
+Mon Jan 19 23:35:45 1998    <coryan@MILONGA>
+
+	* tao/sequence_T.h: 
+	* tao/sequence_T.i: 
+	* tao/sequence_T.cpp: 
+	  Finished suit of parametric classes for sequences, including
+	  bounded sequences of objects and strings.
+	  Fixed some more bugs in the Manager classes for sequences of
+	  objects.
+
 Mon Jan 19 17:33:45 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* orbsvcs/tests/Simple_Naming/clnt.cpp (init): Changed the marker
