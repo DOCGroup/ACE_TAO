@@ -1,3 +1,11 @@
+Thu Feb 11 15:29:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Exception.h:
+	* tao/Environment.{h,cpp}: Unprotected private members and add
+	  exception id and major number to CORBA_Environment if
+	  TAO_USES_FLICK is defined.  Thanks to Tim Stack <stack@aros.net>
+	  for notifying us the change.
+
 Thu Feb 11 15:28:49 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Fixed the g++ unused
