@@ -11,7 +11,7 @@
 INFO  = README
 
 DIRS  =	server \
-	client 
+	clients
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
