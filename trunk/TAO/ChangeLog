@@ -1,3 +1,18 @@
+Wed Mar 30 20:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tao/Visibility.pidl:
+	  Updated regeneration instructions, enable typecodes
+
+	* tao/VisibilityC.{h,cpp,inl}:
+	  Regenerated
+
+	* tao/VisibilityA.cpp:
+	  New file
+
+	* tao/tao.mpc:
+	* tao/Makefile.am
+	  Added VisibilityA.cpp
+
 Wed Mar 30 12:01:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_typecode/alias_typecode.cpp:
