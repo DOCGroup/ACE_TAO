@@ -25,13 +25,14 @@
 #include "ace/TkReactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Msg_WFMO_Reactor.h"
+#include "ace/TP_Reactor.h"
 
 ACE_RCSID(Strategies, advanced_resource, "$Id$")
 
 TAO_Advanced_Resource_Factory::TAO_Advanced_Resource_Factory (void)
   :sched_policy_ (ACE_SCHED_OTHER),
    reactor_registry_type_ (TAO_SINGLE_REACTOR),
-   reactor_type_ (TAO_REACTOR_SELECT_MT),
+   reactor_type_ (TAO_REACTOR_TP),
    priority_mapping_type_ (TAO_PRIORITY_MAPPING_DIRECT),
    cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK)
 {
@@ -394,7 +395,7 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
   for (; factory != end; factory++)
     {
       const ACE_CString &name = (*factory)->protocol_name ();
-
+     
       (*factory)->factory (
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (name.c_str ()));
       if ((*factory)->factory () == 0)
@@ -452,7 +453,6 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
   ACE_Reactor_Impl *impl = 0;
   switch (this->reactor_type_)
     {
-    default:
     case TAO_REACTOR_SELECT_MT:
       ACE_NEW_RETURN (impl,
                       TAO_REACTOR ((ACE_Sig_Handler*)0,
@@ -495,6 +495,14 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
 #if defined(ACE_WIN32) && !defined (ACE_HAS_WINCE)
       ACE_NEW_RETURN (impl, ACE_Msg_WFMO_Reactor, 0);
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+      break;
+      
+    default:
+    case TAO_REACTOR_TP:
+      ACE_NEW_RETURN (impl, ACE_TP_Reactor ((ACE_Sig_Handler*)0,
+                                            (ACE_Timer_Queue*)0,
+                                            this->reactor_mask_signals_),
+                      0);
       break;
     }
 

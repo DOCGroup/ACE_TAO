@@ -1,3 +1,14 @@
+Tue Nov 14 16:29:20 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/RTCORBA/Server_Declared/server.conf: 
+	  Updated to have only one entry rather than two entries, one for
+	  default-resource and the other for advanced_resource. Thanks to
+	  Marina for pointing out.
+	
+	* tao/Strategies/advanced_resource.cpp (allocate_reactor_impl): 
+	  Made TAO_Reactor_TP as the default ReactorType to be consistent
+	  with the default_resource.cpp
+
 Tue Nov 14 18:21:29 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp:
