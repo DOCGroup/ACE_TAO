@@ -1,3 +1,10 @@
+Fri Aug  6 16:30:30 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Borland/ChatClientWnd.cpp: Improved the printouts
+	  that are called to display which exceptions are thrown.  Thanks
+ 	  to Christopher Kohlhoff <chris@kohlhoff.com> for contributing
+ 	  this.
+
 Fri Aug 06 14:24:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/orbconf.h (TAO_DEFAULT_RESOURCE_FACTORY_ARGS): Replaced
@@ -16,8 +23,8 @@ Fri Aug 06 13:20:23 1999  Carlos O'Ryan  <coryan@JIG>
 	* tao/ORB_Core.cpp:
 	* tao/default_server.cpp:
 	  The thread per connection timeouts where not properly
-	  initialized by default. Thanks to <alex@cfx.com> for reporting
-	  this problem.
+	  initialized by default. Thanks to Alexander Villatora
+	  <alex@cfx.com> for reporting this problem.
 
 	* tao/IIOP_Connect.cpp:
 	  Added some debugging messages.
