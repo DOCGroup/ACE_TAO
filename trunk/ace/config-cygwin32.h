@@ -34,7 +34,6 @@
 #define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) extern template class SINGLETON_TYPE <CLASS, LOCK>;
 
 #define ACE_LACKS_SYSV_MSG_H
-#define ACE_HAS_SIG_MACROS
 #define ACE_LACKS_SYSTIME_H
 
 #define ACE_LACKS_READDIR_R
@@ -72,6 +71,7 @@
 #define ACE_LACKS_GETPGID_PROTOTYPE
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_SYSV_IPC
+#define ACE_HAS_VOIDPTR_MMAP
 
 // Compiler/platform supports alloca().
 // Although ACE does have alloca() on this compiler/platform combination, it is
