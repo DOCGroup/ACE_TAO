@@ -19,7 +19,7 @@ SOEXT=so
 endif
 
 VSHLIB  = $(SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
-VOBJS   = $(subst .cpp,.$(OBJEXT),$(foreach file,$(LSRC),$(VDIR)$(notdir $(file))))
+VLOBJS   = $(subst .cpp,.$(OBJEXT),$(foreach file,$(LSRC),$(VDIR)$(notdir $(file))))
 
 ifdef TEMPINCDIR
 VSHOBJS1 =
@@ -75,7 +75,7 @@ endif
 # Uncomment the remaining lines if you want to build both *.a and *.so libraries...
 VLIB	= $(LIB:%.a=%$(VAR).a)
 
-$(VLIB): $(VOBJS)
+$(VLIB): $(VLOBJS)
 ifdef PRELIB
 	$(PRELIB)
 endif
