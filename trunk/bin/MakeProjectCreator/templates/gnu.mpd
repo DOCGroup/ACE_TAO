@@ -526,7 +526,6 @@ endif
 <%endif%>
 
 realclean: clean <%compclean%>
-	-$(RM) $(BIN_UNCHECKED) $(LIB_UNCHECKED) $(SHLIB_UNCHECKED)
 <%if(idl_files)%>
 	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 <%endif%>
