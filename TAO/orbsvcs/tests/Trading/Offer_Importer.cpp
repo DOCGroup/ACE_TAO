@@ -217,8 +217,9 @@ perform_queries_with_policies (const TAO_Policy_Manager& policies,
               
               for (int length = limits_applied_out->length (), j = 0; j < length; j++)
                 {
-                  const char* policy_name = limits_applied_out[j];
-                  ACE_DEBUG ((LM_DEBUG, "%s\n", policy_name));
+                  TAO_String_Manager policy_name = limits_applied_out[j];
+                  ACE_DEBUG ((LM_DEBUG, "%s\n",
+                              ACE_static_cast (const char*, policy_name)));
                 }
             }
         }
