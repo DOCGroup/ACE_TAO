@@ -21,7 +21,9 @@ extern "C" char *getwd (char *);
 #define BLKDEV_IOSIZE	1024
 #endif
 
+#ifndef linux
 extern char *sys_errlist[];
+#endif
 static void clone (char* s_path, char* d_path, int sroot_flag, int level);
 
 static char *pname;
