@@ -147,27 +147,11 @@ TAO_OA_Parameters::tablesize (void)
 ACE_INLINE TAO_OA_Parameters *&
 TAO_OA_Parameters::instance_i (void)
 {
-#if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  // Pointer to the Singleton instance.  This works around a bug with
-  // G++...
-  static TAO_OA_Parameters *instance_ = 0;
-
-  return instance_;
-#else
   return TAO_OA_Parameters::instance_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 }
 
 ACE_INLINE ACE_SYNCH_MUTEX &
 TAO_OA_Parameters::singleton_lock_i (void)
 {
-#if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  // ACE_SYNCH_MUTEX the creation of the singleton.  This works around a
-  // "feature" of G++... ;-)
-  static ACE_SYNCH_MUTEX ace_singleton_lock_;
-
-  return ace_singleton_lock_;
-#else
   return TAO_OA_Parameters::ace_singleton_lock_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 }

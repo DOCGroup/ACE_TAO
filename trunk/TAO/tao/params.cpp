@@ -36,13 +36,11 @@ TAO_OA_Parameters::instance (TAO_OA_Parameters *new_instance)
 }
 
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
 // Pointer to the Singleton instance.
 TAO_OA_Parameters *TAO_OA_Parameters::instance_ = 0;
 
 // Lock the creation of the singleton.  
 ACE_SYNCH_MUTEX TAO_OA_Parameters::ace_singleton_lock_;
-#endif /* !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
 
 #if !defined(__ACE_INLINE__)
 #  include "params.i"

@@ -1,3 +1,10 @@
+Wed Jul 16 14:17:01 1997  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
+
+	* tao/params.*: Eliminated unnecessary
+ 	ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES checks from
+ 	TAO_OA_Parameters (unnecessary b/c it's not a template).  Also
+ 	corrected the type of TAO_OA_Parameters::ace_singleton_lock_.
+
 Wed Jul 16 11:34:36 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/boa.cpp: Removed some unused code.
