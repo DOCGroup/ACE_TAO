@@ -42,15 +42,16 @@ enum ACE_Recyclable_State
   ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE,
   // Can be purged, but is not idle (mostly for debugging).
 
-  ACE_RECYCLABLE_BUSY = 2,
+  ACE_RECYCLABLE_BUSY,
   // Busy (i.e., cannot be recycled or purged).
 
-  ACE_RECYCLABLE_CLOSED = 3,
+  ACE_RECYCLABLE_CLOSED,
   // Closed.
 
-  ACE_RECYCLABLE_UNKNOWN = 4
+  ACE_RECYCLABLE_UNKNOWN
   // Unknown state.
 };
+
 
 // Do not change these values wantonly since GPERF depends on them..
 #define ACE_ASCII_SIZE 128
