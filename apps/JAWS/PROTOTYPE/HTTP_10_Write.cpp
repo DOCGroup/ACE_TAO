@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ace/streams.h"
+
 #include "JAWS/JAWS.h"
 #include "JAWS/IO.h"
 #include "JAWS/IO_Handler.h"
