@@ -12,13 +12,13 @@
  */
 //=============================================================================
 
-#include <tao/Utils/ServantMain.h>
+#include <tao/Utils/Server_Main.h>
 #include "FactoryRegistry_i.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  TAO::Utils::ServantMain<FactoryRegistry_i> servantMain("FactoryRegistry");
-  return servantMain.Main(argc, argv);
+  TAO::Utils::Server_Main<FactoryRegistry_i> server_main("FactoryRegistry");
+  return server_main.run(argc, argv);
 }
 
 ///////////////////////////////////
@@ -26,8 +26,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 // inept compilers.
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template TAO::Utils::ServantMain<FactoryRegistry_i>;
+  template TAO::Utils::Server_Main<FactoryRegistry_i>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Utils::ServantMain<FactoryRegistry_i>
+# pragma instantiate TAO::Utils::Server_Main<FactoryRegistry_i>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

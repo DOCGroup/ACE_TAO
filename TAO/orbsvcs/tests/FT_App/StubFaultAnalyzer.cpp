@@ -35,24 +35,24 @@ int StubFaultAnalyzer::parse_args (int argc, char * argv[])
     {
       case 'r':
       {
-        if (replicaIorBuffer_ == 0)
+        if (this->replicaIorBuffer_ == 0)
         {
           const char * repNames = get_opts.opt_arg ();
           size_t repNameLen = ACE_OS::strlen(repNames);
 
           // make a working copy of the string
-          ACE_NEW_NORETURN(replicaIorBuffer_,
+          ACE_NEW_NORETURN(this->replicaIorBuffer_,
             char[repNameLen + 1]);
-          if ( replicaIorBuffer_ != 0)
+          if ( this->replicaIorBuffer_ != 0)
           {
-            ACE_OS::memcpy(replicaIorBuffer_, repNames, repNameLen+1);
+            ACE_OS::memcpy(this->replicaIorBuffer_, repNames, repNameLen+1);
 
             // tokenize the string on ','
             // into iorReplicaFiles_
-            char * pos = replicaIorBuffer_;
+            char * pos = this->replicaIorBuffer_;
             while (pos != 0)
             {
-              iorReplicaFiles_.push_back(pos);
+              this->iorReplicaFiles_.push_back(pos);
               // find a comma delimiter, and
               // chop the string there.
               pos = ACE_OS::strchr (pos, ',');
@@ -82,17 +82,17 @@ int StubFaultAnalyzer::parse_args (int argc, char * argv[])
       }
       case 'd':
       {
-        iorDetectorFile_ = get_opts.opt_arg ();
+        this->iorDetectorFile_ = get_opts.opt_arg ();
         break;
       }
       case 'n':
       {
-        iorNotifierFile_ = get_opts.opt_arg ();
+        this->iorNotifierFile_ = get_opts.opt_arg ();
         break;
       }
       case 'o':
       {
-        readyFile_ = get_opts.opt_arg ();
+        this->readyFile_ = get_opts.opt_arg ();
         break;
       }
 
@@ -107,21 +107,21 @@ int StubFaultAnalyzer::parse_args (int argc, char * argv[])
 
   if(! optionError)
   {
-    if (0 == replicaIorBuffer_)
+    if (0 == this->replicaIorBuffer_)
     {
       ACE_ERROR ((LM_ERROR,
         "-r option is required.\n"
         ));
       optionError = -1;
     }
-    if (0 == iorDetectorFile_)
+    if (0 == this->iorDetectorFile_)
     {
       ACE_ERROR ((LM_ERROR,
         "-d option is required.\n"
         ));
       optionError = -1;
     }
-    if (0 == iorNotifierFile_)
+    if (0 == this->iorNotifierFile_)
     {
       ACE_ERROR ((LM_ERROR,
         "-n option is required.\n"
@@ -148,46 +148,45 @@ int StubFaultAnalyzer::parse_args (int argc, char * argv[])
 /**
  * Register this object as necessary
  */
-int StubFaultAnalyzer::init (TAO_ORB_Manager & orbManager  ACE_ENV_ARG_DECL)
+int StubFaultAnalyzer::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 {
   int result = 0;
-  orb_ = orbManager.orb();
-
+  this->orb_ = orb;
   //////////////////////////////////////////
   // resolve reference to detector factory
   CORBA::String_var factoryIOR;
-  if (readIORFile(iorDetectorFile_, factoryIOR))
+  if (readIORFile(this->iorDetectorFile_, factoryIOR))
   {
-    CORBA::Object_var obj = orb_->string_to_object(factoryIOR);
-    factory_ = ::FT::FaultDetectorFactory::_narrow(obj);
-    if (CORBA::is_nil(factory_))
+    CORBA::Object_var obj = this->orb_->string_to_object(factoryIOR);
+    this->factory_ = ::FT::FaultDetectorFactory::_narrow(obj);
+    if (CORBA::is_nil(this->factory_))
     {
-      std::cerr << "Can't resolve Detector Factory IOR " << iorDetectorFile_ << std::endl;
+      std::cerr << "Can't resolve Detector Factory IOR " << this->iorDetectorFile_ << std::endl;
       result = -1;
     }
   }
   else
   {
-    std::cerr << "Can't read " << iorDetectorFile_ << std::endl;
+    std::cerr << "Can't read " << this->iorDetectorFile_ << std::endl;
     result = -1;
   }
 
   //////////////////////////////////////////
   // resolve references to notifier
   CORBA::String_var notifierIOR;
-  if (readIORFile(iorNotifierFile_, notifierIOR))
+  if (readIORFile(this->iorNotifierFile_, notifierIOR))
   {
-    CORBA::Object_var obj = orb_->string_to_object(notifierIOR);
-    notifier_ = ::FT::FaultNotifier::_narrow(obj);
-    if (CORBA::is_nil(notifier_))
+    CORBA::Object_var obj = this->orb_->string_to_object(notifierIOR);
+    this->notifier_ = ::FT::FaultNotifier::_narrow(obj);
+    if (CORBA::is_nil(this->notifier_))
     {
-      std::cerr << "Can't resolve Notifier IOR " << iorNotifierFile_ << std::endl;
+      std::cerr << "Can't resolve Notifier IOR " << this->iorNotifierFile_ << std::endl;
       result = -1;
     }
   }
   else
   {
-    std::cerr << "Can't read " << iorNotifierFile_ << std::endl;
+    std::cerr << "Can't read " << this->iorNotifierFile_ << std::endl;
     result = -1;
   }
 
@@ -196,12 +195,12 @@ int StubFaultAnalyzer::init (TAO_ORB_Manager & orbManager  ACE_ENV_ARG_DECL)
   // register fault consumers
   if (result == 0)
   {
-    result = faultConsumer_.init(orbManager, notifier_);
+    result = this->faultConsumer_.init(orb, this->notifier_);
   }
 
   if (result == 0)
   {
-    result = batchConsumer_.init(orbManager, notifier_);
+    result = this->batchConsumer_.init(orb, this->notifier_);
   }
 
   /////////////////////////
@@ -211,14 +210,14 @@ int StubFaultAnalyzer::init (TAO_ORB_Manager & orbManager  ACE_ENV_ARG_DECL)
     ////////////////////////////////////
     // resolve references to replicas
     // create a fault detector for each replica
-    size_t replicaCount = iorReplicaFiles_.size();
+    size_t replicaCount = this->iorReplicaFiles_.size();
     for(size_t nRep = 0; result == 0 && nRep < replicaCount; ++nRep)
     {
-      const char * iorName = iorReplicaFiles_[nRep];
+      const char * iorName = this->iorReplicaFiles_[nRep];
       CORBA::String_var ior;
       if (readIORFile(iorName, ior))
       {
-        CORBA::Object_var obj = orb_->string_to_object(ior);
+        CORBA::Object_var obj = this->orb_->string_to_object(ior);
         FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow(obj);
         if (CORBA::is_nil(replica))
         {
@@ -227,14 +226,14 @@ int StubFaultAnalyzer::init (TAO_ORB_Manager & orbManager  ACE_ENV_ARG_DECL)
         }
         else
         {
-          replicas_.push_back(replica);
+          this->replicas_.push_back(replica);
 
           CORBA::String_var type_id = CORBA::string_dup("FaultDetector");
 
           TAO_PG::Properties_Encoder encoder;
 
           PortableGroup::Value value;
-          value <<= notifier_;
+          value <<= this->notifier_;
           encoder.add(::FT::FT_NOTIFIER, value);
 
           value <<= replica;
@@ -274,7 +273,7 @@ int StubFaultAnalyzer::init (TAO_ORB_Manager & orbManager  ACE_ENV_ARG_DECL)
             encoder.encode(criteria);
             FT::GenericFactory::FactoryCreationId_var factory_creation_id;
 
-            factory_->create_object (
+            this->factory_->create_object (
               type_id.in(),
               criteria.in(),
               factory_creation_id
@@ -290,9 +289,9 @@ int StubFaultAnalyzer::init (TAO_ORB_Manager & orbManager  ACE_ENV_ARG_DECL)
       }
     }
 
-    if (result == 0 && readyFile_ != 0)
+    if (result == 0 && this->readyFile_ != 0)
     {
-      std::ofstream ready(readyFile_, ios::out);
+      std::ofstream ready(this->readyFile_, ios::out);
       ready << "ready" << std::endl;
       ready.close();
     }
@@ -306,7 +305,7 @@ int StubFaultAnalyzer::init (TAO_ORB_Manager & orbManager  ACE_ENV_ARG_DECL)
  */
 const char * StubFaultAnalyzer::identity () const
 {
-  return identity_.c_str();
+  return this->identity_.c_str();
 }
 
 /**
@@ -314,8 +313,8 @@ const char * StubFaultAnalyzer::identity () const
  */
 int StubFaultAnalyzer::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
-  faultConsumer_.fini(ACE_ENV_SINGLE_ARG_PARAMETER);
-  batchConsumer_.fini(ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->faultConsumer_.fini(ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->batchConsumer_.fini(ACE_ENV_SINGLE_ARG_PARAMETER);
   return 0;
 }
 
@@ -325,7 +324,7 @@ int StubFaultAnalyzer::idle(int & result)
   ACE_UNUSED_ARG(result);
   int quit = 0;
 
-  if (replicas_.size() == faultConsumer_.notifications())
+  if (this->replicas_.size() == this->faultConsumer_.notifications())
   {
     quit = 1;
   }

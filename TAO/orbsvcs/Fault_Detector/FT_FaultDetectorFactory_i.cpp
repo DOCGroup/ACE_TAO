@@ -14,7 +14,6 @@
 #include "Fault_Detector_i.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/CosNamingC.h"
-#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Decoder.h"
 
 // Use this macro at the beginning of CORBA methods
@@ -45,20 +44,20 @@
 //////////////////////////////////////////////////////
 // FT_FaultDetectorFactory_i  Construction/destruction
 
-FT_FaultDetectorFactory_i::FT_FaultDetectorFactory_i ()
+TAO::FT_FaultDetectorFactory_i::FT_FaultDetectorFactory_i ()
   : ior_output_file_(0)
-  , nsName_(0)
-  , quitOnIdle_(0)
-  , emptySlots_(0)
-  , quitRequested_(0)
+  , ns_name_(0)
+  , quit_on_idle_(0)
+  , empty_slots_(0)
+  , quit_requested_(0)
 {
 }
 
-FT_FaultDetectorFactory_i::~FT_FaultDetectorFactory_i ()
+TAO::FT_FaultDetectorFactory_i::~FT_FaultDetectorFactory_i ()
 {
   //scope the guard
   {
-    InternalGuard guard (internals_);
+    InternalGuard guard (this->internals_);
 
     // be sure all detectors are gone
     // before this object disappears
@@ -66,32 +65,32 @@ FT_FaultDetectorFactory_i::~FT_FaultDetectorFactory_i ()
   }
   ACE_DECLARE_NEW_ENV;
   fini (ACE_ENV_SINGLE_ARG_PARAMETER);
-  threadManager_.close ();
+  this->threadManager_.close ();
 }
 
 ////////////////////////////////////////////
 // FT_FaultDetectorFactory_i private methods
 
-void FT_FaultDetectorFactory_i::shutdown_i()
+void TAO::FT_FaultDetectorFactory_i::shutdown_i()
 {
   // assume mutex is locked
-  for (size_t nDetector = 0; nDetector < detectors_.size(); ++nDetector)
+  for (size_t nDetector = 0; nDetector < this->detectors_.size(); ++nDetector)
   {
-    Fault_Detector_i * detector = detectors_[nDetector];
+    Fault_Detector_i * detector = this->detectors_[nDetector];
     if (detector != 0)
     {
-      detector->requestQuit();
+      detector->request_quit();
     }
   }
 }
 
-int FT_FaultDetectorFactory_i::write_IOR()
+int TAO::FT_FaultDetectorFactory_i::write_ior()
 {
   int result = -1;
-  FILE* out = ACE_OS::fopen (ior_output_file_, "w");
+  FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
   if (out)
   {
-    ACE_OS::fprintf (out, "%s", static_cast<const char *>(ior_));
+    ACE_OS::fprintf (out, "%s", ACE_static_cast(const char *, this->ior_));
     ACE_OS::fclose (out);
     result = 0;
   }
@@ -107,7 +106,7 @@ int FT_FaultDetectorFactory_i::write_IOR()
 //////////////////////////////////////////////////////
 // FT_FaultDetectorFactory_i public, non-CORBA methods
 
-int FT_FaultDetectorFactory_i::parse_args (int argc, char * argv[])
+int TAO::FT_FaultDetectorFactory_i::parse_args (int argc, char * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:q");
   int c;
@@ -117,11 +116,11 @@ int FT_FaultDetectorFactory_i::parse_args (int argc, char * argv[])
     switch (c)
     {
       case 'o':
-        ior_output_file_ = get_opts.opt_arg ();
+        this->ior_output_file_ = get_opts.opt_arg ();
         break;
       case 'q':
       {
-        quitOnIdle_ = 1;
+        this->quit_on_idle_ = 1;
         break;
       }
 
@@ -142,19 +141,19 @@ int FT_FaultDetectorFactory_i::parse_args (int argc, char * argv[])
   return 0;
 }
 
-const char * FT_FaultDetectorFactory_i::identity () const
+const char * TAO::FT_FaultDetectorFactory_i::identity () const
 {
-  return identity_.c_str();
+  return this->identity_.c_str();
 }
 
-int FT_FaultDetectorFactory_i::idle (int & result)
+int TAO::FT_FaultDetectorFactory_i::idle (int & result)
 {
   ACE_UNUSED_ARG (result);
-  int quit = quitRequested_;
-  if (quit == 0 && detectors_.size() == emptySlots_)
+  int quit = this->quit_requested_;
+  if (quit == 0 && this->detectors_.size() == this->empty_slots_)
   {
     // don't quitOnIdle until something has happened
-    if (quitOnIdle_ && emptySlots_ != 0)
+    if (this->quit_on_idle_ && this->empty_slots_ != 0)
     {
       ACE_ERROR (( LM_INFO,
         "FaultDetectorFactory exits due to quit on idle option.\n"
@@ -167,53 +166,95 @@ int FT_FaultDetectorFactory_i::idle (int & result)
 }
 
 
-int FT_FaultDetectorFactory_i::fini (ACE_ENV_SINGLE_ARG_DECL)
+int TAO::FT_FaultDetectorFactory_i::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
-  if (ior_output_file_ != 0)
+  if (this->ior_output_file_ != 0)
   {
-    ACE_OS::unlink (ior_output_file_);
-    ior_output_file_ = 0;
+    ACE_OS::unlink (this->ior_output_file_);
+    this->ior_output_file_ = 0;
   }
-  if (nsName_ != 0)
+  if (this->ns_name_ != 0)
   {
-    naming_context_->unbind (this_name_
+    this->naming_context_->unbind (this_name_
                             ACE_ENV_ARG_PARAMETER);
-    nsName_ = 0;
+    this->ns_name_ = 0;
   }
   return 0;
 }
 
-int FT_FaultDetectorFactory_i::init (TAO_ORB_Manager & orbManager
-  ACE_ENV_ARG_DECL)
+int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 {
   int result = 0;
-  orb_ = orbManager.orb();
+  this->orb_ = orb;
 
-  // Register with the ORB.
-  ior_ = orbManager.activate (this
-      ACE_ENV_ARG_PARAMETER);
+  // Use the ROOT POA for now
+  CORBA::Object_var poa_object =
+    this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  if (ior_output_file_ != 0)
+  if (CORBA::is_nil (poa_object.in ()))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                      -1);
+
+  // Get the POA object.
+  this->poa_ =
+    PortableServer::POA::_narrow (poa_object.in ()
+                                  ACE_ENV_ARG_PARAMETER);
+
+  ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil(this->poa_))
   {
-    identity_ = "file:";
-    identity_ += ior_output_file_;
-    result = write_IOR();
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT (" (%P|%t) Unable to narrow the POA.\n")),
+                      -1);
+  }
+
+  PortableServer::POAManager_var poa_manager =
+    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  // Register with the POA.
+
+  this->objectId_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  // find my IOR
+
+  CORBA::Object_var obj =
+    this->poa_->id_to_reference (objectId_.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  this->ior_ = this->orb_->object_to_string (obj.in ()
+                                  ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  if (this->ior_output_file_ != 0)
+  {
+    this->identity_ = "file:";
+    this->identity_ += this->ior_output_file_;
+    result = write_ior();
   }
   else
   {
     // if no IOR file specified,
     // then always try to register with name service
-    nsName_ = "FT_FaultDetectorFactory";
+    this->ns_name_ = "FT_FaultDetectorFactory";
   }
 
-  if (nsName_ != 0)
+  if (this->ns_name_ != 0)
   {
-    identity_ = "name:";
-    identity_ += nsName_;
+    this->identity_ = "name:";
+    this->identity_ += this->ns_name_;
 
     CORBA::Object_var naming_obj =
-      orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+      this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (CORBA::is_nil(naming_obj.in ())){
@@ -222,14 +263,14 @@ int FT_FaultDetectorFactory_i::init (TAO_ORB_Manager & orbManager
                         1);
     }
 
-    naming_context_ =
-      CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+    this->naming_context_ =
+      ::CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    this_name_.length (1);
-    this_name_[0].id = CORBA::string_dup (nsName_);
+    this->this_name_.length (1);
+    this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
 
-    naming_context_->rebind (this_name_, _this()
+    this->naming_context_->rebind (this->this_name_, _this()
                             ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
   }
@@ -237,14 +278,14 @@ int FT_FaultDetectorFactory_i::init (TAO_ORB_Manager & orbManager
   return result;
 }
 
-CORBA::ULong FT_FaultDetectorFactory_i::allocateId()
+CORBA::ULong TAO::FT_FaultDetectorFactory_i::allocate_id()
 {
-  CORBA::ULong id = detectors_.size();
-  if (emptySlots_ != 0)
+  CORBA::ULong id = this->detectors_.size();
+  if (this->empty_slots_ != 0)
   {
     for(CORBA::ULong pos = 0; pos < id; ++pos)
     {
-      if (detectors_[pos] == 0)
+      if (this->detectors_[pos] == 0)
       {
         id = pos;
       }
@@ -252,23 +293,23 @@ CORBA::ULong FT_FaultDetectorFactory_i::allocateId()
   }
   else
   {
-    detectors_.push_back(0);
-    emptySlots_ += 1;
+    this->detectors_.push_back(0);
+    this->empty_slots_ += 1;
   }
   return id;
 }
 
-void FT_FaultDetectorFactory_i::removeDetector(CORBA::ULong id, Fault_Detector_i * detector)
+void TAO::FT_FaultDetectorFactory_i::remove_detector(CORBA::ULong id, TAO::Fault_Detector_i * detector)
 {
-  InternalGuard guard (internals_);
-  if (id < detectors_.size())
+  InternalGuard guard (this->internals_);
+  if (id < this->detectors_.size())
   {
-    if(detectors_[id] == detector)
+    if(this->detectors_[id] == detector)
     {
-      delete detectors_[id];
-      detectors_[id] = 0;
-      emptySlots_ += 1;
-      if (emptySlots_ == detectors_.size())
+      delete this->detectors_[id];
+      this->detectors_[id] = 0;
+      this->empty_slots_ += 1;
+      if (this->empty_slots_ == this->detectors_.size())
       {
         ACE_ERROR (( LM_INFO,
           "FaultDetectorFactory is idle.\n"
@@ -288,7 +329,7 @@ void FT_FaultDetectorFactory_i::removeDetector(CORBA::ULong id, Fault_Detector_i
     ACE_ERROR (( LM_ERROR,
       "Attempt to remove invalid detector %d. Limit %d.\n",
       ACE_static_cast(int, id),
-      ACE_static_cast(int, detectors_.size())
+      ACE_static_cast(int, this->detectors_.size())
       ));
   }
 }
@@ -296,16 +337,16 @@ void FT_FaultDetectorFactory_i::removeDetector(CORBA::ULong id, Fault_Detector_i
 //////////////////////////////////////////
 // FT_FaultDetectorFactory_i CORBA methods
 
-void FT_FaultDetectorFactory_i::change_properties (
+void TAO::FT_FaultDetectorFactory_i::change_properties (
     const FT::Properties & property_set
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
     , PortableGroup::InvalidProperty
   ))
 {
-  METHOD_ENTRY(FT_FaultDetectorFactory_i::change_properties);
+  METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::change_properties);
 
     // TimeT is expressed in 10E-7 seconds (== 100 nSec == 0.1 uSec)
   static const long timeT_per_uSec = 10L;
@@ -318,10 +359,10 @@ void FT_FaultDetectorFactory_i::change_properties (
   {
     // note: these should be unsigned long, but
     // ACE_Time_Value wants longs.
-    long uSec = static_cast<long>((value / timeT_per_uSec) % uSec_per_sec);
-    long sec = static_cast<long>((value / timeT_per_uSec) / uSec_per_sec);
+    long uSec = ACE_static_cast (long, (value / timeT_per_uSec) % uSec_per_sec);
+    long sec = ACE_static_cast (long, (value / timeT_per_uSec) / uSec_per_sec);
     ACE_Time_Value atv(sec, uSec);
-    Fault_Detector_i::setTimeValue(atv);
+    TAO::Fault_Detector_i::set_time_for_all_detectors(atv);
   }
   else
   {
@@ -334,22 +375,22 @@ void FT_FaultDetectorFactory_i::change_properties (
     ex.nam[0].id = CORBA::string_dup(FT::FT_FAULT_MONITORING_INTERVAL);
     ACE_THROW (ex);
   }
-  METHOD_RETURN(FT_FaultDetectorFactory_i::change_properties);
+  METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::change_properties);
 }
 
-void FT_FaultDetectorFactory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+void TAO::FT_FaultDetectorFactory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
-  METHOD_ENTRY(FT_FaultDetectorFactory_i::shutdown);
-  InternalGuard guard (internals_);
+  METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::shutdown);
+  InternalGuard guard (this->internals_);
   shutdown_i ();
-  quitRequested_ = 1;
-  METHOD_RETURN(FT_FaultDetectorFactory_i::shutdown);
+  this->quit_requested_ = 1;
+  METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::shutdown);
 }
 
-CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
+CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
     const char * type_id,
     const FT::Criteria & the_criteria,
     FT::GenericFactory::FactoryCreationId_out factory_creation_id
@@ -364,8 +405,8 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
     , PortableGroup::CannotMeetCriteria
   ))
 {
-  METHOD_ENTRY(FT_FaultDetectorFactory_i::create_object);
-  InternalGuard guard (internals_);
+  METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::create_object);
+  InternalGuard guard (this->internals_);
 
   ::TAO_PG::Properties_Decoder decoder (the_criteria);
 
@@ -438,13 +479,13 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
     ACE_THROW ( PortableGroup::InvalidCriteria() );
   }
 
-  CORBA::ULong detectorId = allocateId();
+  CORBA::ULong detectorId = allocate_id();
 
   // NOTE: ACE_NEW is incompatable with ACE_Auto_Basic_Ptr
   // so create a bare pointer first.
-  Fault_Detector_i * pFD = 0;
+  TAO::Fault_Detector_i * pFD = 0;
 
-  ACE_NEW_NORETURN(pFD, Fault_Detector_i(
+  ACE_NEW_NORETURN(pFD, TAO::Fault_Detector_i(
     *this,
     detectorId,
     notifier,
@@ -460,7 +501,7 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
       ));
     ACE_THROW ( PortableGroup::ObjectNotCreated() );
   }
-  ACE_Auto_Basic_Ptr<Fault_Detector_i> detector(pFD);
+  ACE_Auto_Basic_Ptr<TAO::Fault_Detector_i> detector(pFD);
 
   ACE_NEW_NORETURN ( factory_creation_id,
     PortableGroup::GenericFactory::FactoryCreationId);
@@ -474,18 +515,18 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
   }
   (*factory_creation_id) <<= detectorId;
 
-  (*detector).start(threadManager_);
+  (*detector).start(this->threadManager_);
 
-  detectors_[detectorId] = detector.release();
-  emptySlots_ -= 1;
+  this->detectors_[detectorId] = detector.release();
+  this->empty_slots_ -= 1;
 
   // since FaultDetector is not a CORBA object (it does not implement
   // an interface.) we always return NIL;
-  METHOD_RETURN(FT_FaultDetectorFactory_i::create_object)
+  METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::create_object)
     CORBA::Object::_nil();
 }
 
-void FT_FaultDetectorFactory_i::delete_object (
+void TAO::FT_FaultDetectorFactory_i::delete_object (
     const FT::GenericFactory::FactoryCreationId & factory_creation_id
     ACE_ENV_ARG_DECL
   )
@@ -494,17 +535,17 @@ void FT_FaultDetectorFactory_i::delete_object (
     , PortableGroup::ObjectNotFound
   ))
 {
-  METHOD_ENTRY(FT_FaultDetectorFactory_i::delete_object);
+  METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::delete_object);
 
-  InternalGuard guard (internals_);
+  InternalGuard guard (this->internals_);
 
   CORBA::ULong detectorId;
   factory_creation_id >>= detectorId;
-  if (detectorId < detectors_.size())
+  if (detectorId < this->detectors_.size())
   {
-    if(detectors_[detectorId] != 0)
+    if(this->detectors_[detectorId] != 0)
     {
-      detectors_[detectorId]->requestQuit();
+      this->detectors_[detectorId]->request_quit();
     }
     else
     {
@@ -515,13 +556,13 @@ void FT_FaultDetectorFactory_i::delete_object (
   {
     ACE_THROW(::PortableGroup::ObjectNotFound());
   }
-  METHOD_RETURN(FT_FaultDetectorFactory_i::delete_object);
+  METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::delete_object);
 }
 
-CORBA::Boolean FT_FaultDetectorFactory_i::is_alive (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Boolean TAO::FT_FaultDetectorFactory_i::is_alive (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  METHOD_RETURN(FT_FaultDetectorFactory_i::is_alive)
+  METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::is_alive)
     1;
 }
 
@@ -530,10 +571,10 @@ CORBA::Boolean FT_FaultDetectorFactory_i::is_alive (ACE_ENV_SINGLE_ARG_DECL)
 // competence-challenged compilers.
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template ACE_Vector<Fault_Detector_i *>;
+  template ACE_Vector<TAO::Fault_Detector_i *>;
   template ACE_Guard<ACE_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate ACE_Vector<Fault_Detector_i *>
+# pragma instantiate ACE_Vector<TAO::Fault_Detector_i *>
 # pragma ACE_Guard<ACE_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

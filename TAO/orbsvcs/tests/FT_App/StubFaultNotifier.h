@@ -46,7 +46,7 @@ public:
   /**
    * Initialize.
    */
-  int init (TAO_ORB_Manager & orbManager);
+  int init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL);
 
   /**
    * Prepare to exit.
@@ -64,6 +64,12 @@ public:
    * @returns 0 to continue; nonzero to quit
    */
   int idle(int &result);
+
+  // override virtuals
+::PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+
+  PortableServer::ObjectId objectId()const;
+
 
   /**
    * Clean house for process shut down.
@@ -120,8 +126,8 @@ public:
   /////////////////
   // Implementation
 private:
-  int writeIORFile();
-  int readIORFile(const char * fileName, CORBA::String_var & ior);
+  int write_ior_file();
+  int read_ior_file(const char * fileName, CORBA::String_var & ior);
 
   ///////////////
   // Data Members
@@ -132,7 +138,17 @@ private:
   CORBA::ORB_var orb_;
 
   /**
-   * IOR of this object as assigned by orb.
+   * The POA used to activate this object.
+   */
+  PortableServer::POA_var poa_;
+
+  /**
+   * The CORBA object id assigned to this object.
+   */
+  PortableServer::ObjectId_var objectId_;
+
+  /**
+   * IOR of this object as assigned by poa
    */
   CORBA::String_var ior_;
 

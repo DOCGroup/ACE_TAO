@@ -14,7 +14,6 @@
 #include "FT_Notifier_i.h"
 
 #include "ace/Get_Opt.h"
-#include "tao/PortableServer/ORB_Manager.h"
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.
 #define METHOD_ENTRY(name)    \
@@ -41,40 +40,48 @@
 
 
 // Implementation skeleton constructor
-FT_FaultNotifier_i::FT_FaultNotifier_i ()
+TAO::FT_FaultNotifier_i::FT_FaultNotifier_i ()
   : ior_output_file_(0)
-  , nsName_(0)
-  , consumerConnects_(0)
-  , consumerDisconnects_(0)
-  , quitOnIdle_(0)
+  , ns_name_(0)
+  , consumer_connects_(0)
+  , consumer_disconnects_(0)
+  , quit_on_idle_(0)
+  , quitting_(0)
+  , gone_(0)
 {
 }
 
 // Implementation skeleton destructor
-FT_FaultNotifier_i::~FT_FaultNotifier_i ()
+TAO::FT_FaultNotifier_i::~FT_FaultNotifier_i ()
 {
   fini (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 
-int FT_FaultNotifier_i::idle(int &result ACE_ENV_ARG_DECL)
+int TAO::FT_FaultNotifier_i::idle(int &result ACE_ENV_ARG_DECL)
 {
+  static unsigned long linger = 0;
   ACE_UNUSED_ARG(result);
-  int quit = 0;
-  if (quitOnIdle_)
+  if (gone_)
   {
-    if ( consumerConnects_ != 0
-      && consumerConnects_ == consumerDisconnects_)
+    if ( linger == 0)
     {
-      quit = 1;
-      ACE_ERROR((LM_ERROR,
-        "FaultNotifier quit on idle: connects %d, disconnects %d\n",
-        ACE_static_cast (unsigned int, consumerConnects_),
-        ACE_static_cast (unsigned int, consumerDisconnects_)
-        ));
+      ACE_ERROR ((LM_ERROR,
+        "FaultNotifier (%P|%t) Begin linger.\n"
+      ));
+    }
+    if(++linger > 5)//10)
+    {
+      ACE_ERROR ((LM_ERROR,
+        "FaultNotifier (%P|%t) idle returnning gone\n"
+      ));
+    }
+    else
+    {
+      return 0;
     }
   }
-  return quit;
+  return this->gone_;
 }
 
 ////////////////////////////////////////////
@@ -82,13 +89,13 @@ int FT_FaultNotifier_i::idle(int &result ACE_ENV_ARG_DECL)
 
 
 // TODO: find this a common home
-int FT_FaultNotifier_i::write_IOR()
+int TAO::FT_FaultNotifier_i::write_ior()
 {
   int result = -1;
-  FILE* out = ACE_OS::fopen (ior_output_file_, "w");
+  FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
   if (out)
   {
-    ACE_OS::fprintf (out, "%s", static_cast<const char *>(ior_));
+    ACE_OS::fprintf (out, "%s", ACE_static_cast(const char *, this->ior_));
     ACE_OS::fclose (out);
     result = 0;
   }
@@ -104,7 +111,7 @@ int FT_FaultNotifier_i::write_IOR()
 //////////////////////////////////////////////////////
 // FT_FaultNotifier_i public, non-CORBA methods
 
-int FT_FaultNotifier_i::parse_args (int argc, char * argv[])
+int TAO::FT_FaultNotifier_i::parse_args (int argc, char * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:vq");
   int c;
@@ -115,17 +122,17 @@ int FT_FaultNotifier_i::parse_args (int argc, char * argv[])
     {
       case 'o':
       {
-        ior_output_file_ = get_opts.opt_arg ();
+        this->ior_output_file_ = get_opts.opt_arg ();
         break;
       }
       case 'q':
       {
-        quitOnIdle_ = 1;
+        this->quit_on_idle_ = 1;
         break;
       }
       case 'v':
       {
-        verbose_ = 1;
+        this->verbose_ = 1;
         break;
       }
       case '?':
@@ -146,23 +153,40 @@ int FT_FaultNotifier_i::parse_args (int argc, char * argv[])
   return 0;
 }
 
-const char * FT_FaultNotifier_i::identity () const
+const char * TAO::FT_FaultNotifier_i::identity () const
 {
-  return identity_.c_str();
+  return this->identity_.c_str();
 }
 
-int FT_FaultNotifier_i::fini (ACE_ENV_SINGLE_ARG_DECL)
+PortableServer::POA_ptr TAO::FT_FaultNotifier_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
-  if (ior_output_file_ != 0)
+  return poa_.in();
+}
+
+
+void TAO::FT_FaultNotifier_i::_remove_ref (ACE_ENV_SINGLE_ARG_DECL)
+{
+  notify_channel_->destroy(ACE_ENV_SINGLE_ARG_DECL);
+  ACE_CHECK;
+
+  ACE_ERROR ((LM_ERROR,
+    "FaultNotifier (%P|%t) _remove_ref setting gone\n"
+  ));
+  this->gone_ = 1;
+}
+
+int TAO::FT_FaultNotifier_i::fini (ACE_ENV_SINGLE_ARG_DECL)
+{
+  if (this->ior_output_file_ != 0)
   {
-    ACE_OS::unlink (ior_output_file_);
-    ior_output_file_ = 0;
+    ACE_OS::unlink (this->ior_output_file_);
+    this->ior_output_file_ = 0;
   }
-  if (nsName_ != 0 && naming_context_.in() != 0)
+  if (this->ns_name_ != 0 && this->naming_context_.in() != 0)
   {
-    naming_context_->unbind (this_name_
+    this->naming_context_->unbind (this_name_
                             ACE_ENV_ARG_PARAMETER);
-    nsName_ = 0;
+    this->ns_name_ = 0;
   }
 
   int TODO_unregister_with_ReplicationManager;
@@ -170,155 +194,186 @@ int FT_FaultNotifier_i::fini (ACE_ENV_SINGLE_ARG_DECL)
   return 0;
 }
 
-int FT_FaultNotifier_i::init (TAO_ORB_Manager & orbManager
-  ACE_ENV_ARG_DECL)
+int TAO::FT_FaultNotifier_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL )
 {
   int result = 0;
-  orb_ = orbManager.orb();
+  this->orb_ = orb;
 
-  // Register with the ORB.
-  ior_ = orbManager.activate (this
-      ACE_ENV_ARG_PARAMETER);
+  // Use the ROOT POA for now
+  CORBA::Object_var poa_object =
+    this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (poa_object.in ()))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                      -1);
+
+  // Get the POA object.
+  this->poa_ =
+    PortableServer::POA::_narrow (poa_object.in ()
+                                  ACE_ENV_ARG_PARAMETER);
+
+  ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil(this->poa_))
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT (" (%P|%t) Unable to narrow the POA.\n")),
+                      -1);
+  }
+
+  PortableServer::POAManager_var poa_manager =
+    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+
+  // Register with the POA.
+
+  this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  // find my IOR
+
+  CORBA::Object_var obj =
+    this->poa_->id_to_reference (object_id_.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  this->ior_ = this->orb_->object_to_string (obj.in ()
+                                  ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
 
 
   ////////////////////////////////////////////////
   // Register with coresident Notification Channel
+  CosNotifyChannelAdmin::EventChannelFactory_var notify_factory =
+    TAO_Notify_EventChannelFactory_i::create (poa_.in ()
+    ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+  CosNotification::QoSProperties initial_qos;
+  CosNotification::AdminProperties initial_admin;
+  this->notify_channel_ =
+    notify_factory->create_channel (initial_qos,
+    initial_admin,
+    channel_id_
+    ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
 
-  result = orbManager.activate_poa_manager(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-  if (result == 0)
+  this->filter_factory_ = this->notify_channel_->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  ///////////////////////////
+  // Producer registration
+
+  this->supplier_admin_ = this->notify_channel_->default_supplier_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  ::CosNotifyChannelAdmin::ProxyID proxyId = 0;
+
+  //////////////////////
+  // structured producer
+  ::CosNotifyChannelAdmin::ProxyConsumer_var consumer
+    = this->supplier_admin_->obtain_notification_push_consumer (
+      ::CosNotifyChannelAdmin::STRUCTURED_EVENT,
+      proxyId
+      ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  structured_proxy_push_consumer_
+    = ::CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow(consumer
+      ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+  if (CORBA::is_nil (this->structured_proxy_push_consumer_))
   {
-    PortableServer::POA_var poa = orbManager.root_poa();
-
-    CosNotifyChannelAdmin::EventChannelFactory_var notify_factory =
-      TAO_Notify_EventChannelFactory_i::create (poa.in ()
-      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
-    CosNotification::QoSProperties initial_qos;
-    CosNotification::AdminProperties initial_admin;
-    notify_channel_ =
-      notify_factory->create_channel (initial_qos,
-      initial_admin,
-      channelId_
-      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
-
-    filter_factory_ = notify_channel_->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
-
-    ///////////////////////////
-    // Producer registration
-
-    supplierAdmin_ = notify_channel_->default_supplier_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
-
-    ::CosNotifyChannelAdmin::ProxyID proxyId = 0;
-
-    //////////////////////
-    // structured producer
-    ::CosNotifyChannelAdmin::ProxyConsumer_var consumer
-      = supplierAdmin_->obtain_notification_push_consumer (
-        ::CosNotifyChannelAdmin::STRUCTURED_EVENT,
-        proxyId
-        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
-
-    structuredProxyPushConsumer_
-      = ::CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow(consumer
-        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
-    if (CORBA::is_nil (structuredProxyPushConsumer_))
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-         "%T %n (%P|%t) Should not occur: Unable to narrow Structured Proxy Push Consumer\n"),
-        1);
-    }
-
-    // todo: implement a push supplier if we want to receive disconnect notice
-    // todo:  if not, is this call necessary?
-    CosNotifyComm::StructuredPushSupplier_var stubPushSupplier =
-      CosNotifyComm::StructuredPushSupplier::_nil();
-
-    structuredProxyPushConsumer_->connect_structured_push_supplier (stubPushSupplier.in()
-      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
-
-    ////////////////////
-    // Sequence producer
-    consumer
-      = supplierAdmin_->obtain_notification_push_consumer (
-        ::CosNotifyChannelAdmin::SEQUENCE_EVENT,
-        proxyId
-        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
-
-    ::CosNotifyChannelAdmin::SequenceProxyPushConsumer_var sequenceProxyPushConsumer_
-      = ::CosNotifyChannelAdmin::SequenceProxyPushConsumer::_narrow(consumer
-        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
-    if (CORBA::is_nil (sequenceProxyPushConsumer_))
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-         "%T %n (%P|%t) Should not occur: Unable to narrow Sequence Proxy Push Consumer\n"),
-        1);
-    }
-
-    // todo: implement this if we want to receive disconnect notice
-    // todo:  if not, is this call necessary?
-    CosNotifyComm::SequencePushSupplier_var stubSeqPushSupplier =
-      CosNotifyComm::SequencePushSupplier::_nil();
-
-    sequenceProxyPushConsumer_->connect_sequence_push_supplier (stubSeqPushSupplier.in()
-      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
-
-    ///////////////////////////
-    // Consumer registration
-
-    // find the channel administrator for consumers
-    consumerAdmin_ = notify_channel_->default_consumer_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
-    if (CORBA::is_nil (consumerAdmin_))
-    {
-      ACE_ERROR ((LM_ERROR,
-        "%T %n (%P|%t) NIL consumer admin\n"
-        ));
-      result = -1;
-    }
-    // everything else happens when subscriber shows up
+    ACE_ERROR_RETURN ((LM_ERROR,
+       "%T %n (%P|%t) Should not occur: Unable to narrow Structured Proxy Push Consumer\n"),
+      1);
   }
 
+  // todo: implement a push supplier if we want to receive disconnect notice
+  CosNotifyComm::StructuredPushSupplier_var stubPushSupplier =
+    CosNotifyComm::StructuredPushSupplier::_nil();
+
+  this->structured_proxy_push_consumer_->connect_structured_push_supplier (stubPushSupplier.in()
+     ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  ////////////////////
+  // Sequence producer
+  consumer
+    = this->supplier_admin_->obtain_notification_push_consumer (
+      ::CosNotifyChannelAdmin::SEQUENCE_EVENT,
+      proxyId
+      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  this->sequence_proxy_push_consumer_
+    = ::CosNotifyChannelAdmin::SequenceProxyPushConsumer::_narrow(consumer
+      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+  if (CORBA::is_nil (this->sequence_proxy_push_consumer_))
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+       "%T %n (%P|%t) Should not occur: Unable to narrow Sequence Proxy Push Consumer\n"),
+      1);
+  }
+
+  // todo: implement this if we want to receive disconnect notice
+  CosNotifyComm::SequencePushSupplier_var stubSeqPushSupplier =
+    CosNotifyComm::SequencePushSupplier::_nil();
+
+  this->sequence_proxy_push_consumer_->connect_sequence_push_supplier (stubSeqPushSupplier.in()
+    ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+  ///////////////////////////
+  // Consumer registration
+
+  // find the channel administrator for consumers
+  this->consumer_admin_ = this->notify_channel_->default_consumer_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+  if (CORBA::is_nil (this->consumer_admin_))
+  {
+    ACE_ERROR ((LM_ERROR,
+      "%T %n (%P|%t) NIL consumer admin\n"
+      ));
+    result = -1;
+  }
+  // everything else happens when subscriber shows up
   ///////////////////////////////
   // Set up and ready for action
   // publish our IOR
 
   if(result == 0)
   {
-    if (ior_output_file_ != 0)
+    if (this->ior_output_file_ != 0)
     {
-      identity_ = "file:";
-      identity_ += ior_output_file_;
-      result = write_IOR();
+      this->identity_ = "file:";
+      this->identity_ += this->ior_output_file_;
+      result = write_ior();
     }
     else
     {
       // if no IOR file specified,
       // then always try to register with name service
-      nsName_ = "FT_FaultNotifier";
+      this->ns_name_ = "FT_FaultNotifier";
     }
   }
 
   if (result == 0)
   {
-    if (nsName_ != 0)
+    if (this->ns_name_ != 0)
     {
-      identity_ = "name:";
-      identity_ += nsName_;
+      this->identity_ = "name:";
+      this->identity_ += this->ns_name_;
 
       CORBA::Object_var naming_obj =
-        orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil(naming_obj.in ())){
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -326,21 +381,21 @@ int FT_FaultNotifier_i::init (TAO_ORB_Manager & orbManager
                           1);
       }
 
-      naming_context_ =
+      this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-      if (CORBA::is_nil(naming_context_))
+      ACE_TRY_CHECK;
+      if (CORBA::is_nil(this->naming_context_))
       {
         ACE_ERROR_RETURN ((LM_ERROR,
            "%T %n (%P|%t) Should not occur: Can't narrow initial reference to naming context.\n"),
           1);
       }
-      this_name_.length (1);
-      this_name_[0].id = CORBA::string_dup (nsName_);
+      this->this_name_.length (1);
+      this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
 
-      naming_context_->rebind (this_name_, _this()
+      this->naming_context_->rebind (this->this_name_, _this()
                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      ACE_TRY_CHECK;
     }
   }
 
@@ -352,55 +407,55 @@ int FT_FaultNotifier_i::init (TAO_ORB_Manager & orbManager
 ///////////////////
 // CORBA METHODS
 
-void FT_FaultNotifier_i::push_structured_fault (
+void TAO::FT_FaultNotifier_i::push_structured_fault (
     const CosNotification::StructuredEvent & event
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  METHOD_ENTRY(FT_FaultNotifier_i::push_structured_fault);
+  METHOD_ENTRY(TAO::FT_FaultNotifier_i::push_structured_fault);
 
-  structuredProxyPushConsumer_->push_structured_event (event
+  this->structured_proxy_push_consumer_->push_structured_event (event
     ACE_ENV_ARG_PARAMETER);
 
-  METHOD_RETURN(FT_FaultNotifier_i::push_structured_fault);
+  METHOD_RETURN(TAO::FT_FaultNotifier_i::push_structured_fault);
 }
 
-void FT_FaultNotifier_i::push_sequence_fault (
+void TAO::FT_FaultNotifier_i::push_sequence_fault (
     const CosNotification::EventBatch & events
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  METHOD_ENTRY(FT_FaultNotifier_i::push_sequence_fault);
+  METHOD_ENTRY(TAO::FT_FaultNotifier_i::push_sequence_fault);
 
-  sequenceProxyPushConsumer_->push_structured_events (events
+  this->sequence_proxy_push_consumer_->push_structured_events (events
     ACE_ENV_ARG_PARAMETER);
 
-  METHOD_RETURN(FT_FaultNotifier_i::push_sequence_fault);
+  METHOD_RETURN(TAO::FT_FaultNotifier_i::push_sequence_fault);
 }
 
-::CosNotifyFilter::Filter_ptr FT_FaultNotifier_i::create_subscription_filter (
+::CosNotifyFilter::Filter_ptr TAO::FT_FaultNotifier_i::create_subscription_filter (
     const char * constraint_grammar
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyFilter::InvalidGrammar))
 {
-  METHOD_ENTRY(FT_FaultNotifier_i::create_subscription_filter);
+  METHOD_ENTRY(TAO::FT_FaultNotifier_i::create_subscription_filter);
 
-  CosNotifyFilter::Filter_var filter = filter_factory_->create_filter ("ETCL");
-  METHOD_RETURN(FT_FaultNotifier_i::create_subscription_filter)
+  CosNotifyFilter::Filter_var filter = this->filter_factory_->create_filter ("ETCL");
+  METHOD_RETURN(TAO::FT_FaultNotifier_i::create_subscription_filter)
     filter._retn ();
 }
 
-FT::FaultNotifier::ConsumerId FT_FaultNotifier_i::connect_structured_fault_consumer (
+FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_structured_fault_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  METHOD_ENTRY(FT_FaultNotifier_i::connect_structured_fault_consumer);
+  METHOD_ENTRY(TAO::FT_FaultNotifier_i::connect_structured_fault_consumer);
 
   /////////////////////////
   // find a ProxyInfo entry
@@ -408,9 +463,9 @@ FT::FaultNotifier::ConsumerId FT_FaultNotifier_i::connect_structured_fault_consu
 
   size_t infoPos = 0;
   int looking = 1;
-  for ( size_t pos = 0; looking && pos < proxyInfos_.size (); ++pos)
+  for ( size_t pos = 0; looking && pos < this->proxy_infos_.size (); ++pos)
   {
-    ProxyInfo & pi = proxyInfos_[pos];
+    ProxyInfo & pi = this->proxy_infos_[pos];
     if (CORBA::is_nil(pi.proxyVar_))
     {
       infoPos = pos;
@@ -419,21 +474,21 @@ FT::FaultNotifier::ConsumerId FT_FaultNotifier_i::connect_structured_fault_consu
   }
   if (looking)
   {
-    infoPos = proxyInfos_.size();
-    proxyInfos_.push_back(ProxyInfo());
+    infoPos = this->proxy_infos_.size();
+    this->proxy_infos_.push_back(ProxyInfo());
   }
 
   ///////////////////////////////////////
   // Assign an ID, populate the ProxyInfo
   FT::FaultNotifier::ConsumerId result = infoPos;
-  ProxyInfo & info = proxyInfos_[infoPos];
+  ProxyInfo & info = this->proxy_infos_[infoPos];
   info.proxyVar_
-      = consumerAdmin_->obtain_notification_push_supplier (
+      = this->consumer_admin_->obtain_notification_push_supplier (
       ::CosNotifyChannelAdmin::STRUCTURED_EVENT,
       info.proxyId_
       ACE_ENV_ARG_PARAMETER);
 
-  consumerConnects_ += 1;
+  this->consumer_connects_ += 1;
 
   ::CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxySupplier
     = ::CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow(info.proxyVar_
@@ -458,26 +513,26 @@ FT::FaultNotifier::ConsumerId FT_FaultNotifier_i::connect_structured_fault_consu
     }
   }
 
-  METHOD_RETURN(FT_FaultNotifier_i::connect_structured_fault_consumer) result;
+  METHOD_RETURN(TAO::FT_FaultNotifier_i::connect_structured_fault_consumer) result;
 }
 
-FT::FaultNotifier::ConsumerId FT_FaultNotifier_i::connect_sequence_fault_consumer (
+FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_sequence_fault_consumer (
     CosNotifyComm::SequencePushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  METHOD_ENTRY(FT_FaultNotifier_i::connect_sequence_fault_consumer);
+  METHOD_ENTRY(TAO::FT_FaultNotifier_i::connect_sequence_fault_consumer);
   /////////////////////////
   // find a ProxyInfo entry
   // use the first nil entry or a new entry if no nils found
 
   size_t infoPos = 0;
   int looking = 1;
-  for ( size_t pos = 0; looking && pos < proxyInfos_.size (); ++pos)
+  for ( size_t pos = 0; looking && pos < this->proxy_infos_.size (); ++pos)
   {
-    ProxyInfo & pi = proxyInfos_[pos];
+    ProxyInfo & pi = this->proxy_infos_[pos];
     if (CORBA::is_nil(pi.proxyVar_))
     {
       infoPos = pos;
@@ -486,21 +541,21 @@ FT::FaultNotifier::ConsumerId FT_FaultNotifier_i::connect_sequence_fault_consume
   }
   if (looking)
   {
-    infoPos = proxyInfos_.size();
-    proxyInfos_.push_back(ProxyInfo());
+    infoPos = this->proxy_infos_.size();
+    this->proxy_infos_.push_back(ProxyInfo());
   }
 
   ///////////////////////////////////////
   // Assign an ID, populate the ProxyInfo
   FT::FaultNotifier::ConsumerId result = infoPos;
-  ProxyInfo & info = proxyInfos_[infoPos];
+  ProxyInfo & info = this->proxy_infos_[infoPos];
   info.proxyVar_
-    = consumerAdmin_->obtain_notification_push_supplier (
+    = this->consumer_admin_->obtain_notification_push_supplier (
       ::CosNotifyChannelAdmin::SEQUENCE_EVENT,
       info.proxyId_
       ACE_ENV_ARG_PARAMETER);
 
-  consumerConnects_ += 1;
+  this->consumer_connects_ += 1;
 
   ::CosNotifyChannelAdmin::SequenceProxyPushSupplier_var proxySupplier
     = ::CosNotifyChannelAdmin::SequenceProxyPushSupplier::_narrow(info.proxyVar_
@@ -523,21 +578,21 @@ FT::FaultNotifier::ConsumerId FT_FaultNotifier_i::connect_sequence_fault_consume
       proxySupplier->add_filter(filter);
     }
   }
-  METHOD_RETURN(FT_FaultNotifier_i::connect_sequence_fault_consumer) result;
+  METHOD_RETURN(TAO::FT_FaultNotifier_i::connect_sequence_fault_consumer) result;
 }
 
-void FT_FaultNotifier_i::disconnect_consumer (
+void TAO::FT_FaultNotifier_i::disconnect_consumer (
     FT::FaultNotifier::ConsumerId connection
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected))
 {
-  METHOD_ENTRY(FT_FaultNotifier_i::disconnect_consumer);
+  METHOD_ENTRY(TAO::FT_FaultNotifier_i::disconnect_consumer);
 
   size_t index = ACE_static_cast ( size_t, connection);
-  if (index < proxyInfos_.size())
+  if (index < this->proxy_infos_.size())
   {
-    ProxyInfo & info = proxyInfos_[index];
+    ProxyInfo & info = this->proxy_infos_[index];
     if (CORBA::is_nil(info.proxyVar_) )
     {
       ACE_THROW(CosEventComm::Disconnected());
@@ -565,7 +620,7 @@ void FT_FaultNotifier_i::disconnect_consumer (
         else
         {
           ACE_ERROR((LM_ERROR,
-            "Unexpected proxy supplier type\n"
+            "%T %n (%P|%t) Unexpected proxy supplier type\n"
             ));
           ACE_THROW(CosEventComm::Disconnected());
         }
@@ -577,27 +632,42 @@ void FT_FaultNotifier_i::disconnect_consumer (
     ACE_THROW(CosEventComm::Disconnected());
   }
 
-  consumerDisconnects_ += 1;
+  this->consumer_disconnects_ += 1;
+  if (this->quit_on_idle_)
+  {
+    if (! this->quitting_ 
+      && this->consumer_connects_ == this->consumer_disconnects_)
+    {
+      ACE_ERROR((LM_ERROR,
+        "FaultNotifier (%P|%t) quit on idle: connects %d, disconnects %d\n",
+        ACE_static_cast (unsigned int, this->consumer_connects_),
+        ACE_static_cast (unsigned int, this->consumer_disconnects_)
+        ));
+      this->poa_->deactivate_object (this->object_id_.in ()
+                   ACE_ENV_ARG_PARAMETER);
+      this->quitting_ = 1;
+    }
+  }
 
-  METHOD_RETURN(FT_FaultNotifier_i::disconnect_consumer);
+  METHOD_RETURN(TAO::FT_FaultNotifier_i::disconnect_consumer);
 }
 
-CORBA::Boolean FT_FaultNotifier_i::is_alive (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Boolean TAO::FT_FaultNotifier_i::is_alive (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  METHOD_RETURN(FT_FaultNotifier_i::is_alive) 1;
+  METHOD_RETURN(TAO::FT_FaultNotifier_i::is_alive) 1;
 }
 
 //////////////
 // ProxyInfo
 
-FT_FaultNotifier_i::ProxyInfo::ProxyInfo ()
+TAO::FT_FaultNotifier_i::ProxyInfo::ProxyInfo ()
   : proxyId_ (0)
   , proxyVar_ (::CosNotifyChannelAdmin::ProxySupplier::_nil())
 {
 }
 
-FT_FaultNotifier_i::ProxyInfo::ProxyInfo (const ProxyInfo & rhs)
+TAO::FT_FaultNotifier_i::ProxyInfo::ProxyInfo (const ProxyInfo & rhs)
   : proxyId_ (rhs.proxyId_)
   , proxyVar_ (rhs.proxyVar_)
 {

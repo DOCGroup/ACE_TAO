@@ -14,13 +14,13 @@
  */
 //=============================================================================
 
-#include <tao/Utils/ServantMain.h>
+#include <tao/Utils/Server_Main.h>
 #include "FT_Notifier_i.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  TAO::Utils::ServantMain<FT_FaultNotifier_i> servantMain("FaultNotifier");
-  return servantMain.Main(argc, argv);
+  TAO::Utils::Server_Main<TAO::FT_FaultNotifier_i> server_main("TAO_FaultNotifier");
+  return server_main.run(argc, argv);
 }
 
 ///////////////////////////////////
@@ -28,9 +28,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 // inept compilers.
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template TAO::Utils::ServantMain<FT_FaultNotifier_i>;
+  template TAO::Utils::Server_Main<FT_FaultNotifier_i>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Utils::ServantMain<FT_FaultNotifier_i>
+# pragma instantiate TAO::Utils::Server_Main<FT_FaultNotifier_i>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 

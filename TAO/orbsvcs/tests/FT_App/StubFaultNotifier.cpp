@@ -19,9 +19,23 @@ StubFaultNotifier::StubFaultNotifier ()
 
 StubFaultNotifier::~StubFaultNotifier ()
 {
-  delete [] replicaIorBuffer_;
-  replicaIorBuffer_ = 0;
+  delete [] this->replicaIorBuffer_;
+  this->replicaIorBuffer_ = 0;
 }
+
+
+::PortableServer::POA_ptr StubFaultNotifier::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+{
+  return ::PortableServer::POA::_duplicate(this->poa_ ACE_ENV_ARG_PARAMETER);
+}
+
+PortableServer::ObjectId StubFaultNotifier::objectId()const
+{
+  return this->objectId_.in();
+}
+
+
+
 
 
 int StubFaultNotifier::parse_args (int argc, char * argv[])
@@ -35,24 +49,24 @@ int StubFaultNotifier::parse_args (int argc, char * argv[])
     {
       case 'r':
       {
-        if (replicaIorBuffer_ == 0)
+        if (this->replicaIorBuffer_ == 0)
         {
           const char * repNames = get_opts.opt_arg ();
           size_t repNameLen = ACE_OS::strlen(repNames);
 
           // make a working copy of the string
-          ACE_NEW_NORETURN(replicaIorBuffer_,
+          ACE_NEW_NORETURN(this->replicaIorBuffer_,
             char[repNameLen + 1]);
-          if ( replicaIorBuffer_ != 0)
+          if ( this->replicaIorBuffer_ != 0)
           {
-            ACE_OS::memcpy(replicaIorBuffer_, repNames, repNameLen+1);
+            ACE_OS::memcpy(this->replicaIorBuffer_, repNames, repNameLen+1);
 
             // tokenize the string on ','
             // into iorReplicaFiles_
-            char * pos = replicaIorBuffer_;
+            char * pos = this->replicaIorBuffer_;
             while (pos != 0)
             {
-              iorReplicaFiles_.push_back(pos);
+              this->iorReplicaFiles_.push_back(pos);
               // find a comma delimiter, and
               // chop the string there.
               pos = ACE_OS::strchr (pos, ',');
@@ -82,17 +96,17 @@ int StubFaultNotifier::parse_args (int argc, char * argv[])
       }
       case 'd':
       {
-        iorDetectorFile_ = get_opts.opt_arg ();
+        this->iorDetectorFile_ = get_opts.opt_arg ();
         break;
       }
       case 'n':
       {
-        nsName_ = get_opts.opt_arg ();
+        this->nsName_ = get_opts.opt_arg ();
         break;
       }
       case 'o':
       {
-        iorOutputFile_ = get_opts.opt_arg ();
+        this->iorOutputFile_ = get_opts.opt_arg ();
         break;
       }
 
@@ -107,14 +121,14 @@ int StubFaultNotifier::parse_args (int argc, char * argv[])
 
   if(! optionError)
   {
-    if (0 == replicaIorBuffer_)
+    if (0 == this->replicaIorBuffer_)
     {
       ACE_ERROR ((LM_ERROR,
         "-r option is required.\n"
         ));
       optionError = -1;
     }
-    if (0 == iorDetectorFile_)
+    if (0 == this->iorDetectorFile_)
     {
       ACE_ERROR ((LM_ERROR,
         "-d option is required.\n"
@@ -143,12 +157,12 @@ int StubFaultNotifier::parse_args (int argc, char * argv[])
  */
 int StubFaultNotifier::fini ()
 {
-  if(nsName_ != 0)
+  if(this->nsName_ != 0)
   {
     ACE_TRY_NEW_ENV
     {
       CORBA::Object_var naming_obj =
-        orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil(naming_obj.in ())){
@@ -163,7 +177,7 @@ int StubFaultNotifier::fini ()
 
       CosNaming::Name this_name (1);
       this_name.length (1);
-      this_name[0].id = CORBA::string_dup (nsName_);
+      this_name[0].id = CORBA::string_dup (this->nsName_);
 
       naming_context->rebind (this_name, _this()
                               ACE_ENV_ARG_PARAMETER);
@@ -181,46 +195,78 @@ int StubFaultNotifier::fini ()
 /**
  * Publish this objects IOR.
  */
-int StubFaultNotifier::init (TAO_ORB_Manager & orbManager  ACE_ENV_ARG_DECL)
+int StubFaultNotifier::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 {
   int result = 0;
-  orb_ = orbManager.orb();
+  this->orb_ = orb;
 
-  // Register with the ORB.
-  ior_ = orbManager.activate (this
-      ACE_ENV_ARG_PARAMETER);
+  // Use the ROOT POA for now
+  CORBA::Object_var poa_object =
+    this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (poa_object.in ()))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                      -1);
+
+  // Get the POA object.
+  this->poa_ =
+    PortableServer::POA::_narrow (poa_object.in ()
+                                  ACE_ENV_ARG_PARAMETER);
+
+  ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil(this->poa_))
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT (" (%P|%t) Unable to narrow the POA.\n")),
+                      -1);
+  }
+
+  PortableServer::POAManager_var poa_manager =
+    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  // Register with the POA.
+
+  this->objectId_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
 
   //////////////////////////////////////////
   // resolve references to detector factory
   CORBA::String_var factoryIOR;
-  if (readIORFile(iorDetectorFile_, factoryIOR))
+  if (read_ior_file(this->iorDetectorFile_, factoryIOR))
   {
-    CORBA::Object_var obj = orb_->string_to_object(factoryIOR);
-    factory_ = ::FT::FaultDetectorFactory::_narrow(obj);
-    if (CORBA::is_nil(factory_))
+    CORBA::Object_var obj = this->orb_->string_to_object(factoryIOR);
+    this->factory_ = ::FT::FaultDetectorFactory::_narrow(obj);
+    if (CORBA::is_nil(this->factory_))
     {
-      std::cerr << "Can't resolve Detector Factory IOR " << iorDetectorFile_ << std::endl;
+      std::cerr << "Can't resolve Detector Factory IOR " << this->iorDetectorFile_ << std::endl;
       result = -1;
     }
   }
   else
   {
-    std::cerr << "Can't read " << iorDetectorFile_ << std::endl;
+    std::cerr << "Can't read " << this->iorDetectorFile_ << std::endl;
     result = -1;
   }
   if (result == 0)
   {
     ////////////////////////////////////
     // resolve references to replicas
-    size_t replicaCount = iorReplicaFiles_.size();
+    size_t replicaCount = this->iorReplicaFiles_.size();
     for(size_t nRep = 0; result == 0 && nRep < replicaCount; ++nRep)
     {
-      const char * iorName = iorReplicaFiles_[nRep];
+      const char * iorName = this->iorReplicaFiles_[nRep];
       CORBA::String_var ior;
-      if (readIORFile(iorName, ior))
+      if (read_ior_file(iorName, ior))
       {
-        CORBA::Object_var obj = orb_->string_to_object(ior);
+        CORBA::Object_var obj = this->orb_->string_to_object(ior);
         FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow(obj);
         if (CORBA::is_nil(replica))
         {
@@ -229,7 +275,7 @@ int StubFaultNotifier::init (TAO_ORB_Manager & orbManager  ACE_ENV_ARG_DECL)
         }
         else
         {
-          replicas_.push_back(replica);
+          this->replicas_.push_back(replica);
 
           CORBA::String_var type_id = CORBA::string_dup("FaultDetector");
 
@@ -276,7 +322,7 @@ int StubFaultNotifier::init (TAO_ORB_Manager & orbManager  ACE_ENV_ARG_DECL)
             encoder.encode(criteria);
             FT::GenericFactory::FactoryCreationId_var factory_creation_id;
 
-            factory_->create_object (
+            this->factory_->create_object (
               type_id.in(),
               criteria.in(),
               factory_creation_id
@@ -292,26 +338,26 @@ int StubFaultNotifier::init (TAO_ORB_Manager & orbManager  ACE_ENV_ARG_DECL)
       }
     }
 
-    if (iorOutputFile_ != 0)
+    if (this->iorOutputFile_ != 0)
     {
-      identity_ = "file:";
-      identity_ += iorOutputFile_;
-      result = writeIORFile();
+      this->identity_ = "file:";
+      this->identity_ += this->iorOutputFile_;
+      result = write_ior_file();
     }
     else
     {
       // if no IOR file specified,
       // then always try to register with name service
-      nsName_ = "FT_FaultNotifier";
+      this->nsName_ = "FT_FaultNotifier";
     }
 
-    if(nsName_ != 0)
+    if(this->nsName_ != 0)
     {
-      identity_ = "name:";
-      identity_ += nsName_;
+      this->identity_ = "name:";
+      this->identity_ += this->nsName_;
 
       CORBA::Object_var naming_obj =
-        orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil(naming_obj.in ())){
@@ -326,7 +372,7 @@ int StubFaultNotifier::init (TAO_ORB_Manager & orbManager  ACE_ENV_ARG_DECL)
 
       CosNaming::Name this_name (1);
       this_name.length (1);
-      this_name[0].id = CORBA::string_dup (nsName_);
+      this_name[0].id = CORBA::string_dup (this->nsName_);
 
       naming_context->rebind (this_name, _this()
                               ACE_ENV_ARG_PARAMETER);
@@ -336,7 +382,7 @@ int StubFaultNotifier::init (TAO_ORB_Manager & orbManager  ACE_ENV_ARG_DECL)
   return result;
 }
 
-int StubFaultNotifier::readIORFile(const char * fileName, CORBA::String_var & ior)
+int StubFaultNotifier::read_ior_file(const char * fileName, CORBA::String_var & ior)
 {
   int result = 0;
   FILE *in = ACE_OS::fopen (fileName, "r");
@@ -360,13 +406,13 @@ int StubFaultNotifier::readIORFile(const char * fileName, CORBA::String_var & io
   return result;
 }
 
-int StubFaultNotifier::writeIORFile()
+int StubFaultNotifier::write_ior_file()
 {
   int result = -1;
-  FILE* out = ACE_OS::fopen (iorOutputFile_, "w");
+  FILE* out = ACE_OS::fopen (this->iorOutputFile_, "w");
   if (out)
   {
-    ACE_OS::fprintf (out, "%s", static_cast<const char *>(ior_));
+    ACE_OS::fprintf (out, "%s", ACE_static_cast(const char *, this->ior_));
     ACE_OS::fclose (out);
     result = 0;
   }
@@ -378,7 +424,7 @@ int StubFaultNotifier::writeIORFile()
  */
 const char * StubFaultNotifier::identity () const
 {
-  return identity_.c_str();
+  return this->identity_.c_str();
 }
 
 /**
@@ -492,9 +538,9 @@ int StubFaultNotifier::idle(int & result)
   int quit = 0;
   ACE_TRY_NEW_ENV
   {
-    if(factory_.ptr() != 0 && !CORBA::is_nil(factory_))
+    if(this->factory_.ptr() != 0 && !CORBA::is_nil(this->factory_))
     {
-      if (!factory_->is_alive( ACE_ENV_SINGLE_ARG_PARAMETER))
+      if (!this->factory_->is_alive( ACE_ENV_SINGLE_ARG_PARAMETER))
       {
         quit = 1;
       }

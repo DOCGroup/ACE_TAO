@@ -78,12 +78,12 @@ FTClientMain::FTClientMain ()
 
 FTClientMain::~FTClientMain ()
 {
-  if (inFile_.is_open())
+  if (this->inFile_.is_open())
   {
-    inFile_.close();
+    this->inFile_.close();
   }
-  ACE_OS::free (fargValue_);
-  fargValue_ = 0;
+  ACE_OS::free (this->fargValue_);
+  this->fargValue_ = 0;
 }
 
 void FTClientMain::commandUsage(ostream & out)
@@ -143,42 +143,42 @@ void FTClientMain::commandUsage(ostream & out)
 int
 FTClientMain::parse_args (int argc, char *argv[])
 {
-  argc_ = argc;
-  argv_ = argv;
+  this->argc_ = argc;
+  this->argv_ = argv;
   int result = 0;
 
   // find the -f filename argument
   // and treat it specially
-  fargValue_ = 0;
+  this->fargValue_ = 0;
   int nArg;
-  for(nArg = 1; fargValue_ == 0 && nArg < argc - 1; ++nArg)
+  for(nArg = 1; this->fargValue_ == 0 && nArg < argc - 1; ++nArg)
   {
     if (argv[nArg][0] == '-'
       &&  argv[nArg][1] == 'f'
       &&  argv[nArg][2] == '\0')
     {
       // remember the starting, current, and ending position of farg
-      fargValue_ = ACE_OS::strdup(argv[nArg+1]);
-      fargPos_ = fargValue_;
-      fargEnd_ = fargValue_ + ACE_OS::strlen(fargPos_);
+      this->fargValue_ = ACE_OS::strdup(argv[nArg+1]);
+      this->fargPos_ = this->fargValue_;
+      this->fargEnd_ = this->fargValue_ + ACE_OS::strlen(this->fargPos_);
 
       // find a comma delimiter, and
       // chop the string there.
-      char * delim = ACE_OS::strchr (fargValue_, ',');
+      char * delim = ACE_OS::strchr (this->fargValue_, ',');
       while(delim != 0)
       {
         *delim = '\0';
         delim = ACE_OS::strchr (delim + 1, ',');
       }
-      argv[nArg+1] = fargValue_;
+      argv[nArg+1] = this->fargValue_;
 
-      std::cout << "FT Client: Initial primary replica: " << fargPos_ << std::endl;
+      std::cout << "FT Client: Initial primary replica: " << this->fargPos_ << std::endl;
 
       // point fargPos at the next filename
-      fargPos_ = fargPos_ + ACE_OS::strlen(fargPos_);
-      if (fargPos_ != fargEnd_)
+      this->fargPos_ = this->fargPos_ + ACE_OS::strlen(this->fargPos_);
+      if (this->fargPos_ != this->fargEnd_)
       {
-        fargPos_ += 1;
+        this->fargPos_ += 1;
       }
     }
   }
@@ -192,16 +192,16 @@ FTClientMain::parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'c':
-        inFileName_ = get_opts.opt_arg ();
-        inFile_.open(inFileName_);
-        if(inFile_.is_open() && inFile_.good())
+        this->inFileName_ = get_opts.opt_arg ();
+        this->inFile_.open(this->inFileName_);
+        if(this->inFile_.is_open() && this->inFile_.good())
         {
-          std::cout << "FT Client: Reading commands from " << inFileName_ << std::endl;
-          commandIn_ = & inFile_;
+          std::cout << "FT Client: Reading commands from " << this->inFileName_ << std::endl;
+          this->commandIn_ = & this->inFile_;
         }
         else
         {
-          std::cout << "FT Client: Can't open input file: " << inFileName_ << std::endl;
+          std::cout << "FT Client: Can't open input file: " << this->inFileName_ << std::endl;
           result = -1;
         }
         break;
@@ -253,12 +253,12 @@ int FTClientMain::pass (
   ::FT::State_var update;
   unsigned long updateValue = 0;
 
-  while(more && result == 0 &&  ! commandIn_->eof())
+  while(more && result == 0 &&  ! this->commandIn_->eof())
   {
     if (! retry || command.length () == 0 )
     {
       char buffer[1000];
-      commandIn_->getline(buffer, sizeof(buffer)-1);
+      this->commandIn_->getline(buffer, sizeof(buffer)-1);
       command = buffer;
     }
     retry = 0;
@@ -270,14 +270,14 @@ int FTClientMain::pass (
       char * junque;
       long operand = strtol(cdr.c_str(),&junque, 10);
 
-      if (verbose_ >= NOISY)
+      if (this->verbose_ >= NOISY)
       {
         std::cout << "FT Client: " << command << std::endl;
       }
 
       // turn echo on (based on verbose)
       // individual commands can turn it off
-      int echo = verbose_ >= QUIET;
+      int echo = this->verbose_ >= QUIET;
 
       switch(op)
       {
@@ -288,7 +288,7 @@ int FTClientMain::pass (
         }
         case '=':
         {
-          if (verbose_ >= LOUD)
+          if (this->verbose_ >= LOUD)
           {
             std::cout << "FT Client: ->set(" << operand << ");" << std::endl;
           }
@@ -299,7 +299,7 @@ int FTClientMain::pass (
         }
         case 'c':
         {
-          if (verbose_ >= LOUD)
+          if (this->verbose_ >= LOUD)
           {
             std::cout << "FT Client: ->get();" << std::endl;
           }
@@ -320,7 +320,7 @@ int FTClientMain::pass (
         }
         case '>':
         {
-          if (verbose_ >= LOUD)
+          if (this->verbose_ >= LOUD)
           {
             std::cout << "FT Client: ->counter(" << operand << ");" << std::endl;
           }
@@ -331,7 +331,7 @@ int FTClientMain::pass (
         }
         case '+':
         {
-          if (verbose_ >= LOUD)
+          if (this->verbose_ >= LOUD)
           {
             std::cout << "FT Client: ->increment(" << operand << ");" << std::endl;
           }
@@ -342,7 +342,7 @@ int FTClientMain::pass (
         }
         case '-':
         {
-          if (verbose_ >= LOUD)
+          if (this->verbose_ >= LOUD)
           {
             std::cout << "FT Client: ->increment(" << -operand << ");" << std::endl;
           }
@@ -353,7 +353,7 @@ int FTClientMain::pass (
         }
         case '<':
         {
-          if (verbose_ >= LOUD)
+          if (this->verbose_ >= LOUD)
           {
             std::cout << "FT Client: ->counter();" << std::endl;
           }
@@ -365,7 +365,7 @@ int FTClientMain::pass (
         }
         case '!':
         {
-          if (verbose_ >= LOUD)
+          if (this->verbose_ >= LOUD)
           {
             std::cout << "FT Client: ->is_alive();" << std::endl;
           }
@@ -376,18 +376,18 @@ int FTClientMain::pass (
         }
         case 'd':
         {
-          if (verbose_ >= LOUD)
+          if (this->verbose_ >= LOUD)
           {
             std::cout << "FT Client: ->die(" << operand << ");" << std::endl;
           }
-          ft_server->die(static_cast<FT_TEST::TestReplica::Bane>(operand ACE_ENV_ARG_PARAMETER));
+          ft_server->die(ACE_static_cast (FT_TEST::TestReplica::Bane, operand) ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           echo = 0;
           break;
         }
         case 's':
         {
-          if (verbose_ >= LOUD)
+          if (this->verbose_ >= LOUD)
           {
             std::cout << "FT Client: ->get_state();" << std::endl;
           }
@@ -400,7 +400,7 @@ int FTClientMain::pass (
         {
           if (state.in() != 0)
           {
-            if (verbose_ >= LOUD)
+            if (this->verbose_ >= LOUD)
             {
               std::cout << "FT Client: ->set_state(saved_state);" << std::endl;
             }
@@ -416,7 +416,7 @@ int FTClientMain::pass (
         }
         case 'u':
         {
-          if (verbose_ >= LOUD)
+          if (this->verbose_ >= LOUD)
           {
             std::cout << "FT Client: ->get_update();" << std::endl;
           }
@@ -429,7 +429,7 @@ int FTClientMain::pass (
         {
           if (update.in() != 0)
           {
-            if (verbose_ >= LOUD)
+            if (this->verbose_ >= LOUD)
             {
               std::cout << "FT Client: ->set_update(saved_update);" << std::endl;
             }
@@ -445,7 +445,7 @@ int FTClientMain::pass (
         }
         case 'v':
         {
-          verbose_ = static_cast<Verbosity> (operand);
+          this->verbose_ = ACE_static_cast(Verbosity, operand);
           break;
         }
         case 'z':
@@ -464,10 +464,11 @@ int FTClientMain::pass (
           {
             ACE_TRY_NEW_ENV
             {
-              if (verbose_ >= LOUD)
+              if (this->verbose_ >= LOUD)
               {
                 std::cout << "FT Client: ->shutdown();" << std::endl;
               }
+std::cout << "call shutdown" << std::endl;
               ft_server->shutdown( ACE_ENV_SINGLE_ARG_PARAMETER);
             }
             ACE_CATCHANY
@@ -491,9 +492,9 @@ int FTClientMain::pass (
           break;
         }
       }
-      if (echo && verbose_ >= QUIET)
+      if (echo && this->verbose_ >= QUIET)
       {
-        if (verbose_ >= LOUD)
+        if (this->verbose_ >= LOUD)
         {
           std::cout << "FT Client: ->get();" << std::endl;
         }
@@ -502,7 +503,7 @@ int FTClientMain::pass (
         ACE_TRY_CHECK;
         if (value == counter)
         {
-          if (verbose_ >= NORMAL)
+          if (this->verbose_ >= NORMAL)
           {
             std::cout << "FT Client: " << counter << std::endl;;
           }
@@ -521,9 +522,10 @@ int FTClientMain::pass (
 int FTClientMain::run ()
 {
   int result = 0;
+
   ServerVar ft_server;
   // Initialize the ft_server.
-  result = ft_server.init ("FT_TEST",argc_, argv_);
+  result = ft_server.init ("FT_TEST",this->argc_, this->argv_);
 
   if ( result == 0)
   {
@@ -534,7 +536,7 @@ int FTClientMain::run ()
     int retry = 0;
 
     ACE_TRY_CHECK;
-    if (verbose_ >= NORMAL)
+    if (this->verbose_ >= NORMAL)
     {
       std::cout << "FT Client: Initial counter " << counter << std::endl;
     }
@@ -544,7 +546,7 @@ int FTClientMain::run ()
     }
 
     int more = 1;
-    while (more && result == 0 &&  ! commandIn_->eof())
+    while (more && result == 0 &&  ! this->commandIn_->eof())
     {
       ACE_TRY_NEW_ENV
       {
@@ -558,13 +560,13 @@ int FTClientMain::run ()
 
         retry = 0;
         int handled = 0;
-        if(fargPos_ != 0 && fargPos_ != fargEnd_)
+        if(this->fargPos_ != 0 && this->fargPos_ != this->fargEnd_)
         {
-          handled = ! ft_server.reconnect_file(fargPos_);
+          handled = ! ft_server.reconnect_file(this->fargPos_);
           if (handled)
           {
             std::cout << "FT Client: Recovering from fault." << std::endl;
-            std::cout << "FT Client:   Activate " << fargPos_ << std::endl;
+            std::cout << "FT Client:   Activate " << this->fargPos_ << std::endl;
             if (command.length () == 0)
             {
               std::cout << "FT Client:   No command to retry." << std::endl;
@@ -588,10 +590,10 @@ int FTClientMain::run ()
             }
 
             // advance fargPos to next filename
-            fargPos_ += ACE_OS::strlen(fargPos_);
-            if (fargPos_ != fargEnd_)
+            this->fargPos_ += ACE_OS::strlen(this->fargPos_);
+            if (this->fargPos_ != this->fargEnd_)
             {
-              fargPos_ += 1;
+              this->fargPos_ += 1;
             }
           }
         }

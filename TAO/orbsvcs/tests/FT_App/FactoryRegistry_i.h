@@ -69,7 +69,7 @@ public:
    * @param orbManager our ORB -- we keep var to it.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int init (TAO_ORB_Manager & orbManager ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  int init (CORBA::ORB_var & orb  ACE_ENV_ARG_DECL);
 
   /**
    * Prepare to exit.
@@ -160,11 +160,21 @@ private:
   ACE_Mutex internals_;
   typedef ACE_Guard<ACE_Mutex> InternalGuard;
 
-  TAO_ORB_Manager * orbManager_;
   /**
-   * The orb
+   * The orb 
    */
   CORBA::ORB_var orb_;
+
+  /**
+   * The POA used to activate this object.
+   */
+  PortableServer::POA_var poa_;
+
+  /**
+   * The CORBA object id assigned to this object.
+   */
+  PortableServer::ObjectId_var object_id_;
+
 
   /**
    * IOR of this object as assigned by poa.
@@ -174,12 +184,12 @@ private:
   /**
    * A file to which the factory's IOR should be written.
    */
-  const char * iorOutputFile;
+  const char * ior_output_file_;
 
   /**
    * A name to be used to register the factory with the name service.
    */
-  const char * nsName_;
+  const char * ns_name_;
 
   CosNaming::NamingContext_var naming_context_;
 
@@ -188,12 +198,12 @@ private:
   /**
    * Quit on idle flag.
    */
-  int quitOnIdle_;
+  int quit_on_idle_;
 
   /**
    * boolean: starts false.  Set to true when it's time to quit.
    */
-  int quitRequested_;
+  int quit_requested_;
 
 
   RegistryType registry_;

@@ -18,9 +18,19 @@ StubFaultConsumer::~StubFaultConsumer ()
 {
 }
 
+::PortableServer::POA_ptr StubFaultConsumer::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+{
+  return ::PortableServer::POA::_duplicate(this->poa_ ACE_ENV_ARG_PARAMETER);
+}
+
+PortableServer::ObjectId StubFaultConsumer::objectId()const
+{
+  return this->objectId_.in();
+}
+
 size_t StubFaultConsumer::notifications () const
 {
-  return notifications_;
+  return this->notifications_;
 }
 
 
@@ -36,24 +46,24 @@ int StubFaultConsumer::parse_args (int argc, char * argv[])
     {
       case 'r':
       {
-        if (replicaIorBuffer_ == 0)
+        if (this->replicaIorBuffer_ == 0)
         {
           const char * repNames = get_opts.opt_arg ();
           size_t repNameLen = ACE_OS::strlen(repNames);
 
           // make a working copy of the string
-          ACE_NEW_NORETURN(replicaIorBuffer_,
+          ACE_NEW_NORETURN(this->replicaIorBuffer_,
             char[repNameLen + 1]);
-          if ( replicaIorBuffer_ != 0)
+          if ( this->replicaIorBuffer_ != 0)
           {
-            ACE_OS::memcpy(replicaIorBuffer_, repNames, repNameLen+1);
+            ACE_OS::memcpy(this->replicaIorBuffer_, repNames, repNameLen+1);
 
             // tokenize the string on ','
             // into iorReplicaFiles_
-            char * pos = replicaIorBuffer_;
+            char * pos = this->replicaIorBuffer_;
             while (pos != 0)
             {
-              iorReplicaFiles_.push_back(pos);
+              this->iorReplicaFiles_.push_back(pos);
               // find a comma delimiter, and
               // chop the string there.
               pos = ACE_OS::strchr (pos, ',');
@@ -83,17 +93,17 @@ int StubFaultConsumer::parse_args (int argc, char * argv[])
       }
       case 'd':
       {
-        iorDetectorFile_ = get_opts.opt_arg ();
+        this->iorDetectorFile_ = get_opts.opt_arg ();
         break;
       }
       case 'n':
       {
-        nsName_ = get_opts.opt_arg ();
+        this->nsName_ = get_opts.opt_arg ();
         break;
       }
       case 'o':
       {
-        iorOutputFile_ = get_opts.opt_arg ();
+        this->iorOutputFile_ = get_opts.opt_arg ();
         break;
       }
 
@@ -108,14 +118,14 @@ int StubFaultConsumer::parse_args (int argc, char * argv[])
 
   if(! optionError)
   {
-    if (0 == replicaIorBuffer_)
+    if (0 == this->replicaIorBuffer_)
     {
       ACE_ERROR ((LM_ERROR,
         "-r option is required.\n"
         ));
       optionError = -1;
     }
-    if (0 == iorDetectorFile_)
+    if (0 == this->iorDetectorFile_)
     {
       ACE_ERROR ((LM_ERROR,
         "-d option is required.\n"
@@ -143,25 +153,56 @@ int StubFaultConsumer::parse_args (int argc, char * argv[])
 /**
  * Register this object.
  */
-int StubFaultConsumer::init (TAO_ORB_Manager & orbManager,
+int StubFaultConsumer::init (CORBA::ORB_var & orb,
     ::FT::FaultNotifier_var & notifier
     ACE_ENV_ARG_DECL)
 {
   int result = 0;
-  orb_ = orbManager.orb();
+  this->orb_ = orb;
 
-  notifier_ = notifier;
-
-  // Register with the ORB.
-  ior_ = orbManager.activate (this
-      ACE_ENV_ARG_PARAMETER);
+  // Use the ROOT POA for now
+  CORBA::Object_var poa_object =
+    this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  identity_ = "StubFaultConsumer";
+  if (CORBA::is_nil (poa_object.in ()))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                      -1);
+
+  // Get the POA object.
+  this->poa_ =
+    PortableServer::POA::_narrow (poa_object.in ()
+                                  ACE_ENV_ARG_PARAMETER);
+
+  ACE_CHECK_RETURN (-1);
+  if (CORBA::is_nil(this->poa_))
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT (" (%P|%t) Unable to narrow the POA.\n")),
+                      -1);
+  }
+
+  PortableServer::POAManager_var poa_manager =
+    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  // Register with the POA.
+
+  this->objectId_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  this->notifier_ = notifier;
+
+  this->identity_ = "StubFaultConsumer";
 
   CosNotifyFilter::Filter_var filter = CosNotifyFilter::Filter::_nil();
 
-  consumerId_ = notifier->connect_structured_fault_consumer(
+  this->consumerId_ = notifier->connect_structured_fault_consumer(
     _this(),
     filter);
 
@@ -173,7 +214,7 @@ int StubFaultConsumer::init (TAO_ORB_Manager & orbManager,
  */
 const char * StubFaultConsumer::identity () const
 {
-  return identity_.c_str();
+  return this->identity_.c_str();
 }
 
 /**
@@ -181,7 +222,7 @@ const char * StubFaultConsumer::identity () const
  */
 int StubFaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
-  notifier_->disconnect_consumer(consumerId_ ACE_ENV_ARG_PARAMETER);
+  this->notifier_->disconnect_consumer(this->consumerId_ ACE_ENV_ARG_PARAMETER);
   return 0;
 }
 
@@ -189,7 +230,7 @@ int StubFaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
 int StubFaultConsumer::idle(int & result)
 {
   ACE_UNUSED_ARG(result);
-  return quit_;
+  return this->quit_;
 }
 
 ////////////////
@@ -202,13 +243,13 @@ void StubFaultConsumer::push_structured_event(
 {
   ////////////////////////////////////////
   // keep track of how many we've received
-  notifications_ += 1;
+  this->notifications_ += 1;
   ACE_ERROR ((LM_ERROR,
     "FaultConsumer: Received Fault notification(%d):\n"
     "FaultConsumer:   Header EventType domain: %s\n"
     "FaultConsumer:   Header EventType type: %s\n"
     "FaultConsumer:   Header EventName: %s\n",
-    ACE_static_cast (unsigned int, notifications_),
+    ACE_static_cast (unsigned int, this->notifications_),
     ACE_static_cast (const char *, notification.header.fixed_header.event_type.domain_name),
     ACE_static_cast (const char *, notification.header.fixed_header.event_type.type_name),
     ACE_static_cast (const char *, notification.header.fixed_header.event_name)
@@ -246,7 +287,7 @@ void StubFaultConsumer::disconnect_structured_push_consumer(ACE_ENV_SINGLE_ARG_D
   ACE_ERROR ((LM_ERROR,
     "StubFaultConsumer:disconnect_structured_push_consumer interpreted as quit request.\n"
   ));
-  quit_ = 1;
+  this->quit_ = 1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -17,21 +17,21 @@
 ///////////////////////////////
 // Fault_Detector_i static data
 
-ACE_Time_Value Fault_Detector_i::sleepTime_(1,0);
+ACE_Time_Value TAO::Fault_Detector_i::sleep_time_(1,0);
 
 
 /////////////////////////////////////////
 // Fault_Detector_i public static methods
 
-void Fault_Detector_i::setTimeValue(ACE_Time_Value value)
+void TAO::Fault_Detector_i::set_time_for_all_detectors(ACE_Time_Value value)
 {
-  sleepTime_ = value;
+  sleep_time_ = value;
 }
 
 ////////////////////////////////////////////
 // Fault_Detector_i construction/destruction
 
-Fault_Detector_i::Fault_Detector_i (
+TAO::Fault_Detector_i::Fault_Detector_i (
       FT_FaultDetectorFactory_i & factory,
       CORBA::ULong id,
       FT::FaultNotifier_ptr & notifier,
@@ -48,13 +48,13 @@ Fault_Detector_i::Fault_Detector_i (
   , object_type_(object_type)
   , group_id_(group_id)
   , sleep_(0)           // initially not signaled
-  , quitRequested_(0)
+  , quit_requested_(0)
 {
-  notifier_ = FT::FaultNotifier::_duplicate(notifier);
-  monitorable_ = FT::PullMonitorable::_duplicate(monitorable);
+  this->notifier_ = FT::FaultNotifier::_duplicate(notifier);
+  this->monitorable_ = FT::PullMonitorable::_duplicate(monitorable);
 }
 
-Fault_Detector_i::~Fault_Detector_i ()
+TAO::Fault_Detector_i::~Fault_Detector_i ()
 {
 }
 
@@ -62,14 +62,14 @@ Fault_Detector_i::~Fault_Detector_i ()
 // Fault_Detector_i public interface
 
 
-void Fault_Detector_i::requestQuit()
+void TAO::Fault_Detector_i::request_quit()
 {
-  quitRequested_ = 1;
+  this->quit_requested_ = 1;
   // wake up the thread
-  sleep_.signal ();
+  this->sleep_.signal ();
 }
 
-void Fault_Detector_i::start(ACE_Thread_Manager & threadManager)
+void TAO::Fault_Detector_i::start(ACE_Thread_Manager & threadManager)
 {
   threadManager.spawn(thr_func, this);
 }
@@ -77,27 +77,27 @@ void Fault_Detector_i::start(ACE_Thread_Manager & threadManager)
 ///////////////////////////////////////////////////
 // Fault_Detector_i private implementation methods
 
-void Fault_Detector_i::run()
+void TAO::Fault_Detector_i::run()
 {
-  while ( ! quitRequested_ )
+  while ( ! this->quit_requested_ )
   {
     ACE_TRY_NEW_ENV
     {
-      if (monitorable_->is_alive(ACE_ENV_SINGLE_ARG_PARAMETER))
+      if (this->monitorable_->is_alive(ACE_ENV_SINGLE_ARG_PARAMETER))
       {
         ACE_TRY_CHECK;
         // use this rather than ACE_OS::sleep
-        // to allow the nap to be interruped see requestQuit
-        sleep_.wait (&sleepTime_, 0);
+        // to allow the nap to be interruped see request_quit
+        this->sleep_.wait (&sleep_time_, 0);
       }
       else
       {
-        ACE_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_INFO,
           "FaultDetector%d FAULT: not alive.\n",
           id_
           ));
         notify();
-        quitRequested_ = 1;
+        this->quit_requested_ = 1;
       }
     }
     ACE_CATCHANY  // todo refine this
@@ -106,7 +106,7 @@ void Fault_Detector_i::run()
         "FaultDetector FAULT: exception.\n"
         ));
       notify();
-      quitRequested_ = 1;
+      this->quit_requested_ = 1;
     }
     ACE_ENDTRY;
   }
@@ -115,20 +115,20 @@ void Fault_Detector_i::run()
   // member data after making this call.
   // todo: use "scoped resource management" to make
   // this exception-safe and stupid-return-safe.
-  factory_.removeDetector (id_, this);
+  this->factory_.remove_detector (this->id_, this);
 }
 
-void Fault_Detector_i::notify()
+void TAO::Fault_Detector_i::notify()
 {
   CosNotification::StructuredEvent_var  vEvent;
   ACE_NEW_NORETURN(vEvent, CosNotification::StructuredEvent );
   if (vEvent.ptr() != 0)
   {
-    short length = 2;
-    if( object_type_ != 0)
+    CORBA::ULong length = 2;
+    if( this->object_type_ != 0)
     {
       length = 3;
-      if (group_id_!= 0)
+      if (this->group_id_!= 0)
       {
         length = 4;
       }
@@ -138,29 +138,35 @@ void Fault_Detector_i::notify()
     vEvent->header.fixed_header.event_type.type_name = FT::FT_EVENT_TYPE_NAME;
     vEvent->filterable_data.length(length);
     vEvent->filterable_data[0].name = FT::FT_DOMAIN_ID;
-    (vEvent->filterable_data[0].value) <<= domain_id_;
+    (vEvent->filterable_data[0].value) <<= this->domain_id_;
     vEvent->filterable_data[1].name = FT::FT_LOCATION;
-    (vEvent->filterable_data[1].value) <<= object_location_;
-    if (object_type_!= 0)
+    (vEvent->filterable_data[1].value) <<= this->object_location_;
+    if (this->object_type_!= 0)
     {
       vEvent->filterable_data[2].name = FT::FT_TYPE_ID;
-      (vEvent->filterable_data[2].value) <<= object_type_;
-      if (group_id_!= 0)
+      (vEvent->filterable_data[2].value) <<= this->object_type_;
+      if (this->group_id_!= 0)
       {
         vEvent->filterable_data[3].name = FT::FT_GROUP_ID;
-        vEvent->filterable_data[3].value <<= group_id_;
+        vEvent->filterable_data[3].value <<= this->group_id_;
       }
     }
     ACE_TRY_NEW_ENV
     {
-      notifier_->push_structured_fault(vEvent.in()
+ACE_ERROR ((LM_ERROR,
+"call Fault Detector push Structured Event.\n"
+));
+      this->notifier_->push_structured_fault(vEvent.in()
         ACE_ENV_ARG_PARAMETER);
+ACE_ERROR ((LM_ERROR,
+"return from Fault Detector push Structured Event.\n"
+));
       ACE_TRY_CHECK;
     }
     ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-        "Fault Detector cannot send notification.\n");
+        "Fault Detector cannot send notification.");
     }
     ACE_ENDTRY;
   }
@@ -177,10 +183,10 @@ void Fault_Detector_i::notify()
 // Fault_Detector_i private static implementation methods
 
 //static
-ACE_THR_FUNC_RETURN Fault_Detector_i::thr_func (void * arg)
+ACE_THR_FUNC_RETURN TAO::Fault_Detector_i::thr_func (void * arg)
 {
-  Fault_Detector_i * detector = static_cast<Fault_Detector_i *>(arg);
-  detector->run();
+  TAO::Fault_Detector_i * detector = ACE_static_cast (TAO::Fault_Detector_i * , arg);
+  detector->run ();
   return 0;
 }
 

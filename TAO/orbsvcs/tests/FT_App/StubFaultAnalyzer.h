@@ -16,7 +16,6 @@
 
 //////////////////////
 // Forward references
-class TAO_ORB_Manager;
 
 /////////////////////
 // Class declarations
@@ -45,7 +44,7 @@ public:
   /**
    * Initialize this object
    */
-  int init (TAO_ORB_Manager & orbManager);
+  int init (CORBA::ORB_var & orb);
 
   /**
    * Return a string to identify this object for logging/console message purposes.
@@ -74,14 +73,19 @@ private:
   // Data Members
 private:
   /**
-   * The orb
+   * The orb 
    */
   CORBA::ORB_var orb_;
 
   /**
-   * IOR of this object as assigned by orb.
+   * The POA used to activate this object.
    */
-  CORBA::String_var ior_;
+  PortableServer::POA_var poa_;
+
+  /**
+   * The CORBA object id assigned to this object.
+   */
+  PortableServer::ObjectId_var objectId_;
 
   /**
    * A human-readable string to distinguish this from other Notifiers.
