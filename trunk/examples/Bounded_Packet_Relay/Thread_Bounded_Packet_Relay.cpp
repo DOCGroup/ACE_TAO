@@ -25,6 +25,8 @@
 
 #include "Thread_Bounded_Packet_Relay.h"
 
+#include "ace/Condition_T.h"
+
 typedef Thread_Bounded_Packet_Relay_Driver::COMMAND DRIVER_CMD;
 typedef ACE_Command_Callback<BPR_Handler_Base, BPR_Handler_Base::ACTION> HANDLER_CMD;
 typedef ACE_Command_Callback<Send_Handler, Send_Handler::ACTION> SEND_HANDLER_CMD;

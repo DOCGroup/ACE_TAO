@@ -7,6 +7,7 @@
 #include "ace/Atomic_Op.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Barrier.h"
+#include "ace/Lock_Adapter_T.h"
 
 #include "Kokyu_dsrt.h"
 
@@ -73,7 +74,7 @@ int MyTask::svc (void)
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
   int prio;
-  
+
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): task activated\n"));
   ACE_ASSERT (dispatcher_ != 0);
 
@@ -82,7 +83,7 @@ int MyTask::svc (void)
   barrier_.wait ();
 
   long prime_number = 9619899;
-  
+
   ACE_High_Res_Timer timer;
   ACE_Time_Value elapsed_time;
   ACE_Time_Value seconds_tracker(0,0);
@@ -90,14 +91,14 @@ int MyTask::svc (void)
   ACE_Time_Value one_second (1,0);
   ACE_Time_Value compute_count_down_time (exec_duration_, 0);
   ACE_Countdown_Time compute_count_down (&compute_count_down_time);
-  
+
   timer.start ();
   while (compute_count_down_time > ACE_Time_Value::zero)
     {
       ACE::is_prime (prime_number,
                      2,
                      prime_number / 2);
-      
+
       compute_count_down.update ();
       timer.stop ();
       timer.elapsed_time (elapsed_time);
@@ -105,7 +106,7 @@ int MyTask::svc (void)
       if (seconds_tracker >= one_second)
       {
         seconds_tracker.set (0,0);
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%t) Currently running guid=%d")
                     ACE_TEXT (", qos_.importance=%d \n"),
                     guid_, qos_.importance_));
