@@ -1,3 +1,15 @@
+Fri Nov 28 21:39:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be_include/be_visitor_traits.h:
+        
+          - Added check in visit_array() to skip code generation if the node
+            is imported.
+            
+          - Added methods visit_field, visit_exception, visit_structure and
+            visit_union to the visitor class, to catch anonymous arrays
+            declared inside IDL structs, unions and exceptions.
+
 Fri Nov 28 17:21:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ORB_Core.cpp:
