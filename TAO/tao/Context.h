@@ -187,12 +187,14 @@ public:
   CORBA::ULong count ();
   // return the number of elements
 
-  // @@ Jeff, can you please comment these methods?
   CORBA_ContextList_ptr _duplicate (void);
+  // Increment the reference count.
 
   void _destroy (void);
+  // Decrement the reference count and delete if it is 0.
 
   static CORBA_ContextList_ptr _nil ();
+  // Return null pointer of this type.
 
   void add (char *ctx);
   // Add a string to the list.
