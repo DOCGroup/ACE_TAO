@@ -1,3 +1,9 @@
+Fri Feb 26 23:41:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Oops, unlinking
+	  of temp file should not be disable on non-Win32 platforms.
+	  Thanks to David for noticing this.
+
 Fri Feb 26 23:30:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/Makefile: removed the clean target, because it
