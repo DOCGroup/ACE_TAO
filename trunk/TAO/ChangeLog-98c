@@ -1,3 +1,8 @@
+Fri Mar 20 19:46:43 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* docs/releasenotes/index.html (href): Reformatted the DOVE 
+	  demo section of the release notes a bit.
+
 Thu Mar 20 17:05:42 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * $TAO_ROOT/docs/releasenotes/index.html:

@@ -49,6 +49,9 @@ release</A> of <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A>:
 <A HREF="#ace">ORB-related ACE Changes</A></LI>
 
 <LI>
+<A HREF="#dove">The DOVE Demo</A></LI>
+
+<LI>
 <A HREF="#vc">How to add IDL files into your Visual C++ projects</A></LI>
 </UL>
 <!--#include virtual="orbcore.html" -->
@@ -522,6 +525,75 @@ Future work:
 
 <HR>
 <H3>
+<A NAME="dove"></A>The DOVE Demo</H3>
+Point of contact: <A HREF="mailto:mk1@cec.wustl.edu">Michael Kircher</A>.
+<P>
+DOVE is described in detail on the following site:
+<A HREF="http://www.cs.wustl.edu/~schmidt/dove.html">DOVE documentation</A>
+<P>
+We focus on the following goals at the moment:
+<UL>
+<LI>
+Have a DOVE Browser running using Java Beans as vizualization components
+<LI>
+Have the Event Channel as DOVE Agent running with an Event Consumer
+in the DOVE Browser.
+<LI>
+Having a MIB which dumps all events transfered on the Event Channel
+into a file on persistent storage for later reuse. (Not implemented yet)
+</LI>
+</UL>
+<P>
+Two demos are available right now: 
+<UL>
+<LI>
+One using a fixed set of visualization components and the 
+Event Channel as DOVE Agent.
+<LI>
+A new demo using independent visualization components (Java Beans)
+and the Event Channel as DOVE Agent. Connections can be established
+between monitored metrics and the visualization components.
+</LI>
+</UL>
+<P>
+In the concept of the new demo we have three major components: 
+Observables (monitored metrics), Observers (a Java Bean
+for displaying the metric) and a DataHandler (for demultiplexing the 
+monitored metrics to the appropriate Observables).
+Each component inherits from a base class, so that a certain behavior
+of the components can be assured for each component. Relationships
+between components are based on these base classes.
+<P>
+The used Java Beans are required to conform to some standards, as
+they have to support a function called "getProperty" which allows
+the DOVE Browser to determine if the vizualization capabilities of 
+a specific Java Bean are sufficient to display the metric.
+A JavaBean is for example a Java Panel which shows a Graph of
+the delivered doubles. So all metrics can be displayed by this visualization 
+component which can be expressed by a single double.
+<P>
+The DataHandler is connected to the Event Push Consumer (PUSH, because
+we use the push concept of the Event Service). The Event Push Consumer
+does not know what kind of data is transported. The only component 
+knowing all the details about the dependencies of the metrics is
+the DataHandler. This separation allows easy extension and change
+of the demo.
+<P>
+<A HREF="http://students.cec.wustl.edu/~mk1/dove.html">Object Diagrams</A>
+are available about this new concept.
+<P>
+Future work includes:
+<UL>
+<LI>
+Having the DOVE demo properly running on NT
+<LI>
+Add MIB functionality
+</LI>
+</UL>
+<P>
+<HR>
+
+<H3>
 <A NAME="#VC"></A>How to add IDL files into your Visual C++ projects</H3>
 Point of contact: <A HREF="mailto:nw1@cs.wustl.edu">Nanbor Wang</A>.
 
@@ -575,69 +647,6 @@ please let us know. Thanks.
 <P>
 
 <HR>
-<H3>
-<A NAME="DOVE demo"></A>Latest news about the DOVE demo</H3>
-Point of contact: <A HREF="mailto:mk1@cec.wustl.edu">Michael Kircher</A>.
-<P>
-DOVE is described in detail on the following site:
-<A HREF="http://www.cs.wustl.edu/~schmidt/dove.html">DOVE documentation</A>
-<P>
-We focus on the following goals at the moment:
-<LI>
-Have a DOVE Browser running using Java Beans as vizualization components
-<LI>
-Have the Event Channel as DOVE Agent running with an Event Consumer
-in the DOVE Browser.
-<LI>
-Having a MIB which dumps all events transfered on the Event Channel
-into a file on persistent storage for later reuse. (Not implemented yet)
-</LI>
-<P>
-Two demos are available right now: 
-<LI>
-One using a fixed set of visualization components and the 
-Event Channel as DOVE Agent.
-<LI>
-A new demo using independent visualization components (Java Beans)
-and the Event Channel as DOVE Agent. Connections can be established
-between monitored metrics and the visualization components.
-</LI>
-<P>
-In the concept of the new demo we have three major components: 
-Observables (monitored metrics), Observers (a Java Bean
-for displaying the metric) and a DataHandler (for demultiplexing the 
-monitored metrics to the appropriate Observables).
-Each component inherits from a base class, so that a certain behavior
-of the components can be assured for each component. Relationships
-between components are based on these base classes.
-<P>
-The used Java Beans are required to conform to some standards, as
-they have to support a function called "getProperty" which allows
-the DOVE Browser to determine if the vizualization capabilities of 
-a specific Java Bean are sufficient to display the metric.
-A JavaBean is for example a Java Panel which shows a Graph of
-the delivered doubles. So all metrics can be displayed by this visualization 
-component which can be expressed by a single double.
-<P>
-The DataHandler is connected to the Event Push Consumer (PUSH, because
-we use the push concept of the Event Service). The Event Push Consumer
-does not know what kind of data is transported. The only component 
-knowing all the details about the dependencies of the metrics is
-the DataHandler. This separation allows easy extension and change
-of the demo.
-<P>
-<A HREF="http://students.cec.wustl.edu/~mk1/dove.html">Object Diagrams</A>
-are available about this new concept.
-<P>
-Major milestones are:
-<LI>
-Having the DOVE demo properly running on NT
-<LI>
-Add MIB functionality
-</LI>
-<P>
-<HR>
-
 <P>Back to the TAO <A HREF="../index.html">documentation index</A>.&nbsp;<!--#include virtual="/~schmidt/cgi-sig.html" -->
 </BODY>
 </HTML>
