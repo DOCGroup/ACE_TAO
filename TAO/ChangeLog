@@ -1,3 +1,12 @@
+Thu Nov 18 17:05:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Object_T.cpp:
+        
+          Fixed a bug in narrowing a local interface to a non-local
+          base class. Thanks to Vincent Spano <spam.robot@go.away>
+          for reporting it, and for sending in example code to
+          reproduce the problem.
+
 Thu Nov 18 13:17:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface_fwd/any_op_ch.cpp:
