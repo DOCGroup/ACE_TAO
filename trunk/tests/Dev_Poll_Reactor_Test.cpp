@@ -374,13 +374,13 @@ public:
     int flags,
     int perms)
   {
-    int result = this->CONNECTOR::connect_svc_handler (handler,
-                                                       remote_addr,
-                                                       timeout,
-                                                       local_addr,
-                                                       reuse_addr,
-                                                       flags,
-                                                       perms);
+    const int result = this->CONNECTOR::connect_svc_handler (handler,
+                                                             remote_addr,
+                                                             timeout,
+                                                             local_addr,
+                                                             reuse_addr,
+                                                             flags,
+                                                             perms);
 
     if (result != 0)
       return result;
