@@ -5,7 +5,12 @@ Tue Jul  7 22:11:17 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.{h,cpp}:
 	Fixed DEC cxx errors, addressed a memory leak.
 
+Tue Jul  7 20:48:37 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Connect.{h,cpp}:  Revert my previous changes.
+
 Tue Jul  7 19:47:15 198   Jeff Parsons <jp4@cs.wustl.edu>
+
 	* TAO/tao/Request.cpp: Slight modification (Andy's
 	  suggestion) to send_oneway (), getting rid of an
 	  error message when shutting down the Cubit server
@@ -13,7 +18,7 @@ Tue Jul  7 19:47:15 198   Jeff Parsons <jp4@cs.wustl.edu>
 
 Tue Jul  7 19:25:55 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tests/Cubit/TAO/DII_Cubit/DII_Cubit_Test.cpp: 
+	* tests/Cubit/TAO/DII_Cubit/DII_Cubit_Test.cpp:
 	  New file that implements a "one-button" DII Cubit test.
 	* DII_Cubit/Makefile: Added a build for dii_cubit_test.exe.
 	* DII_Cubit/DII_Cubit_Test.dsp: New project in the workspace.
