@@ -1,3 +1,18 @@
+Thu Jul 30 00:39:10 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/tests/Concurrency/{CC_command.tab,lex.CC_command}.cpp.diff:
+ 	  Updated these files to prevent complains from lex and yacc.
+  	  Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
+ 	  for reporting this fix.
+
+Wed Jul 29 18:46:46 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * orbsvcs/tests/Concurrency: Touched the lex and yacc files so
+ 	  that Make won't try to remake their *.cpp files.  This is just a
+ 	  temporary fix until we get this working correctly.  Thanks to
+ 	  J. Russell Noseworthy <rnosewor@objectsciences.com> for
+ 	  reporting this and to Carlos for suggesting the fix.
+
 Wed Jul 29 18:46:46 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2 released.
@@ -47,7 +62,7 @@ Wed Jul 29 08:58:01 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
         but not the inline file and the implementation file. The visitor
         that does this was already done, but it was not getting
         invoked. Thanks to Andreas Geisler
-        (andreas.geisler@erls.siemens.de) for reporting this problem.
+        <andreas.geisler@erls.siemens.de> for reporting this problem.
 
 Wed Jul 29 06:45:54 1998  David L. Levine  <levine@cs.wustl.edu>
 
