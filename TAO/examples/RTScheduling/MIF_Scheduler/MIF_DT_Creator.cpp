@@ -44,17 +44,8 @@ MIF_DT_Creator::yield (int suspend_time,
   ACE_Time_Value now (ACE_OS::gettimeofday ());
   while (((now - *base_time_) < suspend_time) || (suspend_time == 1))
     {
-      if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "Before perform Work\n"));
 
-      ACE_Time_Value wait (1);
-      orb_->perform_work (wait);
-
-      if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "After perform Work\n"));
-
+      ACE_OS::sleep (1);
       CORBA::Policy_var sched_param;
       sched_param = CORBA::Policy::_duplicate (this->sched_param (100));
       const char * name = 0;

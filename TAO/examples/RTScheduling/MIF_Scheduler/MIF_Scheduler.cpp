@@ -490,6 +490,7 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
   */
 
   lock_.acquire ();
+  /*
   if (ready_que_.message_count () > 0)
     {
       DT* run_dt;
@@ -500,6 +501,7 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
 	  run_dt->resume ();
       else ready_que_.enqueue_prio (run_dt);
     }
+  */
   ready_que_.enqueue_prio (new_dt);
   new_dt->suspend ();
   //resume_main ();
@@ -555,7 +557,7 @@ MIF_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr
 			       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   PortableInterceptor::ForwardRequest))
-{
+{/*
   if (wait_que_.message_count () > 0)
     {
       DT* run_dt;
@@ -566,7 +568,9 @@ MIF_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr
       run_dt->resume ();
       lock_.release ();
     }
-  else if (ready_que_.message_count () > 0)
+  else
+ */
+  if (ready_que_.message_count () > 0)
     {
       DT* run_dt;
       ACE_Message_Block* msg;
@@ -585,6 +589,34 @@ MIF_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   PortableInterceptor::ForwardRequest))
 {
+  if (TAO_debug_level > 0)
+    {
+      RTScheduling::Current::IdType* guid = current_->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+
+      int count;
+      ACE_OS::memcpy (&count,
+		      guid->get_buffer (),
+		      guid->length ());
+
+
+      ACE_DEBUG ((LM_DEBUG,
+		  "MIF_Scheduler::send_other %d\n",
+		  count));
+    }
+
+  if (ready_que_.message_count () > 0)
+    {
+      DT* run_dt;
+      ACE_Message_Block* msg;
+      ready_que_.dequeue_head (msg);
+      run_dt = ACE_dynamic_cast (DT*, msg);
+      lock_.acquire ();
+      run_dt->resume ();
+      lock_.release ();
+    }
+
+
 }
 
 void

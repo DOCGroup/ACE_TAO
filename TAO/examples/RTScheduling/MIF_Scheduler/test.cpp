@@ -81,20 +81,14 @@ DT_Test::run (int argc, char* argv []
   ACE_DEBUG ((LM_DEBUG,
 	      "Registered Synch Object\n"));
 
-  //  this->activate_task ();
   dt_creator_->create_distributable_threads (current_.in ()
 					     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  //orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  //ACE_CHECK;
-  // shutdown the ORB
-  //orb_->shutdown (0);
+  orb_->destroy ();
 
-
-  //orb_->destroy ();
-
-  ACE_Thread_Manager::instance ()->wait ();
+  ACE_DEBUG ((LM_DEBUG,
+	      "Test Terminating......\n"));
 }
 
 
