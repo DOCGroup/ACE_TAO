@@ -1,3 +1,8 @@
+Sat Jun  7 18:01:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ChangeLogs/ChangeLog-03a: Moved entries till Mar 31 to this file
+	  from $TAO_ROOT/ChangeLog
+
 Sat Jun  7 14:14:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ORB_Core.h:
