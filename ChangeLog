@@ -1,3 +1,14 @@
+Sat Jan 10 17:11:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+        
+          Added generation for custom build step dependency on the
+          IDL or CIDL compiler executable. This enables the build to
+          detect errors output by the (C)IDL compiler, and also will
+          trigger the custom build step if the (C)IDL compiler has
+          been updated.
+
 Sat Jan 10 16:14:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS_NS_sys_socket.inl (closesocket): On HP-UX, use
