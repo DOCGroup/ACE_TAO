@@ -1,3 +1,26 @@
+Sun Jun 22 04:32:15 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Global_Macros.h:
+          Place LPSECURITY_ATTRIBUTES within !defined (ACE_WIN32) guards.
+
+        * ace/Asynch_IO.h:
+        * ace/Malloc_Base.h:
+          Added include of ace/os_include/sys/os_types.h.
+
+        * ace/OS.h:
+        * ace/os_include/sys/os_mman.h:
+          Moved MS_SYNC definition from OS.h to here.
+
+        * ace/Basic_Types.h:
+        * ace/os_include/sys/os_types.h:
+          Moved ssize_t typedef here from Basic_Types.h.
+
+        * ace/config-win32-common.h:
+		  Add ACE_LACKS_PTHREAD_H.
+
+        * /ace/Malloc_Allocator.i:
+		  Fixed typo.
+
 Sun Jun 22 03:27:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/ACE.h:

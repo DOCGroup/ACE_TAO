@@ -1806,10 +1806,6 @@ typedef struct utsname ACE_utsname;
 #   define ENXIO  6
 #endif /* ENXIO */
 
-# if !defined (MS_SYNC)
-#   define MS_SYNC 0x0
-# endif /* !MS_SYNC */
-
 # if !defined (PIPE_BUF)
 #   define PIPE_BUF 5120
 # endif /* PIPE_BUF */
