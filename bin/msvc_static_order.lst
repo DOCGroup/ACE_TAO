@@ -72,3 +72,4 @@ TAO/performance-tests/RTCorba/Multiple_Endpoints/Common/RTCORBA_Common.dsp
 tests/Test_Output.dsp
 performance-tests/Synch-Benchmarks/Synch_Lib/Synch_Lib.dsp
 examples/Service_Configurator/Misc/Service_Configurator_Misc_Timer.dsp
+ASNMP/asnmp/asnmp_lib.dsp
