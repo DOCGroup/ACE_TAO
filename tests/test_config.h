@@ -47,7 +47,10 @@
 #define ACE_TEXT ACE_LIB_TEXT
 
 #if defined (ACE_HAS_WINCE)
-# define ACE_LOG_DIRECTORY ACE_TEXT ("log\\")
+// Note that Pocket PC 2002 will NOT create a directory if it does not start with a leading '\'.
+// PPC 2002 only accepts '\log' as a valid directory name, while 'log\' works under WinCE 3.0.
+# define ACE_LOG_DIRECTORY_FOR_MKDIR ACE_TEXT ("\\log")
+# define ACE_LOG_DIRECTORY           ACE_TEXT ("\\log\\")
 # define MAKE_PIPE_NAME(X) ACE_TEXT ("\\\\.\\pipe\\"#X)
 #elif defined (ACE_WIN32)
 # define ACE_LOG_DIRECTORY ACE_TEXT ("log\\")
@@ -241,7 +244,11 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   // directory does exist, it causes a wierd console error message
   // about "cat: input error on standard input: Is a directory".  So,
   // VxWorks users must create the directory manually.
-  ACE_OS::mkdir (ACE_LOG_DIRECTORY);
+#   if defined (ACE_HAS_WINCE)
+      ACE_OS::mkdir (ACE_LOG_DIRECTORY_FOR_MKDIR);
+#   else
+      ACE_OS::mkdir (ACE_LOG_DIRECTORY);
+#   endif  // ACE_HAS_WINCE
 # endif /* ! VXWORKS */
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
