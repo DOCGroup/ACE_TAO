@@ -1,3 +1,9 @@
+Thu May 07 17:55:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO/orbsvcs/orbsvcs/orbsvcs.dsp:
+	* TAO/orbsvcs/tests/Logger/server.dsp: Updated.  Thanks to Carlos'
+	  instruction on how to make the change. 
+
 Thu May 7  16:11:00 1998  Robert Eric Thornton <ret1@cec.wustl.edu>
 
         * orbsvcs/tests/Naming/ns_tree.cpp: added the NamingService to this
