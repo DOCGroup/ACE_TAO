@@ -169,7 +169,7 @@ ACE_Thread_ID::to_string (char* thr_id)
                   // the one seen in the debugger as well.
                   ACE_OS::sprintf (thr_id, format,
                                    pthread_getunique_np(&t_id));
-#  elif defined (ACE_MVS)
+#  elif defined (ACE_MVS) || defined (ACE_TANDEM_T1248_PTHREADS)
                   // MVS's pthread_t is a struct... yuck. So use the ACE 5.0
                   // code for it.
                   ACE_OS::strcpy (fp, "u");

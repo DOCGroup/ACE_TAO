@@ -1,3 +1,25 @@
+Mon Jan  5 14:09:34 2004  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (log): 
+	* ace/OS_NS_Thread.cpp (to_string): Tandem NSK uses a struct for
+	  pthread_t.   Need changes to existing preprocessor #ifs in
+	  Log_Msg.cpp and OS_NS_Thread.cpp to handle this so they now
+	  read
+  
+          #  elif defined (ACE_MVS) || defined (ACE_TANDEM_T1248_PTHREADS)
+	  
+	  Thanks to Gary Maxey for this fix, which fixes bugid 1704.
+  
+	* ace/Handle_Set.cpp: The order of bits in the elements of the
+	  fd_set structure for the Tandem NSK platform is left-to-right rather
+	  than right-to-left like most other platforms except pSoS.  Therefore
+	  added 
+	
+  	  #  if defined (ACE_PSOS) || defined (ACE_TANDEM_NSK_BIT_ORDER)
+  
+          to handle this situation.  Thanks to Gary Maxey <gary.maxey@hp.com>
+	  for reporting this and providing the fix.  This fixes bugid 1703.
+
 Mon Jan  5 12:43:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Name_Proxy.cpp:
