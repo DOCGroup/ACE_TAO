@@ -139,7 +139,7 @@ Quoter_Server::init_naming_service (CORBA::Environment& env)
     //Context...
     CosNaming::Name quoterFactoryContextName (1);
     quoterFactoryContextName.length (1);
-    quoterFactoryContextName[0].id = CORBA::string_dup ("quoter_factory");
+    quoterFactoryContextName[0].id = CORBA::string_dup ("Quoter_Factory");
     quoterNameContext->bind (quoterFactoryContextName,
                              quoter_Factory_Impl_._this(env),
                              env);
@@ -175,7 +175,7 @@ Quoter_Server::~Quoter_Server (void)
       CosNaming::Name factory_name (2);
       factory_name.length (2);
       factory_name[0].id = CORBA::string_dup ("IDL_Quoter");
-      factory_name[1].id = CORBA::string_dup ("quoter_factory");
+      factory_name[1].id = CORBA::string_dup ("Quoter_Factory");
       this->namingContext_var_->unbind (factory_name,TAO_TRY_ENV);
       TAO_CHECK_ENV;
       factory_name.length (1);

@@ -75,6 +75,9 @@ private:
   Stock::Quoter_Factory_var factory_var_;
   // Pointer to a factory
 
+  Stock::Quoter_Generic_Factory_var generic_Factory_var_;
+  // Pointer to a generic factory
+
   CORBA::Environment env_;
   // Environment variable.
 

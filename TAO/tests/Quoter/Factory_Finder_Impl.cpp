@@ -38,12 +38,6 @@ Quoter_Factory_Finder_Impl::find_factories (const CosLifeCycle::Key &factory_key
 {
   CORBA::Environment env_here;
 
-  // fill in the name of the Quoter Factory
-  CosNaming::Name factoryName (1);  // max = 1 
-  factoryName.length (1);
-  factoryName[0].id = CORBA::string_dup ("quoter_factory");
-  // or
-
   // Get a reference to the ORB.
   CORBA::ORB_ptr orb_ptr = TAO_ORB_Core_instance ()->orb ();
 
@@ -98,8 +92,15 @@ Quoter_Factory_Finder_Impl::find_factories (const CosLifeCycle::Key &factory_key
 
   // **  now a proper reference to the quoter naming context is available
 
+  // fill in the name of the Quoter Factory
+  //CosNaming::Name factoryName (1);  // max = 1 
+  //factoryName.length (1);
+  //factoryName[0].id = CORBA::string_dup ("Quoter_Generic_Factory");
+  // for direct contact with the Quoter Factory
+  // factoryName[0].id = CORBA::string_dup ("Quoter_Factory");
+    // or
   // Take the key supplied to search for a Quoter Factory
-  //CosNaming::Name factoryName = (CosNaming::Name) factory_key;
+  CosNaming::Name factoryName = (CosNaming::Name) factory_key;
 
   // Try to get a reference to a Quoter Factory
   CORBA::Object_var quoterFactoryObject_var =  

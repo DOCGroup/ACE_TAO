@@ -189,13 +189,14 @@ Quoter_Client::init_naming_service (void)
 
     ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Naming Service.\n"));
 
+    // deprecated
     // ------------------------------------------- direct use of the Quoter Factory
     /*
     // Try to get the quoter_factory
     CosNaming::Name quoter_factory_name (2);
     quoter_factory_name.length (2);
     quoter_factory_name[0].id = CORBA::string_dup ("IDL_Quoter");
-    quoter_factory_name[1].id = CORBA::string_dup ("quoter_factory");
+    quoter_factory_name[1].id = CORBA::string_dup ("Quoter_Factory");
 
     ACE_DEBUG ((LM_DEBUG, "Trying to resolve the Quoter Factory!\n"));
 
@@ -247,7 +248,7 @@ Quoter_Client::init_naming_service (void)
     CosLifeCycle::Key factoryName (1);  // max = 1 
     factoryName.length(1);
     factoryName[0].id =
-    CORBA::string_dup ("quoter_factory");
+    CORBA::string_dup ("Quoter_Generic_Factory");
     
     // Find an appropriate factory over there.
     CosLifeCycle::Factories_ptr factories_ptr = 
@@ -255,7 +256,7 @@ Quoter_Client::init_naming_service (void)
 
     if (factories_ptr == 0)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Did not get a Quoter Factory.\n"),
+                         "Did not get a Generic Quoter Factory.\n"),
                          -1);
 
     // Get the first object reference to a factory.
@@ -273,13 +274,15 @@ Quoter_Client::init_naming_service (void)
                          -1);
     }
 
-      // Narrow it to a Quoter Factory.
-    factory_var_ = Stock::Quoter_Factory::_narrow (quoter_FactoryObj_var.in (),
-                                                   TAO_TRY_ENV);
+    // Narrow it
+    // to a direct Quoter Factory
+    // factory_var_ = Stock::Quoter_Factory::_narrow (quoter_FactoryObj_var.in (), TAO_TRY_ENV);
+    // to a Quoter Generic Factory
+    generic_Factory_var_ = Stock::Quoter_Generic_Factory::_narrow (quoter_FactoryObj_var.in (), TAO_TRY_ENV);
 
     TAO_CHECK_ENV;
 
-    if (CORBA::is_nil (this->factory_var_.in ()))
+    if (CORBA::is_nil (this->generic_Factory_var_.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Factory received is not valid.\n"),
                          -1);
@@ -319,18 +322,19 @@ Quoter_Client::init (int argc, char **argv)
       if (this->parse_args () == -1)
         return -1;
     
-      if (this->use_naming_service_) 
-      {
+      // deprecated
+      //if (this->use_naming_service_) 
+      //{
           int naming_result = this->init_naming_service ();
           if (naming_result == -1)
             return naming_result;
-      }
+      /*}
       else
-        {
+          {
           if (this->quoter_factory_key_ == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%s: no quoter factory key specified\n",
-                               this->argv_[0]),
+                              this->argv_[0]),
                               -1);
 
           CORBA::Object_var factory_object = 
@@ -348,14 +352,25 @@ Quoter_Client::init (int argc, char **argv)
                                  this->quoter_factory_key_),
                                 -1);
             }
-        }
+        }*/
     
       ACE_DEBUG ((LM_DEBUG, "Factory received OK\n"));
     
       // Now retrieve the Quoter obj ref corresponding to the key.
-      this->quoter_ =
-        this->factory_var_->create_quoter (this->quoter_key_,
-                                     TAO_TRY_ENV);
+      // direct Quoter Factory
+
+      // this->quoter_ = this->factory_var_->create_quoter (this->quoter_key_, TAO_TRY_ENV);
+
+      // using the Quoter Generic Factory
+      CosLifeCycle::Key genericFactoryName (1);  // max = 1 
+      genericFactoryName.length(1);
+      genericFactoryName[0].id = CORBA::string_dup ("Generic_Quoter_Factory");
+      CORBA::Object_var quoterObject_var = 
+          this->generic_Factory_var_->create_object (genericFactoryName,
+                                                     0, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      this->quoter_ = Stock::Quoter::_narrow (quoterObject_var.in(), TAO_TRY_ENV);     
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "Quoter Created\n"));
