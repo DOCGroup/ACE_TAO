@@ -1,3 +1,9 @@
+Thu Oct 28 11:16:26 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/HTBP/HTBP_Environment.cpp:
+        * ace/HTBP/HTBP_ID_Requestor.cpp:
+          Fixed overlooked literal wide string and a missing include file.
+
 Thu Oct 28 11:48:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/Reactor/Misc/pingpong.cpp: Added missing includes
