@@ -200,12 +200,12 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET>::ACE_Timer_Hash_T (size_t table_si
 {
   ACE_TRACE ("ACE_Timer_Hash_T::ACE_Timer_Hash_T");
 
-  this->gettimeofday (ACE_High_Res_Timer::gettimeofday);
+  this->gettimeofday (ACE_OS::gettimeofday);
 
   for (size_t i = 0; i < table_size; i++)
     {
       this->table_[i] = new BUCKET (&this->table_functor_, this->free_list_);
-      this->table_[i]->gettimeofday (ACE_High_Res_Timer::gettimeofday);
+      this->table_[i]->gettimeofday (ACE_OS::gettimeofday);
     }
 }
 
@@ -223,12 +223,12 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET>::ACE_Timer_Hash_T (FUNCTOR *upcall
 {
   ACE_TRACE ("ACE_Timer_Hash_T::ACE_Timer_Hash_T");
 
-  this->gettimeofday (ACE_High_Res_Timer::gettimeofday);
+  this->gettimeofday (ACE_OS::gettimeofday);
 
   for (size_t i = 0; i < this->table_size_; i++)
     {
       this->table_[i] = new BUCKET (&this->table_functor_, this->free_list_);
-      this->table_[i]->gettimeofday (ACE_High_Res_Timer::gettimeofday);
+      this->table_[i]->gettimeofday (ACE_OS::gettimeofday);
     }
 }
 

@@ -111,7 +111,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Wheel_T (size_t wheelsize,
   ACE_TRACE ("ACE_Timer_Wheel_T::ACE_Timer_Wheel_T");
   size_t i;
 
-  this->gettimeofday (ACE_High_Res_Timer::gettimeofday);
+  this->gettimeofday (ACE_OS::gettimeofday);
 
   // Create the timing wheel
   ACE_NEW (this->wheel_, (ACE_Timer_Node_T<TYPE> *[wheelsize]));
@@ -142,7 +142,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Wheel_T (FUNCTOR *upcall_funct
   ACE_TRACE ("ACE_Timer_Wheel_T::ACE_Timer_Wheel_T");
   size_t i;
 
-  this->gettimeofday (ACE_High_Res_Timer::gettimeofday);
+  this->gettimeofday (ACE_OS::gettimeofday);
 
   // Create the timing wheel
   ACE_NEW (this->wheel_, (ACE_Timer_Node_T<TYPE> *[this->wheel_size_]));
