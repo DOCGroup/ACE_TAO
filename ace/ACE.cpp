@@ -238,7 +238,7 @@ ACE::terminate_process (pid_t pid)
         ::TerminateProcess (process_handle, 0);
       // Free up the kernel resources.
       ACE_OS::close (process_handle);
-      return terminate_result;
+      return terminate_result ? 0 : -1;
     }
 #elif defined (CHORUS)
   KnCap cap_;
