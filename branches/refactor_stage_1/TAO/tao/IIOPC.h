@@ -34,7 +34,8 @@
 
 #include "CDR.h"
 #include "tao/VarOut_T.h"
-#include "tao/Seq_VarOut_T.h"
+#include "tao/Seq_Out_T.h"
+#include "tao/Seq_Var_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -64,54 +65,54 @@
 
 TAO_NAMESPACE  IIOP
 {
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
-  
+
   struct ListenPoint;
-  
+
   typedef
     TAO_Var_Var_T<
         ListenPoint
       >
     ListenPoint_var;
-  
+
   typedef
     TAO_Out_T<
         ListenPoint,
         ListenPoint_var
       >
     ListenPoint_out;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
-  
+
   struct TAO_Export ListenPoint
   {
     typedef ListenPoint_var _var_type;
-    
+
     static void _tao_any_destructor (void *);
     TAO_String_Manager host;
     CORBA::UShort port;
   };
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ListenPoint;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
-  
+
   class ListenPointList;
-  
+
   typedef
     TAO_VarSeq_Var_T<
         ListenPointList,
         IIOP::ListenPoint
       >
     ListenPointList_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         ListenPointList,
@@ -119,7 +120,7 @@ TAO_NAMESPACE  IIOP
         IIOP::ListenPoint
       >
     ListenPointList_out;
-  
+
   class TAO_Export ListenPointList
     : public
         TAO_Unbounded_Sequence<
@@ -132,54 +133,54 @@ TAO_NAMESPACE  IIOP
     ListenPointList (
         CORBA::ULong max,
         CORBA::ULong length,
-        ListenPoint *buffer, 
+        ListenPoint *buffer,
         CORBA::Boolean release = 0
       );
     ListenPointList (const ListenPointList &);
     ~ListenPointList (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef ListenPointList_var _var_type;
   };
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ListenPointList;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
-  
+
   struct BiDirIIOPServiceContext;
-  
+
   typedef
     TAO_Var_Var_T<
         BiDirIIOPServiceContext
       >
     BiDirIIOPServiceContext_var;
-  
+
   typedef
     TAO_Out_T<
         BiDirIIOPServiceContext,
         BiDirIIOPServiceContext_var
       >
     BiDirIIOPServiceContext_out;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
-  
+
   struct TAO_Export BiDirIIOPServiceContext
   {
     typedef BiDirIIOPServiceContext_var _var_type;
-    
+
     static void _tao_any_destructor (void *);
     IIOP::ListenPointList listen_points;
   };
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_BiDirIIOPServiceContext;
 
 // TAO_IDL - Generated from
@@ -268,4 +269,3 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IIOP::BiDirIIOPServiceCont
 
 #include "ace/post.h"
 #endif /* ifndef */
-

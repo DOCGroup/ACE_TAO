@@ -32,11 +32,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
-#include "IOP_IORC.h"
-#include "IOP_CodecC.h"
-#include "Any_T.h"
-#include "VarOut_T.h"
+#include "tao/TAO_Export.h"
+#include "tao/IOP_IORC.h"
+#include "tao/IOP_CodecC.h"
+#include "tao/Any_T.h"
+#include "tao/VarOut_T.h"
 
 
 #if defined (TAO_EXPORT_MACRO)

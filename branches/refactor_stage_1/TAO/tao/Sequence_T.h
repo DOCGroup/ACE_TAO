@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SEQUENCE_T_H
 #define TAO_SEQUENCE_T_H
 
@@ -246,25 +245,25 @@ public:
 // *************************************************************
 
 template<typename T,
-         typename T_var, 
-         typename T_life, 
-         typename T_cast> 
+         typename T_var,
+         typename T_life,
+         typename T_cast>
   class TAO_Unbounded_Object_Sequence;
 template<class T,class T_var> class TAO_Unbounded_Pseudo_Sequence;
 template<typename T,
          typename T_var,
-         typename T_life> 
+         typename T_life>
   class TAO_Unbounded_Valuetype_Sequence;
-template<typename T, 
-         typename T_var, 
-         typename T_life, 
-         typename T_cast,
-         size_t MAX> 
-  class TAO_Bounded_Object_Sequence;
-template<typename T, 
-         typename T_var, 
+template<typename T,
+         typename T_var,
          typename T_life,
-         size_t MAX> 
+         typename T_cast,
+         size_t MAX>
+  class TAO_Bounded_Object_Sequence;
+template<typename T,
+         typename T_var,
+         typename T_life,
+         size_t MAX>
   class TAO_Bounded_Valuetype_Sequence;
 template<size_t MAX> class TAO_Bounded_String_Sequence;
 
@@ -491,7 +490,7 @@ public:
    * only TAO_*_Object_Sequence would use it, but we have some
    * problems with friendship and templates.
    */
-  TAO_Valuetype_Manager (T **, 
+  TAO_Valuetype_Manager (T **,
                          CORBA::Boolean release);
 
   /// Destructor, only releases the object if <release_> is true.
@@ -578,7 +577,7 @@ public:
    * only TAO_*_Object_Sequence would use it, but we have some
    * problems with friendship and templates.
    */
-  TAO_Abstract_Manager (T **, 
+  TAO_Abstract_Manager (T **,
                         CORBA::Boolean release);
 
   /// Destructor, only releases the object if <release_> is true.
@@ -645,9 +644,9 @@ private:
  * class, in charge of handling the object lifetime, examples are
  * pseudo objects, object references, valuetypes, and strings.
  */
-template<typename T, 
-         typename T_var, 
-         typename T_life, 
+template<typename T,
+         typename T_var,
+         typename T_life,
          typename T_cast>
 class TAO_Unbounded_Object_Sequence : public TAO_Unbounded_Base_Sequence
 {
@@ -792,10 +791,10 @@ public:
  *
  * Please see the documentation for the unbounded case.
  */
-template<typename T, 
-         typename T_var, 
-         typename T_life, 
-         typename T_cast, 
+template<typename T,
+         typename T_var,
+         typename T_life,
+         typename T_cast,
          size_t MAX>
 class TAO_Bounded_Object_Sequence : public TAO_Bounded_Base_Sequence
 {

@@ -1,3 +1,43 @@
+Tue Apr 22 06:22:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Seq_Out_T.cpp:
+	* tao/Seq_Out_T.h:
+	* tao/Seq_Out_T.inl:
+	* tao/Seq_Var_T.cpp:
+	* tao/Seq_Var_T.h:
+	* tao/Seq_Var_T.inl: The Var and Out classes for sequences have
+	  been split across two files. The motivation for this change came
+	  around when we had to have a seperate out class for managed
+	  types. This was needed since the operator[] for managed types
+	  had a return type a bit different from regular sequences. Even
+	  with this change, not all of orbsvcs compile. 
+	  
+	* tao/Array_VarOut_T.h:
+	* tao/DomainC.h:
+	* tao/DynamicC.h:
+	* tao/IIOPC.h:
+	* tao/IOPC.h:
+	* tao/ObjectIdListC.h:
+	* tao/ObjectReferenceTemplateC.h:
+	* tao/Object_KeyC.h:
+	* tao/OctetSeqC.h:
+	* tao/Policy_ForwardC.h:
+	* tao/Sequence_T.h:
+	* tao/StringSeqC.h:
+	* tao/VarOut_T.h:
+	* tao/corba.h:
+	* tao/DynamicAny/DynamicAnyC.h:
+	* tao/IFR_Client/IFR_BaseC.h:
+	* tao/IFR_Client/IFR_BasicC.h:
+	* tao/IORManipulation/IORC.h:
+	* tao/PortableServer/PortableServerC.h: Replaced existing
+	  inclusions of tao/Seq_varOut_T.h with two inclusions,
+	  viz. tao/Seq_Out_T.h and tao/Seq_Var_T.h. 
+
+	* tao/Seq_VarOut_T.h:
+	* tao/Seq_VarOut_T.cpp:
+	* tao/Seq_VarOut_T.inl: Removed from the repo. 
+
 Mon Apr 21 14:09:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:

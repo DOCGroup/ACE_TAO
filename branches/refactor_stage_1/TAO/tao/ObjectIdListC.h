@@ -32,7 +32,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Seq_VarOut_T.h"
+#include "tao/Seq_Var_T.h"
+#include "tao/Seq_Out_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -62,39 +63,39 @@
 
 TAO_NAMESPACE  CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:367
-  
+
   typedef char * ORB_ObjectId;
   typedef CORBA::String_var ORB_ObjectId_var;
   typedef CORBA::String_out ORB_ObjectId_out;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ORB_ObjectId;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
-  
+
   class ORB_ObjectIdList;
-  
+
   typedef
     TAO_MngSeq_Var_T<
         ORB_ObjectIdList,
         TAO_SeqElem_String_Manager
       >
     ORB_ObjectIdList_var;
-  
+
   typedef
-    TAO_Seq_Out_T<
+    TAO_MngSeq_Out_T<
         ORB_ObjectIdList,
         ORB_ObjectIdList_var,
         TAO_SeqElem_String_Manager
       >
     ORB_ObjectIdList_out;
-  
+
   class TAO_Export ORB_ObjectIdList
     : public
         TAO_Unbounded_String_Sequence
@@ -105,18 +106,18 @@ TAO_NAMESPACE  CORBA
     ORB_ObjectIdList (
         CORBA::ULong max,
         CORBA::ULong length,
-        char * *buffer, 
+        char * *buffer,
         CORBA::Boolean release = 0
       );
     ORB_ObjectIdList (const ORB_ObjectIdList &);
     ~ORB_ObjectIdList (void);
-    
+
     typedef ORB_ObjectIdList_var _var_type;
   };
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ORB_ObjectIdList;
 
 // TAO_IDL - Generated from
@@ -169,4 +170,3 @@ TAO_Export CORBA::Boolean operator>> (
 
 #include "ace/post.h"
 #endif /* ifndef */
-

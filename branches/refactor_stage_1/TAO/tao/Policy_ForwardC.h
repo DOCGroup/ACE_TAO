@@ -34,7 +34,8 @@
 
 #include "tao/CDR.h"
 #include "tao/Objref_VarOut_T.h"
-#include "tao/Seq_VarOut_T.h"
+#include "tao/Seq_Var_T.h"
+#include "tao/Seq_Out_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -127,7 +128,7 @@ TAO_NAMESPACE  CORBA
     PolicyList_var;
 
   typedef
-    TAO_Seq_Out_T<
+    TAO_MngSeq_Out_T<
         PolicyList,
         PolicyList_var,
         TAO_Object_Manager<
