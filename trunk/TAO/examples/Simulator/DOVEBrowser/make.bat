@@ -59,11 +59,11 @@ javac *.java
 
 @del *.idl
 @xcopy ..\NavWeap.idl
-@xcopy ..\..\..\orbsvcs\CosTimeBase.idl
-@xcopy ..\..\..\orbsvcs\CosNaming.idl
-@xcopy ..\..\..\orbsvcs\RtecEventComm.idl
-@xcopy ..\..\..\orbsvcs\RtecEventChannelAdmin.idl
-@xcopy ..\..\..\orbsvcs\RtecScheduler.idl
+@xcopy ..\..\..\orbsvcs\orbsvcs\CosTimeBase.idl
+@xcopy ..\..\..\orbsvcs\orbsvcs\CosNaming.idl
+@xcopy ..\..\..\orbsvcs\orbsvcs\RtecEventComm.idl
+@xcopy ..\..\..\orbsvcs\orbsvcs\RtecEventChannelAdmin.idl
+@xcopy ..\..\..\orbsvcs\orbsvcs\RtecScheduler.idl
 
 @goto end
 
@@ -73,11 +73,11 @@ javac *.java
 
 @del *.idl
 @xcopy ..\NavWeap.idl
-@xcopy ..\..\..\orbsvcs\CosTimeBase.idl
-@xcopy ..\..\..\orbsvcs\CosNaming.idl
-@xcopy ..\..\..\orbsvcs\RtecEventComm.idl
-@xcopy ..\..\..\orbsvcs\RtecEventChannelAdmin.idl
-@xcopy ..\..\..\orbsvcs\RtecScheduler.idl
+@xcopy ..\..\..\orbsvcs\orbsvcs\CosTimeBase.idl
+@xcopy ..\..\..\orbsvcs\orbsvcs\CosNaming.idl
+@xcopy ..\..\..\orbsvcs\orbsvcs\RtecEventComm.idl
+@xcopy ..\..\..\orbsvcs\orbsvcs\RtecEventChannelAdmin.idl
+@xcopy ..\..\..\orbsvcs\orbsvcs\RtecScheduler.idl
 
 :clean
 
