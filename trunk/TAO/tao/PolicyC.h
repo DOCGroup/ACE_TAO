@@ -111,7 +111,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_Policy (void); // default constructor
-  CORBA_Policy (STUB_Object *objref,
+  CORBA_Policy (TAO_Stub *objref,
                 TAO_ServantBase *_tao_servant = 0,
                 CORBA::Boolean _tao_collocated = 0
                 );

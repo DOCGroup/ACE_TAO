@@ -98,7 +98,7 @@ public:
   public:
     _tao_collocated_Policy (
         Policy_ptr  servant,
-        STUB_Object *stub
+        TAO_Stub *stub
       );
     Policy_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -159,7 +159,7 @@ public:
   public:
     _tao_collocated_Current (
         Current_ptr  servant,
-        STUB_Object *stub
+        TAO_Stub *stub
       );
     Current_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -446,7 +446,7 @@ class  _tao_collocated_DynAny : public virtual CORBA_DynAny
 public:
   _tao_collocated_DynAny (
       DynAny_ptr  servant,
-      STUB_Object *stub
+      TAO_Stub *stub
     );
   DynAny_ptr _get_servant (void) const;
   virtual CORBA::Boolean _is_a (
@@ -714,7 +714,7 @@ class  _tao_collocated_DynEnum : public virtual CORBA_DynEnum,
 public:
   _tao_collocated_DynEnum (
       DynEnum_ptr  servant,
-      STUB_Object *stub
+      TAO_Stub *stub
     );
   DynEnum_ptr _get_servant (void) const;
   virtual CORBA::Boolean _is_a (
@@ -811,7 +811,7 @@ class  _tao_collocated_DynStruct : public virtual CORBA_DynStruct,
 public:
   _tao_collocated_DynStruct (
       DynStruct_ptr  servant,
-      STUB_Object *stub
+      TAO_Stub *stub
     );
   DynStruct_ptr _get_servant (void) const;
   virtual CORBA::Boolean _is_a (
@@ -928,7 +928,7 @@ class  _tao_collocated_DynUnion : public virtual CORBA_DynUnion,
 public:
   _tao_collocated_DynUnion (
       DynUnion_ptr  servant,
-      STUB_Object *stub
+      TAO_Stub *stub
     );
   DynUnion_ptr _get_servant (void) const;
   virtual CORBA::Boolean _is_a (
@@ -1050,7 +1050,7 @@ class  _tao_collocated_DynSequence : public virtual CORBA_DynSequence,
 public:
   _tao_collocated_DynSequence (
       DynSequence_ptr  servant,
-      STUB_Object *stub
+      TAO_Stub *stub
     );
   DynSequence_ptr _get_servant (void) const;
   virtual CORBA::Boolean _is_a (
@@ -1137,7 +1137,7 @@ class  _tao_collocated_DynArray : public virtual CORBA_DynArray,
 public:
   _tao_collocated_DynArray (
       DynArray_ptr  servant,
-      STUB_Object *stub
+      TAO_Stub *stub
     );
   DynArray_ptr _get_servant (void) const;
   virtual CORBA::Boolean _is_a (

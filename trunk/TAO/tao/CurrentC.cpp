@@ -38,7 +38,7 @@ CORBA_Current_ptr CORBA_Current::_narrow (
     return CORBA_Current::_nil ();
   if (!obj->_is_a ("IDL:CORBA/Current:1.0", env))
     return CORBA_Current::_nil ();
-  STUB_Object *stub = obj->_stubobj ();
+  TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
          || !obj->_servant()

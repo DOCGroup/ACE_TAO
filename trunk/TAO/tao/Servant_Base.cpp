@@ -85,10 +85,10 @@ TAO_ServantBase::_bind (const char *opname,
   return optable_->bind (opname, skel_ptr);
 }
 
-STUB_Object *
+TAO_Stub *
 TAO_ServantBase::_create_stub (CORBA_Environment &env)
 {
-  STUB_Object *stub;
+  TAO_Stub *stub;
 
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   TAO_POA_Current *poa_current = orb_core->poa_current ();
@@ -122,7 +122,7 @@ TAO_ServantBase::_create_stub (CORBA_Environment &env)
   return stub;
 }
 
-STUB_Object *
+TAO_Stub *
 TAO_Local_ServantBase::_create_stub (CORBA_Environment &env)
 {
   PortableServer::ObjectId_var invalid_oid =
@@ -147,7 +147,7 @@ TAO_DynamicImplementation::_this (CORBA::Environment &env)
   // object. Unlike _this() for static skeletons, its return type is
   // not interface-specific because a DSI servant may very well
   // incarnate multiple CORBA objects of different types.
-  STUB_Object *stub = this->_create_stub (env);
+  TAO_Stub *stub = this->_create_stub (env);
   if (env.exception () != 0)
     return CORBA::Object::_nil ();
 
@@ -171,7 +171,7 @@ TAO_DynamicImplementation::_downcast (const char *repository_id)
   return this;
 }
 
-STUB_Object *
+TAO_Stub *
 TAO_DynamicImplementation::_create_stub (CORBA::Environment &env)
 {
   // If DynamicImplementation::_this() is invoked outside of the

@@ -386,7 +386,7 @@ PortableServer::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
 
 ACE_INLINE
 PortableServer::ThreadPolicy::ThreadPolicy(
-                                           STUB_Object *objref,
+                                           TAO_Stub *objref,
                                            TAO_ServantBase *servant,
                                            CORBA::Boolean collocated
                                            )
@@ -580,7 +580,7 @@ PortableServer::ThreadPolicy_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::LifespanPolicy::LifespanPolicy(
-                                               STUB_Object *objref,
+                                               TAO_Stub *objref,
                                                TAO_ServantBase *servant,
                                                CORBA::Boolean collocated
                                                )
@@ -773,7 +773,7 @@ PortableServer::LifespanPolicy_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::IdUniquenessPolicy::IdUniquenessPolicy(
-                                                       STUB_Object *objref,
+                                                       TAO_Stub *objref,
                                                        TAO_ServantBase *servant,
                                                        CORBA::Boolean collocated
                                                        )
@@ -966,7 +966,7 @@ PortableServer::IdUniquenessPolicy_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::IdAssignmentPolicy::IdAssignmentPolicy(
-                                                       STUB_Object *objref,
+                                                       TAO_Stub *objref,
                                                        TAO_ServantBase *servant,
                                                        CORBA::Boolean collocated
                                                        )
@@ -1161,7 +1161,7 @@ PortableServer::IdAssignmentPolicy_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::ImplicitActivationPolicy::ImplicitActivationPolicy(
-                                                                   STUB_Object *objref,
+                                                                   TAO_Stub *objref,
                                                                    TAO_ServantBase *servant,
                                                                    CORBA::Boolean collocated
                                                                    )
@@ -1354,7 +1354,7 @@ PortableServer::ImplicitActivationPolicy_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::ServantRetentionPolicy::ServantRetentionPolicy(
-                                                               STUB_Object *objref,
+                                                               TAO_Stub *objref,
                                                                TAO_ServantBase *servant,
                                                                CORBA::Boolean collocated
                                                                )
@@ -1547,7 +1547,7 @@ PortableServer::ServantRetentionPolicy_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::RequestProcessingPolicy::RequestProcessingPolicy(
-                                                                 STUB_Object *objref,
+                                                                 TAO_Stub *objref,
                                                                  TAO_ServantBase *servant,
                                                                  CORBA::Boolean collocated
                                                                  )
@@ -1742,7 +1742,7 @@ PortableServer::RequestProcessingPolicy_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::POAManager::POAManager(
-                                       STUB_Object *objref,
+                                       TAO_Stub *objref,
                                        TAO_ServantBase *servant,
                                        CORBA::Boolean collocated
                                        )
@@ -1937,7 +1937,7 @@ PortableServer::POAManager_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::AdapterActivator::AdapterActivator(
-                                                   STUB_Object *objref,
+                                                   TAO_Stub *objref,
                                                    TAO_ServantBase *servant,
                                                    CORBA::Boolean collocated
                                                    )
@@ -2130,7 +2130,7 @@ PortableServer::AdapterActivator_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::ServantManager::ServantManager(
-                                               STUB_Object *objref,
+                                               TAO_Stub *objref,
                                                TAO_ServantBase *servant,
                                                CORBA::Boolean collocated
                                                )
@@ -2323,7 +2323,7 @@ PortableServer::ServantManager_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::ServantActivator::ServantActivator(
-                                                   STUB_Object *objref,
+                                                   TAO_Stub *objref,
                                                    TAO_ServantBase *servant,
                                                    CORBA::Boolean collocated
                                                    )
@@ -2516,7 +2516,7 @@ PortableServer::ServantActivator_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::ServantLocator::ServantLocator(
-                                               STUB_Object *objref,
+                                               TAO_Stub *objref,
                                                TAO_ServantBase *servant,
                                                CORBA::Boolean collocated
                                                )
@@ -2711,7 +2711,7 @@ PortableServer::ServantLocator_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::POA::POA(
-                         STUB_Object *objref,
+                         TAO_Stub *objref,
                          TAO_ServantBase *servant,
                          CORBA::Boolean collocated
                          )
@@ -2898,7 +2898,7 @@ PortableServer::POA_out::operator-> (void)
 
 ACE_INLINE
 PortableServer::Current::Current(
-                                 STUB_Object *objref,
+                                 TAO_Stub *objref,
                                  TAO_ServantBase *servant,
                                  CORBA::Boolean collocated
                                  )

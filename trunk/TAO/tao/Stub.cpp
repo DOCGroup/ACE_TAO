@@ -26,19 +26,19 @@
 
 #include "tao/Timeprobe.h"
 
-ACE_RCSID(tao, STUB_Object, "$Id$")
+ACE_RCSID(tao, TAO_Stub, "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_STUB_Object_Timeprobe_Description[] =
+static const char *TAO_TAO_Stub_Timeprobe_Description[] =
   {
-    "STUB_Object::do_static_call - start",
-    "STUB_Object::do_static_call - end",
-    "STUB_Object::do_static_call - set_cancel",
-    "STUB_Object::do_static_call - grab_orb_core",
-    "STUB_Object::do_static_call - invocation_ctor",
-    "STUB_Object::do_static_call - invocation_start",
-    "STUB_Object::do_static_call - put_params"
+    "TAO_Stub::do_static_call - start",
+    "TAO_Stub::do_static_call - end",
+    "TAO_Stub::do_static_call - set_cancel",
+    "TAO_Stub::do_static_call - grab_orb_core",
+    "TAO_Stub::do_static_call - invocation_ctor",
+    "TAO_Stub::do_static_call - invocation_start",
+    "TAO_Stub::do_static_call - put_params"
   };
 
 enum
@@ -54,12 +54,12 @@ enum
   };
 
 // Setup Timeprobes
-ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_STUB_Object_Timeprobe_Description,
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_TAO_Stub_Timeprobe_Description,
                                   TAO_STUB_OBJECT_DO_STATIC_CALL_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-STUB_Object::STUB_Object (char *repository_id,
+TAO_Stub::TAO_Stub (char *repository_id,
                           TAO_MProfile &profiles)
   : type_id (repository_id),
     base_profiles_ ((CORBA::ULong) 0),
@@ -79,7 +79,7 @@ STUB_Object::STUB_Object (char *repository_id,
   set_base_profiles (&profiles);
 }
 
-STUB_Object::STUB_Object (char *repository_id,
+TAO_Stub::TAO_Stub (char *repository_id,
                           TAO_Profile *profile)
   : type_id (repository_id),
     base_profiles_ ((CORBA::ULong) 0),
@@ -105,7 +105,7 @@ STUB_Object::STUB_Object (char *repository_id,
 
 }
 
-STUB_Object::STUB_Object (char *repository_id,
+TAO_Stub::TAO_Stub (char *repository_id,
                           TAO_MProfile *profiles)
   : type_id (repository_id),
     base_profiles_ ((CORBA::ULong) 0),
@@ -128,7 +128,7 @@ STUB_Object::STUB_Object (char *repository_id,
 
 }
 
-STUB_Object::STUB_Object (char *repository_id)
+TAO_Stub::TAO_Stub (char *repository_id)
   : type_id (repository_id),
     base_profiles_ ((CORBA::ULong) 0),
     forward_profiles_ (0),
@@ -152,7 +152,7 @@ STUB_Object::STUB_Object (char *repository_id)
 // @@ Use all profiles for hash function!!!!!  FRED
 //    can get different values, depending on the profile_in_use!!
 CORBA::ULong
-STUB_Object::hash (CORBA::ULong max,
+TAO_Stub::hash (CORBA::ULong max,
                    CORBA::Environment &env)
 {
   // we rely on the profile object to has it's address info
@@ -190,7 +190,7 @@ int operator!=(const TAO_opaque& rhs,
 // NOTE that this must NOT go across the network!
 // @@ Two object references are the same if any two profiles are the same!
 CORBA::Boolean
-STUB_Object::is_equivalent (CORBA::Object_ptr other_obj,
+TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj,
                             CORBA::Environment &env)
 {
   if (CORBA::is_nil (other_obj) == 1)
@@ -209,7 +209,7 @@ STUB_Object::is_equivalent (CORBA::Object_ptr other_obj,
 // Memory managment
 
 CORBA::ULong
-STUB_Object::_incr_refcnt (void)
+TAO_Stub::_incr_refcnt (void)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->refcount_lock_, 0);
 
@@ -217,7 +217,7 @@ STUB_Object::_incr_refcnt (void)
 }
 
 CORBA::ULong
-STUB_Object::_decr_refcnt (void)
+TAO_Stub::_decr_refcnt (void)
 {
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->refcount_lock_, 0);
@@ -294,7 +294,7 @@ private:
 // which does all the work.
 
 void
-STUB_Object::do_static_call (CORBA::Environment &ACE_TRY_ENV,
+TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
                              const TAO_Call_Data *info,
                              void** args)
 
@@ -482,7 +482,7 @@ STUB_Object::do_static_call (CORBA::Environment &ACE_TRY_ENV,
 }
 
 void
-STUB_Object::put_params (CORBA::Environment &ACE_TRY_ENV,
+TAO_Stub::put_params (CORBA::Environment &ACE_TRY_ENV,
                          const TAO_Call_Data *info,
                          TAO_GIOP_Invocation &call,
                          void** args)
@@ -523,7 +523,7 @@ STUB_Object::put_params (CORBA::Environment &ACE_TRY_ENV,
 // DII analogue of the above.
 
 void
-STUB_Object::do_dynamic_call (const char *opname,
+TAO_Stub::do_dynamic_call (const char *opname,
                               CORBA::Boolean is_roundtrip,
                               CORBA::NVList_ptr args,
                               CORBA::NamedValue_ptr result,
@@ -772,7 +772,7 @@ STUB_Object::do_dynamic_call (const char *opname,
 }
 
 void
-STUB_Object::put_params (TAO_GIOP_Invocation &call,
+TAO_Stub::put_params (TAO_GIOP_Invocation &call,
                          CORBA::NVList_ptr args,
                          CORBA::Environment &ACE_TRY_ENV)
 {

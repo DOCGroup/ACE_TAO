@@ -57,7 +57,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // generate the ifdefined macro for  the _ptr type
       os->gen_ifdef_macro (node->flatname (), "_ptr");
 
-     
+
       // the following two are required to be under the ifdef macro to avoid
       // multiple declarations
 
@@ -147,7 +147,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
           // generate the _ptr_type and _var_type typedefs
           // but we must protect against certain versions of g++
-          << "#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8" 
+          << "#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8"
           << be_idt_nl
           << "typedef " << node->local_name () << "_ptr _ptr_type;" << be_nl
           << "typedef " << node->local_name () << "_var _var_type;" << be_uidt_nl
@@ -159,6 +159,13 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << node->local_name () << "_ptr obj);" << be_nl
           << "static " << node->local_name () << "_ptr "
 	        << "_narrow (" << be_idt << be_idt_nl
+          << "CORBA::Object_ptr obj," << be_nl
+	        << "CORBA::Environment &env = " << be_idt_nl
+	        << "CORBA::Environment::default_environment ()"
+	        << be_uidt << be_uidt_nl
+	        << ");" << be_uidt_nl
+          << "static " << node->local_name () << "_ptr "
+	        << "_unchecked_narrow (" << be_idt << be_idt_nl
           << "CORBA::Object_ptr obj," << be_nl
 	        << "CORBA::Environment &env = " << be_idt_nl
 	        << "CORBA::Environment::default_environment ()"
@@ -192,7 +199,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << "protected:" << be_idt_nl
 	        << node->local_name () << " (void); // default constructor" << be_nl
           << node->local_name ()
-	        << " (STUB_Object *objref, " << be_idt << be_idt_nl
+	        << " (TAO_Stub *objref, " << be_idt << be_idt_nl
           << "TAO_ServantBase *_tao_servant = 0, " << be_nl
           << "CORBA::Boolean _tao_collocated = 0" << be_uidt_nl
 	        << ");" << be_uidt_nl

@@ -236,7 +236,7 @@ PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_narrow (
     return PortableServer::ThreadPolicy::_nil ();
   if (!obj->_is_a ("IDL:PortableServer/ThreadPolicy:1.0", env))
     return PortableServer::ThreadPolicy::_nil ();
-  STUB_Object *stub = obj->_stubobj ();
+  TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
@@ -330,7 +330,7 @@ PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_narrow (
     return PortableServer::LifespanPolicy::_nil ();
   if (!obj->_is_a ("IDL:PortableServer/LifespanPolicy:1.0", env))
     return PortableServer::LifespanPolicy::_nil ();
-  STUB_Object *stub = obj->_stubobj ();
+  TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
@@ -425,7 +425,7 @@ PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_narr
     return PortableServer::IdUniquenessPolicy::_nil ();
   if (!obj->_is_a ("IDL:PortableServer/IdUniquenessPolicy:1.0", env))
     return PortableServer::IdUniquenessPolicy::_nil ();
-  STUB_Object *stub = obj->_stubobj ();
+  TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
@@ -515,7 +515,7 @@ PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_narr
     return PortableServer::IdAssignmentPolicy::_nil ();
   if (!obj->_is_a ("IDL:PortableServer/IdAssignmentPolicy:1.0", env))
     return PortableServer::IdAssignmentPolicy::_nil ();
-  STUB_Object *stub = obj->_stubobj ();
+  TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
@@ -608,7 +608,7 @@ PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationP
     return PortableServer::ImplicitActivationPolicy::_nil ();
   if (!obj->_is_a ("IDL:PortableServer/ImplicitActivationPolicy:1.0", env))
     return PortableServer::ImplicitActivationPolicy::_nil ();
-  STUB_Object *stub = obj->_stubobj ();
+  TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
@@ -698,7 +698,7 @@ PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolic
     return PortableServer::ServantRetentionPolicy::_nil ();
   if (!obj->_is_a ("IDL:PortableServer/ServantRetentionPolicy:1.0", env))
     return PortableServer::ServantRetentionPolicy::_nil ();
-  STUB_Object *stub = obj->_stubobj ();
+  TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
@@ -789,7 +789,7 @@ PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPol
     return PortableServer::RequestProcessingPolicy::_nil ();
   if (!obj->_is_a ("IDL:PortableServer/RequestProcessingPolicy:1.0", env))
     return PortableServer::RequestProcessingPolicy::_nil ();
-  STUB_Object *stub = obj->_stubobj ();
+  TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
@@ -872,7 +872,7 @@ PortableServer::POAManager_ptr PortableServer::POAManager::_narrow (
       return PortableServer::POAManager::_nil ();
     } // end of if
 
-  STUB_Object *stub = obj->_stubobj ();
+  TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/POAManager:1.0");
   return new POA_PortableServer::_tao_collocated_POAManager(
@@ -1055,7 +1055,7 @@ PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_narrow (
       return PortableServer::AdapterActivator::_nil ();
     } // end of if
 
-  STUB_Object *stub = obj->_stubobj ();
+  TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/AdapterActivator:1.0");
   return new POA_PortableServer::_tao_collocated_AdapterActivator(
@@ -1110,7 +1110,7 @@ PortableServer::ServantManager_ptr PortableServer::ServantManager::_narrow (
       return PortableServer::ServantManager::_nil ();
     } // end of if
 
-  STUB_Object *stub = obj->_stubobj ();
+  TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/ServantManager:1.0");
   return new POA_PortableServer::_tao_collocated_ServantManager(
@@ -1168,7 +1168,7 @@ PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_narrow (
       return PortableServer::ServantActivator::_nil ();
     } // end of if
 
-  STUB_Object *stub = obj->_stubobj ();
+  TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/ServantActivator:1.0");
   return new POA_PortableServer::_tao_collocated_ServantActivator(
@@ -1224,7 +1224,7 @@ PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_narrow (
       return PortableServer::ServantLocator::_nil ();
     } // end of if
 
-  STUB_Object *stub = obj->_stubobj ();
+  TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/ServantLocator:1.0");
   return new POA_PortableServer::_tao_collocated_ServantLocator(
@@ -1285,7 +1285,7 @@ PortableServer::POA_ptr PortableServer::POA::_narrow (
       return PortableServer::POA::_nil ();
     } // end of if
 
-  STUB_Object *stub = obj->_stubobj ();
+  TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/POA:1.0");
   return new POA_PortableServer::_tao_collocated_POA(
@@ -2719,7 +2719,7 @@ PortableServer::Current_ptr PortableServer::Current::_narrow (
     return PortableServer::Current::_nil ();
   if (!obj->_is_a ("IDL:PortableServer/Current:1.0", env))
     return PortableServer::Current::_nil ();
-  STUB_Object *stub = obj->_stubobj ();
+  TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (!obj->_is_collocated () || !obj->_servant())
     {

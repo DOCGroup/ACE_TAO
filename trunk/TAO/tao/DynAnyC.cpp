@@ -52,7 +52,7 @@ CORBA_DynAny_ptr CORBA_DynAny::_narrow (CORBA::Object_ptr obj,
   if (!obj->_is_a ("IDL:/CORBA_DynAny:1.0", env))
     return CORBA_DynAny::_nil ();
 
-  STUB_Object* stub = obj->_stubobj ();
+  TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
       || !obj->_servant ()
@@ -712,7 +712,7 @@ CORBA_DynEnum_ptr CORBA_DynEnum::_narrow (CORBA::Object_ptr obj,
   if (!obj->_is_a ("IDL:/CORBA_DynEnum:1.0", env))
     return CORBA_DynEnum::_nil ();
 
-  STUB_Object* stub = obj->_stubobj ();
+  TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
       || !obj->_servant ()
@@ -1007,7 +1007,7 @@ CORBA_DynStruct_ptr CORBA_DynStruct::_narrow (CORBA::Object_ptr obj,
   if (!obj->_is_a ("IDL:/CORBA_DynStruct:1.0", env))
     return CORBA_DynStruct::_nil ();
 
-  STUB_Object* stub = obj->_stubobj ();
+  TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
       || !obj->_servant ()
@@ -1116,7 +1116,7 @@ CORBA_DynUnion_ptr CORBA_DynUnion::_narrow (CORBA::Object_ptr obj,
                    env))
     return CORBA_DynUnion::_nil ();
 
-  STUB_Object* stub = obj->_stubobj ();
+  TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
       || !obj->_servant ()
@@ -1326,7 +1326,7 @@ CORBA_DynSequence_ptr CORBA_DynSequence::_narrow (CORBA::Object_ptr obj,
                    env))
     return CORBA_DynSequence::_nil ();
 
-  STUB_Object* stub = obj->_stubobj ();
+  TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
       || !obj->_servant ()
@@ -1435,7 +1435,7 @@ CORBA_DynArray_ptr CORBA_DynArray::_narrow (CORBA::Object_ptr obj,
                    env))
     return CORBA_DynArray::_nil ();
 
-  STUB_Object* stub = obj->_stubobj ();
+  TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
       || !obj->_servant ()

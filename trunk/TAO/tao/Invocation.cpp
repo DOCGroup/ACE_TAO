@@ -62,10 +62,10 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Invocation_Timeprobe_Description,
 // call.  That is less disruptive (and error prone) in general than
 // restructuring an ORB core in terms of asynchrony.
 
-TAO_GIOP_Invocation::TAO_GIOP_Invocation (STUB_Object *data,
+TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
                                           const char *operation,
                                           TAO_ORB_Core* orb_core)
-  : data_ (data),
+  : stub_ (stub),
     opname_ (operation),
     my_request_id_ (0),
     out_stream_ (buffer, sizeof buffer, /* ACE_CDR::DEFAULT_BUFSIZE */
@@ -130,9 +130,9 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
 
   // @@ assert is evil, it crashes the program, changed to an
   // exception (coryan)
-  // assert (this->data_ != 0);
+  // assert (this->stub_ != 0);
 
-  if (this->data_ == 0)
+  if (this->stub_ == 0)
     ACE_THROW (CORBA::INV_OBJREF (CORBA::COMPLETED_NO));
 
   // Get a pointer to the connector registry, which might be in
@@ -158,17 +158,17 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
  for (;;)
     {
       // Get the current profile...
-      this->profile_ = this->data_->profile_in_use ();
+      this->profile_ = this->stub_->profile_in_use ();
 
       if (this->transport_ != 0)
         this->transport_->idle ();
-      int result = conn_reg->connect (this->data_, this->transport_);
+      int result = conn_reg->connect (this->stub_, this->transport_);
       if (result == 0)
         break;
 
       // Try moving to the next profile and starting over, if that
       // fails then we must raise the TRANSIENT exception.
-      if (this->data_->next_profile_retry () == 0)
+      if (this->stub_->next_profile_retry () == 0)
         ACE_THROW (CORBA::TRANSIENT (CORBA::COMPLETED_NO));
     }
 
@@ -354,7 +354,7 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
 
   // @@ Maybe the right place to do this is once the reply is
   //    received? But what about oneways?
-  this->data_->set_valid_profile ();
+  this->stub_->set_valid_profile ();
 
   return TAO_INVOKE_OK;
 }
@@ -385,7 +385,7 @@ TAO_GIOP_Invocation::close_connection (void)
   //    the profile list to point to the first profile!
   // FRED For now we will not deal with recursive forwards!
 
-  this->data_->reset_profiles ();
+  this->stub_->reset_profiles ();
   // sets the forwarding profile to 0 and deletes the old one;
   // rewinds the profiles list back to the first one.
 
@@ -394,7 +394,7 @@ TAO_GIOP_Invocation::close_connection (void)
 
 // Handle the GIOP Reply with status = LOCATION_FORWARD
 // Replace the IIOP Profile. The call is then automatically
-// reinvoked by the STUB_Object::do_static_call method.
+// reinvoked by the TAO_Stub::do_static_call method.
 
 int
 TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
@@ -420,10 +420,10 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
                         TAO_INVOKE_EXCEPTION);
     }
 
-  // The object pointer has to be changed to a STUB_Object pointer
+  // The object pointer has to be changed to a TAO_Stub pointer
   // in order to extract the profile.
 
-  STUB_Object *stubobj = object->_stubobj ();
+  TAO_Stub *stubobj = object->_stubobj ();
 
   if (stubobj == 0)
     {
@@ -450,11 +450,11 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   // New for Multiple profile.  Get the MProfile list from the
   // forwarded object refererence
 
-  this->data_->add_forward_profiles (stubobj->get_profiles ());
+  this->stub_->add_forward_profiles (stubobj->get_profiles ());
   // store the new profile list and set the first forwarding profile
   // note: this has to be and is thread safe.  Also get_profiles returns
-  // a pointer to a new MProfile object which we give to data_ (Our
-  // STUB_Object.)
+  // a pointer to a new MProfile object which we give to our
+  // TAO_Stub.
 
   // @@ Why do we clear the environment?
   // ACE_TRY_ENV.clear ();
@@ -462,7 +462,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   // We may not need to do this since TAO_GIOP_Invocations
   // get created on a per-call basis. For now we'll play it safe.
 
-  if (this->data_->next_profile () == 0)
+  if (this->stub_->next_profile () == 0)
     ACE_THROW_RETURN (CORBA::TRANSIENT (CORBA::COMPLETED_NO),
                       TAO_INVOKE_EXCEPTION);
 
@@ -731,7 +731,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
       // semantics of CORBA we must raise an exception at this point
       // and *not* try to transparently restart the request.
 
-      // We must also reset the state of this object, because the next 
+      // We must also reset the state of this object, because the next
       // invocation may perfectly work.
       this->close_connection ();
 
@@ -922,7 +922,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
   // @@ Maybe the right place to do this is once the reply is
   //    received? But what about oneways?
-  this->data_->set_valid_profile ();
+  this->stub_->set_valid_profile ();
 
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (this->transport_,
                                                      this->inp_stream_,

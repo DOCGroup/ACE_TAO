@@ -74,7 +74,7 @@ public:
   public:
     _tao_collocated_ThreadPolicy (
                                   ThreadPolicy_ptr  servant,
-                                  STUB_Object *stub
+                                  TAO_Stub *stub
                                   );
     ThreadPolicy_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -149,7 +149,7 @@ public:
   public:
     _tao_collocated_LifespanPolicy (
                                     LifespanPolicy_ptr  servant,
-                                    STUB_Object *stub
+                                    TAO_Stub *stub
                                     );
     LifespanPolicy_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -224,7 +224,7 @@ public:
   public:
     _tao_collocated_IdUniquenessPolicy (
                                         IdUniquenessPolicy_ptr  servant,
-                                        STUB_Object *stub
+                                        TAO_Stub *stub
                                         );
     IdUniquenessPolicy_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -299,7 +299,7 @@ public:
   public:
     _tao_collocated_IdAssignmentPolicy (
                                         IdAssignmentPolicy_ptr  servant,
-                                        STUB_Object *stub
+                                        TAO_Stub *stub
                                         );
     IdAssignmentPolicy_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -376,7 +376,7 @@ public:
   public:
     _tao_collocated_ImplicitActivationPolicy (
                                               ImplicitActivationPolicy_ptr  servant,
-                                              STUB_Object *stub
+                                              TAO_Stub *stub
                                               );
     ImplicitActivationPolicy_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -451,7 +451,7 @@ public:
   public:
     _tao_collocated_ServantRetentionPolicy (
                                             ServantRetentionPolicy_ptr  servant,
-                                            STUB_Object *stub
+                                            TAO_Stub *stub
                                             );
     ServantRetentionPolicy_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -526,7 +526,7 @@ public:
   public:
     _tao_collocated_RequestProcessingPolicy (
                                              RequestProcessingPolicy_ptr  servant,
-                                             STUB_Object *stub
+                                             TAO_Stub *stub
                                              );
     RequestProcessingPolicy_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -599,7 +599,7 @@ public:
   public:
     _tao_collocated_POAManager (
                                 POAManager_ptr  servant,
-                                STUB_Object *stub
+                                TAO_Stub *stub
                                 );
     POAManager_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -671,7 +671,7 @@ public:
   public:
     _tao_collocated_AdapterActivator (
                                       AdapterActivator_ptr  servant,
-                                      STUB_Object *stub
+                                      TAO_Stub *stub
                                       );
     AdapterActivator_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -723,7 +723,7 @@ public:
   public:
     _tao_collocated_ServantManager (
                                     ServantManager_ptr  servant,
-                                    STUB_Object *stub
+                                    TAO_Stub *stub
                                     );
     ServantManager_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -775,7 +775,7 @@ public:
   public:
     _tao_collocated_ServantActivator (
                                       ServantActivator_ptr  servant,
-                                      STUB_Object *stub
+                                      TAO_Stub *stub
                                       );
     ServantActivator_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -844,7 +844,7 @@ public:
   public:
     _tao_collocated_ServantLocator (
                                     ServantLocator_ptr  servant,
-                                    STUB_Object *stub
+                                    TAO_Stub *stub
                                     );
     ServantLocator_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -979,7 +979,7 @@ public:
   public:
     _tao_collocated_POA (
                          POA_ptr  servant,
-                         STUB_Object *stub
+                         TAO_Stub *stub
                          );
     POA_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -1168,7 +1168,7 @@ public:
   public:
     _tao_collocated_Current (
                              Current_ptr  servant,
-                             STUB_Object *stub
+                             TAO_Stub *stub
                              );
     Current_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (

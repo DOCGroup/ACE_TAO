@@ -6,7 +6,7 @@
 
 ACE_INLINE
 TAO_Profile *
-STUB_Object::set_profile_in_use_i (TAO_Profile *pfile)
+TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
 {
   TAO_Profile *old = this->profile_in_use_;
 
@@ -29,14 +29,14 @@ STUB_Object::set_profile_in_use_i (TAO_Profile *pfile)
 
 ACE_INLINE
 void
-STUB_Object::reset_first_locate_request (void)
+TAO_Stub::reset_first_locate_request (void)
 {
   first_locate_request_ = 1;
 }
 
 ACE_INLINE
 void
-STUB_Object::reset_base (void)
+TAO_Stub::reset_base (void)
 {
   this->base_profiles_.rewind ();
   reset_first_locate_request ();
@@ -47,7 +47,7 @@ STUB_Object::reset_base (void)
 
 ACE_INLINE
 void
-STUB_Object::forward_back_one (void)
+TAO_Stub::forward_back_one (void)
 {
   TAO_MProfile *from = forward_profiles_->forward_from ();
 
@@ -70,7 +70,7 @@ STUB_Object::forward_back_one (void)
 
 ACE_INLINE
 void
-STUB_Object::reset_forward (void)
+TAO_Stub::reset_forward (void)
 {
   while (forward_profiles_)
     forward_back_one ();
@@ -80,7 +80,7 @@ STUB_Object::reset_forward (void)
 
 ACE_INLINE
 void
-STUB_Object::reset_profiles_i (void)
+TAO_Stub::reset_profiles_i (void)
 {
   reset_forward ();
   reset_base ();
@@ -88,7 +88,7 @@ STUB_Object::reset_profiles_i (void)
 
 ACE_INLINE
 void
-STUB_Object::reset_profiles (void)
+TAO_Stub::reset_profiles (void)
 {
   ACE_MT (ACE_GUARD (ACE_Lock,
                      guard,
@@ -97,7 +97,7 @@ STUB_Object::reset_profiles (void)
 }
 
 ACE_INLINE
-STUB_Object::~STUB_Object (void)
+TAO_Stub::~TAO_Stub (void)
 {
   assert (this->refcount_ == 0);
 
@@ -119,14 +119,14 @@ STUB_Object::~STUB_Object (void)
 
 ACE_INLINE
 TAO_Profile *
-STUB_Object::profile_in_use (void)
+TAO_Stub::profile_in_use (void)
 {
   return this->profile_in_use_;
 }
 
 ACE_INLINE
 void
-STUB_Object::use_locate_requests (CORBA::Boolean use_it)
+TAO_Stub::use_locate_requests (CORBA::Boolean use_it)
 {
   if (use_it)
     {
@@ -143,14 +143,14 @@ STUB_Object::use_locate_requests (CORBA::Boolean use_it)
 
 ACE_INLINE
 TAO_MProfile *
-STUB_Object::get_profiles (void)
+TAO_Stub::get_profiles (void)
 {
   return new TAO_MProfile (&base_profiles_);
 }
 
 ACE_INLINE
 TAO_Profile *
-STUB_Object::next_forward_profile (void)
+TAO_Stub::next_forward_profile (void)
 {
   TAO_Profile *pfile_next = 0;
 
@@ -164,7 +164,7 @@ STUB_Object::next_forward_profile (void)
 
 ACE_INLINE
 TAO_Profile *
-STUB_Object::next_profile_i (void)
+TAO_Stub::next_profile_i (void)
 {
 
   TAO_Profile *pfile_next = 0;
@@ -187,7 +187,7 @@ STUB_Object::next_profile_i (void)
 
 ACE_INLINE
 TAO_Profile *
-STUB_Object::next_profile (void)
+TAO_Stub::next_profile (void)
 {
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
@@ -199,28 +199,28 @@ STUB_Object::next_profile (void)
 
 ACE_INLINE
 CORBA::Boolean
-STUB_Object::valid_forward_profile (void)
+TAO_Stub::valid_forward_profile (void)
 {
   return (profile_success_ && forward_profiles_);
 }
 
 ACE_INLINE
 void
-STUB_Object::set_valid_profile (void)
+TAO_Stub::set_valid_profile (void)
 {
   profile_success_ = 1;
 }
 
 ACE_INLINE
 CORBA::Boolean
-STUB_Object::valid_profile (void)
+TAO_Stub::valid_profile (void)
 {
   return profile_success_;
 }
 
 ACE_INLINE
 TAO_Profile *
-STUB_Object::set_base_profiles (TAO_MProfile *mprofiles)
+TAO_Stub::set_base_profiles (TAO_MProfile *mprofiles)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                             guard,
@@ -237,7 +237,7 @@ STUB_Object::set_base_profiles (TAO_MProfile *mprofiles)
 
 ACE_INLINE
 void
-STUB_Object::add_forward_profiles (TAO_MProfile *mprofiles)
+TAO_Stub::add_forward_profiles (TAO_MProfile *mprofiles)
 {
   // we assume that the profile_in_use_ is being
   // forwarded!  Grab the lock so things don't change.
@@ -262,7 +262,7 @@ STUB_Object::add_forward_profiles (TAO_MProfile *mprofiles)
 
 ACE_INLINE
 CORBA::Boolean
-STUB_Object::next_profile_retry (void)
+TAO_Stub::next_profile_retry (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                             guard,
@@ -286,7 +286,7 @@ STUB_Object::next_profile_retry (void)
 }
 
 ACE_INLINE const TAO_MProfile&
-STUB_Object::get_base_profiles (void) const
+TAO_Stub::get_base_profiles (void) const
 {
   return this->base_profiles_;
 }

@@ -87,7 +87,7 @@ TAO_Connector_Registry::preconnect (const char *the_preconnections)
 }
 
 int
-TAO_Connector_Registry::connect (STUB_Object *&obj,
+TAO_Connector_Registry::connect (TAO_Stub *&obj,
                                  TAO_Transport *&transport)
 {
   CORBA::ULong req_tag = TAO_IOP_TAG_INTERNET_IOP;

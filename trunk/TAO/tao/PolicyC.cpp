@@ -37,7 +37,7 @@ CORBA_Policy_ptr CORBA_Policy::_narrow (
     return CORBA_Policy::_nil ();
   if (!obj->_is_a ("IDL:CORBA/Policy:1.0", env))
     return CORBA_Policy::_nil ();
-  STUB_Object *stub = obj->_stubobj ();
+  TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
          || !obj->_servant()
@@ -72,7 +72,7 @@ CORBA::PolicyType CORBA_Policy::policy_type (
   {"_get_policy_type", 1, 1, _get_CORBA_Policy_policy_type_paramdata, 0, 0};
 
   CORBA::PolicyType _tao_retval = 0;
-  STUB_Object *istub = this->_stubobj ();
+  TAO_Stub *istub = this->_stubobj ();
   if (istub)
   {
     void* _tao_arguments[1];
@@ -100,7 +100,7 @@ CORBA_Policy_ptr CORBA_Policy::copy (
   {"copy", 1, 1, CORBA_Policy_copy_paramdata, 0, 0};
 
   CORBA_Policy_ptr _tao_retval = CORBA_Policy::_nil ();
-  STUB_Object *istub = this->_stubobj ();
+  TAO_Stub *istub = this->_stubobj ();
   if (istub)
   {
     CORBA::Object_ptr _tao_base_retval = CORBA::Object::_nil ();
@@ -130,7 +130,7 @@ void CORBA_Policy::destroy (
   static const TAO_Call_Data CORBA_Policy_destroy_calldata =
   {"destroy", 1, 1, CORBA_Policy_destroy_paramdata, 0, 0};
 
-  STUB_Object *istub = this->_stubobj ();
+  TAO_Stub *istub = this->_stubobj ();
   if (istub)
   {
     void* _tao_arguments[1];

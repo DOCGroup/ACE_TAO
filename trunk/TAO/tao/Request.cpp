@@ -85,7 +85,7 @@ CORBA_Request::~CORBA_Request (void)
 void
 CORBA_Request::invoke (CORBA::Environment &ACE_TRY_ENV)
 {
-  STUB_Object *stub = this->target_->_stubobj ();
+  TAO_Stub *stub = this->target_->_stubobj ();
 
   stub->do_dynamic_call ((char *) opname_,
                          1,
@@ -99,7 +99,7 @@ CORBA_Request::invoke (CORBA::Environment &ACE_TRY_ENV)
 void
 CORBA_Request::send_oneway (CORBA::Environment &ACE_TRY_ENV)
 {
-  STUB_Object *stub = this->target_->_stubobj ();
+  TAO_Stub *stub = this->target_->_stubobj ();
 
   stub->do_dynamic_call ((char *) opname_,
                          0,

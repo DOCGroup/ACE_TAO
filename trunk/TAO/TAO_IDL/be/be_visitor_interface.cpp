@@ -42,4 +42,3 @@
 #include "be_visitor_interface/cdr_op_cs.cpp"
 
 ACE_RCSID(be, be_visitor_interface, "$Id$")
-

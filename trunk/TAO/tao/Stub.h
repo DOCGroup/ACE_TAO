@@ -188,10 +188,10 @@ struct TAO_Skel_Entry
   // skeleton corresponding to the operation
 };
 
-class TAO_Export STUB_Object
+class TAO_Export TAO_Stub
 {
   // = TITLE
-  //   STUB_Object
+  //   TAO_Stub
   //
   // = DESCRIPTION
   //   Per-objref data includes the (protocol-specific) Profile, which
@@ -207,8 +207,8 @@ class TAO_Export STUB_Object
   //   type.
 public:
   void do_static_call (CORBA_Environment &TAO_IN_ENV,
-                               const TAO_Call_Data *info,
-                               void** args);
+                       const TAO_Call_Data *info,
+                       void** args);
   // The "stub interpreter" method parameters are:
   //
   //    - TAO_IN_ENV ... used for exception reporting
@@ -268,7 +268,8 @@ public:
   // equivalent).
 
   CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj,
-        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                                CORBA_Environment &TAO_IN_ENV =
+                                      CORBA::default_environment ());
   // XXX All objref representations should know how to marshal
   // themselves.  That will involve ensuring that the IOR that gets
   // marshaled talks a specific protocol, otherwise the target of a
@@ -282,7 +283,7 @@ public:
 
   // Our Constructors ...
 
-  STUB_Object (char * repository_id);
+  TAO_Stub (char * repository_id);
   // XXX All objref representations should know how to marshal
   // themselves.  That will involve ensuring that the IOR that gets
   // marshaled talks a specific protocol, otherwise the target of a
@@ -294,19 +295,19 @@ public:
   // only supports one protocol -- the problem won't show up.
   // "Multiprotocol ORBs" will need to solve that problem though.  ]
 
-  STUB_Object (char *repository_id,
-               TAO_Profile *profile);
+  TAO_Stub (char *repository_id,
+                   TAO_Profile *profile);
   // degenerate case where only one profile is wanted.  This method
   // is depricated and is here ONLY for compatibility with multiple
   // profile unfriendly code!  The profile is given to the MProfile
   // object.
 
-  STUB_Object (char *repository_id,
+  TAO_Stub (char *repository_id,
                TAO_MProfile *profiles);
   // Construct from a repository ID and a list of profiles.
 
-  STUB_Object (char *repository_id,
-               TAO_MProfile &profiles);
+  TAO_Stub (char *repository_id,
+                   TAO_MProfile &profiles);
   // Construct from a repository ID and a profile ID.profile ID.
 
   // = Memory management.
@@ -321,7 +322,7 @@ public:
   TAO_MProfile *get_profiles (void);
   // Copy of the profile list, user must free memory when done.
   // although the user can call get_profiles then reorder
-  // the list and give it back to STUB_Object.
+  // the list and give it back to TAO_Stub.
 
   const TAO_MProfile& get_base_profiles (void) const;
   // Obtain a reference to the basic profile set.
@@ -388,7 +389,8 @@ protected:
 
   void put_params (TAO_GIOP_Invocation &call,
                    CORBA::NVList_ptr args,
-                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                   CORBA_Environment &TAO_IN_ENV =
+                         CORBA::default_environment ());
   // Helper method to factor out common code in dynamic oneway
   // vs. twoway invocations.
 
@@ -415,7 +417,7 @@ private:
    // NOT THREAD-SAFE.  utility method which pops all forward profile
    // lists and resets the forward_profiles_ pointer.
 
-  ~STUB_Object (void);
+  ~TAO_Stub (void);
   // Destructor is to be called only through _decr_refcnt()
 
   TAO_Profile *next_forward_profile (void);
@@ -424,7 +426,7 @@ private:
 private:
     // @@ For now, we keep track of transport specific profiles here,
   //    but in the next iteration this will go away ... only transport
-  //    neutral info is kept here => STUB_Object should also go away!
+  //    neutral info is kept here => TAO_Stub should also go away!
   //    fredk
   TAO_MProfile     base_profiles_;
   // ordered list of profiles for this object.
@@ -452,8 +454,8 @@ private:
   // distinguishes the first from following calls
 
   // = Disallow copy constructor and assignment operator
-  ACE_UNIMPLEMENTED_FUNC (STUB_Object (const STUB_Object &))
-  ACE_UNIMPLEMENTED_FUNC (STUB_Object &operator = (const STUB_Object &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Stub (const TAO_Stub &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Stub &operator = (const TAO_Stub &))
 
 #if defined (__GNUG__)
   // G++ (even 2.6.3) stupidly thinks instances can't be created.

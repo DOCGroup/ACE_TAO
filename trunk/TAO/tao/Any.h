@@ -312,7 +312,7 @@ private:
   void operator<<= (unsigned char);
   CORBA::Boolean operator>>= (unsigned char&) const;
 
-  friend class STUB_Object;
+  friend class TAO_Stub;
   friend class TAO_Marshal_Any;
   friend class CORBA_NVList;
 };

@@ -874,7 +874,7 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
 
 }
 
-STUB_Object *
+TAO_Stub *
 CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
                                const char *type_id,
                                CORBA::Environment &env)
@@ -905,9 +905,9 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
                           orb_core->orb_params ()->addr ().get_port_number (),
                           key,
                           TAO_ORB_Core_instance ()->orb_params ()->addr ());
-  STUB_Object *data = 0;
+  TAO_Stub *data = 0;
   // @@ replace IIOP::Profile with something more appropriate!!
-  data = new STUB_Object (id, pfile);
+  data = new TAO_Stub (id, pfile);
   
   if (pfile == 0)
     {
@@ -922,8 +922,8 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
 
       // Plus we want to return an exception.  @@ If that's the only
       // reason, then you can use ACE_NEW_THROW_RETURN.
-      data = new STUB_Object (id, pfile);
-      // pfile is given to STUB_Object!
+      data = new TAO_Stub (id, pfile);
+      // pfile is given to TAO_Stub!
 
       if (data == 0)
         env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
@@ -939,7 +939,7 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
                           const char *type_id,
                           CORBA::Environment &env)
 {
-  STUB_Object *data = this->create_stub_object (key, type_id, env);
+  TAO_Stub *data = this->create_stub_object (key, type_id, env);
 
   if (env.exception () != 0)
     return CORBA::Object::_nil ();

@@ -158,7 +158,7 @@ const char* POA_PortableServer::ThreadPolicy::_interface_repository_id (void) co
 
 POA_PortableServer::_tao_collocated_ThreadPolicy::_tao_collocated_ThreadPolicy (
                                                                                 POA_PortableServer::ThreadPolicy_ptr  servant,
-                                                                                STUB_Object *stub
+                                                                                TAO_Stub *stub
                                                                                 )
   : ACE_NESTED_CLASS (PortableServer, ThreadPolicy) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_Policy) (servant, stub),
@@ -220,7 +220,7 @@ POA_PortableServer::_tao_collocated_ThreadPolicy::value (
 PortableServer::ThreadPolicy*
 POA_PortableServer::ThreadPolicy::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
   if (TAO_IN_ENV.exception () != 0)
     return 0;
   return new POA_PortableServer::_tao_collocated_ThreadPolicy (this, stub);
@@ -366,7 +366,7 @@ const char* POA_PortableServer::LifespanPolicy::_interface_repository_id (void) 
 
 POA_PortableServer::_tao_collocated_LifespanPolicy::_tao_collocated_LifespanPolicy (
                                                                                     POA_PortableServer::LifespanPolicy_ptr  servant,
-                                                                                    STUB_Object *stub
+                                                                                    TAO_Stub *stub
                                                                                     )
   : ACE_NESTED_CLASS (PortableServer, LifespanPolicy) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_Policy) (servant, stub),
@@ -427,7 +427,7 @@ POA_PortableServer::_tao_collocated_LifespanPolicy::value (
 PortableServer::LifespanPolicy*
 POA_PortableServer::LifespanPolicy::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
   if (TAO_IN_ENV.exception () != 0)
     return 0;
   return new POA_PortableServer::_tao_collocated_LifespanPolicy (this, stub);
@@ -571,7 +571,7 @@ const char* POA_PortableServer::IdUniquenessPolicy::_interface_repository_id (vo
 
 POA_PortableServer::_tao_collocated_IdUniquenessPolicy::_tao_collocated_IdUniquenessPolicy (
                                                                                             POA_PortableServer::IdUniquenessPolicy_ptr  servant,
-                                                                                            STUB_Object *stub
+                                                                                            TAO_Stub *stub
                                                                                             )
   : ACE_NESTED_CLASS (PortableServer, IdUniquenessPolicy) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_Policy) (servant, stub),
@@ -632,7 +632,7 @@ POA_PortableServer::_tao_collocated_IdUniquenessPolicy::value (
 PortableServer::IdUniquenessPolicy*
 POA_PortableServer::IdUniquenessPolicy::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
   if (TAO_IN_ENV.exception () != 0)
     return 0;
   return new POA_PortableServer::_tao_collocated_IdUniquenessPolicy (this, stub);
@@ -776,7 +776,7 @@ const char* POA_PortableServer::IdAssignmentPolicy::_interface_repository_id (vo
 
 POA_PortableServer::_tao_collocated_IdAssignmentPolicy::_tao_collocated_IdAssignmentPolicy (
                                                                                             POA_PortableServer::IdAssignmentPolicy_ptr  servant,
-                                                                                            STUB_Object *stub
+                                                                                            TAO_Stub *stub
                                                                                             )
   : ACE_NESTED_CLASS (PortableServer, IdAssignmentPolicy) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_Policy) (servant, stub),
@@ -837,7 +837,7 @@ POA_PortableServer::_tao_collocated_IdAssignmentPolicy::value (
 PortableServer::IdAssignmentPolicy*
 POA_PortableServer::IdAssignmentPolicy::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
   if (TAO_IN_ENV.exception () != 0)
     return 0;
   return new POA_PortableServer::_tao_collocated_IdAssignmentPolicy (this, stub);
@@ -983,7 +983,7 @@ const char* POA_PortableServer::ImplicitActivationPolicy::_interface_repository_
 
 POA_PortableServer::_tao_collocated_ImplicitActivationPolicy::_tao_collocated_ImplicitActivationPolicy (
                                                                                                         POA_PortableServer::ImplicitActivationPolicy_ptr  servant,
-                                                                                                        STUB_Object *stub
+                                                                                                        TAO_Stub *stub
                                                                                                         )
   : ACE_NESTED_CLASS (PortableServer, ImplicitActivationPolicy) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_Policy) (servant, stub),
@@ -1044,7 +1044,7 @@ POA_PortableServer::_tao_collocated_ImplicitActivationPolicy::value (
 PortableServer::ImplicitActivationPolicy*
 POA_PortableServer::ImplicitActivationPolicy::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
   if (TAO_IN_ENV.exception () != 0)
     return 0;
   return new POA_PortableServer::_tao_collocated_ImplicitActivationPolicy (this, stub);
@@ -1188,7 +1188,7 @@ const char* POA_PortableServer::ServantRetentionPolicy::_interface_repository_id
 
 POA_PortableServer::_tao_collocated_ServantRetentionPolicy::_tao_collocated_ServantRetentionPolicy (
                                                                                                     POA_PortableServer::ServantRetentionPolicy_ptr  servant,
-                                                                                                    STUB_Object *stub
+                                                                                                    TAO_Stub *stub
                                                                                                     )
   : ACE_NESTED_CLASS (PortableServer, ServantRetentionPolicy) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_Policy) (servant, stub),
@@ -1249,7 +1249,7 @@ POA_PortableServer::_tao_collocated_ServantRetentionPolicy::value (
 PortableServer::ServantRetentionPolicy*
 POA_PortableServer::ServantRetentionPolicy::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
   if (TAO_IN_ENV.exception () != 0)
     return 0;
   return new POA_PortableServer::_tao_collocated_ServantRetentionPolicy (this, stub);
@@ -1393,7 +1393,7 @@ const char* POA_PortableServer::RequestProcessingPolicy::_interface_repository_i
 
 POA_PortableServer::_tao_collocated_RequestProcessingPolicy::_tao_collocated_RequestProcessingPolicy (
                                                                                                       POA_PortableServer::RequestProcessingPolicy_ptr  servant,
-                                                                                                      STUB_Object *stub
+                                                                                                      TAO_Stub *stub
                                                                                                       )
   : ACE_NESTED_CLASS (PortableServer, RequestProcessingPolicy) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_Policy) (servant, stub),
@@ -1454,7 +1454,7 @@ POA_PortableServer::_tao_collocated_RequestProcessingPolicy::value (
 PortableServer::RequestProcessingPolicy*
 POA_PortableServer::RequestProcessingPolicy::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
   if (TAO_IN_ENV.exception () != 0)
     return 0;
   return new POA_PortableServer::_tao_collocated_RequestProcessingPolicy (this, stub);
@@ -1558,7 +1558,7 @@ const char* POA_PortableServer::POAManager::_interface_repository_id (void) cons
 
 POA_PortableServer::_tao_collocated_POAManager::_tao_collocated_POAManager (
                                                                             POA_PortableServer::POAManager_ptr  servant,
-                                                                            STUB_Object *stub
+                                                                            TAO_Stub *stub
                                                                             )
   : ACE_NESTED_CLASS (PortableServer, POAManager) (stub, servant, 1),
     CORBA_Object (stub, servant, 1),
@@ -1633,7 +1633,7 @@ void POA_PortableServer::_tao_collocated_POAManager::deactivate (
 PortableServer::POAManager*
 POA_PortableServer::POAManager::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
   if (TAO_IN_ENV.exception () != 0)
     return 0;
   return new POA_PortableServer::_tao_collocated_POAManager (this, stub);
@@ -1737,7 +1737,7 @@ const char* POA_PortableServer::AdapterActivator::_interface_repository_id (void
 
 POA_PortableServer::_tao_collocated_AdapterActivator::_tao_collocated_AdapterActivator (
                                                                                         POA_PortableServer::AdapterActivator_ptr  servant,
-                                                                                        STUB_Object *stub
+                                                                                        TAO_Stub *stub
                                                                                         )
   : ACE_NESTED_CLASS (PortableServer, AdapterActivator) (stub, servant, 1),
     CORBA_Object (stub, servant, 1),
@@ -1778,7 +1778,7 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_AdapterActivator::unknown_ada
 PortableServer::AdapterActivator*
 POA_PortableServer::AdapterActivator::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
   if (TAO_IN_ENV.exception () != 0)
     return 0;
   return new POA_PortableServer::_tao_collocated_AdapterActivator (this, stub);
@@ -1880,7 +1880,7 @@ const char* POA_PortableServer::ServantManager::_interface_repository_id (void) 
 
 POA_PortableServer::_tao_collocated_ServantManager::_tao_collocated_ServantManager (
                                                                                     POA_PortableServer::ServantManager_ptr  servant,
-                                                                                    STUB_Object *stub
+                                                                                    TAO_Stub *stub
                                                                                     )
   : ACE_NESTED_CLASS (PortableServer, ServantManager) (stub, servant, 1),
     CORBA_Object (stub, servant, 1),
@@ -1908,7 +1908,7 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_ServantManager::_is_a (
 PortableServer::ServantManager*
 POA_PortableServer::ServantManager::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
   if (TAO_IN_ENV.exception () != 0)
     return 0;
   return new POA_PortableServer::_tao_collocated_ServantManager (this, stub);
@@ -2013,7 +2013,7 @@ const char* POA_PortableServer::ServantActivator::_interface_repository_id (void
 
 POA_PortableServer::_tao_collocated_ServantActivator::_tao_collocated_ServantActivator (
                                                                                         POA_PortableServer::ServantActivator_ptr  servant,
-                                                                                        STUB_Object *stub
+                                                                                        TAO_Stub *stub
                                                                                         )
   : ACE_NESTED_CLASS (PortableServer, ServantActivator) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_PortableServer, _tao_collocated_ServantManager) (servant, stub),
@@ -2074,7 +2074,7 @@ void POA_PortableServer::_tao_collocated_ServantActivator::etherealize (
 PortableServer::ServantActivator*
 POA_PortableServer::ServantActivator::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
   if (TAO_IN_ENV.exception () != 0)
     return 0;
   return new POA_PortableServer::_tao_collocated_ServantActivator (this, stub);
@@ -2179,7 +2179,7 @@ const char* POA_PortableServer::ServantLocator::_interface_repository_id (void) 
 
 POA_PortableServer::_tao_collocated_ServantLocator::_tao_collocated_ServantLocator (
                                                                                     POA_PortableServer::ServantLocator_ptr  servant,
-                                                                                    STUB_Object *stub
+                                                                                    TAO_Stub *stub
                                                                                     )
   : ACE_NESTED_CLASS (PortableServer, ServantLocator) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_PortableServer, _tao_collocated_ServantManager) (servant, stub),
@@ -2244,7 +2244,7 @@ void POA_PortableServer::_tao_collocated_ServantLocator::postinvoke (
 PortableServer::ServantLocator*
 POA_PortableServer::ServantLocator::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
   if (TAO_IN_ENV.exception () != 0)
     return 0;
   return new POA_PortableServer::_tao_collocated_ServantLocator (this, stub);
@@ -2348,7 +2348,7 @@ const char* POA_PortableServer::POA::_interface_repository_id (void) const
 
 POA_PortableServer::_tao_collocated_POA::_tao_collocated_POA (
                                                               POA_PortableServer::POA_ptr  servant,
-                                                              STUB_Object *stub
+                                                              TAO_Stub *stub
                                                               )
   : ACE_NESTED_CLASS (PortableServer, POA) (stub, servant, 1),
     CORBA_Object (stub, servant, 1),
@@ -2712,7 +2712,7 @@ CORBA::Object_ptr POA_PortableServer::_tao_collocated_POA::id_to_reference (
 PortableServer::POA*
 POA_PortableServer::POA::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
   if (TAO_IN_ENV.exception () != 0)
     return 0;
   return new POA_PortableServer::_tao_collocated_POA (this, stub);
@@ -2889,7 +2889,7 @@ const char* POA_PortableServer::Current::_interface_repository_id (void) const
 
 POA_PortableServer::_tao_collocated_Current::_tao_collocated_Current (
                                                                       POA_PortableServer::Current_ptr  servant,
-                                                                      STUB_Object *stub
+                                                                      TAO_Stub *stub
                                                                       )
   : ACE_NESTED_CLASS (PortableServer, Current) (stub, servant, 1),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Current) (servant, stub),
@@ -2936,7 +2936,7 @@ PortableServer::ObjectId * POA_PortableServer::_tao_collocated_Current::get_obje
 PortableServer::Current*
 POA_PortableServer::Current::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
   if (TAO_IN_ENV.exception () != 0)
     return 0;
   return new POA_PortableServer::_tao_collocated_Current (this, stub);

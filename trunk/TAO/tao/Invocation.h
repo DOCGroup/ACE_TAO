@@ -62,7 +62,7 @@ class TAO_Export TAO_GIOP_Invocation
   //
 public:
   // = Initialization and termination methods.
-  TAO_GIOP_Invocation (STUB_Object *data,
+  TAO_GIOP_Invocation (TAO_Stub *data,
                        const char *operation,
                        TAO_ORB_Core* orb_core);
   ~TAO_GIOP_Invocation (void);
@@ -145,7 +145,7 @@ private:
   // weight version.
 
 protected:
-  STUB_Object *data_;
+  TAO_Stub *stub_;
   // The object on which this invocation is going.
 
   const char *opname_;
@@ -184,7 +184,7 @@ class TAO_Export TAO_GIOP_Twoway_Invocation : public TAO_GIOP_Invocation
   //
 public:
   // = Initialization and termination methods.
-  TAO_GIOP_Twoway_Invocation (STUB_Object *data,
+  TAO_GIOP_Twoway_Invocation (TAO_Stub *data,
                               const char *operation,
                               TAO_ORB_Core* orb_core);
 
@@ -237,7 +237,7 @@ class TAO_Export TAO_GIOP_Oneway_Invocation : public TAO_GIOP_Invocation
   //
 public:
   // = Initialization and termination methods.
-  TAO_GIOP_Oneway_Invocation (STUB_Object *data,
+  TAO_GIOP_Oneway_Invocation (TAO_Stub *data,
                               const char *operation,
                               TAO_ORB_Core* orb_core);
 
@@ -260,7 +260,7 @@ class TAO_Export TAO_GIOP_Locate_Request_Invocation : public TAO_GIOP_Invocation
   //
 public:
   // = Initialization and termination methods.
-  TAO_GIOP_Locate_Request_Invocation (STUB_Object *data,
+  TAO_GIOP_Locate_Request_Invocation (TAO_Stub *data,
                                       TAO_ORB_Core* orb_core);
 
   void start (CORBA_Environment &TAO_IN_ENV =
