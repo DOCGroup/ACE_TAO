@@ -95,7 +95,7 @@ int
 ACE_Thread_Manager::thread_descriptor (ACE_thread_t thr_id,
                                        ACE_Thread_Descriptor &descriptor)
 {
-  ACE_TRACE ("ACE_Thread_Descriptor::thread_descriptor");
+  ACE_TRACE ("ACE_Thread_Manager::thread_descriptor");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   ACE_FIND (this->find_thread (thr_id), index);
@@ -108,7 +108,7 @@ int
 ACE_Thread_Manager::hthread_descriptor (ACE_hthread_t thr_handle, 
                                         ACE_Thread_Descriptor &descriptor)
 {
-  ACE_TRACE ("ACE_Thread_Descriptor::hthread_descriptor");
+  ACE_TRACE ("ACE_Thread_Manager::hthread_descriptor");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   ACE_FIND (this->find_hthread (thr_handle), index);
@@ -121,7 +121,7 @@ ACE_Thread_Manager::hthread_descriptor (ACE_hthread_t thr_handle,
 int 
 ACE_Thread_Manager::thr_self (ACE_hthread_t &self)
 {
-  ACE_TRACE ("ACE_Thread_Descriptor::thr_self");  
+  ACE_TRACE ("ACE_Thread_Manager::thr_self");  
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   // Try to get the cached HANDLE out of TSS to avoid lookup.
@@ -451,7 +451,7 @@ ace_thread_manager_adapter (void *args)
 // Call the appropriate OS routine to spawn a thread.  Should *not* be
 // called with the lock_ held...
 
-// HEY!  Consider duping the handles so that users can have something
+// @@ Consider duping the handles so that users can have something
 // to manipulate if they want.
 
 int 
@@ -483,14 +483,11 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   if (t_id == 0)
     t_id = &thr_id;
 
-  if (t_handle == 0)
-    t_handle = &thr_handle;
-  
   int result = ACE_Thread::spawn (func,
                                   args,
                                   flags,
                                   t_id,
-                                  t_handle,
+                                  &thr_handle,
                                   priority,
                                   stack,
                                   stack_size,
@@ -501,12 +498,26 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
     // errno = result;
     return -1;
   else
-    return this->append_thr (*t_id,
-			     *t_handle, 
-			     ACE_THR_SPAWNED, 
-			     grp_id,
-			     task,
-			     flags);
+    {
+#if defined (ACE_HAS_WTHREADS)
+      // Have to duplicate handle if client asks for it.
+      if (t_handle != 0)
+        (void) ::DuplicateHandle (::GetCurrentProcess (), 
+                                  thr_handle,
+                                  ::GetCurrentProcess (),
+                                  t_handle,
+                                  0, 
+                                  TRUE,
+                                  DUPLICATE_SAME_ACCESS);
+#endif /* ACE_HAS_WTHREADS */
+      
+      return this->append_thr (*t_id,
+                               thr_handle, 
+                               ACE_THR_SPAWNED, 
+                               grp_id,
+                               task,
+                               flags);
+    }
 }
 
 // Create a new thread running <func>.  *Must* be called with the
@@ -634,7 +645,7 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
 
   // Try to resize the array to twice its existing size if we run out
   // of space...
-  if (this->current_count_ >= this->max_table_size_ 
+  if (this->current_count_ >= this->max_table_size_
       && this->resize (this->max_table_size_ * 2) == -1)
     return -1;
   else
@@ -748,16 +759,6 @@ ACE_Thread_Manager::remove_thr (int i)
   ACE_TRACE ("ACE_Thread_Manager::remove_thr");
 
   this->current_count_--;
-
-  // @@ This compaction strategy should be removed so that we can use
-  // the TSS trick.  Therefore, we need to use the ACE_THR_IDLE flag
-  // to mark unused slots.  In addition, we need to keep a list of
-  // thread descriptors that have been removed *and* that were also
-  // *not* created with the ACE_THREAD_DETACHED (or where created with
-  // the ACE_THR_JOINABLE) flag.  Therefore, don't actually mark the
-  // thr_table_ entry as being in the ACE_THR_IDLE state *until* we've
-  // joined this thread.
-
   if (this->current_count_ > 0)
     // Compact the table by moving the last item into the slot vacated
     // by the index being removed (this is a structure assignment).
@@ -788,7 +789,14 @@ ACE_Thread_Manager::join_thr (int i)
 {
   ACE_TRACE ("ACE_Thread_Manager::join_thr");
 
-  ACE_THR_OP (ACE_Thread::join, ACE_THR_TERMINATED);
+  int result = ACE_Thread::join (this->thr_table_[i].thr_handle_);
+  if (result != 0)
+    {
+      this->remove_thr (i);
+      errno = result;
+      return -1;
+    }
+  return 0;
 }
 
 int
@@ -1158,8 +1166,25 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
 	    this->thr_table_[i].cleanup_info_.cleanup_hook_ = 0;
 	  }
 
-	// Remove thread descriptor from the table.
-	this->remove_thr (i);
+        // @@ I still don't know how to distinguish threads that
+        // fall off the end or exit normally from those that are
+        // joined explicitly by user.  Hopefully, after we put
+        // ACE_Thread_Descriptor addresses into TSS, we can find a
+        // way to solve this.
+
+	// Threads created with THR_DAEMON shouldn't exist here,
+	// but just to be safe, let's put it here.
+	if (((this->thr_table_[i].flags_ & (THR_DETACHED | THR_DAEMON)) == 0) ||
+	    (this->thr_table_[i].flags_ & (THR_JOINABLE != 0)))
+	  {
+	    // Mark thread as terminated.
+	    this->thr_table_[i].thr_state_ = ACE_THR_TERMINATED;
+            this->terminated_thr_queue_.enqueue_tail
+              (this->thr_table_[i]);
+	  }
+
+        // Remove thread descriptor from the table.
+        this->remove_thr (i);
       }
     // Release the guard.
   }
@@ -1221,6 +1246,14 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
   // fix, of course, but that would be very complicated.
   for (size_t i = 0; i < 4 * threads_waited_on; ++i)
     ACE_OS::thr_yield ();
+
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+    ACE_Thread_Descriptor item;
+
+    while (! this->terminated_thr_queue_.dequeue_head (item))
+	ACE_Thread::join (item.thr_handle_);
+  }
 #else
   ACE_UNUSED_ARG (timeout);
 #endif /* ACE_HAS_THREADS */
@@ -1543,11 +1576,13 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
   // This doesn't necessarily belong here, but it's a convenient place for it.
   template class ACE_TSS<ACE_Dynamic>;
   template class ACE_TSS<ACE_Thread_Exit>;
+  template class ACE_Unbounded_Queue<ACE_Thread_Descriptor>;
 #endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
   // This doesn't necessarily belong here, but it's a convenient place for it.
   #pragma instantiate ACE_TSS<ACE_Dynamic>
   #pragma instantiate ACE_TSS<ACE_Thread_Exit>
+  #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor>
 #endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
