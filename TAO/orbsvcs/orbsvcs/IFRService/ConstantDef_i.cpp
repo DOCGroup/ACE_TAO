@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "ConstantDef_i.h"
@@ -9,10 +8,13 @@
 #include "tao/Any_Unknown_IDL_Type.h"
 
 #include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
 
-ACE_RCSID (IFRService, 
+
+ACE_RCSID (IFRService,
            ConstantDef_i,
            "$Id$")
+
 
 TAO_ConstantDef_i::TAO_ConstantDef_i (
     TAO_Repository_i *repo
@@ -137,7 +139,7 @@ TAO_ConstantDef_i::type_def_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "type_path",
                                             type_path);
 
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (type_path,
                                               this->repo_
                                               ACE_ENV_ARG_PARAMETER);
@@ -283,4 +285,3 @@ TAO_ConstantDef_i::value_i (const CORBA::Any &value
                                             mb->base (),
                                             mb->length ());
 }
-

@@ -1,13 +1,16 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "Repository_i.h"
 #include "UsesDef_i.h"
 #include "IFR_Service_Utils_T.h"
 
-ACE_RCSID (IFRService, 
-           UsesDef_i, 
+#include "ace/SString.h"
+
+
+ACE_RCSID (IFRService,
+           UsesDef_i,
            "$Id$")
+
 
 TAO_UsesDef_i::TAO_UsesDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -103,7 +106,7 @@ TAO_UsesDef_i::interface_type_i (ACE_ENV_SINGLE_ARG_DECL)
                                        ACE_ENV_ARG_PARAMETER);
 }
 
-void 
+void
 TAO_UsesDef_i::interface_type (
     CORBA::InterfaceDef_ptr interface_type
     ACE_ENV_ARG_DECL
@@ -119,12 +122,12 @@ TAO_UsesDef_i::interface_type (
                           ACE_ENV_ARG_PARAMETER);
 }
 
-void 
+void
 TAO_UsesDef_i::interface_type_i (
     CORBA::InterfaceDef_ptr interface_type
     ACE_ENV_ARG_DECL_NOT_USED
   )
-  ACE_THROW_SPEC ((CORBA::SystemException)) 
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->remove_value (this->section_key_,
                                         "base_type");
@@ -134,7 +137,7 @@ TAO_UsesDef_i::interface_type_i (
       return;
     }
 
-  const char *tmp = 
+  const char *tmp =
     TAO_IFR_Service_Utils::reference_to_path (interface_type);
 
   ACE_Configuration_Section_Key new_key;
@@ -178,7 +181,7 @@ TAO_UsesDef_i::is_multiple_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return static_cast<CORBA::Boolean> (val);
 }
 
-void 
+void
 TAO_UsesDef_i::is_multiple (
     CORBA::Boolean is_multiple
     ACE_ENV_ARG_DECL
@@ -194,15 +197,14 @@ TAO_UsesDef_i::is_multiple (
                        ACE_ENV_ARG_PARAMETER);
 }
 
-void 
+void
 TAO_UsesDef_i::is_multiple_i (
-    CORBA::Boolean is_multiple 
+    CORBA::Boolean is_multiple
     ACE_ENV_ARG_DECL_NOT_USED
   )
-  ACE_THROW_SPEC ((CORBA::SystemException)) 
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
                                              "is_multiple",
                                              is_multiple);
 }
-

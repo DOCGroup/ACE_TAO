@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "InterfaceAttrExtension_i.h"
@@ -9,9 +8,14 @@
 #include "ExtAttributeDef_i.h"
 #include "IFR_Service_Utils.h"
 
-ACE_RCSID (IFRService, 
-           InterfaceAttrExtension_i, 
+#include "ace/SString.h"
+
+
+ACE_RCSID (IFRService,
+           InterfaceAttrExtension_i,
            "$Id$")
+
+
 
 // =====================================================================
 
@@ -52,7 +56,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
                   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription,
                   0);
 
-  CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var retval = 
+  CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var retval =
     fifd;
 
   ACE_TString holder;
@@ -183,7 +187,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
       ACE_CHECK_RETURN (0);
     }
 
-  CORBA::InterfaceDefSeq_var bases = 
+  CORBA::InterfaceDefSeq_var bases =
     iface.base_interfaces_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -217,7 +221,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
   return retval._retn ();
 }
 
-CORBA::ExtAttributeDef_ptr 
+CORBA::ExtAttributeDef_ptr
 TAO_InterfaceAttrExtension_i::create_ext_attribute (
     const char *id,
     const char *name,
@@ -244,8 +248,8 @@ TAO_InterfaceAttrExtension_i::create_ext_attribute (
                                        set_exceptions
                                        ACE_ENV_ARG_PARAMETER);
 }
-  
-CORBA::ExtAttributeDef_ptr 
+
+CORBA::ExtAttributeDef_ptr
 TAO_InterfaceAttrExtension_i::create_ext_attribute_i (
     const char *id,
     const char *name,
@@ -262,7 +266,7 @@ TAO_InterfaceAttrExtension_i::create_ext_attribute_i (
   ACE_Configuration_Section_Key new_key;
 
   // Common to all IR objects created in CORBA::Container.
-  ACE_TString path = 
+  ACE_TString path =
     TAO_IFR_Service_Utils::create_common (CORBA::dk_Interface,
                                           CORBA::dk_Attribute,
                                           this->section_key_,
@@ -313,4 +317,3 @@ TAO_InterfaceAttrExtension_i::create_ext_attribute_i (
 
   return retval._retn ();
 }
-

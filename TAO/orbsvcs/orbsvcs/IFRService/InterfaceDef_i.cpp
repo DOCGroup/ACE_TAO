@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "InterfaceDef_i.h"
@@ -8,9 +7,13 @@
 #include "IFR_Service_Utils.h"
 #include "IFR_Service_Utils_T.h"
 
-ACE_RCSID (IFRService, 
-           InterfaceDef_i, 
+#include "ace/SString.h"
+
+
+ACE_RCSID (IFRService,
+           InterfaceDef_i,
            "$Id$")
+
 
 TAO_InterfaceDef_i::TAO_InterfaceDef_i (
     TAO_Repository_i *repo
@@ -126,7 +129,7 @@ TAO_InterfaceDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
   ifd.version = holder.fast_rep ();
 
   CORBA::ULong i = 0;
-  CORBA::InterfaceDefSeq_var bases = 
+  CORBA::InterfaceDefSeq_var bases =
     this->base_interfaces_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -232,7 +235,7 @@ TAO_InterfaceDef_i::base_interfaces_i (ACE_ENV_SINGLE_ARG_DECL)
       ACE_TString path;
       path_queue.dequeue_head (path);
 
-      CORBA::Object_var obj = 
+      CORBA::Object_var obj =
         TAO_IFR_Service_Utils::path_to_ir_object (path,
                                                   this->repo_
                                                   ACE_ENV_ARG_PARAMETER);
@@ -306,7 +309,7 @@ TAO_InterfaceDef_i::base_interfaces_i (const CORBA::InterfaceDefSeq &base_interf
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
-      inherited_path = 
+      inherited_path =
         TAO_IFR_Service_Utils::reference_to_path (base_interfaces[i].in ());
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
@@ -372,7 +375,7 @@ TAO_InterfaceDef_i::is_a_i (const char *interface_id
     }
 
   // Is it one of our ancestors' types?
-  CORBA::InterfaceDefSeq_var bases = 
+  CORBA::InterfaceDefSeq_var bases =
     this->base_interfaces_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -556,7 +559,7 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK_RETURN (0);
     }
 
-  CORBA::InterfaceDefSeq_var bases = 
+  CORBA::InterfaceDefSeq_var bases =
     this->base_interfaces_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -640,7 +643,7 @@ TAO_InterfaceDef_i::create_attribute_i (
   ACE_Configuration_Section_Key new_key;
 
   // Common to all IR objects created in CORBA::Container.
-  ACE_TString path = 
+  ACE_TString path =
     TAO_IFR_Service_Utils::create_common (CORBA::dk_Interface,
                                           CORBA::dk_Attribute,
                                           this->section_key_,
@@ -733,7 +736,7 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
   ACE_Configuration_Section_Key new_key;
 
   // Common to all IR objects created in CORBA::Container.
-  ACE_TString path = 
+  ACE_TString path =
     TAO_IFR_Service_Utils::create_common (CORBA::dk_Interface,
                                           CORBA::dk_Operation,
                                           this->section_key_,
@@ -749,11 +752,11 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
 
   // Get the TypeCode for the return type.
   ACE_TString result_path (TAO_IFR_Service_Utils::reference_to_path (result));
-  TAO_IDLType_i *result_impl = 
+  TAO_IDLType_i *result_impl =
     TAO_IFR_Service_Utils::path_to_idltype (result_path,
                                             this->repo_);
 
-  CORBA::TypeCode_var rettype = 
+  CORBA::TypeCode_var rettype =
     result_impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::OperationDef::_nil ());
 
@@ -852,7 +855,7 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
 
       for (i = 0; i < length; ++i)
         {
-          type_path = 
+          type_path =
             TAO_IFR_Service_Utils::reference_to_path (exceptions[i].in ());
 
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
@@ -1045,7 +1048,7 @@ TAO_InterfaceDef_i::name_clash (const char *name)
       return 1;
     }
   ACE_ENDTRY;
-  
+
   return 0;
 }
 
@@ -1255,5 +1258,3 @@ TAO_InterfaceDef_i::check_inherited (const char *name,
         }
     }
 }
-
-

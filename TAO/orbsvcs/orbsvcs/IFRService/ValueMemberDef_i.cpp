@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "Repository_i.h"
@@ -6,9 +5,13 @@
 #include "IDLType_i.h"
 #include "IFR_Service_Utils_T.h"
 
-ACE_RCSID (IFRService, 
-           ValueMemberDef_i, 
+#include "ace/SString.h"
+
+
+ACE_RCSID (IFRService,
+           ValueMemberDef_i,
            "$Id$")
+
 
 TAO_ValueMemberDef_i::TAO_ValueMemberDef_i (
     TAO_Repository_i *repo
@@ -62,7 +65,7 @@ TAO_ValueMemberDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "type_path",
                                             holder);
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (holder,
                                               this->repo_
                                               ACE_ENV_ARG_PARAMETER);

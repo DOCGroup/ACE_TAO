@@ -1,14 +1,17 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "ValueBoxDef_i.h"
 #include "Repository_i.h"
 #include "IFR_Service_Utils.h"
-#include "ace/Auto_Ptr.h"
 
-ACE_RCSID (IFRService, 
-           ValueBoxDef_i, 
+#include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
+
+
+ACE_RCSID (IFRService,
+           ValueBoxDef_i,
            "$Id$")
+
 
 TAO_ValueBoxDef_i::TAO_ValueBoxDef_i (
     TAO_Repository_i *repo
@@ -62,7 +65,7 @@ TAO_ValueBoxDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "boxed_type",
                                             boxed_type_path);
 
-  TAO_IDLType_i *impl = 
+  TAO_IDLType_i *impl =
     TAO_IFR_Service_Utils::path_to_idltype (boxed_type_path,
                                             this->repo_);
 
@@ -96,7 +99,7 @@ TAO_ValueBoxDef_i::original_type_def_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "boxed_type",
                                             boxed_type_path);
 
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (boxed_type_path,
                                               this->repo_
                                               ACE_ENV_ARG_PARAMETER);
@@ -125,12 +128,10 @@ TAO_ValueBoxDef_i::original_type_def_i (CORBA::IDLType_ptr original_type_def
                                         ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  char *boxed_type = 
+  char *boxed_type =
     TAO_IFR_Service_Utils::reference_to_path (original_type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "boxed_type",
                                             boxed_type);
 }
-
-

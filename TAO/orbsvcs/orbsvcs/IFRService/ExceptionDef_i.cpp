@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "ExceptionDef_i.h"
@@ -6,10 +5,12 @@
 #include "IDLType_i.h"
 #include "IFR_Service_Utils.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
 
-ACE_RCSID (IFRService, 
-           ExceptionDef_i, 
+ACE_RCSID (IFRService,
+           ExceptionDef_i,
            "$Id$")
+
 
 TAO_ExceptionDef_i::TAO_ExceptionDef_i (
     TAO_Repository_i *repo
@@ -136,7 +137,7 @@ TAO_ExceptionDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "name",
                                             name);
 
-  CORBA::StructMemberSeq_var members = 
+  CORBA::StructMemberSeq_var members =
     this->members_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
@@ -330,7 +331,7 @@ TAO_ExceptionDef_i::members_i (const CORBA::StructMemberSeq &members
                                                     "name",
                                                     name);
 
-          path = 
+          path =
             TAO_IFR_Service_Utils::reference_to_path (
                 members[i].type_def.in ()
               );

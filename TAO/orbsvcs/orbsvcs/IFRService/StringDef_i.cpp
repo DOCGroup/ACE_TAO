@@ -1,12 +1,15 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "Repository_i.h"
 #include "StringDef_i.h"
 
-ACE_RCSID (IFRService, 
-           StringDef_i, 
+#include "ace/SString.h"
+
+
+ACE_RCSID (IFRService,
+           StringDef_i,
            "$Id$")
+
 
 TAO_StringDef_i::TAO_StringDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -123,4 +126,3 @@ TAO_StringDef_i::bound_i (CORBA::ULong bound
                                              "bound",
                                              bound);
 }
-

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "Repository_i.h"
@@ -6,13 +5,17 @@
 #include "EventDef_i.h"
 #include "IFR_Service_Utils_T.h"
 
-ACE_RCSID (IFRService, 
-           EventPortDef_i, 
+#include "ace/SString.h"
+
+
+ACE_RCSID (IFRService,
+           EventPortDef_i,
            "$Id$")
+
 
 TAO_EventPortDef_i::TAO_EventPortDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
-    TAO_Contained_i (repo)   
+    TAO_Contained_i (repo)
 {
 }
 
@@ -20,7 +23,7 @@ TAO_EventPortDef_i::~TAO_EventPortDef_i (void)
 {
 }
 
-CORBA::ComponentIR::EventDef_ptr 
+CORBA::ComponentIR::EventDef_ptr
 TAO_EventPortDef_i::event (
     ACE_ENV_SINGLE_ARG_DECL
   )
@@ -34,7 +37,7 @@ TAO_EventPortDef_i::event (
   return this->event_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA::ComponentIR::EventDef_ptr 
+CORBA::ComponentIR::EventDef_ptr
 TAO_EventPortDef_i::event_i (
     ACE_ENV_SINGLE_ARG_DECL
   )
@@ -52,7 +55,7 @@ TAO_EventPortDef_i::event_i (
                                                 ACE_ENV_ARG_PARAMETER);
 }
 
-void 
+void
 TAO_EventPortDef_i::event (
     CORBA::ComponentIR::EventDef_ptr event
     ACE_ENV_ARG_DECL
@@ -68,7 +71,7 @@ TAO_EventPortDef_i::event (
                  ACE_ENV_ARG_PARAMETER);
 }
 
-void 
+void
 TAO_EventPortDef_i::event_i (
     CORBA::ComponentIR::EventDef_ptr event
     ACE_ENV_ARG_DECL_NOT_USED
@@ -83,7 +86,7 @@ TAO_EventPortDef_i::event_i (
       return;
     }
 
-  const char *tmp = 
+  const char *tmp =
     TAO_IFR_Service_Utils::reference_to_path (event);
 
   ACE_Configuration_Section_Key new_key;
@@ -102,7 +105,7 @@ TAO_EventPortDef_i::event_i (
                                             holder);
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_EventPortDef_i::is_a (
     const char *event_id
     ACE_ENV_ARG_DECL
@@ -118,7 +121,7 @@ TAO_EventPortDef_i::is_a (
                        ACE_ENV_ARG_PARAMETER);
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_EventPortDef_i::is_a_i (
     const char *event_id
     ACE_ENV_ARG_DECL
@@ -191,4 +194,3 @@ TAO_EventPortDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return CORBA::dk_none;
 }
-

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "Repository_i.h"
@@ -11,9 +10,13 @@
 #include "ExtAttributeDef_i.h"
 #include "IFR_Service_Utils.h"
 
+#include "ace/SString.h"
+
+
 ACE_RCSID (IFRService,
            ComponentDef_i,
            "$Id$")
+
 
 // Specialization.
 template<>
