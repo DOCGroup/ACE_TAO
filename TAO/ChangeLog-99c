@@ -12,9 +12,13 @@ Sun Dec 19 08:58:56 1999  David L. Levine  <levine@cs.wustl.edu>
           auto_ptr wasn't being used correctly.  This needs to
           be fixed properly when Pradeep returns.
 
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+          added explicit template instantiations.
+
 Sun Dec 19 08:52:05 1999 David L. Levine <levine@cs.wustl.edu>
 
-        * orbsvcs/orbsvcs/Makefile: updated dependencies.
+        * orbsvcs/orbsvcs/Makefile,
+          orbsvcs/Notify_Service/Makefile:: updated dependencies.
 
 Sat Dec 18 22:43:55 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
