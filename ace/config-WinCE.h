@@ -82,6 +82,7 @@
 #define ACE_LACKS_FILELOCKS
 #define ACE_LACKS_EXEC
 #define ACE_LACKS_MKTEMP
+#define ACE_HAS_UNICODE_ONLY
 
 // temporary workspace
 class ostream;                  // Fake a ostream for now.
