@@ -4,9 +4,15 @@ project(RTComponentServer): ciao_server,rt_server {
 
   exename = RTComponentServer
 
+  IDL_Files {
+    RTConfiguration.idl
+  }
+
   Source_Files {
+    RTConfigurationC.cpp
     ComponentServer_Task.cpp
     RTComponentServer.cpp
+    RTConfig_Manager.cpp
   }
 }
 
