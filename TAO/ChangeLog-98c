@@ -1,5 +1,9 @@
 Sat Jul 18 20:22:19 1998  Michael Kircher <mk1@cs.wustl.edu>
 
+	* tests/Quoter/run_test.sh: Removed this file,
+	  all the functionality is provided by the 
+	  run_test.pl script.
+
 	* tao/Server_Request.{h,cpp}: Added a new constructor,
 	  which does not need an input CDR stream. It is going
 	  to be used for locate requests. When we invoke
