@@ -15,6 +15,9 @@ Wed Jan 17 10:00:42 2001  Darrell Brunsch <brunsch@uci.edu>
           call doesn't support any nonblocking option, so 
           redefining ACE_NONBLOCK would not seem to fix anything.
 
+          Thanks to Matthias Wittig <m.wittig@com-on.de> for reporting
+          a problem report form about this.
+
         * bin/PerlACE/Process_Unix.pm:
 
           Fixed up the use of the RUNNING state, so wait and kill
