@@ -246,6 +246,8 @@ TAO_IIOP_Profile::set (const ACE_INET_Addr& addr)
 
   this->port_ = addr.get_port_number();
 
+  // @@ We really should be passing in TAO_ORB_Core as a parameter,
+  // instead of using the ORB_Core singleton.
   if (TAO_ORB_Core_instance ()->orb_params ()->use_dotted_decimal_addresses ())
     {
       temphost2 = addr.get_host_addr ();
