@@ -17,6 +17,7 @@ CROSS-COMPILE = 1
 
 debug = 1
 optimize = 1
+rtti =
 shared_libs =
 static_libs = 1
 
@@ -140,6 +141,11 @@ CC              = cc$(TOOLENV)
 CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop \
                    -fvolatile -nostdinc -nostdlib $(PIPE_OPT) -Wall
 CCFLAGS         += $(CFLAGS)
+ifeq (,$(rtti))
+  #### Don't use RTTI even with egcs, because Tornado 1.0.x libraries
+  #### don't support it.
+  CCFLAGS += -fno-rtti -DACE_LACKS_RTTI
+endif # rtti
 DCFLAGS         += -g
 DLD             = $(LD)
 INCLDIRS        += -I$(WIND_BASE)/target/h
