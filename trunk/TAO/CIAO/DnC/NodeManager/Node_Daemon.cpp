@@ -84,7 +84,6 @@ parse_args (int argc, char *argv[])
                            "usage:  %s\n"
                            "-o <ior_output_file>\n"
                            "-c <svc.conf file>\n"
-                           "-i <installation data filename>\n"
                            "-n <use naming service>\n"
                            "-s <NodeApplication executable path>\n"
                            "\n",
