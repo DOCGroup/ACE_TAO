@@ -1,7 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 #include "IIOP_Profile.h"
 #include "CDR.h"
 #include "Environment.h"
@@ -34,12 +33,13 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO_ObjectKey &object_key,
                                     const TAO_GIOP_Message_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (IOP::TAG_INTERNET_IOP, orb_core, version),
+  : TAO_Profile (IOP::TAG_INTERNET_IOP,
+                 orb_core,
+                 object_key,
+                 version),
     endpoint_ (addr,
                orb_core->orb_params ()->use_dotted_decimal_addresses ()),
-    count_ (1),
-    object_key_ (object_key),
-    tagged_profile_ ()
+    count_ (1)
 {
 }
 
@@ -49,11 +49,12 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                                     const ACE_INET_Addr &addr,
                                     const TAO_GIOP_Message_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (IOP::TAG_INTERNET_IOP, orb_core, version),
+  : TAO_Profile (IOP::TAG_INTERNET_IOP,
+                 orb_core,
+                 object_key,
+                 version),
     endpoint_ (host, port, addr),
-    count_ (1),
-    object_key_ (object_key),
-    tagged_profile_ ()
+    count_ (1)
 {
 }
 
@@ -62,9 +63,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
-    count_ (1),
-    object_key_ (),
-    tagged_profile_ ()
+    count_ (1)
 {
 }
 
@@ -449,56 +448,6 @@ TAO_IIOP_Profile::encode (TAO_OutputCDR &stream) const
   return 1;
 }
 
-
-IOP::TaggedProfile &
-TAO_IIOP_Profile::create_tagged_profile (void)
-{
-  // Check whether we have already created the TaggedProfile
-  if (this->tagged_profile_.profile_data.get_buffer () == 0)
-    {
-      // As we have not created we will now create the TaggedProfile
-      this->tagged_profile_.tag = IOP::TAG_INTERNET_IOP;
-
-      // Create the encapsulation....
-      TAO_OutputCDR encap (ACE_CDR::DEFAULT_BUFSIZE,
-                           TAO_ENCAP_BYTE_ORDER,
-                           this->orb_core ()->output_cdr_buffer_allocator (),
-                           this->orb_core ()->output_cdr_dblock_allocator (),
-                           this->orb_core ()->output_cdr_msgblock_allocator (),
-                           this->orb_core ()->orb_params ()->cdr_memcpy_tradeoff (),
-                           TAO_DEF_GIOP_MAJOR,
-                           TAO_DEF_GIOP_MINOR,
-                           this->orb_core ()->to_iso8859 (),
-                           this->orb_core ()->to_unicode ());
-
-      // Create the profile body
-      this->create_profile_body (encap);
-
-      CORBA::ULong length =
-        ACE_static_cast(CORBA::ULong,encap.total_length ());
-
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-      // Place the message block in to the Sequence of Octets that we
-      // have
-      this->tagged_profile_.profile_data.replace (length,
-                                                  encap.begin ());
-#else
-      this->tagged_profile_.profile_data.length (length);
-      CORBA::Octet *buffer =
-        this->tagged_profile_.profile_data.get_buffer ();
-      for (const ACE_Message_Block *i = encap.begin ();
-           i != encap.end ();
-           i = i->next ())
-        {
-          ACE_OS::memcpy (buffer, i->rd_ptr (), i->length ());
-          buffer += i->length ();
-        }
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
-    }
-
-  return this->tagged_profile_;
-}
-
 void
 TAO_IIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 {
@@ -553,27 +502,8 @@ TAO_IIOP_Profile::encode_endpoints (void)
        == 0)
       || (out_cdr << endpoints) == 0)
     return -1;
-  CORBA::ULong length = out_cdr.total_length ();
 
-  IOP::TaggedComponent tagged_component;
-  tagged_component.tag = TAO_TAG_ENDPOINTS;
-  tagged_component.component_data.length (length);
-  CORBA::Octet *buf =
-    tagged_component.component_data.get_buffer ();
-
-  for (const ACE_Message_Block *iterator = out_cdr.begin ();
-       iterator != 0;
-       iterator = iterator->cont ())
-    {
-      CORBA::ULong i_length = iterator->length ();
-      ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
-
-      buf += i_length;
-    }
-
-  // Add component with encoded endpoint data to this profile's
-  // TaggedComponents.
-  tagged_components_.set_component (tagged_component);
+  this->set_tagged_components (out_cdr);
 
   return  0;
 }
