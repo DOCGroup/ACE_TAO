@@ -205,7 +205,7 @@ CORBA::Boolean Messaging::RebindPolicy::_is_a (const CORBA::Char *value, CORBA::
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RebindPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -270,7 +270,7 @@ CORBA::Boolean Messaging::SyncScopePolicy::_is_a (const CORBA::Char *value, CORB
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/SyncScopePolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -363,7 +363,7 @@ CORBA::Boolean Messaging::RequestPriorityPolicy::_is_a (const CORBA::Char *value
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RequestPriorityPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -428,7 +428,7 @@ CORBA::Boolean Messaging::ReplyPriorityPolicy::_is_a (const CORBA::Char *value, 
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/ReplyPriorityPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -493,7 +493,7 @@ CORBA::Boolean Messaging::RequestStartTimePolicy::_is_a (const CORBA::Char *valu
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RequestStartTimePolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -558,7 +558,7 @@ CORBA::Boolean Messaging::RequestEndTimePolicy::_is_a (const CORBA::Char *value,
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RequestEndTimePolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -623,7 +623,7 @@ CORBA::Boolean Messaging::ReplyStartTimePolicy::_is_a (const CORBA::Char *value,
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/ReplyStartTimePolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -688,7 +688,7 @@ CORBA::Boolean Messaging::ReplyEndTimePolicy::_is_a (const CORBA::Char *value, C
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/ReplyEndTimePolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -753,7 +753,7 @@ CORBA::Boolean Messaging::RelativeRequestTimeoutPolicy::_is_a (const CORBA::Char
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RelativeRequestTimeoutPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -818,7 +818,7 @@ CORBA::Boolean Messaging::RelativeRoundtripTimeoutPolicy::_is_a (const CORBA::Ch
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RelativeRoundtripTimeoutPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -911,7 +911,7 @@ CORBA::Boolean Messaging::RoutingPolicy::_is_a (const CORBA::Char *value, CORBA:
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RoutingPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -976,7 +976,7 @@ CORBA::Boolean Messaging::MaxHopsPolicy::_is_a (const CORBA::Char *value, CORBA:
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/MaxHopsPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -1041,7 +1041,7 @@ CORBA::Boolean Messaging::QueueOrderPolicy::_is_a (const CORBA::Char *value, COR
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/QueueOrderPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -1284,7 +1284,7 @@ CORBA::Boolean Messaging::ReplyHandler::_is_a (const CORBA::Char *value, CORBA::
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/ReplyHandler:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
@@ -1678,15 +1678,15 @@ char * Messaging::Poller::op_name (
   return _tao_retval;
 }
 
-CORBA::Boolean Messaging::Poller::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean Messaging::Poller::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/Poller:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Pollable:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value, env); // remote call
+    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
 const char* Messaging::Poller::_interface_repository_id (void) const
