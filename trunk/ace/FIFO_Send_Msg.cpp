@@ -18,7 +18,7 @@ ACE_FIFO_Send_Msg::dump (void) const
 ssize_t
 ACE_FIFO_Send_Msg::send (const ACE_Str_Buf &send_msg)
 {
-  ACE_TRACE ("ACE_FIFO_Send_Msg::send");
+  // ACE_TRACE ("ACE_FIFO_Send_Msg::send");
 #if defined (ACE_HAS_STREAM_PIPES)
   return ACE_OS::putmsg (this->get_handle (), 
 			 (strbuf *) 0, 

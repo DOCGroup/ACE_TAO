@@ -27,7 +27,7 @@ ACE_SPIPE_Stream::ACE_SPIPE_Stream (void)
 ssize_t
 ACE_SPIPE_Stream::send (size_t n, ...) const
 {
-  ACE_TRACE ("ACE_SPIPE_Stream::send");
+  // ACE_TRACE ("ACE_SPIPE_Stream::send");
   va_list argp;  
   size_t total_tuples = n / 2;
   iovec *iovp;

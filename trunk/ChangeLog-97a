@@ -7,6 +7,15 @@ Tue Apr 29 20:03:38 1997    <sumedh@cs.wustl.edu>
 
 Tue Apr 29 19:57:52 1997    <irfan@TWOSTEP>
 
+	* ace: Removed tracing for the following to make things work with
+ 	  tracing on:
+	  
+	  ACE::timestamp
+	  ACE_FIFO_Send_Msg::send
+	  ACE_SPIPE_Stream::send
+	  ACE_Sig_Guard::ACE_Sig_Guard
+	  ACE_Sig_Guard::~ACE_Sig_Guard
+
 	* netsvcs/servers/main.cpp (main): Added special code for Win32
 	  such that only SIGINT is being registered with the Signal
 	  Handler. SIGQUIT is not supported on Win32.

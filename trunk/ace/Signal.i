@@ -168,7 +168,7 @@ ACE_Sig_Action::restore_action (int signum, ACE_Sig_Action &oaction)
 ACE_INLINE 
 ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask)
 {
-  ACE_TRACE ("ACE_Sig_Guard::ACE_Sig_Guard");
+  //ACE_TRACE ("ACE_Sig_Guard::ACE_Sig_Guard");
 
   // If MASK is 0 then block all signals!
   if (mask == 0)
@@ -198,7 +198,7 @@ ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask)
 ACE_INLINE 
 ACE_Sig_Guard::~ACE_Sig_Guard (void)
 {
-  ACE_TRACE ("ACE_Sig_Guard::~ACE_Sig_Guard");
+  //ACE_TRACE ("ACE_Sig_Guard::~ACE_Sig_Guard");
 #if 0 /* defined (ACE_MT_SAFE) */
   ACE_OS::thr_sigsetmask (SIG_SETMASK, (sigset_t *) this->omask_, 0);
 #else
