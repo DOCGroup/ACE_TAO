@@ -326,9 +326,29 @@ TAO_NAMESPACE  CORBA
   
   class Policy;
   typedef Policy *Policy_ptr;
+  
+  struct tao_Policy_life;
+  typedef TAO_Objref_Var_T<Policy, tao_Policy_life> Policy_var;
+  typedef TAO_Objref_Out_T<Policy, tao_Policy_life> Policy_out;
+
+  struct tao_Policy_life
+  {
+    static Policy_ptr tao_duplicate (Policy_ptr);
+    static void tao_release (Policy_ptr);
+    static Policy_ptr tao_nil (void);
+  };
+
+  struct tao_Policy_cast
+  {
+    static Policy_ptr tao_narrow (CORBA::Object_ptr
+                                  ACE_ENV_ARG_DECL);
+    static CORBA::Object_ptr tao_upcast (void *);
+  };
 
 #endif /* end #if !defined */
-
+  
+#if 0
+ 
 #if !defined (_CORBA_POLICY___VAR_CH_)
 #define _CORBA_POLICY___VAR_CH_
   
@@ -401,6 +421,10 @@ TAO_NAMESPACE  CORBA
 
 #endif /* end #if !defined */
   
+#endif /* 0 */
+
+  // *************************************************************
+  // CORBA::Policy
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
 
@@ -705,9 +729,12 @@ TAO_NAMESPACE  CORBA
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Policy;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
-
+  typedef TAO_Unbounded_Object_Sequence<Policy,
+                                        Policy_var,
+                                        tao_Policy_life,
+                                        tao_Policy_cast>
+    PolicyList;
+  
 #if !defined (_CORBA_POLICYMANAGER___PTR_CH_)
 #define _CORBA_POLICYMANAGER___PTR_CH_
   

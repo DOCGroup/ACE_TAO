@@ -334,8 +334,7 @@ CORBA::PolicyList_var::operator ::CORBA::PolicyList *&() // cast
   return this->ptr_;
 }
 
-ACE_INLINE
-TAO_Object_Manager<CORBA::Policy, CORBA::Policy_var>
+ACE_INLINE TAO_Object_Manager<CORBA::Policy, CORBA::Policy_var, CORBA::tao_Policy_life>
 CORBA::PolicyList_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
@@ -443,8 +442,7 @@ CORBA::PolicyList_out::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE
-TAO_Object_Manager<CORBA::Policy, CORBA::Policy_var>
+ACE_INLINE TAO_Object_Manager<CORBA::Policy, CORBA::Policy_var, CORBA::tao_Policy_life>
 CORBA::PolicyList_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);

@@ -182,11 +182,7 @@ CORBA::_TAO_Unbounded_Object_Sequence_CORBA_PolicyList::_upcast (void *src) cons
 
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
-#if !defined (_CORBA_POLICYLIST_CS_)
-#define _CORBA_POLICYLIST_CS_
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
+#if 0
 
 // *************************************************************
 // CORBA::PolicyList
@@ -245,7 +241,7 @@ void CORBA::PolicyList::_tao_any_destructor (void *_tao_void_pointer)
   delete tmp;
 }
 
-#endif /* end #if !defined */
+#endif /* 0 */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -714,7 +710,7 @@ CORBA::Boolean operator<< (
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag =
-            tao_CORBA_Policy_marshal (_tao_sequence[i].in (), strm);
+            (strm << _tao_sequence[i].in ());
         }
       
       return _tao_marshal_flag;

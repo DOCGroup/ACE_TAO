@@ -1,3 +1,30 @@
+Tue Mar 18 21:42:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/DomainC.i:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/Policy_ForwardC.cpp:
+        * tao/Policy_ForwardC.h:
+        * tao/Policy_ForwardC.i:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+        * tao/corba.h:
+
+	  Interim hacks to avoid build errors. All the
+	  hand-crafted files will eventually be regenerated.
+
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+        * tao/Seq_VarOut_T.cpp:
+        * tao/Seq_VarOut_T.h:
+        * tao/Seq_VarOut_T.inl:
+
+	  New files, a start on templatizing all the
+	  _var and _out classes.
+
 Mon Mar 17 09:51:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_module.cpp (fe_add_module):
