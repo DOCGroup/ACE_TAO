@@ -124,6 +124,7 @@ CosNaming_Client::resolve_name (char *c, char *n)
       return -1;
     }
   TAO_ENDTRY;
+  return 0;
 }
 
 void
@@ -132,7 +133,6 @@ CosNaming_Client::list_contents (void)
   CosNaming::BindingIterator_var bi;
   CosNaming::BindingList_var li;
   CORBA::ULong how_many = 0;
-  CORBA::Boolean more = CORBA::B_FALSE;
   CosNaming::Binding_var b;
   CosNaming::Name n;
   CORBA::ULong names = 0;
@@ -141,7 +141,7 @@ CosNaming_Client::list_contents (void)
     {
       this->naming_context_->list (how_many, li, bi, TAO_TRY_ENV);
 
-      while (more = bi->next_one (b, TAO_TRY_ENV))
+      while (bi->next_one (b, TAO_TRY_ENV))
         {
           n = b->binding_name;
           names = n.length ();

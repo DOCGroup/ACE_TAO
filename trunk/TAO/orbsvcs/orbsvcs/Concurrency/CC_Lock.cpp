@@ -70,6 +70,7 @@ CC_Lock::try_lock (CORBA::Environment &_env)
         TAO_THROW_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
                           CORBA::B_FALSE);
     }
+  return CORBA::B_TRUE;
 }
 
 void 

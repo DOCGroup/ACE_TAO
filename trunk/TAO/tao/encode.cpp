@@ -103,9 +103,6 @@ TAO_Marshal_Any::encode (CORBA::TypeCode_ptr,
   // Typecode of the element that makes the Any.
   CORBA::TypeCode_ptr elem_tc;
 
-  // Value maintained by the Any.
-  void *value;
-
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
 
   // Status of encode operation
@@ -117,7 +114,6 @@ TAO_Marshal_Any::encode (CORBA::TypeCode_ptr,
   // Encode the typecode description for the element.
   if (stream->encode (CORBA::_tc_TypeCode, &elem_tc, 0, env)
       == CORBA::TypeCode::TRAVERSE_CONTINUE) {
-    value = (void *) any->value ();
     // if the any owns the data, then the value is a CDR stream and we simply
     // append the CDR stream
     if (any->any_owns_data_)

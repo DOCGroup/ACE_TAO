@@ -108,7 +108,6 @@ test_get (TAO_InputCDR &cdr, const CDR_Test_Types &test_types)
   CORBA::Octet xo;
   CORBA::Short xs;
   CORBA::Long xl;
-  CORBA::String xstr;
   CORBA::Any any;
 
   CORBA::Environment env;
@@ -165,6 +164,7 @@ test_get (TAO_InputCDR &cdr, const CDR_Test_Types &test_types)
                            i),
                           1);
 #if 0
+      CORBA::String xstr;
       if (cdr.read_string (xstr) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "read_string2[%d] failed\n",
