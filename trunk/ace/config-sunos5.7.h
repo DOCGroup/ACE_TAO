@@ -28,6 +28,10 @@
 # endif /* __GNUC__ <= 2  &&  __GNUC_MINOR__ < 8 */
 #endif /* __GNUG__ */
 
+#if defined (__KCC)
+typedef unsigned long long uint64_t;
+#endif
+
 // Solaris 5.7 supports SCHED_FIFO and SCHED_RR, as well as SCHED_OTHER.
 #undef ACE_HAS_ONLY_SCHED_OTHER
 
