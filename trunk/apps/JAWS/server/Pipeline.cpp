@@ -98,9 +98,9 @@ JAWS_Protocol_Filter::JAWS_Protocol_Filter (void)
 }
 
 JAWS_Protocol_Filter::JAWS_Protocol_Filter (JAWS_Protocol_Pipeline *pp)
-  : prev_pipe_ (0),
-    next_pipe_ (0),
-    JAWS_Protocol_Pipeline (pp)
+  : JAWS_Protocol_Pipeline (pp),
+    prev_pipe_ (0),
+    next_pipe_ (0)
 {
 }
 
