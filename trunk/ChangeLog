@@ -1,80 +1,87 @@
+Wed Feb 23 14:45:21 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Message_Block.cpp:
+        * tests/Dynamic_Priority_Test.cpp:
+          Fixed warnings when compiling without
+          ACE_HAS_TIMED_MESSAGE_BLOCKS defined.
+
 Wed Feb 23 12:19:51 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/OS.i (ACE_LACKS_SETREUID_PROTOTYPE,
-	            ACE_LACKS_SETREGID_PROTOTYPE):
+        * ace/OS.i (ACE_LACKS_SETREUID_PROTOTYPE,
+                    ACE_LACKS_SETREGID_PROTOTYPE):
 
-	  If either _BSD_SOURCE, _XOPEN_SOURCE or _XOPEN_SOURCE_EXTENEDED
-	  is defined then do not allow the prototypes corresponding to
-	  these macros to become visible since defining any of these
-	  macros may make the real prototypes in the system headers
-	  visible.  Thanks to Rich Seibel <seibel_r@ociweb.com> for
-	  pointing this out.
+          If either _BSD_SOURCE, _XOPEN_SOURCE or _XOPEN_SOURCE_EXTENEDED
+          is defined then do not allow the prototypes corresponding to
+          these macros to become visible since defining any of these
+          macros may make the real prototypes in the system headers
+          visible.  Thanks to Rich Seibel <seibel_r@ociweb.com> for
+          pointing this out.
 
 Tue Feb 22 21:11:03 2000  Ossama Othman  <ossama@uci.edu>
 
-	* configure.in (ACE_HAS_XPG4_MULTIBYTE_CHAR):
+        * configure.in (ACE_HAS_XPG4_MULTIBYTE_CHAR):
 
-	  Added test for wcslen().  Only define this macro if both the
-	  wchar_t type and the wcslen() function exist.  This fixes a link
-	  problem on a ACE+autoconf QNX build.
+          Added test for wcslen().  Only define this macro if both the
+          wchar_t type and the wcslen() function exist.  This fixes a link
+          problem on a ACE+autoconf QNX build.
 
 Tue Feb 22 20:56:51 2000  Ossama Othman  <ossama@uci.edu>
 
-	* config.guess:
+        * config.guess:
 
-	  Updated to latest version from the GNU CVS repository.
+          Updated to latest version from the GNU CVS repository.
 
-	* config.sub:
+        * config.sub:
 
-	  Merged my QNX Neutrino patches into the latest version from the
-	  GNU CVS repository.
+          Merged my QNX Neutrino patches into the latest version from the
+          GNU CVS repository.
 
 Tue Feb 22 20:09:14 2000  Ossama Othman  <ossama@uci.edu>
 
-	* config.sub:
+        * config.sub:
 
-	  Added support for QNX Neutrino.  Hosts specifications such as
-	  "i386-nto," "i386-qnx," "i386-qnx-nto," etc, will now be
-	  accepted by the configure script's "--host" command line
-	  option.  A patch has been sent to the upstream maintainers of
-	  this script.
+          Added support for QNX Neutrino.  Hosts specifications such as
+          "i386-nto," "i386-qnx," "i386-qnx-nto," etc, will now be
+          accepted by the configure script's "--host" command line
+          option.  A patch has been sent to the upstream maintainers of
+          this script.
 
-	* ace/OS.cpp (unique_name):
+        * ace/OS.cpp (unique_name):
 
-	  Fixed warning about mismatched format specifier by explicitly
-	  casting the result of ACE_OS::getpid(), a "pid_t," to an "int."
+          Fixed warning about mismatched format specifier by explicitly
+          casting the result of ACE_OS::getpid(), a "pid_t," to an "int."
 
-	* ace/OS.h (ACE_LOFF_T):
+        * ace/OS.h (ACE_LOFF_T):
 
-	  QNX Nuetrino has a 64-bit offset type, "off64_t."
+          QNX Nuetrino has a 64-bit offset type, "off64_t."
 
-	* m4/platform.m4 (ACE_SET_PLATFORM_MACROS):
+        * m4/platform.m4 (ACE_SET_PLATFORM_MACROS):
 
-	  Added support for QNX Neutrino.
+          Added support for QNX Neutrino.
 
 Tue Feb 22 17:42:09 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Synch.cpp: Reset the ACE_File_Lock::remove_ data member to
-	  0 in the open() method so that it can be reused.  Thanks to 
-	  Sangwoo Jin <swjinjin@sei.co.kr> for reporting this.
+        * ace/Synch.cpp: Reset the ACE_File_Lock::remove_ data member to
+          0 in the open() method so that it can be reused.  Thanks to
+          Sangwoo Jin <swjinjin@sei.co.kr> for reporting this.
 
 Tue Feb 22 13:57:32 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/ACE.cpp (send_n and recv_n): Reduced the number of calls to
-	  message_block->length () by caching the value.  Also inlined
-	  some of the smaller functions.
+        * ace/ACE.cpp (send_n and recv_n): Reduced the number of calls to
+          message_block->length () by caching the value.  Also inlined
+          some of the smaller functions.
 
 Tue Feb 22 12:29:44 2000  Ossama Othman  <ossama@uci.edu>
 
-	* m4/threads.m4 (ACE_CHECK_THREAD_FLAGS):
+        * m4/threads.m4 (ACE_CHECK_THREAD_FLAGS):
 
-	  Added run-time tests to this M4 macro to get around the annoying
-	  fact that some platforms implement no-op thread function stubs,
-	  which cause link-time tests to pass.  The run-time tests check
-	  the return value of pthread_create() and/or thr_create() to
-	  determine if the function is working or not.  The cross-compiled
-	  case falls back on the link-time test.  This fixes a problem on
-	  Solaris with both Sun C++ and g++.
+          Added run-time tests to this M4 macro to get around the annoying
+          fact that some platforms implement no-op thread function stubs,
+          which cause link-time tests to pass.  The run-time tests check
+          the return value of pthread_create() and/or thr_create() to
+          determine if the function is working or not.  The cross-compiled
+          case falls back on the link-time test.  This fixes a problem on
+          Solaris with both Sun C++ and g++.
 
 Tue Feb 22 14:00:38 2000  David L. Levine  <levine@cs.wustl.edu>
 
@@ -88,8 +95,8 @@ Tue Feb 22 09:52:50 2000  Ossama Othman  <ossama@uci.edu>
 
           A conflict appears when including both <ucontext.h> and
           <sys/procfs.h> with recent glibc headers, so don't define it.
-	  However, at some point we should redefine this macro since the
-	  latest glibc fixes this problem.
+          However, at some point we should redefine this macro since the
+          latest glibc fixes this problem.
 
 Tue Feb 22 09:16:29 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -380,8 +387,8 @@ Thu Feb 17 08:10:08 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Service_Config.cpp (close_singletons): Don't bother calling
           ACE_Proactor::close_singleton() on WinCE, Win95/98, or if
- 	  these's no support for AIO calls.  Thanks to Sangwoo Jin
- 	  <swjinjin@sei.co.kr> for reporting this.
+          these's no support for AIO calls.  Thanks to Sangwoo Jin
+          <swjinjin@sei.co.kr> for reporting this.
 
 Wed Feb 16 17:03:31 2000  Steve Huston  <shuston@riverace.com>
 
