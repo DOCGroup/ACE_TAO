@@ -24,6 +24,7 @@
  *         Department of Computer Science and Engineering
  *         email: scen@cse.ogi.edu
  */
+#include "ace/OS.h"
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -63,12 +64,12 @@ int StatFile(char *filename, struct StatBuf * sb)
   sb->ctime[strlen(sb->ctime)-1] = 0;  /* remove CR */
 
   if ((pw = getpwuid(statbuf.st_uid)) == NULL)
-    sprintf(sb->uid, "%-10d", statbuf.st_uid);
+    sprintf(sb->uid, "%-10ld", statbuf.st_uid);
   else
     strncpy(sb->uid, pw->pw_name, 32);
 
   if ((grp = getgrgid(statbuf.st_gid)) == NULL)
-    sprintf(sb->gid, "%-10d", statbuf.st_gid);
+    sprintf(sb->gid, "%-10ld", statbuf.st_gid);
   else
     strncpy(sb->gid, grp->gr_name, 32);
 }
@@ -77,7 +78,7 @@ int StatFile(char *filename, struct StatBuf * sb)
    read_bytes(s, buf, size)
      input: s - socket to read from
             buf - address of a buffer for the read
-	    size - number of bytes to read
+            size - number of bytes to read
      output: non
      action: try read given number of bytes, all errors are reported, and
              cause program to exit.
@@ -114,7 +115,7 @@ void read_bytes(int s, char * buf, int size)
     if (remain < 0)  /* weird thing is happening */
     {
       fprintf(stderr, "Error: read too much from socket, %d out of %d bytes.\n",
-	      size-remain, size);
+              size-remain, size);
       ACE_OS::exit (1);
     }
     if (remain == 0)
@@ -149,8 +150,8 @@ int wait_read_bytes (int s, char *buf, int size)
     if (val == 0) /* EOF encountered */
     {
       /*
-      fprintf(stderr, "Warn pid %d -- EOF on wait_read %d bytes.\n",
-	     ACE_OS::getpid (), size);
+      fprintf(stderr, "Warn pid %ld -- EOF on wait_read %d bytes.\n",
+             ACE_OS::getpid (), size);
       */
       return 0;
     }
@@ -159,8 +160,8 @@ int wait_read_bytes (int s, char *buf, int size)
     if (remain < 0)  /* weird thing is happening */
     {
       fprintf(stderr,
-	      "Error: weird, read too much from socket, %d out of %d bytes.\n",
-	      size-remain, size);
+              "Error: weird, read too much from socket, %d out of %d bytes.\n",
+              size-remain, size);
       return -1;
     }
     if (remain == 0)
@@ -175,7 +176,6 @@ int time_read_bytes(int s, char * buf, int size)
 {
   int val, remain = size;
   char * ptr = buf;
-  long start = get_usec();
 
   int times = 0;
   
@@ -195,19 +195,19 @@ int time_read_bytes(int s, char * buf, int size)
     {
       /*
       if (get_duration(start, get_usec()) < WAIT_DURATION) {
-	usleep(10000);
-	continue;
+        usleep(10000);
+        continue;
       }
       */
       if (times < WAIT_DURATION / 10000) {
-	usleep(10000);
+        usleep(10000);
         times ++;
         continue;
       }
       else {
-	fprintf(stderr, "time_read_bytes() %d seconds expired\n",
-		WAIT_DURATION/1000000);
-	return -1;
+        fprintf(stderr, "time_read_bytes() %d seconds expired\n",
+                WAIT_DURATION/1000000);
+        return -1;
       }
     }
 
@@ -253,7 +253,7 @@ void write_bytes(int sock, char * data, int len)
     int res = ACE_OS::write (sock, data, len);
     if (res == -1) {
       if (errno == EINTR || errno == EAGAIN) continue;
-      fprintf(stderr, "Error pid %d",ACE_OS::getpid ());
+      fprintf(stderr, "Error pid %ld",ACE_OS::getpid ());
      ACE_OS::perror (" -- failed to write all bytes to socket");
       ACE_OS::exit (1);
     }
@@ -269,7 +269,7 @@ int time_write_bytes(int sock, char * data, int plen)
     int res = ACE_OS::write (sock, data, len);
     if (res == -1) {
       if (errno == EINTR || errno == EAGAIN) continue;
-      fprintf(stderr, "Error pid %d",ACE_OS::getpid ());
+      fprintf(stderr, "Error pid %ld",ACE_OS::getpid ());
      ACE_OS::perror (" -- failed to time_write all bytes to socket");
       return -1;
     }
@@ -287,7 +287,7 @@ int wait_write_bytes(int sock, char * data, int plen)
     if (res == -1) {
       if (errno == EINTR || errno == EAGAIN) continue;
       /*
-      fprintf(stderr, "Error pid %d",ACE_OS::getpid ());
+      fprintf(stderr, "Error pid %ld",ACE_OS::getpid ());
      ACE_OS::perror (" -- failed to wait_write all bytes to socket");
       */
       return -1;

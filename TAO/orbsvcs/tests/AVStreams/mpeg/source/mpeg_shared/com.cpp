@@ -53,17 +53,17 @@
 
 ACE_RCSID(mpeg_shared, com, "$Id$")
 
-#define CONN_INET	1
-#define CONN_UNIX	2
-#define CONN_ATM	3
+#define CONN_INET       1
+#define CONN_UNIX       2
+#define CONN_ATM        3
 
-#define SERVER_FDTABLE_SIZE	50
-#define CLIENT_FDTABLE_SIZE	10
+#define SERVER_FDTABLE_SIZE     50
+#define CLIENT_FDTABLE_SIZE     10
 
-#define STATE_PENDING	1
-#define STATE_CONTROL	2
-#define STATE_DATA	3
-#define STATE_SINGLE	4
+#define STATE_PENDING   1
+#define STATE_CONTROL   2
+#define STATE_DATA      3
+#define STATE_SINGLE    4
 
 static int inet_port;
 static char * unix_port, * atm_port;
@@ -86,16 +86,16 @@ int ComInitClient(int pinet_port, char * punix_port, char * patm_port)
   atm_port = patm_port;
   if (size) {
     fprintf(stderr,
-	    "Error ComInitClient: pid %d already done ComInitClient/Server\n",
-	   ACE_OS::getpid ());
+            "Error ComInitClient: pid %ld already done ComInitClient/Server\n",
+           ACE_OS::getpid ());
     return -1;
   }
   size = CLIENT_FDTABLE_SIZE;
   fdTable = (struct FdTable *)ACE_OS::malloc(size * sizeof(*fdTable));
   if (fdTable == NULL) {
     fprintf(stderr,
-	    "Error ComInitClient: pid %d failed to allocated fdTable space:",
-	   ACE_OS::getpid ());
+            "Error ComInitClient: pid %ld failed to allocated fdTable space:",
+           ACE_OS::getpid ());
    ACE_OS::perror ("");
     return -1;
   }
@@ -126,8 +126,8 @@ int ComCloseFd(int fd)
   int i;
   if (!size) {
     fprintf(stderr,
-	    "Error ComCloseFd: pid %d not done ComInitClient/Server yet.\n",
-	   ACE_OS::getpid ());
+            "Error ComCloseFd: pid %ld not done ComInitClient/Server yet.\n",
+           ACE_OS::getpid ());
     return -1;
   }
   for (i = 0; i < size; i ++) {
@@ -140,8 +140,8 @@ int ComCloseFd(int fd)
       return ATMcloseFd(fd);
 #else
       fprintf(stderr,
-	      "Error ComCloseFd: pid %d CONN_ATM not supported.\n",
-	     ACE_OS::getpid ());
+              "Error ComCloseFd: pid %ld CONN_ATM not supported.\n",
+             ACE_OS::getpid ());
       return -1;
 #endif
     }
@@ -152,8 +152,8 @@ int ComCloseFd(int fd)
   }
   else {
     fprintf(stderr,
-	    "Error ComCloseFd: pid %d can't find fd %d in table\n",
-	   ACE_OS::getpid (), fd);
+            "Error ComCloseFd: pid %ld can't find fd %d in table\n",
+           ACE_OS::getpid (), fd);
     return -1;
   }
 }
@@ -163,8 +163,8 @@ int ComCloseConn(int fd)
   int i;
   if (!size) {
     fprintf(stderr,
-	    "Error ComCloseConn: pid %d not done ComInitClient/Server yet.\n",
-	   ACE_OS::getpid ());
+            "Error ComCloseConn: pid %ld not done ComInitClient/Server yet.\n",
+           ACE_OS::getpid ());
     return -1;
   }
   for (i = 0; i < size; i ++) {
@@ -177,8 +177,8 @@ int ComCloseConn(int fd)
       return ATMcloseConn(fd);
 #else
       fprintf(stderr,
-	      "Error ComCloseConn: pid %d CONN_ATM not supported.\n",
-	     ACE_OS::getpid ());
+              "Error ComCloseConn: pid %ld CONN_ATM not supported.\n",
+             ACE_OS::getpid ());
       return -1;
 #endif
     }
@@ -189,8 +189,8 @@ int ComCloseConn(int fd)
   }
   else {
     fprintf(stderr,
-	    "Error ComCloseConn: pid %d can't find fd %d in table\n",
-	   ACE_OS::getpid (), fd);
+            "Error ComCloseConn: pid %ld can't find fd %d in table\n",
+           ACE_OS::getpid (), fd);
     return -1;
   }
 }
@@ -202,15 +202,15 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
   // The protocol is slightly modified as after connecting we need to
   // inform that we are a audio client so that it can fork a process.
   int i;
-  int cfd, dfd, csocktype, dsocktype;
+  int cfd, dfd = -1, csocktype, dsocktype;
   int conn_tag = !(*max_pkt_size);
   struct sockaddr_in addressIn;
   struct sockaddr_un addressUn;
   
   if (!size) {
     fprintf(stderr,
-	    "Error ComOpenConnPair: pid %d not done ComInitClient/Server yet.\n",
-	   ACE_OS::getpid ());
+            "Error ComOpenConnPair: pid %ld not done ComInitClient/Server yet.\n",
+           ACE_OS::getpid ());
     return -1;
   }
 
@@ -220,8 +220,8 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
   }
   if (cfd < 2) {
     fprintf(stderr,
-	    "Error ComOpenConnPair: pid %d no faTable entry for the pair",
-	   ACE_OS::getpid ());
+            "Error ComOpenConnPair: pid %ld no faTable entry for the pair",
+           ACE_OS::getpid ());
     return -1;
   }
   
@@ -257,46 +257,46 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
     else {
       if ((hp = gethostbyname(address)) == NULL) { /* No such host! */
         fprintf(stderr,
-		"Error ComOpenConnPair: pid %d host %s can't be found:",
-		getpid(), address);
-	perror("");
+                "Error ComOpenConnPair: pid %ld host %s can't be found:",
+                ACE_OS::getpid (), address);
+        perror("");
         return -1;
       }
       if (hp->h_addrtype != AF_INET) {
         fprintf(stderr,
-		"Error ComOpenConnPair: pid %d host %s is not of INET type address.\n",
-		getpid(), address);
+                "Error ComOpenConnPair: pid %ld host %s is not of INET type address.\n",
+                ACE_OS::getpid (), address);
         return -1;
       }
       ACE_OS::memcpy ((char *)&addressIn.sin_addr.s_addr, (char *)hp->h_addr,
-	    sizeof(addressIn.sin_addr.s_addr));
+            sizeof(addressIn.sin_addr.s_addr));
       /*
       bcopy((char *)hp->h_addr, (char *)&addressIn.sin_addr.s_addr,
-	    sizeof(addressIn.sin_addr.s_addr));
+            sizeof(addressIn.sin_addr.s_addr));
       */
     }
     if (get_hostname(hostname, 100)) {
-      fprintf(stderr, "Error ComOpenConnPair: pid %d failed to get_hostname:",
-	     ACE_OS::getpid ());
+      fprintf(stderr, "Error ComOpenConnPair: pid %ld failed to get_hostname:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       return -1;
     }
     if ((hp = gethostbyname(hostname)) == NULL) {
       fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to its own IP address:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConnPair: pid %ld failed to its own IP address:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       return -1;
     }
     if (hp->h_addrtype != AF_INET) {
       fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d own address is not INET type",
-	     ACE_OS::getpid ());
+              "Error ComOpenConnPair: pid %ld own address is not INET type",
+             ACE_OS::getpid ());
       return -1;
     }
     
     if (!memcmp((char *)hp->h_addr, (char *)&addressIn.sin_addr.s_addr,
-	        sizeof(addressIn.sin_addr.s_addr))) {
+                sizeof(addressIn.sin_addr.s_addr))) {
       if (csocktype == CONN_INET) csocktype = CONN_UNIX;
       if (dsocktype == CONN_INET) dsocktype = CONN_UNIX;
     }
@@ -307,33 +307,33 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
     /* build UNIX connection to server */
     addressUn.sun_family = AF_UNIX;
     strncpy(addressUn.sun_path, unix_port,
-	    sizeof(struct sockaddr_un) - sizeof(short));
+            sizeof(struct sockaddr_un) - sizeof(short));
     cfd = socket(AF_UNIX, SOCK_STREAM, 0);
     if (cfd == -1) {
       fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to open UNIX cfd:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConnPair: pid %ld failed to open UNIX cfd:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       return -1;
     }
     usleep(10000); /* this is for waiting for the uncaught signal mentioned
-		      below */
+                      below */
     if (connect(cfd, (struct sockaddr *)&addressUn, sizeof(addressUn)) == -1) {
       fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to conn UNIX cfd to server:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConnPair: pid %ld failed to conn UNIX cfd to server:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       i = -3;  /* I don't understand why when connect() returns EINTR, the connection
-		  is still built, and the other end can still get what written at
-		  this end, 'i = -3' is a garbage to be written. */
+                  is still built, and the other end can still get what written at
+                  this end, 'i = -3' is a garbage to be written. */
       ACE_OS::write (cfd, &i, 4);
       ACE_OS::close (cfd);
       return -1;
     }
     if (time_write_int(cfd, -1) == -1 || time_read_int(cfd, &i) == -1) {
       fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to write -1 to UNIX cfd:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConnPair: pid %ld failed to write -1 to UNIX cfd:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       ACE_OS::close (cfd);
       return -1;
@@ -342,8 +342,8 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
     dfd = socket(AF_UNIX, SOCK_STREAM, 0);
     if (dfd == -1) {
       fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to open UNIX dfd:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConnPair: pid %ld failed to open UNIX dfd:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       ACE_OS::close (cfd);
       return -1;
@@ -351,8 +351,8 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
     usleep(10000);
     if (connect(dfd, (struct sockaddr *)&addressUn, sizeof(addressUn)) == -1) {
        fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to conn UNIX dfd to server:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConnPair: pid %ld failed to conn UNIX dfd to server:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       i = -3;
       ACE_OS::write (dfd, &i, 4);
@@ -362,8 +362,8 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
     }
     if (time_write_int(dfd, i) == -1) {
       fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to write (cfd) to UNIX dfd:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConnPair: pid %ld failed to write (cfd) to UNIX dfd:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       ACE_OS::close (cfd);
       ACE_OS::close (dfd);
@@ -377,16 +377,16 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
     cfd = socket(AF_INET, SOCK_STREAM, 0);
     if (cfd == -1) {
       fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to open TCP cfd:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConnPair: pid %ld failed to open TCP cfd:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       return -1;
     }
     usleep(10000);
     if (connect(cfd, (struct sockaddr *)&addressIn, sizeof(addressIn)) == -1) {
        fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to conn TCP cfd to server:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConnPair: pid %ld failed to conn TCP cfd to server:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       i = -3;
       ACE_OS::write (cfd, &i, 4);
@@ -395,42 +395,42 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
     }
     if (conn_tag) { /* create a second connection with server */
       if (time_write_int(cfd, -1) == -1 || time_read_int(cfd, &i) == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to write -1 to TCP cfd:",
-		getpid());
-	perror("");
-	close(cfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to write -1 to TCP cfd:",
+                ACE_OS::getpid ());
+        perror("");
+        close(cfd);
+        return -1;
       }
       dfd = socket(AF_INET, SOCK_STREAM, 0);
       if (dfd == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to open TCP dfd:",
-		getpid());
-	perror("");
-	close(cfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to open TCP dfd:",
+                ACE_OS::getpid ());
+        perror("");
+        close(cfd);
+        return -1;
       }
       usleep(10000);
       if (connect(dfd, (struct sockaddr *)&addressIn, sizeof(addressIn)) == -1) {
- 	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to conn TCP dfd to server:",
-		getpid());
-	perror("");
-	i = -3;
-	write(dfd, &i, 4);
-	close(cfd);
-	close(dfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to conn TCP dfd to server:",
+                ACE_OS::getpid ());
+        perror("");
+        i = -3;
+        write(dfd, &i, 4);
+        close(cfd);
+        close(dfd);
+        return -1;
       }
       if (time_write_int(dfd, i) == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to write (cfd) to TCP dfd:",
-		getpid());
-	perror("");
-	close(cfd);
-	close(dfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to write (cfd) to TCP dfd:",
+                ACE_OS::getpid ());
+        perror("");
+        close(cfd);
+        close(dfd);
+        return -1;
       }
       *max_pkt_size = 0;
     }
@@ -438,177 +438,177 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
       // Write a byte saying that we are a audio client.
       
       if (time_write_int(cfd,CmdINITaudio) == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to write -2 to TCP cfd:",
-		getpid());
-	perror("");
-	close(cfd);
-	close(dfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to write -2 to TCP cfd:",
+                ACE_OS::getpid ());
+        perror("");
+        close(cfd);
+        close(dfd);
+        return -1;
       }
 
       dfd = socket(AF_INET, SOCK_DGRAM, 0);
       if (dfd == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to open UDP dfd:",
-		getpid());
-	perror("");
-	close(cfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to open UDP dfd:",
+                ACE_OS::getpid ());
+        perror("");
+        close(cfd);
+        return -1;
       }
       memset((char *)&addressIn, 0, sizeof(addressIn));
 
       i = sizeof(addressIn);
       if (getsockname(cfd, (struct sockaddr *)&addressIn, &i) == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to getsocketname on TCP cfd:",
-		getpid());
-	perror("");
-	close(dfd);
-	close(cfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to getsocketname on TCP cfd:",
+                ACE_OS::getpid ());
+        perror("");
+        close(dfd);
+        close(cfd);
+        return -1;
       }
       
       addressIn.sin_family = AF_INET;
       addressIn.sin_port = 0;
       if (bind(dfd, (struct sockaddr *)&addressIn, sizeof(addressIn)) == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to bind UDP dfd:",
-		getpid());
-	perror("");
-	close(cfd);
-	close(dfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to bind UDP dfd:",
+                ACE_OS::getpid ());
+        perror("");
+        close(cfd);
+        close(dfd);
+        return -1;
       }
       if (time_write_int(cfd, -2) == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to write -2 to TCP cfd:",
-		getpid());
-	perror("");
-	close(cfd);
-	close(dfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to write -2 to TCP cfd:",
+                ACE_OS::getpid ());
+        perror("");
+        close(cfd);
+        close(dfd);
+        return -1;
       }
       
       i = sizeof(addressIn);
       if (getsockname(dfd, (struct sockaddr *)&addressIn, &i) == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to getsocketname on UDP fd:",
-		getpid());
-	perror("");
-	close(dfd);
-	close(cfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to getsocketname on UDP fd:",
+                ACE_OS::getpid ());
+        perror("");
+        close(dfd);
+        close(cfd);
+        return -1;
       }
       if (time_write_bytes(cfd, (char *)&addressIn.sin_port, sizeof(short)) == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to write (port) to TCP cfd:",
-		getpid());
-	perror("");
-	close(dfd);
-	close(cfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to write (port) to TCP cfd:",
+                ACE_OS::getpid ());
+        perror("");
+        close(dfd);
+        close(cfd);
+        return -1;
       }
       
       fprintf(stderr, "ComOpenConnPair local UDP socket: addr - %s,%d, port - %u.\n",
-	      inet_ntoa(addressIn.sin_addr), addressIn.sin_addr.s_addr,ntohs(addressIn.sin_port));
+              inet_ntoa(addressIn.sin_addr), addressIn.sin_addr.s_addr,ntohs(addressIn.sin_port));
       
       
       fprintf(stderr, "ComOpenConnPair UDP port %d (should be > 0)\n",
-	      ntohs(addressIn.sin_port));
+              ntohs(addressIn.sin_port));
       
       
       i = sizeof(addressIn);
       if (getsockname(cfd, (struct sockaddr *)&addressIn, &i) == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to getsocketname on TCP cfd:",
-		getpid());
-	perror("");
-	close(dfd);
-	close(cfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to getsocketname on TCP cfd:",
+                ACE_OS::getpid ());
+        perror("");
+        close(dfd);
+        close(cfd);
+        return -1;
       }
       
       if (time_write_bytes(cfd, (char *)&addressIn.sin_addr.s_addr, sizeof(int)) == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to write (IP addr) to TCP cfd:",
-		getpid());
-	perror("");
-	close(dfd);
-	close(cfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to write (IP addr) to TCP cfd:",
+                ACE_OS::getpid ());
+        perror("");
+        close(dfd);
+        close(cfd);
+        return -1;
       }
       
       fprintf(stderr, "ComOpenConnPair TCP cfd socket: addr - %s, port - %u.\n",
-	      inet_ntoa(addressIn.sin_addr), ntohs(addressIn.sin_port));
+              inet_ntoa(addressIn.sin_addr), ntohs(addressIn.sin_port));
       
       if (time_read_bytes(cfd, (char *)&addressIn.sin_port, sizeof(short)) == -1 ||
-	  time_read_bytes(cfd, (char *)&addressIn.sin_addr.s_addr, sizeof(int)) == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to read (IP addr/port) from TCP cfd:",
-		getpid());
-	perror("");
-	close(dfd);
-	close(cfd);
-	return -1;
+          time_read_bytes(cfd, (char *)&addressIn.sin_addr.s_addr, sizeof(int)) == -1) {
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to read (IP addr/port) from TCP cfd:",
+                ACE_OS::getpid ());
+        perror("");
+        close(dfd);
+        close(cfd);
+        return -1;
       }
       usleep(10000);
       if (connect(dfd, (struct sockaddr *)&addressIn, sizeof(addressIn)) == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed conn UDP dfd to peer:",
-		getpid());
-	perror("");
-	close(cfd);
-	close(dfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed conn UDP dfd to peer:",
+                ACE_OS::getpid ());
+        perror("");
+        close(cfd);
+        close(dfd);
+        return -1;
       }
       
       fprintf(stderr, "ComOpenConnPair UDP dfd connects to host-%s (port %u)\n",
-  	      inet_ntoa(addressIn.sin_addr),
-	      ntohs(addressIn.sin_port));
+              inet_ntoa(addressIn.sin_addr),
+              ntohs(addressIn.sin_port));
       
 #ifndef LINUX
       /* adjust the dfd REVBUF size */
       {
-	int len;
-	len = INET_SOCKET_BUFFER_SIZE + 100;
-	/*
-	if (setsockopt(dfd, SOL_SOCKET, SO_SNDBUF, (char *)&len, sizeof(len)) == -1) {
-	  fprintf(stderr,
-		  "Warning ComOpenConnPair: pid %d failed to set UDP dfd-snd to size %d:",
-		 ACE_OS::getpid (), len);
-	 ACE_OS::perror ("");
-	  ACE_OS::close (dfd);
-	  ACE_OS::close (cfd);
-	  return -1;
-	}
-	*/
-	len = 65536;
-	while (setsockopt(dfd, SOL_SOCKET, SO_RCVBUF, (char *)&len, sizeof(len)) == -1) {
-	  len -= 1024;
-	  if (len < 8192) break;
-	  /*
-	  fprintf(stderr,
-		  "Warning ComOpenConnPair: pid %d failed to set UDP dfd-rcv to size %d:",
-		 ACE_OS::getpid (), len);
-	 ACE_OS::perror ("");
-	  ACE_OS::close (dfd);
-	  ACE_OS::close (cfd);
-	  return -1;
-	  */
-	}
-	if (getuid() == DEVELOPER_UID)
-	fprintf(stderr,	"Set UDP dfd-rcv to %dB\n", len);
+        int len;
+        len = INET_SOCKET_BUFFER_SIZE + 100;
+        /*
+        if (setsockopt(dfd, SOL_SOCKET, SO_SNDBUF, (char *)&len, sizeof(len)) == -1) {
+          fprintf(stderr,
+                  "Warning ComOpenConnPair: pid %ld failed to set UDP dfd-snd to size %d:",
+                 ACE_OS::getpid (), len);
+         ACE_OS::perror ("");
+          ACE_OS::close (dfd);
+          ACE_OS::close (cfd);
+          return -1;
+        }
+        */
+        len = 65536;
+        while (setsockopt(dfd, SOL_SOCKET, SO_RCVBUF, (char *)&len, sizeof(len)) == -1) {
+          len -= 1024;
+          if (len < 8192) break;
+          /*
+          fprintf(stderr,
+                  "Warning ComOpenConnPair: pid %ld failed to set UDP dfd-rcv to size %d:",
+                 ACE_OS::getpid (), len);
+         ACE_OS::perror ("");
+          ACE_OS::close (dfd);
+          ACE_OS::close (cfd);
+          return -1;
+          */
+        }
+        if (getuid() == DEVELOPER_UID)
+        fprintf(stderr, "Set UDP dfd-rcv to %dB\n", len);
       }
 #endif
       *max_pkt_size = - INET_SOCKET_BUFFER_SIZE;
                         /* UDP sockets on HP and SUN are discard mode */
     }
     if (setsockopt(cfd, IPPROTO_TCP, TCP_NODELAY,
-		   (const char *)&i, sizeof(i)) == -1) {
+                   (const char *)&i, sizeof(i)) == -1) {
       fprintf(stderr,
-    "Error ComOpenConnPair: pid %d failed to setsockopt on TCP cfd with TCP_NODELAY:",
-	     ACE_OS::getpid ());
+    "Error ComOpenConnPair: pid %ld failed to setsockopt on TCP cfd with TCP_NODELAY:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       ACE_OS::close (dfd);
       ACE_OS::close (cfd);
@@ -622,69 +622,69 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
       addressIn.sin_port = htons(inet_port);
       cfd = socket(AF_INET, SOCK_STREAM, 0);
       if (cfd == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to open TCP1 cfd:",
-		getpid());
-	perror("");
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to open TCP1 cfd:",
+                ACE_OS::getpid ());
+        perror("");
+        return -1;
       }
       usleep(10000);
       if (connect(cfd, (struct sockaddr *)&addressIn, sizeof(addressIn)) == -1) {
-	 fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to conn TCP1 cfd to server:",
-		getpid());
-	perror("");
-	i = -3;
-	write(cfd, &i, 4);
-	close(cfd);
-	return -1;
+         fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to conn TCP1 cfd to server:",
+                ACE_OS::getpid ());
+        perror("");
+        i = -3;
+        write(cfd, &i, 4);
+        close(cfd);
+        return -1;
       }
     }
     else if (csocktype == CONN_UNIX) {
       /* build UNIX connection to server */
       addressUn.sun_family = AF_UNIX;
       strncpy(addressUn.sun_path, unix_port,
-	      sizeof(struct sockaddr_un) - sizeof(short));
+              sizeof(struct sockaddr_un) - sizeof(short));
       cfd = socket(AF_UNIX, SOCK_STREAM, 0);
       if (cfd == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to open UNIX1 cfd:",
-		getpid());
-	perror("");
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to open UNIX1 cfd:",
+                ACE_OS::getpid ());
+        perror("");
+        return -1;
       }
       usleep(10000); /* this is for waiting for the uncaught signal mentioned
-			below */
+                        below */
       if (connect(cfd, (struct sockaddr *)&addressUn, sizeof(addressUn)) == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to conn UNIX1 cfd to server:",
-		getpid());
-	perror("");
-	i = -3;  /* I don't understand why when select() returns EINTR, the connection
-		    is still built, and the other end can still get what written at
-		    this end, 'i = -3' is a garbage to be written. */
-	write(cfd, &i, 4);
-	close(cfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to conn UNIX1 cfd to server:",
+                ACE_OS::getpid ());
+        perror("");
+        i = -3;  /* I don't understand why when select() returns EINTR, the connection
+                    is still built, and the other end can still get what written at
+                    this end, 'i = -3' is a garbage to be written. */
+        write(cfd, &i, 4);
+        close(cfd);
+        return -1;
       }
     }
     else {  /* CONN_ATM */
       cfd = ATMopenConn(address, max_pkt_size);
       if (cfd == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to open ATM cfd conn:",
-		getpid());
-	perror("");
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to open ATM cfd conn:",
+                ACE_OS::getpid ());
+        perror("");
+        return -1;
       }
       usleep(100000);  /* be nice to buggy ATM driver */
     }
     if (time_write_int(cfd, -1) == -1 || time_read_int(cfd, &i) == -1) {
       fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to write -1 to %s cfd:",
-	     ACE_OS::getpid (),
-	      (csocktype == CONN_UNIX) ? "UNIX1" :
-	      (csocktype == CONN_INET) ? "INET1" : "ATM");
+              "Error ComOpenConnPair: pid %ld failed to write -1 to %s cfd:",
+             ACE_OS::getpid (),
+              (csocktype == CONN_UNIX) ? "UNIX1" :
+              (csocktype == CONN_INET) ? "INET1" : "ATM");
      ACE_OS::perror ("");
       if (csocktype == CONN_ATM) ATMcloseConn(cfd);
       else ACE_OS::close (cfd);
@@ -694,8 +694,8 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
     dfd = ATMopenConn(address, max_pkt_size);
     if (dfd == -1) {
       fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to open ATM dfd conn:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConnPair: pid %ld failed to open ATM dfd conn:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       ATMcloseConn(cfd);
       return -1;
@@ -703,8 +703,8 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
     usleep(100000); /* be nice to buggy ATM driver */
     if (time_write_int(dfd, i) == -1) {
       fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to write (cfd) to ATM dfd:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConnPair: pid %ld failed to write (cfd) to ATM dfd:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       ATMcloseConn(cfd);
       ATMcloseConn(dfd);
@@ -712,8 +712,8 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
     }
 #else
     fprintf(stderr,
-	    "Error ComOpenConnPair: pid %d addresstype %d not supported\n",
-	   ACE_OS::getpid (), dsocktype);
+            "Error ComOpenConnPair: pid %ld addresstype %d not supported\n",
+           ACE_OS::getpid (), dsocktype);
     return -1;
 #endif
   }
@@ -754,19 +754,19 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
    "" -- UNIX socket, reliable byte stream
    [INET:]real_address -- INET sockets, reliable control byte stream, and
                           *max_pkt_size == 0 : reliable data byte stream, or
-			                != 0 : unreliable packet stream;
+                                        != 0 : unreliable packet stream;
    ATM:real_address -- ATM sockets, both data and control are
                        unreliable packet streams;
    DATM:real_address -- INET/UNIX control reliable byte stream
                         and ATM unreliable byte stream;
-			
+                        
    Communication between client and server:
 
-   ctr_fd:   client --> server	    server --> client
-             -2: conn-less INET	   Open udp sock, send addr in net byte order
-	         <port, addr>                     <port(short), addr(long)>
-	     -1: conn-orient	   Send value of fd, wait to be paired
-	     cfd>=0: data sock     Paired with cfd and return.
+   ctr_fd:   client --> server      server --> client
+             -2: conn-less INET    Open udp sock, send addr in net byte order
+                 <port, addr>                     <port(short), addr(long)>
+             -1: conn-orient       Send value of fd, wait to be paired
+             cfd>=0: data sock     Paired with cfd and return.
    */
 
 #if 0
@@ -787,8 +787,8 @@ int VideoComOpenConnPair (char * address,
 
   if (!size) {
     fprintf(stderr,
-	    "Error ComOpenConnPair: pid %d not done ComInitClient/Server yet.\n",
-	   ACE_OS::getpid ());
+            "Error ComOpenConnPair: pid %ld not done ComInitClient/Server yet.\n",
+           ACE_OS::getpid ());
     return -1;
   }
 
@@ -798,8 +798,8 @@ int VideoComOpenConnPair (char * address,
   }
   if (cfd < 2) {
     fprintf(stderr,
-	    "Error ComOpenConnPair: pid %d no faTable entry for the pair",
-	   ACE_OS::getpid ());
+            "Error ComOpenConnPair: pid %ld no faTable entry for the pair",
+           ACE_OS::getpid ());
     return -1;
   }
   
@@ -835,46 +835,46 @@ int VideoComOpenConnPair (char * address,
     else {
       if ((hp = gethostbyname(address)) == NULL) { /* No such host! */
         fprintf(stderr,
-		"Error ComOpenConnPair: pid %d host %s can't be found:",
-		getpid(), address);
-	perror("");
+                "Error ComOpenConnPair: pid %ld host %s can't be found:",
+                ACE_OS::getpid (), address);
+        perror("");
         return -1;
       }
       if (hp->h_addrtype != AF_INET) {
         fprintf(stderr,
-		"Error ComOpenConnPair: pid %d host %s is not of INET type address.\n",
-		getpid(), address);
+                "Error ComOpenConnPair: pid %ld host %s is not of INET type address.\n",
+                ACE_OS::getpid (), address);
         return -1;
       }
       ACE_OS::memcpy ((char *)&addressIn.sin_addr.s_addr, (char *)hp->h_addr,
-	    sizeof(addressIn.sin_addr.s_addr));
+            sizeof(addressIn.sin_addr.s_addr));
       /*
       bcopy((char *)hp->h_addr, (char *)&addressIn.sin_addr.s_addr,
-	    sizeof(addressIn.sin_addr.s_addr));
+            sizeof(addressIn.sin_addr.s_addr));
       */
     }
     if (get_hostname(hostname, 100)) {
-      fprintf(stderr, "Error ComOpenConnPair: pid %d failed to get_hostname:",
-	     ACE_OS::getpid ());
+      fprintf(stderr, "Error ComOpenConnPair: pid %ld failed to get_hostname:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       return -1;
     }
     if ((hp = gethostbyname(hostname)) == NULL) {
       fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to its own IP address:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConnPair: pid %ld failed to its own IP address:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       return -1;
     }
     if (hp->h_addrtype != AF_INET) {
       fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d own address is not INET type",
-	     ACE_OS::getpid ());
+              "Error ComOpenConnPair: pid %ld own address is not INET type",
+             ACE_OS::getpid ());
       return -1;
     }
     
     if (!memcmp((char *)hp->h_addr, (char *)&addressIn.sin_addr.s_addr,
-	        sizeof(addressIn.sin_addr.s_addr))) {
+                sizeof(addressIn.sin_addr.s_addr))) {
       if (csocktype == CONN_INET) csocktype = CONN_UNIX;
       if (dsocktype == CONN_INET) dsocktype = CONN_UNIX;
     }
@@ -888,16 +888,16 @@ int VideoComOpenConnPair (char * address,
     cfd = socket(AF_INET, SOCK_STREAM, 0);
     if (cfd == -1) {
       fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to open TCP cfd:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConnPair: pid %ld failed to open TCP cfd:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       return -1;
     }
     usleep(10000);
     if (connect(cfd, (struct sockaddr *)&addressIn, sizeof(addressIn)) == -1) {
        fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to conn TCP cfd to server:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConnPair: pid %ld failed to conn TCP cfd to server:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       i = -3;
       ACE_OS::write (cfd, &i, 4);
@@ -906,42 +906,42 @@ int VideoComOpenConnPair (char * address,
     }
 //     if (conn_tag) { /* create a second connection with server */
 //       if (time_write_int(cfd, -1) == -1 || time_read_int(cfd, &i) == -1) {
-// 	fprintf(stderr,
-// 		"Error ComOpenConnPair: pid %d failed to write -1 to TCP cfd:",
-// 		getpid());
-// 	perror("");
-// 	close(cfd);
-// 	return -1;
+//      fprintf(stderr,
+//              "Error ComOpenConnPair: pid %ld failed to write -1 to TCP cfd:",
+//              ACE_OS::getpid ());
+//      perror("");
+//      close(cfd);
+//      return -1;
 //       }
       dfd = socket(AF_INET, SOCK_STREAM, 0);
       if (dfd == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to open TCP dfd:",
-		getpid());
-	perror("");
-	close(cfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to open TCP dfd:",
+                ACE_OS::getpid ());
+        perror("");
+        close(cfd);
+        return -1;
       }
       usleep(10000);
       if (connect(dfd, (struct sockaddr *)&addressIn, sizeof(addressIn)) == -1) {
- 	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to conn TCP dfd to server:",
-		getpid());
-	perror("");
-	i = -3;
-	write(dfd, &i, 4);
-	close(cfd);
-	close(dfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to conn TCP dfd to server:",
+                ACE_OS::getpid ());
+        perror("");
+        i = -3;
+        write(dfd, &i, 4);
+        close(cfd);
+        close(dfd);
+        return -1;
       }
       if (time_write_int(dfd, i) == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to write (cfd) to TCP dfd:",
-		getpid());
-	perror("");
-	close(cfd);
-	close(dfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to write (cfd) to TCP dfd:",
+                ACE_OS::getpid ());
+        perror("");
+        close(cfd);
+        close(dfd);
+        return -1;
       }
       *max_pkt_size = 0;
     }
@@ -950,166 +950,166 @@ int VideoComOpenConnPair (char * address,
                   "(%P|%t) ::VideoComOpenConnPair: making UDP connection\n"));
       dfd = socket(AF_INET, SOCK_DGRAM, 0);
       if (dfd == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to open UDP dfd:",
-		getpid());
-	perror("");
-	close(cfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to open UDP dfd:",
+                ACE_OS::getpid ());
+        perror("");
+        close(cfd);
+        return -1;
       }
       memset((char *)&addressIn, 0, sizeof(addressIn));
 
       i = sizeof(addressIn);
       if (getsockname(cfd, (struct sockaddr *)&addressIn, &i) == -1) {
-	fprintf(stderr,
-		"Error ComOpenConnPair: pid %d failed to getsocketname on TCP cfd:",
-		getpid());
-	perror("");
-	close(dfd);
-	close(cfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComOpenConnPair: pid %ld failed to getsocketname on TCP cfd:",
+                ACE_OS::getpid ());
+        perror("");
+        close(dfd);
+        close(cfd);
+        return -1;
       }
       
 //       addressIn.sin_family = AF_INET;
 //       addressIn.sin_port = 0;
 //       if (bind(dfd, (struct sockaddr *)&addressIn, sizeof(addressIn)) == -1) {
-// 	fprintf(stderr,
-// 		"Error ComOpenConnPair: pid %d failed to bind UDP dfd:",
-// 		getpid());
-// 	perror("");
-// 	close(cfd);
-// 	close(dfd);
-// 	return -1;
+//      fprintf(stderr,
+//              "Error ComOpenConnPair: pid %ld failed to bind UDP dfd:",
+//              ACE_OS::getpid ());
+//      perror("");
+//      close(cfd);
+//      close(dfd);
+//      return -1;
 //       }
 //       if (time_write_int(cfd, -2) == -1) {
-// 	fprintf(stderr,
-// 		"Error ComOpenConnPair: pid %d failed to write -2 to TCP cfd:",
-// 		getpid());
-// 	perror("");
-// 	close(cfd);
-// 	close(dfd);
-// 	return -1;
+//      fprintf(stderr,
+//              "Error ComOpenConnPair: pid %ld failed to write -2 to TCP cfd:",
+//              ACE_OS::getpid ());
+//      perror("");
+//      close(cfd);
+//      close(dfd);
+//      return -1;
 //       }
       
 //       i = sizeof(addressIn);
 //       if (getsockname(dfd, (struct sockaddr *)&addressIn, &i) == -1) {
-// 	fprintf(stderr,
-// 		"Error ComOpenConnPair: pid %d failed to getsocketname on UDP fd:",
-// 		getpid());
-// 	perror("");
-// 	close(dfd);
-// 	close(cfd);
-// 	return -1;
+//      fprintf(stderr,
+//              "Error ComOpenConnPair: pid %ld failed to getsocketname on UDP fd:",
+//              ACE_OS::getpid ());
+//      perror("");
+//      close(dfd);
+//      close(cfd);
+//      return -1;
 //       }
 //       if (time_write_bytes(cfd, (char *)&addressIn.sin_port, sizeof(short)) == -1) {
-// 	fprintf(stderr,
-// 		"Error ComOpenConnPair: pid %d failed to write (port) to TCP cfd:",
-// 		getpid());
-// 	perror("");
-// 	close(dfd);
-// 	close(cfd);
-// 	return -1;
+//      fprintf(stderr,
+//              "Error ComOpenConnPair: pid %ld failed to write (port) to TCP cfd:",
+//              ACE_OS::getpid ());
+//      perror("");
+//      close(dfd);
+//      close(cfd);
+//      return -1;
 //       }
       
 //       fprintf(stderr, "ComOpenConnPair local UDP socket: addr - %s, port - %u.\n",
-// 	      inet_ntoa(addressIn.sin_addr), ntohs(addressIn.sin_port));
+//            inet_ntoa(addressIn.sin_addr), ntohs(addressIn.sin_port));
       
       
 //       fprintf(stderr, "ComOpenConnPair UDP port %d (should be > 0)\n",
-// 	      ntohs(addressIn.sin_port));
+//            ntohs(addressIn.sin_port));
       
 //       /*
 //       i = sizeof(addressIn);
 //       if (getsockname(cfd, (struct sockaddr *)&addressIn, &i) == -1) {
-// 	fprintf(stderr,
-// 		"Error ComOpenConnPair: pid %d failed to getsocketname on TCP cfd:",
-// 		getpid());
-// 	perror("");
-// 	close(dfd);
-// 	close(cfd);
-// 	return -1;
+//      fprintf(stderr,
+//              "Error ComOpenConnPair: pid %ld failed to getsocketname on TCP cfd:",
+//              ACE_OS::getpid ());
+//      perror("");
+//      close(dfd);
+//      close(cfd);
+//      return -1;
 //       }
 //       */
 //       if (time_write_bytes(cfd, (char *)&addressIn.sin_addr.s_addr, sizeof(int)) == -1) {
-// 	fprintf(stderr,
-// 		"Error ComOpenConnPair: pid %d failed to write (IP addr) to TCP cfd:",
-// 		getpid());
-// 	perror("");
-// 	close(dfd);
-// 	close(cfd);
-// 	return -1;
+//      fprintf(stderr,
+//              "Error ComOpenConnPair: pid %ld failed to write (IP addr) to TCP cfd:",
+//              ACE_OS::getpid ());
+//      perror("");
+//      close(dfd);
+//      close(cfd);
+//      return -1;
 //       }
       
 //       fprintf(stderr, "ComOpenConnPair TCP cfd socket: addr - %s, port - %u.\n",
-// 	      inet_ntoa(addressIn.sin_addr), ntohs(addressIn.sin_port));
+//            inet_ntoa(addressIn.sin_addr), ntohs(addressIn.sin_port));
       
 //       if (time_read_bytes(cfd, (char *)&addressIn.sin_port, sizeof(short)) == -1 ||
-// 	  time_read_bytes(cfd, (char *)&addressIn.sin_addr.s_addr, sizeof(int)) == -1) {
-// 	fprintf(stderr,
-// 		"Error ComOpenConnPair: pid %d failed to read (IP addr/port) from TCP cfd:",
-// 		getpid());
-// 	perror("");
-// 	close(dfd);
-// 	close(cfd);
-      // 	return -1;
+//        time_read_bytes(cfd, (char *)&addressIn.sin_addr.s_addr, sizeof(int)) == -1) {
+//      fprintf(stderr,
+//              "Error ComOpenConnPair: pid %ld failed to read (IP addr/port) from TCP cfd:",
+//              ACE_OS::getpid ());
+//      perror("");
+//      close(dfd);
+//      close(cfd);
+      //        return -1;
       //       }
       //      usleep(10000);
       //            if (connect(dfd, (struct sockaddr *)&addressIn, sizeof(addressIn)) == -1) {
-      //	fprintf(stderr,
-      //		"Error ComOpenConnPair: pid %d failed conn UDP dfd to peer:",
-      //		getpid());
-      //	perror("");
-      //	close(cfd);
-      //	close(dfd);
-      //	return -1;
+      //        fprintf(stderr,
+      //                "Error ComOpenConnPair: pid %ld failed conn UDP dfd to peer:",
+      //                ACE_OS::getpid ());
+      //        perror("");
+      //        close(cfd);
+      //        close(dfd);
+      //        return -1;
       //      }
       
       fprintf(stderr, "ComOpenConnPair UDP dfd connects to host-%s (port %u)\n",
-  	      inet_ntoa(addressIn.sin_addr),
-	      ntohs(addressIn.sin_port));
+              inet_ntoa(addressIn.sin_addr),
+              ntohs(addressIn.sin_port));
       
 #ifndef LINUX
       /* adjust the dfd REVBUF size */
       {
-	int len;
-	len = INET_SOCKET_BUFFER_SIZE + 100;
-	/*
-	if (setsockopt(dfd, SOL_SOCKET, SO_SNDBUF, (char *)&len, sizeof(len)) == -1) {
-	  fprintf(stderr,
-		  "Warning ComOpenConnPair: pid %d failed to set UDP dfd-snd to size %d:",
-		 ACE_OS::getpid (), len);
-	 ACE_OS::perror ("");
-	  ACE_OS::close (dfd);
-	  ACE_OS::close (cfd);
-	  return -1;
-	}
-	*/
-	len = 65536;
-	while (setsockopt(dfd, SOL_SOCKET, SO_RCVBUF, (char *)&len, sizeof(len)) == -1) {
-	  len -= 1024;
-	  if (len < 8192) break;
-	  /*
-	  fprintf(stderr,
-		  "Warning ComOpenConnPair: pid %d failed to set UDP dfd-rcv to size %d:",
-		 ACE_OS::getpid (), len);
-	 ACE_OS::perror ("");
-	  ACE_OS::close (dfd);
-	  ACE_OS::close (cfd);
-	  return -1;
-	  */
-	}
-	if (getuid() == DEVELOPER_UID)
-	fprintf(stderr,	"Set UDP dfd-rcv to %dB\n", len);
+        int len;
+        len = INET_SOCKET_BUFFER_SIZE + 100;
+        /*
+        if (setsockopt(dfd, SOL_SOCKET, SO_SNDBUF, (char *)&len, sizeof(len)) == -1) {
+          fprintf(stderr,
+                  "Warning ComOpenConnPair: pid %ld failed to set UDP dfd-snd to size %d:",
+                 ACE_OS::getpid (), len);
+         ACE_OS::perror ("");
+          ACE_OS::close (dfd);
+          ACE_OS::close (cfd);
+          return -1;
+        }
+        */
+        len = 65536;
+        while (setsockopt(dfd, SOL_SOCKET, SO_RCVBUF, (char *)&len, sizeof(len)) == -1) {
+          len -= 1024;
+          if (len < 8192) break;
+          /*
+          fprintf(stderr,
+                  "Warning ComOpenConnPair: pid %ld failed to set UDP dfd-rcv to size %d:",
+                 ACE_OS::getpid (), len);
+         ACE_OS::perror ("");
+          ACE_OS::close (dfd);
+          ACE_OS::close (cfd);
+          return -1;
+          */
+        }
+        if (getuid() == DEVELOPER_UID)
+        fprintf(stderr, "Set UDP dfd-rcv to %dB\n", len);
       }
 #endif
       *max_pkt_size = - INET_SOCKET_BUFFER_SIZE;
                         /* UDP sockets on HP and SUN are discard mode */
     }
     if (setsockopt(cfd, IPPROTO_TCP, TCP_NODELAY,
-		   (const char *)&i, sizeof(i)) == -1) {
+                   (const char *)&i, sizeof(i)) == -1) {
       fprintf(stderr,
-    "Error ComOpenConnPair: pid %d failed to setsockopt on TCP cfd with TCP_NODELAY:",
-	     ACE_OS::getpid ());
+    "Error ComOpenConnPair: pid %ld failed to setsockopt on TCP cfd with TCP_NODELAY:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       ACE_OS::close (dfd);
       ACE_OS::close (cfd);
@@ -1123,69 +1123,69 @@ int VideoComOpenConnPair (char * address,
 //       addressIn.sin_port = htons(inet_port);
 //       cfd = socket(AF_INET, SOCK_STREAM, 0);
 //       if (cfd == -1) {
-// 	fprintf(stderr,
-// 		"Error ComOpenConnPair: pid %d failed to open TCP1 cfd:",
-// 		getpid());
-// 	perror("");
-// 	return -1;
+//      fprintf(stderr,
+//              "Error ComOpenConnPair: pid %ld failed to open TCP1 cfd:",
+//              ACE_OS::getpid ());
+//      perror("");
+//      return -1;
 //       }
 //       usleep(10000);
 //       if (connect(cfd, (struct sockaddr *)&addressIn, sizeof(addressIn)) == -1) {
-// 	 fprintf(stderr,
-// 		"Error ComOpenConnPair: pid %d failed to conn TCP1 cfd to server:",
-// 		getpid());
-// 	perror("");
-// 	i = -3;
-// 	write(cfd, &i, 4);
-// 	close(cfd);
-// 	return -1;
+//       fprintf(stderr,
+//              "Error ComOpenConnPair: pid %ld failed to conn TCP1 cfd to server:",
+//              ACE_OS::getpid ());
+//      perror("");
+//      i = -3;
+//      write(cfd, &i, 4);
+//      close(cfd);
+//      return -1;
 //       }
 //     }
 //     else if (csocktype == CONN_UNIX) {
 //       /* build UNIX connection to server */
 //       addressUn.sun_family = AF_UNIX;
 //       strncpy(addressUn.sun_path, unix_port,
-// 	      sizeof(struct sockaddr_un) - sizeof(short));
+//            sizeof(struct sockaddr_un) - sizeof(short));
 //       cfd = socket(AF_UNIX, SOCK_STREAM, 0);
 //       if (cfd == -1) {
-// 	fprintf(stderr,
-// 		"Error ComOpenConnPair: pid %d failed to open UNIX1 cfd:",
-// 		getpid());
-// 	perror("");
-// 	return -1;
+//      fprintf(stderr,
+//              "Error ComOpenConnPair: pid %ld failed to open UNIX1 cfd:",
+//              ACE_OS::getpid ());
+//      perror("");
+//      return -1;
 //       }
 //       usleep(10000); /* this is for waiting for the uncaught signal mentioned
-// 			below */
+//                      below */
 //       if (connect(cfd, (struct sockaddr *)&addressUn, sizeof(addressUn)) == -1) {
-// 	fprintf(stderr,
-// 		"Error ComOpenConnPair: pid %d failed to conn UNIX1 cfd to server:",
-// 		getpid());
-// 	perror("");
-// 	i = -3;  /* I don't understand why when select() returns EINTR, the connection
-// 		    is still built, and the other end can still get what written at
-// 		    this end, 'i = -3' is a garbage to be written. */
-// 	write(cfd, &i, 4);
-// 	close(cfd);
-// 	return -1;
+//      fprintf(stderr,
+//              "Error ComOpenConnPair: pid %ld failed to conn UNIX1 cfd to server:",
+//              ACE_OS::getpid ());
+//      perror("");
+//      i = -3;  /* I don't understand why when select() returns EINTR, the connection
+//                  is still built, and the other end can still get what written at
+//                  this end, 'i = -3' is a garbage to be written. */
+//      write(cfd, &i, 4);
+//      close(cfd);
+//      return -1;
 //       }
 //     }
 //     else {  /* CONN_ATM */
 //       cfd = ATMopenConn(address, max_pkt_size);
 //       if (cfd == -1) {
-// 	fprintf(stderr,
-// 		"Error ComOpenConnPair: pid %d failed to open ATM cfd conn:",
-// 		getpid());
-// 	perror("");
-// 	return -1;
+//      fprintf(stderr,
+//              "Error ComOpenConnPair: pid %ld failed to open ATM cfd conn:",
+//              ACE_OS::getpid ());
+//      perror("");
+//      return -1;
 //       }
 //       usleep(100000);  /* be nice to buggy ATM driver */
 //     }
 //     if (time_write_int(cfd, -1) == -1 || time_read_int(cfd, &i) == -1) {
 //       fprintf(stderr,
-// 	      "Error ComOpenConnPair: pid %d failed to write -1 to %s cfd:",
-// 	     ACE_OS::getpid (),
-// 	      (csocktype == CONN_UNIX) ? "UNIX1" :
-// 	      (csocktype == CONN_INET) ? "INET1" : "ATM");
+//            "Error ComOpenConnPair: pid %ld failed to write -1 to %s cfd:",
+//           ACE_OS::getpid (),
+//            (csocktype == CONN_UNIX) ? "UNIX1" :
+//            (csocktype == CONN_INET) ? "INET1" : "ATM");
 //      ACE_OS::perror ("");
 //       if (csocktype == CONN_ATM) ATMcloseConn(cfd);
 //       else ACE_OS::close (cfd);
@@ -1195,8 +1195,8 @@ int VideoComOpenConnPair (char * address,
 //     dfd = ATMopenConn(address, max_pkt_size);
 //     if (dfd == -1) {
 //       fprintf(stderr,
-// 	      "Error ComOpenConnPair: pid %d failed to open ATM dfd conn:",
-// 	     ACE_OS::getpid ());
+//            "Error ComOpenConnPair: pid %ld failed to open ATM dfd conn:",
+//           ACE_OS::getpid ());
 //      ACE_OS::perror ("");
 //       ATMcloseConn(cfd);
 //       return -1;
@@ -1204,8 +1204,8 @@ int VideoComOpenConnPair (char * address,
 //     usleep(100000); /* be nice to buggy ATM driver */
 //     if (time_write_int(dfd, i) == -1) {
 //       fprintf(stderr,
-// 	      "Error ComOpenConnPair: pid %d failed to write (cfd) to ATM dfd:",
-// 	     ACE_OS::getpid ());
+//            "Error ComOpenConnPair: pid %ld failed to write (cfd) to ATM dfd:",
+//           ACE_OS::getpid ());
 //      ACE_OS::perror ("");
 //       ATMcloseConn(cfd);
 //       ATMcloseConn(dfd);
@@ -1213,8 +1213,8 @@ int VideoComOpenConnPair (char * address,
 //     }
 // #else
 //     fprintf(stderr,
-// 	    "Error ComOpenConnPair: pid %d addresstype %d not supported\n",
-// 	   ACE_OS::getpid (), dsocktype);
+//          "Error ComOpenConnPair: pid %ld addresstype %d not supported\n",
+//         ACE_OS::getpid (), dsocktype);
 //     return -1;
 // #endif
 //   }
@@ -1260,8 +1260,8 @@ int ComOpenConn(char * address, int *max_pkt_size)
   
   if (!size) {
     fprintf(stderr,
-	    "Error ComOpenConn: pid %d not done ComInitClient/Server yet.\n",
-	   ACE_OS::getpid ());
+            "Error ComOpenConn: pid %ld not done ComInitClient/Server yet.\n",
+           ACE_OS::getpid ());
     return -1;
   }
 
@@ -1271,8 +1271,8 @@ int ComOpenConn(char * address, int *max_pkt_size)
   }
   if (fd < 1) {
     fprintf(stderr,
-	    "Error ComOpenConn: pid %d no faTable entry for the pair",
-	   ACE_OS::getpid ());
+            "Error ComOpenConn: pid %ld no faTable entry for the pair",
+           ACE_OS::getpid ());
     return -1;
   }
   
@@ -1304,46 +1304,46 @@ int ComOpenConn(char * address, int *max_pkt_size)
     else {
       if ((hp = gethostbyname(address)) == NULL) { /* No such host! */
         fprintf(stderr,
-		"Error ComOpenConn: pid %d host %s can't be found:",
-		getpid(), address);
-	perror("");
+                "Error ComOpenConn: pid %ld host %s can't be found:",
+                ACE_OS::getpid (), address);
+        perror("");
         return -1;
       }
       if (hp->h_addrtype != AF_INET) {
         fprintf(stderr,
-		"Error ComOpenConn: pid %d host %s is not of INET type address.\n",
-		getpid(), address);
+                "Error ComOpenConn: pid %ld host %s is not of INET type address.\n",
+                ACE_OS::getpid (), address);
         return -1;
       }
       ACE_OS::memcpy ((char *)&addressIn.sin_addr.s_addr, (char *)hp->h_addr,
-	    sizeof(addressIn.sin_addr.s_addr));
+            sizeof(addressIn.sin_addr.s_addr));
       /*
       bcopy((char *)hp->h_addr, (char *)&addressIn.sin_addr.s_addr,
-	    sizeof(addressIn.sin_addr.s_addr));
+            sizeof(addressIn.sin_addr.s_addr));
       */
     }
     if (get_hostname(hostname, 100)) {
-      fprintf(stderr, "Error ComOpenConn: pid %d failed to get_hostname:",
-	     ACE_OS::getpid ());
+      fprintf(stderr, "Error ComOpenConn: pid %ld failed to get_hostname:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       return -1;
     }
     if ((hp = gethostbyname(hostname)) == NULL) {
       fprintf(stderr,
-	      "Error ComOpenConn: pid %d failed to its own IP address:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConn: pid %ld failed to its own IP address:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       return -1;
     }
     if (hp->h_addrtype != AF_INET) {
       fprintf(stderr,
-	      "Error ComOpenConn: pid %d own address is not INET type",
-	     ACE_OS::getpid ());
+              "Error ComOpenConn: pid %ld own address is not INET type",
+             ACE_OS::getpid ());
       return -1;
     }
     
     if (!memcmp((char *)hp->h_addr, (char *)&addressIn.sin_addr.s_addr,
-	        sizeof(addressIn.sin_addr.s_addr))) {
+                sizeof(addressIn.sin_addr.s_addr))) {
       if (socktype == CONN_INET) socktype = CONN_UNIX;
     }
   }
@@ -1353,19 +1353,19 @@ int ComOpenConn(char * address, int *max_pkt_size)
     /* build UNIX connection to server */
     addressUn.sun_family = AF_UNIX;
     strncpy(addressUn.sun_path, unix_port,
-	    sizeof(struct sockaddr_un) - sizeof(short));
+            sizeof(struct sockaddr_un) - sizeof(short));
     fd = socket(AF_UNIX, SOCK_STREAM, 0);
     if (fd == -1) {
       fprintf(stderr,
-	      "Error ComOpenConn: pid %d failed to open UNIX fd:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConn: pid %ld failed to open UNIX fd:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       return -1;
     }
     if (connect(fd, (struct sockaddr *)&addressUn, sizeof(addressUn)) == -1) {
       fprintf(stderr,
-	      "Error ComOpenConn: pid %d failed to conn UNIX fd to server:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConn: pid %ld failed to conn UNIX fd to server:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       ACE_OS::close (fd);
       return -1;
@@ -1378,24 +1378,24 @@ int ComOpenConn(char * address, int *max_pkt_size)
     fd = socket(AF_INET, SOCK_STREAM, 0);
     if (fd == -1) {
       fprintf(stderr,
-	      "Error ComOpenConn: pid %d failed to open TCP fd:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConn: pid %ld failed to open TCP fd:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       return -1;
     }
     if (connect(fd, (struct sockaddr *)&addressIn, sizeof(addressIn)) == -1) {
        fprintf(stderr,
-	      "Error ComOpenConn: pid %d failed to conn TCP fd to server:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConn: pid %ld failed to conn TCP fd to server:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       ACE_OS::close (fd);
       return -1;
     }
     if (setsockopt(fd, IPPROTO_TCP, TCP_NODELAY,
-		   (const char *)&i, sizeof(i)) == -1) {
+                   (const char *)&i, sizeof(i)) == -1) {
       fprintf(stderr,
-    "Error ComOpenConn: pid %d failed to setsockopt on TCP fd with TCP_NODELAY:",
-	     ACE_OS::getpid ());
+    "Error ComOpenConn: pid %ld failed to setsockopt on TCP fd with TCP_NODELAY:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       ACE_OS::close (fd);
       return -1;
@@ -1408,15 +1408,15 @@ int ComOpenConn(char * address, int *max_pkt_size)
     fd = ATMopenConn(address, max_pkt_size);
     if (fd == -1) {
       fprintf(stderr,
-	      "Error ComOpenConn: pid %d failed to open ATM fd conn:",
-	     ACE_OS::getpid ());
+              "Error ComOpenConn: pid %ld failed to open ATM fd conn:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       return -1;
     }
 #else
     fprintf(stderr,
-	    "Error ComOpenConn: pid %d addresstype %d not supported\n",
-	   ACE_OS::getpid (), socktype);
+            "Error ComOpenConn: pid %ld addresstype %d not supported\n",
+           ACE_OS::getpid (), socktype);
     return -1;
 #endif
   }
@@ -1453,8 +1453,8 @@ int ComInitServer(int pinet_port, char * punix_port, char * patm_port)
   
   if (size) {
     fprintf(stderr,
-	    "Error ComInitServer: pid %d already done ComInitServer/Server\n",
-	   ACE_OS::getpid ());
+            "Error ComInitServer: pid %ld already done ComInitServer/Server\n",
+           ACE_OS::getpid ());
     return -1;
   }
   size = CLIENT_FDTABLE_SIZE;
@@ -1462,8 +1462,8 @@ int ComInitServer(int pinet_port, char * punix_port, char * patm_port)
   fdTable = (struct FdTable *)ACE_OS::malloc(size * sizeof(*fdTable));
   if (fdTable == NULL) {
     fprintf(stderr,
-	    "Error ComInitServer: pid %d failed to allocated fdTable space:",
-	   ACE_OS::getpid ());
+            "Error ComInitServer: pid %ld failed to allocated fdTable space:",
+           ACE_OS::getpid ());
    ACE_OS::perror ("");
     return -1;
   }
@@ -1485,18 +1485,18 @@ int ComInitServer(int pinet_port, char * punix_port, char * patm_port)
   fd_inet = socket(AF_INET, SOCK_STREAM, 0);
   if (fd_inet == -1) {
     fprintf(stderr,
-	    "Error ComInitServer: pid %d failed to open fd_inet:",
-	   ACE_OS::getpid ());
+            "Error ComInitServer: pid %ld failed to open fd_inet:",
+           ACE_OS::getpid ());
    ACE_OS::perror ("");
     goto open_fd_unix;
   }
   
   i = 1;
   if (setsockopt(fd_inet, SOL_SOCKET, SO_REUSEADDR,
-		 (const char *)&i, sizeof(i)) == -1) {
+                 (const char *)&i, sizeof(i)) == -1) {
     fprintf(stderr,
-	    "Error ComInitServer: pid %d failed to setsockopt fd_inet with REUSEADDR:",
-	   ACE_OS::getpid ());
+            "Error ComInitServer: pid %ld failed to setsockopt fd_inet with REUSEADDR:",
+           ACE_OS::getpid ());
    ACE_OS::perror ("");
     ACE_OS::close (fd_inet);
     fd_inet = -1;
@@ -1505,8 +1505,8 @@ int ComInitServer(int pinet_port, char * punix_port, char * patm_port)
     
   if (bind(fd_inet, (struct sockaddr *)&myaddr_in, sizeof(struct sockaddr_in)) == -1) {
     fprintf(stderr,
-	    "Error ComInitServer: pid %d failed to bind fd_inet:",
-	   ACE_OS::getpid ());
+            "Error ComInitServer: pid %ld failed to bind fd_inet:",
+           ACE_OS::getpid ());
    ACE_OS::perror ("");
     ACE_OS::close (fd_inet);
     fd_inet = -1;
@@ -1514,8 +1514,8 @@ int ComInitServer(int pinet_port, char * punix_port, char * patm_port)
   }
   if (listen(fd_inet, 2) == -1) {
     fprintf(stderr,
-	    "Error ComInitServer: pid %d failed to listen on fd_inet:",
-	   ACE_OS::getpid ());
+            "Error ComInitServer: pid %ld failed to listen on fd_inet:",
+           ACE_OS::getpid ());
    ACE_OS::perror ("");
     ACE_OS::close (fd_inet);
     fd_inet = -1;
@@ -1526,20 +1526,20 @@ int ComInitServer(int pinet_port, char * punix_port, char * patm_port)
   
   myaddr_un.sun_family = AF_UNIX;
   strncpy(myaddr_un.sun_path, unix_port,
-	  (sizeof(struct sockaddr_un) - sizeof(short)));
+          (sizeof(struct sockaddr_un) - sizeof(short)));
   fd_unix = socket(AF_UNIX, SOCK_STREAM, 0);
   if (fd_unix == -1) {
     fprintf(stderr,
-	    "Error ComInitServer: pid %d failed to open fd_unix:",
-	   ACE_OS::getpid ());
+            "Error ComInitServer: pid %ld failed to open fd_unix:",
+           ACE_OS::getpid ());
    ACE_OS::perror ("");
     goto open_fd_atm;
   }
   if ((bind(fd_unix, (struct sockaddr *)&myaddr_un,
-	    sizeof(struct sockaddr_un))) == -1) {
+            sizeof(struct sockaddr_un))) == -1) {
     fprintf(stderr,
-	    "Error ComInitServer: pid %d failed to bind fd_unix:",
-	   ACE_OS::getpid ());
+            "Error ComInitServer: pid %ld failed to bind fd_unix:",
+           ACE_OS::getpid ());
    ACE_OS::perror ("");
     ACE_OS::close (fd_unix);
     fd_unix = -1;
@@ -1547,8 +1547,8 @@ int ComInitServer(int pinet_port, char * punix_port, char * patm_port)
   }
   if ((listen(fd_unix, 2)) == -1) {
     fprintf(stderr,
-	    "Error ComInitServer: pid %d failed to liston on fd_unix:",
-	   ACE_OS::getpid ());
+            "Error ComInitServer: pid %ld failed to liston on fd_unix:",
+           ACE_OS::getpid ());
    ACE_OS::perror ("");
     ACE_OS::close (fd_unix);
     fd_unix = -1;
@@ -1626,19 +1626,19 @@ static int change_option(int fd)
   struct linger linger = {1, 1};
   int i = 1;
   if (setsockopt(fd, IPPROTO_TCP, TCP_NODELAY,
-		 (const char *)&i, sizeof(i)) == -1) {
+                 (const char *)&i, sizeof(i)) == -1) {
     fprintf(stderr,
-	    "Error ComGetConnPair: pid %d failed to setsockopt on fd_inet:",
-	   ACE_OS::getpid ());
+            "Error ComGetConnPair: pid %ld failed to setsockopt on fd_inet:",
+           ACE_OS::getpid ());
    ACE_OS::perror ("");
     return -1;
   }
   /* data socket also NODELAY */
   if (setsockopt(fd, SOL_SOCKET, SO_LINGER, (const char *)&linger,
-		 sizeof(linger)) == -1) {
+                 sizeof(linger)) == -1) {
     fprintf(stderr,
-	    "Error ComGetConnPair: pid %d failed to linger on fd_inet:",
-	   ACE_OS::getpid ());
+            "Error ComGetConnPair: pid %ld failed to linger on fd_inet:",
+           ACE_OS::getpid ());
    ACE_OS::perror ("");
     return -1;
   }
@@ -1648,7 +1648,7 @@ static int change_option(int fd)
 int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
 {
   int i;
-  int fd, fdType;
+  int fd, fdType = -1;
   int addrlen;
   struct sockaddr_in peeraddr_in;
   struct fd_set read_mask;
@@ -1662,10 +1662,10 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
       fd ++;
     }
     else if (fdTable[i].type == STATE_PENDING &&
-		     get_duration(fdTable[i].stime, addrlen) > 10) {
+                     get_duration(fdTable[i].stime, addrlen) > 10) {
       fprintf(stderr,
-	      "ComGetConnPair: pid %d closed fd %d (PENDING >= 10 sec)\n",
-	     ACE_OS::getpid (), fdTable[i].fd);
+              "ComGetConnPair: pid %ld closed fd %d (PENDING >= 10 sec)\n",
+             ACE_OS::getpid (), fdTable[i].fd);
       ComCloseConn(fdTable[i].fd);
       fdTable[i].fd = -1;
       fd ++;
@@ -1673,8 +1673,8 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
   }
   if (fd < 2) {
     fprintf(stderr,
-	    "Error ComGetConnPair: pid %d no faTable entry for the pair",
-	   ACE_OS::getpid ());
+            "Error ComGetConnPair: pid %ld no faTable entry for the pair",
+           ACE_OS::getpid ());
     return -1;
   }
   
@@ -1705,8 +1705,8 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     if (errno == EINTR) return -1;
     
     fprintf(stderr,
-	    "Error ComGetConnPair: pid %d failed on select():",
-	   ACE_OS::getpid ());
+            "Error ComGetConnPair: pid %ld failed on select():",
+           ACE_OS::getpid ());
    ACE_OS::perror ("");
     return -1;
   }
@@ -1723,8 +1723,8 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     fd = accept(fd_unix, (struct sockaddr *)&peeraddr_un, &addrlen);
     if (fd == -1) {
       fprintf(stderr,
-	      "Error ComGetConnPair: pid %d failed to accpet on fd_unix:",
-	     ACE_OS::getpid ());
+              "Error ComGetConnPair: pid %ld failed to accpet on fd_unix:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
     }
     else fdType = CONN_UNIX;
@@ -1741,8 +1741,8 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     fd = accept(fd_inet, (struct sockaddr *)&peeraddr_in, &addrlen);
     if (fd == -1) {
       fprintf(stderr,
-	      "Error ComGetConnPair: pid %d failed to accpet on fd_inet:",
-	     ACE_OS::getpid ());
+              "Error ComGetConnPair: pid %ld failed to accpet on fd_inet:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
     }
     else fdType = CONN_INET;
@@ -1754,8 +1754,8 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     fdType = CONN_ATM;
 #else
     fprintf(stderr,
-	    "Error ComGetConnPair: pid %d CONN_ATM not supported.\n",
-	   ACE_OS::getpid ());
+            "Error ComGetConnPair: pid %ld CONN_ATM not supported.\n",
+           ACE_OS::getpid ());
 #endif
   }
   // fd = -1 implies accept failed in any of the active connections
@@ -1778,10 +1778,10 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
   // read the port number for the UDP socket of the client
   if (time_read_int(fd, &nfds) == -1) {
     fprintf(stderr,
-	    "Error ComGetConnPair: pid %d failed to read int from %s fd:",
-	   ACE_OS::getpid (),
-	    fdType == CONN_ATM ? "ATM" :
-	    fdType == CONN_INET ? "INET" : "UNIX");
+            "Error ComGetConnPair: pid %ld failed to read int from %s fd:",
+           ACE_OS::getpid (),
+            fdType == CONN_ATM ? "ATM" :
+            fdType == CONN_INET ? "INET" : "UNIX");
    ACE_OS::perror ("");
     ComCloseConn(fd);
     return -1;
@@ -1792,9 +1792,9 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
   // nfds holds the int read in time_read_int
   // if nfds is -1 then read int error.
   fprintf(stderr, "ComGetConnPair got %s fd = %d with value %d\n",
-	  fdType == CONN_ATM ? "ATM" :
-	  fdType == CONN_INET ? "INET" : "UNIX",
-	  fd, nfds);
+          fdType == CONN_ATM ? "ATM" :
+          fdType == CONN_INET ? "INET" : "UNIX",
+          fd, nfds);
 
   if (nfds >= 0) { /* can be paired and return */
     // This is the success case where you got a control fd and a data fd.
@@ -1823,10 +1823,10 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     // is this a hack ;-(
     if (time_write_int(fd, fd) == -1) {
       fprintf(stderr,
-	      "Error ComGetConnPair: pid %d failed to write (fd) to %s fd:",
-	     ACE_OS::getpid (),
-	      fdType == CONN_ATM ? "ATM" :
-	      fdType == CONN_INET ? "INET" : "UNIX");
+              "Error ComGetConnPair: pid %ld failed to write (fd) to %s fd:",
+             ACE_OS::getpid (),
+              fdType == CONN_ATM ? "ATM" :
+              fdType == CONN_INET ? "INET" : "UNIX");
      ACE_OS::perror ("");
       ComCloseConn(fd);
       return -1;
@@ -1844,8 +1844,8 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
 
     if (fdType == CONN_INET && change_option(fd) == -1) {
       fprintf(stderr,
-	      "Error ComGetConnPair: pid %d failed to change options of TCP cfd:",
-	     ACE_OS::getpid ());
+              "Error ComGetConnPair: pid %ld failed to change options of TCP cfd:",
+             ACE_OS::getpid ());
       ComCloseConn(fd);
       return -1;
     }
@@ -1853,8 +1853,8 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     dfd = socket(AF_INET, SOCK_DGRAM, 0);
     if (dfd == -1) {
       fprintf(stderr,
-	  "Error ComGetConnPair: pid %d failed to open dfd:",
-	 ACE_OS::getpid ());
+          "Error ComGetConnPair: pid %ld failed to open dfd:",
+         ACE_OS::getpid ());
      ACE_OS::perror ("");
       ComCloseConn(fd);
       return -1;
@@ -1864,8 +1864,8 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     addrlen = sizeof(*in);
     if (getsockname(fd, (struct sockaddr *)in, &addrlen) == -1) {
       fprintf(stderr,
-	  "Error ComGetConnPair: pid %d failed to getsockname of fd:",
-	 ACE_OS::getpid ());
+          "Error ComGetConnPair: pid %ld failed to getsockname of fd:",
+         ACE_OS::getpid ());
      ACE_OS::perror ("");
       ComCloseConn(fd);
       ACE_OS::close (dfd);
@@ -1879,8 +1879,8 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     */
     if (bind(dfd, (struct sockaddr *)in, sizeof(* in)) == -1) {
       fprintf(stderr,
-	  "Error ComGetConnPair: pid %d failed to bind dfd:",
-	 ACE_OS::getpid ());
+          "Error ComGetConnPair: pid %ld failed to bind dfd:",
+         ACE_OS::getpid ());
      ACE_OS::perror ("");
       ComCloseConn(fd);
       ACE_OS::close (dfd);
@@ -1889,8 +1889,8 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     addrlen = sizeof(*in);
     if (getsockname(dfd, (struct sockaddr *)in, &addrlen) == -1) {
       fprintf(stderr,
-	  "Error ComGetConnPair: pid %d failed to getsockname of dfd:",
-	 ACE_OS::getpid ());
+          "Error ComGetConnPair: pid %ld failed to getsockname of dfd:",
+         ACE_OS::getpid ());
      ACE_OS::perror ("");
       ComCloseConn(fd);
       ACE_OS::close (dfd);
@@ -1898,8 +1898,8 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     }
     if (time_write_bytes(fd, (char *)&in->sin_port, sizeof(short)) == -1) {
       fprintf(stderr,
-	  "Error ComGetConnPair: pid %d failed to write (dfd.port) to fd:",
-	 ACE_OS::getpid ());
+          "Error ComGetConnPair: pid %ld failed to write (dfd.port) to fd:",
+         ACE_OS::getpid ());
      ACE_OS::perror ("");
       ComCloseConn(fd);
       ACE_OS::close (dfd);
@@ -1909,8 +1909,8 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     addrlen = sizeof(*in);
     if (getsockname(fd, (struct sockaddr *)in, &addrlen) == -1) {
       fprintf(stderr,
-	  "Error ComGetConnPair: pid %d failed to getsockname of fd:",
-	 ACE_OS::getpid ());
+          "Error ComGetConnPair: pid %ld failed to getsockname of fd:",
+         ACE_OS::getpid ());
      ACE_OS::perror ("");
       ComCloseConn(fd);
       ACE_OS::close (dfd);
@@ -1919,8 +1919,8 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     */
     if (time_write_bytes(fd, (char *)&in->sin_addr.s_addr, sizeof(int)) == -1) {
       fprintf(stderr,
-	  "Error ComGetConnPair: pid %d failed to write (dfd.IPaddr) to fd:",
-	 ACE_OS::getpid ());
+          "Error ComGetConnPair: pid %ld failed to write (dfd.IPaddr) to fd:",
+         ACE_OS::getpid ());
      ACE_OS::perror ("");
       ComCloseConn(fd);
       ACE_OS::close (dfd);
@@ -1931,10 +1931,10 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
             inet_ntoa(in->sin_addr), ntohs(in->sin_port));
 
     if (time_read_bytes(fd, (char *)&in->sin_port, sizeof(short)) == -1 ||
-	time_read_bytes(fd, (char *)&in->sin_addr.s_addr, sizeof(int)) == -1) {
+        time_read_bytes(fd, (char *)&in->sin_addr.s_addr, sizeof(int)) == -1) {
       fprintf(stderr,
-	  "Error ComGetConnPair: pid %d failed to read (port, IPaddr) from fd:",
-	 ACE_OS::getpid ());
+          "Error ComGetConnPair: pid %ld failed to read (port, IPaddr) from fd:",
+         ACE_OS::getpid ());
      ACE_OS::perror ("");
       ComCloseConn(fd);
       ACE_OS::close (dfd);
@@ -1943,8 +1943,8 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     usleep(10000);
     if (connect(dfd, (struct sockaddr *)in, sizeof(*in)) == -1) {
       fprintf(stderr,
-	      "Error ComGetConnPair: pid %d failed conn UDP dfd to peer:",
-	     ACE_OS::getpid ());
+              "Error ComGetConnPair: pid %ld failed conn UDP dfd to peer:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
       ComCloseConn(fd);
       ACE_OS::close (dfd);
@@ -1956,28 +1956,28 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
       len = 65536; /* INET_SOCKET_BUFFER_SIZE + 100; */
       /*
       if (setsockopt(dfd, SOL_SOCKET, SO_SNDBUF, (char *)&len, sizeof(len)) == -1) {
-	fprintf(stderr,
-		"Error ComGetConnPair: pid %d failed to set UDP dfd-snd to size %d:",
-		getpid(), len);
-	perror("");
-	ComCloseConn(fd);
-	close(dfd);
-	return -1;
+        fprintf(stderr,
+                "Error ComGetConnPair: pid %ld failed to set UDP dfd-snd to size %d:",
+                ACE_OS::getpid (), len);
+        perror("");
+        ComCloseConn(fd);
+        close(dfd);
+        return -1;
       }
       */
       len = 65536;
       while (setsockopt(dfd, SOL_SOCKET, SO_RCVBUF, (char *)&len, sizeof(len)) == -1) {
-	len -= 1024;
-	if (len < 8192) break;
-	/*
-	fprintf(stderr,
-		"Warning ComGetConnPair: pid %d failed to set UDP dfd-rcv to size %d:",
-		getpid(), len);
-	perror("");
-	ComCloseConn(fd);
-	close(dfd);
-	return -1;
-	*/
+        len -= 1024;
+        if (len < 8192) break;
+        /*
+        fprintf(stderr,
+                "Warning ComGetConnPair: pid %ld failed to set UDP dfd-rcv to size %d:",
+                ACE_OS::getpid (), len);
+        perror("");
+        ComCloseConn(fd);
+        close(dfd);
+        return -1;
+        */
       }
       if (getuid() == DEVELOPER_UID)
       fprintf(stderr,"Set UDP dfd-rcv to %dB\n", len);
@@ -1987,10 +1987,10 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     // writes the port and ip addr and also gets the client's UDP
     // endpoint .
     *max_pkt_size = - INET_SOCKET_BUFFER_SIZE;  /* UDP sockets on HP and SUN
-						are known to be discard mode */
+                                                are known to be discard mode */
 
     fprintf(stderr, "ComGetConnPair UDP dfd connects to host-%s (port %u)\n",
-	    inet_ntoa(in->sin_addr), ntohs(in->sin_port));
+            inet_ntoa(in->sin_addr), ntohs(in->sin_port));
 
     for (i = 0; i < size; i ++) {
       if (fdTable[i].fd == -1) break;
@@ -2012,8 +2012,8 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
   }
   else {
     fprintf(stderr,
-	    "Error ComGetConnPair: pid %d get invalid value %d from fd\n",
-	   ACE_OS::getpid (), nfds);
+            "Error ComGetConnPair: pid %ld get invalid value %d from fd\n",
+           ACE_OS::getpid (), nfds);
     ComCloseConn(fd);
   }
   return -1;
@@ -2023,7 +2023,7 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
 int ComGetConn(int *max_pkt_size)
 {
   int i;
-  int fd, fdType;
+  int fd, fdType = -1;
   int addrlen;
   struct fd_set read_mask;
   struct timeval tval;
@@ -2037,8 +2037,8 @@ int ComGetConn(int *max_pkt_size)
   }
   if (fd < 1) {
     fprintf(stderr,
-	    "Error ComGetConn: pid %d no faTable entry for the pair",
-	   ACE_OS::getpid ());
+            "Error ComGetConn: pid %ld no faTable entry for the pair",
+           ACE_OS::getpid ());
     return -1;
   }
   
@@ -2065,8 +2065,8 @@ int ComGetConn(int *max_pkt_size)
     if (errno == EINTR) return -1;
     
     fprintf(stderr,
-	    "Error ComGetConn: pid %d failed on select():",
-	   ACE_OS::getpid ());
+            "Error ComGetConn: pid %ld failed on select():",
+           ACE_OS::getpid ());
    ACE_OS::perror ("");
     return -1;
   }
@@ -2083,8 +2083,8 @@ int ComGetConn(int *max_pkt_size)
     fd = accept(fd_unix, (struct sockaddr *)&peeraddr_un, &addrlen);
     if (fd == -1) {
       fprintf(stderr,
-	      "Error ComGetConn: pid %d failed to accpet on fd_unix:",
-	     ACE_OS::getpid ());
+              "Error ComGetConn: pid %ld failed to accpet on fd_unix:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
     }
     else fdType = CONN_UNIX;
@@ -2099,8 +2099,8 @@ int ComGetConn(int *max_pkt_size)
     fd = accept(fd_inet, (struct sockaddr *)&peeraddr_in, &addrlen);
     if (fd == -1) {
       fprintf(stderr,
-	      "Error ComGetConn: pid %d failed to accpet on fd_inet:",
-	     ACE_OS::getpid ());
+              "Error ComGetConn: pid %ld failed to accpet on fd_inet:",
+             ACE_OS::getpid ());
      ACE_OS::perror ("");
     }
     else fdType = CONN_INET;
@@ -2112,8 +2112,8 @@ int ComGetConn(int *max_pkt_size)
     fdType = CONN_ATM;
 #else
     fprintf(stderr,
-	    "Error ComGetConn: pid %d CONN_ATM not supported.\n",
-	   ACE_OS::getpid ());
+            "Error ComGetConn: pid %ld CONN_ATM not supported.\n",
+           ACE_OS::getpid ());
 #endif
   }
   if (fd == -1) return -1;
