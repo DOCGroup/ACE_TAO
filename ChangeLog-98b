@@ -6,6 +6,9 @@ Fri Jun 19 16:51:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* ace/OS.i (sigwait): Suppress compiler warnings on FreeBSD.
 	  (msgsnd):  Separated the case ACE_HAS_NONCONST_MSGSND out.
 
+	  Thanks to Russell L. Carter <rcarter@consys.com> for reporting
+	  the above fix.
+
 Fri Jun 19 11:22:27 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.5.13 released.
