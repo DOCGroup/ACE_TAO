@@ -1,0 +1,413 @@
+// -*-c++-*-
+
+// $Id$
+
+// ================================================================
+//
+// = LIBRARY
+//     cos
+//
+// = FILENAME
+//     CosPropertyService.idl
+//
+// = DESCRITION
+//     The property service, downloaded from
+//     ftp://ftp.omg.org/pub/docs/1995/95-06-01.ps 
+//
+// = AUTHOR
+//     Alexander Babu Arulanthu <alex@cs.wustl.edu>
+//
+// ================================================================
+
+#ifndef TAO_PROPERTY_IDL
+#define TAO_PROPERTY_IDL
+
+#include <orb.idl>
+
+#pragma prefix "omg.org"
+
+module CosPropertyService
+{
+  // = TITLE
+  //     CosPropertyService : To support properties (that are typed
+  //     named values dynamically associated with an object, outside
+  //     of the type system.
+  //
+  // = DESCRIPTION
+  //     The data types and interfaces to deal with property names,
+  //     property values, property modes etc.
+
+  // = Data Types.
+
+  typedef string PropertyName;
+
+  struct Property
+  {
+    PropertyName property_name;
+    any property_value;
+  };
+
+  enum PropertyModeType
+  {
+    normal,
+    read_only,
+    fixed_normal,
+    fixed_readonly,
+    undefined
+  };
+
+  struct PropertyDef
+  {
+    PropertyName property_name;
+    any property_value;
+    PropertyModeType property_mode;
+  };
+
+  struct PropertyMode
+  {
+    PropertyName property_name;
+    PropertyModeType property_mode;
+  };
+
+  typedef sequence<PropertyName> PropertyNames;
+  typedef sequence<Property> Properties;
+  typedef sequence<PropertyDef> PropertyDefs;
+  typedef sequence<PropertyMode> PropertyModes;
+  typedef sequence<CORBA::TypeCode> PropertyTypes;
+
+  interface PropertyNamesIterator;
+  interface PropertiesIterator;
+  interface PropertySetFactory;
+  interface PropertySetDef;
+  interface PropertySet;
+
+  // = Exceptions
+
+  exception ConstraintNotSupported {};
+  exception InvalidPropertyName {};
+  exception ConflictingProperty {};
+  exception PropertyNotFound {};
+  exception UnsupportedTypeCode {};
+  exception UnsupportedProperty {};
+  exception UnsupportedMode {};
+  exception FixedProperty {};
+  exception ReadOnlyProperty {};
+
+  enum ExceptionReason
+  {
+    invalid_property_name,
+    conflicting_property,
+    property_not_found,
+    unsupported_type_code,
+    unsupported_property,
+    unsupported_mode,
+    fixed_property,
+    read_only_property
+  };
+
+  struct PropertyException
+  {
+      ExceptionReason reason;
+      PropertyName failing_property_name;
+  };
+  
+  typedef sequence<PropertyException> PropertyExceptions;
+
+  exception MultipleExceptions
+    {
+      PropertyExceptions exceptions;
+    };
+
+  // = Interface Definitions.
+
+  interface PropertySetFactory
+    {
+      // = TITLE
+      //     Factory class for PropertySet interface.
+      // = DESCRIPTION
+      //     Support for creating PropertySets with initial
+      //     constraints and properties.
+
+      PropertySet create_propertyset ();
+      // The create_propertyset operation returns a new
+      // PropertySet. It is considered an implementation issue as to
+      // whether the PropertySet contains any initial properties or
+      // has constraints.
+
+      PropertySet create_constrained_propertyset (in PropertyTypes allowed_property_types,
+                                                 in Properties allowed_properties)
+        raises (ConstraintNotSupported);
+      // The create_constrained_propertyset operation allows a client
+      // to create a new PropertySet with specific constraints.
+
+      PropertySet create_initial_propertyset (in Properties initial_properties)
+        raises (MultipleExceptions);
+      // The create_initial_propertyset operation allows a client to
+      // create a new PropertySet with specific initial properties.
+    };
+
+  interface PropertySetDefFactory
+    {
+      // = TITLE
+      //     Factory class for PropertySetDef interface.
+      // = DESCRIPTION
+      //     Support for creating Propsetdefs with initial constraints
+      //     and properties.
+
+      PropertySetDef create_propertysetdef ();
+      //  The create_propertysetdef operation returns a new
+      //  PropertySetDef.
+
+      PropertySetDef create_constrained_propertysetdef (in PropertyTypes allowed_property_types,
+                                                        in PropertyDefs  allowed_property_defs)
+        raises (ConstraintNotSupported);
+      // The create_constrained_propertysetdef operation allows a
+      // client to create a new PropertySetDef with specific
+      // constraints, including property modes.
+
+      PropertySetDef create_initial_propertysetdef (in PropertyDefs initial_property_defs)
+        raises (MultipleExceptions);
+      // The create_initial_propertysetdef operation allows a client
+      // to create a new PropertySetDef with specific initial
+      // properties, including property modes.
+    };
+
+  interface PropertySet
+    {
+      // = TITLE
+      //     The PropertySet interface provides operations to define
+      //     and modify properties, list and get properties, and
+      //     delete properties.
+      //
+      // = DESCRIPTION
+      //     Provides support for defining and modifying properties,
+      //     getting properties and their names and deleting properties.
+
+      // = Support for defining and modifying properties.
+
+      void define_property (in PropertyName property_name,
+                            in any property_value)
+        raises (InvalidPropertyName,
+                ConflictingProperty,
+                UnsupportedTypeCode,
+                UnsupportedProperty,
+                ReadOnlyProperty);
+      // Will modify or add a property to the PropertySet. If the
+      // property already exists, then the property type is checked
+      // before the value is overwritten. If the property does not
+      // exist, then the property is added to the PropertySet.
+
+      void define_properties (in Properties nproperties)
+        raises (MultipleExceptions);
+      // Will modify or add each of the properties in Properties
+      // parameter to the PropertySet. For each property in the list,
+      // if the property already exists, then the property type is
+      // checked before overwriting the value. If the property does
+      // not exist, then the property is added to the PropertySet.
+
+      // = Support for Getting Properties and their Names.
+
+      unsigned long get_number_of_properties ();
+      // Returns the current number of properties associated with this
+      // PropertySet.
+
+      void get_all_property_names (in unsigned long how_many,
+                                   out PropertyNames property_names,
+                                   out PropertyNamesIterator rest);
+      // Returns all of the property names currently defined in the
+      // PropertySet. If the PropertySet contains more than how_many
+      // property names, then the remaining property names are put
+      // into the PropertyNamesIterator.
+
+      any  get_property_value (in  PropertyName property_name)
+        raises (PropertyNotFound,
+                InvalidPropertyName);
+      // Returns the value of a property in the PropertySet.
+
+      boolean get_properties (in PropertyNames property_names,
+                              out Properties nproperties);
+      // Returns the values of the properties listed in
+      // property_names.
+
+      void get_all_properties (in unsigned long how_many,
+                               out Properties nproperties,
+                               out PropertiesIterator rest);
+      // Returns all of the property names currently defined in the
+      // PropertySet. If the PropertySet contains more than how_many
+      // property names, then the remaining property names are put
+      // into the PropertyNamesIterator.
+
+      // = Support for Deleting Properties.
+
+      void delete_property (in PropertyName property_name)
+        raises (PropertyNotFound,
+                InvalidPropertyName,
+                FixedProperty);
+      // Deletes the specified property if it exists from a
+      // PropertySet.
+
+
+      void delete_properties (in PropertyNames property_names)
+        raises (MultipleExceptions);
+      // Deletes the properties defined in the property_names
+      // parameter. This is a batch operation that returns the
+      // MultipleExceptions exception if any delete failed.
+
+      boolean delete_all_properties ();
+      // Variation of delete_properties. Applies to all properties.
+
+      // = Support for Existence Check.
+
+      boolean is_property_defined (in PropertyName property_name)
+        raises (InvalidPropertyName);
+      // The is_property_defined operation returns true if the
+      // property is defined in the PropertySet, and returns false
+      // otherwise.
+    };
+
+  interface PropertySetDef:PropertySet
+    {
+      // = TITLE
+      //     Interface to deal with the Property Modes.
+      //
+      // = DESCRIPTION
+      //     The PropertySetDef interface is a specialization
+      //     (subclass) of the PropertySet interface. The
+      //     PropertySetDef interface provides operations to retrieve
+      //     PropertySet constraints, define and modify properties
+      //     with modes, and to get or set property modes.
+
+      void get_allowed_property_types (out PropertyTypes property_types);
+      // Indicates which types of properties are supported by this
+      // PropertySet. If the output sequence is empty, then there is
+      // no restrictions on the any TypeCode portion of the
+      // property_value field of a Property in this PropertySet,
+      // unless the get_allowed_properties output sequence is not empty.
+
+      void get_allowed_properties (out PropertyDefs property_defs);
+      // Indicates which properties are supported by this
+      // PropertySet. If the output sequence is empty, then there is
+      // no restrictions on the properties that can be in this
+      // PropertySet, unless the get_allowed_property_types output
+      // sequence is not empty.
+
+      void define_property_with_mode (in PropertyName property_name,
+                                      in any property_value,
+                                      in PropertyModeType property_mode)
+        raises (InvalidPropertyName,
+                ConflictingProperty,
+                UnsupportedTypeCode,
+                UnsupportedProperty,
+                UnsupportedMode,
+                ReadOnlyProperty);
+      // This operation will modify or add a property to the
+      // PropertySet. If the property already exists, then the
+      // property type is checked before the value is overwritten. The
+      // property mode is also checked to be sure a new value may be
+      // written. If the property does not exist, then the property is
+      // added to the PropertySet. To change the any TypeCode portion
+      // of the property_value of a property, a client must first
+      // delete_property, then invoke the define_property_with_mode.
+
+      void define_properties_with_modes (in PropertyDefs property_defs)
+        raises (MultipleExceptions);
+      // This operation will modify or add each of the properties in
+      // the Properties parameter to the PropertySet. For each
+      // property in the list, if the property already exists, then
+      // the property type is checked before overwriting the
+      // value. The property mode is also checked to be sure a new
+      // value may be written. If the property does not exist, then
+      // the property is added to the PropertySet. This is a batch
+      // operation that returns the MultipleExceptions exception if
+      // any define operation failed.
+
+      // = Support for Getting and Setting Property Modes.
+
+      PropertyModeType get_property_mode (in  PropertyName property_name)
+        raises (PropertyNotFound,
+                InvalidPropertyName);
+      // Support for Getting and Setting Property Modes.
+
+      boolean get_property_modes (in PropertyNames property_names,
+                                 out PropertyModes property_modes);
+      // Support for Getting and Setting Property Modes.
+
+      void set_property_mode (in PropertyName property_name,
+                             in PropertyModeType property_mode)
+        raises (InvalidPropertyName,
+                PropertyNotFound,
+                UnsupportedMode);
+      // Sets the mode of a property in the PropertySet.
+
+      void set_property_modes (in PropertyModes property_modes)
+        raises (MultipleExceptions);
+      // Sets the mode for each property in the property_modes
+      // parameter. This is a batch operation that returns the
+      // MultipleExceptions exception if any set failed.
+
+    };
+
+  interface PropertyNamesIterator
+    {
+      // = TITLE
+      //     Interface for iterating thru the Property Names.
+      //
+      // = DESCRIPTION
+      //     The PropertyNamesIterator interface allows a client to
+      //     iterate through the names using the next_one or next_n operations.
+
+      void reset ();
+      // The reset operation resets the position in an iterator to the
+      // first property, if one exists.
+
+      boolean next_one (out PropertyName property_name);
+      // The next_one operation returns true if an item exists at the
+      // current position in the iterator with an output parameter of
+      // a property name. A return of false signifies no more items in
+      // the iterator.
+
+      boolean next_n (in unsigned long how_many,
+                      out PropertyNames property_names);
+      // The next_n operation returns true if an item exists at the
+      // current position in the iterator and the how_many parameter
+      // was set greater than zero. The output is a PropertyNames
+      // sequence with at most the how_many number of names. A return
+      // of false signifies no more items in the iterator.
+
+      void destroy ();
+      // The destroy operation destroys the iterator.
+    };
+
+  interface PropertiesIterator
+    {
+      // = TITLE
+      //     Interface for iterating thru the Properties.
+      //
+      // = DESCRIPTION
+      //     allows a client to through the name-value pairs using the
+      //     next_one or next_n operations.
+
+      void reset ();
+      // The reset operation resets the position in an iterator to the
+      // first property, if one exists.
+
+      boolean next_one (out Property aproperty);
+      // The next_one operation returns true if an item exists at the
+      // current position in the iterator with an output parameter of
+      // a property. A return of false signifies no more items in the
+      // iterator.
+
+      boolean next_n (in unsigned long how_many,
+                      out Properties nproperties);
+      // The next_n operation returns true if an item exists at the
+      // current position in the iterator and the how_many parameter
+      // was set greater than zero. The output is a properties
+      // sequence with at most the how_many number of properties. A
+      // return of false signifies no more items in the iterator.
+
+      void destroy ();
+      // The destroy operation destroys the iterator.
+    };
+};
+
+#endif /* TAO_PROPERTY_IDL */
