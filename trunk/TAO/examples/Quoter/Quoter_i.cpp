@@ -268,8 +268,8 @@ CosLifeCycle::LifeCycleObject::_nil ();
 // Move this object using <there> and <the_criteria>
 
 void
-Quoter_i::move (CosLifeCycle::FactoryFinder_ptr there,
-                const CosLifeCycle::Criteria &the_criteria,
+Quoter_i::move (CosLifeCycle::FactoryFinder_ptr /* there */,
+                const CosLifeCycle::Criteria & /* the_criteria */,
                 CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosLifeCycle::NoFactory,
@@ -277,14 +277,10 @@ Quoter_i::move (CosLifeCycle::FactoryFinder_ptr there,
                        CosLifeCycle::InvalidCriteria,
                        CosLifeCycle::CannotMeetCriteria))
 {
-  ACE_UNUSED_ARG (there);
-  ACE_UNUSED_ARG (the_criteria);
+  ACE_ERROR ((LM_ERROR,
+              "Quoter_i::move: The Quoter object is not movable!"));
 
-  ACE_ERROR ((LM_ERROR, 
-			  "Quoter_i::move: The Quoter object is not movable!"));
-
-  ACE_THROW (new CosLifeCycle::NotMovable);
-
+  ACE_THROW (CosLifeCycle::NotMovable());
 }
 
 

@@ -1,3 +1,8 @@
+Wed Feb 14 07:13:12 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/Quoter/Quoter_i.cpp:
+          Fixed use of ACE_THROW.
+
 Tue Feb 13 18:44:19 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Reactive_Timeout_Generator.cpp:
