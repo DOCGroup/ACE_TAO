@@ -1588,14 +1588,16 @@ CORBA::Boolean
 operator<< (TAO_OutputCDR& cdr,
             const CORBA::Any &x)
 {
-  if (!(cdr << x.type ()))
+  CORBA::TypeCode_var tc = x.type ();
+
+  if (!(cdr << tc.in ()))
     return 0;
 
   ACE_TRY_NEW_ENV
     {
       TAO_InputCDR input (x._tao_get_cdr (),
                           x._tao_byte_order ());
-      TAO_Marshal_Object::perform_append (x.type (),
+      TAO_Marshal_Object::perform_append (tc.in (),
                                           &input,
                                           &cdr,
                                           ACE_TRY_ENV);
