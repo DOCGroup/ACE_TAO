@@ -1,3 +1,9 @@
+Wed Jun 16 20:14:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/varout.i:
+	  A minor change to keep HP/aCC happy, thanks to Steve Huston for
+	  reporting this problem.
+
 Wed Jun 16 19:59:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp:
