@@ -1,3 +1,12 @@
+Tue Jul 15 10:31:29 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* tests/Bug_1551_Regression/*
+
+	  Bug regression test files for Bug 1551.
+
+	  This bug causes the ORB deadlock if one tries send messages
+	  while handling exceptions in AMI.
+
 Tue Jul 15 10:18:07 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * tao/Transport.cpp (send_closed_connection_notification):
