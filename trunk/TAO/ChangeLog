@@ -1,3 +1,9 @@
+Mon Apr 19 09:18:21 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/Logging_Service/Notify_Logging_Service/svc.conf:
+
+          Turn the new-lines into something sane.
+
 Mon Apr 19 13:23:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         The last file from my regeneration work. This is the file with the
@@ -119,13 +125,13 @@ Mon Apr 19 08:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Apr 16 16:32:32 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (parse_args):
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (parse_args):
 
-	  ptrdiff_t is a signed type, so use the
-	  ACE_INT64_FORMAT_SPECIFIER instead of its unsigned counterpart
-	  when reading a value into a ptrdiff_t variable via sscanf().
-	  Fixes a g++ warning regarding mismatched format specifiers and
-	  corresponding arguments in 64 bit platform builds.
+          ptrdiff_t is a signed type, so use the
+          ACE_INT64_FORMAT_SPECIFIER instead of its unsigned counterpart
+          when reading a value into a ptrdiff_t variable via sscanf().
+          Fixes a g++ warning regarding mismatched format specifiers and
+          corresponding arguments in 64 bit platform builds.
 
 Fri Apr 16 10:28:42 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -151,18 +157,18 @@ Fri Apr 16 09:24:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Apr 15 23:13:55 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Any.h:
+        * tao/Any.h:
 
-	  Reverted change "Wed Apr 14 06:42:12 UTC 2004  Johnny Willemsen
-	  <jwillemsen@remedy.nl>" that added a #include
-	  "tao/Exception.h" to address emulated exception compile-time
-	  problems.  Including "ace/CORBA_macros.h" instead is enough and
-	  much lighterweight.
+          Reverted change "Wed Apr 14 06:42:12 UTC 2004  Johnny Willemsen
+          <jwillemsen@remedy.nl>" that added a #include
+          "tao/Exception.h" to address emulated exception compile-time
+          problems.  Including "ace/CORBA_macros.h" instead is enough and
+          much lighterweight.
 
-	* tao/PolicyC.h:
+        * tao/PolicyC.h:
 
-	  Include "tao/Exception.h" to pull in CORBA exception class
-	  declarations.
+          Include "tao/Exception.h" to pull in CORBA exception class
+          declarations.
 
 Thu Apr 15 06:00:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -209,11 +215,11 @@ Thu Apr 15 14:27:12 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Apr 15 12:02:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
 
-	  Include "tao/CDR.h" to pull in required TAO CDR class
-	  declarations.   Thanks to Johnny Willemsen for pointing out this
-	  is now necessary.
+          Include "tao/CDR.h" to pull in required TAO CDR class
+          declarations.   Thanks to Johnny Willemsen for pointing out this
+          is now necessary.
 
 Thu Apr 15 13:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -399,98 +405,98 @@ Thu Apr 15 06:25:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Apr 14 23:07:54 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Abstract_Servant_Base.h:
-	* tao/Adapter.h:
-	* tao/Any.h:
+        * tao/Abstract_Servant_Base.h:
+        * tao/Adapter.h:
+        * tao/Any.h:
 
-	  Include "tao/CORBA_methods.h" before "tao/Pseudo_VarOut_T.h" to
-	  make sure CORBA::release() overrides are declared prior to
-	  parsing the TAO_Pseudo_{Var,Out}_T template.  Addresses g++ 3.4
-	  pre-release compile-time failures.
+          Include "tao/CORBA_methods.h" before "tao/Pseudo_VarOut_T.h" to
+          make sure CORBA::release() overrides are declared prior to
+          parsing the TAO_Pseudo_{Var,Out}_T template.  Addresses g++ 3.4
+          pre-release compile-time failures.
 
-	* tao/Adapter.cpp:
-	* tao/ORB_Core.h:
-	* tao/DynamicInterface/Request.h:
-	* tao/Valuetype/AbstractBase.h:
+        * tao/Adapter.cpp:
+        * tao/ORB_Core.h:
+        * tao/DynamicInterface/Request.h:
+        * tao/Valuetype/AbstractBase.h:
 
-	  Reordered includes to prevent TAO_Pseudo_{Var,Out}_T template
-	  from being parsed prior to declaring all types that could be
-	  potential template parameters.
+          Reordered includes to prevent TAO_Pseudo_{Var,Out}_T template
+          from being parsed prior to declaring all types that could be
+          potential template parameters.
 
-	* tao/CORBA_methods.h:
+        * tao/CORBA_methods.h:
 
-	  Reverted change that added CORBA::ExceptionList related types
-	  and functions to this header due to inconsistent DLL linkage
-	  issues on MS Windows.
+          Reverted change that added CORBA::ExceptionList related types
+          and functions to this header due to inconsistent DLL linkage
+          issues on MS Windows.
 
-	* tao/Pseudo_VarOut_T.h:
+        * tao/Pseudo_VarOut_T.h:
 
-	  Do not include "tao/CORBA_methods.h" in this header.  It
-	  introduced compilation issues in g++ 3.4 pre-release builds due
-	  to the fact some necessary types were declared after the
-	  TAO_Pseudo_{Var,Out}_T template was parsed, essentially making
-	  the type invisible to the template.  This is due to the fact
-	  that g++ 3.4.x performs name lookups and binding at template
-	  parsing time, not instantiation time.
+          Do not include "tao/CORBA_methods.h" in this header.  It
+          introduced compilation issues in g++ 3.4 pre-release builds due
+          to the fact some necessary types were declared after the
+          TAO_Pseudo_{Var,Out}_T template was parsed, essentially making
+          the type invisible to the template.  This is due to the fact
+          that g++ 3.4.x performs name lookups and binding at template
+          parsing time, not instantiation time.
 
-	* tao/default_environment.h:
+        * tao/default_environment.h:
 
-	  Include "tao/TAO_Export.h" to pull in TAO_Export macro
-	  definitions.
+          Include "tao/TAO_Export.h" to pull in TAO_Export macro
+          definitions.
 
-	* tao/DynamicInterface/DII_CORBA_methods.h:
+        * tao/DynamicInterface/DII_CORBA_methods.h:
 
-	  Moved all DII related functions in the CORBA namespace
-	  (e.g. release()) to this new header.  This header makes it
-	  easier to declare CORBA::release() prototypes before the
-	  TAO_Pseudo_{Var,Out}_T templates are parsed.
+          Moved all DII related functions in the CORBA namespace
+          (e.g. release()) to this new header.  This header makes it
+          easier to declare CORBA::release() prototypes before the
+          TAO_Pseudo_{Var,Out}_T templates are parsed.
 
-	* tao/DynamicInterface/Context.h:
-	* tao/DynamicInterface/ExceptionList.h:
+        * tao/DynamicInterface/Context.h:
+        * tao/DynamicInterface/ExceptionList.h:
 
-	  Moved all DII related functions in the CORBA namespace
-	  (e.g. release()) to the new DLL_CORBA_methods.h header.
+          Moved all DII related functions in the CORBA namespace
+          (e.g. release()) to the new DLL_CORBA_methods.h header.
 
-	  Include the new DII_CORBA_methods.h header before
-	  tao/Pseudo_VarOut_T.h to make sure the DII types and functions
-	  we care about are declared before the TAO_Pseudo_{Var,Out}_T
-	  templates are parsed.  Addresses g++ 3.4.x compile-time issues.
+          Include the new DII_CORBA_methods.h header before
+          tao/Pseudo_VarOut_T.h to make sure the DII types and functions
+          we care about are declared before the TAO_Pseudo_{Var,Out}_T
+          templates are parsed.  Addresses g++ 3.4.x compile-time issues.
 
-	* tao/DynamicInterface/ExceptionList.inl:
+        * tao/DynamicInterface/ExceptionList.inl:
 
-	  Nuked trailing whitespace.
+          Nuked trailing whitespace.
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h (internals_):
-	* orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.h (internals_):
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h (internals_):
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.h (internals_):
 
-	  Declared this mutex member as "mutable" so that performing a
-	  const_cast<> in const methods is unnecessary.
+          Declared this mutex member as "mutable" so that performing a
+          const_cast<> in const methods is unnecessary.
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
 
-	  Removed all const_cast<> mutex hacks in const methods.  They are
-	  no longer necessary since the mutex member (internals_) is now
-	  mutable.
+          Removed all const_cast<> mutex hacks in const methods.  They are
+          no longer necessary since the mutex member (internals_) is now
+          mutable.
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.h:
 
-	  Removed "InternalGuard" typedef.  It is no longer used.
+          Removed "InternalGuard" typedef.  It is no longer used.
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.cpp:
 
-	  Replaced all ACE_Guard uses with the corresponding ACE_GUARD
-	  macro.  Addresses unused variable warnings.
+          Replaced all ACE_Guard uses with the corresponding ACE_GUARD
+          macro.  Addresses unused variable warnings.
 
-	* orbsvcs/tests/Security/Big_Request/client.cpp:
+        * orbsvcs/tests/Security/Big_Request/client.cpp:
 
-	  Cosmetic changes.
+          Cosmetic changes.
 
-	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.h:
-	* tests/Portable_Interceptors/ORB_Shutdown/Server_Request_Interceptor.h:
+        * tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.h:
+        * tests/Portable_Interceptors/ORB_Shutdown/Server_Request_Interceptor.h:
 
-	  Made destructor protected to enforce proper memory management
-	  through reference counting.
+          Made destructor protected to enforce proper memory management
+          through reference counting.
 
 Wed Apr 14 17:48:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
