@@ -1,3 +1,8 @@
+Wed May 15 17:47:24 UTC 2002  Don Hinton  <dhinton@ieee.org>
+	
+	* ace/DLL.cpp:  Fixed compile error in an AIX ifdef'd
+	  section of code I missed before.
+
 Wed May 15 17:18:58 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/DLL.cpp (open):
