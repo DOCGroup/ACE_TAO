@@ -1,2 +1,5 @@
+// -*- MPC -*-
+// $Id$
+
 conditional_include "idl_compiler"
 conditional_include "common"

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project : aceexe, taoversion {
   after       += TAO TAO_IDL_EXE
   includes    += $(TAO_ROOT) $(TAO_ROOT)/tao

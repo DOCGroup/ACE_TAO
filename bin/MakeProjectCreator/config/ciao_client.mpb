@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project : orbsvcslib, ifr_client, valuetype, security {
   after    += CIAO_Client
   includes   += $(TAO_ROOT)/orbsvcs/orbsvcs

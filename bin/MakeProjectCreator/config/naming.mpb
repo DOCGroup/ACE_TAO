@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project : iortable, messaging, svc_utils {
   after     += CosNaming
   libs      += TAO_CosNaming

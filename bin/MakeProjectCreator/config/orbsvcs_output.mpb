@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project {
   staticflags += TAO_AS_STATIC_LIBS
   // We tested with all orbsvcs libs going to $(TAO_ROOT)/orbsvcs/lib, but

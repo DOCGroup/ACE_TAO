@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project : iormanip, portableserver {
   after     += FTORB_Utils 
   libs      += TAO_FTORB_Utils 

@@ -1,3 +1,11 @@
+Tue Dec 30 15:16:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * *.mpb:
+          Added $ID tag to quash fuzz errors.
+
+        * bin/MakeProjectCreator/templates/*.mpt:
+          Added $ID tag to quash fuzz errors.
+
 Tue Dec 30 08:38:59 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/ace.mpc:

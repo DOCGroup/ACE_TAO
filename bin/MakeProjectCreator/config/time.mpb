@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project : naming {
   after     += CosTime
   libs      += TAO_CosTime
