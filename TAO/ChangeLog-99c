@@ -1,3 +1,8 @@
+Tue Jun 22 18:38:35 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Simple/Simple_util.cpp: Made the POA state active
+	  before calling the rebind  on the naming service.
+
 Tue Jun 22 17:45:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
