@@ -2506,7 +2506,7 @@ struct sigaction
 
 // Why is this defined?  It must be a std C library symbol.
 #if !defined (NSIG)
-#define NSIG 1
+#define NSIG 0
 #endif /* NSIG */
 
 #if !defined (R_OK)

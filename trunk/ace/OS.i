@@ -456,8 +456,13 @@ extern "C" char *mktemp (char *);
 // This is necessary to work around nasty problems with MVS C++.
 extern "C" void ace_mutex_lock_cleanup_adapter (void *args);
 #define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
-#else
+#define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
+#elif !defined (ACE_LACKS_PTHREAD_CLEANUP)
 #define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ACE_OS::mutex_lock_cleanup, (void *) A);
+#define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
+#else
+#define ACE_PTHREAD_CLEANUP_PUSH(A) 
+#define ACE_PTHREAD_CLEANUP_POP(A) 
 #endif /* ACE_HAS_THR_C_FUNC */
 
 #if defined (ACE_HAS_REGEX)
@@ -1736,6 +1741,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   // ACE_TRACE ("ACE_OS::sema_destroy");
 #if defined (ACE_HAS_POSIX_SEM)
   int result;
+#if !defined (ACE_LACKS_NAMED_POSIX_SEM)
   if (s->name_)
     {
       ACE_OS::free ((void *) s->name_);
@@ -1743,6 +1749,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
       ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_close (s->sema_), ace_result_), int, -1);
     }
   else
+#endif /* ACE_LACKS_NAMED_POSIX_SEM */
     {
       ACE_OSCALL (ACE_ADAPT_RETVAL (::sem_destroy (s->sema_), result), int, -1, result);
       delete s->sema_;
@@ -1976,7 +1983,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
 
   if (result != -1)
     ACE_OS::mutex_unlock (&s->lock_);
-  pthread_cleanup_pop (1);
+  ACE_PTHREAD_CLEANUP_POP (1);
   return result;
 
 #elif defined (ACE_HAS_WTHREADS)
@@ -2515,7 +2522,7 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
   if (result != -1)
     ACE_OS::mutex_unlock (&rw->lock_);
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  pthread_cleanup_pop (0);
+  ACE_PTHREAD_CLEANUP_POP (0);
 #endif
   return 0;
 #endif /* ACE_HAS_STHREADS */
@@ -2676,7 +2683,7 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
   if (result != -1)
     ACE_OS::mutex_unlock (&rw->lock_);
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  pthread_cleanup_pop (0);
+  ACE_PTHREAD_CLEANUP_POP (0);
 #endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
   return 0;
 #endif /* ACE_HAS_STHREADS */

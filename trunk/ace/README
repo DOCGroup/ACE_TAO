@@ -190,6 +190,7 @@ ACE_LACKS_NETDB_REENTRANT_FUNCTIONS	Platform does not support reentrant netdb fu
 					gethostbyname_r, getservbyname_r).
 ACE_LACKS_RPC_H				Platform lacks the ONC RPC header files.  
 ACE_LACKS_PARAM_H			Platform lacks <sys/param.h> (e.g., MVS)
+ACE_LACKS_NAMED_POSIX_SEM		Platform lacks named POSIX semaphores (e.g., Chorus)
 ACE_LACKS_RLIMIT_PROTO			Platform/compiler lacks {get,set}rlimit() prototypes (e.g., Tandem)
 ACE_LACKS_POSIX_PROTO			Platform lacks POSIX prototypes for certain System V functions like shared memory and message queues.
 ACE_LACKS_PRI_T				Platform lacks pri_t (e.g., Tandem NonStop UNIX).
@@ -225,6 +226,7 @@ ACE_LACKS_TCP_H				Platform doesn't have netinet/tcp.h
 ACE_LACKS_THREAD_STACK_SIZE		Platform lacks pthread_attr_setstacksize() (e.g., Linux pthreads)
 ACE_LACKS_UCONTEXT_H			Platform lacks the ucontext.h file
 ACE_LACKS_UNIX_DOMAIN_SOCKETS		ACE platform has no UNIX domain sockets
+ACE_LACKS_UNIX_SIGNALS			Platform lacks full signal support (e.g., Win32 and Chorus).
 ACE_LACKS_UTSNAME_T			Platform lacks struct utsname (e.g., Win32 and VxWorks)
 ACE_MT_SAFE				Compile using multi-thread libraries
 ACE_NDEBUG				Turns off debugging features

@@ -16,6 +16,7 @@
 #undef linux
 #endif
 
+#define ACE_LACKS_UNIX_SIGNALS
 #define ACE_HAS_IP_MULTICAST
 #define ACE_LACKS_MPROTECT
 #define ACE_LACKS_SOCKETPAIR
@@ -86,11 +87,13 @@
 
 // Yes, we do have threads.
 #define ACE_HAS_THREADS
-//#define ACE_HAS_POSIX_SEM
+#define ACE_HAS_POSIX_SEM
+#define ACE_LACKS_NAMED_POSIX_SEM
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #define ACE_MT_SAFE
 // And they're even POSIX pthreads
 #define ACE_HAS_PTHREADS
+#define ACE_LACKS_PTHREAD_CLEANUP
 #define ACE_LACKS_RWLOCK_T
 #define ACE_HAS_SIGWAIT
 #define ACE_LACKS_CONDATTR_PSHARED
