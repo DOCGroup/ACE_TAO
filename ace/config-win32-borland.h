@@ -1,6 +1,5 @@
 // -*- C++ -*-
 //$Id$
-// config-win32-borland.h,v 4.27 2000/07/11 19:57:58 nanbor Exp
 
 // The following configuration file contains defines for Borland compilers.
 
@@ -29,6 +28,7 @@
 # define ACE_CC_PREPROCESSOR "CPP32.EXE"
 # define ACE_CC_PREPROCESSOR_ARGS "-P- -ocon -w-"
 
+# define ACE_HAS_ITOA 1
 # define ACE_EXPORT_NESTED_CLASSES 1
 # define ACE_HAS_ANSI_CASTS 1
 # define ACE_HAS_CPLUSPLUS_HEADERS 1
