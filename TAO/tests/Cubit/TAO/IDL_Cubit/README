@@ -24,7 +24,7 @@ server:
 -------
 
 % server [-d] [-s] [-ORBhost <serverhost>] [-ORBport <portnum>]
-           [-n <number-of-cubit-objects>] [-o <ior_output_file>] 
+           [-n <number-of-cubit-objects>] [-o <ior_output_file>]
 
 Options:
 -------
@@ -44,11 +44,11 @@ The server cubit factory maintains num_of_cubit objects (default =
 When the server is started and you have used the -d flag, you should
 see as the first line of output something that looks like the follow:
 
-	iiop:1.0//swarm:10015/Persistent/886013035/850128/RootPOA/RootPOA_is_BAD/factory
-	(-ORBobjrefstyle url)
+        iiop:1.0//swarm:10015/Persistent/886013035/850128/RootPOA/RootPOA_is_BAD/factory
+        (-ORBobjrefstyle url)
 or
-	IOR:000000000000001649444c3a43756269745...
-	(-ORBobjrefstyle ior)
+        IOR:000000000000001649444c3a43756269745...
+        (-ORBobjrefstyle ior)
 
 Using -d turns on debugging messages.  It is additive, i.e., the more
 -d options provided, the more debugging you get.  At the moment, only
@@ -58,36 +58,36 @@ silently ignored.
 client:
 -------
 
-% client [-d] [-s] [-x] <-f cubit_factory_ior_file> <-k cubit_factory_ior>  -n <iterations> 
+% client [-d] [-s] [-x] <-f cubit_factory_ior_file> <-k cubit_factory_ior>  -n <iterations>
 
 Options:
 -------
--d	Debug flag
--s	Don't Use the Naming Service
--x 	Tells the server to shutdown.
--f	Reads the cubit factory IOR from the file
--k	Reads the cubit factory IOR from commandline
--n	no. of iterations
-	
+-d      Debug flag
+-s      Don't Use the Naming Service
+-x      Tells the server to shutdown.
+-f      Reads the cubit factory IOR from the file
+-k      Reads the cubit factory IOR from commandline
+-n      no. of iterations
+
 The following are the three ways of giving the CubitFactory IOR to the
 client:
 
-        1. From a file using the -f option. (This file can be produced using 
-		the -o option of the server.)
-	
-	2. Directly on the commandline using the -k option.
-	
-	3. Get it from the Naming Service (which is the default client
-       	   behavior).  
+        1. From a file using the -f option. (This file can be produced using
+                the -o option of the server.)
+
+        2. Directly on the commandline using the -k option.
+
+        3. Get it from the Naming Service (which is the default client
+           behavior).
 
 IDL_Cubit_Test:
 --------------
 
         This is a simple test program which tests the server and
 client using the default options of the server and client. To test
-using this just run 
+using this just run
 
-        % IDL_Cubit_Test       
+        % IDL_Cubit_Test
 
 collocation_test:
 -----------------
@@ -100,8 +100,8 @@ to see results with collocation optimization.  Run it with
 run_test.pl:
 ------------
 
-	This is a perl script which simplifies the execution of the
-test.  
+        This is a perl script which simplifies the execution of the
+test.
 
 run_test [-h] [-n num] [-mcast] [-sleeptime t] [-debug] [-release]
 
@@ -119,7 +119,7 @@ Sample Run-Using files to communicate IOR:
 
 1. Start the server.
 
-% server -s -ORBport 20000 -ORBobjrefstyle url -o theior 
+% server -s -ORBport 20000 -ORBobjrefstyle url -o theior
 
         IDL_Cubit:SERVER
 
@@ -139,33 +139,25 @@ Factory received OK
 Sample Run-Using Naming Service:
 --------------------------------
 1. Start the server
-	%server -ORBport 19999
+        %server -ORBport 19999
 
 2. Start the client
-	%client -ORBport 19998
-		if you don't want the server to shutdown.
-	%client -ORBport 19998  -x
-		if you want to shutdown the server after this request.
+        %client -ORBport 19998
+                if you don't want the server to shutdown.
+        %client -ORBport 19998  -x
+                if you want to shutdown the server after this request.
 
 3. If Multicast is not supported the naming service can be reached by
 the  following 2 methods.
-        
+
         a) use the -ORBnameserviceior flag to the client to give the
         naming service ior outputted by the server.
-        
+
         b)set the ENVIRONMENT variable "NameService"
-        
+
         This might be helpful if more than one person is running the
         Naming service in which case Multicast might cause confusion with some
         other Naming Service trying to answer your call.
-
-To build the client for VxWorks, for running the server and client
-on a single target:
-
-  % make BIN=client ACELIB= LDLIBS="$ACE_ROOT/ace/.obj/High_Res_Timer.o $ACE_ROOT/ace/.obj/gethrtime.o"
-
-The gethrtime.o component should only be included in LDLIBS if
-building with GreenHills for Pentium target.
 
 Using JAVA to access the IDL Cubit test:
 ----------------------------------------
