@@ -32,6 +32,7 @@ sub new {
                                       'MakeProjectCreator',
                                       'AutomakeProjectCreator',
                                       'BMakeProjectCreator',
+                                      'HTMLProjectCreator',
                                     ],
                      }, $class;
   return $self;

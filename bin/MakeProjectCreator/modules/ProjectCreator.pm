@@ -294,19 +294,16 @@ sub begin_project {
             push(@{$self->{'reading_parent'}}, $file);
 
             ## Collect up some information about the inheritance tree
-            my($tree) = basename($self->get_current_input());
-            $tree =~ s/\.[^\.]+//;
+            my($tree) = $self->get_current_input();
             if (!defined $self->{'inheritance_tree'}->{$tree}) {
               $self->{'inheritance_tree'}->{$tree} = {};
             }
             my($hash) = $self->{'inheritance_tree'}->{$tree};
             foreach my $p (@{$self->{'reading_parent'}}) {
-              my($cpy) = basename($p);
-              $cpy =~ s/\.[^\.]+$//;
-              if (!defined $$hash{$cpy}) {
-                $$hash{$cpy} = {};
+              if (!defined $$hash{$p}) {
+                $$hash{$p} = {};
               }
-              $hash = $$hash{$cpy};
+              $hash = $$hash{$p};
             }
 
             ## Begin reading the parent
@@ -2681,12 +2678,6 @@ sub fill_value {
   #my($self) = shift;
   #my($name) = shift;
   return undef;
-}
-
-
-sub separate_static_project {
-  #my($self) = shift;
-  return 0;
 }
 
 
