@@ -1,5 +1,8 @@
 Fri Jul 14 19:03:49 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
+        * include/makeinclude/warpepr_macros.GNU:
+          Added -DPACE_HAS_ALL_POSIX_FUNCS to the pace flag.
+
 	* ace/OS.h:
 	  Changed typedef of ACE_SignalHandler on LynxOS to
 	  use pace_sig_pf when pace is enabled. Also changed
