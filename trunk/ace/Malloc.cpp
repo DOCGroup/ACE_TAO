@@ -119,6 +119,20 @@ ACE_Allocator::~ACE_Allocator (void)
   ACE_TRACE ("ACE_Allocator::~ACE_Allocator");
 }
 
+void
+ACE_Static_Allocator_Base::dump (void) const
+{
+  ACE_TRACE ("ACE_Static_Base_Allocator::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\noffset_ = %d"), this->offset_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nsize_ = %d\n"), this->size_));
+  ACE_HEX_DUMP ((LM_DEBUG, this->buffer_, this->size_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+       
 #if defined (ACE_HAS_MALLOC_STATS)
 ACE_Malloc_Stats::ACE_Malloc_Stats (void)
   : nblocks_ (0),
@@ -150,7 +164,6 @@ template class ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 
 #endif /* ACE_HAS_MALLOC_STATS */
 #endif /* ACE_MALLOC_C */

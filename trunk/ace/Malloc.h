@@ -298,6 +298,56 @@ public:
   virtual void dump (void) const;
 };
 
+class ACE_Export ACE_Static_Allocator_Base : public ACE_Allocator
+{
+  // = TITLE
+  //     Defines a class that provided a highly optimized memory
+  //     management scheme for allocating memory statically.
+  //
+  // = DESCRIPTION
+  //     This class manages a fixed-size <POOL_SIZE> of memory.  Every
+  //     time <malloc>/<calloc> is called, it simply moves an internal
+  //     index forward and returns a pointer to the requested chunk.
+  //     All memory is allocated statically (typically via the
+  //     <ACE_Static_Allocator> template) and <free> is a no-op.  This
+  //     behavior is useful for use-cases where all the memory
+  //     allocation needs are known in advance and no deletions ever
+  //     occur.
+public:
+  ACE_Static_Allocator_Base (char *buffer, size_t size);
+  virtual void *malloc (size_t nbytes); 
+  virtual void *calloc (size_t nbytes, char initial_value = '\0');
+  virtual void free (void *ptr);
+  virtual int remove (void);
+  virtual int bind (const char *name, void *pointer, int duplicates = 0);
+  virtual int trybind (const char *name, void *&pointer);
+  virtual int find (const char *name, void *&pointer);
+  virtual int find (const char *name);
+  virtual int unbind (const char *name);
+  virtual int unbind (const char *name, void *&pointer);
+  virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
+  virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
+  virtual int protect (ssize_t len = -1, int prot = PROT_RDWR); 
+  virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
+#if defined (ACE_HAS_MALLOC_STATS)
+  virtual void print_stats (void) const;
+#endif /* ACE_HAS_MALLOC_STATS */ 
+  virtual void dump (void) const;
+
+protected:
+  ACE_Static_Allocator_Base (void);
+  // Don't allow direct instantiations of this class.
+
+  char *buffer_;
+  // Pointer to the buffer.
+
+  size_t size_;
+  // Size of the buffer.
+
+  size_t offset_;
+  // Pointer to the current offset in the <buffer_>.
+};
+
 #if defined (__ACE_INLINE__)
 #include "ace/Malloc.i"
 #endif /* __ACE_INLINE__ */

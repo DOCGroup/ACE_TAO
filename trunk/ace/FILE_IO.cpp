@@ -99,8 +99,17 @@ ACE_FILE_IO::get_local_addr (ACE_Addr &addr) const
 {
   ACE_TRACE ("ACE_FILE_IO::get_local_addr");
 
-  addr = this->addr_;
-  return 0;
+  // Perform the downcast since <addr> had better be an
+  // <ACE_FILE_Addr>.
+  ACE_FILE_Addr *file_addr = ACE_dynamic_cast (ACE_FILE_Addr *, &addr);
+
+  if (file_addr == 0)
+    return -1;
+  else
+    {
+      *file_addr = this->addr_;
+      return 0;
+    }
 }
 
 // Return the address of the remotely connected peer (if there is
@@ -110,6 +119,6 @@ int
 ACE_FILE_IO::get_remote_addr (ACE_Addr &addr) const
 {
   ACE_TRACE ("ACE_FILE_IO::get_remote_addr");
-  addr = this->addr_;
-  return 0;
+
+  return this->get_local_addr (addr);
 }

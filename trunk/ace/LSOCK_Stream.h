@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -55,9 +54,12 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
+  int get_local_addr (ACE_Addr &) const; 
+  // This method simply returns the "local" addr.
+
   int get_remote_addr (ACE_Addr &) const; 
-  // This method simply returns the "local" addr (since they are the
-  // same for UNIX domain sockets).
+  // This method returns the "local" addr since it's the same value
+  // for UNIX domain sockets.
 };
 
 #include "ace/LSOCK_Stream.i"

@@ -1,9 +1,36 @@
+Thu Apr  9 13:39:48 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/IPC_SAP/SOCK_SAP: Improved both the CPP-unserver.cpp
+ 	  and CPP-inserver.cpp programs so they work identically wrt
+ 	  concurrency and logic.
+
+	* ace/LSOCK_Stream.cpp: Fixed the get_remote_addr() and
+ 	  get_local_addr() methods to work correctly.  Apparently,
+ 	  getpeername() doesn't work appropriately for UNIX domain
+ 	  sockets, so we simply have both methods call getsockname().
+  	  Thanks to Chuck Gehr for pointing out this problem.
+
+	* ace/FILE_IO.cpp (get_local_addr): The RHS has an additional
+ 	  field that is the FILE name, which did not get copied.  Added an
+ 	  ACE_dynamic_cast() to do the right thing here.  Thanks to Ganesh
+ 	  Pai for reporting this.
+
+	* ace/Malloc*: Factored out all the code in ACE_Static_Allocator
+ 	  into a new non-templatized base class called
+ 	  ACE_Static_Base_Allocator so that we don't trigger multiply
+ 	  defined symbols when we use this in TAO.  Thanks to Carlos for
+ 	  this very insightful trick!
+
+	* tests/Thread_Manager_Test.cpp (main): Added ACE_ASSERT
+ 	  statements so that we bailout if things go awry.  Thanks to
+ 	  Robert J.  Laferriere <laferrie@gsao.med.ge.com> for reporting
+ 	  this.
+
 Thu Apr  9 12:27:23 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
-	* tests/Hash_Map_Manager_Test.cpp: 
-	  POOL_SIZE was simple "const POOL_SIZE" I changed that to "const
-	  int POOL_SIZE".
-	  Added missing template instantiation for Static_Allocator.
+	* tests/Hash_Map_Manager_Test.cpp: POOL_SIZE was simple "const
+ 	  POOL_SIZE" I changed that to "const int POOL_SIZE".  Added
+ 	  missing template instantiation for Static_Allocator.
 
 Thu Apr 09 10:50:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -18,6 +45,11 @@ Thu Apr  9 09:37:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Hash_Map_Manager_Test.cpp (run_test): Added a return
 	  value to make G++ and David Levine happy ;-).
+
+Thu Apr 09 10:50:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/WFMO_Reactor.cpp (dump): Fixed signed/unsigned mismatched
+ 	  warnings on NT. Thanks to Darrell for noticing the bug.
 
 Wed Apr 08 17:29:01 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
