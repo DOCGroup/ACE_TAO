@@ -10,7 +10,7 @@
 //    Util_Thread.h
 //
 // = AUTHOR
-//    Andy Gokhale, Sumedh Mungee, and Sergio Flores-Gaitan
+//    Andy Gokhale, Sumedh Mungee, Sergio Flores-Gaitan and Nagarajan Surendran.
 //
 // ============================================================================
 

@@ -1,18 +1,5 @@
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests
-//
-// = FILENAME
-//    Cubit_Task.cpp
-//
-// = AUTHOR
-//    Andy Gokhale, Sumedh Mungee, Sergio Flores-Gaitan
-//
-// ============================================================================
-
 #include "ace/Sched_Params.h"
 #include "Globals.h"
 #include "Cubit_Task.h"
