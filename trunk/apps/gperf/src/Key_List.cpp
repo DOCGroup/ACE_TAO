@@ -1688,13 +1688,22 @@ Key_List::string_sort (void)
       List_Node *curr;
       if(ptr->link)
         {
-          for(curr=ptr->link;curr->link;curr=curr->link)
-            {
-              curr->next = curr->link;
-            }
-          curr->next = ptr->next;
-          ptr->next = ptr->link;
+	  List_Node *last_node = 0;
 
+          for(curr = ptr->link; curr; curr = curr->link)
+            {
+	      // Chnage the link to next pointer.
+              curr->next = curr->link;
+	      
+	      // Save the pointer for the last node.
+	      if (curr->link == 0)
+		last_node = curr;
+            }
+	  
+	  // Set the pointers, correctly.
+	  last_node->next = ptr->next;
+          ptr->next = ptr->link;
+	  ptr = last_node;
         }
     }
 
