@@ -128,7 +128,7 @@ template <class SH>
 ACE_Svc_Tuple<SH>::ACE_Svc_Tuple (SVC_HANDLER *sh, 
 				  ACE_HANDLE handle,
 				  const void *arg,
-				  int id)
+				  long id)
   : svc_handler_ (sh), 
     handle_ (handle),
     arg_ (arg),
@@ -172,7 +172,7 @@ ACE_Svc_Tuple<SH>::handle (ACE_HANDLE h)
   this->handle_ = h;
 }
 
-template <class SH> int
+template <class SH> long
 ACE_Svc_Tuple<SH>::cancellation_id (void)
 { 
   ACE_TRACE ("ACE_Svc_Tuple<SH>::cancellation_id");
@@ -180,7 +180,7 @@ ACE_Svc_Tuple<SH>::cancellation_id (void)
 }
 
 template <class SH> void
-ACE_Svc_Tuple<SH>::cancellation_id (int id)
+ACE_Svc_Tuple<SH>::cancellation_id (long id)
 { 
   ACE_TRACE ("ACE_Svc_Tuple<SH>::cancellation_id");
   this->cancellation_id_ = id;

@@ -92,7 +92,7 @@ Thread_Handler::Thread_Handler (int delay,
   
   sig_set.sig_add (SIGQUIT);
   sig_set.sig_add (SIGINT);
-#endif
+#endif /* CHORUS */
 
   this->id_ = 0;
 
@@ -101,10 +101,10 @@ Thread_Handler::Thread_Handler (int delay,
 				   ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
 
-#if !defined(CHORUS)
+#if !defined (CHORUS)
   else if (ACE_Reactor::instance ()->register_handler (sig_set, this) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n", "register_handler"));
-#endif
+#endif /* CHORUS */
 
   else if (ACE_Reactor::instance ()->schedule_timer 
       (this, 0, Thread_Handler::delay_, Thread_Handler::interval_) == -1)
@@ -113,9 +113,9 @@ Thread_Handler::Thread_Handler (int delay,
   // Set up this thread's signal mask, which is inherited by the
   // threads it spawns.
 
-#if !defined(CHORUS)
+#if !defined (CHORUS)
   ACE_Thread::sigsetmask (SIG_BLOCK, sig_set);
-#endif
+#endif /* CHORUS */
 
   // Create N new threads of control Thread_Handlers.
 
@@ -126,9 +126,9 @@ Thread_Handler::Thread_Handler (int delay,
       ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Thread::spawn"));
 
   // Unblock signal set so that only this thread receives them!
-#if !defined(CHORUS)
+#if !defined (CHORUS)
   ACE_Thread::sigsetmask (SIG_UNBLOCK, sig_set);
-#endif
+#endif /* CHORUS */
 }
 
 int
@@ -158,31 +158,22 @@ Thread_Handler::handle_input (ACE_HANDLE handle)
   ssize_t n = ACE_OS::read (handle, buf, sizeof buf);
 
   if (n > 0)
-  {
+    {
       ACE_DEBUG ((LM_DEBUG, "input to (%t) %*s", 
 		  n, buf));
 
-      if (--iterations_ <= 0)
-      {
-	  // would like to put this in handle_timeout(), but chorus
-	  // clock_gettime() does not seem to work in my version!
-	  ACE_Reactor::end_event_loop();
-      }
-      else
-      {
-	  ACE_DEBUG ((LM_DEBUG, "%d more input to kill\n", 
-		      iterations_));
-	  // Only wait up to 10 milliseconds to notify the Reactor.
-	  ACE_Time_Value timeout (0, 10 * 1000);
+      ACE_DEBUG ((LM_DEBUG, "%d more input to kill\n", 
+		  iterations_));
+      // Only wait up to 10 milliseconds to notify the Reactor.
+      ACE_Time_Value timeout (0, 10 * 1000);
 	  
-	  if (this->notify (&timeout) == -1)
-	      ACE_ERROR ((LM_DEBUG, "(%t), %p\n", 
-			  "notification::handle_input:notify"));
-      }
+      if (this->notify (&timeout) == -1)
+	ACE_ERROR ((LM_DEBUG, "(%t), %p\n", 
+		    "notification::handle_input:notify"));
       return 0;
-  }
+    }
   else
-      return -1;
+    return -1;
 }
 
 // Perform a task that will test the ACE_Reactor's multi-threading
@@ -237,6 +228,10 @@ Thread_Handler::handle_timeout (const ACE_Time_Value &time,
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) received timeout at (%u, %u)\n",
 	      time.sec (), time.usec ()));
+
+  if (--iterations_ <= 0)
+    ACE_Reactor::end_event_loop();
+
   return 0;
 }
 
