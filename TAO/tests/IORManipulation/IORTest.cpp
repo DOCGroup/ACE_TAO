@@ -36,7 +36,7 @@ main (int argc, char *argv[])
 
   int Status = 0;
 
-  ACE_DEBUG ((LM_DEBUG, "----------------------------------\n"));
+  ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
   ACE_DEBUG ((LM_DEBUG, "Running the IORManipulation Tests.\n"));
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -51,7 +51,7 @@ main (int argc, char *argv[])
       // **********************************************************************
 
       // Get an object reference for the ORBs IORManipulation object!
-      CORBA_Object_ptr IORM =
+      CORBA::Object_ptr IORM =
         orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                           0,
                                           ACE_TRY_ENV);
@@ -63,28 +63,33 @@ main (int argc, char *argv[])
       // **********************************************************************
 
       // Create a few fictitious IORs
-      CORBA_Object_ptr name1 =
+      CORBA::Object_var name1 =
         orb_->string_to_object ("iiop://acme.cs.wustl.edu:6060/xyz",
                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA_Object_ptr name2 =
+      CORBA::Object_var name2 =
         orb_->string_to_object ("iiop://tango.cs.wustl.edu:7070/xyz",
                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
       // **********************************************************************
 
+      // @@ CORBA::ORB::object_to_string() cannot be called on
+      //    locality constrained objects such as IORManipulation.
+      //        -Ossama
       // Get the string reps for these IORs and show them to the user
-      ACE_CString iorm_ior = orb_->object_to_string (IORM, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      ACE_DEBUG ((LM_DEBUG,
-                  "\tIORManipulation IOR string = %s\n",
-                  iorm_ior.c_str()));
+      // ACE_CString iorm_ior = orb_->object_to_string (IORM, ACE_TRY_ENV);
+      // ACE_TRY_CHECK;
+      // ACE_DEBUG ((LM_DEBUG,
+      //             "\tIORManipulation IOR string = %s\n",
+      //             iorm_ior.c_str()));
 
-      ACE_CString name1_ior = orb_->object_to_string (name1, ACE_TRY_ENV);
+      ACE_CString name1_ior = orb_->object_to_string (name1.in (),
+                                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "\tFirst made up IOR = %s\n", name1_ior.c_str()));
 
-      ACE_CString name2_ior = orb_->object_to_string (name2, ACE_TRY_ENV);
+      ACE_CString name2_ior = orb_->object_to_string (name2.in (),
+                                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "\tSecond made up IOR = %s\n", name2_ior.c_str()));
 
@@ -95,10 +100,11 @@ main (int argc, char *argv[])
       iors [0] = name1;
       iors [1] = name2;
 
-      CORBA_Object_ptr merged = iorm->merge_iors (iors, ACE_TRY_ENV);
+      CORBA::Object_var merged = iorm->merge_iors (iors, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_CString merged_ior = orb_->object_to_string (merged, ACE_TRY_ENV);
+      ACE_CString merged_ior = orb_->object_to_string (merged.in (),
+                                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::ULong count1 = iorm->get_profile_count (iors [0], ACE_TRY_ENV);
@@ -107,7 +113,8 @@ main (int argc, char *argv[])
       CORBA::ULong count2 = iorm->get_profile_count (iors [1], ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::ULong count = iorm->get_profile_count (merged, ACE_TRY_ENV);
+      CORBA::ULong count = iorm->get_profile_count (merged.in (),
+                                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (count != (count1 + count2))
@@ -121,7 +128,9 @@ main (int argc, char *argv[])
 
       // is_in_ior throws an exception if the intersection of the two
       // IORs is NULL.
-      CORBA::ULong in_count = iorm->is_in_ior (merged, name1, ACE_TRY_ENV);
+      CORBA::ULong in_count = iorm->is_in_ior (merged.in (),
+                                               name1.in (),
+                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (count1 != in_count)
@@ -130,7 +139,9 @@ main (int argc, char *argv[])
                     "count bad (%d)!\n",
                     in_count));
 
-      in_count = iorm->is_in_ior (merged, name2, ACE_TRY_ENV);
+      in_count = iorm->is_in_ior (merged.in (),
+                                  name2.in (),
+                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (count2 != in_count)
@@ -142,14 +153,15 @@ main (int argc, char *argv[])
 
       // Verify ability to remove profiles from an IOR
       // First remove the second IOR from the merged IOR
-      CORBA_Object_ptr just1 =
-        iorm->remove_profiles (merged, name2, ACE_TRY_ENV);
+      CORBA::Object_var just1 =
+        iorm->remove_profiles (merged.in (), name2.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_CString just1_ior = orb_->object_to_string (just1, ACE_TRY_ENV);
+      ACE_CString just1_ior = orb_->object_to_string (just1.in (),
+                                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      count = iorm->get_profile_count (just1, ACE_TRY_ENV);
+      count = iorm->get_profile_count (just1.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (count1 != count)
@@ -162,7 +174,7 @@ main (int argc, char *argv[])
                   count,
                   just1_ior.c_str ()));
 
-      in_count = iorm->is_in_ior (just1, name1, ACE_TRY_ENV);
+      in_count = iorm->is_in_ior (just1.in (), name1.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (count1 != in_count)
@@ -174,18 +186,19 @@ main (int argc, char *argv[])
       // **********************************************************************
 
       // Now try the add_profiles interface.
-      CORBA_Object_ptr merged2 =
-        iorm->add_profiles (just1, name2, ACE_TRY_ENV);
+      CORBA::Object_var merged2 =
+        iorm->add_profiles (just1.in (), name2.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      count = iorm->get_profile_count (merged2, ACE_TRY_ENV);
+      count = iorm->get_profile_count (merged2.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (count != (count1 + count2))
         ACE_DEBUG ((LM_ERROR,
                     "**ERROR: add_profile failed profile count test!\n"));
 
-      ACE_CString merged2_ior = orb_->object_to_string (merged2, ACE_TRY_ENV);
+      ACE_CString merged2_ior = orb_->object_to_string (merged2.in (),
+                                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -195,7 +208,7 @@ main (int argc, char *argv[])
 
       // is_in_ior throws an exception if the intersection of the two
       // IORs is NULL.
-      in_count = iorm->is_in_ior (merged2, name1, ACE_TRY_ENV);
+      in_count = iorm->is_in_ior (merged2.in (), name1. in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (count1 != in_count)
@@ -204,7 +217,7 @@ main (int argc, char *argv[])
                     "count bad (%d)!\n",
                     in_count));
 
-      in_count = iorm->is_in_ior (merged2, name2, ACE_TRY_ENV);
+      in_count = iorm->is_in_ior (merged2.in (), name2.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (count2 != in_count)
@@ -213,14 +226,15 @@ main (int argc, char *argv[])
                     "profile count bad!\n"));
       // **********************************************************************
 
-      CORBA_Object_ptr just2 =
-        iorm->remove_profiles (merged2, name1, ACE_TRY_ENV);
+      CORBA::Object_var just2 =
+        iorm->remove_profiles (merged2.in (), name1.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_CString just2_ior = orb_->object_to_string (just2, ACE_TRY_ENV);
+      ACE_CString just2_ior = orb_->object_to_string (just2.in (),
+                                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      count = iorm->get_profile_count (just2, ACE_TRY_ENV);
+      count = iorm->get_profile_count (just2.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (count2 != count)
@@ -231,7 +245,7 @@ main (int argc, char *argv[])
                   count,
                   just2_ior.c_str ()));
 
-      in_count = iorm->is_in_ior (just2, name2, ACE_TRY_ENV);
+      in_count = iorm->is_in_ior (just2.in (), name2.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (count2 != in_count)
@@ -244,7 +258,7 @@ main (int argc, char *argv[])
       Status = 1;
       // Finally generate an exception and quit.
       // This will generate a NotFound exception.
-      in_count = iorm->is_in_ior (just2, name1, ACE_TRY_ENV);
+      in_count = iorm->is_in_ior (just2.in (), name1.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
     }
@@ -259,7 +273,17 @@ main (int argc, char *argv[])
       if (Status == 1)
         {
           Status = 2;
-          ACE_DEBUG ((LM_DEBUG, "Caught NotFound Exception!\n"));
+
+          // @@ Don't use ACE_PRINT_EXCEPTION here since it will print
+          //    "EXCEPTION" somewhere in the output which will make
+          //    our auto-compile/test scripts think that an unexpected 
+          //    exception occurred.  Instead, simply print the
+          //    exception ID.
+          //       -Ossama
+          ACE_DEBUG ((LM_DEBUG,
+                      "Caught <%s> exception.\n"
+                      "This exception was expected.\n\n",
+                      userex._id ()));
         }
       else
         {
@@ -304,8 +328,8 @@ main (int argc, char *argv[])
   if (Status == 0)
     ACE_DEBUG ((LM_DEBUG, "An ERROR occured during the tests!\n"));
   else
-    ACE_DEBUG ((LM_DEBUG, "Tests Successfully Completed!\n"));
-  ACE_DEBUG ((LM_DEBUG, "--------------------------------------\n"));
+    ACE_DEBUG ((LM_DEBUG, "IORManipulation Tests Successfully Completed!\n"));
+  ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
 
   return 0;
 }

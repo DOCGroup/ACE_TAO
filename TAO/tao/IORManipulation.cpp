@@ -75,11 +75,9 @@ TAO_IOR_Manipulation_impl::merge_iors (
     {
       // this gets a copy of the MProfile, hense the auto_ptr;
 
-      // @@ This is ugly, it is a work around MS C++ auto_ptr which
-      // does not implement reset ()!!
-      auto_ptr<TAO_MProfile> XXtemp (iors[i]->_stubobj ()->make_profiles ());
-      // tmp_pfiles.reset (iors[i]->_stubobj ()->make_profiles ());
-      tmp_pfiles = XXtemp;
+      ACE_AUTO_PTR_RESET (tmp_pfiles,
+                          iors[i]->_stubobj ()->make_profiles (),
+                          TAO_MProfile);
 
       // check to see if any of the profile in tmp_pfiles are already
       // in Merged_Profiles.  If so raise exception.
@@ -105,10 +103,7 @@ TAO_IOR_Manipulation_impl::merge_iors (
 
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
 
-  // @@ We could use an auto_ptr here but the fact that
-  // TAO_Stub::~TAO_Stub() is private and should only be called
-  // through TAO_Stub::_decr_refcnt() prevents this.
-  TAO_Stub *stub;
+  TAO_Stub *stub = 0;
   ACE_NEW_THROW_EX (stub,
                     TAO_Stub (id,  // give the id string to stub
                               Merged_Profiles,
@@ -117,10 +112,14 @@ TAO_IOR_Manipulation_impl::merge_iors (
 
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
+  // Make the stub memory allocation exception safe for the duration
+  // of this method.
+  TAO_Stub_Auto_Ptr safe_stub (stub);
+
   // Create the CORBA level proxy
-  CORBA_Object *new_obj;
+  CORBA_Object *new_obj = CORBA::Object::_nil ();
   ACE_NEW_THROW_EX (new_obj,
-                    CORBA_Object (stub),
+                    CORBA_Object (safe_stub.get ()),
                     CORBA::NO_MEMORY ());
 
   auto_ptr<CORBA_Object> safe_new_obj (new_obj);
@@ -130,14 +129,14 @@ TAO_IOR_Manipulation_impl::merge_iors (
   // Clean up in case of errors.
   if (CORBA::is_nil (safe_new_obj.get ()))
     {
-      stub->_decr_refcnt ();
       ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                         CORBA::Object::_nil ());
     }
 
   // Release ownership of the pointers protected by the auto_ptrs since they
   // no longer need to be protected by this point.
-  safe_new_obj.release ();
+  new_obj = safe_new_obj.release ();
+  stub = safe_stub.release ();
 
   return new_obj;
 }
@@ -199,21 +198,20 @@ TAO_IOR_Manipulation_impl::remove_profiles (
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                       CORBA::Object::_nil ());
 
-  // @@ This is ugly, it is a work around MS C++ auto_ptr which
-  // does not implement reset ()!!
-  auto_ptr<TAO_MProfile> XXtemp (ior2->_stubobj ()->make_profiles ());
-  tmp_pfiles = XXtemp;
-  // tmp_pfiles.reset (ior2->_stubobj ()->make_profiles ());
+  ACE_AUTO_PTR_RESET (tmp_pfiles,
+                      ior2->_stubobj ()->make_profiles (),
+                      TAO_MProfile);
 
   if (Diff_Profiles.remove_profiles (tmp_pfiles.get ()) < 0)
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::NotFound (),
                       CORBA::Object::_nil ());
 
-  // MS C++ knows nothing abouyt reset!
+  // MS C++ knows nothing about reset!
   // tmp_pfiles.reset (0); // get rid of last MProfile
 
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-  TAO_Stub *stub;
+
+  TAO_Stub *stub = 0;
   ACE_NEW_THROW_EX (stub,
                     TAO_Stub (id, // give id string to stub
                               Diff_Profiles,
@@ -222,22 +220,28 @@ TAO_IOR_Manipulation_impl::remove_profiles (
 
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
+  // Make the stub memory allocation exception safe for the duration
+  // of this method.
+  TAO_Stub_Auto_Ptr safe_stub (stub);
+
   // Create the CORBA level proxy
-  CORBA_Object *new_obj;
+  CORBA_Object *new_obj = CORBA::Object::_nil ();
   ACE_NEW_THROW_EX (new_obj,
-                    CORBA_Object (stub),
+                    CORBA_Object (safe_stub.get ()),
                     CORBA::NO_MEMORY ());
 
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-
   // Clean up in case of errors.
   if (CORBA::is_nil (new_obj))
     {
-      stub->_decr_refcnt ();
       ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                         CORBA::Object::_nil ());
     }
+
+  // Exception safety is no longer an issue by this point so release
+  // the TAO_Stub from the TAO_Stub_Auto_Ptr.
+  stub = safe_stub.release ();
 
   return new_obj;
 }
