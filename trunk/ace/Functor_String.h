@@ -95,7 +95,7 @@ ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Equal_To<ACE_WString>
 {
 public:
-  int operator () (const ACE_WString &lhs
+  int operator () (const ACE_WString &lhs,
                    const ACE_WString &rhs) const;
 };
 
