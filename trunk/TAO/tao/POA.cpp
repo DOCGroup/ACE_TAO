@@ -2942,8 +2942,8 @@ TAO_POA::encode_sequence_to_string (CORBA::String &str,
         }
 
       *cp++ = '\\';
-      *cp++ = ACE::nibble2hex (byte & 0x0f);
       *cp++ = ACE::nibble2hex ((byte >> 4) & 0x0f);
+      *cp++ = ACE::nibble2hex (byte & 0x0f);
     }
   // Zero terminate
   *cp = '\0';

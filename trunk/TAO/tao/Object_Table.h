@@ -410,6 +410,12 @@ public:
 
 protected:
 
+  enum
+  {
+    INDEX_FIELD = 0,
+    GENERATION_FIELD = 1
+  };
+
   virtual CORBA::ULong next_free (void);
 
   virtual int parse_object_id (const PortableServer::ObjectId &id,

@@ -372,13 +372,6 @@ class TAO_Export TAO_POA : public POA_PortableServer::POA
 {
 public:
 
-  enum 
-  {
-    // This is the maximum space require to convert the ulong into a
-    // string.
-    MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX = 16
-  };
-
   typedef ACE_CString String;
 
   virtual PortableServer::POA_ptr create_POA (const char *adapter_name,
@@ -546,6 +539,13 @@ public:
   static CORBA::ULong name_separator_length (void);
 
   static CORBA::ULong id_separator_length (void);
+
+  enum 
+  {
+    // This is the maximum space require to convert the ulong into a
+    // string.
+    MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX = 16
+  };
 
 protected:
 
