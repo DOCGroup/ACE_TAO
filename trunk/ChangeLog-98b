@@ -1,3 +1,11 @@
+Tue Dec 15 08:44:18 1998  Steve Huston  <shuston@riverace.com>
+
+        * examples/NT_Service: New example program, shows how to create,
+          manipulate, and run an NT Service using the ACE_NT_Service class.
+          Muchas gracias to Gonzalo Diethelm for smashing this code into a
+          good example - useful enough to show how things work, but simple
+          enough to show all the useful functionality in one concise program.
+
 Tue Dec 15 07:32:49 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* OS.h:
