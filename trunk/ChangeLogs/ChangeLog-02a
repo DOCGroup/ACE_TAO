@@ -1,3 +1,9 @@
+Sun Mar 10 05:54:30 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* THANKS : Added Val Dumitrescu <val.dumitrescu@am-beo.com> to the
+	  Hal of Fame. 
+	* bin/auto_run_tests.lst: Added a new test to the daily builds.
+
 Sat Mar  9 21:22:51 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/CDR_Stream.cpp:
