@@ -1,3 +1,19 @@
+Mon Feb 26 16:34:55 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * orbsvcs/IFR_Service/IFR_Service.bor:
+        * orbsvcs/IFR_Service/TAO_IFR_BE_DLL.bor:
+        * orbsvcs/IFR_Service/TypeCodeFactory_DLL.bor:
+
+          Fixed build of IFR_Service with Borland.
+
+        * orbsvcs/TAO_Service/Makefile.bor:
+
+          Added Borland makefile for the TAO_Service.
+
+        * orbsvcs/Makefile.bor:
+
+          Include IFR_Service and TAO_Service in default build.
+
 Mon Feb 26 15:35:10 2001  Phil Mesnier  <mesnier_p@ociweb.com>
         Port to Unixware 7 (7.1.1) Using UDK CC (7.1.1.b)
 

@@ -24,6 +24,7 @@ TAO_IFR_BE_DLLFLAG=1
 CFLAGS = \
 	$(ACE_CFLAGS) \
 	$(TAO_CFLAGS) \
+	$(TAO_IFR_CLIENT_CFLAGS) \
 	$(TAO_IDL_FE_CFLAGS) \
 	-DTAO_IFR_BE_HAS_DLL=$(TAO_IFR_BE_DLLFLAG) \
 	-DTAO_IFR_BE_BUILD_DLL
@@ -33,6 +34,7 @@ CPPDIR = .
 LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \
+	$(TAO_IFR_CLIENT_LIB) \
 	$(TAO_IDL_FE_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
