@@ -1,6 +1,10 @@
+Wed Jan 22 16:05:18 2003  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
+
+	* CIDLC/DesignNotes: added some more ideas.
+
 Wed Jan 22 13:54:12 2003  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
 
-	* CIDLC/DesignNotes: added this file to capture and document CIDL 
+	* CIDLC/DesignNotes: added this file to capture and document CIDL
 	  complier design ideas/decisions.
 
 Tue Jan 21 16:20:44 2003  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
