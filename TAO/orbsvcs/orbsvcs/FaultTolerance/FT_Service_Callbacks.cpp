@@ -3,6 +3,7 @@
 #include "tao/Tagged_Components.h"
 #include "tao/Stub.h"
 #include "FT_Policy_i.h"
+#include "tao/Invocation.h"
 
 
 #if !defined (__ACE_INLINE__)
@@ -171,24 +172,30 @@ void
 TAO_FT_Service_Callbacks::service_context_list (
     TAO_Stub *&stub,
     IOP::ServiceContextList &service_list,
+    CORBA::Boolean restart,
     CORBA::Environment  &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-  // Pack the group version service context
-  this->group_version_service_context (stub,
-                                       service_list,
-                                       ACE_TRY_ENV);
-  ACE_CHECK;
+  // If the restart flag is true, then this call for a
+  // reinvocation. We need not prepare the Service Context List once
+  // again. We can use the already existing one.
+  if (!restart)
+    {
+      // Pack the group version service context
+      this->group_version_service_context (stub,
+                                           service_list,
+                                           ACE_TRY_ENV);
+      ACE_CHECK;
 
-  // Pack the request service context
-  this->request_service_context (stub,
-                                 service_list,
-                                 ACE_TRY_ENV);
-  ACE_CHECK;
+      // Pack the request service context
+      this->request_service_context (stub,
+                                     service_list,
+                                     ACE_TRY_ENV);
+      ACE_CHECK;
+    }
 
-
-
+  return;
 }
 
 void
@@ -368,4 +375,81 @@ TAO_FT_Service_Callbacks::get_object_group_version (TAO_Profile *profile)
 
   // Set the flag
   this->group_component_flag_ = 1;
+}
+
+
+int
+TAO_FT_Service_Callbacks::raise_comm_failure (
+    TAO_GIOP_Invocation *invoke,
+    TAO_Profile *profile,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  if (restart_policy_check (invoke->service_info (),
+                            profile))
+    {
+      return TAO_INVOKE_RESTART;
+    }
+
+  // As the right tags are not found close the connection and throw an
+  // exception
+  invoke->close_connection ();
+  ACE_THROW_RETURN (CORBA::COMM_FAILURE (
+      CORBA_SystemException::_tao_minor_code (
+          TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
+          errno),
+      CORBA::COMPLETED_MAYBE),
+      TAO_INVOKE_EXCEPTION);
+}
+
+int
+TAO_FT_Service_Callbacks::raise_transient_failure (
+    TAO_GIOP_Invocation *invoke,
+    TAO_Profile *profile,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  if (restart_policy_check (invoke->service_info (),
+                            profile))
+    {
+      return TAO_INVOKE_RESTART;
+    }
+
+  // As the right tags are not found close the connection and throw an
+  // exception
+  ACE_THROW_RETURN (CORBA::TRANSIENT (
+      CORBA_SystemException::_tao_minor_code (
+          TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
+          errno),
+      CORBA::COMPLETED_MAYBE),
+      TAO_INVOKE_EXCEPTION);
+}
+
+CORBA::Boolean
+TAO_FT_Service_Callbacks::restart_policy_check (
+    IOP::ServiceContextList &service_list,
+    const TAO_Profile *profile)
+{
+  // Check whether the IOP::FT_REQUEST exists within the service
+  // context list and FT::FT_GROUP exists within the profile that we
+  // have
+  IOP::TaggedComponent tagged_component;
+  tagged_component.tag = IOP::TAG_FT_GROUP;
+
+  if (profile->tagged_components ().get_component (tagged_component)
+      == 1)
+    {
+      // Look for the FT_REQUEST context id
+      for (CORBA::Long i = 0;
+           i < service_list.length ();
+           i++)
+        {
+          if (service_list[i].context_id == IOP::FT_REQUEST)
+            {
+              // Success
+              return 1;
+            }
+        }
+    }
+
+  // Failure
+  return 0;
 }

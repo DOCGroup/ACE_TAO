@@ -1,3 +1,11 @@
+Mon Oct  2 13:10:14 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.i:
+	  Implementation for transparent reinvocation as defined by FT
+	  CORBA.
+
 Mon Oct  2 13:08:16 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
