@@ -135,6 +135,18 @@ CORBA_Request::_tao_lazy_evaluation (int lazy_evaluation)
   this->lazy_evaluation_ = lazy_evaluation;
 }
 
+ACE_INLINE int
+CORBA_Request::_tao_byte_order (void) const
+{
+  return this->byte_order_;
+}
+
+ACE_INLINE void
+CORBA_Request::_tao_byte_order (int byte_order)
+{
+  this->byte_order_ = byte_order;
+}
+
 // *************************************************************
 // Inline operations for class CORBA_Request_var
 // *************************************************************

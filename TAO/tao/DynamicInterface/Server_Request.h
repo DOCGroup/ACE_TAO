@@ -110,6 +110,12 @@ public:
   void _tao_lazy_evaluation (int lazy_evaluation);
   // Set the lazy evaluation flag.
 
+  int _tao_incoming_byte_order (void) const;
+  // Get the byte order of the incoming CDR stream.
+
+  void _tao_reply_byte_order (int byte_order);
+  // Set the byte order of the outgoing CDR stream.
+
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA::ServerRequest_ptr _ptr_type;
 #endif /* __GNUC__ */

@@ -90,7 +90,8 @@ public:
                        const char *operation,
                        CORBA::ULong opname_len,
                        CORBA::Boolean argument_flag,
-                       TAO_ORB_Core *orb_core);
+                       TAO_ORB_Core *orb_core,
+                       int byte_order = TAO_ENCAP_BYTE_ORDER);
 
   /**
    * This destructor is virtual so that the derived synchronous
@@ -357,7 +358,8 @@ public:
                              const char *operation,
                              CORBA::ULong opname_len,
                              CORBA::Boolean argument_flag,
-                             TAO_ORB_Core *orb_core);
+                             TAO_ORB_Core *orb_core,
+                             int byte_order = TAO_ENCAP_BYTE_ORDER);
 
   /// Destructor.
   virtual ~TAO_GIOP_Synch_Invocation (void);
@@ -401,7 +403,8 @@ public:
                               const char *operation,
                               CORBA::ULong opname_len,
                               CORBA::Boolean argument_flag,
-                              TAO_ORB_Core *orb_core);
+                              TAO_ORB_Core *orb_core,
+                              int byte_order = TAO_ENCAP_BYTE_ORDER);
 
   /// Destructor.
   virtual ~TAO_GIOP_Twoway_Invocation (void);
@@ -440,7 +443,8 @@ public:
                               const char *operation,
                               CORBA::ULong opname_len,
                               CORBA::Boolean argument_flag,
-                              TAO_ORB_Core *orb_core);
+                              TAO_ORB_Core *orb_core,
+                              int byte_order = TAO_ENCAP_BYTE_ORDER);
 
   /// Destructor.
   virtual ~TAO_GIOP_Oneway_Invocation (void);

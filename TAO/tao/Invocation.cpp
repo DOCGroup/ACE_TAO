@@ -106,14 +106,15 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
                                           const char *operation,
                                           CORBA::ULong opname_len,
                                           CORBA::Boolean argument_flag,
-                                          TAO_ORB_Core *orb_core)
+                                          TAO_ORB_Core *orb_core,
+                                          int byte_order)
   : stub_ (stub),
     op_details_ (operation,
                  opname_len,
                  argument_flag),
     out_stream_ (this->buffer_,
                  sizeof this->buffer_, /* ACE_CDR::DEFAULT_BUFSIZE */
-                 TAO_ENCAP_BYTE_ORDER,
+                 byte_order,
                  orb_core->output_cdr_buffer_allocator (),
                  orb_core->output_cdr_dblock_allocator (),
                  orb_core->orb_params ()->cdr_memcpy_tradeoff (),
@@ -971,13 +972,15 @@ TAO_GIOP_Oneway_Invocation::TAO_GIOP_Oneway_Invocation (
     const char *operation,
     CORBA::ULong opname_len,
     CORBA::Boolean argument_flag,
-    TAO_ORB_Core *orb_core
+    TAO_ORB_Core *orb_core,
+    int byte_order
   )
   : TAO_GIOP_Synch_Invocation (stub,
                                operation,
                                opname_len,
                                argument_flag,
-                               orb_core),
+                               orb_core,
+                               byte_order),
     sync_scope_ (TAO::SYNC_WITH_TRANSPORT)
 {
   int has_synchronization = 0;

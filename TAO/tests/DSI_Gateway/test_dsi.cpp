@@ -43,8 +43,15 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request,
 
   target_request->_tao_lazy_evaluation (1);
 
+  // Outgoing request must have the same byte order as the incoming one.
+  target_request->_tao_byte_order (request->_tao_incoming_byte_order ());
+
+  // Updates the byte order state, if necessary.
   target_request->invoke (ACE_TRY_ENV);
   ACE_CHECK;
+  
+  // Outgoing reply must have the same byte order as the incoming one.
+  request->_tao_reply_byte_order (target_request->_tao_byte_order ());
 }
 
 CORBA::RepositoryId

@@ -141,6 +141,12 @@ public:
   void _tao_lazy_evaluation (int lazy_evaluation);
   // Set the lazy evaluation flag.
 
+  int _tao_byte_order (void) const;
+  // Get the byte order member.
+
+  void _tao_byte_order (int byte_order);
+  // Set the byte order member.
+
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_Request_ptr _ptr_type;
   typedef CORBA_Request_var _var_type;
@@ -212,6 +218,9 @@ private:
   CORBA::Boolean response_received_;
   // Set to TRUE upon completion of invoke() or
   // handle_response().
+
+  int byte_order_;
+  // Can be reset by a gateway when passing along a request.
 };
 
 typedef CORBA_Request* CORBA_Request_ptr;
