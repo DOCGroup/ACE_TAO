@@ -1,3 +1,12 @@
+Sat Oct 16 18:40:59 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/README:
+	* orbsvcs/Logging_Service/Event_Logging_Service/README:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/README:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/README:
+
+	  Convert from DOS to UNIX text format.
+
 Sat Oct 16 13:22:54 MST 2004 Trevor Fields  <fields_t@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
@@ -13,9 +22,9 @@ Fri Oct 15 20:37:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  being marshalled to the server. This was from the following
 	  change
 
-          Mon Aug 23 21:40:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>           
+          Mon Aug 23 21:40:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Thanks to Chad Elliott for pointing out the problem from our
-	  daily builds. 
+	  daily builds.
 
 Fri Oct 15 13:08:06 2004  Chad Elliott  <elliott_c@ociweb.com>
 
