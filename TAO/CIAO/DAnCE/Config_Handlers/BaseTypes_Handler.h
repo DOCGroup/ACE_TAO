@@ -48,8 +48,8 @@ namespace CIAO{
       ///This method takes a <CORBA::string> and an 
       ///<XMLSchema::string> and stores the value from
       ///the <XMLSchema::string> in the <CORBA::string>.
-      static void get_string (Corba::string& str, 
-                               XMLSchema::string& desc);
+      static CORBA::String_var& get_string (CORBA::String_var& str, 
+                               XMLSchema::string<char>& desc);
          
     };
 
