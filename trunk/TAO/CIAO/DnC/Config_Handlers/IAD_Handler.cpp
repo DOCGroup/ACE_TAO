@@ -11,6 +11,7 @@
 #include "Requirement_Handler.h"
 #include "PCI_Handler.h"
 #include "CompIntrDesc_Handler.h"
+#include "NIA_Handler.h"
 #include "IAD_Handler.h"
 
 #include <iostream>
