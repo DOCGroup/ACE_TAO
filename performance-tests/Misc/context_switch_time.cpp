@@ -695,29 +695,34 @@ main (int argc, char *argv [])
       // Wait for all tasks to exit.
       ACE_Thread_Manager::instance ()->wait ();
 
-      // NOTE:  the divisions by 1ul below allow transparent support of
-      // ACE_U_LongLongs.
+      // NOTE:  the divisions by (ACE_UINT32) 1u below allow transparent
+      // support of ACE_U_LongLongs.
 
       if (ping_suspend_resume_test.elapsed_time () >
            suspend_resume_test.elapsed_time ())
         {
           ACE_DEBUG ((LM_INFO, "context switch time is (%.3f - %.3f)/2 = "
                                "%.3f microseconds\n",
-                      (double) (ping_suspend_resume_test.elapsed_time ()/1ul) /
+                      (double) (ping_suspend_resume_test.elapsed_time ()/
+                                (ACE_UINT32) 1u) /
                         num_iterations,
-                      (double) (suspend_resume_test.elapsed_time ()/1ul) /
+                      (double) (suspend_resume_test.elapsed_time ()/
+                                (ACE_UINT32) 1u) /
                         num_iterations,
                       (double) ((ping_suspend_resume_test.elapsed_time () -
-                                suspend_resume_test.elapsed_time ())/1ul) /
+                                  suspend_resume_test.elapsed_time ())/
+                                (ACE_UINT32) 1u) /
                         num_iterations / 2));
         }
       else
         {
           ACE_DEBUG ((LM_INFO, "ping suspend/resume time of %.3f usec was "
                                "less than suspend/resume time of %.3f\n",
-                      (double) (ping_suspend_resume_test.elapsed_time ()/1ul) /
+                      (double) (ping_suspend_resume_test.elapsed_time ()/
+                                (ACE_UINT32) 1u) /
                         num_iterations,
-                      (double) (suspend_resume_test.elapsed_time ()/1ul) /
+                      (double) (suspend_resume_test.elapsed_time ()/
+                                (ACE_UINT32) 1u) /
                         num_iterations));
         }
 
@@ -728,7 +733,8 @@ main (int argc, char *argv [])
 
       ACE_DEBUG ((LM_INFO, "context switch time from yield test is %.3f "
                            "microseconds\n",
-                  (double) (yield_test.elapsed_time ()/1ul) / num_iterations /
+                  (double) (yield_test.elapsed_time ()/ (ACE_UINT32) 1u) /
+                           num_iterations /
                     2));
     }
 
