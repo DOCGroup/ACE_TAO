@@ -18,14 +18,36 @@
     <EVENT name="WORKER_WAIT_DONE" id="8" />
   </FAMILY>
   <FAMILY name="WORKER_GROUP" id="3">
-    <EVENT name="ONEWAY_CALL_DONE" id="0" />
-    <EVENT name="ONEWAY_CALL_STOP" id="1" />
-    <EVENT name="END_SCHED_SEGMENT" id="2" />
-    <EVENT name="BEGIN_SCHED_SEGMENT" id="3" />
+    <EVENT name="ONE_WAY_CALL_START" id="0" />
+    <EVENT name="ONE_WAY_CALL_DONE" id="1" />
+    <EVENT name="BEGIN_SCHED_SEGMENT" id="2" />
+    <EVENT name="END_SCHED_SEGMENT" id="3" />
     <EVENT name="WORKER_STARTED" id="4" />
     <EVENT name="UPDATE_SCHED_SEGMENT_BEGIN" id="5"/>
     <EVENT name="UPDATE_SCHED_SEGMENT_END" id="6"/>
     <EVENT name="RUNNING_SUBTASK" id="7"/>
     <EVENT name="FINISHING_SUBTASK" id="8"/>
   </FAMILY>
+<!--
+  <FAMILY name="DSRT_DISPATCH" id="4">
+    <EVENT name="SCHEDULE" id="0"	/>
+  </FAMILY>
+  <FAMILY name="DSRT_CV_Dispatcher" id="5">
+    <EVENT name="SCHEDULE_ENTER" id="0"	/>
+    <EVENT name="SCHEDULE_EXIT" id="1"	/>
+    <EVENT name="RG_EVENT_RELEASED" id="2"	/>
+    <EVENT name="RG_EVENT_DELAYED_RELEASED" id="3"	/>
+    <EVENT name="NONRG_EVENT_RELEASED" id="4"	/>
+    <EVENT name="INIT_I" id="5"	/>
+    <EVENT name="RELEASED_GUARD_START" id="6"	/>
+    <EVENT name="RELEASED_GUARD_END" id="7"	/>
+    <EVENT name="UPDATE_SCHEDULE_START" id="8"	/>
+    <EVENT name="UPDATE_SCHEDULE_END" id="9"	/>
+    <EVENT name="CANCEL_SCHEDULE_START" id="10"	/>
+    <EVENT name="CANCEL_SCHEDULE_END" id="11"	/>
+    <EVENT name="SHUTDOWN" id="12"	/>
+    <EVENT name="INIT" id="13"	/>
+    <EVENT name="RG_EVENT_DELAYED_RELEASED_FIRE" id="14"	/>
+  </FAMILY>
+-->
 </NAMESPACE>

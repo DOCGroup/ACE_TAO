@@ -249,6 +249,7 @@ main (int argc, char *argv[])
   //print out the start time of the program.
   ACE_Time_Value start_time=ACE_OS::gettimeofday();
   ACE_OS::printf ( ACE_TEXT ("The Start time: %u (sec), %u (usec)\n"), start_time.sec(), start_time.usec());
+  ACE_DEBUG((LM_DEBUG,"START\n"));
   DSTRM_EVENT(MAIN_GROUP_FAM, START,0,sizeof(Object_ID), (char*)&oid);
 
   ACE_TRY_NEW_ENV
@@ -278,7 +279,7 @@ main (int argc, char *argv[])
 
       if (enable_dynamic_scheduling)
         {
-          ACE_DEBUG ((LM_DEBUG, "Dyn Sched enabled\n"));
+//          ACE_DEBUG ((LM_DEBUG, "Dyn Sched enabled\n"));
           CORBA::Object_ptr manager_obj =
             orb->resolve_initial_references ("RTSchedulerManager"
                                              ACE_ENV_ARG_PARAMETER);
@@ -377,7 +378,6 @@ main (int argc, char *argv[])
               "(%t|%T) cannot activate worker thread.\n"));
               }
       */
-      ACE_DEBUG((LM_DEBUG,"Test 1\n"));
       Worker worker2 (orb.in (),
                       server.in (),
                       current.in (),
@@ -410,8 +410,8 @@ main (int argc, char *argv[])
       // Get thread id
       // DSTRM_EVENT (MAIN_GROUP_FAM, WORKER_WAIT_DONE, 1, strlen(msg), msg);
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%t): wait for worker threads done in main thread\n"));
+//      ACE_DEBUG ((LM_DEBUG,
+//                  "(%t): wait for worker threads done in main thread\n"));
 
       if (do_shutdown)
         {
@@ -433,7 +433,7 @@ main (int argc, char *argv[])
               ACE_TRY_CHECK;
             }
 
-          ACE_DEBUG ((LM_DEBUG, "(%t): about to call server shutdown\n"));
+//          ACE_DEBUG ((LM_DEBUG, "(%t): about to call server shutdown\n"));
 
           /* MEASURE: Call to shutdown server */
           // char* msg = "(%t): wait for worker threads done in main thread\n";
@@ -445,7 +445,7 @@ main (int argc, char *argv[])
 
           /* MEASURE: After call to server shutdown */
           DSTRM_EVENT (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 0, sizeof(Object_ID), (char*)&oid); 
-          ACE_DEBUG ((LM_DEBUG, "after shutdown call in main thread\n"));
+//          ACE_DEBUG ((LM_DEBUG, "after shutdown call in main thread\n"));
 
 
           if (enable_dynamic_scheduling)
@@ -459,7 +459,7 @@ main (int argc, char *argv[])
 
       /* MEASURE: Scheduler stop time */
       DSTRM_EVENT (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 0, sizeof(Object_ID), (char*)&oid); 
-      ACE_DEBUG ((LM_DEBUG, "scheduler shutdown done\n"));
+      ACE_DEBUG ((LM_DEBUG, "SCHEDULER_SHUTDOWN\n"));
     }
   ACE_CATCHANY
     {
@@ -624,6 +624,7 @@ Worker::svc (void)
       timeval tv;
 
 //      ACE_DEBUG((LM_DEBUG,"Task id is %d and thread id is %d\n",oid.task_id,oid.tid));
+      ACE_DEBUG((LM_DEBUG,"START_SERVICE\n"));
       DSTRM_EVENT (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
       tv.tv_sec = server_load_/1000;
@@ -635,12 +636,12 @@ Worker::svc (void)
 
       CPULoad::run(tv);
 
-#ifdef KOKYU_DSRT_LOGGING
-      ACE_DEBUG((LM_DEBUG,"(%t|%T)after running the client workload\n"));
-#endif
+//      ACE_DEBUG((LM_DEBUG,"(%t|%T)after running the client workload\n"));
+      ACE_DEBUG((LM_DEBUG,"STOP_SERVICE\n"));
       DSTRM_EVENT (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
 //      sched_param.deadline = sched_param.deadline + left_work*10000000;
+      ACE_DEBUG((LM_DEBUG,"ONE_WAY_CALL_START\n"));
       DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
       server_->test_method (left_work ACE_ENV_ARG_PARAMETER);
 
@@ -650,6 +651,7 @@ Worker::svc (void)
         oneway call done on the client side.
       */
       /* MEASURE: One way call done */
+      ACE_DEBUG((LM_DEBUG,"ONE_WAY_CALL_DONE\n"));
       DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid);
 
       scheduler_->kokyu_dispatcher_->update_schedule (*(scheduler_current_->id ()),
