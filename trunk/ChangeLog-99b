@@ -1,3 +1,9 @@
+Tue Jul 13 22:25:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU:
+	  Disable the "unitialized" warnings with EGCS+exceptions, it
+	  gives too many bogus warnings to take care of them.
+
 Tue Jul 13 22:16:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* bin/ACEutils.pm:
