@@ -18,8 +18,10 @@ TAO_Messaging_ORBInitializer::pre_init (
     TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+#if (TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY == 1)
   TAO_ORB_Core::set_timeout_hook
     (TAO_RelativeRoundtripTimeoutPolicy::hook);
+#endif /* TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY == 1 */
   
   TAO_ORB_Core::set_sync_scope_hook
   (TAO_Sync_Scope_Policy::hook);

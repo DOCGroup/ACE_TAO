@@ -32,7 +32,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
 class TAO_Export TAO_RelativeRoundtripTimeoutPolicy
   : public Messaging::RelativeRoundtripTimeoutPolicy,
@@ -87,8 +87,11 @@ private:
   TimeBase::TimeT relative_expiry_;
   // The attribute
 };
+#endif /* TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 ////////////////////////////////////////////////////////////////////////////////
+
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
 class TAO_Export TAO_Sync_Scope_Policy
   : public Messaging::SyncScopePolicy,
@@ -145,6 +148,8 @@ private:
   // The attribute
 };
 
+#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
 #if defined (__ACE_INLINE__)
 #include "tao/Messaging_Policy_i.i"
 #endif /* __ACE_INLINE__ */
@@ -152,8 +157,6 @@ private:
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#endif /*TAO_HAS_CORBA_MESSAGING == 1 */
 
 #include "ace/post.h"
 #endif /* TAO_MESSAGING_POLICY_I_H */

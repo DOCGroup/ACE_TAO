@@ -1,3 +1,25 @@
+Wed Nov  1 08:19:12 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/Messaging_ORBInitializer.cpp:
+
+          Added TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY protection 
+          around call to TAO_ORB_Core::set_timeout_hook.
+
+        * tao/Messaging_PolicyFactory.cpp:
+
+          Added TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY protection
+          for one case statement.
+
+        * tao/Messaging_Policy_i.cpp:
+        * tao/Messaging_Policy_i.h:
+        * tao/Messaging_Policy_i.i:
+
+          Standardized the use of the protection macros, since the .h
+          file was using TAO_HAS_CORBA_MESSAGING, but the .cpp file
+          was using TAO_HAS_SYNC_SCOPE_POLICY or nothing at all.  Made
+          them consistent.  Granted, I don't know if this is the 
+          "correct" way of doing it, but it links for me though.
+
 Wed Nov 01 09:58:29 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/PortableServer/Object_Adapter.h (prepare_for_upcall): Added
