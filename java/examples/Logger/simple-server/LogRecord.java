@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class LogRecord
 {
-  final public int MAXLOGMSGLEN = 4 * 1024;
+  final public static int MAXLOGMSGLEN = 4 * 1024;
 
   private int type_;
   private int length_;
