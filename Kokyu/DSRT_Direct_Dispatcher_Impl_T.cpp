@@ -48,7 +48,8 @@ DSRT_Direct_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
                          int sched_scope)
   :DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>(sched_policy, sched_scope),
    sched_queue_modified_ (0),
-   sched_queue_modified_cond_ (sched_queue_modified_cond_lock_)
+   sched_queue_modified_cond_ (sched_queue_modified_cond_lock_),
+   release_guard_cond_ (release_guard_cond_lock_)
 {
   //Run scheduler thread at highest priority
   if (this->activate (this->rt_thr_flags_, 1, 0, this->executive_prio_) == -1)
@@ -80,10 +81,14 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("max prio=%d\n")
               ACE_TEXT ("min prio=%d\n")
+              ACE_TEXT ("executive prio=%d\n")
+              ACE_TEXT ("blocked prio=%d\n")
               ACE_TEXT ("active prio=%d\n")
               ACE_TEXT ("inactive prio=%d\n"),
               max_prio_,
               min_prio_,
+	      executive_prio_,
+	      blocked_prio_,
               active_prio_,
               inactive_prio_));
 
@@ -130,8 +135,16 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
       sched_queue_modified_ = 0;
 
       ACE_Guard<ACE_SYNCH_RECURSIVE_MUTEX> synch_lock_mon(this->synch_lock_);
-      if (this->ready_queue_.current_size () <= 0)
+#ifdef KOKYU_DSRT_LOGGING
+   ACE_DEBUG((LM_DEBUG,"(%t): sched thread get the ready queue lock\n"));
+#endif
+
+      if (this->ready_queue_.current_size () <= 0) {
+        ACE_GUARD_RETURN (cond_lock_t,
+             rg_mon, this->release_guard_cond_lock_, 0);
+        this->release_guard_cond_.signal();
         continue;
+      }
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG, "(%t|%T):Sched Queue contents===>\n"));
@@ -179,6 +192,7 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
           this->curr_scheduled_thr_handle_ = most_eligible_thr_handle;
           this->curr_scheduled_guid_ = item_var->guid ();
         }
+        this->ready_queue_.change_prio(this->blocked_prio_, this->inactive_prio_,this->sched_policy_);
     }
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -228,10 +242,20 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
-              "(%t|%T):schedule_i after thr_setprio\n"));
+              "(%t|%T):schedule_i after thr_setprio \n"));
 #endif
 
   //ready_queue_.dump ();
+
+/*first release ready_queue_ lock. Otherwise if the scheduler gets the
+  sched_queue_modified_cond_lock first, then try to get the ready_queue_ lock
+  just when one thread who gets the ready_queue_ lock first, then try to get
+  sched_queue_modified_cond_lock. Deadlock happens.
+*/
+   guard.release ();
+#ifdef KOKYU_DSRT_LOGGING
+  ACE_DEBUG((LM_DEBUG,"(%t):schedule_i after release ready queue lock\n"));
+#endif
 
   //@@ Perhaps the lock could be moved further down just before
   //setting the condition variable?
@@ -240,11 +264,27 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
-              "(%t|%T):schedule_i after acquiring cond lock\n"));
+              "(%t|%T):schedule_i after acquiring sched_queue_modified lock\n"));
 #endif
 
   this->sched_queue_modified_ = 1;
   this->sched_queue_modified_cond_.signal ();
+
+/*
+  mon.release ();
+
+int prio;
+  if (ACE_OS::thr_setprio (thr_handle,
+                           this->inactive_prio_,
+                           this->sched_policy_) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("thr_setprio failed")), -1);
+    }
+ACE_OS::thr_getprio (thr_handle, prio);
+
+*/
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -258,8 +298,108 @@ template <class DSRT_Scheduler_Traits>
 int DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
 {
+  int int_guid;
+  ACE_OS::memcpy (&int_guid,
+                  guid.get_buffer (),
+                  guid.length ());
 
- return this->schedule (guid, qos);
+  DSUI_EVENT_LOG (DSRT_DIRECT_DISPATCH_FAM, RELEASE_GUARD_START, int_guid, 0, NULL);
+#ifdef KOKYU_DSRT_LOGGING
+  ACE_DEBUG((LM_DEBUG,"(%t|%T):release guard enter and current task id is %d and period is %d.\n",qos.task_id_,qos.period_));
+#endif
+
+      ACE_Time_Value cur_time, tv, proper_t,left_time;
+
+//Need a period information. Hope I can get it from QoS.
+      TimeBase::TimeT period = qos.period_;
+      cur_time = ACE_OS::gettimeofday ();
+
+//If I change the guid to Task ID, will it work?
+      if(this->release_map_.find(qos.task_id_, tv)==0)
+      {
+#ifdef MY_KOKYU_DSRT_LOGGING
+           ACE_DEBUG ((LM_DEBUG,
+                  "(%t|%T): Get the previous release time is %d, %d\n",tv.sec(),tv.usec()));
+           ACE_DEBUG ((LM_DEBUG,
+                  "(%t|%T): Get the cur time is %d, %d\n",cur_time.sec(), cur_time.usec()));
+#endif
+        proper_t = tv + ACE_Time_Value (period/10000000, (period%10000000)/10);
+        if( proper_t  <= cur_time )
+           {
+#ifdef MY_KOKYU_DSRT_LOGGING
+           ACE_DEBUG ((LM_DEBUG,
+                  "(%t|%T): Over the proper release time\n"));
+#endif
+             this->release_map_.rebind(qos.task_id_, cur_time);
+/*DTTIME:
+  Release time on the server side. please record the guid in your DSUI_EVENT_LOG
+*/
+             DSUI_EVENT_LOG (DSRT_DIRECT_DISPATCH_FAM, RG_EVENT_RELEASED, qos.task_id_, 0, NULL);
+             this->schedule_i (guid, qos);
+           }
+        else
+           {
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->synch_lock_, -1);
+
+           if(this->ready_queue_.current_size()) {
+#ifdef KOKYU_DSRT_LOGGING
+           ACE_DEBUG((LM_DEBUG,"(%t|%T):BEFORE GOING TO SLEEP\n"));
+#endif
+           left_time = proper_t - cur_time;
+           timeval time_tv;
+           time_tv.tv_sec = left_time.sec();
+           time_tv.tv_usec = left_time.usec();
+
+           left_time += ACE_OS::gettimeofday ();
+#ifdef MY_KOKYU_DSRT_LOGGING
+           ACE_DEBUG((LM_DEBUG,"GOING TO SLEEP FOR %d, %d\n", time_tv.tv_sec, time_tv.tv_usec));
+#endif
+           guard.release ();
+	   ACE_GUARD_RETURN (cond_lock_t,
+                        rg_mon, this->release_guard_cond_lock_, 0);
+           if (this->release_guard_cond_.wait (&left_time) == -1)
+             {
+             ACE_ERROR ((LM_ERROR,
+                      "(%t|%T): release_cond.wait timed out \n"));
+             }
+           rg_mon.release();
+           }
+           else 
+		guard.release ();
+
+             cur_time = ACE_OS::gettimeofday ();
+#ifdef MY_KOKYU_DSRT_LOGGING
+           ACE_DEBUG ((LM_DEBUG,
+                  "(%t|%T): And Current time is set in the map and %d, %d.\n",cur_time.sec(), cur_time.usec() ));
+#endif
+
+             this->release_map_.rebind(qos.task_id_, cur_time);
+/*DTTIME:
+  Release time on the server side. please record the guid in your DSUI_EVENT_LOG
+*/
+             DSUI_EVENT_LOG (DSRT_DIRECT_DISPATCH_FAM, RG_EVENT_DELAYED_RELEASED, qos.task_id_, 0, NULL);
+
+             this->schedule_i (guid, qos);
+           }
+      }
+      else
+      {
+#ifdef KOKYU_DSRT_LOGGING
+           ACE_DEBUG ((LM_DEBUG,
+                  "(%t|%T): Can not find release information in map\n"));
+#endif
+
+             this->release_map_.bind(qos.task_id_, cur_time);
+/*DTTIME:
+  Release time on the server side. please record the guid in your DSUI_EVENT_LOG
+*/
+             DSUI_EVENT_LOG (DSRT_DIRECT_DISPATCH_FAM, NONRG_EVENT_RELEASED, qos.task_id_, 0, NULL);
+
+             this->schedule_i (guid, qos);
+      }
+
+  DSUI_EVENT_LOG (DSRT_DIRECT_DISPATCH_FAM, RELEASE_GUARD_END, int_guid, 0, NULL);
+  return 0;
 }
 
 template <class DSRT_Scheduler_Traits>
@@ -305,6 +445,7 @@ update_schedule_i (Guid_t guid, Block_Flag_t flag)
       //@@ Need to investigate this further. Also we can consider
       //using the Thread-Safe interface pattern.
       //mon.release ();
+      guard.release ();
       int rc = this->cancel_schedule (guid);
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -343,8 +484,18 @@ cancel_schedule_i (Guid_t guid)
       this->curr_scheduled_thr_handle_ = 0;
     }
 
+  guard.release ();
+  
+#ifdef KOKYU_DSRT_LOGGING
+  ACE_DEBUG((LM_DEBUG,"(%t): AFTER release ready queue lock in cancel_schedule_i\n"));
+#endif
+
   ACE_GUARD_RETURN (cond_lock_t,
                     mon, this->sched_queue_modified_cond_lock_, 0);
+#ifdef KOKYU_DSRT_LOGGING
+  ACE_DEBUG((LM_DEBUG,"(%t): AFTER get the sched_queue_modified_lock in cancel_schedule_i\n"));
+#endif
+
   this->sched_queue_modified_ = 1;
   this->sched_queue_modified_cond_.signal ();
   return 0;
