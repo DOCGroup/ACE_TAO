@@ -1,6 +1,7 @@
 // $Id$
 
 #include "tao/Policy_Set.h"
+#include "tao/Environment.h"
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
@@ -321,4 +322,3 @@ TAO_Policy_Set::get_cached_policy (TAO_Cached_Policy_Type type)
 
   return CORBA::Policy::_nil ();
 }
-
