@@ -1,5 +1,14 @@
 Tue Feb 16 00:39:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+	* ace/WIN32_Asynch_IO.h: 
+	* ace/WIN32_Asynch_IO.h: 
+	* ace/WIN32_Asynch_IO.h:
+	Added the files
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp:
+	Updated these files
+
 	* examples/Reactor/Proactor/Makefile: 	
 	New make file which also compiles the test_aiosig_ace.cpp
 	program. 		
