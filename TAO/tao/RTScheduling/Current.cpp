@@ -731,7 +731,7 @@ TAO_RTScheduler_Current_i::current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_
 const char*
 TAO_RTScheduler_Current_i::name (void)
 {
-  return CORBA::string_dup (this->name_);
+  return CORBA::string_dup (this->name_.in ());
 }
 
 void

@@ -36,9 +36,9 @@
 
 #include "rtscheduler_export.h"
 
-#include "c:/ACE_wrappers/TAO/tao/RTCORBA/RTCORBA.h"
-#include "c:/ACE_wrappers/TAO/tao/PortableServer/PortableServerC.h"
-#include "c:/ACE_wrappers/TAO/tao/PortableInterceptorC.h"
+#include "tao/RTCORBA/RTCORBA.h"
+#include "tao/PortableServer/PortableServerC.h"
+#include "tao/PortableInterceptorC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
