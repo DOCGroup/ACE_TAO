@@ -15,9 +15,7 @@
 
 #include "common/XML_Types.h"
 #include "parser/parser/Parser_export.h"
-#include "ace/Functor.h"
 #include "ace/Hash_Map_Manager.h"
-#include "ace/Containers_T.h"
 
 typedef ACE_Hash_Map_Entry<ACEXML_String,
                            ACEXML_String> ACEXML_ENTITY_ENTRY;

@@ -54,6 +54,12 @@ public:
   virtual ~ACEXML_Attribute_Def_Builder () = 0;
 
   /**
+   * Specify the name of the attribute.
+   */
+  virtual int setName (const ACEXML_Char *n) = 0;
+  virtual const ACEXML_Char *getName (void) = 0;
+
+  /**
    * Set the attribute type.
    */
   virtual int setAttType (const ATT_TYPE type,
@@ -64,7 +70,7 @@ public:
   /**
    * Insert an element for NOTATION or ENUMERATION type attribute.
    */
-  virtual int insertList (const ACEXML_Char Name,
+  virtual int insertList (const ACEXML_Char *Name,
                           ACEXML_Env &xmlenv)
     // ACE_THORW_SPEC ((ACEXML_SAXException))
     = 0;

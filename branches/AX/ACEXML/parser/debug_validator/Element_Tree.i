@@ -61,20 +61,20 @@ ACEXML_Element_Tree_List_Stack::ACEXML_Element_Tree_List_Stack (void)
 }
 
 ACEXML_INLINE ACEXML_Element_Tree_List_Node *
-ACEXML_Element_Tree_list_Stack::top ()
+ACEXML_Element_Tree_List_Stack::top ()
 {
   return this->top_;
 }
 
 ACEXML_INLINE  void
-ACEXML_Element_Tree_list_Stack::push (ACEXML_Element_Tree_List_Node *n)
+ACEXML_Element_Tree_List_Stack::push (ACEXML_Element_Tree_List_Node *n)
 {
   n->pop_next_ = this->top_;
   this->top_ = n;
 }
 
 ACEXML_INLINE ACEXML_Element_Tree_List_Node *
-ACEXML_Element_Tree_list_Stack::pop ()
+ACEXML_Element_Tree_List_Stack::pop ()
 {
   if (this->top_ != 0)
     {
@@ -85,8 +85,8 @@ ACEXML_Element_Tree_list_Stack::pop ()
   return 0;
 }
 
-ACEXML_INLINE ACEXML_Element_Tree_List_Node *
-ACEXML_Element_Tree_list_Stack::empty ()
+ACEXML_INLINE int
+ACEXML_Element_Tree_List_Stack::empty ()
 {
   return this->top_ == 0;
 }
