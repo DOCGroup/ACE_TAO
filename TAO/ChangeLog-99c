@@ -1,5 +1,8 @@
 Sun Jan 24 22:46:43 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
+	* removed the orbsvcs/orbsvcs/Time_Service/implrepo.conf file.
+	This file is not required here. It is required in the tests dir.
+
 	Made changes to the following Makefiles to incorporate the
 	Implementation Repository service.
 
