@@ -39,9 +39,9 @@ int run_test (int iterations, int threads, int subtasks)
         <font color=red>// task.{h|cpp} for more details.</font>
     Task *task = new Task (subtasks);
 
-    if (task->open (threads) == -1)
+    if (task->start (threads) == -1)
     {
-        ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>open</font>"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>start</font>"), -1);
     }
 
         <font color=red>// Give the threads a chance to get ready.</font>
@@ -98,7 +98,7 @@ int main (int argc, char *argv[])
 
     ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Application exiting\n</font>"));
 
-    exit (0);
+    return (0);
 }
 <font color=blue>#if defined</font> (<font color=purple>ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION</font>)
 template class ACE_Guard &lt; ACE_Mutex >;

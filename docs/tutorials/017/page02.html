@@ -71,7 +71,8 @@ int <font color=#008888>Test::svc</font>(void)
         <font color=red>// Initialize the random number generator.  We'll use this to</font>
         <font color=red>// create sleep() times in each thread.  This will help us see </font>
         <font color=red>// if the barrier synch is working.</font>
-    ACE_RANDR_TYPE seed = <font color=#008888>ACE_OS::thr_self</font>();
+    ACE_Time_Value now(<font color=#008888>ACE_OS::gettimeofday</font>());
+    ACE_RANDR_TYPE seed = now.usec();
     <font color=#008888>ACE_OS::srand</font>(seed);
     int delay;
 
