@@ -9,6 +9,12 @@ Fri Feb 20 06:36:04 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Buffer_Stream_Test (Consumer::svc): removed thr_yield for
           LynxOS, now that ACE_OS::cond_timedwait () is fixed.
 
+        * ace/OS.i (mmap): use ACE_DEFAULT_FILE_PERMS on LynxOS for the
+          shared memory object.
+
+        * ace/Mem_Map.* (unmap): on LynxOS, write back the shared object to
+          the plain file, if the mmap () protection included PROT_WRITE.
+
 Thu Feb 19 17:59:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* apps/JAWS/clients/Caching/*: Reworked and cleaned up these files a
