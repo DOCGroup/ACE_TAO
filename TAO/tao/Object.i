@@ -5,22 +5,14 @@
 ACE_INLINE ULONG
 CORBA_Object::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->IUnknown_lock_, 0));
-
   return ++this->refcount_;
 }
 
 ACE_INLINE ULONG
 CORBA_Object::Release (void)
 {
-  {
-    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->IUnknown_lock_, 0));
-
-    ACE_ASSERT (this != 0);
-
-    if (--this->refcount_ != 0)
-      return this->refcount_;
-  }
+  if (--this->refcount_ != 0)
+    return this->refcount_;
   delete this;
   return 0;
 }

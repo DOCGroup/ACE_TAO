@@ -911,7 +911,8 @@ private:
   ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_int> open_called_;
   // Flag which denotes that the open method was called.
 
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_int> should_shutdown_;
+  ACE_Lock* shutdown_lock_;
+  int should_shutdown_;
   // Flag which denotes that the ORB should shut down and <run> should
   // return.
 

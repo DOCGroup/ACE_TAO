@@ -1,3 +1,19 @@
+Tue May 26 18:39:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB.h: 
+	* tao/ORB.cpp: 
+	* tao/Server_Strategy_Factory.h: 
+	* tao/Server_Strategy_Factory.cpp: 
+	* tao/default_server.h: 
+	* tao/default_server.cpp: 
+	  Added options to control the kind of locking in the ORB event
+	  loop (i.e. ORB::run), by default it acquires no locks.
+
+	* tao/Object.h: 
+	* tao/Object.i: 
+	  All the objects in the ORB that are reference counted do *not*
+	  have locks to protect the count.
+
 Tue May 26 18:15:40 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/CosNaming_i: Changed the implementation
