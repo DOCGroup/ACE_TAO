@@ -1,3 +1,30 @@
+Mon Jul  1 09:06:15 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/be_extern.h:
+        * orbsvcs/IFR_Service/be_global.cpp:
+        * orbsvcs/IFR_Service/be_produce.cpp:
+        * orbsvcs/IFR_Service/drv_args_ifr.cpp:
+        * orbsvcs/IFR_Service/drv_extern_ifr.h:
+        * orbsvcs/IFR_Service/drv_init_ifr.cpp:
+        * orbsvcs/IFR_Service/drv_preproc_ifr.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvcs/IFR_Service/ifr_removing_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_visitor.h:
+        * orbsvcs/IFR_Service/tao_ifr.cpp:
+        * orbsvcs/IFR_Service/tao_ifr.dsp:
+
+          Changes to keep tao_ifr compatible with the recent
+          changes to the IDL compiler. These changes are
+          only to avoid build errors - full support of
+          valuetypes and components in the IFR has not yet
+          been implemented.
+
 Mon Jul  1 09:02:32 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/AbstractBase.cpp:
