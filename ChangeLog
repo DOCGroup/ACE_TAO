@@ -1,3 +1,7 @@
+Wed May 23 06:52:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/nightlybuilds/builds.lst: Moved the FORTE builds to ace.
+
 Tue May 22 21:57:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/nightlybuilds/builds.lst: Added NO_AMI_MESSAGING to the
