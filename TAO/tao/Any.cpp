@@ -1283,7 +1283,6 @@ template class TAO::Any_Basic_Impl_T<CORBA::Double>;
 template class TAO::Any_Dual_Impl_T<CORBA::Any>;
 template class TAO::Any_Impl_T<CORBA::TypeCode>;
 template class TAO::Any_Dual_Impl_T<CORBA::Exception>;
-template class TAO::Any_Impl_T<CORBA::Any>;
 template class TAO::Any_Impl_T<char>;
 template class TAO::Any_Impl_T<CORBA::WChar>;
 template class TAO::Any_Impl_T<CORBA::Object>;
@@ -1340,7 +1339,6 @@ template class TAO::Any_Impl_T<CORBA::Any>;
 #pragma instantiate TAO::Any_Dual_Impl_T<CORBA::Any>
 #pragma instantiate TAO::Any_Impl_T<CORBA::TypeCode>
 #pragma instantiate TAO::Any_Dual_Impl_T<CORBA::Exception>
-#pragma instantiate TAO::Any_Impl_T<CORBA::Any>
 #pragma instantiate TAO::Any_Impl_T<char>
 #pragma instantiate TAO::Any_Impl_T<CORBA::WChar>
 #pragma instantiate TAO::Any_Impl_T<CORBA::Object>
