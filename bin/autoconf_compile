@@ -137,8 +137,7 @@ if ($#BUILD_LIST == -1) {
     ('ace',
      'netsvcs',
      'tests',
-     'apps/gperf',
-     'TAO');
+     'apps/gperf');
 }
 if ($debug) {
 
@@ -280,6 +279,7 @@ print LOG "TAO ChangeLogTag:", $_, "\n";
 close (CHLOG);
 
 # Bootstrap the workspace
+print LOG "$CMD: ==================================================\n\n";
 print LOG "$CMD: bootstrapping the workspace\n";
 open(BOOTSTRAP, "cd $CHECKOUT/ACE_wrappers && "
      . "sh bin/bootstrap workspace --enable-deps 2>&1 |")
@@ -289,6 +289,7 @@ while(<BOOTSTRAP>) {
 }
 close(BOOTSTRAP)
     || mydie "error while bootstrapping the workspace";
+print LOG "$CMD: ==================================================\n\n";
 
 # Begin the workspace configuration
 $date = localtime;
