@@ -134,8 +134,14 @@ ACE_MEM_Acceptor::shared_accept_finish (ACE_MEM_Stream new_stream,
   ACE_INET_Addr local_addr;
   if (new_stream.get_local_addr (local_addr) == -1)
     return -1;
+
+  // @@ Need to make the filename prefix configurable.  Perhaps we
+  // should have something like ACE_MEM_Addr?
   ACE_OS::sprintf (buf, "MEM_Acceptor_%d_", local_addr.get_port_number ());
   ACE_OS::unique_name (this, buf, MAXPATHLEN);
+
+  // Make sure we have a fresh start.
+  ACE_OS::unlink (buf);
 
   // Now set up the shared memory malloc pool.
   if (new_stream.create_shm_malloc (buf) == -1)
@@ -145,7 +151,7 @@ ACE_MEM_Acceptor::shared_accept_finish (ACE_MEM_Stream new_stream,
   ACE_UINT16 buf_len = ACE_OS::strlen (buf) + 1;
 
   // No need to worry about byte-order because both parties should always
-  // on the same machine.
+  // be on the same machine.
   if (ACE::send (new_handle, &buf_len, sizeof (ACE_UINT16)) == -1)
     return -1;
 
