@@ -10,8 +10,9 @@ TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
 OBJFILES = \
 	$(OBJDIR)\testC.obj \
 	$(OBJDIR)\testS.obj \
-        $(OBJDIR)\receiver.obj \
-        $(OBJDIR)\sender.obj \
+        $(OBJDIR)\Receiver.obj \
+        $(OBJDIR)\Sender.obj \
+        $(OBJDIR)\Sender_Task.obj \
 	$(OBJDIR)\client.obj
 
 CFLAGS = \
