@@ -39,6 +39,10 @@ BOOL APIENTRY DllMain(HANDLE hModule,
                       DWORD  ul_reason_for_call,
                       LPVOID lpReserved)
 {
+  // @@ This disables the funtion: TO DO - figure out why this function
+  // @@ is causing a crash in tao_idl on NT.
+  return TRUE;
+
   switch( ul_reason_for_call )
     {
     case DLL_PROCESS_ATTACH:
