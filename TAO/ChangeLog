@@ -1,3 +1,9 @@
+Fri Sep 12 10:29:13 MST 2003 Trevor Fields <fields_t@ociweb.com>
+
+        * tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
+
+          Fixed compile error due to missing ACE_ENV_ARG_DECL.
+
 Fri Sep 12 12:14:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAOACE.dsw:
