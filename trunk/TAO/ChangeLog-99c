@@ -3,7 +3,9 @@ Mon Aug 16 13:04:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/fe.idl.yy:
 	* TAO_IDL/fe/y.tab.h:
 	* TAO_IDL/fe/y.tab.cpp:
-	  One last bit of wstring business in idl.yy.
+	* TAO_IDL/include/ast_decl.h
+	  One last bit of wstring business in idl.yy, and a
+	  new node type NT_wstring.
 
 Sat Aug 14 17:39:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
