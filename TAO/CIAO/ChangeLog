@@ -1,3 +1,13 @@
+Wed Jun 23 15:33:06 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        * DnC/DomainApplicationManager/DomainApplicationManager.mpc
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.h
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.inl
+
+          Added "debug level" controlled debugging statements.
+          Addressed Ossama's comments. Thanks Ossama!
+
 Wed Jun 23 13:52:06 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/tests/Config_Handlers/RobotAssembly/ACE.iad:
