@@ -25,12 +25,17 @@ use vars qw(@ISA);
 # Data Section
 # ************************************************************
 
-my($wsext) = 'mwc';
+my($wsext)  = 'mwc';
+my($wsbase) = 'mwb';
 
 ## Valid names for assignments within a workspace
 my(%validNames) = ('cmdline'  => 1,
                    'implicit' => 1,
                   );
+
+## Singleton hash maps of project information
+my(%allprinfo)   = ();
+my(%allprojects) = ();
 
 # ************************************************************
 # Subroutine Section
@@ -51,8 +56,8 @@ sub new {
   my($toplevel)  = shift;
   my($baseprojs) = shift;
   my($self)      = Creator::new($class, $global, $inc,
-                                $template, $ti, $relative,
-                                $addtemp, $addproj,
+                                $template, $ti, $dynamic, $static,
+                                $relative, $addtemp, $addproj,
                                 $progress, $toplevel, $baseprojs,
                                 'workspace');
   my($typecheck) = $self->{'type_check'};
@@ -63,8 +68,7 @@ sub new {
   $self->{'project_info'}   = {};
   $self->{'reading_parent'} = [];
   $self->{'project_files'}  = [];
-  $self->{'dynamic'}        = $dynamic;
-  $self->{'static'}         = $static;
+  $self->{'cacheok'}        = 1;
 
   return $self;
 }
@@ -89,7 +93,7 @@ sub parse_line {
           ## Fill in all the default values
           $self->generate_defaults();
 
-          ## End of project; Have subclass write out the file
+          ## End of workspace; Have subclass write out the file
           ## Generate the project files
           my($gstat, $generator) = $self->generate_project_files();
           if ($gstat) {
@@ -116,12 +120,15 @@ sub parse_line {
         if (defined $parents) {
           foreach my $parent (@$parents) {
             ## Read in the parent onto ourself
-            my($file) = $self->search_include_path("$parent.$wsext");
+            my($file) = $self->search_include_path("$parent.$wsbase");
+            if (!defined $file) {
+              $file = $self->search_include_path("$parent.$wsext");
+            }
 
             if (defined $file) {
               my($rp) = $self->{'reading_parent'};
               push(@$rp, 1);
-              $self->parse_file("$parent.$wsext");
+              $self->parse_file($file);
               pop(@$rp);
               if (!$status) {
                 $errorString = "ERROR: Invalid parent: $parent";
@@ -316,26 +323,32 @@ sub write_workspace {
   my($status)    = 1;
 
   if ($self->get_toplevel()) {
-    my($fh)   = new FileHandle();
     my($name) = $self->transform_file_name($self->workspace_file_name());
-    my($dir)  = dirname($name);
+    if (defined $self->{'projects'}->[0]) {
+      my($fh)   = new FileHandle();
+      my($dir)  = dirname($name);
 
-    if ($dir ne '.') {
-      mkpath($dir, 0, 0777);
-    }
-    if (open($fh, ">$name")) {
-      $self->pre_workspace($fh);
-      $self->write_comps($fh, $generator);
-      $self->post_workspace($fh);
-      close($fh);
+      if ($dir ne '.') {
+        mkpath($dir, 0, 0777);
+      }
+      if (open($fh, ">$name")) {
+        $self->pre_workspace($fh);
+        $self->write_comps($fh, $generator);
+        $self->post_workspace($fh);
+        close($fh);
 
-      if ($addfile) {
-        $self->add_file_written($name);
+        if ($addfile) {
+          $self->add_file_written($name);
+        }
+      }
+      else {
+        print STDERR "ERROR: Unable to open $name for output\n";
+        $status = 0;
       }
     }
     else {
-      print STDERR "ERROR: Unable to open $name for output\n";
-      $status = 0;
+      print "WARNING: No projects were created.\n" .
+            "         Workspace $name has not been created.\n";
     }
   }
 
@@ -351,9 +364,15 @@ sub save_project_info {
   my($projects) = shift;
   my($pi)       = shift;
   my($c)        = 0;
+
+  ## For each file written
   foreach my $pj (@$gen) {
+    ## Save the full path to the project file in the array
     my($full) = ($dir ne '.' ? "$dir/" : '') . $pj;
     push(@$projects, $full);
+
+    ## Get the corresponding generated project info and save it
+    ## in the hash map keyed on the full project file name
     $$pi{$full} = $$gpi[$c];
     $c++;
   }
@@ -361,57 +380,81 @@ sub save_project_info {
 
 
 sub generate_project_files {
-  my($self)       = shift;
-  my($status)     = 0;
-  my(@projects)   = ();
-  my(%pi)         = ();
-  my($generator)  = $self->project_creator();
-  my($cwd)        = $self->getcwd();
-  my($impl)       = $self->get_assignment('implicit');
+  my($self)      = shift;
+  my($status)    = 0;
+  my(@projects)  = ();
+  my(%pi)        = ();
+  my($generator) = $self->project_creator();
+  my($cwd)       = $self->getcwd();
+  my($impl)      = $self->get_assignment('implicit');
+  my($postkey)   = $generator->get_dynamic() .
+                   $generator->get_static() . "-$self";
+
+  ## Remove the address portion of the $self string
+  $postkey =~ s/=.*//;
 
   foreach my $ofile (@{$self->{'project_files'}}) {
     my($file) = $ofile;
     my($dir)  = dirname($file);
 
+    ## If we are generating implicit projects and the file is a
+    ## directory, then we set the dir to the file and empty the file
     if ($impl && -d $file) {
       $dir  = $file;
       $file = '';
     }
 
+    ## Generate the key for this project file
+    my($prkey) = $self->getcwd() . "/$file-$postkey";
+
     ## We must change to the subdirectory for
     ## which this project file is intended
     if ($self->cd($dir)) {
-      $status = $generator->generate(basename($file));
-
-      ## If any one project file fails, then stop
-      ## processing altogether.
-      if (!$status) {
-        return $status, $generator;
+      my($gen) = [];
+      my($gpi) = [];
+      if ($self->{'cacheok'} && defined $allprojects{$prkey}) {
+        $gen = $allprojects{$prkey};
+        $gpi = $allprinfo{$prkey};
+        $status = 1;
       }
+      else {
+        $status = $generator->generate(basename($file));
 
-      ## Get the individual project information and
-      ## generated file name(s)
-      my($gen) = $generator->get_files_written();
-      my($gpi) = $generator->get_project_info();
+        ## If any one project file fails, then stop
+        ## processing altogether.
+        if (!$status) {
+          return $status, $generator;
+        }
 
-      ## If we need to generate a workspace file per project
-      ## then we generate a temporary project info and projects
-      ## array and call write_project().
-      if ($dir ne '.' && defined $$gen[0] && $self->workspace_per_project()) {
-        my(%perpi)       = ();
-        my(@perprojects) = ();
-        $self->save_project_info($gen, $gpi, '.', \@perprojects, \%perpi);
+        ## Get the individual project information and
+        ## generated file name(s)
+        $gen = $generator->get_files_written();
+        $gpi = $generator->get_project_info();
 
-        ## Set our per project information
-        $self->{'projects'}     = \@perprojects;
-        $self->{'project_info'} = \%perpi;
+        ## If we need to generate a workspace file per project
+        ## then we generate a temporary project info and projects
+        ## array and call write_project().
+        if ($dir ne '.' && defined $$gen[0] && $self->workspace_per_project()) {
+          my(%perpi)       = ();
+          my(@perprojects) = ();
+          $self->save_project_info($gen, $gpi, '.', \@perprojects, \%perpi);
 
-        ## Write our per project workspace
-        $self->write_workspace($generator);
+          ## Set our per project information
+          $self->{'projects'}     = \@perprojects;
+          $self->{'project_info'} = \%perpi;
 
-        ## Reset our project information to empty
-        $self->{'projects'}     = [];
-        $self->{'project_info'} = {};
+          ## Write our per project workspace
+          $self->write_workspace($generator);
+
+          ## Reset our project information to empty
+          $self->{'projects'}     = [];
+          $self->{'project_info'} = {};
+        }
+
+        if ($self->{'cacheok'}) {
+          $allprojects{$prkey} = $gen;
+          $allprinfo{$prkey}   = $gpi;
+        }
       }
       $self->cd($cwd);
       $self->save_project_info($gen, $gpi, $dir, \@projects, \%pi);
@@ -438,18 +481,6 @@ sub get_projects {
 sub get_project_info {
   my($self) = shift;
   return $self->{'project_info'};
-}
-
-
-sub get_dynamic {
-  my($self) = shift;
-  return $self->{'dynamic'};
-}
-
-
-sub get_static {
-  my($self) = shift;
-  return $self->{'static'};
 }
 
 
@@ -514,6 +545,9 @@ sub process_cmdline {
   my($self)       = shift;
   my($parameters) = shift;
 
+  ## It's ok to use the cache
+  $self->{'cacheok'} = 1;
+
   my($cmdline) = $self->get_assignment('cmdline');
   if (defined $cmdline && $cmdline ne '') {
     my($args) = $self->create_array($cmdline);
@@ -536,20 +570,16 @@ sub process_cmdline {
     my($options) = $self->options('MWC', {}, 0, @$args);
     if (defined $options) {
       foreach my $key (keys %$options) {
-        if (UNIVERSAL::isa($options->{$key}, 'ARRAY')) {
-          if (defined $options->{$key}->[0]) {
-            push(@{$parameters->{$key}}, @{$options->{$key}});
+        my($type) = $self->is_set($key, $options);
+        if ($type eq 'ARRAY') {
+          push(@{$parameters->{$key}}, @{$options->{$key}});
+        }
+        elsif ($type eq 'HASH') {
+          foreach my $hk (keys %{$options->{$key}}) {
+            $parameters->{$key}->{$hk} = $options->{$key}->{$hk};
           }
         }
-        elsif (UNIVERSAL::isa($options->{$key}, 'HASH')) {
-          my(@keys) = keys %{$options->{$key}};
-          if (defined $keys[0]) {
-            foreach my $hk (keys %{$options->{$key}}) {
-              $parameters->{$key}->{$hk} = $options->{$key}->{$hk};
-            }
-          }
-        }
-        elsif (defined $options->{$key}) {
+        elsif ($type eq 'SCALAR') {
           $parameters->{$key} = $options->{$key};
         }
       }
@@ -564,6 +594,17 @@ sub process_cmdline {
       if (defined $options->{'input'}->[0]) {
         $self->optionError('Command line files ' .
                            'specified in a workspace are ignored');
+      }
+
+      ## Determine if it's ok to use the cache
+      my(@cacheInvalidating) = ('global', 'include', 'baseprojs',
+                                'template', 'ti', 'relative',
+                                'addtemp', 'addproj');
+      foreach my $key (@cacheInvalidating) {
+        if ($self->is_set($key, $options)) {
+          $self->{'cacheok'} = 0;
+          last;
+        }
       }
     }
   }

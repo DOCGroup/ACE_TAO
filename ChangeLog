@@ -1,3 +1,27 @@
+Wed Apr  2 10:17:59 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+
+          Factored the dynamic and static accessors into this class from
+          WorkspaceCreator.pm                                           
+
+        * bin/MakeProjectCreator/modules/Options.pm:
+
+          Added a utility function which can be used to determine if an
+          option has been used.
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Use the factored dynamic and static accessors.
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Added the functionality to track which projects have been
+          generated.  If multiple workspaces with overlapping projects are
+          processed within the same process, it is able to skip the
+          re-generation of the overlapping projects.  Also added the ability
+          to use "mwb" files as base project files.
+
 Wed Apr  2 08:49:51 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
