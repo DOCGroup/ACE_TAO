@@ -1,3 +1,16 @@
+Wed Jul  7 03:17:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/Options.html: Removed the -ORBReactorLock entry into the
+	  Resource_Factory section and replaced it with a note.  Removed
+	  the -ORBColTable entry from the Resource_Factory section.
+
+	  Removed the -ORBColTblLockType entry from the
+	  Server_Strategy_Factory section.
+
+	  Added the -ORBEventLoopLock entry into the
+	  Server_Strategy_Factory section.  Added the -ORBProtocolFactory
+	  entry into the Resource_Factory section.  Somebody, document us.
+
 Tue Jul  6 22:23:01 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/benchmark/run_test.pl: 
