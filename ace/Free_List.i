@@ -7,7 +7,7 @@
 template <class T, class LOCK> ACE_INLINE void 
 ACE_Locked_Free_List<T, LOCK>::add (T *element)
 {
-  ACE_MT (ACE_GUARD (LOCK, ace_mon, *this->mutex_));
+  ACE_MT (ACE_GUARD (LOCK, ace_mon, this->mutex_));
   // Check to see that we not at the high water mark.
   if (this->mode_ == ACE_PURE_FREE_LIST 
       || this->size_ >= this->hwm_)
@@ -28,7 +28,7 @@ ACE_Locked_Free_List<T, LOCK>::add (T *element)
 template <class T, class LOCK> ACE_INLINE T*
 ACE_Locked_Free_List<T, LOCK>::remove (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, *this->mutex_, 0));
+  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, 0));
 
   // If we are at the low water mark, add some nodes
   if (this->mode_ != ACE_PURE_FREE_LIST && this->size_ <= this->lwm_)
@@ -61,7 +61,7 @@ ACE_Locked_Free_List<T, LOCK>::size (void)
 template <class T, class LOCK> ACE_INLINE void 
 ACE_Locked_Free_List<T, LOCK>::resize (size_t newsize)
 {
-  ACE_MT (ACE_GUARD (LOCK, ace_mon, *this->mutex_));
+  ACE_MT (ACE_GUARD (LOCK, ace_mon, this->mutex_));
 
   // Check if we are allowed to resize
   if (this->mode_ != ACE_PURE_FREE_LIST)

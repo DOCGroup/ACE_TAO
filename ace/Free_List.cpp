@@ -24,16 +24,13 @@ ACE_Locked_Free_List<T, LOCK>::ACE_Locked_Free_List (int mode,
 						     size_t prealloc, 
                                                      size_t lwm, 
                                                      size_t hwm, 
-                                                     size_t inc,
-                                                     LOCK *mutex)
+                                                     size_t inc)
   : mode_ (mode),
     free_list_ (NULL),
     lwm_ (lwm),
     hwm_ (hwm),
     inc_ (inc),
-    size_ (0),
-    mutex_ (mutex == 0 ? new LOCK : mutex),
-    delete_mutex_ (mutex == 0)
+    size_ (0)
 {
   this->alloc (prealloc);
 }
@@ -50,9 +47,6 @@ ACE_Locked_Free_List<T, LOCK>::~ACE_Locked_Free_List (void)
 	this->free_list_ = this->free_list_->get_next ();
 	delete temp;
       }
-
-  if (this->delete_mutex_)
-    delete this->mutex_;
 }
 
 // Allocates <n> extra nodes for the freelist
@@ -60,7 +54,7 @@ ACE_Locked_Free_List<T, LOCK>::~ACE_Locked_Free_List (void)
 template <class T, class LOCK> void 
 ACE_Locked_Free_List<T, LOCK>::alloc (size_t n)
 {
-  ACE_MT (ACE_GUARD (LOCK, ace_mon, *this->mutex_));
+  ACE_MT (ACE_GUARD (LOCK, ace_mon, this->mutex_));
 
   for (; n > 0; n--)
     {
@@ -77,7 +71,7 @@ ACE_Locked_Free_List<T, LOCK>::alloc (size_t n)
 template <class T, class LOCK> void 
 ACE_Locked_Free_List<T, LOCK>::dealloc (size_t n)
 {
-  ACE_MT (ACE_GUARD (LOCK, ace_mon, *this->mutex_));
+  ACE_MT (ACE_GUARD (LOCK, ace_mon, this->mutex_));
 
   for (; this->free_list_ != NULL && n > 0;
        n--)
@@ -87,23 +81,6 @@ ACE_Locked_Free_List<T, LOCK>::dealloc (size_t n)
       delete temp;
       this->size_--;
     }
-}
-
-// returns a reference to the mutex.
-template <class T, class LOCK> LOCK &
-ACE_Locked_Free_List<T, LOCK>::get_mutex (void)
-{
-  return *this->mutex_;
-}
-
-template <class T, class LOCK> void 
-ACE_Locked_Free_List<T, LOCK>::set_mutex (LOCK &mutex)
-{
-  if (this->delete_mutex_)
-    delete this->mutex_;
-
-  this->mutex_ = &mutex;
-  this->delete_mutex_ = 0;
 }
 
 #endif /* ACE_FREE_LIST_C */
