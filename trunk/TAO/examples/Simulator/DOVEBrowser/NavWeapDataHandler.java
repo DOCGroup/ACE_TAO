@@ -238,7 +238,16 @@ public class NavWeapDataHandler implements DataHandler {
 	received_events_++;
       }
 	else 
-	System.out.println ("Received wrong type information"+any_value.type());
+	System.out.println ("Received wrong type information");
+  
+	System.out.println ("Received any_value.type (): [" +
+                            any_value.type() + "]");
+  
+	System.out.println ("Expected NavigationHelper.type (): [" +
+                            NavigationHelper.type() + "]");
+
+	System.out.println ("OR WeaponsHelper.type (): [" +
+                            WeaponsHelper.type() + "]");
   }
   
   NavWeapDataHandler () {
