@@ -61,6 +61,12 @@ main (int argc, char *argv[])
                             1);
         }
 
+      // @@ Jai, make multiple invocations to force the load balancer
+      //    to return forward the client to a different servant.  It's
+      //    not crucial to do this.  Doing so is just meant to
+      //    exercise the LoadManager internals a bit.  For example,
+      //    try putting the below get_string() call in a loop that
+      //    executes 10 times.
       CORBA::String_var the_string =
         basic->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -68,6 +74,9 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
                   the_string.in ()));
 
+      // @@ Jai, something to think about...  You're shutting down the
+      //    servant, but its object reference is still registered with
+      //    the LoadManager.  What does that mean?  :-)
       basic->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
