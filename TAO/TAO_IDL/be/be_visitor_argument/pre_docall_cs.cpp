@@ -144,7 +144,7 @@ be_visitor_args_pre_docall_cs::visit_array (be_array *node)
 }
 
 int
-be_visitor_args_pre_docall_cs::visit_interface (be_interface *node)
+be_visitor_args_pre_docall_cs::visit_interface (be_interface *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
@@ -169,7 +169,7 @@ be_visitor_args_pre_docall_cs::visit_interface (be_interface *node)
 }
 
 int
-be_visitor_args_pre_docall_cs::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_args_pre_docall_cs::visit_interface_fwd (be_interface_fwd *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
