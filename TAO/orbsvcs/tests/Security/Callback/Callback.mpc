@@ -1,4 +1,6 @@
 project: server {
+  requires += ssl
+
   IDL_Files {
     server.idl
     client.idl
@@ -14,7 +16,8 @@ project: server {
 }
 
 project(client): server {
-  exename = client
+  exename   = client
+  requires += ssl
 
   IDL_Files {
     server.idl

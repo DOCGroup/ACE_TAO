@@ -1,4 +1,4 @@
-project(airplane server) : server, orbsvcsexe {
+project(airplane server) : server, orbsvcsexe, minimum_corba {
   depends += IORTable
   libs    += TAO_IORTable
   exename  = airplane_server
@@ -16,7 +16,7 @@ project(airplane server) : server, orbsvcsexe {
   }
 }
 
-project(airplane client) : server, orbsvcsexe {
+project(airplane client) : server, orbsvcsexe, minimum_corba {
   depends += IORTable
   libs    += TAO_IORTable
   exename  = airplane_client
@@ -33,7 +33,7 @@ project(airplane client) : server, orbsvcsexe {
   }
 }
 
-project(nestea server) : server, orbsvcsexe {
+project(nestea server) : server, orbsvcsexe, minimum_corba {
   depends += IORTable
   libs    += TAO_IORTable
   exename  = nestea_server
@@ -51,7 +51,7 @@ project(nestea server) : server, orbsvcsexe {
   }
 }
 
-project(nestea client) : server, orbsvcsexe {
+project(nestea client) : server, orbsvcsexe, minimum_corba {
   depends += IORTable
   libs    += TAO_IORTable
   exename  = nestea_client

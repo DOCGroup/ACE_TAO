@@ -1,3 +1,111 @@
+Thu Jul 18 08:46:16 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/AV.mpc:
+        * orbsvcs/orbsvcs/CosConcurrency.mpc:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/CosLifeCycle.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosProperty.mpc:
+        * orbsvcs/orbsvcs/CosTime.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/ETCL.mpc:
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
+        * orbsvcs/orbsvcs/IFRService.mpc:
+        * orbsvcs/orbsvcs/Loadbalancing.mpc:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/RTCORBAEvent.mpc:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTOLDEvent.mpc:
+        * orbsvcs/orbsvcs/RTSched.mpc:
+        * orbsvcs/orbsvcs/RTSchedEvent.mpc:
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+        * orbsvcs/orbsvcs/Security.mpc:
+
+          Added options to generate conditional target GNU Makefiles.
+
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/AVStreams_Asynch_Three_Stage.mpc:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/AVStreams_Bidirectional_Flows.mpc:
+        * orbsvcs/tests/AVStreams/Component_Switching/AVStreams_Component_Switching.mpc:
+        * orbsvcs/tests/AVStreams/Full_Profile/AVStreams_Full_Profile.mpc:
+        * orbsvcs/tests/AVStreams/Latency/AVStreams_Latency.mpc:
+        * orbsvcs/tests/AVStreams/Modify_QoS/AVStreams_Modify_QoS.mpc:
+        * orbsvcs/tests/AVStreams/Multicast/AVStreams_Multicast.mpc:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/AVStreams_Multicast_Full_Profile.mpc:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/AVStreams_Multiple_Flows.mpc:
+        * orbsvcs/tests/AVStreams/Pluggable/AVStreams_Pluggable.mpc:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/AVStream_Pluggable_Flow_Protocol.mpc:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/AVStreams_Simple_Three_Stage.mpc:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/AVStreams_Simple_Two_Stage.mpc:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/AVStreams_Simple_Two_Stage_With_QoS.mpc:
+        * orbsvcs/tests/Concurrency/Concurrency.mpc:
+        * orbsvcs/tests/CosEvent/Basic/CosEvent_Basic.mpc:
+        * orbsvcs/tests/CosEvent/lib/CosEvent_lib.mpc:
+        * orbsvcs/tests/EC_Throughput/EC_Throughput.mpc:
+        * orbsvcs/tests/Event/Basic/Event_Basic.mpc:
+        * orbsvcs/tests/Event/Performance/Event_Performance.mpc:
+        * orbsvcs/tests/Event/lib/Event_lib.mpc:
+        * orbsvcs/tests/FaultTolerance/IOGR/FaultTolerance_IOGR.mpc:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/FaultTolerance_IOGRManipulation.mpc:
+        * orbsvcs/tests/ImplRepo/ImplRepo.mpc:
+        * orbsvcs/tests/ImplRepo/NameService/ImplRepo_NameService.mpc:
+        * orbsvcs/tests/LoadBalancing/LoadBalancing.mpc:
+        * orbsvcs/tests/Miop/McastHello/McastHello.mpc:
+        * orbsvcs/tests/Notify/Basic/Basic.mpc:
+        * orbsvcs/tests/Property/Property.mpc:
+        * orbsvcs/tests/Sched/Sched.mpc:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.mpc:
+        * orbsvcs/tests/Security/Big_Request/Big_Request.mpc:
+        * orbsvcs/tests/Security/Callback/Callback.mpc:
+        * orbsvcs/tests/Security/Secure_Invocation/Secure_Invocation.mpc:
+        * orbsvcs/tests/Security/SecurityLevel1/SecurityLevel1.mpc:
+        * orbsvcs/tests/Simple_Naming/Simple_Naming.mpc:
+        * orbsvcs/tests/Time/Time.mpc:
+        * orbsvcs/tests/Trading/Trading.mpc:
+        * orbsvcs/tests/tests_svc_loader/tests_svc_loader.mpc:
+        * tests/AMI/AMI.mpc:
+        * tests/BiDirectional/BiDirectional.mpc:
+        * tests/BiDirectional_NestedUpcall/BiDirectional_NestedUpcall.mpc:
+        * tests/Big_Request_Muxing/Big_Request_Muxing.mpc:
+        * tests/Blocking_Sync_None/Blocking_Sync_None.mpc:
+        * tests/Crashed_Callback/Crashed_Callback.mpc:
+        * tests/DSI_Gateway/DSI_Gateway.mpc:
+        * tests/Faults/Faults.mpc:
+        * tests/File_IO/File_IO.mpc:
+        * tests/MProfile_Forwarding/MProfile_Forwarding.mpc:
+        * tests/MT_BiDir/MT_BiDir.mpc:
+        * tests/MT_Timeout/MT_Timeout.mpc:
+        * tests/Native_Exceptions/Native_Exceptions.mpc:
+        * tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:
+        * tests/ORT/ORT.mpc:
+        * tests/Oneway_Buffering/Oneway_Buffering.mpc:
+        * tests/POA/Etherealization/Etherealization.mpc:
+        * tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.mpc:
+        * tests/POA/Identity/Identity.mpc:
+        * tests/POA/Non_Servant_Upcalls/Non_Servant_Upcalls.mpc:
+        * tests/POA/Object_Reactivation/Object_Reactivation.mpc:
+        * tests/POA/POA_Destruction/POA_Destruction.mpc:
+        * tests/POA/Single_Threaded_POA/Single_Threaded_POA.mpc:
+        * tests/POA/wait_for_completion/wait_for_completion.mpc:
+        * tests/Param_Test/Param_Test.mpc:
+        * tests/Policies/Policies.mpc:
+        * tests/Portable_Interceptors/Benchmark/Portable_Interceptors_Benchmark.mpc:
+        * tests/Portable_Interceptors/Dynamic/Portable_Interceptors_Dynamic.mpc:
+        * tests/Portable_Interceptors/ForwardRequest/Portable_Interceptors_ForwardRequest.mpc:
+        * tests/Portable_Interceptors/IORInterceptor/Portable_Interceptors_IORInterceptor.mpc:
+        * tests/Portable_Interceptors/PICurrent/Portable_Interceptors_PICurrent.mpc:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Portable_Interceptors_Request_Interceptor_Flow.mpc:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Portable_Interceptors_Service_Context_Manipulation.mpc:
+        * tests/RTCORBA/Persistent_IOR/RTCORBA_Persistent_IOR.mpc:
+        * tests/Reliable_Oneways/Reliable_Oneways.mpc:
+        * tests/Timed_Buffered_Oneways/Timed_Buffered_Oneways.mpc:
+        * tests/Timeout/Timeout.mpc:
+
+          Added options to generate target conditional GNU Makefiles based
+          on GNU Make macro settings.
+
 Wed Jul 17 23:54:44 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.h:

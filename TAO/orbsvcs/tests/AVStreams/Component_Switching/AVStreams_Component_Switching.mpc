@@ -1,4 +1,4 @@
-project(sender): orbsvcsexe, avstreamsexe, strategies {
+project(sender): avstreamsexe, strategies {
   exename  = sender
 
   Source_Files {
@@ -7,7 +7,7 @@ project(sender): orbsvcsexe, avstreamsexe, strategies {
   }
 }
 
-project(distributer): orbsvcsexe, avstreamsexe, strategies {
+project(distributer): avstreamsexe, strategies {
   exename  = distributer
 
   Source_Files {
@@ -16,7 +16,7 @@ project(distributer): orbsvcsexe, avstreamsexe, strategies {
   }
 }
 
-project(receiver): orbsvcsexe, avstreamsexe, strategies {
+project(receiver): avstreamsexe, strategies {
   exename  = receiver
 
   Source_Files {

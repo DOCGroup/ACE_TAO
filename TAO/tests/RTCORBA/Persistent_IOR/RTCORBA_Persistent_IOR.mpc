@@ -5,6 +5,7 @@ project: rt_server {
 }
 
 project: client {
+  requires += rt_corba
   Source_Files {
     testC.cpp
     client.cpp

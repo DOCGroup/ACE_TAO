@@ -4,6 +4,7 @@ project(CosTrading) : orbsvcslib {
   libs      += TAO_CosNaming TAO_Svc_Utils TAO_DynamicAny TAO_PortableServer TAO
   idlflags  += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h
   dllflags   = TAO_TRADING_BUILD_DLL
+  tagchecks  = Trader
 
   IDL_Files {
     CosTrading.idl
@@ -11,13 +12,15 @@ project(CosTrading) : orbsvcslib {
     CosTradingDynamic.idl
   }
 
-  Source_Files {
-    CosTradingC.cpp
-    CosTradingS.cpp
-    CosTradingReposC.cpp
-    CosTradingReposS.cpp
-    CosTradingDynamicC.cpp
-    CosTradingDynamicS.cpp
-    Trader
+  Source_Files(ORBSVCS_COMPONENTS) {
+    Trader {
+      CosTradingC.cpp
+      CosTradingS.cpp
+      CosTradingReposC.cpp
+      CosTradingReposS.cpp
+      CosTradingDynamicC.cpp
+      CosTradingDynamicS.cpp
+      Trader
+    }
   }
 }

@@ -1,18 +1,18 @@
-project: server {
+project: server, minimum_corba {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project: client {
+project: client, minimum_corba {
   Source_Files {
     testC.cpp
     client.cpp
   }
 }
 
-project(Manager): server {
+project(Manager): server, minimum_corba {
   depends += IORManpulation
   libs    += TAO_IORManip
   exename  = Manager

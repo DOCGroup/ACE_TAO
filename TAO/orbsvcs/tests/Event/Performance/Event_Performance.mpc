@@ -1,6 +1,6 @@
-project(Throughput): orbsvcsexe, messaging {
-  depends  += "Event Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(Throughput): messaging, rteventexe {
+  depends  += "Event Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Throughput
 
@@ -9,9 +9,9 @@ project(Throughput): orbsvcsexe, messaging {
   }
 }
 
-project(Connect): orbsvcsexe, messaging {
-  depends  += "Event Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(Connect): messaging, rteventexe {
+  depends  += "Event Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Connect
 
@@ -20,9 +20,9 @@ project(Connect): orbsvcsexe, messaging {
   }
 }
 
-project(Inversion): orbsvcsexe, messaging {
-  depends  += "Event Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(Inversion): messaging, rteventexe {
+  depends  += "Event Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Inversion
 
@@ -31,9 +31,9 @@ project(Inversion): orbsvcsexe, messaging {
   }
 }
 
-project(Latency): orbsvcsexe, messaging, strategies {
-  depends  += "Event Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(Latency): messaging, rteventexe, strategies {
+  depends  += "Event Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Latency
 
@@ -42,9 +42,9 @@ project(Latency): orbsvcsexe, messaging, strategies {
   }
 }
 
-project(Latency_Server): orbsvcsexe, messaging, strategies {
-  depends  += "Event Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(Latency_Server): messaging, rteventexe, strategies {
+  depends  += "Event Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Latency_Server
 

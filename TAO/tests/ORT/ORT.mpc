@@ -1,4 +1,6 @@
 project: server {
+  requires += interceptors
+
   Source_Files {
     ORT_test_i.cpp
     ORT_test_IORInterceptor_ORBInitializer.cpp
@@ -8,6 +10,8 @@ project: server {
 }
 
 project: client {
+  requires += interceptors
+
   Source_Files {
     ORT_testC.cpp
     client.cpp

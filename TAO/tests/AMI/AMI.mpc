@@ -1,6 +1,7 @@
 project: messaging {
   idlflags -= -Sc
   idlflags += -GC
+  requires += ami
 
   Source_Files {
     ami_test_i.cpp
@@ -12,6 +13,7 @@ project(client): messaging {
   exename   = client
   idlflags -= -Sc
   idlflags += -GC
+  requires += ami
 
   Source_Files {
     client.cpp
@@ -22,6 +24,7 @@ project(simple_client): messaging {
   exename   = simple_client
   idlflags -= -Sc
   idlflags += -GC
+  requires += ami
 
   Source_Files {
     simple_client.cpp

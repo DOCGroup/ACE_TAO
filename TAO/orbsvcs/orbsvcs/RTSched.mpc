@@ -4,17 +4,20 @@ project(RTSched) : orbsvcslib {
   libs      += TAO_CosNaming TAO_Svc_Utils TAO_PortableServer TAO
   idlflags  += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RTSched_Export -Wb,export_include=Sched/sched_export.h
   dllflags   = TAO_RTSCHED_BUILD_DLL
+  tagchecks  = Sched
 
   IDL_Files {
     RtecScheduler.idl
   }
 
   Source_Files {
-    RtecSchedulerC.cpp
-    RtecSchedulerS.cpp
-    Scheduler_Factory.cpp
-    Runtime_Scheduler.cpp
-    Scheduler_Utilities.cpp
-    Sched
+    Sched {
+      RtecSchedulerC.cpp
+      RtecSchedulerS.cpp
+      Scheduler_Factory.cpp
+      Runtime_Scheduler.cpp
+      Scheduler_Utilities.cpp
+      Sched
+    }
   }
 }

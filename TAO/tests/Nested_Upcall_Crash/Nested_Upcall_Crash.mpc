@@ -1,11 +1,11 @@
-project: messaging {
+project: messaging, corba_messaging {
   Source_Files {
     Server_Peer.cpp
     server.cpp
   }
 }
 
-project(scavenger): messaging {
+project(scavenger): messaging, corba_messaging {
   exename = scavenger
 
   Source_Files {
@@ -13,7 +13,7 @@ project(scavenger): messaging {
   }
 }
 
-project(client): messaging {
+project(client): messaging, corba_messaging {
   exename = client
 
   Source_Files {
