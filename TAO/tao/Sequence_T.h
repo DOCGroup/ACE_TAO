@@ -116,7 +116,7 @@ public:
   // to those for the <T *data> constructor for the sequence.
 };
 
-template <class T, CORBA::ULong MAX>
+template <class T, size_t MAX>
 class TAO_Bounded_Sequence : public TAO_Bounded_Base_Sequence
 {
   // = TITLE
@@ -215,12 +215,12 @@ public:
 // *************************************************************
 
 template<class T,class T_var> class TAO_Unbounded_Object_Sequence;
-template<class T, class T_var, CORBA::ULong MAX> class TAO_Bounded_Object_Sequence;
-template<CORBA::ULong MAX> class TAO_Bounded_String_Sequence;
+template<class T, class T_var, size_t MAX> class TAO_Bounded_Object_Sequence;
+template<size_t MAX> class TAO_Bounded_String_Sequence;
 
 // *************************************************************
 
-template<class T,class T_var>
+template<class T, class T_var>
 class TAO_Object_Manager
 {
   // = TITLE
@@ -441,7 +441,7 @@ public:
 
 // *************************************************************
 
-template<class T, class T_var,CORBA::ULong MAX>
+template<class T, class T_var, size_t MAX>
 class TAO_Bounded_Object_Sequence : public TAO_Bounded_Base_Sequence
 {
   // = TITLE
@@ -559,7 +559,7 @@ public:
 
 // *************************************************************
 
-template<class T, class T_var,CORBA::ULong MAX>
+template<class T, class T_var, size_t MAX>
 class TAO_Bounded_Pseudo_Sequence : public TAO_Bounded_Base_Sequence
 {
   // = TITLE
@@ -607,7 +607,7 @@ public:
 
 // *************************************************************
 
-template<CORBA::ULong MAX>
+template<size_t MAX>
 class TAO_Bounded_String_Sequence : public TAO_Bounded_Base_Sequence
 {
   // = TITLE

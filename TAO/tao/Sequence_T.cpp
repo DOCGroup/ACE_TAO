@@ -428,7 +428,7 @@ TAO_Unbounded_Object_Sequence<T,T_var>::_upcast (void* src) const
 // Operations for class TAO_Bounded_Object_Sequence
 // *************************************************************
 
-template <class T, class T_var,CORBA::ULong MAX>
+template <class T, class T_var, size_t MAX>
 TAO_Bounded_Object_Sequence<T, T_var,MAX>::
 TAO_Bounded_Object_Sequence (void)
   :  TAO_Bounded_Base_Sequence (MAX,
@@ -436,7 +436,7 @@ TAO_Bounded_Object_Sequence (void)
 {
 }
 
-template <class T, class T_var,CORBA::ULong MAX>
+template <class T, class T_var, size_t MAX>
 TAO_Bounded_Object_Sequence<T, T_var,MAX>::
 TAO_Bounded_Object_Sequence (const TAO_Bounded_Object_Sequence<T, T_var,MAX> &rhs)
   : TAO_Bounded_Base_Sequence (rhs)
@@ -449,7 +449,7 @@ TAO_Bounded_Object_Sequence (const TAO_Bounded_Object_Sequence<T, T_var,MAX> &rh
   this->buffer_ = tmp1;
 }
 
-template <class T, class T_var,CORBA::ULong MAX> TAO_Bounded_Object_Sequence<T, T_var,MAX>&
+template <class T, class T_var, size_t MAX> TAO_Bounded_Object_Sequence<T, T_var,MAX>&
 TAO_Bounded_Object_Sequence<T, T_var,MAX>::operator=
 (const TAO_Bounded_Object_Sequence<T,T_var, MAX> &rhs)
 {
@@ -481,7 +481,7 @@ TAO_Bounded_Object_Sequence<T, T_var,MAX>::operator=
   return *this;
 }
 
-template <class T, class T_var,CORBA::ULong MAX> T **
+template <class T, class T_var, size_t MAX> T **
 TAO_Bounded_Object_Sequence<T, T_var,MAX>::allocbuf (CORBA::ULong)
 {
   T **buf;
@@ -494,7 +494,7 @@ TAO_Bounded_Object_Sequence<T, T_var,MAX>::allocbuf (CORBA::ULong)
   return buf;
 }
 
-template <class T, class T_var,CORBA::ULong MAX> void
+template <class T, class T_var, size_t MAX> void
 TAO_Bounded_Object_Sequence<T, T_var,MAX>::freebuf (T **buffer)
 {
   // How much do we deallocate? Easy! allocbuf() always creates MAX
@@ -510,7 +510,7 @@ TAO_Bounded_Object_Sequence<T, T_var,MAX>::freebuf (T **buffer)
   delete[] buffer;
 }
 
-template<class T, class T_var,CORBA::ULong MAX> void
+template<class T, class T_var, size_t MAX> void
 TAO_Bounded_Object_Sequence<T, T_var,MAX>::_allocate_buffer (CORBA::ULong length)
 {
   // For this class memory is never reallocated so the implementation
@@ -519,7 +519,7 @@ TAO_Bounded_Object_Sequence<T, T_var,MAX>::_allocate_buffer (CORBA::ULong length
     TAO_Bounded_Object_Sequence<T, T_var,MAX>::allocbuf (length);
 }
 
-template<class T, class T_var,CORBA::ULong MAX> void
+template<class T, class T_var, size_t MAX> void
 TAO_Bounded_Object_Sequence<T,T_var,MAX>::_deallocate_buffer (void)
 {
   if (this->buffer_ == 0 || this->release_ == 0)
@@ -529,7 +529,7 @@ TAO_Bounded_Object_Sequence<T,T_var,MAX>::_deallocate_buffer (void)
   this->buffer_ = 0;
 }
 
-template<class T, class T_var,CORBA::ULong MAX> void
+template<class T, class T_var, size_t MAX> void
 TAO_Bounded_Object_Sequence<T,T_var, MAX>::_shrink_buffer (CORBA::ULong nl,
                                                            CORBA::ULong ol)
 {
@@ -542,7 +542,7 @@ TAO_Bounded_Object_Sequence<T,T_var, MAX>::_shrink_buffer (CORBA::ULong nl,
     }
 }
 
-template <class T, class T_var,CORBA::ULong MAX> void
+template <class T, class T_var, size_t MAX> void
 TAO_Bounded_Object_Sequence<T, T_var,MAX>::_downcast (void* target,
                                                       CORBA_Object* src,
                                                       CORBA_Environment &ACE_TRY_ENV)
@@ -552,7 +552,7 @@ TAO_Bounded_Object_Sequence<T, T_var,MAX>::_downcast (void* target,
   *tmp = T::_narrow (src, ACE_TRY_ENV);
 }
 
-template <class T, class T_var,CORBA::ULong MAX> CORBA_Object*
+template <class T, class T_var, size_t MAX> CORBA_Object*
 TAO_Bounded_Object_Sequence<T, T_var,MAX>::_upcast (void* src) const
 {
   T **tmp = ACE_static_cast (T**, src);
@@ -724,7 +724,7 @@ TAO_Unbounded_Pseudo_Sequence<T,T_var>::_shrink_buffer (CORBA::ULong nl,
 // Operations for class TAO_Bounded_Pseudo_Sequence
 // *************************************************************
 
-template <class T, class T_var,CORBA::ULong MAX>
+template <class T, class T_var, size_t MAX>
 TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::
 TAO_Bounded_Pseudo_Sequence (void)
   :  TAO_Bounded_Base_Sequence (MAX,
@@ -732,7 +732,7 @@ TAO_Bounded_Pseudo_Sequence (void)
 {
 }
 
-template <class T, class T_var,CORBA::ULong MAX>
+template <class T, class T_var, size_t MAX>
 TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::
 TAO_Bounded_Pseudo_Sequence (const TAO_Bounded_Pseudo_Sequence<T, T_var,MAX> &rhs)
   : TAO_Bounded_Base_Sequence (rhs)
@@ -745,7 +745,7 @@ TAO_Bounded_Pseudo_Sequence (const TAO_Bounded_Pseudo_Sequence<T, T_var,MAX> &rh
   this->buffer_ = tmp1;
 }
 
-template <class T, class T_var,CORBA::ULong MAX> TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>&
+template <class T, class T_var, size_t MAX> TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>&
 TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::operator=
 (const TAO_Bounded_Pseudo_Sequence<T, T_var,MAX> &rhs)
 {
@@ -777,7 +777,7 @@ TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::operator=
   return *this;
 }
 
-template <class T, class T_var,CORBA::ULong MAX> T **
+template <class T, class T_var, size_t MAX> T **
 TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::allocbuf (CORBA::ULong)
 {
   T **buf;
@@ -790,7 +790,7 @@ TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::allocbuf (CORBA::ULong)
   return buf;
 }
 
-template <class T, class T_var,CORBA::ULong MAX> void
+template <class T, class T_var, size_t MAX> void
 TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::freebuf (T **buffer)
 {
   // How much do we deallocate? Easy! allocbuf() always creates MAX
@@ -806,7 +806,7 @@ TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::freebuf (T **buffer)
   delete[] buffer;
 }
 
-template<class T, class T_var,CORBA::ULong MAX> void
+template<class T, class T_var, size_t MAX> void
 TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::_allocate_buffer (CORBA::ULong length)
 {
   // For this class memory is never reallocated so the implementation
@@ -815,7 +815,7 @@ TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::_allocate_buffer (CORBA::ULong length
     TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::allocbuf (length);
 }
 
-template<class T, class T_var,CORBA::ULong MAX> void
+template<class T, class T_var, size_t MAX> void
 TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::_deallocate_buffer (void)
 {
   if (this->buffer_ == 0 || this->release_ == 0)
@@ -825,7 +825,7 @@ TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::_deallocate_buffer (void)
   this->buffer_ = 0;
 }
 
-template<class T, class T_var,CORBA::ULong MAX> void
+template<class T, class T_var, size_t MAX> void
 TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::_shrink_buffer (CORBA::ULong nl,
                                                            CORBA::ULong ol)
 {
