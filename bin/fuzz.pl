@@ -652,12 +652,14 @@ sub check_for_missing_rir_env ()
                     $disable = 0;
                 }
                 if ($disable == 0) {
-                    if (m/try\s*\{/) {
+        	    next if m/^\s*\/\//;
+	
+                    if (m/^\s*try/) {
                         $disable = 1;
                         next;
                     }
 
-                    if (m/resolve_initial_references\s*\(/) {
+                    if (m/[^\:]resolve_initial_references\s*\(/) {
                         $found_env = 0;
                         $in_rir = 1;
                     }
@@ -686,7 +688,67 @@ sub check_for_missing_rir_env ()
     }
 }
 
+# This test checks for usage of ACE_CHECK/ACE_TRY_CHECK
+sub check_for_ace_check ()
+{
+    print "Running ACE_CHECK check\n";
+    foreach $file (@files_cpp, @files_inl) {
+        my $line = 0;
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            my $in_func = 0;
+            my $in_return = 0;
+            my $found_env = 0;
 
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                ++$line;
+                if (/FUZZ\: disable check_for_ace_check/) {
+                    $disable = 1;
+                }
+                if (/FUZZ\: enable check_for_ace_check/) {
+                    $disable = 0;
+                }
+
+                next if m/^\s*\/\//;
+                next if m/^\s*$/;
+
+                if ($disable == 0) {
+                    if (m/[,\(]\s*ACE_TRY_ENV[,\)]/) {
+                        $found_env = 1;
+                        $in_func = 1;
+                        $env_line = $line;
+                    }
+
+                    if (m/ACE_TRY_ENV.*ACE_TRY_ENV/) {
+                        print_error ("Multiple ACE_TRY_ENV in $file ($line)");
+                    }
+
+                    if ($in_func && m/\)/) {
+                        $in_func = 0;
+                    }
+                    elsif (!$in_func && $found_env) {
+                        if (!m/_CHECK/ && !m/^\}/ && !$in_return) {
+                            print_error ("Missing ACE_CHECK/ACE_TRY_CHECK for $file ($env_line)");
+                        }
+                        $found_env = 0;
+                    }
+                    
+                    if (m/^\s*return/) {
+                        $in_return = 1;
+                    }
+                    else {
+                        $in_return = 0;
+                    }              
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
 
 ##############################################################################
 
@@ -737,6 +799,7 @@ check_for_bad_run_test () if ($opt_l >= 6);
 check_for_absolute_ace_wrappers () if ($opt_l >= 3);
 check_for_bad_ace_trace () if ($opt_l >= 4);
 check_for_missing_rir_env () if ($opt_l >= 5);
+check_for_ace_check () if ($opt_l >= 3);
 
 print "\nFuzz.pl - $errors error(s), $warnings warning(s)\n";
 
