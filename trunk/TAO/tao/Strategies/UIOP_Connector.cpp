@@ -110,15 +110,11 @@ TAO_UIOP_Connector::close (void)
 
 
 int
-<<<<<<< UIOP_Connector.cpp
 TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
-  if (endpoint->tag () != TAO_TAG_UIOP_PROFILE)
-    return -1;
-
   TAO_UIOP_Endpoint *uiop_endpoint =
-    ACE_dynamic_cast (TAO_UIOP_Endpoint *,
-                      endpoint );
+    this->remote_endpoint (endpoint);
+
   if (uiop_endpoint == 0)
     return -1;
 
@@ -145,45 +141,6 @@ TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 
    return 0;
 }
-
-int
-=======
-TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
-{
-  if (endpoint->tag () != TAO_TAG_UIOP_PROFILE)
-    return -1;
-
-  TAO_UIOP_Endpoint *uiop_endpoint =
-    ACE_dynamic_cast (TAO_UIOP_Endpoint *,
-                      endpoint );
-  if (uiop_endpoint == 0)
-    return -1;
-
-   const ACE_UNIX_Addr &remote_address =
-     uiop_endpoint->object_addr ();
-
-   // @@ Note, POSIX.1g renames AF_UNIX to AF_LOCAL.
-   // Verify that the remote ACE_UNIX_Addr was initialized properly.
-   // Failure can occur if hostname lookup failed when initializing the
-   // remote ACE_INET_Addr.
-   if (remote_address.get_type () != AF_UNIX)
-     {
-       if (TAO_debug_level > 0)
-         {
-           ACE_DEBUG ((LM_DEBUG,
-                       ACE_LIB_TEXT ("TAO (%P|%t) UIOP failure.\n")
-                       ACE_LIB_TEXT ("TAO (%P|%t) This is most likely ")
-                       ACE_LIB_TEXT ("due to a hostname lookup ")
-                       ACE_LIB_TEXT ("failure.\n")));
-         }
-
-       return -1;
-     }
-
-   return 0;
-}
-
-
 
 int
 TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
@@ -203,8 +160,6 @@ TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
   const ACE_UNIX_Addr &remote_address =
     uiop_endpoint->object_addr ();
 
-  TAO_UIOP_Connection_Handler *svc_handler = 0;
-
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) UIOP_Connector::connect ")
@@ -218,6 +173,7 @@ TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
   this->active_connect_strategy_->synch_options (max_wait_time,
                                                  synch_options);
 
+  TAO_UIOP_Connection_Handler *svc_handler = 0;
 
   int result =
     this->base_connector_.connect (svc_handler,
