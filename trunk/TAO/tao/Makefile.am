@@ -1069,12 +1069,10 @@ nobase_include_HEADERS += \
   PortableServer/Active_Object_Map.i \
   PortableServer/ImplRepoC.i \
   PortableServer/ImplRepoS.i \
-  PortableServer/Key_Adapters.i \
   PortableServer/Object_Adapter.i \
   PortableServer/POA.i \
   PortableServer/POAManager.i \
   PortableServer/POA_Cached_Policies.i \
-  PortableServer/POA_Policies.i \
   PortableServer/POA_Policy_Set.i \
   PortableServer/PolicyS.inl \
   PortableServer/PolicyS_T.inl \

@@ -284,9 +284,5 @@ protected:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#if defined (__ACE_INLINE__)
-# include "POA_Policies.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_POA_POLICIES_H */
