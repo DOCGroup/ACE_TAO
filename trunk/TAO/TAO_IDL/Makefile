@@ -174,12 +174,13 @@ else  # ! CROSS-COMPILE
     CCFLAGS += -Wno-switch
   else
   ifeq ($(findstring cxx,$(CXX)),cxx)
+    # Digital Unix cxx
     # 111: statement is unreachable
     # 177: variable was declared but not referenced
     # 550: variable set but never used
-    ifeq ($(CXX_VER),POST_5X)
+    ifneq ($(CXX_VER),CXX_5)
       WARNING_FLAGS += -msg_disable 111,177,550
-    endif # POST_5X
+    endif # CXX_5
   endif # cxx
   endif # g++
 

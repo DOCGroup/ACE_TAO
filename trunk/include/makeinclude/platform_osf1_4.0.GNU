@@ -14,8 +14,9 @@ CXX             = $(CC)
 CFLAGS          += -pthread
 
 #### These flags can only be used with cxx Version 6.0 and later.
-#### They can be enabled on the gmake command line with CXX_VER=POST_5X,
-#### or by setting the CXX_VER environment variable to POST_5X.
+#### They are enabled by default; they can be disabled by settting
+#### CXX_VER to CXX_5 either on the make command line, or by
+#### or by setting the CXX_VER environment variable to CXX_5.
 # WARNING_FLAGS +=
 #   9: nested comment not allowed.  But there's one in /usr/include/pdsc.h!
 # 174: expr_has_no_effect
@@ -25,7 +26,7 @@ CFLAGS          += -pthread
 # 610: nonoverriding_function_decl
 # 835: unreferenced_function_param
 # 839: no_corresponding_delete (until this is fixed in libTAO)
-ifeq ($(CXX_VER),POST_5X)
+ifneq ($(CXX_VER),CXX_5)
   WARNING_FLAGS += -w0 -msg_display_number \
                    -msg_disable 9,174,193,236,401,610,835,839
 endif
