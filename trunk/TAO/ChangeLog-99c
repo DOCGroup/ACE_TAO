@@ -1,6 +1,7 @@
 Tue May 25 11:50:01 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB.cpp (ORB_init): Removed out-dated comments.
+	* tao/ORB.cpp (ORB_init): Removed out-dated comments.  Thanks to
+	  Irfan for pointing this out.
 
 Tue May 25 11:40:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
