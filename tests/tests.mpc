@@ -1068,6 +1068,13 @@ project(UUIDTest) : acetest {
   }
 }
 
+project(Unbounded Set Test) : acetest {
+  exename = Unbounded_Set_Test
+  Source_Files {
+    Unbounded_Set_Test.cpp
+  }
+}
+
 project(INET Addr Test IPV6) : acetest {
   exename = INET_Addr_Test_IPV6
   Source_Files {
