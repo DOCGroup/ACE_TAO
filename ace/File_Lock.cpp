@@ -21,8 +21,10 @@ ACE_File_Lock::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h)
-  : removed_ (0)
+ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h,
+                              int unlink_in_destructor)
+  : removed_ (0),
+    unlink_in_destructor_ (unlink_in_destructor)
 {
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
   if (ACE_OS::flock_init (&this->lock_) == -1)
@@ -34,7 +36,9 @@ ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h)
 
 ACE_File_Lock::ACE_File_Lock (const ACE_TCHAR *name,
                               int flags,
-                              mode_t perms)
+                              mode_t perms,
+                              int unlink_in_destructor)
+  : unlink_in_destructor_ (unlink_in_destructor)
 {
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
 
@@ -58,12 +62,11 @@ ACE_File_Lock::open (const ACE_TCHAR *name,
 ACE_File_Lock::~ACE_File_Lock (void)
 {
 // ACE_TRACE ("ACE_File_Lock::~ACE_File_Lock");
-  this->remove ();
+  this->remove (this->unlink_in_destructor_);
 }
 
-//
 // These are instantiated both with and without ACE_HAS_THREADS.
-//
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 // template class ACE_Guard<ACE_File_Lock>;
