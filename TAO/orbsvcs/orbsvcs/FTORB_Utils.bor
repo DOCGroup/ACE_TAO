@@ -21,7 +21,6 @@ LFLAGS = \
 
 LIBFILES = \
 	TAO_Messaging$(LIB_DECORATOR).lib \
-	TAO_PortableGroup$(LIB_DECORATOR).lib \
 	TAO_PortableServer$(LIB_DECORATOR).lib \
 	TAO_IORInterceptor$(LIB_DECORATOR).lib \
 	TAO_ObjRefTemplate$(LIB_DECORATOR).lib \
