@@ -51,6 +51,14 @@ LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
 lex.CC_command.cpp:	CC_command.l CC_command.tab.h
+	@echo "WARNING: Potentially outdated lex.CC_command.cpp"
+	@echo "         either touch(1) the file or explicitly"
+	@echo "         generate it using:"
+	@echo "    make lex.CC_comand.cpp.target"
+
+.PHONY: lex.CC_command.cpp.target
+
+lex.CC_command.cpp.target:
 		$(LEX) -t -I CC_command.l > /tmp/$(USER).CC_L1
 		sed -e "s/unistd/stdio/g" \
 		-e "s/yy/ace_cc_yy/g" \
@@ -61,11 +69,19 @@ lex.CC_command.cpp:	CC_command.l CC_command.tab.h
 		-e "s@#include <stdio\.h>@#include \"ace/OS.h\"@" \
 		-e "s@#include <@#include /**/ <@" \
 		-e "s@ECHO@ACE_CC_ECHO@" < /tmp/$(USER).CC_L1 > /tmp/$(USER).CC_L2
-		cp /tmp/$(USER).CC_L2 $@
+		cp /tmp/$(USER).CC_L2 lex.CC_command.cpp
 		patch < lex.CC_command.cpp.diff
 		$(RM) -f /tmp/$(USER).CC_L1 /tmp/$(USER).CC_L2
 
 CC_command.tab.cpp CC_command.tab.h:	CC_command.y
+	@echo "WARNING: Potentially outdated CC_command.tab.cpp"
+	@echo "         either touch(1) the file or explicitly "
+	@echo "         generate it using:"
+	@echo "    make CC_comand.tab"
+
+.PHONY: CC_command.tab
+
+CC_command.tab: CC_command.y
 		$(YACC) -d CC_command.y
 		sed -e "s/char \*getenv/char *ace_foo/g" \
 		    -e "s/= getenv/= ACE_OS::getenv/g" \
@@ -77,7 +93,6 @@ CC_command.tab.cpp CC_command.tab.h:	CC_command.y
 		    -e "s/YY/ACE_CC_YY/g" < y.tab.h > /tmp/$(USER).CC_YH
 		cp /tmp/$(USER).CC_Y CC_command.tab.cpp
 		cp /tmp/$(USER).CC_YH CC_command.tab.h
-		patch < CC_command.tab.cpp.diff
 		$(RM) -f /tmp/$(USER).CC_Y  /tmp/$(USER).CC_YH y.tab.c y.tab.h
 
 CC_client:	$(addprefix $(VDIR),$(CC_CLT_OBJS))
