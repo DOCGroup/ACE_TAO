@@ -473,8 +473,6 @@ template class ACE_Hash_Map_Iterator_Base_Ex<CosNotifyFilter::ConstraintID,TAO_N
 template class ACE_Hash_Map_Reverse_Iterator<CosNotifyFilter::ConstraintID,TAO_Notify_Filter_i::Notify_Constraint_Expr*,TAO_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyFilter::ConstraintID,TAO_Notify_Filter_i::Notify_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,TAO_SYNCH_MUTEX>;
 
-template class ACE_Equal_To<CosNotifyFilter::ConstraintID>;
-
 template class ACE_Array<TAO_Notify_Filter_i::Notify_Constraint_Expr*>;
 template class ACE_Array_Base<TAO_Notify_Filter_i::Notify_Constraint_Expr*>;
 
@@ -491,8 +489,6 @@ template class ACE_Auto_Basic_Ptr<CosNotifyFilter::ConstraintInfoSeq>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<CosNotifyFilter::ConstraintID,TAO_Notify_Filter_i::Notify_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<CosNotifyFilter::ConstraintID,TAO_Notify_Filter_i::Notify_Constraint_Expr*,TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyFilter::ConstraintID,TAO_Notify_Filter_i::Notify_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,TAO_SYNCH_MUTEX>
-
-#pragma instantiate ACE_Equal_To<CosNotifyFilter::ConstraintID>
 
 #pragma instantiate ACE_Array<TAO_Notify_Filter_i::Notify_Constraint_Expr*>
 #pragma instantiate ACE_Array_Base<TAO_Notify_Filter_i::Notify_Constraint_Expr*>
