@@ -95,6 +95,10 @@ SOURCE=.\server.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\TestC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\TestS.cpp
 # End Source File
 # End Group
@@ -164,7 +168,7 @@ InputPath=.\Test.idl
 InputName=Test
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\bin\tao_idl  -GH -Gv -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
