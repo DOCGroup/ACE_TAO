@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: acedefaults, aceversion {
+project: acedefaults, aceversion, pkgconfig {
   after    += ACE
   libs     += ACE
   libout    = $(ACE_ROOT)/lib 
