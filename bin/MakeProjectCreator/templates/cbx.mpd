@@ -86,6 +86,12 @@
   <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_xprefetch.enabled" value="1"/>
   <property category="solaris.Debug_Build.sunforte.forte_cpp_link" name="option.minus_o.enabled" value="1"/>
   <property category="solaris.sunforte.Debug_Build" name="saved" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="container.1" value="SelectedWarnings"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="container.SelectedWarnings.containerenabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="container.SelectedWarnings.option.wccc.enabled" value="0"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="container.SelectedWarnings.option.wpia.enabled" value="0"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="container.SelectedWarnings.option.wrch.enabled" value="0"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="container.SelectedWarnings.option.wrvl.enabled" value="0"/>
   <property category="win32.Debug_Build.win32b.bcc32" name="option.D.arg.1" value="_DEBUG"/>
   <property category="win32.Debug_Build.win32b.bcc32" name="option.D.arg.2" value="_RTLDLL"/>
 <%if(type_is_dynamic)%>
@@ -169,6 +175,8 @@
 <%foreach(source_files)%>
       <file path="<%source_file%>">
         <property category="unique" name="id"/>
+        <property category="win32.Debug_Build.win32b.bcc32" name="container.1" value="SelectedWarnings"/>
+        <property category="win32.Debug_Build.win32b.bcc32" name="container.SelectedWarnings.containerenabled" value="1"/>
       </file>
 <%endfor%>
   </node>
@@ -211,6 +219,7 @@
 <%foreach(template_files)%>
       <file path="<%template_file%>">
         <property category="unique" name="id"/>
+        <property category="win32b.bcc32" name="enabled" value="0"/>
       </file>
 <%endfor%>
   </node>
