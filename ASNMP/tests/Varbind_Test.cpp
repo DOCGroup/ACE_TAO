@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
  
 // ============================================================================
@@ -46,6 +45,7 @@ DAMAGES.
 #include "asnmp/vb.h"
 #include "test_config.h"
 
+ACE_RCSID(tests, Varbind_Test, "$Id$")
 
 // hack: do this so when linking SUNC 4.x compiler will instantiate template
 #include "ace/Containers.h"

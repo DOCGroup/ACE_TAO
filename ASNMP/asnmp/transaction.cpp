@@ -1,6 +1,5 @@
 // $Id$
 
-/* -*-C++-*- */
 // ============================================================================
 //
 // = LIBRARY
@@ -19,6 +18,8 @@
 
 #include "ace/Reactor.h"
 #include "asnmp/transaction.h"
+
+ACE_RCSID(asnmp, transaction, "$Id$")
 
 // pre: pdu, target report  valid() == 1
 // post: pdu sent out over the wire

@@ -1,6 +1,5 @@
 // $Id$
 
-/* -*-C++-*- */
 // ============================================================================
 //
 // = LIBRARY
@@ -30,6 +29,8 @@
 #include "asnmp/snmp.h"               // manager snmp interface 
 #include "asnmp/sagent.h"             // agent interface
 #include "asnmp/transaction.h"	      // convert from wire to API
+
+ACE_RCSID(asnmp, sagent, "$Id$")
 
 sagent::sagent(unsigned short port): Snmp(port)
 {

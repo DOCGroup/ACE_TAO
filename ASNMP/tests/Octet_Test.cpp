@@ -1,5 +1,5 @@
-/* -*- C++ -*- */
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -39,12 +39,13 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
  
-
  
 #include "ace/OS.h"
 #include "asnmp/octet.h"
 #include "test_config.h"
  
+ACE_RCSID(tests, Octet_Test, "$Id$")
+
 // hack: do this so when linking SUNC 4.x compiler will instantiate template
 #include "ace/Containers.h"
 ACE_Unbounded_Set<ACE_Log_Msg*> x;

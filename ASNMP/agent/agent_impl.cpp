@@ -1,6 +1,5 @@
 // $Id$
 
-/* -*-C++-*- */
 // implement a prototype SNMP Agent using ASNMP and ACE
  
 #include <ace/Reactor.h>
@@ -8,6 +7,8 @@
 #include <ace/INET_Addr.h>
 
 #include "agent_impl.h"
+
+ACE_RCSID(agent, agent_impl, "$Id$")
 
 agent_impl::agent_impl(unsigned short port, const char *rd, const char *wr) :
 sagent(port)
