@@ -1,3 +1,19 @@
+Fri Oct 10 22:56:35 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/Kokyu_defs.{h,i,cpp}: 
+	* Kokyu/Dispatcher_Task.{i,h,cpp}: 
+	* Kokyu/Dispatcher_Impl.h: 
+	* Kokyu/Default_Dispatcher_Impl.cpp: 
+	
+	  Added allocator, sched scope, sched policy, reordering queue
+	  attributes to the Dispatcher_Attributes class. This will make
+	  the dispatcher more configurable.
+	
+	* Kokyu/tests/FIFO/test.cpp: 
+	* Kokyu/tests/EDF/test.cpp: 
+	 
+	  Added command line options to specify the sched policy.
+	
 Fri Oct 10 19:52:26 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.{h,i}:
