@@ -136,6 +136,10 @@ Sample Run, passing the IOR on the command line, on VxWorks:
 The IOR provided to the client is the IOR that the server printed out.
 Be sure to replace the <> with "".
 
+NOTE:  if you built your VxWorks executables with g++, replace "main"
+with "ace_main" above.  See ACE-INSTALL.html for an explanation of why
+ACE renames "main" to "ace_main" with g++ on VxWorks.
+
 
 Using JAVA to access the IDL Cubit test:
 ----------------------------------------
