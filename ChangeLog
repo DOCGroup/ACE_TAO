@@ -1,3 +1,11 @@
+Fri Nov 26 19:38:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	* Makefile.am:
+
+	  Use AC_SUBST instead of AM_CONDITIONAL for directories that may
+	  be omitted in a distribution.
+
 Fri Nov 26 17:54:32 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/tao_other_tests.lst:
