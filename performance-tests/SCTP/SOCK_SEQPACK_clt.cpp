@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS_Memory.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_SEQPACK_Association.h"
 #include "ace/SOCK_SEQPACK_Connector.h"
