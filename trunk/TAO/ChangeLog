@@ -1,3 +1,8 @@
+Mon Nov 10 20:45:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+          Added #include streams.h.
+
 Mon Nov 10 20:15:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * TAO_IDL/tao_idl.cpp:
