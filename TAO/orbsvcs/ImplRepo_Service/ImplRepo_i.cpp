@@ -436,8 +436,8 @@ ImplRepo_i::server_is_running (const char * server,
     orb->orb_core ()->acceptor_registry ();
 
   TAO_Acceptor *acceptor = 0;
-  TAO_AcceptorSetItor end = registry->end ();
-  for (TAO_AcceptorSetItor i = registry->begin (); i != end; ++i)
+  TAO_AcceptorSetIterator end = registry->end ();
+  for (TAO_AcceptorSetIterator i = registry->begin (); i != end; ++i)
     {
       if ((*i)->tag () == TAO_TAG_IIOP_PROFILE)
         {
@@ -446,10 +446,10 @@ ImplRepo_i::server_is_running (const char * server,
         }
     }
   if (acceptor == 0)
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT(), 0);
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 
   TAO_IIOP_Acceptor* iiop_acceptor =
-    ACE_dynamic_cast (TAO_IIOP_Acceptor*,acceptor);
+    ACE_dynamic_cast (TAO_IIOP_Acceptor*, acceptor);
 
   // Get our host and port and convert it to something we can use.
   const ACE_INET_Addr& my_addr  = iiop_acceptor->address ();
