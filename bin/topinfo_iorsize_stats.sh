@@ -19,7 +19,7 @@ ACE_ROOT=$ROOT
 export ACE_ROOT
 LD_LIBRARY_PATH=$ACE_ROOT/ace
 export LD_LIBRARY_PATH
-PATH=/usr/bin:$PATH
+PATH=/usr/bin:/bin:$PATH
 export PATH
 cd TAO/performance-tests/Memory/IORsize
 
@@ -33,7 +33,7 @@ fi
 
 s_id=$!;
 
-server_start_size=`top -p $s_id -n 1 -b | grep $US| awk '{print $5}'`;
+server_start_size=`cat /proc/$s_id/status | grep VmRSS | awk '{print $2}'`;
 
 # Just sleep for 2 seconds.
 sleep 2;
@@ -47,8 +47,8 @@ if test -f $file
     # Wait till all the invocations are done
     sleep 30;
     # Get the size once the client has made sufficient invocations. 
-    s_invocations=`top -p $s_id -n 1 -b | grep $US| awk '{print $5}'`;
-    let "actual_server_growth= ${s_invocations}-${server_start_size}";
+    s_invocations=`cat /proc/$s_id/status  | grep VmRSS | awk '{print $2}'`;
+    let "actual_server_growth=${s_invocations}-${server_start_size}";
     if test $OPT == 1
         then 
         echo $DATE $s_invocations >> $DEST/source/server_opt_ior_size.txt
