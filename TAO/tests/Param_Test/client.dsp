@@ -64,7 +64,7 @@ LINK32=link.exe
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ""
-# PROP Intermediate_Dir "Debug"
+# PROP Intermediate_Dir "Debug\client"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
@@ -223,6 +223,10 @@ SOURCE=.\bd_short_seq.h
 # Begin Source File
 
 SOURCE=.\bd_str_seq.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\bd_string.h
 # End Source File
 # Begin Source File
 

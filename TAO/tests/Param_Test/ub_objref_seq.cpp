@@ -16,8 +16,6 @@
 //
 // ============================================================================
 
-#include "helper.h"
-
 #include "ub_objref_seq.h"
 
 ACE_RCSID(Param_Test, ub_objref_seq, "$Id$")
@@ -38,14 +36,15 @@ static const char *Coffee_Flavor [] = {
 Test_ObjRef_Sequence::Test_ObjRef_Sequence (void)
   : opname_ (CORBA::string_dup ("test_objref_sequence")),
     inout_ (new Param_Test::Coffee_Mix),
-    out_ (0),
-    ret_ (0)
+    out_ (new Param_Test::Coffee_Mix),
+    ret_ (new Param_Test::Coffee_Mix)
 {
 }
 
 Test_ObjRef_Sequence::~Test_ObjRef_Sequence (void)
 {
   CORBA::string_free (this->opname_);
+  this->opname_ = 0;
   // the other data members will be freed as they are "_var"s and objects
   // (rather than pointers to objects)
 }
@@ -58,7 +57,7 @@ Test_ObjRef_Sequence::opname (void) const
 
 int
 Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref,
-                                     CORBA::Environment &env)
+                                       CORBA::Environment &env)
 {
   Coffee::Desc desc;
   Generator *gen = GENERATOR::instance (); // value generator
@@ -75,15 +74,14 @@ Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref,
       // the sequence
       this->in_[i] = objref->make_coffee (env);
       if (env.exception ())
-          {
-        env.print_exception ("make_coffee");
-        return -1;
-          }
-      // get some sequence length (not more than 10)
+        {
+          env.print_exception ("make_coffee");
+          return -1;
+        }
+          // select a Coffee flavor at random
           CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 6);
           desc.name = Coffee_Flavor [index];
-          // set the attribute of the object
-//        this->in_[i]->description (desc, env); // set the attribute for the in object
+          // set the attribute for the in object
           Coffee_ptr tmp = this->in_[i];
           tmp->description (desc, env);
 
@@ -99,9 +97,9 @@ Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref,
 int
 Test_ObjRef_Sequence::reset_parameters (void)
 {
-  this->inout_ = new Param_Test::Coffee_Mix; // delete the previous one
-  this->out_ = 0;
-  this->ret_ = 0;
+  this->inout_ = new Param_Test::Coffee_Mix; // delete the previous ones
+  this->out_ = new Param_Test::Coffee_Mix;
+  this->ret_ = new Param_Test::Coffee_Mix;
   return 0;
 }
 
@@ -122,20 +120,39 @@ Test_ObjRef_Sequence::add_args (CORBA::NVList_ptr param_list,
                                 CORBA::NVList_ptr retval,
                                 CORBA::Environment &env)
 {
-  CORBA::Any in_arg (Param_Test::_tc_Coffee_Mix, (void *) &this->in_, 0);
-  CORBA::Any inout_arg (Param_Test::_tc_Coffee_Mix, &this->inout_.inout (), 0);
-  CORBA::Any out_arg (Param_Test::_tc_Coffee_Mix, this->out_.out (), 0);
+  CORBA::Any in_arg (Param_Test::_tc_Coffee_Mix,
+                     (void *) &this->in_,
+                     CORBA::B_FALSE);
+
+  CORBA::Any inout_arg (Param_Test::_tc_Coffee_Mix,
+                        &this->inout_.inout (),
+                        CORBA::B_FALSE);
+
+  CORBA::Any out_arg (Param_Test::_tc_Coffee_Mix,
+                      this->out_.out (),
+                      CORBA::B_FALSE);
 
   // add parameters
-  (void)param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
-  (void)param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
-  (void)param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("s1",
+                         in_arg,
+                         CORBA::ARG_IN,
+                         env);
+
+  param_list->add_value ("s2",
+                         inout_arg,
+                         CORBA::ARG_INOUT,
+                         env);
+
+  param_list->add_value ("s3",
+                         out_arg,
+                         CORBA::ARG_OUT,
+                         env);
 
   // add return value
-  (void)retval->item (0, env)->value ()->replace (Param_Test::_tc_Coffee_Mix,
-                                                  &this->ret_,
-                                                  0, // does not own
-                                                  env);
+  retval->item (0, env)->value ()->replace (Param_Test::_tc_Coffee_Mix,
+                                            &this->ret_,
+                                            CORBA::B_FALSE, // does not own
+                                            env);
   return 0;
 }
 
@@ -143,26 +160,32 @@ CORBA::Boolean
 Test_ObjRef_Sequence::check_validity (void)
 {
   TAO_TRY
-  {
-    if (this->compare (this->in_, this->inout_.in (), TAO_TRY_ENV))
     {
-      TAO_CHECK_ENV;
-      if (this->compare (this->in_, this->out_.in (), TAO_TRY_ENV))
-      {
-        TAO_CHECK_ENV;
-        if (this->compare (this->in_, this->ret_.in (), TAO_TRY_ENV))
+      if (this->compare (this->in_,
+                        this->inout_.in ()
+                        TAO_TRY_ENV))
         {
           TAO_CHECK_ENV;
-          return 1;
+          if (this->compare (this->in_,
+                             this->out_.in (),
+                             TAO_TRY_ENV))
+            {
+              TAO_CHECK_ENV;
+              if (this->compare (this->in_,
+                                 this->ret_.in (),
+                                 TAO_TRY_ENV))
+                {
+                  TAO_CHECK_ENV;
+                  return 1;
+                }
+            }
         }
-      }
+      return 0;
     }
-    return 0;
-  }
   TAO_CATCHANY;
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
   TAO_ENDTRY;
 }
 

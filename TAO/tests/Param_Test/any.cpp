@@ -179,17 +179,28 @@ Test_Any::add_args (CORBA::NVList_ptr param_list,
                         CORBA::B_FALSE);
 
   CORBA::Any out_arg (CORBA::_tc_any,
-                      &this->out_.inout (),
+                      &this->out_.inout (), // .out () causes crash
                       CORBA::B_FALSE);
 
   // add parameters
-  param_list->add_value ("o1", in_arg, CORBA::ARG_IN, env);
-  param_list->add_value ("o2", inout_arg, CORBA::ARG_INOUT, env);
-  param_list->add_value ("o3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("o1",
+                         in_arg,
+                         CORBA::ARG_IN,
+                         env);
+
+  param_list->add_value ("o2",
+                         inout_arg,
+                         CORBA::ARG_INOUT,
+                         env);
+
+  param_list->add_value ("o3",
+                          out_arg,
+                          CORBA::ARG_OUT,
+                          env);
 
   // add return value
   retval->item (0, env)->value ()->replace (CORBA::_tc_any,
-                                            &this->ret_.inout (),
+                                            &this->ret_.inout (), // see above
                                             CORBA::B_FALSE, // does not own
                                             env);
   return 0;
@@ -198,7 +209,6 @@ Test_Any::add_args (CORBA::NVList_ptr param_list,
 CORBA::Boolean
 Test_Any::check_validity (void)
 {
-  CORBA::Environment env;
   CORBA::Short short_in, short_inout, short_out, short_ret;
   char *str_in, *str_inout, *str_out, *str_ret;
   Coffee_ptr obj_in, obj_inout, obj_out, obj_ret;
