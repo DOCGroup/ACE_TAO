@@ -5073,7 +5073,13 @@ typedef WSAPROTOCOL_INFO ACE_Protocol_Info;
 #else
 typedef u_long ACE_SERVICE_TYPE;
 typedef u_long ACE_SOCK_GROUP;
-typedef u_long ACE_Protocol_Info;
+typedef struct ACE_Protocol_Info
+{
+  u_long dwServiceFlags1;
+  int iAddressFamily;
+  int iProtocol;
+  char szProtocol[255+1];
+};
 #define ACE_OVERLAPPED_SOCKET_FLAG 0
 #endif /* ACE_HAS_WINSOCK2 && ACE_HAS_WINSOCK2 != 0 */
 
