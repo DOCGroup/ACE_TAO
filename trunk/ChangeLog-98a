@@ -3,6 +3,9 @@ Sat Apr 18 13:59:55 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Naming_Context.h: removed trailing ';' at end of
           ACE_FACTORY_DECLARE.
 
+        * ace/High_Res_Timer.cpp (reset): initialize by assignment with
+          0 instead of using memset.  Thanks to Carlos for noticing this.
+
 Sat Apr 18 01:14:30 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/OS.cpp (start and stop): start and stop should only be done
