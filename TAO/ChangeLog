@@ -1,3 +1,121 @@
+Tue Mar 16 00:49:15 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	The following changes are an overhaul that address a number of
+	problems with TAO's PICurrent support.
+
+	* tao/PICurrent_Copy_Callback.h:
+	* tao/PICurrent_Copy_Callback.cpp:
+
+	  New PICurrent copy callback object implementation designed to
+	  provide cleaner logical/deep copying code.
+
+	* tao/ClientRequestInfo_i.h (TAO_ClientRequestInfo_i):
+	* tao/TAO_Server_Request.h (TAO_ServerRequest):
+
+	  Added new PICurrent_Copy_Callback member responsible for
+	  performing deep copies from the RSC to TSC or vice versa when
+	  necessary.
+
+	* tao/ClientRequestInfo_i.cpp (setup_picurrent):
+	* tao/PICurrent.h:
+	* tao/PICurrent.inl:
+	* tao/PICurrent.cpp:
+	* tao/PortableServer/ServerInterceptorAdapter.cpp:
+	* tao/PortableServer/ServerRequestInfo.cpp:
+
+	  Use new copy callback to improve RSC/TSC copying code.
+
+	* tao/ORB.cpp (ORB_init):
+
+	  Updated PICurrent initialization method call to conform to new
+	  signature.
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+
+	  TAO's PICurrent class is now in the "TAO" namespace.  Updated
+	  all "TAO_PICurrent" instances accordingly.
+
+	* tao/PICurrent_ORBInitializer.cpp (pre_init):
+
+	  Pass the ORB Core pointer to the PICurrent constructor.  There
+	  is no need to pass it to the later explicit initialization call
+	  that occurs during CORBA::ORB_init().
+
+	* tao/Profile_Transport_Resolver.h:
+
+	  Corrected typo in documentation.
+
+	* tao/TAO_Server_Request.cpp (TAO_ServerRequest):
+
+	  Initialize PICurrent_Copy_Callback object in base member
+	  initializer list.
+
+	* tao/TAO_Server_Request.i (pi_current_copy_callback):
+
+	  New accessor for the PICurrent_Copy_Callback object.
+
+	* tao/orbconf.h (TAO_HAS_EXTENDED_FT_INTERCEPTORS):
+
+	  Added missing default definition for this preprocessor symbol.
+	  Addresses "undefined symbol" warnings exhibited by GNU g++ when
+	  using the "-Wundef" flag.
+
+	* tao/Makefile.bor:
+	* tao/Makefile.tao:
+	* tao/tao.mpc:
+
+	  Added new PICurrent_Copy_Callback.{h,cpp} files to the source
+	  lists in these files.
+
+	* tao/PortableServer/PICurrent_Guard.cpp:
+	* tao/PortableServer/PICurrent_Guard.h:
+
+	  Moved PICurrent_Guard implementation from core TAO library
+	  (client side) to the PortableServer library since it is only
+	  used on the server side.
+
+	* tao/Domain/DomainS.cpp:
+	* tao/PortableServer/ImR_LocatorS.cpp:
+	* tao/PortableServer/ImplRepoS.cpp:
+	* tao/PortableServer/PolicyS.cpp:
+	* orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
+	* orbsvcs/orbsvcs/IFRService/IFR_BasicS.cpp:
+	* orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
+	* orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.cpp:
+
+	  Updated files to match modified PICurrent_Guard related code in
+	  generated skeletons.
+
+	* tao/PortableServer/Makefile:
+	* tao/PortableServer/Makefile.bor:
+	* tao/PortableServer/PortableServer.mpc:
+
+	  Added new PICurrent_Guard files to these files.
+
+	* tao/Domain/Makefile:
+	* tao/IORInterceptor/Makefile:
+	* tao/ObjRefTemplate/Makefile:
+	* tao/Valuetype/Makefile:
+	* orbsvcs/orbsvcs/Makefile.IFRService:
+	* TAO_IDL/Makefile.BE:
+	* TAO_IDL/Makefile.EXE:
+	* TAO_IDL/Makefile.FE:
+
+	  Updated dependencies.
+
+	* TAO_IDL/be/be_codegen.cpp (gen_skel_src_includes):
+
+	  No need to include "tao/PICurrent.h".
+	  "tao/PortableServer/PICurrent_Guard.h" is enough.  This may also
+	  help with compile times, at least slightly.
+
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+	  (visit_operation):
+
+	  Updated generated skeleton code to use new PICurrent_Guard name
+	  (i.e. TAO_PICurrent -> TAO::PICurrent).
+
 Tue Mar 16 00:07:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/IFR_Client_Adapter.h:
