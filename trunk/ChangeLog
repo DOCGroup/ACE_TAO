@@ -1,14 +1,19 @@
+Wed Oct  8 07:12:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ASNMP/asnmp/address.cpp:
+          Fixed compile problem in MinGW build
+
 Tue Oct  7 21:10:22 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/DSRT_CV_Dispatcher_Impl_T.{h,cpp}: 
-	* Kokyu/DSRT_Dispatcher_Impl_T.{h,cpp}: 
-	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.{h,cpp}: 
-	* Kokyu/DSRT_Dispatch_Item_T.h: 
+	* Kokyu/DSRT_CV_Dispatcher_Impl_T.{h,cpp}:
+	* Kokyu/DSRT_Dispatcher_Impl_T.{h,cpp}:
+	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.{h,cpp}:
+	* Kokyu/DSRT_Dispatch_Item_T.h:
 	* Kokyu/DSRT_Sched_Queue_T.{h,cpp}:
 	* Kokyu/Kokyu_dsrt.cpp:
 	  Added condition variable based implementation of DSRTCORBA
 	  scheduler mechanisms.
-	
+
 	* Kokyu/tests/DSRT_MIF/MIF.cpp:
 	* Kokyu/tests/DSRT_MIF/Makefile:
 	  Added explicit template instantiations.
@@ -18,11 +23,11 @@ Tue Oct  7 14:54:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* ace/Reactor.h: Renamed a variable name, signals to sigset. The
 	  former was creating problems when Reactor is used with
 	  Qt. Thanks to Hans Utz <hans.utz@informatik.uni-ulm.de> for
-	  reporting the problem. 
+	  reporting the problem.
 
 	* Makefile: Added Kokyu to the list of controlled files. Thanks to
 	  Don Hinton for the patch and Werner Buchert for reporting the
-	  problem. 
+	  problem.
 
 Tue Oct 07 14:01:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
