@@ -58,7 +58,7 @@ endif
 
 LDFLAGS      += -L../../orbsvcs/orbsvcs -L../../tao -L../../../ace
 
-ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -lTAO_PortableServer -lTAO -lTAO_RTCORBA $(ACELIB)
+ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -lTAO_PortableServer -lTAO_RTCORBA -lTAO $(ACELIB)
 
 #----------------------------------------------------------------------------
 #       Local targets
