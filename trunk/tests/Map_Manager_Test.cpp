@@ -843,10 +843,12 @@ run_test (void (*ptf) (size_t, size_t, int),
 
   if (test_iterators)
     test_iterators_string =
-      ASYS_TEXT ("includes executing iterators");
+      ASYS_TEXT (ACE_const_cast (char*, 
+                                 "includes executing iterators"));
   else
     test_iterators_string =
-      ASYS_TEXT ("doesn't include executing iterators");
+      ASYS_TEXT (ACE_const_cast (char*, 
+                                 "doesn't include executing iterators"));
 
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("time to test a map of size %d for %d iterations using %s (%s)\n"),
