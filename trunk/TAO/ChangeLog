@@ -1,3 +1,13 @@
+Wed Jul 16 13:06:03 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+          When updating the observers, when one fails, then just go on
+          further with the other observers instead of just stopping
+          with updating them all.
+
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+          Small doxygen improvements
+
 Wed Jul 16 12:15:34 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * TAO_IDL/ast/ast_argument.cpp:
