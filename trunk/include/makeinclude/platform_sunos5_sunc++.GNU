@@ -49,7 +49,7 @@ ifdef orbix
   CPPFLAGS      += -I$(ORBIX_ROOT)/corba2/include
 else
   LDFLAGS       += -R $(ACE_ROOT)/ace
-  LIBS          += -lsocket -ldl -lnsl -lgen
+  LIBS          += -lsocket -ldl -lnsl -lgen -lposix4
 endif # orbix
 
 LDFLAGS         += -xildoff

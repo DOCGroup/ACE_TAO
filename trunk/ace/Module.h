@@ -23,18 +23,15 @@
 // Forward decl.
 // template <ACE_SYNCH_DECL> class ACE_Task;
 
-template <ACE_SYNCH_DECL>
-class ACE_Module
+struct ACE_Export ACE_Module_Base
 {
   // = TITLE
-  //     An abstraction for managing a bi-directional flow of messages.
-  // 
+  //   Workaround HP/C++ compiler bug with enums in templates.
+  //
   // = DESCRIPTION
-  //     This is based on the Module concept in System V Streams,
-  //     which contains a pair of Tasks, one for handling upstream
-  //     processing, one for handling downstream processing.
-public:
-  friend class ACE_Shutup_GPlusPlus;  // Turn off g++ warning
+  //   The ever lamest HP/C++ compiler seems to fail if enums are
+  //   defined inside a template, hence we have to move them into a
+  //   base class.
 
   enum
   {
@@ -53,6 +50,21 @@ public:
     // The <M_DELETE_READER> and <M_DELETE_WRITER> flags may be or'ed
     // together.
   };
+
+};
+
+template <ACE_SYNCH_DECL>
+class ACE_Module : public ACE_Module_Base
+{
+  // = TITLE
+  //     An abstraction for managing a bi-directional flow of messages.
+  // 
+  // = DESCRIPTION
+  //     This is based on the Module concept in System V Streams,
+  //     which contains a pair of Tasks, one for handling upstream
+  //     processing, one for handling downstream processing.
+public:
+  friend class ACE_Shutup_GPlusPlus;  // Turn off g++ warning
 
   // = Initialization and termination methods.
   ACE_Module (void);
