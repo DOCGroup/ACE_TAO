@@ -300,17 +300,17 @@ dnl    AC_DEFINE(ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
   *qnx* | *nto* | *neutrino*)
     dnl These should be defined on the command line, not in config.h.
     CPPFLAGS="$CPPFLAGS -D_QNX_SOURCE -D_POSIX_C_SOURCE=199506"
-    CPPFLAGS="$CPPFLAGS -D_POSIX_NAME_MAX=14"  dnl Max bytes in a filename
-    CPPFLAGS="$CPPFLAGS -D_POSIX_PATH_MAX=256" dnl Num. bytes in
-                                               dnl pathname (excl. NULL)
-    case $target in
+    CPPFLAGS="$CPPFLAGS -D_POSIX_NAME_MAX=14"  # Max bytes in a filename
+    CPPFLAGS="$CPPFLAGS -D_POSIX_PATH_MAX=256" # Num. bytes in
+                                               # pathname (excl. NULL)
+    case "$target" in
 changequote(, )dnl
       i[3456]86*)
 changequote([, ])dnl
         if test -n "$GXX"; then
-          dnl Neutrino defines memcpy as a macro on x86, which then
-          dnl hoses the ACE_OS::memcpy() method.  Undefining
-          dnl __OPTIMIZE__ prevents this from happening.
+          # Neutrino defines memcpy as a macro on x86, which then
+          # hoses the ACE_OS::memcpy() method.  Undefining
+          # __OPTIMIZE__ prevents this from happening.
           CPPFLAGS="$CPPFLAGS -U__OPTIMIZE__"
         fi
         ;;
