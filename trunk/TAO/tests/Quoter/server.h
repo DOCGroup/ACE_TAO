@@ -67,7 +67,7 @@ private:
   CosNaming::NamingContext_var namingContext_var_;
   // Naming Service context
 
-  Quoter_Factory_Impl  *quoter_Factory_Impl_;
+  Quoter_Factory_Impl  *quoter_Factory_Impl_ptr_;
   // Instantiate the Quoter Factory
 
   TAO_ORB_Manager orb_manager_;

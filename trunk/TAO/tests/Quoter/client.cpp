@@ -194,35 +194,7 @@ Quoter_Client::init_naming_service (void)
     if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Naming Service.\n"));
 
-    // deprecated
-    // ------------------------------------------- direct use of the Quoter Factory
-    /*
-    // Try to get the quoter_factory
-    CosNaming::Name quoter_factory_name (2);
-    quoter_factory_name.length (2);
-    quoter_factory_name[0].id = CORBA::string_dup ("IDL_Quoter");
-    quoter_factory_name[1].id = CORBA::string_dup ("Quoter_Factory");
-
-    ACE_DEBUG ((LM_DEBUG, "Trying to resolve the Quoter Factory!\n"));
-
-    CORBA::Object_var factory_obj =
-      naming_context->resolve (quoter_factory_name,
-                               TAO_TRY_ENV);
-    TAO_CHECK_ENV;
-
-    ACE_DEBUG ((LM_DEBUG, "Resolved the Quoter Factory!\n"));
-    
-    this->factory_var_ =
-      Stock::Quoter_Factory::_narrow (factory_obj.in (), 
-                                      TAO_TRY_ENV);
-    TAO_CHECK_ENV;
-   
-    if (CORBA::is_nil (this->factory_var_.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-      " could not resolve quoter factory in Naming service <%s>\n"),
-      -1);*/
-    // -------------------------------------------- end of direct use
-
+ 
     CosNaming::Name quoterFactoryFinderName (2);
     quoterFactoryFinderName.length (2);
     quoterFactoryFinderName[0].id = CORBA::string_dup ("IDL_Quoter");

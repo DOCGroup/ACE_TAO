@@ -36,7 +36,7 @@ class Quoter_Impl: public POA_Stock::Quoter
 public:
   Quoter_Impl (const char *obj_name = "",  
 	       const unsigned char use_LifeCycle_Service = 0,
-	       PortableServer::POA_ptr poa = 0);
+	       PortableServer::POA_ptr poa_ptr = 0);
   // Constructor (use_LifeCycle_Service is 1 if the LifeCycle_Service should be used 
   // instead of the Quoter Generic_Factory
 
@@ -67,7 +67,7 @@ private:
   // This flag defines if a Generic Factory is used (0 by default) or 
   // the more sophisticated LifeCycle Service (1)
 
-  PortableServer::POA_ptr poa_;
+  PortableServer::POA_var poa_var_;
   // Keep a reference to the POA for use by the move operation
 };
 
@@ -84,7 +84,7 @@ class Quoter_Factory_Impl: public POA_Stock::Quoter_Factory
   // = DESCRIPTION
   //   Factory object returning the quoter_impl objrefs.
 public:
-  Quoter_Factory_Impl (size_t num);
+  Quoter_Factory_Impl (size_t num, PortableServer::POA_ptr poa_ptr);
   // Constructor that takes in the number of quoters in the pool.
 
   ~Quoter_Factory_Impl (void);
