@@ -1,3 +1,14 @@
+Thu Mar 16 20:52:17 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log:
+	  changed _ptr to * in various places to fix compile
+	  errors.
+	* orbsvcs/orbsvcs/Notify/Notify_Types.{h, cpp}:
+	  removed unnecessary string_dups in Notify_EventType
+	* orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
+	  Fixed the example - the structured events were not
+	  being populated correctly.
+
 Thu Mar 16 17:52:03 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/Param_Test/param_test_i.cpp:
@@ -6,7 +17,7 @@ Thu Mar 16 17:52:03 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Thu Mar 16 15:26:30 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Lite.cpp (parse_reply): 
+	* tao/GIOP_Message_Lite.cpp (parse_reply):
 	* tao/GIOP_Message_Acceptors.cpp:
 	* tao/GIOP_Message_Connectors.cpp: More warning fixes. These were
 	  in Digital Unix. Thanks to Jeff Parsons <parsons@cs.wustl.edu>
@@ -33,7 +44,7 @@ Thu Mar 16 14:20:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Thu Mar 16 13:57:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/target_identifier.h (class TAO_Target_Specification): 
+	* tao/target_identifier.h (class TAO_Target_Specification):
 	* tao/target_identifier.i: Fixed a warning from Digital Unix
 	  compiler (cxx). Thanks to Jeff Parsons <parsons@cs.wsutl.edu>
 	  for reporting this.
@@ -58,7 +69,7 @@ Thu Mar 16 13:53:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	   Disabled the exclusion (for all data types) of the repository
 	   id from optimized typecodes (it was already disabled for interfaces,
 	   valuetypes and exceptions, as required by the spec). It proved to
-	   be an unpopular feature, causing performace slowdowns 
+	   be an unpopular feature, causing performace slowdowns
 	   disproportionate to its value in decreasing typecode size. Thanks
 	   to Hugh Arnold <harnold@bebe.culver.itginc.com> for pointing
 	   this out.
@@ -79,7 +90,7 @@ Thu Mar 16 13:26:09 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: Forgot to
 	  checkin the run_test.pl. This will now use the service
 	  configurator file instead of the -ORBGIOPlite command line
-	  option. 
+	  option.
 
 Thu Mar 16 13:22:43 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -89,24 +100,24 @@ Thu Mar 16 13:22:43 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 Thu Mar 16 13:02:45 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/Naming_Service/Makefile:
-	* orbsvcs/Scheduling_Service/Makefile: 
+	* orbsvcs/Scheduling_Service/Makefile:
 	* orbsvcs/Event_Service/Makefile:
 	* orbsvcs/Dump_Schedule/Makefile:
 	* orbsvcs/Time_Service/Makefile:
-	* orbsvcs/CosEvent_Service/Makefile: 
-	* orbsvcs/ImplRepo_Service/Makefile: 
-	* orbsvcs/LifeCycle_Service/Makefile: 
+	* orbsvcs/CosEvent_Service/Makefile:
+	* orbsvcs/ImplRepo_Service/Makefile:
+	* orbsvcs/LifeCycle_Service/Makefile:
 	* orbsvcs/Logging_Service/Makefile:
 	* orbsvcs/Trading_Service/Makefile:
-	* examples/Callback_Quoter/Makefile: 
-	* examples/Simple/time-date/Makefile: 
+	* examples/Callback_Quoter/Makefile:
+	* examples/Simple/time-date/Makefile:
 	* examples/Load_Balancing/Makefile:
-	* examples/Buffered_Oneways/Makefile: 
-	* performance-tests/Cubit/TAO/MT_Cubit/Makefile: 
-	* performance-tests/Cubit/TAO/DII_Cubit/Makefile: 
+	* examples/Buffered_Oneways/Makefile:
+	* performance-tests/Cubit/TAO/MT_Cubit/Makefile:
+	* performance-tests/Cubit/TAO/DII_Cubit/Makefile:
 	* performance-tests/POA/Object_Creation_And_Registration/Makefile:
 	* performance-tests/Pluggable/Makefile:
-	* performance-tests/Thruput/TAO/Makefile: 
+	* performance-tests/Thruput/TAO/Makefile:
 	* performance-tests/RTCorba/Oneways/Reliable/Makefile:
 	* performance-tests/Latency/Makefile:
 	* tests/InterOp-Naming/Makefile: Updated these Makefiles. Thanks
@@ -125,7 +136,7 @@ Thu Mar 16 12:34:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_static.dsp:
 	  Server-side interface repository files and related
 	  changes. I didn't want to add these to TAO, but the
-	  Interface Repository IDL isn't inside its own 
+	  Interface Repository IDL isn't inside its own
 	  module - it's all in the CORBA namespace. The added
 	  files are large but, like InterfaceC.*, they will not
 	  build unless TAO_HAS_INTERFACE_REPOSITORY == 1.
