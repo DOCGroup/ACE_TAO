@@ -17,9 +17,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # 2) tries not to put junk files into the build tree,
 # 3) only creates a new tree in a build/ directory below the current,
 #    top level ACE directory (it's a feature :-), but it does enforce
-#    consistency), and
-# 4) is ACE-specific, so it can always create the ChangeLog symlink,
-#    for example.
+#    consistency).
 #
 # This program can be re-run on a build tree at any time in order to
 # update it.  It will only add new symlinks, it won't remove any that
@@ -124,19 +122,6 @@ foreach $file ( @files ) {
 		    || die "$0 symlink to $build/$file failed\n";
 	    }
         }
-    }
-}
-
-####
-#### If this is for an ACE top-level directory, create ChangeLog symlink.
-####
-unless ( -e "$build/ChangeLog" ) {
-    if (!$absolute) {
-	symlink "../../ChangeLog", "$build/ChangeLog"  ||
-	    die "$0: unable to create $build/ChangeLog symlink\n";
-    } else {
-	symlink "$source/ChangeLog", "$build/ChangeLog"  ||
-	    die "$0: unable to create $build/ChangeLog symlink\n";
     }
 }
 
