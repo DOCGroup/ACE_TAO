@@ -28,14 +28,14 @@ void
 Test_Consumer::connect (const char* name,
                         int event_a, int event_b,
                         RtecEventChannelAdmin::EventChannel_ptr ec,
-                        CORBA::Environment& _env)
+                        CORBA::Environment& TAO_IN_ENV)
 {
   RtecScheduler::Scheduler_ptr server =
     ACE_Scheduler_Factory::server ();
 
   RtecScheduler::handle_t rt_info =
-    server->create (name, _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+    server->create (name, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   // The worst case execution time is far less than 2
   // milliseconds, but that is a safe estimate....
@@ -50,8 +50,8 @@ Test_Consumer::connect (const char* name,
                time,
                0,
                RtecScheduler::OPERATION,
-               _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+               TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   ACE_ConsumerQOS_Factory qos;
   qos.start_disjunction_group ();
@@ -61,43 +61,43 @@ Test_Consumer::connect (const char* name,
 
   // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    ec->for_consumers (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+    ec->for_consumers (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+    consumer_admin->obtain_push_supplier (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
-  RtecEventComm::PushConsumer_var objref = this->_this (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  RtecEventComm::PushConsumer_var objref = this->_this (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   this->supplier_proxy_->connect_push_consumer (objref.in (),
                                                 qos.get_ConsumerQOS (),
-                                                _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+                                                TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 }
 
 void
-Test_Consumer::disconnect (CORBA::Environment &_env)
+Test_Consumer::disconnect (CORBA::Environment &TAO_IN_ENV)
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
 
-  this->supplier_proxy_->disconnect_push_supplier (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier_proxy_->disconnect_push_supplier (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 
   // Deactivate the servant
   PortableServer::POA_var poa = 
-    this->_default_POA (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+    this->_default_POA (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this, _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
-  poa->deactivate_object (id.in (), _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+    poa->servant_to_id (this, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+  poa->deactivate_object (id.in (), TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 }
 
 void
@@ -121,7 +121,7 @@ Test_Consumer::dump_results (const char* name)
 
 void
 Test_Consumer::push (const RtecEventComm::EventSet& events,
-                     CORBA::Environment &_env)
+                     CORBA::Environment &TAO_IN_ENV)
 {
   if (events.length () == 0)
     {
@@ -164,7 +164,7 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
               // We stop the timer as soon as we realize it is time to
               // do so.
               this->timer_.stop ();
-              this->driver_->shutdown_consumer (this->cookie_, _env);
+              this->driver_->shutdown_consumer (this->cookie_, TAO_IN_ENV);
             }
         }
       else

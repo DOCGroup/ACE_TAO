@@ -267,50 +267,50 @@ ECM_Driver::federation_has_shutdown (ECM_Local_Federation *federation,
 void
 ECM_Driver::open_federations (RtecEventChannelAdmin::EventChannel_ptr ec,
                               RtecScheduler::Scheduler_ptr scheduler,
-                              CORBA::Environment &_env)
+                              CORBA::Environment &TAO_IN_ENV)
 {
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
       this->local_federations_[i]->open (this->event_count_,
                                          this->event_period_,
-                                         ec, scheduler, _env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+                                         ec, scheduler, TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
     }
 }
 
 void
 ECM_Driver::activate_federations (RtecEventChannelAdmin::EventChannel_ptr ec,
                                   RtecScheduler::Scheduler_ptr scheduler,
-                                  CORBA::Environment &_env)
+                                  CORBA::Environment &TAO_IN_ENV)
 {
   this->federations_running_ = this->local_federations_count_;
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
       this->local_federations_[i]->activate (this->event_period_,
-                                             ec, scheduler, _env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+                                             ec, scheduler, TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
     }
 }
 
 void
-ECM_Driver::close_federations (CORBA::Environment &_env)
+ECM_Driver::close_federations (CORBA::Environment &TAO_IN_ENV)
 {
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
-      this->local_federations_[i]->close (_env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+      this->local_federations_[i]->close (TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
     }
 }
 
 void
 ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec,
                           RtecScheduler::Scheduler_ptr scheduler,
-                          CORBA::Environment &_env)
+                          CORBA::Environment &TAO_IN_ENV)
 {
   if (this->endpoint_.dgram ().open (ACE_Addr::sap_any) == -1)
     {
       // @@ TODO throw an application specific exception.
-      _env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+      TAO_IN_ENV.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
       return;
     }
   ACE_INET_Addr ignore_from;
@@ -324,18 +324,18 @@ ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec,
       this->all_federations_[i]->open (&this->endpoint_,
                                        ec,
                                        scheduler,
-                                       _env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+                                       TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
     }
 }
 
 void
-ECM_Driver::close_senders (CORBA::Environment &_env)
+ECM_Driver::close_senders (CORBA::Environment &TAO_IN_ENV)
 {
   for (int i = 0; i < this->all_federations_count_; ++i)
     {
-      this->all_federations_[i]->close (_env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+      this->all_federations_[i]->close (TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
     }
   this->endpoint_.dgram ().close ();
 }
@@ -343,25 +343,25 @@ ECM_Driver::close_senders (CORBA::Environment &_env)
 void
 ECM_Driver::open_receivers (RtecEventChannelAdmin::EventChannel_ptr ec,
                             RtecScheduler::Scheduler_ptr scheduler,
-                            CORBA::Environment &_env)
+                            CORBA::Environment &TAO_IN_ENV)
 {
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
       this->local_federations_[i]->open_receiver (ec,
                                                   scheduler,
                                                   &this->endpoint_,
-                                                  _env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+                                                  TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
     }
 }
 
 void
-ECM_Driver::close_receivers (CORBA::Environment &_env)
+ECM_Driver::close_receivers (CORBA::Environment &TAO_IN_ENV)
 {
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
-      this->local_federations_[i]->close_receiver (_env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+      this->local_federations_[i]->close_receiver (TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
     }
 }
 
@@ -637,7 +637,7 @@ void
 ECM_Federation::open (TAO_ECG_UDP_Out_Endpoint *endpoint,
                       RtecEventChannelAdmin::EventChannel_ptr ec,
                       RtecScheduler::Scheduler_ptr scheduler,
-                      CORBA::Environment &_env)
+                      CORBA::Environment &TAO_IN_ENV)
 {
   const int bufsize = 512;
   char buf[bufsize];
@@ -645,22 +645,22 @@ ECM_Federation::open (TAO_ECG_UDP_Out_Endpoint *endpoint,
   ACE_OS::strcat (buf, "/sender");
 
   RtecUDPAdmin::AddrServer_var addr_server =
-    this->addr_server (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+    this->addr_server (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   this->sender_.init (ec, scheduler,
                       buf,
                       addr_server.in (),
                       endpoint,
-                      _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+                      TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   // @@ TODO Make this a parameter....
   this->sender_.mtu (64);
 
   RtecScheduler::handle_t rt_info =
-    scheduler->create (buf, _env);
-  TAO_CHECK_ENV_RETURN_VOID(_env);
+    scheduler->create (buf, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID(TAO_IN_ENV);
 
   // The worst case execution time is far less than 2
   // milliseconds, but that is a safe estimate....
@@ -675,8 +675,8 @@ ECM_Federation::open (TAO_ECG_UDP_Out_Endpoint *endpoint,
                   time,
                   0,
                   RtecScheduler::OPERATION,
-                  _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+                  TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   ACE_ConsumerQOS_Factory qos;
   qos.start_disjunction_group ();
@@ -685,17 +685,17 @@ ECM_Federation::open (TAO_ECG_UDP_Out_Endpoint *endpoint,
       qos.insert_type (this->consumer_ipaddr (i), rt_info);
     }
   RtecEventChannelAdmin::ConsumerQOS qos_copy = qos.get_ConsumerQOS ();
-  this->sender_.open (qos_copy, _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->sender_.open (qos_copy, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 }
 
 void
-ECM_Federation::close (CORBA::Environment &_env)
+ECM_Federation::close (CORBA::Environment &TAO_IN_ENV)
 {
-  this->sender_.close (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
-  this->sender_.shutdown (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->sender_.close (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+  this->sender_.shutdown (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 }
 
 RtecUDPAdmin::AddrServer_ptr
@@ -717,11 +717,11 @@ ECM_Supplier::open (const char* name,
                     RtecScheduler::Period_t period,
                     RtecEventChannelAdmin::EventChannel_ptr ec,
                     RtecScheduler::Scheduler_ptr scheduler,
-                    CORBA::Environment &_env)
+                    CORBA::Environment &TAO_IN_ENV)
 {
   RtecScheduler::handle_t rt_info =
-    scheduler->create (name, _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+    scheduler->create (name, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   // The execution times are set to reasonable values, but
   // actually they are changed on the real execution, i.e. we
@@ -739,8 +739,8 @@ ECM_Supplier::open (const char* name,
                   time,
                   1,
                   RtecScheduler::OPERATION,
-                  _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+                  TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   this->supplier_id_ = ACE::crc32 (name);
   ACE_DEBUG ((LM_DEBUG, "ID for <%s> is %04.4x\n", name,
@@ -758,30 +758,30 @@ ECM_Supplier::open (const char* name,
               rt_info, 1);
 
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    ec->for_suppliers (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+    ec->for_suppliers (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   this->consumer_proxy_ =
-    supplier_admin->obtain_push_consumer (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+    supplier_admin->obtain_push_consumer (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
-  RtecEventComm::PushSupplier_var objref = this->_this (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  RtecEventComm::PushSupplier_var objref = this->_this (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   this->consumer_proxy_->connect_push_supplier (objref.in (),
                                                 qos.get_SupplierQOS (),
-                                                _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+                                                TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 }
 
 void
-ECM_Supplier::close (CORBA::Environment &_env)
+ECM_Supplier::close (CORBA::Environment &TAO_IN_ENV)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
 
-  this->consumer_proxy_->disconnect_push_consumer (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->consumer_proxy_->disconnect_push_consumer (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   this->consumer_proxy_ = 0;
 }
@@ -791,15 +791,15 @@ ECM_Supplier::activate (const char* name,
                         RtecScheduler::Period_t period,
                         RtecEventChannelAdmin::EventChannel_ptr ec,
                         RtecScheduler::Scheduler_ptr scheduler,
-                        CORBA::Environment &_env)
+                        CORBA::Environment &TAO_IN_ENV)
 {
   const int bufsize = 512;
   char buf[bufsize];
   ACE_OS::strcpy (buf, "consumer_");
   ACE_OS::strcat (buf, name);
   RtecScheduler::handle_t rt_info =
-    scheduler->create (buf, _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+    scheduler->create (buf, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   // The execution times are set to reasonable values, but
   // actually they are changed on the real execution, i.e. we
@@ -816,8 +816,8 @@ ECM_Supplier::activate (const char* name,
                   time,
                   1,
                   RtecScheduler::OPERATION,
-                  _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+                  TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   // Also connect our consumer for timeout events from the EC.
   int interval = period / 10;
@@ -834,21 +834,21 @@ ECM_Supplier::activate (const char* name,
 
   // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    ec->for_consumers (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+    ec->for_consumers (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+    consumer_admin->obtain_push_supplier (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   RtecEventComm::PushConsumer_var cref =
-    this->consumer_._this (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+    this->consumer_._this (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   this->supplier_proxy_->connect_push_consumer (cref.in (),
                                                 consumer_qos.get_ConsumerQOS (),
-                                                _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+                                                TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 }
 
 int
@@ -859,7 +859,7 @@ ECM_Supplier::supplier_id (void) const
 
 void
 ECM_Supplier::push (const RtecEventComm::EventSet& events,
-                    CORBA::Environment& _env)
+                    CORBA::Environment& TAO_IN_ENV)
 {
   for (u_int i = 0; i < events.length (); ++i)
     {
@@ -868,17 +868,17 @@ ECM_Supplier::push (const RtecEventComm::EventSet& events,
         continue;
 
       this->federation_->supplier_timeout (this->consumer_proxy_.in (),
-                                           _env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+                                           TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
     }
 }
 
 void
-ECM_Supplier::disconnect_push_supplier (CORBA::Environment& _env)
+ECM_Supplier::disconnect_push_supplier (CORBA::Environment& TAO_IN_ENV)
 {
-  ACE_UNUSED_ARG (_env);
+  ACE_UNUSED_ARG (TAO_IN_ENV);
 
-  // this->supplier_proxy_->disconnect_push_supplier (_env);
+  // this->supplier_proxy_->disconnect_push_supplier (TAO_IN_ENV);
 }
 
 void
@@ -900,11 +900,11 @@ ECM_Consumer::open (const char* name,
                     RtecEventChannelAdmin::EventChannel_ptr ec,
                     RtecScheduler::Scheduler_ptr scheduler,
                     ACE_RANDR_TYPE &seed,
-                    CORBA::Environment& _env)
+                    CORBA::Environment& TAO_IN_ENV)
 {
   this->rt_info_ =
-    scheduler->create (name, _env);
-  TAO_CHECK_ENV_RETURN_VOID(_env);
+    scheduler->create (name, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID(TAO_IN_ENV);
 
   // The worst case execution time is far less than 2
   // milliseconds, but that is a safe estimate....
@@ -919,26 +919,26 @@ ECM_Consumer::open (const char* name,
                   time,
                   0,
                   RtecScheduler::OPERATION,
-                  _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+                  TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   // = Connect as a consumer.
-  this->consumer_admin_ = ec->for_consumers (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->consumer_admin_ = ec->for_consumers (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
-  this->connect (seed, _env);
+  this->connect (seed, TAO_IN_ENV);
 }
 
 void
 ECM_Consumer::connect (ACE_RANDR_TYPE &seed,
-                       CORBA::Environment& _env)
+                       CORBA::Environment& TAO_IN_ENV)
 {
   if (CORBA::is_nil (this->consumer_admin_.in ()))
     return;
 
   this->supplier_proxy_ =
-    this->consumer_admin_->obtain_push_supplier (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+    this->consumer_admin_->obtain_push_supplier (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   ACE_ConsumerQOS_Factory qos;
   qos.start_disjunction_group ();
@@ -965,42 +965,42 @@ ECM_Consumer::connect (ACE_RANDR_TYPE &seed,
                        this->rt_info_);
     }
 
-  RtecEventComm::PushConsumer_var objref = this->_this (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  RtecEventComm::PushConsumer_var objref = this->_this (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   this->supplier_proxy_->connect_push_consumer (objref.in (),
                                                 qos.get_ConsumerQOS (),
-                                                _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+                                                TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 }
 
 void
-ECM_Consumer::disconnect (CORBA::Environment& _env)
+ECM_Consumer::disconnect (CORBA::Environment& TAO_IN_ENV)
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ())
       || CORBA::is_nil (this->consumer_admin_.in ()))
     return;
 
-  this->supplier_proxy_->disconnect_push_supplier (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier_proxy_->disconnect_push_supplier (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
 
 void
-ECM_Consumer::close (CORBA::Environment &_env)
+ECM_Consumer::close (CORBA::Environment &TAO_IN_ENV)
 {
-  this->disconnect (_env);
+  this->disconnect (TAO_IN_ENV);
   this->consumer_admin_ =
     RtecEventChannelAdmin::ConsumerAdmin::_nil ();
 }
 
 void
 ECM_Consumer::push (const RtecEventComm::EventSet& events,
-                    CORBA::Environment &_env)
+                    CORBA::Environment &TAO_IN_ENV)
 {
   ACE_hrtime_t arrival = ACE_OS::gethrtime ();
-  this->federation_->consumer_push (arrival, events, _env);
+  this->federation_->consumer_push (arrival, events, TAO_IN_ENV);
 }
 
 void
@@ -1042,7 +1042,7 @@ ECM_Local_Federation::open (int event_count,
                             RtecScheduler::Period_t period,
                             RtecEventChannelAdmin::EventChannel_ptr ec,
                             RtecScheduler::Scheduler_ptr scheduler,
-                            CORBA::Environment& _env)
+                            CORBA::Environment& TAO_IN_ENV)
 {
   this->event_count_ = event_count;
 
@@ -1051,41 +1051,41 @@ ECM_Local_Federation::open (int event_count,
   ACE_OS::strcpy (buf, this->federation_->name ());
   ACE_OS::strcat (buf, "/supplier");
 
-  this->supplier_.open (buf, period, ec, scheduler, _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier_.open (buf, period, ec, scheduler, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   ACE_OS::strcpy (buf, this->federation_->name ());
   ACE_OS::strcat (buf, "/consumer");
-  this->consumer_.open (buf, ec, scheduler, this->seed_, _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->consumer_.open (buf, ec, scheduler, this->seed_, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   this->last_subscription_change_ = ACE_OS::gettimeofday ();
 }
 
 void
-ECM_Local_Federation::close (CORBA::Environment &_env)
+ECM_Local_Federation::close (CORBA::Environment &TAO_IN_ENV)
 {
-  this->consumer_.close (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->consumer_.close (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
-  this->supplier_.close (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier_.close (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 }
 
 void
 ECM_Local_Federation::activate (RtecScheduler::Period_t period,
                                 RtecEventChannelAdmin::EventChannel_ptr ec,
                                 RtecScheduler::Scheduler_ptr scheduler,
-                                CORBA::Environment& _env)
+                                CORBA::Environment& TAO_IN_ENV)
 {
   this->supplier_.activate (this->federation_->name (),
                             period,
-                            ec, scheduler, _env);
+                            ec, scheduler, TAO_IN_ENV);
 }
 
 void
 ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer,
-                                        CORBA::Environment &_env)
+                                        CORBA::Environment &TAO_IN_ENV)
 {
   RtecEventComm::EventSet sent (1);
   sent.length (1);
@@ -1109,14 +1109,14 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
 
   if (this->event_count_ < 0)
     {
-      this->driver_->federation_has_shutdown (this, _env);
+      this->driver_->federation_has_shutdown (this, TAO_IN_ENV);
       return;
     }
   int i = this->event_count_ % this->federation_->supplier_types ();
   s.header.type = this->federation_->supplier_ipaddr (i);
 
-  consumer->push (sent, _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  consumer->push (sent, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   this->send_count_++;
 
@@ -1131,10 +1131,10 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
       ACE_DEBUG ((LM_DEBUG,
                   "Reconfiguring federation %s: %f %f\n",
                   this->name (), p, maxp));
-      this->consumer_.disconnect (_env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
-      this->consumer_.connect (this->seed_, _env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+      this->consumer_.disconnect (TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+      this->consumer_.connect (this->seed_, TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
       this->last_subscription_change_ = ACE_OS::gettimeofday ();
     }
 }
@@ -1142,9 +1142,9 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
 void
 ECM_Local_Federation::consumer_push (ACE_hrtime_t,
                                      const RtecEventComm::EventSet &event,
-                                     CORBA::Environment &_env)
+                                     CORBA::Environment &TAO_IN_ENV)
 {
-  ACE_UNUSED_ARG (_env);
+  ACE_UNUSED_ARG (TAO_IN_ENV);
 
   if (event.length () == 0)
     {
@@ -1177,7 +1177,7 @@ void
 ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
                                      RtecScheduler::Scheduler_ptr scheduler,
                                      TAO_ECG_UDP_Out_Endpoint* ignore_from,
-                                     CORBA::Environment &_env)
+                                     CORBA::Environment &TAO_IN_ENV)
 {
   const int bufsize = 512;
   char buf[bufsize];
@@ -1185,8 +1185,8 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
   ACE_OS::strcat (buf, "/receiver");
 
   RtecUDPAdmin::AddrServer_var addr_server =
-    this->federation_->addr_server (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+    this->federation_->addr_server (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   ACE_Reactor* reactor = TAO_ORB_Core_instance ()->reactor ();
 
@@ -1198,12 +1198,12 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
                         ignore_from,
                         addr_server.in (),
                         reactor, expire_interval, max_timeouts,
-                        _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+                        TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   RtecScheduler::handle_t rt_info =
-    scheduler->create (buf, _env);
-  TAO_CHECK_ENV_RETURN_VOID(_env);
+    scheduler->create (buf, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID(TAO_IN_ENV);
 
   // The worst case execution time is far less than 2
   // milliseconds, but that is a safe estimate....
@@ -1218,15 +1218,15 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
                   time,
                   1,
                   RtecScheduler::OPERATION,
-                  _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+                  TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   RtecEventComm::EventSourceID source = ACE::crc32 (buf);
 
   this->mcast_eh_.reactor (reactor);
 
-  this->mcast_eh_.open (ec, _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->mcast_eh_.open (ec, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   ACE_SupplierQOS_Factory qos;
   for (int i = 0; i < this->consumer_types (); ++i)
@@ -1238,21 +1238,21 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
 
   RtecEventChannelAdmin::SupplierQOS qos_copy =
     qos.get_SupplierQOS ();
-  this->receiver_.open (qos_copy, _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->receiver_.open (qos_copy, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
 
 }
 
 void
-ECM_Local_Federation::close_receiver (CORBA::Environment &_env)
+ECM_Local_Federation::close_receiver (CORBA::Environment &TAO_IN_ENV)
 {
-  this->receiver_.close (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
-  this->receiver_.shutdown (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
-  this->mcast_eh_.close (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->receiver_.close (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+  this->receiver_.shutdown (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+  this->mcast_eh_.close (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 }
 
 void

@@ -22,7 +22,7 @@ ImplRepo_i::ImplRepo_i (void)
 
 CORBA::Object_ptr 
 ImplRepo_i::activate_object (CORBA::Object_ptr obj,
-                             CORBA::Environment &_env)
+                             CORBA::Environment &TAO_IN_ENV)
 {
   Implementation_Repository::INET_Addr *new_addr;
   IIOP_Object *new_iiop_obj = 0;
@@ -66,7 +66,7 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
 
 Implementation_Repository::INET_Addr *
 ImplRepo_i::activate_server (const char *server,
-                             CORBA::Environment &_env)
+                             CORBA::Environment &TAO_IN_ENV)
 {
   int start = 0;
   char *ping_ior;
@@ -193,7 +193,7 @@ ImplRepo_i::activate_server (const char *server,
 void
 ImplRepo_i::register_server (const char *server,
                              const Implementation_Repository::Process_Options &options,
-                             CORBA::Environment &_env)
+                             CORBA::Environment &TAO_IN_ENV)
 {
   Repository::Record rec;
   rec.comm_line = CORBA::string_dup (options.command_line_);
@@ -235,9 +235,9 @@ ImplRepo_i::register_server (const char *server,
 void
 ImplRepo_i::reregister_server (const char *server,
                                const Implementation_Repository::Process_Options &options,
-                               CORBA::Environment &_env)
+                               CORBA::Environment &TAO_IN_ENV)
 {
-  ACE_UNUSED_ARG (_env);
+  ACE_UNUSED_ARG (TAO_IN_ENV);
   Repository::Record rec;
   // @@ Darrell, please make sure to use the ACE_ALLOCATOR and
   // ACE_ALLOCATOR_RETURN macros for all of these string_dup() calls
@@ -269,7 +269,7 @@ ImplRepo_i::reregister_server (const char *server,
 
 void 
 ImplRepo_i::remove_server (const char *server,
-                           CORBA::Environment &_env)
+                           CORBA::Environment &TAO_IN_ENV)
 {
   if (this->repository_.remove (server) == 0)
     {
@@ -292,7 +292,7 @@ Implementation_Repository::INET_Addr *
 ImplRepo_i::server_is_running (const char *server,
                                const Implementation_Repository::INET_Addr &addr,
                                CORBA::Object_ptr ping,
-                               CORBA::Environment &_env)
+                               CORBA::Environment &TAO_IN_ENV)
 {
   Implementation_Repository::INET_Addr *new_addr =
     new Implementation_Repository::INET_Addr;
@@ -320,7 +320,7 @@ ImplRepo_i::server_is_running (const char *server,
   rec.host = ACE::strnew (addr.host_.in ());
   rec.port = addr.port_;
   rec.ping_ior = ACE::strnew (this->orb_manager_.orb ()->object_to_string (ping,
-                                                                           _env));
+                                                                           TAO_IN_ENV));
   this->repository_.update (server, rec);
 
   if (this->repository_.update (server, rec) == 0)
@@ -363,9 +363,9 @@ ImplRepo_i::server_is_running (const char *server,
 
 void 
 ImplRepo_i::server_is_shutting_down (const char *server,
-                                     CORBA::Environment &_env)
+                                     CORBA::Environment &TAO_IN_ENV)
 {
-  ACE_UNUSED_ARG (_env);
+  ACE_UNUSED_ARG (TAO_IN_ENV);
   Repository::Record rec;
 
   if (this->repository_.resolve (server, rec) == 0)
@@ -461,7 +461,7 @@ ImplRepo_i::parse_args (void)
 }
 
 int
-ImplRepo_i::init (int argc, char **argv, CORBA::Environment &_env)
+ImplRepo_i::init (int argc, char **argv, CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {
@@ -712,7 +712,7 @@ IR_Forwarder::_primary_interface (const PortableServer::ObjectId &oid,
 
 void 
 IR_Forwarder::invoke (CORBA::ServerRequest_ptr request,
-                      CORBA::Environment &_env)
+                      CORBA::Environment &TAO_IN_ENV)
 {
   // Get the POA Current object reference
   CORBA::Object_var obj = this->orb_var_->resolve_initial_references ("POACurrent");
@@ -720,23 +720,23 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr request,
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   TAO_POA_Current *poa_current = orb_core->poa_current ();
 
-  if (_env.exception () != 0)
+  if (TAO_IN_ENV.exception () != 0)
     {
-      _env.print_exception ("PortableServer::Current::_narrow");
+      TAO_IN_ENV.print_exception ("PortableServer::Current::_narrow");
       return;
     }
   
   // The servant determines the key associated with the database entry
   // represented by self
-  PortableServer::ObjectId_var oid = poa_current->get_object_id (_env);
-  if (_env.exception () != 0)
+  PortableServer::ObjectId_var oid = poa_current->get_object_id (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0)
     return;
 
   // Now convert the id into a string
   CORBA::String_var key = PortableServer::ObjectId_to_string (oid.in ());
   
-  PortableServer::POA_ptr poa = poa_current->get_POA (_env);
-  if (_env.exception () != 0)
+  PortableServer::POA_ptr poa = poa_current->get_POA (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0)
     return;
 
   // Now FORWARD!!!
@@ -758,7 +758,7 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr request,
   CORBA_Object_ptr forward_object =
     this->orb_var_->key_to_object (poa_current->object_key (),
                                    0,
-                                   _env);
+                                   TAO_IN_ENV);
 
   IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *,
                                             forward_object->_stubobj ());
@@ -770,10 +770,10 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr request,
 //  if (TAO_debug_level > 0)
 //    ACE_DEBUG ((LM_DEBUG, 
 //                "The forward_to is <%s>\n", 
-//                this->orb_var_->object_to_string (forward_object, _env)));
+//                this->orb_var_->object_to_string (forward_object, TAO_IN_ENV)));
   
   if (!CORBA::is_nil (forward_object))
-    _env.exception (new PortableServer::ForwardRequest (forward_object));
+    TAO_IN_ENV.exception (new PortableServer::ForwardRequest (forward_object));
   else
     ACE_ERROR ((LM_ERROR,
                 "Error: Forward_to reference is nil.\n"));

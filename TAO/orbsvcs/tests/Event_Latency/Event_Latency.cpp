@@ -356,9 +356,9 @@ Latency_Supplier::Supplier::Supplier (Latency_Supplier* impl)
 }
 
 void Latency_Supplier::Supplier::disconnect_push_supplier
-  (CORBA::Environment &_env)
+  (CORBA::Environment &TAO_IN_ENV)
 {
-  this->impl_->disconnect_push_supplier (_env);
+  this->impl_->disconnect_push_supplier (TAO_IN_ENV);
 }
 
 Latency_Supplier::Consumer::Consumer (Latency_Supplier* impl)
@@ -367,16 +367,16 @@ Latency_Supplier::Consumer::Consumer (Latency_Supplier* impl)
 }
 
 void Latency_Supplier::Consumer::disconnect_push_consumer
-  (CORBA::Environment &_env)
+  (CORBA::Environment &TAO_IN_ENV)
 {
-  this->impl_->disconnect_push_consumer (_env);
+  this->impl_->disconnect_push_consumer (TAO_IN_ENV);
 }
 
 void Latency_Supplier::Consumer::push
   (const RtecEventComm::EventSet &events,
-   CORBA::Environment &_env)
+   CORBA::Environment &TAO_IN_ENV)
 {
-  this->impl_->push (events, _env);
+  this->impl_->push (events, TAO_IN_ENV);
 }
 
 // ************************************************************
@@ -537,10 +537,10 @@ Latency_Supplier::start_generating_events (void)
 
 void
 Latency_Supplier::push (const RtecEventComm::EventSet &events,
-                        CORBA::Environment & _env)
+                        CORBA::Environment & TAO_IN_ENV)
 {
   // ACE_DEBUG ((LM_DEBUG, "Latency_Supplier::push - "));
-  ACE_UNUSED_ARG (_env);
+  ACE_UNUSED_ARG (TAO_IN_ENV);
 
   if (events.length () == 0)
     {

@@ -96,7 +96,7 @@ TAO_PropertySetFactory::~TAO_PropertySetFactory (void)
 // things.
 
 CosPropertyService::PropertySet_ptr
-TAO_PropertySetFactory::create_propertyset (CORBA::Environment &_env)
+TAO_PropertySetFactory::create_propertyset (CORBA::Environment &TAO_IN_ENV)
 {
   // New a TAO_PropertySet.
   TAO_PropertySet *new_set;
@@ -106,7 +106,7 @@ TAO_PropertySetFactory::create_propertyset (CORBA::Environment &_env)
   size_t cur_len = this->propertyset_products_.length ();
   this->propertyset_products_.length (cur_len + 1);
   this->propertyset_products_[cur_len] = new_set;
-  return new_set->_this (_env);
+  return new_set->_this (TAO_IN_ENV);
 }
 
 // Allows a client to create a new TAO_PropertySet with specific
@@ -115,7 +115,7 @@ TAO_PropertySetFactory::create_propertyset (CORBA::Environment &_env)
 CosPropertyService::PropertySet_ptr
 TAO_PropertySetFactory::create_constrained_propertyset (const CosPropertyService::PropertyTypes &allowed_property_types,
                                                         const CosPropertyService::Properties &allowed_properties,
-                                                        CORBA::Environment &_env)
+                                                        CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "create_constrained_propertyset\n"));
@@ -137,7 +137,7 @@ TAO_PropertySetFactory::create_constrained_propertyset (const CosPropertyService
       this->propertyset_products_[products_len] = new_set;
 
       // All done. Return the pointer.
-      return new_set->_this (_env);
+      return new_set->_this (TAO_IN_ENV);
     }
   TAO_CATCH (CORBA::UserException, ex)
     {
@@ -172,7 +172,7 @@ TAO_PropertySetFactory::create_constrained_propertyset (const CosPropertyService
 
 CosPropertyService::PropertySet_ptr
 TAO_PropertySetFactory::create_initial_propertyset (const CosPropertyService::Properties &initial_properties,
-                                                    CORBA::Environment &_env)
+                                                    CORBA::Environment &TAO_IN_ENV)
 {
   TAO_PropertySet *new_set = 0;
 
@@ -191,7 +191,7 @@ TAO_PropertySetFactory::create_initial_propertyset (const CosPropertyService::Pr
       this->propertyset_products_[products_len] = new_set;
 
       // All done. Return the pointer.
-      return new_set->_this (_env);
+      return new_set->_this (TAO_IN_ENV);
     }
   TAO_CATCH (CosPropertyService::MultipleExceptions, ex)
     {
@@ -240,7 +240,7 @@ TAO_PropertySetDefFactory::TAO_PropertySetDefFactory (void)
 // delete all these New'ed things.
 
 CosPropertyService::PropertySetDef_ptr
-TAO_PropertySetDefFactory::create_propertysetdef (CORBA::Environment &_env)
+TAO_PropertySetDefFactory::create_propertysetdef (CORBA::Environment &TAO_IN_ENV)
 {
   // New a TAO_PropertySetDef.
   TAO_PropertySetDef *new_set;
@@ -250,13 +250,13 @@ TAO_PropertySetDefFactory::create_propertysetdef (CORBA::Environment &_env)
   size_t cur_len = this->propertysetdef_products_.length ();
   this->propertysetdef_products_.length (cur_len + 1);
   this->propertysetdef_products_[cur_len] = new_set;
-  return new_set->_this (_env);
+  return new_set->_this (TAO_IN_ENV);
 }
 
 CosPropertyService::PropertySetDef_ptr
 TAO_PropertySetDefFactory::create_constrained_propertysetdef (const CosPropertyService::PropertyTypes &allowed_property_types,
                                                               const CosPropertyService::PropertyDefs &allowed_property_defs,
-                                                              CORBA::Environment &_env)
+                                                              CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "create_constrained_propertysetdef\n"));
 
@@ -278,7 +278,7 @@ TAO_PropertySetDefFactory::create_constrained_propertysetdef (const CosPropertyS
       this->propertysetdef_products_[products_len] = new_set;
 
       // All done. Return the pointer.
-      return new_set->_this (_env);
+      return new_set->_this (TAO_IN_ENV);
     }
   TAO_CATCH (CORBA::UserException, ex)
     {
@@ -314,7 +314,7 @@ TAO_PropertySetDefFactory::create_constrained_propertysetdef (const CosPropertyS
 
 CosPropertyService::PropertySetDef_ptr
 TAO_PropertySetDefFactory::create_initial_propertysetdef (const CosPropertyService::PropertyDefs &initial_property_defs,
-                                                          CORBA::Environment &_env)
+                                                          CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "create_initial_propertysetdef\n"));
 
@@ -335,7 +335,7 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (const CosPropertyServi
       this->propertysetdef_products_[products_len] = new_set;
 
       // All done. Return the pointer.
-      return new_set->_this (_env);
+      return new_set->_this (TAO_IN_ENV);
     }
   TAO_CATCH (CosPropertyService::MultipleExceptions, ex)
     {
@@ -380,7 +380,7 @@ TAO_PropertySet::TAO_PropertySet (void)
 
 TAO_PropertySet::TAO_PropertySet (const CosPropertyService::PropertyTypes allowed_property_types,
                                   const CosPropertyService::Properties allowed_properties,
-                                  CORBA::Environment &_env)
+                                  CORBA::Environment &TAO_IN_ENV)
   : allowed_property_types_ (allowed_property_types),
     allowed_property_names_ (allowed_properties.length ())
 {
@@ -447,7 +447,7 @@ TAO_PropertySet::TAO_PropertySet (const CosPropertyService::PropertyTypes allowe
 // allowed properties' sequence withe just the maximum length.
 TAO_PropertySet::TAO_PropertySet (const CosPropertyService::PropertyTypes allowed_property_types,
                                   const CORBA::ULong number_of_allowed_properties,
-                                  CORBA::Environment &_env)
+                                  CORBA::Environment &TAO_IN_ENV)
   : allowed_property_types_ (allowed_property_types),
     allowed_property_names_ (number_of_allowed_properties)
 {
@@ -456,7 +456,7 @@ TAO_PropertySet::TAO_PropertySet (const CosPropertyService::PropertyTypes allowe
 // properies with *normal* modes.
 
 TAO_PropertySet::TAO_PropertySet (const CosPropertyService::Properties initial_properties,
-                                  CORBA::Environment &_env)
+                                  CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "TAO_PropertySet Hash_Table:-current_size %d\ntotal_size %d\nInitialProps %d\n",
@@ -514,7 +514,7 @@ TAO_PropertySet::~TAO_PropertySet (void)
 void
 TAO_PropertySet::define_property (const char *property_name,
                                   const CORBA::Any &property_value,
-                                  CORBA::Environment &_env)
+                                  CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "define_property : property_name %s \n",
@@ -651,7 +651,7 @@ TAO_PropertySet::is_property_allowed (const char* property_name)
 
 void
 TAO_PropertySet::define_properties (const CosPropertyService::Properties &nproperties,
-                                    CORBA::Environment &_env)
+                                    CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "define_properties\n"));
@@ -740,7 +740,7 @@ TAO_PropertySet::define_properties (const CosPropertyService::Properties &nprope
 // PropertySet.
 
 CORBA::ULong
-TAO_PropertySet::get_number_of_properties ( CORBA::Environment &_env)
+TAO_PropertySet::get_number_of_properties ( CORBA::Environment &TAO_IN_ENV)
 {
   return this->hash_table_.current_size ();
 }
@@ -754,12 +754,12 @@ void
 TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
                                          CosPropertyService::PropertyNames_out property_names,
                                          CosPropertyService::PropertyNamesIterator_out rest,
-                                         CORBA::Environment &_env)
+                                         CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "get_all_property_names\n"));
 
   size_t num_of_properties =
-    this->get_number_of_properties (_env);
+    this->get_number_of_properties (TAO_IN_ENV);
 
   if (num_of_properties == 0)
     // Nothing to do.
@@ -814,7 +814,7 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
       TAO_PropertyNamesIterator *names_iterator;
       ACE_NEW (names_iterator, TAO_PropertyNamesIterator (*property_set));
 
-      rest = CosPropertyService::PropertyNamesIterator::_duplicate (names_iterator->_this (_env));
+      rest = CosPropertyService::PropertyNamesIterator::_duplicate (names_iterator->_this (TAO_IN_ENV));
     }
 }
 
@@ -822,7 +822,7 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
 
 CORBA::Any *
 TAO_PropertySet::get_property_value (const char *property_name,
-                                     CORBA::Environment &_env)
+                                     CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "get_property_value\n"));
 
@@ -857,7 +857,7 @@ TAO_PropertySet::get_property_value (const char *property_name,
 CORBA::Boolean
 TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &property_names,
                                  CosPropertyService::Properties_out nproperties,
-                                 CORBA::Environment &_env)
+                                 CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "get_properties\n"));
 
@@ -878,9 +878,9 @@ TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &proper
 
   for (size_t i = 0; i < n; i++)
     {
-      _env.clear ();
+      TAO_IN_ENV.clear ();
       any_ptr = get_property_value (property_names [i],
-                                    _env);
+                                    TAO_IN_ENV);
 
       if (any_ptr != 0)
         {
@@ -903,8 +903,8 @@ TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &proper
           nproperties [i].property_value.replace (CORBA::_tc_void,
                                                   0,
                                                   0,
-                                                  _env);
-          TAO_CHECK_ENV_RETURN (_env, 0);
+                                                  TAO_IN_ENV);
+          TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
         }
     }
 
@@ -915,7 +915,7 @@ void
 TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
                                      CosPropertyService::Properties_out nproperties,
                                      CosPropertyService::PropertiesIterator_out rest,
-                                     CORBA::Environment &_env)
+                                     CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "get_all_properties\n"));
 
@@ -981,15 +981,15 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
 
       ACE_DEBUG ((LM_DEBUG,
                   "DB:New PropertySet created--size %d\n",
-                  prop_set->get_number_of_properties (_env)));
+                  prop_set->get_number_of_properties (TAO_IN_ENV)));
 
       // Make the iterator out of the new TAO_Propset.
       TAO_PropertiesIterator *iterator = 0;
       ACE_NEW (iterator,
                TAO_PropertiesIterator (*prop_set));
 
-      rest = CosPropertyService::PropertiesIterator::_duplicate (iterator->_this (_env));
-      TAO_CHECK_ENV_PRINT_RETURN_VOID (_env,
+      rest = CosPropertyService::PropertiesIterator::_duplicate (iterator->_this (TAO_IN_ENV));
+      TAO_CHECK_ENV_PRINT_RETURN_VOID (TAO_IN_ENV,
                                        "CosPropertyService::PropertiesIterator::_duplicate");
 
       ACE_DEBUG ((LM_DEBUG, "DB:TAO_PropSet::get_all_properties-Done\n"));
@@ -1000,7 +1000,7 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
 
 void
 TAO_PropertySet::delete_property (const char *property_name,
-                                  CORBA::Environment &_env)
+                                  CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "delete_property\n"));
 
@@ -1045,7 +1045,7 @@ TAO_PropertySet::delete_property (const char *property_name,
 
 void
 TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &property_names,
-                                    CORBA::Environment &_env)
+                                    CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "delete_properties\n"));
 
@@ -1124,7 +1124,7 @@ TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &pro
 // one.
 
 CORBA::Boolean
-TAO_PropertySet::delete_all_properties (CORBA::Environment &_env)
+TAO_PropertySet::delete_all_properties (CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {
@@ -1172,7 +1172,7 @@ TAO_PropertySet::delete_all_properties (CORBA::Environment &_env)
 // Returns TRUE if the property is defined in the PropertySet.
 
 CORBA::Boolean
-TAO_PropertySet::is_property_defined (const char *property_name,  CORBA::Environment &_env)
+TAO_PropertySet::is_property_defined (const char *property_name,  CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "is_property_defined\n"));
 
@@ -1202,10 +1202,10 @@ TAO_PropertySetDef::TAO_PropertySetDef (void)
 
 TAO_PropertySetDef::TAO_PropertySetDef (const CosPropertyService::PropertyTypes allowed_property_types,
                                         const CosPropertyService::PropertyDefs allowed_property_defs,
-                                        CORBA::Environment &_env)
+                                        CORBA::Environment &TAO_IN_ENV)
   : TAO_PropertySet (allowed_property_types,
                      allowed_property_defs.length (),
-                     _env)
+                     TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "TAO_PropertySetDef Hash_Table:-current_size %d\ntotal_size %d\n",
@@ -1243,7 +1243,7 @@ TAO_PropertySetDef::TAO_PropertySetDef (const CosPropertyService::PropertyTypes 
 // Constructor that the factory uses.
 
 TAO_PropertySetDef::TAO_PropertySetDef (const CosPropertyService::PropertyDefs initial_property_defs,
-                                        CORBA::Environment &_env)
+                                        CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "TAO_PropertySetDef Hash_Table:-current_size %d\ntotal_size %d\nInitialProps %d\n",
@@ -1275,7 +1275,7 @@ TAO_PropertySetDef::~TAO_PropertySetDef (void)
 // Return the sequence that is there in side.
 void
 TAO_PropertySetDef::get_allowed_property_types (CosPropertyService::PropertyTypes_out property_types,
-                                                CORBA::Environment &_env)
+                                                CORBA::Environment &TAO_IN_ENV)
 {
   // Copy contents of the sequence.
   ACE_NEW (property_types,
@@ -1284,7 +1284,7 @@ TAO_PropertySetDef::get_allowed_property_types (CosPropertyService::PropertyType
 
 void
 TAO_PropertySetDef::get_allowed_properties (CosPropertyService::PropertyDefs_out property_defs,
-                                            CORBA::Environment &_env)
+                                            CORBA::Environment &TAO_IN_ENV)
 {
   // We have all the names, get the values and the modes from the Hash
   // Table and return.
@@ -1307,7 +1307,7 @@ void
 TAO_PropertySetDef::define_property_with_mode (const char *property_name,
                                                const CORBA::Any &property_value,
                                                CosPropertyService::PropertyModeType property_mode,
-                                               CORBA::Environment &_env)
+                                               CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "define_property with mode : property_name %s \n",
@@ -1392,7 +1392,7 @@ TAO_PropertySetDef::define_property_with_mode (const char *property_name,
 // MultipleExceptions sequence and raise that.
 void
 TAO_PropertySetDef::define_properties_with_modes (const CosPropertyService::PropertyDefs &property_defs,
-                                                  CORBA::Environment &_env)
+                                                  CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "define_properties_with_modes\n"));
 
@@ -1492,7 +1492,7 @@ TAO_PropertySetDef::define_properties_with_modes (const CosPropertyService::Prop
 // PropertyNotFound exceptions.
 CosPropertyService::PropertyModeType
 TAO_PropertySetDef::get_property_mode (const char *property_name,
-                                       CORBA::Environment &_env)
+                                       CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "get_property_mode\n"));
 
@@ -1529,7 +1529,7 @@ TAO_PropertySetDef::get_property_mode (const char *property_name,
 CORBA::Boolean
 TAO_PropertySetDef::get_property_modes (const CosPropertyService::PropertyNames &property_names,
                                         CosPropertyService::PropertyModes_out property_modes,
-                                        CORBA::Environment &_env)
+                                        CORBA::Environment &TAO_IN_ENV)
 {
   // Get the length of names sequence.
   size_t sequence_length = property_names.length ();
@@ -1588,7 +1588,7 @@ TAO_PropertySetDef::get_property_modes (const CosPropertyService::PropertyNames 
 void
 TAO_PropertySetDef::set_property_mode (const char *property_name,
                                        CosPropertyService::PropertyModeType property_mode,
-                                       CORBA::Environment &_env)
+                                       CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "set-property_mode"));
 
@@ -1693,7 +1693,7 @@ TAO_PropertySetDef::set_property_mode (const char *property_name,
 
 void
 TAO_PropertySetDef::set_property_modes (const CosPropertyService::PropertyModes &property_modes,
-                                        CORBA::Environment &_env)
+                                        CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "set_property_modes\n"));
 
@@ -1788,7 +1788,7 @@ TAO_PropertyNamesIterator::~TAO_PropertyNamesIterator (void)
 // one exists.
 
 void
-TAO_PropertyNamesIterator::reset (CORBA::Environment &_env)
+TAO_PropertyNamesIterator::reset (CORBA::Environment &TAO_IN_ENV)
 {
   this->iterator_ = this->iterator_.map ().begin ();
 }
@@ -1800,7 +1800,7 @@ TAO_PropertyNamesIterator::reset (CORBA::Environment &_env)
 
 CORBA::Boolean
 TAO_PropertyNamesIterator::next_one (CORBA::String_out property_name,
-                                     CORBA::Environment &_env)
+                                     CORBA::Environment &TAO_IN_ENV)
 {
   CosProperty_Hash_Entry_ptr entry_ptr;
 
@@ -1818,7 +1818,7 @@ TAO_PropertyNamesIterator::next_one (CORBA::String_out property_name,
 CORBA::Boolean
 TAO_PropertyNamesIterator::next_n (CORBA::ULong how_many,
                                    CosPropertyService::PropertyNames_out property_names,
-                                   CORBA::Environment &_env)
+                                   CORBA::Environment &TAO_IN_ENV)
 {
   CosProperty_Hash_Entry_ptr entry_ptr = 0;
 
@@ -1844,7 +1844,7 @@ TAO_PropertyNamesIterator::next_n (CORBA::ULong how_many,
 }
 
 void
-TAO_PropertyNamesIterator::destroy (CORBA::Environment &_env)
+TAO_PropertyNamesIterator::destroy (CORBA::Environment &TAO_IN_ENV)
 {
 }
 
@@ -1858,14 +1858,14 @@ TAO_PropertiesIterator::~TAO_PropertiesIterator (void)
 }
 
 void
-TAO_PropertiesIterator::reset (CORBA::Environment &_env)
+TAO_PropertiesIterator::reset (CORBA::Environment &TAO_IN_ENV)
 {
   this->iterator_ = this->iterator_.map ().begin ();
 }
 
 CORBA::Boolean
 TAO_PropertiesIterator::next_one (CosPropertyService::Property_out aproperty,
-                                  CORBA::Environment &_env)
+                                  CORBA::Environment &TAO_IN_ENV)
 {
   CosProperty_Hash_Entry_ptr entry_ptr;
 
@@ -1887,7 +1887,7 @@ TAO_PropertiesIterator::next_one (CosPropertyService::Property_out aproperty,
 CORBA::Boolean
 TAO_PropertiesIterator::next_n (CORBA::ULong how_many,
                                 CosPropertyService::Properties_out nproperties,
-                                CORBA::Environment &_env)
+                                CORBA::Environment &TAO_IN_ENV)
 {
   CosProperty_Hash_Entry_ptr entry_ptr = 0;
 
@@ -1918,7 +1918,7 @@ TAO_PropertiesIterator::next_n (CORBA::ULong how_many,
 }
 
 void
-TAO_PropertiesIterator::destroy (CORBA::Environment &_env)
+TAO_PropertiesIterator::destroy (CORBA::Environment &TAO_IN_ENV)
 {
 }
 

@@ -34,17 +34,17 @@ Life_Cycle_Service_i::~Life_Cycle_Service_i (void)
 
 CORBA::Boolean 
 Life_Cycle_Service_i::supports (const CosLifeCycle::Key &factory_key,
-                                       CORBA::Environment &_env_there)
+                                       CORBA::Environment &TAO_IN_ENV_there)
 {
   ACE_UNUSED_ARG (factory_key);
-  ACE_UNUSED_ARG (_env_there);
+  ACE_UNUSED_ARG (TAO_IN_ENV_there);
   return 0;
 }
 
 CORBA::Object_ptr
 Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key, 
                                             const CosLifeCycle::Criteria &the_criteria,
-                                            CORBA::Environment &_env_there)
+                                            CORBA::Environment &TAO_IN_ENV_there)
 {
   ACE_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: called.\n"));
   // Exceptions are forwarded, not handled !!
@@ -56,9 +56,9 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
       
       ACE_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: getFilter will be called.\n"));
       
-      CORBA::String filter = criteria_Evaluator.getFilter (_env_there);
+      CORBA::String filter = criteria_Evaluator.getFilter (TAO_IN_ENV_there);
       
-      if (_env_there.exception() != 0)
+      if (TAO_IN_ENV_there.exception() != 0)
 	{
 	  return 0;
 	} 
@@ -83,7 +83,7 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
       // Check if it is a valid Generic Factory reference
       if (CORBA::is_nil (genericFactoryObj_ptr)) 
 	{ // throw a NoFactory exception  
-	  _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+	  TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory (factory_key));      
 	  return 0;
 	}
       else 
@@ -97,7 +97,7 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
 	  // see if there is an exception, if yes then throw the NoFactory exception
 	  if (env_here.exception () != 0) // throw a NoFactory exception  
 	    { 
-	      _env_there.exception (new CosLifeCycle::NoFactory (factory_key));      
+	      TAO_IN_ENV_there.exception (new CosLifeCycle::NoFactory (factory_key));      
 	      return 0;
 	    }
 	  
@@ -111,7 +111,7 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
 	  // Now retrieve the Object obj ref corresponding to the key.
 	  CORBA::Object_var object_var = genericFactory_var->create_object (factory_key,
 									    the_criteria,
-									    _env_there);
+									    TAO_IN_ENV_there);
       
 	  ACE_DEBUG ((LM_DEBUG,
 		      "Life_Cycle_Service_i::create_object: Forwarded request.\n"));
@@ -138,7 +138,7 @@ Life_Cycle_Service_i::register_factory (const char * name,
 					   const char * location,
 					   const char * description,
 					   CORBA::Object_ptr object,
-					   CORBA::Environment &_env_there)
+					   CORBA::Environment &TAO_IN_ENV_there)
 {
   if (factory_trader_ptr_ == 0)
     {

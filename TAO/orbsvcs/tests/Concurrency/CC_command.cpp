@@ -39,7 +39,7 @@ CC_Command::CC_Command(void)
 }
 
 CosConcurrencyControl::LockSet_var
-CC_Command::GetLockSet(char *lock_set_name, CORBA::Environment &_env)
+CC_Command::GetLockSet(char *lock_set_name, CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {

@@ -20,7 +20,7 @@ TAO_Time_Service_Server::~TAO_Time_Service_Server (void)
 // inaccuracy in a UTO.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Server::universal_time (CORBA::Environment &_env)
+TAO_Time_Service_Server::universal_time (CORBA::Environment &TAO_IN_ENV)
 {
   TAO_UTO *uto = 0;
 
@@ -65,7 +65,7 @@ CosTime::UTO_ptr
 TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
 					     TimeBase::InaccuracyT inaccuracy,
 					     TimeBase::TdfT tdf,
-					     CORBA::Environment &_env)
+					     CORBA::Environment &TAO_IN_ENV)
 {
   TAO_UTO *uto = 0;
 
@@ -84,7 +84,7 @@ TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
 
 CosTime::UTO_ptr
 TAO_Time_Service_Server::uto_from_utc (const TimeBase::UtcT &utc,
-				       CORBA::Environment &_env)
+				       CORBA::Environment &TAO_IN_ENV)
 {
   TAO_UTO *uto = 0;
 
@@ -102,7 +102,7 @@ TAO_Time_Service_Server::uto_from_utc (const TimeBase::UtcT &utc,
 CosTime::TIO_ptr
 TAO_Time_Service_Server::new_interval (TimeBase::TimeT lower,
 				       TimeBase::TimeT upper,
-				       CORBA::Environment &_env)
+				       CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TIO *tio = 0;
 
