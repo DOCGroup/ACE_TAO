@@ -23,10 +23,13 @@ Tue Nov  4 23:38:54 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
 	(evil) TAO_HAS_TSS_ORB_CORE flag. Now this functionality is
 	provided by svc.conf.
 
-Tue Nov  4 23:37:04 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
-
 	* tests/Cubit/TAO/MT_Cubit/: Fixed the server code to use the new
 	IDL compiler generated code.
+
+	* TAO/tests/Cubit/TAO/MT_Cubit/client/Task_Client.cpp: Changed the
+	order of the initializers to remove g++ warnings, and added some
+	ACE_UNUSED_ARGs. Also removed the hand-crafted stubs, to make way
+	for the idl-compiler generated files.
 
 Tue Nov  4 23:21:29 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
@@ -66,13 +69,6 @@ Tue Nov  4 16:58:12 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 	* tao/except.*: Added print_exception() function for backwards
  	compatibility.  It simply calls
  	CORBA::Environment::print_exception().
-
-Tue Nov  4 14:13:52 1997 Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
-
-	* TAO/tests/Cubit/TAO/MT_Cubit/client/Task_Client.cpp: Changed the
-	order of the initializers to remove g++ warnings, and added some
-	ACE_UNUSED_ARGs. Also removed the hand-crafted stubs, to make way
-	for the idl-compiler generated files.
 
 Tue Nov 04 10:45:07 1997    <nw1@CHA-CHA>
 
