@@ -1,3 +1,9 @@
+Thu Oct 30 07:02:03 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* include/makeinclude/platform_chorus.GNU (CXX): Replaced
+	  DCFLAGS += -g with DCFLAGS += -gstabs+.  Thanks to 
+	  Wei Chiang for this.
+
 Thu Oct 30 06:14:58 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile,ACE-INSTALL: removed ACE-INSTALL from CVS control.

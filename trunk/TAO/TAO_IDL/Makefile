@@ -8,13 +8,6 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-INFO	=
-LIBS	= -lACE
-DIRS	= driver fe ast util narrow be
-BIN	= tao_idl
-TAOLIBS	= -ldrv -lfe -last -lutil -lnarrow -lbe -lACE
-CLONE	=
-BUILD	= $(VBIN)
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
@@ -26,16 +19,24 @@ include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
 
+INFO	= 
+# LIBS	= -lACE
+DIRS	= driver fe ast util narrow be
+BIN	= tao_idl
+TAOLIBS	= -L$(ACE_ROOT)/ace -ldrv -lfe -last -lutil -lnarrow -lbe -lACE
+CLONE	= 
+BUILD	= $(VBIN)
+
 #----------------------------------------------------------------------------
 #	Local targets
 #----------------------------------------------------------------------------
 
 all:
-	$(PRELINK) $(CXX) -g -o $(BIN) $(TAOLIBS) $(LIBS) -lthread
+	$(PRELINK) $(CXX) $(CFLAGS) -o $(BIN) $(TAOLIBS) $(LIBS)
 
 tags:
 	rm -f TAGS
-	etags -C include/*.h be_include/*.h
+	etags -C include/*.h be_include/*.h 
 	etags -a ast/*.cpp util/*.cpp narrow/*.cpp \
 		driver/*.cpp fe/*.cpp be/*.cpp
 clean:
@@ -43,3 +44,4 @@ clean:
 
 realclean:
 	rm -f tao_idl TAGS
+
