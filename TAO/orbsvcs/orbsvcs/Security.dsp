@@ -145,6 +145,10 @@ SOURCE=.\SecurityLevel2S.cpp
 
 SOURCE=.\Security\SecurityManager.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\SecurityReplaceableC.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -216,6 +220,10 @@ SOURCE=.\SecurityLevel2S_T.h
 # Begin Source File
 
 SOURCE=.\Security\SecurityManager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SecurityReplaceableC.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -582,6 +590,10 @@ SOURCE=.\SecurityLevel2S.i
 # Begin Source File
 
 SOURCE=.\SecurityLevel2S_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\SecurityReplaceableC.i
 # End Source File
 # End Group
 # Begin Group "Template Files"
