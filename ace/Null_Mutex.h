@@ -46,10 +46,10 @@ public:
   int acquire (void) {return 0;}
 
   /// Return -1 with <errno> == <ETIME>.
-  int acquire (ACE_Time_Value &timeout) {errno = ETIME; return -1;}
+  int acquire (ACE_Time_Value &) {errno = ETIME; return -1;}
 
   /// Return -1 with <errno> == <ETIME>.
-  int acquire (ACE_Time_Value *timeout) {errno = ETIME; return -1;}
+  int acquire (ACE_Time_Value *) {errno = ETIME; return -1;}
 
   /// Return 0.
   int tryacquire (void) {return 0;}
