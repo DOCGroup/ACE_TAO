@@ -26,6 +26,7 @@ Wed Jan 23 12:03:01 2002  Carlos O'Ryan  <coryan@uci.edu>
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
 	* TAO_IDL/be_include/be_visitor_interface/amh_ss.h:
 	* TAO_IDL/be_include/be_visitor_interface/interface_ss.h:
+	
 	  Fixed generate of the _downcast() method for AMH skeletons.  I
 	  used the new worker class to traverse inheritance graphs to do
 	  the job.
@@ -42,11 +43,12 @@ Wed Jan 23 12:00:35 2002  Ossama Othman  <ossama@uci.edu>
 
 Wed Jan 23 11:10:33 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-        * tao/PortableServer/AMH_Response_Handler.h:
-        * tao/PortableServer/TAO_PortableServer.dsp:
-        * tao/TAO.dsp:
-          Changed workspaces and header file to compile/link on
-          Windows platforms. 
+	* tao/PortableServer/AMH_Response_Handler.h:
+	* tao/PortableServer/TAO_PortableServer.dsp:
+	* tao/TAO.dsp:
+	
+          Changed workspaces and header file to compile/link on Windows
+	  platforms.
 
 Wed Jan 23 10:47:30 2002  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -61,9 +63,9 @@ Wed Jan 23 09:55:33 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp:
 
-	  Changed code to generate the right signatures for 
-	  constructors and destructors, similar to the way it is done 
-	  in be_visitor_operation/amh_rh_ss.cpp.
+	  Changed code to generate the right signatures for constructors
+	  and destructors, similar to the way it is done in
+	  be_visitor_operation/amh_rh_ss.cpp.
 
 Wed Jan 23 09:33:31 2002  Ossama Othman  <ossama@uci.edu>
 
@@ -289,28 +291,29 @@ Mon Jan 21 18:03:11 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	* tao/PortableServer/AMH_Response_Handler.cpp
 	* tao/PortableServer/AMH_Response_Handler.h
 	  
-	  Removed TAO_AMH_Response_Handler.* files from ORB_CORE and added them
-	  to tao/PortableServer, also renaming them to AMH_Response_Handler. 
-	  This was doen to reduce tao orb_core foot-print.
-	  Other changes to the AMH_Response_Handler:
-	    - The RH methods are now thread-safe.
-	    - Documentation of class, methods and members
-	    - The 'once-only' semantics is now made more explicit by using an
-	      enum to hold the various ststes. 
-	    - init_reply and send_reply method names changed with _tao_rh_ 
-	      prefix to reduce possibility of user defining similar methods in 
-	      IDL and creating a conflict.
-	  Thanks to Carlos for all the '@@' comments regarding the above :-)
-	
+	  Removed TAO_AMH_Response_Handler.* files from ORB_CORE and added
+	  them to tao/PortableServer, also renaming them to
+	  AMH_Response_Handler. This was doen to reduce tao orb_core
+	  foot-print.  Other changes to the AMH_Response_Handler:
+
+	- The RH methods are now thread-safe.
+	- Documentation of class, methods and members
+	- The 'once-only' semantics is now made more
+	  explicit by using an enum to hold the various ststes.
+	- init_reply and send_reply method names changed with _tao_rh_
+	  prefix to reduce possibility of user defining similar methods in
+	  IDL and creating a conflict.  Thanks to Carlos for all the '@@'
+	  comments regarding the above :-)
+
 	* TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp
 	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp
 
 	  Changed code-generation to generate _tao_rh_init_reply () and
-	  _tao_init_send_reply () as per changes above.
+	  _tao_init_send_reply () as per changes above.	
 	
 	* TAO_IDL/be/be_codegen.cpp (start_server_header): 
-	  Changed code generation to include the (tao) ResponseHandler classes
-	  from the tao/PortableServer/ rather than from tao/
+	  Changed code generation to include the (tao) ResponseHandler
+	  classes from the tao/PortableServer/ rather than from tao/	
 	
 Mon Jan 21 17:15:18 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -924,8 +927,8 @@ Fri Jan 18 13:19:00 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	* tao/TAO_AMH_Response_handler.h:
 	* tao/TAO_AMH_Response_handler.cpp:
 
-	  Added code that now generates AMH-RH code for operation
-	  in skeleton-source file.  Changed 'tao_out' CDR stream in
+	  Added code that now generates AMH-RH code for operation in
+	  skeleton-source file.  Changed 'tao_out' CDR stream in
 	  TAO_AMH_Response_Handler so that the variable names of the
 	  generated IDL code and that in the tao orb_core files match.
 
@@ -1112,10 +1115,11 @@ Thu Jan 17 17:40:55 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	* be/be_visitor_interface/amh_rh_ss.cpp:
 	* be/be_visitor_operation/amh_rh_sh.cpp:
 	* be/be_visitor_operation/amh_rh_ss.cpp:
+	
 	  Most of the 'bugs' have been fixed with the AMH-RH generated
-	  code now.  The only known remaining 'to-do' is the generation
-	  of the marshalling code for the RH-parametes in the skeleton
-	  source file.
+	  code now.  The only known remaining 'to-do' is the generation of
+	  the marshalling code for the RH-parametes in the skeleton source
+	  file.
 
 Thu Jan 17 17:39:00 2002  Ossama Othman  <ossama@uci.edu>
 
@@ -1667,6 +1671,7 @@ Thu Jan 17 00:54:41 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	* TAO_IDL/be/be_visitor_interface/interface.cpp:
 	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	
 	  Made code generation logic for AMH-skeletons and AMH-RH
 	  consistent (and symmetric) in the amh_rh and amh_ss files.
 
@@ -1792,10 +1797,11 @@ Wed Jan 16 13:17:04 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	* TAO_IDL/be/be_visitor_interface/interface.cpp:
 	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	  Added method to check if a particular node is an 'AMH'
-	  node that was added during pre-processing.  This check is
-	  used to dynamically create the amh_rh visitors in
-	  interface_s{h/s} visitors.
+	
+	  Added method to check if a particular node is an 'AMH' node that
+	  was added during pre-processing.  This check is used to
+	  dynamically create the amh_rh visitors in interface_s{h/s}
+	  visitors.
 
 Wed Jan 16 12:57:56 2002  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -1812,6 +1818,7 @@ Wed Jan 16 12:22:13 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
 	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+	
 	  Fixed Fuzz errors for @file
 
 Wed Jan 16 14:12:17 2002  Jeff Parsons <parsons@cs.wustl.edu>
@@ -2051,23 +2058,25 @@ Tue Jan 15 13:30:07 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
 	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	
 	  This is a snap-shot of the changes to facilitate parallel
-	  working on AMH.  The new files and changes to old ones is
-	  part of a new approach to generate AMh code from the IDL-compiler.
-	  In the new approach, only one new implied-idl node is added to the
-	  main AST i.e. the ResponseHandler (RH) node.  With this node, code is
-	  generated in the following files:
+	  working on AMH.  The new files and changes to old ones is part
+	  of a new approach to generate AMh code from the IDL-compiler.
+	  In the new approach, only one new implied-idl node is added to
+	  the main AST i.e. the ResponseHandler (RH) node.  With this
+	  node, code is generated in the following files:	
 		- The Client Header (Base abstract RH class)
 		- The Skeleton Header (implementation RH class declaration)
-		- The Skeleton Source (implementation RH class definition)
-	  In this snapshot, the code for the above is in place and there are no
-	  compilation errors.  The implementation is yet to be tested, though.
-	  Also, in keeping with the new approach, AMH-skeleton code is generated
-	  'on the fly'.  In the interface_{ch/sh/ss} files, AMH_skeleton
-	  code is generated if the be_global->generate_amh_classes () is set.
-	  Currently, this code is commented out and the amh_{ch/sh/ss} files are
-	  not included in the compiltation of TAO_IDL but once the code is in
-	  place  amd working, the IDL compiler will include these visitors.
+		- The Skeleton Source (implementation RH class definition)	
+	  In this snapshot, the code for the above is in place and there
+	  are no compilation errors.  The implementation is yet to be
+	  tested, though.  Also, in keeping with the new approach,
+	  AMH-skeleton code is generated 'on the fly'.  In the
+	  interface_{ch/sh/ss} files, AMH_skeleton code is generated if
+	  the be_global->generate_amh_classes () is set.  Currently, this
+	  code is commented out and the amh_{ch/sh/ss} files are not
+	  included in the compiltation of TAO_IDL but once the code is in
+	  place amd working, the IDL compiler will include these visitors.
 
 Tue Jan 15 13:35:07 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
@@ -3344,48 +3353,54 @@ Sat Jan  5 21:31:43 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
 	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	
 	  Added code to generate the Client side abstract RH class and the
 	  skeleton RH class. For the above two interfaces, there should be
 	  no classes generated on teh 'other side' i.e. for the client RH
-	  interface node, there should be no class generatd in the skeleton
-	  files.  Currently there are a few problems with this and with the
-	  exact names and inheritance of the generated classes.
+	  interface node, there should be no class generatd in the
+	  skeleton files.  Currently there are a few problems with this
+	  and with the exact names and inheritance of the generated
+	  classes.
 
 Sat Jan  5 18:27:59 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO_IDL/be_include/be_visitor_operation/amh_ss.h:
 	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	
 	  Added code to generate the skeleton-source code for AMH-skelton
 	  operation.  The amh-method differs from the original method in
-	  the following ways:
+	  the following ways:	
 	  - Return type is always void
 	  - IN and INOUT parameters _only_ are de-marshalled
 	  One part left to be done is the creation and instantiation of
 	  the RH inside the generated method body.
 
-
 Sat Jan  5 18:15:34 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+	
 	  Added actions for all the AMH states (including amh_rh).
 	  Previously some of them returned 0 or just didn't do anything.
 
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	
 	  Removed all the code from the visit_interface that generates
-	  code for the this_method and put it into a seperate method called
-	  this_method.  This method already existed but for some reason a
-	  part of the code was left in the visit_interface method.  With
-	  this in place, the AMH class can now implement all the changes that
-	  are needed in the _this () method.
+	  code for the this_method and put it into a seperate method
+	  called this_method.  This method already existed but for some
+	  reason a part of the code was left in the visit_interface
+	  method.  With this in place, the AMH class can now implement all
+	  the changes that are needed in the _this () method.
 
 	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
-	  - Changed the this_method().  This method now generates all the code
-	  for the _this() method in amh-skeleton.  Changes include a narrow
-	  of original interface rather than teh AMH-skeleton narrow and
-	  commenting of the generation of the safe_stub.release() line.
-	  - Changed the dispath_method () so that it now generates a call to
-	  asynchronous_upcall_dispatch rather than synchronous_upcall_dispatch
-	  as is generated for a normal skeleton.
+	
+	  - Changed the this_method().  This method now generates all the
+	  code for the _this() method in amh-skeleton.  Changes include a
+	  narrow of original interface rather than teh AMH-skeleton narrow
+	  and commenting of the generation of the safe_stub.release()
+	  line.  - Changed the dispath_method () so that it now generates
+	  a call to asynchronous_upcall_dispatch rather than
+	  synchronous_upcall_dispatch as is generated for a normal
+	  skeleton.
 
 Sat Jan  5 20:39:25 2002  Ossama Othman  <ossama@uci.edu>
 
