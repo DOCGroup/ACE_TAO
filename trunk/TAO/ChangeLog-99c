@@ -1,94 +1,101 @@
+Mon Aug 23 08:43:01 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Makefile: for QNX Neutrino only, always compile
+          CDR_Interpreter.cpp without -g.  With -g, the compiler chokes:
+          ../../egcs-1.1.2/gcc/dwarfout.c:5253: Internal compiler error \
+          in function dwarfout_file_scope_decl
+
 Sun Aug 22 09:48:40 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/IIOP_Acceptor.cpp (create_mprofile):
-	* tao/UIOP_Acceptor.cpp (create_mprofile):
+        * tao/IIOP_Acceptor.cpp (create_mprofile):
+        * tao/UIOP_Acceptor.cpp (create_mprofile):
 
-	  Fixed memory leak that would occur if transfer of profile
-	  ownership failed.
+          Fixed memory leak that would occur if transfer of profile
+          ownership failed.
 
-	* tao/IIOP_Connector.cpp:
-	* tao/UIOP_Connector.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/UIOP_Connector.cpp:
 
-	  Removed auto_ptr for "this->cached_connect_strategy_" since it
-	  isn't necessary to have one due to the fact that it gets
-	  deallocated when the Connector is destroyed.
+          Removed auto_ptr for "this->cached_connect_strategy_" since it
+          isn't necessary to have one due to the fact that it gets
+          deallocated when the Connector is destroyed.
 
-	  Made memory allocations in preconnect() method exception safe.
-	
-	* tao/IIOP_Connector.cpp:
-	* tao/Resource_Factory.cpp:
+          Made memory allocations in preconnect() method exception safe.
 
-	  Moved template instantiation of TAO_Cached_Connector_Lock to
-	  Resource_Factory.cpp since that it where the template is
-	  located.
+        * tao/IIOP_Connector.cpp:
+        * tao/Resource_Factory.cpp:
 
-	* tao/Pluggable.cpp:
+          Moved template instantiation of TAO_Cached_Connector_Lock to
+          Resource_Factory.cpp since that it where the template is
+          located.
 
-	  TAO_Unknown_Profile::addr_to_string() should return -1, not 0.
+        * tao/Pluggable.cpp:
 
-	* tao/Stub.h:
-	* tao/Stub.i:
-	* tao/Stub.cpp:
+          TAO_Unknown_Profile::addr_to_string() should return -1, not 0.
 
-	  Changed names of {get,set}_base_profiles() and get_profiles()
-	  methods to be consistent with ACE/TAO coding styles.  They are
-	  now called base_profiles() (with appropriate args) and
-	  make_profiles() (since it is a factory method), respectively.
+        * tao/Stub.h:
+        * tao/Stub.i:
+        * tao/Stub.cpp:
 
-	* tao/Invocation.cpp:
-	* tao/IORManipulation.cpp:
-	* tao/Object.cpp:
-	* tao/ORB.cpp:
+          Changed names of {get,set}_base_profiles() and get_profiles()
+          methods to be consistent with ACE/TAO coding styles.  They are
+          now called base_profiles() (with appropriate args) and
+          make_profiles() (since it is a factory method), respectively.
 
-	  Updated to use renamed Stub object methods.
+        * tao/Invocation.cpp:
+        * tao/IORManipulation.cpp:
+        * tao/Object.cpp:
+        * tao/ORB.cpp:
 
-	* tao/IORManipulation.cpp:
+          Updated to use renamed Stub object methods.
 
-	  Made a memory allocation exception safe.
+        * tao/IORManipulation.cpp:
 
-	* tao/Makefile:
+          Made a memory allocation exception safe.
 
-	  Updated dependencies.
+        * tao/Makefile:
+
+          Updated dependencies.
 
 Sat Aug 21 18:46:14 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_fork.cpp (DRV_fork): Removed the use of
-	  ACE_Process_Manager and replaced it with ACE_Process.  This
- 	  prevents the IDL compiler from hanging when it's given multiple
- 	  files.  Thanks to Dave Binder <dbinder@globalmt.com> for
- 	  motivating this fix.  This fix closes out [BUGID:240].
+        * TAO_IDL/driver/drv_fork.cpp (DRV_fork): Removed the use of
+          ACE_Process_Manager and replaced it with ACE_Process.  This
+          prevents the IDL compiler from hanging when it's given multiple
+          files.  Thanks to Dave Binder <dbinder@globalmt.com> for
+          motivating this fix.  This fix closes out [BUGID:240].
 
-	* TAO_IDL/be/be_interface.cpp (gen_gperf_lookup_methods,
-	  TAO_IDL/driver/drv_args.cpp (DRV_check_gperf),
-	  TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Changed the
-	  name of the ACE_Process *manager* object to *process* so that it
- 	  wouldn't be confused with the ACE_Process_Manager, which we use
- 	  elsewhere in the IDL compiler.
+        * TAO_IDL/be/be_interface.cpp (gen_gperf_lookup_methods,
+          TAO_IDL/driver/drv_args.cpp (DRV_check_gperf),
+          TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Changed the
+          name of the ACE_Process *manager* object to *process* so that it
+          wouldn't be confused with the ACE_Process_Manager, which we use
+          elsewhere in the IDL compiler.
 
 Sat Aug 21 17:18:07 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/ORB.{h,i}: Added a CORBA_String_out constructor which takes
-	  const char* (we were missing this one from the spec).
+        * tao/ORB.{h,i}: Added a CORBA_String_out constructor which takes
+          const char* (we were missing this one from the spec).
 
-	* TAO/examples/Load_Balancing/Load_Balancer.idl
-	* TAO/examples/Load_Balancing/Load_Balancer_i.cpp
-	* TAO/examples/Load_Balancing/Load_Balancer_i.h
-	* TAO/examples/Load_Balancing/Makefile
-	* TAO/examples/Load_Balancing/README
-	* TAO/examples/Load_Balancing/Identity_i.h
-	* TAO/examples/Load_Balancing/Identity_i.cpp
-	* TAO/examples/Load_Balancing/Load_Balancing_Service.h
-	* TAO/examples/Load_Balancing/Identity.idl
-	* TAO/examples/Load_Balancing/Identity_Server.cpp
-	* TAO/examples/Load_Balancing/Identity_Server.h
-	* TAO/examples/Load_Balancing/Identity_Client.h
-	* TAO/examples/Load_Balancing/Identity_Client.cpp
-	* TAO/examples/Load_Balancing/Load_Balancing_Service.cpp
-	* TAO/examples/Makefile:
-	  Added a new example to TAO: Load Balancing Service.
+        * TAO/examples/Load_Balancing/Load_Balancer.idl
+        * TAO/examples/Load_Balancing/Load_Balancer_i.cpp
+        * TAO/examples/Load_Balancing/Load_Balancer_i.h
+        * TAO/examples/Load_Balancing/Makefile
+        * TAO/examples/Load_Balancing/README
+        * TAO/examples/Load_Balancing/Identity_i.h
+        * TAO/examples/Load_Balancing/Identity_i.cpp
+        * TAO/examples/Load_Balancing/Load_Balancing_Service.h
+        * TAO/examples/Load_Balancing/Identity.idl
+        * TAO/examples/Load_Balancing/Identity_Server.cpp
+        * TAO/examples/Load_Balancing/Identity_Server.h
+        * TAO/examples/Load_Balancing/Identity_Client.h
+        * TAO/examples/Load_Balancing/Identity_Client.cpp
+        * TAO/examples/Load_Balancing/Load_Balancing_Service.cpp
+        * TAO/examples/Makefile:
+          Added a new example to TAO: Load Balancing Service.
 
-	* TAO/examples/Makefile:
-	  Generated the dependencies.
+        * TAO/examples/Makefile:
+          Generated the dependencies.
 
 Sat Aug 21 14:16:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -96,56 +103,56 @@ Sat Aug 21 14:16:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Sat Aug 21 03:32:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Simple/time-date/Time_Date.dsp:
-	* examples/Simple/time-date/client.dsp:
-	* examples/Simple/time-date/server.dsp: Added definition of
-	  Alt_Resource_Factory_HAS_DLL=1 to all projects.
+        * examples/Simple/time-date/Time_Date.dsp:
+        * examples/Simple/time-date/client.dsp:
+        * examples/Simple/time-date/server.dsp: Added definition of
+          Alt_Resource_Factory_HAS_DLL=1 to all projects.
 
-	* examples/Simple/time-date/Time_Date.cpp
-	  (Alt_Resource_Factory_BUILD_DLL): Define this macro.
+        * examples/Simple/time-date/Time_Date.cpp
+          (Alt_Resource_Factory_BUILD_DLL): Define this macro.
 
-	* tao/default_resource.h (TAO_Default_Resource_Factory): Added
-	  TAO_Export specifier to the class.
+        * tao/default_resource.h (TAO_Default_Resource_Factory): Added
+          TAO_Export specifier to the class.
 
-	* tao/ORB.cpp (open): Moved the setting of <open_called_> *after*
-	  the ORB has actually opened.  Otherwise, the double-checked
-	  locking here would be useless and race condition might occurred
-	  (it did, in time-date example.)
+        * tao/ORB.cpp (open): Moved the setting of <open_called_> *after*
+          the ORB has actually opened.  Otherwise, the double-checked
+          locking here would be useless and race condition might occurred
+          (it did, in time-date example.)
 
 Fri Aug 20 15:51:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB.cpp (resolve_initial_references): Changed to search for
-	  the ORB's lookup table if the search in initial reference table
-	  kept in ORB param fails.  This change allows up to find the
-	  collocated service available in the local ORB.  Thanks to Sharo
-	  Randall <RASB@eci-esyst.com> for suggesting the change.
+        * tao/ORB.cpp (resolve_initial_references): Changed to search for
+          the ORB's lookup table if the search in initial reference table
+          kept in ORB param fails.  This change allows up to find the
+          collocated service available in the local ORB.  Thanks to Sharo
+          Randall <RASB@eci-esyst.com> for suggesting the change.
 
 Fri Aug 20 13:48:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
-	  Modified my earlier change to the way a return
-	  valuetype is declared in the stub. This clears up
-	  compile errors in TAO/esamples/OBV/Typed_Events.
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+          Modified my earlier change to the way a return
+          valuetype is declared in the stub. This clears up
+          compile errors in TAO/esamples/OBV/Typed_Events.
 
 Thu Aug 19 20:05:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_pre_docall_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/compiled_marshal_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_post_docall_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_ami_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp:
-	  Return types which are allocated on the heap in the stub (all
-	  variable-size data types plus arrays) would leak memory if
-	  there were an exception during invocation or demarshaling. Now
-	  all these types are eclosed in a _var between
-	  'ACE_NEW_RETURN (...);' and 'return ...;'. Thanks to
-	  Eugene Surovegin <ebs@glasnet.ru>, whose example showed
-	  the tip of the iceberg.
+        * TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_pre_docall_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/compiled_marshal_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_post_docall_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp:
+          Return types which are allocated on the heap in the stub (all
+          variable-size data types plus arrays) would leak memory if
+          there were an exception during invocation or demarshaling. Now
+          all these types are eclosed in a _var between
+          'ACE_NEW_RETURN (...);' and 'return ...;'. Thanks to
+          Eugene Surovegin <ebs@glasnet.ru>, whose example showed
+          the tip of the iceberg.
 
 Thu Aug 19 18:45:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -155,38 +162,38 @@ Thu Aug 19 18:45:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 Thu Aug 19 18:34:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Reply_Dispatcher.cpp:
-	  Fixed problems with forwarded requests and requests re-issued
-	  due to problems in profile.  The message state was not beign
-	  reset after receiving the first reply (i.e. a LOCATION_FORWARD)
-	  yielding invalid results when reading the next reply.
+        * tao/Reply_Dispatcher.cpp:
+          Fixed problems with forwarded requests and requests re-issued
+          due to problems in profile.  The message state was not beign
+          reset after receiving the first reply (i.e. a LOCATION_FORWARD)
+          yielding invalid results when reading the next reply.
 
 Thu Aug 19 17:25:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs\orbsvcs\Sched\Reconfig_Scheduler_T.cpp: changed default
           value to which RT_Info period is initialized to 1 instead of 0,
-	  to avoid divide-by-zero errors when creates are used to lay out
+          to avoid divide-by-zero errors when creates are used to lay out
           all operations and utilization is assessed by an adaptive
-	  algorithm before all operations are valued via the set method.
+          algorithm before all operations are valued via the set method.
 
 Thu Aug 19 16:34:04 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/BoundsC.i:
-	* tao/BoundsC.cpp:
-	* tao/BoundsC.h:
-	* tao/Makefile:
-	* tao/corbafwd.h:
-	* tao/corba.h:
-	* tao/Typecode_Constants.cpp: Added support for CORBA::Bounds
-	  which is a part of CORBA2.3 spec.
+        * tao/BoundsC.i:
+        * tao/BoundsC.cpp:
+        * tao/BoundsC.h:
+        * tao/Makefile:
+        * tao/corbafwd.h:
+        * tao/corba.h:
+        * tao/Typecode_Constants.cpp: Added support for CORBA::Bounds
+          which is a part of CORBA2.3 spec.
 
 Thu Aug 19 12:57:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Sequence_T.i:
-	* tao/Sequence_T.cpp:
-	  Moved some methods of TAO_Object_Manager<> to the .cpp file,
-	  they were causing problems with forward declared
-	  interfaces. Thanks to David for pointing this out.
+        * tao/Sequence_T.i:
+        * tao/Sequence_T.cpp:
+          Moved some methods of TAO_Object_Manager<> to the .cpp file,
+          they were causing problems with forward declared
+          interfaces. Thanks to David for pointing this out.
 
 Thu Aug 19 11:24:35 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -199,8 +206,8 @@ Thu Aug 19 11:24:35 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Aug 19 08:30:49 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* docs/releasenotes/index.html: Added information
-	  about Asynchronous Method Invocation.
+        * docs/releasenotes/index.html: Added information
+          about Asynchronous Method Invocation.
 
 Thu Aug 19 01:47:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
