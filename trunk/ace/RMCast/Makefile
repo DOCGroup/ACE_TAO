@@ -164,16 +164,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  RMCast_Export.h RMCast.i RMCast_Module.i \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -255,16 +255,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -418,16 +418,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -606,16 +606,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
@@ -690,16 +690,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  RMCast_Worker.h RMCast_Worker.i RMCast_Worker.cpp \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -793,16 +793,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  RMCast_Worker.i RMCast_Worker.cpp \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -852,16 +852,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  RMCast_Worker.h RMCast_Worker.i RMCast_Worker.cpp \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -952,16 +952,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/RB_Tree.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -1053,16 +1053,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -1199,16 +1199,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Event_Handler.i \
  RMCast_Resend_Handler.i RMCast_Retransmission.h RMCast_Module.h \
@@ -1330,16 +1330,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  RMCast_Export.h RMCast.i RMCast_Module.i \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -1415,16 +1415,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
@@ -1547,16 +1547,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Event_Handler.i \
  RMCast_UDP_Event_Handler.i RMCast_IO_UDP.h RMCast_Module.h RMCast.h \
@@ -1677,16 +1677,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  RMCast_Export.h RMCast.i RMCast_Module.i RMCast_Proxy.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
@@ -1817,16 +1817,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
@@ -1949,16 +1949,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \

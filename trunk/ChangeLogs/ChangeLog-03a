@@ -1,3 +1,8 @@
+Sat Oct 21 12:52:58 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Makefile*:
+          Update dependencies.
+
 Fri Oct 20 20:46:37 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.i (chdir): Added !defined (AIX) to the !defined (ACE_WIN32)
