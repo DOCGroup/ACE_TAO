@@ -1,0 +1,16 @@
+#
+# $Id$
+#
+
+NAME = Test_Output
+
+OBJFILES = $(OBJDIR)\Test_Output.obj
+
+CFLAGS = $(ACE_CFLAGS) -DTEST_OUTPUT_BUILD_DLL
+
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

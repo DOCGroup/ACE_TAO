@@ -1,0 +1,6 @@
+project: namingexe {
+  depends += AV CosProperty
+  libs    += TAO_AV TAO_CosProperty
+  comps   += AV
+}
+

@@ -1,0 +1,18 @@
+#
+# Makefile for building the IPC_SAP ATM_SAP example
+#
+
+NAMES = \
+        CPP-client \
+        CPP-server
+
+OBJFILES = $(OBJDIR)\$(NAME).obj
+
+CFLAGS = $(ACE_CFLAGS)
+
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

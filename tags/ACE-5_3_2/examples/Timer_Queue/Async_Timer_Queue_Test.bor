@@ -1,0 +1,20 @@
+#
+# Makefile for building the Async_Timer_Queue_Test example
+#
+
+NAME = main_async
+
+OBJFILES = \
+        $(OBJDIR)\Async_Timer_Queue_Test.obj \
+        $(OBJDIR)\main_async.obj
+
+CPPDIR = .
+
+LIBFILES = \
+        $(ACE_LIB)
+
+CFLAGS = \
+        $(ACE_CFLAGS)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+

@@ -1,0 +1,5 @@
+project {
+  depends  += ACEXML_Parser ACEXML
+  libs     += ACEXML_Parser ACEXML
+  libpaths += $(ACE_ROOT)/ACEXML/common $(ACE_ROOT)/ACEXML/parser/parser
+}
