@@ -58,6 +58,11 @@ handler (int signum)
 static void *
 worker (int iterations)
 {
+#if defined (VXWORKS)
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) %s: stack size is %u\n"),
+              ACE_OS::thr_self (), ACE_OS::thr_min_stack ()));
+#endif /* VXWORKS */
+
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   // Cache a pointer to this thread's Signal_Catcher.  That way, we
   // try to avoid dereferencing signal_catcher below in a thread that
@@ -146,10 +151,48 @@ main (int, ASYS_TCHAR *[])
 
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
-  int grp_id = thr_mgr->spawn_n (n_threads,
-                                 ACE_THR_FUNC (worker),
-                                 (void *) n_iterations,
-                                 THR_BOUND | THR_DETACHED);
+#if defined (VXWORKS)
+  // Assign thread (VxWorks task) names to test that feature.
+  ACE_thread_t *thread_name;
+  ACE_NEW_RETURN (thread_name, ACE_thread_t[n_threads], -1);
+
+  // And test the ability to specify stack size.
+  size_t *stack_size;
+  ACE_NEW_RETURN (stack_size, size_t[n_threads], -1);
+
+  int i;
+
+  for (i = 0; i < n_threads; ++i)
+    {
+      if (i < n_threads - 1)
+        {
+          ACE_NEW_RETURN (thread_name[i], char[32], -1);
+          ACE_OS::sprintf (thread_name[i], ASYS_TEXT ("thread%u"), i);
+        }
+      else
+        // Pass an ACE_thread_t pointer of 0 for the last thread name.
+        thread_name[n_threads - 1] = 0;
+
+      stack_size[i] = 40000;
+    }
+#endif /* VXWORKS */
+
+  int grp_id = thr_mgr->spawn_n
+                 (
+#if defined (VXWORKS)
+                  thread_name,
+#endif /* VXWORKS */
+                  n_threads,
+                  (ACE_THR_FUNC) worker,
+                  (void *) n_iterations,
+                  THR_BOUND | THR_DETACHED
+#if defined (VXWORKS)
+                  , ACE_DEFAULT_THREAD_PRIORITY
+                  , -1
+                  , 0
+                  , stack_size
+#endif /* VXWORKS */
+                  );
 
   ACE_ASSERT (grp_id != -1);
   thread_start->wait ();
@@ -194,6 +237,17 @@ main (int, ASYS_TCHAR *[])
   ACE_ASSERT (thr_mgr->wait () != -1);
 
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) main thread finished\n")));
+
+#if defined (VXWORKS)
+  for (i = 0; i < n_threads - 1; ++i)
+    {
+      delete [] thread_name[i];
+      // Don't delete the last thread_name, because it points
+      // to the name in the TCB.  It was initially 0.
+    }
+  delete [] thread_name;
+  delete [] stack_size;
+#endif /* VXWORKS */
 
   delete thread_start;
   thread_start = 0;
