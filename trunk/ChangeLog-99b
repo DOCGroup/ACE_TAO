@@ -1,3 +1,9 @@
+Tue Jun 08 16:57:03 1999  Steve Huston  <shuston@riverace.com>
+
+        * tests/SOCK_Connector_Test.cpp: Check for failed host lookup before
+          trying to connect.  Changed the way sethostent is done on AIX 4.3 to
+          work around an apparant bug in AIX 4.3.
+
 Tue Jun  8 15:47:06 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
 	* ace/Env_Value_T.h: Added a new ACE_Convert() function that works
