@@ -189,7 +189,7 @@ main (int, char *[])
        thread_handles) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
-#if !defined (VXWORKS)
+#if defined (VXWORKS)
       // VxWorks doesn't support thr_join() semantics...  Someday
       // we'll fix this.
       ACE_Thread_Manager::instance ()->wait ();
