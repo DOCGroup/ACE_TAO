@@ -105,7 +105,22 @@
     </td>
   </tr>
 </table>
+
+<li><b>TAO Modules required by CIAO:</b>  We currently don't have a
+    target set up in TAO's make system to build CIAO required module
+    only, so you need to do this yourself.  (BTW, we only support the
+    use of dynamic linked libraries, at least for now.) Here is a list
+    of necessary TAO modules in order of dependencies:
+
+    <ol>
+      <li>TAO Main library.
+      <li>PortableServer
+      <li>orbsvcs/orbsvcs/Security
+      <li>IFR_Client
+    </ol>
+
 </ol>
+
 <hr>
 <h2>TO-DOs</h2><a name="todos">
 This to-do list is currently arranged in chronological order,
@@ -229,7 +244,7 @@ certain release together.  All interfaces and types are under
 <hr>
 <address></address>
 <!-- hhmts start -->
-Last modified: Sun Nov 24 18:41:54 Central Standard Time 2002
+Last modified: Tue Dec 10 21:50:11 Central Standard Time 2002
 <!-- hhmts end -->
 <address>Nanbor Wang &lt;nanbor@cs.wustl.edu&gt;</address>
 </body> </html>
