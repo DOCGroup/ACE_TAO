@@ -1,3 +1,15 @@
+Sun Aug 27 13:09:38 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/UIOP_Acceptor.{h,cpp}
+	* tao/IIOP_Acceptor.{h,cpp}:
+
+	  Removed ORB_Core parameter from <open_i> method, since it was
+	  not being used.
+
+	* tao/Acceptor_Registry.cpp (make_mprofile):
+
+	  Added ACE_UNUSED_ARG.
+
 Sat Aug 26 23:07:56 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Policy_Manager.i

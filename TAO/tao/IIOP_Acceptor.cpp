@@ -206,7 +206,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                     1) != 0)
         return -1;
       else
-        return this->open_i (orb_core, addr);
+        return this->open_i (addr);
     }
   else if (ACE_OS::strchr (address, ':') == 0)
     {
@@ -240,7 +240,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (this->addrs_[0].set (addr) != 0)
     return -1;
 
-  return this->open_i (orb_core, addr);
+  return this->open_i (addr);
 }
 
 int
@@ -289,13 +289,11 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                 1) != 0)
     return -1;
 
-  return this->open_i (orb_core,
-                       addr);
+  return this->open_i (addr);
 }
 
 int
-TAO_IIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
-                           const ACE_INET_Addr& addr)
+TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr)
 {
   ACE_NEW_RETURN (this->creation_strategy_,
                   TAO_IIOP_CREATION_STRATEGY (this->orb_core_,
