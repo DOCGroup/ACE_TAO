@@ -59,12 +59,6 @@ main (int argc, char **argv)
   else
     ACE_DEBUG ((LM_DEBUG, "%s: Not using collocation optimization\n", argv[0]));
 
-  Cubit_Client cubit_client (test_collocation, 1);
-  // We want to test collocation, so create
-  // cubit_client with parameter 1 set.  Make sure
-  // the server shuts itself down afterward.
-
-  CORBA::Environment env;
   ACE_Barrier barrier (2);
 
   int retv = 1;
@@ -77,10 +71,17 @@ main (int argc, char **argv)
   barrier.wait ();
   ACE_OS::sleep (1);
 
-  if (cubit_client.init (argc, argv, THE_IOR_FILE) == -1)
-    return 1;
-  else
-    retv = cubit_client.run ();
+  {
+    Cubit_Client cubit_client (test_collocation, 1);
+    // We want to test collocation, so create
+    // cubit_client with parameter 1 set.  Make sure
+    // the server shuts itself down afterward.
+
+    if (cubit_client.init (argc, argv, THE_IOR_FILE) == -1)
+      return 1;
+    else
+      retv = cubit_client.run ();
+  }
 
   ACE_THREAD_MANAGER->wait ();
   return retv;

@@ -1014,7 +1014,7 @@ Cubit_Client::shutdown_server (int do_shutdown)
 {
   if (this->testing_collocation_)
     {
-      TAO_ORB_Core_instance ()->using_collocation (0);
+      this->orb_->_optimize_collocation_objects (0);
       // Make sure we call the following method "remotely" so
       // the right ORB could be used.
 
@@ -1159,7 +1159,7 @@ Cubit_Client::init (int argc, char **argv, char *collocation_test_ior)
       ACE_TRY_CHECK;
       if (this->testing_collocation_ == 0)
         // turn off collocation if directed to do so.
-        TAO_ORB_Core_instance ()->using_collocation (0);
+        this->orb_->_optimize_collocation_objects (0);
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
