@@ -210,6 +210,7 @@ Test_ECP::run (int argc, char* argv[])
       TAO_TRY_ENV.print_exception ("SYS_EX");
     }
   TAO_ENDTRY;
+  return 0;
 }
 
 RtecEventChannelAdmin::EventChannel_ptr
@@ -469,7 +470,7 @@ Test_ECP::push (const RtecEventComm::EventSet &events,
 	  
 	  for (int j = 0; j < n; ++j)
 	    {
-	      Event& s = sent[j];
+	      RtecEventComm::Event& s = sent[j];
 	      s.source_ = this->supplier_id_;
 	      s.ttl_ = 1;
 
@@ -582,8 +583,8 @@ template class ACE_PushSupplier_Adapter<Test_ECP>;
 template class ACE_PushConsumer_Adapter<EC_Proxy>;
 template class ACE_PushSupplier_Adapter<EC_Proxy>;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-template class ACE_PushConsumer_Adapter<Test_ECP>;
-template class ACE_PushSupplier_Adapter<Test_ECP>;
-template class ACE_PushConsumer_Adapter<EC_Proxy>;
-template class ACE_PushSupplier_Adapter<EC_Proxy>;
+#pragma instantiate ACE_PushConsumer_Adapter<Test_ECP>
+#pragma instantiate ACE_PushSupplier_Adapter<Test_ECP>
+#pragma instantiate ACE_PushConsumer_Adapter<EC_Proxy>
+#pragma instantiate ACE_PushSupplier_Adapter<EC_Proxy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
