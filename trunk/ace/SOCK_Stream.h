@@ -69,33 +69,39 @@ public:
   ssize_t recv_n (void *buf,
                   size_t len,
                   int flags,
-                  const ACE_Time_Value *timeout = 0) const;
+                  const ACE_Time_Value *timeout = 0,
+                  int error_on_eof = 1) const;
   // Try to recv exactly <len> bytes into <buf> from <handle>.
 
   ssize_t recv_n (void *buf,
                   size_t len,
-                  const ACE_Time_Value *timeout = 0) const;
+                  const ACE_Time_Value *timeout = 0,
+                  int error_on_eof = 1) const;
   // Try to recv exactly <len> bytes into <buf> from <handle>.
 
   ssize_t recvv_n (iovec iov[],
                    size_t iovcnt,
-                   const ACE_Time_Value *timeout = 0) const;
+                   const ACE_Time_Value *timeout = 0,
+                   int error_on_eof = 1) const;
   // Receive an <iovec> of size <iovcnt> to the connected socket.
 
   ssize_t send_n (const void *buf,
                   size_t len,
                   int flags,
-                  const ACE_Time_Value *timeout = 0) const;
+                  const ACE_Time_Value *timeout = 0,
+                  int error_on_eof = 1) const;
   // Try to send exactly <len> bytes into <buf> from <handle>.
 
   ssize_t send_n (const void *buf,
                   size_t len,
-                  const ACE_Time_Value *timeout = 0) const;
+                  const ACE_Time_Value *timeout = 0,
+                  int error_on_eof = 1) const;
   // Try to send exactly <len> bytes into <buf> from <handle>.
 
   ssize_t sendv_n (const iovec iov[],
                    size_t iovcnt,
-                   const ACE_Time_Value *timeout = 0) const;
+                   const ACE_Time_Value *timeout = 0,
+                   int error_on_eof = 1) const;
   // Send an <iovec> of size <iovcnt> to the connected socket.
 
   // = Send/receive ``urgent'' data (see TCP specs...).

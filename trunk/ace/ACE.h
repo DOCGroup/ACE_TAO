@@ -112,6 +112,11 @@ public:
   // is not counted down.  If the transfer times out, the number of
   // bytes transferred so far are returned.
   //
+  // If EOF is reached while transmitting data, a value of 1 for
+  // <error_on_eof> causes -1 to be returned to the caller. However,
+  // if <error_on_eof> is 0, whatever has been transmitted so far will
+  // be returned to the caller.
+  //
   // Methods with <iovec> parameter are I/O vector variants of the I/O
   // operations.
 
@@ -120,6 +125,16 @@ public:
                        size_t len,
                        int flags,
                        const ACE_Time_Value *timeout = 0);
+
+#if defined (ACE_HAS_TLI)
+
+  static ssize_t t_rcv (ACE_HANDLE handle,
+                        void *buf,
+                        size_t len,
+                        int *flags,
+                        const ACE_Time_Value *timeout = 0);
+
+#endif /* ACE_HAS_TLI */
 
   static ssize_t recv (ACE_HANDLE handle,
                        void *buf,
@@ -143,12 +158,25 @@ public:
                          void *buf,
                          size_t len,
                          int flags,
-                         const ACE_Time_Value *timeout = 0);
+                         const ACE_Time_Value *timeout = 0,
+                         int error_on_eof = 1);
+
+#if defined (ACE_HAS_TLI)
+
+  static ssize_t t_rcv_n (ACE_HANDLE handle,
+                          void *buf,
+                          size_t len,
+                          int *flags,
+                          const ACE_Time_Value *timeout = 0,
+                          int error_on_eof = 1);
+
+#endif /* ACE_HAS_TLI */
 
   static ssize_t recv_n (ACE_HANDLE handle,
                          void *buf,
                          size_t len,
-                         const ACE_Time_Value *timeout = 0);
+                         const ACE_Time_Value *timeout = 0,
+                         int error_on_eof = 1);
 
   static ssize_t recv (ACE_HANDLE handle, size_t n, ...);
   // Varargs variant.
@@ -161,21 +189,33 @@ public:
   static ssize_t recvv_n (ACE_HANDLE handle,
                           iovec *iov,
                           int iovcnt,
-                          const ACE_Time_Value *timeout = 0);
+                          const ACE_Time_Value *timeout = 0,
+                          int error_on_eof = 1);
 
   static ssize_t recv_n (ACE_HANDLE handle,
                          ACE_Message_Block *message_block,
-                         const ACE_Time_Value *timeout = 0);
-
-  static ssize_t send (ACE_HANDLE handle,
-                       const void *buf,
-                       size_t len,
-                       const ACE_Time_Value *timeout = 0);
+                         const ACE_Time_Value *timeout = 0,
+                         int error_on_eof = 1);
 
   static ssize_t send (ACE_HANDLE handle,
                        const void *buf,
                        size_t len,
                        int flags,
+                       const ACE_Time_Value *timeout = 0);
+
+#if defined (ACE_HAS_TLI)
+
+  static ssize_t t_snd (ACE_HANDLE handle,
+                        const void *buf,
+                        size_t len,
+                        int flags,
+                        const ACE_Time_Value *timeout = 0);
+
+#endif /* ACE_HAS_TLI */
+
+  static ssize_t send (ACE_HANDLE handle,
+                       const void *buf,
+                       size_t len,
                        const ACE_Time_Value *timeout = 0);
 
   static ssize_t sendmsg (ACE_HANDLE handle,
@@ -195,12 +235,25 @@ public:
                          const void *buf,
                          size_t len,
                          int flags,
-                         const ACE_Time_Value *timeout = 0);
+                         const ACE_Time_Value *timeout = 0,
+                         int error_on_eof = 1);
+
+#if defined (ACE_HAS_TLI)
+
+  static ssize_t t_snd_n (ACE_HANDLE handle,
+                          const void *buf,
+                          size_t len,
+                          int flags,
+                          const ACE_Time_Value *timeout = 0,
+                          int error_on_eof = 1);
+
+#endif /* ACE_HAS_TLI */
 
   static ssize_t send_n (ACE_HANDLE handle,
                          const void *buf,
                          size_t len,
-                         const ACE_Time_Value *timeout = 0);
+                         const ACE_Time_Value *timeout = 0,
+                         int error_on_eof = 1);
 
   static ssize_t send (ACE_HANDLE handle, size_t n, ...);
   // Varargs variant.
@@ -213,29 +266,35 @@ public:
   static ssize_t sendv_n (ACE_HANDLE handle,
                           const iovec *iov,
                           int iovcnt,
-                          const ACE_Time_Value *timeout = 0);
+                          const ACE_Time_Value *timeout = 0,
+                          int error_on_eof = 1);
 
   static ssize_t send_n (ACE_HANDLE handle,
                          const ACE_Message_Block *message_block,
-                         const ACE_Time_Value *timeout = 0);
+                         const ACE_Time_Value *timeout = 0,
+                         int error_on_eof = 1);
 
   // = File system I/O functions (these don't support timeouts).
 
   static ssize_t read_n (ACE_HANDLE handle,
                          void *buf,
-                         size_t len);
+                         size_t len,
+                         int error_on_eof = 1);
 
   static ssize_t write_n (ACE_HANDLE handle,
                           const void *buf,
-                          size_t len);
+                          size_t len,
+                          int error_on_eof = 1);
 
   static ssize_t readv_n (ACE_HANDLE handle,
                           iovec *iov,
-                          int iovcnt);
+                          int iovcnt,
+                          int error_on_eof = 1);
 
   static ssize_t writev_n (ACE_HANDLE handle,
                            const iovec *iov,
-                           int iovcnt);
+                           int iovcnt,
+                           int error_on_eof = 1);
 
   // = Socket connection establishment calls.
 
@@ -563,7 +622,7 @@ public:
   // Timed wait for handle to get read ready.
 
   static int handle_write_ready (ACE_HANDLE handle,
-                                const ACE_Time_Value *timeout);
+                                 const ACE_Time_Value *timeout);
   // Timed wait for handle to get write ready.
 
   static int handle_exception_ready (ACE_HANDLE handle,
@@ -612,31 +671,54 @@ private:
   static ssize_t recv_n_i (ACE_HANDLE handle,
                            void *buf,
                            size_t len,
-                           int flags);
+                           int flags,
+                           int error_on_eof);
 
   static ssize_t recv_n_i (ACE_HANDLE handle,
                            void *buf,
                            size_t len,
                            int flags,
-                           const ACE_Time_Value *timeout);
+                           const ACE_Time_Value *timeout,
+                           int error_on_eof);
 
-  static ssize_t recv_n_i (ACE_HANDLE handle,
-                           void *buf,
-                           size_t len);
+#if defined (ACE_HAS_TLI)
+
+  static ssize_t t_rcv_n_i (ACE_HANDLE handle,
+                            void *buf,
+                            size_t len,
+                            int *flags,
+                            int error_on_eof);
+
+  static ssize_t t_rcv_n_i (ACE_HANDLE handle,
+                            void *buf,
+                            size_t len,
+                            int *flags,
+                            const ACE_Time_Value *timeout,
+                            int error_on_eof);
+
+#endif /* ACE_HAS_TLI */
 
   static ssize_t recv_n_i (ACE_HANDLE handle,
                            void *buf,
                            size_t len,
-                           const ACE_Time_Value *timeout);
+                           int error_on_eof);
 
-  static ssize_t recvv_n_i (ACE_HANDLE handle,
-                            iovec *iov,
-                            int iovcnt);
+  static ssize_t recv_n_i (ACE_HANDLE handle,
+                           void *buf,
+                           size_t len,
+                           const ACE_Time_Value *timeout,
+                           int error_on_eof);
 
   static ssize_t recvv_n_i (ACE_HANDLE handle,
                             iovec *iov,
                             int iovcnt,
-                            const ACE_Time_Value *timeout);
+                            int error_on_eof);
+
+  static ssize_t recvv_n_i (ACE_HANDLE handle,
+                            iovec *iov,
+                            int iovcnt,
+                            const ACE_Time_Value *timeout,
+                            int error_on_eof);
 
   //
   // = Send_n helpers
@@ -649,31 +731,54 @@ private:
   static ssize_t send_n_i (ACE_HANDLE handle,
                            const void *buf,
                            size_t len,
-                           int flags);
+                           int flags,
+                           int error_on_eof);
 
   static ssize_t send_n_i (ACE_HANDLE handle,
                            const void *buf,
                            size_t len,
                            int flags,
-                           const ACE_Time_Value *timeout);
+                           const ACE_Time_Value *timeout,
+                           int error_on_eof);
 
-  static ssize_t send_n_i (ACE_HANDLE handle,
-                           const void *buf,
-                           size_t len);
+#if defined (ACE_HAS_TLI)
+
+  static ssize_t t_snd_n_i (ACE_HANDLE handle,
+                            const void *buf,
+                            size_t len,
+                            int flags,
+                            int error_on_eof);
+
+  static ssize_t t_snd_n_i (ACE_HANDLE handle,
+                            const void *buf,
+                            size_t len,
+                            int flags,
+                            const ACE_Time_Value *timeout,
+                            int error_on_eof);
+
+#endif /* ACE_HAS_TLI */
 
   static ssize_t send_n_i (ACE_HANDLE handle,
                            const void *buf,
                            size_t len,
-                           const ACE_Time_Value *timeout);
+                           int error_on_eof);
 
-  static ssize_t sendv_n_i (ACE_HANDLE handle,
-                            const iovec *iov,
-                            int iovcnt);
+  static ssize_t send_n_i (ACE_HANDLE handle,
+                           const void *buf,
+                           size_t len,
+                           const ACE_Time_Value *timeout,
+                           int error_on_eof);
 
   static ssize_t sendv_n_i (ACE_HANDLE handle,
                             const iovec *iov,
                             int iovcnt,
-                            const ACE_Time_Value *timeout);
+                            int error_on_eof);
+
+  static ssize_t sendv_n_i (ACE_HANDLE handle,
+                            const iovec *iov,
+                            int iovcnt,
+                            const ACE_Time_Value *timeout,
+                            int error_on_eof);
 
   static u_int init_fini_count_;
   // Counter to match <init>/<fini> calls.  <init> must increment it;

@@ -3827,7 +3827,7 @@ extern "C"
   int t_rcvrel(int fildes);
   int t_rcvudata(int fildes, struct t_unitdata *unitdata, int *flags);
   int t_rcvuderr(int fildes, struct t_uderr *uderr);
-  int t_snd(int fildes, char *buf, u_int nbytes, int flags);
+  int t_snd(int fildes, const char *buf, u_int nbytes, int flags);
   int t_snddis(int fildes, struct t_call *call);
   int t_sndrel(int fildes);
   int t_sndudata(int fildes, struct t_unitdata *unitdata);
@@ -5867,12 +5867,15 @@ public:
                        ACE_OVERLAPPED *);
   static ssize_t read_n (ACE_HANDLE handle,
                          void *buf,
-                         size_t len);
+                         size_t len,
+                         int error_on_eof = 1);
   // Receive <len> bytes into <buf> from <handle> (uses the
   // <ACE_OS::read> call, which uses the <read> system call on UNIX
-  // and the <ReadFile> call on Win32).  If <handle> is set to
-  // non-blocking mode this call will poll until all <len> bytes are
-  // received.
+  // and the <ReadFile> call on Win32). If EOF is reached while
+  // transmitting data, a value of 1 for <error_on_eof> causes -1 to
+  // be returned to the caller. However, if <error_on_eof> is 0,
+  // whatever has been transmitted so far will be returned to the
+  // caller.
   static int readlink (const char *path,
                        char *buf,
                        size_t bufsiz);
@@ -5895,11 +5898,14 @@ public:
                         ACE_OVERLAPPED *);
   static ssize_t write_n (ACE_HANDLE handle,
                           const void *buf,
-                          size_t len);
+                          size_t len,
+                          int error_on_eof = 1);
   // Send <len> bytes from <buf> to <handle> (uses the <ACE_OS::write>
   // calls, which is uses the <write> system call on UNIX and the
-  // <WriteFile> call on Win32).  If <handle> is set to non-blocking
-  // mode this call will poll until all <len> bytes are sent.
+  // <WriteFile> call on Win32).  If EOF is reached while transmitting
+  // data, a value of 1 for <error_on_eof> causes -1 to be returned to
+  // the caller. However, if <error_on_eof> is 0, whatever has been
+  // transmitted so far will be returned to the caller.
   static ssize_t pwrite (ACE_HANDLE handle,
                          const void *buf,
                          size_t nbyte,
@@ -6524,7 +6530,7 @@ public:
   static int t_rcvuderr (ACE_HANDLE fildes,
                          struct t_uderr *uderr);
   static int t_snd (ACE_HANDLE fildes,
-                    char *buf,
+                    const char *buf,
                     u_int nbytes,
                     int flags);
   static int t_snddis (ACE_HANDLE fildes,
