@@ -1,3 +1,13 @@
+Thu Jul 15 17:35:07 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/ORB_Core.*:
+
+	  Changed TAO_ORB_Parameters pointer member to a non-pointer
+	  member.  The main reason why it was made a pointer member was to 
+	  reduce compile-time dependencies.  However, params.h is already
+	  included, so we gain nothing by keeping it a pointer.  It's
+	  safer this way, anyway.
+
 Thu Jul 15 18:19:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Makefile:
