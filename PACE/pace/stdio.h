@@ -374,7 +374,7 @@ extern "C" {
   */
 
   /**
-     PACE's implementation of the POSIX function sscanf.
+     PACE's implementation of the POSIX function tmpfile.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
