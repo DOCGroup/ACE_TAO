@@ -117,6 +117,7 @@ extern int yyleng;
   double		dval;		/* Double value		*/
   float			fval;		/* Float value		*/
   char			cval;		/* Char value		*/
+  ACE_CDR::WChar	wcval;		/* WChar value		*/
 
   UTL_String		*sval;		/* String value		*/
   char			*strval;	/* char * value		*/
@@ -186,6 +187,8 @@ extern int yyleng;
 %token <strval>	IDL_SCOPE_DELIMITOR
 %token		IDL_LEFT_SHIFT
 %token		IDL_RIGHT_SHIFT
+%token <wcval>	IDL_WCHAR_LITERAL
+%token		IDL_WSTRING_LITERAL
 
 /*
  * These are production names:
@@ -1071,6 +1074,11 @@ literal
 	| IDL_CHARACTER_LITERAL
 	{
 	  $$ = idl_global->gen()->create_expr($1);
+	}
+	| IDL_WCHAR_LITERAL
+	{
+	  ACE_OutputCDR::from_wchar wc ($1);
+	  $$ = idl_global->gen()->create_expr(wc);
 	}
 	| IDL_FLOATING_PT_LITERAL
 	{

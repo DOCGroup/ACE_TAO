@@ -72,6 +72,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_private.h"
 #include "y.tab.h"
 
+static ACE_CDR::WChar	idl_wchar_escape_reader(char *);
 static char		idl_escape_reader(char *);
 static double		idl_atof(char *);
 static long		idl_atoi(char *, long);
@@ -253,6 +254,16 @@ oneway		return IDL_ONEWAY;
 "'"\\."'"	{
 		  yylval.cval = idl_escape_reader(ace_yytext + 1);
 		  return IDL_CHARACTER_LITERAL;
+		}
+L"'"."'"	{
+		  // wide character constant
+		  yylval.wcval = ace_yytext [2];
+		  return IDL_WCHAR_LITERAL;
+		}
+L"'"\\u([0-9a-fA-F]{1,4})"'"	{
+		  // hexadecimal wide character constant
+		  yylval.wcval = idl_wchar_escape_reader(ace_yytext + 2);
+		  return IDL_WCHAR_LITERAL;
 		}
 ^#[ \t]*pragma[ \t].*{NL}	|
 ^\?\?=[ \t]*pragma[ \t].*{NL}	{/* remember pragma */
@@ -615,4 +626,27 @@ idl_escape_reader(
 	}
 	ACE_NOTREACHED  (break;)
     }
+}
+/*
+ * Convert escaped hex digits into a wchar
+ */
+static ACE_CDR::WChar
+idl_wchar_escape_reader (char *str)
+{
+  if (str[0] != '\\' || str[1] != 'u')
+    {
+      return 0;
+    }
+
+  int i;
+  // get the hex digits
+  for (i = 2; str[i] != '\0' && isxdigit (str[i]); i++)
+    {
+      continue;
+    }
+  char save = str[i];
+  str[i] = '\0';
+  ACE_CDR::WChar out = (ACE_CDR::WChar) idl_atoui (&str[2], 16);
+  str[i] = save;
+  return out;
 }
