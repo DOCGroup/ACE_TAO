@@ -147,5 +147,53 @@ namespace CIAO
 
      return 1;
     }
+
+   ComponentInterfaceDescription
+   CCD_Handler::component_interface_descr (
+     const ::Deployment::ComponentInterfaceDescription&  src)
+   {
+     ComponentInterfaceDescription cid;
+
+     XMLSchema::string< char > uuid ((src.UUID));
+     XMLSchema::string< char > label ((src.label));
+     XMLSchema::string< char > specifict ((src.specificType));
+    
+     cid.UUID (uuid);
+     cid.label (label);
+     cid.specificType (specifict);
+
+     ::CORBA::ULong total = src.supportedType.length ();
+     for (size_t i = 0; i < total; ++i)
+       {
+         XMLSchema::string< char > curr ((src.supportedType[i]));
+         cid.add_supportedType (curr);
+       }
+     
+     total = src.idlFile.length ();
+     for (size_t i = 0; i < total; ++i)
+       {
+         XMLSchema::string< char > curr ((src.idlFile[i]));
+         cid.add_idlFile (curr);
+       }
+
+     total = src.configProperty.length ();
+     for (size_t i = 0; i < total; ++i)
+       {
+         cid.add_configProperty (
+           Property_Handler::get_property (
+             src.configProperty[i]));
+       }
+     
+     total = src.port.length ();
+     for (size_t i = 0; i < total; ++i)
+       {
+         cid.add_port (
+           CPD_Handler::component_port_description (
+             src.port[i]));
+       }
+
+
+     return cid;
+   }
   }
 }

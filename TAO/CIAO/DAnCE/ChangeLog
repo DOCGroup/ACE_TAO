@@ -1,3 +1,38 @@
+Tue Oct 26 21:00:13 2004  Jules White  <Jules@dre.vanderbilt.edu>
+
+ 	* Config_Handlers/Property_Handler.cpp:
+ 	* Config_Handlers/Property_Handler.h:
+ 	* Config_Handlers/PSPE_Handler.cpp:
+ 	* Config_Handlers/PSPE_Handler.h:
+ 	* Config_Handlers/RDD_Handler.cpp:
+ 	* Config_Handlers/RDD_Handler.h:
+ 	* Config_Handlers/Req_Handler.cpp:
+ 	* Config_Handlers/Req_Handler.h:
+ 	* Config_Handlers/IRDD_Handler.cpp:
+ 	* Config_Handlers/IRDD_Handler.h:
+ 	* Config_Handlers/ID_Handler.cpp:
+ 	* Config_Handlers/ID_Handler.h:
+ 	* Config_Handlers/ERE_Handler.cpp:
+ 	* Config_Handlers/ERE_Handler.h:
+ 	* Config_Handlers/DataType_Handler.cpp:
+ 	* Config_Handlers/DataType_Handler.h:
+ 	* Config_Handlers/CRDD_Handler.cpp:
+ 	* Config_Handlers/CRDD_Handler.h:
+ 	* Config_Handlers/CPD_Handler.cpp:
+ 	* Config_Handlers/CPD_Handler.h:
+ 	* Config_Handlers/ComponentPropertyDescription_Handler.cpp:
+ 	* Config_Handlers/ComponentPropertyDescription_Handler.h:
+ 	* Config_Handlers/CEPE_Handler.cpp:
+ 	* Config_Handlers/CEPE_Handler.h:
+ 	* Config_Handlers/CCD_Handler.cpp:
+ 	* Config_Handlers/CCD_Handler.h:
+ 	* Config_Handlers/Any_Handler.cpp:
+ 	* Config_Handlers/Any_Handler.h:
+ 	* Config_Handlers/ADD_Handler.cpp:
+ 	* Config_Handlers/ADD_Handler.h:
+ 	
+ 	  Added methods to map from idl types back to XSC types.
+
 Sun Oct 10 22:58:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* ExecutionManager/DAM_Map.cpp:

@@ -49,6 +49,10 @@ namespace CIAO
         const PlanConnectionDescription &src,
         ::Deployment::PlanSubcomponentPortEndpoints &dest);
 
+      static PlanSubcomponentPortEndpoint
+      sub_component_port_endpoint (
+        const Deployment::PlanSubcomponentPortEndpoint &src);
+
     private:
       static void sub_component_port_endpoint (
         const PlanSubcomponentPortEndpoint &src,

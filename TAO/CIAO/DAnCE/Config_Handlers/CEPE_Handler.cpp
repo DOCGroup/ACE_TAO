@@ -42,5 +42,15 @@ namespace CIAO
       dest.portName =
         src.portName ().c_str ();
     }
+    
+    ComponentExternalPortEndpoint
+    CEPE_Handler::external_port_endpoint (
+      const ::Deployment::ComponentExternalPortEndpoint &src)
+    {
+      //MAJO Unfinished
+      XMLSchema::string< char > portname ((src.portName));
+      ComponentExternalPortEndpoint cepe (portname);
+      return cepe;
+    }
   }
 }

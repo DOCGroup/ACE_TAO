@@ -50,10 +50,12 @@ namespace CIAO
         ///This method takes a <Deployment::Requirement>
         ///and maps the values from the passed in XSC 
         ///Requirement to its members.
-        void get_Requirement (
+        static void get_Requirement (
                     Deployment::Requirement& toconfig,
                     Requirement& desc);          
-
+        static Requirement
+        Req_Handler::get_requirement (
+                         const Deployment::Requirement& src);
     };
   }
 }

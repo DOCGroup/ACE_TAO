@@ -47,6 +47,10 @@ namespace CIAO
        static bool component_interface_descr (
          const ComponentInterfaceDescription &src,
          ::Deployment::ComponentInterfaceDescription& dest);
+       static ComponentInterfaceDescription
+       component_interface_descr (
+         const ::Deployment::ComponentInterfaceDescription&  src);
+
     };
   }
 }

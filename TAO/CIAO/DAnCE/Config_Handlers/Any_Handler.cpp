@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Any_Handler.h"
+#include "DataType_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "tao/Any.h"
 
@@ -87,6 +88,18 @@ namespace CIAO
           CORBA::ULongLong val = value.ulonglong ();
           toconfig <<=val;
         }
+    }
+
+    Any get_any (const ::CORBA::Any& src)
+    {
+      //MAJO
+      //@Bala ... still haven't figured this one out yet
+      //I was saving it for last...going from corba::any
+      //to xsc DataValue
+      DataType type = DataType_Handler::data_type (src.type ());
+      DataValue value;
+      Any any (type,value);
+      return any;
     }
   }
 }

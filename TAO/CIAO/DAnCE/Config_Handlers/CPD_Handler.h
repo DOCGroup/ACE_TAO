@@ -50,8 +50,11 @@ namespace CIAO
      static void component_port_description (
          const ComponentPortDescription &desc,
          ::Deployment::ComponentPortDescription &toconfig);
-    };
-
+    
+     static ComponentPortDescription
+     component_port_description (
+         const Deployment::ComponentPortDescription& src);
+  };
  }
 }
 

@@ -40,5 +40,14 @@ namespace CIAO
       dest.location =
         src.location ().c_str ();
     }
+   
+    ExternalReferenceEndpoint 
+    ERE_Handler::external_ref_endpoint (
+        const Deployment::ExternalReferenceEndpoint& src)
+    {
+      XMLSchema::string< char > loc ((src.location));
+      ExternalReferenceEndpoint erp (loc);
+      return erp;
+    }
   }
 }

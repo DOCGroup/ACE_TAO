@@ -49,7 +49,9 @@ namespace CIAO
       static bool external_ref_endpoints (
         const PlanConnectionDescription &src,
         ::Deployment::ExternalReferenceEndpoints &dest);
-
+      
+      static ExternalReferenceEndpoint external_ref_endpoint (
+        const Deployment::ExternalReferenceEndpoint& src);
     private:
       static void external_ref_endpoint (
         const ExternalReferenceEndpoint &src,

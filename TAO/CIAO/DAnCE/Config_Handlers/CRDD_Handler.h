@@ -54,7 +54,11 @@ namespace CIAO
         ///ConnectionResourceDeploymentDescription to its members.
         void get_ConnectionResourceDeploymentDescription (
                     Deployment::ConnectionResourceDeploymentDescription& toconfig,
-                    ConnectionResourceDeploymentDescription& desc);          
+                    ConnectionResourceDeploymentDescription& desc);   
+                    
+        ConnectionResourceDeploymentDescription
+        connection_resource_depl_desc (
+          const ::Deployment::ConnectionResourceDeploymentDescription& src);       
 
     };
   }
