@@ -5513,6 +5513,7 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
     sig = &local_sig;
 #if defined (ACE_HAS_THREADS)
 #if defined (__FreeBSD__) || defined (CHORUS)
+  ACE_USUSED_ARG (set);
   ACE_NOTSUP_RETURN (-1);
 #elif (defined (ACE_HAS_STHREADS) && (_POSIX_C_SOURCE - 0 < 199506L)) || defined (ACE_HAS_FSU_PTHREADS)
   *sig = ::sigwait (set);
@@ -6544,7 +6545,9 @@ ACE_OS::msgsnd (int int_id, const void *buf, size_t len, int flags)
 {
   // ACE_TRACE ("ACE_OS::msgsnd");
 #if defined (ACE_HAS_SYSV_IPC)
-#if defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_HAS_NONCONST_MSGSND) || defined (ACE_LACKS_SOME_POSIX_PROTOTYPES)
+#if defined (ACE_HAS_NONCONST_MSGSND)
+  ACE_OSCALL_RETURN (::msgsnd (int_id, (void *) buf, len, flags), int, -1);
+#elif defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_LACKS_SOME_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::msgsnd (int_id, (msgbuf *) buf, len, flags), int, -1);
 #else
   ACE_OSCALL_RETURN (::msgsnd (int_id, buf, len, flags), int, -1);
@@ -6645,7 +6648,7 @@ ACE_INLINE char *
 ACE_OS::dlerror (void)
 {
   // ACE_TRACE ("ACE_OS::dlerror");
-#if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
+#if defined (AC1E_HAS_SVR4_DYNAMIC_LINKING)
   ACE_OSCALL_RETURN ((char *)::dlerror (), char *, 0);
 #elif defined (__hpux)
   ACE_OSCALL_RETURN (::strerror(errno), char *, 0);
