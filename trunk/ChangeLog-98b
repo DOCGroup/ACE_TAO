@@ -1,3 +1,16 @@
+Thu Jul 23 22:17:41 1998  Arturo Montes  <mitosys@colomsat.net.co>
+
+        * ace/OS.cpp,Task.cpp,Thread_Manager.cpp: unify the Thread
+          Adapter use between general ACE threads and threads spawned
+          with a Thread_Manager.
+
+          With this patch we add a new flag: ACE_USE_THREAD_MANAGER_ADAPTER.
+          If you set this flag in your config file, ACE will use the
+          ace_thread_manager_adapter in Thread_Manager, matching the current
+          behaviour.  If you omit this flag, ACE will use ace_thread_adapter.
+          This change save a lot of source code and will let in the future
+          incorporate ACE_Thread at_exit.
+
 Thu Jul 23 15:30:41 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Token.{h,i,cpp}: On platforms that support timed acquire
