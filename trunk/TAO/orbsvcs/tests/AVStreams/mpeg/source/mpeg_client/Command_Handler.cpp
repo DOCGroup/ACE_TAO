@@ -117,22 +117,8 @@ Command_Handler::handle_input (ACE_HANDLE fd)
         {
         case CmdINIT:
           this->init_video ();
-        
-          /* following for automatic expriment plan when invoked by Developer */
-          if (getuid() == DEVELOPER_UID && videoSocket >= 0) {
-            fp = fopen(EXP_PLAN_FILE, "r");
-            if (fp != NULL) {
-              static char expCmd[6] = {CmdPOSITIONrelease, 0, 0, 0, 0, CmdPLAY};
-              fprintf(stderr,
-                      "Warning: Auto-exp plan is to be conducted as instructed by file %s\n",
-                      EXP_PLAN_FILE);
-              cmdBuffer = expCmd;
-              cmdBytes = 6;
-              cmdAcks = 2;
-            }
-          }
-          else fp = NULL;
-      
+          // automatic experiment code zapped :-)
+          fp = NULL;
           break;
         case CmdSTOP:
           this->stop();
@@ -147,69 +133,9 @@ Command_Handler::handle_input (ACE_HANDLE fd)
           this->step ();
           break;
         case CmdPLAY:
-
-          /* following is for automatic experiment plan */
-          if (fp != NULL) {
-            char buf[64];
-            while (fgets(buf, 64, fp) != NULL) {
-              if (!strncmp("Delay", buf, 5)) {
-                int val;
-                sscanf(strchr(buf, ' '), "%d", &val);
-                if (val < 0) val = 1;
-                else if (val > 60) val = 60;
-                fprintf(stderr, "Auto-exp: Delay for %d seconds\n", val);
-                usleep(val * 1000000);
-              }
-              else if (!strncmp("Experiment", buf, 5)) {
-                fprintf(stderr, "Auto-exp: to perform an experiment\n");
-                while (fgets(buf, 64, fp) != NULL && buf[0] > ' ') {
-                  if (!strncmp("playSpeed", buf, 5)) {
-                    double fps;
-                    sscanf(strchr(buf, ' '), "%lf", &fps);
-                    /* following code is copied from definition of set_speed(void) */
-                    shared->framesPerSecond = (int)fps;
-                    shared->usecPerFrame = (int) (1000000.0/fps);
-                    if (audioSocket >= 0)
-                      {
-                        double sps = shared->audioPara.samplesPerSecond *
-                          fps / shared->pictureRate;
-                        shared->samplesPerSecond = (int)sps;
-                        shared->usecPerSample = (int)(1000000.0/sps);
-                      }
-                  }
-                  else if (!strncmp("frameRateLimit", buf, 5)) {
-                    sscanf(strchr(buf, ' '), "%f", &shared->config.frameRateLimit);
-                  }
-                  else if (!strncmp("maxSPframes", buf, 5)) {
-                    sscanf(strchr(buf, ' '), "%d", &shared->config.maxSPframes);
-                  }
-                  else if (!strncmp("filterPara", buf, 5)) {
-                    sscanf(strchr(buf, ' '), "%d", &shared->config.filterPara);
-                  }
-                  else if (!strncmp("collectStat", buf, 5)) {
-                    sscanf(strchr(buf, ' '), "%d", &shared->config.collectStat);
-                  }
-                  else if (!strncmp("qosEffective", buf, 5)) {
-                    sscanf(strchr(buf, ' '), "%d", &shared->config.qosEffective);
-                  }
-                  else if (!strncmp("syncEffective", buf, 5)) {
-                    sscanf(strchr(buf, ' '), "%d", &shared->config.syncEffective);
-                  }
-                }
-                usleep(500000);
-                shared->loopBack = 1;
-                break;
-              }
-              else if (!strncmp("EndExperiment", buf, 5)) {
-                fprintf(stderr, "Auto-exp ends.\n");
-                usleep(2000000);
-                fclose(fp);
-                exit(0);
-              }
-            }
-          }
-
-          this->play (fp != NULL,TAO_TRY_ENV);
+          // automatic experiment code zapped :-)
+          this->play (fp != NULL,
+                      TAO_TRY_ENV);
           TAO_CHECK_ENV;
           break;
         case CmdPOSITION:
@@ -1053,20 +979,79 @@ Command_Handler::play (int auto_exp,
   return 0;
 }
 
-CORBA::Boolean 
+int
+Command_Handler::position_action (int operation_tag)
+{
+  int val;
+  unsigned char tmp = CmdDONE;
+  CmdRead ((char*)&val, 4);
+  if (shared->live) {
+    beep();
+  }
+  else {
+    shared->locationPosition = val;
+    this->stop_playing ();
+    NewCmd(CmdPOSITION);
+    if (videoSocket >= 0)
+    {
+      int gop = shared->nextGroup;
+      Video_Control::POSITIONpara_var para (new Video_Control::POSITIONpara);
+      shared->nextGroup = ((shared->totalGroups-1) * val) / POSITION_RANGE;
+      /*
+      fprintf(stderr, "CTR: POSITION%s %d (nextGop %d). . .\n",
+              operation_tag ? "_released" : "", val, shared->nextGroup);
+      */
+      if (gop != shared->nextGroup || operation_tag)
+      {
+        shared->nextFrame = ((shared->totalFrames-1) * val) / POSITION_RANGE;
+        para->sn = htonl(shared->cmdsn);
+        para->nextGroup = htonl(shared->nextGroup);
+        tmp = CmdPOSITION;
+        TAO_TRY
+          {
+            CORBA::Boolean result;
+            result = this->video_control_->position (para.in (),
+                                                     TAO_TRY_ENV);
+            TAO_CHECK_ENV;
+            if (result == (CORBA::B_FALSE))
+              return -1;
+            ACE_DEBUG ((LM_DEBUG,"(%P|%t) position done \n"));
+          }
+        TAO_CATCHANY
+          {
+            TAO_TRY_ENV.print_exception ("video_control_->position (..)");
+            return -1;
+          }
+        TAO_ENDTRY;
+        if (operation_tag)  /* release or LOOPrewind */
+          wait_display();
+      }
+      if (operation_tag && audioSocket >= 0) /* needs to adjust audio position */
+      {
+        shared->nextSample = (int)((double)shared->audioPara.samplesPerSecond *
+                             ((double)shared->nextFrame / shared->pictureRate));
+      }
+    }
+    else if (audioSocket >= 0)
+      shared->nextSample  = (shared->totalSamples-1) * val / POSITION_RANGE;
+  }
+  tmp = CmdDONE;
+  CmdWrite(&tmp, 1);
+  return 0;
+}
+
+int
 Command_Handler::position (void)
                            
 {
-  ::position ();
-  return 0;
+  return this->position_action (0);
 }
 
 int
 Command_Handler::position_release (void)
                            
 {
-  ::position_release ();
-  return 0;
+  return this->position_action (1);
 }
 
 int

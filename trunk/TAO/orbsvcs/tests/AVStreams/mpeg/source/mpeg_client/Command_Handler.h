@@ -83,8 +83,9 @@ private:
   CORBA::Boolean play (int flag,
                        CORBA::Environment& env);
                       
-  
-  CORBA::Boolean position (void);
+  int position_action (int operation_tag);
+
+  int position (void);
   
   int position_release (void);
 
