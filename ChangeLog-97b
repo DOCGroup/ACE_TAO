@@ -1,4 +1,7 @@
-Sat Nov 22 02:47:09 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+Sat Nov 22 03:59:34 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* ace/Acceptor.cpp (activate_svc_handler): Should be if (open (...) ==
+	  -1) then error, not if (open (...) != -1) then error.
 
 	* ace/ACE.cpp (set_handle_limit): Removed a duplicated ACE_TRACE
 	  macro.
