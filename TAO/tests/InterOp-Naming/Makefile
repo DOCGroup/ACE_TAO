@@ -84,7 +84,10 @@ INS_test_server:$(addprefix $(VDIR),$(SIMPLE_SERVER_OBJS))
 INS_test_client:$(addprefix $(VDIR),$(SIMPLE_CLIENT_OBJS))
 		$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-.PRECIOUS: INSC.cpp
+.PRECIOUS: $(foreach ext, $(IDL_EXT), INS$(ext))
+
+realclean: clean
+	-$(RM) $(foreach ext, $(IDL_EXT), INS$(ext))
 
 #----------------------------------------------------------------------------
 #       Dependencies
