@@ -1,8 +1,15 @@
+Thu Jul 15 12:59:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Object_Adapter.cpp (find_transient_poa): Changed use of
+	  ORB_Core::root_poa() such that an environment variable was
+	  passed to the function instead of it using the default
+	  environment.  Thanks to Carlos for pointing this out.
+
 Thu Jul 15 13:00:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
 	  Added a check for discriminator types of char, wchar and boolean
-	  in the CDR operator code generation, so that the 
+	  in the CDR operator code generation, so that the
 	  appropriate CORBA_Any::to_* struct can be used. Thanks to
 	  Roger Egbers <regbers@isrglobal.com> for reporting this
 	  bug and sending in an example IDL file.
