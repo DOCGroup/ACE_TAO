@@ -170,8 +170,7 @@ public:
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
-                       CORBA::SystemException,
-                       DynamicAny::DynAny::TypeMismatch
+                       CORBA::SystemException
       ));
 
     virtual CORBA::Boolean equal (

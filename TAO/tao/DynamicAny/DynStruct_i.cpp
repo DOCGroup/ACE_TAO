@@ -390,8 +390,7 @@ TAO_DynStruct_i::from_any (const CORBA_Any& any,
 CORBA::Any_ptr
 TAO_DynStruct_i::to_any (CORBA::Environment& ACE_TRY_ENV)
       ACE_THROW_SPEC ((
-                       CORBA::SystemException,
-                       DynamicAny::DynAny::InvalidValue
+                       CORBA::SystemException
       ))
 {
   TAO_OutputCDR out_cdr;
