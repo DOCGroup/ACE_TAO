@@ -1,3 +1,8 @@
+Sat Feb  7 14:11:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.{h,cpp}:
+          Fixed include path
+
 Sat Feb  7 14:09:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
