@@ -86,6 +86,10 @@ main (int argc, char *argv[])
                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+#ifndef ACE_WIN32
+      orb->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+#else
       while (1)
         {
           ACE_Time_Value tv (1, 0);
@@ -93,6 +97,7 @@ main (int argc, char *argv[])
           ACE_TRY_CHECK;
           control.handle_timeout (tv, 0);
         }
+#endif
 
       root_poa->destroy (1, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;

@@ -17,7 +17,7 @@ public:
 
   // Receive the timeout event
   virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              void *arg);
+                              const void *arg);
 
 private:
   Hash_ReplicaControl *adaptee_;
@@ -34,7 +34,7 @@ public:
              CORBA::Environment &ACE_TRY_ENV);
 
   int handle_timeout (const ACE_Time_Value &current_time,
-                      void *arg);
+                      const void *arg);
   // Handle a timeout event
 
   void request_received (void);

@@ -40,7 +40,8 @@ CPP_SRCS += \
 	LoadBalancing/LoadBalancer_i \
 	LoadBalancing/LoadBalancing_Strategy \
 	LoadBalancing/ReplicaProxy \
-	LoadBalancing/Round_Robin_Strategy
+	LoadBalancing/Round_Robin_Strategy \
+	LoadBalancing/Minimum_Dispersion
 
 IDL_FILES = \
         $(addsuffix S, $(IDL_SRCS)) \

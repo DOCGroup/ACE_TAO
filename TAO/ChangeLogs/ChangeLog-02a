@@ -1,25 +1,50 @@
+Sun Mar 26 20:15:17 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Makefile.LoadBalancing:
+          Add new load balancing strategy
+
+        * orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.cpp:
+          Several improvements to this strategy, i tried to detect
+          crashed servers, not very successfully.
+
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp:
+          More fixes to the load balancer.
+
+        * orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.h:
+        * orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
+          Fine tune the load measurement algorithm.  Try to make the load
+          less sensible to transient spikes.
+
+        * orbsvcs/tests/LoadBalancing/server.cpp:
+          The Win32 workaround is not the Right Thing [tm]
+
+        * orbsvcs/tests/LoadBalancing/client.cpp:
+          Try to improve fault tolerance, had to back it up, Forwarding
+          does not seems to work right.
+
 Sun Mar 26 13:53:40 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/LoadBalancer/LoadBalancer.h:
-	* orbsvcs/LoadBalancer/LoadBalancer.cpp
-	* orbsvcs/orbsvcs/LoadBalancing.dsp:
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.h:
-	* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
-	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
-	  Implemented new load balancing strategy.
+        * orbsvcs/LoadBalancer/LoadBalancer.h:
+        * orbsvcs/LoadBalancer/LoadBalancer.cpp
+        * orbsvcs/orbsvcs/LoadBalancing.dsp:
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.h:
+        * orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
+          Implemented new load balancing strategy.
 
-	* orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.h:
-	* orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
-	  Add debugging messages
+        * orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.h:
+        * orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
+          Add debugging messages
 
-	* orbsvcs/tests/LoadBalancing/server.cpp:
-	  Workaround problems on Win32 implementations of the Reactor.
+        * orbsvcs/tests/LoadBalancing/server.cpp:
+          Workaround problems on Win32 implementations of the Reactor.
 
 Sat Mar 25 21:27:11 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -114,24 +139,24 @@ Sat Mar 25 16:31:29 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Fri Mar 24 21:32:30 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* docs/releasenotes/index.html:
-	  Updated the section on the Notification Service.
-	  Thanks to Roger Tragin <rtragin@wpine.com> for reminding to update.
+        * docs/releasenotes/index.html:
+          Updated the section on the Notification Service.
+          Thanks to Roger Tragin <rtragin@wpine.com> for reminding to update.
 
 Fri Mar 24 17:15:07 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IIOP_Acceptor.cpp (is_collocated):
-	* tao/SHMIOP_Acceptor.cpp (is_collocated):
-	* tao/UIOP_Acceptor.cpp (is_collocated):
+        * tao/IIOP_Acceptor.cpp (is_collocated):
+        * tao/SHMIOP_Acceptor.cpp (is_collocated):
+        * tao/UIOP_Acceptor.cpp (is_collocated):
 
-	  Check that dynamically cast pointer is actually valid
-	  (i.e. non-zero) prior to using it.
+          Check that dynamically cast pointer is actually valid
+          (i.e. non-zero) prior to using it.
 
 Fri Mar 24 18:38:20 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp: Fixed a typo where
-	  ACE_Null_Mutex was being passed as ACE_null_mutex.  Thanks to
-	  Thomas Groth <groth.th@stn-atlas.de> for reporting this.
+        * orbsvcs/tests/AVStreams/Full_Profile/server.cpp: Fixed a typo where
+          ACE_Null_Mutex was being passed as ACE_null_mutex.  Thanks to
+          Thomas Groth <groth.th@stn-atlas.de> for reporting this.
 
 Fri Mar 24 15:40:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -155,9 +180,9 @@ Fri Mar 24 15:40:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Mar 24 10:21:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_expression.cpp:
-	  Initialized some variables to avoid cxx warnings,
-	  and made some cosmetic changes.
+        * TAO_IDL/ast/ast_expression.cpp:
+          Initialized some variables to avoid cxx warnings,
+          and made some cosmetic changes.
 
 Thu Mar 23 21:49:36 2000  Darrell Brunsch <brunsch@uci.edu>
 
