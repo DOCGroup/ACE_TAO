@@ -1,3 +1,9 @@
+Thu Nov 27 16:03:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp:
+          Added missing const qualifiers to fix errors in the SunForte 8 build
+
 Thu Nov 27 15:44:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_tmplinst.cpp:
