@@ -309,8 +309,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Get_Opt.i Manager.h \
-  Servant_Locator.h \
+  $(ACE_ROOT)/ace/Get_Opt.i \
+  Manager.h Servant_Locator.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \

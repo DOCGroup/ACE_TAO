@@ -1480,7 +1480,8 @@ realclean:
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  dataC.h $(TAO_ROOT)/tao/corba.h \
+  dataC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Message_Block.h \

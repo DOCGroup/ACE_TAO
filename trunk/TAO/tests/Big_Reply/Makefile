@@ -521,7 +521,8 @@ realclean: clean
 
 .obj/Big_Reply_i.o .obj/Big_Reply_i.so .shobj/Big_Reply_i.o .shobj/Big_Reply_i.so: Big_Reply_i.cpp Big_Reply_i.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h $(TAO_ROOT)/tao/corba.h \
+  TestC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \

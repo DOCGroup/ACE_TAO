@@ -19591,8 +19591,8 @@ realclean:
   $(ACE_ROOT)/ace/Singleton.cpp \
   $(ACE_ROOT)/ace/Thread_Manager.i \
   ORB_Core.i Timeprobe.h \
-  $(ACE_ROOT)/ace/Timeprobe.h debug.h \
-  Pluggable_Messaging_Utils.h \
+  $(ACE_ROOT)/ace/Timeprobe.h \
+  debug.h Pluggable_Messaging_Utils.h \
   $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
   Pluggable_Messaging.h \
   $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
@@ -28513,8 +28513,9 @@ realclean:
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl IOPC.h \
-  Any.h $(TAO_ROOT)/tao/CDR.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  IOPC.h Any.h \
+  $(TAO_ROOT)/tao/CDR.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -35447,7 +35448,8 @@ realclean:
   $(TAO_ROOT)/tao/Services.i \
   CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
-  PolicyC.h $(TAO_ROOT)/tao/ORB.i \
+  PolicyC.h \
+  $(TAO_ROOT)/tao/ORB.i \
   Environment.h Policy_Manager.h \
   $(TAO_ROOT)/tao/Policy_Set.h \
   $(TAO_ROOT)/tao/Policy_Set.i \

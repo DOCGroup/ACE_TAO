@@ -251,7 +251,8 @@ realclean: clean
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Oneway_Receiver.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h $(TAO_ROOT)/tao/corba.h \
+  TestC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -453,7 +454,8 @@ realclean: clean
 
 .obj/Oneway_Receiver.o .obj/Oneway_Receiver.so .shobj/Oneway_Receiver.o .shobj/Oneway_Receiver.so: Oneway_Receiver.cpp Oneway_Receiver.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h $(TAO_ROOT)/tao/corba.h \
+  TestC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -653,7 +655,8 @@ realclean: clean
 
 .obj/Shutdown_Helper.o .obj/Shutdown_Helper.so .shobj/Shutdown_Helper.o .shobj/Shutdown_Helper.so: Shutdown_Helper.cpp Shutdown_Helper.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h $(TAO_ROOT)/tao/corba.h \
+  TestC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \

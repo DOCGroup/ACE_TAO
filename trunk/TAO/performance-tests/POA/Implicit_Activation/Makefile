@@ -59,7 +59,8 @@ realclean: clean
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Factory.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h $(TAO_ROOT)/tao/corba.h \
+  TestC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -462,7 +463,8 @@ realclean: clean
 
 .obj/collocated.o .obj/collocated.so .shobj/collocated.o .shobj/collocated.so: collocated.cpp Simple.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h $(TAO_ROOT)/tao/corba.h \
+  TestC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -674,7 +676,8 @@ realclean: clean
 
 .obj/Factory.o .obj/Factory.so .shobj/Factory.o .shobj/Factory.so: Factory.cpp Factory.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h $(TAO_ROOT)/tao/corba.h \
+  TestC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -874,7 +877,8 @@ realclean: clean
 
 .obj/Simple.o .obj/Simple.so .shobj/Simple.o .shobj/Simple.so: Simple.cpp Simple.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h $(TAO_ROOT)/tao/corba.h \
+  TestC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \

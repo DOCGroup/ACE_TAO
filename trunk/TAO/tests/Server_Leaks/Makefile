@@ -244,7 +244,8 @@ realclean: clean
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Ping_Service.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h $(TAO_ROOT)/tao/corba.h \
+  TestC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -446,7 +447,8 @@ realclean: clean
 
 .obj/Ping_Service.o .obj/Ping_Service.so .shobj/Ping_Service.o .shobj/Ping_Service.so: Ping_Service.cpp Ping_Service.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h $(TAO_ROOT)/tao/corba.h \
+  TestC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \

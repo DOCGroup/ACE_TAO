@@ -251,7 +251,8 @@ realclean: clean
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Blocking_Sync_None.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h $(TAO_ROOT)/tao/corba.h \
+  TestC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -453,7 +454,8 @@ realclean: clean
 
 .obj/Blocking_Sync_None.o .obj/Blocking_Sync_None.so .shobj/Blocking_Sync_None.o .shobj/Blocking_Sync_None.so: Blocking_Sync_None.cpp Blocking_Sync_None.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h $(TAO_ROOT)/tao/corba.h \
+  TestC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
