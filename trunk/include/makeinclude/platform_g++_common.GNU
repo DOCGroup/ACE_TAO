@@ -40,5 +40,9 @@ endif
 # versioning
 #
 ifneq ($(SONAME),)
-  SOFLAGS += -Wl,-h -Wl,$(SONAME)
+  ifeq ($(with_ld),hpux)
+    SOFLAGS += -Wl,+h -Wl,$(SONAME)
+  else
+    SOFLAGS += -Wl,-h -Wl,$(SONAME)
+  endif
 endif
