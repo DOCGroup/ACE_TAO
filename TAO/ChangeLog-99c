@@ -8,6 +8,10 @@ Fri Oct  1 10:23:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  it can't be done until all the arithmetic, logical and
 	  compare opertors are implemented.
 
+	* tests/IDL_Test/constants.idl:
+	  Added some test constants to keep a check on this and
+	  previous fixes to constant literal operators.
+
 Fri Oct 01 07:20:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_visitor_interface/ami_handler_fwd_ch.cpp,
