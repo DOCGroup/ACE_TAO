@@ -71,13 +71,6 @@ TAO_UIOP_Connection_Handler::~TAO_UIOP_Connection_Handler (void)
 }
 
 
-// @@ Should I do something here to enable non-blocking?? (Alex).
-// @@ Alex: I don't know if this is the place to do it, but the way to
-//    do it is:
-//    if (this->peer ().enable (ACE_NONBLOCK) == -1)
-//       return -1;
-//    Probably we will need to use the transport to decide if it is
-//    needed or not.
 
 int
 TAO_UIOP_Connection_Handler::open (void*)
@@ -85,6 +78,9 @@ TAO_UIOP_Connection_Handler::open (void*)
   if (this->set_socket_option (this->peer (),
                                this->uiop_properties_->send_buffer_size,
                                this->uiop_properties_->recv_buffer_size) == -1)
+    return -1;
+
+  if (this->peer ().enable (ACE_NONBLOCK) == -1)
     return -1;
 
   // Called by the <Strategy_Acceptor> when the handler is completely

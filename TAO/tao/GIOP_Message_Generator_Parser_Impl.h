@@ -37,9 +37,10 @@
 class TAO_Export TAO_GIOP_Message_Generator_Parser_Impl
 {
 public:
+
   /// Performs a check of the revision numbers
-  CORBA::Boolean check_revision (CORBA::Octet incoming_major,
-                                 CORBA::Octet incoming_minor);
+  static CORBA::Boolean check_revision (CORBA::Octet incoming_major,
+                                        CORBA::Octet incoming_minor);
 
   /// Version 1.0 of GIOP
   TAO_GIOP_Message_Generator_Parser_10 tao_giop_10;
