@@ -200,8 +200,8 @@ namespace CIAO
         {
           DOMNamedNodeMap* named_node_map = node->getAttributes ();
           int length = named_node_map->getLength ();
-          CORBA::ULong i (domain.interconnect.length ());
-          domain.interconnect.length (i + 1);
+          CORBA::ULong i (domain.bridge.length ());
+          domain.bridge.length (i + 1);
           if (length == 1)
             {
               this->process_bridge
