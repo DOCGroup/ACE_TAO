@@ -35,7 +35,7 @@ namespace TAO
        public virtual ACE_Service_Object
     {
     public:
-      virtual ~Policy_Strategy (void);
+      virtual ~Policy_Strategy (void) {};
 
       virtual void strategy_init(CORBA::PolicyList *policy_list) = 0;
     };

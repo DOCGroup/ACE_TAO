@@ -96,6 +96,8 @@ namespace TAO
     class TAO_PortableServer_Export Active_Policy_Strategies
     {
     public:
+      Active_Policy_Strategies();
+
       void update (Cached_Policies &policies
                    ACE_ENV_ARG_DECL);
 

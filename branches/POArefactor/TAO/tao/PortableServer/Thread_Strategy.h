@@ -17,8 +17,14 @@
 #include "portableserver_export.h"
 #include "PolicyFactory.h"
 #include "PortableServerC.h"
-#include "PolicyStrategy.h"
+#include "Policy_Strategy.h"
 #include "ace/Service_Config.h"
+
+// Locking
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -42,14 +48,11 @@ namespace TAO
     public:
       virtual ~Thread_Strategy (void);
 
-      virtual void enter () = 0;
+      virtual int enter () = 0;
 
-      virtual void exit () = 0;
+      virtual int exit () = 0;
 
-      void strategy_init (CORBA::PolicyList *policy_list)
-      {
-        // dependent on type create the correct strategy.
-      }
+      void strategy_init (CORBA::PolicyList *policy_list);
     };
 
     class TAO_PortableServer_Export Single_Thread_Strategy :
@@ -58,15 +61,9 @@ namespace TAO
     public:
       virtual ~Single_Thread_Strategy (void);
 
-      virtual void enter ()
-      {
-        lock.acquire();
-      }
+      virtual int enter ();
 
-      virtual void exit ()
-      {
-        lock.release();
-      }
+      virtual int exit ();
 
     private:
       TAO_SYNCH_RECURSIVE_MUTEX lock_;
@@ -78,15 +75,9 @@ namespace TAO
     public:
       virtual ~ORBControl_Thread_Strategy (void);
 
-      virtual void enter ()
-      {
-        // Noop
-      }
+      virtual int enter ();
 
-      virtual void exit ()
-      {
-        // Noop
-      }
+      virtual int exit ();
     };
   }
 }

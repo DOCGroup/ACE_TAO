@@ -395,6 +395,9 @@ public:
   /// Accessor for cached POA policies.
   TAO::Portable_Server::Cached_Policies &cached_policies (void);
 
+  /// Accessor for active policy strategies.
+  TAO::Portable_Server::Active_Policy_Strategies &active_policy_strategies (void);
+
   /// This method gives the policies that are exposed to the client.
   /// These policies are shipped within the IOR.
   virtual CORBA::PolicyList *client_exposed_policies (
@@ -921,6 +924,8 @@ protected:
   PortableInterceptor::AdapterState adapter_state_;
 
   TAO::Portable_Server::Cached_Policies cached_policies_;
+
+  TAO::Portable_Server::Active_Policy_Strategies active_policy_strategies_;
 
   int delete_active_object_map_;
 

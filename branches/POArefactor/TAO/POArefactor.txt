@@ -1,3 +1,23 @@
+Thu Oct  7 10:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Object_Adapter.cpp:
+          Instead of checking the thread policy value, use the thread strategy
+          to obtain and release the lock.
+
+        * tao/PortableServer/Thread_Strategy.{h,cpp}:
+          Implemented this class in cpp file, give enter/exit an int return
+          value
+
+        * tao/PortableServer/POA_Cached_Policies.{h,cpp}:
+          Implemented Active_Policy_Strategies for thread strategy, just to
+          show the idea, have to use a factory and svc conf in the future
+
+        * tao/PortableServer/POA.{h,cpp,i}:
+          Added Active_Policy_Strategies as member, update it on construction
+          of the POA so that the strategies are created. When this is the
+          correct way to go, the code belonging to the single thread lock and
+          the lock itself can be zapped.
+
 Thu Oct  7 08:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Object_Adapter.cpp:

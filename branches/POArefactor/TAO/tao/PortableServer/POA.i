@@ -732,6 +732,12 @@ TAO_POA::cached_policies (void)
   return this->cached_policies_;
 }
 
+TAO::Portable_Server::Active_Policy_Strategies &
+TAO_POA::active_policy_strategies (void)
+{
+  return this->active_policy_strategies_;
+}
+
 ACE_INLINE void *
 TAO_POA::thread_pool (void) const
 {

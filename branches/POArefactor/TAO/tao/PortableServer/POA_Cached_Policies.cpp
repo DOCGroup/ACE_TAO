@@ -10,6 +10,10 @@
 #include "ServantRetentionPolicyC.h"
 #include "ThreadPolicyC.h"
 
+    #include "Thread_Strategy.h"
+
+
+
 #if !defined (__ACE_INLINE__)
 # include "POA_Cached_Policies.i"
 #endif /* ! __ACE_INLINE__ */
@@ -158,5 +162,33 @@ namespace TAO
 
     #endif /* TAO_HAS_MINIMUM_POA == 0 */
     }
+
+
+    Active_Policy_Strategies::Active_Policy_Strategies() :
+      thread_strategy_(0)
+    {
+    }
+
+    void
+    Active_Policy_Strategies::update (Cached_Policies &policies
+                                      ACE_ENV_ARG_DECL)
+    {
+      // This has to changed into having a factory that checks this and loads the correct strategy
+      if (policies.thread() == ::PortableServer::ORB_CTRL_MODEL)
+      {
+        ACE_NEW (thread_strategy_, ORBControl_Thread_Strategy);
+      }
+      else
+      {
+        ACE_NEW (thread_strategy_, Single_Thread_Strategy);
+      }
+    }
+
+    Thread_Strategy*
+    Active_Policy_Strategies::thread_strategy (void) const
+    {
+      return thread_strategy_;
+    }
+
   }
 }

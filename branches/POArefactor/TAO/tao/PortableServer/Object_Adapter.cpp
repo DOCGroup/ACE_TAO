@@ -52,6 +52,8 @@
 
 #include "ace/Dynamic_Service.h"
 
+#include "Thread_Strategy.h"
+
 ACE_RCSID (PortableServer,
            Object_Adapter,
            "$Id$")
@@ -1701,14 +1703,11 @@ TAO_Object_Adapter::Servant_Upcall::single_threaded_poa_setup (ACE_ENV_SINGLE_AR
   // lock.  Otherwise, the thread that wants to release this lock will
   // not be able to do so since it can't acquire the object adapterx
   // lock.
-  if (this->poa_->thread_policy () == PortableServer::SINGLE_THREAD_MODEL)
-    {
-      int result = this->poa_->single_threaded_lock ().acquire ();
+    int result = this->poa_->active_policy_strategies().thread_strategy ()->enter();
 
-      if (result == -1)
-        // Locking error.
-        ACE_THROW (CORBA::OBJ_ADAPTER ());
-    }
+    if (result == -1)
+      // Locking error.
+      ACE_THROW (CORBA::OBJ_ADAPTER ());
 #else
   ACE_ENV_ARG_NOT_USED; // FUZZ: ignore check_for_ace_check
 #endif /* !TAO_HAS_MINIMUM_POA == 0 */
@@ -1719,8 +1718,7 @@ TAO_Object_Adapter::Servant_Upcall::single_threaded_poa_cleanup (void)
 {
 #if (TAO_HAS_MINIMUM_POA == 0)
   // Since the servant lock was acquired, we must release it.
-  if (this->poa_->thread_policy () == PortableServer::SINGLE_THREAD_MODEL)
-    this->poa_->single_threaded_lock ().release ();
+  int result = this->poa_->active_policy_strategies().thread_strategy ()->exit ();
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 }
 
