@@ -91,6 +91,12 @@ namespace Receiver_Impl
       protected:
       // Methods that manage this component's connections and consumers.
 
+      /*
+      virtual ::Components::ConsumerDescriptions *
+      get_all_consumers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+      */
+
       virtual void
       connect_read_message (
       ::Hello::ReadMessage_ptr
@@ -165,6 +171,12 @@ namespace Receiver_Impl
       ACE_THROW_SPEC ((
       ::CORBA::SystemException,
       ::Components::NoConnection));
+
+      /*
+      virtual ::Components::ConsumerDescriptions *
+      get_all_consumers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+      */
 
       virtual ::Hello::ReadMessage_ptr
       get_connection_read_message (

@@ -106,9 +106,11 @@ namespace CIAO
     get_all_facets (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    
     virtual ::Components::ConsumerDescriptions *
     get_all_consumers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
+    
 
     virtual ::Components::EventConsumerBase_ptr
     get_consumer (const char *sink_name

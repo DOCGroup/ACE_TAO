@@ -52,6 +52,16 @@ namespace Receiver_Impl
       this->ciao_uses_read_message_.in ());
     }
 
+    /*
+    ::Components::ConsumerDescriptions *
+    Receiver_Context::get_all_consumers (
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException))
+    {
+    }
+    */
+
     void
     Receiver_Context::connect_read_message (
     ::Hello::ReadMessage_ptr c
@@ -167,6 +177,18 @@ namespace Receiver_Impl
         ACE_UNUSED_ARG (descr_value);
       }
     }
+
+    /*
+    ::Components::ConsumerDescriptions *
+    Receiver_Servant::get_all_consumers (
+        ACE_ENV_SINGLE_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException))
+    {
+      return this->context_->get_all_consumers (
+         ACE_ENV_ARG_PARAMETER);
+    }
+    */
 
     Receiver_Servant::TimeOutConsumer_click_in_Servant::TimeOutConsumer_click_in_Servant (
     ::Hello::CCM_Receiver_ptr executor,

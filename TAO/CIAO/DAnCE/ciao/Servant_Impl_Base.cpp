@@ -113,9 +113,11 @@ namespace CIAO
       this->get_all_receptacles (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
 
+    /*
     ::Components::ConsumerDescriptions_var consumer_desc =
       this->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
+    */
 
     ::Components::EmitterDescriptions_var emitter_desc =
       this->get_all_emitters (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -127,7 +129,7 @@ namespace CIAO
 
     retv->facets (facets_desc.in ());
     retv->receptacles (receptacle_desc.in ());
-    retv->consumers (consumer_desc.in ());
+    // retv->consumers (consumer_desc.in ());
     retv->emitters (emitter_desc.in ());
     retv->publishers (publisher_desc.in ());
 
@@ -219,12 +221,15 @@ namespace CIAO
     return retval._retn ();
   }
 
+
   ::Components::ConsumerDescriptions *
   Servant_Impl_Base::get_all_consumers (
       ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+
+    ACE_DEBUG ((LM_DEBUG, "BEING CALLED\n"));
     ::Components::ConsumerDescriptions *tmp = 0;
     ACE_NEW_THROW_EX (tmp,
                       ::Components::ConsumerDescriptions (this->consumer_table_.current_size ()),
@@ -246,6 +251,7 @@ namespace CIAO
 
     return retval._retn ();
   }
+
 
   ::Components::EventConsumerBase_ptr
   Servant_Impl_Base::get_consumer (

@@ -95,6 +95,8 @@ namespace CIAO
                                    this->home_servant_,
                                    this->container_);
 
+    ACE_DEBUG ((LM_DEBUG, "created the servant and activated\n"));
+
     if (component_removed_ == 1)
       {
         // svt->ciao_preactivate ();
