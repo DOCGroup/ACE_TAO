@@ -222,7 +222,7 @@ namespace CIAO
 
     /// Cached deployment plan for the particular domain.
     /// The plan will be initialized when init is called.
-    const Deployment::DeploymentPlan &plan_;
+    Deployment::DeploymentPlan plan_;
 
     /// Cached child plans.
     //Deployment::DeploymentPlan * child_plan_;
