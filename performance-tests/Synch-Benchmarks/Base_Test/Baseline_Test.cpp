@@ -1,10 +1,11 @@
 // $Id$
 
+#define  ACE_BUILD_SVC_DLL
+
 #include "Baseline_Test.h"
 
 # if defined (ACE_HAS_THREADS)
 
-#define  ACE_BUILD_SVC_DLL
 #include "ace/OS_NS_unistd.h"
 #include "ace/Service_Repository.h"
 #include "ace/Get_Opt.h"
