@@ -21,6 +21,7 @@
 #include "Resume_Handle.h"
 
 #include "ace/Message_Block.h"
+#include "ace/Reactor.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Transport.inl"
