@@ -1,3 +1,33 @@
+Sun Jun 13 23:29:22 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.{h,cpp}
+	* orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.{h,cpp}
+	Added the above files.
+
+	* orbsvcs/orbsvcs/Naming/Persistent_Bindings_Map.{h,cpp}
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index_T.{h,cpp}
+	Removed the above files.
+
+	* orbsvcs/orbsvcs/Naming/Naming_Context.{h,cpp}
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.{h,cpp}
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.{h,cpp}
+	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.{h,cpp}
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}
+	* orbsvcs/orbsvcs/Naming/Entries.{h,cpp}
+	* orbsvcs/orbsvcs/Naming/Persistent_Entries.{h,cpp}
+	Modified the above files.
+
+	Restructured the implementation of NamingContext to factor out the
+	common code between persistent and nonpersistent implementations
+	through the Template method pattern (added
+	TAO_Transient_Naming_Context, TAO_Bindings_Map,
+	TAO_Transient_Bindings_Map classes and modified others).  Made
+	TAO_Persistent_Context_Index a non-template class, and
+	TAO_Bindings_Iterator a template class.  Made a pass through some
+	files for code review - added comments.  Got rid of the use of
+	<create_servant_lock> method, and changed lock pointers to lock
+	references.  Many other minor adjustments...
+
 Sun Jun 13 22:39:51 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h,
@@ -311,17 +341,17 @@ Fri Jun 11 12:27:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.ll: Made the following two changes to TAO's IDL
 	  flex file.
-	
+
 	  Removed the "A" through "Z" characters ranges.  Under EBCDIC
 	  the need to be "A through I", "J through R", and "S through Z"
 	  (ditto for the lower case letters).  Perhaps it should just be
 	  changed to be "[ABCDEFGHIJKLMNOPQRSTUVWXYZ]"...
 
 	  Added support for the trigraph "??=" which is the trigraph for
-	  the "#" sign.  The OpenEdition preprocessor inserts a "pragma" 
+	  the "#" sign.  The OpenEdition preprocessor inserts a "pragma"
 	  statement at the start of the preprocessed output using this
 	  trigraph.
-	  
+
 	  Thanks to Jim Rogers <jrogers@viasoft.com> for these fixes.
 
 Fri Jun 11 14:48:11 1999  David L. Levine  <levine@cs.wustl.edu>
