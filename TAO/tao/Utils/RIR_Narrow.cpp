@@ -19,7 +19,7 @@ TAO::Utils::RIR_Narrow<T>::narrow (CORBA::ORB_ptr orb,
 {
   CORBA::Object_var object =
     orb->resolve_initial_references (id
-                                     ACE_ENV_ARG_DECL);
+                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (T::_nil ());
 
   return RIR_Narrow<T>::narrow_object (object.in ()
@@ -28,11 +28,16 @@ TAO::Utils::RIR_Narrow<T>::narrow (CORBA::ORB_ptr orb,
 
 template<class T> TAO::Utils::RIR_Narrow<T>::_ptr_type
 TAO::Utils::RIR_Narrow<T>::narrow (PortableInterceptor::ORBInitInfo_ptr info,
-                                   char const * id)
+                                   char const * id
+                                   ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var object =
-    info->resolve_initial_references (id);
-  return RIR_Narrow<T>::narrow_object (object.in ());
+    info->resolve_initial_references (id
+                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (T::_nil ());
+
+  return RIR_Narrow<T>::narrow_object (object.in ()
+                                       ACE_ENV_ARG_PARAMETER);
 }
 
 template<class T> TAO::Utils::RIR_Narrow<T>::_ptr_type
