@@ -1669,7 +1669,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
- Security/Security_Current_Impl.h Security/Security_Current.inl
+ Security/Security_Current_Impl.h Security/Security_Current.inl \
+ Security/SecurityManager.h
 
 .obj/PrincipalAuthenticator.o .obj/PrincipalAuthenticator.so .shobj/PrincipalAuthenticator.o .shobj/PrincipalAuthenticator.so: Security/PrincipalAuthenticator.cpp \
  Security/PrincipalAuthenticator.h \

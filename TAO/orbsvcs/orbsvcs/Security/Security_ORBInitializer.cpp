@@ -10,6 +10,7 @@ ACE_RCSID (TAO_Security,
 #include "tao/ORBInitInfo.h"
 
 #include "Security_Current.h"
+#include "SecurityManager.h"
 #include "Security_PolicyFactory.h"
 
 
@@ -63,6 +64,27 @@ TAO_Security_ORBInitializer::pre_init (
   // ORB.
   info->register_initial_reference ("SecurityCurrent",
                                     security_current.in ()
+                                    TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Create the SecurityLevel2::SecurityManager object.
+  SecurityLevel2::SecurityManager_ptr manager =
+    SecurityLevel2::SecurityManager::_nil ();
+  ACE_NEW_THROW_EX (manager,
+                    TAO_SecurityManager,
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK;
+
+  SecurityLevel2::SecurityManager_var security_manager = manager;
+
+  // Register the SecurityLevel2::Current object reference with the
+  // ORB.
+  info->register_initial_reference ("SecurityManager",
+                                    security_manager.in ()
                                     TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
