@@ -74,6 +74,8 @@
 // OS supports the getrusage() system call
 #define ACE_HAS_GETRUSAGE
 
+#define ACE_HAS_GPERF
+
 #define ACE_HAS_H_ERRNO
 
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
