@@ -201,14 +201,10 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
                                 TAO_EC_QOS_Info& qos_info,
                                 CORBA::Environment& ACE_TRY_ENV)
 {
-  // Do not take a lock, this is a call back from our child filter, so
-  // we are holding the lock already (in the filter() method).
-  if (this->is_connected_i ())
-    this->event_channel_->dispatching ()->push (this,
-                                                this->consumer_.in (),
-                                                event,
-                                                qos_info,
-                                                ACE_TRY_ENV);
+  this->event_channel_->dispatching ()->push (this,
+                                              event,
+                                              qos_info,
+                                              ACE_TRY_ENV);
   this->child_->clear ();
 }
 
@@ -217,15 +213,29 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
                                        TAO_EC_QOS_Info& qos_info,
                                        CORBA::Environment& ACE_TRY_ENV)
 {
-  // Do not take a lock, this is a call back from our child filter, so
-  // we are holding the lock already (in the filter() method).
-  if (this->is_connected_i ())
-    this->event_channel_->dispatching ()->push_nocopy (this,
-                                                       this->consumer_.in (),
-                                                       event,
-                                                       qos_info,
-                                                       ACE_TRY_ENV);
+  this->event_channel_->dispatching ()->push_nocopy (this,
+                                                     event,
+                                                     qos_info,
+                                                     ACE_TRY_ENV);
   this->child_->clear ();
+}
+
+void
+TAO_EC_ProxyPushSupplier::push_to_consumer (const RtecEventComm::EventSet& event,
+                                            CORBA::Environment& ACE_TRY_ENV)
+{
+  ACE_GUARD_THROW_EX (
+            ACE_Lock, ace_mon, *this->lock_,
+            RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK;
+
+  if (this->is_connected_i () == 0)
+    return; // TAO_THROW (RtecEventComm::Disconnected ());????
+
+  if (this->suspended_ != 0)
+    return;
+
+  this->consumer_->push (event, ACE_TRY_ENV);
 }
 
 void

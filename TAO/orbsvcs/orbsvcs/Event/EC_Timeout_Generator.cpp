@@ -40,9 +40,9 @@ TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value & /* tv */,
       RtecEventComm::EventSet single_event (1, 1, &e, 0);
 
       TAO_EC_QOS_Info qos_info = filter->qos_info ();
-      filter->filter (single_event,
-                      qos_info,
-                      ACE_TRY_ENV);
+      filter->push_nocopy (single_event,
+                           qos_info,
+                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -13,6 +13,8 @@
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Basic_Factory.h"
 #include "Event_Latency.h"
 
 #include "tao/Timeprobe.h"
@@ -623,8 +625,8 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
         }
       else
         {
-          ACE_ERROR ((LM_ERROR, "(%t) %s received unexpected events: ",
-                      entry_point ()));
+          ACE_ERROR ((LM_ERROR, "(%t) %s received unexpected events: %d\n",
+                      entry_point (), events[i].header.type));
           // ::dump_sequence (events);
           return;
         }
@@ -887,6 +889,7 @@ main (int argc, char *argv [])
       // the cost of doing it later.
       ACE_TIMEPROBE_RESET;
 
+#if 1
       CosNaming::Name channel_name (1);
       channel_name.length (1);
       channel_name[0].id = CORBA::string_dup ("EventService");
@@ -899,6 +902,17 @@ main (int argc, char *argv [])
         RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in (),
                                                       TAO_TRY_ENV);
       TAO_CHECK_ENV;
+#else
+      TAO_EC_Basic_Factory ec_factory (root_poa.in ());
+
+      TAO_EC_Event_Channel ec_impl  (&ec_factory);
+      ec_impl.activate (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      RtecEventChannelAdmin::EventChannel_var ec =
+        ec_impl._this (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+#endif /* 0 */
 
       // Create supplier(s).
       Latency_Supplier **supplier;

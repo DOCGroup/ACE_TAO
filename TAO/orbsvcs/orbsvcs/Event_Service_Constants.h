@@ -46,6 +46,9 @@ const long ACE_ES_CONJUNCTION_DESIGNATOR = 8;
 const long ACE_ES_DISJUNCTION_DESIGNATOR = 9;
 const long ACE_ES_EVENT_UNDEFINED = 16;
 
+// = Predefined event sources.
+const long ACE_ES_EVENT_SOURCE_ANY = 0;
+
 // The max number of priorities provided by the target platform.
 // TODO: This should be defined in ACE (somehow) and only mapped here
 // to some variables (and even that is doubtful).
