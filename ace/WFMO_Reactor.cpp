@@ -640,8 +640,11 @@ ACE_WFMO_Reactor_Handler_Repository::bind_i (int io_entry,
     this->handles_to_be_deleted_ +
     this->suspended_handles_;
 
-  // Make sure that there's room in the table.
-  if (current_size < this->max_size_)
+  // Make sure that there's room in the table and that total pending
+  // additions should not exceed what the <to_be_added_info_> array
+  // can hold.
+  if (current_size < this->max_size_ &&
+      this->handles_to_be_added_ < this->max_size_)
     {
       // Cache this set into the <to_be_added_info_>, till we come
       // around to actually adding this to the <current_info_>
