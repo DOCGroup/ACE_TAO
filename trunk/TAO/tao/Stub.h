@@ -365,6 +365,11 @@ public:
   // set the forward_profiles.  This object will assume ownership of
   // this TAO_MProfile object!!
 
+  CORBA::Boolean next_profile_retry (void)
+  // THREAD SAFE
+  // used to get the next profile after the one being used has 
+  // failed during the initial connect or send of the message!
+
 protected:
   void put_params (CORBA_Environment &TAO_IN_ENV,
                    const TAO_Call_Data *info,
