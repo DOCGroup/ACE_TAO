@@ -1,3 +1,9 @@
+Sat Aug  9 05:16:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Modified the ld version test so that it wouldn't printout error
+          information to the build log on failure.
+
 Sat Aug  9 04:21:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/config-freebsd.h:

@@ -68,7 +68,8 @@ ifeq ($(shared_libs), 1)
       endif # DLD = CXX_FOR_VERSION_TEST
 
       # The -E option is GNU ld specific 
-      ifeq (GNU ld, $(findstring GNU ld,$(shell $(LD_FOR_VERSION_TEST) -v)))
+      GNU_LD := $(shell sh -c '$(LD_FOR_VERSION_TEST) -v 2>&1 | grep -i "GNU ld" /dev/null; echo $$?')
+      ifeq ($(GNU_LD),1)
 
         # Make sure this version of ld supports the -E option.
         LD_EXPORT_DEFINED := $(shell sh -c '$(LD_FOR_VERSION_TEST) -E 2>&1 | grep -i -e "(option|flag)" /dev/null; echo $$?')
