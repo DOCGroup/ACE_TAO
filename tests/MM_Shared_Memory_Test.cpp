@@ -36,18 +36,23 @@ USELIB("..\ace\aced.lib");
 const int SHMSZ = 27;
 static TCHAR shm_key[] = ACE_TEMP_FILE_NAME ACE_TEXT ("XXXXXX");
 
+#if defined (ACE_LACKS_FORK)
+static ACE_Thread_Semaphore SYNCHRONIZER;
+#else
+typedef ACE_Process_Semaphore SYNCHRONIZER; 
+#endif /* !defined (ACE_LACKS_FORK) */
+
 // Synchronize the start of the parent and the child.
-static ACE_Process_Semaphore *process_synchronizer = 0;
+static SYNCHRONIZER *synchronizer = 0;
 
 static void *
 child (void * = 0)
 {
   int result;
-#if !defined (ACE_LACKS_FORK)
-  // Wait for the parent process to 
-  result = process_synchronizer->acquire ();
+
+  // Wait for the parent to be initialized.
+  result = synchronizer->acquire ();
   ACE_ASSERT (result != -1);
-#endif /* !defined (ACE_LACKS_FORK) */
 
   char *t = ACE_ALPHABET;
   ACE_Shared_Memory_MM shm_child;
@@ -91,11 +96,9 @@ parent (void * = 0)
 
   *s = '\0';
 
-#if !defined (ACE_LACKS_FORK)
-  // Allow the child process to proceed.
-  result = process_synchronizer->release ();
+  // Allow the child to proceed.
+  result = synchronizer->release ();
   ACE_ASSERT (result != -1);
-#endif /* !defined (ACE_LACKS_FORK) */
 
   // Perform a "busy wait" until the child sets the character to '*'.
   while (*shm != '*')
@@ -112,14 +115,14 @@ parent (void * = 0)
 static int
 spawn (void)
 {
-#if !defined (ACE_LACKS_FORK)
-  // Create the synchronizer before spawning the child process, to
-  // avoid race condition between the creation in the parent and use
-  // in the child.
-  ACE_NEW_RETURN (process_synchronizer,
-                  ACE_Process_Semaphore (0), // Locked by default...
+  // Create the synchronizer before spawning the child process/thread,
+  // to avoid race condition between the creation in the parent and
+  // use in the child.
+  ACE_NEW_RETURN (synchronizer,
+                  SYNCHRONIZER (0), // Locked by default...
                   -1);
 
+#if !defined (ACE_LACKS_FORK)
   switch (ACE_OS::fork (ASYS_TEXT ("child")))
     {
     case -1:
@@ -130,7 +133,9 @@ spawn (void)
       /* NOTREACHED */
     case 0:
       parent ();
-      delete process_synchronizer;
+      // Remove the semaphore.
+      synchronizer->remove ();
+      delete synchronizer;
       break;
       /* NOTREACHED */
     default:
@@ -156,9 +161,9 @@ spawn (void)
                        ASYS_TEXT ("thread create failed")),
                       1);
   ACE_Thread_Manager::instance ()->wait ();
-  ACE_UNUSED_ARG (process_synchronizer);
+  delete synchronizer;
 #else
-  ACE_UNUSED_ARG (process_synchronizer);
+  ACE_UNUSED_ARG (synchronizer);
   ACE_ERROR_RETURN ((LM_ERROR,
                      ASYS_TEXT ("only one thread may be run in a process on this platform\n")),
                     1);

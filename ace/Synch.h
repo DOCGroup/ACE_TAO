@@ -348,7 +348,9 @@ public:
   // maximum value of <max>.
 
   ~ACE_Process_Semaphore (void);
-  // Implicitly destroy the semaphore.
+  // This method is a no-op, i.e., it doesn't remove the semaphore.
+  // If you want to remove the semaphore, you must call the <remove>
+  // method explicitly.
 
   int remove (void);
   // Explicitly destroy the semaphore.  Note that only one thread

@@ -96,7 +96,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK> void
 ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::print_stats (void) const
 {
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::print_stats");
-  ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
+  ACE_GUARD (ACE_LOCK, ace_mon, (ACE_LOCK &) this->lock_);
 
   if (this->cb_ptr_ == 0)
     return;
