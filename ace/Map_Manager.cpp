@@ -136,7 +136,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::free_search_structure (void)
 {
   if (this->search_structure_ != 0)
     {
-      for (int i = 0; i < this->total_size_; i++)
+      for (size_t = 0; i < this->total_size_; i++)
 	// Explicitly call the destructor.
 	{
 	  ACE_Map_Entry<EXT_ID, INT_ID> &ss = this->search_structure_[i];
