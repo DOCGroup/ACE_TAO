@@ -1,3 +1,11 @@
+Tue Oct  5 15:27:45 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Strategy.h:
+          Build problems with exception=0
+          Can't use ACE_ENV_ARG_DECL_WITH_DEFAULTS in function pointer typedef
+
 Mon Oct  4 12:52:21 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/CosEvent/Basic/MT_Disconnect.h:
