@@ -1,3 +1,8 @@
+Sat Nov 30 09:38:33 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Transport_Cache_Manager.cpp: Added a second check after
+	  holding the lock for the hash map entry in update_item ().
+
 Fri Nov 29 19:42:12 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
