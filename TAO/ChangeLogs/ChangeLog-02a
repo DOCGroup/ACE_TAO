@@ -1,3 +1,28 @@
+Mon Jan 14 15:19:05 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/PortableInterceptorC.h:
+	  Fixed compilation problem due to bugs in IDL compiler.
+
+	* tao/PortableServer/ObjectReferenceTemplate.cpp:
+	  Removed bogus #include for ObjectReferenceTemplate.i, the file
+	  does not exist.
+
+	* tao/Makefile:
+	* tao/BiDir_GIOP/Makefile:
+	* tao/Domain/Makefile:
+	* tao/DynamicAny/Makefile:
+	* tao/DynamicInterface/Makefile:
+	* tao/IFR_Client/Makefile:
+	* tao/IORManipulation/Makefile:
+	* tao/IORTable/Makefile:
+	* tao/PortableServer/Makefile:
+	* tao/RTCORBA/Makefile:
+	* tao/RTPortableServer/Makefile:
+	* tao/SmartProxies/Makefile:
+	* tao/Strategies/Makefile:
+	* tao/TypeCodeFactory/Makefile:
+	  Update dependencies.
+
 Mon Jan 14 15:03:53 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ORB_Core.cpp: 

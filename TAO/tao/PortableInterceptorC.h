@@ -1558,19 +1558,19 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InvalidSlot;
     static const char* _tao_obv_static_repository_id ();
 
     virtual CORBA::Object_ptr make_object (
-        const char *, 
+        const char *,
         const PortableInterceptor::ObjectId &
         TAO_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
   protected:
     ObjectReferenceFactory ();
     virtual ~ObjectReferenceFactory ();
-    
+
     // TAO internals
     virtual void *_tao_obv_narrow (ptr_arith_t);
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
-    
+
   private:
     ObjectReferenceFactory (const ObjectReferenceFactory &);
     void operator= (const ObjectReferenceFactory &);
@@ -1654,15 +1654,15 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InvalidSlot;
       : public virtual ObjectReferenceFactory
     {
     public:
-      
+
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
       typedef ObjectReferenceTemplate* _ptr_type;
       typedef ObjectReferenceTemplate_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
-      
+
       static ObjectReferenceTemplate* _downcast (CORBA::ValueBase* );
       // The address of static _downcast is implicit used as type id
-      
+
       // (TAO extensions or internals)
       static CORBA::Boolean _tao_unmarshal (
                                             TAO_InputCDR &,
@@ -1680,12 +1680,12 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InvalidSlot;
     protected:
       ObjectReferenceTemplate ();
       virtual ~ObjectReferenceTemplate ();
-      
+
       // TAO internals
       virtual void *_tao_obv_narrow (ptr_arith_t);
       virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
       virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
-      
+
 private:
   ObjectReferenceTemplate (const ObjectReferenceTemplate &);
   void operator= (const ObjectReferenceTemplate &);
@@ -2843,8 +2843,8 @@ TAO_NAMESPACE CORBA
 TAO_NAMESPACE_CLOSE
 //@@ Boris: end experimental
 
-TAO_ExportCORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceFactory *);
-TAO_ExportCORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceFactory *&);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceFactory *);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceFactory *&);
 //@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
@@ -2854,8 +2854,8 @@ TAO_NAMESPACE CORBA
 TAO_NAMESPACE_CLOSE
 //@@ Boris: end experimental
 
-TAO_ExportCORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceTemplate *);
-TAO_ExportCORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceTemplate *&);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceTemplate *);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceTemplate *&);
 
 #if !defined _TAO_CDR_OP_PortableInterceptor_ObjectReferenceTemplateSeq_H_
 #define _TAO_CDR_OP_PortableInterceptor_ObjectReferenceTemplateSeq_H_
