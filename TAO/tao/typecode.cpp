@@ -75,7 +75,7 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA_TCKind kind,
       (void) ACE_OS::memcpy (_buffer, buffer, (size_t) length);
       _orb_owns = CORBA_B_FALSE;	// XXX may leak
     }
-#endif
+#endif /* 0 */
 
   // TAO comments: 
   // For free standing typecodes, we choose to always make a copy of the buffer passed

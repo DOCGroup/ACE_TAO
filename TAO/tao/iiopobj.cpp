@@ -18,7 +18,7 @@
 
 #if !defined (__ACE_INLINE__)
 #  include "iiopobj.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 IIOP::ProfileBody::ProfileBody (const IIOP::ProfileBody &src)
   : iiop_version (src.iiop_version),
@@ -141,7 +141,7 @@ EXTERN_C ACE_Svc_Export GUID IID_STUB_Object =
 #else
 DEFINE_GUID(IID_STUB_Object,
 0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
-#endif
+#endif /* 0 */
 
 // {A201E4C2-F258-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_CORBA_Object,
@@ -150,7 +150,7 @@ DEFINE_GUID (IID_CORBA_Object,
 // End - Added by BRM: 2/21/97 IID_STUB_Object and IID_CORBA_Object
 // were not being defined.  Need a central place for all of these
 // macros.
-#endif
+#endif /* 0 */
 
 ULONG __stdcall
 IIOP_Object::AddRef (void)

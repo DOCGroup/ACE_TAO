@@ -6,9 +6,11 @@
 
 #include "tao/orb.h"
 
-#if	defined (HAVE_WIDEC_H)
+// @@ Chris, do we really need to use HAVE_WIDEC_H anymore?  Isn't
+// this handled by ACE?  
+#if defined (HAVE_WIDEC_H)
 #	include <widec.h>
-#endif
+#endif /* HAVE_WIDEC_H */
 
 // String utility support; this can need to be integrated with the
 // ORB's own memory allocation subsystem.

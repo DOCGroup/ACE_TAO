@@ -39,6 +39,7 @@ DEEP_FREE (CORBA_TypeCode_ptr  param,
 	   const void *dest,
 	   CORBA_Environment &env);
 
+// = Forward declarations.
 class TAO_Marshal_Object;
 class TAO_Marshal_Primitive;
 class TAO_Marshal_Any;
@@ -78,7 +79,8 @@ private:
   };
 
   TAO_Marshal_Object_Entry mobj_table_[TC_KIND_COUNT];
-  // A table of specialized marshal objects indexed by the _kind field
+  // A table of specialized marshal objects indexed by the _kind
+  // field.
 
 #if 0
   // define data members that are instances of various Marshal_Object classes
@@ -95,7 +97,7 @@ private:
   TAO_Marshal_Alias     *m_alias_;
   TAO_Marshal_Except    *m_except_;
   TAO_Marshal_WString   *m_wstring_;
-#endif
+#endif /* 0 */
 };
 
 // Create a type for the singleton factory
@@ -104,7 +106,8 @@ typedef ACE_Singleton<TAO_Marshal_Factory, ACE_SYNCH_MUTEX>
 
 class TAO_Marshal
 // = TITLE
-//    Namespace in which to put otherwise "global" methods like initialize, etc.
+//    Namespace in which to put otherwise "global" methods like
+//    initialize, etc.
 {
 public:
   static void initialize (void);
@@ -115,26 +118,28 @@ public:
 class TAO_Marshal_Object
 {
   // = TITLE
-  // The Marshaling object that provides a common interface to the CDR
-  // object for marshaling different IDL data types
+  //    The Marshaling object that provides a common interface to the
+  //    CDR object for marshaling different IDL data types
   //
   // = DESCRIPTION
-  // Provides a set of virtual methods for encoding, decoding,
-  // deep_copying, and deep_freeing.
+  //    Provides a set of virtual methods for encoding, decoding,
+  //    deep_copying, and deep_freeing.
 public:
+  // = Encoding and decoding operations.
+
   virtual CORBA_TypeCode::traverse_status encode (CORBA_TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
                                                   void *context,
                                                   CORBA_Environment &env) = 0;
-  // encoding operation
+  // Encoding operation.
 
   virtual CORBA_TypeCode::traverse_status decode (CORBA_TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
                                                   CORBA_Environment &env) = 0;
-  // decoding operation
+  // Decoding operation.
 
   TAO_Marshal_Object (void);
   // constructor
@@ -145,6 +150,7 @@ public:
 
 class TAO_Marshal_Primitive: public TAO_Marshal_Object
 {
+  // @@ Andy, please fill in here and add comments to this class.
   // = TITLE
   // = DESCRIPTION
 public:
@@ -582,12 +588,12 @@ typedef ACE_Singleton<TAO_Marshal_WString, ACE_SYNCH_MUTEX>
 #    undef ACE_INLINE
 #    define ACE_INLINE inline
 #    define do_undef_on_ACE_INLINE
-#  endif
+#  endif /* __ACE_INLINE__ */
 #  include "marshal.i"
 #  if defined (do_undef_on_ACE_INLINE)
 #    undef do_undef_on_ACE_INLINE
 #    undef ACE_INLINE
 #    define ACE_INLINE
-#  endif
+#  endif /* do_undef_on_ACE_INLINE */
 
-#endif
+#endif /* TAO_MARSHAL_H */

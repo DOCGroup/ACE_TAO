@@ -237,7 +237,7 @@ struct TAO_Dispatch_Context
 
 #  if defined (__ACE_INLINE__)
 #    include "boa.i"
-#  endif
+#  endif /* __ACE_INLINE__ */
 
 #endif	/* TAO_BOA_H */
 

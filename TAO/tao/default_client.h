@@ -29,25 +29,30 @@
 #  include "tao/objtable.h"
 
 class TAO_Default_Client_Strategy_Factory : public TAO_Client_Strategy_Factory
-// = TITLE
-//   This is the "default" client strategy factor for TAO...basically, it
-//   includes strategies that are configured through command-line options
-//   so that everything operates as if there were no dynamically-linkable
-//   strategies.
+  // = TITLE
+  //   This is the "default" client strategy factor for
+  //   TAO...basically, it includes strategies that are configured
+  //   through command-line options so that everything operates as if
+  //   there were no dynamically-linkable strategies.
 {
 public:
+  // = Initialization and termination methods.
+  TAO_Default_Client_Strategy_Factory (void);
+  // Constructor.
+
+  virtual ~TAO_Default_Client_Strategy_Factory (void);
+  // Destructor.
+  
+  // = Useful typedef.
   typedef ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, 
                                       ACE_SOCK_CONNECTOR,
 				      ACE_SYNCH_RW_MUTEX>
           CACHED_CONNECT_STRATEGY;
 
-  TAO_Default_Client_Strategy_Factory (void);
-  virtual ~TAO_Default_Client_Strategy_Factory (void);
-  
   virtual TAO_Client_Strategy_Factory::CONNECTOR *connector (void);
   // Return a pointer to a connector using appropriate strategies.
 
-  // = SERVICE CONFIGURATOR HOOKS
+  // = Service Configurator hooks.
   virtual int init(int argc, char* argv[]);
   // Dynamic linking hook
 
@@ -55,11 +60,19 @@ public:
   // Parse svc.conf arguments
   
 private:
-#  if defined (TAO_HAS_CLIENT_CONCURRENCY)
+
+  // @@ Chris, please add comments to these members.
+
+#if defined (TAO_HAS_CLIENT_CONCURRENCY)
+  // @@ Chris, shouldn't this always be "potentially" the case, even
+  // if a client didn't want to use it? 
   CONCURRENCY_STRATEGY *concurrency_strategy_;
-#  endif
+#endif /* TAO_HAS_CLIENT_CONCURRENCY */
+
   CONNECTOR connector_;
+
   NULL_CREATION_STRATEGY null_creation_strategy_;
+
   CACHED_CONNECT_STRATEGY caching_connect_strategy_;
 };
 

@@ -13,7 +13,7 @@
 #define ACE_BUILD_SVC_DLL
 #include "default_server.h"
 
-TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory(void)
+TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : thread_flags_ (0),
     object_table_size_ (SERVER_OBJECT_TABLE_SIZE),
     concurrency_strategy_ (0),
@@ -22,74 +22,81 @@ TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory(void)
 
 TAO_Default_Server_Strategy_Factory::~TAO_Default_Server_Strategy_Factory (void)
 {
-  // perform appropriate cleanup
+  // Perform appropriate cleanup.
   delete this->objtable_;
 }
 
-TAO_Default_Server_Strategy_Factory::CONCURRENCY_STRATEGY*
-TAO_Default_Server_Strategy_Factory::concurrency_strategy(void)
+TAO_Default_Server_Strategy_Factory::CONCURRENCY_STRATEGY *
+TAO_Default_Server_Strategy_Factory::concurrency_strategy (void)
 {
   return this->concurrency_strategy_;
 }
 
-TAO_Default_Server_Strategy_Factory::TAO_Object_Table*
-TAO_Default_Server_Strategy_Factory::object_lookup_strategy(void)
+TAO_Default_Server_Strategy_Factory::TAO_Object_Table *
+TAO_Default_Server_Strategy_Factory::object_lookup_strategy (void)
 {
   return this->objtable_;
 }
 
 // Evil macros b/c I'm lazy!
-#define BEGINCHECK  if (0)
-#define CHECKANDSET(sym)  else if (ACE_OS::strcmp (flag, #sym) == 0) ACE_SET_BITS (this->thread_flags_, sym)
-#define ENDCHECK
+#define TAO_BEGINCHECK  if (0)
+#define TAO_CHECKANDSET(sym) else if (ACE_OS::strcmp (flag, #sym) == 0) ACE_SET_BITS (this->thread_flags_, sym)
+#define TAO_ENDCHECK
 
 void
 TAO_Default_Server_Strategy_Factory::tokenize (char *flag_string)
 {
   // @@ Danger!  strtok not re-entrant...need to find a re-entrant version!
+  // @@ Chris, please see ACE_OS::strtok_r ().  There are some examples of
+  // how to use this in JAWS.
+
   for (char *flag = ACE_OS::strtok (flag_string, "|");
        flag != 0;
-       flag = ACE_OS::strtok(0, "|"))
+       flag = ACE_OS::strtok (0, "|"))
     {
-      BEGINCHECK;
-      CHECKANDSET (THR_DETACHED);
-      CHECKANDSET (THR_BOUND);
-      CHECKANDSET (THR_NEW_LWP);
-      CHECKANDSET (THR_SUSPENDED);
-      CHECKANDSET (THR_DAEMON);
-      ENDCHECK;
+      TAO_BEGINCHECK;
+      TAO_CHECKANDSET (THR_DETACHED);
+      TAO_CHECKANDSET (THR_BOUND);
+      TAO_CHECKANDSET (THR_NEW_LWP);
+      TAO_CHECKANDSET (THR_SUSPENDED);
+      TAO_CHECKANDSET (THR_DAEMON);
+      TAO_ENDCHECK;
     }
   
 }
 
 int
-TAO_Default_Server_Strategy_Factory::init(int argc, char* argv[])
+TAO_Default_Server_Strategy_Factory::init (int argc, char *argv[])
 {
-  return this->parse_args(argc, argv);
+  return this->parse_args (argc, argv);
 }
 
 int
-TAO_Default_Server_Strategy_Factory::parse_args(int argc, char* argv[])
+TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
 {
-  ACE_TRACE("TAO_Default_Server_Strategy_Factory::parse_args");
+  ACE_TRACE ("TAO_Default_Server_Strategy_Factory::parse_args");
 
   ACE_Get_Opt get_opt (argc, argv, "t:s:RTL:", 0);
 
   TAO_Demux_Strategy strat = TAO_NONE;
 
-  for (int c; (c = get_opt()) != -1; )
+  // @@ Chris, I think this code should use the same option format
+  // that is used by CORBA_ORB_init().  Can you please work with Andy
+  // on this?
+
+  for (int c; (c = get_opt ()) != -1; )
     {
-      switch(c)
+      switch (c)
         {
         case 't':
           {
-            char* temp = get_opt.optarg;
-            this->tokenize(temp);
+            char *temp = get_opt.optarg;
+            this->tokenize (temp);
           }
           break;
 
         case 's':
-          this->object_table_size_ = ACE_OS::strtoul(get_opt.optarg);
+          this->object_table_size_ = ACE_OS::strtoul (get_opt.optarg);
           break;
 
         case 'R':
@@ -105,24 +112,32 @@ TAO_Default_Server_Strategy_Factory::parse_args(int argc, char* argv[])
         case 'L':
           {
             char *name = getopt.opt_arg;
-            if (ACE_OS::strcasecmp(name, "dynamic") == 0)
+
+	    // @@ Chris, why do we use "L" for "Demuxing strategy?"
+	    // Also, please make sure that you document all of these
+	    // options!
+
+            if (ACE_OS::strcasecmp (name, "dynamic") == 0)
               strat = TAO_DYNAMIC_HASH;
-            else if (ACE_OS::strcasecmp(name, "linear") == 0)
+            else if (ACE_OS::strcasecmp (name, "linear") == 0)
               strat = TAO_LINEAR;
-            else if (ACE_OS::strcasecmp(name, "active") == 0)
+            else if (ACE_OS::strcasecmp (name, "active") == 0)
               strat = TAO_ACTIVE_HASH;
-            else if (ACE_OS::strcasecmp(name, "user") == 0)
+            else if (ACE_OS::strcasecmp (name, "user") == 0)
               strat = TAO_USER_DEFINED;
           }
           break;
         }
     }
 
-  // Create the appropriate-sized object table based on passed arguments.
+  // Create the appropriate-sized object table based on passed
+  // arguments.
   switch (strat)
     {
     case TAO_LINEAR:
-      ACE_NEW (this->objtable_, TAO_Linear_ObjTable (this->object_table_size_));
+      ACE_NEW_RETURN (this->objtable_,
+		      TAO_Linear_ObjTable (this->object_table_size_),
+		      -1);
       break;
 #if 0
       // Don't do this one right now until we determine how to deal
@@ -132,14 +147,18 @@ TAO_Default_Server_Strategy_Factory::parse_args(int argc, char* argv[])
       // user-defined instance of the object table
       this->objtable_ = p->userdef_lookup_strategy ();
       break;
-#endif
+#endif /* 0 */
     case TAO_ACTIVE_DEMUX:
-      ACE_NEW (this->objtable_, TAO_Active_Demux_ObjTable (this->object_table_size_));
+      ACE_NEW_RETURN (this->objtable_,
+		      TAO_Active_Demux_ObjTable (this->object_table_size_),
+		      -1);
       break;
     case TAO_DYNAMIC_HASH:
     case TAO_NONE:
     default:
-      ACE_NEW (this->objtable_, TAO_Dynamic_Hash_ObjTable (this->object_table_size_));
+      ACE_NEW_RETURN (this->objtable_,
+		      TAO_Dynamic_Hash_ObjTable (this->object_table_size_),
+		      -1);
       break;
     }
 }

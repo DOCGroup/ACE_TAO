@@ -152,13 +152,12 @@ private:
 
   IIOP_Object (const IIOP_Object &);
   operator = (const IIOP_Object &);
-#if	defined (__GNUG__)
-  //
-  // G++ (even 2.6.3) stupidly thinks instances can't be
-  // created.  This de-warns.
-  //
+
+#if defined (__GNUG__)
+  // G++ (even 2.6.3) stupidly thinks instances can't be created.
+  // This de-warns.
   friend class everyone_needs_a_friend;
-#endif
+#endif /* __GNUG__ */
 };
 
 #  if defined (__ACE_INLINE__)

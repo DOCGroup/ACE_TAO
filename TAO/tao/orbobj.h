@@ -50,13 +50,16 @@ CORBA_ORB_init (int &argc,
 		CORBA_Environment &env);
 
 class ACE_Svc_Export CORBA_ORB : public IUnknown
-// = TITLE
-// ORB pseudo-objref
+  // = TITLE
+  // ORB pseudo-objref
 {
 public:
   CORBA_BOA_ptr BOA_init (int &argc, 
-			  char **argv, 
+			  char *argv[], 
 			  const char *boa_identifier = 0);
+  // Initialize the BOA.
+
+  // @@ Please add comments.
   static CORBA_ORB_ptr _duplicate (CORBA_ORB_ptr orb);
   static CORBA_ORB_ptr _nil (void);
 
@@ -80,7 +83,7 @@ public:
   ULONG __stdcall AddRef (void);
   ULONG __stdcall Release (void);
 
-  // = TAO-SPECIFIC THINGS
+  // = TAO-specific methods.
   TAO_Client_Factory &client_factory (void);
   TAO_Server_Factory &server_factory (void);
   TAO_ORB_Parameters &params (void);
@@ -94,9 +97,13 @@ private:
   u_int refcount_;
 
   TAO_Client_Strategy_Factory *client_factory_;
-  CORBA_Boolean                client_factory_from_service_config_;
+
+  CORBA_Boolean client_factory_from_service_config_;
+
   TAO_Server_Strategy_Factory *server_factory_;
-  CORBA_Boolean                server_factory_from_service_config_;
+
+  CORBA_Boolean server_factory_from_service_config_;
+
   TAO_ORB_Parameters params_;
 
   // = NON-PROVIDED METHODS

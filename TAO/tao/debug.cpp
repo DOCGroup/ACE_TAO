@@ -140,9 +140,9 @@ dmsg_filter (const char *_FAR categories,
     ACE_OS::fprintf (debug_stream, "\n");
   funlockfile (debug_stream);
 
-#if	defined (_WIN32)
+#if defined (_WIN32)
   OutputDebugString ("called dmsg_filter\n");	// experimental
-#endif
+#endif /* _WIN32 */
 }
 
 void ACE_Svc_Export
@@ -165,9 +165,9 @@ dmsg_filter (u_int level,
     ACE_OS::fprintf (debug_stream, "\n");
   funlockfile (debug_stream);
 
-#if	defined (_WIN32)
+#if defined (_WIN32)
   OutputDebugString ("called dmsg_filter\n");	// experimental
-#endif
+#endif /* _WIN32 */
 }
 
 void ACE_Svc_Export
@@ -186,9 +186,9 @@ dmsg_v (const char *_FAR fmt,
     ACE_OS::fprintf (debug_stream, "\n");
   funlockfile (debug_stream);
 
-#if	defined (_WIN32)
+#if defined (_WIN32)
   OutputDebugString ("called dmsg_v\n");	// experimental
-#endif
+#endif /* _WIN32 */
 }
 
 void ACE_Svc_Export
@@ -211,9 +211,9 @@ _dmsg_x (CORBA_Environment _FAR	&env,
     }
   funlockfile (debug_stream);
 
-#if	defined (_WIN32)
+#if defined (_WIN32)
   OutputDebugString ("called _dmsg_x\n");	// experimental
-#endif
+#endif /* _WIN32 */
 }
 
 void ACE_Svc_Export
@@ -262,9 +262,9 @@ dmsg_opaque (char *_FAR label,
   ACE_OS::fprintf (debug_stream, "\n");
   funlockfile (debug_stream);
 
-#if	defined (_WIN32)
+#if defined (_WIN32)
   OutputDebugString ("called dmsg_opaque\n");	// experimental
-#endif
+#endif /* _WIN32 */
 }
 
 void ACE_Svc_Export
@@ -313,9 +313,9 @@ dmsg_opaque_full (char *_FAR label,
   ACE_OS::fprintf (debug_stream, "\n");
   funlockfile (debug_stream);
 
-#if	defined (_WIN32)
+#if defined (_WIN32)
   OutputDebugString ("called dmsg_opaque_full\n");	// experimental
-#endif
+#endif /* _WIN32 */
 }
 
 #endif /* DEBUG && HAVE_VPRINTF */

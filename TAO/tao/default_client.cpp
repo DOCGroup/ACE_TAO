@@ -13,7 +13,6 @@
 //     $Id$
 // ============================================================================
 
-
 #define ACE_BUILD_SVC_DLL
 #include "default_client.h"
 
@@ -22,6 +21,13 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   // When should I do this open ()?  It seems like this is way too
   // early, but doing it in the accessor for connector () seems like
   // it would be too late as well.
+  // @@ Chris, a couple of thoughts:
+  // 1. What is wrong with doing it here, in general?
+  // 2. We should make sure not to use ACE_Reactor::instance() since
+  //    it makes our ORB too tightly coupled to having just 1 reactor!
+  //    I think it's clear now that we'll have one Reactor "per-ORB"
+  //    and we may have multiple ORBs per process (e.g., consider the 
+  //    "real-time rate-based ORB" we discussed the other day).
   connector_.open (ACE_Reactor::instance (),
 		   &null_creation_strategy_,
 		   &caching_connect_strategy_,
@@ -42,10 +48,10 @@ TAO_Default_Client_Strategy_Factory::init (int argc, char *argv[])
   return this->parse_args (argc, argv);
 }
 
-TAO_Client_Strategy_Factory::CONNECTOR*
+TAO_Client_Strategy_Factory::CONNECTOR *
 TAO_Default_Client_Strategy_Factory::connector (void)
 {
-  return &connector_;
+  return &this->connector_;
 }
 
 int
@@ -55,9 +61,9 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char *argv[])
   return 0;
 }
 
-#if ! defined(__ACE_INLINE__)
+#if ! defined (__ACE_INLINE__)
 #  include "default_client.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX>;

@@ -15,7 +15,7 @@
 //     $Id$
 // ============================================================================
 
-#if !defined(TAO_SERVER_FACTORY_H)
+#if !defined (TAO_SERVER_FACTORY_H)
 #  define TAO_SERVER_FACTORY_H
 
 #  include "ace/SOCK_Acceptor.h"
@@ -28,11 +28,9 @@
 #  include "tao/connect.h"
 #  include "tao/objtable.h"
 
-
 class TAO_Server_Strategy_Factory : public ACE_Service_Object
   // = TITLE
-  // 
-  //    Base class for the server's abstract factory which turns out
+  //    Base class for the server's abstract factory that manufactures
   //    various strategies of special utility to it.  This simply
   //    serves as an interface to a subclass that REALLY gets
   //    specified and loaded by the Service Configurator.
@@ -40,17 +38,20 @@ class TAO_Server_Strategy_Factory : public ACE_Service_Object
 public:
   // = Initialization and termination methods.
   TAO_Server_Strategy_Factory (void);
-  // constructor
+  // Constructor.
 
   virtual ~TAO_Server_Strategy_Factory(void);
-  // destructor
+  // Destructor.
 
-
-  // = SERVER-SIDE factory types.
-  typedef ACE_Creation_Strategy<TAO_OA_Connection_Handler> CREATION_STRATEGY;
-  typedef ACE_Accept_Strategy<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR> ACCEPT_STRATEGY;
-  typedef ACE_Concurrency_Strategy<TAO_OA_Connection_Handler> CONCURRENCY_STRATEGY;
-  typedef ACE_Scheduling_Strategy<TAO_OA_Connection_Handler> SCHEDULING_STRATEGY;
+  // = Server-side factory types.
+  typedef ACE_Creation_Strategy<TAO_OA_Connection_Handler>
+          CREATION_STRATEGY;
+  typedef ACE_Accept_Strategy<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR>
+          ACCEPT_STRATEGY;
+  typedef ACE_Concurrency_Strategy<TAO_OA_Connection_Handler>
+          CONCURRENCY_STRATEGY;
+  typedef ACE_Scheduling_Strategy<TAO_OA_Connection_Handler>
+          SCHEDULING_STRATEGY;
 
   // = Factory methods for the server-side strategies.
 
@@ -68,13 +69,11 @@ public:
 
   virtual TAO_Object_Table *object_lookup_strategy (void);
   // Return the concrete object lookup strategy.
-
-private:
 };
 
 
 #  if defined(__ACE_INLINE__)
 #    include "server_factory.i"
-#  endif
+#  endif /* __ACE_INLINE__ */
 
-#endif
+#endif /* TAO_SERVER_FACTORY_H */
