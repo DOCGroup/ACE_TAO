@@ -583,6 +583,12 @@ ECM_Federation::ECM_Federation (char* name,
     }
 }
 
+ECM_Federation::~ECM_Federation (void)
+{
+  delete[] this->consumer_ipaddr_;
+  delete[] this->supplier_ipaddr_;
+}
+
 void
 ECM_Federation::open (TAO_ECG_UDP_Out_Endpoint *endpoint,
                       RtecEventChannelAdmin::EventChannel_ptr ec,
