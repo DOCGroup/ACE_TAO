@@ -350,6 +350,9 @@ GIOP_ServerRequest::set_exception (const CORBA::Any &value,
     env.exception (new CORBA::BAD_INV_ORDER ());
   else
   {
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
     // Try to narrow to ForwardRequest
     PortableServer::ForwardRequest_ptr forward_request =
         PortableServer::ForwardRequest::_narrow ((CORBA::Exception *) value.value ());
@@ -362,6 +365,9 @@ GIOP_ServerRequest::set_exception (const CORBA::Any &value,
       }
     // Normal exception
     else
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
       {
         this->exception_ = new CORBA::Any (value);
 

@@ -61,6 +61,10 @@ protected:
 
   void activate_i (CORBA_Environment &ACE_TRY_ENV);
 
+  void deactivate_i (CORBA::Boolean etherealize_objects,
+                     CORBA::Boolean wait_for_completion,
+                     CORBA_Environment &ACE_TRY_ENV);
+
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
   void hold_requests_i (CORBA::Boolean wait_for_completion,
@@ -68,10 +72,6 @@ protected:
 
   void discard_requests_i (CORBA::Boolean wait_for_completion,
                            CORBA_Environment &ACE_TRY_ENV);
-
-  void deactivate_i (CORBA::Boolean etherealize_objects,
-                     CORBA::Boolean wait_for_completion,
-                     CORBA_Environment &ACE_TRY_ENV);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 

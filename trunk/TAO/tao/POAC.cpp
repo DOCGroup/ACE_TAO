@@ -66,6 +66,8 @@ TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ObjectId, &_tc_TAO_tc_PortableServer_ObjectId)
 TAO_NAMESPACE_END
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 // default constructor
 PortableServer::ForwardRequest::ForwardRequest (void)
   : CORBA_UserException (PortableServer::_tc_ForwardRequest)
@@ -208,6 +210,9 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ForwardRequest, &_tc_TAO_tc_PortableServer_ForwardRequest)
 TAO_NAMESPACE_END
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, THREAD_POLICY_ID, 16)
