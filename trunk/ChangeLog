@@ -1,8 +1,13 @@
+Fri Oct 17 06:48:15 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS.h:
+          When using the new CBX preview compiler define ACE_NSIG as _NSIG
+
 Thu Oct 16 21:18:06 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* bin/MakeProjectCreator/config/kokyu_dsrt_schedulers.mpb: 
+	* bin/MakeProjectCreator/config/kokyu_dsrt_schedulers.mpb:
 	  Added rtscheduling as a base project. This should take care of
-	  link problems in cygwin build. 
+	  link problems in cygwin build.
 
 Thu Oct 16 18:08:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
