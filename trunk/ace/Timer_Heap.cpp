@@ -188,7 +188,7 @@ ACE_Timer_Heap::copy (int index, ACE_Timer_Node *moved_node)
   this->heap_[index] = moved_node;
 
   ACE_ASSERT (moved_node->timer_id_ >= 0 
-	      && moved_node->timer_id_ < this->max_size_);
+	      && moved_node->timer_id_ < (int) this->max_size_);
   // Update the corresponding slot in the parallel <timer_ids_> array.
   this->timer_ids_[moved_node->timer_id_] = index;
 }
