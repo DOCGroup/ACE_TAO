@@ -1,3 +1,10 @@
+Sat Dec 27 10:08:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+
+	  Cosmetic fixes to align with coding standards. I have not done
+	  the entire file. I am gettingtired of doing this.
+
 Sat Dec 27 09:59:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/CONV_FRAMEA.h:
