@@ -1,3 +1,9 @@
+Sat Jan 20 10:21:08 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/OS.cpp:
+	  Another pass fixing problems with ACE_BEGINTHREADEX() under
+	  Win32, this time Win32 is working fine.
+
 Sat Jan 20 10:20:50 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* doc/tutorials: Integrated the new Service Configurator tutorial
