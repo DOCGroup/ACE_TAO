@@ -2,7 +2,8 @@ Fri Dec 29 07:38:27 2000  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tests/Policies/Manipulation.cpp:
 	* orbsvcs/tests/Time/Client_i.cpp:
-	* 
+	* orbsvcs/examples/Log/Client/TLS_Client.cpp:
+	* orbsvcs/examples/Log/test/BasicLog_Test.cpp:
 	  Fixed compile errors under VxWorks due to lack of support
 	  for 64 bit integers.
 
