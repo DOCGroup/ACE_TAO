@@ -80,7 +80,8 @@ int TPC_Logging_Acceptor::accept_svc_handler
     (TPC_Logging_Handler *sh) {
   if (PARENT::accept_svc_handler (sh) == -1) return -1;
   SSL_clear (ssl_);  // Reset for new SSL connection.
-  SSL_set_fd (ssl_, sh->get_handle ());
+  SSL_set_fd
+    (ssl_, ACE_reinterpret_cast (int, sh->get_handle ()));
 
   SSL_set_verify
     (ssl_,

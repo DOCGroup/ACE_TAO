@@ -93,7 +93,43 @@ Package=<4>
 
 ###############################################################################
 
+Project: "SR_Configurable_Logging_Server"=".\SR_Configurable_Logging_Server.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Select_Reactor_Logging_Server"=".\Select_Reactor_Logging_Server.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TPCLS"=".\TPCLS.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TPLS"=".\TPLS.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
