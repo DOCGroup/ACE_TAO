@@ -1,3 +1,11 @@
+Tue Jul 10 16:08:04 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/platform_osf1_4.0.GNU:
+
+          Fixed the default flags so that it enables the user to override
+          settings. Now that the long pending fix to wrapper_macros.GNU is
+          through, this should work fine now.
+
 Tue Jul 10 13:37:31 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/OS_Dirent.cpp (readdir_emulation):
@@ -7,17 +15,17 @@ Tue Jul 10 13:37:31 2001  Jeff Parsons <parsons@cs.wustl.edu>
           causing the source and target strings to be of different widths.
 
 Tue Jul 10 11:32:26 2001  Tibor Kiss  <tkiss@mindmaker.hu>
-  
+
         * ace/Log_Msg.cpp:
           Completed the ACE_Log_Msg::close method with the
- 	  ACE_Thread::keyfree (log_msg_tss_key_) and key_created_ = 0; to
- 	  ensure restartability by multiple successive ACE::init and
- 	  ACE::fini calls.  This fix prevent leaks from occurring when
- 	  ACE::init() and ACE::fini() are called multiple times.
+          ACE_Thread::keyfree (log_msg_tss_key_) and key_created_ = 0; to
+          ensure restartability by multiple successive ACE::init and
+          ACE::fini calls.  This fix prevent leaks from occurring when
+          ACE::init() and ACE::fini() are called multiple times.
 
 Tue Jul 10 11:12:00 2001  Chris Gill <cdgill@cs.wustl.edu>
 
-        * ace/OS_Dirent.{h, inl}: refactored XDIR, dirent usage for pSOS - 
+        * ace/OS_Dirent.{h, inl}: refactored XDIR, dirent usage for pSOS -
           user is no longer responsible for buffer deallocation after each
           readdir call, only for passing the pointer returned from opendir
           into closedir when all done.  ACE_DIR structure is now used
@@ -25,16 +33,16 @@ Tue Jul 10 11:12:00 2001  Chris Gill <cdgill@cs.wustl.edu>
 
 Tue Jul 10 06:06:07 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Service_Repository.h: Updated the insert() comment to
-	  clarify the return values.  Thanks to Johnny Willemsen for
- 	  suggesting this.
+        * ace/Service_Repository.h: Updated the insert() comment to
+          clarify the return values.  Thanks to Johnny Willemsen for
+          suggesting this.
 
-	* ace/Service_Repository.{h,i}: Made the current_size() and
-	  total_size() methods const.  Thanks to Johnny Willemsen for
- 	  suggesting this.
+        * ace/Service_Repository.{h,i}: Made the current_size() and
+          total_size() methods const.  Thanks to Johnny Willemsen for
+          suggesting this.
 
-	* ace/Service_Repository.h: Fixed a typo in the comments.  Thanks
-	  to Johnny Willemsen for reporting this.
+        * ace/Service_Repository.h: Fixed a typo in the comments.  Thanks
+          to Johnny Willemsen for reporting this.
 
 Tue Jul 10 08:39:04 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -61,30 +69,30 @@ Tue Jul 10 09:00:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Mon Jul 09 22:41:43 2001  Ossama Othman  <ossama@uci.edu>
 
-	* include/makeinclude/wrapper_macros.GNU (exceptions):
+        * include/makeinclude/wrapper_macros.GNU (exceptions):
 
-	  Include platform_macros.GNU before the default for "exceptions"
-	  is set.  This fixes a problem where the default native
-	  exceptions setting in platform_linux.GNU was not set due to the
-	  fact that it was previously set in wrapper_macros.GNU.  Thanks
-	  to Hans Utz <hans.utz@informatik.uni-ulm.de> for tracking down
-	  the problem.
+          Include platform_macros.GNU before the default for "exceptions"
+          is set.  This fixes a problem where the default native
+          exceptions setting in platform_linux.GNU was not set due to the
+          fact that it was previously set in wrapper_macros.GNU.  Thanks
+          to Hans Utz <hans.utz@informatik.uni-ulm.de> for tracking down
+          the problem.
 
 Mon Jul  9 16:40:02 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Dirent_Selector.cpp (ACE_Dirent_Selector):
+        * ace/Dirent_Selector.cpp (ACE_Dirent_Selector):
 
-	  Correct order of initialization of members to match order of
-	  declaration.  Fixes a warning issued from GCC.
+          Correct order of initialization of members to match order of
+          declaration.  Fixes a warning issued from GCC.
 
-	* ace/Dirent_Selector.inl:
+        * ace/Dirent_Selector.inl:
 
-	  Added missing RCS ID keyword.  Fuzz was whining about the lack
-	  of it.
+          Added missing RCS ID keyword.  Fuzz was whining about the lack
+          of it.
 
-	* ace/Dirent_Selector.h:
+        * ace/Dirent_Selector.h:
 
-	  Corrected some Doxygen comments.
+          Corrected some Doxygen comments.
 
 Mon Jul 09 19:12:42 2001  Steve Huston  <shuston@riverace.com>
 
@@ -112,50 +120,50 @@ Mon Jul  9 15:28:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Jul  9 06:52:09 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Makefile.bor (OBJFILES): Added the Dirent_Selector.obj file.
+        * ace/Makefile.bor (OBJFILES): Added the Dirent_Selector.obj file.
 
-	* tests/Dirent_Test.cpp: Integrated a new test for the
+        * tests/Dirent_Test.cpp: Integrated a new test for the
           ACE_Dirent_Selector class.
 
-	* ace/Makefile (UTILS_FILES),
-  	* ace/Dirent_Selector.h,
-    	* ace/Dirent_Selector.inl,
-    	* ace/Dirent_Selector.cpp: Added support for a C++ wrapper facade that
-	  encapsulates ACE_OS_Dirent::scandir().  Thanks to Rich Newman for
-	  contributing this, as well.
+        * ace/Makefile (UTILS_FILES),
+        * ace/Dirent_Selector.h,
+        * ace/Dirent_Selector.inl,
+        * ace/Dirent_Selector.cpp: Added support for a C++ wrapper facade that
+          encapsulates ACE_OS_Dirent::scandir().  Thanks to Rich Newman for
+          contributing this, as well.
 
-	* ace/OS_Dirent.h,
-  	* ace/OS_Dirent.inl,
-	* ace/OS_Dirent.cpp: Added support for the scandir() feature, which
-	  makes it possible to selectively pick which files in a directory
- 	  to iterate over.  Also fixed a bug in the emulation of dirent.
-  	  Thanks to Rich Newman <RNewman@directv.com> for contributing
- 	  these fixes.
+        * ace/OS_Dirent.h,
+        * ace/OS_Dirent.inl,
+        * ace/OS_Dirent.cpp: Added support for the scandir() feature, which
+          makes it possible to selectively pick which files in a directory
+          to iterate over.  Also fixed a bug in the emulation of dirent.
+          Thanks to Rich Newman <RNewman@directv.com> for contributing
+          these fixes.
 
 Mon Jul 09 14:39:50 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.i (thr_getprio and thr_setprio): Changed these two
-	  function such that if we are on Solaris and we have pthreads
-	  enabled, we should use the pthread calls rather than the native
-	  Solaris calls.  The reasons for choosing the pthread calls is
-	  due to following problems with the native calls:
+        * ace/OS.i (thr_getprio and thr_setprio): Changed these two
+          function such that if we are on Solaris and we have pthreads
+          enabled, we should use the pthread calls rather than the native
+          Solaris calls.  The reasons for choosing the pthread calls is
+          due to following problems with the native calls:
 
-	  - thr_getprio() is evil because on Solaris 5.8, a thread with
-	  priority -20 (SCHED_OTHER) is reported to have priority 80.
+          - thr_getprio() is evil because on Solaris 5.8, a thread with
+          priority -20 (SCHED_OTHER) is reported to have priority 80.
 
-	  - thr_setprio() is evil because it cannot set the negative
-	  priorities on Solaris 5.8.
+          - thr_setprio() is evil because it cannot set the negative
+          priorities on Solaris 5.8.
 
-	  - Also, thr_setprio() cannot change the priority of a thread
-	  with negative priority to a positive priority on Solaris 5.8
-	  (even though there is no error reported and thr_getprio() shows
-	  that the change happened but pthread_getschedparam() shows that
-	  no change happened).
+          - Also, thr_setprio() cannot change the priority of a thread
+          with negative priority to a positive priority on Solaris 5.8
+          (even though there is no error reported and thr_getprio() shows
+          that the change happened but pthread_getschedparam() shows that
+          no change happened).
 
-	  - In addition, suppose a thread of policy SCHED_RR or SCHED_FIFO
-	  uses thr_setprio() to reset its priority, the priority will be
-	  reset but the scheduling policy will be dropped to SCHED_OTHER.
-	  This happens with both Solaris 5.7 and Solaris 5.8.
+          - In addition, suppose a thread of policy SCHED_RR or SCHED_FIFO
+          uses thr_setprio() to reset its priority, the priority will be
+          reset but the scheduling policy will be dropped to SCHED_OTHER.
+          This happens with both Solaris 5.7 and Solaris 5.8.
 
 Mon Jul  9 13:33:43 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
@@ -168,9 +176,9 @@ Mon Jul  9 13:33:43 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Mon Jul 09 10:59:22 2001  Ossama Othman  <ossama@uci.edu>
 
-	* THANKS:
+        * THANKS:
 
-	  Added Mouna Seri <seri@crhc.uiuc.edu> to the hall of fame.
+          Added Mouna Seri <seri@crhc.uiuc.edu> to the hall of fame.
 
 Mon Jul  9 11:10:44 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -196,41 +204,41 @@ Mon Jul 09 11:31:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Sun Jul 08 11:26:23 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/OS.h (mkstemp):
-	* ace/OS.i (mkstemp):
+        * ace/OS.h (mkstemp):
+        * ace/OS.i (mkstemp):
 
-	  New mkstemp() wrapper.  It is assumed to be available on the
-	  given platform, unless ACE_LACKS_MKSTEMP is defined.
+          New mkstemp() wrapper.  It is assumed to be available on the
+          given platform, unless ACE_LACKS_MKSTEMP is defined.
 
-	* ace/FILE_Connector.h:
+        * ace/FILE_Connector.h:
 
-	  Added O_EXCL to the default flags.  This is a security hole
-	  fix.
+          Added O_EXCL to the default flags.  This is a security hole
+          fix.
 
-	* ace/FILE_Connector.cpp (connect):
+        * ace/FILE_Connector.cpp (connect):
 
-	  If mkstemp() is available, then use it to create a temporary
-	  file rather than mktemp() (via ACE_FILE_Addr) since mktemp() is
-	  susceptible to a denial-of-service attack.
+          If mkstemp() is available, then use it to create a temporary
+          file rather than mktemp() (via ACE_FILE_Addr) since mktemp() is
+          susceptible to a denial-of-service attack.
 
-	* ace/config-win32-common.h:
-	* ace/config-vxworks5.x.h:
+        * ace/config-win32-common.h:
+        * ace/config-vxworks5.x.h:
 
-	  mkstemp() is not supported on MS Windows and VxWorks.  Define
-	  ACE_LACKS_MKSTEMP in these headers.
+          mkstemp() is not supported on MS Windows and VxWorks.  Define
+          ACE_LACKS_MKSTEMP in these headers.
 
 Sun Jul  8 08:13:12 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Select_Reactor_Base.h: Added a comment explaining what
-	  the ACE_HAS_REACTOR_NOTIFICATION_QUEUE macro means.  Thanks to
- 	  Kobi Cohen-Arazi <kobic@bvr.co.il> for motivating this.
+        * ace/Select_Reactor_Base.h: Added a comment explaining what
+          the ACE_HAS_REACTOR_NOTIFICATION_QUEUE macro means.  Thanks to
+          Kobi Cohen-Arazi <kobic@bvr.co.il> for motivating this.
 
 Sat Jul  7 18:53:49 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* include/makeinclude/platform_osf1_4.0.GNU:
+        * include/makeinclude/platform_osf1_4.0.GNU:
 
-	  Revert the changes made to this file. Please see the file for a
-	  lengthy description.
+          Revert the changes made to this file. Please see the file for a
+          lengthy description.
 
 Fri Jul 06 21:53:26 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
@@ -239,10 +247,10 @@ Fri Jul 06 21:53:26 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Fri Jul  6 19:55:23 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* examples/Reactor/Multicast: Adding the support for UNIX Syslog
-	  broke this example because LOG_DEBUG was suddenly defined as a
- 	  macro (it's in syslog.h).  I've fixed this by renaming the LOG_
- 	  enums to LM_ instead.  Thanks to Bala for reporting this.
+        * examples/Reactor/Multicast: Adding the support for UNIX Syslog
+          broke this example because LOG_DEBUG was suddenly defined as a
+          macro (it's in syslog.h).  I've fixed this by renaming the LOG_
+          enums to LM_ instead.  Thanks to Bala for reporting this.
 
 Fri Jul 06 20:23:41 2001  Steve Huston  <shuston@riverace.com>
 
@@ -259,17 +267,17 @@ Fri Jul 06 20:13:29 2001  Steve Huston  <shuston@riverace.com>
 
 Fri Jul  6 15:55:54 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/OS.h (ACE_FD_SETSIZE):
+        * ace/OS.h (ACE_FD_SETSIZE):
 
-	  Integrated patch from Jody Hagins <jody@atdesk.com>.  Set the
-	  default reactor file descriptor set size to be an integer
-	  constant rather than a preprocessor constant.  Some third party
-	  software #undef FD_SETSIZE in their header files, causing build
-	  problems in ACE.
+          Integrated patch from Jody Hagins <jody@atdesk.com>.  Set the
+          default reactor file descriptor set size to be an integer
+          constant rather than a preprocessor constant.  Some third party
+          software #undef FD_SETSIZE in their header files, causing build
+          problems in ACE.
 
 Fri Jul 06 18:20:39 2001  Steve Huston  <shuston@riverace.com>
 
-	* netsvcs/lib/Client_Logging_Handler.cpp: #if 0'd out a bunch of
+        * netsvcs/lib/Client_Logging_Handler.cpp: #if 0'd out a bunch of
           ACE_DEBUG statements that aren't appropriate for use in commercial
           logging. These can be #if 1'd if there's some doubt while debugging
           this stuff, but they aren't useful once debugged, and are
@@ -277,7 +285,7 @@ Fri Jul 06 18:20:39 2001  Steve Huston  <shuston@riverace.com>
 
 Fri Jul  6 13:40:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Log_Msg_UNIX_Syslog.cpp: Fixed a warning in g++.
+        * ace/Log_Msg_UNIX_Syslog.cpp: Fixed a warning in g++.
 
 Fri Jul 06 11:39:41 2001  Steve Huston  <shuston@riverace.com>
 
@@ -290,89 +298,89 @@ Fri Jul 06 11:39:41 2001  Steve Huston  <shuston@riverace.com>
 Fri Jul  6 08:36:20 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * netsvcs/Makefile: Don't build this if ACE_COMPONENTS does not
-	  contain Other.  The netsvcs library requires Naming_Context.
+          contain Other.  The netsvcs library requires Naming_Context.
 
 Fri Jul  6 05:44:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Makefile (LOGGING_FILES): Added support for
-	  Log_Msg_UNIX_Syslog.
+        * ace/Makefile (LOGGING_FILES): Added support for
+          Log_Msg_UNIX_Syslog.
 
-	* ace/Log_Msg_UNIX_Syslog.{h,cpp}:
-	* ace/Log_Msg.cpp,
-	* ace/OS.h: Added support for a new UNIX syslog backend for the
-	  ACE_Log_Msg class.  Thanks to Jerry D. De Master
- 	  <jdemaster@rite-solutions.com> and Robert Davidson
- 	  <robert@rdavidson.freeserve.co.uk>.
+        * ace/Log_Msg_UNIX_Syslog.{h,cpp}:
+        * ace/Log_Msg.cpp,
+        * ace/OS.h: Added support for a new UNIX syslog backend for the
+          ACE_Log_Msg class.  Thanks to Jerry D. De Master
+          <jdemaster@rite-solutions.com> and Robert Davidson
+          <robert@rdavidson.freeserve.co.uk>.
 
-	* ace/SOCK_Dgram.h: Fixed a typo in one of the send() method
-	  comments.  Thanks to Alain Decamps <Alain.Decamps@PIDPA.be> for
- 	  reporting this.
+        * ace/SOCK_Dgram.h: Fixed a typo in one of the send() method
+          comments.  Thanks to Alain Decamps <Alain.Decamps@PIDPA.be> for
+          reporting this.
 
-	* ace/config-macosx.h: Added a new file courtesy of John
-	  Zorko so that things will work on MacOSX.
+        * ace/config-macosx.h: Added a new file courtesy of John
+          Zorko so that things will work on MacOSX.
 
 Thu Jul  5 23:22:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	  Fixes that were required for fixing bug 575. Merged in from
-	  branch bug_575_stage_2.
+          Fixes that were required for fixing bug 575. Merged in from
+          branch bug_575_stage_2.
 
 Thu Jul  5 23:09:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/CDR_Stream.cpp (ACE_InputCDR): Fixed a long standing bug in
-	  the branch. This caused the DSI_Gateway test to fail. The
-	  problem was from setting the write pointer to a wrong position
-	  during the construction.
+        * ace/CDR_Stream.cpp (ACE_InputCDR): Fixed a long standing bug in
+          the branch. This caused the DSI_Gateway test to fail. The
+          problem was from setting the write pointer to a wrong position
+          during the construction.
 
 Thu Jul  5 14:39:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* Merged with the main trunk and moved it to a new branch by name
-	  bug_575_stage_2.
+        * Merged with the main trunk and moved it to a new branch by name
+          bug_575_stage_2.
 
 Thu Jun 28 15:25:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Reactor.h (ACE_Reactor):
-	* ace/Reactor.cpp: Added a new method resumable_handler () to the
-	  reactor interface. This would indicate whether the application
-	  can take advantage by resuming the handlers themselves or
-	  not. Not all reactors can allow this feature.
+        * ace/Reactor.h (ACE_Reactor):
+        * ace/Reactor.cpp: Added a new method resumable_handler () to the
+          reactor interface. This would indicate whether the application
+          can take advantage by resuming the handlers themselves or
+          not. Not all reactors can allow this feature.
 
-	* ace/Reactor_Impl.h:
-	* ace/Reactor_Impl.cpp: Added a pure virtual function so that all
-	  the implementations can decide whether the handlers are
-	  resumable or not.
+        * ace/Reactor_Impl.h:
+        * ace/Reactor_Impl.cpp: Added a pure virtual function so that all
+          the implementations can decide whether the handlers are
+          resumable or not.
 
-	* ace/Select_Reactor_Base.h:
-	* ace/Select_Reactor_Base.cpp:
-	* ace/TP_Reactor.h:
-	* ace/TP_Reactor.cpp:
-	* ace/WFMO_Reactor.h:
-	* ace/WFMO_Reactor.cpp:Implemented resumable_handlers ().
+        * ace/Select_Reactor_Base.h:
+        * ace/Select_Reactor_Base.cpp:
+        * ace/TP_Reactor.h:
+        * ace/TP_Reactor.cpp:
+        * ace/WFMO_Reactor.h:
+        * ace/WFMO_Reactor.cpp:Implemented resumable_handlers ().
 
 Sun Jun 24 11:25:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* Created this file. Got the whole stuff in ace to a new branch by
-	  name bug_575_stage_1. This ChangeLog file will be in branch
-	  bug_575.
+        * Created this file. Got the whole stuff in ace to a new branch by
+          name bug_575_stage_1. This ChangeLog file will be in branch
+          bug_575.
 
 Fri Jun 22 16:52:13 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
-	* ace/CDR_Stream.cpp: Changed the copy constructor for the
-	  ACE_InputCDR's. Instead of duplicating the ACE_Data_Block we
-	  now use the new copy constructor in the ACE_Message_Block.
+        * ace/CDR_Stream.cpp: Changed the copy constructor for the
+          ACE_InputCDR's. Instead of duplicating the ACE_Data_Block we
+          now use the new copy constructor in the ACE_Message_Block.
 
-	* ace/Message_Block.h:
-	* ace/Message_Block.cpp: Added a new copy constructor to the
-	  ACE_Message_Block. This copy constructor does a deep copy from
-	  the data block if the data block of the incoming message block
-	  is on the stack or does a shallow copy of the data block (by
-	  incrementing the ref count) if it is on the heap.
+        * ace/Message_Block.h:
+        * ace/Message_Block.cpp: Added a new copy constructor to the
+          ACE_Message_Block. This copy constructor does a deep copy from
+          the data block if the data block of the incoming message block
+          is on the stack or does a shallow copy of the data block (by
+          incrementing the ref count) if it is on the heap.
 
-	END of entries from bug_575_stage_2.
+        END of entries from bug_575_stage_2.
 
 Thu Jul  5 22:07:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst: Added the new perl script in LongUpcalls
-	  in the  daily builds.
+        * bin/auto_run_tests.lst: Added the new perl script in LongUpcalls
+          in the  daily builds.
 
 Thu Jul  5 20:36:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -392,20 +400,20 @@ Wed Jul  4 15:35:47 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Wed Jul 04 14:26:10 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Synch_T.h (class ACE_Acquire_Method): Moved the enums from
-	  the Reverse Lock class into ACE_Acquire_Method, a non-template
-	  class.  These enums should have been inside the reverse lock
-	  class, but some lame compilers cannot handle enums inside
-	  template classes.
+        * ace/Synch_T.h (class ACE_Acquire_Method): Moved the enums from
+          the Reverse Lock class into ACE_Acquire_Method, a non-template
+          class.  These enums should have been inside the reverse lock
+          class, but some lame compilers cannot handle enums inside
+          template classes.
 
 Wed Jul 04 12:43:22 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Synch_T.i (ACE_Reverse_Lock): Fully specified the
-	  ACE_ACQUIRE_METHOD type.
+        * ace/Synch_T.i (ACE_Reverse_Lock): Fully specified the
+          ACE_ACQUIRE_METHOD type.
 
 Tue Jul  3 15:43:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Select_Reactor_Base.cpp: Fixed a warning in g++.
+        * ace/Select_Reactor_Base.cpp: Fixed a warning in g++.
 
 Tue Jul  3 14:44:00 2001  Craig Rodrigues  <crodrigues@bbn.com>
 
@@ -416,51 +424,51 @@ Tue Jul  3 14:44:00 2001  Craig Rodrigues  <crodrigues@bbn.com>
 
 Tue Jul 03 12:26:33 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Synch_T.h (class ACE_Reverse_Lock): Added a parameter to the
-	  constructor of the reverse lock.  The ACE_ACQUIRE_METHOD
-	  parameter is used to indicate which acquire() method will be
-	  called on the real lock when the release() method is called on
-	  the reverse lock. REGULAR indicated the acquire() method, READ
-	  indicates the acquire_read() method, and WRITE indicates the
-	  acquire_write() method.  Note that the try_*() methods are not
-	  represented here because we have to make sure that the release()
-	  method on the reverse lock acquires a lock on the real lock.
+        * ace/Synch_T.h (class ACE_Reverse_Lock): Added a parameter to the
+          constructor of the reverse lock.  The ACE_ACQUIRE_METHOD
+          parameter is used to indicate which acquire() method will be
+          called on the real lock when the release() method is called on
+          the reverse lock. REGULAR indicated the acquire() method, READ
+          indicates the acquire_read() method, and WRITE indicates the
+          acquire_write() method.  Note that the try_*() methods are not
+          represented here because we have to make sure that the release()
+          method on the reverse lock acquires a lock on the real lock.
 
-	  Thanks to Edan Ayal <edana@bandwiz.com> for suggesting this.
+          Thanks to Edan Ayal <edana@bandwiz.com> for suggesting this.
 
 Tue Jul  3 06:20:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
         * ace/Reactor.h,
         * ace/Reactor_Impl.h,
-	* ace/Select_Reactor_Base.cpp,
-	* ace/Select_Reactor_Base.i,
-  	* ace/Select_Reactor_Base.h,
-    	* ace/WFMO_Reactor.cpp,
-      	* ace/WFMO_Reactor.h: Added an enhancement that allows the
-	  Reactor to selectively purge event handlers from its
- 	  notification queue according to their Reactor_Mask type.  Thanks
- 	  to Edan Ayal <edana@bandwiz.com> for contributing this.
+        * ace/Select_Reactor_Base.cpp,
+        * ace/Select_Reactor_Base.i,
+        * ace/Select_Reactor_Base.h,
+        * ace/WFMO_Reactor.cpp,
+        * ace/WFMO_Reactor.h: Added an enhancement that allows the
+          Reactor to selectively purge event handlers from its
+          notification queue according to their Reactor_Mask type.  Thanks
+          to Edan Ayal <edana@bandwiz.com> for contributing this.
 
-	* tests/Reactor_Notify_Test.cpp (run_notify_purge_test):
-	  Added a new set of tests for the new selective notification
- 	  purging features of the Reactor.  Thanks to Edan Ayal
- 	  <edana@bandwiz.com> for contributing this.
+        * tests/Reactor_Notify_Test.cpp (run_notify_purge_test):
+          Added a new set of tests for the new selective notification
+          purging features of the Reactor.  Thanks to Edan Ayal
+          <edana@bandwiz.com> for contributing this.
 
-	* ace/WIN32_Asynch_IO.cpp: Removed the
-	  ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority,
- 	  signal_number), initializer since we no longer use virtual
- 	  inheritance.  Thanks to Alexander Libman
- 	  <alexander.libman@baltimore.com> for reporting this.
+        * ace/WIN32_Asynch_IO.cpp: Removed the
+          ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority,
+          signal_number), initializer since we no longer use virtual
+          inheritance.  Thanks to Alexander Libman
+          <alexander.libman@baltimore.com> for reporting this.
 
-	* ace/WIN32_Asynch_IO.h: Removed the virtual inheritance from
-	  ACE_WIN32_Asynch_Result for the ACE_Asynch_Read_Stream_Result
- 	  and ACE_Asynch_Read_Dgram_Result classes.  Thanks to Alexander
- 	  Libman <alexander.libman@baltimore.com> for reporting this.
+        * ace/WIN32_Asynch_IO.h: Removed the virtual inheritance from
+          ACE_WIN32_Asynch_Result for the ACE_Asynch_Read_Stream_Result
+          and ACE_Asynch_Read_Dgram_Result classes.  Thanks to Alexander
+          Libman <alexander.libman@baltimore.com> for reporting this.
 
-	* ace/Refcounted_Auto_Ptr.h: Made the destructor of
-	  ACE_Refcounted_Auto_Ptr virtual so that users can override it
- 	  locally.  Thanks to Jenny Kowald <jkowald@oz.agile.tv> for
- 	  reporting this.
+        * ace/Refcounted_Auto_Ptr.h: Made the destructor of
+          ACE_Refcounted_Auto_Ptr virtual so that users can override it
+          locally.  Thanks to Jenny Kowald <jkowald@oz.agile.tv> for
+          reporting this.
 
 Tue Jul  3 09:40:59 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -490,48 +498,48 @@ Mon Jul  2 16:23:04 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Jul  2 15:26:32 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-sunos5.6.h: Removed ACE_HAS_POSIX_SEM and
-	  ACE_LACKS_NAMED_POSIX_SEM.  Thanks to Glenn Popelka
-	  <gpp@gpopelka.com> for helping track this down.
+        * ace/config-sunos5.6.h: Removed ACE_HAS_POSIX_SEM and
+          ACE_LACKS_NAMED_POSIX_SEM.  Thanks to Glenn Popelka
+          <gpp@gpopelka.com> for helping track this down.
 
 Mon Jul 02 11:45:57 2001  Ossama Othman  <ossama@uci.edu>
 
-	* bin/make_release:
+        * bin/make_release:
 
-	  Disabled bootstrapping of ACE's autoconf support.  It isn't
-	  ready for general use.  Doing so reduces the amount of
-	  confusion.  Thanks to Holger P. Krekel <krekel@merlinux.de> for
- 	  motivating this change.
+          Disabled bootstrapping of ACE's autoconf support.  It isn't
+          ready for general use.  Doing so reduces the amount of
+          confusion.  Thanks to Holger P. Krekel <krekel@merlinux.de> for
+          motivating this change.
 
 Mon Jul  2 13:18:14 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* Moved ACE-configurations.txt into the docs directory.  Also
-	  removed the hopelessly out of date BIBLIOGRAPHY file.
+        * Moved ACE-configurations.txt into the docs directory.  Also
+          removed the hopelessly out of date BIBLIOGRAPHY file.
 
-	* Moved all the ChangeLog-* files into the new ChangeLogs
-	  directory.  Thanks to Holger P. Krekel <krekel@merlinux.de> for
- 	  this suggestion.
+        * Moved all the ChangeLog-* files into the new ChangeLogs
+          directory.  Thanks to Holger P. Krekel <krekel@merlinux.de> for
+          this suggestion.
 
 Mon Jul 02 11:20:52 2001  Ossama Othman  <ossama@uci.edu>
 
-	* config.guess:
-	* config.sub:
+        * config.guess:
+        * config.sub:
 
-	  Updated to the latest versions from the GNU FTP site.
+          Updated to the latest versions from the GNU FTP site.
 
 Mon Jul 02 11:30:20 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Synch_T.i: Since the release() method on the reverse lock
-	  calls the simple acquire() method on the real lock, it is
-	  assumed that it is a simple acquire/release protocol with the
-	  real lock.  Therefore, I think all the other methods on the
-	  reverse lock tryacquire(), acquire_read(), acquire_write(),
-	  tryacquire_read(), tryacquire_write(), and
-	  tryacquire_write_upgrade() should not be allowed.  This falls in
-	  line with the original concept of using reverse locks with
-	  regular guards.
+        * ace/Synch_T.i: Since the release() method on the reverse lock
+          calls the simple acquire() method on the real lock, it is
+          assumed that it is a simple acquire/release protocol with the
+          real lock.  Therefore, I think all the other methods on the
+          reverse lock tryacquire(), acquire_read(), acquire_write(),
+          tryacquire_read(), tryacquire_write(), and
+          tryacquire_write_upgrade() should not be allowed.  This falls in
+          line with the original concept of using reverse locks with
+          regular guards.
 
-	  Thanks to Edan Ayal <edana@bandwiz.com> for pointing this out.
+          Thanks to Edan Ayal <edana@bandwiz.com> for pointing this out.
 
 Mon Jul  2 11:17:37 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -542,9 +550,9 @@ Mon Jul  2 11:17:37 2001  Chad Elliott  <elliott_c@ociweb.com>
           ACE_Profile_Timer::elapsed_rusage() when neither ACE_HAS_PRUSAGE_T
           nor ACE_HAS_GETRUSAGE is defined.
 
-	* Reverted the reverted changes in this entry.
-	  "Fri Jun 29 22:31:56 2001  Balachandran Natarajan
-	  <bala@cs.wustl.edu>".  These changes are ok, I just
+        * Reverted the reverted changes in this entry.
+          "Fri Jun 29 22:31:56 2001  Balachandran Natarajan
+          <bala@cs.wustl.edu>".  These changes are ok, I just
           needed to fix the bug in Profile_Timer.cpp.
 
 Mon Jul  2 09:40:45 2001  Chad Elliott  <elliott_c@ociweb.com>
@@ -556,106 +564,106 @@ Mon Jul  2 09:40:45 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Mon Jul  2 05:40:54 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Logging_Strategy.cpp: Enhanced the code so that it works with
-	  ACE_LACKS_IOSTREAM_TOTALLY.  Thanks to Nir Drang <nir@bandwiz.com>
-	  and Edan Ayal <edana@bandwiz.com> for reporting this.
+        * ace/Logging_Strategy.cpp: Enhanced the code so that it works with
+          ACE_LACKS_IOSTREAM_TOTALLY.  Thanks to Nir Drang <nir@bandwiz.com>
+          and Edan Ayal <edana@bandwiz.com> for reporting this.
 
-	* ace/SPIPE_Addr.cpp (set): Added a "+ 1" to the computation of
-	  the size of the SPIPE_Addr to account for the trailing NUL.
-  	  Thanks to Oren Zeev-Ben-Mordehai <oren@phonedo.com> for
- 	  reporting this.
+        * ace/SPIPE_Addr.cpp (set): Added a "+ 1" to the computation of
+          the size of the SPIPE_Addr to account for the trailing NUL.
+          Thanks to Oren Zeev-Ben-Mordehai <oren@phonedo.com> for
+          reporting this.
 
-	* ace/Refcounted_Auto_Ptr.{h,i}: Added support for a "null()"
-	  method to check if a refcounted auto ptr is NULL.  Thanks to
- 	  Jenny Kowald <jkowald@oz.agile.tv> for reporting this.
+        * ace/Refcounted_Auto_Ptr.{h,i}: Added support for a "null()"
+          method to check if a refcounted auto ptr is NULL.  Thanks to
+          Jenny Kowald <jkowald@oz.agile.tv> for reporting this.
 
-	* ace/config-macosx.h,
-  	* ace/platform_macosx.GNU: Enhanced these files to support MacOSX.
-	  Thanks to John Zorko <j.zorko@att.net> for contributing this.
+        * ace/config-macosx.h,
+        * ace/platform_macosx.GNU: Enhanced these files to support MacOSX.
+          Thanks to John Zorko <j.zorko@att.net> for contributing this.
 
-	* ace/Synch.h: Fixed the Doxygen documentation for all the
-	  removed_ fields, which where somehow messed up.  Thanks to
- 	  Johnny Willemsen for reporting this.
+        * ace/Synch.h: Fixed the Doxygen documentation for all the
+          removed_ fields, which where somehow messed up.  Thanks to
+          Johnny Willemsen for reporting this.
 
 Sun Jul  1 11:49:13 2001  Alexander Libman <alexander.libman@baltimore.com>
 
         * ace: Enhanced the POSIX and Sun Proactor implementations as
-	  follows:
+          follows:
 
           . POSIX_SIG_Proactor is now based on POSIX_AIOCB_Proactor
 
-	  . All classes ACE_POSIX_SIG_Asynch_XXXX are removed.
-	    POSIX_SIG_Proactor uses the ACE_POSIX_AIOCB_Asynch_XXXX
- 	    classes now.
+          . All classes ACE_POSIX_SIG_Asynch_XXXX are removed.
+            POSIX_SIG_Proactor uses the ACE_POSIX_AIOCB_Asynch_XXXX
+            classes now.
 
-	  . ACE_POSIX_AIOCB_Proactor::register_and_start_aio (...)
-	    now calls a new virtual method: int
- 	    ACE_POSIX_AIOCB_Proactor::allocate_aio_slot
- 	    (ACE_POSIX_Asynch_Result *result).
+          . ACE_POSIX_AIOCB_Proactor::register_and_start_aio (...)
+            now calls a new virtual method: int
+            ACE_POSIX_AIOCB_Proactor::allocate_aio_slot
+            (ACE_POSIX_Asynch_Result *result).
 
           . The strategy of free slot allocation in SIG_Proactor is
-	    a bit different from AIOCB and SUN Proactors.  The
- 	    allocate_aio_slot() method is responsible for setting
- 	    notification information for aio request
- 	    (SIGEV_NONE/SIGEV_SIGNAL).  For SIG_Proactor, the field
- 	    aio_sigevent.sigev_value.sival_int now contains index of aiocb
- 	    in the aiocb_list_, not a pointer.
+            a bit different from AIOCB and SUN Proactors.  The
+            allocate_aio_slot() method is responsible for setting
+            notification information for aio request
+            (SIGEV_NONE/SIGEV_SIGNAL).  For SIG_Proactor, the field
+            aio_sigevent.sigev_value.sival_int now contains index of aiocb
+            in the aiocb_list_, not a pointer.
 
-	  . The ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
+          . The ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
                                               int &return_status, size_t
-					      &index, size_t &count)
+                                              &index, size_t &count)
             parameter index defines initial slot to scan and the new
- 	    parameter count tells us maximum number slots to scan.  On
- 	    return: index contains value to start scan next time, count
- 	    contains remained number of slots.  Scanning is performed in
- 	    "wheel" style to allow all requests be handled with equal
- 	    priorities.
+            parameter count tells us maximum number slots to scan.  On
+            return: index contains value to start scan next time, count
+            contains remained number of slots.  Scanning is performed in
+            "wheel" style to allow all requests be handled with equal
+            priorities.
 
-	  . ACE_POSIX_AIOCB_Proactor::check_max_aio_num () checks for
-	    max_number_files to open and tries to setup max_number_files
- 	    equal to aiocb_max_size_. if we failed than cut off
- 	    aiocb_max_size_ value to existing max_number_files.
+          . ACE_POSIX_AIOCB_Proactor::check_max_aio_num () checks for
+            max_number_files to open and tries to setup max_number_files
+            equal to aiocb_max_size_. if we failed than cut off
+            aiocb_max_size_ value to existing max_number_files.
 
-	  . POSIX_Proactor added member int os_id_ and constructor sets up
-	    os_id_ (compilation time + run_time function) to know
- 	    OS(Sun/HP/Linux/...) and version.  We need such info for
- 	    POSIX_SIG_Proactors to take into account the behavior of
- 	    different OS.
+          . POSIX_Proactor added member int os_id_ and constructor sets up
+            os_id_ (compilation time + run_time function) to know
+            OS(Sun/HP/Linux/...) and version.  We need such info for
+            POSIX_SIG_Proactors to take into account the behavior of
+            different OS.
 
           . Delivery of simulated/"post_completed" Asynch_Results
-	    (Timers, AsynchAccept,Wakeup ...).  As both Proactors have no
- 	    reliable mechanizm for delivery "post_completed" results, so
- 	    the reliable queue of "post_completed" results was
- 	    implemented.  The new member of AIOCB Proactor
- 	    ACE_Unbounded_Queue<ACE_POSIX_Asynch_Result *> result_queue_
- 	    has been added.  Also added protected methods to the
- 	    ACE_POSIX_AIOCB_Proactor.
+            (Timers, AsynchAccept,Wakeup ...).  As both Proactors have no
+            reliable mechanizm for delivery "post_completed" results, so
+            the reliable queue of "post_completed" results was
+            implemented.  The new member of AIOCB Proactor
+            ACE_Unbounded_Queue<ACE_POSIX_Asynch_Result *> result_queue_
+            has been added.  Also added protected methods to the
+            ACE_POSIX_AIOCB_Proactor.
 
           . We had an error in all previous versions (from major ACE 5.1):
-	    post_completion (int how_many) does not guarantee that all
- 	    completions will be delivered to the different threads running
- 	    event_loop (sometimes several completions could be delivered
- 	    to the one thread, in another thread performs during long time
- 	    application_spesific_code ()).  Moreover, you can run now
- 	    Proactor event_loop in any number of threads (more than
- 	    SIGQUEMAX).
+            post_completion (int how_many) does not guarantee that all
+            completions will be delivered to the different threads running
+            event_loop (sometimes several completions could be delivered
+            to the one thread, in another thread performs during long time
+            application_spesific_code ()).  Moreover, you can run now
+            Proactor event_loop in any number of threads (more than
+            SIGQUEMAX).
 
 Sun Jul  1 11:49:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* examples/Reactor/Proactor: Integrated a test that exercises the
-	  support for asynchronous UDP operations.  Thanks to Roger Tragin
- 	  <r.tragin@computer.org> for contributing this.
+        * examples/Reactor/Proactor: Integrated a test that exercises the
+          support for asynchronous UDP operations.  Thanks to Roger Tragin
+          <r.tragin@computer.org> for contributing this.
 
-	* ace/Synch_T.i: Changed the implementations of all the
-	  acquire*() method to call release().  Thanks to Edan Ayal
- 	  <edana@bandwiz.com> for reporting this.
+        * ace/Synch_T.i: Changed the implementations of all the
+          acquire*() method to call release().  Thanks to Edan Ayal
+          <edana@bandwiz.com> for reporting this.
 
 Sat Jun 30 12:44:11 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* examples/Connection/blocking/SPIPE-acceptor.cpp: Added better
-	  support for shutting down the server when a signal occurs.
-  	  Thanks to Rich Newman <RNewman@directv.com> for this
- 	  enhancement.
+        * examples/Connection/blocking/SPIPE-acceptor.cpp: Added better
+          support for shutting down the server when a signal occurs.
+          Thanks to Rich Newman <RNewman@directv.com> for this
+          enhancement.
 
 Sun Jul 01 11:16:34 2001  Balachandran  <bala@cs.wustl.edu>
 
@@ -663,49 +671,49 @@ Sun Jul 01 11:16:34 2001  Balachandran  <bala@cs.wustl.edu>
 
 Sun Jul  1 11:03:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/generate_doxygen.pl: Removed SSLIOP from the list.
+        * bin/generate_doxygen.pl: Removed SSLIOP from the list.
         * etc/tao_ssliop.dosxygen: Removed the file as it was creating
-	  problems for the beta.
+          problems for the beta.
 
 Sat Jun 30 12:44:11 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/FIFO_Send_Msg.cpp (send): Fixed another errant use of
-	  putmsg().  Thanks to David Trusty <david.trusty@westwave.com>
- 	  for reporting this.
+        * ace/FIFO_Send_Msg.cpp (send): Fixed another errant use of
+          putmsg().  Thanks to David Trusty <david.trusty@westwave.com>
+          for reporting this.
 
 Fri Jun 29 22:31:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* Reverted the changes in this entry.
-	  "Thu Jun 28 13:44:52 2001  Chad Elliott
-	  <elliott_c@ociweb.com>". The changes seem to be breaking builds
-	  on Sun.
+        * Reverted the changes in this entry.
+          "Thu Jun 28 13:44:52 2001  Chad Elliott
+          <elliott_c@ociweb.com>". The changes seem to be breaking builds
+          on Sun.
 
 Fri Jun 29 10:14:03 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/config-macosx.h: Removed some macros that don't apply to
-	  MacOSX.  Thanks to John Zorko <j.zorko@att.net> for contributing
- 	  this.
+        * ace/config-macosx.h: Removed some macros that don't apply to
+          MacOSX.  Thanks to John Zorko <j.zorko@att.net> for contributing
+          this.
 
-	* include/makeinclude/platform_macosx.GNU (CC): Changed
-	  the -fno-implict-templates to -fimplicit-templates.  Thanks to
- 	  John Zorko <j.zorko@att.net> for contributing this.
+        * include/makeinclude/platform_macosx.GNU (CC): Changed
+          the -fno-implict-templates to -fimplicit-templates.  Thanks to
+          John Zorko <j.zorko@att.net> for contributing this.
 
 Wed Jun 27 12:00:34 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/FIFO_Send_Msg.i (send): Make sure that when we use the
-	  putmsg() variant of this call that we correctly return the
- 	  length.  Thanks to David Trusty <david.trusty@westwave.com> for
- 	  reporting this.
+        * ace/FIFO_Send_Msg.i (send): Make sure that when we use the
+          putmsg() variant of this call that we correctly return the
+          length.  Thanks to David Trusty <david.trusty@westwave.com> for
+          reporting this.
 
-	* ace/FIFO_Recv_Msg.i (recv): Make sure that when we use the
-	  getmsg() variant of this call that we correctly return the
- 	  length.  Thanks to David Trusty <david.trusty@westwave.com> for
- 	  reporting this.
+        * ace/FIFO_Recv_Msg.i (recv): Make sure that when we use the
+          getmsg() variant of this call that we correctly return the
+          length.  Thanks to David Trusty <david.trusty@westwave.com> for
+          reporting this.
 
-	* ace/Log_Record.{h,cpp}: Added support for extending the
-	  names of the types of logging requests.  Thanks to Kelly
- 	  F. Hickel <kfh@mqsoftware.com> and Jonathan Reis
- 	  <reis@stentor.com> for this fix.
+        * ace/Log_Record.{h,cpp}: Added support for extending the
+          names of the types of logging requests.  Thanks to Kelly
+          F. Hickel <kfh@mqsoftware.com> and Jonathan Reis
+          <reis@stentor.com> for this fix.
 
 Thu Jun 28 13:44:52 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -750,63 +758,63 @@ Thu Jun 28 13:05:12 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Jun 28 07:08:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/TP_Reactor.cpp: Added a sanity check. The check involves
-	  invalidating the handle when the handler is removed from the
-	  repository in notify_handle (). We also check for an invalid
-	  handle before we go ahead and resume the handle. Thanks to
-	  Alexander Libman <alexander.libman@baltimore.com> for suggesting
-	  this check.
+        * ace/TP_Reactor.cpp: Added a sanity check. The check involves
+          invalidating the handle when the handler is removed from the
+          repository in notify_handle (). We also check for an invalid
+          handle before we go ahead and resume the handle. Thanks to
+          Alexander Libman <alexander.libman@baltimore.com> for suggesting
+          this check.
 
 Wed Jun 27 14:07:43 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
-	* ace/CDR_Stream.{cpp,h}:
+        * ace/CDR_Stream.{cpp,h}:
 
-	  Changed write_wstring() and read_wstring() to partially comply
-	  with GIOP 1.2.
+          Changed write_wstring() and read_wstring() to partially comply
+          with GIOP 1.2.
 
 Wed Jun 27 07:13:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/OS_TLI.inl: Fixed a compile error in Win32 builds.
+        * ace/OS_TLI.inl: Fixed a compile error in Win32 builds.
 
 Tue Jun 26 17:56:05 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* tests/Message_Block_Test.cpp: Changed the test to use
-	  ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY and
- 	  ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY + 1 rather than priorities 0
- 	  and 1.  Thus, the test works properly when users override the
- 	  ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY in config.h.  Thanks to Ivan
- 	  Murphy for reporting this.
+        * tests/Message_Block_Test.cpp: Changed the test to use
+          ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY and
+          ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY + 1 rather than priorities 0
+          and 1.  Thus, the test works properly when users override the
+          ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY in config.h.  Thanks to Ivan
+          Murphy for reporting this.
 
-	* examples/Connection/blocking/SPIPE-acceptor.cpp: Added several
-	  fixes so that this stuff runs correct when called by multiple
- 	  clients.  Thanks to Rich Newman <RNewman@directv.com> for
- 	  contributing this.
+        * examples/Connection/blocking/SPIPE-acceptor.cpp: Added several
+          fixes so that this stuff runs correct when called by multiple
+          clients.  Thanks to Rich Newman <RNewman@directv.com> for
+          contributing this.
 
 Tue Jun 26 17:37:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Proactor.h: Fixed a compile error with g++. There were two
-	  return types. Retained the return type as int.
+        * ace/Proactor.h: Fixed a compile error with g++. There were two
+          return types. Retained the return type as int.
 
 Tue Jun 26 16:22:24 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/OS_TLI.h: Zapped a dummy declaration of struct rlimit { }.
-	  Thanks to Bala for reporting this.
+        * ace/OS_TLI.h: Zapped a dummy declaration of struct rlimit { }.
+          Thanks to Bala for reporting this.
 
-	* ace/TLI_*, OS_TLI.*: Added a number of fixes for TLI so that it'll
-	  compile properly on Win32 platforms.  Thanks to Andreas Geisler
- 	  <andreas.geisler@erls.siemens.de> for reporting this.
+        * ace/TLI_*, OS_TLI.*: Added a number of fixes for TLI so that it'll
+          compile properly on Win32 platforms.  Thanks to Andreas Geisler
+          <andreas.geisler@erls.siemens.de> for reporting this.
 
-	* ace/Proactor.h: Added a static reset_event_loop() to the ACE_Proactor
-	  class.  Thanks to Rich Newman <RNewman@directv.com> for
- 	  reporting this.
+        * ace/Proactor.h: Added a static reset_event_loop() to the ACE_Proactor
+          class.  Thanks to Rich Newman <RNewman@directv.com> for
+          reporting this.
 
-	* ace/config-sunos5.7.h: Removed an errant #endif.  Thanks to
-	  Craig Ching <cching@mqsoftware.com> for reporting this.
+        * ace/config-sunos5.7.h: Removed an errant #endif.  Thanks to
+          Craig Ching <cching@mqsoftware.com> for reporting this.
 
 Mon Jun 25 15:36:55 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/config-sunos5.7.h: Added support for GCC 3.0.  Thanks to
-	  Craig Ching <cching@mqsoftware.com> for contributing this.
+        * ace/config-sunos5.7.h: Added support for GCC 3.0.  Thanks to
+          Craig Ching <cching@mqsoftware.com> for contributing this.
 
 Mon Jun 25 12:18:41 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -828,17 +836,17 @@ Mon Jun 25 12:18:41 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Mon Jun 25 10:05:37 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Malloc_T.cpp (avail_chunks): Guarded againt the case when a
-	  Malloc_Header contains 0 available header for allocation as it
-	  caused an assignment of negative number to an unsigned number.
-	  Thanks to Ben Howard <Benn_Howard@raytheon.com> for pointing
-	  this out.
+        * ace/Malloc_T.cpp (avail_chunks): Guarded againt the case when a
+          Malloc_Header contains 0 available header for allocation as it
+          caused an assignment of negative number to an unsigned number.
+          Thanks to Ben Howard <Benn_Howard@raytheon.com> for pointing
+          this out.
 
 Sun Jun 24 21:51:10 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Obstack.h: Moved the trailing semicolon into the
-	  ACE_EXPORT_SINGLETON_DECLARATION macro to avoid a warning from
-	  Tru65.
+        * ace/Obstack.h: Moved the trailing semicolon into the
+          ACE_EXPORT_SINGLETON_DECLARATION macro to avoid a warning from
+          Tru65.
 
 Sun Jun 24 08:57:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -1637,9 +1645,9 @@ Mon Jun  4 05:53:57 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * ace/File_Lock: Added an "unlink_in_destructor" flag to
           ACE_File_Lock to control whether or not the underlying file is
- 	  unlinked in the destructor.  Thanks to Yuval Yosef
- 	  <yuvi@isdn.net.il> and Crawford Lodge
- 	  <crawford.lodge@xmlglobal.com> for suggesting this.
+          unlinked in the destructor.  Thanks to Yuval Yosef
+          <yuvi@isdn.net.il> and Crawford Lodge
+          <crawford.lodge@xmlglobal.com> for suggesting this.
 
 Sun Jun  3 18:08:39 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
