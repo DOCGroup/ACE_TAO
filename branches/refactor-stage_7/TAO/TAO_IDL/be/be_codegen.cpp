@@ -1427,6 +1427,17 @@ TAO_CodeGen::gen_stub_src_includes (void)
         }
     }
 
+  // If valuefactory_seen_ was set, this was generated in the stub header file,
+  // otherwise it needs to go here - used in _tao_unmarshal().
+  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                       idl_global->decls_seen_masks.valuetype_seen_)
+      && !ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                           idl_global->decls_seen_masks.valuefactory_seen_))
+    {
+      this->gen_standard_include (this->client_stubs_,
+                                  "tao/Valuetype/ValueFactory.h");
+    }
+
   if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
                        idl_global->decls_seen_masks.non_local_iface_seen_))
     {
