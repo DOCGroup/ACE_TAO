@@ -1,3 +1,9 @@
+Mon May  5 13:35:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Messaging/TAO_Messaging.dsp:
+
+          Fixed settings in the release version.
+
 Mon May  5 13:20:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* performance-tests/*/Makefile: Updated dependencies.
