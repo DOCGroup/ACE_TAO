@@ -5,16 +5,25 @@
 
 char *rategen_ior_ = 0;
 int rate = 2;
+int turn_on = 1;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:r:");
+  ACE_Get_Opt get_opts (argc, argv, "k:r:of");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'o':
+        turn_on = 1;
+        break;
+
+      case 'f':
+        turn_on = 0;
+        break;
+
       case 'k':
         rategen_ior_ = get_opts.opt_arg ();
         break;
@@ -26,9 +35,11 @@ parse_args (int argc, char *argv[])
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           "-k <RateGen IOR> (default is file://rategen.ior)"
-                           "-r <rate in hertz> (default is 3)"
+                           "usage:  %s\n"
+                           "-o (Turn on the rate generator)\n"
+                           "-f (Turn off the rate generator)\n"
+                           "-k <RateGen IOR> (default is file://rategen.ior)\n"
+                           "-r <rate in hertz> (default is 3)\n"
                            "\n",
                            argv [0]),
                           -1);
@@ -67,23 +78,24 @@ main (int argc, char *argv[])
       if (CORBA::is_nil (pulser.in ()))
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire 'RateGen' objref\n"), -1);
 
-      pulser->hertz (rate
-                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if (turn_on)
+        {
+          pulser->hertz (rate
+                         ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Start up the Rate Generator\n"));
+          ACE_DEBUG ((LM_DEBUG, "Start up the Rate Generator\n"));
 
-      pulser->start (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          pulser->start (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      else
+        {
+          pulser->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Press <enter> to stop the pulse generator\n"));
-      char dummy [256];
-      cin.getline (dummy, 256);
-
-      pulser->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      ACE_DEBUG ((LM_DEBUG, "Rate Generator stopped\n"));
+          ACE_DEBUG ((LM_DEBUG, "Rate Generator stopped\n"));
+        }
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
