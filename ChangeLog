@@ -1,3 +1,10 @@
+Thu Apr  1 15:40:55 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Strategies_T.cpp (activate_svc_handler): Make sure to 
+	  store/restore errno when calling svc_handler->destroy ().
+  	  Thanks to Ewald Dieterich <ewald.dieterich@fun.de> for reporting
+ 	  this.  This fixes bugid 1776.
+  
 Sun Apr 11 18:33:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* */*.icc:
