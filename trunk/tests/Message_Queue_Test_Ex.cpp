@@ -162,25 +162,6 @@ receiver (void *arg)
                   User_Class *[max_messages],
                   (void *) -1);
 
-#if defined (VXWORKS)
-  // Set up blocks to receive the messages.  Allocate these off the
-  // heap in case messages is large relative to the amount of stack
-  // space available.
-  User_Class *receive_block;
-  ACE_NEW_RETURN (receive_block,
-                  User_Class[max_messages],
-                  (void *) -1);
-
-  for (i = 0; i < max_messages; ++i)
-    {
-      receive_block[i].init (MAX_MESSAGE_SIZE);
-
-      // For VxWorks Message Queues, the receive block pointer must be
-      // assigned.  It will be used by <dequeue_head>.
-      receive_block_p[i] = &receive_block[i];
-    }
-#endif /* VXWORKS */
-
   for (i = 0; i < max_messages; ++i)
     if (queue_wrapper->q_->dequeue_head (receive_block_p[i]) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -190,9 +171,6 @@ receiver (void *arg)
   timer->stop ();
 
   delete [] receive_block_p;
-#if defined (VXWORKS)
-  delete [] receive_block;
-#endif /* VXWORKS */
 
   return 0;
 }
@@ -322,8 +300,6 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
   }
 
-#if !defined (VXWORKS)
-#endif /* ! VXWORKS */
   ACE_NEW_RETURN (timer,
                   ACE_High_Res_Timer,
                   -1);

@@ -39,6 +39,8 @@ ACE_RCSID (tests,
 
 #if defined (VXWORKS) || defined(CHORUS)
 #define TEST_DIR "log"
+#define DIR_DOT "."
+#define DIR_DOT_DOT ".."
 #define TEST_ENTRY ".."
 #else
 #  define TEST_DIR "../tests"
