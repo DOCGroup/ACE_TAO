@@ -1,3 +1,24 @@
+Fri Sep 25 22:07:55 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Mcast/README: 
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.h: 
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
+	  The UDP_Receiver is a RtecEventChannelAdmin::Observer so it can
+	  update its set of mcast group subscriptions automatically. We
+	  still need to improve the underlying socket abstractions to
+	  handle multiple groups (even when the number grows beyond the
+	  limits of a single socket).
+
+	* orbsvcs/orbsvcs/Event_Utilities.cpp: 
+	  The debug routine for QoS structures did not print the
+	  is_gateway field.
+
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	  Fixed some problems on shutdown, related to observer updates.
+
 Fri Sep 25 19:02:03 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/try_macros.h: Fixed the TAO_THROW_ENV_RETURN macro for

@@ -639,7 +639,7 @@ ECM_Federation::open (ACE_SOCK_Dgram *dgram,
   ACE_OS::strcat (buf, "/sender");
 
   RtecUDPAdmin::AddrServer_var addr_server =
-    this->addr_server_._this (_env);
+    this->addr_server (_env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   this->sender_.init (ec, scheduler,
@@ -687,6 +687,12 @@ ECM_Federation::close (CORBA::Environment &_env)
   TAO_CHECK_ENV_RETURN_VOID (_env);
   this->sender_.shutdown (_env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
+}
+
+RtecUDPAdmin::AddrServer_ptr
+ECM_Federation::addr_server (CORBA::Environment &env)
+{
+  return this->addr_server_._this (env);
 }
 
 // ****************************************************************
@@ -1108,7 +1114,7 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
   double p = double (ACE_OS::rand_r (this->seed_)) / RAND_MAX;
   double maxp = double (delta.msec ()) / this->subscription_change_period_;
 
-  if (2 * p < maxp)
+  if (4 * p < maxp)
     {
       ACE_DEBUG ((LM_DEBUG,
 		  "Reconfiguring federation %s: %f %f\n",
@@ -1165,11 +1171,16 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
   ACE_OS::strcpy (buf, this->name ());
   ACE_OS::strcat (buf, "/receiver");
 
+  RtecUDPAdmin::AddrServer_var addr_server =
+    this->federation_->addr_server (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
   ACE_INET_Addr local_addr;
   this->federation_->sender_local_addr (local_addr);
   this->receiver_.init (ec, scheduler,
                         buf,
                         local_addr,
+			addr_server,
                         _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
@@ -1197,18 +1208,16 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
 
   this->mcast_eh_.reactor (TAO_ORB_Core_instance ()->reactor ());
 
+  this->mcast_eh_.open (ec, _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
   ACE_SupplierQOS_Factory qos;
   for (int i = 0; i < this->consumer_types (); ++i)
     {
       qos.insert (source,
-                  this->consumer_ipaddr (i),
-                  rt_info, 1);
-      ACE_INET_Addr mcast_addr (this->mcast_port (),
-                                this->consumer_ipaddr (i));
-      this->mcast_eh_.subscribe (mcast_addr);
+		  this->consumer_ipaddr (i),
+		  rt_info, 1);
     }
-
-  this->mcast_eh_.open ();
 
   RtecEventChannelAdmin::SupplierQOS qos_copy =
     qos.get_SupplierQOS ();

@@ -116,6 +116,10 @@ public:
   int sender_local_addr (ACE_INET_Addr& addr);
   // Return the sender local address
 
+  RtecUDPAdmin::AddrServer_ptr addr_server (CORBA::Environment &env);
+  // This address server can be used to convert event headers
+  // (type,source) to UDP addresses (ipaddr,port)
+
 private:
   char* name_;
   CORBA::UShort mcast_port_;

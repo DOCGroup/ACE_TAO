@@ -243,6 +243,7 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
                             RtecScheduler::Scheduler_ptr lcl_sched,
                             const char* lcl_name,
                             const ACE_INET_Addr& ignore_from,
+			    RtecUDPAdmin::AddrServer_ptr addr_server,
                             CORBA::Environment &_env)
 {
   this->ignore_from_ = ignore_from;
@@ -250,9 +251,12 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
   this->lcl_ec_ =
     RtecEventChannelAdmin::EventChannel::_duplicate (lcl_ec);
 
+  this->addr_server_ = 
+    RtecUDPAdmin::AddrServer::_duplicate (addr_server);
+  
   this->lcl_info_ =
     lcl_sched->create (lcl_name, _env);
-  if (_env.exception () != 0) return;
+  TAO_CHECK_ENV_RETURN_VOID (_env);
 
   ACE_Time_Value tv (0, 500);
   TimeBase::TimeT time;
@@ -301,8 +305,8 @@ TAO_ECG_UDP_Receiver::open (RtecEventChannelAdmin::SupplierQOS& pub,
     this->_this (_env);
   if (_env.exception () != 0) return;
 
-  ACE_DEBUG ((LM_DEBUG, "ECG_UDP_Receiver (%t) Gateway/Supplier "));
-  ACE_SupplierQOS_Factory::debug (pub);
+  // ACE_DEBUG ((LM_DEBUG, "ECG_UDP_Receiver (%t) Gateway/Supplier "));
+  // ACE_SupplierQOS_Factory::debug (pub);
 
   this->consumer_proxy_->connect_push_supplier (supplier_ref.in (),
                                                 pub,
@@ -406,6 +410,14 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
   return 0;
 }
 
+void
+TAO_ECG_UDP_Receiver::get_addr (const RtecEventComm::EventHeader& header,
+				RtecUDPAdmin::UDP_Addr_out addr,
+				CORBA::Environment& env)
+{
+  this->addr_server_->get_addr (header, addr, env);
+}
+
 // ****************************************************************
 
 TAO_ECG_UDP_EH::TAO_ECG_UDP_EH (TAO_ECG_UDP_Receiver *recv)
@@ -444,18 +456,55 @@ TAO_ECG_UDP_EH::get_handle (void) const
   return this->dgram_.get_handle ();
 }
 
+
 // ****************************************************************
 
 TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_UDP_Receiver *recv)
-  :  receiver_ (recv)
+  :  receiver_ (recv),
+     observer_ (this)
 {
 }
 
 int
-TAO_ECG_Mcast_EH::open (void)
+TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec,
+			CORBA::Environment& _env)
 {
-  return this->reactor ()->register_handler (this,
-                                             ACE_Event_Handler::READ_MASK);
+  this->ec_ = RtecEventChannelAdmin::EventChannel::_duplicate (ec);
+  RtecEventChannelAdmin::Observer_var obs =
+    this->observer_._this (_env);
+  TAO_CHECK_ENV_RETURN (_env, -1);
+
+  this->handle_ = this->ec_->append_observer (obs.in (), _env);
+  TAO_CHECK_ENV_RETURN (_env, -1);
+}
+
+int
+TAO_ECG_Mcast_EH::close (CORBA::Environment& _env)
+{
+  if (this->reactor ()->remove_handler (this,
+                                        ACE_Event_Handler::READ_MASK) == -1)
+    return -1;
+
+  if (this->dgram_.unsubscribe () == -1)
+    return -1;
+  
+  this->ec_->remove_observer (this->handle_, _env);
+  this->handle_ = 0;
+  TAO_CHECK_ENV_RETURN (_env, -1);
+
+  
+}
+
+int
+TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE)
+{
+  return this->receiver_->handle_input (this->dgram_);
+}
+
+ACE_HANDLE
+TAO_ECG_Mcast_EH::get_handle (void) const
+{
+  return this->dgram_.get_handle ();
 }
 
 int
@@ -470,26 +519,82 @@ TAO_ECG_Mcast_EH::unsubscribe (const ACE_INET_Addr &mcast_addr)
   return this->dgram_.unsubscribe ();
 }
 
-int
-TAO_ECG_Mcast_EH::close (void)
+void
+TAO_ECG_Mcast_EH::update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub,
+				   CORBA::Environment& _env)
 {
-  if (this->reactor ()->remove_handler (this,
-                                        ACE_Event_Handler::READ_MASK) == -1)
-    return -1;
+  // ACE_DEBUG ((LM_DEBUG,
+  //	      "ECG_Mcast_EH (%t) updating consumer\n"));
 
-  return this->dgram_.unsubscribe ();
+  // @@ TODO: If we are more careful we may simply subscribe for the
+  // new event types and unsubscribe from the old ones...
+  this->reactor ()->remove_handler (this,
+				    ACE_Event_Handler::READ_MASK);
+  this->dgram_.close ();
+
+  int must_register = 0;
+  for (CORBA::ULong i = 0; i < sub.dependencies.length (); ++i)
+    {
+      const RtecEventComm::EventHeader& header =
+	sub.dependencies[i].event.header;
+
+      if (0 <= header.type && header.type <= ACE_ES_EVENT_UNDEFINED)
+	{
+	  // ACE_DEBUG ((LM_DEBUG,
+	  //	      "ECG_Mcast_EH (%t) type = %d skipped\n",
+	  //	      header.type));
+	  continue;
+	}
+      must_register = 1;
+      RtecUDPAdmin::UDP_Addr addr;
+
+      this->receiver_->get_addr (header, addr, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+
+      ACE_INET_Addr inet_addr (addr.port, addr.ipaddr);
+      if (this->subscribe (inet_addr) == -1)
+	ACE_ERROR ((LM_DEBUG,
+		    "cannot subscribe to %s:%d\n",
+		    inet_addr.get_host_addr (),
+		    inet_addr.get_port_number ()));
+      // ACE_DEBUG ((LM_DEBUG,
+      //	  "ECG_Mcast_EH (%t) subscribed to %s:%d\n",
+      //	  inet_addr.get_host_addr (),
+      //	  inet_addr.get_port_number ()));
+    }
+
+  if (must_register)
+    this->reactor ()->register_handler (this,
+					ACE_Event_Handler::READ_MASK);
 }
 
-int
-TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE)
+void
+TAO_ECG_Mcast_EH::update_supplier (const RtecEventChannelAdmin::SupplierQOS&,
+				   CORBA::Environment&)
 {
-  return this->receiver_->handle_input (this->dgram_);
+  // Do nothing
 }
 
-ACE_HANDLE
-TAO_ECG_Mcast_EH::get_handle (void) const
+// ****************************************************************
+
+TAO_ECG_Mcast_EH::Observer::Observer (TAO_ECG_Mcast_EH* eh)
+  :  eh_ (eh)
 {
-  return this->dgram_.get_handle ();
+}
+
+void
+TAO_ECG_Mcast_EH::Observer::update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub,
+					     CORBA::Environment& _env)
+{
+  this->eh_->update_consumer (sub, _env);
+}
+
+void
+TAO_ECG_Mcast_EH::Observer::update_supplier (const
+					     RtecEventChannelAdmin::SupplierQOS& pub,
+					     CORBA::Environment& _env)
+{
+  this->eh_->update_supplier (pub, _env);
 }
 
 // ****************************************************************

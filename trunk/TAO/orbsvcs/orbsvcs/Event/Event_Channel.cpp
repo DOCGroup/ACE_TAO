@@ -700,12 +700,11 @@ ACE_EventChannel::activate (void)
 void
 ACE_EventChannel::shutdown (void)
 {
-  // @@ TODO: Find a portable way to shutdown the ORB, on Orbix we have
-  // to call deactive_impl () on a CORBA::POA is that the portable
-  // way?
-  // With TAO we need access to the ORB (to call shutdown() on it).
+  this->cleanup_observers ();
+
   this->task_manager_->shutdown ();
   this->dispatching_module_->shutdown ();
+
 }
 
 void
@@ -767,11 +766,15 @@ ACE_EventChannel::del_gateway (TAO_EC_Gateway* gw,
 void
 ACE_EventChannel::update_consumer_gwys (CORBA::Environment& _env)
 {
-  if (this->observers_.current_size () == 0)
+  TAO_GUARD_THROW (ACE_ES_MUTEX, ace_mon, this->lock_, _env,
+		   RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
+
+  if (this->observers_.current_size () == 0
+      || this->state_ == ACE_EventChannel::SHUTDOWN)
     return;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "EC (%t) Event_Channel::update_consumer_gwys\n"));
+  // ACE_DEBUG ((LM_DEBUG,
+  //              "EC (%t) Event_Channel::update_consumer_gwys\n"));
 
   RtecEventChannelAdmin::ConsumerQOS c_qos;
   this->consumer_module_->fill_qos (c_qos);
@@ -787,11 +790,15 @@ ACE_EventChannel::update_consumer_gwys (CORBA::Environment& _env)
 void
 ACE_EventChannel::update_supplier_gwys (CORBA::Environment& _env)
 {
-  if (this->observers_.current_size () == 0)
+  TAO_GUARD_THROW (ACE_ES_MUTEX, ace_mon, this->lock_, _env,
+		   RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
+
+  if (this->observers_.current_size () == 0
+      || this->state_ == ACE_EventChannel::SHUTDOWN)
     return;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "EC (%t) Event_Channel::update_supplier_gwys\n"));
+  // ACE_DEBUG ((LM_DEBUG,
+  //            "EC (%t) Event_Channel::update_supplier_gwys\n"));
 
   RtecEventChannelAdmin::SupplierQOS s_qos;
   this->supplier_module_->fill_qos (s_qos);
@@ -845,6 +852,16 @@ ACE_EventChannel::remove_observer (RtecEventChannelAdmin::Observer_Handle h,
     TAO_THROW_ENV
       (RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER(), _env);
 }
+
+void
+ACE_EventChannel::cleanup_observers (void)
+{
+  ACE_GUARD (ACE_ES_MUTEX, ace_mon, this->lock_);
+
+  // @@ TODO report back any errors here...
+  this->observers_.close ();
+}
+
 
 // ****************************************************************
 
@@ -1389,6 +1406,9 @@ ACE_ES_Consumer_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos)
     {
       ACE_Push_Consumer_Proxy *c = *i;
 
+      // ACE_DEBUG ((LM_DEBUG, "EC (%t) fill_qos "));
+      // ACE_ConsumerQOS_Factory::debug (c->qos ());
+
       if (c->qos ().is_gateway)
         continue;
 
@@ -1399,14 +1419,12 @@ ACE_ES_Consumer_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos)
             c->qos ().dependencies[j].event;
 
           RtecEventComm::EventType type = event.header.type;
-          if (type <= ACE_ES_EVENT_UNDEFINED)
-            continue;
 
           // Only type and source dependencies are relevant, notice
           // that we turn conjunctions into disjunctions because
           // correlations could be satisfied by events coming from
           // several remote ECs.
-          if (type <= ACE_ES_EVENT_UNDEFINED)
+          if (0 <= type && type <= ACE_ES_EVENT_UNDEFINED)
             continue;
 
           // If the dependency is already there we don't add it.
@@ -1429,6 +1447,8 @@ ACE_ES_Consumer_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos)
         }
     }
   dep.length (cc);
+
+  // ACE_DEBUG ((LM_DEBUG, "EC (%t) Consumer::fill_qos - %d\n", cc));
 }
 
 // ************************************************************
@@ -3100,30 +3120,31 @@ void
 ACE_ES_Supplier_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
                                        CORBA::Environment &_env)
 {
-  ACE_ES_GUARD ace_mon (lock_);
-  if (ace_mon.locked () == 0)
-    TAO_THROW (RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
+  CORBA::Boolean need_update = 0;
+  {
+    TAO_GUARD_THROW (ACE_SYNCH_MUTEX,  ace_mon, this->lock_, _env,
+		     RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
 
-  if (all_suppliers_.remove (supplier) == -1)
-    TAO_THROW (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR());
+    if (all_suppliers_.remove (supplier) == -1)
+      TAO_THROW (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR());
 
-  up_->disconnecting (supplier, _env);
+    up_->disconnecting (supplier, _env);
+    
+    if (this->all_suppliers_.size () <= 0)
+      {
+	// ACE_DEBUG ((LM_DEBUG, "EC (%t) No more suppliers connected.\n"));
+	channel_->report_disconnect_i (ACE_EventChannel::SUPPLIER);
+      }
 
-  if (all_suppliers_.size () <= 0)
-    {
-      // ACE_DEBUG ((LM_DEBUG, "EC (%t) No more suppliers connected.\n"));
-      channel_->report_disconnect_i (ACE_EventChannel::SUPPLIER);
-    }
-
-  CORBA::Boolean dont_update = supplier->qos ().is_gateway;
-
-  // @@ TODO It would seem
-  // IMHO this release is broken: supplier is a parameter, we never
-  // actually increased its reference count, so we shouldn't decrease
-  // it.
-  // CORBA::release (supplier);
-
-  if (!dont_update)
+    need_update = (supplier->qos ().is_gateway == 0);
+    
+    // @@ TODO It would seem
+    // IMHO this release is broken: supplier is a parameter, we never
+    // actually increased its reference count, so we shouldn't decrease
+    // it.
+    // CORBA::release (supplier);
+  }
+  if (need_update)
     this->channel_->update_supplier_gwys (_env);
 }
 
@@ -3278,14 +3299,12 @@ ACE_ES_Supplier_Module::fill_qos (RtecEventChannelAdmin::SupplierQOS& s_qos)
             s->qos ().publications[j].event;
 
           RtecEventComm::EventType type = event.header.type;
-          if (type <= ACE_ES_EVENT_UNDEFINED)
-            continue;
 
           // Only type and source dependencies are relevant, notice
           // that we turn conjunctions into disjunctions because
           // correlations could be satisfied by events coming from
           // several remote ECs.
-          if (type <= ACE_ES_EVENT_UNDEFINED)
+          if (0 <= type && type <= ACE_ES_EVENT_UNDEFINED)
             continue;
 
           // If the dependency is already there we don't add it.

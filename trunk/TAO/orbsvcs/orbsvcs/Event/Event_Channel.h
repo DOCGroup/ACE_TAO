@@ -262,6 +262,10 @@ public:
 				CORBA::Environment &env);
   // The observer manipulators
 
+ private:
+  void cleanup_observers (void);
+  // Remove all the observers, this simplifies the shutdown process.
+
 private:
   ACE_RTU_Manager *rtu_manager_;
   // The RTU manager dude!

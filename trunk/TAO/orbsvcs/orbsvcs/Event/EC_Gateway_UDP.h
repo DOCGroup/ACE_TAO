@@ -149,6 +149,7 @@ public:
              RtecScheduler::Scheduler_ptr lcl_sched,
              const char* lcl_name,
              const ACE_INET_Addr& ignore_from,
+	     RtecUDPAdmin::AddrServer_ptr addr_server,
              CORBA::Environment &_env);
   // To do its job this class requires to know the local EC it will
   // connect to; it also requires to build an RT_Info for the local
@@ -174,6 +175,12 @@ public:
   // The PushSupplier method.
   virtual void disconnect_push_supplier (CORBA::Environment &);
 
+  
+  void get_addr (const RtecEventComm::EventHeader& header,
+		 RtecUDPAdmin::UDP_Addr_out addr,
+		 CORBA::Environment& env);
+  // Call the RtecUDPAdmin::AddrServer
+
 private:
   RtecEventChannelAdmin::EventChannel_var lcl_ec_;
   // The remote and the local EC, so we can reconnect when the list changes.
@@ -186,6 +193,8 @@ private:
 
   ACE_INET_Addr ignore_from_;
   // Ignore any events coming from this IP addres.
+
+  RtecUDPAdmin::AddrServer_var addr_server_;
 };
 
 class TAO_ORBSVCS_Export TAO_ECG_UDP_EH : public ACE_Event_Handler
@@ -233,21 +242,59 @@ class TAO_ORBSVCS_Export TAO_ECG_Mcast_EH : public ACE_Event_Handler
 public:
   TAO_ECG_Mcast_EH (TAO_ECG_UDP_Receiver *recv);
 
-  int open (void);
-  // Open the datagram (join the mcast group) and register with
-  // this->reactor()
+  int open (RtecEventChannelAdmin::EventChannel_ptr ec,
+	    CORBA::Environment& _env);
+  // Register for changes in the EC subscription list.
+  // When the subscription list becomes non-empty we join the proper
+  // multicast groups (using the receiver to translate between event
+  // types and mcast groups) and the class registers itself with the
+  // reactor.
 
-  int close (void);
-  // Close the datagram (leave the mcast group) and unregister with
-  // the reactor.
+  int close (CORBA::Environment& _env);
+  // Remove ourselves from the event channel, unsubscribe from the
+  // multicast groups, close the sockets and unsubscribe from the
+  // reactor.
 
+  virtual int handle_input (ACE_HANDLE fd);
+  virtual ACE_HANDLE get_handle (void) const;
+  // Reactor callbacks
+
+  void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub,
+			CORBA::Environment& _env);
+  void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub,
+			CORBA::Environment& _env);
+  // The Observer methods
+
+  class Observer : public POA_RtecEventChannelAdmin::Observer
+  {
+    // = TITLE
+    //   Observe changes in the EC subscriptions.
+    //
+    // = DESCRIPTION
+    //   As the subscriptions on the EC change we also change the
+    //   mcast groups that we join.
+    //   We could use the TIE classes, but they don't work in all
+    //   compilers.
+  public:
+    Observer (TAO_ECG_Mcast_EH* eh);
+    // We report changes in the EC subscriptions to the event
+    // handler.
+
+    // The Observer methods
+    virtual void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub,
+				  CORBA::Environment& _env);
+    virtual void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub,
+				  CORBA::Environment& _env);
+
+  private:
+    TAO_ECG_Mcast_EH* eh_;
+    // Our callback object.
+  };
+
+private:
   int subscribe (const ACE_INET_Addr &mcast_addr);
   int unsubscribe (const ACE_INET_Addr &mcast_addr);
   // Control the multicast group subscriptions
-
-  // Reactor callbacks
-  virtual int handle_input (ACE_HANDLE fd);
-  virtual ACE_HANDLE get_handle (void) const;
 
 private:
   ACE_SOCK_Dgram_Mcast dgram_;
@@ -255,6 +302,16 @@ private:
 
   TAO_ECG_UDP_Receiver* receiver_;
   // We callback to this object when a message arrives.
+
+  Observer observer_;
+  // This object will call us back when the subscription list
+  // changes.
+
+  RtecEventChannelAdmin::Observer_Handle handle_;
+  // Keep the handle of the observer so we can unregister later.
+
+  RtecEventChannelAdmin::EventChannel_var ec_;
+  // The Event Channel.
 };
 
 
