@@ -112,7 +112,7 @@ ACEXML_NamespaceSupport::getDeclaredPrefixes (ACEXML_STR_LIST &prefixes) const
 const ACEXML_Char *
 ACEXML_NamespaceSupport::getPrefix (const ACEXML_Char *uri) const
 {
-  if (!uri)
+if (!ACE_OS::strcmp (uri, ACEXML_DEFAULT_NS_PREFIX) || !uri)
     return 0;
 
   ACEXML_NS_CONTEXT_ENTRY *entry;
