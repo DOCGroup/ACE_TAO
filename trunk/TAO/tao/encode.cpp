@@ -19,6 +19,8 @@
 //
 // ============================================================================
 
+#include "tao/corba.h"
+
 #if defined(VXWORKS) && defined(ghs)
 extern "C"
 {
@@ -26,8 +28,6 @@ extern "C"
   CORBA::WChar *wscpy (CORBA::WChar *, const CORBA::WChar *);
 }
 #endif /* HAVE_WIDEC_H */
-
-#include "tao/corba.h"
 
 extern CORBA::TypeCode TC_opaque;
 
