@@ -16,7 +16,7 @@
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_aio_cancel (int fildes, pace_aiocb * aiocbp)
+pace_aio_cancel (PACE_HANDLE fildes, pace_aiocb * aiocbp)
 {
   return aio_cancel (fildes, aiocbp);
 }
