@@ -54,12 +54,16 @@ Priority_Task::open (void *arg)
 {
   this->priority_ = *(int *) arg;
   // Become an active object.
-  return this->activate (THR_NEW_LWP, 1, 0, this->priority_);
+  ACE_ASSERT (this->activate (THR_NEW_LWP, 1, 0, this->priority_) != -1);
+  return 0;
 }
 
 int
 Priority_Task::svc (void)
 {
+  // set up logging for this thread
+  ACE_NEW_THREAD;
+
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
   int prio;
