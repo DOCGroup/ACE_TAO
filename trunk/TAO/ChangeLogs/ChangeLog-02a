@@ -1,3 +1,11 @@
+Sat Jun 10 20:44:20 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * TAO-INSTALL.html: 
+        
+          Revised the section on TAOACE.dsw, since things changed 
+          when we split up orbsvcs into separate libraries.  Thanks 
+          to Tom Ziomek <tomz@cc.comm.mot.com> for pointing this out. 
+
 Sat Jun 10 19:56:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Param_Test/except.cpp:
