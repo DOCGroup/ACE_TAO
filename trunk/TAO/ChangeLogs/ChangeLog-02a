@@ -1,3 +1,36 @@
+Fri Apr 27 14:11:11 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Invocation.i (location_forward_i):
+	* tao/Invocation.cpp (invoke):
+
+	  Set the "restart_flag_" to 1 in the event of a location forward
+	  or a transport retry.  Previously, this was done in the
+	  generated stubs.  However, there was no reason to do it there.
+	  Setting it here saves on footprint.
+
+	* TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
+	  (gen_marshal_and_invoke):
+
+	  Fixed generated stub code so that attempts to demarshal return
+	  values or inout/out arguments will not occur if a
+	  LOCATION_FORWARD reply or a transport retry occurs.  In such
+	  cases, no inout/out and return values will be returned to the
+	  client so there is no point in attempting to demarshal them.
+	  [Bug 887]
+
+	  The receive_other() interception point in the generated code is
+	  now invoked in the event a target initiated LOCATION_FORWARD
+	  reply occurs or a transport retry occurs.
+
+	  No longer set the TAO_GIOP_Invocation::restart_flag_ variable in
+	  the generated stub.  The same thing can be done in the
+	  Invocation object itself.
+
+	  Check the ReplyStatus after invoking the receive_exception()
+	  interception point.  It may have transformed the caught
+	  exception in to a LOCATION_FORWARD, in which case the caught
+	  exception should not be rethrown.
+
 Fri Apr 27 16:01:34 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/POA/Etherealization: Added new test to check for proper
@@ -135,7 +168,6 @@ Thu Apr 26 08:14:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
           interceptors are turned off. This is part of the requirement for
           writing TAO applications, which should include all the namespace
           files implicitly or explicitly.
-
 
 Thu Apr 26 08:06:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
