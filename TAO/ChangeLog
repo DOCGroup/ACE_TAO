@@ -1,3 +1,12 @@
+Thu Aug 12 19:21:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP.mpc:
+
+	  Removed SSLIOPS.cpp from the source file list.  No unconstrained
+	  interfaces are defined in the SSLIOP.idl IDL file, meaning that
+	  there is no need to compile and link the corresponding
+	  skeleton file.
+
 Thu Aug 12 18:45:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ClientCredentials.h
