@@ -11,14 +11,14 @@
 #include "ace/Thread_Manager.h"
 #include "ace/streams.h"
 
-#include <string>
-
-#include "SLDEX_export.h"
-
 #if defined (ACE_WIN32) && (!defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
                             (ACE_HAS_STANDARD_CPP_LIBRARY == 0))
-#  error "Must add to config.h: #define ACE_HAS_STANDARD_CPP_LIBRARY 1"
+#  include <stdio.h>
+#else
+#  include <string>
 #endif
+
+#include "SLDEX_export.h"
 
 
 class Quit_Handler : public ACE_Event_Handler {
@@ -47,6 +47,17 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
   Quit_Handler *quit_handler = 0;
   ACE_NEW_RETURN (quit_handler, Quit_Handler (reactor), 0);
 
+#if defined (ACE_WIN32) && (!defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
+                            (ACE_HAS_STANDARD_CPP_LIBRARY == 0))
+  for (;;) {
+    char user_input[80];
+    gets (user_input);
+    if (ACE_OS_String::strcmp (user_input, "quit") == 0) {
+      reactor->notify (quit_handler);
+      break;
+    }
+  }
+#else
   for (;;) {
     std::string user_input;
     std::getline (cin, user_input, '\n');
@@ -55,6 +66,8 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
       break;
     }
   }
+#endif
+
   return 0;
 }
 
