@@ -25,7 +25,7 @@ namespace TAO
   ORT_Adapter_Impl::tao_server_id (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    // @@Johnny, just document why duplicate isn't necessary.
+    // No need to duplicate, the ort_template_ method has to do the duplicate
     return this->ort_template_->server_id (ACE_ENV_SINGLE_ARG_PARAMETER);
   }
 
@@ -33,7 +33,7 @@ namespace TAO
   ORT_Adapter_Impl::tao_orb_id (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    // @@Johnny, just document why duplicate isn't necessary.
+    // No need to duplicate, the ort_template_ method has to do the duplicate
     return this->ort_template_->orb_id (ACE_ENV_SINGLE_ARG_PARAMETER);
   }
 
@@ -41,7 +41,7 @@ namespace TAO
   ORT_Adapter_Impl::tao_adapter_name (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    // @@Johnny, comment for duplicate also applies here..
+    // No need to duplicate, the ort_template_ method has to do the duplicate
     return this->ort_template_->adapter_name (ACE_ENV_SINGLE_ARG_PARAMETER);
   }
 

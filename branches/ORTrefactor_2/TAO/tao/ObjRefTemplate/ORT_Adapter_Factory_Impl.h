@@ -31,7 +31,7 @@ namespace TAO
    *
    * @brief ORT_Adapter_Factory_Impl
    *
-   * Class that creates instances of::TAO_ObjectReferenceTemplate_Adapter
+   * Class that creates instances of TAO::ORT_Adapter
    * (one per POA). This is the derived class that contains the actual
    * implementation.
    */

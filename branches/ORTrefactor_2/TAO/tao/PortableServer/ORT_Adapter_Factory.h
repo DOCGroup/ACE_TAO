@@ -37,7 +37,7 @@ namespace TAO
    *
    * @brief ORT_Adapter_Factory
    *
-   * Class that creates one instance of TAO::bjectReferenceTemplate_Adapter per
+   * Class that creates one instance of TAO::ORT_Adapter per
    * POA on the POA's first usage of its objectreferencetemplate_adapter.
    * This is a base class for the actual implementation in the
    * TAO_ObjectReferenceTemplate library.

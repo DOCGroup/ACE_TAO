@@ -1,10 +1,37 @@
+Tue Aug 24 10:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        The ORTrefactor branch is now ORTrefactor_2 and the compile archive is
+        branched now.
+
+        * tests/Abstract_Interface/Abstract_Interface.mpc:
+          Added missing base projects
+
+        * tests/ORT/ORT.mpc:
+        * tests/Portable_Interceptors/IORInterceptor/PI_IORInterceptor.mpc:
+        * tests/Portable_Interceptors/ORB_Shutdown/PI_ORB_Shutdown.mpc:
+          Added missing base projects and removed not needed idlflags
+
+        * tao/PortableServer/*C.i:
+          Renamed all generated .i files to .inl
+
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_*.*:
+          Renamed all to ORT_*.*, moved classes to TAO namespace and shortened
+          classnames
+
+        * tao/PortableServer/POA.h:
+          Make TAO_IORInfo a friend and make the methods that this class needs
+          protected instead of public.
+
+        * tao/Messaging.mpc:
+          Messaging is dependent on valuetype
+
 Mon Aug 23 18:33:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/Thread_Per_Connection_Handler.cpp:
 
 	  Fixed a compile error with the latest version of ACE. This has
-	  been fixed in the main trunk. 
-	
+	  been fixed in the main trunk.
+
 	* tao/IORInterceptor/IORInterceptor_List.cpp:
 	* tao/IORInterceptor/IORInterceptor_List.h:
 	* tao/ObjRefTemplate/ObjectReferenceTemplate_Adapter_Factory_Impl.cpp:
@@ -25,8 +52,8 @@ Mon Aug 23 18:33:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  significant among them are:
 
 	  - adding implementations in the TAO namespace. The TAO_* naming
-	    should be killed. 
-	  
+	    should be killed.
+
 	  - Make the names of the classes and file names shorter. The
 	    existing makes things harder to read and find the relation
 	    ships. I have done a few. I have left the rest for Johnny as

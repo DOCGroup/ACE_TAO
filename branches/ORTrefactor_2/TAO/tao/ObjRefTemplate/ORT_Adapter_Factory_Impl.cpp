@@ -20,7 +20,7 @@ namespace TAO
       ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    TAO::ORT_Adapter_Impl * new_ort_adapter;
+    TAO::ORT_Adapter_Impl * new_ort_adapter = 0;
     ACE_NEW_THROW_EX (new_ort_adapter,
                       TAO::ORT_Adapter_Impl,
                       CORBA::NO_MEMORY ());
