@@ -26,13 +26,6 @@
 #if !defined (_CORBA_TYPECODEFACTORY___CI_)
 #define _CORBA_TYPECODEFACTORY___CI_
 
-ACE_INLINE
-CORBA::Boolean
-CORBA::TypeCodeFactory::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
 template<>
 ACE_INLINE
 CORBA::Boolean
@@ -61,4 +54,3 @@ TAO::Any_Impl_T<CORBA::TypeCodeFactory>::demarshal_value (TAO_InputCDR &)
 }
 
 #endif /* end #if !defined */
-

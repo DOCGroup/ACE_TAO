@@ -26,13 +26,6 @@
 #if !defined (_RTPORTABLESERVER_POA___CI_)
 #define _RTPORTABLESERVER_POA___CI_
 
-ACE_INLINE
-CORBA::Boolean
-RTPortableServer::POA::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
 template<>
 ACE_INLINE
 CORBA::Boolean
@@ -61,4 +54,3 @@ TAO::Any_Impl_T<RTPortableServer::POA>::demarshal_value (TAO_InputCDR &)
 }
 
 #endif /* end #if !defined */
-

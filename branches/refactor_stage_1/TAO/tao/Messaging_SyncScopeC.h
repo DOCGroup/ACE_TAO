@@ -63,7 +63,7 @@ TAO_NAMESPACE  Messaging
 {
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:334
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
   
   typedef CORBA::Short SyncScope;
   typedef CORBA::Short_out SyncScope_out;
@@ -76,22 +76,22 @@ TAO_NAMESPACE  Messaging
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::Short SYNC_NONE = 0;
+  const Messaging::SyncScope SYNC_NONE = 0;
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::Short SYNC_WITH_TRANSPORT = 1;
+  const Messaging::SyncScope SYNC_WITH_TRANSPORT = 1;
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::Short SYNC_WITH_SERVER = 2;
+  const Messaging::SyncScope SYNC_WITH_SERVER = 2;
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::Short SYNC_WITH_TARGET = 3;
+  const Messaging::SyncScope SYNC_WITH_TARGET = 3;
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
@@ -110,7 +110,7 @@ TAO_NAMESPACE_CLOSE // module Messaging
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "Messaging_SyncScopeC.i"

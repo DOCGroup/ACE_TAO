@@ -1,5 +1,6 @@
 // $Id$
 
+
 // Implementation of Named Value List and NamedValue classes
 
 #include "tao/NVList.h"
@@ -134,7 +135,7 @@ CORBA::NVList::add_value (const char *name,
                           ACE_ENV_ARG_DECL)
 {
   // Call the helper to allocate a NamedValue element.
-  CORBA::NamedValue_ptr nv = this->add_element (flags 
+  CORBA::NamedValue_ptr nv = this->add_element (flags
                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -306,8 +307,8 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr,
                             int flag
                             ACE_ENV_ARG_DECL)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, 
-             ace_mon, 
+  ACE_GUARD (TAO_SYNCH_MUTEX,
+             ace_mon,
              this->refcount_lock_);
 
   if (this->incoming_ != 0)
@@ -393,7 +394,7 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming,
 {
   if (TAO_debug_level > 3)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) : NVList::_tao_decode\n")));
     }
 
@@ -433,8 +434,8 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming,
 ptr_arith_t
 CORBA::NVList::_tao_target_alignment (void)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, 
-                    ace_mon, 
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                    ace_mon,
                     this->refcount_lock_,
                     ACE_CDR::MAX_ALIGNMENT);
 
@@ -479,6 +480,10 @@ CORBA::NVList::_lazy_has_arguments (void) const
 template class ACE_Node<CORBA::NamedValue_ptr>;
 template class ACE_Unbounded_Queue<CORBA::NamedValue_ptr>;
 template class ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr>;
+template class TAO_Pseudo_Var_T<CORBA::NamedValue>;
+template class TAO_Pseudo_Out_T<CORBA::NamedValue, CORBA::NamedValue_var>;
+template class TAO_Pseudo_Var_T<CORBA::NVList>;
+template class TAO_Pseudo_Out_T<CORBA::NVList, CORBA::NVList_var>;
 #  if defined (ACE_LACKS_AUTO_PTR) \
       || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
            && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
@@ -489,6 +494,10 @@ template class auto_ptr<TAO_InputCDR>;
 #pragma instantiate ACE_Node<CORBA::NamedValue_ptr>
 #pragma instantiate ACE_Unbounded_Queue<CORBA::NamedValue_ptr>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr>
+#pragma instantiate TAO_Pseudo_Var_T<CORBA::NamedValue>
+#pragma instantiate TAO_Pseudo_Out_T<CORBA::NamedValue, CORBA::NamedValue_var>
+#pragma instantiate TAO_Pseudo_Var_T<CORBA::NVList>
+#pragma instantiate TAO_Pseudo_Out_T<CORBA::NVList, CORBA::NVList_var>
 #  if defined (ACE_LACKS_AUTO_PTR) \
       || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
            && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))

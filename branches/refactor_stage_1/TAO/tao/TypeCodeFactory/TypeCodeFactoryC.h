@@ -27,16 +27,13 @@
 
 #include "ace/pre.h"
 
-#include "tao/corba.h"
+#include "tao/IFR_Client/IFR_ExtendedC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "typecodefactory_export.h"
-
-#include "tao/IFR_Client/IFR_ExtendedC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -68,90 +65,53 @@ TAO_NAMESPACE  CORBA
 {
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_CORBA_TYPECODEFACTORY___PTR_CH_)
-#define _CORBA_TYPECODEFACTORY___PTR_CH_
+#if !defined (_CORBA_TYPECODEFACTORY__ODDS_N_ENDS_CH_)
+#define _CORBA_TYPECODEFACTORY__ODDS_N_ENDS_CH_
   
   class TypeCodeFactory;
   typedef TypeCodeFactory *TypeCodeFactory_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_TYPECODEFACTORY___VAR_CH_)
-#define _CORBA_TYPECODEFACTORY___VAR_CH_
+  struct tao_TypeCodeFactory_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        TypeCodeFactory,
+        tao_TypeCodeFactory_life
+      >
+    TypeCodeFactory_var;
   
-  class TAO_TypeCodeFactory_Export TypeCodeFactory_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        TypeCodeFactory,
+        tao_TypeCodeFactory_life
+      >
+    TypeCodeFactory_out;
+  
+  struct TAO_TypeCodeFactory_Export tao_TypeCodeFactory_life
   {
-  public:
-    TypeCodeFactory_var (void); // default constructor
-    TypeCodeFactory_var (TypeCodeFactory_ptr p) : ptr_ (p) {} 
-    TypeCodeFactory_var (const TypeCodeFactory_var &); // copy constructor
-    ~TypeCodeFactory_var (void); // destructor
-    
-    TypeCodeFactory_var &operator= (TypeCodeFactory_ptr);
-    TypeCodeFactory_var &operator= (const TypeCodeFactory_var &);
-    TypeCodeFactory_ptr operator-> (void) const;
-    
-    operator const TypeCodeFactory_ptr &() const;
-    operator TypeCodeFactory_ptr &();
-    // in, inout, out, _retn 
-    TypeCodeFactory_ptr in (void) const;
-    TypeCodeFactory_ptr &inout (void);
-    TypeCodeFactory_ptr &out (void);
-    TypeCodeFactory_ptr _retn (void);
-    TypeCodeFactory_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static TypeCodeFactory_ptr tao_duplicate (TypeCodeFactory_ptr);
     static void tao_release (TypeCodeFactory_ptr);
     static TypeCodeFactory_ptr tao_nil (void);
-    static TypeCodeFactory_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        TypeCodeFactory_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    TypeCodeFactory_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    TypeCodeFactory_var (const TAO_Base_var &rhs);
-    TypeCodeFactory_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_TYPECODEFACTORY___OUT_CH_)
-#define _CORBA_TYPECODEFACTORY___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_TypeCodeFactory_Export TypeCodeFactory_out
+  struct TAO_TypeCodeFactory_Export tao_TypeCodeFactory_cast
   {
-  public:
-    TypeCodeFactory_out (TypeCodeFactory_ptr &);
-    TypeCodeFactory_out (TypeCodeFactory_var &);
-    TypeCodeFactory_out (const TypeCodeFactory_out &);
-    TypeCodeFactory_out &operator= (const TypeCodeFactory_out &);
-    TypeCodeFactory_out &operator= (const TypeCodeFactory_var &);
-    TypeCodeFactory_out &operator= (TypeCodeFactory_ptr);
-    operator TypeCodeFactory_ptr &();
-    TypeCodeFactory_ptr &ptr (void);
-    TypeCodeFactory_ptr operator-> (void);
-  
-  private:
-    TypeCodeFactory_ptr &ptr_;
+    static TypeCodeFactory_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_TYPECODEFACTORY_CH_)
 #define _CORBA_TYPECODEFACTORY_CH_
@@ -435,7 +395,7 @@ TAO_NAMESPACE  CORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -445,10 +405,6 @@ TAO_NAMESPACE  CORBA
   protected:
     TypeCodeFactory (void);
     virtual ~TypeCodeFactory (void);
-    
-    friend class _TAO_TypeCodeFactory_Remote_Proxy_Impl;
-    friend class _TAO_TypeCodeFactory_ThruPOA_Proxy_Impl;
-    friend class _TAO_TypeCodeFactory_Direct_Proxy_Impl;
   
   private:
     TypeCodeFactory (const TypeCodeFactory &);
@@ -486,7 +442,7 @@ TAO_TypeCodeFactory_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "TypeCodeFactoryC.inl"
@@ -502,5 +458,4 @@ TAO_TypeCodeFactory_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA
 
 #include "ace/post.h"
 #endif /* ifndef */
-
 

@@ -32,6 +32,10 @@
 
 namespace CORBA
 {
+  class LocalObject;
+  typedef TAO_Pseudo_Var_T<LocalObject> LocalObject_var;
+  typedef TAO_Pseudo_Out_T<LocalObject, LocalObject_var> LocalObject_out;
+
   /**
    * @class LocalObject
    *
@@ -62,47 +66,53 @@ namespace CORBA
                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /// No-op it is just here to simplify some templates.
-    static LocalObject_ptr _unchecked_narrow (CORBA::Object_ptr obj
-                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    static LocalObject_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
     /// Always returns false.
     virtual CORBA::Boolean _non_existent (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      );
 
     /// Throws CORBA::NO_IMPLEMENT.
     virtual CORBA::ImplementationDef_ptr _get_implementation (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      );
 
     /// Gets info about object from the Interface Repository.
     virtual CORBA::InterfaceDef_ptr _get_interface (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      );
 
     /// Throws NO_IMPLEMENT.
     virtual CORBA::Object_ptr _get_component (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      );
 
     virtual void _create_request (CORBA::Context_ptr ctx,
-                                  const char *operation,
+                                  const char * operation,
                                   CORBA::NVList_ptr arg_list,
                                   CORBA::NamedValue_ptr result,
-                                  CORBA::Request_ptr &request,
+                                  CORBA::Request_ptr & request,
                                   CORBA::Flags req_flags
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     virtual void _create_request (CORBA::Context_ptr ctx,
-                                  const char *operation,
+                                  const char * operation,
                                   CORBA::NVList_ptr arg_list,
                                   CORBA::NamedValue_ptr result,
                                   CORBA::ExceptionList_ptr exclist,
                                   CORBA::ContextList_ptr ctxtlist,
-                                  CORBA::Request_ptr &request,
+                                  CORBA::Request_ptr & request,
                                   CORBA::Flags req_flags
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /// Throws NO_IMPLEMENT.
-    virtual CORBA::Request_ptr _request (const char *operation
+    virtual CORBA::Request_ptr _request (const char * operation
                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -119,19 +129,22 @@ namespace CORBA
 
     /// Throws CORBA::NO_IMPLEMENT.
     CORBA::Object_ptr _set_policy_overrides (
-      const CORBA::PolicyList & policies,
-      CORBA::SetOverrideType set_add
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        const CORBA::PolicyList & policies,
+        CORBA::SetOverrideType set_add
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     /// Throws CORBA::NO_IMPLEMENT.
     CORBA::PolicyList * _get_policy_overrides (
-      const CORBA::PolicyTypeSeq & types
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        const CORBA::PolicyTypeSeq & types
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     /// Throws CORBA::NO_IMPLEMENT.
     CORBA::Boolean _validate_connection (
-      CORBA::PolicyList_out inconsistent_policies
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        CORBA::PolicyList_out inconsistent_policies
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -164,13 +177,11 @@ namespace CORBA
     // = TAO extensions
 
     /// Throws CORBA::NO_IMPLEMENT.
-    virtual TAO::ObjectKey *_key (ACE_ENV_SINGLE_ARG_DECL);
+    virtual TAO::ObjectKey * _key (ACE_ENV_SINGLE_ARG_DECL);
 
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     /// Useful for template programming.
     typedef LocalObject_ptr _ptr_type;
     typedef LocalObject_var _var_type;
-#endif /* __GNUC__ */
 
   protected:
 
@@ -187,51 +198,9 @@ namespace CORBA
      */
     //@{
     LocalObject (const LocalObject &);
-    LocalObject &operator = (const LocalObject &);
+    LocalObject & operator = (const LocalObject &);
     //@}
 
-  };
-
-  class TAO_Export LocalObject_var
-  {
-  public:
-    LocalObject_var (void); // default constructor
-    LocalObject_var (LocalObject_ptr);
-    LocalObject_var (const LocalObject_var &); // copy constructor
-    ~LocalObject_var (void); // destructor
-
-    LocalObject_var &operator= (LocalObject_ptr);
-    LocalObject_var &operator= (const LocalObject_var &);
-    LocalObject_ptr operator-> (void) const;
-
-    /// in, inout, out, _retn
-    operator const LocalObject_ptr &() const;
-    operator LocalObject_ptr &();
-    LocalObject_ptr in (void) const;
-    LocalObject_ptr &inout (void);
-    LocalObject_ptr &out (void);
-    LocalObject_ptr _retn (void);
-    LocalObject_ptr ptr (void) const;
-
-  private:
-    LocalObject_ptr ptr_;
-  };
-
-  class TAO_Export LocalObject_out
-  {
-  public:
-    LocalObject_out (LocalObject_ptr &);
-    LocalObject_out (LocalObject_var &);
-    LocalObject_out (const LocalObject_out &);
-    LocalObject_out &operator= (const LocalObject_out &);
-    LocalObject_out &operator= (const LocalObject_var &);
-    LocalObject_out &operator= (LocalObject_ptr);
-    operator LocalObject_ptr &();
-    LocalObject_ptr &ptr (void);
-    LocalObject_ptr operator-> (void);
-
-  private:
-    LocalObject_ptr &ptr_;
   };
 }   // End CORBA namespace
 
@@ -270,7 +239,9 @@ private:
    */
   //@{
   TAO_Local_RefCounted_Object (const TAO_Local_RefCounted_Object &);
-  TAO_Local_RefCounted_Object &operator = (const TAO_Local_RefCounted_Object &);
+  TAO_Local_RefCounted_Object & operator = (
+      const TAO_Local_RefCounted_Object &
+    );
   //@}
 
 protected:
@@ -280,7 +251,6 @@ protected:
 
   /// Number of outstanding references to this object.
   CORBA::ULong refcount_;
-
 };
 
 

@@ -89,6 +89,11 @@ public:
   const char *instance_name (void);
   // Report the instance name for instantiation.
 
+  int gen_base_class_name (TAO_OutStream *os,
+                           AST_Decl *elem_scope);
+  // Common code for generating the name and parameters of our
+  // template sequence base class.
+
 protected:
   virtual char *gen_name (void);
   // Helper to create_name.

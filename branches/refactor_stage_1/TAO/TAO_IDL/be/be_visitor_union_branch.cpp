@@ -33,6 +33,7 @@
 #include "be_helper.h"
 #include "ast_union_label.h"
 #include "utl_identifier.h"
+#include "nr_extern.h"
 
 #include "be_visitor_union_branch.h"
 #include "be_visitor_array.h"

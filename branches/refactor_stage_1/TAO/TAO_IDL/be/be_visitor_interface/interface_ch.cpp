@@ -1,7 +1,3 @@
-//
-// $Id$
-//
-
 // ============================================================================
 //
 // = LIBRARY
@@ -43,68 +39,12 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       return 0;
     }
 
+  // This will be a no-op if it has already been done by a forward
+  // declaration.
+  node->gen_var_out_seq_decls ();
+
   TAO_OutStream *os = this->ctx_->stream ();
   long i;
-
-  // == STEP 1:  generate the class name and class names we inherit ==
-
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
-  // Generate the ifdefined macro for  the _ptr type.
-  os->gen_ifdef_macro (node->flat_name (),
-                       "_ptr");
-
-  // The following two are required to be under the ifdef macro to avoid
-  // multiple declarations.
-
-  // Forward declaration.
-  *os << be_nl << be_nl << "class " << node->local_name () << ";";
-  // Generate the _ptr declaration.
-  *os << be_nl << "typedef " << node->local_name () << " *"
-      << node->local_name () << "_ptr;";
-
-  os->gen_endif ();
-
-  // Generate the ifdefined macro for the var type.
-  os->gen_ifdef_macro (node->flat_name (), "_var");
-
-  // Generate the _var declaration.
-  if (node->gen_var_defn () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_ch::"
-                         "visit_interface - "
-                         "codegen for _var failed\n"),
-                        -1);
-    }
-
-  os->gen_endif ();
-
-  // Generate the ifdef macro for the _out class.
-  os->gen_ifdef_macro (node->flat_name (),
-                       "_out");
-
-  // Generate the _out declaration.
-  if (node->gen_out_defn () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_ch::"
-                         "visit_interface - "
-                         "codegen for _out failed\n"),
-                        -1);
-    }
-
-  // Generate the endif macro.
-  os->gen_endif ();
-
-  // The above code could have been executed by the forward declaration
-  // as long as it wasn't imported. The code below can only be
-  // executed by an interface definition, also non-imported.
-  if (node->imported ())
-    {
-      return 0;
-    }
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;

@@ -106,6 +106,7 @@ be_visitor_operation_interceptors_exceptlist::gen_exceptlist (
   *os << be_uidt_nl << "};" << be_nl;
 
   long excp_count = (node->exceptions())->length ();
+
   *os << be_nl
       << "exception_list->length (" << excp_count << ");" << be_nl
       << "for (CORBA::ULong i = 0; i < " << excp_count << "; ++i)"
@@ -118,5 +119,5 @@ be_visitor_operation_interceptors_exceptlist::gen_exceptlist (
       << "(*exception_list)[i] = tcp_object;" << be_uidt_nl
       << "}\n" << be_uidt;
 
-return 0;
+  return 0;
 }

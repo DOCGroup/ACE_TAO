@@ -92,6 +92,7 @@ public:
       , PT_octet        // Predefined type "octet"
       , PT_any          // Predefined type "CORBA::Any"
       , PT_object       // Predefined type "CORBA::Object"
+      , PT_value        // Predefined type "CORBA::ValueBase"
       , PT_void         // Predefined type "void"
       , PT_pseudo       // Predefined type for pseudo objects
     };

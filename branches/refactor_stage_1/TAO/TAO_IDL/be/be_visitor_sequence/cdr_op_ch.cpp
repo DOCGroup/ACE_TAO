@@ -61,8 +61,8 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
   if (!tdef)
     {
       *os << "\n\n#if !defined _TAO_CDR_OP_"
-          << node->flat_name () << "_H_" << be_nl
-          << "#define _TAO_CDR_OP_" << node->flat_name () << "_H_";
+          << node->flat_name () << "_H_"
+          << "\n#define _TAO_CDR_OP_" << node->flat_name () << "_H_";
     }
 
   *os << be_nl << be_nl 
@@ -79,8 +79,7 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
 
   if (!tdef)
     {
-      *os << be_nl << be_nl
-          << "#endif /* _TAO_CDR_OP_"
+      *os << "\n\n#endif /* _TAO_CDR_OP_"
           << node->flat_name () << "_H_ */";
     }
 

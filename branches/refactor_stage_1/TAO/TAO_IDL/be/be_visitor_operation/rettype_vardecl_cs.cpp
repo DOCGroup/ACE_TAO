@@ -101,8 +101,18 @@ be_visitor_operation_rettype_vardecl_cs::visit_interface (be_interface *node)
     }
   else
     {
-      *os << bt->name () << "_var _tao_retval ("
-          << " tao_" << node->flat_name () << "_nil ());";
+      *os << bt->name () << "_var _tao_retval (" << be_idt << be_idt_nl;
+
+      AST_Decl *parent = ScopeAsDecl (node->defined_in ());
+
+      if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+        {
+          *os << parent->name () << "::";
+        }
+
+      *os << "tao_" << node->local_name () << "_life::tao_nil ()" 
+          << be_uidt_nl
+          << ");" << be_uidt_nl;
     }
 
   return 0;

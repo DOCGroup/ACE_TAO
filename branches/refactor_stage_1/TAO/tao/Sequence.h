@@ -286,7 +286,7 @@ public:
    */
   TAO_Unbounded_String_Sequence (CORBA::ULong maximum,
                                  CORBA::ULong length,
-                                 char* *data,
+                                 char ** data,
                                  CORBA::Boolean release = 0);
 
   /**
@@ -325,7 +325,7 @@ public:
    * reallocation is performed. After reallocation, the release flag
    * is always set to TRUE.
    */
-  TAO_Unbounded_String_Sequence &operator= (
+  TAO_Unbounded_String_Sequence & operator= (
       const TAO_Unbounded_String_Sequence &
     );
 
@@ -343,7 +343,7 @@ public:
    * reason cannot allocate the requested vector. Vectors allocated by
    * allocbuf should be freed using the freebuf function.
    */
-  static char* *allocbuf (CORBA::ULong);
+  static char ** allocbuf (CORBA::ULong);
 
   /**
    * The freebuf function ensures that the destructor for each element
@@ -354,9 +354,11 @@ public:
    */
   static void freebuf (char **);
 
+  static void _tao_any_destructor (void *);
+
   // = Fast buffer accessors.
-  char **get_buffer (CORBA::Boolean orphan = 0);
-  const char **get_buffer (void) const;
+  char ** get_buffer (CORBA::Boolean orphan = 0);
+  const char ** get_buffer (void) const;
 
   // Functions to create, destroy, and adjust the underlying buffer.
   virtual void _allocate_buffer (CORBA::ULong length);
@@ -367,7 +369,7 @@ public:
   // Parameters work the same as in constructor of the same signature.
   void replace (CORBA::ULong maximum,
                 CORBA::ULong length,
-                char* *data,
+                char ** data,
                 CORBA::Boolean release = 0);
 };
 
@@ -432,7 +434,7 @@ public:
    */
   TAO_Unbounded_WString_Sequence (CORBA::ULong maximum,
                                   CORBA::ULong length,
-                                  CORBA::WChar* *data,
+                                  CORBA::WChar ** data,
                                   CORBA::Boolean release = 0);
 
   /**
@@ -446,7 +448,7 @@ public:
    * elements (items zero through length-1), and sets the release
    * flag to TRUE.
    */
-  TAO_Unbounded_WString_Sequence (const TAO_Unbounded_WString_Sequence&);
+  TAO_Unbounded_WString_Sequence (const TAO_Unbounded_WString_Sequence &);
 
   /// The destructor releases all object reference members and frees
   /// all string members.
@@ -471,7 +473,7 @@ public:
    * reallocation is performed. After reallocation, the release flag
    * is always set to TRUE.
    */
-  TAO_Unbounded_WString_Sequence &operator= (
+  TAO_Unbounded_WString_Sequence & operator= (
       const TAO_Unbounded_WString_Sequence &
     );
 
@@ -489,7 +491,7 @@ public:
    * reason cannot allocate the requested vector. Vectors allocated by
    * allocbuf should be freed using the freebuf function.
    */
-  static CORBA::WChar* *allocbuf (CORBA::ULong);
+  static CORBA::WChar ** allocbuf (CORBA::ULong);
 
   /**
    * The freebuf function ensures that the destructor for each element
@@ -500,9 +502,11 @@ public:
    */
   static void freebuf (CORBA::WChar **);
 
+  static void _tao_any_destructor (void *);
+
   // = Fast buffer accessors.
-  CORBA::WChar **get_buffer (CORBA::Boolean orphan = 0);
-  const CORBA::WChar **get_buffer (void) const;
+  CORBA::WChar ** get_buffer (CORBA::Boolean orphan = 0);
+  const CORBA::WChar ** get_buffer (void) const;
 
   // Functions to create, destroy, and adjust the underlying buffer.
   virtual void _allocate_buffer (CORBA::ULong length);
@@ -513,7 +517,7 @@ public:
   // Parameters work the same as in constructor of the same signature.
   void replace (CORBA::ULong maximum,
                 CORBA::ULong length,
-                CORBA::WChar* *data,
+                CORBA::WChar ** data,
                 CORBA::Boolean release = 0);
 };
 

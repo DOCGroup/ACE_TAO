@@ -26,13 +26,13 @@
 #define _TAO_IDL_ORIG_OBJECTIDLISTC_H_
 
 #include "ace/pre.h"
-#include "tao/corbafwd.h"
+#include "tao/Sequence.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Sequence.h"
+#include "tao/Seq_VarOut_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -74,38 +74,37 @@ TAO_NAMESPACE  CORBA
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ORB_ObjectId;
-
-#if !defined (_CORBA_ORB_OBJECTIDLIST_CH_)
-#define _CORBA_ORB_OBJECTIDLIST_CH_
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
   
   class ORB_ObjectIdList;
-  class ORB_ObjectIdList_var;
   
-  // *************************************************************
-  // CORBA::ORB_ObjectIdList
-  // *************************************************************
+  typedef
+    TAO_MngSeq_Var_T<
+        ORB_ObjectIdList,
+        TAO_SeqElem_String_Manager
+      >
+    ORB_ObjectIdList_var;
   
-  class TAO_Export ORB_ObjectIdList : public 
+  typedef
+    TAO_Seq_Out_T<
+        ORB_ObjectIdList,
+        ORB_ObjectIdList_var,
+        TAO_SeqElem_String_Manager
+      >
+    ORB_ObjectIdList_out;
   
-  // TAO_IDL - Generated from 
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  TAO_Unbounded_String_Sequence
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_String_Sequence
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  class TAO_Export ORB_ObjectIdList
+    : public
+        TAO_Unbounded_String_Sequence
   {
   public:
     ORB_ObjectIdList (void);
     ORB_ObjectIdList (CORBA::ULong max);
     ORB_ObjectIdList (
-        CORBA::ULong max, 
-        CORBA::ULong length, 
+        CORBA::ULong max,
+        CORBA::ULong length,
         char * *buffer, 
         CORBA::Boolean release = 0
       );
@@ -114,80 +113,6 @@ TAO_NAMESPACE  CORBA
     
     typedef ORB_ObjectIdList_var _var_type;
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_ORB_OBJECTIDLIST___VAR_CH_)
-#define _CORBA_ORB_OBJECTIDLIST___VAR_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
-  
-  // *************************************************************
-  // class CORBA::ORB_ObjectIdList_var
-  // *************************************************************
-  
-  class TAO_Export ORB_ObjectIdList_var
-  {
-  public:
-    ORB_ObjectIdList_var (void);
-    ORB_ObjectIdList_var (ORB_ObjectIdList *);
-    ORB_ObjectIdList_var (const ORB_ObjectIdList_var &);
-    ~ORB_ObjectIdList_var (void);
-    
-    ORB_ObjectIdList_var &operator= (ORB_ObjectIdList *);
-    ORB_ObjectIdList_var &operator= (const ORB_ObjectIdList_var &);
-    ORB_ObjectIdList *operator-> (void);
-    const ORB_ObjectIdList *operator-> (void) const;
-    
-    operator const ORB_ObjectIdList &() const;
-    operator ORB_ObjectIdList &();
-    operator ORB_ObjectIdList &() const;
-    
-    // Variable-size base types only.
-    operator ORB_ObjectIdList *&();
-    
-    TAO_SeqElem_String_Manager operator[] (CORBA::ULong index);
-    
-    // in, inout, out, _retn 
-    const ORB_ObjectIdList &in (void) const;
-    ORB_ObjectIdList &inout (void);
-    ORB_ObjectIdList *&out (void);
-    ORB_ObjectIdList *_retn (void);
-    ORB_ObjectIdList *ptr (void) const;
-  
-  private:
-    ORB_ObjectIdList *ptr_;
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_ORB_OBJECTIDLIST___OUT_CH_)
-#define _CORBA_ORB_OBJECTIDLIST___OUT_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
-  
-  class TAO_Export ORB_ObjectIdList_out
-  {
-  public:
-    ORB_ObjectIdList_out (ORB_ObjectIdList *&);
-    ORB_ObjectIdList_out (ORB_ObjectIdList_var &);
-    ORB_ObjectIdList_out (const ORB_ObjectIdList_out &);
-    ORB_ObjectIdList_out &operator= (const ORB_ObjectIdList_out &);
-    ORB_ObjectIdList_out &operator= (ORB_ObjectIdList *);
-    operator ORB_ObjectIdList *&();
-    ORB_ObjectIdList *&ptr (void);
-    ORB_ObjectIdList *operator-> (void);
-    TAO_SeqElem_String_Manager operator[] (CORBA::ULong index);
-  
-  private:
-    ORB_ObjectIdList *&ptr_;
-    // Assignment from T_var not allowed.
-    void operator= (const ORB_ObjectIdList_var &);
-  };
-
-#endif /* end #if !defined */
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44

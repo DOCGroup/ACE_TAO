@@ -25,14 +25,6 @@
 
 #if !defined (_TAO_CONNECTIONTIMEOUTPOLICY___CI_)
 #define _TAO_CONNECTIONTIMEOUTPOLICY___CI_
-
-ACE_INLINE
-CORBA::Boolean
-TAO::ConnectionTimeoutPolicy::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
 template<>
 ACE_INLINE
 CORBA::Boolean
@@ -61,4 +53,3 @@ TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
 }
 
 #endif /* end #if !defined */
-

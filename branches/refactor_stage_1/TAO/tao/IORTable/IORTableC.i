@@ -26,13 +26,6 @@
 #if !defined (_IORTABLE_TABLE___CI_)
 #define _IORTABLE_TABLE___CI_
 
-ACE_INLINE
-CORBA::Boolean
-IORTable::Table::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -41,17 +34,10 @@ IORTable::Table::marshal (TAO_OutputCDR &)
 #if !defined (_IORTABLE_LOCATOR___CI_)
 #define _IORTABLE_LOCATOR___CI_
 
-ACE_INLINE
-CORBA::Boolean
-IORTable::Locator::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/cdr_op_ci.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/cdr_op_ci.cpp:71
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -80,7 +66,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/cdr_op_ci.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/cdr_op_ci.cpp:71
 
 ACE_INLINE
 CORBA::Boolean operator<< (

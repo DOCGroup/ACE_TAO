@@ -14,14 +14,13 @@
 #define TAO_ADAPTER_H
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
-#include "tao/Exception.h"
-#include "tao/Object_KeyC.h"
-#include "ace/Service_Object.h"
+#include "tao/Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Service_Object.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

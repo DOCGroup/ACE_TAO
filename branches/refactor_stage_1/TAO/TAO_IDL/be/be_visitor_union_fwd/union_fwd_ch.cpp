@@ -43,13 +43,10 @@ be_visitor_union_fwd_ch::visit_union_fwd (be_union_fwd *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+  be_union *fd = be_union::narrow_from_decl (node->full_definition ());
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
-  // Generate a forward declaration of the class.
-  *os << be_nl << be_nl
-      << "class " << node->local_name () << ";";
+  // This will be a no-op if it has already been done for this node.
+  fd->gen_common_varout (os);
 
   node->cli_hdr_gen (I_TRUE);
   return 0;

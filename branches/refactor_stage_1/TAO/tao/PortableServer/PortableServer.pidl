@@ -57,7 +57,7 @@ module PortableServer
   local interface POA;	    // forward declaration
   typedef sequence<POA> POAList;
   native Servant;
-  typedef sequence<octet> ObjectId;
+  typedef CORBA::OctetSeq ObjectId;
 
   exception ForwardRequest 
   {

@@ -23,6 +23,7 @@
 #include "be_extern.h"
 #include "be_helper.h"
 #include "ast_module.h"
+#include "utl_identifier.h"
 #include "idl_defines.h"
 #include "nr_extern.h"
 #include "ace/Log_Msg.h"
@@ -68,6 +69,8 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                   n_inherits_flat,
                   0,
                   abstract),
+    be_type (AST_Decl::NT_valuetype,
+             n),
     AST_ValueType (n,
                    inherits,
                    n_inherits,
@@ -92,7 +95,8 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
     COMMON_Base (0,
                  abstract),
     full_obv_skel_name_ (0),
-    supports_abstract_ (0)
+    supports_abstract_ (0),
+    var_out_seq_decls_gen_ (0)
 {
   // Check that redefine() copies all members.
 
@@ -117,6 +121,36 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
           break;
         }
     }
+
+  AST_Decl *parent = ScopeAsDecl (this->defined_in ());
+  Identifier *segment = 0;
+  char *tmp = 0;
+
+  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+    {
+      for (UTL_IdListActiveIterator i (parent->name ());
+           !i.is_done ();
+           i.next ())
+        {
+          segment = i.item ();
+          tmp = segment->get_string ();
+
+          if (ACE_OS::strcmp (tmp, "") == 0)
+            {
+              continue;
+            }
+
+          this->fwd_helper_name_ += tmp;
+          this->fwd_helper_name_ += "::";
+        }
+    }
+  else
+    {
+      this->fwd_helper_name_= "";
+    }
+
+  this->fwd_helper_name_ += "tao_";
+  this->fwd_helper_name_ += this->local_name ();
 }
 
 be_valuetype::~be_valuetype (void)
@@ -126,6 +160,8 @@ be_valuetype::~be_valuetype (void)
 void
 be_valuetype::redefine (AST_Interface *from)
 {
+  be_valuetype *bv = be_valuetype::narrow_from_decl (from);
+  bv->var_out_seq_decls_gen_ = bv->var_out_seq_decls_gen_;
   this->AST_ValueType::redefine (from);
 }
 
@@ -157,517 +193,10 @@ be_valuetype::full_obv_skel_name (void)
   return this->full_obv_skel_name_;
 }
 
-// Generate the var definition.
-int
-be_valuetype::gen_var_defn (char *local_name)
+const char *
+be_valuetype::fwd_helper_name (void) const
 {
-  char namebuf [NAMEBUFSIZE];
-
-  if (local_name == 0)
-    {
-      local_name = (char *) this->local_name ();
-    }
-
-  ACE_OS::memset (namebuf,
-                  '\0',
-                  NAMEBUFSIZE);
-
-  ACE_OS::sprintf (namebuf,
-                   "%s_var",
-                   local_name);
-
-  TAO_OutStream *ch = tao_cg->client_header ();
-
-  *ch << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-  // Generate the var definition (always in the client header).
-  // Depending upon the data type, there are some differences which we account
-  // for over here.
-
-  *ch << "class " << be_global->stub_export_macro ()
-      << " " << namebuf << be_nl;
-  *ch << "{" << be_nl;
-  *ch << "public:" << be_idt_nl;
-
-  // Default constructor.
-  *ch << namebuf << " (void);" << be_nl;
-  *ch << namebuf << " (" << local_name << "*);" << be_nl;
-  *ch << namebuf << " (const " << local_name
-      << "*); // (TAO extension)" << be_nl;
-
-  // Copy constructor.
-  *ch << namebuf << " (const " << namebuf <<
-    " &);" << be_nl;
-
-  // Destructor.
-  *ch << "~" << namebuf << " (void);" << be_nl;
-  *ch << be_nl;
-
-  // Assignment operator from a pointer.
-  *ch << namebuf << " &operator= (" << local_name
-      << "*);" << be_nl;
-
-  // Assignment from _var.
-  *ch << namebuf << " &operator= (const " << namebuf <<
-    " &);" << be_nl;
-
-  // Arrow operator.
-  *ch << local_name << "* operator-> (void) const;" << be_nl;
-
-  *ch << be_nl;
-
-  // Other extra types (cast operators and others).
-  *ch << "operator const " << local_name
-      << "* () const;" << be_nl;
-  *ch << "operator " << local_name << "*& ();" << be_nl;
-
-  *ch << "// in, inout, out, _retn " << be_nl;
-  // The return types of in, out, inout, and _retn are based on the parameter
-  // passing rules and the base type.
-  *ch << local_name << "* in (void) const;" << be_nl;
-  *ch << local_name << "*& inout (void);" << be_nl;
-  *ch << local_name << "*& out (void);" << be_nl;
-  *ch << local_name << "* _retn (void);" << be_nl;
-
-  // Generate an additional member function that returns
-  // the underlying pointer.
-  *ch << local_name << "* ptr (void) const;" << be_nl << be_nl;
-
-  // Hooks for non-defined forward declared interfaces.
-  *ch << "// Hooks used by template sequence and valuetype manager classes"
-      << be_nl
-      << "// for non-defined forward declared valuetypes." << be_nl
-      << "static void tao_add_ref (" << local_name << " *);" << be_nl
-      << "static void tao_remove_ref (" << local_name << " *);"
-      << be_uidt_nl << be_nl;
-
-  // Private.
-  *ch << "private:" << be_idt_nl;
-  *ch << local_name << "* ptr_;" << be_uidt_nl;
-
-  *ch << "};";
-
-  return 0;
-}
-
-// Implementation of the _var class. All of these get generated in the stubs
-// file.
-int
-be_valuetype::gen_var_impl (char *local_name,
-                            char *full_name)
-{
-  TAO_OutStream *cs = 0;
-  TAO_NL be_nl;
-
-  // Decide on the names to use.
-  // Even if one argument is 0, there is no point using the
-  // arguments. Let us then use the name in this node.
-  if (local_name == 0 || full_name == 0)
-    {
-      local_name = (char *) this->local_name ();
-      full_name = (char *) this->full_name ();
-    }
-
-  // To hold the full and local _var names.
-  char fname [NAMEBUFSIZE];
-  char lname [NAMEBUFSIZE];
-
-  ACE_OS::memset (fname,
-                  '\0',
-                  NAMEBUFSIZE);
-
-  ACE_OS::sprintf (fname,
-                   "%s_var",
-                   full_name);
-
-  ACE_OS::memset (lname,
-                  '\0',
-                  NAMEBUFSIZE);
-
-  ACE_OS::sprintf (lname,
-                   "%s_var",
-                   local_name);
-
-  cs = tao_cg->client_stubs ();
-
-  // Generate the var implementation in the stubs file
-  // Depending upon the data type, there are some differences which we account
-  // for over here.
-
-  *cs << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-  *cs << "// *************************************************************"
-      << be_nl;
-  *cs << "// Operations for class " << fname << be_nl;
-  *cs << "// *************************************************************"
-      << be_nl << be_nl;
-
-  // Default constructor.
-  *cs << fname << "::" << lname <<
-    " (void)" << be_nl;
-  *cs << "  " << ": ptr_ (0)" << be_nl;
-  *cs << "{}" << be_nl << be_nl;
-
-  // Constructor from a pointer.
-  *cs << fname << "::" << lname << " ("
-      << local_name << "* p)" << be_nl;
-  *cs << "  : ptr_ (p)" << be_nl;
-  *cs << "{}" << be_nl << be_nl;
-
-  // Constructor from a const pointer.
-  // TAO extension - it appears that there are problems with at least g++
-  // which reclaims amguity between T(T*) and T(const T_var &)
-  *cs << fname << "::" << lname << " (const "
-      << local_name << "* p)" << be_nl;
-  *cs << "  : ptr_ (ACE_const_cast ("
-      << local_name << " *, p))" << be_nl;
-  *cs << "{}" << be_nl << be_nl;
-
-  // The additional ptr () member function. This member function must be
-  // defined before the remaining member functions including the copy
-  // constructor because this inline function is used elsewhere. Hence to make
-  // inlining of this function possible, we must define it before its use.
-  *cs << full_name << " *" << be_nl;
-  *cs << fname << "::ptr (void) const" << be_nl;
-  *cs << "{" << be_idt_nl;
-
-  *cs << "return this->ptr_;" << be_uidt_nl;
-
-  *cs << "}" << be_nl << be_nl;
-
-  // Copy constructor.
-  *cs << fname << "::" << lname << " (const " << lname <<
-    " &p)" << be_nl;
-  *cs << "{" << be_idt_nl
-      <<    "CORBA::add_ref (p.ptr ());" << be_nl
-      <<    "this->ptr_ = p.ptr ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
-  // Destructor.
-  *cs << fname << "::~" << lname << " (void) // destructor" << be_nl;
-  *cs << "{" << be_idt_nl;
-
-  *cs << "CORBA::remove_ref (this->ptr_);" << be_uidt_nl;
-
-  *cs << "}" << be_nl << be_nl;
-
-  // Assignment operator.
-  *cs << fname << " &" << be_nl;
-  *cs << fname << "::operator= (" << local_name
-      << " *p)" << be_nl;
-  *cs << "{" << be_idt_nl;
-
-  *cs << "CORBA::remove_ref (this->ptr_);" << be_nl;
-  *cs << "this->ptr_ = p;" << be_nl;
-  *cs << "return *this;" << be_uidt_nl;
-
-  *cs << "}" << be_nl << be_nl;
-
-  // Assignment operator from _var.
-  *cs << fname << " &" << be_nl;
-  *cs << fname << "::operator= (const " << lname
-      << " &p)" << be_nl;
-  *cs << "{" << be_idt_nl;
-
-  *cs << "if (this != &p)" << be_nl;
-  *cs << "{" << be_idt_nl;
-
-  *cs << "CORBA::remove_ref (this->ptr_);" << be_nl
-      << local_name << " *tmp = p.ptr ();" << be_nl
-      << "CORBA::add_ref (tmp);" << be_nl
-      << "this->ptr_ = tmp;" << be_uidt_nl;
-
-  *cs << "}" << be_nl << be_nl;
-  *cs << "return *this;" << be_uidt_nl;
-
-  *cs << "}" << be_nl << be_nl;
-
-  // Other extra methods - cast operators.
-  *cs << fname << "::operator const " << full_name
-      << "* () const // cast" << be_nl;
-  *cs << "{" << be_idt_nl;
-
-  *cs << "return this->ptr_;" << be_uidt_nl;
-
-  *cs << "}" << be_nl << be_nl;
-
-  *cs << fname << "::operator " << full_name
-      << "*& () // cast " << be_nl;
-  *cs << "{" << be_idt_nl;
-
-  *cs << "return this->ptr_;" << be_uidt_nl;
-
-  *cs << "}" << be_nl << be_nl;
-
-  // operator->
-  *cs << full_name << " *" << be_nl;
-  *cs << fname << "::operator-> (void) const" << be_nl;
-  *cs << "{" << be_idt_nl;
-
-  *cs << "return this->ptr_;" << be_uidt_nl;
-
-  *cs << "}" << be_nl << be_nl;
-
-  // in, inout, out, and _retn.
-  *cs << full_name << " *" << be_nl;
-  *cs << fname << "::in (void) const" << be_nl;
-  *cs << "{" << be_idt_nl;
-
-  *cs << "return this->ptr_;" << be_uidt_nl;
-
-  *cs << "}" << be_nl << be_nl;
-
-  *cs << full_name << " *&" << be_nl;
-  *cs << fname << "::inout (void)" << be_nl;
-  *cs << "{" << be_idt_nl;
-
-  *cs << "return this->ptr_;" << be_uidt_nl;
-
-  *cs << "}" << be_nl << be_nl;
-
-  *cs << full_name << " *&" << be_nl;
-  *cs << fname << "::out (void)" << be_nl;
-  *cs << "{" << be_idt_nl;
-
-  *cs << "CORBA::remove_ref (this->ptr_);" << be_nl;
-  *cs << "this->ptr_ = 0;" << be_nl;
-  *cs << "return this->ptr_;" << be_uidt_nl;
-
-  *cs << "}" << be_nl << be_nl;
-
-  *cs << full_name << " *" << be_nl;
-  *cs << fname << "::_retn (void)" << be_nl;
-  *cs << "{" << be_idt_nl;
-
-  *cs << "// yield ownership of managed obj reference" << be_nl;
-  *cs << local_name << "* tmp = this->ptr_;" << be_nl;
-  *cs << "this->ptr_ = 0;" << be_nl;
-  *cs << "return tmp;" << be_uidt_nl;
-  *cs << "}" << be_nl << be_nl;
-
-  // Hooks for the flat name global functions used by references to
-  // non-defined valuetypes.
-  *cs << "void" << be_nl
-      << fname << "::tao_add_ref (" << be_idt << be_idt_nl
-      << local_name << " *p" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "CORBA::add_ref (p);"
-      << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
-  *cs << "void" << be_nl
-      << fname << "::tao_remove_ref (" << be_idt << be_idt_nl
-      << local_name << " *p" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "CORBA::remove_ref (p);" << be_uidt_nl
-      << "}";
-
-  return 0;
-}
-
-// Generate the _out definition.
-int
-be_valuetype::gen_out_defn (char *)
-{
-  TAO_OutStream *ch = 0;
-  TAO_NL be_nl;
-  char namebuf [NAMEBUFSIZE];
-
-  ACE_OS::memset (namebuf,
-                  '\0',
-                  NAMEBUFSIZE);
-
-  ACE_OS::sprintf (namebuf,
-                   "%s_out",
-                   this->local_name ());
-
-  ch = tao_cg->client_header ();
-
-  *ch << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-  // Generate the out definition (always in the client header).
-
-  *ch << "class " << be_global->stub_export_macro ()
-      << " " << namebuf << be_nl;
-  *ch << "{" << be_nl;
-  *ch << "public:" << be_idt_nl;
-
-  // No default constructor.
-
-  // Constructor from a pointer.
-  *ch << namebuf << " (" << this->local_name () << "* &);" << be_nl;
-
-  // Constructor from a _var &.
-  *ch << namebuf << " (" << this->local_name () << "_var &);" << be_nl;
-
-  // Constructor from a _out &.
-  *ch << namebuf << " (const " << namebuf << " &);" << be_nl;
-
-  // Assignment operator from a _out &.
-  *ch << namebuf << " &operator= (const " << namebuf << " &);" << be_nl;
-
-  // Assignment operator from a pointer &, cast operator, ptr fn, operator
-  // -> and any other extra operators.
-  // Only interface allows assignment from var &.
-  *ch << namebuf << " &operator= (const " << this->local_name ()
-      << "_var &);" << be_nl;
-  *ch << namebuf << " &operator= (" << this->local_name ()
-      << "*);" << be_nl;
-
-  // Cast.
-  *ch << "operator " << this->local_name () << "*& ();" << be_nl;
-
-  // ptr function.
-  *ch << this->local_name () << "*& ptr (void);" << be_nl;
-
-  // operator ->
-  *ch << this->local_name () << "* operator-> (void);" << be_nl;
-
-  *ch << be_uidt_nl;
-  *ch << "private:" << be_idt_nl;
-  *ch << this->local_name () << "* &ptr_;" << be_uidt_nl;
-  *ch << "};";
-
-  return 0;
-}
-
-int
-be_valuetype::gen_out_impl (char *,
-                            char *)
-{
-  TAO_OutStream *cs = 0;
-  TAO_NL be_nl;
-
-  // To hold the full and local _out names.
-  char fname [NAMEBUFSIZE];
-  char lname [NAMEBUFSIZE];
-
-  ACE_OS::memset (fname,
-                  '\0',
-                  NAMEBUFSIZE);
-
-  ACE_OS::sprintf (fname,
-                   "%s_out",
-                   this->full_name ());
-
-  ACE_OS::memset (lname,
-                  '\0',
-                  NAMEBUFSIZE);
-
-  ACE_OS::sprintf (lname,
-                   "%s_out",
-                   this->local_name ());
-
-  cs = tao_cg->client_stubs ();
-
-  *cs << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-  // Generate the var implementation in the inline file
-  // Depending upon the data type, there are some differences which we account
-  // for over here.
-
-  *cs << "// *************************************************************"
-      << be_nl;
-  *cs << "// Operations for class " << fname << be_nl;
-  *cs << "// *************************************************************"
-      << be_nl << be_nl;
-
-  // Constructor from a pointer.
-  *cs << fname << "::" << lname << " (" << this->local_name ()
-      << " *&p)" << be_nl;
-  *cs << "  : ptr_ (p)" << be_nl;
-  *cs << "{" << be_idt_nl;
-
-  *cs << "this->ptr_ = 0;" << be_uidt_nl;
-
-  *cs << "}" << be_nl << be_nl;
-
-  // Constructor from _var &.
-  *cs << fname << "::" << lname << " (" << this->local_name ()
-      << "_var &p)" << be_nl;
-  *cs << "  : ptr_ (p.out ())" << be_nl;
-  *cs << "{" << be_idt_nl;
-
-  *cs << "CORBA::remove_ref (this->ptr_);" << be_nl;
-  *cs << "this->ptr_ = 0;" << be_uidt_nl;
-
-  *cs << "}" << be_nl << be_nl;
-
-  // Copy constructor.
-  *cs << fname << "::" << lname << " (const " << lname
-      << " &p)" << be_nl;
-  *cs << "  : ptr_ (ACE_const_cast (" << lname << "&, p).ptr_)" << be_nl;
-  *cs << "{}" << be_nl << be_nl;
-
-  // Assignment operator from _out &.
-  *cs << fname << " &" << be_nl;
-  *cs << fname << "::operator= (const " << lname <<
-    " &p)" << be_nl;
-  *cs << "{" << be_idt_nl;
-
-  *cs << "this->ptr_ = ACE_const_cast (" << lname << "&, p).ptr_;" << be_nl;
-  *cs << "return *this;" << be_uidt_nl;
-
-  *cs << "}" << be_nl << be_nl;
-
-  // Assignment operator from _var.
-  *cs << fname << " &" << be_nl;
-  *cs << fname << "::operator= (const " << this->local_name ()
-      << "_var &p)" << be_nl;
-  *cs << "{" << be_idt_nl;
-
-  *cs << this->local_name () << " *tmp = p.ptr ();" << be_nl
-      << "CORBA::add_ref (tmp);" << be_nl
-      << "this->ptr_ = tmp;" << be_nl;
-  *cs << "return *this;" << be_uidt_nl;
-
-  *cs << "}" << be_nl << be_nl;
-
-  // Assignment operator from *.
-  *cs << fname << " &" << be_nl;
-  *cs << fname << "::operator= (" << this->local_name ()
-      << " *p)" << be_nl;
-  *cs << "{" << be_idt_nl;
-
-  *cs << "this->ptr_ = p;" << be_nl;
-  *cs << "return *this;" << be_uidt_nl;
-
-  *cs << "}" << be_nl << be_nl;
-
-  // Other extra methods - cast operator ().
-  *cs << fname << "::operator " << this->name ()
-      << "*& () // cast" << be_nl;
-  *cs << "{" << be_idt_nl;
-  *cs << "return this->ptr_;" << be_uidt_nl;
-
-  *cs << "}" << be_nl << be_nl;
-
-  // ptr function.
-  *cs << this->name () << " *&" << be_nl;
-  *cs << fname << "::ptr (void) // ptr" << be_nl;
-  *cs << "{" << be_idt_nl;
-  *cs << "return this->ptr_;" << be_uidt_nl;
-
-  *cs << "}" << be_nl << be_nl;
-
-  // operator->
-  *cs << this->name () << " *" << be_nl;
-  *cs << fname << "::operator-> (void)" << be_nl;
-  *cs << "{" << be_idt_nl;
-
-  *cs << "return this->ptr_;" << be_uidt_nl;
-
-  *cs << "}" << be_nl << be_nl;
-
-  *cs << "// *************************************************************";
-
-  return 0;
+  return this->fwd_helper_name_.fast_rep ();
 }
 
 int
@@ -759,6 +288,51 @@ be_valuetype::gen_helper_stubs (char* ,
       << "}";
 
   return 0;
+}
+
+// Generate the forward declarations and static methods used by the
+// interface _var and _out template classes, as well as by the
+// template sequence classes for object references.
+void
+be_valuetype:: gen_var_out_seq_decls (void)
+{
+  if (this->var_out_seq_decls_gen_ == 1)
+    {
+      return;
+    }
+
+  TAO_OutStream *os = tao_cg->client_header ();
+
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+  const char *lname = this->local_name ();
+
+  *os << "class " << lname << ";" << be_nl
+      << "struct tao_" << lname << "_life;" << be_nl << be_nl
+      << "typedef" << be_idt_nl
+      << "TAO_Value_Var_T<" << be_idt << be_idt_nl
+      << lname << "," << be_nl
+      << "tao_" << lname << "_life" << be_uidt_nl
+      << ">" << be_uidt_nl
+      << lname << "_var;" << be_uidt_nl << be_nl
+      << "typedef" << be_idt_nl
+      << "TAO_Value_Out_T<" << be_idt << be_idt_nl
+      << lname << "," << be_nl
+      << "tao_" << lname << "_life" << be_uidt_nl
+      << ">" << be_uidt_nl 
+      << lname << "_out;" << be_uidt;
+
+  *os << be_nl << be_nl
+      << "struct " << be_global->stub_export_macro () 
+      << " tao_" << lname << "_life" << be_nl
+      << "{" << be_idt_nl
+      << "static void tao_add_ref (" 
+      << lname << " *);" << be_nl
+      << "static void tao_remove_ref (" << lname << " *);" << be_uidt_nl
+      << "};";
+
+  this->var_out_seq_decls_gen_ = 1;
 }
 
 // For building the pre and postfix of private data fields.

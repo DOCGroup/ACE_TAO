@@ -51,9 +51,6 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  // Generate the Any <<= and >>= operator declarations.
-  os->indent ();
-
   *os << be_global->stub_export_macro () << " void"
       << " operator<<= (CORBA::Any &, " << node->name ()
       << "_ptr); // copying" << be_nl;

@@ -93,51 +93,54 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  // Global functions to allow non-defined forward declared interfaces
+  // Helper functions to allow non-defined forward declared valuetypes
   // access to some methods in the full definition.
   *os << "void" << be_nl
-      << "tao_" << node->flat_name ()
-      << "_add_ref (" << be_idt << be_idt_nl
-      << node->full_name () << " *p" << be_uidt_nl
+      << node->fwd_helper_name () << "_life::tao_add_ref (" 
+      << be_idt << be_idt_nl
+      << node->full_name () << " * p" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "CORBA::add_ref (p);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   *os << "void" << be_nl
-      << "tao_" << node->flat_name ()
-      << "_remove_ref (" << be_idt << be_idt_nl
-      << node->full_name () << " *p" << be_uidt_nl
+      << node->fwd_helper_name () << "_life::tao_remove_ref (" 
+      << be_idt << be_idt_nl
+       << node->full_name () << " * p" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "CORBA::remove_ref (p);" << be_uidt_nl
       << "}";
 
-  // Generate methods for _var class.
-  if (node->gen_var_impl () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_cs::"
-                         "visit_valuetype - "
-                         "codegen for _var failed\n"), 
-                        -1);
-    }
-
-  // Generate methods for _out class
-  if (node->gen_out_impl () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_cs::"
-                         "visit_valuetype - "
-                         "codegen for _out failed\n"), 
-                        -1);
-    }
-
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl
+      << "\n#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)" << be_idt_nl
+      << "template class" << be_idt_nl
+      << "TAO_Value_Var_T<" << be_idt << be_idt_nl
+      << node->name () << "," << be_nl
+      << node->fwd_helper_name () << "_life" << be_uidt_nl
+      << ">;" << be_uidt << be_uidt_nl
+      << "template class" << be_idt_nl
+      << "TAO_Value_Out_T<" << be_idt << be_idt_nl
+      << node->name () << "," << be_nl
+      << node->fwd_helper_name () << "_life" << be_uidt_nl
+      << ">;" << be_uidt << be_uidt << be_uidt_nl
+      << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
+      << "# pragma instantiate \\" << be_idt << be_idt_nl
+      << "TAO_Value_Var_T< \\" << be_idt << be_idt_nl
+      << node->name () << ", \\" << be_nl
+      << node->fwd_helper_name () << "_life \\" << be_uidt_nl
+      << ">" << be_uidt << be_uidt << be_uidt_nl
+      << "# pragma instantiate \\" << be_idt << be_idt_nl
+      << "TAO_Value_Out_T< \\" << be_idt << be_idt_nl
+      << node->name () << ", \\" << be_nl
+      << node->fwd_helper_name () << "_life \\" << be_uidt_nl
+      << ">" << be_uidt << be_uidt << be_uidt_nl
+      << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
 
   // The _downcast method    // %! use ACE_xxx_cast here ?
-  *os << node->name () << " *" << be_nl << node->name ()
+  *os << be_nl << be_nl
+      << node->name () << " *" << be_nl << node->name ()
       << "::_downcast (CORBA::ValueBase *v)" << be_nl
       << "{" << be_idt_nl
       << "if (v == 0)" << be_idt_nl

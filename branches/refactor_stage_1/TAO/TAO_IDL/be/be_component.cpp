@@ -73,6 +73,14 @@ be_component::~be_component (void)
 }
 
 void
+be_component::redefine (AST_Interface *from)
+{
+  be_component *bc = be_component::narrow_from_decl (from);
+  this->var_out_seq_decls_gen_ = bc->var_out_seq_decls_gen_;
+  AST_Component::redefine (from);
+}
+
+void
 be_component::destroy ()
 {
   this->be_interface::destroy ();
