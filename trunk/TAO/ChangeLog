@@ -1,3 +1,12 @@
+Fri Nov  7 07:06:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Makefile*:
+	* tests/Exposed_Policies/Makefile:
+	* orbsvcs/tests/Notify/Makefile*:
+
+	  Updated dependencies since the last dependencies left them
+	  broken. 
+
 Fri Nov  7 06:50:49 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * TAO_IDL/Makefile.BE:
