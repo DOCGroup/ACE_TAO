@@ -1,3 +1,10 @@
+Thu Nov 16 08:15:37 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/InterfaceC.cpp:
+	* tao/Object.cpp:
+	* tao/DomainC.cpp: The last set of changes broke the code guarded
+	  by TAO_HAS_INTERFACE_REPOSITORY == 1. Fixed the problem. 
+
 Wed Nov 15 21:52:10 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Table.cpp (bind):
