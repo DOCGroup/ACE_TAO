@@ -371,6 +371,11 @@ public:
   /// Finds the next token in a string (safe char version).
   static char *strtok_r (char *s, const char *tokens, char **lasts);
 
+#if defined (ACE_HAS_WCHAR)
+  /// Finds the next token in a string (wchar_t version).
+  static wchar_t *strtok_r (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, ACE_WCHAR_T **lasts);
+#endif  // ACE_HAS_WCHAR
+
 #if !defined (ACE_LACKS_STRTOD)
   /// Converts a string to a double value (char version).
   static double strtod (const char *s, char **endptr);
@@ -470,6 +475,11 @@ private:
 #if !defined (ACE_HAS_REENTRANT_FUNCTIONS)
   /// Emulated strtok_r.
   static char *strtok_r_emulation (char *s, const char *tokens, char **lasts);
+
+# if defined (ACE_HAS_WCHAR)
+  /// Emulated strtok_r (wchar_t version).
+  static wchar_t *strtok_r_emulation (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, ACE_WCHAR_T **lasts);
+# endif  // ACE_HAS_WCHAR
 #endif /* !ACE_HAS_REENTRANT_FUNCTIONS */
 
 #if defined (ACE_LACKS_STRSPN)

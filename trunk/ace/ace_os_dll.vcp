@@ -309,6 +309,8 @@ DEP_CPP_BASE_=\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
+	".\Default_Constants.h"\
+	".\Global_Macros.h"\
 	".\iosfwd.h"\
 	".\Log_Msg.h"\
 	".\Log_Msg_Callback.h"\
@@ -525,6 +527,8 @@ DEP_CPP_OS_CP=\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
+	".\Default_Constants.h"\
+	".\Global_Macros.h"\
 	".\iosfwd.h"\
 	".\Log_Msg.h"\
 	".\Log_Msg_Callback.h"\
@@ -548,6 +552,7 @@ DEP_CPP_OS_CP=\
 	".\OS_Log_Msg_Attributes.inl"\
 	".\OS_Memory.h"\
 	".\OS_Memory.inl"\
+	".\OS_QoS.h"\
 	".\OS_String.h"\
 	".\OS_String.inl"\
 	".\OS_Thread_Adapter.h"\
@@ -737,6 +742,8 @@ DEP_CPP_OS_DI=\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
+	".\Default_Constants.h"\
+	".\Global_Macros.h"\
 	".\iosfwd.h"\
 	".\Log_Msg.h"\
 	".\Log_Msg_Callback.h"\
@@ -1175,6 +1182,8 @@ DEP_CPP_OS_ST=\
 	".\ACE_export.h"\
 	".\ace_wchar.h"\
 	".\ace_wchar.inl"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
 	".\config-all.h"\
 	".\config-cygwin32-common.h"\
 	".\config-cygwin32.h"\
@@ -1192,6 +1201,7 @@ DEP_CPP_OS_ST=\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
+	".\iosfwd.h"\
 	".\OS_Errno.h"\
 	".\OS_Errno.inl"\
 	".\OS_Export.h"\
@@ -1201,6 +1211,7 @@ DEP_CPP_OS_ST=\
 	".\OS_String.inl"\
 	".\post.h"\
 	".\pre.h"\
+	".\streams.h"\
 	".\svc_export.h"\
 	
 
@@ -1376,6 +1387,8 @@ DEP_CPP_OS_TH=\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
+	".\Default_Constants.h"\
+	".\Global_Macros.h"\
 	".\iosfwd.h"\
 	".\Log_Msg.h"\
 	".\Log_Msg_Callback.h"\
@@ -1692,6 +1705,8 @@ DEP_CPP_THREA=\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
+	".\Default_Constants.h"\
+	".\Global_Macros.h"\
 	".\iosfwd.h"\
 	".\Log_Msg.h"\
 	".\Log_Msg_Callback.h"\
