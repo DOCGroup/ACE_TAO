@@ -6,7 +6,7 @@ ACE_RCSID (DynamicInterface,
            "$Id$")
 
 
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 #include "tao/NVList.h"
 #include "tao/Environment.h"
 #include "tao/CORBA_String.h"
