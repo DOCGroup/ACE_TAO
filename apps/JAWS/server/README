@@ -58,6 +58,12 @@ following command-line arguments:
 
         -p port         Start JAWS on the specified port.
         -n num_threads  Use num_threads as the maximum number of threads.
+        -f thr_flag     Can be used multiple times to set thread
+                        creation flags:
+                        THR_BOUND       -> bound threads
+                        THR_DAEMON      -> daemonized threads
+                        THR_DETACHED    -> detached threads
+                        THR_NEW_LWP     -> increase concurrency level
         -t thr_strategy Use one of the following strategies:
                         POOL        -> thread pool
                         PER_REQUEST -> thread-per-request
