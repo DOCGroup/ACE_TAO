@@ -1,42 +1,55 @@
+Mon Mar  8 17:03:18 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/USAGE:
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Changed the default behavior for all "make" based workspace
+          creators such that the -hierarchy option is the default.  It is no
+          longer necessary to pass the -hierarchy option when generating
+          workspaces and projects of type make, bmake, borland, gnuace or
+           nmake.
+
 Mon Mar  8 11:38:43 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Time_Value.inl (set): Make sure to roundup the
-	  double value properly.  Thanks to James Hu for suggesting the
-	  fix and for Mikael Lundqvist <programmer_71@hotmail.com>
-	  for reporting it.
+        * ace/Time_Value.inl (set): Make sure to roundup the
+          double value properly.  Thanks to James Hu for suggesting the
+          fix and for Mikael Lundqvist <programmer_71@hotmail.com>
+          for reporting it.
 
 Mon Mar  8 15:52:33 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/POSIX_Asynch_IO.{h cpp}: Added ACE_POSIX_Asynch_Read_Dgram and
-	  ACE_POSIX_Asynch_Write_Dgram functionality. These were previously
-	  left as "not supported". The functions don't offer the
-	  immediate-success feature available on Windows, and the Dgram
-	  socket must be "connected" as there's no address-specification
-	  feature available in the asynch IO facility on POSIX.
+        * ace/POSIX_Asynch_IO.{h cpp}: Added ACE_POSIX_Asynch_Read_Dgram and
+          ACE_POSIX_Asynch_Write_Dgram functionality. These were previously
+          left as "not supported". The functions don't offer the
+          immediate-success feature available on Windows, and the Dgram
+          socket must be "connected" as there's no address-specification
+          feature available in the asynch IO facility on POSIX.
 
-	* ace/POSIX_Proactor.cpp: Comment out the signal setup; this should
-	  not be necessary and, indeed, is erroneous, at least on Linux.
-	  It's commented out instead of removed in case further testing on
-	  other platforms determines that it is needed sometimes.
+        * ace/POSIX_Proactor.cpp: Comment out the signal setup; this should
+          not be necessary and, indeed, is erroneous, at least on Linux.
+          It's commented out instead of removed in case further testing on
+          other platforms determines that it is needed sometimes.
 
 Mon Mar  8 13:48:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* NEWS:
+        * NEWS:
 
-	  Added a NEWS file which tracks user visible changes between
-	  every beta. Thanks to Olli Savia and Gary Duzan for motivating
-	  this. 
+          Added a NEWS file which tracks user visible changes between
+          every beta. Thanks to Olli Savia and Gary Duzan for motivating
+          this.
 
 Mon Mar  8 13:18:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Timer_Queue_Adapters.h:
-	* ace/Timer_Queue_Adapters.i:
+        * ace/Timer_Queue_Adapters.h:
+        * ace/Timer_Queue_Adapters.i:
 
-	  Fixed warnings for the SunCC compiler. 
+          Fixed warnings for the SunCC compiler.
 
 Mon Mar  8 20:32:35 2004  Olli Savia  <ops@iki.fi>
 
-	* ACE-INSTALL.html
+        * ACE-INSTALL.html
           Updated LynxOS section.
 
 Mon Mar  8 20:21:15 2004  Olli Savia  <ops@iki.fi>
