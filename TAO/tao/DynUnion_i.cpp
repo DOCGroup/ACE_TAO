@@ -1838,7 +1838,6 @@ TAO_DynUnion_i::get_longlong (CORBA::Environment &ACE_TRY_ENV)
 {
 #if defined (ACE_LACKS_LONGLONG_T)
   CORBA::LongLong retval = {0, 0};
-  return retval;
 #else  /* ! ACE_LACKS_LONGLONG_T */
   CORBA::LongLong retval = 0;
 #endif /* ! ACE_LACKS_LONGLONG_T */
@@ -1860,7 +1859,7 @@ TAO_DynUnion_i::get_longlong (CORBA::Environment &ACE_TRY_ENV)
   else
     {
       ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
-                        0);
+                        retval);
     }
 }
 
