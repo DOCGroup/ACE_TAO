@@ -1,3 +1,8 @@
+Tue Sep 14 17:49:33 1999  Luther J Baker  <ljb1@cs.wustl.edu>
+
+	* ace/Arg_Shifter.cpp (get_the_parameter): removed an errant
+	  return 0;
+
 Tue Sep 14 16:01:04 1999  Christopher Kohlhoff <chris@kohlhoff.com>
 
         * ace/Process_Manager.cpp (wait): moved declaration of

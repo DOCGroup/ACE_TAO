@@ -83,7 +83,7 @@ ACE_Arg_Shifter::get_the_parameter (const char* flag)
 	}
     }
   // the paramter is in the middle somewhere...
-  return this->temp_[current_index_] + offset;  return 0;
+  return this->temp_[current_index_] + offset;
 }
 
 int
