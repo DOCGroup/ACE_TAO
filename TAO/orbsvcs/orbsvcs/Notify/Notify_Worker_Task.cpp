@@ -28,6 +28,8 @@ int
 TAO_Notify_Worker_Task::process_event (TAO_Notify_Command *mb, CORBA::Environment& ACE_TRY_ENV, ACE_Time_Value * /*tv*/)
 {
   int result = mb->execute (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
   ACE_Message_Block::release (mb);
   return result;
 }

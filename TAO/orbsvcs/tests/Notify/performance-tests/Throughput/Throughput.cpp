@@ -156,11 +156,11 @@ Throughput_StructuredPushSupplier::svc (void)
           event.filterable_data[0].value <<= Throughput_base;
 
           this->proxy_consumer_->push_structured_event (event, ACE_TRY_ENV);
+          ACE_CHECK_RETURN (-1);
 
           ACE_hrtime_t end = ACE_OS::gethrtime ();
           this->throughput_.sample (end - this->throughput_start_,
                                     end - start);
-          ACE_CHECK_RETURN (-1);
         }
 
       ACE_OS::sleep (tv);
@@ -176,6 +176,7 @@ Throughput_StructuredPushSupplier::svc (void)
   event.filterable_data[0].value <<= Throughput_base;
 
   this->proxy_consumer_->push_structured_event (event, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   test_client_->g_consumer_done_count++;
   return 0;
@@ -402,6 +403,8 @@ Notify_Throughput::run_test (CORBA::Environment &ACE_TRY_ENV)
     {
       suppliers_[i]->
         TAO_Notify_StructuredPushSupplier::init (root_poa_.in (), ACE_TRY_ENV);
+      ACE_CHECK;
+
       if (suppliers_[i]->activate (THR_NEW_LWP | THR_JOINABLE) != 0)
         ACE_ERROR ((LM_ERROR,
                     "Cannot activate client threads\n"));

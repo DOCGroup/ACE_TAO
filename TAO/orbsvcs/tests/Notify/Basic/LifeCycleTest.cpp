@@ -100,11 +100,22 @@ LifeCycleTest::run_test(CORBA::Environment &ACE_TRY_ENV)
   for (int i = 0; i < this->count_; ++i)
     {
      this->create_ec(ACE_TRY_ENV);
+     ACE_CHECK;
+
      this->create_supplier_admin(ACE_TRY_ENV);
+     ACE_CHECK;
+
      this->create_consumer_admin(ACE_TRY_ENV);
+     ACE_CHECK;
+
      this->destroy_consumer_admin(ACE_TRY_ENV);
+     ACE_CHECK;
+
      this->destroy_supplier_admin(ACE_TRY_ENV);
+     ACE_CHECK;
+
      this->destroy_ec(ACE_TRY_ENV);
+     ACE_CHECK;
   }
 }
 

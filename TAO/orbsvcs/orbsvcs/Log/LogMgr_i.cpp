@@ -51,13 +51,11 @@ LogMgr_i::list_logs (CORBA::Environment &ACE_TRY_ENV)
 
 DsLogAdmin::Log_ptr
 LogMgr_i::find_log (DsLogAdmin::LogId id,
-                    CORBA::Environment &ACE_TRY_ENV)
+                    CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
   DsLogAdmin::BasicLog_var v_return;
 
   if (hash_map_.find (id,

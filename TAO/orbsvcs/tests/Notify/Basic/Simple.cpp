@@ -165,6 +165,7 @@ Simple_Test::on_event_received (void)
     {
       ACE_DECLARE_NEW_CORBA_ENV;
       this->end_test (ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 

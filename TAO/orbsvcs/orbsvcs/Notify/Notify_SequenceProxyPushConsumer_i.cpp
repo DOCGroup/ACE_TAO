@@ -107,6 +107,8 @@ TAO_Notify_SequenceProxyPushConsumer_i::push_structured_events (const CosNotific
         new TAO_Notify_StructuredEvent(notification_copy);
 
       this->event_manager_->process_event (notify_event, this, ACE_TRY_ENV);
+      ACE_CHECK;
+
       notify_event->_decr_refcnt ();
     }
 }
