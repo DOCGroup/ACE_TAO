@@ -1,3 +1,13 @@
+Wed Jan 12 23:01:24 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/PolicyFactory/IORInterceptor.cpp:
+
+	  Fixed spelling typo.
+
+	* tests/Portable_Interceptors/PolicyFactory/server.cpp:
+
+	  Cosmetic change.
+
 Wed Jan 12 22:36:58 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/ObjRefTemplate/ORT_Adapter_Impl.h (tao_ort_template_):
