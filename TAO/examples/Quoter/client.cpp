@@ -59,7 +59,7 @@ Quoter_Client::parse_args (void)
         break;
       default:
         exit_code = 1;
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                     "%s: unknown arg, -%c\n",
                     this->argv_[0], char(opt)));
       case '?':
@@ -250,7 +250,7 @@ Quoter_Client::init_naming_service (void)
 
       // Find an appropriate factory over there.
       exception_message = "While finding factories";
-      CosLifeCycle::Factories_ptr factories_ptr =
+      CosLifeCycle::Factories *factories_ptr =
           factory_Finder_var_->find_factories (factoryName, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
