@@ -1,3 +1,28 @@
+Wed Mar 17 13:14:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.cpp:
+	  Added a check for NULL ACE_Message_Block pointer in
+	  _tao_replace().
+
+	* tao/Request.i:
+	  Type in comments.
+
+	*tao/Context.{h,i,cpp}:
+	  New files for our minimal Context support, basically just
+	  so Object::_create_request() can be compliant.
+
+	* tao/Object.{h,cpp}:
+	* tao/corbafwd.h:
+	* tao/corba.h:
+	* tao/TAO.dsp:
+	* tao/Makefile:
+	  Other files that needed additions for Context support.
+
+	* TAO/tests/param_test/client.cpp:
+	* TAO/Benchmark/Marshal_Test/TAO/tao_marshal_client.cpp:
+	  Test files that use _create_request() and so needed
+	  the added Context arg in the calls.
+
 Wed Mar 17 12:28:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
