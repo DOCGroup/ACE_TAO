@@ -65,7 +65,7 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
                                         entry) != 0)
             ACE_THROW (Deployment::PlanError ());
 
-          Chained_Artifacts artifacts = entry->int_id_;
+          Chained_Artifacts & artifacts = entry->int_id_;
 
           // Dump plans
           Deployment::DnC_Dump::dump (artifacts.child_plan_);
@@ -215,7 +215,7 @@ split_plan (void)
       // Fill in the child deployment plan in the map.
 
       // Get the instance deployment description
-      ::Deployment::InstanceDeploymentDescription my_instance =
+      const ::Deployment::InstanceDeploymentDescription & my_instance =
         (this->plan_.instance)[i];
 
       // Find the corresponding child deployment plan entry in
@@ -225,8 +225,7 @@ split_plan (void)
         Chained_Artifacts> *entry;
 
       if (this->artifact_map_.find
-          (ACE_CString (my_instance.node.in ()), //is this parameter correct?
-	                                         //@@ Gan, now it should be correct.
+          (ACE_CString (my_instance.node.in ()),
                         entry) != 0)
         return 0;                          // no valid name found.
 
@@ -240,7 +239,7 @@ split_plan (void)
       // field with a new "implementation", which is specified by the
       // <implementationRef> field of <my_instance> entry.  NOTE: The
       // <artifactRef> field needs to be changed accordingly.
-      ::Deployment::MonolithicDeploymentDescription my_implementation =
+      const ::Deployment::MonolithicDeploymentDescription & my_implementation =
         (this->plan_.implementation)[my_instance.implementationRef];
 
       CORBA::ULong index_imp = child_plan->implementation.length ();
