@@ -66,10 +66,13 @@ Test_DynSequence::run_test (void)
         DynamicAny::DynAnyFactory::_narrow (factory_obj.in (),
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       if (CORBA::is_nil (dynany_factory.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Nil dynamic any factory after narrow\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Nil dynamic any factory after narrow\n"),
+                            -1);
+        }
 
       ts[0] = data.m_string2;
       ts[1] = data.m_string2;
@@ -95,11 +98,89 @@ Test_DynSequence::run_test (void)
       ACE_TRY_CHECK;
       CORBA::String_var out_str1 = fa1->get_string (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       if (!ACE_OS::strcmp (out_str1.in (), data.m_string1))
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
       else
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
+
+      ACE_DEBUG ((
+          LM_DEBUG,
+          "testing: set_elements_as_dyn_any/get_elements_as_dyn_any/equal\n"
+        ));
+
+      static const char *values[] = 
+      {
+        "zero",
+        "one",
+        "two"
+      };
+
+      CORBA::ULong length = 3;
+      DynamicAny::DynAnySeq *elem_ptr = 0;
+      ACE_NEW_RETURN (elem_ptr,
+                      DynamicAny::DynAnySeq (length),
+                      -1);
+      elem_ptr->length (length);
+      DynamicAny::DynAnySeq_var elements (elem_ptr);
+      CORBA_Any elem_any;
+      CORBA::ULong i;
+
+      for (i = 0; i < length; ++i)
+        {
+          elem_any <<= values[i];
+          elements[i] = dynany_factory->create_dyn_any (elem_any,
+                                                        ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+
+      fa1->set_elements_as_dyn_any (elements.in (),
+                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      DynamicAny::DynAnySeq_var out_elems = 
+        fa1->get_elements_as_dyn_any (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (out_elems->length () != 3)
+        {
+          ++this->error_count_;
+          return -1;
+        }
+
+      CORBA::String_var out_str;
+
+      for (i = 0; i < length; ++i)
+        {
+          out_str = out_elems[i]->get_string (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          CORBA::Boolean equal = 
+            out_elems[i]->equal (elements[i].in (),
+                                 ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          if (!equal)
+            {
+              ++this->error_count_;
+            }
+
+          // To show that calling destroy() on a component does
+          // nothing, as required by the spec.
+          out_elems[i]->destroy (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+
+      if (this->error_count_ == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "++ OK ++\n"));
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
@@ -115,9 +196,11 @@ Test_DynSequence::run_test (void)
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (ftc1.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "DynSequence::_narrow() returned nil\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "DynSequence::_narrow() returned nil\n"),
+                            -1);
+        }
 
       ts[0] = CORBA::string_dup (data.m_string1);
       CORBA_Any in_any2;
@@ -125,24 +208,25 @@ Test_DynSequence::run_test (void)
       ftc1->from_any (in_any2,
                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::Any* out_any1 = ftc1->to_any (ACE_TRY_ENV);
+      CORBA::Any_var out_any1 = ftc1->to_any (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       DynAnyTests::test_seq* ts_out;
       *out_any1 >>= ts_out;
+
       if (!ACE_OS::strcmp ((*ts_out)[0], data.m_string1))
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
       else
-        ++this->error_count_;
-
-      // Created with NEW
-      delete out_any1;
-
+        {
+          ++this->error_count_;
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: length/set_elements/get_elements\n"));
 
-      CORBA::ULong length = ftc1->get_length (ACE_TRY_ENV);
+      length = ftc1->get_length (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (length != 2)
@@ -170,11 +254,17 @@ Test_DynSequence::run_test (void)
       CORBA_Any out_any2 = as_out[index];
       char* out_str2;
       out_any2 >>= CORBA::Any::to_string (out_str2, 0);
+
       if (ACE_OS::strcmp (out_str2, data.m_string1))
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
+
       if (this->error_count_ == 0)
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
 
       fa1->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;

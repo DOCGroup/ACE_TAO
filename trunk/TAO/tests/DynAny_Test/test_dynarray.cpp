@@ -65,10 +65,13 @@ Test_DynArray::run_test (void)
         DynamicAny::DynAnyFactory::_narrow (factory_obj.in (),
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       if (CORBA::is_nil (dynany_factory.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Nil dynamic any factory after narrow\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Nil dynamic any factory after narrow\n"),
+                            -1);
+        }
 
       CORBA::Any in_any1;
       in_any1 <<= ta;
@@ -93,11 +96,16 @@ Test_DynArray::run_test (void)
       ACE_TRY_CHECK;
       l_out1 = fa1->get_long (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       if (l_out1 == data.m_long1)
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
       else
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
@@ -113,9 +121,11 @@ Test_DynArray::run_test (void)
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (ftc1.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "DynArray::_narrow() returned nil\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "DynArray::_narrow() returned nil\n"),
+                            -1);
+        }
 
       ta[1] = data.m_long1;
       CORBA::Any in_any2;
@@ -129,10 +139,14 @@ Test_DynArray::run_test (void)
       out_any1.in () >>= ta_out;
 
       if (ta_out[(CORBA::ULong) 1] == data.m_long1)
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
       else
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: set_elements/get_elements\n"));
@@ -146,19 +160,21 @@ Test_DynArray::run_test (void)
       ftc1->set_elements (as_in,
                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      DynamicAny::AnySeq* as_out = ftc1->get_elements (ACE_TRY_ENV);
+      DynamicAny::AnySeq_var as_out = ftc1->get_elements (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA_Any out_any2 = (*as_out)[1];
       CORBA::Long l_out2;
       out_any2 >>= l_out2;
-      if (l_out2 == data.m_long1)
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
-      else
-        ++this->error_count_;
 
-      // Created with NEW
-      delete as_out;
+      if (l_out2 == data.m_long1)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
+      else
+        {
+          ++this->error_count_;
+        }
 
       fa1->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
