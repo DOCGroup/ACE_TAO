@@ -2,7 +2,7 @@
 
 #include "Handler_Test.h"
 
-#include "Config_Handlers/IAD_Handler.h"
+#include "Old_Config_Handlers/IAD_Handler.h"
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
