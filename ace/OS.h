@@ -22,6 +22,10 @@
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).
 #include "ace/inc_user_config.h"
 
+#if defined (ACE_HAS_MOSTLY_UNICODE_APIS) && !defined (UNICODE)
+#error UNICODE must be defined when using ACE_HAS_MOSTLY_UNICODE_APIS, check your compiler document on how to enable UNICODE.
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS && !UNICODE */
+
 #if defined (ACE_HAS_ANSI_CASTS)
 # define ACE_static_cast(TYPE, EXPR)       static_cast<TYPE> (EXPR)
 # define ACE_const_cast(TYPE, EXPR)        const_cast<TYPE> (EXPR)
@@ -4442,7 +4446,7 @@ public:
   static char *mktemp (char *t);
   static char *getcwd (char *,
                        size_t);
-  static int rename (const char *old_name, 
+  static int rename (const char *old_name,
                      const char *new_name);
   static int unlink (const char *path);
   static char *tempnam (const char *dir,
