@@ -29,12 +29,7 @@ malloc_recurse (int count)
 {
   static char default_char = 0;
 
-  if (count <= 0)
-    {
-      if (Options::instance ()->debug ())
-	AMS (Malloc::instance ()->print_stats ());
-    }
-  else
+  if (count > 0)
     {
       int alloc_size = gen_size ();
       void *ptr = Malloc::instance ()->malloc (alloc_size);

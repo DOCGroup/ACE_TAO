@@ -69,7 +69,6 @@ private:
   char *name_;
   ACE_Activation_Queue activation_queue_;
   Scheduler *scheduler_;
-
 };
 
 class Method_Object_work : public ACE_Method_Object
@@ -124,11 +123,11 @@ public:
 
 private:
   Scheduler *scheduler_;
-  ACE_Future<const char*> future_result_;
+  ACE_Future<const char *> future_result_;
 };
 
 Method_Object_name::Method_Object_name (Scheduler *new_scheduler,
-					ACE_Future<const char*> &new_result)
+					ACE_Future<const char *> &new_result)
   : scheduler_ (new_scheduler),
     future_result_ (new_result)
 {
@@ -153,7 +152,7 @@ class Method_Object_end : public ACE_Method_Object
   //     Reification of the <end> method.
 {
 public:
-  Method_Object_end (Scheduler *new_Scheduler): scheduler_ (new_Scheduler) {}
+  Method_Object_end (Scheduler *new_scheduler): scheduler_ (new_scheduler) {}
   virtual ~Method_Object_end (void) {}
   virtual int call (void) { this->scheduler_->close (); return -1; }
 
@@ -161,12 +160,13 @@ private:
   Scheduler *scheduler_;
 };
 
-// constructor
-Scheduler::Scheduler (const char *newname, Scheduler *new_Scheduler)
+// Constructor.
+Scheduler::Scheduler (const char *newname, 
+		      Scheduler *new_scheduler)
 {
   ACE_NEW (this->name_, char[ACE_OS::strlen (newname) + 1]);
-  ACE_OS::strcpy ((char *) this->name_, newname);
-  this->scheduler_ = new_Scheduler;
+  ACE_OS::strcpy (this->name_, newname);
+  this->scheduler_ = new_scheduler;
   ACE_DEBUG ((LM_DEBUG, "(%t) Scheduler %s created\n", this->name_));
 }
 
@@ -174,6 +174,7 @@ Scheduler::Scheduler (const char *newname, Scheduler *new_Scheduler)
 Scheduler::~Scheduler (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) Scheduler %s will be destroyed\n", this->name_));
+  delete [] this->name_;
 }
 
 // open
@@ -262,7 +263,8 @@ Scheduler::name (void)
 }
 
 ACE_Future<u_long> 
-Scheduler::work (u_long newparam, int newcount)
+Scheduler::work (u_long newparam, 
+		 int newcount)
 {
   if (this->scheduler_) {
     return this->scheduler_->work (newparam, newcount);
@@ -279,7 +281,7 @@ Scheduler::work (u_long newparam, int newcount)
 // @@ These values should be set by the command line options!
 
 // Total number of loops.
-static int n_loops = 100;
+static size_t n_loops = 100;
 
 int
 main (int, char *[]) 
@@ -300,11 +302,11 @@ main (int, char *[])
   ACE_NEW_RETURN (matias, Scheduler ("matias", andres), -1);
   matias->open ();
 
-  for (int i = 0; i < n_loops; i++) 
+  for (size_t i = 0; i < n_loops; i++) 
     {
       {
 	ACE_Future<u_long> fresulta, fresultb, fresultc, fresultd, fresulte;
-	ACE_Future<const char*> fname;
+	ACE_Future<const char *> fname;
 
 	ACE_DEBUG ((LM_DEBUG, "(%t) going to do a non-blocking call\n"));
 
@@ -353,7 +355,7 @@ main (int, char *[])
 	fname.get (name);
 
 	ACE_DEBUG ((LM_DEBUG, "(%t) name %s\n", name));
-
+	delete [] (char *) name;
       }
 
       ACE_DEBUG ((LM_DEBUG,
