@@ -459,9 +459,9 @@ TAO_PSDL_Node_Visitor::visit_constr_forward_decl (TAO_PSDL_Constr_Forward_Decl *
 }
 
 int
-TAO_PSDL_Node_Visitor::visit_interface (TAO_PSDL_Interface *interface)
+TAO_PSDL_Node_Visitor::visit_interface (TAO_PSDL_Interface *interf)
 {
-  if (interface->type_of_dcl ()->accept (this) == -1)
+  if (interf->type_of_dcl ()->accept (this) == -1)
     return -1;
 
   return 0;
