@@ -9,14 +9,14 @@
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
 ACE_ROOT = $(top_srcdir)
+ACE_BUILDDIR = $(top_builddir)
 
 ## Makefile.ACEXML_XML_Svc_Conf_Parser.am 
 noinst_LTLIBRARIES = libACEXML_XML_Svc_Conf_Parser.la
 
 libACEXML_XML_Svc_Conf_Parser_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir) \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
   -I$(ACE_ROOT)/ACEXML/common
 
 libACEXML_XML_Svc_Conf_Parser_la_SOURCES = \
@@ -24,7 +24,9 @@ libACEXML_XML_Svc_Conf_Parser_la_SOURCES = \
   Svcconf_Handler.cpp
 
 libACEXML_XML_Svc_Conf_Parser_la_LIBADD = \
- $(top_builddir)/ACEXML/parser/parser/libACEXML_Parser.la $(top_builddir)/ACEXML/libACEXML.la $(top_builddir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
+ $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 noinst_HEADERS = \
   Svcconf.h \

@@ -9,21 +9,22 @@
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
 ACE_ROOT = $(top_srcdir)
+ACE_BUILDDIR = $(top_builddir)
 
 ## Makefile.Netsvcs_server.am 
 noinst_PROGRAMS = main
 
 main_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir) \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
   -I$(ACE_ROOT)/netsvcs/lib
 
 main_SOURCES = \
   main.cpp
 
 main_LDADD = \
- $(top_builddir)/lib/libnetsvcs.la $(top_builddir)/lib/libACE.la
+ $(ACE_BUILDDIR)/netsvcs/lib/libnetsvcs.la \
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

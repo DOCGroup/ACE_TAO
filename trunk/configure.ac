@@ -7211,6 +7211,7 @@ AC_CONFIG_FILES([
   ace/RMCast/Makefile
   ace/QoS/Makefile
   ace/SSL/Makefile
+  ace/TMCast/Makefile
   apps/Makefile
   apps/gperf/Makefile
   apps/gperf/src/Makefile
@@ -7230,7 +7231,17 @@ AC_CONFIG_FILES([
   netsvcs/clients/Tokens/rw_lock/Makefile
   netsvcs/servers/Makefile
   tests/Makefile
+  tests/RMCast/Makefile
   tests/SSL/Makefile
+  ACEXML/Makefile
+  ACEXML/apps/Makefile
+  ACEXML/apps/svcconf/Makefile
+  ACEXML/common/Makefile
+  ACEXML/examples/Makefile
+  ACEXML/examples/SAXPrint/Makefile
+  ACEXML/parser/Makefile
+  ACEXML/parser/parser/Makefile
+  ACEXML/tests/Makefile
 ])
 
 dnl Configure subdirectories if they are present.

@@ -8,13 +8,15 @@
 ## MPC Command:
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
+ACE_ROOT = $(top_srcdir)
+ACE_BUILDDIR = $(top_builddir)
+
 ## Makefile.gperf.am 
 bin_PROGRAMS = gperf
 
 gperf_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 gperf_SOURCES = \
   Bool_Array.cpp \
@@ -37,7 +39,7 @@ gperf_SOURCES = \
   Vectors.h
 
 gperf_LDADD = \
- $(top_builddir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

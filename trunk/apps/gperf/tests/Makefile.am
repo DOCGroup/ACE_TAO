@@ -9,6 +9,7 @@
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
 ACE_ROOT = $(top_srcdir)
+ACE_BUILDDIR = $(top_builddir)
 
 ## Makefile.adainset.am 
 
@@ -28,16 +29,15 @@ ada-stamp: $(srcdir)/ada.gperf
 noinst_PROGRAMS = aout
 
 aout_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 aout_SOURCES = \
   ada.cpp \
   test.cpp
 
 aout_LDADD = \
- $(top_builddir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.cinset.am 
 
@@ -57,16 +57,15 @@ c-stamp: $(srcdir)/c.gperf
 noinst_PROGRAMS += cout
 
 cout_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 cout_SOURCES = \
   c.cpp \
   test.cpp
 
 cout_LDADD = \
- $(top_builddir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.cppinset.am 
 
@@ -86,16 +85,15 @@ cpp-stamp: $(srcdir)/cpp.gperf
 noinst_PROGRAMS += cppout
 
 cppout_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 cppout_SOURCES = \
   cpp.cpp \
   test.cpp
 
 cppout_LDADD = \
- $(top_builddir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.iinset.am 
 
@@ -115,16 +113,15 @@ idl-stamp: $(srcdir)/idl.gperf
 noinst_PROGRAMS += iout
 
 iout_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 iout_SOURCES = \
   idl.cpp \
   test.cpp
 
 iout_LDADD = \
- $(top_builddir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.iinset2.am 
 
@@ -144,16 +141,15 @@ idl-stamp: $(srcdir)/idl.gperf
 noinst_PROGRAMS += iout2
 
 iout2_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 iout2_SOURCES = \
   idl.cpp \
   test.cpp
 
 iout2_LDADD = \
- $(top_builddir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.m3inset.am 
 
@@ -173,16 +169,15 @@ modula3-stamp: $(srcdir)/modula3.gperf
 noinst_PROGRAMS += m3out
 
 m3out_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 m3out_SOURCES = \
   modula3.cpp \
   test.cpp
 
 m3out_LDADD = \
- $(top_builddir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.pinset.am 
 
@@ -202,16 +197,15 @@ pascal-stamp: $(srcdir)/pascal.gperf
 noinst_PROGRAMS += pout
 
 pout_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 pout_SOURCES = \
   pascal.cpp \
   test.cpp
 
 pout_LDADD = \
- $(top_builddir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.preinset.am 
 
@@ -231,16 +225,15 @@ adadefs-stamp: $(srcdir)/adadefs.gperf
 noinst_PROGRAMS += preout
 
 preout_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 preout_SOURCES = \
   adadefs.cpp \
   test.cpp
 
 preout_LDADD = \
- $(top_builddir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.taoinset.am 
 
@@ -260,16 +253,15 @@ tao-stamp: $(srcdir)/tao.gperf
 noinst_PROGRAMS += taoout
 
 taoout_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 taoout_SOURCES = \
   tao.cpp \
   test.cpp
 
 taoout_LDADD = \
- $(top_builddir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.tinset.am 
 
@@ -289,16 +281,15 @@ corba-stamp: $(srcdir)/corba.gperf
 noinst_PROGRAMS += tout
 
 tout_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 tout_SOURCES = \
   corba.cpp \
   test.cpp
 
 tout_LDADD = \
- $(top_builddir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:
