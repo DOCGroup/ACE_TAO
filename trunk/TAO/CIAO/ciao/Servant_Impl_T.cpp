@@ -7,12 +7,9 @@
 
 namespace CIAO
 {
-  template <typename BASE_SKEL, 
-            typename EXEC, 
-            typename EXEC_VAR, 
-            typename CONTEXT>
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::Servant_Impl (
-      EXEC * exe, 
+  template <typename SKEL, typename EXEC, typename CONTEXT>
+  Servant_Impl<SKEL, EXEC, CONTEXT>::Servant_Impl (
+      typename EXEC::_ptr_type exe, 
       Session_Container * c
     )
     : Servant_Impl_Base (c),
@@ -20,20 +17,14 @@ namespace CIAO
   {
   }
   
-  template <typename BASE_SKEL, 
-            typename EXEC, 
-            typename EXEC_VAR, 
-            typename CONTEXT>
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::~Servant_Impl (void)
+  template <typename SKEL, typename EXEC, typename CONTEXT>
+  Servant_Impl<SKEL, EXEC, CONTEXT>::~Servant_Impl (void)
   {
   }
   
-  template <typename BASE_SKEL, 
-            typename EXEC, 
-            typename EXEC_VAR, 
-            typename CONTEXT>
+  template <typename SKEL, typename EXEC, typename CONTEXT>
   ::Components::FacetDescriptions *
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::get_all_facets (
+  Servant_Impl<SKEL, EXEC, CONTEXT>::get_all_facets (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -57,12 +48,9 @@ namespace CIAO
     return retval._retn ();
   }
   
-  template <typename BASE_SKEL, 
-            typename EXEC, 
-            typename EXEC_VAR, 
-            typename CONTEXT>
+  template <typename SKEL, typename EXEC, typename CONTEXT>
   ::Components::ConsumerDescriptions *
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::get_all_consumers (
+  Servant_Impl<SKEL, EXEC, CONTEXT>::get_all_consumers (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException))

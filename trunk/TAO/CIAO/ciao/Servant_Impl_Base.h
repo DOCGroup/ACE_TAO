@@ -69,10 +69,8 @@ namespace CIAO
                                     ACE_Null_Mutex>
        ConsumerTable;
        
-    FacetTable facet_table_;
-    
-    ConsumerTable consumer_table_;
-      
+    FacetTable facet_table_;    
+    ConsumerTable consumer_table_;      
     Session_Container * container_;
   };
 }
