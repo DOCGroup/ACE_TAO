@@ -82,8 +82,10 @@ int TPC_Logging_Acceptor::accept_svc_handler
   SSL_clear (ssl_);  // Reset for new SSL connection.
   SSL_set_fd (ssl_, sh->get_handle ());
 
-  SSL_set_verify 
-    (ssl_, SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT, 0);
+  SSL_set_verify
+    (ssl_,
+     SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT,
+     0);
   if (SSL_accept (ssl_) == -1 
       || SSL_shutdown (ssl_) == -1) return -1;
   return 0;

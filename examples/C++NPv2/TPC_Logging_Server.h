@@ -71,9 +71,10 @@ public:
   }
 
   // Initialize the acceptor instance.
-  virtual int open (const ACE_SOCK_Acceptor::PEER_ADDR &local_addr,
-            ACE_Reactor *reactor = ACE_Reactor::instance (),
-            int flags = 0, int use_select = 1, int reuse_addr = 1);
+  virtual int open
+    (const ACE_SOCK_Acceptor::PEER_ADDR &local_addr,
+     ACE_Reactor *reactor = ACE_Reactor::instance (),
+     int flags = 0, int use_select = 1, int reuse_addr = 1);
 
   virtual int handle_close
     (ACE_HANDLE = ACE_INVALID_HANDLE,
