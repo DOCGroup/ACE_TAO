@@ -1,3 +1,9 @@
+Mon Jul 24 16:07:25 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp: 
+	* orbsvcs/tests/Notify/Basic/Updates.cpp:
+	  fixes for errors building on vxworks - added #pragma
+	  instantiate, missing class keyword.
+	
 Mon Jul 24 14:03:59 2000  Chad Elliott  <elliott_c@ociweb.com>
         * rules.tao.GNU
         * orbsvcs/orbsvcs/Makefile
