@@ -93,27 +93,26 @@ SOURCE=.\cubit.idl
 
 # Begin Custom Build
 InputPath=.\cubit.idl
-InputName=cubit
 
 BuildCmds= \
-	..\..\..\..\tao_idl\tao_idl $(InputName).idl
+	..\..\..\..\tao_idl\tao_idl cubit.idl
 
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"cubitC.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"cubitC.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"cubitC.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"cubitS.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"cubitS.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"cubitS.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
@@ -121,27 +120,26 @@ BuildCmds= \
 
 # Begin Custom Build
 InputPath=.\cubit.idl
-InputName=cubit
 
 BuildCmds= \
-	..\..\..\..\tao_idl\tao_idl $(InputName).idl
+	..\..\..\..\tao_idl\tao_idl cubit.idl
 
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"cubitC.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"cubitC.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"cubitC.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"cubitS.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"cubitS.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"cubitS.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
