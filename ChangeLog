@@ -1,3 +1,10 @@
+Wed Aug 13 15:47:13 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * apps/drwho/File_Manager.h:
+          Added #include Null_Mutex.h needed when
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION is defined due to recent
+          subsetting.
+
 Mon Aug 11 19:19:24 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Global_Macros.h: Updated the documentation to point to
