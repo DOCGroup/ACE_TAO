@@ -1,9 +1,18 @@
+Fri Mar 26 18:07:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/POAC.h:
+	* tao/POAS.{h,cpp}:
+	* tao/POAManager.cpp (get_state): Added enum definition for
+	  PortableServer::POAManager::State and the get_state method which
+	  got added in Corba 2.3 spec.  Thanks to Umar Syyid
+	  <usyyid@hns.com> for pointing this out.
+
 Fri Mar 26 18:12:56 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
         * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
-          I think the passing of a _var into a method that 
-          accepts _ptr was causing errors on some platforms so 
+          I think the passing of a _var into a method that
+          accepts _ptr was causing errors on some platforms so
           I added .ionout () to it hoping to fix it.
 
 Fri Mar 26 17:59:22 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
@@ -34,15 +43,15 @@ Fri Mar 26 17:58:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/ORB.cpp:
 	* tao/ORB_Core.cpp:
 	  Removed the IIOP_ORB class, it was not needed, it was confusing
-	  the pluggable protocols work and it added more layering than was 
+	  the pluggable protocols work and it added more layering than was
 	  desirable.
 	  Also added a pointer from the ORB to the ORB_Core that created
 	  it, that way we don't need to rely on the
 	  TAO_ORB_Core_instance() method.
 	  The more I think about it the more the ORB_Core looks like an
 	  implementation class for the ORB interface.
-	  
-	* examples/Makefile: 
+
+	* examples/Makefile:
 	  Added Event_Comm to the list.
 
 	* docs/releasenotes/TODO.html:
@@ -50,8 +59,8 @@ Fri Mar 26 17:58:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Fri Mar 26 15:38:00 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input): 
-	  Cosmetic change. Moved the null termination of service name 
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input):
+	  Cosmetic change. Moved the null termination of service name
 	  ahead so it prints properly in the ACE_DEBUG.
 
 Fri Mar 26 16:00:58 1999  David L. Levine  <levine@cs.wustl.edu>
