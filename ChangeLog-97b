@@ -1,3 +1,20 @@
+Thu Nov 13 02:06:58 1997  Chris Cleeland  <cleeland@macarena.cs.wustl.edu>
+
+	* ace/Signal.i: Changed to use new Object Manager member.
+
+	* ace/Object_Manager.cpp: Added a new member to the Object
+ 	Manager--default_mask.  This is the default signal mask employed
+ 	by ACE_Sig_Set.  Moving the object into the OM saves cycles b/c we
+ 	only construct it once and just re-use every time.
+
+	* ace/Handle_Set.cpp: Added two new macros--ACE_DIV_BY_WORDSIZE and
+ 	ACE_MULT_BY_WORDSIZE--which either divide or multiply the argument
+ 	by ACE_Handle_Set::WORDSIZE.  The manner in which this is
+ 	accomplished is governed by the #define
+ 	ACE_USE_SHIFT_FOR_EFFICIENCY--when defined, ACE tries to use
+ 	shifts to implement multiplication and division rather than actual
+ 	multiply and divide operations.  Currently this is disabled.
+
 Wed Nov 12 19:13:05 1997    <irfan@TWOSTEP>
 
 	* ace/Svc_Handler: Changed hand written tss singleton to
