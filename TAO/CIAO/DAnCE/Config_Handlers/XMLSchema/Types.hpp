@@ -14,8 +14,9 @@
  * Disabled the warning about using this in the base member initialization section.
  * Our use in this file is fine.
  */
-#pragma warning ( disable: 4355 )
-
+#ifdef _MSC_VER
+# pragma warning ( disable: 4355 )
+#endif
 namespace XMLSchema
 {
   typedef XSCRT::FundamentalType<signed char> byte;
