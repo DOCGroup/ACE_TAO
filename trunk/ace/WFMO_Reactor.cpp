@@ -1453,11 +1453,9 @@ ACE_WFMO_Reactor_Handler_Repository::handler (ACE_HANDLE handle,
   int found = 0;
   size_t i = 0;
   ACE_Event_Handler *event_handler = 0;
-  long existing_masks;
+  long existing_masks = 0;
 
-  //
   // Look for the handle first
-  //
 
   // First go through the current entries
   //
