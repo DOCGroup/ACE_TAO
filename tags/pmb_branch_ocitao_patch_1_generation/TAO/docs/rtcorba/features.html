@@ -1,0 +1,833 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.77 [en] (Windows NT 5.0; U) [Netscape]">
+   <title>TAO Real-Time CORBA Features Documentation</title>
+<!-- $Id$ -->
+</head>
+<body>
+
+<center>
+<h3>
+Features Documentation</h3></center>
+This page is not a tutorial on Real-Time CORBA, but is rather a supplement
+to the specification, covering all implementation-specific details. Sample
+code exercising RTCORBA features can be found in
+<tt>$TAO/tests/RTCORBA/</tt>.
+We hope to have tutorial-style examples available in the near future.
+<h3>
+<a NAME="enabling"></a>Enabling Real-Time CORBA features</h3>
+In order to use features from the Real-Time CORBA 1.0 specification in
+TAO, a RT-CORBA client application must link with the RTCORBA library;
+a RT-CORBA server application must link with the RTCORBA library and the
+RTPortbaleServer libraries. Since some features in RT-CORBA depend on the
+messaging specification, all code must be compiled with <tt>TAO_HAS_CORBA_MESSAGING</tt>
+set to
+<tt>1</tt>. This macros are defined in
+<tt>$TAO/tao/orbconf.h</tt>
+<p>By default, both Real-Time CORBA and Messaging are enabled in TAO unless
+Minimum CORBA support is turned on, <i>i.e.</i>,
+<tt>TAO_HAS_MINIMUM_CORBA</tt>
+is set to <tt>1</tt>.
+<h3>
+<a NAME="mappings"></a>Priority Mappings</h3>
+TAO provides three Priority Mappings: Direct, Linear, and Continuous. If
+no mapping is specified, Direct Priority Mappings will be used. Note that
+Continuous was previously referred to as Direct.
+<dl>
+<dt>
+<b>Direct</b></dt>
+
+<dd>
+Maps CORBA priorities directly to native priorities.</dd>
+
+<dt>
+<b>Linear</b></dt>
+
+<dd>
+Maps each individual native priority to a contiguous range of CORBA priorities,
+so that the complete CORBA priority range is used up for the mapping. See
+<tt>$TAO_ROOT/tao/RTCORBA/Linear_Priority_Mapping.cpp
+</tt>for
+more details.</dd>
+
+<dt>
+<b>Continuous</b></dt>
+
+<dd>
+Maps the first <i>n</i> CORBA priorities to the range of native priorities,
+where <i>n</i> is the number of native priorities. The lowest native priority
+is mapped to CORBA priority 0, next higher native priority is mapped to
+CORBA priority 1, and so on. Since in all the operating systems where TAO
+is supported the native priority set contains less than 32767 priorities,
+part of the CORBA priority range is left unused. Consider NT Direct priority
+mapping as an example. NT native priorities -15 -2 -1 0 1 2 15 are mapped
+to CORBA priorities 0 1 2 3 4 5 6, respectively, and the rest of the CORBA
+priority range is not used.</dd>
+</dl>
+Priority mappings implement the rules for mapping CORBA priority range
+(from 0 to 32767) into the native OS priority range and vice versa. However,
+in some operating systems, the the native OS priority range depends on
+the scheduling policy being used. That's why when specifying a priority
+mapping, scheduling policy must be specified as well. Below, we describe
+how to configure TAO to use a particular priority mapping and scheduling
+policy. Note, in some operating systems super user privileges are required
+for use of some of the scheduling policies.
+<p>By default TAO uses Direct priority mapping and
+<tt>SCHED_OTHER</tt>
+scheduling policy. There are two ways for an application to override these
+settings:
+<ol>
+<li>
+<tt>svc.conf</tt> file can be used to select a mapping and a scheduling
+policy the ORB will use. (This method does not allow the specification
+of user-defined mappings.) Config file should contain the following options:</li>
+
+<br>&nbsp;
+<p>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<p><tt>static RT_ORB_Loader "-ORBPriorityMapping
+<i>mapping_type</i> -ORBSchedPolicy
+<i>sched_policy</i>"</tt>
+<p>where valid values for <i>mapping_type</i> are <tt>linear</tt> and <tt>direct,</tt>
+and<i> </i>valid values for <i>sched_policy</i> are <tt>SCHED_OTHER</tt>,
+<tt>SCHED_FIFO</tt>
+and <tt>SCHED_RR</tt>.
+<li>
+<i>TAO::PriorityMappingManager</i> can be used to 1) override the default
+priority mapping and scheduling policy with another ORB-defined mapping/scheduling
+policy combination, 2) install a user-defined priority mapping, 3) obtain
+a reference to the priority mapping object used by the ORB. Code excerpts
+below demonstrate how to perform each of these tasks.</li>
+
+<br>&nbsp;
+<p>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<p>Obtaining Priority Mapping Manager:
+<br><tt>object = orb->resolve_initial_references ("PriorityMappingManager");</tt>
+<br><tt>TAO::PriorityMappingManager_var mapping_manager =</tt>
+<br><tt>TAO::PriorityMappingManager::_narrow (object.in ());</tt>
+<p>Overriding priority mapping/policy in effect with another ORB-defined
+mapping/policy combination:
+<br><tt>#include "tao/RTCORBA/Linear_Priority_Mapping.h"</tt>
+<br><tt>#include "tao/RTCORBA/Direct_Priority_Mapping.h"</tt>
+<br><tt>...</tt>
+<p><tt>RTCORBA::PriorityMapping *pm =</tt>
+<br><tt>new TAO_Linear_Priority_Mapping (policy);</tt>
+<br>or
+<br><tt>new TAO_Direct_Priority_Mapping (policy);</tt>
+<br><tt>mapping_manager->mapping (pm);</tt>
+<br><tt>...</tt>
+<br>where policy is <tt>SCHED_OTHER, SCHED_FIFO</tt> or
+<tt>SCHED_RR.</tt>
+Priority Mapping Manager takes the ownership of the priority mapping object.
+<p>Overriding the default with user-defined priority mapping:
+<br><tt>My_Mapping *foo = new My_Mapping;</tt>
+<br><tt>mapping_manager->mapping (foo);</tt>
+<br>where <i>My_Mapping</i> must inherit from <i>RTCORBA::PriorityMapping</i>
+(a typedef for <i>TAO_Priority_Mapping</i> class) located in
+<tt>$TAO/tao/Priority_Mapping.h</tt>
+<p>Obtaining a pointer to the priority mapping object being used by the
+ORB:
+<br><tt>RTCORBA::PriorityMapping *pm =</tt>
+<br><tt>mapping_manager->mapping ();</tt>
+<br>Mapping manager retains the ownership of the priority mapping object.</ol>
+
+<h3>
+<a NAME="defaults"></a>ORB Default Policies</h3>
+Real-Time CORBA 1.0 does not specify ORB defaults for the policies it defines,
+leaving it up to implementations. Below is a summary TAO defaults.
+<br>&nbsp;
+<table BORDER CELLPADDING=7 WIDTH="100%" >
+<tr>
+<td ALIGN=CENTER WIDTH="31%"><b>Policy</b></td>
+
+<td ALIGN=CENTER WIDTH="69%"><b>Default</b></td>
+</tr>
+
+<tr>
+<td WIDTH="31%"><i>ServerProtocolPolicy</i></td>
+
+<td WIDTH="69%">All protocols that are loaded by the ORB by default (e.g.,
+IIOP) and any explicitly specified by the user (e.g., SHMIOP), in the order
+they were loaded, with their default properties. See <a href="#protocols">Protocol
+Policies</a> section for more details.</td>
+</tr>
+
+<tr>
+<td WIDTH="31%"><i>ClientProtocolPolicy</i></td>
+
+<td WIDTH="69%">None</td>
+</tr>
+
+<tr>
+<td WIDTH="31%"><i>ThreadpoolPolicy</i></td>
+
+<td WIDTH="69%">None. If no ThreadpoolPolicy policy is specified during
+POA creation, the default thread-pool will be used for that POA.</td>
+</tr>
+
+<tr>
+<td WIDTH="31%"><i>PriorityModelPolicy</i></td>
+
+<td WIDTH="69%">None</td>
+</tr>
+
+<tr>
+<td WIDTH="31%"><i>PriorityBandedConnectionPolicy</i></td>
+
+<td WIDTH="69%">None</td>
+</tr>
+
+<tr>
+<td WIDTH="31%"><i>PrivateConnectionPolicy</i></td>
+
+<td WIDTH="69%">None</td>
+</tr>
+
+<tr>
+<td WIDTH="31%">Priority Mapping</td>
+
+<td WIDTH="69%">Direct mapping with <tt>SCHED_OTHER</tt> scheduling policy.
+See <a href="#mappings">Priority Mappings</a> section for more details.</td>
+</tr>
+</table>
+
+<h3>
+<a NAME="threadpools"></a>Threadpools</h3>
+
+<ul>
+<li>
+ThreadPools are now fully supported. Endpoint priorities are no longer
+supported.</li>
+</ul>
+
+<h3>
+<a NAME="valid_configurations"></a>Priority Policies</h3>
+The table below lists all possible configurations of policies involving
+priorities, and summarizes the semantics of each configuration.
+<br>&nbsp;
+<table BORDER CELLPADDING=4 WIDTH="100%" >
+<tr>
+<td ALIGN=CENTER WIDTH="33%"><b>Configuration</b></td>
+
+<td ALIGN=CENTER WIDTH="33%"><b>Valid values</b></td>
+
+<td ALIGN=CENTER WIDTH="34%"><b>Semantics</b></td>
+</tr>
+
+<tr>
+<td WIDTH="33%">Threadpool with lanes,
+<br>no <i>PriorityModelPolicy</i>,
+<br>no <i>PriorityBandedConnectionPolicy</i></td>
+
+<td WIDTH="33%">Invalid.</td>
+
+<td WIDTH="34%">None.</td>
+</tr>
+
+<tr>
+<td WIDTH="33%">Threadpool with lanes +
+<br><tt>SERVER_DECLARED</tt> model,
+<br>no <i>PriorityBandedConnectionPolicy</i></td>
+
+<td WIDTH="33%"><i>Server_priority</i> attribute of the <i>PriorityModelPolicy</i>
+must be equal to the priority of one of the threadpool lanes. (Same goes
+for priorities of all the objects registered with the target POA).</td>
+
+<td WIDTH="34%">All processing is done at the servant's priority.</td>
+</tr>
+
+<tr>
+<td WIDTH="33%">Threadpool with lanes +
+<br><tt>CLIENT_PROPAGATED</tt> model,
+<br>no <i>PriorityBandedConnectionPolicy</i></td>
+
+<td WIDTH="33%">Priority of the invoking client thread must be equal to
+the priority of one of the threadpool lanes.</td>
+
+<td WIDTH="34%">All processing is done at the client-propagated priority.</td>
+</tr>
+
+<tr>
+<td WIDTH="33%">Threadpool with lanes +
+<br><i>PriorityBandedConnectionPolicy</i>,
+<br>no <i>PriorityModelPolicy</i></td>
+
+<td WIDTH="33%">Invalid.</td>
+
+<td WIDTH="34%">None.</td>
+</tr>
+
+<tr>
+<td WIDTH="33%">Threadpool with lanes +
+<br><tt>SERVER_DECLARED</tt> model +
+<br><i>PriorityBandedConnectionPolicy</i></td>
+
+<td WIDTH="33%"><i>Server_priority</i> attribute of the <i>PriorityModelPolicy</i>
+must be equal to the priority of one of the threadpool lanes. (Same goes
+for priorities of all the objects registered with the target POA). In addition,
+each of the priority bands must cover at least one of the threadpool lane
+priorities.</td>
+
+<td WIDTH="34%">All processing is done at the servant's priority.</td>
+</tr>
+
+<tr>
+<td WIDTH="33%">Threadpool with lanes +
+<br><tt>CLIENT_PROPAGATED</tt> model +
+<br><i>PriorityBandedConnectionPolicy</i></td>
+
+<td WIDTH="33%">Priority of the invoking client thread must fall into one
+of the priority bands. In addition, each of the priority bands must cover
+at least one of the threadpool lane priorities.</td>
+
+<td WIDTH="34%">All processing is done at the threadpool lane priority
+which matches the priority band used by the client.</td>
+</tr>
+
+<tr>
+<td WIDTH="33%">Threadpool without lanes,
+<br>no <i>PriorityModelPolicy</i>,
+<br>no <i>PriorityBandedConnectionPolicy</i></td>
+
+<td WIDTH="33%">All valid CORBA priorities.</td>
+
+<td WIDTH="34%">All processing is done at the threadpool's default priority.</td>
+</tr>
+
+<tr>
+<td WIDTH="33%">Threadpool without lanes +
+<br><tt>SERVER_DECLARED</tt> model,
+<br>no <i>PriorityBandedConnectionPolicy</i></td>
+
+<td WIDTH="33%">All valid CORBA priorities.</td>
+
+<td WIDTH="34%">Request I/O and demultiplexing processing is done at the
+threadpool's default priority. Application level processing is done at
+the servant's priority.</td>
+</tr>
+
+<tr>
+<td WIDTH="33%">Threadpool without lanes + <tt>CLIENT_PROPAGATED</tt> model,
+<br>no <i>PriorityBandedConnectionPolicy</i></td>
+
+<td WIDTH="33%">All valid CORBA priorities.</td>
+
+<td WIDTH="34%">Request I/O and demultiplexing processing is done at the
+threadpool's default priority. Application level processing is done at
+the client-propagated priority.</td>
+</tr>
+
+<tr>
+<td WIDTH="33%">Threadpool without lanes +
+<br><i>PriorityBandedConnectionPolicy</i>,
+<br>no <i>PriorityModelPolicy</i></td>
+
+<td WIDTH="33%">Invalid.</td>
+
+<td WIDTH="34%">None.</td>
+</tr>
+
+<tr>
+<td WIDTH="33%">Threadpool without lanes +
+<br><tt>SERVER_DECLARED</tt> model +
+<br><i>PriorityBandedConnectionPolicy</i></td>
+
+<td WIDTH="33%"><i>Server_priority</i> attribute of the <i>PriorityModelPolicy</i>
+must fall into one of the priority bands. (Same goes for priorities of
+all the objects registered with the target POA).</td>
+
+<td WIDTH="34%">Request I/O and demultiplexing processing is done at the
+threadpool's default priority. Application level processing is done at
+the servant's priority. In this case, <i>PriorityBandedConnectionPolicy</i>
+is used to restrict the allowed priority values for the servant.</td>
+</tr>
+
+<tr>
+<td WIDTH="33%">Threadpool without lanes +
+<br><tt>CLIENT_PROPAGATED</tt> model +
+<br><i>PriorityBandedConnectionPolicy</i></td>
+
+<td WIDTH="33%">Priority of the invoking client thread must fall into one
+of the priority bands.</td>
+
+<td WIDTH="34%">Request I/O and demultiplexing processing is done at the
+threadpool's default priority. Application level processing is done at
+the client-propagated priority. In this case, <i>PriorityBandedConnectionPolicy</i>
+is used to restrict the allowed priority values for the client.</td>
+</tr>
+</table>
+
+<h3>
+<a NAME="explicit_bind"></a>Explicit Binding</h3>
+<tt>Object::_validate_connection ()</tt> method establishes a connection,
+if one doesn't already exist, and verifies policy overrides for the <i>invoking
+thread/ its priority/ target object</i> combination. To establish all connections
+ahead of time, application must call <tt>_validate_connection ()</tt> for
+<b>all</b><i>thread/
+priority/ object</i> combinations that will be used.
+<h3>
+<a NAME="protocols"></a>Protocol Policies</h3>
+In addition to <i>TCPProtocolProperties</i> defined by the Real-Time CORBA
+specification, TAO provides configurable properties for each protocol it
+supports. Below is a summary of all protocol properties available in TAO.
+<ul>
+<li>
+<b>IIOP</b></li>
+
+<br>Protocol <i>ProfileId</i>: 0
+<br>Transport properties interface name: <i>RTCORBA::TCPProtocolProperties</i>
+(standard)
+<br>Implementation class name: <i>TAO_TCP_Properties</i>
+<table BORDER CELLPADDING=4 HEIGHT="150" >
+<tr>
+<td ALIGN=CENTER HEIGHT="19"><b>Protocol Properties Attribute</b></td>
+
+<td ALIGN=CENTER HEIGHT="19"><b>Default Value</b></td>
+</tr>
+
+<tr>
+<td HEIGHT="19">long <i>send_buffer_size</i></td>
+
+<td ALIGN=LEFT HEIGHT="19"><tt>ACE_DEFAULT_MAX_SOCKET_BUFSIZ</tt></td>
+</tr>
+
+<tr>
+<td HEIGHT="19">long <i>recv_buffer_size</i></td>
+
+<td ALIGN=LEFT HEIGHT="19"><tt>ACE_DEFAULT_MAX_SOCKET_BUFSIZ</tt></td>
+</tr>
+
+<tr>
+<td HEIGHT="19">boolean <i>keep_alive</i> (not yet supported)</td>
+
+<td ALIGN=LEFT HEIGHT="19"><tt>1</tt></td>
+</tr>
+
+<tr>
+<td HEIGHT="19">boolean <i>dont_route</i> (not yet supported)</td>
+
+<td ALIGN=LEFT HEIGHT="19"><tt>0</tt></td>
+</tr>
+
+<tr>
+<td HEIGHT="19">boolean <i>no_delay</i></td>
+
+<td ALIGN=LEFT HEIGHT="19"><tt>1</tt></td>
+</tr>
+</table>
+
+<li>
+<b>UIOP</b></li>
+
+<br>Protocol <i>ProfileId</i>: 0x54414f00U
+<br>Transport properties interface name: <i>RTCORBA::UnixDomainProtocolProperties</i>
+(TAO-specific)
+<br>Implementation class name: <i>TAO_Unix_Domain_Properties</i>
+<table BORDER CELLPADDING=4 >
+<tr>
+<td ALIGN=CENTER><b>Protocol Properties Attribute</b></td>
+
+<td ALIGN=CENTER><b>Default Value</b></td>
+</tr>
+
+<tr>
+<td>long <i>send_buffer_size</i></td>
+
+<td><tt>ACE_DEFAULT_MAX_SOCKET_BUFSIZ</tt></td>
+</tr>
+
+<tr>
+<td>long <i>recv_buffer_size</i></td>
+
+<td><tt>ACE_DEFAULT_MAX_SOCKET_BUFSIZ</tt></td>
+</tr>
+</table>
+
+<li>
+<b>SHMIOP</b></li>
+
+<br>Protocol <i>ProfileId</i>: 0x54414f02U
+<br>Transport properties interface name: <i>RTCORBA::SharedMemoryProtocolProperties</i>
+(TAO-specific)
+<br>Implementation class name: <i>TAO_SMEM_Properties</i>
+<table BORDER CELLPADDING=4 >
+<tr>
+<td ALIGN=CENTER><b>Protocol Properties Attribute</b></td>
+
+<td ALIGN=CENTER><b>Default Value</b></td>
+</tr>
+
+<tr>
+<td>long <i>preallocate_buffer_size</i></td>
+
+<td>not yet supported</td>
+</tr>
+
+<tr>
+<td>string <i>mmap_filename</i></td>
+
+<td>not yet supported</td>
+</tr>
+
+<tr>
+<td>string <i>mmap_lockname</i></td>
+
+<td>not yet supported</td>
+</tr>
+</table>
+</ul>
+Real-Time CORBA 1.0 does not define how protocol properties are created.
+<i>TAO_Protocol_Factory</i>
+class can be used to create default <i>ProtocolProperties</i> for a particular
+protocol given its <i>ProfileId</i>:
+<p><tt>class TAO_Protocol_Properties_Factory</tt>
+<br><tt>{</tt>
+<br><tt>public:</tt>
+<p><tt>static RTCORBA::ProtocolProperties*</tt>
+<br><tt>create_transport_protocol_property (IOP::ProfileId id);</tt>
+<p><tt>static RTCORBA::ProtocolProperties*</tt>
+<br><tt>create_orb_protocol_property (IOP::ProfileId id);</tt>
+<br><tt>};</tt>
+<p>Alternatively, concrete <i>ProtocolProperties</i> implementation classes
+can be instantiated directly as needed.
+<p>The table below summarizes how protocol policies overrides affect protocol
+selection and configuration in TAO.
+<br>&nbsp;
+<table BORDER CELLPADDING=4 >
+<tr>
+<td ALIGN=CENTER><b>Policy</b></td>
+
+<td ALIGN=CENTER><b>ORB default</b></td>
+
+<td ALIGN=CENTER><b>Override levels that have impact on protocol selection</b></td>
+
+<td ALIGN=CENTER><b>Override levels that have impact on protocol configuration</b></td>
+</tr>
+
+<tr>
+<td><i>ServerProtocolPolicy</i></td>
+
+<td>All protocols loaded into the ORB, in the order they were loaded.</td>
+
+<td>ORB
+<br>POA</td>
+
+<td>ORB
+<br>(If no protocol properties are specified at the ORB level, default
+protocol configurations are used.)</td>
+</tr>
+
+<tr>
+<td><i>ClientProtocolPolicy</i></td>
+
+<td>None</td>
+
+<td>ORB
+<br>Current
+<br>Object</td>
+
+<td>ORB
+<br>(If no protocol properties are specified at the ORB level, default
+protocol configurations are used.)</td>
+</tr>
+</table>
+
+<p>NOTE: <tt>-ORBSndSock</tt> and <tt>-ORBRcvSock</tt> ORB options have
+no effect when RTCORBA is enabled.
+<p>Protocol policies do not depend on any other Real-Time CORBA features
+and can be used alone. In fact, we plan to make protocol policies available
+outside RTCORBA, and better integrate them with the Pluggable Protocols
+framework in the near future.
+<br>
+<hr>
+<h3>
+<a NAME="diffserv"></a>Diffserv Support</h3>
+
+<p>Though the RT-CORBA specification details the real-time ORB, thread
+priorities, and application scheduling requirements, it is less
+explicit about the communication transport and the underlying
+network priorities. Our research involved using Differentiated Services
+technology to prioritize the RT-CORBA traffic in the network. This
+effort required two essential enhancements to the TAO ORB. First, we
+provided an efficient and flexible way of setting the DSCP codepoints
+in the data packets, which is done by extending the ORB protocol
+properties.  DSCP codepoints can dynamically change, based on many
+factors like QoS feedback received from external QoS monitoring
+resources or even a change in the application policy. Second, we
+provide a mechanism to map the RT-CORBA priorities to the Diff-Serv
+network priorities. The detials of the implementation follows.
+<dl>
+<dt>
+<b>Modifications to RTCORBA.pidl</b></dt>
+
+<br>&nbsp;
+<ul>
+<li>
+<b>TCP Protocol Properties extension</b></li>
+
+<br>&nbsp;
+<dd>
+The TCP protocol properties interface was extended to add a flag, enable_network_priority.
+When this flag is set to 1 the RTCORBA priority is mapped to network priority
+(diffserv codepoint - DSCP) and this priority is set on the GIOP requests
+and replies. When the flag is not set no network priorities are set on
+the GIOP requests and replies and are hence best effort.</dd>
+&nbsp;
+<p><tt>local interface TCPProtocolProperties : ProtocolProperties</tt>
+<br><tt>{</tt>
+<br><tt>attribute long send_buffer_size;</tt>
+<br><tt>attribute long recv_buffer_size;</tt>
+<br><tt>attribute boolean keep_alive;</tt>
+<br><tt>attribute boolean dont_route;</tt>
+<br><tt>attribute boolean no_delay;</tt>
+<br><tt>attribute boolean enable_network_priority;</tt>
+<br><tt>};</tt>
+<br>&nbsp;
+<li>
+<b>Network Priority Mapping Interfaces</b></li>
+
+<dd>
+<p>Support was added for mapping RTCORBA priority to Network Priority. It
+is similar to the RTCORBA to native thread priority mapping.</dd>
+
+<p><tt>typedef long NetworkPriority;</tt>
+<br><tt>native NetworkPriorityMapping;</tt></ul><br>
+
+<dt>
+<b>Usage</b></dt>
+
+<br>&nbsp;
+<ul>
+<li>
+<b>Client - Setting DSCP on the GIOP Requests</b></li>
+
+<br><br>
+<dd>
+1. <i>Create TCP protocol properties</i> - The enable_network_priority
+flag implies the setting/unsetting of the network priority.</dd>
+
+<p><tt>RTCORBA::TCPProtocolProperties_var tcp_properties =</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; rt_orb->create_tcp_protocol_properties (send_buffer_size,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+recv_buffer_size,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+1, //keep alive</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0, //don't route</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+1, //no delay</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+enable_network_priority);</tt>
+<p>2. <i>Create TCP Protocol Properties Policy</i>
+<p><tt>RTCORBA::ProtocolList protocols;</tt>
+<br><tt>protocols.length (1);</tt>
+<br><tt>protocols[0].protocol_type = 0; //IIOP</tt>
+<br><tt>protocols[0].transport_protocol_properties =</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; RTCORBA::ProtocolProperties::_duplicate (tcp_properties.in
+());</tt>
+<br><tt>protocols[0].orb_protocol_properties =</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; RTCORBA::ProtocolProperties::_nil ();</tt>
+<p><tt>CORBA::PolicyList policy_list;</tt>
+<br><tt>policy_list.length (1);</tt>
+<br><tt>policy_list[0] =</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; rt_orb->create_client_protocol_policy (protocols);</tt>
+<p>3.<i> Set TCP Protocol Properties Policy</i>
+<p><b>ORB Level</b> - This implies that the tcp protocol properties set
+will apply to every invocation made with this ORB.
+<p><tt>CORBA::Object_var object =</tt>
+<br><tt>orb->resolve_initial_references ("ORBPolicyManager");</tt>
+<br><tt>CORBA::PolicyManager_var policy_manager =</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; CORBA::PolicyManager::_narrow (object.in ());</tt>
+<br><tt>policy_manager->set_policy_overrides (policy_list,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+CORBA::SET_OVERRIDE);</tt>
+<p><b>THREAD Level</b> - This implies that the tcp protocol properties
+set will apply to all the invocations made in the corresponding thread
+only. All other invocations will have the TCP protocol properties set at
+the ORB level.
+<p>orb->orb_core ()->policy_current ().set_policy_overrides (policy_list,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+CORBA::SET_OVERRIDE);
+<p><b>OBJECT Level</b> - This implies that the tcp protocol properties
+set will apply to the invocations made on the corresponding object only.
+<p><tt>CORBA::Object_var object = server->_set_policy_overrides (policy_list,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+CORBA::SET_OVERRIDE);</tt>
+<p><tt>server = Test::_narrow (object.in ()); //server is the CORBA Object</tt>
+<p>The above steps can be applied repeatedly to create and set TCP protocol
+properties on the client to enable/disable network priority on the GIOP
+requests. Since the TCP protocol properties are updated per invocation
+the most recently set policy will apply.
+<br>&nbsp;
+<li>
+<b>Server - Setting DSCP on the GIOP Replies</b></li>
+
+<br>&nbsp;
+<dd>
+1. <i>Create the TCP protocol properties</i> - The enable_network_priority
+flag implies the setting/unsetting of the network priority.</dd>
+
+<p><tt>RTCORBA::TCPProtocolProperties_var tcp_properties =</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; rt_orb->create_tcp_protocol_properties (send_buffer_size,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+recv_buffer_size,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+1, //keep alive</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0, //don't route</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+1, //no delay</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+enable_network_priority);</tt>
+<p>2. <i>Create TCP Protocol Properties Policy</i>
+<p><tt>RTCORBA::ProtocolList protocols;</tt>
+<br><tt>protocols.length (1);</tt>
+<br><tt>protocols[0].protocol_type = 0; //IIOP</tt>
+<br><tt>protocols[0].transport_protocol_properties =</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; RTCORBA::ProtocolProperties::_duplicate (tcp_properties.in
+());</tt>
+<br><tt>protocols[0].orb_protocol_properties =</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; RTCORBA::ProtocolProperties::_nil ();</tt>
+<br>&nbsp;
+<p><tt>CORBA::PolicyList policy_list;</tt>
+<br><tt>policy_list.length (1);</tt>
+<br><tt>policy_list[0] =</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; rt_orb->create_server_protocol_policy (protocols);</tt>
+<p>3. <i>Create POA with Diffserv enabled</i>
+<p><tt>CORBA::PolicyList poa_policy_list;</tt>
+<br><tt>poa_policy_list.length (1);</tt>
+<br><tt>poa_policy_list [0] =</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; rt_orb->create_server_protocol_policy (protocols);</tt>
+<p><tt>PortableServer::POA_var poa_with_ds =</tt>
+<br><tt>root_poa->create_POA ("POA_WITH_DS",</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+poa_manager.in (),</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+poa_policy_list );</tt>
+<p>All the servants that want network priority set on their replies should
+register with this POA.
+<p>NOTE - The POA policy can be set only once. This implies that all replies
+sent from the POA that has the network priority set will have the DSCP
+set on them. In order to unset the network priority one has to use a different
+POA without the network priority set on it.
+<br>&nbsp;</ul>
+
+<dt>
+<b>Network Priority Mapping</b></dt>
+
+<br>&nbsp;
+<ul>
+<li>
+<b>NetworkPriorityMapping interface</b></li>
+
+<br>&nbsp;
+<dd>
+The RTCORBA to network priority mapping framework is similar to the RTCORBA
+to native thread priority mapping framework. As mentioned in section 2.1.2
+this is implemented by providing the native interface NetworkPriorityMapping.
+The native interface is implemented in the RTCORBAC.h as:
+
+<p><tt>typedef TAO_Network_Priority_Mapping
+NetworkPriorityMapping;</tt></dd>
+
+<p><tt>Where TAO_Network_Priority_Mapping is defined as:</tt>
+<p><tt>class TAO_Network_Priority_Mapping</tt>
+<br><tt>{</tt>
+<br><tt>public:</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; virtual CORBA::Boolean to_network (RTCORBA::Priority
+corba_priority,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+RTCORBA::NetworkPriority &amp;network_priority) = 0;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; virtual CORBA::Boolean to_CORBA (RTCORBA::NetworkPriority
+network_priority,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+RTCORBA::Priority &amp;corba_priority) = 0;</tt>
+<br><tt>};</tt>
+<p>The methods to_network (…) and to_corba (…) can be implemented differently
+for different mapping algorithms that can be defined by the application.
+<br>&nbsp;
+<li>
+<b>Default Network Priority Mappings</b></li>
+
+<br>&nbsp;
+<dd>
+TAO implements the default Linear Mapping from RTCORBA to Diffserv Codepoint
+mapping. Further mappings may be added to TAO. The application can choose
+these TAO supported mappings through the Service Configurator (svc.conf)
+files with the following entry:</dd>
+
+<p>static RT_ORB_Loader "-ORBSchedPolicy SCHED_FIFO -ORBScopePolicy PROCESS
+-ORBPriorityMapping direct <i>-ORBNetworkPriorityMapping Linear</i>"
+<br>&nbsp;
+<li>
+<b>Network Priority Mapping Manager</b></li>
+
+<br>&nbsp;
+<dd>
+A NetworkPriorityMappingManager is defined in TAO to manage the Network
+Priority Mapping.</dd>
+
+<p><tt>typedef TAO_Network_Priority_Mapping_Manager NetworkPriorityMappingManager;</tt>
+<p><tt>Where TAO_Network_Priority_Mapping_Manager is:</tt>
+<p><tt>class TAO_RTCORBA_Export TAO_Network_Priority_Mapping_Manager :</tt>
+<br><tt>{</tt>
+<br><tt>public:</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; TAO_Network_Priority_Mapping_Manager (RTCORBA::NetworkPriorityMapping
+* mapping);</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; void mapping (RTCORBA::NetworkPriorityMapping
+* mapping);</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; RTCORBA::NetworkPriority_Mapping *mapping (void);</tt><tt></tt>
+<p><tt>private:</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; TAO_Network_Priority_Mapping *mapping_;</tt>
+<br><tt>};</tt>
+<p>The application developer can add his custom network priority mappings
+as described in section 2.3.3 using the NetworkPriorityMappingManager.
+<br>&nbsp;
+<li>
+<b>Custom Network Priority Mapping</b></li>
+
+<br>&nbsp;
+<dd>
+In order to implement a custom network priority mapping the application
+developer should implement the methods of the TAO_Network_Priority_Mapping
+class. E.g:</dd>
+
+<p><tt>class TAO_Custom_Network_Priority_Mapping :</tt>
+<br><tt>public TAO_Network_Priority_Mapping</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; virtual CORBA::Boolean to_network (RTCORBA::Priority
+corba_priority,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+RTCORBA::NetworkPriority &amp;network_priority);</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; virtual CORBA::Boolean to_CORBA (RTCORBA::NetworkPriority
+network_priority,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+RTCORBA::Priority &amp;corba_priority);</tt>
+<br><tt>};</tt>
+<p>This custom Network Priority Mapping can then be loaded into the Network
+Priority Mapping Manager as follows:
+<p><tt># Resolve the Network priority Mapping Manager</tt>
+<br><tt>CORBA::Object_var object = orb->resolve_initial_references ("NetworkPriorityMappingManager");</tt>
+<br><tt>RTCORBA::NetworkPriorityMappingManager_var mapping_manager = RTCORBA::NetworkPriorityMappingManager::_narrow
+(object.in ());</tt>
+<p><tt># Initialize the custom priority mapping</tt>
+<br><tt>TAO_Custom_Network_Priority_Mapping *cnpm = 0;</tt>
+<br><tt>ACE_NEW (cnpm,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TAO_Custom_Network_Priority_Mapping);</tt>
+<p><tt>#Load the custom network priority mapping object in the network
+priority</tt>
+<br><tt>#mapping manager. The user can thus add his own priority mapping.</tt>
+<br><tt>mapping_manager->mapping (cnpm);</tt>
+<p>This ensures that the Custom Network Priority Mapping will be used to
+map the RTCORBA priority to the network priority.
+</ul>
+<br>
+<i>Last Modified: $Date$</i></dl>
+
+</body>
+</html>

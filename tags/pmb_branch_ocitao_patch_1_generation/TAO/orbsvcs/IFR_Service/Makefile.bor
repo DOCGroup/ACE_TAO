@@ -1,0 +1,10 @@
+#
+# Makefile for building the IFR Service executable and library
+#
+
+MAKEFILES = \
+	IFR_Service.bor \
+	TAO_IFR_BE_DLL.bor \
+	tao_ifr.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

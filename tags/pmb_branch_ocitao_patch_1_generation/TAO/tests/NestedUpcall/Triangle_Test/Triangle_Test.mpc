@@ -1,0 +1,27 @@
+project(server_A): server {
+  exename = server_A
+
+  Source_Files {
+    Object_A_i.cpp
+    server_A.cpp
+  }
+}
+
+project(server_B): server {
+  exename = server_B
+
+  Source_Files {
+    Object_B_i.cpp
+    server_B.cpp
+  }
+}
+
+project(initiator): server {
+  exename = initiator
+
+  Source_Files {
+    Initiator_i.cpp
+    initiator.cpp
+  }
+}
+
