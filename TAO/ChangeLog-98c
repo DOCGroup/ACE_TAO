@@ -1,47 +1,52 @@
+Tue Aug 11 13:47:53 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/ORB_Core.cpp: removed unnecessary trailing semicolons
+          on a couple of IMPLEMENT_{APP,PRE}_GET_METHOD macro invocations.
+
 Tue Aug 11 10:51:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Sequence.h: 
-	* tao/Sequence.cpp: 
-	* tao/CDR.cpp: 
-	  Added support for octet sequences containing chains of message
-	  blocks. NOTE: the use of chains of message blocks inside octet
-	  sequences is *ONLY* for custom marshaling, many octet sequence
-	  features (such as get_buffer() or operator[]) are either hard or
-	  expensive to implement when the buffer is split across several
-	  message blocks; thus they are *not* supported. This is only an
-	  issue if the users decides to take advantage of some TAO
-	  extensions to octet sequences; using the normal octet sequences
-	  has *no* side effects.
+        * tao/Sequence.h:
+        * tao/Sequence.cpp:
+        * tao/CDR.cpp:
+          Added support for octet sequences containing chains of message
+          blocks. NOTE: the use of chains of message blocks inside octet
+          sequences is *ONLY* for custom marshaling, many octet sequence
+          features (such as get_buffer() or operator[]) are either hard or
+          expensive to implement when the buffer is split across several
+          message blocks; thus they are *not* supported. This is only an
+          issue if the users decides to take advantage of some TAO
+          extensions to octet sequences; using the normal octet sequences
+          has *no* side effects.
 
-	* orbsvcs/tests/EC_Throughput/README: 
-	* orbsvcs/tests/EC_Throughput/Makefile: 
-	* orbsvcs/tests/EC_Throughput/run_test.pl: 
-	* orbsvcs/tests/EC_Throughput/data.idl: 
-	* orbsvcs/tests/EC_Throughput/ECT_Data.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Data.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
-	  The test was trying to achieve too much, I made it smaller by
-	  taking the custom marshaling example to a new test
-	  (EC_Custom_Marshal) and just trying to exercise throughput on
-	  this one.
+        * orbsvcs/tests/EC_Throughput/README:
+        * orbsvcs/tests/EC_Throughput/Makefile:
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+        * orbsvcs/tests/EC_Throughput/data.idl:
+        * orbsvcs/tests/EC_Throughput/ECT_Data.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Data.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+          The test was trying to achieve too much, I made it smaller by
+          taking the custom marshaling example to a new test
+          (EC_Custom_Marshal) and just trying to exercise throughput on
+          this one.
 
-	* orbsvcs/tests/Makefile: 
-	* EC_Custom_Marshal/Makefile: 
-	* EC_Custom_Marshal/README: 
-	* EC_Custom_Marshal/data.idl: 
-	* EC_Custom_Marshal/run_test.pl: 
-	* EC_Custom_Marshal/ECM_Data.h: 
-	* EC_Custom_Marshal/ECM_Data.cpp: 
-	* EC_Custom_Marshal/ECM_Consumer.h: 
-	* EC_Custom_Marshal/ECM_Consumer.cpp: 
-	* EC_Custom_Marshal/ECM_Supplier.h: 
-	* EC_Custom_Marshal/ECM_Supplier.cpp: 
-	  Added a new test to show how custom marshaling works, actually
-	  this was already in EC_Throughput, but that test was growing too
-	  fat.
+        * orbsvcs/tests/Makefile:
+        * EC_Custom_Marshal/Makefile:
+        * EC_Custom_Marshal/README:
+        * EC_Custom_Marshal/data.idl:
+        * EC_Custom_Marshal/run_test.pl:
+        * EC_Custom_Marshal/ECM_Data.h:
+        * EC_Custom_Marshal/ECM_Data.cpp:
+        * EC_Custom_Marshal/ECM_Consumer.h:
+        * EC_Custom_Marshal/ECM_Consumer.cpp:
+        * EC_Custom_Marshal/ECM_Supplier.h:
+        * EC_Custom_Marshal/ECM_Supplier.cpp:
+          Added a new test to show how custom marshaling works, actually
+          this was already in EC_Throughput, but that test was growing too
+          fat.
 
 Mon Aug 10 22:46:39 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -81,12 +86,12 @@ Mon Aug 10 16:46:50 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Mon Aug 10 15:56:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Memory_Pools.h: 
-	  The memory pools are global from some time now, but they did not
-	  have the right kind of lock; this lead to memory corruption
-	  problems when sending events at a very high rate. Thanks to
-	  Mark L. Boriack <mboriack@std.saic.com> for reporting this
-	  problem.
+        * orbsvcs/orbsvcs/Event/Memory_Pools.h:
+          The memory pools are global from some time now, but they did not
+          have the right kind of lock; this lead to memory corruption
+          problems when sending events at a very high rate. Thanks to
+          Mark L. Boriack <mboriack@std.saic.com> for reporting this
+          problem.
 
 Mon Aug 10 13:59:24 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
