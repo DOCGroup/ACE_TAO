@@ -7460,14 +7460,18 @@ AC_CONFIG_FILES([
   websvcs/Makefile
   websvcs/lib/Makefile
   websvcs/tests/Makefile
-  Kokyu/Makefile
-  Kokyu/tests/Makefile
-  Kokyu/tests/DSRT_MIF/Makefile
-  Kokyu/tests/EDF/Makefile
-  Kokyu/tests/FIFO/Makefile
 ])
 
 dnl Configure subdirectories if they are present.
+if test -d $srcdir/Kokyu; then
+  AC_CONFIG_FILES([
+    Kokyu/Makefile
+    Kokyu/tests/Makefile
+    Kokyu/tests/DSRT_MIF/Makefile
+    Kokyu/tests/EDF/Makefile
+    Kokyu/tests/FIFO/Makefile
+  ])
+fi
 AM_CONDITIONAL([BUILD_KOKYU],
                [test -d $srcdir/Kokyu])
 
