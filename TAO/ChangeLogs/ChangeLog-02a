@@ -1,3 +1,10 @@
+Sat Mar 24 07:44:05 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/NT_Naming_Service.cpp: Added a patch
+	  to make it possible to pass multiple arguments to the
+ 	  NT_Naming_Service.  Thanks to Martin Johnson
+ 	  <mjhn@bigpond.net.au> for reporting this.
+
 Mon Mar 26 13:06:10 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/corba.h:
@@ -406,15 +413,15 @@ Sun Mar 25 11:17:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
           change.
 
 Sun Mar 25 08:52:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * orbsvcs/orbsvcs/Makefile.RTSched: Added guards for old g++.
-
-        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp:
-        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h:
-        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
-        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h: Removed redundant
-          guards  in the files. This should fix a small compilation
-          problem in LYNX-I386 builds.
+  
+	* orbsvcs/orbsvcs/Makefile.RTSched: Added guards for old g++. 
+	
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h: Removed redundant
+	  guards  in the files. This should fix a small compilation
+	  problem in LYNX-I386 builds.
 
 Sun Mar 25 07:42:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -704,8 +711,8 @@ Wed Mar 21 23:13:23 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.h:
           Fixed TAO_Export macro for TAO_Synch_Refcountable.  Thanks to
-          Johnny Willemsen <johnny.willemsen@meco.nl> for suggesting this
-          fix.
+ 	  Johnny Willemsen <johnny.willemsen@meco.nl> for suggesting this
+ 	  fix.
 
 Wed Mar 21 23:57:44 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
@@ -788,42 +795,37 @@ Wed Mar 21 08:02:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tests/RTCORBA/Explicit_Binding/client.cpp: Fixed a possible typo
           that was giving false alarms in the nightly builds. The message
-          read "ERROR: <validate_connection> returned true". The message
-          was not right, as this is not an error.
+ 	  read "ERROR: <validate_connection> returned true". The message
+ 	  was not right, as this is not an error.
 
 Tue Mar 20 21:53:17 2001  Ossama Othman  <ossama@uci.edu>
 
         * orbsvcs/tests/Security/Secure_Invocation/Foo.idl:
-
           Added user exception that is thrown when no security attributes
           are available for the current upcall.
 
           The baz() test method raises this exception.
 
         * orbsvcs/tests/Security/Secure_Invocation/Foo_i.h (baz):
-
           Updated exception specification to include the newly added user
           exception.
 
         * orbsvcs/tests/Security/Secure_Invocation/Foo_i.cpp (baz):
-
           Throw an exception if no security attributes are available for
           the current upcall.  The exception indicates problem with the
           underlying security mechanism in use.
 
         * orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
-
           Increased timeout for server IOR file.  It wasn't long enough
-          for some slow machines.
+ 	  for some slow machines.
 
 Tue Mar 20 20:01:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.cpp (make_idle):
           The function was not checking if cache_map_entry_ was null
-          before using it.  This field is set to 0 once the underlying
-          connection is closed, this can be done by another thread, while
-          the Transport has not been idled by the thread making a
-          request.
+ 	  before using it.  This field is set to 0 once the underlying
+ 	  connection is closed, this can be done by another thread, while
+ 	  the Transport has not been idled by the thread making a request.
 
 Tue Mar 20 16:55:38 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -841,14 +843,12 @@ Tue Mar 20 16:55:38 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tests/Client_Leaks/client.cpp:
         * tests/Client_Leaks/server.cpp:
           Several improvements to the test to make it more reliable and
-          faster.
-          The process factory uses callback interfaces to receive the new
-          child IOR.
-          Both the client and the process factory are multithreaded, to
-          speed up the test by increasing concurrency during process
-          creation.
-          The child processes are detached to avoid zombies and to
-          minimize the need of using the ACE_Process_Manager.
+ 	  faster.  The process factory uses callback interfaces to receive
+ 	  the new child IOR.  Both the client and the process factory are
+ 	  multithreaded, to speed up the test by increasing concurrency
+ 	  during process creation.  The child processes are detached to
+ 	  avoid zombies and to minimize the need of using the
+ 	  ACE_Process_Manager.
 
 Tue Mar 20 18.54:01  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
@@ -930,11 +930,11 @@ Mon Mar 19 16:37:21 2001  Chris Cleeland  <cleeland_c@ociweb.com>
         * tao/Transport.h:
 
           Added new thread-safe TAO_Synch_Refcountable class (which uses
-          TAO_SYNCH_MUTEX to insure thread-safe reference counting), and
-          changed the private base of TAO_Transport to use it rather than
-          ACE_Refcountable.  Now refcounting of Transport objects should
-          be thread-safe.  Thanks to Carlos O'Ryan for catching this! [Bug
-          814]
+ 	  TAO_SYNCH_MUTEX to insure thread-safe reference counting), and
+ 	  changed the private base of TAO_Transport to use it rather than
+ 	  ACE_Refcountable.  Now refcounting of Transport objects should
+ 	  be thread-safe.  Thanks to Carlos O'Ryan for catching this! [Bug
+ 	  814]
 
 Mon Mar 19 15:09:52 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
@@ -957,9 +957,9 @@ Mon Mar 19 15:09:52 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tests/POA/wait_for_completion/wait_for_completion.cpp (main):
           The servant was not removed from the POA at the end of the
-          program.  When the POA died in the static destructors, it tried
-          to reach for the dead servant causing a seg fault.  This was
-          fixed by destroying the POA before the servant died.
+ 	  program.  When the POA died in the static destructors, it tried
+ 	  to reach for the dead servant causing a seg fault.  This was
+ 	  fixed by destroying the POA before the servant died.
 
 Mon Mar 19 14:20:38 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -984,7 +984,7 @@ Mon Mar 19 15:28:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Throughput: Added a space between the svc conf
           file and the option "-m". This could be the problem that has
-          been dodging the builds for quite sometime.
+ 	  been dodging the builds for quite sometime.
 
 Mon Mar 19 11:37:43 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
@@ -1007,18 +1007,17 @@ Mon Mar 19 11:28:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
         * tao/ORB_Core.cpp:
         * tao/ORB_Core.i: Moved the method service_context_list () from
           the .i file to .cpp file. This was causing SunCC 4.2 to choke
-          when the debugging symbols were off and caused the clients
-          linked with TAO to dump a core. Thanks to Carlos for suggesting
-          that some methods in .i file could be the source of the
-          problem.
+ 	  when the debugging symbols were off and caused the clients
+ 	  linked with TAO to dump a core. Thanks to Carlos for suggesting
+ 	  that some methods in .i file could be the source of the problem.
 
 Mon Mar 19 09:05:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Typecode.cpp:
           The code was not checking for exceptions with ACE_CHECK or
-          ACE_CHECK_RETURN, but was using the return values.  This is
-          clearly broken and can result in some nasty behavior on
-          platforms without native exceptions.
+ 	  ACE_CHECK_RETURN, but was using the return values.  This is
+ 	  clearly broken and can result in some nasty behavior on
+ 	  platforms without native exceptions.
 
         * tao/Transport.cpp:
           Cosmetic fixes to fit the ACE-guidelines.
@@ -1163,10 +1162,9 @@ Sun Mar 18 18:09:05 2001  Ossama Othman  <ossama@uci.edu>
 Sun Mar 18 13:30:00 2001  Ossama Othman  <ossama@uci.edu>
 
         * tao/Exception.cpp (_info):
-
           Fixed _is_a() call on CORBA::BAD_PARAM() exception.  The
-          repository ID passed to the _is_a() call was missing the
-          version.
+ 	  repository ID passed to the _is_a() call was missing the
+ 	  version.
 
 Sun Mar 18 11:50:57 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -1218,7 +1216,7 @@ Sun Mar 18 12:22:08 2001  Ossama Othman  <ossama@uci.edu>
           method to the post_init() method.  This was necessary to get
           around "order of initialization" restrictions imposed by the
           PortableInterceptor::ORBInitInfo object,
-          i.e. resolve_initial_references() cannot be called from within
+          i.e., resolve_initial_references() cannot be called from within
           pre_init().
 
 Sun Mar 18 13:24:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -1351,7 +1349,7 @@ Sat Mar 17 10:26:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tests/BiDirectional_NestedUpcall/test_i.cpp (test_method):
           Changed connection_cache () as transport_cache (). This fixes
-          some of the compile errors in g++.
+ 	  some of the compile errors in g++.
 
 Sat Mar 17 10:23:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -1497,10 +1495,10 @@ Fri Mar 16 15:48:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
           Regroup code to use a single #if 0/#endif instead of multiple
-          sections of commented out code, easier to work that way.
+ 	  sections of commented out code, easier to work that way.
 
         * tests/Client_Leaks/Process_Factory.cpp:
-          Fixed Fuzz warning (i.e. missing ACE_CHECK_RETURN)
+          Fixed Fuzz warning (i.e., missing ACE_CHECK_RETURN)
 
 Fri Mar 16 15:11:04 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -2157,7 +2155,7 @@ Sat Mar 10 18:17:57 2001  Ossama Othman  <ossama@uci.edu>
 
         * tests/NestedUpcall/MT_Client_Test/local_server.cpp (MT_Server):
 
-          The ORB_Manager pointer may be zero, i.e. uninitialized, if the
+          The ORB_Manager pointer may be zero, i.e., uninitialized, if the
           server task was not activated.  Check that it is non-zero before
           attempting to call methods through it.  Fixes a seg fault.
 
@@ -4014,7 +4012,7 @@ Sat Mar 03 15:28:34 2001  Ossama Othman  <ossama@uci.edu>
           (create_POA_i):
 
           Use a POA_var instead of an auto_ptr.  The same reasoning from
-          above applies here as well, i.e. auto_ptrs should not be used on
+          above applies here as well, i.e., auto_ptrs should not be used on
           reference counted objects.
 
 Sat Mar  3 13:12:00 2001  Carlos O'Ryan  <coryan@uci.edu>
@@ -4026,7 +4024,7 @@ Sat Mar 03 12:18:12 2001  Ossama Othman  <ossama@uci.edu>
 
         * tests/Codec/client.cpp (verify_data):
 
-          Cleaned up test output so that it is HTML friendly (i.e. no tab
+          Cleaned up test output so that it is HTML friendly (i.e., no tab
           characters).  The output in our HTML build logs was slightly
           confusing.
 
@@ -6411,7 +6409,7 @@ Sun Feb 11 16:52:55 2001  Ossama Othman  <ossama@uci.edu>
         * tao/RT_Current.h (TAO_RT_Current):
 
           Derive this class from the reference counted version of
-          CORBA::LocalObject, i.e. the "TAO_Local_RefCounted_Object"
+          CORBA::LocalObject, i.e., the "TAO_Local_RefCounted_Object"
           extension.  This addresses memory management issues.
 
         * tao/Priority_Mapping_Manager.h (TAO_Priority_Mapping_Manager):
@@ -6480,7 +6478,7 @@ Sun Feb 11 16:52:55 2001  Ossama Othman  <ossama@uci.edu>
         * tao/RT_Protocols_Hooks.cpp (set_priority_mapping):
 
           If the reference to the PriorityMappingManager is nil, then
-          throw a CORBA::INV_OBJREF exception, i.e. don't just die
+          throw a CORBA::INV_OBJREF exception, i.e., don't just die
           quietly.
 
           (set_default_policies):
@@ -9381,7 +9379,7 @@ Tue Dec 26 13:40:50 2000  Ossama Othman  <ossama@uci.edu>
 
         * tao/PortableInterceptor.i (receive_request):
 
-          Added a run-time integrity check.  This method (i.e. the
+          Added a run-time integrity check.  This method (i.e., the
           receive_request() interception point) should only be invoked if
           all of the interceptors registered with the ORB were pushed on
           to the flow stack by one of the starting endpoints (such as
@@ -10752,7 +10750,7 @@ Wed Dec 13 19:06:43 2000  Ossama Othman  <ossama@uci.edu>
 
           Fixed broken flow logic that would occur when a LOCATION_FORWARD
           reply was received from the server, or a connection retry was
-          performed, i.e. the connection loop was re-executed.  The flow
+          performed, i.e., the connection loop was re-executed.  The flow
           stack size would increase during each loop iteration.  Thus, a
           seg fault would occur when during execution of an ending
           interception point since the logical flow stack would attempt to
@@ -10871,7 +10869,7 @@ Wed Dec 13 19:06:43 2000  Ossama Othman  <ossama@uci.edu>
 
           (reply_status):
 
-          Convert the invocation status (i.e. the return value of the
+          Convert the invocation status (i.e., the return value of the
            Invocation::invoke() method in the generated stub) into the
           appropriate PortableInterceptor reply status.
 
@@ -12996,7 +12994,7 @@ Tue Nov 21 15:04:31 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
         * performance-tests/Latency/st_server.conf :
         * performance-tests/Latency/client-mt-exclusive.conf :
         * performance-tests/Latency/client-st-muxed.conf :
-          Updated to load the correct, i.e. the advanced resource
+          Updated to load the correct, i.e., the advanced resource
           factory.
 
         * tao/Strategies/advanced_resource.cpp :
@@ -13094,7 +13092,7 @@ Tue Nov 21 10:10:07 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
         * TAO_IDL/be_include/be_interface.h:
 
-          Removed typo (i.e.  ",") from the last element of the enum that
+          Removed typo (i.e., ",") from the last element of the enum that
           defines the collocation strategy.
 
 Tue Nov 21 07:32:28 2000  Chris Kohlhoff  <chris@kohlhoff.com>
@@ -13524,7 +13522,7 @@ Sun Nov 19 21:20:58 2000  Ossama Othman  <ossama@uci.edu>
           pluggable protocol.  The primary difference between this version
           and standard one, is that this version's connection handler
           invalidates the SSL session state stored in TSS during an IIOP
-          (i.e. insecure) request/upcall.  Once the request/upcall is
+          (i.e., insecure) request/upcall.  Once the request/upcall is
           complete, the previous SSL state is restored.  This closes a
           potentially large security hole that could occur during a nested
           upcall where the SSL state for the current request could
@@ -17826,7 +17824,7 @@ Mon Oct 23 02:49:25 2000  Ossama Othman  <ossama@uci.edu>
           Removed all interceptor related code.  They should have been in
           the TAO_ORB_Core class since code in these files is related
           predominantly to ORB pseudo-references, not the actual ORB
-          implementation (i.e. the ORB core).
+          implementation (i.e., the ORB core).
 
         * tao/ORB.cpp (ORB_init):
 
@@ -18929,12 +18927,12 @@ Thu Oct 12 14:24:03 2000  Ossama Othman  <ossama@uci.edu>
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
 
           Only allow connection to the insecure IIOP port if the endpoint
-          explicitly allows it, i.e. if the Security::NoProtection
+          explicitly allows it, i.e., if the Security::NoProtection
           security association bit is set in the
           SSLIOP::SSL::target_supports field.  The server will soon
           perform the same permission check, so this check is an
           optimization since a connection will not be established
-          needlessly, i.e. rejected due to lack of permission.
+          needlessly, i.e., rejected due to lack of permission.
 
           Removed the check that causes an attempt to connect to the
           insecure port if the SSL port is set to zero.  The SSL port will
@@ -18947,7 +18945,7 @@ Thu Oct 12 14:24:03 2000  Ossama Othman  <ossama@uci.edu>
           connection, and subsequently the request, from completing.  This
           feature will be added soon.
 
-          If the endpoint requires an insecure connection, i.e. the
+          If the endpoint requires an insecure connection, i.e., the
           Security::NoProtection security association bit in the
           SSLIOP::SSL::target_requires field is enabled, then prevent an
           SSL connection from occuring.  This seems silly, but nothing

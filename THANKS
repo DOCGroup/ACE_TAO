@@ -854,7 +854,7 @@ Chad Elliott <elliott_c@ociweb.com>
 David X. Callaway <david.x.callaway@intel.com>
 Soren Ilsoe <soren.ilsoe@tellabs.com>
 Eric Hopper <ehopper@globalmt.com>
-Martin Johnson <mjhn@ozemail.com.au>
+Martin Johnson <mjhn@bigpond.net.au>
 Pierre Oberson <oberson@nagra-kudelski.ch>
 Chris Uzdavinis <chris@atdesk.com>
 Ishay Green <ishaygreen@hotmail.com>
@@ -1181,6 +1181,8 @@ Greg McCain <greg.mccain@veritas.com>
 Matt Cheers <matt.cheers@boeing.com>
 Benjamin Fry <ben@thrownet.com>
 Ram Ben-Yakir <Ram@bandwiz.com>
+Eric Desamore <Eric.Desamore@idtv.bull.net>
+John Ashmun <John.ASHMUN@esca.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
