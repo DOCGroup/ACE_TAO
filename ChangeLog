@@ -1,3 +1,9 @@
+Fri May 23 14:46:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS.i (ioctl):
+          Cygwin has ioctl, so removed Cygwin specific that just returned
+          a notsup.
+
 Fri May 23 09:38:55 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/DependencyGenerator/DependencyGenerator.pm:
