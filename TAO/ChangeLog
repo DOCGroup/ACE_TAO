@@ -1,3 +1,10 @@
+Fri Oct 10 12:31:53 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FaultTolerance.bor
+          No .i files are anymore available in the FaultTolerance
+          directory, only .inl files, so updated the INCLUDES part
+          of this makefile.
+
 Fri Oct 10 06:18:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FT_ORB.bor:
