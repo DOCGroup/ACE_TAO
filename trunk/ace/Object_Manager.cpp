@@ -239,7 +239,7 @@ ACE_Object_Manager::init (void)
 #     endif /* ACE_HAS_TSS_EMULATION */
 
 #if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS)
-#if defined (_DEBUG) && defined (_MSC_VER)
+#if defined (_DEBUG) && defined (_MSC_VER) && !defined (__BORLANDC__)
           // This will keep the ACE_Assert window
            _CrtSetReportMode( _CRT_ERROR, _CRTDBG_MODE_FILE );
           _CrtSetReportFile( _CRT_ERROR, _CRTDBG_FILE_STDERR );
