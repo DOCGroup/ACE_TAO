@@ -161,7 +161,7 @@ Task::svc (void)
       char iteration_description[BUFSIZ];
       for (i = 0; i != iterations; ++i)
         {
-          ACE_OS::sprintf (iteration_description, "L:%d", i);
+          ACE_OS::sprintf (iteration_description, "L:%02d", i);
           test->method (work,
                         iteration_description
                         ACE_ENV_ARG_PARAMETER);
@@ -174,7 +174,7 @@ Task::svc (void)
 
       for (i = 0; i != iterations; ++i)
         {
-          ACE_OS::sprintf (iteration_description, "H:%d", i);
+          ACE_OS::sprintf (iteration_description, "H:%02d", i);
           test->method (work,
                         iteration_description
                         ACE_ENV_ARG_PARAMETER);
