@@ -1093,23 +1093,31 @@ TAO_ORB_Core::get_next_follower (void)
 ACE_Allocator*
 TAO_ORB_Core::input_cdr_dblock_allocator (void)
 {
+#if 0
   if (this->input_cdr_dblock_allocator_ == 0)
     {
       this->input_cdr_dblock_allocator_ =
         this->resource_factory ()->input_cdr_dblock_allocator ();
     }
   return this->input_cdr_dblock_allocator_;
+#else
+  return this->resource_factory ()->input_cdr_dblock_allocator ();
+#endif
 }
 
 ACE_Allocator*
 TAO_ORB_Core::input_cdr_buffer_allocator (void)
 {
+#if 0
   if (this->input_cdr_buffer_allocator_ == 0)
     {
       this->input_cdr_buffer_allocator_ =
         this->resource_factory ()->input_cdr_buffer_allocator ();
     }
   return this->input_cdr_buffer_allocator_;
+#else
+  return this->resource_factory ()->input_cdr_buffer_allocator ();
+#endif
 }
 
 // ****************************************************************

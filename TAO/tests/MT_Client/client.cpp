@@ -140,8 +140,8 @@ Client::svc (void)
     }
   ACE_CATCHANY
     {
-      ACE_ERROR ((LM_ERROR, "(%P|%t) exception raised\n"));
-      ACE_TRY_ENV.print_exception ("The exception is:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "MT_Client: exception raised");
     }
   ACE_ENDTRY;
   return 0;
