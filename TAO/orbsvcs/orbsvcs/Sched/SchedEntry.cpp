@@ -92,14 +92,15 @@ u_long minimum_frame_size (u_long period1, u_long period2)
 //////////////////////
 
 Task_Entry::Task_Entry ()
-  : rt_info_ (0)
-  , effective_period_(0)
-  , dfs_status_ (NOT_VISITED)
-  , discovered_ (-1)
-  , finished_ (-1)
-  , is_thread_delineator_ (0)
-  , calls_ ()
-  , callers_ ()
+  : rt_info_ (0),
+    effective_period_(0),
+    dfs_status_ (NOT_VISITED),
+    discovered_ (-1),
+    finished_ (-1),
+    is_thread_delineator_ (0),
+    has_unresolved_remote_dependencies_ (0),
+    calls_ (),
+    callers_ ()
 {
 }
 
@@ -123,8 +124,9 @@ Task_Entry::~Task_Entry ()
   }
 }
 
-// merge dispatches according to info type and type of call,
-// update relevant scheduling characteristics for this entry
+// Merge dispatches according to info type and type of call,
+// update relevant scheduling characteristics for this entry.
+
 int
 Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries)
 {
@@ -133,7 +135,7 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
   {
     case RtecScheduler::DISJUNCTION:
 
-      // prohibit two-way dispatches of a disjunction group,
+      // Prohibit two-way dispatches of a disjunction group,
       // and disjunctively merge its one-way dispatches.
       // NOTE: one interpretation of disjunction for two-way calls
       //       is that the caller calls one OR the other, but this
@@ -148,7 +150,7 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
 
     case RtecScheduler::CONJUNCTION:
 
-      // prohibit two-way dispatches of a conjunction group,
+      // Prohibit two-way dispatches of a conjunction group,
       // and conjunctively merge its one-way dispatches.
       // NOTE: one interpretation of disjunction for two-way calls
       //       is that the caller calls BOTH, so that there is a
@@ -167,7 +169,7 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
     case RtecScheduler::OPERATION:
     case RtecScheduler::REMOTE_DEPENDANT:
 
-      // disjunctively merge the operation's two-way dispatches,
+      // Disjunctively merge the operation's two-way dispatches,
       // and conjunctively merge its one-way dispatches.
       result = disjunctive_merge (RtecScheduler::TWO_WAY_CALL, dispatch_entries);
       if (result == 0)
@@ -180,7 +182,7 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
 
     default:
 
-      // there should not be any other kind of RT_Info, or if
+      // There should not be any other kind of RT_Info, or if
       // there is, the above switch logic is in need of repair.
       result = -1;
       break;
@@ -191,7 +193,7 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
 
 
 
-// prohibit calls of the given type: currently used to enforce
+// Prohibit calls of the given type: currently used to enforce
 // the notion that two-way calls to disjunctive or conjunctive
 // RT_Infos do not have any defined meaning, and thus should be
 // considered dependency specification errors: if these constraints
@@ -200,8 +202,8 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
 int
 Task_Entry::prohibit_dispatches (Dependency_Type dt)
 {
-  // iterate over the set of dependencies, ensuring
-  // none of them has the given dependency type
+  // Iterate over the set of dependencies, ensuring
+  // none of them has the given dependency type.
   ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter (callers_);
   while (! iter.done ())
   {
@@ -219,16 +221,17 @@ Task_Entry::prohibit_dispatches (Dependency_Type dt)
 }
 
 
-// perform disjunctive merge of arrival times of oneway calls:
+// Perform disjunctive merge of arrival times of oneway calls:
 // all arrival times of all dependencies are duplicated by the
-// multiplier and repetition over the new frame size and merged
+// multiplier and repetition over the new frame size.
+
 int
 Task_Entry::disjunctive_merge (
   Dependency_Type dt,
   ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries)
 {
-  // iterate over the set of dependencies, ensuring
-  // none of them has the given dependency type
+  // Iterate over the set of dependencies, merging dispatches
+  // of the callers over the enclosing frame size.
   ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter (callers_);
   while (! iter.done ())
   {
@@ -241,7 +244,23 @@ Task_Entry::disjunctive_merge (
     // the link matches the dependency type given
     if ((*link)->dependency_type () == dt)
     {
-      // merge the caller's dispatches into the current set
+      // Check for and warn about unresolved remote 
+      // dependencies in the ONE_WAY call graph.
+      if ((*link)->dependency_type () == RtecScheduler::ONE_WAY_CALL &&
+          (*link)->caller ().has_unresolved_remote_dependencies () &&
+          ! this->has_unresolved_remote_dependencies ())
+        {
+          // Propagate the unresolved remote dependency
+          // flag, and issue a debug scheduler warning.
+          this->has_unresolved_remote_dependencies (1);
+          ACE_DEBUG (
+             (LM_DEBUG,
+              "Warning: an operation identified by "
+              "\"%s\" has unresolved remote dependencies.\n",
+              (const char*) this->rt_info ()->entry_point));
+        }
+
+      // Merge the caller's dispatches into the current set.
       if (merge_frames (dispatch_entries, *this, dispatches_,
                        (*link)->caller ().dispatches_, effective_period_,
                        (*link)->caller ().effective_period_,
@@ -257,12 +276,13 @@ Task_Entry::disjunctive_merge (
   return 0;
 }
 
-// perform conjunctive merge of arrival times of calls:
+// Perform conjunctive merge of arrival times of calls:
 // all arrival times of all dependencies are duplicated by the
 // multiplier and repetition over the new frame size and then
 // iteratively merged by choosing the maximal arrival time at
 // the current position in each queue (iteration is in lockstep
 // over all queues, and ends when any queue ends).
+
 int
 Task_Entry::conjunctive_merge (
   Dependency_Type dt,
@@ -270,7 +290,7 @@ Task_Entry::conjunctive_merge (
 {
   int result = 0;
 
-  // iterate over the dependencies, and determine the total frame size
+  // Iterate over the dependencies, and determine the total frame size.
   u_long frame_size = 1;
   ACE_Unbounded_Set_Iterator <Task_Entry_Link *> dep_iter (callers_);
   for (dep_iter.first (); dep_iter.done () == 0; dep_iter.advance ())
@@ -281,27 +301,43 @@ Task_Entry::conjunctive_merge (
       return -1;
     }
 
-    // the link matches the dependency type given
+    // The link matches the dependency type given.
     if ((*link)->dependency_type () == dt)
     {
+      // Check for and warn about unresolved remote 
+      // dependencies in the ONE_WAY call graph.
+      if ((*link)->dependency_type () == RtecScheduler::ONE_WAY_CALL &&
+          (*link)->caller ().has_unresolved_remote_dependencies () &&
+          ! this->has_unresolved_remote_dependencies ())
+        {
+          // Propagate the unresolved remote dependency
+          // flag, and issue a debug scheduler warning.
+          this->has_unresolved_remote_dependencies (1);
+          ACE_DEBUG (
+             (LM_DEBUG,
+              "Warning: an operation identified by "
+              "\"%s\" has unresolved remote dependencies.\n",
+              (const char*) this->rt_info ()->entry_point));
+        }
+
       frame_size = minimum_frame_size (frame_size, (*link)->caller ().effective_period_);
     }
   }
 
-  // reframe dispatches in the set to the new frame size
-  // (expands the set's effective period to be the new enclosing frame)
+  // Reframe dispatches in the set to the new frame size
+  // (expands the set's effective period to be the new enclosing frame).
   if (reframe (dispatch_entries, *this, dispatches_,
                effective_period_, frame_size) < 0)
   {
     return -1;
   }
 
-  // A set and iterator for virtual dispatch sets
-  // over which the conjunction will iterate
+  // A container and iterator for virtual dispatch sets
+  // over which the conjunction will operate
   ACE_Ordered_MultiSet <Dispatch_Proxy_Iterator *> conj_set;
   ACE_Ordered_MultiSet_Iterator <Dispatch_Proxy_Iterator *> conj_set_iter (conj_set);
 
-  // iterate over the dependencies, and for each of the given call type,
+  // Iterate over the dependencies, and for each of the given call type,
   // create a Dispatch_Proxy_Iterator for the caller's dispatch set, using
   // the caller's period, the total frame size, and the number of calls:
   // if any of the sets is empty, just return 0;
@@ -313,7 +349,7 @@ Task_Entry::conjunctive_merge (
       return -1;
     }
 
-    // the link matches the dependency type given
+    // The link matches the dependency type given.
     if ((*link)->dependency_type () == dt)
     {
       Dispatch_Proxy_Iterator *proxy_ptr;
@@ -324,7 +360,7 @@ Task_Entry::conjunctive_merge (
                         frame_size, (*link)->number_of_calls ()),
                       -1);
 
-      // if there are no entries in the virtual set, we're done
+      // If there are no entries in the virtual set, we're done.
       if (proxy_ptr->done ())
       {
         return 0;
@@ -369,14 +405,14 @@ Task_Entry::conjunctive_merge (
       //         should be one of the decisions factored out into the conjunctive merge
       //         strategy class.
 
-      // obtain a pointer to the current dispatch proxy iterator
+      // Obtain a pointer to the current dispatch proxy iterator.
       Dispatch_Proxy_Iterator **proxy_iter;
       if ((conj_set_iter.next (proxy_iter) == 0) || (! proxy_iter) || (! (*proxy_iter)))
       {
         return -1;
       }
 
-      // use latest arrival, latest deadline, lowest priority (0 is highest)
+      // Use latest arrival, latest deadline, lowest priority (0 is highest).
       if (arrival <= (*proxy_iter)->arrival ())
       {
         arrival = (*proxy_iter)->arrival ();
@@ -403,17 +439,17 @@ Task_Entry::conjunctive_merge (
                     Dispatch_Entry (arrival, deadline, priority, OS_priority, *this),
                     -1);
 
-    // if even one new dispatch was inserted, result is "something happened".
+    // If even one new dispatch was inserted, result is "something happened".
     result = 1;
 
-    // add the new dispatch entry to the set of all dispatches, and
-    //  a link to it to the dispatch links for this task entry
+    // Add the new dispatch entry to the set of all dispatches, and
+    // a link to it to the dispatch links for this task entry.
     if (dispatch_entries.insert (entry_ptr) < 0)
     {
       return -1;
     }
 
-    // use iterator for efficient insertion into the dispatch set
+    // Use iterator for efficient insertion into the dispatch set.
     ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> insert_iter (dispatches_);
     if (dispatches_.insert (Dispatch_Entry_Link (*entry_ptr), insert_iter) < 0)
     {
@@ -428,12 +464,13 @@ Task_Entry::conjunctive_merge (
   return result;
 }
 
-// this static method is used to reframe an existing dispatch set
+// This static method is used to reframe an existing dispatch set
 // to the given new period multiplier, creating new instances of
 // each existing dispatch (with adjusted arrival and deadline)
 // in each successive sub-frame.  Returns 1 if the set was reframed
 // to a new period, 0 if the set was not changed (the new period
 // was not a multiple of the old one), or -1 if an error occurred.
+
 int
 Task_Entry::reframe (
   ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
@@ -480,7 +517,7 @@ Task_Entry::reframe (
       }
     }
 
-    // do a deep copy merge back into the set using the new period and starting
+    // Do a deep copy merge back into the set using the new period and starting
     // after the 0th sub-frame: this puts all dispatches after the 0th
     // sub-frame of the new period into the set, and leaves existing dispatches
     // in the 0th sub-frame of the new period in the set as well.
@@ -496,10 +533,11 @@ Task_Entry::reframe (
 }
 
 
-// this static method is used to merge an existing dispatch set,
+// This static method is used to merge an existing dispatch set,
 // multiplied by the given multipliers for the period and number of
 // instances in each period of each existing dispatch, into the
 // given "into" set, without affecting the "from set".
+
 int
 Task_Entry::merge_frames (
   ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,

@@ -13,7 +13,7 @@
 //    7 February 1998
 //
 // = AUTHOR
-//    Chris Gill
+//    Chris Gill <cdgill@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -27,15 +27,13 @@
 // Helper Functions //
 //////////////////////
 
-// TBD - move this to the ACE class
-// Euclid's greatest common divisor algorithm
+// Euclid's greatest common divisor algorithm.
 u_long gcd (u_long x, u_long y);
 
-// TBD - move this to the ACE class
-// calculate the minimum frame size
+// Calculates the minimum enclosing frame size for the given periods.
 u_long minimum_frame_size (u_long period1, u_long period2);
 
-// forward declaration of classes
+// Forward declaration of classes.
 class Task_Entry;
 class Task_Entry_Link;
 class Dispatch_Entry;
@@ -65,30 +63,35 @@ public:
   typedef RtecScheduler::Dependency_Type Dependency_Type;
 
   Dispatch_Entry_Link (Dispatch_Entry &d);
-    // ctor
+    // Constructor.
 
   Dispatch_Entry_Link (const Dispatch_Entry_Link &d);
-    // copy ctor
+    // Copy constructor.
 
   ~Dispatch_Entry_Link ();
-    // dtor
+    // Destructor.
 
-  // TBD - make this a global comparison operator
-  // instead of a class member function
   int operator < (const Dispatch_Entry_Link &d) const;
-    // LT comparator
+    // Less than comparison operator.
 
   Dispatch_Entry &dispatch_entry () const;
-    // accessor for reference to dispatch entry
+    // Accessor for reference to the dispatch entry.
 
 private:
 
   Dispatch_Entry &dispatch_entry_;
+    // Dispatch entry to which the smart pointer refers.
 };
 
 
-// Wrapper for the RT_Info, which aggregates all its dispatches
+
 class TAO_ORBSVCS_Export Task_Entry
+// = TITLE
+//    Task Entry.
+//
+// = DESCRIPTION
+//    Wrapper for the RT_Info, which aggregates all its dispatches.
+//
 {
 public:
 
@@ -103,72 +106,89 @@ public:
   typedef RtecScheduler::Info_Type Info_Type;
   typedef RtecScheduler::Dependency_Type Dependency_Type;
 
-  // info for DFS traversal, topological sort of call graph
+  // Info for DFS traversal, topological sort of call graph.
   enum DFS_Status {NOT_VISITED, VISITED, FINISHED};
 
-  // ctor
+  // Constructor.
   Task_Entry ();
 
-  // dtor
+  // Destructor.
   ~Task_Entry ();
 
-  // merge dispatches according to info type, update
+  // Merges dispatches according to info type, update
   // relevant scheduling characteristics for this entry.
-  // Returns 0 if all is well, or -1 if an error occurred
+  // Returns 0 if all is well, or -1 if an error occurred.
   int merge_dispatches (
     ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries);
 
-  // get, set pointer to underlying RT_Info
+  // Gets the pointer to the underlying RT_Info.
   RT_Info *rt_info () const;
+
+  // Sets the pointer to the underlying RT_Info.
   void rt_info (RT_Info *info);
 
-
-  // get effective period for the task entry
+  // Gets the effective period for the task entry.
   Period effective_period () const;
+
+  // Sets the effective period for the task entry.
   void effective_period (Period p);
 
-  // set/get time when node was discovered in DFS traversal
+  // Sets when the node was discovered in DFS traversal.
   void discovered (long l);
+
+  // Gets when the node was discovered in DFS traversal.
   long discovered () const;
 
-  // set/get time when node was finished in DFS traversal
+  // Sets when the node was finished in DFS traversal.
   void finished (long l);
+
+  // Gets when the node was finished in DFS traversal.
   long finished () const;
 
-  // set/get DFS traversal status of node
+  // Sets DFS traversal status of the node.
   void dfs_status (DFS_Status ds);
+
+  // Gets DFS traversal status of the node.
   DFS_Status dfs_status () const;
 
-  // set/get flag indicating whether node is a thread delineator
+  // Sets a flag indicating whether node is a thread delineator.
   void is_thread_delineator (int i);
+
+  // Gets the flag indicating whether node is a thread delineator.
   int is_thread_delineator () const;
 
-  // get set of links to Task Entries which this entry calls
+  // Sets a flag indicating whether node has unresolved remote dependencies.
+  void has_unresolved_remote_dependencies (int i);
+
+  // Gets the flag indicating whether node has unresolved remote dependencies.
+  int has_unresolved_remote_dependencies () const;
+
+  // Gets the set of links to Task Entries which this entry calls.
   ACE_Unbounded_Set <Task_Entry_Link *> & calls ();
 
-  // get set of links to Task Entries which call this entry
+  // Gets the set of links to Task Entries which call this entry.
   ACE_Unbounded_Set <Task_Entry_Link *> & callers ();
 
-  // get set of arrivals in the effective period
+  // Gets the set of arrivals in the effective period.
   ACE_Ordered_MultiSet<Dispatch_Entry_Link> &dispatches ();
 
-  // get the type of Info the entry wraps
+  // Gets the type of RT_Info the entry wraps.
   Info_Type info_type () const;
 
-  // effective execution time for the task entry
+  // Gets the effective execution time for the task entry.
   u_long effective_execution_time () const;
 
 private:
 
-  // prohibit calls of the given type: currently used to enforce
+  // Prohibits calls of the given type: currently used to enforce
   // the notion that two-way calls to disjunctive or conjunctive
   // RT_Infos do not have any defined meaning, and thus should be
   // considered dependency specification errors: if these constraints
-  // are removed in the future, this method should be removed as well
+  // are removed in the future, this method should be removed as well.
   // Returns 0 if all is well, or -1 if an error has occurred.
   int prohibit_dispatches (Dependency_Type dt);
 
-  // performs disjunctive merge of arrival times of calls of the given
+  // Performs a disjunctive merge of arrival times of calls of the given
   // type: all arrival times of all callers of that type are duplicated by
   // the multiplier and repetition over the new frame size and merged.
   // Returns 0 if all is well, or -1 if an error has occurred.
@@ -176,9 +196,9 @@ private:
     Dependency_Type dt,
     ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries);
 
-  // perform conjunctive merge of arrival times of calls of the given
+  // Performs a conjunctive merge of arrival times of calls of the given
   // type: all arrival times of all callers of that type are duplicated
-  //  by the multiplier and repetition over the new frame size and then
+  // by the multiplier and repetition over the new frame size and then
   // iteratively merged by choosing the maximal arrival time at
   // the current position in each queue (iteration is in lockstep
   // over all queues, and ends when any queue ends).  Returns 0 if
@@ -188,7 +208,7 @@ private:
     ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries);
 
 
-  // this static method is used to reframe an existing dispatch set
+  // This static method is used to reframe an existing dispatch set
   // to the given new period multiplier, creating new instances of
   // each existing dispatch (with adjusted arrival and deadline)
   // in each successive sub-frame.  Returns 1 if the set was reframed
@@ -199,7 +219,7 @@ private:
                       ACE_Ordered_MultiSet <Dispatch_Entry_Link> &set,
                       u_long &set_period, u_long new_period);
 
-  // this static method is used to merge an existing dispatch set,
+  // This static method is used to merge an existing dispatch set,
   // multiplied by the given multipliers for the period and number of
   // instances in each period of each existing dispatch, into the
   // given "into" set, without affecting the "from set". Returns 1 if
@@ -214,30 +234,41 @@ private:
                            u_long number_of_calls = 1,
                            u_long starting_dest_sub_frame = 0);
 
-  // pointer to the underlying RT_Info
+  // A pointer to the underlying RT_Info.
   RT_Info *rt_info_;
 
-  // effective period for the task entry
+  // The effective period for the task entry.
   u_long effective_period_;
 
-  // set of arrivals in the effective period
+  // The set of arrivals in the entry's effective period.
   ACE_Ordered_MultiSet<Dispatch_Entry_Link> dispatches_;
 
+  // Depth-first-search status of the entry. 
   DFS_Status dfs_status_;
+
+  // Depth-first-search discovery order of the entry. 
   long discovered_;
+
+  // Depth-first-search completion order of the entry. 
   long finished_;
 
-  // info for identifying threads in the oneway call graph
+  // Flag identifying threads in the call graph.
   int is_thread_delineator_;
 
-  // get set of links to Task Entries which this entry calls
+  // Flag indicating whether or not there are unresolved remote
+  // dependencies in the entry's dependency call chain.
+  int has_unresolved_remote_dependencies_;
+
+  // Set of links to Task Entries which this entry calls.
   ACE_Unbounded_Set <Task_Entry_Link *> calls_;
 
-  // get set of links to Task Entries which call this entry
+  // Set of links to Task Entries which call this entry.
   ACE_Unbounded_Set <Task_Entry_Link *> callers_;
+
 };
 
 
+// Wrapper for dependencies between RT_Infos 
 class TAO_ORBSVCS_Export Task_Entry_Link
 {
 public:

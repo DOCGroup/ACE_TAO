@@ -87,11 +87,15 @@ Task_Entry::dfs_status (Task_Entry::DFS_Status ds)
   dfs_status_ = ds;
 }
 
+// Sets a flag indicating whether node is a thread delineator.
+
 ACE_INLINE void
 Task_Entry::is_thread_delineator (int i)
 {
   is_thread_delineator_ = i;
 }
+
+// Gets the flag indicating whether node is a thread delineator.
 
 ACE_INLINE int
 Task_Entry::is_thread_delineator () const
@@ -99,21 +103,41 @@ Task_Entry::is_thread_delineator () const
   return is_thread_delineator_;
 }
 
-// access set of Task Entries on which this entry depends
+// Sets a flag indicating whether node has unresolved remote dependencies.
+
+ACE_INLINE void
+Task_Entry::has_unresolved_remote_dependencies (int i)
+{
+  has_unresolved_remote_dependencies_ = i;
+}
+
+// Gets the flag indicating whether node has unresolved remote dependencies.
+
+ACE_INLINE int
+Task_Entry::has_unresolved_remote_dependencies () const
+{
+  return has_unresolved_remote_dependencies_;
+}
+
+
+// Gets the set of Task Entries on which this entry depends.
+
 ACE_INLINE ACE_Unbounded_Set <Task_Entry_Link *> &
 Task_Entry::calls ()
 {
   return calls_;
 }
 
-// access set of Task Entries which depend on this entry
+// Gets the set of Task Entries which depend on this entry.
+
 ACE_INLINE ACE_Unbounded_Set <Task_Entry_Link *> &
 Task_Entry::callers ()
 {
   return callers_;
 }
 
-// get set of arrivals in the effective period
+// Gets set of arrivals in the entry's effective period.
+
 ACE_INLINE ACE_Ordered_MultiSet<Dispatch_Entry_Link> &
 Task_Entry::dispatches ()
 {
