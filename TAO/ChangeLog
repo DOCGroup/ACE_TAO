@@ -1,3 +1,8 @@
+Thu Feb 24 18:14:23 2005  Olli Savia  <ops@iki.fi>
+
+        * tests/RTCORBA/RTMutex/server.cpp:
+          Removed LynxOS specific code which is no longer needed.
+
 Thu Feb 24 15:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Fixed_Array_SArgument_T.h:
@@ -6,24 +11,24 @@ Thu Feb 24 15:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Feb 24 07:13:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/PSS/Makefile.am:
+        * orbsvcs/PSS/Makefile.am:
 
-	  Removed.
+          Removed.
 
-	* orbsvcs/Makefile.am:
-	* configure.ac:
+        * orbsvcs/Makefile.am:
+        * configure.ac:
 
-	  Remove PSS from list of subdirs.
+          Remove PSS from list of subdirs.
 
 Thu Feb 24 06:57:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tests/OBV/Supports/Supports_Test.mpc:
+        * tests/OBV/Supports/Supports_Test.mpc:
 
-	  Change "dummy_lable" to "dummy_label".
+          Change "dummy_lable" to "dummy_label".
 
-	* orbsvcs/PSS/PSDL.mpc:
+        * orbsvcs/PSS/PSDL.mpc:
 
-	  Change "dummy" to "dummy_label".
+          Change "dummy" to "dummy_label".
 
 Thu Feb 24 08:10:35 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
