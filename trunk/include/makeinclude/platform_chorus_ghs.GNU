@@ -53,14 +53,20 @@ LDFLAGS = --no_auto_instantiation \
           $(MVME_DIR)/lib/CC/libC.a \
           $(GHS_DIR)/ch68/libedg.a \
           $(MVME_DIR)/lib/classix/libcx.s.a
-OCFLAGS += -O -OM -OL
+OCFLAGS += -OL -OM
 AR      = $(GHS_DIR)/gnuch68/bin/ar
 ARFLAGS = rv
 RANLIB  = @true
 
+ifeq ($(debug),)
+  CRTH = $(MVME_DIR)/lib/crt/crth.s.o
+else
+  CRTH = $(MVME_DIR)/lib/crt/crth_d.s.o
+endif # debug
+
 POSTLINK = ; $(CC) -groot=$(MVME_DIR) -alttools=$(GHS_DIR) -68040 \
-           -O -nostartfiles -nostdlib -e __start -o $@.final \
-           $(MVME_DIR)/lib/crt/crth.s.o $(MVME_DIR)/lib/crt/crt0.o \
+           -nostartfiles -nostdlib -e __start -o $@.final \
+           $(CRTH) $(MVME_DIR)/lib/crt/crt0.o \
            $(MVME_DIR)/lib/crt/crti.o $@ \
            $(MVME_DIR)/lib/crt/crtn.o \
            -locatedprogram -r; \
