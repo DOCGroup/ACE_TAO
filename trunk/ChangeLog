@@ -1,3 +1,10 @@
+Wed Mar 10 18:34:12 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* bin/fuzz.pl:
+	  Changed the requried runlevel for check_for_include test.
+	  Also added support for the user to specify any single test
+	  to run by using the [-t test_name] augment option.
+
 Wed Mar 10 18:54:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/configs/ciao_servant.mpb:
