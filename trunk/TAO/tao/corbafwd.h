@@ -917,22 +917,22 @@ TAO_NAMESPACE CORBA
 // Location encoding:  next-to-last 8 bits.
 
 // For TRANSIENT...
-#define TAO_INVOCATION_CONNECT_MINOR_CODE          (0x01u << 4)
-#define TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE (0x02u << 4)
-#define TAO_INVOCATION_SEND_REQUEST_MINOR_CODE     (0x03u << 4)
-#define TAO_POA_DISCARDING                         (0x04u << 4)
-#define TAO_POA_HOLDING                            (0x05u << 4)
-#define TAO_UNHANDLED_SERVER_CXX_EXCEPTION         (0x06u << 4)
-#define TAO_INVOCATION_RECV_REQUEST_MINOR_CODE     (0x07u << 4)
+#define TAO_INVOCATION_CONNECT_MINOR_CODE          (0x01U << 4)
+#define TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE (0x02U << 4)
+#define TAO_INVOCATION_SEND_REQUEST_MINOR_CODE     (0x03U << 4)
+#define TAO_POA_DISCARDING                         (0x04U << 4)
+#define TAO_POA_HOLDING                            (0x05U << 4)
+#define TAO_UNHANDLED_SERVER_CXX_EXCEPTION         (0x06U << 4)
+#define TAO_INVOCATION_RECV_REQUEST_MINOR_CODE     (0x07U << 4)
 
 // errno encoding:  bottom 4 bits.
-#define TAO_UNSPECIFIED_MINOR_CODE  0x00u
-#define TAO_ETIMEDOUT_MINOR_CODE    0x01u
-#define TAO_ENFILE_MINOR_CODE       0x02u
-#define TAO_EMFILE_MINOR_CODE       0x03u
-#define TAO_EPIPE_MINOR_CODE        0x04u
-#define TAO_ECONNREFUSED_MINOR_CODE 0x05u
-#define TAO_UNKNOWN_MINOR_CODE      0xFFu
+#define TAO_UNSPECIFIED_MINOR_CODE  0x0U
+#define TAO_ETIMEDOUT_MINOR_CODE    0x1U
+#define TAO_ENFILE_MINOR_CODE       0x2U
+#define TAO_EMFILE_MINOR_CODE       0x3U
+#define TAO_EPIPE_MINOR_CODE        0x4U
+#define TAO_ECONNREFUSED_MINOR_CODE 0x5U
+#define TAO_UNKNOWN_MINOR_CODE      0xFU
 
 
 // ****************************************************************
