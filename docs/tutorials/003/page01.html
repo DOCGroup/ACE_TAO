@@ -1,168 +1,146 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <HTML>
 <HEAD>
-   <TITLE>ACE Tutorial 003</TITLE>
-   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
    <META NAME="Author" CONTENT="James CE Johnson">
    <META NAME="Description" CONTENT="A first step towards using ACE productively">
+   <TITLE>ACE Tutorial 003</TITLE>
 </HEAD>
-<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
 
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 003</FONT></B></CENTER>
 
-<CENTER><P><B><FONT SIZE=+2>ACE&nbsp;Tutorial 003<BR>
-Creating a Simple Client</FONT></B></P></CENTER>
+<CENTER><B><FONT SIZE=+2>Creating a Simple Client</FONT></B></CENTER>
+
 
 <P>
-<HR WIDTH="100%"></P>
+<HR WIDTH="100%">
 
 <P>Now that we've seen how to create servers, let's spend just a moment
 making a client. Since this is so easy, I'm going to do all of it in this
-one page.</P>
+one page.
 
 <P>
-<HR WIDTH="100%"></P>
+<HR WIDTH="100%">
+<PRE>/*
+  To establish a socket connection to a server, we'll need an ACE_SOCK_Connector.
+ */
+#include "ace/SOCK_Connector.h"
 
-<P>First, a look at the code:</P>
+/*
+  Unlike the previous two Tutorials, we're going to allow the user to provide
+  command line options this time.  Still, we need defaults in case that isn't
+  done.
+ */
+static u_short SERVER_PORT = ACE_DEFAULT_SERVER_PORT;
+static const char *const SERVER_HOST = ACE_DEFAULT_SERVER_HOST;
+static const int MAX_ITERATIONS = 4;
 
-<UL>
-<PRE>        
-1.      #include &quot;ace/SOCK_Connector.h&quot;
-        
-2.      static u_short SERVER_PORT = ACE_DEFAULT_SERVER_PORT;
-3.      static const char *const SERVER_HOST = ACE_DEFAULT_SERVER_HOST;
-4.      static const int MAX_ITERATIONS = 4;
-        
-5.      int main (int argc, char *argv[])
-        {
-6.        const char *server_host = argc &gt; 1 ? argv[1]                : SERVER_HOST;
-7.        u_short server_port     = argc &gt; 2 ? ACE_OS::atoi (argv[2]) : SERVER_PORT;
-8.        int max_iterations      = argc &gt; 3 ? ACE_OS::atoi (argv[3]) : MAX_ITERATIONS;
-        
-9.        ACE_SOCK_Stream server;
-10.       ACE_SOCK_Connector connector;
-11.       ACE_INET_Addr addr (server_port, server_host);
-        
-12.       if (connector.connect (server, addr) == -1)
-          {
-13.         ACE_ERROR_RETURN ((LM_ERROR, &quot;%p\n&quot;, &quot;open&quot;), -1);
-          }
-          
-14.       for (int i = 0; i &lt; max_iterations; i++)
-            {
-15.           char buf[BUFSIZ];
-        
-16.           ::sprintf (buf, &quot;message = %d\n&quot;, i + 1);
-        
-17.           if (server.send_n ( buf, strlen(buf) ) == -1)
-              {
-18.             ACE_ERROR_RETURN ((LM_ERROR, &quot;%p\n&quot;, &quot;send&quot;), -1);
-              }
-19.           else
-              {
-20.             ACE_OS::sleep (1);
-              }
-            }
-        
-21.       if (server.close () == -1)
-          {
-22.         ACE_ERROR_RETURN ((LM_ERROR, &quot;%p\n&quot;, &quot;close&quot;), -1);
-          }
-        
-23.       return 0;
-        }
-</PRE>
-</UL>
+int main (int argc, char *argv[])
+{
+  /*
+    Accept the users's choice of hosts or use the default.  Then do the same
+    for the TCP/IP port at which the server is listening as well as the
+    number of iterations to perform.
+   */
+  const char *server_host = argc > 1 ? argv[1]                : SERVER_HOST;
+  u_short server_port     = argc > 2 ? ACE_OS::atoi (argv[2]) : SERVER_PORT;
+  int max_iterations      = argc > 3 ? ACE_OS::atoi (argv[3]) : MAX_ITERATIONS;
 
-<P>
-<HR WIDTH="100%"></P>
+  /*
+    Build ourselves a Stream socket. This is a connected socket that provides
+    reliable end-to-end communications. We will use the server object to send
+    data to the server we connect to.
+   */
+  ACE_SOCK_Stream server;
 
-<P>Now, the code description:</P>
+  /*
+    And we need a connector object to establish that connection. The ACE_SOCK_Connector
+    object provides all of the tools we need to establish a connection once we know the
+    server's network address... 
+   */
+  ACE_SOCK_Connector connector;
 
-<OL>
-<LI>Include the ACE socket objects. We'll need this in a minute when we
-establish the connection.</LI>
+  /*
+    Which we create with an ACE_INET_Addr object. This object is given the TCP/IP port
+    and hostname of the server we want to connect to.
+   */
+  ACE_INET_Addr addr (server_port, server_host);
 
-<LI>For simplicity, we define a default TCP/IP&nbsp;port,</LI>
+  /*
+    So, we feed the Addr object and the Stream object to the connector's connect() member
+    function. Given this information, it will establish the network connection to the
+    server and attacht that connection to the server object. 
+   */
+  if (connector.connect (server, addr) == -1)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+  }
+  
+  /*
+    Just for grins, we'll send the server several messages.
+   */
+  for (int i = 0; i &lt; max_iterations; i++)
+  {
+    char buf[BUFSIZ];
 
-<LI>and server name. We allow command-line override but in reality this
-might be quite a bit more complicated.</LI>
+    /*
+      Create our message with the message number
+     */
+    ACE_OS::sprintf (buf, "message = %d\n", i + 1);
 
-<LI>A default iterations count is also defined.</LI>
+    /*
+      Send the message to the server.  We use the server object's send_n() function to
+      send all of the data at once. There is also a send() function but it may not send
+      all of the data. That is due to network buffer availability and such. If the send()
+      doesn't send all of the data, it is up to you to program things such that it will
+      keep trying until all of the data is sent or simply give up. The send_n() function
+      already does the "keep tyring" option for us, so we use it. 
+     */
+    if (server.send_n ( buf, strlen(buf) ) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), -1);
+    }
+    else
+    {
+      /*
+        Pause for a second.
+       */
+      ACE_OS::sleep (1);
+    }
+  }
 
-<LI>Good ol' <I>main</I> will be our one and only function.</LI>
+  /*
+    Close the connection to the server.  The servers we've created so far all are based
+    on the ACE_Reactor.  When we close(), the server's reactor will see activity for
+    the registered event handler and invoke handle_input().  That, in turn, will try
+    to read from the socket but get back zero bytes.  At that point, the server will know
+    that we've closed from our side.
+   */
+  if (server.close () == -1)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), -1);
+  }
 
-<LI>Set the server hostname, allowing command-line override.</LI>
+  return 0;
+}</PRE>
 
-<LI>Set the server's TCP/IP port</LI>
-
-<LI>and the iteration count similarly.</LI>
-
-<LI>Build ourselves a Stream socket. This is a connected socket that provides
-reliable end-to-end communications. We will use the <I>server</I> object
-to send data to the server we connect to.</LI>
-
-<LI>And we need a <I>connector</I> object to establish that connection.
-The <I>ACE_SOCK_Connector</I> object provides all of the tools we need
-to establish a connection once we know the server's network address...</LI>
-
-<LI>Which we create with an <I>ACE_INET_Addr</I> object. This object is
-given the TCP/IP port and hostname of the server we want to connect to.
-It creates a generic address object for us to use in connection attempts.</LI>
-
-<LI>So, we feed the <I>Addr</I> object and the <I>Stream</I> object to
-the <I>connector</I>'s <I>connect</I> member function. Given this information,
-it will establish the network connection to the server and attacht that
-connection to the <I>server</I> object.</LI>
-
-<LI>If we fail, we will exit semi-gracefully.</LI>
-
-<LI>For this simple example, we use a <I>for</I> loop do send messages
-to the server.</LI>
-
-<LI>We use this buffer to build the message</LI>
-
-<LI>using the <I>sprintf</I> command and some useless data.</LI>
-
-<LI>Once the data is available, we use the <I>server</I> object's <I>send_n</I>
-function to send all of the data at once. There is also a <I>send</I> function
-but it may not send all of the data. That is due to network buffer availability
-and such. If the <I>send</I> doesn't send all of the data, it is up to
-you to program things such that it will keep trying until all of the data
-is sent or simply give up. The <I>send_n</I> function already does the
-&quot;keep tyring&quot; option for us, so we use it.</LI>
-
-<LI>Since <I>send_n</I> is so reliable, we may as well give up when it
-fails.</LI>
-
-<LI>But if it doesn't fail</LI>
-
-<LI>kick back and snooze for a second.</LI>
-
-<LI>Attempt to close the connection to the server. </LI>
-
-<LI>If it fails, we display a simple message. If enough of these fail,
-though, we may run out of network resources. It is a good idea to fix any
-failure if at all possible.</LI>
-
-<LI>All done.</LI>
-</OL>
-
-<P>
-<HR WIDTH="100%"></P>
+<HR WIDTH="100%">
 
 <P>Ok, so that was pretty easy. What would be even easier would be to wrap
 all of the connection mess up in an object and overload a couple of basic
 operators to make things less network-centric. Perhaps we'll see that in
-another tutorial.</P>
+another tutorial.
+
+<P>If you want to compile it yourself, here's the <A HREF="client.cpp">source</A>,
+the <A HREF="Makefile">Makefile</A>,
+and <A HREF="00SetEnv">Environment
+settings</A>.
 
 <P>
-If you want to compile it yourself, here's the <A HREF="client.cpp">source</A>,
-the <A HREF="Makefile">Makefile</A>, and <A HREF="00SetEnv">Environment settings</A>.
-<P>
-<HR WIDTH="100%"></P>
-
-<CENTER><P>[<A HREF="..">Tutorial
-Index</A>]</P></CENTER>
+<HR WIDTH="100%">
+<CENTER>[<A HREF="..">Tutorial
+Index</A>]</CENTER>
 
 </BODY>
 </HTML>
