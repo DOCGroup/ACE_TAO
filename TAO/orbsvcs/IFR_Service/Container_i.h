@@ -67,6 +67,13 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  IR::Contained_ptr lookup_i (
+      const char *search_name,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual IR::ContainedSeq *contents (
       IR::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
