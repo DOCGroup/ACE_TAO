@@ -60,9 +60,9 @@ int
 ACEXML_FileCharStream::get (ACEXML_Char& ch)
 {
   // @@ Error checking?
-  ch = fgetc (this->infile_);
+  ch = (unsigned char) fgetc (this->infile_);
 
-  return (ch == EOF ? -1 :0);
+  return (((char) ch) == EOF ? -1 :0);
 }
 
 int

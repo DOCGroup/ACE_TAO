@@ -160,10 +160,10 @@ ACEXML_Debug_Attributes_Builder::~ACEXML_Debug_Attributes_Builder ()
 }
 
 int
-ACEXML_Debug_Attributes_Builder::setElement (const ACEXML_Char *namespaceURI,
-                                             const ACEXML_Char *localName,
+ACEXML_Debug_Attributes_Builder::setElement (const ACEXML_Char *,
+                                             const ACEXML_Char *,
                                              const ACEXML_Char *qName,
-                                             ACEXML_Env &xmlenv)
+                                             ACEXML_Env &)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   this->element_name_.set (qName, 0);
