@@ -1,3 +1,20 @@
+Fri Apr 18 18:04:44 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests/Bug_1020_Basic_Regression/Bug_1020_Basic_Regression.dsw
+	* tests/Bug_1020_Basic_Regression/client.dsp
+	* tests/Bug_1020_Basic_Regression/server.dsp
+	* tests/Bug_1020_Regression/Bug_1020_Regression.dsw
+	* tests/Bug_1020_Regression/client.dsp
+	* tests/Bug_1020_Regression/server.dsp
+
+          Added VC project files for Bug_1020_Regression and
+	  Bug_1020_Basic_Regression tests.
+	
+	* tests/TAO_Tests.dsw:
+
+	  Updated to include project files for Bug_1020_Regression and
+	  Bug_1020_Basic_Regression tests.
+
 Fri Apr 18 12:18:46 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/AV.mpc:

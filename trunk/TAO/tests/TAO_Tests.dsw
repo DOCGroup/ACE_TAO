@@ -267,6 +267,54 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Bug 1020 Basic Regression Client"=.\Bug_1020_Basic_Regression\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Bug 1020 Basic Regression Server"=.\Bug_1020_Basic_Regression\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Bug 1020 Regression Client"=.\Bug_1020_Regression\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Bug 1020 Regression Server"=.\Bug_1020_Regression\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "CDR Basic Types"=.\CDR\basic_types.dsp - Package Owner=<4>
 
 Package=<5>
