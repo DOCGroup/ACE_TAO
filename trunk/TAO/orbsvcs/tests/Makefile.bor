@@ -16,6 +16,7 @@ DIRS = \
 	EC_Custom_Marshal \
         ior_corbaname \
         IOR_MCast \
+	LoadBalancing \
         Miop \
         Notify \
 	Property \
