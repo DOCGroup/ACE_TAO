@@ -64,6 +64,13 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator== (const TYPE &i) const
 }
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE int
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator!= (const TYPE &i) const
+{
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator!=");
+  return !(*this == i);
+}
+
+template <class ACE_LOCK, class TYPE> ACE_INLINE int
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator>= (const TYPE &i) const
 {
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator>=");
@@ -105,14 +112,6 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const ACE_Atomic_Op<ACE_LOCK, TYPE> &r
   // This will call ACE_Atomic_Op::TYPE(), which will ensure the value
   // of <rhs> is acquired atomically.
   this->value_ = rhs; 
-}
-
-template <class ACE_LOCK, class TYPE> ACE_INLINE
-ACE_Atomic_Op<ACE_LOCK, TYPE>::operator TYPE () const
-{
-// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::operator TYPE");
-  ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->lock_);
-  return this->value_;    
 }
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
@@ -160,10 +159,8 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (const long &i)
 inline void
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &rhs)
 {
-  // This will call ACE_Atomic_Op::TYPE(), which will ensure the value
-  // of <rhs> is acquired atomically.
   ::InterlockedExchange (&this->value_,
-                         rhs);
+                         rhs.value ());
 }
 
 #if defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)

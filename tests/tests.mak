@@ -196,8 +196,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Handle_Set_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -257,8 +255,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Mem_Map_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -318,8 +314,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Mutex_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -379,8 +373,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Naming_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -440,8 +432,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Reactor_Timer_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -501,8 +491,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Reactors_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -562,8 +550,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/SString_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -623,8 +609,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Time_Value_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -684,8 +668,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Timer_Queue_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -745,8 +727,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/UPIPE_SAP_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -806,8 +786,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Priority_Buffer_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -867,8 +845,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Time_Service_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -928,8 +904,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/SPIPE_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -989,8 +963,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Buffer_Stream_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -1050,8 +1022,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Barrier_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -1111,8 +1081,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Reader_Writer_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -1172,8 +1140,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Recursive_Mutex_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -1233,8 +1199,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Task_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -1294,8 +1258,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Thread_Manager_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -1355,8 +1317,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/TSS_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -1416,8 +1376,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Thread_Pool_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -1477,8 +1435,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Future_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -1538,8 +1494,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Tokens_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -1598,8 +1552,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Message_Queue_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -1659,8 +1611,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Map_Manager_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -1720,8 +1670,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Pipe_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -1781,8 +1729,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Process_Mutex_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -1842,9 +1788,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/SV_Shared_Memory_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c\
- 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -1904,9 +1847,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/MM_Shared_Memory_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c\
- 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -1966,8 +1906,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Service_Config_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -2027,8 +1965,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/SOCK_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -2088,8 +2024,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Message_Block_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -2149,8 +2083,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Reactor_Notify_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -2210,8 +2142,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/IOStream_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -2271,9 +2201,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Process_Strategy_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c\
- 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -2333,8 +2260,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Conn_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -2394,9 +2319,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Simple_Message_Block_Test.pch" /YX /Fo"$(INTDIR)/"\
- /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -2457,9 +2379,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Reactor_Exceptions_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/"\
- /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -2520,8 +2439,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Priority_Task_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -2581,8 +2498,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Sigset_Ops_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -2642,9 +2557,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Message_Queue_Notifications_Test.pch" /YX /Fo"$(INTDIR)/"\
- /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -2705,8 +2617,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Enum_Interfaces_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -2766,9 +2676,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Hash_Map_Manager_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c\
- 
 CPP_OBJS=.\.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -2828,8 +2735,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Semaphore_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -2889,8 +2794,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Atomic_Op_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -2947,8 +2850,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/MT_SOCK_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -3005,9 +2906,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Priority_Reactor_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c\
- 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -3067,9 +2965,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Reactor_Performance_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/"\
- /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -3127,9 +3022,6 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Notify_Performance_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/"\
- /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -3158,6 +3050,9 @@ LINK32_OBJS= \
 <<
 
 !ENDIF 
+
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
+ /Fp"$(INTDIR)/Handle_Set_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 
 .c{$(CPP_OBJS)}.obj:
    $(CPP) $(CPP_PROJ) $<  
@@ -3248,6 +3143,7 @@ DEP_CPP_HANDL=\
 	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -3291,6 +3187,7 @@ DEP_CPP_MEM_M=\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -3365,6 +3262,7 @@ DEP_CPP_MUTEX=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -3477,6 +3375,7 @@ DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -3558,6 +3457,7 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -3673,6 +3573,7 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -3716,6 +3617,7 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -3757,6 +3659,7 @@ DEP_CPP_TIME_=\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -3850,6 +3753,7 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -3987,6 +3891,7 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\ace\UPIPE_Connector.i"\
 	{$(INCLUDE)}"\ace\UPIPE_Stream.h"\
 	{$(INCLUDE)}"\ace\UPIPE_Stream.i"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -4093,6 +3998,7 @@ DEP_CPP_PRIOR=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -4138,6 +4044,7 @@ DEP_CPP_TIME_S=\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -4225,6 +4132,7 @@ DEP_CPP_SPIPE=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -4344,6 +4252,7 @@ DEP_CPP_BUFFE=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -4420,6 +4329,7 @@ DEP_CPP_BARRI=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -4496,6 +4406,7 @@ DEP_CPP_READE=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -4572,6 +4483,7 @@ DEP_CPP_RECUR=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -4687,6 +4599,7 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -4763,6 +4676,7 @@ DEP_CPP_THREA=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -4838,6 +4752,7 @@ DEP_CPP_TSS_T=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -4953,6 +4868,7 @@ DEP_CPP_THREAD=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -5074,6 +4990,7 @@ DEP_CPP_FUTUR=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -5199,6 +5116,7 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\Token_Request_Reply.h"\
 	{$(INCLUDE)}"\ace\Token_Request_Reply.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -5303,6 +5221,7 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -5403,6 +5322,7 @@ DEP_CPP_MAP_M=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -5450,6 +5370,7 @@ DEP_CPP_PIPE_=\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -5509,6 +5430,7 @@ DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -5581,6 +5503,7 @@ DEP_CPP_SV_SH=\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -5658,6 +5581,7 @@ DEP_CPP_MM_SH=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -5746,6 +5670,7 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -5839,6 +5764,7 @@ DEP_CPP_SOCK_=\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -5959,6 +5885,7 @@ DEP_CPP_MESSAG=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -6078,6 +6005,7 @@ DEP_CPP_REACTOR=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -6224,6 +6152,7 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -6372,6 +6301,7 @@ DEP_CPP_PROCES=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -6521,6 +6451,7 @@ DEP_CPP_CONN_=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -6597,6 +6528,7 @@ DEP_CPP_SIMPL=\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -6691,6 +6623,7 @@ DEP_CPP_REACTOR_=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -6809,6 +6742,7 @@ DEP_CPP_PRIORI=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -6852,6 +6786,7 @@ DEP_CPP_SIGSE=\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -6921,7 +6856,6 @@ DEP_CPP_MESSAGE=\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
 	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
@@ -6963,10 +6897,8 @@ DEP_CPP_MESSAGE=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -7015,6 +6947,7 @@ DEP_CPP_ENUM_=\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -7106,6 +7039,7 @@ DEP_CPP_HASH_=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -7182,6 +7116,7 @@ DEP_CPP_SEMAP=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -7237,6 +7172,7 @@ DEP_CPP_ATOMI=\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -7330,6 +7266,7 @@ DEP_CPP_MT_SO=\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -7489,6 +7426,7 @@ DEP_CPP_PRIORIT=\
 	{$(INCLUDE)}"\ace\Token.h"\
 	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -7652,6 +7590,7 @@ DEP_CPP_REACTOR_P=\
 	{$(INCLUDE)}"\ace\Token.h"\
 	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -7777,6 +7716,7 @@ DEP_CPP_NOTIF=\
 	{$(INCLUDE)}"\ace\Token.h"\
 	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
