@@ -294,7 +294,7 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
   :RTCP_Packet (buffer)
 {
   unsigned int i = 0;
-  RR_Block *local_block_ptr;
+  RR_Block *local_block_ptr = 0;
 
   this->rr_ = 0;
 

@@ -534,6 +534,7 @@ int
 TAO_AV_Flow_Handler::cancel_timer (void)
 {
   ACE_Event_Handler *event_handler = this->event_handler ();
+  ACE_UNUSED_ARG(event_handler);
   TAO_AV_CORE::instance()->reactor ()->cancel_timer (this->timer_id_);
 
   return 0;
