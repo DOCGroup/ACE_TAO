@@ -84,6 +84,7 @@ Receiver_Callback::handle_destroy (void)
 Receiver::Receiver (void)
   : mmdevice_ (0),
     output_file_name_ ("output"),
+    addr_file_ ("addr_file"),
     sender_name_ ("distributer"),
     receiver_name_ ("receiver")
 {
@@ -110,6 +111,8 @@ Receiver::init (int,
     this->connection_manager_.init (TAO_AV_CORE::instance ()->orb ());
   if (result != 0)
     return result;
+
+  this->connection_manager_.load_ep_addr (this->addr_file_.c_str ());
 
   // Register the receiver mmdevice object with the ORB
   ACE_NEW_RETURN (this->mmdevice_,
@@ -145,13 +148,16 @@ Receiver::parse_args (int argc,
   // Parse the command line arguments
   ACE_Get_Opt opts (argc,
                     argv,
-                    "f:s:r:");
+                    "f:s:r:a:");
 
   int c;
   while ((c = opts ()) != -1)
     {
       switch (c)
         {
+	case 'a':
+	  this->addr_file_ = opts.opt_arg ();
+	  break;
         case 'f':
           this->output_file_name_ = opts.opt_arg ();
           break;

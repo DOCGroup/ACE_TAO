@@ -105,10 +105,12 @@ int
 Client::parse_args (int argc,
                     char **argv)
 {
-  ACE_Get_Opt opts (argc,argv,"f:a:p:s");
+  ACE_Get_Opt opts (argc,argv,"f:l:a:p:s");
 
   this->use_sfp_ = 0;
   int c;
+  int p_addr = 0;
+  int l_addr = 0;
   while ((c= opts ()) != -1)
     {
       switch (c)
@@ -116,8 +118,13 @@ Client::parse_args (int argc,
         case 'f':
           this->filename_ = ACE_OS::strdup (opts.opt_arg ());
           break;
-        case 'a':
+        case 'l':
           this->address_ = ACE_OS::strdup (opts.opt_arg ());
+		  l_addr = 1; 
+          break;
+        case 'a':
+          this->peer_addr_ = ACE_OS::strdup (opts.opt_arg ());
+		  p_addr =1;
           break;
         case 'p':
           this->protocol_ = ACE_OS::strdup (opts.opt_arg ());
@@ -130,6 +137,24 @@ Client::parse_args (int argc,
           return -1;
         }
     }
+  if (l_addr == 0)
+    {
+      char buf [BUFSIZ];
+      ACE_OS::hostname (buf,
+			BUFSIZ);
+      address_ = buf;
+      address_ += ":5000";
+    }
+  
+  if (p_addr == 0)
+    {
+      char buf [BUFSIZ];
+      ACE_OS::hostname (buf,
+			BUFSIZ);
+      peer_addr_ = buf;
+      peer_addr_ += ":5050";
+    }
+  
   return 0;
 }
 
@@ -151,7 +176,7 @@ Client::protocols (void)
   AVStreams::protocolSpec protocols (1);
   protocols.length (1);
   char buf [BUFSIZ];
-  ACE_OS::sprintf (buf,"%s=%s",this->protocol_,this->address_);
+  ACE_OS::sprintf (buf,"%s=%s",this->protocol_,this->address_.c_str ());
   protocols [0] = CORBA::string_dup (buf);
   return protocols;
 }
@@ -166,7 +191,7 @@ const char *
 Client::address (void)
 
 {
-  return this->address_;
+  return this->address_.c_str ();
 }
 
 TAO_StreamCtrl*
@@ -176,8 +201,7 @@ Client::streamctrl (void)
 }
 
 Client::Client (void)
-  : address_ (ACE_OS::strdup ("127.0.0.1:12345")),
-    fp_ (0),
+  : fp_ (0),
     protocol_ (ACE_OS::strdup ("UDP")),
     orb_ (TAO_AV_CORE::instance ()->orb ()),
     poa_ (TAO_AV_CORE::instance ()->poa ())
@@ -208,7 +232,7 @@ Client::init (int argc,char **argv)
       ACE_NEW_RETURN ( this->streamendpoint_a_,
 		      TAO_StreamEndPoint_A, -1 );
 
-      ACE_NEW_RETURN ( this->fep_a_, FTP_Client_Producer, -1 );
+      ACE_NEW_RETURN (this->fep_a_, FTP_Client_Producer, -1 );
       this->flowname_ = "Data";
 
       sep_a_ = this->streamendpoint_a_->_this( ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -255,13 +279,18 @@ Client::run (void)
       AVStreams::flowSpec flow_spec (1);
       flow_spec.length (1);
 
-      ACE_INET_Addr addr (this->address_);
+      ACE_INET_Addr addr (this->address_.c_str ());
+
       TAO_Forward_FlowSpec_Entry entry (this->flowname_.c_str(),
                                         "IN",
                                         "USER_DEFINED",
                                         flow_protocol_str,
                                         this->protocol_,
                                         &addr);
+
+      ACE_INET_Addr peer_addr (this->peer_addr_.c_str ());;
+      entry.set_peer_addr (&peer_addr);
+
       flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
 
       ACE_High_Res_Timer timer;
@@ -273,10 +302,13 @@ Client::run (void)
       AVStreams::StreamEndPoint_B_var sep_b = AVStreams::StreamEndPoint_B::_narrow ( obj_b.in() );
 
       CORBA::Boolean result =
-        this->streamctrl_.bind ( sep_a_.in(), sep_b.in(), 
-			         the_qos.inout(), flow_spec 
-				 ACE_ENV_ARG_PARAMETER );
-
+        this->streamctrl_.bind (sep_a_.in(),
+				sep_b.in(), 
+				the_qos.inout(), 
+				flow_spec 
+				ACE_ENV_ARG_PARAMETER );
+      ACE_TRY_CHECK;
+      
       timer.stop ();
       timer.elapsed_time (elapsed);
       elapsed.dump ();

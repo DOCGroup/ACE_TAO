@@ -69,7 +69,8 @@ private:
   int argc_;
   char **argv_;
   const char *filename_;
-  const char *address_;
+  ACE_CString address_;
+  ACE_CString peer_addr_;
 
   FILE *fp_;
   char *protocol_;
