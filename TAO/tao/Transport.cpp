@@ -323,7 +323,6 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
   TAO_Flushing_Strategy *flushing_strategy =
     this->orb_core ()->flushing_strategy ();
 
-  int start_flushing = 1;
   if (try_sending_first)
     {
       // ... in this case we must try to send the message first ...
@@ -368,9 +367,11 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
           // be fast.
           return 0;
         }
-    }
 
-  (void) flushing_strategy->schedule_output (this);
+      // ... if the message was partially sent then we need to
+      // continue sending ASAP ...
+      (void) flushing_strategy->schedule_output (this);
+    }
 
   // ... either the message must be queued or we need to queue it
   // because it was not completely sent out ...
@@ -392,7 +393,17 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
 
   // ... if the queue is full we need to activate the output on the
   // queue ...
-  if (start_flushing || this->must_flush_queue_i (stub))
+  int must_flush = 0;
+  int constraints_reached =
+    this->check_buffering_constraints_i (stub,
+                                         must_flush);
+
+  if (constraints_reached)
+    {
+      (void) flushing_strategy->schedule_output (this);
+    }
+
+  if (must_flush)
     {
       typedef ACE_Reverse_Lock<TAO_SYNCH_MUTEX> TAO_REVERSE_SYNCH_MUTEX;
       TAO_REVERSE_SYNCH_MUTEX reverse (this->queue_mutex_);
@@ -880,7 +891,8 @@ TAO_Transport::cleanup_queue (size_t byte_count)
 }
 
 int
-TAO_Transport::must_flush_queue_i (TAO_Stub *stub)
+TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub,
+                                              int &must_flush)
 {
   // First let's compute the size of the queue:
   size_t msg_count = 0;
@@ -894,14 +906,15 @@ TAO_Transport::must_flush_queue_i (TAO_Stub *stub)
   int set_timer;
   ACE_Time_Value interval;
 
-  if (stub->sync_strategy ().buffering_constraints_reached (stub,
-                                                            msg_count,
-                                                            total_bytes,
-                                                            set_timer,
-                                                            interval))
-    {
-      return 1;
-    }
+  int constraints_reached =
+    stub->sync_strategy ().buffering_constraints_reached (stub,
+                                                          msg_count,
+                                                          total_bytes,
+                                                          must_flush,
+                                                          set_timer,
+                                                          interval);
+  if (constraints_reached != 0)
+    return constraints_reached;
 
   // ... it is not time to flush yet, but maybe we need to set a
   // timer ...
