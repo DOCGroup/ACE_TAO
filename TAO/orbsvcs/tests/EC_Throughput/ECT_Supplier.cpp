@@ -511,7 +511,7 @@ int Test_Supplier::supplier_id (void) const
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
 Test_Supplier::consumer_proxy (void)
 {
-  return this->consumer_proxy_;
+  return this->consumer_proxy_.in ();
 }
 
 // ****************************************************************
