@@ -251,7 +251,7 @@ namespace TAO
           ACE_CHECK;
 
           thread_strategy_factory_->destroy (thread_strategy_);
-          thread_strategy_ = 0
+          thread_strategy_ = 0;
         }
 
       if (servant_retention_strategy_ != 0)

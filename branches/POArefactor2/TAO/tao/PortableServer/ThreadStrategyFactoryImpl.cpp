@@ -76,8 +76,13 @@ namespace TAO
       {
         case ::PortableServer::SINGLE_THREAD_MODEL :
         {
-          delete strategy;
+          ThreadStrategyFactory *thread_strategy_factory =
+            ACE_Dynamic_Service<ThreadStrategyFactory>::instance ("ThreadStrategySingleFactory");
 
+          if (thread_strategy_factory != 0)
+            {
+              thread_strategy_factory->destroy (strategy);
+            }
           break;
         }
         case ::PortableServer::ORB_CTRL_MODEL :
@@ -85,6 +90,7 @@ namespace TAO
           // Noop
           break;
         }
+      }
     }
 
     ACE_STATIC_SVC_DEFINE (

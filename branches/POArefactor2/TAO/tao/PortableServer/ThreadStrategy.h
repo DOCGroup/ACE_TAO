@@ -16,6 +16,7 @@
 
 #include "portableserver_export.h"
 #include "Policy_Strategy.h"
+#include "ThreadPolicyC.h"
 #include "ace/Service_Config.h"
 
 #include "tao/orbconf.h"
