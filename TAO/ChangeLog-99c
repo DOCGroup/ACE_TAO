@@ -1,3 +1,11 @@
+Tue Jun 15 18:49:56 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao: Fixed simple miscellaneous stuff marked by Dr. Schmidt.
+
+	  - Active_Object_Map.h
+	  - Active_Object_Map.i
+	  - Forwarding_Servant.cpp
+
 Tue Jun 15 18:04:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs.dsp:
