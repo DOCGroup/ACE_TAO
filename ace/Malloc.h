@@ -111,9 +111,8 @@ public:
   long padding_[ACE_MALLOC_PADDING_SIZE < 1 : ACE_MALLOC_PADDING_SIZE];
 #endif /* ACE_MALLOC_PADDING > 0 */
 
-  ACE_UNIMPLEMENTED_FUNC (void dummy (void))
-  // A dummy for egcs (or all g++ variants?) to prevent them from
-  // complaining "all member functions are private."
+  void dump (void) const;
+  // Dump the state of the object.
 
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
 private:
