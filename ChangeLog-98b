@@ -1,3 +1,8 @@
+Mon Aug 10 10:35:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Added the ACE-subsets.html file to the ACE directory so that
+	  we can all modify it.
+
 Mon Aug 10 10:29:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (shm_open): There's no need to mess with the security
