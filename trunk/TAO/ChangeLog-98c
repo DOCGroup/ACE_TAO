@@ -1,3 +1,12 @@
+Tue Nov 18 18:32:14 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
+
+	* tests/Cubit/COOL/Task_Client.{h,cpp}: Used the COOL_Activity to
+	create threads instead of ACE_Task.
+
+	* tests/Cubit/COOL/server.cpp: Used the createActivity stuff to
+	create threads.  The server now creates two servants, one for high
+	and the other for low priority clients.
+
 Tue Nov 18 17:44:02 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/corbacom.h: Added special case for CORBA::WChar to be a
