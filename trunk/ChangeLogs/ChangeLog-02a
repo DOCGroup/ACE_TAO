@@ -1,3 +1,12 @@
+Fri Jan 11 22:54:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/config-lynxos.h: Added #define ACE_HAS_USING_KEYWORD to teh
+	  file.  The compiler supports namespaces. According to the new
+	  rules at the doc_group, we dont use any compilers that dont
+	  support namespaces. The above macro is itself a waste. But we
+	  cannot remove it overnight as it has far reaching
+	  consequences. Working around that for the timebeing.
+
 Thu Jan 10 18:35:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Profile_Timer.h: Clarified that elapsed_time() calculates time

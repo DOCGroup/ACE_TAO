@@ -165,6 +165,11 @@
 # define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
+// Looks like the modern compilers  have support for namespaces. Or
+// rather we dont support any compiler without this support. Need to
+// get this macro off of ACE.
+#define ACE_HAS_USING_KEYWORD
+
 // By default, don't include RCS Id strings in object code.
 #if !defined (ACE_USE_RCSID)
 # define ACE_USE_RCSID 0
