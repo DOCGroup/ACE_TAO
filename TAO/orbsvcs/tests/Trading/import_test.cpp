@@ -70,7 +70,6 @@ main (int argc, char** argv)
   TAO_CATCHANY
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Trader Import Tests Failed."), -1);
-      TAO_TRY_ENV.print_exception ("main");
     }
   TAO_ENDTRY;
 
