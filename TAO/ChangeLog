@@ -1,3 +1,15 @@
+Wed Mar 16 10:35:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* TAO_IDL/Makefile.am:
+
+	  Regenerate.
+
+	* TAO_IDL/tao_idl.mpc:
+
+	  Set TAO_IDL_INCLUDE_DIR to $(includedir)/tao for automake
+	  builds so end-user's won't have to set ACE_ROOT/TAO_ROOT
+	  to run the installed executable.
+
 Wed Mar 16 10:28:11 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.i:
