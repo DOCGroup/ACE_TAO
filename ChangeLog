@@ -1,3 +1,13 @@
+Sun May 12 10:11:07 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Message_Queue_T.cpp: Updated all the enqueue*() and dequeue*() methods 
+	  so that they use the new total_size_and_length() method, which
+ 	  is more efficient.
+
+	* ace/Message_Block.h (ACE_Message_Block): Added new total_size_and_length()
+	  method to speed up calculation of these values by putting them
+ 	  into one loop.
+
 Sun May 12 11:12:00 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* Makefile: Moved ACEXML directory up so it would be compile right
