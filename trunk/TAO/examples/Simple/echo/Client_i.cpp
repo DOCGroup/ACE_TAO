@@ -172,7 +172,7 @@ Client_i::via_naming_service(void)
   TAO_TRY
     {
       // Initialization of the naming service.
-      if (naming_services_client_.init (orb_.in (), argc_, argv_) != 0)
+      if (naming_services_client_.init (orb_.in ()) != 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to initialize "
 			   "the TAO_Naming_Client. \n"),

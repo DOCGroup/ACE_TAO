@@ -45,20 +45,20 @@ Server_i::init_naming_service (CORBA::Environment& env)
 
       // Register the object implementation with the POA.
       Echo_var echo_obj = this->servant_._this (env);
-      TAO_CHECK_ENV_RETURN (env, -1);
+      TAO_CHECK_ENV;
 
       // Name the object.
       CosNaming::Name echo_obj_name (1);
       echo_obj_name.length (1);
       echo_obj_name[0].id = CORBA::string_dup ("Echo");
 
-      TAO_CHECK_ENV_RETURN (env, -1);
+      TAO_CHECK_ENV;
 
       // Now, attach the object name to the context.
       this->naming_server_->bind (echo_obj_name,
 				  echo_obj.in (),
 				  env);
-      TAO_CHECK_ENV_RETURN (env, -1);
+      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
