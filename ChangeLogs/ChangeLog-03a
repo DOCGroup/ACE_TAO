@@ -1,3 +1,13 @@
+Thu May 24 12:15:35 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/OS.h: Added #defines for RTLD_LAZY, RTLD_NOW, RTLD_GLOBAL.
+	  Thanks to Kobi Cohen-Arazi <kobic@bvr.co.il> for suggesting
+ 	  this.
+  
+	* ace/OS.h: Updated the ACE_Time_Value class to point out that the values 
+	  are in secs and usecs.  Thanks to Israel Illescas Gomez
+ 	  <illescas@dycsa.es> for motivating this.
+
 Thu May 24 18:08:27 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/run_test.lst: Re-enable MT_Reactor_Timer_Test.
