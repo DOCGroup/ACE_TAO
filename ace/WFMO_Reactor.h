@@ -989,18 +989,6 @@ int WSAEnumNetworkEvents (SOCKET s,
 
 #endif /* !defined ACE_HAS_WINSOCK2 */
 
-#else /* NOT win32 */
-class ACE_Export ACE_WFMO_Reactor : public ACE_Reactor_Impl
-{
-public:
-  virtual int handle_events (ACE_Time_Value * = 0)  { return -1; }
-  virtual int handle_events (ACE_Time_Value &) { return -1; }
-  virtual int notify (ACE_Event_Handler * = 0, 
-		      ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
-		      ACE_Time_Value * = 0)  
-  { return 0; }
-};
-
 #endif /* ACE_WIN32 */
 
 #if defined (__ACE_INLINE__)
