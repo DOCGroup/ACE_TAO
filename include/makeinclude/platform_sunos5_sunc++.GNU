@@ -25,6 +25,7 @@
 # necessary with automatic template instantiation.
 
 debug = 1
+distrib = 0
 threads = 1
 
 ifeq ($(threads),1)
@@ -88,7 +89,9 @@ ifdef orbix
                    -lthread -lgen -lposix4
   CPPFLAGS      += -I$(ORBIX_ROOT)/corba2/include
 else
+ifeq ($(distrib),0)
   LDFLAGS       += -R $(ACE_ROOT)/ace -R./
+endif
   LIBS          += -lsocket -ldl -lnsl -lgen -lposix4
 endif # orbix
 
