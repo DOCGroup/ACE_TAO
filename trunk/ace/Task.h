@@ -157,11 +157,12 @@ public:
    *
    * Assigning <task> allows you to associate the newly spwaned
    * threads with an instance of ACE_Task_Base.  If <task> == 0, then
-   * the new threads are automatically with <this> ACE_Task_Base.
-   * Setting the <task> argument to value other than <this> make the
-   * thread manipulating functions, like wait(), suspend(), resume()
-   * useless.  Threads spawned with user specified <task> value must
-   * be manipulated thru ACE_Thread_Manager directly.
+   * the new threads are associated automatically with <this>
+   * ACE_Task_Base.  Setting the <task> argument to value other than
+   * <this> makes the thread manipulating methods, such as wait(),
+   * suspend(), resume(), useless.  Threads spawned with user
+   * specified <task> value must therefore be manipulated thru
+   * ACE_Thread_Manager directly.
    *
    * If <stack> != 0 it is assumed to be an array of <n> pointers to
    * the base of the stacks to use for the threads being spawned.
