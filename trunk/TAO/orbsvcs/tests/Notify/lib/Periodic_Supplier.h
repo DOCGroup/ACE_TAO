@@ -50,7 +50,7 @@ public:
   int init_state (ACE_Arg_Shifter& arg_shifter);
 
   /// Activate this task, synch on the given barrier.
-  virtual int activate (ACE_Barrier* barrier);
+  virtual int activate_task (ACE_Barrier* barrier);
 
   /// Connect.
   void connect (CosNotifyChannelAdmin::StructuredProxyPushConsumer_ptr proxy, CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL);

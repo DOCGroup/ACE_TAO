@@ -36,6 +36,9 @@ public:
   /// Destructor
   ~TAO_RT_Notify_Service ();
 
+  /// Overload base virtual method to silence HPUX11 build warning.
+  virtual int init (int argc, char *argv[]);
+
   /// Init the service.
   virtual void init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
 
