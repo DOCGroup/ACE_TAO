@@ -1,3 +1,15 @@
+Sat Mar 10 17:55:53 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * include/makeinclude: Zapped the platform_linux_pthread.GNU,
+	  platform_linux_lxpthread.GNU, and platform_linux_lxpthreads.GNU
+ 	  files since they are confusing and shouldn't not be used in
+ 	  favor of platform_linux.GNU.
+	
+	* ace: Zapped the config-linux.pthread.h and config-linux-lxpthreads.h
+	  file since they are confusing and shouldn't not be used in favor
+ 	  of config-linux.h.  Thanks to Craig Rodrigues for this
+ 	  suggestion.
+
 Sat Mar 10 12:39:16 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * ace/Reactor.h:
