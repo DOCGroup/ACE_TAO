@@ -1,3 +1,11 @@
+Wed Jul 24 13:49:02 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.idl:
+
+	  Corrected exception in "raises" clause of the
+	  Strategy::push_loads() method.  "StrategyNotAdaptive" instead of
+	  "LocationNotFound."
+
 Wed Jul 24 11:51:29 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* tao/PortableServer/Collocated_Object.cpp:
