@@ -1,8 +1,3 @@
-// -*- C++ -*-
-//
-// $Id$
-
-
 #include "LocalObject.h"
 
 #if !defined (__ACE_INLINE__)
@@ -10,24 +5,26 @@
 #endif /* ! __ACE_INLINE__ */
 
 #include "PolicyC.h"
+#include "debug.h"
+
 
 ACE_RCSID (tao,
            LocalObject,
            "$Id$")
 
 
-CORBA_LocalObject::~CORBA_LocalObject (void)
+CORBA::LocalObject::~LocalObject (void)
 {
 }
 
 void
-CORBA_LocalObject::_add_ref (void)
+CORBA::LocalObject::_add_ref (void)
 {
   // Do nothing as per CCM spec.
 }
 
 void
-CORBA_LocalObject::_remove_ref (void)
+CORBA::LocalObject::_remove_ref (void)
 {
   // Do nothing as per CCM spec.
 }
@@ -36,8 +33,8 @@ CORBA_LocalObject::_remove_ref (void)
 // create hash tables.
 
 CORBA::ULong
-CORBA_LocalObject::_hash (CORBA::ULong maximum
-                          ACE_ENV_ARG_DECL_NOT_USED)
+CORBA::LocalObject::_hash (CORBA::ULong maximum
+                           ACE_ENV_ARG_DECL_NOT_USED)
 {
   // Note that we reinterpret_cast to an "unsigned long" instead of
   // CORBA::ULong since we need to first cast to an integer large
@@ -56,8 +53,8 @@ CORBA_LocalObject::_hash (CORBA::ULong maximum
 // such as strcmp(), to allow more comparison algorithms.
 
 CORBA::Boolean
-CORBA_LocalObject::_is_equivalent (CORBA_Object_ptr other_obj
-                                   ACE_ENV_ARG_DECL_NOT_USED)
+CORBA::LocalObject::_is_equivalent (CORBA::Object_ptr other_obj
+                                    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (())
 {
   return (other_obj == this) ? 1 : 0;
@@ -67,27 +64,28 @@ CORBA_LocalObject::_is_equivalent (CORBA_Object_ptr other_obj
 
 
 TAO_ObjectKey *
-CORBA_LocalObject::_key (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::LocalObject::_key (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_ERROR((LM_ERROR,
-             ACE_TEXT ("(%P|%t) Cannot get _key froma LocalObject!!!\n")));
+  if (TAO_debug_level > 0)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("(%P|%t) Cannot get _key from a LocalObject!\n")));
 
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 #if 0
 void *
-CORBA_LocalObject::_tao_QueryInterface (ptr_arith_t type)
+CORBA::LocalObject::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (ptr_arith_t,
-                                    &CORBA_LocalObject::_narrow))
+                                    &CORBA::LocalObject::_narrow))
     retv = ACE_reinterpret_cast (void *, this);
   else if (type == ACE_reinterpret_cast (ptr_arith_t,
-                                         &CORBA_Object::_narrow))
+                                         &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
-                                 ACE_static_cast (CORBA_Object_ptr,
+                                 ACE_static_cast (CORBA::Object_ptr,
                                                   this));
   if (retv)
     this->_add_ref ();
@@ -103,20 +101,20 @@ CORBA_LocalObject::_tao_QueryInterface (ptr_arith_t type)
 // the latter case, return FALSE.
 
 CORBA::Boolean
-CORBA_LocalObject::_non_existent (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA::LocalObject::_non_existent (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   // Always return false.
   return 0;
 }
 
 void
-CORBA_LocalObject::_create_request (CORBA::Context_ptr,
-                                    const CORBA::Char *,
-                                    CORBA::NVList_ptr,
-                                    CORBA::NamedValue_ptr,
-                                    CORBA::Request_ptr &,
-                                    CORBA::Flags
-                                    ACE_ENV_ARG_DECL)
+CORBA::LocalObject::_create_request (CORBA::Context_ptr,
+                                     const char *,
+                                     CORBA::NVList_ptr,
+                                     CORBA::NamedValue_ptr,
+                                     CORBA::Request_ptr &,
+                                     CORBA::Flags
+                                     ACE_ENV_ARG_DECL)
 {
   // @@ Correct minor code?  CCM spec says one thing CORBA spec says
   //    another!
@@ -125,15 +123,15 @@ CORBA_LocalObject::_create_request (CORBA::Context_ptr,
 }
 
 void
-CORBA_LocalObject::_create_request (CORBA::Context_ptr,
-                                    const CORBA::Char *,
-                                    CORBA::NVList_ptr,
-                                    CORBA::NamedValue_ptr,
-                                    CORBA::ExceptionList_ptr,
-                                    CORBA::ContextList_ptr,
-                                    CORBA::Request_ptr &,
-                                    CORBA::Flags
-                                    ACE_ENV_ARG_DECL)
+CORBA::LocalObject::_create_request (CORBA::Context_ptr,
+                                     const char *,
+                                     CORBA::NVList_ptr,
+                                     CORBA::NamedValue_ptr,
+                                     CORBA::ExceptionList_ptr,
+                                     CORBA::ContextList_ptr,
+                                     CORBA::Request_ptr &,
+                                     CORBA::Flags
+                                     ACE_ENV_ARG_DECL)
 {
   // @@ Correct minor code?  CCM spec says one thing CORBA spec says
   //    another!
@@ -142,8 +140,8 @@ CORBA_LocalObject::_create_request (CORBA::Context_ptr,
 }
 
 CORBA::Request_ptr
-CORBA_LocalObject::_request (const CORBA::Char *
-                             ACE_ENV_ARG_DECL)
+CORBA::LocalObject::_request (const char *
+                              ACE_ENV_ARG_DECL)
 {
   // @@ Correct minor code?  CCM spec says one thing CORBA spec says
   //    another!
@@ -153,24 +151,65 @@ CORBA_LocalObject::_request (const CORBA::Char *
 }
 
 CORBA::Object_ptr
-CORBA_LocalObject::_get_component (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::LocalObject::_get_component (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-CORBA_InterfaceDef_ptr
-CORBA_LocalObject::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::InterfaceDef_ptr
+CORBA::LocalObject::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 CORBA::ImplementationDef_ptr
-CORBA_LocalObject::_get_implementation (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::LocalObject::_get_implementation (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+#if (TAO_HAS_CORBA_MESSAGING == 1)
+
+CORBA::Policy_ptr
+CORBA::LocalObject::_get_policy (CORBA::PolicyType
+                                 ACE_ENV_ARG_DECL)
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    CORBA::Policy::_nil ());
+}
+
+CORBA::Policy_ptr
+CORBA::LocalObject::_get_client_policy (CORBA::PolicyType
+                                        ACE_ENV_ARG_DECL)
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
+}
+
+CORBA::Object_ptr
+CORBA::LocalObject::_set_policy_overrides (const CORBA::PolicyList &,
+                                           CORBA::SetOverrideType
+                                           ACE_ENV_ARG_DECL)
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
+}
+
+CORBA::PolicyList *
+CORBA::LocalObject::_get_policy_overrides (const CORBA::PolicyTypeSeq &
+                                           ACE_ENV_ARG_DECL)
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+}
+
+CORBA::Boolean
+CORBA::LocalObject::_validate_connection (CORBA::PolicyList_out
+                                          ACE_ENV_ARG_DECL)
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+}
+
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 // ****************************************************************
 
@@ -194,44 +233,3 @@ TAO_Local_RefCounted_Object::_remove_ref (void)
 
   delete this;
 }
-
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
-CORBA::Policy_ptr
-CORBA_LocalObject::_get_policy (CORBA::PolicyType
-                                ACE_ENV_ARG_DECL)
-{
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    CORBA::Policy::_nil ());
-}
-
-CORBA::Policy_ptr
-CORBA_LocalObject::_get_client_policy (CORBA::PolicyType
-                                       ACE_ENV_ARG_DECL)
-{
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
-}
-
-CORBA::Object_ptr
-CORBA_LocalObject::_set_policy_overrides (const CORBA::PolicyList &,
-                                          CORBA::SetOverrideType
-                                          ACE_ENV_ARG_DECL)
-{
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
-}
-
-CORBA::PolicyList *
-CORBA_LocalObject::_get_policy_overrides (const CORBA::PolicyTypeSeq &
-                                          ACE_ENV_ARG_DECL)
-{
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
-}
-
-CORBA::Boolean
-CORBA_LocalObject::_validate_connection (CORBA::PolicyList_out
-                                         ACE_ENV_ARG_DECL)
-{
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
-}
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */

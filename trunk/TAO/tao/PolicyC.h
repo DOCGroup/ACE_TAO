@@ -354,7 +354,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidPolicies;
   class _TAO_Policy_Remote_Proxy_Broker;
   
   class TAO_Export Policy
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
     // ****************************************************************
     , public virtual TAO_Encodable
     // ****************************************************************
@@ -469,7 +469,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidPolicies;
   public:
     virtual ~_TAO_Policy_Proxy_Impl (void) { }
     virtual CORBA::PolicyType policy_type (
-        CORBA_Object *_collocated_tao_target_
+        CORBA::Object *_collocated_tao_target_
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -477,7 +477,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidPolicies;
       )) = 0;
     
     virtual ::CORBA::Policy_ptr copy (
-        CORBA_Object *_collocated_tao_target_
+        CORBA::Object *_collocated_tao_target_
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -485,7 +485,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidPolicies;
       )) = 0;
     
     virtual void destroy (
-        CORBA_Object *_collocated_tao_target_
+        CORBA::Object *_collocated_tao_target_
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -515,7 +515,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidPolicies;
     
     virtual ~_TAO_Policy_Remote_Proxy_Impl (void) { }
     virtual CORBA::PolicyType policy_type (
-        CORBA_Object *_collocated_tao_target_
+        CORBA::Object *_collocated_tao_target_
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -523,7 +523,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidPolicies;
       ));
     
     virtual ::CORBA::Policy_ptr copy (
-        CORBA_Object *_collocated_tao_target_
+        CORBA::Object *_collocated_tao_target_
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -531,7 +531,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidPolicies;
       ));
     
     virtual void destroy (
-        CORBA_Object *_collocated_tao_target_
+        CORBA::Object *_collocated_tao_target_
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -700,7 +700,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidPolicies;
 #define _CORBA_POLICYMANAGER_CH_
   
   class TAO_Export PolicyManager
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)

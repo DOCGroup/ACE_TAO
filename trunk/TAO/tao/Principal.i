@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 ACE_INLINE CORBA::Boolean
@@ -7,7 +9,7 @@ CORBA::is_nil (CORBA::Principal_ptr principal)
 }
 
 ACE_INLINE CORBA::ULong
-CORBA_Principal::_decr_refcnt (void)
+CORBA::Principal::_decr_refcnt (void)
 {
   {
     this->refcount_--;
@@ -27,14 +29,14 @@ CORBA::release (CORBA::Principal_ptr principal)
 }
 
 ACE_INLINE CORBA::ULong
-CORBA_Principal::_incr_refcnt (void)
+CORBA::Principal::_incr_refcnt (void)
 {
   return this->refcount_++;
 }
 
 
-ACE_INLINE CORBA_Principal*
-CORBA_Principal::_duplicate (CORBA_Principal* x)
+ACE_INLINE CORBA::Principal*
+CORBA::Principal::_duplicate (CORBA::Principal* x)
 {
   if (x != 0)
     x->_incr_refcnt ();
@@ -42,169 +44,169 @@ CORBA_Principal::_duplicate (CORBA_Principal* x)
 }
 
 
-ACE_INLINE CORBA_Principal*
-CORBA_Principal::_nil (void)
+ACE_INLINE CORBA::Principal*
+CORBA::Principal::_nil (void)
 {
   return 0;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_Principal_var
+// Inline operations for class CORBA::Principal_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_Principal_var::CORBA_Principal_var (void)
-  : ptr_ (CORBA_Principal::_nil ())
+CORBA::Principal_var::Principal_var (void)
+  : ptr_ (CORBA::Principal::_nil ())
 {
 }
 
 ACE_INLINE
-CORBA_Principal_var::CORBA_Principal_var (CORBA_Principal_ptr p)
+CORBA::Principal_var::Principal_var (CORBA::Principal_ptr p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA_Principal_var::~CORBA_Principal_var (void)
+CORBA::Principal_var::~Principal_var (void)
 {
   CORBA::release (this->ptr_);
 }
 
-ACE_INLINE CORBA_Principal_ptr
-CORBA_Principal_var::ptr (void) const
+ACE_INLINE CORBA::Principal_ptr
+CORBA::Principal_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-CORBA_Principal_var::CORBA_Principal_var (const CORBA_Principal_var &p)
-  : ptr_ (CORBA_Principal::_duplicate (p.ptr ()))
+CORBA::Principal_var::Principal_var (const CORBA::Principal_var &p)
+  : ptr_ (CORBA::Principal::_duplicate (p.ptr ()))
 {}
 
-ACE_INLINE CORBA_Principal_var &
-CORBA_Principal_var::operator= (CORBA_Principal_ptr p)
+ACE_INLINE CORBA::Principal_var &
+CORBA::Principal_var::operator= (CORBA::Principal_ptr p)
 {
   CORBA::release (this->ptr_);
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_Principal_var &
-CORBA_Principal_var::operator= (const CORBA_Principal_var &p)
+ACE_INLINE CORBA::Principal_var &
+CORBA::Principal_var::operator= (const CORBA::Principal_var &p)
 {
   if (this != &p)
   {
     CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_Principal::_duplicate (p.ptr ());
+    this->ptr_ = CORBA::Principal::_duplicate (p.ptr ());
   }
   return *this;
 }
 
 ACE_INLINE
-CORBA_Principal_var::operator const CORBA_Principal_ptr &() const
+CORBA::Principal_var::operator const CORBA::Principal_ptr &() const
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-CORBA_Principal_var::operator CORBA_Principal_ptr &()
+CORBA::Principal_var::operator CORBA::Principal_ptr &()
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Principal_ptr
-CORBA_Principal_var::operator-> (void) const
+ACE_INLINE CORBA::Principal_ptr
+CORBA::Principal_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Principal_ptr
-CORBA_Principal_var::in (void) const
+ACE_INLINE CORBA::Principal_ptr
+CORBA::Principal_var::in (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Principal_ptr &
-CORBA_Principal_var::inout (void)
+ACE_INLINE CORBA::Principal_ptr &
+CORBA::Principal_var::inout (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Principal_ptr &
-CORBA_Principal_var::out (void)
+ACE_INLINE CORBA::Principal_ptr &
+CORBA::Principal_var::out (void)
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_Principal::_nil ();
+  this->ptr_ = CORBA::Principal::_nil ();
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Principal_ptr
-CORBA_Principal_var::_retn (void)
+ACE_INLINE CORBA::Principal_ptr
+CORBA::Principal_var::_retn (void)
 {
   // yield ownership
-  CORBA_Principal_ptr val = this->ptr_;
-  this->ptr_ = CORBA_Principal::_nil ();
+  CORBA::Principal_ptr val = this->ptr_;
+  this->ptr_ = CORBA::Principal::_nil ();
   return val;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_Principal_out
+// Inline operations for class CORBA::Principal_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_Principal_out::CORBA_Principal_out (CORBA_Principal_ptr &p)
+CORBA::Principal_out::Principal_out (CORBA::Principal_ptr &p)
         : ptr_ (p)
 {
-  this->ptr_ = CORBA_Principal::_nil ();
+  this->ptr_ = CORBA::Principal::_nil ();
 }
 
 ACE_INLINE
-CORBA_Principal_out::CORBA_Principal_out (CORBA_Principal_var &p)
+CORBA::Principal_out::Principal_out (CORBA::Principal_var &p)
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_Principal::_nil ();
+  this->ptr_ = CORBA::Principal::_nil ();
 }
 
 ACE_INLINE
-CORBA_Principal_out::CORBA_Principal_out (CORBA_Principal_out &p)
+CORBA::Principal_out::Principal_out (CORBA::Principal_out &p)
   : ptr_ (p.ptr_)
 {}
 
-ACE_INLINE CORBA_Principal_out &
-CORBA_Principal_out::operator= (CORBA_Principal_out &p)
+ACE_INLINE CORBA::Principal_out &
+CORBA::Principal_out::operator= (CORBA::Principal_out &p)
 {
   this->ptr_ = p.ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_Principal_out &
-CORBA_Principal_out::operator= (const CORBA_Principal_var &p)
+ACE_INLINE CORBA::Principal_out &
+CORBA::Principal_out::operator= (const CORBA::Principal_var &p)
 {
-  this->ptr_ = CORBA_Principal::_duplicate (p.ptr ());
+  this->ptr_ = CORBA::Principal::_duplicate (p.ptr ());
   return *this;
 }
 
-ACE_INLINE CORBA_Principal_out &
-CORBA_Principal_out::operator= (CORBA_Principal_ptr p)
+ACE_INLINE CORBA::Principal_out &
+CORBA::Principal_out::operator= (CORBA::Principal_ptr p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE
-CORBA_Principal_out::operator CORBA_Principal_ptr &()
+CORBA::Principal_out::operator CORBA::Principal_ptr &()
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Principal_ptr &
-CORBA_Principal_out::ptr (void)
+ACE_INLINE CORBA::Principal_ptr &
+CORBA::Principal_out::ptr (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Principal_ptr
-CORBA_Principal_out::operator-> (void)
+ACE_INLINE CORBA::Principal_ptr
+CORBA::Principal_out::operator-> (void)
 {
   return this->ptr_;
 }
