@@ -1,3 +1,31 @@
+Tue Aug 13 11:25:23 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/Push_Handler.h:
+	* orbsvcs/LoadBalancer/Push_Handler.cpp:
+
+	  Event handler responsible for pushing loads to the LoadManager
+	  when the "PUSH" load monitoring style is used.
+
+	* orbsvcs/LoadBalancer/LoadMonitor.cpp:
+
+	  Correctly handle both "PULL" and "PUSH" load monitoring styles.
+
+	  Added support for custom LoadMonitors.  Users may now feed this
+	  utility the IOR of their custom LoadMonitor.
+
+	* orbsvcs/LoadBalancer/Makefile:
+
+	  Added these targets to the ".PHONY" target.  This forces the
+	  top-level Makefile to invoke these targets regardless of whether
+	  or not the actual binaries they build have been built or not.
+	  This fixes a problem where the binaries were not rebuilt after
+	  invoking the top-level Makefile despite the fact that the
+	  binary sources were modified.
+
+	* orbsvcs/LoadBalancer/Makefile.LoadMonitor (SRC):
+
+	  Added Push_Handler to the list of sources.
+
 Tue Aug 13 10:54:08 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/CosLoadBalancing.bor (CFLAGS):
