@@ -471,7 +471,8 @@ parse_args (int argc, char *argv[])
       }
     case 'h':
     default:
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) usage:\n"
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) usage:\n"
 		  ASYS_TEXT ("-i <iterations>\n")));
       break;
   }
