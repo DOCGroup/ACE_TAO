@@ -96,7 +96,10 @@ RFC 2475, "An Architecture for Differentiated Services",
 
 RFC 2597, "Assured Forwarding PHB Group", http://www.ietf.org/rfc/rfc2597.txt
 
-RFC 2598, "An Expedited Forwarding PHB", http://www.ietf.org/rfc/rfc2598.txt
+RFC 3246, "An Expedited Forwarding PHB", http://www.ietf.org/rfc/rfc3246.txt
+
+RFC 3247, "Supplemental Information for the New Definition of the EF PHB", 
+          http://www.ietf.org/rfc/rfc3247.txt
 
 RFC 3168, "The Addition of Explicit Congestion Notification (ECN)
            to IP", http://www.ietf.org/rfc/rfc3168.txt
