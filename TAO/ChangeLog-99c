@@ -1,3 +1,24 @@
+Wed Aug 18 16:22:25 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_union.cpp:
+	  Code generation for implementation of union_var's
+	  ptr() method was not happening in some cases. Thanks to 
+	  Lothar Werzinger <werzinger.lothar@krones.de> for
+	  pointing this out.
+
+	* TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
+	  CORBA 2.3 requires C++ mapping to have a typedef of
+	  '_foo_seq' for anonymous sequence members of unions
+	  or structs. This provides a consistent type name for
+	  the user so that the implementation-specific
+	  name of the anonymous sequence need not be known.
+	  Since this typedef occurs inside the union class or
+	  struct, the usual guard against compilers with broken
+	  typedef scoping is included in the generated code.
+	  Thanks again to Lothar Werzinger <werzinger.lothar@krones.de>
+	  for bringing this to our attention.
+
 Wed Aug 18 12:53:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Param_Test/run_test.pl: 
