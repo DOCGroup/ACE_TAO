@@ -1,3 +1,13 @@
+Thu Aug  6 13:39:32 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* tao_idl/be/be_visitor_argument/vardecl_ss.cpp:
+	* tao_idl/be/be_visitor_argument/post_upcall_ss.cpp:
+	  Removed code from visit_predefined_type () in
+	  post_upcall_ss.cpp and changed vardecl_ss.cpp to
+	  accomplish the same thing in a less messy and more
+	  memory-robust manner. Applies to code generated for
+	  test_typecode_skel () in param_TestS.cpp.
+
 Thu Aug 06 12:51:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/orbconf.h: Added a define for the type of reactor that TAO
