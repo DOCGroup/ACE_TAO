@@ -65,30 +65,27 @@ public:
   // Copy the state from <source>, it uses the copy() operator to
   // obtain independent copies of all the policies.
 
-  void set_policy_overrides (
-      const CORBA::PolicyList & policies,
-      CORBA::SetOverrideType set_add,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
+  void set_policy_overrides (const CORBA::PolicyList & policies,
+                             CORBA::SetOverrideType set_add,
+                             CORBA::Environment &ACE_TRY_ENV =
+                             TAO_default_environment ()
     );
   // Modify the list of policies to include <policies>.
   // If <set_add> is CORBA::SET_OVERRIDE then we replace all the old
   // policies. If it is CORBA::ADD_OVERRIDE we simply add the policies
   // in <policies>.
-  // No attempt is made to validate the policies for consitency.
+  // No attempt is made to validate the policies for consistency.
 
-  CORBA::PolicyList * get_policy_overrides (
-      const CORBA::PolicyTypeSeq & types,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
+  CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & types,
+                                            CORBA::Environment &ACE_TRY_ENV =
+                                            TAO_default_environment ()
     );
   // Get the values (if any) for the policies in <types>, if <types>
   // is an empty list the method returns *all* the current policies.
 
-  CORBA::Policy_ptr get_policy (
-      CORBA::PolicyType policy,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy,
+                                CORBA::Environment &ACE_TRY_ENV =
+                                TAO_default_environment ()
     );
   // Obtain a single policy.
 
@@ -193,10 +190,9 @@ public:
   TAO_Policy_Manager (void);
   // constructor
 
-  CORBA::Policy_ptr get_policy (
-      CORBA::PolicyType policy,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy,
+                                CORBA::Environment &ACE_TRY_ENV =
+                                TAO_default_environment ()
     );
   // Obtain a single policy.
 
@@ -207,12 +203,11 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-  virtual void set_policy_overrides (
-        const CORBA::PolicyList & policies,
-        CORBA::SetOverrideType set_add,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+  virtual void set_policy_overrides (const CORBA::PolicyList & policies,
+                                     CORBA::SetOverrideType set_add,
+                                     CORBA::Environment &ACE_TRY_ENV =
+                                     CORBA::Environment::default_environment ()
+                                     );
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
@@ -262,10 +257,9 @@ private:
 class TAO_Export TAO_Policy_Current_Impl
 {
 public:
-  CORBA::Policy_ptr get_policy (
-      CORBA::PolicyType policy,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy,
+                                CORBA::Environment &ACE_TRY_ENV =
+                                TAO_default_environment ()
     );
   // Obtain a single policy.
 
@@ -276,12 +270,10 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-  void set_policy_overrides (
-        const CORBA::PolicyList & policies,
-        CORBA::SetOverrideType set_add,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+  void set_policy_overrides (const CORBA::PolicyList & policies,
+                             CORBA::SetOverrideType set_add,
+                             CORBA::Environment &ACE_TRY_ENV =
+                             CORBA::Environment::default_environment ());
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
@@ -309,11 +301,8 @@ public:
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  TAO_PriorityModelPolicy *priority_model (void) const;
-  TAO_ThreadpoolPolicy *threadpool (void) const;
   TAO_PrivateConnectionPolicy *private_connection (void) const;
   TAO_PriorityBandedConnectionPolicy *priority_banded_connection (void) const;
-  TAO_ServerProtocolPolicy *server_protocol (void) const;
   TAO_ClientProtocolPolicy *client_protocol (void) const;
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
@@ -378,11 +367,8 @@ public:
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  TAO_PriorityModelPolicy *priority_model (void) const;
-  TAO_ThreadpoolPolicy *threadpool (void) const;
   TAO_PrivateConnectionPolicy *private_connection (void) const;
   TAO_PriorityBandedConnectionPolicy *priority_banded_connection (void) const;
-  TAO_ServerProtocolPolicy *server_protocol (void) const;
   TAO_ClientProtocolPolicy *client_protocol (void) const;
 
 #endif /* TAO_HAS_RT_CORBA == 1 */

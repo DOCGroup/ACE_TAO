@@ -180,23 +180,6 @@ TAO_Policy_Current_Impl::get_policy (
   return this->manager_impl_.get_policy (policy, ACE_TRY_ENV);
 }
 
-ACE_INLINE CORBA::PolicyList *
-TAO_Policy_Current_Impl::get_policy_overrides (
-        const CORBA::PolicyTypeSeq & ts,
-        CORBA::Environment &ACE_TRY_ENV)
-{
-  return this->manager_impl_.get_policy_overrides (ts, ACE_TRY_ENV);
-}
-
-ACE_INLINE void
-TAO_Policy_Current_Impl::set_policy_overrides (
-        const CORBA::PolicyList & policies,
-        CORBA::SetOverrideType set_add,
-        CORBA::Environment &ACE_TRY_ENV)
-{
-  this->manager_impl_.set_policy_overrides (policies, set_add, ACE_TRY_ENV);
-}
-
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
 ACE_INLINE TAO_RelativeRoundtripTimeoutPolicy *
@@ -239,18 +222,6 @@ TAO_Policy_Current_Impl::buffering_constraint (void) const
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-ACE_INLINE TAO_PriorityModelPolicy *
-TAO_Policy_Current_Impl::priority_model (void) const
-{
-  return this->manager_impl_.priority_model ();
-}
-
-ACE_INLINE TAO_ThreadpoolPolicy *
-TAO_Policy_Current_Impl::threadpool (void) const
-{
-  return this->manager_impl_.threadpool ();
-}
-
 ACE_INLINE TAO_PrivateConnectionPolicy *
 TAO_Policy_Current_Impl::private_connection (void) const
 {
@@ -263,11 +234,6 @@ TAO_Policy_Current_Impl::priority_banded_connection (void) const
   return this->manager_impl_.priority_banded_connection ();
 }
 
-ACE_INLINE TAO_ServerProtocolPolicy *
-TAO_Policy_Current_Impl::server_protocol (void) const
-{
-  return this->manager_impl_.server_protocol ();
-}
 
 ACE_INLINE TAO_ClientProtocolPolicy *
 TAO_Policy_Current_Impl::client_protocol (void) const
@@ -300,10 +266,9 @@ TAO_Policy_Current::get_policy_overrides (
 }
 
 ACE_INLINE void
-TAO_Policy_Current::set_policy_overrides (
-        const CORBA::PolicyList & policies,
-        CORBA::SetOverrideType set_add,
-        CORBA::Environment &ACE_TRY_ENV)
+TAO_Policy_Current::set_policy_overrides (const CORBA::PolicyList & policies,
+                                          CORBA::SetOverrideType set_add,
+                                          CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
 
@@ -360,22 +325,6 @@ TAO_Policy_Current::buffering_constraint (void) const
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-ACE_INLINE TAO_PriorityModelPolicy *
-TAO_Policy_Current::priority_model (void) const
-{
-  TAO_Policy_Current_Impl &impl = this->implementation ();
-
-  return impl.priority_model ();
-}
-
-ACE_INLINE TAO_ThreadpoolPolicy *
-TAO_Policy_Current::threadpool (void) const
-{
-  TAO_Policy_Current_Impl &impl = this->implementation ();
-
-  return impl.threadpool ();
-}
-
 ACE_INLINE TAO_PrivateConnectionPolicy *
 TAO_Policy_Current::private_connection (void) const
 {
@@ -390,14 +339,6 @@ TAO_Policy_Current::priority_banded_connection (void) const
   TAO_Policy_Current_Impl &impl = this->implementation ();
 
   return impl.priority_banded_connection ();
-}
-
-ACE_INLINE TAO_ServerProtocolPolicy *
-TAO_Policy_Current::server_protocol (void) const
-{
-  TAO_Policy_Current_Impl &impl = this->implementation ();
-
-  return impl.server_protocol ();
 }
 
 ACE_INLINE TAO_ClientProtocolPolicy *
