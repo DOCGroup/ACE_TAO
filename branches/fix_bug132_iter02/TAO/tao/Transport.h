@@ -71,10 +71,10 @@ class TAO_Queued_Message;
  * transport may already be sending another message in a reactive
  * fashion.
  *
- * Consequently, the Transport must also keep a
- * <TT>current_message</TT>, if	the current message is not null	any
- * new messages	must be	queued.	 Only once the current message is
- * completely sent we can take a message out of	the queue.
+ * Consequently, the Transport must also know if the head of the queue
+ * has been partially sent.  In that case new messages can only follow
+ * the head. Only once the head is completely sent we can start
+ * sending new messages.
  *
  * <H4>Waiting threads:</H4> One or more threads can be	blocked
  * waiting for the connection to completely send the message.
@@ -483,14 +483,6 @@ public:
   virtual int messaging_init (CORBA::Octet major,
                               CORBA::Octet minor) = 0;
 
-  /// There is data queued or pending data in the current
-  /// message. Enable the reactive calls through the reactor
-  virtual int schedule_output (void);
-
-  /// There is no more data to send, cancel any reactive calls through
-  /// the reactor
-  virtual int cancel_output (void);
-
   //@}
 
   /// Send a message block chain,
@@ -518,15 +510,8 @@ private:
    */
   int send_current_message (void);
 
-  /// Dequeue the next message, if any, and continue sending data
-  /**
-   * Once a message is completely sent, a new message is dequeued and
-   * setup as the current message.
-   *
-   * Returns 0 if there is more data to send, -1 if there was an error
-   * and 1 if the message was completely sent.
-   */
-  int dequeue_next_message (void);
+  /// Copy the contents of a message block into a Queued_Message
+  TAO_Queued_Message *copy_message_block (const ACE_Message_Block *mb);
 
   /// Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Transport	(const TAO_Transport&))
@@ -585,10 +570,6 @@ protected:
   /// Implement the outgoing data queue
   TAO_Queued_Message *head_;
   TAO_Queued_Message *tail_;
-
-  /// Once part of a message has been sent it is kept here until it is
-  /// completely sent
-  TAO_Queued_Message *current_message_;
 };
 
 #if defined (__ACE_INLINE__)

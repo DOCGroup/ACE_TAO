@@ -125,9 +125,6 @@ public:
                               CORBA::Octet minor);
 
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
-
-  virtual int schedule_output (void);
-  virtual int cancel_output (void);
   //@}
 
 private:
