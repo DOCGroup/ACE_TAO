@@ -16,7 +16,7 @@
 #include "ace/Task.h"
 #include "ace/Lock_Adapter_T.h"
 
-#ifdef KOKYU_HAS_RELEASE_GUARD
+#if defined (KOKYU_HAS_RELEASE_GUARD)
 #include "ace/Map.h"
 #include "Dispatch_Deferrer.h"
 #endif //KOKYU_HAS_RELEASE_GUARD
@@ -25,11 +25,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if ! defined (ACE_WIN32) && defined (ACE_HAS_DSUI)
+#if defined (ACE_HAS_DSUI)
 #include "kokyu_config.h"
 #include "kokyu_dsui_families.h"
 #include <dsui.h>
-#endif /* ACE_HAS_DSUI */
+#endif // ACE_HAS_DSUI
 
 #include "Kokyu_defs.h"
 
@@ -124,6 +124,8 @@ private:
   int enqueue_i (Dispatch_Queue_Item *qitem);
 
 #ifdef KOKYU_HAS_RELEASE_GUARD
+  friend class Dispatch_Deferrer; //Dispatch_Deferrer needs access to enqueue_i()
+
   //TODO: What's the best way to identify periodic events?
   //For now, use QoSDescriptor equivalence.
   //Maps QoSDescriptors to last release time of events for that
@@ -140,7 +142,6 @@ private:
   Dispatch_Deferrer_Attributes deferrer_attr_;
   Dispatch_Deferrer deferrer_;
 
-  friend class Dispatch_Deferrer; //Dispatch_Deferrer needs access to enqueue_i()
 #endif //KOKYU_HAS_RELEASE_GUARD
 };
 

@@ -146,7 +146,7 @@ namespace Kokyu
 
       void destroy (void);
 
-      const Object_Counter::object_id getID (void);
+      const Object_Counter::object_id getID (void) const;
 
       void setID (Object_Counter::object_id);
 

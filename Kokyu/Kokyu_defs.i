@@ -65,13 +65,15 @@ void Dispatch_Command::destroy (void)
 }
 
 ACE_INLINE
-void Dispatch_Command::setID (Object_Counter::object_id input_oid)
+void
+Dispatch_Command::setID (Object_Counter::object_id input_oid)
 {
   oid_ = input_oid;
 }
 
 ACE_INLINE
-const Object_Counter::object_id Dispatch_Command::getID (void)
+const Object_Counter::object_id
+Dispatch_Command::getID (void) const
 {
   return oid_;
 }
