@@ -1,3 +1,10 @@
+Fri Mar  5 18:12:24 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Asynch_Acceptor.cpp (open): If any of the steps in the open fail,
+	  close the socket and reset listen_handle_ to ACE_INVALID_HANDLE
+	  before returning. Also added ACE_LIB_TEXT around the naked literal
+	  strings for ACE_ERROR.
+	
 Fri Mar  5 22:56:45 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
