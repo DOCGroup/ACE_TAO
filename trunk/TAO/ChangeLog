@@ -1,3 +1,18 @@
+Sun Mar 23 12:30:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Services.cpp:
+        * tao/Services.h:
+        * tao/Services.i:
+
+	  Removed these files from the respository, since they are replaced by the
+	  corresponding ServicesC.* file. Apparently during a recent branch merge
+	  the removal of the above files was overlooked or otherwise derailed.
+
+	* tao/Makefile.bor:
+
+	  Updated the Borland makefile to reflect the change above. Thanks to 
+	  Johnny Willemsen <jwillemsen@remedy.nl> for reporting the problem.
+
 Sat Mar 22 19:52:58 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Collocation_Tests: New test for Collocation. This test has

@@ -177,7 +177,7 @@ OBJFILES = \
 	$(OBJDIR)\Server_Strategy_Factory.obj \
 	$(OBJDIR)\Service_Callbacks.obj \
 	$(OBJDIR)\Service_Context.obj \
-	$(OBJDIR)\Services.obj \
+	$(OBJDIR)\ServicesC.obj \
 	$(OBJDIR)\Services_Activate.obj \
 	$(OBJDIR)\StringSeqC.obj \
 	$(OBJDIR)\Stub.obj \
