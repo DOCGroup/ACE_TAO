@@ -13,11 +13,11 @@ CFG=Log_Msg_MFC - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Log_Msg_MFC.mak" CFG="Log_Msg_MFC - Win32 Debug"
+!MESSAGE NMAKE /f "Log_Msg_MFC.mak" CFG="Log_Msg_MFC - Win32 MFC Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Log_Msg_MFC - Win32 Debug" (based on "Win32 (x86) Application")
+!MESSAGE "Log_Msg_MFC - Win32 MFC Debug" (based on "Win32 (x86) Application")
 !MESSAGE 
 
 # Begin Project
@@ -54,7 +54,7 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "Log_Msg_MFC - Win32 Debug"
+# Name "Log_Msg_MFC - Win32 MFC Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
