@@ -1984,6 +1984,10 @@ SOURCE=.\Valuetype_Adapter.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Var_Array_Argument_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Var_Size_Argument_T.h
 # End Source File
 # Begin Source File
@@ -2732,6 +2736,11 @@ SOURCE=.\Special_Basic_Argument_T.cpp
 # Begin Source File
 
 SOURCE=.\UB_String_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Array_Argument_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
