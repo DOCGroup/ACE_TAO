@@ -204,20 +204,19 @@ protected:
  * We could use the outgoing path of the ORB to send replies. This
  * would allow us to reuse most of the code in the outgoing data
  * path. We were doing this till TAO-1.2.3. We run in to
- * problems. When wrinting the reply gets flow controlled, the ORB
- * tries to flush the message by going into the reactor. This resulted
- * in unnecessary nesting. The thread that gets into the Reactor could
- * potentially handle other messages (incoming or outgoing) and the
- * stack starts growing leading to crashes.
+ * problems. When writing the reply the ORB gets flow controlled, and the
+ * ORB tries to flush the message by going into the reactor. This
+ * resulted in unnecessary nesting. The thread that gets into the
+ * Reactor could potentially handle other messages (incoming or
+ * outgoing) and the stack starts growing leading to crashes.
  *
  * <H4> Solution to the nesting problem </H4>
  *
- * If a thread sending replies gets flow controlled, the ORB would be
- * healthier if it just copies the message and leaves it in the
- * queue. It can go back to wait in the reactor by exiting the
- * loop. The underlying assumption is that the thread trying to send a
- * reply is doing so in the first place it was waiting in the reactor
- to send
+ * The solution that we (plan to) adopt is pretty straight
+ * forward. The thread sending replies will not block to send the
+ * replies but queue the replies and return to the Reactor. (Note the
+ * careful usages of the terms "blocking in the Reactor" as opposed to
+ * "return back to the Reactor".
  *
  *
  * <B>See Also:</B>
@@ -228,6 +227,7 @@ protected:
 class TAO_Export TAO_Transport : private TAO_Synch_Refcountable
 {
 public:
+
   /// default creator, requres the tag value be supplied.
   TAO_Transport (CORBA::ULong tag,
                  TAO_ORB_Core *orb_core);
@@ -272,6 +272,30 @@ public:
   /// Callback method to reactively drain the outgoing data queue
   int handle_output (void);
 
+  /// Get/Set the bidirectional flag
+  int bidirectional_flag (void) const;
+  void bidirectional_flag (int flag);
+
+  /// Set/Get the Cache Map entry
+  void cache_map_entry (TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *entry);
+  TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry (void);
+
+  /// Return the identifier for this transport instance.
+  /**
+   * If not set, this will return an integer representation of
+   * the <code>this</code> pointer for the instance on which
+   * it's called.
+   */
+  int id (void) const;
+  /// Set the identifier for this transport instance.
+  void id (int id);
+
+  /// Return the order for the purging strategy.
+  unsigned long purging_order (void) const;
+
+  /// Allow the purging strategy to set the order.
+  void purging_order(unsigned long value);
+
   /**
    * Initialising the messaging object. This would be used by the
    * connector side. On the acceptor side the connection handler
@@ -279,10 +303,6 @@ public:
    */
   virtual int messaging_init (CORBA::Octet major,
                               CORBA::Octet minor) = 0;
-
-  /// Get/Set the bidirectional flag
-  int bidirectional_flag (void) const;
-  void bidirectional_flag (int flag);
 
   /// Fill in a handle_set with any associated handler's reactor handle.
   /**
@@ -407,21 +427,7 @@ public:
                 const ACE_Time_Value *timeout = 0);
 
 
-  /// Return the identifier for this transport instance.
-  /**
-   * If not set, this will return an integer representation of
-   * the <code>this</code> pointer for the instance on which
-   * it's called.
-   */
-  int id (void) const;
-  /// Set the identifier for this transport instance.
-  void id (int id);
 
-  /// Return the order for the purging strategy.
-  unsigned long purging_order (void) const;
-
-  /// Allow the purging strategy to set the order.
-  void purging_order(unsigned long value);
 
 protected:
   /** @name Template methods
@@ -686,9 +692,7 @@ public:
   /// recache ourselves in the cache
   int recache_transport (TAO_Transport_Descriptor_Interface* desc);
 
-  /// Set/Get the Cache Map entry
-  void cache_map_entry (TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *entry);
-  TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry (void);
+
 
   /// Send a message block chain,
   int send_message_block_chain (const ACE_Message_Block *message_block,
@@ -744,6 +748,10 @@ public:
                       const void* act);
 
 private:
+
+  /// Helper method that returns the Transport Cache Manager.
+  TAO_Transport_Cache_Manager &transport_cache_manager (void);
+
   /// Send some of the data in the queue.
   /**
    * As the outgoing data is drained this method is invoked to send as
