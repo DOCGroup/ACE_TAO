@@ -122,8 +122,8 @@ public:
   ACE_Allocator_Adapter (const char *pool_name,
                          const char *lock_name,
                          MEMORY_POOL_OPTIONS options = 0)
-      : allocator_ (ACE_TEXT_CHAR_TO_TCHAR (pool_name), 
-                    ACE_TEXT_CHAR_TO_TCHAR (lock_name), 
+      : allocator_ (ACE_TEXT_CHAR_TO_TCHAR (pool_name),
+                    ACE_TEXT_CHAR_TO_TCHAR (lock_name),
                     options)
     {
       ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
@@ -136,8 +136,8 @@ public:
   ACE_Allocator_Adapter (const wchar_t *pool_name,
                          const wchar_t *lock_name,
                          MEMORY_POOL_OPTIONS options = 0)
-      : allocator_ (ACE_TEXT_WCHAR_TO_TCHAR (pool_name), 
-                    ACE_TEXT_WCHAR_TO_TCHAR (lock_name), 
+      : allocator_ (ACE_TEXT_WCHAR_TO_TCHAR (pool_name),
+                    ACE_TEXT_WCHAR_TO_TCHAR (lock_name),
                     options)
     {
       ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
@@ -332,6 +332,12 @@ public:
 
   void *calloc (size_t nbytes, char initial_value = '\0');
   // Allocate <nbytes>, giving them <initial_value>.
+
+  void *calloc (size_t n_elem,
+                size_t elem_size,
+                char initial_value = '\0');
+  // Allocate <n_elem> each of size <elem_size>, giving them
+  // <initial_value>.
 
   void  free (void *ptr);
   // Deallocate memory pointed to by <ptr>, which must have been
