@@ -1,3 +1,14 @@
+Fri Nov  5 09:55:28 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * performance-tests/Benchmark/RoundTrip/client.cpp:
+
+          The svc.conf file passed in to the client was not being passed
+          to the ORB as ACE::Get_Opt ate up the argument before being
+          passed to the client ORB. This fixes this error at the client
+          side temporarily by initializing the ORB before parsing the
+          arguments. Thanks to Abhi <abhi@qualcomm.com> for reporting
+          this.
+
 Thu Nov  4 09:31:29 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/RepositoryManager/Update_Plan.cpp:
