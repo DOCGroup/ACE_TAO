@@ -732,7 +732,10 @@ typedef int key_t;
       typedef char *            caddr_t;
 
 #       if defined (ACE_PSOS_DIAB_PPC)
+      // pid_t is defined in sys/types.h
+#         if 0
       typedef unsigned long pid_t;
+#         endif /* 0 */
 #     define ACE_INVALID_PID ((pid_t) ~0)
 #       else /* !defined (ACE_PSOS_DIAB_PPC) */
       typedef long pid_t;
