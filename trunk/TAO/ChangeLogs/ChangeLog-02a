@@ -1,3 +1,28 @@
+Sun Jan 23 14:09:30 2000  Ossama Othman  <ossama@uci.edu>
+
+	* docs/Options.html:
+
+	  Added descriptions of the newly added "-ORBSetUID" and
+	  "-ORBSetGID" ORB options.
+
+	* tao/ORB_Core.cpp (init):
+
+	  Added two new ORB options "-ORBSetUID" and "-ORBSetGID."  These
+	  options can be used to the set the effective user and group IDs,
+	  respectively.  This is useful when starting the ORB under the
+	  super-user but it is desired to run the ORB under different user
+	  and/or group IDs.  A typical use would be to start a TAO daemon,
+	  under the 'nobody' user via System V style initialization
+	  scripts.
+
+	  In general, it is a good idea to only run the ORB with
+	  super-user privileges when necessary, e.g. when performing
+	  benchmarking experiments, and when access to the real-time
+	  scheduling class is needed.  If the ORB must be started via the
+	  super-user account, and the real-time scheduling class won't be
+	  used, than the ORB's effective user ID should at least be
+	  changed to an unprivileged one.
+
 Sat Jan 22 21:08:07 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs.dsp:
