@@ -162,7 +162,9 @@ worker (void *)
           ++timeouts;
           ACE_Time_Value diff = ACE_OS::gettimeofday ();
           diff = diff - tv;       // tv should have been reset to time acquired
-          if (diff.msec () > ACE_ALLOWED_SLACK)
+          long diff_msec = diff.msec ();
+
+          if (diff_msec > ACE_ALLOWED_SLACK)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("Acquire fails time reset test\n")));
