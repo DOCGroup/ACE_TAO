@@ -1,3 +1,14 @@
+Thu Jan  4 14:14:23 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/Makefile.tao_ifr:
+
+          Removed execution of $TAO_ROOT/TAO_IDL/Makefile.FE.
+          This library should already be built, and in any
+          case, executing the makefile from this directory
+          would create duplicate object files and a duplicate
+          library in the current directory, which is not what
+          we want.
+
 Thu Jan  4 13:45:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/tao_ifr.dsp:
