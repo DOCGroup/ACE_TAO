@@ -1,70 +1,80 @@
+Sat Feb 24 08:21:48 2001  David L. Levine <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+          added -fno-implicit-templates on Tornado II for Intel 386
+          family targets.  Thanks to Albert Wijnja <Albert.Wijnja@meco.nl>
+          for reporting that static template data members weren't really on
+          VxWorks/386, and to Greg Holtmeyer <greg.holtmeyer@windriver.com>
+          for confirming that -fno-implicit-templates should work with
+          the Tornado II g++.  [Bug 658]
+
 Fri Feb 23 19:44:36 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACE version 5.1.13 released.
 
 Thu Feb 22 12:28:15 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/TP_Reactor.cpp (handle_events): Here is the description of
-	  how things were working and where the problem was: In the
-	  TP_Reactor there is one leader thread waiting in select() and
-	  the others waiting on the token.  During deactivation(), the
-	  <deactivation_> flag is set on the reactor, signal_all_threads()
-	  is called on the token, and an empty notification is send to the
-	  current leader thread.  signal_all_threads() sets the
-	  <signal_all_threads_> flag on the Token when there are waiters
-	  on the Token (does nothing if there are no waiters).  This
-	  scheme worked fine when there were leader and follower threads
-	  waiting.  When a new leader is chosen, it returns the magic
-	  number 2 from token.acquire_read() and hence exits gracefully
-	  from the handle_events().  However, the problem was that when
-	  some (or all) of the TP threads are busy running upcalls,
-	  signal_all_threads() was a no-op and the magic number 2 was not
-	  returned from token.acquire_read() and hence the exit from
-	  handle_events() was flagged as an error.
+        * ace/TP_Reactor.cpp (handle_events): Here is the description of
+          how things were working and where the problem was: In the
+          TP_Reactor there is one leader thread waiting in select() and
+          the others waiting on the token.  During deactivation(), the
+          <deactivation_> flag is set on the reactor, signal_all_threads()
+          is called on the token, and an empty notification is send to the
+          current leader thread.  signal_all_threads() sets the
+          <signal_all_threads_> flag on the Token when there are waiters
+          on the Token (does nothing if there are no waiters).  This
+          scheme worked fine when there were leader and follower threads
+          waiting.  When a new leader is chosen, it returns the magic
+          number 2 from token.acquire_read() and hence exits gracefully
+          from the handle_events().  However, the problem was that when
+          some (or all) of the TP threads are busy running upcalls,
+          signal_all_threads() was a no-op and the magic number 2 was not
+          returned from token.acquire_read() and hence the exit from
+          handle_events() was flagged as an error.
 
-	  The fix is as described below: 
+          The fix is as described below:
 
-	  (1) ACE_Token::signal_all_threads() does not make sense.  The
-	  token is a mutex, not a condition variable.  Therefore, it does
-	  not make sense to have a signal_all_threads() methods.  Plus I
-	  believe that the method does not do as advertised.  Therefore, I
-	  removed this method from the token class.
+          (1) ACE_Token::signal_all_threads() does not make sense.  The
+          token is a mutex, not a condition variable.  Therefore, it does
+          not make sense to have a signal_all_threads() methods.  Plus I
+          believe that the method does not do as advertised.  Therefore, I
+          removed this method from the token class.
 
-	  (2) There is no need to signal all the threads in the
-	  TP_Reactor.  Marking the Reactor as closed and signaling the
-	  leader thread is enough.  The leader thread will wake up to
-	  handle the empty event, the next leader will see that the
-	  Reactor is closed and exit gracefully.  This will continue until
-	  all the waiters are drained.
+          (2) There is no need to signal all the threads in the
+          TP_Reactor.  Marking the Reactor as closed and signaling the
+          leader thread is enough.  The leader thread will wake up to
+          handle the empty event, the next leader will see that the
+          Reactor is closed and exit gracefully.  This will continue until
+          all the waiters are drained.
 
-	  (3) With the above change, there is no need to check for an
-	  magic returns from token.acquire_read().  When a thread gets the
-	  token, it checks the deactivation flag before proceeding.  If
-	  the Reactor is closed, it gracefully exits.  Otherwise, it
-	  continues as leader.
+          (3) With the above change, there is no need to check for an
+          magic returns from token.acquire_read().  When a thread gets the
+          token, it checks the deactivation flag before proceeding.  If
+          the Reactor is closed, it gracefully exits.  Otherwise, it
+          continues as leader.
 
-	  (4) Since there is no need to call token.signal_all_threads(),
-	  ACE_TP_Reactor::wakeup_all_threads() can be removed since it is
-	  now the same as ACE_Select_Reactor_T::wakeup_all_threads().
+          (4) Since there is no need to call token.signal_all_threads(),
+          ACE_TP_Reactor::wakeup_all_threads() can be removed since it is
+          now the same as ACE_Select_Reactor_T::wakeup_all_threads().
 
-	  Note that this change should help with making
-	  Thread_Pool_Reactor_Test run without shutdown errors.
-	  
-	* ace/Select_Reactor_T.i (deactivate): The setting of the
-	  <deactivated_> flag and waking up of all the threads should be
-	  atomic.  I am being picky about this one but I think am I right.
-	  Also added the guard to the accessor.
+          Note that this change should help with making
+          Thread_Pool_Reactor_Test run without shutdown errors.
+
+        * ace/Select_Reactor_T.i (deactivate): The setting of the
+          <deactivated_> flag and waking up of all the threads should be
+          atomic.  I am being picky about this one but I think am I right.
+          Also added the guard to the accessor.
 
 Thu Feb 22 08:51:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
-        * ace/OS.i:  
+        * ace/OS.i:
 
           Bleh.  Changed an && to || to make sure we get a symbolname
           variable for non-Unicode Win32.
 
-          "He who lives without committing any folly is not so 
+          "He who lives without committing any folly is not so
           wise as he thinks"  - La Rochefoucauld
- 
+
 Thu Feb 22 08:43:30 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * include/makeinclude/rules.local.GNU:
@@ -77,7 +87,7 @@ Thu Feb 22 08:43:30 2001  Carlos O'Ryan  <coryan@uci.edu>
 Thu Feb 22 07:51:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * ace/OS.i: Reverted the change "Thu Feb 22 03:31:06 2001
-          Krishnakumar B  <kitty@ace.cs.wustl.edu> ". 
+          Krishnakumar B  <kitty@ace.cs.wustl.edu> ".
 
 Thu Feb 22 03:31:06 2001  Krishnakumar B  <kitty@ace.cs.wustl.edu>
 
