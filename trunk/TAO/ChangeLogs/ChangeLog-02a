@@ -3,6 +3,7 @@ Tue Mar  5 13:11:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/Asynch_Reply_Dispatcher_Base.h:
         * tao/Service_Callbacks.h:
         * tao/TAO_Server_Request.h:
+        * tao/Adapter.h:
           Fixed small typing errors in comment
 
 Tue Mar  5 00:07:13 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
