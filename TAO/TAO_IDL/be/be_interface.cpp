@@ -36,6 +36,7 @@ be_interface::be_interface (void)
     ami_handler_full_skel_name_ (0),
     skel_count_ (0),
     full_coll_name_ (0),
+    cached_coll_name_type_ (-1),
     ami_handler_full_coll_name_ (0),
     local_coll_name_ (0),
     ami_handler_local_coll_name_ (0),
@@ -107,13 +108,11 @@ be_interface::~be_interface (void)
 void
 be_interface::compute_coll_name (int type)
 {
-// @@ not thread safe.
-  static int cached_type = -1;
-  if (type == cached_type && this->full_coll_name_ != 0)
+  if (type == this->cached_coll_name_type_ && this->full_coll_name_ != 0)
     return;
   else
     {
-      cached_type = type;
+      this->cached_coll_name_type_ = type;
       delete this->full_coll_name_;
       delete this->local_coll_name_;
     }

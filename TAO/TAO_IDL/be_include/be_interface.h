@@ -261,6 +261,9 @@ private:
   char *full_coll_name_;
   // Full collocated name
 
+  int cached_coll_name_type_;
+  // Record the type of cached collocated class prefix.
+
   char *ami_handler_full_coll_name_;
   // Full collocated name of the AMI handler
 
