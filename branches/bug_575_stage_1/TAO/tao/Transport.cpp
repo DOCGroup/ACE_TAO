@@ -1028,27 +1028,7 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
       this->incoming_message_queue_.enqueue_tail (qd);
     }
 
-  // See if the message in the head of the queue is complete...
-  if (this->incoming_message_queue_.is_head_complete () == 1)
-    {
-      // Get the message on the head of the queue..
-      TAO_Queued_Data *qd =
-        this->incoming_message_queue_.dequeue_head ();
-
-      // Process the message...
-      if (this->process_parsed_messages (qd,
-                                         rh) == -1)
-        return -1;
-
-      // Delete the message block first
-      //      delete qd->msg_block_;
-
-      // Delete the Queued_Data..
-      delete qd;
-
-    }
-
-  return 0;
+  return this->process_queue_head (rh);
 }
 
 
@@ -1057,14 +1037,11 @@ TAO_Transport::consolidate_extra_messages (ACE_Message_Block
                                            &incoming,
                                            TAO_Resume_Handle &rh)
 {
-  // @@Bala: What about messages that dont even have their first few
-  // bytes in...
-
   // Take a message from the tail..
   TAO_Queued_Data *tail =
     this->incoming_message_queue_.dequeue_tail ();
 
-  if (tail )
+  if (tail)
     {
       if (this->messaging_object ()->consolidate_node (tail,
                                                        incoming) == -1)
@@ -1085,33 +1062,12 @@ TAO_Transport::consolidate_extra_messages (ACE_Message_Block
         this->incoming_message_queue_.enqueue_tail (q_data);
     }
 
-
-
-  // See if the message in the head of the queue is complete...
-  if (this->incoming_message_queue_.is_head_complete () == 1)
-    {
-      // Get the message on the head of the queue..
-      TAO_Queued_Data *qd =
-        this->incoming_message_queue_.dequeue_head ();
-
-      // Process the message...
-      if (this->process_parsed_messages (qd,
-                                         rh) == -1)
-        return -1;
-
-      // Delete the message_block
-      // delete qd->msg_block_;
-
-      // Delete the Queued_Data..
-      delete qd;
-    }
-
   if (retval == -1)
     {
       return retval;
     }
 
-  return 0;
+  return this->process_queue_head (rh);
 }
 
 int
@@ -1249,6 +1205,56 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
   // If not, just return back..
   return 0;
 }
+
+int
+TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
+{
+  // See if the message in the head of the queue is complete...
+  if (this->incoming_message_queue_.is_head_complete () == 1)
+    {
+      // Get the message on the head of the queue..
+      TAO_Queued_Data *qd =
+        this->incoming_message_queue_.dequeue_head ();
+
+      // Now that we have pulled out out one message out of the queue,
+      // check whether we have one more message in the queue...
+      if (this->incoming_message_queue_.is_head_complete () == 1)
+        {
+          // If we do have, then we get the event handler..
+          ACE_Event_Handler *eh = this->event_handler_i ();
+          if (eh == 0)
+            return -1;
+
+          ACE_Reactor *reactor = eh->reactor ();
+          if (reactor == 0)
+            return -1;
+
+          if (TAO_debug_level > 3)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - Transport[%d]::notify to Reactor\n",
+                          this->id ()));
+            }
+
+          // Send a notification to the reactor...
+          reactor->notify (eh,
+                           ACE_Event_Handler::READ_MASK);
+        }
+      // Process the message...
+      if (this->process_parsed_messages (qd,
+                                         rh) == -1)
+        return -1;
+
+      // Delete the message_block
+      // delete qd->msg_block_;
+
+      // Delete the Queued_Data..
+      delete qd;
+    }
+
+  return 0;
+}
+
 
 int
 TAO_Transport::queue_is_empty (void)
