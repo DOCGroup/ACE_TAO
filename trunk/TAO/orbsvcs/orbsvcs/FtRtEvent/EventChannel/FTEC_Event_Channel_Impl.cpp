@@ -314,7 +314,7 @@ TAO_FTEC_Event_Channel_Impl::connect_push_consumer (
 
   FtRtecEventChannelAdmin::ObjectId *oid;
 
-  if ((*any) >>= oid) {
+  if (any.in() >>= oid) {
     FtRtecEventChannelAdmin::ObjectId* result;
     ACE_NEW_THROW_EX(result,
                      FtRtecEventChannelAdmin::ObjectId(*oid),
@@ -354,7 +354,7 @@ TAO_FTEC_Event_Channel_Impl::connect_push_supplier (
 
   FtRtecEventChannelAdmin::ObjectId *oid;
 
-  if ((*any) >>= oid) {
+  if (any.in() >>= oid) {
     FtRtecEventChannelAdmin::ObjectId* result;
     ACE_NEW_THROW_EX(result,
                      FtRtecEventChannelAdmin::ObjectId(*oid),
