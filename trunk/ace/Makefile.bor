@@ -197,4 +197,29 @@ CFLAGS = $(ACE_CFLAGS) -DACE_BUILD_DLL -DACE_OS_BUILD_DLL
 
 CPPDIR = .
 
+INCDIR_NAME = ace
+INCLUDES = \
+	*.h *.i *.inl *_T.cpp \
+	Acceptor.cpp \
+	Asynch_Acceptor.cpp \
+	Auto_Ptr.cpp \
+	Connector.cpp \
+	CORBA_Ref.cpp \
+	Dynamic_Service.cpp \
+	Free_List.cpp \
+	Future.cpp \
+	Future_Set.cpp \
+	LOCK_SOCK_Acceptor.cpp \
+	Managed_Object.cpp \
+	Map_Manager.cpp \
+	Module.cpp \
+	RB_Tree.cpp \
+	Singleton.cpp \
+	Stream.cpp \
+	Stream_Modules.cpp \
+	Svc_Handler.cpp \
+	Timer_Queue_Adapters.cpp \
+	Typed_SV_Message.cpp \
+	Typed_SV_Message_Queue.cpp
+
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>

@@ -81,6 +81,11 @@ typedef char TCHAR;
 # include /**/ <wchar.h>
 #endif
 
+#if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
+            (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
+using std::size_t;
+#endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
+
 
 // Define the unicode/wchar related macros correctly
 

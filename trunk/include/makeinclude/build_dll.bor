@@ -1,6 +1,6 @@
 #
 # Rules for linking a dll
-# 
+#
 # Inputs:
 # ~~~~~~~
 # NAME - undecorated name of target
@@ -31,13 +31,11 @@ $(TARGET): $(OBJFILES) $(RESOURCE)
 	@del $(TARGET:.dll=.tds)
 !endif
 
-clean:
-	@copy &&!
-@del $(OBJFILES:.obj=.obj ^
-@del ) $(RESOURCE)
-! clean_$(NAME)~.bat 1> NUL
-	-@clean_$(NAME)~.bat 2> NUL
-	@del clean_$(NAME)~.bat
+!include <$(ACE_ROOT)\include\makeinclude\clean.bor>
+
+INSTALL_TYPES = dll lib includes
+
+!include <$(ACE_ROOT)\include\makeinclude\install.bor>
 
 !ifdef CPPDIR
 .path.cpp = $(CPPDIR)
@@ -60,4 +58,3 @@ clean:
 	$(RC) -fo$@ $<
 
 .autodepend
-
