@@ -1,5 +1,10 @@
 Wed Dec 31 14:56:06 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* examples/Reactor/Dgram/: Enhanced the examples to make sure they
+ 	  close() the dgram endpoint when the object is removed from the
+ 	  Reactor.  Thanks to Evgeny Beskrovny
+ 	  <evgeny_beskrovny@icomverse.com> for reporting this.
+
 	* ace/Obstack.cpp: Fixed a stupid bug in the ACE_Obstack
  	  constructor.  Thanks to David Levine for reporting this.
 
