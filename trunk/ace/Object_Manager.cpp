@@ -257,6 +257,9 @@ ACE_Object_Manager::init (void)
       // been initialized.
       object_manager_state_ = OBJ_MAN_INITIALIZED;
 
+      // Allow tracing again (useful if user does init/fini/init)
+      ACE_Trace::start_tracing ();
+
       return 0;
     } else {
       // Had already initialized.

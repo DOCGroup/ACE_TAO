@@ -97,6 +97,7 @@ ACE_Get_Opt::ACE_Get_Opt (int argc,
     long_only_ (long_only),
     has_colon_ (0),
     nextchar_ (0),
+    optopt_ (0),
     ordering_ (ordering),
     nonopt_start_ (optind),
     nonopt_end_ (optind),
@@ -269,26 +270,29 @@ ACE_Get_Opt::long_option_i (void)
       this->optind++;
       if (*s)
         {
-          // s must point to '=' which means there's an argument (well close enougth).
+          // s must point to '=' which means there's an argument (well
+          // close enough).
           if (pfound->has_arg_ != NO_ARG)
             // Good, we want an argument and here it is.
             this->optarg = ++s;
           else
             {
-              // Whoops, we've got what looks like an argument, but we don't want one.
+              // Whoops, we've got what looks like an argument, but we
+              // don't want one.
               if (this->opterr)
-                  ACE_ERROR ((LM_ERROR,
-                              ACE_LIB_TEXT ("%s: long option `--%s' doesn't allow an argument\n"),
-                              this->argv_[0], pfound->name_));
+                  ACE_ERROR
+                    ((LM_ERROR,
+                      ACE_LIB_TEXT ("%s: long option `--%s' doesn't allow an argument\n"),
+                      this->argv_[0], pfound->name_));
               // The spec doesn't cover this, so we keep going and the program
               // doesn't know we ignored an argument if opt_err is off!!!
             }
         }
       else if (pfound->has_arg_ == ARG_REQUIRED)
         {
-          // s didn't help us, but we need an argument. Note that optional arguments
-          // for long options must use the "=" syntax, so we won't get here
-          // in that case.
+          // s didn't help us, but we need an argument. Note that
+          // optional arguments for long options must use the "=" syntax,
+          // so we won't get here in that case.
           if (this->optind < this->argc_)
             // We still have some elements left, so use the next one.
             this->optarg = this->argv_[this->optind++];
@@ -300,6 +304,7 @@ ACE_Get_Opt::long_option_i (void)
                             ACE_LIB_TEXT ("%s: long option '--%s' requires an argument\n"),
                             this->argv_[0], pfound->name_));
               this->nextchar_ = 0;
+              this->optopt_ = pfound->val_;   // Remember matching short equiv
               return this->has_colon_ ? ':' : '?';
             }
         }
@@ -307,6 +312,7 @@ ACE_Get_Opt::long_option_i (void)
       this->long_option_ = pfound;
       // Since val_ has to be either a valid short option or 0, this works
       // great.  If the user really wants to know if a long option was passed.
+      this->optopt_ = pfound->val_;
       return pfound->val_;
     }
   if (!this->long_only_ || this->argv_[this->optind][1] == '-'
@@ -355,6 +361,7 @@ ACE_Get_Opt::short_option_i (void)
         this->nextchar_ = this->argv_[this->optind];
       return long_option_i ();
     }
+  this->optopt_ = oli[0];      // Remember the option that matched
   if (oli[1] == ':')
     {
       if (oli[2] == ':')
@@ -407,7 +414,6 @@ ACE_Get_Opt::operator () (void)
   this->optarg = 0;
   this->long_option_ = 0;
 
-  this->optarg = 0;
   if (this->argv_ == 0)
     {
       // It can happen, e.g., on VxWorks.
@@ -415,8 +421,8 @@ ACE_Get_Opt::operator () (void)
       return -1;
     }
 
-  // We check this because we can string short options together if the preceding one doesn't take
-  // an argument.
+  // We check this because we can string short options together if the
+  // preceding one doesn't take an argument.
   if (this->nextchar_ == 0 || *this->nextchar_ == '\0')
     {
       int retval = this->nextchar_i ();
@@ -446,11 +452,11 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
 {
   ACE_TRACE ("ACE_Get_Opt::long_option (const ACE_TCHAR *name, int short_option, OPTION_ARG_MODE has_arg)");
 
-  // We only allow valid alpha-numeric characters as short options.  If short_options
-  // is not a valid alpha-numeric, we can still return it when the long option
-  // is found, but won't allow the caller to pass it on the command line (how could
-  // they?).  The special case is 0, but since we always return it, we let the caller
-  // worry about that.
+  // We only allow valid alpha-numeric characters as short options.
+  // If short_options is not a valid alpha-numeric, we can still return it
+  // when the long option is found, but won't allow the caller to pass it on
+  // the command line (how could they?).  The special case is 0, but since
+  // we always return it, we let the caller worry about that.
   if (isalnum (short_option) != 0)
     {
       // If the short_option already exists, make sure it matches, otherwise
@@ -465,23 +471,41 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
               if (s[2] == ':')
                 {
                   if (has_arg != ARG_OPTIONAL)
-                    ACE_ERROR_RETURN ((LM_ERROR,
-                                       "Argument type for existing short option '%c' "
-                                       "does not match '%s'-- != 'ARG_OPTIONAL'\n",
-                                       short_option, s), -1);
+                    {
+                      if (this->opterr)
+                        ACE_ERROR
+                          ((LM_ERROR,
+                            ACE_LIB_TEXT ("Existing short option '%c' takes ")
+                            ACE_LIB_TEXT ("optional argument; adding %s ")
+                            ACE_LIB_TEXT ("requires ARG_OPTIONAL\n"),
+                            short_option, name));
+                      return -1;
+                    }
                 }
               else
                 if (has_arg != ARG_REQUIRED)
-                  ACE_ERROR_RETURN ((LM_ERROR,
-                                     "Argument type for existing short option '%c' "
-                                     "does not match '%s' -- != 'ARG_REQUIRED'\n",
-                                     short_option, s), -1);
+                  {
+                    if (this->opterr)
+                      ACE_ERROR
+                        ((LM_ERROR,
+                          ACE_LIB_TEXT ("Existing short option '%c' requires ")
+                          ACE_LIB_TEXT ("an argument; adding %s ")
+                          ACE_LIB_TEXT ("requires ARG_REQUIRED\n"),
+                          short_option, name));
+                    return -1;
+                  }
             }
           else if (has_arg != NO_ARG)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Argument type for existing short option '%c' "
-                               "does not match '%s' -- != 'NO_ARG'\n",
-                               short_option, s), -1);
+            {
+              if (this->opterr)
+                ACE_ERROR
+                  ((LM_ERROR,
+                    ACE_LIB_TEXT ("Existing short option '%c' does not ")
+                    ACE_LIB_TEXT ("accept an argument; adding %s ")
+                    ACE_LIB_TEXT ("requires NO_ARG\n"),
+                    short_option, name));
+              return -1;
+            }
         }
       else
         {
@@ -506,8 +530,9 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
       || this->long_opts_.set (option, size) != 0)
     {
       delete option;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Could not add long option to array.\n"), -1);
+      ACE_ERROR_RETURN
+        ((LM_ERROR, ACE_LIB_TEXT ("Could not add long option to array.\n")),
+         -1);
     }
   return 0;
 }
