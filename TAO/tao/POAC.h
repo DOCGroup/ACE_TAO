@@ -296,7 +296,7 @@ class ThreadPolicy;
 #if !defined (_PORTABLESERVER_THREADPOLICY_CH_)
 #define _PORTABLESERVER_THREADPOLICY_CH_
 
-  class TAO_Export ThreadPolicy: public virtual CORBA::Policy
+  class TAO_Export ThreadPolicy: public virtual ACE_CORBA_1(Policy)
   {
   public:
     // the static operations
@@ -402,7 +402,7 @@ class LifespanPolicy;
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY_CH_
 
-  class TAO_Export LifespanPolicy: public virtual CORBA::Policy
+  class TAO_Export LifespanPolicy: public virtual ACE_CORBA_1(Policy)
   {
   public:
     // the static operations
@@ -508,7 +508,7 @@ class IdUniquenessPolicy;
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY_CH_
 
-  class TAO_Export IdUniquenessPolicy: public virtual CORBA::Policy
+  class TAO_Export IdUniquenessPolicy: public virtual ACE_CORBA_1(Policy)
   {
   public:
     // the static operations
@@ -614,7 +614,7 @@ class IdAssignmentPolicy;
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY_CH_
 
-  class TAO_Export IdAssignmentPolicy: public virtual CORBA::Policy
+  class TAO_Export IdAssignmentPolicy: public virtual ACE_CORBA_1(Policy)
   {
   public:
     // the static operations
@@ -720,7 +720,7 @@ class ImplicitActivationPolicy;
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY_CH_
 
-  class TAO_Export ImplicitActivationPolicy: public virtual CORBA::Policy
+  class TAO_Export ImplicitActivationPolicy: public virtual ACE_CORBA_1(Policy)
   {
   public:
     // the static operations
@@ -826,7 +826,7 @@ class ServantRetentionPolicy;
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY_CH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY_CH_
 
-  class TAO_Export ServantRetentionPolicy: public virtual CORBA::Policy
+  class TAO_Export ServantRetentionPolicy: public virtual ACE_CORBA_1(Policy)
   {
   public:
     // the static operations
@@ -933,7 +933,7 @@ class RequestProcessingPolicy;
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY_CH_
 
-  class TAO_Export RequestProcessingPolicy: public virtual CORBA::Policy
+  class TAO_Export RequestProcessingPolicy: public virtual ACE_CORBA_1(Policy)
   {
   public:
     // the static operations
@@ -2043,7 +2043,7 @@ class Current;
 #if !defined (_PORTABLESERVER_CURRENT_CH_)
 #define _PORTABLESERVER_CURRENT_CH_
 
-  class TAO_Export Current: public virtual CORBA::Current
+  class TAO_Export Current: public virtual ACE_CORBA_1(Current)
   {
   public:
     // the static operations
