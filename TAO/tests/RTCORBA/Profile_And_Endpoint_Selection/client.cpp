@@ -18,6 +18,7 @@
 #include "ace/Task.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/Strategies/advanced_resource.h"
+#include "../check_supported_priorities.cpp"
 #include "../common_args.cpp"
 #include "testC.h"
 
@@ -393,6 +394,10 @@ Client::reset_policies (ACE_ENV_SINGLE_ARG_DECL)
 int
 main (int argc, char **argv)
 {
+  // Make sure we can support multiple priorities that are required
+  // for this test.
+  check_supported_priorities ();
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
