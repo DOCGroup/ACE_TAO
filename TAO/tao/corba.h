@@ -41,7 +41,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
-#include "ace/Strategies_T.h"
+#include "ace/Strategies.h"
 #include "ace/Connector.h"
 #include "ace/Singleton.h"
 #include "ace/Reactor.h"
