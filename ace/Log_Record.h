@@ -57,28 +57,34 @@ public:
 
 #if !defined (ACE_HAS_WINCE)    // @@ Sould this be ACE_LACKS_IOSTREAM_TOTALLY?
   int print (const ASYS_TCHAR host_name[], 
-	     int verbose = 1, 
+	     u_long verbose_flag,
 	     FILE *fp = stderr);
   // Write the contents of the logging record to the appropriate
   // <FILE>.
 
   int print (const ASYS_TCHAR host_name[], 
-	     int verbose, 
+	     u_long verbose_flag, 
 	     ostream &stream);
   // Write the contents of the logging record to the appropriate
   // <ostream>.
 #else
   int print (const ASYS_TCHAR host_name[], 
-	     int verbose, 
+	     u_long verbose_flag, 
 	     FILE *fp);
   // Write the contents of the logging record to the appropriate
   // <FILE>.
 
   int print (const ASYS_TCHAR host_name[],
-             int verbose = 1,
+             u_long verbose_flag,
              ACE_CE_Bridge *log_ = 0);
-  // For Windows CE, the default is to log messages to a preset window.
+  // For Windows CE, the default is to log messages to a preset
+  // window.
 #endif /* ! ACE_HAS_WINCE */
+
+  static const char *priority_name (ACE_Log_Priority p);
+  // Returns a character array with the string form of the
+  // <ACE_Log_Priority> parameter.  This is used for the verbose
+  // printing format.
 
   // = Marshall/demarshall
   void encode (void);
@@ -158,6 +164,9 @@ private:
 
   ASYS_TCHAR msg_data_[MAXLOGMSGLEN]; 
   // Logging record data 
+
+  static const char *priority_names_[];
+  // Symbolic names for the <ACE_Log_Priority> enums.
 };
 
 #include "ace/Log_Record.i"
