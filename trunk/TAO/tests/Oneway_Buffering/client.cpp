@@ -24,6 +24,10 @@ const int BUFFER_SIZE = 64 * PAYLOAD_LENGTH;
 /// Check that no more than 10% of the messages are not sent.
 const double LIVENESS_TOLERANCE = 0.9;
 
+/// Limit the depth of the liveness test, avoid blowing up the stack
+/// on the server
+const int LIVENESS_MAX_DEPTH = 256;
+
 /// Factor in GIOP overhead in the buffer size test
 const double GIOP_OVERHEAD = 0.9;
 
@@ -296,6 +300,17 @@ configure_policies (CORBA::ORB_ptr orb,
   return 0;
 }
 
+void
+sync_server (Test::Oneway_Buffering_ptr flusher,
+             CORBA::Environment &ACE_TRY_ENV)
+{
+  // Get back in sync with the server...
+  flusher->flush (ACE_TRY_ENV);
+  ACE_CHECK;
+  flusher->sync (ACE_TRY_ENV);
+  ACE_CHECK;
+}             
+
 int
 run_liveness_test (Test::Oneway_Buffering_ptr oneway_buffering,
                    Test::Oneway_Buffering_ptr flusher,
@@ -305,10 +320,7 @@ run_liveness_test (Test::Oneway_Buffering_ptr oneway_buffering,
   ACE_DEBUG ((LM_DEBUG, ".... checking for liveness\n"));
   int test_failed = 0;
 
-  // Get back in sync with the server...
-  flusher->flush (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-  flusher->sync (ACE_TRY_ENV);
+  sync_server (flusher, ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
   CORBA::ULong send_count =
@@ -322,6 +334,7 @@ run_liveness_test (Test::Oneway_Buffering_ptr oneway_buffering,
   for (int j = 0; j != PAYLOAD_LENGTH; ++j)
     payload[j] = CORBA::Octet(j % 256);
 
+  int depth = 0;
   for (int i = 0; i != liveness_test_iterations; ++i)
     {
       oneway_buffering->receive_data (payload, ACE_TRY_ENV);
@@ -346,7 +359,19 @@ run_liveness_test (Test::Oneway_Buffering_ptr oneway_buffering,
                       "not enough messages received %u "
                       "expected %u\n",
                       i, receive_count, expected));
+          
+          sync_server (flusher, ACE_TRY_ENV);
+          ACE_CHECK_RETURN (-1);
         }
+
+      if (depth++ == LIVENESS_MAX_DEPTH)
+        {
+          sync_server (flusher, ACE_TRY_ENV);
+          ACE_CHECK_RETURN (-1);
+
+          depth = 0;
+        }
+      
     }
 
   return test_failed;
@@ -382,10 +407,7 @@ run_message_count (CORBA::ORB_ptr orb,
   CORBA::ULong send_count = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      // Get back in sync with the server...
-      flusher->flush (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-      flusher->sync (ACE_TRY_ENV);
+      sync_server (flusher.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
 
       CORBA::ULong initial_receive_count =
@@ -484,10 +506,7 @@ run_timeout (CORBA::ORB_ptr orb,
   CORBA::ULong send_count = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      // Get back in sync with the server...
-      flusher->flush (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-      flusher->sync (ACE_TRY_ENV);
+      sync_server (flusher.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
 
       CORBA::ULong initial_receive_count =
@@ -588,10 +607,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
   CORBA::ULong send_count = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      // Get back in sync with the server...
-      flusher->flush (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-      flusher->sync (ACE_TRY_ENV);
+      sync_server (flusher.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
 
       CORBA::ULong initial_receive_count =
@@ -698,10 +714,7 @@ run_buffer_size (CORBA::ORB_ptr orb,
   CORBA::ULong bytes_sent = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      // Get back in sync with the server...
-      flusher->flush (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-      flusher->sync (ACE_TRY_ENV);
+      sync_server (flusher.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
 
       CORBA::ULong initial_bytes_received =

@@ -113,7 +113,6 @@ Session::validate_connections (CORBA::Environment &ACE_TRY_ENV)
           ACE_CATCHANY {} ACE_ENDTRY;
         }
     }
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) connections are ready\n"));
 }
 
 void

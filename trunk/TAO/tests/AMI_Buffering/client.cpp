@@ -25,6 +25,10 @@ const int BUFFER_SIZE = 64 * PAYLOAD_LENGTH;
 /// Check that no more than 10% of the messages are not sent.
 const double LIVENESS_TOLERANCE = 0.9;
 
+/// Limit the depth of the liveness test, avoid blowing up the stack
+/// on the server
+const int LIVENESS_MAX_DEPTH = 256;
+
 /// Factor in GIOP overhead in the buffer size test
 const double GIOP_OVERHEAD = 0.9;
 
@@ -329,8 +333,26 @@ configure_policies (CORBA::ORB_ptr orb,
   return 0;
 }
 
+void
+sync_server (CORBA::ORB_ptr orb,
+             Test::AMI_Buffering_ptr flusher,
+             CORBA::Environment &ACE_TRY_ENV)
+{
+  // Get back in sync with the server...
+  flusher->flush (ACE_TRY_ENV);
+  ACE_CHECK;
+  flusher->sync (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Drain responses from the queue
+  ACE_Time_Value tv (0, 100000);
+  orb->run (tv, ACE_TRY_ENV);
+  ACE_CHECK;
+}             
+
 int
-run_liveness_test (Test::AMI_AMI_BufferingHandler_ptr reply_handler,
+run_liveness_test (CORBA::ORB_ptr orb,
+                   Test::AMI_AMI_BufferingHandler_ptr reply_handler,
                    Test::AMI_Buffering_ptr ami_buffering,
                    Test::AMI_Buffering_ptr flusher,
                    Test::AMI_Buffering_Admin_ptr ami_buffering_admin,
@@ -340,9 +362,7 @@ run_liveness_test (Test::AMI_AMI_BufferingHandler_ptr reply_handler,
   int test_failed = 0;
 
   // Get back in sync with the server...
-  flusher->flush (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-  flusher->sync (ACE_TRY_ENV);
+  sync_server (orb, flusher, ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
   CORBA::ULong send_count =
@@ -356,6 +376,7 @@ run_liveness_test (Test::AMI_AMI_BufferingHandler_ptr reply_handler,
   for (int j = 0; j != PAYLOAD_LENGTH; ++j)
     payload[j] = CORBA::Octet(j % 256);
 
+  int depth = 0;
   for (int i = 0; i != liveness_test_iterations; ++i)
     {
       ami_buffering->sendc_receive_data (reply_handler,
@@ -382,6 +403,17 @@ run_liveness_test (Test::AMI_AMI_BufferingHandler_ptr reply_handler,
                       "not enough messages received %u "
                       "expected %u\n",
                       i, receive_count, expected));
+
+          sync_server (orb, flusher, ACE_TRY_ENV);
+          ACE_CHECK_RETURN (-1);
+        }
+
+      if (depth++ == LIVENESS_MAX_DEPTH)
+        {
+          sync_server (orb, flusher, ACE_TRY_ENV);
+          ACE_CHECK_RETURN (-1);
+
+          depth = 0;
         }
     }
 
@@ -428,10 +460,7 @@ run_message_count (CORBA::ORB_ptr orb,
   CORBA::ULong send_count = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      // Get back in sync with the server...
-      flusher->flush (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-      flusher->sync (ACE_TRY_ENV);
+      sync_server (orb, flusher.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
 
       CORBA::ULong initial_receive_count =
@@ -490,7 +519,8 @@ run_message_count (CORBA::ORB_ptr orb,
     }
 
   int liveness_test_failed =
-    run_liveness_test (reply_handler.in (),
+    run_liveness_test (orb,
+                       reply_handler.in (),
                        ami_buffering,
                        flusher.in (),
                        ami_buffering_admin,
@@ -543,10 +573,7 @@ run_timeout (CORBA::ORB_ptr orb,
   CORBA::ULong send_count = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      // Get back in sync with the server...
-      flusher->flush (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-      flusher->sync (ACE_TRY_ENV);
+      sync_server (orb, flusher.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
 
       CORBA::ULong initial_receive_count =
@@ -606,7 +633,8 @@ run_timeout (CORBA::ORB_ptr orb,
     }
 
   int liveness_test_failed =
-    run_liveness_test (reply_handler.in (),
+    run_liveness_test (orb,
+                       reply_handler.in (),
                        ami_buffering,
                        flusher.in (),
                        ami_buffering_admin,
@@ -659,10 +687,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
   CORBA::ULong send_count = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      // Get back in sync with the server...
-      flusher->flush (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-      flusher->sync (ACE_TRY_ENV);
+      sync_server (orb, flusher.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
 
       CORBA::ULong initial_receive_count =
@@ -729,7 +754,8 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
 
 #if 0
   int liveness_test_failed =
-    run_liveness_test (reply_handler.in (),
+    run_liveness_test (orb,
+                       reply_handler.in (),
                        ami_buffering,
                        flusher.in (),
                        ami_buffering_admin,
@@ -782,10 +808,7 @@ run_buffer_size (CORBA::ORB_ptr orb,
   CORBA::ULong bytes_sent = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      // Get back in sync with the server...
-      flusher->flush (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-      flusher->sync (ACE_TRY_ENV);
+      sync_server (orb, flusher.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
 
       CORBA::ULong initial_bytes_received =
@@ -849,7 +872,8 @@ run_buffer_size (CORBA::ORB_ptr orb,
     }
 
   int liveness_test_failed =
-    run_liveness_test (reply_handler.in (),
+    run_liveness_test (orb,
+                       reply_handler.in (),
                        ami_buffering,
                        flusher.in (),
                        ami_buffering_admin,
