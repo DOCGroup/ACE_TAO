@@ -1,6 +1,11 @@
+Sun Nov 28 11:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/PluggableTopology/Test_Saver.cpp:
+          Added include of OS_NS_stdio.h to get fprintf
+
 Sun Nov 28 06:10:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/Options.html (scenario): 
+	* docs/Options.html (scenario):
 
 	  Documentation for the options.
 
