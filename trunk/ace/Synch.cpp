@@ -376,22 +376,22 @@ ACE_Mutex::ACE_Mutex (int type, LPCTSTR name, void *arg)
   // ACE_TRACE ("ACE_Mutex::ACE_Mutex");
 
 #if defined(CHORUS)
-  if (type == USYNC_PROCESS) 
+  if (type == USYNC_PROCESS)
     {
       // Let's see if the shared memory entity already exists.
       ACE_HANDLE fd = ACE_OS::shm_open (name,
                                         O_RDWR | O_CREAT | O_EXCL,
                                         ACE_DEFAULT_FILE_PERMS);
-      if (fd == ACE_INVALID_HANDLE) 
+      if (fd == ACE_INVALID_HANDLE)
         {
           if (errno == EEXIST)
             fd = ACE_OS::shm_open (name,
                                    O_RDWR | O_CREAT,
                                    ACE_DEFAULT_FILE_PERMS);
-          else 
+          else
             return;
         }
-      else 
+      else
         {
           // We own this shared memory object!  Let's set its size.
           if (ACE_OS::ftruncate (fd,
@@ -408,7 +408,7 @@ ACE_Mutex::ACE_Mutex (int type, LPCTSTR name, void *arg)
             }
         }
 
-      this->process_lock_ = 
+      this->process_lock_ =
         (ACE_mutex_t *) ACE_OS::mmap (0,
                                       sizeof (ACE_mutex_t),
                                       PROT_RDWR,
@@ -423,13 +423,13 @@ ACE_Mutex::ACE_Mutex (int type, LPCTSTR name, void *arg)
           && ACE_OS::mutex_init (this->process_lock_,
                                  type,
                                  name,
-                                 arg) != 0) 
+                                 arg) != 0)
         return;
     }
    // It is ok to fall through into the <mutex_init> below if the
    // USYNC_PROCESS flag is not enabled.
 #endif /* CHORUS */
-  if (ACE_OS::mutex_init (&this->lock_, 
+  if (ACE_OS::mutex_init (&this->lock_,
                           type,
                           name,
                           arg) != 0)
@@ -669,7 +669,9 @@ int
 ACE_Recursive_Thread_Mutex::release (void)
 {
 // ACE_TRACE ("ACE_Recursive_Thread_Mutex::release");
+#if !defined (ACE_NDEBUG)
   ACE_thread_t t_id = ACE_Thread::self ();
+#endif /* ACE_NDEBUG */
 
   // Automatically acquire mutex.
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->nesting_mutex_, -1);
