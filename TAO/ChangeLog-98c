@@ -1,41 +1,43 @@
 Tue Jul  7 08:21:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/Makefile: 
-	* orbsvcs/Dump_Schedule/Makefile: 
-	* orbsvcs/Event_Service/Makefile: 
-	* orbsvcs/LifeCycle_Service/Makefile: 
-	* orbsvcs/Naming_Service/Makefile: 
-	* orbsvcs/Scheduling_Service/Makefile: 
-	* orbsvcs/orbsvcs/Makefile: 
-	* orbsvcs/tests/Concurrency/Makefile: 
-	* orbsvcs/tests/EC_Multiple/Makefile: 
-	* orbsvcs/tests/EC_Throughput/Makefile: 
-	* orbsvcs/tests/Event_Latency/Makefile: 
-	* orbsvcs/tests/Logger/Makefile: 
-	* orbsvcs/tests/Simple_Naming/Makefile: 
-	* tao/Makefile: 
-	* tests/CDR/Makefile: 
-	* tests/Cubit/TAO/IDL_Cubit/Makefile: 
-	* tests/Cubit/TAO/MT_Cubit/Makefile: 
-	* tests/OctetSeq/Makefile: 
-	* tests/POA/Default_Servant/Makefile: 
-	* tests/POA/Explicit_Activation/Makefile: 
-	* tests/POA/FindPOA/Makefile: 
-	* tests/POA/Generic_Servant/Makefile: 
-	* tests/POA/NewPOA/Makefile: 
-	* tests/POA/On_Demand_Activation/Makefile: 
-	* tests/POA/RootPOA/Makefile: 
-	* tests/Param_Test/Makefile: 
-	* tests/Quoter/Makefile: 
-	* tests/Thruput/TAO/Makefile: 
-	* tests/NestedUpcall/Reactor/Makefile: 
-	* tests/NestedUpcall/Triangle_Test/Makefile: 
-	  Updated dependencies.
+        * TAO_IDL/Makefile:
+        * orbsvcs/Dump_Schedule/Makefile:
+        * orbsvcs/Event_Service/Makefile:
+        * orbsvcs/LifeCycle_Service/Makefile:
+        * orbsvcs/Naming_Service/Makefile:
+        * orbsvcs/Scheduling_Service/Makefile:
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/tests/Concurrency/Makefile:
+        * orbsvcs/tests/EC_Multiple/Makefile:
+        * orbsvcs/tests/EC_Throughput/Makefile:
+        * orbsvcs/tests/Event_Latency/Makefile:
+        * orbsvcs/tests/Logger/Makefile:
+        * orbsvcs/tests/Simple_Naming/Makefile:
+        * tao/Makefile:
+        * tests/CDR/Makefile:
+        * tests/Cubit/TAO/IDL_Cubit/Makefile:
+        * tests/Cubit/TAO/MT_Cubit/Makefile:
+        * tests/OctetSeq/Makefile:
+        * tests/POA/Default_Servant/Makefile:
+        * tests/POA/Explicit_Activation/Makefile:
+        * tests/POA/FindPOA/Makefile:
+        * tests/POA/Generic_Servant/Makefile:
+        * tests/POA/NewPOA/Makefile:
+        * tests/POA/On_Demand_Activation/Makefile:
+        * tests/POA/RootPOA/Makefile:
+        * tests/Param_Test/Makefile:
+        * tests/Quoter/Makefile:
+        * tests/Thruput/TAO/Makefile:
+        * tests/NestedUpcall/Reactor/Makefile:
+        * tests/NestedUpcall/Triangle_Test/Makefile:
+          Updated dependencies.
 
 Tue Jul 07 07:36:36 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/compat/objbase.h: use #if 0 instead of // to comment out a
           multiline #define, to avoid warning about a multiline comment.
+
+        * tests/Param_Test/results.{h,cpp}: added trailing $ to $Id$ string.
 
 Mon Jul  6 19:33:54 1998  Jeff Parsons  <jp4@cs.wustl,edu>
 
