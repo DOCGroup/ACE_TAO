@@ -208,6 +208,7 @@ public:
   /// Constructor.
   ACE_RB_Tree (ACE_Allocator *alloc = 0);
 
+
   /// Copy constructor.
   ACE_RB_Tree (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt);
 
@@ -361,10 +362,10 @@ public:
   size_t current_size (void) const;
 
   /// Assignment operator.
-  void operator= (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt);
-
-  /// Less than comparison function for keys, using comparison functor.
-  virtual int lessthan (const EXT_ID &k1, const EXT_ID &k2);
+  void operator= (const ACE_RB_Tree<EXT_ID,
+                  INT_ID,
+                  COMPARE_KEYS,
+                  ACE_LOCK> &rbt);
 
   /**
    * Returns a reference to the underlying <ACE_LOCK>.  This makes it
@@ -440,6 +441,14 @@ public:
   void clear (void);
 
 protected:
+  /// Reinitialize constructor.
+  /**
+   * This constructor is used to provide a valid vtable and allocator
+   * if the tree is reconstructed from shared memory.  Constructor
+   * used by the derived class that has an allocator
+   */
+  ACE_RB_Tree (void *location,
+               ACE_Allocator *alloc);
 
   // = Protected methods. These should only be called with locks held.
 
@@ -548,6 +557,9 @@ protected:
   /// basic form, but template specialization can be used to
   /// provide definitions for various EXT_ID and INT_ID types.
   void dump_node_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> &node) const;
+
+  /// Less than comparison function for keys, using comparison functor.
+  int lessthan (const EXT_ID &k1, const EXT_ID &k2);
 
 private:
 

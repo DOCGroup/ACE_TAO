@@ -98,6 +98,20 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (const ACE_RB_T
               *(iter.item ()));
 }
 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (
+    void *location,
+    ACE_Allocator *alloc
+)
+{
+  if (location != this)
+    {
+      this->root_ = 0;
+      this->current_size_ = 0;
+    }
+
+  this->allocator_ = alloc;
+}
 // Destructor.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
