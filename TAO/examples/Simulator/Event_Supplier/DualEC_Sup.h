@@ -168,9 +168,11 @@ private:
 
   // References for CORBA RtecScheduler data structures
   RtecScheduler::RT_Info_Set_var infos_hi_;
+  RtecScheduler::Dependency_Set_var deps_hi_;
   RtecScheduler::Config_Info_Set_var configs_hi_;
   RtecScheduler::Scheduling_Anomaly_Set_var anomalies_hi_;
   RtecScheduler::RT_Info_Set_var infos_lo_;
+  RtecScheduler::Dependency_Set_var deps_lo_;
   RtecScheduler::Config_Info_Set_var configs_lo_;
   RtecScheduler::Scheduling_Anomaly_Set_var anomalies_lo_;
 

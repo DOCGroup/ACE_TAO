@@ -26,6 +26,8 @@
 #include "rtkokyu_event_export.h"
 #include "ace/SString.h"
 
+//#define EC_KOKYU_LOGGING
+
 /**
  * @class TAO_EC_Kokyu_Filter
  *
@@ -83,7 +85,7 @@ public:
                                 ACE_ENV_ARG_DECL);
   virtual void get_qos_info (TAO_EC_QOS_Info& qos_info
                              ACE_ENV_ARG_DECL);
-
+  
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_Kokyu_Filter
                               (const TAO_EC_Kokyu_Filter&))

@@ -19,6 +19,8 @@ OBJFILES = \
 	$(OBJDIR)\Reconfig_Scheduler.obj \
 	$(OBJDIR)\RtecSchedulerC.obj \
 	$(OBJDIR)\RtecSchedulerS.obj \
+	$(OBJDIR)\RtecBaseC.obj \
+	$(OBJDIR)\RtecBaseS.obj \
 	$(OBJDIR)\Runtime_Scheduler.obj \
 	$(OBJDIR)\SchedEntry.obj \
 	$(OBJDIR)\Scheduler.obj \
