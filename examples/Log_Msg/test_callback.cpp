@@ -18,7 +18,6 @@
 // ============================================================================
 
 #include "ace/OS.h"
-#include "ace/streams.h"
 
 ACE_RCSID(Log_Msg, test_callback, "$Id$")
 
@@ -37,7 +36,8 @@ Logger::log (ACE_Log_Record &log_record)
 {
   if (!this->verbose_logging_)
     {
-      cerr << "Logger::log -> " << log_record.msg_data () << endl;
+      ACE_OS::printf ("Logger::log -> %s\n",  
+                      log_record.msg_data ());
     }
   else
     {
@@ -48,13 +48,14 @@ Logger::log (ACE_Log_Record &log_record)
 
       if (result == 0)
         {
-          cerr << "Logger::log -> " << verbose_msg << endl;          
+          ACE_OS::printf ("Logger::log -> %s\n",  
+                          verbose_msg);
         }      
     }
 }
 
 int
-main (int argc, char *argv[])
+main (int, char *[])
 {
   // This message should show up in stderr.
   ACE_DEBUG ((LM_DEBUG,
