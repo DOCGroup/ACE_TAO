@@ -1,3 +1,12 @@
+Fri Dec  6 16:26:49 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/FILE_Addr.cpp (set): Windows appends ASCII 'a' - 'z' and
+          'A' - 'Z' to generate unique filenames and gives up if the
+          character in the template is a non-alphabetic character. In such
+          cases, it returns a NULL. Make sure that we supply a template
+          with a alphabetic character before XXXXXX as well as check for a
+          NULL return value.
+
 Thu Dec  5 22:19:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.{h i}: Added ACE_OS::sigwaitinfo() wrapper.
@@ -23,7 +32,7 @@ Thu Dec  5 20:33:18 2002  Steve Huston  <shuston@riverace.com>
 Thu Dec  5 14:35:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* netsvcs/clients/Naming/Client/Makefile: Do not build in static
-	  builds. 
+	  builds.
 
 Thu Dec  5 07:39:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -32,9 +41,9 @@ Thu Dec  5 07:39:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 Thu Dec  5 09:58:45 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
-	* ace/config-openbsd-pthread.h:  Added 
+	* ace/config-openbsd-pthread.h:  Added
 	  ACE_LACKS_PERFECT_MULTICAST_FILTERING 1.  This should
-	  fix the errors in the test/Multicast_Test in the 
+	  fix the errors in the test/Multicast_Test in the
 	  nightly autobuilds.
 
 Wed Dec  4 21:53:28 2002  Steve Huston  <shuston@riverace.com>
