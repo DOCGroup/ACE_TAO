@@ -41,7 +41,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 
-.PRECIOUS: DatabaseC.h DatabaseC.i DatabaseC.cpp DatabaseS.h DatabaseS.i DatabaseS.cpp
+.PRECIOUS: DatabaseC.h DatabaseC.i DatabaseC.cpp DatabaseS.h DatabaseS.i DatabaseS.cpp DatabaseS_T.h DatabaseS_T.i DatabaseS_T.cpp
 
 server:	$(addprefix $(VDIR),$(FILE_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
@@ -50,7 +50,7 @@ client:	$(addprefix $(VDIR),$(FILE_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-$(RM) DatabaseC.* DatabaseS.*
+	-$(RM) DatabaseC.* DatabaseS.* DatabaseS_T.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
