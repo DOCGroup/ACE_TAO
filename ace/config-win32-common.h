@@ -42,6 +42,14 @@
 # define ACE_HAS_MFC 0
 #endif
 
+// If the invoking procedure turned off debugging by setting NDEBUG, then
+// also set ACE_NDEBUG, unless the user has already set it.
+#if defined (NDEBUG)
+#  if !defined (ACE_NDEBUG)
+#    define ACE_NDEBUG
+#  endif /* ACE_NDEBUG */
+#endif /* NDEBUG */
+
 // Define ACE_HAS_STRICT to 1 in your config.h file if you want to use
 // STRICT type checking.  It is disabled by default because it will
 // break existing application code.
