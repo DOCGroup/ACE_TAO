@@ -7,6 +7,7 @@
 #define ACE_BUILD_DLL
 #include "ace/ACE.h"
 #include "ace/Acceptor.h"
+#include "ace/Handle_Set.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Acceptor)
 
@@ -119,7 +120,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::init (int, char *[])
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (char **strp, 
-						      size_t length) const
+                                                      size_t length) const
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info");
   char buf[BUFSIZ];
@@ -132,9 +133,9 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (char **strp,
     return -1;
   
   ACE_OS::sprintf (buf, "%s\t %s %s", 
-		   "ACE_Acceptor", 
-		   addr_str, 
-		   "# acceptor factory\n");
+                   "ACE_Acceptor", 
+                   addr_str, 
+                   "# acceptor factory\n");
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -169,7 +170,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::close (void)
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE,
-							      ACE_Reactor_Mask)
+                                                              ACE_Reactor_Mask)
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close");
   // Guard against multiple closes.
@@ -181,11 +182,11 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE,
       // accept_strategy_...
 
       this->reactor_->remove_handler 
-	(handle, ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
+        (handle, ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
 
       // Shut down the listen socket to recycle the handles.
       if (this->peer_acceptor_.close () == -1)
-	ACE_ERROR ((LM_ERROR, "close\n"));
+        ACE_ERROR ((LM_ERROR, "close\n"));
 
       // Set the Reactor to 0 so that we don't try to close down
       // again.
@@ -249,7 +250,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler
   if (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK) != 0)
     {
       if (svc_handler->peer ().enable (ACE_NONBLOCK) == -1)
-	return -1;
+        return -1;
     }
   // Otherwise, make sure it's disabled by default.
   else if (svc_handler->peer ().disable (ACE_NONBLOCK) == -1)
@@ -298,12 +299,12 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
       SVC_HANDLER *svc_handler = 0;
       
       if (this->make_svc_handler (svc_handler) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "make_svc_handler"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "make_svc_handler"), 0);
 
       // Accept connection into the Svc_Handler.
 
       else if (this->accept_svc_handler (svc_handler) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "accept_svc_handler"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "accept_svc_handler"), 0);
 
       // Activate the <svc_handler> using the designated concurrency
       // strategy (note that this method becomes responsible for
@@ -311,7 +312,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
       // awry...).
 
       else if (this->activate_svc_handler (svc_handler) == -1)
-      	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activate_svc_handler"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activate_svc_handler"), 0);
 
       conn_handle.set_bit (listener);
     }
@@ -506,7 +507,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor");
 
   if (this->open (addr, reactor, cre_s, acc_s, con_s, sch_s,
-		  service_name, service_description) == -1)
+                  service_name, service_description) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Strategy_Acceptor::ACE_Strategy_Acceptor"));
 }
 
@@ -515,7 +516,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE,
-								       ACE_Reactor_Mask)
+                                                                       ACE_Reactor_Mask)
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close");
   // Guard against multiple closes.
@@ -524,22 +525,22 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDL
       ACE_HANDLE handle = this->get_handle ();
 
       if (this->delete_creation_strategy_)
-	delete this->creation_strategy_;
+        delete this->creation_strategy_;
       this->delete_creation_strategy_ = 0;
       this->creation_strategy_ = 0;
 
       if (this->delete_accept_strategy_)
-	delete this->accept_strategy_;
+        delete this->accept_strategy_;
       this->delete_accept_strategy_ = 0;
       this->accept_strategy_ = 0;
 
       if (this->delete_concurrency_strategy_)
-	delete this->concurrency_strategy_;
+        delete this->concurrency_strategy_;
       this->delete_concurrency_strategy_ = 0;
       this->concurrency_strategy_ = 0;
 
       if (this->delete_scheduling_strategy_)
-	delete this->scheduling_strategy_;
+        delete this->scheduling_strategy_;
       this->delete_scheduling_strategy_ = 0;
       this->scheduling_strategy_ = 0;
 
@@ -547,7 +548,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDL
       // accept_strategy_...
 
       this->reactor ()->remove_handler 
-	(handle, ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
+        (handle, ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
 
       // Set the Reactor to 0 so that we don't try to close down
       // again.
@@ -621,7 +622,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_signal (int, sig
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (char **strp, 
-							       size_t length) const
+                                                               size_t length) const
 {
   ACE_TRACE ("ACE_Strategy_Acceptor::info");
   char buf[BUFSIZ];
@@ -635,9 +636,9 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (char **strp,
 
   // @@ Should add the protocol in...
   ACE_OS::sprintf (buf, "%s\t %s #%s\n",
-		   this->service_name_, 
-		   service_addr_str, 
-		   this->service_description_);
+                   this->service_name_, 
+                   service_addr_str, 
+                   this->service_description_);
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -665,7 +666,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "\nrestart_ = %d", this->restart_));
   this->peer_acceptor_.dump ();
   ACE_DEBUG ((LM_DEBUG, "delete_concurrency_strategy_ = %d", 
-	      delete_concurrency_strategy_));
+              delete_concurrency_strategy_));
   this->concurrency_strategy_->dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -710,7 +711,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Oneshot_Acceptor
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Oneshot_Acceptor");
   if (this->open (addr, reactor, cs) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", 
-	       "ACE_Oneshot_Acceptor::ACE_Oneshot_Acceptor"));
+               "ACE_Oneshot_Acceptor::ACE_Oneshot_Acceptor"));
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> 
@@ -729,14 +730,14 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::close (void)
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE,
-								      ACE_Reactor_Mask)
+                                                                      ACE_Reactor_Mask)
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close");
   // Guard against multiple closes.
   if (this->concurrency_strategy_ != 0)  
     {
       if (this->delete_concurrency_strategy_)
-	delete this->concurrency_strategy_;
+        delete this->concurrency_strategy_;
       this->delete_concurrency_strategy_ = 0;
       this->concurrency_strategy_ = 0;
 
@@ -744,11 +745,11 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE
       // ACE_Reactor then it's ok for this call to fail...
 
       if (this->reactor ())
-	this->reactor ()->remove_handler 
-	  (this, ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
+        this->reactor ()->remove_handler 
+          (this, ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
 
       if (this->peer_acceptor_.close () == -1)
-	ACE_ERROR ((LM_ERROR, "close\n"));
+        ACE_ERROR ((LM_ERROR, "close\n"));
     }
   return 0;
 }
@@ -763,12 +764,12 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_timeout
 
   if (this->svc_handler_->handle_timeout (tv, arg) == -1)
     this->svc_handler_->handle_close (this->svc_handler_->get_handle (), 
-				      ACE_Event_Handler::TIMER_MASK);;
+                                      ACE_Event_Handler::TIMER_MASK);;
 
   // Since we aren't necessarily registered with the Reactor, don't
   // bother to check the return value here...
   if (this->reactor ())
-	this->reactor ()->remove_handler (this, ACE_Event_Handler::ACCEPT_MASK);
+        this->reactor ()->remove_handler (this, ACE_Event_Handler::ACCEPT_MASK);
   return 0;
 }
 
@@ -796,12 +797,12 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::register_handler
       ACE_Time_Value *tv = (ACE_Time_Value *) synch_options.time_value ();
 
       if (tv != 0 
-	  && this->reactor ()->schedule_timer (this, synch_options.arg (),
-					     *tv) == 0)
-	return -1;
+          && this->reactor ()->schedule_timer (this, synch_options.arg (),
+                                             *tv) == 0)
+        return -1;
       else
-	return this->reactor ()->register_handler 
-	  (this, ACE_Event_Handler::ACCEPT_MASK);
+        return this->reactor ()->register_handler 
+          (this, ACE_Event_Handler::ACCEPT_MASK);
     }
 }
 
@@ -838,12 +839,12 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::shared_accept
 
   // Accept connection into the Svc_Handler.
   else if (this->peer_acceptor_.accept (svc_handler->peer (), remote_addr,
-					timeout, restart) == -1)
+                                        timeout, restart) == -1)
     {
       // Check whether we just timed out or whether we failed...
       if (!(errno == EWOULDBLOCK || errno == ETIMEDOUT))
-	// Close down handler to avoid memory leaks.
-	svc_handler->close (0); 
+        // Close down handler to avoid memory leaks.
+        svc_handler->close (0); 
       return -1;
     }
   // Activate the <svc_handler> using the designated concurrency
@@ -884,8 +885,8 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept
   if (this->shared_accept (svc_handler, remote_addr, timeout, restart) == -1)
     {
       if (use_reactor && errno == EWOULDBLOCK)
-	// We couldn't accept right away, so let's wait in the ACE_Reactor.
-	this->register_handler (svc_handler, synch_options, restart);
+        // We couldn't accept right away, so let's wait in the ACE_Reactor.
+        this->register_handler (svc_handler, synch_options, restart);
       return -1;
     }
   return 0;
@@ -929,7 +930,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::fini (void)
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (char **strp, 
-							      size_t length) const
+                                                              size_t length) const
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info");
   char buf[BUFSIZ];
@@ -942,9 +943,9 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (char **strp,
     return -1;
 
   ACE_OS::sprintf (buf, "%s\t %s %s", 
-		   "ACE_Oneshot_Acceptor", 
-		   addr_str, 
-		   "#oneshot acceptor factory\n");
+                   "ACE_Oneshot_Acceptor", 
+                   addr_str, 
+                   "#oneshot acceptor factory\n");
   
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
