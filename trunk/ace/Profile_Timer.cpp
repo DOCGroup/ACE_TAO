@@ -11,7 +11,7 @@ ACE_RCSID(ace, Profile_Timer, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Profile_Timer)
 
-#if defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)
+#if (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32)
 
 void
 ACE_Profile_Timer::dump (void) const

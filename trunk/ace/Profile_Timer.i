@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-#if defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)
+#if (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32)
 
 #if defined (ACE_HAS_PRUSAGE_T)
 ACE_INLINE int
