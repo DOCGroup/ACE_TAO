@@ -1,3 +1,13 @@
+Sun Nov 03 11:00:27 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/CosNotification.bor:
+	  Added missing .obj extension to targets. Thanks to Johnny
+	  Willemsen <jwillemsen@remedy.nl> for pointing this out.
+
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp:
+	  Removed calls to initalize old Notification factories. This is
+	  not needed now.
+
 Sat Nov  2 19:58:51 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Bug_1269_Regression/ORB_Task.cpp:

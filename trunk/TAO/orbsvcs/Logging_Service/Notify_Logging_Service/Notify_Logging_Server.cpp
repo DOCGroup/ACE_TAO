@@ -1,9 +1,5 @@
+//$Id$
 #include "Notify_Logging_Service.h"
-#include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
-#include "orbsvcs/Notify/Notify_Default_CO_Factory.h"
-#include "orbsvcs/Notify/Notify_Default_POA_Factory.h"
-#include "orbsvcs/Notify/Notify_Default_Collection_Factory.h"
-#include "orbsvcs/Notify/Notify_Default_EMO_Factory.h"
 
 ACE_RCSID (Notify_Logging_Service,
            Notify_Logging_Server,
@@ -14,12 +10,6 @@ ACE_RCSID (Notify_Logging_Service,
 int
 main (int argc, char *argv[])
 {
-  // Init factories.
-  TAO_Notify_Default_CO_Factory::init_svc ();
-  TAO_Notify_Default_POA_Factory::init_svc ();
-  TAO_Notify_Default_Collection_Factory::init_svc ();
-  TAO_Notify_Default_EMO_Factory::init_svc ();
-
   Notify_Logging_Service notify_logging_service;
 
   ACE_DECLARE_NEW_CORBA_ENV;
