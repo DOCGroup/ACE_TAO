@@ -34,3 +34,6 @@
 #include "be_visitor_union/union_ch.cpp"
 #include "be_visitor_union/union_ci.cpp"
 #include "be_visitor_union/union_cs.cpp"
+
+ACE_RCSID(be, be_visitor_union, "$Id$")
+

@@ -24,6 +24,8 @@
 
 #include "be_visitor_sequence.h"
 
+ACE_RCSID(be_visitor_sequence, any_op_ch, "$Id$")
+
 
 // ***************************************************************************
 // Sequence visitor for generating Any operator declarations in the client header

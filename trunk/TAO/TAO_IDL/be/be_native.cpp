@@ -1,6 +1,5 @@
 // $Id$
 
-// Id
 // ============================================================================
 //
 // = LIBRARY
@@ -20,6 +19,8 @@
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
+
+ACE_RCSID(be, be_native, "$Id$")
 
 
 // be_native: New IDL type added by the POA spec

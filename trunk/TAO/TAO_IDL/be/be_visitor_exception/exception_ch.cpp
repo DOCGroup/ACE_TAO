@@ -24,6 +24,8 @@
 
 #include "be_visitor_exception.h"
 
+ACE_RCSID(be_visitor_exception, exception_ch, "$Id$")
+
 
 // ******************************************************
 // for client header

@@ -25,6 +25,8 @@
 
 #include "be_visitor_operation.h"
 
+ACE_RCSID(be_visitor_operation, exceptlist_cs, "$Id$")
+
 
 // ****************************************************************************
 // visitor to generate the exception list for operations

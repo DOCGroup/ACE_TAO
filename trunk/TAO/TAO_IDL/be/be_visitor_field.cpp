@@ -27,3 +27,6 @@
 #include "be_visitor_field/field_ch.cpp"
 #include "be_visitor_field/field_ci.cpp"
 #include "be_visitor_field/field_cs.cpp"
+
+ACE_RCSID(be, be_visitor_field, "$Id$")
+

@@ -27,3 +27,6 @@
 // include all the individual files
 #include "be_visitor_typecode/typecode_decl.cpp"
 #include "be_visitor_typecode/typecode_defn.cpp"
+
+ACE_RCSID(be, be_visitor_typecode, "$Id$")
+

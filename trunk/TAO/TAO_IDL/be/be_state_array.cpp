@@ -19,6 +19,10 @@
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
+#include	"be_state.h"
+
+ACE_RCSID(be, be_state_array, "$Id$")
+
 
 // return type for array
 be_state_array::be_state_array (void)

@@ -29,3 +29,6 @@
 #include "be_visitor_enum/any_op_cs.cpp"
 #include "be_visitor_enum/enum_ch.cpp"
 #include "be_visitor_enum/enum_cs.cpp"
+
+ACE_RCSID(be, be_visitor_enum, "$Id$")
+

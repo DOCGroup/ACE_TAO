@@ -77,6 +77,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include	"fe_private.h"
 
+ACE_RCSID(fe, fe_interface_header, "$Id$")
+
 /*
  * Constructor(s) and destructor
  */

@@ -25,6 +25,8 @@
 
 #include "be_visitor_interface.h"
 
+ACE_RCSID(be_visitor_interface, collocated_ss, "$Id$")
+
 
 // ************************************************************
 //  be_visitor_interface_collacted_ss

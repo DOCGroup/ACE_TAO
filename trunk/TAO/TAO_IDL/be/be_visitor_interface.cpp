@@ -36,3 +36,6 @@
 #include "be_visitor_interface/interface_ss.cpp"
 #include "be_visitor_interface/tie_sh.cpp"
 #include "be_visitor_interface/tie_si.cpp"
+
+ACE_RCSID(be, be_visitor_interface, "$Id$")
+

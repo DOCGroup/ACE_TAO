@@ -5,6 +5,9 @@
 #include	"be.h"
 #include        "be_sunsoft.h"
 
+ACE_RCSID(be, be_sunsoft, "$Id$")
+
+
 TAO_SunSoft_OutStream::TAO_SunSoft_OutStream (void)
   : TAO_OutStream ()
 {

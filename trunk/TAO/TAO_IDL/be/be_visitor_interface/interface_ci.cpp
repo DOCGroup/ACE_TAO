@@ -24,6 +24,8 @@
 
 #include "be_visitor_interface.h"
 
+ACE_RCSID(be_visitor_interface, interface_ci, "$Id$")
+
 
 // **************************************************
 // Interface visitor for client inline

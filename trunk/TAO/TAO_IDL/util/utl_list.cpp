@@ -83,6 +83,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"idl.h"
 #include	"idl_extern.h"
 
+ACE_RCSID(util, utl_list, "$Id$")
+
 /*
  * Constructor(s)
  */

@@ -31,3 +31,6 @@
 #include "be_visitor_array/array_ch.cpp"
 #include "be_visitor_array/array_ci.cpp"
 #include "be_visitor_array/array_cs.cpp"
+
+ACE_RCSID(be, be_visitor_array, "$Id$")
+

@@ -25,6 +25,8 @@
 
 #include "be_visitor_operation.h"
 
+ACE_RCSID(be_visitor_operation, rettype_post_upcall_ss, "$Id$")
+
 
 // ****************************************************************************
 // visitor to do any post processing for return type after an upcall

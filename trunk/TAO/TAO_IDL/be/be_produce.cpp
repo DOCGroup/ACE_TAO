@@ -73,6 +73,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include        "be_interpretive.h"
 
+ACE_RCSID(be, be_produce, "$Id$")
+
 /*
  * Do the work of this BE. This is the starting point for code generation.
  */

@@ -29,3 +29,6 @@
 #include "be_visitor_module/module.cpp"
 #include "be_visitor_module/module_ch.cpp"
 #include "be_visitor_module/module_sh.cpp"
+
+ACE_RCSID(be, be_visitor_module, "$Id$")
+

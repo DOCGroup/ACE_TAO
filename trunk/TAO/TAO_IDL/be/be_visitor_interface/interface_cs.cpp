@@ -24,6 +24,8 @@
 
 #include "be_visitor_interface.h"
 
+ACE_RCSID(be_visitor_interface, interface_cs, "$Id$")
+
 
 // ************************************************************
 // Interface visitor for client stubs

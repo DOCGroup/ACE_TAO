@@ -24,6 +24,8 @@
 
 #include "be_visitor_operation.h"
 
+ACE_RCSID(be_visitor_operation, argument, "$Id$")
+
 
 // ************************************************************
 // generic operation visitor to handle the pre/post do_static_call/upcall stuff with

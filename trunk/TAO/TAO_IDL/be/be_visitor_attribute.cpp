@@ -26,3 +26,6 @@
 
 // include all the individual files
 #include "be_visitor_attribute/attribute.cpp"
+
+ACE_RCSID(be, be_visitor_attribute, "$Id$")
+

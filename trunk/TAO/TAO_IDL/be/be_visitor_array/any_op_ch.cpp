@@ -25,6 +25,9 @@
 
 #include "be_visitor_array.h"
 
+ACE_RCSID(be_visitor_array, any_op_ch, "$Id$")
+
+
 // ***************************************************************************
 // Array visitor for generating Any operator declarations in the client header
 // ***************************************************************************

@@ -24,6 +24,8 @@
 
 #include "be_visitor_sequence.h"
 
+ACE_RCSID(be_visitor_sequence, buffer_type, "$Id$")
+
 
 // ****************************************************************
 // We have to generate the buffer type in the constructor

@@ -23,6 +23,9 @@
 #include "be.h"
 #include "be_visitor_argument.h"
 
+ACE_RCSID(be_visitor_argument, pre_docall_cs, "$Id$")
+
+
 // *************************************************************************
 // visitor for argument to do any pre docall processing. Not all types need
 // this. Only those that have an _out type need this.  In addition, interfaces

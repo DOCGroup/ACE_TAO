@@ -25,6 +25,8 @@
 
 #include "be_visitor_operation.h"
 
+ACE_RCSID(be_visitor_operation, rettype_assign_ss, "$Id$")
+
 
 // ****************************************************************************
 // visitor for assignment to a return value variable from the upcall

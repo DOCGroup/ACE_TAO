@@ -24,6 +24,8 @@
 
 #include "be_visitor_union.h"
 
+ACE_RCSID(be_visitor_union, discriminant_ci, "$Id$")
+
 
 // *************************************************************************
 // be_visitor_discriminant_ci - visitor for discriminant in client inline file

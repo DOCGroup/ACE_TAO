@@ -33,3 +33,6 @@
 #include "be_visitor_exception/exception_ci.cpp"
 #include "be_visitor_exception/exception_cs.cpp"
 #include "be_visitor_exception/exception_ctor.cpp"
+
+ACE_RCSID(be, be_visitor_exception, "$Id$")
+

@@ -24,6 +24,8 @@
 
 #include "be_visitor_operation.h"
 
+ACE_RCSID(be_visitor_operation, rettype_marshal_ss, "$Id$")
+
 
 // ****************************************************************************
 // Visitor that passes the return value to the marshal/demarshal routine

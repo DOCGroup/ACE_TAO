@@ -23,6 +23,8 @@
 #include "idl_extern.h"
 #include "be.h"
 
+ACE_RCSID(be, be_decl, "$Id$")
+
 // Default Constructor
 be_decl::be_decl (void)
   : cli_hdr_gen_ (I_FALSE),

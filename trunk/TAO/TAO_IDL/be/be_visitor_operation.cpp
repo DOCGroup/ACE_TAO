@@ -46,3 +46,6 @@
 #include "be_visitor_operation/rettype_vardecl_ss.cpp"
 #include "be_visitor_operation/tie_sh.cpp"
 #include "be_visitor_operation/tie_si.cpp"
+
+ACE_RCSID(be, be_visitor_operation, "$Id$")
+

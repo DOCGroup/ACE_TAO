@@ -75,6 +75,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"idl.h"
 #include	"idl_extern.h"
 
+ACE_RCSID(ast, ast_check, "$Id$")
+
 /*
  * Static storage for remembering nodes
  */

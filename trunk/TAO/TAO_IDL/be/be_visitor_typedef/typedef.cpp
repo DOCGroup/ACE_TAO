@@ -24,6 +24,8 @@
 
 #include "be_visitor_typedef.h"
 
+ACE_RCSID(be_visitor_typedef, typedef, "$Id$")
+
 
 // ******************************************************
 // Generic Typedef visitor

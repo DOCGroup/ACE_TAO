@@ -6,6 +6,8 @@
 #include	"idl.h"
 #include	"idl_extern.h"
 
+ACE_RCSID(ast, ast_native, "$Id$")
+
 /*
  * Constructor(s)
  */

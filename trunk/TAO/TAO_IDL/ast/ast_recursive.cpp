@@ -87,6 +87,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"idl.h"
 #include	"idl_extern.h"
 
+ACE_RCSID(ast, ast_recursive, "$Id$")
+
 /*
  * FE_illegal_recursive_type() - Implement the algorithm described above
  */

@@ -25,6 +25,8 @@
 
 #include "be_visitor_interface.h"
 
+ACE_RCSID(be_visitor_interface, collocated_sh, "$Id$")
+
 
 // ************************************************************
 //  collocated class in header

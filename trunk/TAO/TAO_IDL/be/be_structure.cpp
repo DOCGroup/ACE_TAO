@@ -23,6 +23,9 @@
 #include	"idl_extern.h"
 #include	"be.h"
 
+ACE_RCSID(be, be_structure, "$Id$")
+
+
 /*
  * BE_Structure
  */

@@ -23,6 +23,9 @@
 #include "be.h"
 #include "be_visitor_argument.h"
 
+ACE_RCSID(be_visitor_argument, post_upcall_ss, "$Id$")
+
+
 // ************************************************************************
 //  visitor for doing any post-processing after the upcall is made
 // ************************************************************************

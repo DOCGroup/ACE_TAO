@@ -23,6 +23,8 @@
 #include	"idl_extern.h"
 #include	"be.h"
 
+ACE_RCSID(be, be_field, "$Id$")
+
 /*
  * BE_Field
  */

@@ -25,6 +25,8 @@
 
 #include "be_visitor_operation.h"
 
+ACE_RCSID(be_visitor_operation, tie_sh, "$Id$")
+
 
 // ************************************************************
 // Operation visitor for server header for TIE class operations

@@ -25,6 +25,9 @@
 
 #include "be_visitor_scope.h"
 
+ACE_RCSID(be, be_visitor_scope, "$Id$")
+
+
 // ******************************************************
 //  Generic visitor for a scope.
 //  All elements that give rise to a scope inherit from

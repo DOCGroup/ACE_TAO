@@ -22,6 +22,8 @@
 
 #include "be_visitor_sequence.h"
 
+ACE_RCSID(be_visitor_sequence, gen_bounded_str_sequence_ch, "$Id$")
+
 
 int
 be_visitor_sequence_ch::gen_bounded_str_sequence (be_sequence *node)

@@ -24,6 +24,8 @@
 
 #include "be_visitor_union.h"
 
+ACE_RCSID(be_visitor_union, any_op_cs, "$Id$")
+
 
 // ***************************************************************************
 // Union visitor for generating Any operator declarations in the client

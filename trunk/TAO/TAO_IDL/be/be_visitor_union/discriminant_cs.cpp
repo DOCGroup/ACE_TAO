@@ -24,6 +24,8 @@
 
 #include "be_visitor_union.h"
 
+ACE_RCSID(be_visitor_union, discriminant_cs, "$Id$")
+
 
 // *************************************************************************
 // be_visitor_discriminant_cs - visitor for discriminant in client stubs

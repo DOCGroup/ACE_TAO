@@ -24,6 +24,8 @@
 
 #include "be_visitor_operation.h"
 
+ACE_RCSID(be_visitor_operation, operation_cs, "$Id$")
+
 
 // ************************************************************
 // Operation visitor for client stubs

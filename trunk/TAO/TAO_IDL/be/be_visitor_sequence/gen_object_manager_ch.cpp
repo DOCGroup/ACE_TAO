@@ -23,6 +23,8 @@
 
 #include "be_visitor_sequence.h"
 
+ACE_RCSID(be_visitor_sequence, gen_object_manager_ch, "$Id$")
+
 
 int
 be_visitor_sequence_ch::gen_object_manager (be_sequence *node)

@@ -44,6 +44,9 @@
 #include "be_visitor_union.h"
 #include "be_visitor_union_branch.h"
 
+ACE_RCSID(be, be_interpretive, "$Id$")
+
+
 TAO_Interpretive_Visitor_Factory::TAO_Interpretive_Visitor_Factory (void)
 {
 }

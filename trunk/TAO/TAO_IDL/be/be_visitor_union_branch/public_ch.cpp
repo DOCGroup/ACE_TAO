@@ -24,6 +24,8 @@
 
 #include "be_visitor_union_branch.h"
 
+ACE_RCSID(be_visitor_union_branch, public_ch, "$Id$")
+
 
 // **********************************************
 //  visitor for union_branch in the client header file

@@ -25,6 +25,9 @@
 #include "be.h"
 #include "be_visitor.h"
 
+ACE_RCSID(be, be_visitor, "$Id$")
+
+
 be_visitor::be_visitor (void)
 {
 }

@@ -24,6 +24,8 @@
 
 #include "be_visitor_sequence.h"
 
+ACE_RCSID(be_visitor_sequence, sequence_base, "$Id$")
+
 
 // ****************************************************************
 // We have to generate the parameters for the template that implements

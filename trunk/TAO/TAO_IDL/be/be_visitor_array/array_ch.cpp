@@ -24,6 +24,9 @@
 
 #include "be_visitor_array.h"
 
+ACE_RCSID(be_visitor_array, array_ch, "$Id$")
+
+
 // ************************************************************************
 //  visitor for array declaration in client header
 // ************************************************************************

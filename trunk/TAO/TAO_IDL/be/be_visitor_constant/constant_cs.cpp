@@ -24,6 +24,9 @@
 
 #include "be_visitor_constant.h"
 
+ACE_RCSID(be_visitor_constant, constant_cs, "$Id$")
+
+
 // ********************************************************************
 // Visitor implementation for the Constant type
 // This one for the client stubs file

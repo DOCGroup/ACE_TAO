@@ -25,6 +25,8 @@
 
 #include "be_visitor_exception.h"
 
+ACE_RCSID(be_visitor_exception, ctor_assign, "$Id$")
+
 
 // ************************************************************************
 // used for the body of the assignment operator and the copy constructor

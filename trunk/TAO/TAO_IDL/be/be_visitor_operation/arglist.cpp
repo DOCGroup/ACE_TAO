@@ -24,6 +24,8 @@
 
 #include "be_visitor_operation.h"
 
+ACE_RCSID(be_visitor_operation, arglist, "$Id$")
+
 
 // ************************************************************
 //   operation visitor  to generate the argument list.

@@ -24,6 +24,8 @@
 
 #include "be_visitor_sequence.h"
 
+ACE_RCSID(be_visitor_sequence, elemtype, "$Id$")
+
 
 // ***********************************************************
 // sequence element type visitor for return types of [] methods

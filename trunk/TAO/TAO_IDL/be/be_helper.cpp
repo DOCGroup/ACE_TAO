@@ -1,6 +1,7 @@
+// $Id$
+
 // ============================================================================
 //
-// $Id$
 //
 // = LIBRARY
 //    TAO IDL
@@ -21,6 +22,8 @@
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
+
+ACE_RCSID(be, be_helper, "$Id$")
 
 static const char copyright [] =
 "/* -*- C++ -*- */\n\n\

@@ -1,4 +1,5 @@
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -21,6 +22,8 @@
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
+
+ACE_RCSID(be, be_root, "$Id$")
 
 // Default Constructor
 be_root::be_root (void)

@@ -30,3 +30,6 @@
 #include "be_visitor_root/root_sh.cpp"
 #include "be_visitor_root/root_si.cpp"
 #include "be_visitor_root/root_ss.cpp"
+
+ACE_RCSID(be, be_visitor_root, "$Id$")
+
