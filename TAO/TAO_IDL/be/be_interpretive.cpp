@@ -26,6 +26,7 @@
 #include "be_interpretive.h"
 
 #include "be_visitor_args.h"
+#include "be_visitor_array.h"
 #include "be_visitor_attribute.h"
 #include "be_visitor_constant.h"
 #include "be_visitor_enum.h"
@@ -327,6 +328,17 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_exception_any_op_ch (new_ctx);
     case TAO_CodeGen::TAO_EXCEPTION_ANY_OP_CS:
       return new be_visitor_exception_any_op_cs (new_ctx);
+
+    case TAO_CodeGen::TAO_ARRAY_CH:
+      return new be_visitor_array_ch (new_ctx);
+    case TAO_CodeGen::TAO_ARRAY_CI:
+      return new be_visitor_array_ci (new_ctx);
+    case TAO_CodeGen::TAO_ARRAY_CS:
+      return new be_visitor_array_cs (new_ctx);
+    case TAO_CodeGen::TAO_ARRAY_ANY_OP_CH:
+      return new be_visitor_array_any_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_ARRAY_ANY_OP_CS:
+      return new be_visitor_array_any_op_cs (new_ctx);
 
     case TAO_CodeGen::TAO_OPERATION_RESULT_SS:
     case TAO_CodeGen::TAO_ARGUMENT_CH:

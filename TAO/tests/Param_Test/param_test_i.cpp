@@ -196,6 +196,17 @@ Param_Test_i::test_strseq (const Param_Test::StrSeq &s1,
     *ret = new Param_Test::StrSeq,
     *out = new Param_Test::StrSeq;
 
+  ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*SERVER SIDE=*=*=*=*=*=*=\n"));
+  for (CORBA::ULong i=0; (i < s2.length ()); i++)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Element #%d\n"
+                  "in : %s\n",
+                  i,
+                  (s2[i]? (const char *)s2[i]:"<nul>")));
+    }
+  if (s2.length () == 0)
+    ACE_DEBUG ((LM_DEBUG, "\ninout sequence is NUL\n"));
   // now copy all elements of s1 into the others using the assignment operator
   s2 = s1;
   *out = s1;
