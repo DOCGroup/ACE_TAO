@@ -1325,7 +1325,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                                    format,
                                    ACE_static_cast(unsigned,
                                                    ACE_Thread::self ()));
-#elif defined (AIX) && (ACE_AIX_MINOR_VERS <= 2)
+#elif defined (ACE_AIX_VERS) && (ACE_AIX_VERS <= 402)
                   // AIX's pthread_t (ACE_hthread_t) is a pointer, and it's
                   // a little ugly to send that through a %u format.  So,
                   // get the kernel thread ID (tid_t) via thread_self() and
