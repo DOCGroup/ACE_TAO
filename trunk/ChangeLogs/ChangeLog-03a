@@ -1,3 +1,15 @@
+Wed May  8 13:57:58 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS_Dirent.h:
+        * ace/OS_Dirent.cpp:
+
+          Fixed the Dirent_Test under wide character builds with Visual C++
+          6.0.  The d_name member of the dirent struct is normally a one
+          element ACE_TCHAR array that is used as an ACE_TCHAR pointer. 
+          This doesn't work properly under wide character builds with VC6.
+          Note: because of this change, memcpy on a 'struct dirent' no
+          longer works on Windows as it would on UNIX.
+
 Wed May  8 11:02:44 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/TP_Reactor_Test.cpp: Turned off full traces, only the
