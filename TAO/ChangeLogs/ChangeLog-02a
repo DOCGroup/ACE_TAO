@@ -2,7 +2,8 @@ Thu Feb 24 16:25:04 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp: 
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/vs.cpp: 
-	  Fixed compile errors on RedHat Linux platform
+	  Fixed compile errors on RedHat Linux platform. Thanks to Sandeep
+	  Adwankar <adwankar@rsch.comm.mot.com> for pointing this out.
 	
 
 Thu Feb 24 10:49:32 2000  Ossama Othman  <ossama@uci.edu>
