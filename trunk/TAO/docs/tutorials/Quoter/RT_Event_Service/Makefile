@@ -19,13 +19,6 @@ IDL_FILES = Quoter
 IDL_SRC = QuoterC.cpp QuoterS.cpp
 BIN2 = client server
 
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-endif # RTEvent
-
 SRC = $(addsuffix .cpp, $(BIN) Stock_Consumer Stock_i Stock_Factory_i) \
 	$(IDL_SRC)
 
@@ -43,6 +36,12 @@ TAO_IDLFLAGS=-in
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # RTEvent
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

@@ -26,12 +26,6 @@ LSRC	= $(addsuffix .cpp,$(FILES))
 
 BIN2 = receiver sender
 
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (AV,$(findstring AV,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-endif # AV
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -40,6 +34,12 @@ endif # AV
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (AV,$(findstring AV,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # AV
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
