@@ -21,8 +21,10 @@ ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (void)
 {
 }
 
-ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (const ACE_SOCK_Dgram_Mcast &dgram_mcast)
-  : dgram_mcast_ (dgram_mcast)
+ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (const ACE_SOCK_Dgram_Mcast &dgram_mcast,
+											  ACE_QoS_Session *qos_session)
+  : dgram_mcast_ (dgram_mcast),
+    qos_session_ (qos_session)
 {
 }
 
@@ -47,20 +49,23 @@ ACE_QOS_Event_Handler::handle_qos (ACE_HANDLE)
   ACE_DEBUG ((LM_DEBUG,
               "\nReceived a QOS event. Inside handle_qos ()\n"));
 
-  ACE_QoS ace_get_qos;
-  u_long dwBytes;
+  // We have received an RSVP event. The following update_qos () call 
+  // calls rapi_dispatch () in case of RAPI and WSAIoctl (GET_QOS) in
+  // case of W2K. It then does the QoS parameter translation and updates 
+  // the QoS session object with the latest QoS. This call replaces the 
+  // direct call that was being made to WSAIoctl (GET_QOS) here for the 
+  // Win2K example.
 
-  if (ACE_OS::ioctl (this->dgram_mcast_.get_handle (),
-                     ACE_SIO_GET_QOS,
-                     ace_get_qos,
-                     &dwBytes) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "Error in Qos get ACE_OS::ioctl ()\n"
-                "Bytes Returned = %d\n",
-                dwBytes));
+  if (this->qos_session_->update_qos () == -1)
+	ACE_ERROR_RETURN ((LM_ERROR,
+					   "Error in updating QoS\n"),
+						-1);
   else
     ACE_DEBUG ((LM_DEBUG,
-                "Getting QOS using ACE_OS::ioctl () succeeds.\n"));
+                " Updating QOS succeeds.\n"));
+
+  // Now proactively query the QoS object for QoS.
+  ACE_QoS ace_get_qos = this->qos_session_->qos ();
 
   ACE_DEBUG ((LM_DEBUG,
               "\nReceiving Flowspec :\t\t\tSending Flowspec :\n\n"

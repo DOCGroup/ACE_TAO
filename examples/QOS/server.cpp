@@ -18,6 +18,8 @@
 
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/OS.h"
+#include "ace/QoS_Session_Factory.h"
+#include "ace/QoS_Session.h"
 
 #include "QosEvent.h"
 #include "Receiver_QOS_Event_Handler.h"
@@ -209,8 +211,39 @@ main (int argc, char * argv[])
   ACE_QoS_Params qos_params;
   FillQoSParams (qos_params, 0, &qos);
 
+  // Create a QoS Session Factory.
+  ACE_QoS_Session_Factory session_factory;
+
+  // Ask the factory to create a QoS session. This could be RAPI or GQoS 
+  // based on the parameter passed.
+  ACE_QoS_Session *qos_session = 
+	  session_factory.create_session (ACE_QoS_Session_Factory::ACE_GQOS_SESSION);
+
+  // Create a destination address for the QoS session. The same address should be used 
+  // for the subscribe call later. A copy is made below only to distinguish the two 
+  // usages of the dest address. 
+
+  ACE_INET_Addr dest_addr (mult_addr);
+
+  // A QoS session is defined by the 3-tuple [DestAddr, DestPort, Protocol]. Initialize 
+  // the QoS session.
+  if (qos_session->open (mult_addr,
+					     IPPROTO_UDP) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR,
+					   "Error in opening the QoS session\n"),
+						-1);
+
   // The following call opens the Dgram_Mcast and calls the
-  // <ACE_OS::join_leaf> with the qos_params supplied here.
+  // <ACE_OS::join_leaf> with the qos_params supplied here. Note the
+  // QoS session object is passed into this call. This subscribes the 
+  // underlying socket to the passed in QoS session. For joining multiple 
+  // multicast sessions, the following subscribe call should be made with 
+  // different multicast addresses and a new QoS session object should be passed in for 
+  // each such call. The QoS session objects can be created only through the
+  // session factory. Care should be taken that the mult_addr for the subscribe()
+  // call matches the dest_addr of the QoS session object. If this is not done,
+  // the subscribe call will fail. A more abstract version of subscribe will be 
+  // added that constrains the various features of GQoS like different flags etc.
 
   if (dgram_mcast.subscribe (mult_addr,
                              qos_params,
@@ -222,7 +255,8 @@ main (int argc, char * argv[])
                              0,
                              ACE_OVERLAPPED_SOCKET_FLAG 
                              | ACE_FLAG_MULTIPOINT_C_LEAF 
-                             | ACE_FLAG_MULTIPOINT_D_LEAF) == -1)
+                             | ACE_FLAG_MULTIPOINT_D_LEAF,
+							 qos_session) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in subscribe\n"),
                       -1);
@@ -234,6 +268,8 @@ main (int argc, char * argv[])
   char achInBuf [BUFSIZ];
   u_long dwBytes;
 
+  // Should this be abstracted into QoS objects ?? Doesnt seem to 
+  // have to do anything directly with QoS.
   if (ACE_OS::ioctl (dgram_mcast.get_handle (), // Socket.
                      ACE_SIO_MULTICAST_SCOPE, // IO control code.
                      &nIP_TTL, // In buffer.
@@ -251,6 +287,8 @@ main (int argc, char * argv[])
 
   int bFlag = FALSE;
 
+  // Should this be abstracted into QoS objects ?? Doesnt seem to 
+  // have to do anything directly with QoS.
   if (ACE_OS::ioctl (dgram_mcast.get_handle (), // Socket.
                      ACE_SIO_MULTIPOINT_LOOPBACK, // IO control code.
                      &bFlag, // In buffer.
@@ -265,7 +303,6 @@ main (int argc, char * argv[])
   else
     ACE_DEBUG ((LM_DEBUG,
                 "Disable Loopback with ACE_OS::ioctl call succeeds \n"));
-
 
   // Fill up an ACE_QoS and pass it to the overloaded ACE_OS::ioctl ()
   // that uses the I/O control code as SIO_SET_QOS.
@@ -284,22 +321,21 @@ main (int argc, char * argv[])
   ace_qos.receiving_flowspec (receiving_flowspec);
   ace_qos.provider_specific (iov); 
   
-  // Set the QOS according to the supplied ACE_QoS. The I/O control
-  // code used under the hood is SIO_SET_QOS.
-  if (ACE_OS::ioctl (dgram_mcast.get_handle (), // Socket.
-                     ACE_SIO_SET_QOS,
-                     ace_qos, // ACE_QoS.
-                     &dwBytes) == -1) // bytes returned.
-    ACE_ERROR ((LM_ERROR,
-                "Error in Qos set ACE_OS::ioctl()\n"
-                "Bytes Returned = %d\n",
-                dwBytes));					   	
+  // Set the QoS for the session. Replaces the ioctl () call that was being 
+  // made previously.
+  if (qos_session->qos (&dgram_mcast,
+						ace_qos) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR,
+					   "Unable to set QoS\n"),
+					   -1);
   else
     ACE_DEBUG ((LM_DEBUG,
-                "Setting QOS with ACE_OS::ioctl succeeds.\n"));
+                "Setting QOS succeeds.\n"));
 
-  // Instantiate a QOS Event Handler and pass the Dgram_Mcast into it.
-  ACE_QOS_Event_Handler qos_event_handler (dgram_mcast);
+  // Instantiate a QOS Event Handler and pass the Dgram_Mcast and
+  // QoS session object into it.
+  ACE_QOS_Event_Handler qos_event_handler (dgram_mcast,
+										   qos_session);
 	
   // Register the QOS Handler with the Reactor.
   if (ACE_Reactor::instance ()->register_handler 
