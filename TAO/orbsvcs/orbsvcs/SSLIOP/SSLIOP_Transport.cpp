@@ -69,6 +69,13 @@ TAO_SSLIOP_Transport::messaging_object (void)
   return this->messaging_object_;
 }
 
+int
+TAO_SSLIOP_Transport::handle_input_i (TAO_Resume_Handle &rh,
+                                      ACE_Time_Value *max_wait_time,
+                                      int block)
+{
+
+}
 
 ssize_t
 TAO_SSLIOP_Transport::send_i (iovec *iov,

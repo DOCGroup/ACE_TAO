@@ -82,6 +82,10 @@ protected:
 
   virtual TAO_Pluggable_Messaging *messaging_object (void);
 
+  virtual int handle_input_i (TAO_Resume_Handle &rh,
+                              ACE_Time_Value *max_wait_time = 0,
+                              int block = 0);
+
   /// Write the complete Message_Block chain to the connection.
   virtual ssize_t send_i (iovec *iov, int iovcnt,
                           size_t &bytes_transferred,

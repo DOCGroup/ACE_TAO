@@ -255,8 +255,17 @@ TAO_SSLIOP_Connection_Handler::fetch_handle (void)
 
 
 int
+TAO_IIOP_Connection_Handler::resume_handler (void)
+{
+  return TAO_RESUMES_CONNECTION_HANDLER;
+}
+
+int
 TAO_SSLIOP_Connection_Handler::handle_output (ACE_HANDLE)
 {
+  TAO_Resume_Handle  resume_handle (this->orb_core (),
+                                    this->fetch_handle ());
+
   return this->transport ()->handle_output ();
 }
 
@@ -332,7 +341,19 @@ TAO_SSLIOP_Connection_Handler::process_listen_point_list (
 int
 TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 {
-  return this->handle_input_i (h);
+    // Increase the reference count on the upcall that have passed us.
+  this->pending_upcalls_++;
+
+  TAO_Resume_Handle  resume_handle (this->orb_core (),
+                                    this->fetch_handle ());
+
+  int retval = this->transport ()->handle_input_i (resume_handle);
+
+  // The upcall is done. Bump down the reference count
+  if (--this->pending_upcalls_ <= 0)
+    retval = -1;
+
+  return retval;
 }
 
 
@@ -341,13 +362,12 @@ int
 TAO_SSLIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
                                                ACE_Time_Value *max_wait_time)
 {
-  int result;
+
 
   // Set up the SSLIOP::Current object.
   TAO_SSL_State_Guard ssl_state_guard (this,
                                        this->orb_core (),
                                        result);
-
   if (result == -1)
     return -1;
 
