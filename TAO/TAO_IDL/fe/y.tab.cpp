@@ -912,7 +912,7 @@ const char *tao_yyrule[] = {
 #ifdef TAO_YYMAXDEPTH
 #define TAO_YYSTACKSIZE TAO_YYMAXDEPTH
 #else
-#define TAO_YYSTACKSIZE 300
+#define TAO_YYSTACKSIZE 10000
 #endif
 #endif
 int tao_yydebug;
@@ -940,13 +940,13 @@ tao_yywrap()
 
 /*
  * Report an error situation discovered in a production
- *
- * This does not do anything since we report all error situations through
- * idl_global->err() operations
  */
 void
-tao_yyerror(const char *)
+tao_yyerror(const char *msg)
 {
+  ACE_ERROR ((LM_ERROR,
+              "%s\n",
+              msg));
 }
 #line 951 "y.tab.cpp"
 #define TAO_YYABORT goto tao_yyabort
@@ -1174,7 +1174,7 @@ tao_yyloop:
     goto tao_yynewerror;
 #endif
 
-    tao_yyerror("syntax error");
+//    tao_yyerror("syntax error");
 #ifdef lint
     goto tao_yyerrlab;
 #endif
