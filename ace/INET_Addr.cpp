@@ -878,7 +878,7 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
   return &buf_[0];
 #else /* VXWORKS */
   char *ch = ACE_OS::inet_ntoa (this->inet_addr_.in4_.sin_addr);
-  ACE_OS::strncpy (dst, ch, size);
+  ACE_OS::strsncpy (dst, ch, size);
   return ch;
 #endif
 }
