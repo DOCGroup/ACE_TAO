@@ -1,3 +1,17 @@
+Fri Jul 11 18:41:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+        * tao/Any.h:
+        * tao/Valuetype_Adapter.h:
+        * tao/Valuetype/Valuetype_Adapter_Impl.cpp:
+        * tao/Valuetype/Valuetype_Adapter_Impl.h:
+
+	  Fixed a bug in the Any extraction operators that widen to Object,
+	  ValueBase and AbstractBase, which were failing when
+	  the Any contains an unknown IDL type. Thanks to Anand
+	  <anand@iCMGworld.com> for reporting the problem with
+	  widening to Object.
+
 Fri Jul 11 16:23:05 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao\Strategies\DIOP_Acceptor.cpp (close): 

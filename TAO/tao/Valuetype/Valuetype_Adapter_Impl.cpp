@@ -22,6 +22,22 @@ TAO_Valuetype_Adapter_Impl::abstractbase_to_object (
   return p->_to_object ();
 }
 
+CORBA::Boolean 
+TAO_Valuetype_Adapter_Impl::stream_to_value (TAO_InputCDR &cdr,
+                                             CORBA::ValueBase *& val)
+{
+  return cdr >> val;
+}
+
+CORBA::Boolean 
+TAO_Valuetype_Adapter_Impl::stream_to_abstract_base (
+    TAO_InputCDR &cdr,
+    CORBA::AbstractBase_ptr & obj
+  )
+{
+  return cdr >> obj;
+}
+
 CORBA::ULong
 TAO_Valuetype_Adapter_Impl::type_info_single (void) const
 {
