@@ -1712,7 +1712,7 @@ TAO_DynStruct_i::get_longdouble (
         DynamicAny::DynAny::InvalidValue
       ))
 {
-  CORBA::LongDouble ret;
+  CORBA::LongDouble ret = ACE_CDR_LONG_DOUBLE_INITIALIZER;
   ACE_UNUSED_ARG (ret);
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), ret);
 }
