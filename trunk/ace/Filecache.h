@@ -23,6 +23,12 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/SString.h"
 
+enum ACE_Filecache_Flag
+{
+  NOMAP = 0,
+  MAPIT = 1,
+};
+
 // = Forward declarations.
 ACE_DECLARE_EXPORT(class, ACE_Filecache);
 ACE_DECLARE_EXPORT(class, ACE_Filecache_Handle);
@@ -84,11 +90,14 @@ class ACE_Filecache_Handle
   //
 public:
 
-  ACE_Filecache_Handle (const char *filename, int mapit = 1);
+  ACE_Filecache_Handle (const char *filename,
+                        ACE_Filecache_Flag mapit = MAPIT);
   // Query cache for file, and acquire it.  Assumes the file is being
   // opened for reading.
 
-  ACE_Filecache_Handle (const char *filename, int size, int mapit = 1);
+  ACE_Filecache_Handle (const char *filename,
+                        int size,
+                        ACE_Filecache_Flag mapit = MAPIT);
   // Create new entry, and acquire it.  Presence of SIZE assumes the
   // file is being opened for writing.
 
@@ -236,8 +245,8 @@ public:
 
   ACE_Filecache_Object (const char *filename,
                         ACE_SYNCH_RW_MUTEX &lock,
-                        int mapit = 1,
-                        LPSECURITY_ATTRIBUTES sa = 0);
+                        LPSECURITY_ATTRIBUTES sa = 0,
+                        int mapit = 1);
   // Creates a file for reading.
 
   ACE_Filecache_Object (const char *filename,
