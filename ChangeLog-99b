@@ -1,3 +1,9 @@
+Tue Apr 20 16:41:39 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (num_tasks_in_group): Make sure we are
+	  not searching for a null task.  Thanks to Umar Syyid
+	  <usyyid@hns.com> for pointing this out.
+
 Tue Apr 20 15:10:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Reactor_Performance_Test.cpp: Changed the default number
