@@ -5,7 +5,7 @@
 
 ACE_RCSID(Trader, Constraint_Interpreter, "$Id$")
 
-ACE_Thread_Mutex TAO_Interpreter::parserMutex__;
+ACE_SYNCH_MUTEX TAO_Interpreter::parserMutex__;
 
 TAO_Interpreter::TAO_Interpreter (void)
   : root_ (0)
@@ -20,7 +20,10 @@ TAO_Interpreter::~TAO_Interpreter (void)
 int
 TAO_Interpreter::build_tree (const char* constraints)
 {
-  ACE_Guard<ACE_Thread_Mutex> guard(parserMutex__);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                    guard,
+                    TAO_Interpreter::parserMutex__,
+                    -1);
 
   TAO_Lex_String_Input::reset ((char*)constraints);
   int return_value = 0;
