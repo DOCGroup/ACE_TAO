@@ -1,3 +1,9 @@
+Thu Oct 26 12:19:45 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Memory_Pool.cpp (unmap): Fixed a bug that was preventing
+	  the handle from being closed.  Thanks to Ivan Murphy and Dieter
+ 	  Quehl for reporting this.
+
 Thu Oct 26 10:56:36 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.i (ACE_OS::rename): Added && (ACE_HAS_WINNT4 == 1) to the
