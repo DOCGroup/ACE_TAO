@@ -1,3 +1,10 @@
+Fri Jul  5 08:12:30 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp (init): 
+	  Added an "else" clause to handle the case where a user gives
+ 	  incorrect options.  Thanks to Bruce McIntosh
+ 	  <Bruce.McIntosh@Australia.Boeing.com> for reporting this.
+
 Sun Jul  7 10:24:06 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/Miop/McastHello/Makefile: Updated dependencies. 

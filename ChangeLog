@@ -1,3 +1,13 @@
+Fri Jul  5 10:30:44 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Array_Base.cpp: Swapped the order of includes so that
+	  Array_Base.h comes after Malloc_Base.h.  Thanks to Al Pariante
+ 	  <Albert.Pariante@axcelis.com> for reporting this.
+
+Thu Jul  4 11:27:05 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* Happy 226th Birthday USA!
+
 Sat Jul 06 19:32:40 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Time_Value.h (ACE_Time_Value): Fix for [BUGID 1240]. Some of
@@ -30,8 +40,6 @@ Fri Jul  5 16:14:51 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Basic_Types.h: If ACE_HAS_SSIZE_T not defined, and Win64,
           typedef SSIZE_T ssize_t; else use the existing int typedef.
-
-Wed Jul  3 11:09:31 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
           Change thread function to return ACE_THR_FUNC_RETURN, not void *.
@@ -214,7 +222,6 @@ Sun Jun 30 12:22:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 	  Updated these files so that the new PortableGroup doxygen
 	  documentation is generated and listed in the index page.
 
->>>>>>> 4.3830
 Fri Jun 28 08:07:12 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Logging_Strategy.cpp: Added the ability to toggle
@@ -303,7 +310,6 @@ Mon Jun 24 20:55:45 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/ACE.cpp (select): Fixed typo.
 
->>>>>>> 4.3835
 Mon Jun 24 17:39:31 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/ace_dll64.mak:
@@ -6858,8 +6864,9 @@ Tue Mar  5 05:51:44 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	* ace/Process.cpp (spawn): If fork()/exec() fail, call ACE_OS::_exit()
 	  rather than ACE_OS::exit() to avoid destructors being called
  	  that will yield hang problems.  Thanks to Renjie Tang
- 	  <rtang@informatica.com> and Max V. Zinal <Zlat0@mail.ru> for
- 	  this suggestion.  This fixes BugID 1147.
+ 	  <rtang@informatica.com>, Max V. Zinal <Zlat0@mail.ru>, and
+ 	  Michael Hornok <Michael.Hornok@alcatel.com> for this suggestion.
+  	  This fixes BugID 1147.
 
 Tue Mar  5 12:24:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 

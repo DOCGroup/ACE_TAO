@@ -480,7 +480,7 @@ Olivier Lau <olivier_lau@srtelecom.com>
 Achim Stindt <stindt@conbis.de>
 Fredrik Lindahl <fredrik.lindahl@ausys.se>
 Joseph Weihs <joseph-w@Orbotech.Co.IL>
-Serge Kolgan <skolgan@cisco.com>
+Serge Kolgan <skolgan@dctd.saic.com>
 James Megquier <jmegq@bbn.com>
 Martin Krumpolec <krumpolec@asset.sk>
 Michael Thomas <Michael.Thomas@Australia.Boeing.com>
@@ -1203,7 +1203,7 @@ Stephane Pion <PION_Stephane@stna.dgac.fr>
 Raghu Narayan <raghu_narayan@non.hp.com>
 Richard Goold <rgoold@inexum.com>
 Nathalie D'Amours <nathalie@stentor.com>
-Albert Pariante <albert@sw.bev.etn.com>
+Albert Pariante <Albert.Pariante@axcelis.com>
 Stephen Torri <s.torri@lancaster.ac.uk>
 Philippe Perrin <perrin@enseirb.fr>
 Gunnar Buason <a98gunbu@student.his.se>
@@ -1538,6 +1538,8 @@ Stephen Howard <stephen.e.howard@lmco.com>
 Carsten T. Nielsen <ctn@maerskdatadefence.dk>
 <rjgebis@hotmailer.com>
 Davide Pasetto <dipo@sis.it>
+Michael Hornok <Michael.Hornok@alcatel.com>
+W.M. van den Boogaard <wim.vd.boogaard@meco.nl>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
