@@ -1,0 +1,81 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Ambreen Ilyas">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+   <TITLE>Example 1</TITLE>
+</HEAD>
+<BODY>
+<FONT COLOR="#CC0000">/////////////////////////////////////////////////////////////////////////////////////////////////////////////////</FONT>
+<BR><FONT COLOR="#CC0000">//// This example is from the ACE Programmers
+Guide.</FONT>
+<BR><FONT COLOR="#CC0000">////&nbsp; Chapter:&nbsp; "The Acceptor/Connector"&nbsp;
+(Connection Initialization)</FONT>
+<BR><FONT COLOR="#CC0000">//// For details please see the guide at</FONT>
+<BR><FONT COLOR="#CC0000">//// http://www.cs.wustl.edu/~schmidt/ACE.html</FONT>
+<BR><FONT COLOR="#CC0000">////&nbsp; AUTHOR: Umar Syyid (usyyid@hns.com)</FONT>
+<BR><FONT COLOR="#CC0000">//// and Ambreen Ilyas (ambreen@bitsmart.com)</FONT>
+<BR><FONT COLOR="#CC0000">/////////////////////////////////////////////////////////////////////////////////////////////////////////////</FONT>
+
+<P><FONT COLOR="#FF0000">//Example 1</FONT>
+<BR><FONT COLOR="#000099">#include</FONT> <FONT COLOR="#006600">"ace/Reactor.h"</FONT>
+<BR><FONT COLOR="#000099">#include</FONT><FONT COLOR="#006600"> "ace/Svc_Handler.h"</FONT>
+<BR><FONT COLOR="#000099">#include</FONT> <FONT COLOR="#006600">"ace/Acceptor.h"</FONT>
+<BR><FONT COLOR="#000099">#include</FONT><FONT COLOR="#006600"> "ace/Synch.h"</FONT>
+<BR><FONT COLOR="#000099">#include </FONT><FONT COLOR="#006600">"ace/SOCK_Acceptor.h"</FONT>
+
+<P><FONT COLOR="#FF0000">//Create a Service Handler whose open() method
+will be called back automatically.</FONT>
+<BR><FONT COLOR="#FF0000">//This class MUST derive from ACE_Svc_Handler
+which is an interface and</FONT>
+<BR><FONT COLOR="#FF0000">//as can be seen is a template container class
+itself. The first parameter to //ACE_Svc_Handler is the underlying stream
+that it may use for communication.</FONT>
+<BR><FONT COLOR="#FF0000">//Since we are using TCP sockets the stream is
+ACE_SOCK_STREAM.</FONT>
+<BR><FONT COLOR="#FF0000">//The second is the internal synchronization
+mechanism it could use.</FONT>
+<BR><FONT COLOR="#FF0000">//Since we have a single threaded application
+we pass it a "null" lock</FONT>
+<BR><FONT COLOR="#FF0000">//which will do nothing.</FONT>
+
+<P>class My_Svc_Handler:
+<BR>&nbsp;public ACE_Svc_Handler &lt;ACE_SOCK_STREAM,ACE_NULL_SYNCH>{
+<BR><FONT COLOR="#FF0000">//the open method which will be called back automatically
+after the</FONT>
+<BR><FONT COLOR="#FF0000">//connection has been established</FONT>.
+
+<P>public:
+<BR>int open(void*){
+<BR>&nbsp;cout&lt;&lt;?Connection established?&lt;&lt;endl;
+<BR>&nbsp;}
+<BR>};
+<BR><FONT COLOR="#FF0000">// Create the acceptor as described above.</FONT>
+<BR>typedef ACE_Acceptor&lt;My_Svc_Handler,ACE_SOCK_ACCEPTOR> MyAcceptor;
+
+<P>int main(int argc, char* argv[]){
+<BR><FONT COLOR="#FF0000">//create the&nbsp; address on which we wish to
+connect. The constructor takes</FONT>
+<BR><FONT COLOR="#FF0000">//the port number on which to listen and will
+automatically take the hosts</FONT>
+<BR><FONT COLOR="#FF0000">//IP address as the IP Address for the addr object</FONT>
+
+<P>ACE_INET_Addr addr(PORT_NUM);
+
+<P><FONT COLOR="#FF0000">//instantiate the appropriate acceptor object
+with the address on which we wish to</FONT>
+<BR><FONT COLOR="#FF0000">//accept and the Reactor instance we want to
+use. In this case we just use the global</FONT>
+<BR><FONT COLOR="#FF0000">//ACE_Reactor singleton. (Read more about the
+reactor in the previous chapter)</FONT>
+<BR>MyAcceptor acceptor(address, ACE_Reactor::instance());
+
+<P>while(1)
+<BR><FONT COLOR="#FF0000">&nbsp;// Start the reactors event loop</FONT>
+<BR>&nbsp;ACE_Reactor::instance()->handle_events();
+<BR>}
+
+<P>&nbsp;<A HREF="ex02.html">Next Example</A>
+<BR>&nbsp;
+</BODY>
+</HTML>
