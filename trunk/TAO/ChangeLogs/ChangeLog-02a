@@ -1,3 +1,8 @@
+Mon Mar 19 10:03:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp (main):
+	  Fixed a warning in KCC builds.
+
 Mon Mar 19 06:23:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/examples/RtEC/Schedule/Service.cpp: Commented out the

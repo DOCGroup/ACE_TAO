@@ -182,9 +182,8 @@ main (int argc, char **argv)
       Worker worker1 (object1.in ());
       Worker worker2 (object2.in ());
 
-      int result = 0;
 
-      result =
+      int result =
         worker1.activate (THR_BOUND) != 0 ||
         worker2.activate (THR_BOUND) != 0;
       ACE_ASSERT (result == 0);
