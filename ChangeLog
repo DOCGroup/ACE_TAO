@@ -1,3 +1,9 @@
+Wed Dec  5 12:10:42 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/nightlybuilds/builds.lst:
+
+          Temporarily disable the OCI nightly builds.
+
 Wed Dec  5 09:55:28 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/INET_Addr_Test.cpp: Made the ipv4_addresses array const char *.
