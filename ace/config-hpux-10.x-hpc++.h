@@ -47,7 +47,7 @@
 #  define volatile
 
 #else  // aC++ definitions
- 
+
 // Parts of TAO (at least) use __HP_aCC to detect this compiler, but the
 // macro is not set until A.01.18. If it's not set, set it - it won't be an
 // HP-advertised value, but we don't check the value/version - just whether
@@ -68,8 +68,10 @@
 // Compiler can't handle calls like foo->operator T *()
 #  define ACE_HAS_BROKEN_CONVERSIONS
 
-// Compiler supports C++ exception handling
-#  define ACE_HAS_EXCEPTIONS
+// Compiler supports C++ exception handling, unless we turned it off with +noeh
+#  if !defined (__HPACC_NOEH)
+#    define ACE_HAS_EXCEPTIONS
+#  endif  /* __HPACC_NOEH */
 
 // Compiler enforces the "One Definition Rule"
 #  define ACE_HAS_ONE_DEFINITION_RULE
@@ -102,7 +104,10 @@
 #  define ACE_HAS_TEMPLATE_SPECIALIZATION
 
 // Compiler's runtime new throws bad_alloc on out-of-memory condition.
-#  define ACE_NEW_THROWS_EXCEPTIONS
+// If being compiled without exceptions though (+noeh), it doesn't.
+#  if defined (ACE_HAS_EXCEPTIONS)
+#    define ACE_NEW_THROWS_EXCEPTIONS
+#  endif /* ACE_HAS_EXCEPTIONS */
 
 #endif /* __cplusplus < 199707L */
 
@@ -118,7 +123,7 @@
 // Compiler doesn't handle 'signed char' correctly (used in ace/IOStream.h)
 #define ACE_LACKS_SIGNED_CHAR
 
-#include "ace/config-hpux-10.x.h"	/* OS information */
+#include "ace/config-hpux-10.x.h"        /* OS information */
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_H */

@@ -1,3 +1,25 @@
+Fri Mar 02 12:24:27 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-10.x-hpc++.h: If compiling without exceptions
+          (+noeh) then don't set ACE_HAS_EXCEPTIONS (don't set
+          ACE_NEW_THROWS_EXCEPTIONS either).
+
+        * ace/Thread_Manager.cpp (join_thr): Moved the code for
+          ACE_HAS_PTHREADS_DRAFT4 that does a pthread_detach from here
+          to ACE_OS::thr_join (which this function calls) so that
+          ACE_Thread::join also causes a pthread_detach. This is needed
+          on Pthreads Draft 4 (HP-UX 10.x) to properly clean up the thread
+          storage and avoid leaking memory. Thanks to Vladimir Kondratiev
+          <vladimir.kondratiev@intel.com> for reporting this and providing
+          excellent test cases to help resolve it quickly.
+
+        * ace/OS.i (ACE_OS::thr_join): Added the code that was removed from
+          ACE_Thread_Manager::join_thr, above.
+
+        * ace/Event_Handler.cpp (~ACE_Event_Handler): Add an ACE_Errno_Guard
+          around purge_pending_notifications to prevent against an
+          ENOTSUP from purge_pending_notifications.
+
 Thu Mar  1 17:02:10 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/PerlACE/Process_Unix.pm:
@@ -1111,6 +1133,7 @@ Tue Feb  6 23:43:49 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
           %s to be %*s since the string may not be nul terminated!  Thanks
           to Lu Yunhai <luyunhai@huawei.com> for reporting this.
 
+>>>>>>> 4.1657
 Tue Feb  6 20:11:28 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU:
