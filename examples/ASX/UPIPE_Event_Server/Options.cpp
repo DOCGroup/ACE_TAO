@@ -2,6 +2,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Synch.h"
+#include "ace/Log_Msg.h"
 
 #include "Options.h"
 
