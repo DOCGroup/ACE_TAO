@@ -1,3 +1,9 @@
+Mon Jul  2 05:40:54 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Synch.h: Fixed the Doxygen documentation for all the
+	  removed_ fields, which where somehow messed up.  Thanks to
+ 	  Johnny Willemsen for reporting this.
+
 Sun Jul  1 11:49:13 2001  Alexander Libman <alexander.libman@baltimore.com>
 
         * ace: Enhanced the POSIX and Sun Proactor implementations as
