@@ -1,0 +1,54 @@
+-*- indented-text -*-
+
+$Id$
+
+			      BACKGROUND
+			      ==========
+
+This example tests the scenario of nested upcalls.  For example, a
+particular process may need to act in both the role of client and
+server.  This interaction is common in situations where the process
+makes a twoway invocation on a remote servant, passing a local object
+reference 'o' to that servant.  In the process of servicing that
+invocation, the servant makes a twoway invocation on 'o'.
+
+In this example, we draw upon an interaction of this sort which should
+be familiar to anyone who's used ACE: the process of registering a
+handler with a Reactor.  The EventHandler is the local object
+reference, and the Reactor the remote servant.  NOTE: This example in
+no way should be construed as testimony that remote Reactors make
+sense or are in any way useful.  It is merely a motivating example!
+
+			      EXECUTION
+			      =========
+
+server
+------
+
+$ server [orb options] [-d]
+
+where 
+	-d	turns on debugging messages
+
+
+client
+------
+
+$ client [orb options] [-d] [-f ior_file] [-k ior_string]
+
+where
+	-d	turns on debugging messages
+
+	-f	specifies the name of a file in which the IOR
+		for the Reactor can be found
+	
+	-k	specifies a string which is the IOR of the Reactor
+
+
+NOTES
+-----
+
+If running both on the same machine, it will be necessary to specify a
+different port for each the client and the server using -ORBport on
+the command line.  This is because there is also a servant within the
+confines of the client executable.

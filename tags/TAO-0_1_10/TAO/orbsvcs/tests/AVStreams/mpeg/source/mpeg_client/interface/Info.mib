@@ -1,0 +1,78 @@
+static char InfoMib[] = "\
+TotalWidgets: 4\n\
+Ref: 1\n\
+Widget: \"RootForm\"\n\
+Children: 2 3 4\n\
+Parent: 1\n\
+Public-\n\
+Name: \"Root\"\n\
+Xmwidth: 562\n\
+Xmheight: 307\n\
+XmtopAttachment: 1\n\
+XmbottomAttachment: 1\n\
+XmleftAttachment: 1\n\
+XmrightAttachment: 1\n\
+XmtopOffset: 0\n\
+XmbottomOffset: 0\n\
+XmleftOffset: 0\n\
+XmrightOffset: 0\n\
+Private-\n\
+EndWidget.\n\
+Ref: 2\n\
+Widget: \"Button\"\n\
+Children: X\n\
+Parent: 1\n\
+Public-\n\
+Name: \"Dismiss\"\n\
+Xmwidth: 62\n\
+Xmheight: 28\n\
+XmtopAttachment: 0\n\
+XmbottomAttachment: 1\n\
+XmleftAttachment: 0\n\
+XmrightAttachment: 1\n\
+XmtopOffset: 270\n\
+XmbottomOffset: 9\n\
+XmleftOffset: 506\n\
+XmrightOffset: 9\n\
+Private-\n\
+label: \"Dismiss\"\n\
+EndWidget.\n\
+Ref: 3\n\
+Widget: \"TextBig\"\n\
+Children: X\n\
+Parent: 1\n\
+Public-\n\
+Name: \"TextBig\"\n\
+Xmwidth: 546\n\
+Xmheight: 256\n\
+XmtopAttachment: 1\n\
+XmbottomAttachment: 1\n\
+XmleftAttachment: 1\n\
+XmrightAttachment: 1\n\
+XmtopOffset: 8\n\
+XmbottomOffset: 43\n\
+XmleftOffset: 8\n\
+XmrightOffset: 8\n\
+Private-\n\
+EndWidget.\n\
+Ref: 4\n\
+Widget: \"Frame\"\n\
+Children: X\n\
+Parent: 1\n\
+Public-\n\
+Name: \"OutFrame\"\n\
+Xmwidth: 561\n\
+Xmheight: 306\n\
+XmtopAttachment: 1\n\
+XmbottomAttachment: 1\n\
+XmleftAttachment: 1\n\
+XmrightAttachment: 1\n\
+XmtopOffset: 0\n\
+XmbottomOffset: 1\n\
+XmleftOffset: 1\n\
+XmrightOffset: 0\n\
+Private-\n\
+shadowtype: 1\n\
+EndWidget.\n\
+END.\n\
+";

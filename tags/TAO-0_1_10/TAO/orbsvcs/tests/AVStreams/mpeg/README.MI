@@ -1,0 +1,39 @@
+Hello animation addicts,
+
+I'll be brief. This is the modified source of mpeg_play that has a new motif
+user interface (finally!). I hope you will enjoy spending many hours using it!
+This is a very rough first release and the source files + make files are not
+particularly well organized. You might have to do a lot of hand tweaking to get
+it to compile.
+
+Here are some helpful hints:
+
+/mib directory contains the source for my mib interface construction toolkit
+     which is really just a wrapper around motif. This is the majority of the
+     new code and is the same toolkit I used for the X11 version of Geomview
+     (3d visualization program), also available via ftp from geom.umn.edu.
+
+/interface directory contains the bitmaps for buttons, and the interface
+     geometry specified with .mib files.
+
+ui.c file contains the code which sets up the interface and processes button
+     callbacks.
+
+More minor modifications were made to gdith.c util.c util32.c and video.c.
+
+To compile you will need a decent compiler (gcc works the best!), as well as
+the X11, Xt, and Xm (motif) libraries.
+
+You must first get mib/libmib.a to be created. The Makefile in /mib should take
+care of this when properly tweaked. The main makefile should handle linking the
+library into the mpeg_play binary.
+
+If you have any questions or need help with the compile feel free to send me
+mail, but I may take a while to respond. I tend to correspond with quite a
+few people about many different things.
+
+best wishes,
+
+Daeron Meyer
+
+daeron@geom.umn.edu
