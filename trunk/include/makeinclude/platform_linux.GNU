@@ -6,20 +6,19 @@
 debug = 1
 optimize = 1
 
-CC              = gcc
-CXX             = g++
-CFLAGS          += -Wall -Wpointer-arith -pipe
-CCFLAGS         += $(CFLAGS) -fno-implicit-templates
-DCFLAGS         += -g
-DLD             = $(CXX)
-LD              = $(CXX)
-LIBS            += -ldl
-OCFLAGS         += -O3
-PIC             = -fPIC
-AR              = ar
-ARFLAGS         = ruv
-RANLIB          = ranlib
-
+CC      = gcc
+CXX     = g++
+CFLAGS  += -Wall -Wpointer-arith -pipe
+CCFLAGS += $(CFLAGS) -fno-implicit-templates
+DCFLAGS += -g
+DLD     = $(CXX)
+LD      = $(CXX)
+LIBS    += -ldl
+OCFLAGS += -O3
+PIC     = -fPIC
+AR      = ar
+ARFLAGS = rsuv
+RANLIB  = @true
 SOFLAGS = $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB  = @true

@@ -11,21 +11,20 @@
 debug = 1
 optimize = 1
 
-CC              = gcc
-CXX             = g++
-CFLAGS          += -Wall -pipe \
-                   -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT
-CCFLAGS         += $(CFLAGS) -fno-implicit-templates
-DCFLAGS         += -g
-DLD             = $(CXX)
-LD              = $(CXX)
-LIBS            += -ldl -lpthread
-OCFLAGS         += -O3
-PIC             = -fPIC
-AR              = ar
-ARFLAGS         = ruv
-RANLIB          = ranlib
-
+CC      = gcc
+CXX     = g++
+CFLAGS  += -Wall -pipe \
+           -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT
+CCFLAGS += $(CFLAGS) -fno-implicit-templates
+DCFLAGS += -g
+DLD     = $(CXX)
+LD      = $(CXX)
+LIBS    += -ldl -lpthread
+OCFLAGS += -O3
+PIC     = -fPIC
+AR      = ar
+ARFLAGS = rsuv
+RANLIB  = @true
 SOFLAGS = $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
           $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
