@@ -1,3 +1,25 @@
+Wed Jan  5 10:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/Continuous_Priority_Mapping.{h,cpp,i}:
+        * tao/RTCORBA/Direct_Priority_Mapping.{h,cpp,i}:
+        * tao/RTCORBA/Linear_Network_Priority_Mapping.{h,cpp,i}:
+        * tao/RTCORBA/Linear_Priority_Mapping.{h,cpp,i}:
+        * tao/RTCORBA/Multi_Priority_Mapping.{h,cpp,i}:
+        * tao/RTCORBA/Network_Priority_Mapping.{h,cpp,i}:
+        * tao/RTCORBA/Priority_Mapping.{h,cpp,i}:
+        * tao/RTCORBA/RT_Current.{h,cpp,i}:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.{h,cpp,i}:
+        * tao/RTCORBA/RT_Mutex.{h,cpp,i}:
+        * tao/RTCORBA/RT_ORB.{h,cpp,i}:
+        * tao/RTCORBA/RT_Policy_i.{h,cpp,i}:
+        * tao/RTCORBA/RT_Protocols_Hooks.{h,cpp,i}:
+        * tao/RTCORBA/RT_Thread_Lane_Resources_Manager.{h,cpp,i}:
+        * tao/RTCORBA/Thread_Pool.{h,cpp,i}:
+          All .i/.inl files above where empty, so removed them from the repo
+          and updated the h/cpp files to not include the removed file. In case
+          someone want to inline a method, must re-add the file at that moment
+          with the .inl extension. Also updated some wrong ACE_RCSID tags
+
 Tue Jan  4 17:55:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* Makefile.am:
