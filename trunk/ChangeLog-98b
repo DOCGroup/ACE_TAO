@@ -1,3 +1,8 @@
+Tue Sep 29 21:55:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/ace.dsw: Removed Connector.cpp from the compile list since
+	  it is a files with template classes only.	  
+
 Tue Sep 29 21:14:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (open): Grab a lock from the Object_Manager when
