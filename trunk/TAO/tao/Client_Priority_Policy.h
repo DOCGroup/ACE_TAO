@@ -31,7 +31,7 @@
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
-#include "tao/TAOS.h"
+#include "tao/TAOC.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -40,8 +40,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export TAO_Client_Priority_Policy : public TAO_RefCountServantBase,
-                                              public POA_TAO::ClientPriorityPolicy
+class TAO_Export TAO_Client_Priority_Policy : public TAO::ClientPriorityPolicy
 {
   // = TITLE
   //
@@ -50,15 +49,13 @@ class TAO_Export TAO_Client_Priority_Policy : public TAO_RefCountServantBase,
   //
   //
 public:
-  TAO_Client_Priority_Policy (PortableServer::POA_ptr poa,
-                              const TAO::PrioritySpecification &priority_spec);
+  TAO_Client_Priority_Policy (const TAO::PrioritySpecification &priority_spec);
   // Constructor.
 
   TAO_Client_Priority_Policy (const TAO_Client_Priority_Policy &rhs);
   // Copy constructor.
 
   static CORBA::Policy_ptr create (
-      PortableServer::POA_ptr poa,
       const CORBA::Any& val,
       CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ()
@@ -82,14 +79,8 @@ public:
   virtual void destroy (
       CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
     );
-  virtual PortableServer::POA_ptr _default_POA (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-    );
 
 private:
-  PortableServer::POA_var poa_;
-  // The default poa
-
   TAO::PrioritySpecification priority_spec_;
   // The attribute
 };

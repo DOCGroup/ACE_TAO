@@ -1,0 +1,141 @@
+--- orig/MessagingC.i	Fri Apr 28 16:44:03 2000
++++ MessagingC.i	Fri Apr 28 16:43:53 2000
+@@ -7,6 +7,8 @@
+ // Information about TAO is available at:
+ //                 http://www.cs.wustl.edu/~schmidt/TAO.html
+ 
++#if (TAO_HAS_REBIND_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::RebindPolicy::RebindPolicy (void) // default constructor
+ {}
+@@ -189,6 +191,10 @@
+ 
+ #endif /* end #if !defined */
+ 
++#endif /* TAO_HAS_REBIND_POLICY == 1 */
++
++#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::SyncScopePolicy::SyncScopePolicy (void) // default constructor
+ {}
+@@ -371,6 +377,10 @@
+ 
+ #endif /* end #if !defined */
+ 
++#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
++
++#if (TAO_HAS_PRIORITY_POLICIES == 1)
++
+ // *************************************************************
+ // Inline operations for class Messaging::PriorityRange_var
+ // *************************************************************
+@@ -863,6 +873,10 @@
+ 
+ #endif /* end #if !defined */
+ 
++#endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
++
++#if (TAO_HAS_REQUEST_START_TIME_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::RequestStartTimePolicy::RequestStartTimePolicy (void) // default constructor
+ {}
+@@ -1045,6 +1059,10 @@
+ 
+ #endif /* end #if !defined */
+ 
++#endif /* TAO_HAS_REQUEST_START_TIME_POLICY == 1 */
++
++#if (TAO_HAS_REQUEST_END_TIME_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::RequestEndTimePolicy::RequestEndTimePolicy (void) // default constructor
+ {}
+@@ -1227,6 +1245,10 @@
+ 
+ #endif /* end #if !defined */
+ 
++#endif /* TAO_HAS_REQUEST_END_TIME_POLICY == 1 */
++
++#if (TAO_HAS_REPLY_START_TIME_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::ReplyStartTimePolicy::ReplyStartTimePolicy (void) // default constructor
+ {}
+@@ -1409,6 +1431,10 @@
+ 
+ #endif /* end #if !defined */
+ 
++#endif /* TAO_HAS_REPLY_START_TIME_POLICY == 1 */
++
++#if (TAO_HAS_REPLY_END_TIME_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::ReplyEndTimePolicy::ReplyEndTimePolicy (void) // default constructor
+ {}
+@@ -1591,6 +1617,10 @@
+ 
+ #endif /* end #if !defined */
+ 
++#endif /* TAO_HAS_REPLY_END_TIME_POLICY == 1 */
++
++#if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::RelativeRequestTimeoutPolicy::RelativeRequestTimeoutPolicy (void) // default constructor
+ {}
+@@ -1773,6 +1803,10 @@
+ 
+ #endif /* end #if !defined */
+ 
++#endif /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
++
++#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::RelativeRoundtripTimeoutPolicy::RelativeRoundtripTimeoutPolicy (void) // default constructor
+ {}
+@@ -1959,6 +1993,10 @@
+ // Inline operations for class Messaging::RoutingTypeRange_var
+ // *************************************************************
+ 
++#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
++
++#if (TAO_HAS_ROUTING_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::RoutingTypeRange_var::RoutingTypeRange_var (void) // default constructor
+   : ptr_ (0)
+@@ -2265,6 +2303,10 @@
+ 
+ #endif /* end #if !defined */
+ 
++#endif /* TAO_HAS_ROUTING_POLICY == 1 */
++
++#if (TAO_HAS_MAX_HOPS_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::MaxHopsPolicy::MaxHopsPolicy (void) // default constructor
+ {}
+@@ -2447,6 +2489,10 @@
+ 
+ #endif /* end #if !defined */
+ 
++#endif /* TAO_HAS_MAX_HOPS_POLICY == 1 */
++
++#if (TAO_HAS_QUEUE_ORDER_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::QueueOrderPolicy::QueueOrderPolicy (void) // default constructor
+ {}
+@@ -2628,6 +2674,8 @@
+ 
+ 
+ #endif /* end #if !defined */
++
++#endif /* TAO_HAS_QUEUE_ORDER_POLICY == 1 */
+ 
+ // *************************************************************
+ // Inline operations for class Messaging::PolicyValue_var

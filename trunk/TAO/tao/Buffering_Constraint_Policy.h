@@ -29,7 +29,7 @@
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-#include "tao/TAOS.h"
+#include "tao/TAOC.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -38,8 +38,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export TAO_Buffering_Constraint_Policy : public TAO_RefCountServantBase,
-                                                   public POA_TAO::BufferingConstraintPolicy
+class TAO_Export TAO_Buffering_Constraint_Policy : public TAO::BufferingConstraintPolicy
 {
   // = TITLE
   //     Implementation class for TAO-specific Buffering Constraint
@@ -50,15 +49,13 @@ class TAO_Export TAO_Buffering_Constraint_Policy : public TAO_RefCountServantBas
   //     the ORB.
   //
 public:
-  TAO_Buffering_Constraint_Policy (const TAO::BufferingConstraint &buffering_constraint,
-                                   PortableServer::POA_ptr poa);
+  TAO_Buffering_Constraint_Policy (const TAO::BufferingConstraint &buffering_constraint);
   // Constructor.
 
   TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs);
   // Copy constructor.
 
-  static CORBA::Policy_ptr create (PortableServer::POA_ptr poa,
-                                   const CORBA::Any& val,
+  static CORBA::Policy_ptr create (const CORBA::Any& val,
                                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Helper method for the implementation of CORBA::ORB::create_policy.
 
@@ -76,14 +73,9 @@ public:
 
   virtual void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-
 private:
   TAO::BufferingConstraint buffering_constraint_;
   // The attribute
-
-  PortableServer::POA_var poa_;
-  // The default poa
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -436,6 +436,9 @@ CORBA_SystemException::_info (void) const
         case TAO_ORB_CORE_INIT_LOCATION_CODE:
           location = "ORB Core initialization failed";
           break;
+        case TAO_POLICY_NARROW_CODE:
+          location = "Failure when narrowing a Policy";
+          break;
         default:
           location = "unknown location";
         }

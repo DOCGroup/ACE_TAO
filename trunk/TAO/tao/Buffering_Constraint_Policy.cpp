@@ -11,18 +11,14 @@ ACE_RCSID(TAO, Buffering_Constraint_Policy, "$Id$")
 #include "tao/Buffering_Constraint_Policy.i"
 #endif /* __ACE_INLINE__ */
 
-TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO::BufferingConstraint &buffering_constraint,
-                                                                  PortableServer::POA_ptr poa)
-  : buffering_constraint_ (buffering_constraint),
-    poa_ (PortableServer::POA::_duplicate (poa))
+TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO::BufferingConstraint &buffering_constraint)
+  : buffering_constraint_ (buffering_constraint)
 {
 }
 
 TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs)
-  : TAO_RefCountServantBase (rhs),
-    POA_TAO::BufferingConstraintPolicy (rhs),
-    buffering_constraint_ (rhs.buffering_constraint_),
-    poa_ (rhs.poa_)
+  : TAO::BufferingConstraintPolicy (),
+    buffering_constraint_ (rhs.buffering_constraint_)
 {
 }
 
@@ -33,8 +29,7 @@ TAO_Buffering_Constraint_Policy::policy_type (CORBA_Environment &)
 }
 
 CORBA::Policy_ptr
-TAO_Buffering_Constraint_Policy::create (PortableServer::POA_ptr poa,
-                                         const CORBA::Any& val,
+TAO_Buffering_Constraint_Policy::create (const CORBA::Any& val,
                                          CORBA::Environment &ACE_TRY_ENV)
 {
   TAO::BufferingConstraint *buffering_constraint;
@@ -44,17 +39,11 @@ TAO_Buffering_Constraint_Policy::create (PortableServer::POA_ptr poa,
 
   TAO_Buffering_Constraint_Policy *servant = 0;
   ACE_NEW_THROW_EX (servant,
-                    TAO_Buffering_Constraint_Policy (*buffering_constraint,
-                                                     poa),
+                    TAO_Buffering_Constraint_Policy (*buffering_constraint),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  PortableServer::ServantBase_var smart_servant (servant);
-
-  CORBA::Policy_var result = servant->_this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  return result._retn ();
+  return servant;
 }
 
 TAO_Buffering_Constraint_Policy *
@@ -76,31 +65,12 @@ TAO_Buffering_Constraint_Policy::copy (CORBA_Environment &ACE_TRY_ENV)
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  PortableServer::ServantBase_var smart_servant (servant);
-
-  CORBA::Policy_var result = servant->_this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  return result._retn ();
+  return servant;
 }
 
 void
-TAO_Buffering_Constraint_Policy::destroy (CORBA_Environment &ACE_TRY_ENV)
+TAO_Buffering_Constraint_Policy::destroy (CORBA_Environment &)
 {
-  PortableServer::ObjectId_var id =
-    this->poa_->servant_to_id (this,
-                               ACE_TRY_ENV);
-  ACE_CHECK;
-
-  this->poa_->deactivate_object (id.in (),
-                                 ACE_TRY_ENV);
-  ACE_CHECK;
-}
-
-PortableServer::POA_ptr
-TAO_Buffering_Constraint_Policy::_default_POA (CORBA_Environment &)
-{
-  return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
