@@ -1,26 +1,32 @@
+Wed Dec 15 13:48:44 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+
+          Get rid of build warnings from gcc 3.3.
+
 Tue Nov 30 21:41:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* CIDLC/ServantSourceGenerator.cpp (namespace): 
+        * CIDLC/ServantSourceGenerator.cpp (namespace):
 
-	  More use of ACE_NEW_THROW_EX instead of ACE_NEW_RETURN.
+          More use of ACE_NEW_THROW_EX instead of ACE_NEW_RETURN.
 
 Tue Nov 30 21:03:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* CIDLC/ServantSourceGenerator.cpp (namespace): 
+        * CIDLC/ServantSourceGenerator.cpp (namespace):
 
-	  Another use of ACE_NEW_THROW_EX instead of ACE_NEW_RETURN.
+          Another use of ACE_NEW_THROW_EX instead of ACE_NEW_RETURN.
 
 Tue Nov 30 20:39:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* CIDLC/ServantSourceGenerator.cpp (namespace): 
+        * CIDLC/ServantSourceGenerator.cpp (namespace):
 
-	  Used ACE_NEW_THROW_EX instead of ACE_NEW_RETURN.
+          Used ACE_NEW_THROW_EX instead of ACE_NEW_RETURN.
 
 Tue Nov 30 20:22:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* CIDLC/ServantSourceGenerator.cpp (namespace): 
+        * CIDLC/ServantSourceGenerator.cpp (namespace):
 
-	  Fixes for VC6.
+          Fixes for VC6.
 
 Wed Nov 24 09:47:58 2004  Chad Elliott  <elliott_c@ociweb.com>
 
