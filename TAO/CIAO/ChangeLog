@@ -1,3 +1,16 @@
+Sat Mar 19 15:06:37 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/DAM_Map.cpp:
+        * DAnCE/ExecutionManager/DAM_Map.h:
+        * DAnCE/ExecutionManager/ExecutionManager.mpc:
+        * DAnCE/ExecutionManager/Execution_Manager.cpp:
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication.cpp:
+        * DAnCE/NodeManager/NodeDaemon_Impl.cpp:
+
+          Made changes to fix compile errors.
+
 Sat Mar 19 15:02:03 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/Deployment_Configuration.h:
