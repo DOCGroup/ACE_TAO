@@ -1,3 +1,10 @@
+Sun Aug 25 20:30:43 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup_Static.dsp:
+
+	  Added miop stub and skeleton to the source list.  They were
+	  missing.
+
 Sun Aug 25 16:36:53 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/fe/idl.ll:
