@@ -34,10 +34,6 @@ Thu Jan  1 12:04:29 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  program so that it reuses more ACE components and so that it is
  	  more portable.
 
-Thu Jan 01 07:56:17 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-        * ACE version 4.4.12, released Thu Jan 01 07:56:17 1998.
-
 Thu Jan 01 08:50:55 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * apps/Gateway/Peer/Peer.cpp: added template instantiations.
@@ -50,11 +46,15 @@ Thu Jan 01 08:50:55 1998  David L. Levine  <levine@cs.wustl.edu>
           trouble with its inline template member functions, especially
           if __ACE_INLINE__ is disabled.
 
+Thu Jan 01 07:56:17 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.4.12, released Thu Jan 01 07:56:17 1998.
+
 Thu Jan 01 00:28:46 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* apps/Gateway/Peer/Peer.dsp: Added a new file "Options.cpp" into
- 	  this project.	
-	
+ 	  this project.
+
 	* tests/Env_Value_Test.cpp (main): Changed variable name: 'environ'
  	  to 'envp'.  Real OSes don't understand what the word means
  	  and Access Violations will occur.
@@ -63,7 +63,7 @@ Thu Jan 01 00:28:46 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* tests/version_tests/version_tests.dsw:
 	* tests/tests.dsw: Added Env_Value_Test.dsp.
-	
+
 	* tests/version_tests/Env_Value_Test.dsp:
 	* tests/Env_Value_Test.dsp:  New file.
 
@@ -137,7 +137,7 @@ Wed Dec 31 16:25:16 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
  	  above.
 
 	* tests/Makefile: Added new Env_Value_Test test to the Makefile.
-	
+
 	* ace/OS.{h,i} (strtod): Added new function for converting strings
  	  to doubles.
 
