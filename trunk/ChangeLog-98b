@@ -25,6 +25,9 @@ Tue Aug 18 08:15:30 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Aio_Platform_Test.cpp (do_sysconf): on VxWorks, don't
           call ACE_OS::sysconf () because it's not supported.
 
+        * bin/make_release: added -P to cvs checkout command, to ignore
+          empty diretories.
+
 Mon Aug 17 22:56:17 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/version_tests/version_tests.dsw:
