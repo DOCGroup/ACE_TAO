@@ -75,23 +75,31 @@ ACE_TTY_IO::control (Control_Mode cmd,
         case 38400:
           newbaudrate = B38400;
           break;
-#if defined (ACE_USES_HIGH_BAUD_RATES)
-//          case 56000:
-//            newbaudrate = B56000;
-//            break;
+#if defined (B56000)
+	case 56000:
+	  newbaudrate = B56000;
+	  break;
+#endif /* B56000 */
+#if defined (B57600)
         case 57600:
           newbaudrate = B57600;
           break;
+#endif /* B57600 */
+#if defined (B115200)
         case 115200:
           newbaudrate = B115200;
           break;
-//          case 128000:
-//            newbaudrate = B128000;
-//            break;
-//          case 256000:
-//            newbaudrate = B256000;
-//            break;
-#endif /* ACE_USES_HIGH_BAUD_RATES */
+#endif /* B115200 */
+#if defined (B128000)
+	case 128000:
+	  newbaudrate = B128000;
+	  break;
+#endif /* B128000 */
+#if defined (B256000)
+	case 256000:
+	  newbaudrate = B256000;
+	  break;
+#endif /* B256000 */
         default:
           return -1;
         }
@@ -136,8 +144,7 @@ ACE_TTY_IO::control (Control_Mode cmd,
       if (arg->parityenb)
         {
           c_cflag |= PARENB;
-          if (ACE_OS::strcmp (arg->paritymode, "ODD") == 0
-              || ACE_OS::strcmp (arg->paritymode, "odd") == 0)
+          if (ACE_OS::strcasecmp (arg->paritymode, "odd") == 0)
             c_cflag |= PARODD;
         }
 
@@ -281,17 +288,13 @@ ACE_TTY_IO::control (Control_Mode cmd,
       if (arg->parityenb)
         {
           dcb.fParity = TRUE;
-          if (ACE_OS::strcmp (arg->paritymode, "ODD") == 0
-              || ACE_OS::strcmp (arg->paritymode, "odd") == 0)
+          if (ACE_OS::strcasecmp (arg->paritymode, "odd") == 0)
             dcb.Parity = ODDPARITY;
-          else if (ACE_OS::strcmp (arg->paritymode, "EVEN") == 0
-                   || ACE_OS::strcmp (arg->paritymode, "even") == 0)
+          else if (ACE_OS::strcasecmp (arg->paritymode, "even") == 0)
             dcb.Parity = EVENPARITY;
-          else if (ACE_OS::strcmp (arg->paritymode, "MARK") == 0
-                   || ACE_OS::strcmp (arg->paritymode, "mark") == 0)
+          else if (ACE_OS::strcasecmp (arg->paritymode, "mark") == 0)
             dcb.Parity = MARKPARITY;
-          else if (ACE_OS::strcmp (arg->paritymode, "SPACE") == 0
-                   || ACE_OS::strcmp (arg->paritymode, "space") == 0)
+          else if (ACE_OS::strcasecmp (arg->paritymode, "space") == 0)
             dcb.Parity = SPACEPARITY;
           else
             dcb.Parity = NOPARITY;
