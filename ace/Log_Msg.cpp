@@ -218,10 +218,8 @@ ACE_Log_Msg::instance (void)
       ACE_Log_Msg_Manager::get_lock ();
 
       if (ACE_Log_Msg_Manager::task_count_++ == 0)
-        {
-          // Register cleanup handler, just once, for all tasks.
-          ::taskDeleteHookAdd ((FUNCPTR) ACE_Log_Msg_Manager::close);
-        }
+	// Register cleanup handler, just once, for all tasks.
+	::taskDeleteHookAdd ((FUNCPTR) ACE_Log_Msg_Manager::close);
 
       // Allocate memory off the heap and store it in a pointer in
       // thread-specific storage, i.e., in the task control block.
@@ -328,7 +326,9 @@ ACE_Log_Msg::close (void)
   // harded coded into the ACE_Object_Manager's shutdown sequence,
   // in its destructor.
 
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_Log_Msg_Manager::close ();
+#endif /* (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) */
 #endif /* ! VXWORKS */
 }
 
