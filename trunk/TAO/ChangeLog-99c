@@ -72,7 +72,6 @@ Sat Jan 30 14:26:41 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
         * tao/params.i : Defined the Get/Set methods for the init_ref_ parameter.
         * tao/params.cpp : Added the constructor initialization of the init_ref_.
 
-
 Sat Jan 30 11:55:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * TAO/orbsvcs/tests/Sched_Conf/Sched_Conf.cpp
@@ -316,12 +315,9 @@ Wed Jan 27 22:09:14 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
         Modified  the Jtree to to display multiple movie  info
         Enabled the display of the performance graph
 
-
         * orbsvcs/tests/AVStreams/server_discovery/Server_Discovery.java:
         Added the thread to get the dynamic properties and display as a
         graph
-
-
 
 Wed Jan 27 21:59:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
