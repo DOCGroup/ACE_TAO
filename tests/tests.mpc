@@ -713,6 +713,13 @@ project(SOCK Test) : acetest {
   }
 }
 
+project(SOCK Dgram Test) : acetest {
+  exename = SOCK_Dgram_Test
+    Source_Files {
+      SOCK_Dgram_Test.cpp
+  }
+}
+
 project(SOCK Connector Test) : acetest {
   exename = SOCK_Connector_Test
   Source_Files {

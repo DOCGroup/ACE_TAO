@@ -141,7 +141,10 @@ BIN =   \
 	INET_Addr_Test_IPV6 \
 	Max_Default_Port_Test_IPV6 \
 	Multicast_Test_IPV6 \
-	Multihomed_INET_Addr_Test_IPV6
+	Multihomed_INET_Addr_Test_IPV6 \
+	Proactor_Test_IPV6 \
+	SOCK_Send_Recv_Test_IPV6 \
+	SOCK_Test_IPv6
 
 
 BIN2 =  Naming_Test \
