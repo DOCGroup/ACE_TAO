@@ -264,7 +264,7 @@ MT_Test::svc (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception in MT test");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception in MT test setup");
       return -1;
     }
   ACE_ENDTRY;
@@ -281,18 +281,16 @@ MT_Test::svc (void)
                           ACE_TRY_ENV);
       ACE_TRY_CHECK_EX (BIND);
       ACE_DEBUG ((LM_DEBUG,
-                  "Bound name OK in thread %8.8x \n",
-                  ACE_OS::thr_self ()));
+                  "Bound name OK in thread %t\n"));
     }
   ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Unable to bind in thread %8.8x \n",
-                  ACE_OS::thr_self ()));
+                  "Unable to bind in thread %t\n"));
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception in MT test");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception in MT test bind");
       // This debug statement works around a IRIX/MIPSPro 7.3 bug (it
       // fails with optimize=1 debug=0; but works with any other
       // settings for those flags).
@@ -323,19 +321,17 @@ MT_Test::svc (void)
 
           if (id == CosNaming_Client::OBJ1_ID)
             ACE_DEBUG ((LM_DEBUG,
-                        "Resolved name OK in thread %8.8x \n",
-                        ACE_OS::thr_self ()));
+                        "Resolved name OK in thread %t\n"));
         }
     }
   ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Unable to resolve in thread %8.8x \n",
-                  ACE_OS::thr_self ()));
+                  "Unable to resolve in thread %t\n"));
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception in MT test");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception in MT test resolve");
       return -1;
     }
   ACE_ENDTRY;
@@ -348,18 +344,16 @@ MT_Test::svc (void)
                             ACE_TRY_ENV);
       ACE_TRY_CHECK_EX (UNBIND);
       ACE_DEBUG ((LM_DEBUG,
-                  "Unbound name OK in thread %8.8x \n",
-                  ACE_OS::thr_self ()));
+                  "Unbound name OK in thread %t\n"));
     }
   ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Unable to unbind in thread %8.8x \n",
-                  ACE_OS::thr_self ()));
+                  "Unable to unbind in thread %t\n"));
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception in MT test");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception in MT test unbind");
       return -1;
     }
   ACE_ENDTRY;
