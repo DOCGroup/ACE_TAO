@@ -2918,7 +2918,7 @@ TAO_POA::wstring_to_ObjectId (const CORBA::WChar *string)
   // We DO NOT include the zero terminator, as this is simply an
   // artifact of the way strings are stored in C.
   //
-  CORBA::ULong string_length = ACE_WString::wstrlen (string);
+  CORBA::ULong string_length = ACE_OS::wslen (string);
 
   size_t buffer_size = string_length * sizeof (CORBA::WChar);
 
