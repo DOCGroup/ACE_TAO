@@ -34,7 +34,6 @@ $debug = 0;
 $verbose = 0;
 $print_status = 0;
 $Ignore_errors = 0;              # By default, bail out if an error occurs.
-$Use_MPC = 0;
 $Build_LIB = 0;
 $Build_Debug = 0;
 $Build_Release = 0;
@@ -174,10 +173,8 @@ sub Build_All ()
 
     foreach $c (@configurations) {
         if ($Build_All
-            || ($Build_LIB && $Use_MPC == 0 && $Build_Debug && $c =~ /Win32 Static Debug/)
-            || ($Build_LIB && $Use_MPC == 0 && $Build_Release && $c =~ /Win32 Static Release/)
-            || ($Build_LIB && $Use_MPC == 1 && $Build_Debug && $c =~ /Win32 Debug/)
-            || ($Build_LIB && $Use_MPC == 1 && $Build_Release && $c =~ /Win32 Release/))
+            || ($Build_LIB && $Build_Debug && $c =~ /Win32 Debug/)
+            || ($Build_LIB && $Build_Release && $c =~ /Win32 Release/))
         {
             my $Status = 0;
             $Status = Build_Config ($c)
@@ -194,10 +191,8 @@ sub Build_All ()
     foreach $c (@configurations) {
         print STDERR "Configuration ".$count++." of ".$#configurations."\n" if ($print_status == 1);
         Build_Config ($c)
-        if (($Build_LIB && $Use_MPC == 0 && $Build_Debug && $c =~ /Win32 Static Debug/)
-           || ($Build_LIB && $Use_MPC == 0 && $Build_Release && $c =~ /Win32 Static Release/)
-           || ($Build_LIB && $Use_MPC == 1 && $Build_Debug && $c =~ /Win32 Debug/)
-           || ($Build_LIB && $Use_MPC == 1 && $Build_Release && $c =~ /Win32 Release/));
+        if (($Build_LIB && $Build_Debug && $c =~ /Win32 Debug/)
+           || ($Build_LIB && $Build_Release && $c =~ /Win32 Release/));
     }
 }
 
@@ -239,16 +234,6 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
 	push @directories, ("$ACE_ROOT\\TAO\\orbsvcs\\tests\\Notify\\lib");
 	push @directories, ("$ACE_ROOT\\TAO");
     }
-    elsif ($ARGV[0] =~ '-tests_TAO') {       # Build TAO tests
-        print "Building TAO tests\n" if ( $verbose );
-        $use_custom_dir = 1;
-	push @directories, ("$ACE_ROOT\\TAO\\tests");
-    }
-    elsif ($ARGV[0] =~ '-examples_TAO') {       # Build TAO examples
-        print "Building TAO examples\n" if ( $verbose );
-        $use_custom_dir = 1;
-	push @directories, ("$ACE_ROOT\\TAO\\examples");
-    }
     elsif ($ARGV[0] =~ '-dir') {        # Compile only a specific directory
         shift;
         print "Adding directory $ARGV[0]\n" if ( $verbose );
@@ -278,10 +263,6 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         $Build_LIB = 1;
         $Build_All = 0;
     }
-    elsif ($ARGV[0] =~ '-MPC') {        # Use MPC
-        print "Use MPC generated files\n" if ( $verbose );
-        $Use_MPC = 1;
-    }
     elsif ($ARGV[0] =~ '-(\?|h)') {     # Help information
         print "Options\n";
         print "-d         = Debug (only print out projects)\n";
@@ -300,7 +281,6 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         print "-Debug     = Compile Debug versions\n";
         print "-Release   = Compile Release versions\n";
         print "-LIB       = Comple LIB Configurations\n";
-        print "-MPC       = Use MPC generate project files\n";
         exit;
     }
     else {
