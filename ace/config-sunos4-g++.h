@@ -10,6 +10,10 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+// config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
+// this must appear before its #include.
+#define ACE_HAS_STRING_CLASS
+
 #include "ace/config-g++-common.h"
 // This config file has not been tested with ACE_HAS_TEMPLATE_SPECIALIZATION.
 // Maybe it will work?
@@ -22,7 +26,6 @@
 
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
-#define ACE_HAS_STRING_CLASS
 #define ACE_LACKS_SYSTIME_H
 #define ACE_LACKS_GETPGID
 

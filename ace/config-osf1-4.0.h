@@ -40,11 +40,16 @@
 #if defined (__GNUG__)
   // g++ with pthreads
 
+  // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
+  // this must appear before its #include.
+# define ACE_HAS_STRING_CLASS
+
 # include "ace/config-g++-common.h"
 
 # define ACE_HAS_GNU_CSTRING_H
 # define ACE_HAS_REENTRANT_FUNCTIONS
 #elif defined (__DECCXX)
+# define ACE_HAS_STRING_CLASS
 # define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
@@ -94,6 +99,7 @@
 
 #elif defined (__rational__)
 # define ACE_HAS_REENTRANT_FUNCTIONS
+# define ACE_HAS_STRING_CLASS
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
 
@@ -104,6 +110,7 @@
 # define ACE_HAS_TYPENAME_KEYWORD
 # define ACE_HAS_USING_KEYWORD
 #elif defined (__KCC)
+# define ACE_HAS_STRING_CLASS
 # include "ace/config-kcc-common.h"
 #else
 # error unsupported compiler on Digital Unix
@@ -184,7 +191,6 @@
 #define ACE_HAS_STRBUF_T
 #define ACE_HAS_STREAMS
 #define ACE_HAS_STRERROR
-#define ACE_HAS_STRING_CLASS
 #define ACE_HAS_STRPTIME
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_SVR4_SIGNAL_T

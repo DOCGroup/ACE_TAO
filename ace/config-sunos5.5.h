@@ -31,7 +31,7 @@
     // but the newer, explicit instantiation is used (above)
 #   if (__SUNPRO_CC_COMPAT >= 5)
 #     define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
-// Note that SunC++ 5.0 doesn't yet appear to support 
+// Note that SunC++ 5.0 doesn't yet appear to support
 // ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION...
 #     define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #     define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
@@ -76,9 +76,11 @@
        from your CFLAGS, e.g., using make threads=0. */
 
 #elif defined (__GNUG__)
+  // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
+  // this must appear before its #include.
+# define ACE_HAS_STRING_CLASS
 # include "ace/config-g++-common.h"
 # define ACE_HAS_HI_RES_TIMER
-# define ACE_HAS_STRING_CLASS
   // Denotes that GNU has cstring.h as standard, to redefine memchr().
 # define ACE_HAS_GNU_CSTRING_H
 # define ACE_HAS_XPG4_MULTIBYTE_CHAR

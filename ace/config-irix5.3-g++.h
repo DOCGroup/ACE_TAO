@@ -7,6 +7,10 @@
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
+// config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
+// this must appear before its #include.
+#define ACE_HAS_STRING_CLASS
+
 #include "ace/config-g++-common.h"
 
 #define ACE_SIZEOF_LONG_DOUBLE 8
@@ -14,7 +18,6 @@
 #define ACE_LACKS_SYSTIME_H
 // Platform supports getpagesize() call.
 #define ACE_HAS_GETPAGESIZE
-#define ACE_HAS_STRING_CLASS
 #define IRIX5
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_DIRENT

@@ -81,6 +81,11 @@ $(VLIB): $(VLOBJS)
 ifdef PRELIB
 	$(PRELIB)
 endif
+ifeq (1,$(ace_lib_prelink))
+        #### Attempt a link (which will fail), to add template instantiations
+        #### to lib files, for example.
+	-$(LINK.cc) -o ace-templ_inst $? $(LDFLAGS) $(ACE_NUL_STDERR)
+endif # ace_lib_prelink
 	$(AR) $(ARFLAGS) $@ $?
 ifdef TEMPINCDIR
 # This is required to get AIX xlC to instantiate and compile the needed
@@ -126,6 +131,11 @@ ifdef TEMPINCDIR
 		$(SOLINK.cc) -o $@ $(VSHOBJS1) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS); \
 	fi
 else
+ifeq (1,$(ace_lib_prelink))
+        #### Attempt a link (which will fail), to add template instantiations
+        #### to lib files, for example.
+	-$(LINK.cc) -o ace-templ_inst $(VSHOBJS1) $(LDFLAGS) $(ACE_NUL_STDERR)
+endif # ace_lib_prelink
 	$(SOLINK.cc) -o $@ $(VSHOBJS1) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
 endif
 	-chmod a+rx $@

@@ -18,17 +18,23 @@
 #endif /* ! __ACE_INLINE__ */
 
 #if defined (__GNUG__)
-# include "ace/config-g++-common.h"
-
 # if __GNUC_MINOR__ == 7
+
+#   include "ace/config-g++-common.h"
+
     // The g++ that's distributed with LynxOS 3.0.0 needs this.
     // It won't hurt with 2.5.0.
 #   undef ACE_HAS_TEMPLATE_SPECIALIZATION
 # elif __LYNXOS_SDK_VERSION <= 199603L
+    // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
+    // this must appear before its #include.
+
     // If ACE_HAS_STRING_CLASS is used with LynxOS 3.0.0, some
     // executables, such as IOStream_Test, require linking with
     // libg++.
 #   define ACE_HAS_STRING_CLASS
+
+#   include "ace/config-g++-common.h"
 # endif /* __GNUC_MINOR__ == 7 */
 #endif /* __GNUG__ */
 
