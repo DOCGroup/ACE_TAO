@@ -366,27 +366,45 @@ class ACE_Oneshot_Acceptor : public ACE_Service_Object
   //     exactly one service handler (SVC_HANDLER).
   //
   // = DESCRIPTION
-  //     This class works similarly to the regular acceptor except
-  //     that this class doesn't need a Creation_Strategy (since the
-  //     user supplies the SVC_HANDLER) or an Accept_Strategy (since
-  //     this class only accepts one connection and then removes all
-  //     traces (e.g., from the ACE_Reactor).
+  //     This class works similarly to the regular <ACE_Acceptor>,
+  //     with the following differences:
+  //    
+  //     1. This class doesn't automagically register <this> with the
+  //        <ACE_Reactor> since it expects to have its <accept> method
+  //        called directly.  However, it stashes the <ACE_Reactor>
+  //        pointer away in case it's needed later to finish accepting
+  //        a connection asynchronously.
+  //
+  //     2. The class doesn't need an <ACE_Creation_Strategy> (since
+  //        the user supplies the SVC_HANDLER) or an
+  //        <ACE_Accept_Strategy> (since this class only accepts one
+  //        connection and then removes all traces of itself from the
+  //        <ACE_Reactor> if it was registered for asynchronous
+  //        accepts).
 public:
   // = Initialization and termination methods.
   ACE_Oneshot_Acceptor (void);
-  // "Do-nothing" constructor.
+  // Constructor.
 
-  ACE_Oneshot_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &,
-			ACE_Reactor * = ACE_Reactor::instance(),
+  ACE_Oneshot_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
+			ACE_Reactor *reactor = ACE_Reactor::instance (),
 			ACE_Concurrency_Strategy<SVC_HANDLER> * = 0);
-  // Initialize the appropriate strategies for concurrency and
-  // creation and then register <this> at the designated <local_addr>.
+  // Initialize the appropriate strategies for concurrency and then
+  // open the <peer_acceptor> at the designated <local_addr>.  Note
+  // that unlike the <ACE_Acceptor> and <ACE_Strategy_Acceptor>, this
+  // method does NOT register <this> acceptor with the <reactor> at
+  // this point -- it just stashes the <reactor> away in case it's
+  // needed later.
 
   int open (const ACE_PEER_ACCEPTOR_ADDR &, 
-	    ACE_Reactor * = ACE_Reactor::instance(),
+	    ACE_Reactor *reactor = ACE_Reactor::instance (),
 	    ACE_Concurrency_Strategy<SVC_HANDLER> * = 0);
-  // Initialize the appropriate strategies for concurrency and
-  // creation and then register <this> at the designated <local_addr>.
+  // Initialize the appropriate strategies for concurrency and then
+  // open the <peer_acceptor> at the designated <local_addr>.  Note
+  // that unlike the <ACE_Acceptor> and <ACE_Strategy_Acceptor>, this
+  // method does NOT register <this> acceptor with the <reactor> at
+  // this point -- it just stashes the <reactor> away in case it's
+  // needed later.
 
   virtual ~ACE_Oneshot_Acceptor (void);
   // Close down the <Oneshot_Acceptor>.
@@ -397,8 +415,8 @@ public:
 		      const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
 		      int restart = 1,
                       int reset_new_handle = 0);
-  // Create a <SVC_HANDLER>, accept the connection into the <SVC_HANDLER>,
-  // and activate the <SVC_HANDLER>.
+  // Create a <SVC_HANDLER>, accept the connection into the
+  // <SVC_HANDLER>, and activate the <SVC_HANDLER>.
   
   virtual int cancel (void);
   // Cancel a oneshot acceptor that was started asynchronously.
@@ -434,12 +452,6 @@ protected:
                      int reset_new_handle);
   // Factors out the code shared between the <accept> and
   // <handle_input> methods.
-
-  int register_handler (SVC_HANDLER *svc_handler,
-			const ACE_Synch_Options &options,
-			int restart);
-  // Insert ourselves into the ACE_Reactor so that we can 
-  // continue accepting this connection asynchronously.
 
   // = Demultiplexing hooks.
   virtual ACE_HANDLE get_handle (void) const;
@@ -480,6 +492,13 @@ protected:
   // by application developer to do anything meaningful.
 
 private:
+  int register_handler (SVC_HANDLER *svc_handler,
+			const ACE_Synch_Options &options,
+			int restart);
+  // Insert ourselves into the <ACE_Reactor> so that we can continue
+  // accepting this connection asynchronously.  This method should NOT
+  // be called by developers directly.
+
   SVC_HANDLER *svc_handler_;
   // Hold the svc_handler_ across asynchrony boundaries.
 

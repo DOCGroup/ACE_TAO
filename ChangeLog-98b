@@ -1,3 +1,12 @@
+Sat Oct 17 13:41:57 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Connection/non_blocking/CPP-acceptor: Fixed a bug that
+ 	  occurred when timers were used in conjunction with the
+ 	  ACE_Oneshot_Acceptor and handle_close().
+
+	* ace/Acceptor: Cleaned up the ACE_Oneshot_Acceptor comments.
+  	  Boy, this was confusing ;-).
+
 Sat Oct 17 12:54:17 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.60 released.

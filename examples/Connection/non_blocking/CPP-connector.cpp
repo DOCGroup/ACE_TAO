@@ -24,20 +24,27 @@ Peer_Handler<PR_ST_2>::Peer_Handler (ACE_Reactor *r)
 template <PR_ST_1> int
 Peer_Handler<PR_ST_2>::open (void *)
 {
-  ACE_DEBUG ((LM_DEBUG, "activating %d\n", this->peer ().get_handle ()));
+  ACE_DEBUG ((LM_DEBUG,
+              "activating %d\n",
+              this->peer ().get_handle ()));
   this->action_ = &Peer_Handler<PR_ST_2>::connected;
 
-  ACE_DEBUG ((LM_DEBUG, "please enter input..: "));      
+  ACE_DEBUG ((LM_DEBUG,
+              "please enter input..: "));      
 
   if (this->reactor ())
+
 #if defined (ACE_WIN32)
-    // On Win32, the std handle must be registered directly (and not
-    // as a socket)
-    this->reactor ()->register_handler (this, ACE_STDIN);
+    // On Win32, the stdin HANDLE must be registered directly (and not
+    // as a socket).
+    this->reactor ()->register_handler (this,
+                                        ACE_STDIN);
 #else
-    // On non-Win32, the std handle must be registered as a normal
-    // handle with the READ mask
-    this->reactor ()->register_handler (ACE_STDIN, this, ACE_Event_Handler::READ_MASK);
+    // On non-Win32, the stdin HANDLE must be registered as a normal
+    // handle with the <READ_Mask>.
+    this->reactor ()->register_handler (ACE_STDIN,
+                                        this,
+                                        ACE_Event_Handler::READ_MASK);
 #endif /* ACE_WIN32 */
   else
     {
@@ -53,7 +60,8 @@ Peer_Handler<PR_ST_2>::open (void *)
 template <PR_ST_1> int
 Peer_Handler<PR_ST_2>::uninitialized (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "uninitialized!\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "uninitialized!\n"));
   return 0;
 }
 
@@ -62,20 +70,31 @@ Peer_Handler<PR_ST_2>::connected (void)
 {
   char buf[BUFSIZ];
 
-  ssize_t n = ACE_OS::read (ACE_STDIN, buf, sizeof buf);
+  ssize_t n = ACE_OS::read (ACE_STDIN,
+                            buf,
+                            sizeof buf);
 
-  if (n > 0 && this->peer ().send_n (buf, n) != n)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "write failed"), -1);
-  else if (n == 0) /* Explicitly close the connection. */
+  if (n > 0 
+      && this->peer ().send_n (buf,
+                               n) != n)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "write failed"),
+                      -1);
+  else if (n == 0) 
     {
+      // Explicitly close the connection.
       if (this->peer ().close () == -1) 
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), 1);
-
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "close"),
+                          1);
       return -1;
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "please enter input..: "));      
+      ACE_DEBUG ((LM_DEBUG,
+                  "please enter input..: "));      
       return 0;
     }
 }
@@ -85,13 +104,21 @@ Peer_Handler<PR_ST_2>::stdio (void)
 {
   char buf[BUFSIZ];
 
-  ACE_DEBUG ((LM_DEBUG, "stdio!\nplease enter input..: "));
+  ACE_DEBUG ((LM_DEBUG,
+              "in stdio\nplease enter input..: "));
       
-  ssize_t n = ACE_OS::read (ACE_STDIN, buf, sizeof buf);
-
+  ssize_t n = ACE_OS::read (ACE_STDIN,
+                            buf,
+                            sizeof buf);
   if (n > 0)
     {
-      ACE_OS::write (ACE_STDOUT, buf, n);
+      if (ACE_OS::write (ACE_STDOUT,
+                         buf,
+                         n) != n)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "write"),
+                          -1);
       return 0;
     }
   else 
@@ -101,15 +128,19 @@ Peer_Handler<PR_ST_2>::stdio (void)
 template <PR_ST_1> int
 Peer_Handler<PR_ST_2>::handle_output (ACE_HANDLE)
 {
-  ACE_DEBUG ((LM_DEBUG, "in handle_output\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "in handle_output\n"));
 
   return (this->*action_) ();
 }
 
 template <PR_ST_1> int
-Peer_Handler<PR_ST_2>::handle_signal (int signum, siginfo_t *, ucontext_t *)
+Peer_Handler<PR_ST_2>::handle_signal (int signum,
+                                      siginfo_t *,
+                                      ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG, "in handle_signal\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "in handle_signal\n"));
   ACE_UNUSED_ARG (signum);
 
   return (this->*action_) ();
@@ -118,33 +149,52 @@ Peer_Handler<PR_ST_2>::handle_signal (int signum, siginfo_t *, ucontext_t *)
 template <PR_ST_1> int
 Peer_Handler<PR_ST_2>::handle_input (ACE_HANDLE)
 {
-  ACE_DEBUG ((LM_DEBUG, "in handle_input\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "in handle_input\n"));
 
   return (this->*action_) ();
 }
 
 template <PR_ST_1> int
-Peer_Handler<PR_ST_2>::handle_close (ACE_HANDLE, 
+Peer_Handler<PR_ST_2>::handle_close (ACE_HANDLE h,
 				     ACE_Reactor_Mask mask)
 {
-  ACE_DEBUG ((LM_DEBUG, "closing down (%d)\n", mask));
+  ACE_DEBUG ((LM_DEBUG,
+              "closing down handle %d with mask %d\n",
+              h,
+              mask));
 
-  this->action_ = &Peer_Handler<PR_ST_2>::stdio;
-  this->peer ().close ();
-  ACE_OS::rewind (stdin);
-  
-  if (this->reactor ())
-#if defined (ACE_WIN32)
-    // On Win32, the std handle must be registered directly (and not
-    // as a socket)
-    return this->reactor ()->register_handler (this, ACE_STDIN);
-#else
-  // On non-Win32, the std handle must be registered as a normal
-  // handle with the READ mask
-  return this->reactor ()->register_handler (ACE_STDIN, this, ACE_Event_Handler::READ_MASK);
-#endif /* ACE_WIN32 */
+  if (this->action_ == &Peer_Handler<PR_ST_2>::stdio)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "moving to closed state\n"));
+      ACE_Reactor::end_event_loop ();
+    }
   else
-    delete this;
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "moving to stdio state\n"));
+      this->action_ = &Peer_Handler<PR_ST_2>::stdio;
+      this->peer ().close ();
+      ACE_OS::rewind (stdin);
+
+      if (this->reactor ())
+#if defined (ACE_WIN32)
+        // On Win32, the std handle must be registered directly (and not
+        // as a socket)
+        return this->reactor ()->register_handler (this,
+                                                   ACE_STDIN);
+#else
+        // On non-Win32, the std handle must be registered as a normal
+        // handle with the READ mask
+        return this->reactor ()->register_handler (ACE_STDIN,
+                                                   this,
+                                                   ACE_Event_Handler::READ_MASK);
+#endif /* ACE_WIN32 */
+      else
+        delete this;
+    }
+
   return 0;
 }
 
@@ -172,7 +222,8 @@ IPC_Client<SH, PR_CO_2>::IPC_Client (void)
 template <class SH, PR_CO_1> int
 IPC_Client<SH, PR_CO_2>::init (int argc, char *argv[])
 {
-  // Call down to the CONNECTOR's open() method to do the initialization.
+  // Call down to the CONNECTOR's open() method to do the
+  // initialization.
   this->inherited::open (ACE_Reactor::instance ());
 
   const char *r_addr = argc > 1 ? argv[1] : 
@@ -184,21 +235,30 @@ IPC_Client<SH, PR_CO_2>::init (int argc, char *argv[])
 
   // Handle signals through the ACE_Reactor.
   if (ACE_Reactor::instance ()->register_handler
-      (SIGINT, &this->done_handler_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
-
+      (SIGINT,
+       &this->done_handler_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "register_handler"),
+                      -1);
   PR_AD remote_addr (r_addr);
-
-  this->options_.set (ACE_Synch_Options::USE_REACTOR, timeout);
+  this->options_.set (ACE_Synch_Options::USE_REACTOR,
+                      timeout);
 
   SH *sh;
-  
-  ACE_NEW_RETURN (sh, SH (this->reactor ()), -1);
+  ACE_NEW_RETURN (sh,
+                  SH (this->reactor ()),
+                  -1);
 
   // Connect to the peer.
-  if (this->connect (sh, remote_addr, this->options_) == -1
+  if (this->connect (sh,
+                     remote_addr,
+                     this->options_) == -1
       && errno != EWOULDBLOCK)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connect"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "connect"),
+                      -1);
   else
     return 0;
 }
@@ -213,11 +273,15 @@ IPC_Client<SH, PR_CO_2>::handle_close (ACE_HANDLE h,
 				       ACE_Reactor_Mask)
 {
   if (h == ACE_INVALID_HANDLE)
-    ACE_ERROR ((LM_ERROR, "%p on %d\n", "connection failed", h));
+    ACE_ERROR ((LM_ERROR,
+                "%p on %d\n",
+                "connection failed",
+                h));
   else 
     {
       // We are closing down the connector.
-      ACE_DEBUG ((LM_DEBUG, "closing down IPC_Client\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "closing down IPC_Client\n"));
       this->inherited::handle_close ();
     }
 

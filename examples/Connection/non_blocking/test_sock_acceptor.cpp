@@ -20,7 +20,10 @@ main (int argc, char *argv[])
   IPC_SERVER peer_acceptor;
 
   if (peer_acceptor.init (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "init"),
+                      -1);
 
   return peer_acceptor.svc ();
 }

@@ -222,7 +222,8 @@ timed_blocking_connect (CONNECTOR &con,
   ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT, tv);
 
   Svc_Handler *svc_handler;
-  ACE_NEW (svc_handler, Svc_Handler);
+  ACE_NEW (svc_handler,
+           Svc_Handler);
 
   // Perform a timed-blocking connect to the server (this should
   // connect quickly since we're in the same address space or same
@@ -249,7 +250,8 @@ blocking_connect (CONNECTOR &con,
                   const ACE_INET_Addr &server_addr)
 {
   Svc_Handler *svc_handler;
-  ACE_NEW (svc_handler, Svc_Handler);
+  ACE_NEW (svc_handler, 
+           Svc_Handler);
 
   // Perform a blocking connect to the server.
   if (con.connect (svc_handler, server_addr) == -1)
@@ -367,7 +369,8 @@ client_connections (void *arg)
 static void *
 client (void *arg)
 {
-  ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
+  ACE_INET_Addr *remote_addr = ACE_reinterpret_cast (ACE_INET_Addr *,
+                                                     arg);
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
                              ACE_DEFAULT_SERVER_HOST);
   CONNECTOR connector;
@@ -429,9 +432,11 @@ server (void *arg)
   ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT, tv);
 
   Svc_Handler *svc_handler;
-  ACE_NEW_RETURN (svc_handler, Svc_Handler, 0);
+  ACE_NEW_RETURN (svc_handler, 
+                  Svc_Handler, 
+                  0);
 
-  // Keep looping until we timeout on accept() or fail.
+  // Keep looping until we timeout on <accept> or fail.
 
   for (;;)
     {
@@ -447,13 +452,14 @@ server (void *arg)
       ACE_UNUSED_ARG (options);
 #endif /* ! ACE_LACKS_FORK */
 
-      // Timing out is the only way for threads to stop accepting,
-      // since we don't have signals
+      // Timing out is the only way for threads to stop accepting
+      // since we don't have signals.
 
       if (result == -1)
         {
           svc_handler->close ();
-          ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n"),
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ASYS_TEXT ("(%P|%t) %p\n"),
                              ASYS_TEXT ("accept failed, shutting down")),
                             0);
         }
@@ -465,7 +471,7 @@ server (void *arg)
       svc_handler->recv_data ();
     }
 
-  ACE_NOTREACHED(return 0);
+  ACE_NOTREACHED (return 0);
 }
 
 #if !defined (ACE_LACKS_FORK)
@@ -484,7 +490,9 @@ spawn_processes (ACCEPTOR *acceptor,
                  ACE_INET_Addr *server_addr)
 {
   pid_t *children_ptr;
-  ACE_NEW_RETURN (children_ptr, pid_t[n_servers], -1);
+  ACE_NEW_RETURN (children_ptr,
+                  pid_t[n_servers], 
+                  -1);
   ACE_Auto_Basic_Array_Ptr<pid_t> children (children_ptr);
   int i;
 
@@ -552,24 +560,29 @@ spawn_threads (ACCEPTOR *acceptor,
 #if defined (VXWORKS)
   // Assign thread (VxWorks task) names to test that feature.
   ACE_thread_t *server_name;
-  ACE_NEW (server_name, ACE_thread_t[n_servers]);
+  ACE_NEW (server_name, 
+           ACE_thread_t[n_servers]);
 
   // And test ability to provide stacks.
   size_t *stack_size;
-  ACE_NEW (stack_size, size_t[n_servers]);
+  ACE_NEW (stack_size,
+           size_t[n_servers]);
   char **stack;
-  ACE_NEW (stack, char *[n_servers]);
+  ACE_NEW (stack, 
+           char *[n_servers]);
 
   int i;
 
   for (i = 0; i < n_servers; ++i)
     {
-      ACE_NEW (server_name[i], ASYS_TCHAR[32]);
+      ACE_NEW (server_name[i],
+               ASYS_TCHAR[32]);
       ACE_OS::sprintf (server_name[i],
                        ASYS_TEXT ("server%u"),
                        i);
       stack_size[i] = 40000;
-      ACE_NEW (stack[i], char[stack_size[i]]);
+      ACE_NEW (stack[i], 
+               char[stack_size[i]]);
 
       // Initialize the stack for checkStack.
       ACE_OS::memset (stack[i], 0xEE, stack_size[i]);
