@@ -2,7 +2,7 @@
 
 ACE_RCSID (Infrastructure_Controlled,
            Factory_Struct,
-           "$Id$");
+           "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

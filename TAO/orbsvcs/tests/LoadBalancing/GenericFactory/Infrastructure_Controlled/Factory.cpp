@@ -5,7 +5,7 @@
 
 ACE_RCSID (Infrastructure_Controlled,
            Factory,
-           "$Id$");
+           "$Id$")
 
 Factory::Factory (void)
 {
@@ -36,7 +36,7 @@ Factory::create_object (
   PortableServer::ServantBase_var safe_servant = servant;
 
   CORBA::ULong tmp_fcid = 0;
-  tmp_fcid = this->fcid_; 
+  tmp_fcid = this->fcid_;
 
   while (this->factory_map_.find (this->fcid_) == 0)
     {
