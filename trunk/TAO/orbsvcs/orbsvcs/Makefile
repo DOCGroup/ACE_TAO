@@ -37,8 +37,27 @@ LIBS    += -lTAO -lACE
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
+
+####
+#### Build customization.
+####
+ifndef TAO_ORBSVCS
+  #### Please see docs/configurations.html#orbsvcs for documentation of
+  #### TAO_ORBSVCS.
+  TAO_ORBSVCS = Naming \
+                Time \
+                Log \
+                Concurrency \
+                LifeCycle \
+                ImplRepo \
+                Property \
+                Trader \
+                Sched \
+                Event \
+                CosEvent \
+                AV \
+		Event2
+endif # TAO_ORBSVCS
 
 ####
 #### TAO_ORBSVCS support.
@@ -211,6 +230,8 @@ DEFS  = $(addsuffix .h,$(FILES))
 LSRC  = $(addsuffix .cpp,$(FILES))
 BUILD += ORBSVCS_COMPONENTS
 
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU

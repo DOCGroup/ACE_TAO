@@ -271,25 +271,17 @@ Set (and export) a <tt>TAO_ORBSVCS</tt> environment variable.</li>
 
 <br>&nbsp;
 <p>&nbsp;</ol>
-Please see <tt><a href="../rules.tao.GNU">rules.tao.GNU</a></tt> for the
-default setting of <tt>TAO_ORBSVCS</tt>.
-<p>&nbsp;Please note the current limitations:
-<br>&nbsp;
-<br>&nbsp;
+Please see the <code><a href="../orbsvcs/orbsvcs/Makefile">ORBSVCS
+Makefile</a></code> for the default setting of <code>TAO_ORBSVCS</code>.<p>
+
+Please note the current limitations:
 <ol>
-<li>
-We currently don't check for interdependencies between services. For example,
-if you build the CosEvent service, you must also explicitly specify the
-Sched and Event services, at least.</li>
-
-<br>&nbsp;
-<p>&nbsp;
-<li>
-We currently don't check this macro in each of the orbsvcs Makefiles, or
-in their tests. We'll add those checks soon.</li>
-
-<br>&nbsp;
-<p>&nbsp;</ol>
+  <li>We currently don't check for interdependencies between services.
+    For example, if you build the CosEvent service, you must also
+    explicitly specify the Sched and Event services, at least.<p>
+  <li>We currently don't check this macro in each of the orbsvcs
+    Makefiles, or in their tests.  We might add those checks soon.<p>
+</ol>
 </ul>
 
 <hr>
