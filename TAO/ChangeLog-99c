@@ -1,4 +1,11 @@
-Sat May 01 02:14:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Sat May 01 03:03:47 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h:
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h:
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h:
+	* orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h:
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: Disable MSVC's warning
+	  4250.
 
 	* tao/tao[_static].dsp: Added IIOP_Server_Request.{h,i,cpp}.
 
