@@ -1,3 +1,8 @@
+Fri Aug 13 17:46:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IOR_Parser.h:
+          Small doxygen tag improvements
+
 Fri Aug 13 10:25:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.h (OpenSSL_traits):
