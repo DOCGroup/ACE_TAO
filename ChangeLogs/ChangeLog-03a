@@ -1,3 +1,11 @@
+Thu Aug 16 08:09:53 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/run_test.lst:
+
+          Added the OTHER requirement to the Thread_Pool_Reactor_Test and
+          the Thread_Pool_Reactor_Resume_Test.  These are only built if
+          OTHER is part of the ACE components list.
+
 Wed Aug 15 15:50:38 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/WFMO_Reactor.cpp: Don't try to purge the notifications if
