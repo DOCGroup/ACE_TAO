@@ -95,7 +95,8 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "CORBA::Boolean" << be_nl
+  *os << "template<>" << be_nl
+      << "CORBA::Boolean" << be_nl
       << "TAO::Any_Impl_T<" << node->name () << ">::to_object ("
       << be_idt <<  be_idt_nl
       << "CORBA::Object_ptr &_tao_elem" << be_uidt_nl
@@ -107,7 +108,8 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
   if (node->is_abstract () || node->has_mixed_parentage ())
     {
-      *os << "CORBA::Boolean" << be_nl
+      *os << "template<>" << be_nl
+          << "CORBA::Boolean" << be_nl
           << "TAO::Any_Impl_T<" << node->name () << ">::to_abstract_base ("
           << be_idt <<  be_idt_nl
           << "CORBA::AbstractBase_ptr &_tao_elem" << be_uidt_nl
