@@ -1,3 +1,16 @@
+Sat Mar 30 14:43:28 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
+
+	  Include "tao/Protocol_Factory.h" and "tao/Pluggable.h" to pull
+	  in TAO_Protocol_Factory and TAO_Acceptor class declarations,
+	  respectively.
+
+	* tao/RTCORBA/Private_Transport_Descriptor.cpp:
+
+	  Include "tao/Endpoint.h" to pull in TAO_Endpoint class
+	  declaration.
+
 Sat Mar 30 14:01:43 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Transport_Cache_Manager.h:
