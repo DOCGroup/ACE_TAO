@@ -29,7 +29,7 @@ ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES
                                         Win32 only.  Users want to use
                                         a predefined security
                                         attributes defined in
-                                        ACE_OS::default_win32_security_attributes
+                                      ACE_OS::default_win32_security_attributes
                                         as the default security
                                         object.
 ACE_DISABLE_DEBUG_DLL_CHECK             Define this if you don't want
@@ -44,6 +44,15 @@ ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER
                                         ACE_HAS_NONSTATIC_OBJECT_MANAGER.
                                         Usually used with MFC
                                         applications.
+ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO     Platform does not initialize
+                                        sockaddr_in::sin_zero field in
+                                        calls to getpeername() and
+                                        getsockname().  As a result,
+                                        memcmp()-based equality
+                                        comparison can fail despite
+                                        the fact two sockaddr_in
+                                        instances refer to the same
+                                        addr characteristics.
 ACE_MAIN                                Renames "main (int, char *[])",
                                         for platforms such as g++/VxWorks
                                         that don't allow "main".  Requires
@@ -56,11 +65,14 @@ ACE_NEW_THROWS_EXCEPTIONS               Compiler's 'new' throws exception on
 ACE_NLOGGING                            Turns off the LM_DEBUG and
                                         LM_ERROR logging macros...
 ACE_NTRACE                              Turns off the tracing feature when = 1.
-ACE_HAS_TRACE                           Defined when ACE_NTRACE=0 to help support
-                                        tracing.  Can also be defined by users who
-                                        implement their own tracing macros based on
-                                        ACE_TRACE_IMPL.  Not defining it helps reduce
-                                        footprint by not requiring applications to
+ACE_HAS_TRACE                           Defined when ACE_NTRACE=0 to
+                                        help support tracing.  Can
+                                        also be defined by users who
+                                        implement their own tracing
+                                        macros based on
+                                        ACE_TRACE_IMPL.  Not defining
+                                        it helps reduce footprint by
+                                        not requiring applications to
                                         link in Trace.o.
 ACE_PAGE_SIZE                           Defines the page size of the
                                         system (not used on Win32 or
@@ -90,16 +102,20 @@ ACE_USES_ASM_SYMBOL_IN_DLSYM            Platform uses assembly symbols
 ACE_USES_STATIC_MFC                     When linking MFC as a static library is desired
 ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB   Platform has its standard c++
                                         library in the namespace std.
-ACE_USES_EXPLICIT_STD_NAMESPACE         Set this when ::fclose doesn't work and you
-                                        have to explicitly specify the std namespace.
-                                        This is needed with the Borland 6 and earlier
+ACE_USES_EXPLICIT_STD_NAMESPACE         Set this when ::fclose doesn't
+                                        work and you have to
+                                        explicitly specify the std
+                                        namespace.   This is needed
+                                        with the Borland 6 and earlier
                                         compilers.
 ACE_USES_GPROF                          ACE calls getitimer before spawning
-                                        a new thread and setitimer after spawning
-                                        the thread in order to overcome the problems
-                                        of gprof with multithreaded applications.
-                                        It uses the idea from
-                                        http://sam.zoy.org/writings/programming/gprof.html
+                                        a new thread and setitimer
+                                        after spawning the thread in
+                                        order to overcome the problems
+                                        of gprof with multithreaded
+                                        applications.  It uses the
+                                        idea from
+                             http://sam.zoy.org/writings/programming/gprof.html
 ACE_WSOCK_VERSION                       A parameter list indicating
                                         the version of WinSock (e.g.,
                                         "1, 1" is version 1.1).
@@ -1000,9 +1016,10 @@ ACE_LACKS_WILDCARD_BIND                 The bind() call will not
 ACE_LACKS_WRITEV                        Platform doesn't define
                                         writev, so use our own
 
-ACE_LEGACY_MODE                         When defined, it will enable some code that is
-                                        used to provide some support for backwards
-                                        compatibility.
+ACE_LEGACY_MODE                         When defined, it will enable
+                                        some code that is used to
+                                        provide some support for
+                                        backwards compatibility.
 
 ACE_NEEDS_DEV_IO_CONVERSION             Necessary with some compilers
                                         to pass ACE_TTY_IO as
@@ -1015,7 +1032,8 @@ ACE_NEEDS_FUNC_DEFINITIONS              Compiler requires a definition
                                         compiler needs this, in
                                         template classes, with
                                         ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA.
-ACE_NEEDS_HUGE_THREAD_STACKSIZE         Required by platforms with small default stacks.
+ACE_NEEDS_HUGE_THREAD_STACKSIZE         Required by platforms with
+                                        small default stacks.
 ACE_NEEDS_LWP_PRIO_SET                  OS has LWPs, and when the
                                         priority of a bound thread is
                                         set, then the LWP priority
@@ -1031,15 +1049,22 @@ ACE_NO_WIN32_LEAN_AND_MEAN              If this is set, then ACE does not
                                         code that uses non-lean Win32
                                         facilities such as COM.
 
-ACE_ONLY_LATEST_AND_GREATEST            A macro that indicates that the "latest and greatest"
-                                        features of ACE/TAO should be turned on.  It has been
-                                        replaced by ACE_LEGACY_MODE, which has the opposite
-                                        meaning but serves the same purpose.
+ACE_ONLY_LATEST_AND_GREATEST            A macro that indicates that
+                                        the "latest and greatest"
+                                        features of ACE/TAO should be
+                                        turned on.  It has been
+                                        replaced by ACE_LEGACY_MODE,
+                                        which has the opposite meaning
+                                        but serves the same purpose.
 
-ACE_WSTRING_HAS_USHORT_SUPPORT          If a platform has wchar_t as a separate type,
-                                        then ACE_WString doesn't have a constructor that
-                                        understands an ACE_USHORT16 string.  So this
-                                        macro enables one. (mostly used my ACE Name Space).
+ACE_WSTRING_HAS_USHORT_SUPPORT          If a platform has wchar_t as a
+                                        separate type, then
+                                        ACE_WString doesn't have a
+                                        constructor that understands
+                                        an ACE_USHORT16 string.  So
+                                        this macro enables
+                                        one. (mostly used my ACE Name
+                                        Space).
 
 ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK
                                         Under QNX/RTP the objects preallocated
@@ -1061,19 +1086,24 @@ The following macros determine the svc.conf file format ACE uses.
 
 Macro                                   Description
 -----                                   -----------
-ACE_HAS_CLASSIC_SVC_CONF                This macro forces ACE to use the classic
-                                        svc.conf format.
+ACE_HAS_CLASSIC_SVC_CONF                This macro forces ACE to use
+                                        the classic svc.conf format.
 
 ACE_HAS_XML_SVC_CONF                    This macro forces ACE to use the XML
                                         svc.conf format.
 
-ACE_USES_CLASSIC_SVC_CONF               This macro should be defined as 0 or 1, depending
-                                        on the preferred svc.conf file format.
-                                        Defining this macro to 0 means ACE will use XML
-                                        svc.conf file format.  Defining it to 1 will
-                                        force ACE to use the classic svc.conf format.
-                                        ** This macro takes precedence over previous
-                                        ** two macros.
+ACE_USES_CLASSIC_SVC_CONF               This macro should be defined
+                                        as 0 or 1, depending on the
+                                        preferred svc.conf file
+                                        format.  Defining this macro
+                                        to 0 means ACE will use XML
+                                        svc.conf file format.
+                                        Defining it to 1 will force
+                                        ACE to use the classic
+                                        svc.conf format.  
+                                        ** This macro takes precedence
+                                        ** over previous two macros.
+
 ----------------------------------------
 The following is a partial list of where some of these macros are used
 in the code.  This list was originally compiled by Jam Hamidi
