@@ -59,12 +59,11 @@ MyImpl::Controller_exec_i::start (CORBA::Long arg
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
 
-//   if (do_dump_history)
-//     {
-//       history.dump_samples ("HISTORY", gsf);
-//     }
-
-
+  ACE_Env_Value<int> envar ("CIAO_DUMP_SAMPLE_HISTORY", 0);
+  if (envar != 0)
+    {
+      history.dump_samples ("HISTORY", gsf);
+    }
 
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);
