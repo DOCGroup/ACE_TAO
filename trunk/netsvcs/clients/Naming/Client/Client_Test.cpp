@@ -178,7 +178,7 @@ Client_Test::handle_input (ACE_HANDLE)
       break;
     case 'b' :
       // get the input from stdin
-      ACE_OS::fgets (input, sizeof input, ACE_STDIN);
+      ACE_OS::fgets (input, sizeof input, stdin);
 
       // get the key
       if ((temp_buf = ACE_OS::strtok (input, " ")))
@@ -212,7 +212,7 @@ Client_Test::handle_input (ACE_HANDLE)
       break;
     case 'r' :
       // get the input from stdin
-      ACE_OS::fgets (input, sizeof input, ACE_STDIN);
+      ACE_OS::fgets (input, sizeof input, stdin);
 
       // get the key
       if ((temp_buf = ACE_OS::strtok (input, " ")))
