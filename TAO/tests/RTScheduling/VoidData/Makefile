@@ -53,6 +53,8 @@ include $(TAO_ROOT)/taoconfig.mk
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))
 
+$(CLIENT_OBJS): $(IDL_SRC)
+
 VoidData: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(RT_TAO_CLNT_LIBS) $(POSTLINK)
 
