@@ -529,10 +529,14 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
   reply_handler->set_defined_in (s);
   reply_handler->gen_fwd_helper_name ();
 
-  // Now our customized valuetype is created, we have to
-  // add now the operations and attributes to the scope.
-
-  if (! node->imported () && node->nmembers () > 0)
+  // Now our customized reply handler is created, we have to
+  // add the operations and attributes to the scope.
+  // Imported nodes get admitted here, so they can get
+  // the reply handler operations added, in case they are
+  // needed in the inheritance graph traversal for a
+  // child reply handler. However, no exception holder
+  // stuff is executed for an imported node.
+  if (node->nmembers () > 0)
     {
       this->elem_number_ = 0;
       // Initialize an iterator to iterate thru our scope.
@@ -566,9 +570,12 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
               this->create_reply_handler_operation (get_operation,
                                                     reply_handler);
 
-              this->create_excep_operation (get_operation,
-                                            reply_handler,
-                                            excep_holder);
+              if (!node->imported ())
+                {
+                  this->create_excep_operation (get_operation,
+                                                reply_handler,
+                                                excep_holder);
+                }
 
               if (!attribute->readonly ())
                 {
@@ -577,11 +584,13 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
                   this->create_reply_handler_operation (set_operation,
                                                         reply_handler);
 
-                  this->create_excep_operation (set_operation,
-                                                reply_handler,
-                                                excep_holder);
+                  if (!node->imported ())
+                    {
+                      this->create_excep_operation (set_operation,
+                                                    reply_handler,
+                                                    excep_holder);
+                    }
                 }
-
             }
           else
             {
@@ -592,9 +601,12 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
                   this->create_reply_handler_operation (operation,
                                                         reply_handler);
 
-                  this->create_excep_operation (operation,
-                                                reply_handler,
-                                                excep_holder);
+                  if (!node->imported ())
+                    {
+                      this->create_excep_operation (operation,
+                                                    reply_handler,
+                                                    excep_holder);
+                    }
                 }
             }
         } // end of while loop
@@ -1185,7 +1197,6 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
             elements[position++] = si.item ();
           }
       }
-
 
       int elem_number = 0;
 
