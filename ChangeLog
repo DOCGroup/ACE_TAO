@@ -1,3 +1,9 @@
+Thu Aug  1 12:14:21 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Added $(ACELIB) to the list of ACE_SHLIBS.
+
 Thu Aug  1 11:13:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Malloc_Allocator.h:
