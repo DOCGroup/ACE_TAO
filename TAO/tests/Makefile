@@ -11,6 +11,7 @@
 #----------------------------------------------------------------------------
 
 DIRS  = CDR \
+	Codec \
         BiDirectional \
 	BiDirectional_NestedUpcall \
 	Collocation \
