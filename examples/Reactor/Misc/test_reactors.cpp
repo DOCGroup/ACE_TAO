@@ -35,7 +35,7 @@ private:
 
 int Test_Task::task_count_ = 0;
 
-static ACE_Atomic_Op<ACE_Thread_Mutex, u_long> done_count = MAX_TASKS * 2;
+static ACE_Atomic_Op<ACE_Thread_Mutex, int> done_count = MAX_TASKS * 2;
 
 static ACE_Recursive_Thread_Mutex reclock_;
 
@@ -183,7 +183,7 @@ main (void)
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Atomic_Op<ACE_Thread_Mutex, u_long>;
+template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
 #else
