@@ -131,7 +131,8 @@ public:
                         ACE_Task_Base *task = 0,
                         ACE_hthread_t thread_handles[] = 0,
                         void *stack[] = 0,
-                        size_t stack_size[] = 0);
+                        size_t stack_size[] = 0,
+                        ACE_thread_t thread_names[] = 0);
   // We override the default <activate> method so that we can ensure
   // that only a single thread is ever spawned.  Otherwise, too many
   // weird things can happen...
