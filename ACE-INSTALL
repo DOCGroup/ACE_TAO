@@ -1,0 +1,669 @@
+
+     _________________________________________________________________
+   
+  Building and Installing ACE and Its Network Services
+  
+    Synopsis
+    
+   The file explains how to build and install ACE and its Network
+   Services on the various OS platforms and compilers that it has been
+   ported to. Please consult the [1]ChangeLog file to see whether any
+   recent changes to the release will affect your code. In addition, you
+   might want to read the ACE [2]FAQ before building and installing ACE.
+   
+    Document Index
+    
+     * [3]Supported Platforms and Compilers
+     * [4]Building and Installing ACE
+     * [5]Building and Installing ACE Network Services
+     * [6]Advanced Topics
+     _________________________________________________________________
+   
+  Supported Platforms and Compilers
+  
+   The ADAPTIVE Communication Environment has been ported and tested
+   extensively on a wide range of C++ compilers and uni-processor and
+   multi-processor OS platforms including Win32 (i.e., WinNT and Win95),
+   most versions of UNIX (e.g., SunOS 4.x and 5.x, SGI IRIX, DG/UX,
+   HP-UX, OSF/1 a.k.a. DEC UNIX, AIX 4.x, Linux, SCO, UnixWare, and
+   FreeBSD), [7]VxWorks, and [8]MVS OpenEdition. If you have a problem
+   compiling the ACE wrappers on the platforms shown below please send
+   email to the [9]ACE mailing list and we'll try to fix it for you.
+   
+   Win32 (Windows NT and Windows '95) 
+          
+          All of ACE has been ported to the Win32 API (which includes
+          Windows NT and Windows '95). The entire release now compiles
+          using the Microsoft Visual C++ 4.x and 5.0 compilers (the 2.0
+          compiler may also work, but we haven't tested it recently). ACE
+          can be built as both a static and dynamic library, using the
+          Win32 installation process described below.
+          
+   Sun OS 5.x/4.x (a.k.a. Solaris 2.x/1.x) using Sun CC 3.0.1, Sun C++
+          4.0.x, Centerline C++ 2.x, and GNU gcc 2.7.x. 
+          
+          All the source code and tests should build and run without any
+          problems on the Solaris and SunOS platforms using the Sun C++
+          compilers.
+          
+   Sun OS 4.1.x using Centerline C++ 2.x, Sun CC 3.x, and Lucid Energize
+          3.2. 
+          
+          Note that shared libraries do not interact very well with
+          Centerline C++ or Sun C++ on SunOS 4.1.x. This is due to odd
+          behavior of the SunOS 4.1.x linker, which (1) does not properly
+          call constructors of global objects within shared libraries and
+          (2) does not call the init() and fini() functions in shared
+          libraries, even though the manual claims that these functions
+          are called! In particular, this means that the tests in the
+          directory
+          $(ACE_ROOT)/tests/Service_Configurator/IPC-tests/server/ will
+          not work for statically linked services...
+          
+          Some versions of SunOS 4.1.x do not contain the
+          /usr/lib/libnsl.a library. This library seems to be optional
+          since System V Transport Layer Interface (TLI) support is
+          optional on SunOS 4.1.x (in contrast, it's the "preferred"
+          transport interface on Solaris).
+          
+          The best work-around for now is probably to either add a dummy
+          libnsl.a in /lib (which may not be feasible) or simply comment
+          out the line:
+          
+          LIBS += -lnsl
+          
+          in the $ACE_ROOT/include/makeinclude/wrapper_macros.GNU file.
+          Naturally, any programs (e.g., the TLI_SAP tests) that use the
+          TLI wrappers aren't going to work!
+          
+          Note that on SunOS 4.x you may get warnings from the linker
+          that "archive has no table of contents; add one using
+          ranlib(1)" for certain libraries (e.g., libASX.a, libThreads.a,
+          and libSPIPE.a). This occurs since SunOS 4.x does not support
+          these features.
+          
+   AIX 
+          
+          The ACE port to AIX assumes that the user has installed the AIX
+          patch containing the dl*() APIs. To use these APIs, IBM has
+          created a separate product (free to AIX licensees) called
+          shared library hookable symbols (or slhs/6000). If you don't
+          have this patch, the sv* commands for compiling and linking
+          will not be present on the system.
+          
+          BTW, here's a technique from Rob Jordan
+          <[10]jordan@hursley.ibm.com> that can reduce the size of the
+          ACE libraries by about one third, and can also be applied to
+          applications. It works by optimising the sharing of template
+          functions, which are created in an ``unusual'' way under AIX.
+          It also speeds up compilation.
+          
+          Here's how to optimise the ACE library generation:
+          
+          Look at the [11]Makefile in $ACE_ROOT/ace. Create a file called
+          ACE_All_Src.cpp, and add a line to #include each of the source
+          files listed under FILES= in the Makefile. Create a file called
+          ACE_All_Tmp.h and add a line to #include each of the .h files
+          listed under TEMPLATE_FILES= in the Makefile. Now update the
+          Makefile so that FILES=ACE_All_Src and
+          TEMPLATE_FILES=ACE_All_Tmp.
+          
+   Linux and SCO 4.2 
+          
+          ACE has been ported to [12]Linux and SCO UNIX using the GNU G++
+          2.7.2 compiler.
+          
+   SGI IRIX 5.x and 6.x 
+          
+          ACE used to build fine using the SGI C++ and GNU GCC compilers
+          for IRIX 5.x. It has been ported to IRIX 6.x using the SGI
+          MipsPro 7.1 C++ compiler; be aware that in IRIX 6.2 there is a
+          number of patches that have to be installed and exceptions
+          appear to fail with the O32 ABI. Please check the config files
+          for the details.
+          
+   HP-UX 9.x and 10.x 
+          
+          The current HP/UX C++ compiler is incredibly lame and has
+          problems compiling ACE templates and achieving template
+          closure. I've heard that the next release is better... In the
+          meantime, you might try using GNU GCC or SunC++ on HP/UX.
+          
+   OSF/1 3.2 and 4.0 (a.k.a. Digital UNIX 4.0a) 
+          
+          The current OSF/1 C++ 5.4 compiler still seems to have problems
+          with ACE's templates. It compiles the lib and test programs,
+          although giving warnings about template usage. Most tests run,
+          some dump core. Hopefully newer compiler releases will
+          alleviate these problems.
+          
+          GNU gcc 2.7.2.1 compiles without problems. All tests run
+          (besides minor problems). Thanks to Thilo Kielmann <[13]
+          kielmann@informatik.uni-siegen.de> and David Trumble
+          <[14]trumble@cvg.enet.dec.com> for help with this port.
+          
+   UnixWare 2.01 
+          
+          Steve Huston <[15]shuston@riverace.com> has ported ACE to work
+          with UnixWare 2.01 and its standard C++ compiler.
+          
+   VxWorks
+          
+          [16]David Levine <[17]levine@cs.wustl.edu> has ported ACE to
+          VxWorks 5.2/5.3/5.3.1 with the GreenHills 1.8.8 and g++ 2.7.2
+          compilers.
+          
+          In addition to all of the other benefits of ACE, it helps work
+          around some deficiencies with VxWorks 5.3/5.3.1. Some of these
+          apply only with g++, at least thru version 2.7.2. That is the
+          version that is shipped with Tornado 1.0.1/ VxWorks 5.3.1. The
+          problems are:
+          
+         1. The program entry point cannot be called ``main''. ACE
+            renames it to ``ace_main'' on VxWorks. While this may seem
+            trivial, it is important with legacy code. ACE itself ran
+            into this problem.
+         2. argc/argv isn't used with VxWorks entry points. ACE provides
+            a wrapper function that transparently converts shell command
+            line arguments to argc/argv form. See [18]below for details.
+         3. Unsigned long long support is not available with the g++ that
+            is distributed with Tornado 1.0.1/VxWorks 5.3.1, or with
+            GreenHills 1.8.8. The documentation says that it is supported
+            by g++, but try using it :-) Wind River technical support
+            verified that it doesn't work. ACE provides its own 64-bit
+            unsigned integer type, ACE_hrtime_t, so you don't even have
+            to worry about this problem if you use it.
+         4. There a gory problem with munch that is severely aggravated
+            by the presence of a static in the Wind River/g++ iostream.h.
+            ACE hides this and provides an easy-to-use workaround in the
+            very unlikely situation where it becomes a problem. Please
+            see ace/config-vxworks5.2-g++.h for more information.
+            
+          In addition, as noted [19]below following the discussion of the
+          g++ -fno-implicit-templates option, -fno-implicit-templates is
+          broken. And, -O2 is not supported on some targets.
+          
+          The current version of ACE, 4.3, has limited support for
+          destroying static objects after program termination on VxWorks.
+          To destroy static objects, the module must be unloaded, using
+          unld. Static constructors are called when loading the module,
+          with ld.
+          
+   MVS OpenEdition
+          
+          All of ACE has been ported to OpenEdition by Chuck Gehr
+          <[20]gehr@sweng.stortek.com>. The ACE library, all the tests
+          and most of the examples and apps build clean. There are still
+          some problems that need to be ironed out:
+          
+          MVS does not support the dynamic linking dl...() calls that the
+          Service Configurator uses to dynmically link services at run
+          time. As a result, all the examples and apps that use a
+          svc.conf file (for dynamically configuring service objects) do
+          not work, however, most of these apps can be built/run
+          statically. Also, the Svc_Conf_l.cpp and Svc_Conf_y.cpp files
+          are generated using flex and yacc on a ascii (not ebcdic)
+          machine and as a result they don't work very well with ebcdic
+          svc.conf files. We should be able to regenerate these files on
+          MVS but MVS doesn't have flex. This is something that needs to
+          be done.
+          
+          Some of the tests do not execute properly. This is a minority
+          and over time the goal is to get to 100%.
+          
+          The make scheme for some of the apps still doesn't work
+          perfectly on MVS. This is mainly due to the way shared
+          libraries are handled on MVS. See [21]additional build tips for
+          MVS for more on this.
+     _________________________________________________________________
+   
+    Compiling ACE with GNU C++
+    
+   If you use the GNU GCC C++ compiler please note the following:
+   
+     * Earlier versions of G++ may not compile certain parts of ACE
+       correctly due to compiler bugs. Please upgrade to G++ 2.7.2 or
+       greater.
+     * Make sure to update your gcc "config.status" file - this specifies
+       whether your gcc install uses, for example, Solaris's
+       "/usr/ccs/bin" binary utils or GNU binary utils.
+     * Make sure that the linker invoked by GCC produces code that
+       initializes static objects. Please see GCC's documentation for
+       using collect2.
+     * By default, gcc (thru version 2.7.2, at least) uses implicit
+       template instantiation. Besides wasting space, this breaks the use
+       of ACE_Singleton: instead of one singleton instance, there could
+       be one instance per object (.o) file that "sees" the template.
+       Therefore, we have overridden this default in ACE by enabling the
+       -fno-implicit-templates option to CCFLAGS in all
+       include/makeinclude/platform_*.GNU files that set CXX to g++.
+     * The disadvantage of this approach is that you must add template
+       specializations for all templates that your application uses to
+       your own code. (The ACE libraries are self-contained: you don't
+       need to add the templates that they use internally.) Examples of
+       template specializations occur in quite a few ACE .cpp files; see
+       apps/Gateway/Gateway/Proxy_Handler.cpp for one example. An easy
+       way to figure out what template instantiations are need is to try
+       to build your executable and pipe the output through c++filt. The
+       linker will report the missing instantiations as undefined
+       symbols. Iteration may be necessary, if the template
+       instantiations themselves reference other templates.
+     * Alternatively, you could apply the Cygnus template repository
+       patches and use the -repo option instead of
+       -fno-implicit-templates. Please see the g++ FAQ and gcc manual for
+       more information. The g++ FAQ indicates that a new implementation
+       of templates planned for version 2.8 will eliminate the
+       restriction against static data members in template classes, which
+       would allow ready implementation of a correct ACE_Singleton. A
+       final alternative is to remove the -fno-implicit-templates option
+       from the CCFLAGS macro in your
+       include/makeinclude/platform_macros.GNU, and thereby use the
+       default g++ implicit template instantiation.
+     * Thanks to Thilo Kielmann <[22] kielmann@informatik.uni-siegen.de>
+       for reporting the problem with ACE_Singleton on g++, and for
+       helping to find and implement these solutions.
+     * On VxWorks only, g++ (thru version 2.7.2, at least, distributed
+       with Tornado 1.0.1/VxWorks 5.3.1), -fno-implicit-templates is
+       broken. In addition, -O2 is not supported on some targets.
+     _________________________________________________________________
+   
+  Building and Installing ACE
+  
+   The following explains how to build the ACE on [23]UNIX and [24]Win32.
+   
+    Building and Installing ACE on UNIX
+    
+   Building and installing ACE on UNIX is relatively simple (the
+   [25]process for Win32 is different). Here's what you need to do:
+   
+    1. Install GNU make 3.7 or greater on your system (available via
+       anonymous ftp from prep.ai.mit.edu in the pub/gnu directory).
+    2. Add an environment variable called ACE_ROOT that contains the name
+       of the root of the directory where you keep the ACE wrapper source
+       tree. The ACE recursive Makefile scheme needs this information.
+       There are several ways to set the ACE_ROOT variable. For instance,
+       in my .login file I have the following entry:
+
+% setenv ACE_ROOT /home/cs/faculty/schmidt/ACE_wrappers
+       However, if you're building a number of versions of ACE (e.g., for
+       different OS platforms or for different releases of ACE) you might
+       use the following approach:
+
+% setenv ACE_ROOT $cwd
+    3. Edit the $ACE_ROOT/ace/OS.h file to update things like default
+       hostname and port numbers you'd like the programs in the
+       $ACE_ROOT/{apps,tests} directories to use by default.
+    4. Set the $ACE_ROOT/ace/config.h file to point to the appropriate
+       platform/compiler-specific header configurations (such as
+       config-sunos5-sunc++-4.x.h). This file contains the #defines that
+       are used throughout ACE to indicate which features your system
+       supports (see the $ACE_ROOT/ace/OS.h file for many examples of how
+       the ACE build configuration is affected by these macro settings).
+       There are config files for most versions of UNIX. If there isn't a
+       version of this file that matches your platform/compiler, you'll
+       need to make one. Please send me email if you get it working so I
+       can add it to the master ACE release.
+    5. Set the $ACE_ROOT/include/makeinclude/platform_macros.GNU file to
+       point to the appropriate platform/compiler-specific Makefile
+       configurations (e.g., platform_sunos5_sunc++.GNU). This file
+       contains the compiler and Makefile directives that are
+       platform/compiler-specific
+    6. Note that since ACE builds shared libraries, you'll need to set
+       LD_LIBRARY_PATH to whereever you put the binary version of the ACE
+       library. For example, you probably want to do something like the
+       following
+
+% setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$LD_LIBRARY_PATH
+    7. When all this is done, hopefully all you'll need to do is type:
+
+% make
+       at the root of the ACE source tree. This will build the static and
+       shared object libraries and build the tests and the sample
+       applications.
+     _________________________________________________________________
+   
+    Building and Installing ACE on Win32
+    
+   ACE contains project files for Microsoft Visual C++ 4.x (*.mdp) and
+   5.0 (*.dsw).
+   
+    1. Create a directory (e.g., C:\ACE) and copy all of the ACE
+       distribution into it. This directory will be referred to as
+       ACE_ROOT in the rest of this discussion.
+    2. Create a file called config.h in the ACE_ROOT\ace directory that
+       contains:
+       #include "config-win32.h"
+    3. Now load up the project file for ACE (ACE_ROOT\ace\ace.mdp or
+       ACE_ROOT\ace\ace.dsw). If you are using MSVC 4.x, you will need to
+       add paths to your global settings. In Tools|Options|Directories,
+       add ACE_ROOT to your include path and ACE_ROOT\ace to your library
+       path.
+    4. Each project will contain 8 different configurations. These are a
+       mixture of Debug/Release, Unicode/non-Unicode, and Static/Dynamic
+       library versions. Note: If you use the dynamic libraries, make
+       sure you include ACE_ROOT\ace in your PATH whenever you run
+       programs that use ACE.
+    5. If you are building for Windows NT and plan to use the STL
+       implementation that comes with ACE, then you can start building
+       now. If you are building on Windows 95, then you should add the
+       line
+       #define ACE_HAS_WINNT4 0
+       before the #include statement in ACE_ROOT\ace\config.h and it will
+       turn off Windows NT 4 specific code.
+       If you want to use the standard C++ headers (iostream, cstdio, ...
+       as defined by the C++ Standard Draft 2) that comes with MSVC 5,
+       then add the line
+       #define ACE_HAS_STANDARD_CPP_LIBRARY 1
+       before the #include statement in ACE_ROOT\ace\config.h.
+       
+   ACE TESTS
+   
+   The tests are located in ACE_ROOT\tests. There are two corresponding
+   project files in that directory also (tests.mdp and tests.dsp).
+   
+   Once you build all the tests (Batch Build works well for this) you can
+   run the batch file run_tests.bat in that directory to try all the
+   tests.
+   
+   BUILDING ACE ON A WIN32 MACHINE THAT LACKS A NETWORK CARD 
+   
+   You may want to run ACE on a non-networked machine. To do so, you must
+   install TCP/IP and configure it to ignore the absence of a network
+   card. This is one method:
+   
+    1. Run Control Panel
+    2. Choose Network from Control Panel
+    3. Add Adapter: MS Loopback Adapter
+    4. Configure MS Loopback Adapter with 802.3 (default)
+    5. Add Software: TCP/IP Protocol
+    6. Configure TCP/IP Protocol with a valid IP address and subnet mask.
+       Leave everything else at the default settings.
+    7. Add Software: Workstation
+    8. Exit and Restart System
+    9. Run Control Panel again
+   10. Choose Services from Control Panel
+   11. The following services are not necessary and may be set to
+       Disabled Startup:
+       Alerter
+       Computer Browser
+       Net logon
+       Messanger
+   12. Choose Network from Control Panel
+   13. Confirm the following setup. This is all you need to run ACE:
+       Installed Software:
+       Computer Browser
+       MS Loopback Adapter Driver
+       TCP/IP Protocol
+       Workstation
+       Installed Adapter Cards:
+       MS Loopback Adapter
+     _________________________________________________________________
+   
+    Building and Installing ACE on VxWorks
+    
+   For the most part, you should be able to follow the instructions above
+   to build ACE and applications that use it. Use the [26]Unix
+   instructions for Unix hosts, or [27]Win32 instructions for Windows NT
+   hosts.
+   
+   You'll have to let ACE know the target type at compile time. There are
+   several ways to do this; please see the
+   $ACE_ROOT/include/makeinclude/platform_vxworks5.x_g++.GNU platform
+   file for detailed information.
+   
+   The VxWorks platform_vxworks*.GNU files are set up so that shared
+   libraries are not built on VxWorks. Only static libraries, with .a
+   extension, are built. Therefore, it's not necessary to set the
+   LD_LIBRARY_PATH environment variable on your host system when building
+   for VxWorks targets.
+   
+   These non-default VxWorks kernel configuration #defines are required
+   with ACE:
+   
+#define INCLUDE_CPLUS           /* include C++ support */
+#define INCLUDE_CPLUS_IOSTREAMS /* include iostreams classes */
+#define INCLUDE_POSIX_ALL       /* include all available POSIX functions */
+
+   For completeness, here are the non-default #defines that we use for
+   VxWorks 5.3.1/g++ 2.7.2:
+
+#define INCLUDE_CPLUS           /* include C++ support */
+#define INCLUDE_CPLUS_IOSTREAMS /* include iostreams classes */
+#define INCLUDE_CONFIGURATION_5_2 /* pre-tornado tools */
+#define INCLUDE_DEBUG           /* pre-tornado debugging */
+#define INCLUDE_LOADER          /* object module loading */
+#define INCLUDE_NET_SYM_TBL     /* load symbol table from network */
+#define INCLUDE_SYM_TBL_SYNC    /* synchronize host and target symbol tables */
+#define INCLUDE_NFS             /* nfs package */
+#define INCLUDE_PING            /* ping() utility */
+#define INCLUDE_POSIX_ALL       /* include all available POSIX functions */
+#define INCLUDE_RDB             /* remote debugging package */
+#define INCLUDE_RLOGIN          /* remote login */
+#define INCLUDE_RPC             /* rpc package */
+#define INCLUDE_SECURITY        /* shell security for network access */
+#define INCLUDE_SHELL           /* interactive c-expression interpreter */
+#define INCLUDE_SHOW_ROUTINES   /* show routines for system facilities*/
+#define INCLUDE_SPY             /* spyLib for task monitoring */
+#define INCLUDE_STARTUP_SCRIPT  /* execute start-up script */
+#define INCLUDE_STAT_SYM_TBL    /* create user-readable error status */
+#define INCLUDE_SYM_TBL         /* symbol table package */
+#define INCLUDE_UNLOADER        /* object module unloading */
+#define INCLUDE_WINDVIEW        /* WindView command server */
+
+   It probably wouldn't take much effort to modify the ACE library to not
+   require INCLUDE_CPLUS_IOSTREAMS, if necessary. If you're first getting
+   started with ACE and/or VxWorks, I recommend just building the ACE
+   library and tests first. Some of the ACE examples, in System_V_IPC and
+   Threads, don't build on VxWorks yet. Then try running the tests.
+   Please see $ACE_ROOT/tests/README for the latest status of the ACE
+   tests on VxWorks.
+   
+   Please note that the main entry point is renamed to ace_main on
+   VxWorks, to comply with the VxWorks restriction against using main.
+   Also, if you run ace_main directly from a shell, you'll probably have
+   to restart the shell (using Ctrl-C, if enabled in your configuration)
+   in order to be able to unld the module. Alternatively, you can spawn a
+   new task to run ace_main, using either VxWorks sp, or ACE'S spa. spa
+   can be used from the VxWorks shell to pass arguments to ace_main. Its
+   usage is
+    spa main, "arg1" [, ...]
+
+   All arguments must be quoted, even numbers.
+     _________________________________________________________________
+   
+  Building and Installing ACE Network Services
+  
+   The following explains how to build the ACE [28]network services on
+   [29]UNIX and [30]Win32.
+   
+    Building and Installing ACE Network Services on UNIX
+    
+   Building and installing ACE Network Services on UNIX is relatively
+   simple (the [31]process for Win32 is different). Here's what you need
+   to do:
+   
+    1. Build and install ACE on UNIX as described [32]earlier. If ACE is
+       built at the root of the ACE source tree (and ACE has been ported
+       to your platform, of course) the netsvcs static and shared object
+       libraries should be built automatically. In addition, the server
+       driver program (main) contained in
+       [33]$ACE_ROOT/netsvcs/servers/main.cpp should also be compiled and
+       ready to run.
+    2. Set your LD_LIBRARY_PATH environment variable to where the binary
+       version of the ACE netsvcs library. For example, you probably want
+       to do something like the following
+
+% setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$LD_LIBRARY_PATH
+    3. By default, if the shared object library is built, the services
+       are linked into the main driver program dynamically. To specify
+       which services should be linked in and executed, edit the
+       [34]$ACE_ROOT/netsvcs/servers/svc.conf file. During your editing,
+       you should update information (such as the default service port
+       numbers) that affects the initialization of services in this file.
+       Refer to the [35]Service Configurator documentation to learn how
+       the configuration file is parsed and how the services are
+       dynamically linked and executed. In addition, refer to the
+       [36]Network Services documentation to learn more about how to
+       configure each network service.
+    4. If you only want to link the services statically, simply remove or
+       rename the svc.conf file.
+       
+    Building and Installing ACE Network Services on Win32
+    
+   Once again, there are supplied project for both MSVC 4.x and 5.0 for
+   the Network Services.
+   
+   If you are using MSVC 4.x, you will need to add another directory to
+   your global include and library paths, ACE_ROOT/netsvcs/lib. When you
+   use the dynamic libraries, make sure to also include
+   ACE_ROOT/netsvcs/lib in your PATH.
+     _________________________________________________________________
+   
+  Advanced Topics
+  
+     * [37]Cloning the Source Tree
+     * [38]Building CORBA Versions of ACE
+     * [39]Additional Build Tips for MVS
+     * [40]Version Control
+     * [41]ACE Makefile hints
+       
+    Cloning the Source Tree
+    
+   On UNIX platforms, I typically like to support multiple platform
+   builds using the same ACE source tree. This idiom is supported by ACE
+   using the $(ACE_ROOT)/bin/clone.c program. To build clone, perform the
+   following steps:
+   
+% cd $ACE_ROOT/bin
+% make
+% mv clone ~/bin
+% rehash
+
+   Then create a ./build subdirectory someplace (e.g., under $ACE_ROOT),
+   and then invoke the top-level Makefile with the "clone" target, e.g.:
+   
+% cd $ACE_ROOT
+% mkdir build-SunOS5
+% cd build-SunOS5
+% make -f ../Makefile clone
+% setenv ACE_ROOT $cwd
+% make
+
+   This will establish a complete tree of links. When you do a make in
+   this directory you will be producing object code that is not stored in
+   the same place as the original source tree. This way, you can easily
+   build another platform in a parallel tree structure.
+   
+   VERY IMPORTANT! 
+   
+   If you use the "clone trick" discussed above, make sure that the
+   symbolic links are correctly in place before starting the build. In
+   particular, if you plan to clone the tree, it is preferable to do so
+   before you start a build procedure on the original tree. This is
+   because the build procedure create object directories (.obj and
+   .shobj) and the cloning procedure will clone these directories also.
+   You would end up with links pointing to object files of another
+   platform. If you clone the tree after you've done a build on the
+   original tree, make sure to remove all ".obj", ".shobj" and (any other
+   files or directories) in all subdirectories before starting the build
+   on your cloned tree.
+     _________________________________________________________________
+   
+    Building CORBA Versions of ACE
+    
+   Note that if you are compiling with IONA's Orbix implementation of
+   CORBA or Visigenix's implementation of CORBA, you'll also need to set
+   ORBIX_ROOT to point to the root of the Orbix source tree and
+   ORBELINE_ROOT to point to the root of the ORBeline source tree. Since
+   many platforms don't have these CORBA tools the default for ACE does
+   *not* incorporate them. Thus, if you are compiling with Orbix or
+   ORBeline, make sure that you set the symbolic links for
+   $ACE_ROOT/include/makeinclude/platform_macros.GNU and
+   $ACE_ROOT/ace/config.h to point to the the config* and platform* files
+   that have "-orbix" in them!
+     _________________________________________________________________
+   
+    Additional Build Tips for MVS
+    
+   For all intents and purpose, MVS OpenEdition (OE) is another flavor of
+   UNIX, therefore, the instructions under [42]Building and Installing
+   ACE on Unix can be used along with the following additional tips:
+   
+   You can get a copy of GNU make that has been ported to MVS OpenEdition
+   from the [43]IBM OpenEdition web site. ACE's make scheme generates
+   compile commands that have options and operands interspersed. By
+   default, the c89/cc/c++ compiler expects all options to precede all
+   operands. To get around this, you must set a special compiler
+   environment variable (_CXX_CCMODE) to 1 which tells the compiler to
+   allow options and operands to be interspersed.
+   
+   Note that the environment variable LD_LIBRARY_PATH is called LIBPATH
+   on MVS.
+   
+   Shared objects are built a little different on MVS than on other UNIX
+   implementations. This has been accounted for in the makefiles that
+   come with ACE When the linker (via the cxx command) builds the
+   libACE.so file it will also create a file called libACE.x. This is a
+   side-deck file and it must be included in subsequent link edits with
+   application code. For more information on this see the C/C++ MVS
+   Programming Guide. If you want to build your application statically,
+   i.e., using libACE.a instead of libACE.so, you can set ACELIB to
+   ACELIB_STATIC in platform_mvs.GNU.
+   
+   When the libACE.so file is built (via the MVS pre-linker and binder),
+   you will get a rc=4 from the pre-linker. This is ok. This is due to
+   some warnings about unresolved references which should get resolved
+   during the link step. Note, however, there shouldn't be any unresolved
+   references from the binder (linkage editor). You can get pre-link and
+   link maps by uncommenting the PMAP and LMAP lines in the
+   platform_mvs.GNU file.
+     _________________________________________________________________
+   
+   Back to the [44]ACE home page.
+
+References
+
+   1. file://localhost/project/adaptive/ACE_wrappers/ChangeLog
+   2. file://localhost/project/adaptive/ACE_wrappers/ACE.FAQ.html
+   3. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#platforms
+   4. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#aceinstall
+   5. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#svcsinstall
+   6. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#advanced
+   7. http://www.wrs.com/
+   8. http://www.s390.ibm.com/products/oe/index.html
+   9. mailto:ace-users@cs.wustl.edu
+  10. mailto:jordan@hursley.ibm.com
+  11. http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/Makefile
+  12. http://www.cs.wustl.edu/~cleeland/ace/
+  13. mailto:kielmann@informatik.uni-siegen.de
+  14. mailto:trumble@cvg.enet.dec.com
+  15. mailto:shuston@riverace.com
+  16. http://www.cs.wustl.edu/~levine/
+  17. mailto:levine@cs.wustl.edu
+  18. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#spa
+  19. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#g++
+  20. mailto:gehr@sweng.stortek.com
+  21. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#mvs
+  22. mailto:kielmann@informatik.uni-siegen.de
+  23. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#unixsvcs
+  24. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32svcs
+  25. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32
+  26. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#unix
+  27. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32
+  28. file://localhost/project/adaptive/ACE_wrappers/ACE-netsvcs.html
+  29. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#unixsvcs
+  30. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32svcs
+  31. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32svcs
+  32. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#unix
+  33. http://www.cs.wustl.edu/~schmidt/ACE_wrappers/netsvcs/servers/main.cpp
+  34. http://www.cs.wustl.edu/~schmidt/ACE_wrappers/netsvcs/servers/svc.conf
+  35. file://localhost/project/adaptive/ACE_wrappers/ACE-papers.html#config
+  36. file://localhost/project/adaptive/ACE_wrappers/ACE-netsvcs.html
+  37. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#cloning
+  38. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#corba
+  39. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#mvs
+  40. http://www.cs.wustl.edu/~levine/CVS.html
+  41. http://www.cs.wustl.edu/~cleeland/ace/makefile-hints.html
+  42. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#aceinstall
+  43. http://www.s390.ibm.com/products/oe/index.html
+  44. http://www.cs.wustl.edu/~schmidt/ACE.html

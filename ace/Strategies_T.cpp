@@ -328,6 +328,9 @@ ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy (ACE_Thread_Manager *thr_m
 
 template <class SVC_HANDLER> 
 ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy (void)
+  : thr_mgr_ (0),
+    thr_flags_ (0),
+    n_threads_ (1)
 {
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy");
 }
