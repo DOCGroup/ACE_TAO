@@ -2,6 +2,8 @@
 // $Id$
 
 project(Repository_Manager): ciao_server_dnc,ciao_deployment_svnt, ciao_deployment_stub, taoexe, xerces, exceptions {
+
+  requires += dummy_label
   exename = executor
   after += Config_Handlers ExecutionManager_stub NodeDaemon_stub
   includes += /usr/include
