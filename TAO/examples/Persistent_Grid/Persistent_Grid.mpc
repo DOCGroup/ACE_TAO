@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): taoexe, portableserver {
+project(*server): taoserver, utils {
   Source_Files {
     Grid_i.cpp
     Simple_util.cpp
@@ -9,7 +9,7 @@ project(*server): taoexe, portableserver {
   }
 }
 
-project(*client): taoexe, portableserver {
+project(*client): taoexe, utils, portableserver {
   Source_Files {
     GridC.cpp
     Simple_util.cpp
@@ -18,7 +18,7 @@ project(*client): taoexe, portableserver {
   }
 }
 
-project(*persistent client): taoexe, portableserver {
+project(*persistent client): taoexe, utils, portableserver {
   Source_Files {
     GridC.cpp
     Simple_util.cpp

@@ -42,7 +42,6 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/ORB.h"
-#include "tao/SystemException.h"
 #include "tao/Environment.h"
 
 #include "tao/IOP_IORC.h"

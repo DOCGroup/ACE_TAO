@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:301
+// be\be_codegen.cpp:302
 
 
 #include "Typecode_typesC.h"
@@ -41,7 +41,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:66
 
 // Arg traits specializations.
 namespace TAO

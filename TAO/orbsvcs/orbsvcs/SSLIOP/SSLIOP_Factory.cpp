@@ -52,7 +52,7 @@ const char *
 TAO::SSLIOP::Protocol_Factory::prefix (void) const
 {
    // Note: This method doesn't seem to be used anywhere. Moreover,
-   // keeping it may make things more confusing - a Factory can 
+   // keeping it may make things more confusing - a Factory can
    // well be handling multiple protocol prefixes, not just one!
    // Shouldn't it be deprecated?
   return ::prefix_[0];
@@ -78,22 +78,22 @@ TAO::SSLIOP::Protocol_Factory::make_acceptor (void)
 }
 
 
-// Parses a X509 path. Beware: This function modifies 
+// Parses a X509 path. Beware: This function modifies
 // the buffer pointed to by arg!
 int
-TAO::SSLIOP::Protocol_Factory::parse_x509_file_path (char *arg, 
+TAO::SSLIOP::Protocol_Factory::parse_x509_file_path (char *arg,
                                                    char **path)
 {
   ACE_ASSERT (arg!= 0);
   ACE_ASSERT (path!= 0);
-  
+
   char *lst = 0;
   const char *type_name = ACE_OS::strtok_r (arg, ":", &lst);
   *path = ACE_OS::strtok_r (0, "", &lst);
 
   if (ACE_OS::strcasecmp (type_name, "ASN1") == 0)
       return SSL_FILETYPE_ASN1;
-  
+
   if (ACE_OS::strcasecmp (type_name, "PEM") == 0)
       return SSL_FILETYPE_PEM;
 
@@ -402,7 +402,7 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer (
                         TAO::Security::ORBInitializer,
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_TRY_CHECK;
@@ -421,7 +421,7 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer (
                                                      csiv2_target_requires),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_TRY_CHECK;

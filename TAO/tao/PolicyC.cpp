@@ -48,7 +48,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:65
+// be\be_visitor_arg_traits.cpp:66
 
 // Arg traits specializations.
 namespace TAO
@@ -513,7 +513,7 @@ CORBA::PolicyType CORBA::Policy::policy_type (
       CORBA_Policy_setup_collocation ();
     }
   
-  TAO::Arg_Traits< CORBA::PolicyType>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::PolicyType>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -555,7 +555,7 @@ CORBA::PolicyType CORBA::Policy::policy_type (
       CORBA_Policy_setup_collocation ();
     }
   
-  TAO::Arg_Traits< ::CORBA::Policy>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::Policy>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -693,14 +693,14 @@ CORBA::Policy::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Policy:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -831,18 +831,18 @@ CORBA::PolicyManager::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/PolicyManager:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -970,26 +970,26 @@ CORBA::PolicyCurrent::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/PolicyManager:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Current:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/PolicyCurrent:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -1022,20 +1022,13 @@ CORBA::Boolean operator<< (
   if (strm << _tao_aggregate._rep_id ())
     {
       // Now marshal the members (if any).
-      if (
+      return (
         (strm << _tao_aggregate.reason)
-       )
-        {
-          return 1;
-        }
-      else
-        {
-          return 0;
-        }
+       );
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1045,16 +1038,9 @@ CORBA::Boolean operator>> (
   )
 {
   // Demarshal the members.
-  if (
+  return (
     (strm >> _tao_aggregate.reason)
-  )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+  );
 }
 
 // TAO_IDL - Generated from
@@ -1069,20 +1055,13 @@ CORBA::Boolean operator<< (
   if (strm << _tao_aggregate._rep_id ())
     {
       // Now marshal the members (if any).
-      if (
+      return (
         (strm << _tao_aggregate.indices)
-       )
-        {
-          return 1;
-        }
-      else
-        {
-          return 0;
-        }
+       );
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1092,16 +1071,9 @@ CORBA::Boolean operator>> (
   )
 {
   // Demarshal the members.
-  if (
+  return (
     (strm >> _tao_aggregate.indices)
-  )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+  );
 }
 
 // Hand crafted.
@@ -1151,9 +1123,9 @@ CORBA::Boolean operator>> (
 {
   CORBA::Object_var obj;
   
-  if ((strm >> obj.inout ()) == 0)
+  if (!(strm >> obj.inout ()))
     {
-      return 0;
+      return false;
     }
   
   typedef ::CORBA::Policy RHS_SCOPED_NAME;
@@ -1219,32 +1191,32 @@ CORBA::Boolean operator>> (
 
   template class
     TAO::Objref_Traits<
-        CORBA::PolicyManager
+        CORBA::PolicyCurrent
       >;
 
   template class
     TAO_Objref_Var_T<
-        CORBA::PolicyManager
+        CORBA::PolicyCurrent
       >;
   
   template class
     TAO_Objref_Out_T<
-        CORBA::PolicyManager
+        CORBA::PolicyCurrent
       >;
 
   template class
     TAO::Objref_Traits<
-        CORBA::PolicyCurrent
+        CORBA::PolicyManager
       >;
 
   template class
     TAO_Objref_Var_T<
-        CORBA::PolicyCurrent
+        CORBA::PolicyManager
       >;
   
   template class
     TAO_Objref_Out_T<
-        CORBA::PolicyCurrent
+        CORBA::PolicyManager
       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -1295,21 +1267,6 @@ CORBA::Boolean operator>> (
 
 # pragma instantiate \
     TAO::Objref_Traits< \
-        CORBA::PolicyManager \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        CORBA::PolicyManager
-      >
-  
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        CORBA::PolicyManager
-      >
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
         CORBA::PolicyCurrent \
       >
 
@@ -1321,6 +1278,21 @@ CORBA::Boolean operator>> (
 # pragma instantiate \
     TAO_Objref_Out_T< \
         CORBA::PolicyCurrent
+      >
+
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        CORBA::PolicyManager \
+      >
+
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        CORBA::PolicyManager
+      >
+  
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        CORBA::PolicyManager
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

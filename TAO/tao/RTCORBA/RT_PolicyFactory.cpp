@@ -62,7 +62,7 @@ TAO_RT_PolicyFactory::_create_policy (
                         TAO_PriorityModelPolicy,
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
@@ -76,7 +76,7 @@ TAO_RT_PolicyFactory::_create_policy (
                         TAO_PriorityBandedConnectionPolicy,
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
@@ -90,7 +90,7 @@ TAO_RT_PolicyFactory::_create_policy (
                         TAO_ClientProtocolPolicy,
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());

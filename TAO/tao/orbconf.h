@@ -316,7 +316,7 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 
 // The Root POA default name.
 #if !defined (TAO_DEFAULT_ROOTPOA_NAME)
-#define TAO_DEFAULT_ROOTPOA_NAME   ""
+#define TAO_DEFAULT_ROOTPOA_NAME   "RootPOA"
 #endif /* TAO_DEFAULT_ROOTPOA_NAME */
 
 // The default lane name used when storing endpoints.

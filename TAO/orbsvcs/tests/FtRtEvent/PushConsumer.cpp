@@ -3,6 +3,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "PushConsumer.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
+#include "tao/PortableServer/PS_CurrentC.h"
 #include <stdio.h>
 
 ACE_RCSID (FtRtEvent,

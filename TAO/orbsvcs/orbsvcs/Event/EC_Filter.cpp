@@ -9,8 +9,8 @@
 #include "EC_Filter.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event, 
-           EC_Filter, 
+ACE_RCSID (Event,
+           EC_Filter,
            "$Id$")
 
 TAO_EC_Filter::~TAO_EC_Filter (void)
@@ -46,7 +46,7 @@ TAO_EC_Filter::get_qos_info (TAO_EC_QOS_Info& qos_info
                              ACE_ENV_ARG_DECL)
 {
   ACE_UNUSED_ARG (qos_info);
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO::VMCID,
                                   CORBA::COMPLETED_NO));
 }
 

@@ -28,7 +28,6 @@
 #include "ace/Svc_Handler.h"
 #include "ace/SOCK_Acceptor.h"
 
-#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/AV/AV_export.h"
 #include "orbsvcs/CosPropertyServiceS.h"
 #include "orbsvcs/AVStreamsS.h"
@@ -45,9 +44,7 @@
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined (_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
+# pragma warning(push)
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
@@ -1547,7 +1544,7 @@ public:
 
 #include "Flows_T.h"
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

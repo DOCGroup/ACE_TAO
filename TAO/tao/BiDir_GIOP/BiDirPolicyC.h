@@ -91,7 +91,7 @@ namespace BiDirPolicy
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:342
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::UShort BidirectionalPolicyValue;
   typedef CORBA::UShort_out BidirectionalPolicyValue_out;
@@ -162,7 +162,7 @@ namespace BiDirPolicy
     
     static BidirectionalPolicy_ptr _nil (void)
     {
-      return (BidirectionalPolicy_ptr)0;
+      return static_cast<BidirectionalPolicy_ptr> (0);
     }
     
     

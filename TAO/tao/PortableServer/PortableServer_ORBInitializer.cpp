@@ -2,8 +2,8 @@
 
 #include "PortableServer_ORBInitializer.h"
 #include "PortableServer_PolicyFactory.h"
-#include "PortableServerC.h"
-#include "Object_Adapter.h"
+#include "PortableServer.h"
+#include "POA_Current.h"
 #include "tao/ORBInitInfo.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -57,7 +57,7 @@ TAO_PortableServer_ORBInitializer::register_poa_current (PortableInterceptor::OR
 
   // Create Current.
   CORBA::Object_var current =
-    new TAO_POA_Current;
+    new TAO::Portable_Server::POA_Current;
 
   // Setup the POA_Current object in the ORB Core.
   tao_info->orb_core ()->poa_current (current.in ());
@@ -73,7 +73,7 @@ TAO_PortableServer_ORBInitializer::register_policy_factories (PortableIntercepto
                     TAO_PortableServer_PolicyFactory,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;

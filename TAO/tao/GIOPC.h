@@ -42,11 +42,10 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/ORB.h"
-#include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/VarOut_T.h"
 
-#include "tao/IOPC.h"
+#include "tao/IOP_IORC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -76,7 +75,7 @@ namespace GIOP
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:342
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::Short AddressingDisposition;
   typedef CORBA::Short_out AddressingDisposition_out;
@@ -319,7 +318,7 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const GIOP::TargetAddress
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, GIOP::TargetAddress &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:963
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
 #include "GIOPC.inl"

@@ -19,7 +19,7 @@
 #ifndef SERVER_I_H
 #define SERVER_I_H
 
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/Utils/ORB_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "INS_i.h"

@@ -23,6 +23,7 @@
 
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/ServantActivatorC.h"
 
 class ServantActivator : public PortableServer::ServantActivator
 {

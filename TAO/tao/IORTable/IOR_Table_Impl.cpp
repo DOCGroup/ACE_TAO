@@ -10,7 +10,6 @@
 #include "IOR_Table_Impl.h"
 #include "ace/Guard_T.h"
 
-
 ACE_RCSID (IORTable,
            IOR_Table_Impl,
            "$Id$")

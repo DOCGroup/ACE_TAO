@@ -198,18 +198,16 @@ TAO_GIOP_Message_Lite::format_message (TAO_OutputCDR &stream)
   // this particular environment and that isn't handled by the
   // networking infrastructure (e.g., IPSEC).
 
-  CORBA::ULong bodylen = ACE_static_cast (CORBA::ULong,
-                                          total_len - header_len);
+  CORBA::ULong bodylen = static_cast <CORBA::ULong> (total_len - header_len);
 
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
-  *ACE_reinterpret_cast (CORBA::ULong *, buf + offset) = bodylen;
+  *(reinterpret_cast <CORBA::ULong *> (buf + offset)) = bodylen;
 #else
   if (!stream.do_byte_swap ())
-    *ACE_reinterpret_cast (CORBA::ULong *,
-                           buf + offset) = bodylen;
+    *(reinterpret_cast <CORBA::ULong *>
+                           (buf + offset)) = bodylen;
   else
-    ACE_CDR::swap_4 (ACE_reinterpret_cast (char *,
-                                           &bodylen),
+    ACE_CDR::swap_4 (reinterpret_cast <char *> (&bodylen),
                      buf + offset);
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
 
@@ -231,8 +229,7 @@ TAO_GIOP_Message_Lite::format_message (TAO_OutputCDR &stream)
       ///
 
       this->dump_msg ("send",
-                      ACE_reinterpret_cast (u_char *,
-                                            buf),
+                      reinterpret_cast <u_char *> (buf),
                       stream.length ());
 
       //
@@ -272,14 +269,14 @@ TAO_GIOP_Message_Lite::parse_incoming_messages (ACE_Message_Block &block)
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
   if (!(this->byte_order_ != TAO_ENCAP_BYTE_ORDER))
     {
-      x = *ACE_reinterpret_cast (ACE_CDR::ULong*, buf);
+      x = *(reinterpret_cast <ACE_CDR::ULong*> (buf));
     }
   else
     {
-      ACE_CDR::swap_4 (buf, ACE_reinterpret_cast (char*, &x));
+      ACE_CDR::swap_4 (buf, reinterpret_cast <char*> (&x));
     }
 #else
-  x = *ACE_reinterpret_cast (ACE_CDR::ULong*, buf);
+  x = *(reinterpret_cast <ACE_CDR::ULong*> (buf));
 #endif /* ACE_DISABLE_SWAP_ON_READ */
 
   this->message_size_ = x;
@@ -525,8 +522,7 @@ TAO_GIOP_Message_Lite::process_request_message (TAO_Transport *transport,
 
   if (TAO_debug_level > 0)
     this->dump_msg ("recv",
-                    ACE_reinterpret_cast (u_char *,
-                                          qd->msg_block_->rd_ptr ()),
+                    reinterpret_cast <u_char *> (qd->msg_block_->rd_ptr ()),
                     qd->msg_block_->length ());
 
 
@@ -580,8 +576,7 @@ TAO_GIOP_Message_Lite::process_reply_message (
 
   if (TAO_debug_level > 0)
     this->dump_msg ("recv",
-                    ACE_reinterpret_cast (u_char *,
-                                          qd->msg_block_->rd_ptr ()),
+                    reinterpret_cast <u_char *> (qd->msg_block_->rd_ptr ()),
                     qd->msg_block_->length ());
 
 
@@ -1600,8 +1595,7 @@ TAO_GIOP_Message_Lite::dump_msg (const char *label,
           // to. So, try to align teh pointer to a 4 byte boundary.
           char *buf = ACE_ptr_align_binary (ptr + TAO_GIOP_LITE_HEADER_LEN, 4);
 
-          id = ACE_reinterpret_cast (CORBA::ULong *,
-                                     (char * ) (buf));
+          id = reinterpret_cast <CORBA::ULong *> (buf);
         }
 
       // Print.

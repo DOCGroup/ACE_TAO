@@ -51,7 +51,8 @@
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
-#include "IFR_ExtendedC.h"
+
+#include "tao/IFR_Client/IFR_ExtendedC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

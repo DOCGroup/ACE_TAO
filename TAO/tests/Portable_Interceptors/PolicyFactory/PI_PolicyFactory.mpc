@@ -2,7 +2,7 @@
 //
 // $Id$
 
-project(*Server): taoexe, portableserver, iorinterceptor {
+project(*Server): taoserver, iorinterceptor {
   requires += interceptors
 
   Source_Files {

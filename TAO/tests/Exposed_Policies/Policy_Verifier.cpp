@@ -52,7 +52,7 @@ Policy_Verifier::init (int argc,
             {
               ACE_NEW_THROW_EX (this->rt_poa_properties_,
                                 RT_Properties,
-                                CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                CORBA::NO_MEMORY (TAO::VMCID,
                                                   CORBA::COMPLETED_NO));
               ACE_CHECK;
             }
@@ -67,7 +67,7 @@ Policy_Verifier::init (int argc,
             {
               ACE_NEW_THROW_EX (this->rt_object_properties_,
                                 RT_Properties,
-                                CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                CORBA::NO_MEMORY (TAO::VMCID,
                                                   CORBA::COMPLETED_NO));
               ACE_CHECK;
             }

@@ -27,10 +27,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/ORB_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/Log_Msg.h"
+
+class TAO_ORB_Manager;
 
 class MT_Server
 {

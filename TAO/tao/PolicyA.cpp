@@ -191,9 +191,9 @@ TAO::Any_Dual_Impl_T<CORBA::PolicyError>::demarshal_value (
 {
   CORBA::String_var id;
   
-  if ((cdr >> id.out ()) == 0)
+  if (!(cdr >> id.out ()))
     {
-      return 0;
+      return false;
     }
   
   ACE_TRY_NEW_ENV
@@ -203,11 +203,11 @@ TAO::Any_Dual_Impl_T<CORBA::PolicyError>::demarshal_value (
     }
   ACE_CATCHANY
     {
-      return 0;
+      return false;
     }
   ACE_ENDTRY;
   
-  return 1;
+  return true;
 }
 
 // Copying insertion.
@@ -276,9 +276,9 @@ TAO::Any_Dual_Impl_T<CORBA::InvalidPolicies>::demarshal_value (
 {
   CORBA::String_var id;
   
-  if ((cdr >> id.out ()) == 0)
+  if (!(cdr >> id.out ()))
     {
-      return 0;
+      return false;
     }
   
   ACE_TRY_NEW_ENV
@@ -288,11 +288,11 @@ TAO::Any_Dual_Impl_T<CORBA::InvalidPolicies>::demarshal_value (
     }
   ACE_CATCHANY
     {
-      return 0;
+      return false;
     }
   ACE_ENDTRY;
   
-  return 1;
+  return true;
 }
 
 // Copying insertion.
@@ -422,14 +422,14 @@ ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::PolicyManager>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::PolicyManager>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.
@@ -491,14 +491,14 @@ ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::PolicyCurrent>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::PolicyCurrent>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.
@@ -551,6 +551,11 @@ operator>>= (
       >;
 
   template class
+    TAO::Any_Impl_T<
+        CORBA::PolicyCurrent
+      >;
+
+  template class
     TAO::Any_Dual_Impl_T<
         CORBA::PolicyError
       >;
@@ -565,16 +570,16 @@ operator>>= (
         CORBA::PolicyManager
       >;
 
-  template class
-    TAO::Any_Impl_T<
-        CORBA::PolicyCurrent
-      >;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
     TAO::Any_Impl_T< \
         CORBA::Policy \
+      >
+
+# pragma instantiate \
+    TAO::Any_Impl_T< \
+        CORBA::PolicyCurrent \
       >
 
 # pragma instantiate \
@@ -590,11 +595,6 @@ operator>>= (
 # pragma instantiate \
     TAO::Any_Impl_T< \
         CORBA::PolicyManager \
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        CORBA::PolicyCurrent \
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

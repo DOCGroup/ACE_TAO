@@ -19,13 +19,12 @@
 #include "test_objectS.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Server.h"
-#include "tao/PortableServer/ORB_Manager.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (Simple_Naming, 
-           client, 
+ACE_RCSID (Simple_Naming,
+           client,
            "$Id$")
 
 #if defined (_MSC_VER)
@@ -104,7 +103,7 @@ main (int argc, ACE_TCHAR **argv)
         i = ACE_OS::atoi(get_opts.opt_arg ());
         if (i<2)
         {
-          ACE_ERROR((LM_ERROR, 
+          ACE_ERROR((LM_ERROR,
                      ACE_LIB_TEXT ("Invalid breath, must be 2 or more\n")));
           exit(1);
         }
@@ -114,7 +113,7 @@ main (int argc, ACE_TCHAR **argv)
         i = ACE_OS::atoi(get_opts.opt_arg ());
         if (i<2)
         {
-          ACE_ERROR((LM_ERROR, 
+          ACE_ERROR((LM_ERROR,
                      ACE_LIB_TEXT ("Invalid depth, must be 2 or more\n")));
           exit(1);
         }
@@ -124,7 +123,7 @@ main (int argc, ACE_TCHAR **argv)
         i = ACE_OS::atoi(get_opts.opt_arg ());
         if (i<2)
         {
-          ACE_ERROR((LM_ERROR, 
+          ACE_ERROR((LM_ERROR,
                      ACE_LIB_TEXT ("Invalid breath, must be 2 or more\n")));
           exit(1);
         }
@@ -194,7 +193,7 @@ main (int argc, ACE_TCHAR **argv)
   }
   ACE_CATCHANY
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                          ACE_LIB_TEXT ("Unable to resolve name servers"));
     return -1;
   }
@@ -235,7 +234,7 @@ main (int argc, ACE_TCHAR **argv)
   }
   ACE_CATCHANY
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                          ACE_LIB_TEXT ("Unable to create a lot of objects"));
     return -1;
   }
@@ -263,7 +262,7 @@ main (int argc, ACE_TCHAR **argv)
   }
   ACE_CATCHANY
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                          ACE_LIB_TEXT ("Unable to create deep context"));
     return -1;
   }
@@ -289,7 +288,7 @@ main (int argc, ACE_TCHAR **argv)
   }
   ACE_CATCHANY
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                          ACE_LIB_TEXT ("Unable to create wide context"));
     return -1;
   }
@@ -317,7 +316,7 @@ main (int argc, ACE_TCHAR **argv)
     CORBA::Object_var result_obj_ref = root_context_1->resolve (wide2
                                                           ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(bl_e);
-    CosNaming::NamingContext_var result_object = 
+    CosNaming::NamingContext_var result_object =
       CosNaming::NamingContext::_narrow (result_obj_ref.in ()
                                          ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(bl_e);
@@ -342,7 +341,7 @@ main (int argc, ACE_TCHAR **argv)
     }
     result_obj_ref = root_context_1->resolve (deep ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(bl_e);
-    result_object = 
+    result_object =
       CosNaming::NamingContext::_narrow (result_obj_ref.in ()
                                          ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(bl_e);
@@ -359,7 +358,7 @@ main (int argc, ACE_TCHAR **argv)
   }
   ACE_CATCHANY
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                          ACE_LIB_TEXT ("Unable to delete objects"));
     return -1;
   }
@@ -392,7 +391,7 @@ main (int argc, ACE_TCHAR **argv)
   }
   ACE_CATCHANY
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
       ACE_LIB_TEXT ("Unable to resolve object from redundant server"));
     return -1;
   }
@@ -433,7 +432,7 @@ main (int argc, ACE_TCHAR **argv)
     CORBA::Object_var result_obj_ref = root_context_2->resolve (wide
                                                           ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(bl_h);
-    CosNaming::NamingContext_var result_object = 
+    CosNaming::NamingContext_var result_object =
       CosNaming::NamingContext::_narrow (result_obj_ref.in ()
                                          ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(bl_h);
@@ -446,7 +445,7 @@ main (int argc, ACE_TCHAR **argv)
   }
   ACE_CATCHANY
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
       ACE_LIB_TEXT ("Unable to resolve wide context from redundant server"));
     return -1;
   }
@@ -514,7 +513,7 @@ main (int argc, ACE_TCHAR **argv)
     CORBA::Object_var result_obj_ref = root_context_1->resolve (deep
                                                           ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(bl_k);
-    CosNaming::NamingContext_var result_object = 
+    CosNaming::NamingContext_var result_object =
       CosNaming::NamingContext::_narrow (result_obj_ref.in ()
                                          ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(bl_k);
@@ -529,7 +528,7 @@ main (int argc, ACE_TCHAR **argv)
   }
   ACE_CATCHANY
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
       ACE_LIB_TEXT ("Unable to resolve deep context from redundant server"));
     return -1;
   }

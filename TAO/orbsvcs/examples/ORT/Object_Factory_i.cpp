@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Object_Factory_i.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Root_POA.h"
 
 Object_Factory_i::Object_Factory_i (CORBA::ORB_ptr orb,
                                     PortableServer::POA_ptr gateway_poa)

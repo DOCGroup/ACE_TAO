@@ -2,7 +2,7 @@
 
 #include "ace/Get_Opt.h"
 #include "testS.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Root_POA.h"
 #include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (UNKNOWN_Exception, server, "$Id$")
@@ -231,8 +231,7 @@ main (int argc, char *argv[])
 
       poa_manager->activate ();
 
-      TAO_POA *tao_poa =
-        root_poa->_tao_poa_downcast();
+      TAO_Root_POA *tao_poa = dynamic_cast <TAO_Root_POA*> (root_poa.in ());
 
       while (!done)
         {

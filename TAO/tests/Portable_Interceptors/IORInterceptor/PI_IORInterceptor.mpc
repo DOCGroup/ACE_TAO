@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, portableserver, iorinterceptor {
+project(*Server): taoserver, iorinterceptor {
   requires += interceptors
 
   Source_Files {
@@ -12,7 +12,7 @@ project(*Server): taoexe, portableserver, iorinterceptor {
   }
 }
 
-project(*Client): taoexe {
+project(*Client): taoclient {
   requires += interceptors
 
   Source_Files {

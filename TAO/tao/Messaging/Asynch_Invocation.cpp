@@ -84,7 +84,7 @@ namespace TAO
           {
             // @@ What is the right way to handle this error? Do we need
             // to call the interceptors in this case?
-            ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+            ACE_THROW_RETURN (CORBA::INTERNAL (TAO::VMCID,
                                                CORBA::COMPLETED_NO),
                               TAO_INVOKE_FAILURE);
           }

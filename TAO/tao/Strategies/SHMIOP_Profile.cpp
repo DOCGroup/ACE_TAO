@@ -140,7 +140,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
       // No host/port delimiter!
       ACE_THROW (CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
-                     TAO_DEFAULT_MINOR_CODE,
+                     TAO::VMCID,
                      EINVAL),
                    CORBA::COMPLETED_NO));
     }
@@ -152,7 +152,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
       // No object key delimiter!
       ACE_THROW (CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
-                     TAO_DEFAULT_MINOR_CODE,
+                     TAO::VMCID,
                      EINVAL),
                    CORBA::COMPLETED_NO));
     }
@@ -180,7 +180,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
         {
           ACE_THROW (CORBA::INV_OBJREF (
               CORBA::SystemException::_tao_minor_code (
-                  TAO_DEFAULT_MINOR_CODE,
+                  TAO::VMCID,
                   EINVAL),
               CORBA::COMPLETED_NO));
         }
@@ -222,7 +222,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
             // @@ What's the right exception to throw here?
             ACE_THROW (CORBA::INV_OBJREF (
                          CORBA::SystemException::_tao_minor_code (
-                           TAO_DEFAULT_MINOR_CODE,
+                           TAO::VMCID,
                            EINVAL),
                          CORBA::COMPLETED_NO));
           }
@@ -248,7 +248,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
       // @@ What's the right exception to throw here?
       ACE_THROW (CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
-                     TAO_DEFAULT_MINOR_CODE,
+                     TAO::VMCID,
                      EINVAL),
                    CORBA::COMPLETED_NO));
     }

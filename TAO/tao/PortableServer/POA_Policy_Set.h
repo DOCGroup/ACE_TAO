@@ -17,21 +17,13 @@
 #define TAO_POA_POLICY_SET_H
 #include /**/ "ace/pre.h"
 
-#include "POA_Policies.h"
-#include "tao/Policy_Set.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// This is to remove "inherits via dominance" warnings from MSVC.
-// MSVC is being a little too paranoid.
-#if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
+#include "tao/Policy_Set.h"
 
 class TAO_Policy_Validator;
 
@@ -48,6 +40,8 @@ public:
   /// Returns the policy at the specified index.
   /// CORBA::Policy::_nil () is returned if the policy doesn't exist
   CORBA::Policy *get_policy_by_index (CORBA::ULong index);
+
+  /// Get the number of policies
   CORBA::ULong num_policies (void) const;
 
   /// Obtain a single cached policy.
@@ -70,13 +64,13 @@ public:
 
   TAO_Policy_Set &policies (void);
 
+  /// Obtain a single policy.
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy
+                                ACE_ENV_ARG_DECL);
+
 protected:
   TAO_Policy_Set impl_;
 };
-
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
 # include "POA_Policy_Set.i"

@@ -107,7 +107,7 @@ EDF_Scheduler::create_scheduling_parameter (const EDF_Scheduling::SchedulingPara
                     EDF_Sched_Param_Policy,
                     CORBA::NO_MEMORY (
                                       CORBA::SystemException::_tao_minor_code (
-                                                                               TAO_DEFAULT_MINOR_CODE,
+                                                                               TAO::VMCID,
                                                                                ENOMEM),
                                       CORBA::COMPLETED_NO));
 
@@ -446,7 +446,7 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
       ACE_OS::memcpy (&int_guid,
 		      guid.get_buffer (),
 		      guid.length ());
-  
+
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
@@ -476,7 +476,7 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   record the entering dispatcher time on the server side.
   Tenth Time.
 */
-#ifdef KOKYU_HAS_RELEASE_GUARD 
+#ifdef KOKYU_HAS_RELEASE_GUARD
   this->kokyu_dispatcher_->release_guard (guid, qos);
 #else
   this->kokyu_dispatcher_->schedule (guid, qos);

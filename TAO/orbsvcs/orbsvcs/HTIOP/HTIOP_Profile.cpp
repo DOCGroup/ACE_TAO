@@ -125,7 +125,7 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior
       // No object key delimiter or no hostname specified.
       ACE_THROW (CORBA::INV_OBJREF
                  (CORBA::SystemException::_tao_minor_code
-                  (TAO_DEFAULT_MINOR_CODE,
+                  (TAO::VMCID,
                    EINVAL),
                   CORBA::COMPLETED_NO));
     }
@@ -140,7 +140,7 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior
       // No hostname specified!  It is required by the spec.
       ACE_THROW (CORBA::INV_OBJREF
                  (CORBA::SystemException::_tao_minor_code
-                  (TAO_DEFAULT_MINOR_CODE,
+                  (TAO::VMCID,
                    EINVAL),
                   CORBA::COMPLETED_NO));
     }
@@ -194,7 +194,7 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior
           // @@ What's the right exception to throw here?
           ACE_THROW (CORBA::INV_OBJREF
                      (CORBA::SystemException::_tao_minor_code
-                      (TAO_DEFAULT_MINOR_CODE,
+                      (TAO::VMCID,
                        EINVAL),
                       CORBA::COMPLETED_NO));
         }

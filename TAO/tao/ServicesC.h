@@ -78,7 +78,7 @@ namespace CORBA
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:342
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::UShort ServiceType;
   typedef CORBA::UShort_out ServiceType_out;
@@ -89,7 +89,7 @@ namespace CORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServiceType;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:342
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::ULong ServiceOption;
   typedef CORBA::ULong_out ServiceOption_out;
@@ -100,7 +100,7 @@ namespace CORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServiceOption;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:342
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::ULong ServiceDetailType;
   typedef CORBA::ULong_out ServiceDetailType_out;

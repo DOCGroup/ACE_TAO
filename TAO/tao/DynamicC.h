@@ -42,7 +42,6 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/ORB.h"
-#include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Typecode.h"
 #include "tao/Sequence_T.h"
@@ -51,6 +50,7 @@
 
 #include "tao/Dynamic_ParameterC.h"
 #include "tao/StringSeqC.h"
+#include "tao/Typecode_typesC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -133,7 +133,7 @@ namespace Dynamic
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ParameterList;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:435
+  // be\be_visitor_typedef/typedef_ch.cpp:472
   
   typedef CORBA::StringSeq ContextList;
   typedef CORBA::StringSeq_var ContextList_var;
@@ -202,7 +202,7 @@ namespace Dynamic
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ExceptionList;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:435
+  // be\be_visitor_typedef/typedef_ch.cpp:472
   
   typedef CORBA::StringSeq RequestContext;
   typedef CORBA::StringSeq_var RequestContext_var;
@@ -277,7 +277,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_Dynamic_ExceptionList_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:963
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
 #include "DynamicC.inl"

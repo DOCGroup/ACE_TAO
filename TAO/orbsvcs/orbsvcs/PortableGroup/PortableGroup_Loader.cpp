@@ -3,6 +3,7 @@
 // $Id$
 
 #include "PortableGroup_Loader.h"
+#include "PG_Object_Adapter_Factory.h"
 #include "PortableGroup_ORBInitializer.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/ORB_Core.h"
@@ -27,12 +28,12 @@ TAO_PortableGroup_Loader::init (int /*argc*/,
         PortableInterceptor::ORBInitializer::_nil ();
       PortableInterceptor::ORBInitializer_var orb_initializer;
 
-      /// Register the RTCORBA ORBInitializer.
+      /// Register the Portablegroup ORBInitializer.
       ACE_NEW_THROW_EX (temp_orb_initializer,
                         TAO_PortableGroup_ORBInitializer (),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_TRY_CHECK;

@@ -586,14 +586,14 @@ ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::Interceptor>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::Interceptor>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.
@@ -649,9 +649,9 @@ TAO::Any_Dual_Impl_T<PortableInterceptor::ForwardRequest>::demarshal_value (
 {
   CORBA::String_var id;
   
-  if ((cdr >> id.out ()) == 0)
+  if (!(cdr >> id.out ()))
     {
-      return 0;
+      return false;
     }
   
   ACE_TRY_NEW_ENV
@@ -661,11 +661,11 @@ TAO::Any_Dual_Impl_T<PortableInterceptor::ForwardRequest>::demarshal_value (
     }
   ACE_CATCHANY
     {
-      return 0;
+      return false;
     }
   ACE_ENDTRY;
   
-  return 1;
+  return true;
 }
 
 // Copying insertion.
@@ -734,9 +734,9 @@ TAO::Any_Dual_Impl_T<PortableInterceptor::InvalidSlot>::demarshal_value (
 {
   CORBA::String_var id;
   
-  if ((cdr >> id.out ()) == 0)
+  if (!(cdr >> id.out ()))
     {
-      return 0;
+      return false;
     }
   
   ACE_TRY_NEW_ENV
@@ -746,11 +746,11 @@ TAO::Any_Dual_Impl_T<PortableInterceptor::InvalidSlot>::demarshal_value (
     }
   ACE_CATCHANY
     {
-      return 0;
+      return false;
     }
   ACE_ENDTRY;
   
-  return 1;
+  return true;
 }
 
 // Copying insertion.
@@ -825,14 +825,14 @@ ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::Current>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::Current>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.
@@ -894,14 +894,14 @@ ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.
@@ -963,14 +963,14 @@ ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.
@@ -1032,14 +1032,14 @@ ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.
@@ -1101,14 +1101,14 @@ ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.
@@ -1170,14 +1170,14 @@ ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.
@@ -1239,14 +1239,14 @@ ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.
@@ -1308,14 +1308,14 @@ ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.
@@ -1367,14 +1367,14 @@ ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<PortableInterceptor::ORBInitInfo::DuplicateName>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<PortableInterceptor::ORBInitInfo::DuplicateName>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.
@@ -1439,14 +1439,14 @@ ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<PortableInterceptor::ORBInitInfo::InvalidName>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<PortableInterceptor::ORBInitInfo::InvalidName>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.
@@ -1521,14 +1521,14 @@ ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.

@@ -69,7 +69,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_root/root_ch.cpp:63
+// be\be_visitor_root/root_ch.cpp:62
 
 namespace TAO
 {
@@ -86,7 +86,7 @@ namespace CORBA
 {
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:603
+  // be\be_interface.cpp:598
 
 #if !defined (_CORBA_POLLABLESET__VAR_OUT_CH_)
 #define _CORBA_POLLABLESET__VAR_OUT_CH_
@@ -109,7 +109,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:603
+  // be\be_interface.cpp:598
 
 #if !defined (_CORBA_POLLABLE__VAR_OUT_CH_)
 #define _CORBA_POLLABLE__VAR_OUT_CH_
@@ -159,7 +159,7 @@ namespace CORBA
     
     static Pollable_ptr _nil (void)
     {
-      return (Pollable_ptr)0;
+      return static_cast<Pollable_ptr> (0);
     }
     
     
@@ -212,7 +212,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:603
+  // be\be_interface.cpp:598
 
 #if !defined (_CORBA_DIIPOLLABLE__VAR_OUT_CH_)
 #define _CORBA_DIIPOLLABLE__VAR_OUT_CH_
@@ -262,7 +262,7 @@ namespace CORBA
     
     static DIIPollable_ptr _nil (void)
     {
-      return (DIIPollable_ptr)0;
+      return static_cast<DIIPollable_ptr> (0);
     }
     
     
@@ -321,7 +321,7 @@ namespace CORBA
     
     static PollableSet_ptr _nil (void)
     {
-      return (PollableSet_ptr)0;
+      return static_cast<PollableSet_ptr> (0);
     }
     
     
@@ -566,7 +566,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:963
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
 #include "PollableC.inl"

@@ -34,7 +34,7 @@
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
 #include "tao/TC_Constants_Forward.h"
-#include "tao/OBV_Constants.h"
+#include "tao/VisibilityC.h"
 #include "tao/CORBA_methods.h"
 #include "tao/Sequence_T.h"
 #include "tao/Typecode_typesC.h"

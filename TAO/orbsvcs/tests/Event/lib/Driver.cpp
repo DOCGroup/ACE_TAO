@@ -102,7 +102,7 @@ EC_Driver::run_init (int &argc, char* argv[]
   ACE_CHECK;
 
   if (this->parse_args (argc, argv))
-    ACE_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+    ACE_THROW (CORBA::INTERNAL (TAO::VMCID,
                                 CORBA::COMPLETED_NO));
 
   if (this->verbose ())
@@ -120,18 +120,18 @@ EC_Driver::run_init (int &argc, char* argv[]
     }
 
   if (this->move_to_rt_class () == -1)
-    ACE_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+    ACE_THROW (CORBA::INTERNAL (TAO::VMCID,
                                 CORBA::COMPLETED_NO));
 
   this->initialize_ec_impl (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (this->allocate_consumers () == -1)
-    ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+    ACE_THROW (CORBA::NO_MEMORY (TAO::VMCID,
                                  CORBA::COMPLETED_NO));
 
   if (this->allocate_suppliers () == -1)
-    ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+    ACE_THROW (CORBA::NO_MEMORY (TAO::VMCID,
                                  CORBA::COMPLETED_NO));
 
   this->connect_clients (ACE_ENV_SINGLE_ARG_PARAMETER);

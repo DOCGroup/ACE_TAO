@@ -36,6 +36,8 @@
 #include <tao/ParameterMode.pidl>
 #include <tao/orb_types.pidl>
 #include <tao/Typecode_types.pidl>
+#include <tao/Visibility.pidl>
+#include <tao/ValueModifier.pidl>
 
 #pragma prefix "omg.org"
 
@@ -55,16 +57,6 @@ module CORBA
     USER_EXCEPTION,
     SYSTEM_EXCEPTION
   };
-
-  typedef short ValueModifier;
-  const ValueModifier VM_NONE = 0;
-  const ValueModifier VM_CUSTOM = 1;
-  const ValueModifier VM_ABSTRACT = 2;
-  const ValueModifier VM_TRUNCATABLE = 3;
-
-  typedef short Visibility;
-  const Visibility PRIVATE_MEMBER = 0;
-  const Visibility PUBLIC_MEMBER = 1;
 };
 
 #endif /* TAO_ORB_IDL */

@@ -407,7 +407,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
     ));
     ACE_THROW (CORBA::BAD_PARAM (
       CORBA::SystemException::_tao_minor_code (
-        TAO_DEFAULT_MINOR_CODE,
+        TAO::VMCID,
         EINVAL),
       CORBA::COMPLETED_NO));
   }
@@ -473,7 +473,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
 
     ACE_THROW (CORBA::INTERNAL (
       CORBA::SystemException::_tao_minor_code (
-        TAO_DEFAULT_MINOR_CODE,
+        TAO::VMCID,
         EINVAL),
       CORBA::COMPLETED_NO));
   }
@@ -1035,7 +1035,7 @@ TAO::FT_ReplicationManager::create_object (
                     PortableGroup::GenericFactory::FactoryCreationId,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Object::_nil ());

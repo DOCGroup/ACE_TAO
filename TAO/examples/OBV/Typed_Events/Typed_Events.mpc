@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): taoexe, portableserver, valuetype, minimum_corba {
+project(*server): taoexe, utils, portableserver, valuetype, minimum_corba {
   Source_Files {
     Server_i.cpp
     Event_Types_impl.cpp
@@ -10,7 +10,7 @@ project(*server): taoexe, portableserver, valuetype, minimum_corba {
   }
 }
 
-project(*client): taoexe, portableserver, valuetype, minimum_corba {
+project(*client): taoexe, utils, portableserver, valuetype, minimum_corba {
   Source_Files {
     Client_i.cpp
     Event_Types_impl.cpp

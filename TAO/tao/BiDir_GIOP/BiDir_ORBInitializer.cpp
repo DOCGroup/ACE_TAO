@@ -8,12 +8,9 @@
 
 #include "tao/ORB_Constants.h"
 
-ACE_RCSID (BiDir_GIOP, 
+ACE_RCSID (BiDir_GIOP,
            BiDir_ORBInitializer,
            "$Id$")
-
-
-
 
 void
 TAO_BiDir_ORBInitializer::pre_init (
@@ -50,7 +47,7 @@ TAO_BiDir_ORBInitializer::register_policy_factories (
                     TAO_BiDir_PolicyFactory,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                         TAO_DEFAULT_MINOR_CODE,
+                         TAO::VMCID,
                          ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;

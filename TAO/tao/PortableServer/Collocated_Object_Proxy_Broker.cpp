@@ -2,6 +2,8 @@
 // -- PortableServer Include --
 #include "Collocated_Object_Proxy_Broker.h"
 #include "Object_Adapter.h"
+#include "Servant_Upcall.h"
+#include "Servant_Base.h"
 
 
 // -- TAO Include --
@@ -10,8 +12,8 @@
 #include "tao/Profile.h"
 #include "tao/DomainC.h"
 
-ACE_RCSID (tao,
-           TAO_Object_Remote_Proxy_Broker,
+ACE_RCSID (PortableServer,
+           Collocated_Object_Proxy_Broker,
            "$Id$")
 
 
@@ -29,7 +31,7 @@ namespace TAO
         stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ()
           == TAO_ORB_Core::THRU_POA)
       {
-        TAO_Object_Adapter::Servant_Upcall servant_upcall (
+        TAO::Portable_Server::Servant_Upcall servant_upcall (
           stub->servant_orb_var ()->orb_core ()
         );
 
@@ -78,7 +80,7 @@ namespace TAO
             stub->servant_orb_var ()->orb_core ()
             ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
           {
-            TAO_Object_Adapter::Servant_Upcall servant_upcall (
+            TAO::Portable_Server::Servant_Upcall servant_upcall (
               target->_stubobj ()->servant_orb_var ()->orb_core ()
               );
 
@@ -137,7 +139,7 @@ namespace TAO
             stub->servant_orb_var ()->orb_core ()
               ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
           {
-            TAO_Object_Adapter::Servant_Upcall servant_upcall (
+            TAO::Portable_Server::Servant_Upcall servant_upcall (
                 stub->servant_orb_var ()->orb_core ()
                 );
 
@@ -196,7 +198,7 @@ namespace TAO
             stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ()
               == TAO_ORB_Core::THRU_POA)
           {
-            TAO_Object_Adapter::Servant_Upcall servant_upcall (
+            TAO::Portable_Server::Servant_Upcall servant_upcall (
                 target->_stubobj ()->servant_orb_var ()->orb_core ()
                 );
 

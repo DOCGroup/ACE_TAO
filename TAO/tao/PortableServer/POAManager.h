@@ -8,7 +8,6 @@
  *
  *   POAManager
  *
- *
  *  @author  Irfan Pyarali
  */
 //=============================================================================
@@ -17,30 +16,28 @@
 #define TAO_POAMANAGER_H
 #include /**/ "ace/pre.h"
 
-#include "PortableServerC.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "poa_macros.h"
+#include "POAManagerC.h"
 
 // Local Object
 #include "tao/LocalObject.h"
-
-#include "tao/PortableInterceptorC.h"
+#include "tao/PI_ForwardC.h"
 #include "ace/Unbounded_Set.h"
 
 // Forward decl.
-class TAO_POA;
+class TAO_Root_POA;
 class TAO_Object_Adapter;
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -48,7 +45,7 @@ class TAO_PortableServer_Export TAO_POA_Manager :
   public PortableServer::POAManager,
   public TAO_Local_RefCounted_Object
 {
-  friend class TAO_POA;
+  friend class TAO_Root_POA;
   friend class TAO_Object_Adapter;
 
 public:
@@ -86,6 +83,12 @@ public:
 
   PortableInterceptor::AdapterManagerId get_manager_id (ACE_ENV_SINGLE_ARG_DECL);
 
+  /// Check the state of this POA manager
+  void check_state (ACE_ENV_SINGLE_ARG_DECL);
+
+  PortableServer::POAManager::State get_state_i ()
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 protected:
 
   void activate_i (ACE_ENV_SINGLE_ARG_DECL)
@@ -118,14 +121,11 @@ protected:
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-  PortableServer::POAManager::State get_state_i ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
   ACE_Lock &lock (void);
 
-  int remove_poa (TAO_POA *poa);
+  int remove_poa (TAO_Root_POA *poa);
 
-  int register_poa (TAO_POA *poa);
+  int register_poa (TAO_Root_POA *poa);
 
   /**
    * Generate an AdapterManagerId for this POAManager.
@@ -140,7 +140,7 @@ protected:
 
   ACE_Lock &lock_;
 
-  typedef ACE_Unbounded_Set<TAO_POA *> POA_COLLECTION;
+  typedef ACE_Unbounded_Set<TAO_Root_POA *> POA_COLLECTION;
 
   POA_COLLECTION poa_collection_;
 
@@ -150,7 +150,7 @@ protected:
 
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

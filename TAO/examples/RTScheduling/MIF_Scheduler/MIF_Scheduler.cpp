@@ -55,11 +55,11 @@ MIF_Scheduler::MIF_Scheduler (CORBA::ORB_ptr orb)
         orb->resolve_initial_references ("RTScheduler_Current"
                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       this->current_ =
         RTScheduling::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       wait_ = 0;
     }
   ACE_CATCHANY
@@ -113,7 +113,7 @@ MIF_Scheduler::create_segment_scheduling_parameter (CORBA::Short importance
                     Segment_Sched_Param_Policy,
                     CORBA::NO_MEMORY (
 				      CORBA::SystemException::_tao_minor_code (
-				       TAO_DEFAULT_MINOR_CODE,
+               TAO::VMCID,
 				       ENOMEM),
 				      CORBA::COMPLETED_NO));
 
@@ -331,7 +331,7 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
       ACE_Thread::self (current);
       if (ACE_Thread::getprio (current, priority) == -1)
 	return;
-      
+
       ACE_DEBUG ((LM_DEBUG,
 		  "Initial thread priority is %d %d\n",
 		  priority,
@@ -348,8 +348,8 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
       ACE_DEBUG ((LM_DEBUG,
 		  "Bumped thread priority is %d\n",
 		  priority));
-      
-      
+
+
       DT* run_dt;
       ACE_Message_Block* msg;
       ready_que_.dequeue_head (msg);
@@ -379,10 +379,10 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
     request_info->get_request_service_context (Server_Interceptor::SchedulingInfo);
 
   if (serv_cxt != 0)
-    { 
+    {
       ACE_DEBUG ((LM_DEBUG,
 		  "Got scheduling info\n"));
-      
+
       RTScheduling::Current::IdType* guid;
       ACE_NEW (guid,
 	       RTScheduling::Current::IdType);
@@ -570,7 +570,7 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr
   ACE_Thread::self (current);
   if (ACE_Thread::getprio (current, priority) == -1)
     return;
-  
+
   current_->the_priority (priority - 1
 			  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -610,13 +610,13 @@ MIF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr
 
   lock_.acquire ();
   ready_que_.enqueue_prio (new_dt);
-  
+
   int priority;
   ACE_hthread_t current;
   ACE_Thread::self (current);
   if (ACE_Thread::getprio (current, priority) == -1)
     return;
-  
+
   current_->the_priority (priority - 1
 			  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -662,7 +662,7 @@ MIF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr
   ACE_Thread::self (current);
   if (ACE_Thread::getprio (current, priority) == -1)
     return;
-  
+
   current_->the_priority (priority - 1
 			  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

@@ -63,7 +63,7 @@ CORBA::Context::_decr_refcnt (void)
 const char *
 CORBA::Context::context_name (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO::VMCID,
                                          CORBA::COMPLETED_NO),
                     0);
 }
@@ -71,7 +71,7 @@ CORBA::Context::context_name (ACE_ENV_SINGLE_ARG_DECL) const
 CORBA::Context_ptr
 CORBA::Context::parent (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO::VMCID,
                                          CORBA::COMPLETED_NO),
                     0);
 }
@@ -81,7 +81,7 @@ CORBA::Context::create_child (const char * /* child_ctx_name */,
                               CORBA::Context_out /* child_ctx */
                               ACE_ENV_ARG_DECL)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO::VMCID,
                                   CORBA::COMPLETED_NO));
 }
 
@@ -90,7 +90,7 @@ CORBA::Context::set_one_value (const char * /* propname */,
                                const CORBA::Any & /* propvalue */
                                ACE_ENV_ARG_DECL)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO::VMCID,
                                   CORBA::COMPLETED_NO));
 }
 
@@ -98,7 +98,7 @@ void
 CORBA::Context::set_values (CORBA::NVList_ptr
                             ACE_ENV_ARG_DECL)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO::VMCID,
                                   CORBA::COMPLETED_NO));
 }
 
@@ -106,7 +106,7 @@ void
 CORBA::Context::delete_values (const char * /* propname */
                                ACE_ENV_ARG_DECL)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO::VMCID,
                                   CORBA::COMPLETED_NO));
 }
 
@@ -117,7 +117,7 @@ CORBA::Context::get_values (const char * /* start_scope */,
                             CORBA::NVList_ptr & /* values */
                             ACE_ENV_ARG_DECL)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO::VMCID,
                                   CORBA::COMPLETED_NO));
 }
 

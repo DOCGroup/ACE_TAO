@@ -43,7 +43,7 @@ TAO::SSLIOP::Current::get_peer_certificate (
                     ::SSLIOP::ASN_1_Cert,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
@@ -77,7 +77,7 @@ TAO::SSLIOP::Current::get_peer_certificate_chain (
                     ::SSLIOP::SSL_Cert,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);

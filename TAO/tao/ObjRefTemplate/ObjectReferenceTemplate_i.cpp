@@ -1,5 +1,5 @@
 #include "ObjectReferenceTemplate_i.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Root_POA.h"
 
 #include "tao/CORBA_String.h"
 #include "tao/ORB_Constants.h"
@@ -51,7 +51,7 @@ namespace TAO
                                                         *(this->adapter_name_)),
                       CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                              TAO_DEFAULT_MINOR_CODE,
+                              TAO::VMCID,
                               ENOMEM),
                           CORBA::COMPLETED_NO));
     ACE_CHECK_RETURN (0);
@@ -69,7 +69,7 @@ namespace TAO
     if (CORBA::is_nil(poa_.in()))
       ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), CORBA::Object::_nil ());
 
-    TAO_POA* tao_poa = poa_->_tao_poa_downcast ();
+    TAO_Root_POA* tao_poa = dynamic_cast<TAO_Root_POA*>(poa_.in());
 
     return tao_poa->invoke_key_to_object (ACE_ENV_SINGLE_ARG_PARAMETER);
   }

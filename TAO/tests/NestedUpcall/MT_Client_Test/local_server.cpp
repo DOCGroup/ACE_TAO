@@ -22,6 +22,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
+#include "tao/Utils/ORB_Manager.h"
 
 ACE_RCSID(MT_Client_Test, local_server, "$Id$")
 

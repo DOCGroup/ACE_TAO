@@ -65,7 +65,7 @@ TAO_LB_LoadAverage::get_properties (ACE_ENV_SINGLE_ARG_DECL)
                     CosLoadBalancing::Properties (this->properties_),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);

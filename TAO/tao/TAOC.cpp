@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:65
+// be\be_visitor_arg_traits.cpp:66
 
 // Arg traits specializations.
 namespace TAO
@@ -170,22 +170,22 @@ TAO::BufferingConstraintPolicy::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Policy:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:tao/TAO/BufferingConstraintPolicy:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }

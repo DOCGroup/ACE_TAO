@@ -94,7 +94,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << ")" << be_nl
       << "ACE_THROW_SPEC ((CORBA::Exception))" << be_uidt_nl
       << "{" << be_idt_nl
-      << "TAO_Object_Adapter::Servant_Upcall servant_upcall ("
+      << "TAO::Portable_Server::Servant_Upcall servant_upcall ("
       << be_idt << be_idt_nl
       << "obj->_stubobj ()"
       << "->servant_orb_var ()->orb_core ()"

@@ -7,6 +7,7 @@
 
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/ServantLocatorC.h"
 
 class Quoter_Stock_Factory_Locator_i : public PortableServer::ServantLocator
 {

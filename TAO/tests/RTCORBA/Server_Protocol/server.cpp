@@ -7,7 +7,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
 #include "ace/Get_Opt.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Root_POA.h"
 
 class Test_i : public POA_Test
 {
@@ -93,8 +93,8 @@ check_server_protocol_at_root_poa (CORBA::ORB_ptr /*orb*/,
   // Users should never write code like below.
   // It is for testing purposes only! (Unfortunately, there
   // is no standard way to access POA policies).
-  TAO_POA &tao_poa =
-    dynamic_cast<TAO_POA &> (*poa);
+  TAO_Root_POA &tao_poa =
+    dynamic_cast<TAO_Root_POA &> (*poa);
 
   TAO_POA_Policy_Set &policies =
     tao_poa.policies ();

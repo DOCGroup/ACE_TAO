@@ -15,15 +15,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "PortableServerC.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Abstract_Servant_Base.h"
-
+#include "PS_ForwardC.h"
 #include "ace/Atomic_Op.h"
+#include "tao/Abstract_Servant_Base.h"
 
 class TAO_Operation_Table;
 
@@ -39,10 +39,6 @@ class TAO_PortableServer_Export TAO_ServantBase
   : public virtual TAO_Abstract_ServantBase
 {
 public:
-  friend class TAO_POA;
-  friend class TAO_Object_Adapter;
-  friend class TAO_Local_ServantBase;
-
   /// Destructor.
   virtual ~TAO_ServantBase (void);
 
@@ -98,10 +94,10 @@ public:
                      TAO::Collocation_Strategy st,
                      const unsigned int length = 0);
 
-protected:
-
   /// Get this interface's repository id (TAO specific).
   virtual const char *_interface_repository_id (void) const = 0;
+
+protected:
 
   /// Default constructor, only derived classes can be created.
   TAO_ServantBase (void);

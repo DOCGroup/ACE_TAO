@@ -45,20 +45,20 @@ FP_Segment_Sched_Param_Policy::value (
   this->value_ = value;
 }
 
-CORBA::Policy_ptr 
+CORBA::Policy_ptr
 FP_Segment_Sched_Param_Policy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   FP_Segment_Sched_Param_Policy* tmp;
   ACE_NEW_THROW_EX (tmp, FP_Segment_Sched_Param_Policy (*this),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return tmp;
 }
 
-void 
+void
 FP_Segment_Sched_Param_Policy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -97,7 +97,7 @@ Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (
   ACE_CHECK;
 
   IOP::CodecFactory_var codec_factory;
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     orb->resolve_initial_references ("CodecFactory"
                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -140,13 +140,13 @@ Fixed_Priority_Scheduler::create_segment_scheduling_parameter (
         CORBA::SystemException
       ))
 {
-  FP_Scheduling::SegmentSchedulingParameterPolicy_ptr 
+  FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
     segment_sched_param_policy;
   ACE_NEW_THROW_EX (segment_sched_param_policy,
                     FP_Segment_Sched_Param_Policy,
                     CORBA::NO_MEMORY (
                                       CORBA::SystemException::_tao_minor_code (
-                                       TAO_DEFAULT_MINOR_CODE,
+                                       TAO::VMCID,
                                        ENOMEM),
                                       CORBA::COMPLETED_NO));
 
@@ -166,8 +166,8 @@ Fixed_Priority_Scheduler::begin_new_scheduling_segment (const RTScheduling::Curr
                    RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
 #ifdef KOKYU_DSRT_LOGGING
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%t|%T):FP_Scheduler::begin_new_scheduling_segment enter\n")); 
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t|%T):FP_Scheduler::begin_new_scheduling_segment enter\n"));
 #endif
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -188,8 +188,8 @@ Fixed_Priority_Scheduler::begin_new_scheduling_segment (const RTScheduling::Curr
   kokyu_dispatcher_->schedule (guid, qos);
 
 #ifdef KOKYU_DSRT_LOGGING
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%t|%T):FP_Scheduler::begin_new_scheduling_segment exit\n")); 
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t|%T):FP_Scheduler::begin_new_scheduling_segment exit\n"));
 #endif
 }
 
@@ -524,7 +524,7 @@ Fixed_Priority_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
 #endif
     }
 
-  kokyu_dispatcher_->update_schedule (*(this->current_->id ()), 
+  kokyu_dispatcher_->update_schedule (*(this->current_->id ()),
                                       Kokyu::BLOCK);
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -575,7 +575,7 @@ Fixed_Priority_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_
   // Check that the reply service context was received as
   // expected.
   IOP::ServiceContext_var sc =
-    ri->get_reply_service_context (Client_Interceptor::SchedulingInfo 
+    ri->get_reply_service_context (Client_Interceptor::SchedulingInfo
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -605,7 +605,7 @@ Fixed_Priority_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_
       ACE_DEBUG ((LM_DEBUG,
                   "(%t): Desired_Priority = %d in recvd service context\n",
                   desired_priority));
-#endif                  
+#endif
     }
 
   FP_Scheduler_Traits::QoSDescriptor_t qos;

@@ -42,7 +42,6 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/ORB.h"
-#include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Sequence_T.h"
 #include "tao/Seq_Var_T.h"
@@ -50,6 +49,7 @@
 #include "tao/VarOut_T.h"
 
 #include "tao/IOP_IORC.h"
+#include "tao/Policy_ForwardC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

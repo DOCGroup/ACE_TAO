@@ -18,7 +18,7 @@
 #define _NOTIFIER_SERVER_H
 
 #include "Event_Comm_i.h"
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/Utils/ORB_Manager.h"
 #include "orbsvcs/CosNamingS.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 

@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/Utils/ORB_Manager.h"
 #include "Factory_Finder_i.h"
 
 #ifndef QUOTER_FACTORY_FINDER_H

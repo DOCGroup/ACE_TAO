@@ -28,7 +28,7 @@ TAO_Unbounded_Sequence<T>::TAO_Unbounded_Sequence (
     {
       T * tmp1 = TAO_Unbounded_Sequence<T>::allocbuf (this->maximum_);
       T * const tmp2 =
-        ACE_reinterpret_cast (T * ACE_CAST_CONST, rhs.buffer_);
+        reinterpret_cast <T * ACE_CAST_CONST> (rhs.buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         {
@@ -57,8 +57,7 @@ TAO_Unbounded_Sequence<T>::operator= (const TAO_Unbounded_Sequence<T> & rhs)
       if (this->maximum_ < rhs.maximum_)
         {
           // Free the old buffer.
-          T * tmp = ACE_reinterpret_cast (T *,
-                                          this->buffer_);
+          T * tmp = reinterpret_cast <T *> (this->buffer_);
           TAO_Unbounded_Sequence<T>::freebuf (tmp);
           this->buffer_ =
             TAO_Unbounded_Sequence<T>::allocbuf (rhs.maximum_);
@@ -79,10 +78,8 @@ TAO_Unbounded_Sequence<T>::operator= (const TAO_Unbounded_Sequence<T> & rhs)
 
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
-  T * tmp1 = ACE_reinterpret_cast (T *,
-                                   this->buffer_);
-  T * const tmp2 = ACE_reinterpret_cast (T * ACE_CAST_CONST,
-                                         rhs.buffer_);
+  T * tmp1 = reinterpret_cast <T *> (this->buffer_);
+  T * const tmp2 = reinterpret_cast <T * ACE_CAST_CONST> (rhs.buffer_);
 
   for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
@@ -106,8 +103,7 @@ TAO_Unbounded_Sequence<T>::_allocate_buffer (CORBA::ULong length)
 
   if (this->buffer_ != 0)
     {
-      T * old = ACE_reinterpret_cast (T *,
-                                      this->buffer_);
+      T * old = reinterpret_cast <T *> (this->buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         {
@@ -132,8 +128,7 @@ TAO_Unbounded_Sequence<T>::_deallocate_buffer (void)
       return;
     }
 
-  T * tmp = ACE_reinterpret_cast (T *,
-                                  this->buffer_);
+  T * tmp = reinterpret_cast <T *> (this->buffer_);
 
   TAO_Unbounded_Sequence<T>::freebuf (tmp);
   this->buffer_ = 0;
@@ -162,14 +157,12 @@ TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan)
         }
       else
         {
-          result = ACE_reinterpret_cast (T *,
-                                         this->buffer_);
+          result = reinterpret_cast <T *> (this->buffer_);
         }
     }
   else
     {
-      result = ACE_reinterpret_cast (T *,
-                                     this->buffer_);
+      result = reinterpret_cast <T *> (this->buffer_);
 
       if (this->release_ != 0)
         {
@@ -191,8 +184,7 @@ T &
 TAO_Unbounded_Sequence<T>::operator[] (CORBA::ULong i)
 {
   TAO_SEQUENCE_ASSERT (i, this->maximum_);
-  T * tmp = ACE_reinterpret_cast (T *,
-                                  this->buffer_);
+  T * tmp = reinterpret_cast <T *> (this->buffer_);
   return tmp[i];
 }
 
@@ -203,8 +195,7 @@ const T &
 TAO_Unbounded_Sequence<T>::operator[] (CORBA::ULong i) const
 {
   TAO_SEQUENCE_ASSERT (i, this->maximum_);
-  T * const tmp = ACE_reinterpret_cast (T * ACE_CAST_CONST,
-                                        this->buffer_);
+  T * const tmp = reinterpret_cast <T * ACE_CAST_CONST> (this->buffer_);
   return tmp[i];
 }
 
@@ -220,7 +211,7 @@ TAO_Unbounded_Sequence<T>::replace (CORBA::ULong max,
 
   if (this->buffer_ && this->release_ == 1)
     {
-      T * tmp = ACE_reinterpret_cast (T *, this->buffer_);
+      T * tmp = reinterpret_cast <T *> (this->buffer_);
       TAO_Unbounded_Sequence<T>::freebuf (tmp);
     }
 
@@ -242,9 +233,7 @@ TAO_Bounded_Sequence<T, MAX>::TAO_Bounded_Sequence (
     {
       T * tmp1 = TAO_Bounded_Sequence<T,MAX>::allocbuf (MAX);
 
-      T * const tmp2 =
-        ACE_reinterpret_cast (T * ACE_CAST_CONST,
-                              rhs.buffer_);
+      T * const tmp2 = reinterpret_cast <T * ACE_CAST_CONST> (rhs.buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         {
@@ -290,8 +279,8 @@ TAO_Bounded_Sequence<T,MAX>::operator= (
 
   TAO_Bounded_Base_Sequence::operator= (rhs);
 
-  T * tmp1 = ACE_reinterpret_cast (T *, this->buffer_);
-  T * const tmp2 = ACE_reinterpret_cast (T * ACE_CAST_CONST, rhs.buffer_);
+  T * tmp1 = reinterpret_cast <T *> (this->buffer_);
+  T * const tmp2 = reinterpret_cast <T * ACE_CAST_CONST> (rhs.buffer_);
 
   for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
@@ -325,8 +314,7 @@ TAO_Bounded_Sequence<T, MAX>::_deallocate_buffer (void)
       return;
     }
 
-  T * tmp = ACE_reinterpret_cast (T *,
-                                  this->buffer_);
+  T * tmp = reinterpret_cast <T *> (this->buffer_);
   TAO_Bounded_Sequence<T, MAX>::freebuf (tmp);
   this->buffer_ = 0;
   this->length_  = 0;
@@ -351,8 +339,7 @@ TAO_Bounded_Sequence<T, MAX>::get_buffer (CORBA::Boolean orphan)
         }
       else
         {
-          result =
-            ACE_reinterpret_cast (T*, this->buffer_);
+          result = reinterpret_cast <T*> (this->buffer_);
         }
     }
   else // if (orphan == 1)
@@ -361,7 +348,7 @@ TAO_Bounded_Sequence<T, MAX>::get_buffer (CORBA::Boolean orphan)
         {
           // We set the state back to default and relinquish
           // ownership.
-          result = ACE_reinterpret_cast(T*,this->buffer_);
+          result = reinterpret_cast <T*> (this->buffer_);
           this->maximum_ = 0;
           this->length_ = 0;
           this->buffer_ = 0;
@@ -384,7 +371,7 @@ TAO_Bounded_Sequence<T,MAX>::replace (CORBA::ULong max,
 
   if (this->buffer_ && this->release_ == 1)
     {
-      T * tmp = ACE_reinterpret_cast (T *, this->buffer_);
+      T * tmp = reinterpret_cast <T *> (this->buffer_);
       TAO_Bounded_Sequence<T,MAX>::freebuf (tmp);
     }
 
@@ -580,8 +567,7 @@ TAO_Unbounded_Object_Sequence<T,T_var>::TAO_Unbounded_Object_Sequence (
         TAO_Unbounded_Object_Sequence<T,T_var>::allocbuf (
             this->maximum_
           );
-      T ** const tmp2 =
-        ACE_reinterpret_cast (T ** ACE_CAST_CONST, rhs.buffer_);
+      T ** const tmp2 = reinterpret_cast <T ** ACE_CAST_CONST> (rhs.buffer_);
 
       for (CORBA::ULong i = 0; i < rhs.length_; ++i)
         {
@@ -616,8 +602,7 @@ TAO_Unbounded_Object_Sequence<T,T_var>::operator= (
 
   if (this->release_)
     {
-      T ** tmp = ACE_reinterpret_cast (T **,
-                                       this->buffer_);
+      T ** tmp = reinterpret_cast <T **> (this->buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         {
@@ -651,8 +636,8 @@ TAO_Unbounded_Object_Sequence<T,T_var>::operator= (
 
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
-  T ** tmp1 = ACE_reinterpret_cast (T **, this->buffer_);
-  T ** const tmp2 = ACE_reinterpret_cast (T ** ACE_CAST_CONST, rhs.buffer_);
+  T ** tmp1 = reinterpret_cast <T **> (this->buffer_);
+  T ** const tmp2 = reinterpret_cast <T ** ACE_CAST_CONST> (rhs.buffer_);
 
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     {
@@ -716,8 +701,7 @@ TAO_Unbounded_Object_Sequence<T,T_var>::_allocate_buffer (
 
   if (this->buffer_ != 0)
     {
-      T ** old = ACE_reinterpret_cast (T **,
-                                       this->buffer_);
+      T ** old = reinterpret_cast <T **> (this->buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         // Only call duplicate when we did not own the previous
@@ -754,8 +738,7 @@ TAO_Unbounded_Object_Sequence<T,T_var>::_deallocate_buffer (
       return;
     }
 
-  T ** tmp = ACE_reinterpret_cast (T **,
-                                   this->buffer_);
+  T ** tmp = reinterpret_cast <T **> (this->buffer_);
 
   for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
@@ -777,8 +760,7 @@ TAO_Unbounded_Object_Sequence<T,T_var>::_shrink_buffer (
     CORBA::ULong ol
   )
 {
-  T ** tmp = ACE_static_cast (T **,
-                              this->buffer_);
+  T ** tmp = static_cast <T **> (this->buffer_);
 
   for (CORBA::ULong i = nl; i < ol; ++i)
     {
@@ -811,9 +793,7 @@ TAO_Bounded_Object_Sequence<T,T_var,MAX>::TAO_Bounded_Object_Sequence (
       T ** tmp1 =
         TAO_Bounded_Object_Sequence<T,T_var,MAX>::allocbuf (MAX);
 
-      T ** const tmp2 =
-        ACE_reinterpret_cast (T** ACE_CAST_CONST,
-                              rhs.buffer_);
+      T ** const tmp2 = reinterpret_cast <T** ACE_CAST_CONST> (rhs.buffer_);
 
       for (CORBA::ULong i = 0; i < rhs.length_; ++i)
         {

@@ -1,5 +1,5 @@
 #include "IORInfo.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Root_POA.h"
 
 #include "tao/PolicyC.h"
 #include "tao/IOPC.h"
@@ -15,7 +15,7 @@ ACE_RCSID (IORInterceptor,
 #endif /* __ACE_INLINE__ */
 
 
-TAO_IORInfo::TAO_IORInfo (TAO_POA *poa)
+TAO_IORInfo::TAO_IORInfo (TAO_Root_POA *poa)
   : poa_ (poa),
     components_established_ (0)
 {
@@ -33,28 +33,13 @@ TAO_IORInfo::get_effective_policy (CORBA::PolicyType type
   this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  TAO_POA_Policy_Set &policies =
-    this->poa_->policies ();
+  CORBA::Policy_var policy =
+    this->poa_->get_policy (type ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  // @@ This brain damaged implementation exists due to the fact
-  //    neither TAO_POA nor TAO_POA_Policy_Set exposes any methods
-  //    useful for retrieving a given Policy in the POA's PolicyList.
-  //    So, I use the lame interfaces for now.
-  //          -Ossama
-  const CORBA::ULong num_policies = policies.num_policies ();
-  for (CORBA::ULong i = 0; i < num_policies; ++i)
+  if (!CORBA::is_nil (policy.in ()))
     {
-      // @@ This incurs at least two locks per loop iteration due
-      //    to the reference counting found within the policy
-      //    object reference!!!
-      CORBA::Policy_var policy = policies.get_policy_by_index (i);
-
-      CORBA::PolicyType ptype =
-        policy->policy_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-      if (ptype == type)
-        return policy._retn ();
+      return policy._retn ();
     }
 
   // TODO: Now check the global ORB policies.
@@ -201,7 +186,7 @@ TAO_IORInfo::check_validity (ACE_ENV_SINGLE_ARG_DECL)
       // once the POA has invoked all IORInterceptor interception
       // points.  This also prevents memory access violations from
       // occuring if the POA is destroyed before this IORInfo object.
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE,
+      ACE_THROW (CORBA::OBJECT_NOT_EXIST (TAO::VMCID,
                                           CORBA::COMPLETED_NO));
     }
 }

@@ -28,7 +28,6 @@ CONTROLLED_FILES = \
 	TAO/interop-tests \
 	TAO/orbsvcs \
 	TAO/performance-tests \
-	TAO/release.pl \
 	TAO/rules.tao.GNU \
 	TAO/tao \
 	TAO/Makefile.am \

@@ -41,7 +41,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:65
+// be\be_visitor_arg_traits.cpp:66
 
 // Arg traits specializations.
 namespace TAO
@@ -167,7 +167,7 @@ CORBA::Boolean operator<< (
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -177,7 +177,7 @@ CORBA::Boolean operator<< (
       return _tao_marshal_flag;
     }
   
-  return 0;
+  return false;
 }
 
 CORBA::Boolean operator>> (
@@ -194,7 +194,7 @@ CORBA::Boolean operator>> (
       // of the stream. (See bug 58.)
       if (_tao_seq_len > strm.length ())
         {
-          return 0;
+          return false;
         }
       
       // Set the length of the sequence.
@@ -203,11 +203,11 @@ CORBA::Boolean operator>> (
       // If length is 0 we return true.
       if (0 >= _tao_seq_len) 
         {
-          return 1;
+          return true;
         }
       
       // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -218,7 +218,7 @@ CORBA::Boolean operator>> (
     
     }
   
-  return 0;
+  return false;
 }
 
 #endif /* _TAO_CDR_OP_IIOP_ListenPointList_CPP_ */

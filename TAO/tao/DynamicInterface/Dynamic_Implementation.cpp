@@ -1,6 +1,5 @@
 #include "Dynamic_Implementation.h"
 
-
 ACE_RCSID (DynamicInterface,
            Dynamic_Implementation,
            "$Id$")
@@ -10,7 +9,8 @@ ACE_RCSID (DynamicInterface,
 #include "tao/ORB_Core.h"
 #include "tao/TSS_Resources.h"
 #include "tao/IFR_Client_Adapter.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Root_POA.h"
+#include "tao/PortableServer/POA_Current_Impl.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
@@ -96,9 +96,9 @@ TAO_DynamicImplementation::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
   // context of a request invocation on a target object being served
   // by the DSI servant, it raises the PortableServer::WrongPolicy
   // exception. See the CORBA C++ mapping, section 1.38.3.
-  TAO_POA_Current_Impl *poa_current_impl =
-    ACE_static_cast (TAO_POA_Current_Impl *,
-                     TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+  TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
+    static_cast <TAO::Portable_Server::POA_Current_Impl *>
+                     (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
 
   if (poa_current_impl == 0
       || this != poa_current_impl->servant ())
@@ -198,9 +198,9 @@ TAO_DynamicImplementation::get_id_from_primary_interface (
   // context of a request invocation on a target object being served
   // by the DSI servant, it raises the PortableServer::WrongPolicy
   // exception. See the CORBA C++ mapping, section 1.38.3.
-  TAO_POA_Current_Impl *poa_current_impl =
-    ACE_static_cast (TAO_POA_Current_Impl *,
-                     TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+  TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
+    static_cast <TAO::Portable_Server::POA_Current_Impl *>
+                     (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
 
   if (poa_current_impl == 0
       || this != poa_current_impl->servant ())
