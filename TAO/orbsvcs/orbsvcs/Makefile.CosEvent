@@ -33,13 +33,8 @@ override TAO_IDLFLAGS += \
         -Wb,post_include=ace/post.h
 
 IDL_SRCS += CosEventComm CosEventChannelAdmin
+ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
 CPP_SRCS += \
-        CosEvent/ConsumerAdmin_i \
-        CosEvent/SupplierAdmin_i \
-        CosEvent/EventChannel_i \
-        CosEvent/ProxyPushConsumer_i \
-        CosEvent/ProxyPushSupplier_i \
-        CosEvent_Utilities \
         CosEvent/CEC_ConsumerAdmin \
         CosEvent/CEC_ConsumerControl \
         CosEvent/CEC_Dispatching \
@@ -58,6 +53,15 @@ CPP_SRCS += \
         CosEvent/CEC_Pulling_Strategy \
         CosEvent/CEC_Reactive_Pulling_Strategy \
         CosEvent/CEC_Default_Factory
+endif # ACE_HAS_GNUG_PRE_2_8
+
+CPP_SRCS += \
+        CosEvent/ConsumerAdmin_i \
+        CosEvent/SupplierAdmin_i \
+        CosEvent/EventChannel_i \
+        CosEvent/ProxyPushConsumer_i \
+        CosEvent/ProxyPushSupplier_i \
+        CosEvent_Utilities
 
 IDL_FILES = \
         $(addsuffix S, $(IDL_SRCS)) \
