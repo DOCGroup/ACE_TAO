@@ -178,7 +178,8 @@ supported by the DOC group, Riverace, or OCI. <P>
       ACE_Object_Manager</A> discussion below.<p>
 
       We've also added some support for
-      <A HREF="#mingw">GNU g++ with MinGW</A>,
+      <A HREF="#mingw">GNU g++ with MinGW</A>, 
+      <A HREF="#cygwin">GNU g++ with Cygwin</A>
       <A HREF="#borland">Borland C++ 5.5, Borland C++ Builder 4.0/5.0/6.0 
       and Borland C++ BuilderX</A>, and IBM's VisualAge C++ compiler.
       Since we don't have these compilers we rely on the ACE+TAO users
@@ -1197,7 +1198,7 @@ need to do:<P>
 
 Below are instructions for building ACE with <A
 HREF="#borland">Borland C++Builder</A>, <A HREF="#msvc">Microsoft
-Visual C++</A> and <A HREF="#mingw">MinGw</A>. <P>
+Visual C++</A>, <A HREF="#cygwin">Cygwin</A>, and <A HREF="#mingw">MinGw</A>. <P>
 
 First, if you are upgrading from an older release, clean up everything
 and rebuild from scratch to ensure that everything is rebuilt
@@ -1560,21 +1561,21 @@ You will also need GNU make for Win32 and the set of UNIX tools that
 the ACE UNIX build system uses (this include but is not limited to
 <TT><B>sh, rm, cp</B></TT>).
 For this purpose you can grab the
-<A HREF="http://cygwin.com/setup.exe">cygwin</A>
+<A HREF="http://cygwin.com/setup.exe">Cygwin</A>
 distribution from
 <A HREF="http://cygwin.com"><TT>http://cygwin.com</TT></A>.
 
 <p>
-Be careful, because cygwin includes it's own version of the compiler
+Be careful, because Cygwin includes it's own version of the compiler
 and build tools, you will need to have the MinGW build tools before
-the cygwin set on you PATH environment variable (more on this later).
+the Cygwin set on you PATH environment variable (more on this later).
 The steps we followed in the build are:
 
 <OL>
 
-  <LI> Install cygwin (this can be easy downloading and running
+  <LI> Install Cygwin (this can be easy downloading and running
        <A HREF="http://cygwin.com/setup.exe"><tt>setup.exe</tt></A>
-       from the cygwin site).
+       from the Cygwin site).
        <BR><BR>
 
   <LI> Install the MinGW tools. Download all the needed packages (see
@@ -1582,10 +1583,10 @@ The steps we followed in the build are:
        unpack them on the same base directory, say c:/mingw32.
        If some of the packages are distributed on
        <TT>.tar.gz</TT> format, you may need to use
-       the cygwin version of the <TT><B>tar</B></TT> utility.
+       the Cygwin version of the <TT><B>tar</B></TT> utility.
        <BR><BR>
 
-  <LI> Open a cygwin shell. Set your <TT>PATH</TT> environment variable so
+  <LI> Open a Cygwin shell. Set your <TT>PATH</TT> environment variable so
        your MinGW's <TT>bin</TT> directory is first:
 
        <blockquote><code><pre>
@@ -1593,10 +1594,10 @@ The steps we followed in the build are:
        </pre></code></blockquote>
 
        <p>
-       Note cygwin uses ``<TT>/</TT>'' as directory separator,
+       Note Cygwin uses ``<TT>/</TT>'' as directory separator,
        and ``<TT>//X</TT>'' as a notation for Win32 drive <TT>X</TT>.
        Note also that you <EM>can't</EM> use ``<TT>c:/mingw32/bin</TT>''
-       because, for cygwin,
+       because, for Cygwin,
        ``<TT>:</TT>'' is path separator character, as in UNIX.
        <BR><BR>
 
@@ -1608,7 +1609,7 @@ The steps we followed in the build are:
        </pre></code></blockquote>
 
        <p>
-       Note here you <EM>can't</EM> use the ``<TT>//X</TT>'' cygwin
+       Note here you <EM>can't</EM> use the ``<TT>//X</TT>'' Cygwin
        notation as this is seen by MinGW's compiler and it doesn't
        support that (it <EM>does</EM> support ``<TT>/</TT>'' as directory
        separator however).
@@ -1672,7 +1673,7 @@ The steps we followed in the build are:
        before the previous one.
        <BR><BR>
 
-  <LI> On the cygwin shell, change to the $ACE_ROOT/ace directory and
+  <LI> On the Cygwin shell, change to the $ACE_ROOT/ace directory and
        run make:
 
        <blockquote><code><pre>
@@ -1697,7 +1698,7 @@ The steps we followed in the build are:
 
   <LI> <A NAME="mingwrunpath">
        The same rules for Win32 search of DLLs apply for MinGW. If you
-       want to run some ACE programs from the cygwin shell, you may
+       want to run some ACE programs from the Cygwin shell, you may
        need to add the directory for <TT>libACE.dll</TT> to your PATH:
 
        <blockquote><code><pre>
@@ -1720,11 +1721,11 @@ make:
 
 <p>
 Once you build all the tests, you can run
-<code>run_tests.sh</code> in the
+<code>run_tests.pl</code> in the
 <code>tests</code> directory to try all the tests:
 
        <blockquote><code><pre>
-       % run_tests.sh
+       % perl run_tests.pl
        </pre></code></blockquote>
 
 <p>
@@ -1734,6 +1735,148 @@ variable as explained <A HREF="#mingwrunpath">above</A>.
 <p>
 You may want to check <tt>$ACE_ROOT/tests/README</tt> for the status
 of the various tests on MinGW and the different Windows flavors.
+
+<P><hr align=left width="50%"><P>
+<H4><A NAME="cygwin">Building and Installing ACE on Win32 with Cygwin</A></H4>
+
+<p>
+If you are building for a machine without a network card, you may want
+to check <A HREF="#win32nonic">here</A> first.
+
+<p>
+Building and installing ACE on <A HREF="http://www.cygwin.com">Cygwin</A>
+uses the <A HREF="#unix">UNIX</A> building process.
+Also, as Cygwin uses GNU g++, you may want to take
+a look at the <A HREF="#g++">Compiling ACE with GNU g++</A> section.
+
+<p>
+You will need the Cygwin build tools and libraries, downloable from
+<A HREF="http://www.cygwin.com"><TT>http://www.cygwin.com</TT></A>.
+For our build we require the following packages besides the packages the
+setup selects by default:
+<A NAME="cygwinpacks">
+<blockquote>
+<B><TT>gcc, cygipc, make, perl</TT></B>.
+</blockquote>
+
+<OL>
+
+  <LI> Install Cygwin (this can be easy downloading and running
+       <A HREF="http://cygwin.com/setup.exe"><tt>setup.exe</tt></A>
+       from the Cygwin site).
+       <BR><BR>
+
+  <LI> Open a Cygwin shell. Set your <TT>PATH</TT> environment variable so
+       your CYgwin <TT>bin</TT> directory is first:
+
+       <blockquote><code><pre>
+       % export PATH=//c/cygwin/bin:$PATH
+       </pre></code></blockquote>
+
+       <p>
+       Note Cygwin uses ``<TT>/</TT>'' as directory separator,
+       and ``<TT>//X</TT>'' as a notation for Win32 drive <TT>X</TT>.
+       Note also that you <EM>can't</EM> use ``<TT>c:/cygwin/bin</TT>''
+       because, for Cygwin,
+       ``<TT>:</TT>'' is path separator character, as in UNIX.
+       <BR><BR>
+
+  <LI> Add an <TT>ACE_ROOT</TT> environment variable pointing to the
+       root of your ACE wrappers source tree:
+
+       <blockquote><code><pre>
+       % export ACE_ROOT=c:/work/cygwin/ACE_wrappers
+       </pre></code></blockquote>
+
+       <p>
+       Note here you <EM>can't</EM> use the ``<TT>//X</TT>'' Cygwin
+       notation as this is seen by Cygwin's compiler and it doesn't
+       support that (it <EM>does</EM> support ``<TT>/</TT>'' as directory
+       separator however).
+
+       <p>
+       From now on, we will refer to the root directory of the ACE
+       source tree as <TT>$ACE_ROOT</TT>.
+       <BR><BR>
+
+  <LI> Create a file called <TT>config.h</TT> in the
+       <TT>$ACE_ROOT/ace</TT> directory that contains:
+
+       <blockquote><code><pre>
+       #include "ace/config-cygwin32.h"
+       </pre></code></blockquote>
+
+  <LI> Create a file called <TT>platform_macros.GNU</TT> in the
+       <TT>$ACE_ROOT/include/makeinclude</TT> directory containing:
+
+       <blockquote><code><pre>
+       include $(ACE_ROOT)/include/makeinclude/platform_cygwin32.GNU
+       </pre></code></blockquote>
+
+       In the above text, don't replace <TT>$(ACE_ROOT)</TT> with the
+       actual directory, GNU make will take the value from the
+       environment variable you defined previously.
+
+  <LI> On the Cygwin shell, change to the $ACE_ROOT/ace directory and
+       run make:
+
+       <blockquote><code><pre>
+       % cd $ACE_ROOT/ace
+       % make
+       </pre></code></blockquote>
+
+       <p>
+       This should create <TT>libACE.dll</TT> (the Win32 shared library) and
+       <TT>libACE.dll</TT> (the Win32 import library for the DLL).
+       Note the name for the ACE DLL on Cygwin follows the UNIX convention.
+       <BR><BR>
+
+       <p>
+       If you want static libs also, you may run:
+
+       <blockquote><code><pre>
+       % make static_libs=1
+       </pre></code></blockquote>
+
+  <LI> <A NAME="cygwinrunpath">
+       The same rules for Win32 search of DLLs apply for Cygwin. If you
+       want to run some ACE programs from the Cygwin shell, you may
+       need to add the directory for <TT>libACE.dll</TT> to your PATH:
+
+       <blockquote><code><pre>
+       # export PATH=//c/work/cygwin/ACE_wrappers/ace:$PATH
+       </pre></code></blockquote>
+
+
+</OL>
+
+<B>ACE TESTS</B><P>
+
+The tests are located in <TT>$ACE_ROOT/tests</TT>.
+After building the library, you can change to that directory and run
+make:
+
+       <blockquote><code><pre>
+       % cd $ACE_ROOT/tests
+       % make
+       </pre></code></blockquote>
+
+<p>
+Once you build all the tests, you can run
+<code>run_tests.pl</code> in the
+<code>tests</code> directory to try all the tests:
+
+       <blockquote><code><pre>
+       % perl run_tests.pl
+       </pre></code></blockquote>
+
+<p>
+If you are using ACE as a DLL, you will need to modify your PATH
+variable as explained <A HREF="#cygwinrunpath">above</A>.
+
+<p>
+You may want to check <tt>$ACE_ROOT/tests/README</tt> for the status
+of the various tests on Cygwin and the different Windows flavors.
 
 <P><hr align=left width="50%"><P>
 <H4><A NAME="vxworks">Building and Installing ACE on VxWorks</A></H4>
@@ -2134,7 +2277,7 @@ http://www.ActiveState.com/download/contrib/Microsoft/NT/InstMsi.exe =
 
 <P>3) Cygwin GNU to build TAO. It is available for NT as a freeware =
 from </P>
-<P>http://sources.redhat.com/cygwin/</P>
+<P>http://www.cygwin.com/</P>
 <P>The Cygwin Make (version 3.75) can only build the TAO not the =
 Tornado II make (version 3.74)</P>
 
