@@ -1,4 +1,14 @@
+Mon Jan  7 15:55:26 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/INET_Addr.cpp (set):
+
+	  Pass a pointer to a "struct in_addr" to inet_aton(), i.e. the
+	  proper type, instead of a forcibly casted ACE_UINT32.  Also
+	  updated existing code to use the in_addr::s_addr member instead
+	  of the previous ACE_UINT32 variable.
+
 Mon Jan  7 15:13:09 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
 	* performance-tests/Misc/context_switch_time.cpp (main):
 	  Since the Yield_test does seem to work on VxWorks now (see 
 	  ChangeLog below), the 'ifdefs' for bypassing VxWorks for the
@@ -10,8 +20,8 @@ Mon Jan  7 15:08:25 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	  Changed ::taskDelay (1) to ::taskDelay (0) for VxWorks in 
 	  thr_yield ().  The change with (0), now does seem to perform
 	  the yield correctly as reflected in the Yield-Test of 
-	  context_switch_time.  Thanks to Charlie Grames <charlie.grames@windriver.com>
-	  for this tip.
+	  context_switch_time.  Thanks to Charlie Grames
+	  <charlie.grames@windriver.com> for this tip.
 
 Mon Jan  7 15:16:10 2002  Ossama Othman  <ossama@uci.edu>
 

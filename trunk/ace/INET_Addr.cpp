@@ -261,14 +261,14 @@ ACE_INET_Addr::set (u_short port_number,
 #else /* ACE_HAS_IPV6 */
 
   // IPv6 not supported... insure the family is set to IPv4
-  address_family = PF_INET;
+  address_family = AF_INET;
   this->set_type (address_family);
   this->inet_addr_.in4_.sin_family = address_family;
-  ACE_UINT32 addrv4;
+  struct in_addr addrv4;
   if (ACE_OS::inet_aton (host_name,
-                         (struct in_addr *) &addrv4) == 1)
+                         &addrv4) == 1)
     return this->set (port_number,
-                      encode ? ntohl (addrv4) : addrv4,
+                      encode ? ntohl (addrv4.s_addr) : addrv4.s_addr,
                       encode);
   else
     {
@@ -290,11 +290,11 @@ ACE_INET_Addr::set (u_short port_number,
         }
       else
         {
-          (void) ACE_OS_String::memcpy ((void *) &addrv4,
+          (void) ACE_OS_String::memcpy ((void *) &addrv4.s_addr,
                                         hp->h_addr,
                                         hp->h_length);
           return this->set (port_number,
-                            encode ? ntohl (addrv4) : addrv4,
+                            encode ? ntohl (addrv4.s_addr) : addrv4.s_addr,
                             encode);
         }
     }
@@ -589,7 +589,7 @@ ACE_INET_Addr::get_host_name (char hostname[],
             {
               //result == -1;
               // This could be worse than hostname[len -1] = '\0'?
-              hostname[0] = '\0';   
+              hostname[0] = '\0';
             }
         }
     }
@@ -729,7 +729,7 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
         return -1;
 
       if (ACE_OS::strlen (hp->h_name) >= len)
-        {        
+        {
           // We know the length, so use memcpy
           if (len > 0)
             {
@@ -738,7 +738,7 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
             }
           errno = ENOSPC;
           return -2;  // -2 Means that we have a good string
-          // Using errno looks ok, but ENOSPC could be set on 
+          // Using errno looks ok, but ENOSPC could be set on
           // other places.
         }
 
