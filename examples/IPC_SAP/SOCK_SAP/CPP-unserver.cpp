@@ -129,7 +129,8 @@ run_event_loop (const char rendezvous[])
 
 #if defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) server,
-                                                  (void *) new_stream.get_handle (),
+                                                  ACE_reinterpret_cast (void *,
+                                                      new_stream.get_handle ()),
                                                   THR_DETACHED) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) %p\n",
