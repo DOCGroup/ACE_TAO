@@ -1,3 +1,14 @@
+Mon Feb 24 20:28:10 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* include/makeinclude/platform_{irix5.3_g++,linux*,m88k,
+	  osf1_4.0_g++,sco-nothread,sunos*g++,unixware_g++}.GNU:
+	  changed C++ compiler (CXX) from gcc to g++ so that libg++
+	  will be linked in.
+
+	* examples/IOStream/{client,server}/Makefile,tests/Makefile:
+	  removed -lg++ when gcc is the compiler because it's no
+	  longer needed with g++ as the compiler.
+
 Mon Feb 24 11:52:08 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* examples/Connection/non_blocking/CPP-acceptor.cpp (init): Added

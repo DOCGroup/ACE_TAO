@@ -52,8 +52,6 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BUILD = $(VBIN)
 
-#### NOTE: VLDLIBS is (conditionally) defined below!!!!
-
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
@@ -64,10 +62,6 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.common.GNU
 include	$(WRAPPER_ROOT)/include/makeinclude/rules.nonested.GNU
 include	$(WRAPPER_ROOT)/include/makeinclude/rules.bin.GNU
 include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
-
-ifneq (,$(findstring gcc,$(CXX)))
-VLDLIBS += -lg++
-endif
 
 #----------------------------------------------------------------------------
 #	Local targets
