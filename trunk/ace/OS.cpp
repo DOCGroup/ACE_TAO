@@ -91,15 +91,15 @@ ACE_Cleanup_Info::ACE_Cleanup_Info (void)
 {
 }
 
-int 
+int
 ACE_Cleanup_Info::operator== (const struct ACE_Cleanup_Info &o) const
 {
-  return o.object_ == this->object_ 
+  return o.object_ == this->object_
     && o.cleanup_hook_ == this->cleanup_hook_
     && o.param_ == this->param_;
 }
 
-int 
+int
 ACE_Cleanup_Info::operator!= (const struct ACE_Cleanup_Info &o) const
 {
   return !(*this == o);
@@ -3031,9 +3031,6 @@ ACE_Thread_ID::operator!= (const ACE_Thread_ID &rhs)
 int
 ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
 {
-#if defined (CHORUS)
-  return ::inet_aton(host_name, addr);
-#else
   ACE_UINT32 ip_addr = ACE_OS::inet_addr (host_name);
   if (ip_addr == (ACE_UINT32) htonl ((ACE_UINT32) ~0)
       // Broadcast addresses are weird...
@@ -3046,7 +3043,6 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
     }
   else
     return 1;
-#endif /* CHORUS */
 }
 
 ssize_t
