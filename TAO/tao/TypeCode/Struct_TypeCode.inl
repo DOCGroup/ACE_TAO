@@ -9,9 +9,9 @@ TAO::TypeCode::Struct<StringType, FieldArrayType, RefCountPolicy>::Struct (
   char const * name,
   Field<StringType> const * fields,
   CORBA::ULong nfields)
-  : base_attributes_ (id, name),
-    fields_ (fields),
-    nfields_ (nfields)
+  : base_attributes_ (id, name)
+  , nfields_ (nfields)
+  , fields_ (fields)
 {
 }
 

@@ -101,16 +101,28 @@ namespace TAO
 
     private:
 
+      /**
+       * @c Struct Attributes
+       *
+       * Attributes representing the structure of an OMG IDL
+       * @c struct.
+       *
+       * @note These attributes are declared in the order in which
+       *       they are marshaled into a CDR stream in order to
+       *       increase cache hits by improving spatial locality.
+       */
+      //@{
+
       /// Base attributes containing repository ID and name of
       /// structure type.
       Base_Attributes<StringType> const base_attributes_;
 
+      /// The number of fields in the OMG IDL structure.
+      CORBA::ULong const nfields_;
+
       /// Array of @c TAO::TypeCode fields representing structure of the
       /// OMG IDL defined @c struct.
       FieldArrayType const fields_;
-
-      /// The number of fields in the OMG IDL structure.
-      CORBA::ULong const nfields_;
 
     };
 

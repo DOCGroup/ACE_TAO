@@ -100,16 +100,28 @@ namespace TAO
 
     private:
 
+      /**
+       * @c Enum Attributes
+       *
+       * Attributes representing the structure of an OMG IDL
+       * @c enum.
+       *
+       * @note These attributes are declared in the order in which
+       *       they are marshaled into a CDR stream in order to
+       *       increase cache hits by improving spatial locality.
+       */
+      //@{
+
       /// Base attributes containing repository ID and name of
       /// structure type.
       Base_Attributes base_attributes_;
 
+      /// The number of enumerators in the OMG IDL enumeration.
+      CORBA::ULong const nenumerators_;
+
       /// Array of @c TAO::TypeCode enumerators representing
       /// enumerators in the OMG IDL defined @c enum.
       EnumeratorArrayType const enumerators_;
-
-      /// The number of enumerators in the OMG IDL enumeration.
-      CORBA::ULong const nenumerators_;
 
     };
 

@@ -9,8 +9,8 @@ TAO::TypeCode::Enum<StringType, AttrType, RefCountPolicy>::Enum (
   char const * name,
   Enumerator<StringType> const * enumerators,
   CORBA::ULong nenumerators)
-  : base_attributes_ (id, name),
-    enumerators_ (enumerators),
-    nenumerators_ (nenumerators)
+  : base_attributes_ (id, name)
+  , nenumerators_ (nenumerators)
+  , enumerators_ (enumerators)
 {
 }
