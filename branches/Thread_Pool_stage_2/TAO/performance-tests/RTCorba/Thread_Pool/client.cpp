@@ -15,21 +15,20 @@
 ACE_RCSID(Thread_Pool, client, "$Id$")
 
 static const char *ior = "file://ior";
-static size_t iterations_for_slowest_paced_worker = 1;
 static int shutdown_server = 0;
 static int do_dump_history = 0;
 static ACE_UINT32 gsf = 0;
 static const char *rates_file = "rates";
-static size_t continuous_workers = 2;
+static size_t continuous_workers = 0;
 static int done = 0;
-static default_time_for_test = 10;
-static work_in_milli_seconds = 10;
+static time_for_test = 10;
+static work = 10;
 static size_t max_throughput_timeout = 5;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "hxk:i:r:c:w:");
+  ACE_Get_Opt get_opts (argc, argv, "hxk:r:c:w:t:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -47,11 +46,6 @@ parse_args (int argc, char *argv[])
         ior = get_opts.optarg;
         break;
 
-      case 'i':
-        iterations_for_slowest_paced_worker =
-          ACE_OS::atoi (get_opts.optarg);
-        break;
-
       case 'r':
         rates_file = get_opts.optarg;
         break;
@@ -61,7 +55,11 @@ parse_args (int argc, char *argv[])
         break;
 
       case 'w':
-        work_in_milli_seconds = ACE_OS::atoi (get_opts.optarg);
+        work = ACE_OS::atoi (get_opts.optarg);
+        break;
+
+      case 't':
+        time_for_test = ACE_OS::atoi (get_opts.optarg);
         break;
 
       case '?':
@@ -114,7 +112,7 @@ get_rates (const char *file_name,
   if (string == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "\nNo rates set!\n\n"));
+                  "\nNo rates set!\n"));
       return 0;
     }
 
@@ -160,7 +158,7 @@ get_rates (const char *file_name,
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n\n"));
+              "\n"));
 
   return 0;
 }
@@ -273,7 +271,7 @@ Paced_Worker::svc (void)
 
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-          this->test_->method (work_in_milli_seconds,
+          this->test_->method (work,
                                ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -386,7 +384,7 @@ Continuous_Worker::svc (void)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-          this->test_->method (work_in_milli_seconds,
+          this->test_->method (work,
                                ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -454,7 +452,7 @@ max_throughput (test_ptr test,
           if (now > end)
             break;
 
-          test->method (work_in_milli_seconds,
+          test->method (work,
                         ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -545,14 +543,6 @@ main (int argc, char *argv[])
                         max_rate);
       if (result != 0)
         return result;
-
-      size_t time_for_test =
-        default_time_for_test;
-
-      if (lowest_rate != 0)
-        time_for_test =
-          iterations_for_slowest_paced_worker /
-          lowest_rate;
 
       CORBA::Short priority_range =
         RTCORBA::maxPriority - RTCORBA::minPriority;
