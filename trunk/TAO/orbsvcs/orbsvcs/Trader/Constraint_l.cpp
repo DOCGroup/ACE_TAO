@@ -790,7 +790,7 @@ YY_RULE_SETUP
 #line 67 "Trader/constraint.l"
 { 
 		  yylval.constraint_ = 
-		    new TAO_Literal_Constraint(1);
+		    new TAO_Literal_Constraint((CORBA::Boolean) 1);
 		  TAO_YY_LEX_DEBUG; return TAO_BOOLEAN;
 		}
 	ACE_NOTREACHED (YY_BREAK)
@@ -799,7 +799,7 @@ YY_RULE_SETUP
 #line 72 "Trader/constraint.l"
 { 
 		  yylval.constraint_ = 
-		    new TAO_Literal_Constraint(0);
+		    new TAO_Literal_Constraint((CORBA::Boolean) 0);
 		  TAO_YY_LEX_DEBUG; return TAO_BOOLEAN;
 		}
 	ACE_NOTREACHED (YY_BREAK)
