@@ -23,6 +23,7 @@
 #include "ace/Env_Value_T.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/INET_Addr.h"
 
 ACE_RCSID(tao, ORB_Core, "$Id$")
 

@@ -59,9 +59,10 @@ TAO_UIOP_Transport::~TAO_UIOP_Transport (void)
 {
 }
 
-TAO_UIOP_Server_Transport::TAO_UIOP_Server_Transport (TAO_UIOP_Server_Connection_Handler *handler)
+TAO_UIOP_Server_Transport::TAO_UIOP_Server_Transport (TAO_UIOP_Server_Connection_Handler *handler,
+                                                      TAO_ORB_Core* orb_core)
   : TAO_UIOP_Transport (handler,
-                        TAO_ORB_Core_instance ()),
+                        orb_core),
     server_handler_ (handler)
 {
 }

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Offer_Exporter.h"
+#include "ace/INET_Addr.h"
 
 ACE_RCSID(Trading, Offer_Exporter, "$Id$")
 

@@ -4,6 +4,7 @@
 #include "orbsvcs/PingS.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/IIOP_Acceptor.h"
+#include "tao/Acceptor_Registry.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 

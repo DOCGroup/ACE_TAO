@@ -18,8 +18,9 @@
 #define TAO_AV_SFP_H
 
 #include "orbsvcs/orbsvcs_export.h"
-#include "ace/SOCK_Dgram.h"
 #include "orbsvcs/sfpC.h"
+#include "ace/SOCK_Dgram.h"
+#include "ace/INET_Addr.h"
 
 #define MAGIC_NUMBER_LEN 5
 #define MESSAGE_TYPE_OFFSET 5
@@ -45,11 +46,11 @@ class TAO_ORBSVCS_Export SFP_Callback
 public:
   virtual int start_failed (void) = 0;
   // This is called for both active and passive start.
-  
+
   virtual int stream_established (void) = 0;
   // This is a callback for both active and passive stream
   // establshment.
-  
+
   virtual int receive_frame (ACE_Message_Block *frame) =0;
   // upcall to the application to receive a frame.
 
@@ -177,7 +178,7 @@ private:
   // registers the dgram socket with the reactor.
 
   ACE_Message_Block *check_all_fragments (TAO_SFP_Fragment_Table_Entry *fragment_entry);
-  // checks if all the fragments for this entry has been received and returns the 
+  // checks if all the fragments for this entry has been received and returns the
   // head of the chain of message blocks for that frame.
 
   void dump_buf (char *buf,int n);
@@ -194,7 +195,7 @@ private:
 
   //  TAO_InputCDR input_cdr_;
   // Use the TAO CDR encoder to encode everything
-  
+
   ACE_SOCK_Dgram dgram_;
   // Connection Oriented Dgram.
 
@@ -207,7 +208,7 @@ private:
   ACE_Time_Value timeout1_;
   // Timeout used for Start on Sender side and also for Credit on
   // receiver side.
-  
+
   ACE_Time_Value timeout2_;
   // Timeout used for StartReply on the receiver side and also for
   // CREDIT on the sender side.
@@ -217,13 +218,13 @@ private:
 
   const char *receiver_addr_;
   // The address of the receiver to which we're connected to.
-  
+
   ACE_INET_Addr receiver_inet_addr_;
   // INET addr of the receiver.
 
   SFP_Callback *callback_;
   // Application Callback Object.
-  
+
   int sequence_num_;
   // sequence number of the packet.
 
@@ -243,7 +244,7 @@ private:
   flowProtocol::StartReply start_reply_;
   ssize_t start_reply_len_;
   // StartReply message and its length.
-  
+
   flowProtocol::credit credit_;
   ssize_t credit_len_;
   CORBA::ULong credit_num_;

@@ -18,6 +18,7 @@
 
 #include "Trader_Interfaces.h"
 #include "Trader_T.h"
+#include "ace/INET_Addr.h"
 
 ACE_RCSID(Trader, Trader_Interfaces, "$Id$")
 
@@ -1289,7 +1290,7 @@ TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
   // Ok, then, Carlos, we'll do it a different way: ip addr + pid.
   ACE_UINT32 ip_addr = 0;
   ASYS_TCHAR host_name[BUFSIZ];
-  
+
   if (ACE_OS::hostname (host_name, BUFSIZ) != -1)
     {
       ACE_INET_Addr addr ((u_short) 0, host_name);
@@ -1316,7 +1317,7 @@ TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
     {
       size_t time_value = ACE_OS::time ();
       ACE_OS::srand (ACE_static_cast (u_int, time_value));
-      
+
       this->stem_id_[0] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
       this->stem_id_[1] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
       this->stem_id_[2] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);

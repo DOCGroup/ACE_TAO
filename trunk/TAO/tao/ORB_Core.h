@@ -27,7 +27,6 @@
 #include "ace/Map_Manager.h"
 
 // Forward declarations
-class TAO_Client_Connection_Handler;
 class TAO_POA;
 class TAO_POA_Current;
 class TAO_POA_Current_Impl;

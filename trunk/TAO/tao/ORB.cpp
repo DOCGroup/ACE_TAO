@@ -6,6 +6,8 @@
 // library components.
 
 #include "tao/ORB.h"
+#include "tao/Acceptor_Registry.h"
+#include "tao/Connector_Registry.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Repository.h"
@@ -1933,12 +1935,6 @@ CORBA_ORB::lookup_value_factory (const char *repository_id,
 
 
 // ****************************************************************
-
-// @@ Fred&Ossama: I'm convinced that you ended up moving template
-//    instantiations from here to the Connect.cpp file.
-
-#define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
-#define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -25,7 +25,7 @@
 #include "tao/Pluggable.h"
 #include "tao/Object_KeyC.h"
 
-class TAO_Client_Connection_Handler;
+class TAO_IIOP_Client_Connection_Handler;
 
 // TAO IIOP_Profile concrete Profile definitions
 class TAO_Export TAO_IIOP_Profile : public TAO_Profile
@@ -175,7 +175,7 @@ public:
   // First set the version then return a pointer to it.  This object
   // maintains ownership.
 
-  TAO_Client_Connection_Handler *&hint (void);
+  TAO_IIOP_Client_Connection_Handler *&hint (void);
   //  This is a hint for which connection handler to use.
 
   void reset_hint (void);
@@ -215,7 +215,7 @@ private:
   // Cached instance of <ACE_INET_Addr> for use in making
   // invocations, etc.
 
-  TAO_Client_Connection_Handler *hint_;
+  TAO_IIOP_Client_Connection_Handler *hint_;
   // Pointer to a connection handler which we successfully used
   // already.
 };
