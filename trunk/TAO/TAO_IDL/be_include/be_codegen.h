@@ -77,7 +77,9 @@ public:
     TAO_ATTRIBUTE_CH,                        // in client header
     TAO_ATTRIBUTE_CS,                        // in client stubs
     TAO_ATTRIBUTE_SH,                        // in server header
+    TAO_ATTRIBUTE_IH,                        // in implementation header
     TAO_ATTRIBUTE_SS,                        // in server skeletons
+    TAO_ATTRIBUTE_IS,                        // in implementation skeletons
     TAO_ATTRIBUTE_COLLOCATED_SH,             // in server header for collocated
     TAO_ATTRIBUTE_COLLOCATED_SS,             // in server skeletons for
                                              // collocated
@@ -130,8 +132,10 @@ public:
     TAO_INTERFACE_CI,
     TAO_INTERFACE_CS,
     TAO_INTERFACE_SH,
+    TAO_INTERFACE_IH,
     TAO_INTERFACE_SI,
     TAO_INTERFACE_SS,
+    TAO_INTERFACE_IS,
     TAO_INTERFACE_COLLOCATED_SH,
     TAO_INTERFACE_COLLOCATED_SS,
     TAO_INTERFACE_ANY_OP_CH,
@@ -152,7 +156,9 @@ public:
     TAO_MODULE_CS,
     TAO_MODULE_SH,
     TAO_MODULE_SI,
+    TAO_MODULE_IH,
     TAO_MODULE_SS,
+    TAO_MODULE_IS,
     TAO_MODULE_ANY_OP_CH,
     TAO_MODULE_ANY_OP_CS,
     TAO_MODULE_CDR_OP_CH,
@@ -162,15 +168,20 @@ public:
     TAO_OPERATION_CH,                       // in client header
     TAO_OPERATION_CS,                       // in client stubs
     TAO_OPERATION_SH,                       // in server header
+    TAO_OPERATION_IH,                       // in implementation header
     TAO_OPERATION_SS,                       // in server skeletons
+    TAO_OPERATION_IS,                       // in server skeletons
     TAO_OPERATION_COLLOCATED_SH,            // in collocated server header
     TAO_OPERATION_COLLOCATED_SS,            // in collocated server skel
     TAO_OPERATION_RETTYPE_CH,                // return type in client header op
                                              // signature
+    TAO_OPERATION_RETTYPE_IS,                // return type in client header op
     TAO_OPERATION_RETTYPE_OTHERS,            // ... in other cases
     TAO_OPERATION_ARGLIST_CH,                // parameter list in op signature
                                              // ... for client header
     TAO_OPERATION_ARGLIST_SH,                // ... for server header
+    TAO_OPERATION_ARGLIST_IH,                // ... for implementation header
+    TAO_OPERATION_ARGLIST_IS,                // ... for implementation header
     TAO_OPERATION_ARGLIST_COLLOCATED_SH,     // ... for collocated server
     TAO_OPERATION_ARGLIST_OTHERS,            // ... for all other cases
     TAO_OPERATION_RETVAL_DECL_CS,            // return value variable declaration
@@ -213,6 +224,8 @@ public:
     TAO_ROOT_SH,
     TAO_ROOT_SI,
     TAO_ROOT_SS,
+    TAO_ROOT_IH,
+    TAO_ROOT_IS,
     TAO_ROOT_ANY_OP_CH,
     TAO_ROOT_ANY_OP_CS,
     TAO_ROOT_CDR_OP_CH,
@@ -344,6 +357,12 @@ public:
   int start_server_header (const char *fname);
   // set the server header stream
 
+  int start_implementation_header (const char *fname);
+  // set the implementation header stream
+
+  int start_implementation_skeleton (const char *fname);
+  // set the implementation skeleton stream
+
   int start_server_template_header (const char *fname);
   // set the server template header stream
 
@@ -366,6 +385,12 @@ public:
   int end_server_header (void);
   // put a last #endif in the server header
 
+  int end_implementation_header (const char *fname);
+  // put a last #endif in the server header
+
+  int end_implementation_skeleton (const char *fname);
+  // put a last #endif in the server header
+
   int end_server_template_header (void);
   // put a last #endif in the server template header
 
@@ -383,6 +408,12 @@ public:
 
   TAO_OutStream *server_header (void);
   // get the server header stream
+
+  TAO_OutStream *implementation_header (void);
+  // get the implementation header stream
+
+  TAO_OutStream *implementation_skeleton (void);
+  // get the implementation skeleton stream
 
   TAO_OutStream *server_template_header (void);
   // get the server header template stream
@@ -453,6 +484,12 @@ private:
 
   TAO_OutStream *server_header_;
   // server header stream
+
+  TAO_OutStream *implementation_header_;
+  // implementation header stream
+
+  TAO_OutStream *implementation_skeleton_;
+  // implementation skeleton stream
 
   TAO_OutStream *server_template_header_;
   // server header template stream

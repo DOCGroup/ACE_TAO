@@ -69,6 +69,7 @@ public:
   const char *flatname (void);
   // return the flattened full scoped name
 
+
   const char *repoID (void);
   // retrieve the repository ID
 
@@ -95,7 +96,9 @@ public:
   idl_bool cli_stub_gen (void);
   idl_bool cli_inline_gen (void);
   idl_bool srv_hdr_gen (void);
+  idl_bool impl_hdr_gen (void);
   idl_bool srv_skel_gen (void);
+  idl_bool impl_skel_gen (void);
   idl_bool srv_inline_gen (void);
   idl_bool cli_hdr_any_op_gen (void);
   idl_bool cli_stub_any_op_gen (void);
@@ -108,7 +111,9 @@ public:
   void cli_stub_gen (idl_bool);
   void cli_inline_gen (idl_bool);
   void srv_hdr_gen (idl_bool);
+  void impl_hdr_gen (idl_bool);
   void srv_skel_gen (idl_bool);
+  void impl_skel_gen (idl_bool);
   void srv_inline_gen (idl_bool);
   void cli_hdr_any_op_gen (idl_bool);
   void cli_stub_any_op_gen (idl_bool);
@@ -135,6 +140,7 @@ protected:
   virtual void compute_flatname (void);
   // compute the flattened fully scoped name
 
+
   virtual void compute_repoID (void);
   // computes the repoID
 
@@ -156,7 +162,9 @@ protected:
   idl_bool cli_stub_gen_;
   idl_bool cli_inline_gen_;
   idl_bool srv_hdr_gen_;
+  idl_bool impl_hdr_gen_;
   idl_bool srv_skel_gen_;
+  idl_bool impl_skel_gen_;
   idl_bool srv_inline_gen_;
   idl_bool cli_hdr_any_op_gen_;
   idl_bool cli_stub_any_op_gen_;
@@ -169,6 +177,7 @@ protected:
 
   char *flatname_;
   // flattened fully scoped name
+
 
   char *repoID_;
   // repository ID

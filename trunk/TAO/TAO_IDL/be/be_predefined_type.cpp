@@ -158,6 +158,8 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
 
   // compute the flattened fully scoped name
   compute_flatname ();
+
+ 
 }
 
 // overriden method

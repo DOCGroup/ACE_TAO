@@ -324,8 +324,12 @@ public:
   static const char  *be_get_client_stub_fname ();
   static const char  *be_get_client_inline_fname (int base_name_only = 0);
   static const char  *be_get_server_hdr_fname (int base_name_only = 0);
+  static const char  *be_get_implementation_hdr_fname (int base_name_only = 0);
+  static const char  *be_get_implementation_skel_fname (int base_name_only = 0);
   static const char  *be_get_server_template_hdr_fname (int base_name_only = 0);
   static const char  *be_get_server_skeleton_fname ();
+  static const char  *be_get_implementation_skeleton_fname ();
+  //  static const char  *be_get_implementation_hdr_fname ();
   static const char  *be_get_server_template_skeleton_fname (int base_name_only = 0);
   static const char  *be_get_server_inline_fname (int base_name_only = 0);
   static const char  *be_get_server_template_inline_fname (int base_name_only = 0);
@@ -341,6 +345,10 @@ public:
   static const char *be_get_client_inline (String *idl_file_name,
                                            int base_name_only = 0);
   static const char *be_get_server_hdr (String *idl_file_name,
+                                        int base_name_only = 0);
+  static const char *be_get_implementation_hdr (String *idl_file_name,
+                                        int base_name_only = 0);
+  static const char *be_get_implementation_skel (String *idl_file_name,
                                         int base_name_only = 0);
   static const char *be_get_server_template_hdr (String *idl_file_name,
                                                  int base_name_only = 0);
@@ -391,6 +399,30 @@ public:
 
   virtual const char* server_hdr_ending (void) const;
   // Get the server_hdr_ending.
+
+  virtual void implementation_hdr_ending (const char* s);
+  // Set the implementation_hdr_ending.
+
+  virtual void impl_class_prefix (const char* s);
+  // Set the implementation class prefix.
+
+  virtual void impl_class_suffix (const char* s);
+  // Set the implementation class suffix.
+  
+  virtual void implementation_skel_ending (const char* s);
+  // Set the implementation_skel_ending.
+
+  virtual const char* implementation_hdr_ending (void) const;
+  // Get the implementation_hdr_ending.
+
+  virtual const char* impl_class_prefix (void) const;
+  //Get implementation class prefix
+
+  virtual const char* impl_class_suffix (void) const;
+  //Get implementation class suffix
+
+  virtual const char* implementation_skel_ending (void) const;
+  // Get the implementation_skel_ending.
 
   virtual void server_template_hdr_ending (const char* s);
   // Set the server_template_hdr_ending.
@@ -453,8 +485,26 @@ public:
   virtual void compiled_marshaling (idl_bool);
   // enable compiled marshaling support
 
+  virtual void gen_impl_files (idl_bool);
+  //enable generation of implementation files
+
+  virtual void gen_copy_ctor (idl_bool);
+  //enable generation of copy constructor
+
+  virtual void gen_assign_op (idl_bool);
+  //enable the generation of the assignment operator
+
   virtual idl_bool compiled_marshaling (void);
   // check if we use compiled marshaling
+
+  virtual idl_bool gen_impl_files (void);
+  // check if we want to generate implementation files
+
+  virtual idl_bool gen_copy_ctor (void);
+  //check if we want to generate the copy constructor
+
+  virtual idl_bool gen_assign_op (void);
+  //check if we want to generate the assignment operator
 
   virtual void exception_support (idl_bool);
   // enable real C++ exceptions
@@ -528,6 +578,18 @@ private:
   // Server's hdr file name ending. Default is "S.h".
   char* server_hdr_ending_;
 
+  // Implementation's hdr file name ending. Default is "I.h".
+  char* implementation_hdr_ending_;
+
+ // Implementation's skeleton file name ending. Default is "I.cpp".
+  char* implementation_skel_ending_;
+  
+  //Implementaion class prefix
+  char* impl_class_prefix_;
+
+  //Implementation class suffix
+  char* impl_class_suffix_;
+
   // Server's template hdr file name ending. Default is "S_T.h".
   char* server_template_hdr_ending_;
 
@@ -561,6 +623,15 @@ private:
 
   idl_bool compiled_marshaling_;
   // do we support compiled marshaling
+
+  idl_bool gen_impl_files_;
+  //are we generating implementation files
+
+  idl_bool gen_copy_ctor_;
+  //are we generating the copy constructor
+
+  idl_bool gen_assign_op_;
+  //are we generating the assignment operator
 
   idl_bool exception_support_;
   // do we support real C++ exceptions (strict mapping) for stubs/skeletons

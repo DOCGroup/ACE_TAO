@@ -73,8 +73,14 @@ be_visitor_interface::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_INTERFACE_SH:
       ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_SH);
       break;
+    case TAO_CodeGen::TAO_INTERFACE_IH:
+      ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_IH);
+      break;
     case TAO_CodeGen::TAO_INTERFACE_SS:
       ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_SS);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_IS:
+      ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_IS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
       ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_COLLOCATED_SH);
@@ -157,6 +163,8 @@ be_visitor_interface::visit_constant (be_constant *node)
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_CI:
     case TAO_CodeGen::TAO_INTERFACE_SH:
+    case TAO_CodeGen::TAO_INTERFACE_IH:
+    case TAO_CodeGen::TAO_INTERFACE_IS:
     case TAO_CodeGen::TAO_INTERFACE_SI:
     case TAO_CodeGen::TAO_INTERFACE_SS:
     case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
@@ -230,6 +238,8 @@ be_visitor_interface::visit_enum (be_enum *node)
       break;
     case TAO_CodeGen::TAO_INTERFACE_CI:
     case TAO_CodeGen::TAO_INTERFACE_SH:
+    case TAO_CodeGen::TAO_INTERFACE_IH:
+    case TAO_CodeGen::TAO_INTERFACE_IS:
     case TAO_CodeGen::TAO_INTERFACE_SI:
     case TAO_CodeGen::TAO_INTERFACE_SS:
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
@@ -307,6 +317,8 @@ be_visitor_interface::visit_exception (be_exception *node)
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_SH:
+    case TAO_CodeGen::TAO_INTERFACE_IH:
+    case TAO_CodeGen::TAO_INTERFACE_IS:
     case TAO_CodeGen::TAO_INTERFACE_SI:
     case TAO_CodeGen::TAO_INTERFACE_SS:
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
@@ -352,7 +364,7 @@ int
 be_visitor_interface::visit_operation (be_operation *node)
 {
   // instantiate a visitor context with a copy of our context. This info
-  // will be modified based on what type of node we are visiting
+  // will be modified ased on what type of node we are visiting
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node); // set the node to be the node being visited. The scope is
                    // still the same
@@ -371,8 +383,14 @@ be_visitor_interface::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_INTERFACE_SH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_SH);
       break;
+    case TAO_CodeGen::TAO_INTERFACE_IH:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_IH);
+      break;
     case TAO_CodeGen::TAO_INTERFACE_SS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_SS);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_IS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_IS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_SH);
@@ -464,6 +482,8 @@ be_visitor_interface::visit_structure (be_structure *node)
       ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_SH:
+    case TAO_CodeGen::TAO_INTERFACE_IH:
+    case TAO_CodeGen::TAO_INTERFACE_IS:
     case TAO_CodeGen::TAO_INTERFACE_SI:
     case TAO_CodeGen::TAO_INTERFACE_SS:
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
@@ -541,6 +561,8 @@ be_visitor_interface::visit_union (be_union *node)
       ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_SH:
+    case TAO_CodeGen::TAO_INTERFACE_IH:
+    case TAO_CodeGen::TAO_INTERFACE_IS:
     case TAO_CodeGen::TAO_INTERFACE_SI:
     case TAO_CodeGen::TAO_INTERFACE_SS:
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
@@ -618,6 +640,8 @@ be_visitor_interface::visit_typedef (be_typedef *node)
       ctx.state (TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_SH:
+    case TAO_CodeGen::TAO_INTERFACE_IH:
+    case TAO_CodeGen::TAO_INTERFACE_IS:
     case TAO_CodeGen::TAO_INTERFACE_SI:
     case TAO_CodeGen::TAO_INTERFACE_SS:
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:

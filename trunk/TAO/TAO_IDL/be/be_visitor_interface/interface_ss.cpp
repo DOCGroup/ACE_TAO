@@ -91,13 +91,13 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       // we are outermost. So the POA_ prefix is prepended to our name
       *os << node->full_skel_name () << "::POA_"
 	  << node->local_name () << " ("
-	  << "POA_" << node->local_name () << "& rhs)";
+	  << "const POA_" << node->local_name () << "& rhs)";
     }
   else
     {
       // the POA_ prefix is prepended to our outermost module name
       *os << node->full_skel_name () << "::"
-	  << node->local_name () << " ("
+	  << node->local_name () << " (const "
 	  << node->local_name () << "& rhs)";
     }
   *os << be_idt_nl

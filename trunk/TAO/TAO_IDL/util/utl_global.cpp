@@ -111,6 +111,10 @@ IDL_GlobalData::IDL_GlobalData (void)
       client_stub_ending_ (ACE::strnew ("C.cpp")),
       client_inline_ending_ (ACE::strnew ("C.i")),
       server_hdr_ending_ (ACE::strnew ("S.h")),
+      implementation_hdr_ending_ (ACE::strnew ("I.h")),
+      impl_class_suffix_ (ACE::strnew ("_i")),
+      impl_class_prefix_ (ACE::strnew ("")),
+      implementation_skel_ending_ (ACE::strnew ("I.cpp")),
       server_template_hdr_ending_ (ACE::strnew ("S_T.h")),
       server_skeleton_ending_ (ACE::strnew ("S.cpp")),
       server_template_skeleton_ending_ (ACE::strnew ("S_T.cpp")),
@@ -121,6 +125,9 @@ IDL_GlobalData::IDL_GlobalData (void)
       any_support_ (I_TRUE),
       tc_support_ (I_TRUE),
       compiled_marshaling_ (I_FALSE),
+      gen_impl_files_ (I_FALSE),
+      gen_copy_ctor_ (I_FALSE),
+      gen_assign_op_ (I_FALSE),
       exception_support_ (I_FALSE),
       opt_tc_ (I_FALSE)
 {
@@ -783,6 +790,24 @@ IDL_GlobalData::be_get_server_hdr (String *idl_file_name,
 }
 
 const char *
+IDL_GlobalData::be_get_implementation_hdr (String *idl_file_name,
+                                   int base_name_only) 
+{
+  return be_change_idl_file_extension (idl_file_name,
+                                       idl_global->implementation_hdr_ending (), 
+                                       base_name_only);
+}
+
+const char *
+IDL_GlobalData::be_get_implementation_skel (String *idl_file_name,
+                                   int base_name_only) 
+{
+  return be_change_idl_file_extension (idl_file_name,
+                                       idl_global->implementation_skel_ending (), 
+                                       base_name_only);
+}
+
+const char *
 IDL_GlobalData::be_get_server_template_hdr (String *idl_file_name,
                                             int base_name_only)
 {
@@ -853,6 +878,21 @@ IDL_GlobalData::be_get_server_hdr_fname (int base_name_only)
 }
 
 const char *
+IDL_GlobalData::be_get_implementation_hdr_fname (int base_name_only)
+{
+  return be_get_implementation_hdr (idl_global->stripped_filename (),
+                            base_name_only); 
+}
+
+const char *
+IDL_GlobalData::be_get_implementation_skel_fname (int base_name_only)
+{
+  return be_get_implementation_skel (idl_global->stripped_filename (),
+                            base_name_only); 
+}
+
+
+const char *
 IDL_GlobalData::be_get_server_template_hdr_fname (int base_name_only)
 {
   return be_get_server_template_hdr (idl_global->stripped_filename (),
@@ -864,6 +904,20 @@ IDL_GlobalData::be_get_server_skeleton_fname ()
 {
   return be_get_server_skeleton (idl_global->stripped_filename ());
 }
+/*
+const char *
+IDL_GlobalData::be_get_implementation_hdr_fname ()
+{
+  return be_get_implementation_hdr (idl_global->stripped_filename ());
+}
+*/
+
+const char *
+IDL_GlobalData::be_get_implementation_skeleton_fname ()
+{
+  return be_get_implementation_skel (idl_global->stripped_filename ());
+}
+
 
 const char *
 IDL_GlobalData::be_get_server_template_skeleton_fname (int base_name_only)
@@ -966,6 +1020,62 @@ IDL_GlobalData::server_hdr_ending (void) const
 {
   return this->server_hdr_ending_;
 }
+
+void 
+IDL_GlobalData::implementation_hdr_ending (const char* s)
+{
+  delete [] this->implementation_hdr_ending_;
+  this->implementation_hdr_ending_ = ACE::strnew (s);
+}
+
+void 
+IDL_GlobalData::implementation_skel_ending (const char* s)
+{
+  delete [] this->implementation_skel_ending_;
+  this->implementation_skel_ending_ = ACE::strnew (s);
+}
+
+
+void 
+IDL_GlobalData::impl_class_prefix (const char* s)
+{
+  delete [] this->impl_class_prefix_;
+  this->impl_class_prefix_ = ACE::strnew (s);
+}
+
+void 
+IDL_GlobalData::impl_class_suffix (const char* s)
+{
+  delete [] this->impl_class_suffix_;
+  this->impl_class_suffix_ = ACE::strnew (s);
+}
+
+const char* 
+IDL_GlobalData::impl_class_prefix (void) const
+{
+  return this->impl_class_prefix_;
+}
+
+const char* 
+IDL_GlobalData::implementation_hdr_ending (void) const
+{
+  return this->implementation_hdr_ending_;
+}
+
+
+const char* 
+IDL_GlobalData::impl_class_suffix (void) const
+{
+  return this->impl_class_suffix_;
+}
+
+const char* 
+IDL_GlobalData::implementation_skel_ending (void) const
+{
+  return this->implementation_skel_ending_;
+}
+
+
 
 void 
 IDL_GlobalData::server_template_hdr_ending (const char* s)
@@ -1086,6 +1196,42 @@ void
 IDL_GlobalData::compiled_marshaling (idl_bool val)
 {
   this->compiled_marshaling_ = val;
+}
+
+void
+IDL_GlobalData::gen_impl_files (idl_bool val)
+{
+  this->gen_impl_files_ = val;
+}
+
+void
+IDL_GlobalData::gen_copy_ctor (idl_bool val)
+{
+  this->gen_copy_ctor_ = val;
+}
+
+void
+IDL_GlobalData::gen_assign_op (idl_bool val)
+{
+  this->gen_assign_op_ = val;
+}
+
+idl_bool
+IDL_GlobalData::gen_impl_files (void)
+{
+  return this->gen_impl_files_;
+}
+
+idl_bool
+IDL_GlobalData::gen_copy_ctor (void)
+{
+  return this->gen_copy_ctor_;
+}
+
+idl_bool
+IDL_GlobalData::gen_assign_op (void)
+{
+  return this->gen_assign_op_;
 }
 
 idl_bool

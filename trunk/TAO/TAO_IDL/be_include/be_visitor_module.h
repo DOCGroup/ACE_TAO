@@ -30,6 +30,7 @@
 // the others, they use the default module visitor
 #include "be_visitor_module/module_ch.h"
 #include "be_visitor_module/module_sh.h"
+#include "be_visitor_module/module_ih.h"
 #include "be_visitor_module/any_op.h"
 #include "be_visitor_module/cdr_op.h"
 
