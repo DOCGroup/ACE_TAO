@@ -4,7 +4,7 @@
 
 extern "C" {
 #include "ace/os_include/sys/os_types.h"
-};
+}
 
 #include "ace/Get_Opt.h"
 #include "ace/os_include/netinet/os_in.h"
@@ -19,7 +19,7 @@ extern "C" {
 };
 #else
 #ifndef IPPROTO_SCTP
-#define IPPROTO_SCTP 132 /* always the same value on every platform */ 
+#define IPPROTO_SCTP 132 /* always the same value on every platform */
 #endif
 #endif
 
