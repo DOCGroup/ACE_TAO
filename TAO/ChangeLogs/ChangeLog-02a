@@ -1,3 +1,11 @@
+Wed Jan 10 17:02:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/Policy_Manager.cpp:
+
+          Version 4.  G++ didn't like the last one, so with an
+          assist from Carlos, used a ptr as an inbetweener.
+          Does work on MSVC 5 and G++ and my fingers are crossed.
+
 Wed Jan 10 16:52:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/Policy_Manager.cpp:
