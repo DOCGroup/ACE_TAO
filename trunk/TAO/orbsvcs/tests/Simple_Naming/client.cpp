@@ -418,8 +418,6 @@ MT_Test::execute (TAO_Naming_Client &root_context)
     return -1;
 
   status = this->wait ();
-  ACE_DEBUG ((LM_DEBUG,
-              "(%t) MT_Test::execute - result = %d\n", status));
   return status;
 }
 

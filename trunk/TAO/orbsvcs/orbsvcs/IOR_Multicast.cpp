@@ -71,7 +71,8 @@ TAO_IOR_Multicast::handle_timeout (const ACE_Time_Value &,
 int
 TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 {
-  ACE_DEBUG ((LM_DEBUG, "TAO_IOR_Multicast::Handle_input\n"));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Entered TAO_IOR_Multicast::handle_input\n"));
 
   // The length of the service name string that follows.
   CORBA::Short header;
