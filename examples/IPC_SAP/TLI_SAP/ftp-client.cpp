@@ -5,8 +5,6 @@
 
 #if defined (ACE_HAS_TLI)
 
-const int MAXLINE = 255;
-  
 int
 main (int argc, char *argv[])
 {
