@@ -81,7 +81,7 @@ ACE_UUID::ACE_UUID (const ACE_CString& uuid_string)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%N ACE_UUID::ACE_UUID - "
-                  "IllegalArgument(incorrect string length)"));
+                  "IllegalArgument(incorrect string length)\n"));
       return;
     }
 

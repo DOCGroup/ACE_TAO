@@ -1,3 +1,24 @@
+Fri Jul 25 11:10:21 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+          Only do a pragma comment with MSVC
+
+        * ace/Makefile.bor:
+          Added UUID
+
+        * ace/UUID.h:
+          Fixed compile error with Borland
+
+        * ace/UUID.cpp:
+          Improved log line.
+
+        * tests/UUIDTest.cpp:
+          Fix compile problem in unicode build and ACE_START_TEST to
+          get logfile.
+
+        * tests/Tests.bor:
+          Added UUIDTest
+
 Fri Jul 25 09:34:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h:

@@ -20,27 +20,27 @@
 #include "ace/Synch.h"
 
 /// Class to hold a MAC address
-class ACE_Export UUID_node 
+class ACE_Export UUID_node
 {
  public:
 
   /// Constructor
   UUID_node (void);
-  
-  typedef enum {NODE_ID_SIZE = 6};
+
+  enum {NODE_ID_SIZE = 6};
   typedef u_char NodeID[NODE_ID_SIZE];
-  
+
   NodeID& nodeID (void);
   void nodeID (NodeID&);
 
   /// Assignment Operation
   UUID_node &operator=(const UUID_node &right);
 
-  /// Equality Operations 
+  /// Equality Operations
   bool operator == (const UUID_node& right) const;
   bool operator != (const UUID_node& right) const;
 
-  /// Relational Operations 
+  /// Relational Operations
   bool operator <  (const UUID_node& right) const;
 
  private:
@@ -62,63 +62,63 @@ class ACE_Export UUID_node
  * UUIDs have value semantics. In addition, they may be compared for
  * ordering and equality.
  *
- * Additionally in this implementation provisions have been made to include 
- * process and thread ids to make the UUIDs more unique. The variant 0xc0 
+ * Additionally in this implementation provisions have been made to include
+ * process and thread ids to make the UUIDs more unique. The variant 0xc0
  * has been added to facilitate this.
  */
-class ACE_Export ACE_UUID 
+class ACE_Export ACE_UUID
 {
  public:
 
   /// Constructor
   ACE_UUID(void);
- 
+
   /// Copy constructor
   ACE_UUID(const ACE_UUID &right);
-  
+
   /// Constructs a UUID from a string representation.
   ACE_UUID (const ACE_CString& uuidString);
-  
+
   // Destructor
   ~ACE_UUID (void);
 
   ACE_UINT32 timeLow (void);
   void timeLow (ACE_UINT32);
 
-  ACE_UINT16 timeMid (void);    
-  void timeMid (ACE_UINT16);    
+  ACE_UINT16 timeMid (void);
+  void timeMid (ACE_UINT16);
 
   ACE_UINT16 timeHiAndVersion (void);
   void timeHiAndVersion (ACE_UINT16);
 
-  u_char clockSeqHiAndReserved (void);    
-  void clockSeqHiAndReserved (u_char);    
+  u_char clockSeqHiAndReserved (void);
+  void clockSeqHiAndReserved (u_char);
 
   u_char clockSeqLow (void);
   void clockSeqLow (u_char);
-  
-  UUID_node* node (void); 
-  void node (UUID_node*); 
 
-  ACE_CString* thr_id (void); 
-  void thr_id (char*); 
-  
-  ACE_CString* pid (void); 
+  UUID_node* node (void);
+  void node (UUID_node*);
+
+  ACE_CString* thr_id (void);
+  void thr_id (char*);
+
+  ACE_CString* pid (void);
   void pid (char*);
 
   /// Returns a string representation of the UUID
   const ACE_CString* to_string (void);
-    
+
   static ACE_UUID NIL_UUID;
 
   /// Assignment Operation
   ACE_UUID & operator=(const ACE_UUID &right);
 
-  /// Equality Operations 
+  /// Equality Operations
   bool operator==(const ACE_UUID &right) const;
   bool operator!=(const ACE_UUID &right) const;
 
-  /// Relational Operations 
+  /// Relational Operations
   bool operator< (const ACE_UUID &right) const;
   bool operator> (const ACE_UUID &right) const;
   bool operator<=(const ACE_UUID &right) const;
@@ -128,23 +128,23 @@ class ACE_Export ACE_UUID
 
   /// Data Members for Class Attributes
   ACE_UINT32 timeLow_;
-  ACE_UINT16 timeMid_;    
-  ACE_UINT16 timeHiAndVersion_;    
-  u_char clockSeqHiAndReserved_;    
-  u_char clockSeqLow_;    
-  UUID_node* node_; 
+  ACE_UINT16 timeMid_;
+  ACE_UINT16 timeHiAndVersion_;
+  u_char clockSeqHiAndReserved_;
+  u_char clockSeqLow_;
+  UUID_node* node_;
   int node_release_;
-  ACE_CString thr_id_; 
-  ACE_CString pid_; 
-  
+  ACE_CString thr_id_;
+  ACE_CString pid_;
+
   /// The string representation of the UUID. This is created and
   /// updated only on demand.
-  ACE_CString *as_string_; 
+  ACE_CString *as_string_;
 };
 
 
 /**
- * @class ACE_UUID_Generator 
+ * @class ACE_UUID_Generator
  *
  * Singleton class that generates UUIDs.
  *
@@ -160,11 +160,11 @@ class ACE_Export ACE_UUID_Generator
 
   void init (void);
 
-  /// Format timestamp, clockseq, and nodeID into an UUID of the 
+  /// Format timestamp, clockseq, and nodeID into an UUID of the
   /// specified version and variant. For generating UUID's with
   /// thread and process ids use variant=0xc0
   void generateUUID(ACE_UUID&, ACE_UINT16 version=0x0001, u_char variant=0x80);
-  
+
   /// Format timestamp, clockseq, and nodeID into a VI UUID. For
   /// generating UUID's with thread and process ids use variant=0xc0
   ACE_UUID* generateUUID (ACE_UINT16 version=0x0001, u_char variant=0x80);
@@ -172,7 +172,7 @@ class ACE_Export ACE_UUID_Generator
   /// Type to represent UTC as a count of 100 nanosecond intervals
   /// since 00:00:00.00, 15 October 1582.
   typedef ACE_UINT64 UUID_time;
-  
+
   /// The locking strategy prevents multiple generators from accessing
   /// the UUID_state at the same time. Get the locking strategy.
   ACE_SYNCH_MUTEX* lock (void);
@@ -180,7 +180,7 @@ class ACE_Export ACE_UUID_Generator
   /// Set a new locking strategy and return the old one.
   ACE_SYNCH_MUTEX* lock (ACE_SYNCH_MUTEX*lock,
 			 int release_lock);
-  
+
 
  private:
 
@@ -204,7 +204,7 @@ class ACE_Export ACE_UUID_Generator
   /// since 00:00:00.00, 15 October 1582 (the date of Gregorian reform to
   /// the Christian calendar).
   void get_systemtime( UUID_time& timeNow);
-  
+
   /// The UUID generator persistent state.
   UUID_State uuid_state_;
 
