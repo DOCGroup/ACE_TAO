@@ -1,3 +1,7 @@
+Tue Apr 13 14:52:15 1999  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * ace/ATM_Addr.cpp: Fixed g++ warnings of unused parameters.
+
 Tue Apr 13 14:47:18 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Basic_Types_Test.cpp (main): replaced call to sysconf ()
