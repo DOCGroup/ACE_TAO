@@ -70,20 +70,8 @@ TAO_GIOP_DII_Invocation::invoke (CORBA::ExceptionList_ptr exceptions
                          this->inp_stream ().byte_order (),
                          cdr);
 
-          CORBA_Exception *exception = 0;
-
-          ACE_NEW_THROW_EX (exception,
-                            CORBA_UnknownUserException (any),
-                            CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                              CORBA::COMPLETED_YES));
-          ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
-
-          // @@ Think about a better way to raise the exception here,
-          //    maybe we need some more macros?
-#if !defined (ACE_HAS_EXCEPTIONS)
-          TAO_ENV_SINGLE_ARG_PARAMETER.exception (exception);  // We can not use ACE_THROW here.
-#endif
-          return TAO_INVOKE_EXCEPTION;
+          ACE_THROW_RETURN (CORBA_UnknownUserException (any),
+                            TAO_INVOKE_EXCEPTION);
         }
 
       // If we couldn't find the right exception, report it as

@@ -1,3 +1,14 @@
+Tue Dec 11 09:54:04 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/orbconf.h:
+	  Improved definition and documentation for the TAO_ENV_*ARG* macros.
+
+	* tao/ORB.cpp:
+	  Fixed warning on builds with exceptions enabled.
+
+	* tao/DynamicInterface/DII_Invocation.cpp:
+	  Fixed problems with user exceptions raised during DII requests.
+
 Tue Dec 11 10:12:02 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* TAO/tests/DLL_ORB/Test_Client_Module.h
