@@ -159,7 +159,7 @@ Mon Feb 01 12:00:55 1999  David L. Levine  <levine@cs.wustl.edu>
         Thanks to Diethard Ohrt <Diethard.Ohrt@siemens.at> for confirming
         that above fixes allow ACE and TAO to build with CC 5.0.
 
-        * include/makeinclude/platform_sunos5_g++.GNU: removed -lw
+        * include/makeinclude/platform_sunos5_{g++,ghs}.GNU: removed -lw
           from libs.  It's not necessary, and apparently causes problems
           on Solaris 2.6, because libc now includes the code that was
           formerly in libw.  Thanks to Steve Coleman <Steve.Coleman@jhuapl.edu>
