@@ -13,13 +13,13 @@ public:
                   PortableServer::POAManager_ptr poa_manager,
                   TAO_POA_Policies &policies,
                   PortableServer::POA_ptr parent,
-                  CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
 
   virtual TAO_POA *clone (const char *adapter_name,
                           PortableServer::POAManager_ptr poa_manager,
                           TAO_POA_Policies &policies,
                           PortableServer::POA_ptr parent,
-                          CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                          CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
 
 protected:
 

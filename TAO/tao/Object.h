@@ -41,7 +41,7 @@ public:
   // return a NUL object
 
   static CORBA_Object_ptr _narrow (CORBA_Object_ptr obj,
-                                   CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // no-op it is just here to simplify some templates.
 
   // These calls correspond to over-the-wire operations, or at least
@@ -50,11 +50,11 @@ public:
   // making such calls, but may be overridden when it appears
   // appropriate.
 
-  virtual CORBA::InterfaceDef_ptr _get_interface (CORBA_Environment &_env = CORBA_Environment::default_environment ());
+  virtual CORBA::InterfaceDef_ptr _get_interface (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // Interface repository related operation
 
   virtual CORBA::Boolean _is_a (const CORBA::Char *logical_type_id,
-                                CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // determine if we are of the type specified by the "logical_type_id"
 
   virtual const char* _interface_repository_id (void) const;
@@ -68,18 +68,18 @@ public:
   // are we collocated with the servant?
 
   virtual CORBA::ImplementationDef_ptr
-      _get_implementation (CORBA_Environment &_env = CORBA_Environment::default_environment ());
+      _get_implementation (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // This method is deprecated in the CORBA 2.2 spec, we just return 0
   // every time.
 
-  virtual CORBA::Boolean _non_existent (CORBA_Environment &_env = CORBA_Environment::default_environment ());
+  virtual CORBA::Boolean _non_existent (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
 
   virtual void _create_request (const CORBA::Char *operation,
                                 CORBA::NVList_ptr arg_list,
                                 CORBA::NamedValue_ptr result,
                                 CORBA::Request_ptr &request,
                                 CORBA::Flags req_flags,
-                                CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // DII operation to create a request.
   //
   // The mapping for create_request is split into two forms,
@@ -91,11 +91,11 @@ public:
   // calls above ... that's how it can have a default implementation.
 
   virtual CORBA::Request_ptr _request (const CORBA::Char *operation,
-                                       CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                       CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // DII operation to create a request.
 
   virtual CORBA::ULong _hash (CORBA::ULong maximum,
-                              CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                              CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // Return a (potentially non-unique) hash value for this object.
   // This method relies on the representation of the object
   // reference's private state.  Since that changes easily (when
@@ -103,7 +103,7 @@ public:
   // implementation.
 
   virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj,
-                                         CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                         CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // Try to determine if this object is the same as <other_obj>.  This
   // method relies on the representation of the object reference's
   // private state.  Since that changes easily (when different ORB
@@ -124,7 +124,7 @@ public:
   virtual ~CORBA_Object (void);
   // destructor
 
-  virtual TAO_ObjectKey *_key (CORBA_Environment &_env = CORBA_Environment::default_environment ());
+  virtual TAO_ObjectKey *_key (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // Return the object key as an out parameter.  Caller should release
   // return value when finished with it.
 
@@ -228,7 +228,7 @@ public:
   // destructor
 
   virtual void _downcast (CORBA_Object* base_ptr,
-                          CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
+                          CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
   virtual CORBA_Object* _upcast (void) = 0;
   virtual void _release (void) = 0;
 };

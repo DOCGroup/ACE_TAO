@@ -112,7 +112,7 @@ TAO_DynStruct_i::current_member_kind (CORBA::Environment& env)
 }
 
 NameValuePairSeq*
-TAO_DynStruct_i::get_members (CORBA::Environment& _env)
+TAO_DynStruct_i::get_members (CORBA::Environment& TAO_IN_ENV)
 {
   CORBA::ULong length = this->da_members_.size ();
 
@@ -131,7 +131,7 @@ TAO_DynStruct_i::get_members (CORBA::Environment& _env)
       (*members)[i].id =
         CORBA::string_dup (this->type_.in ()->member_name (i));
 
-      CORBA::Any_ptr temp = this->da_members_[i]->to_any (_env);
+      CORBA::Any_ptr temp = this->da_members_[i]->to_any (TAO_IN_ENV);
       (*members)[i].value = *temp;
       delete temp;
     }
@@ -247,7 +247,7 @@ TAO_DynStruct_i::from_any (const CORBA_Any& any,
 }
 
 CORBA::Any_ptr
-TAO_DynStruct_i::to_any (CORBA::Environment& _env)
+TAO_DynStruct_i::to_any (CORBA::Environment& TAO_IN_ENV)
 {
   TAO_OutputCDR out_cdr;
 
@@ -256,14 +256,14 @@ TAO_DynStruct_i::to_any (CORBA::Environment& _env)
       // Each component must have been initialied.
       if (!this->da_members_[i].in ())
         {
-          _env.exception (new CORBA_DynAny::Invalid);
+          TAO_IN_ENV.exception (new CORBA_DynAny::Invalid);
           return 0;
         }
 
-      CORBA_TypeCode_ptr field_tc = this->da_members_[i]->type (_env);
+      CORBA_TypeCode_ptr field_tc = this->da_members_[i]->type (TAO_IN_ENV);
 
       // Recursive step
-      CORBA_Any_ptr field_any = this->da_members_[i]->to_any (_env);
+      CORBA_Any_ptr field_any = this->da_members_[i]->to_any (TAO_IN_ENV);
 
       ACE_Message_Block* field_mb = field_any->_tao_get_cdr ();
 
@@ -271,7 +271,7 @@ TAO_DynStruct_i::to_any (CORBA::Environment& _env)
 
       out_cdr.append (field_tc,
                       &field_cdr,
-                      _env);
+                      TAO_IN_ENV);
 
       delete field_any;
     }
@@ -280,7 +280,7 @@ TAO_DynStruct_i::to_any (CORBA::Environment& _env)
 
   CORBA_Any* retval;
   ACE_NEW_THROW_RETURN (retval,
-                        CORBA_Any (this->type (_env),
+                        CORBA_Any (this->type (TAO_IN_ENV),
                                    in_cdr.start ()),
                         CORBA::NO_MEMORY (),
                         0);

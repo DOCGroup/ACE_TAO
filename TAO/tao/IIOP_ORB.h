@@ -37,11 +37,11 @@ public:
   // destructor
 
   CORBA::Object_ptr string_to_object (const char *str,
-                                      CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                      CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // Get an object reference from the IOR string.
 
   CORBA::String object_to_string (CORBA::Object_ptr obj,
-                                  CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // Convert an object reference to an IOR stringified form.
 
   TAO_ServantBase *_get_collocated_servant (STUB_Object *sobj);
