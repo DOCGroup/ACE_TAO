@@ -18,7 +18,7 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
 
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 #include "tao/CORBA_String.h"
 #include "tao/SystemException.h"
 
