@@ -1,7 +1,5 @@
 // $Id$
 
-// Service_Object.cpp
-
 #include "ace/Service_Types.h"
 #include "ace/Service_Object.h"
 

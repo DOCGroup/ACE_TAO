@@ -49,6 +49,7 @@ OBJFILES = \
 	$(OBJDIR)\DEV_Connector.obj \
 	$(OBJDIR)\DEV_IO.obj \
 	$(OBJDIR)\Dirent.obj \
+	$(OBJDIR)\Dirent_Selector.obj \
 	$(OBJDIR)\DLL.obj \
 	$(OBJDIR)\Dump.obj \
 	$(OBJDIR)\Dynamic.obj \

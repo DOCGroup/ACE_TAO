@@ -32,6 +32,7 @@ UTILS_FILES = \
   Configuration \
   Configuration_Import_Export \
   Dirent \
+  Dirent_Selector \
   Dynamic \
   Flag_Manip \
   Functor \
