@@ -1,3 +1,9 @@
+Thu Mar 20 15:52:34 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/config-aix-4.[12].x.h: added back ACE_HAS_THREAD_SELF and
+	  and ACE_HAS_SVR4_DYNAMIC_LINKING; removed ACE_HAS_PTHREAD_T.
+	  Thanks to Chris Lahey <CLahey@cccis.com> for figuring these out.
+
 Thu Mar 20 12:25:30 1997    <harrison@samba.cs.wustl.edu>
 
 	* ace/ace.{mak,mdp}: Build->Settings->Code Generation->Processor is
