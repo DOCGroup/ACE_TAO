@@ -1,7 +1,8 @@
 #----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	10/18/96
+#	$Id$
 #
-#	Top-level Makefile for the ACE toolkit libraries, tests, and applications
+#	Top-level Makefile for the ACE toolkit libraries, tests, and
+#       applications
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
@@ -43,13 +44,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
 # directory (or some place similar).
 
 clone:
-	@for dir in $(CLONE) ;\
+	@for dir in $(CLONE); \
 	do \
 		(clone -s $(ACE_ROOT)/$$dir $$dir) \
 	done
 
 RELEASE_FILES = ACE_wrappers/ACE-INSTALL.html \
-		ACE_wrappers/ACE-INSTALL \
 		ACE_wrappers/ACE-categories \
 	        ACE_wrappers/ACE-install.sh \
 	        ACE_wrappers/ACE-lessons.html \
@@ -99,9 +99,12 @@ RELEASE_LIB_FILES = \
 ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
   TIMESTAMP = (lynx -dump ACE-INSTALL.html > ACE-INSTALL; \
                 CHANGELOG='ChangeLog'; export CHANGELOG; \
-              if [ -z "$$CHANGELOG" ]; then echo unable to find latest ChangeLog file; exit 1; fi; \
+              if [ -z "$$CHANGELOG" ]; then \
+		echo unable to find latest ChangeLog file; exit 1; fi; \
               DATE=`/usr/bin/date +"%a %b %d %T %Y"`; export DATE; \
-              cd ..; UPTODATE=`cvs -nq update $(RELEASE_FILES) | egrep -v '/tests/log/' | perl -pi -e 's%/ACE_wrappers%%g; s/$$/\\\n  /g'`; cd ACE_wrappers; \
+              cd ..; UPTODATE=`cvs -nq update $(RELEASE_FILES) | \
+		egrep -v '/tests/log/' | perl -pi -e 's%/ACE_wrappers%%g; \
+		s/$$/\\\n  /g'`; cd ACE_wrappers; \
               if [ "$$UPTODATE" ]; then /pkg/gnu/bin/echo -e ERROR: workspace must be updated, and/or non-controlled files must be removed or added/committed: $$UPTODATE; exit 1; fi; \
               ACE_VERSION=`perl -pi -e \
                 'BEGIN { $$date=$$ENV{"DATE"} } \
@@ -145,12 +148,15 @@ FILTER = -name CVS -prune -o ! -name '.\#*' ! -name '\#*' ! -name '*~' -print
 
 cleanrelease:
 	@$(TIMESTAMP) (make realclean; cd ..; \
-	 find $(RELEASE_FILES) $(FILTER) | cpio -o -H tar | gzip -9 > ACE.tar.gz; \
+	 find $(RELEASE_FILES) ACE_wrappers/ACE-INSTALL $(FILTER) | \
+	   cpio -o -H tar | gzip -9 > ACE.tar.gz; \
 	 chmod a+r ACE.tar.gz; mv ACE.tar.gz ./ACE_wrappers/)
 
 release:
 	@$(TIMESTAMP) (cd ..; \
-	 find $(RELEASE_FILES) $(FILTER) | cpio -o -H tar | gzip -9 > ACE.tar.gz; \
-	 find $(RELEASE_LIB_FILES) $(FILTER) | cpio -o -H tar | gzip -9 > ACE-lib.tar.gz; \
+	 find $(RELEASE_FILES) ACE_wrappers/ACE-INSTALL $(FILTER) | \
+	   cpio -o -H tar | gzip -9 > ACE.tar.gz; \
+	 find $(RELEASE_LIB_FILES) $(FILTER) | \
+	   cpio -o -H tar | gzip -9 > ACE-lib.tar.gz; \
 	 chmod a+r ACE.tar.gz ACE-lib.tar.gz; \
 	 mv ACE.tar.gz ACE-lib.tar.gz ./ACE_wrappers/)
