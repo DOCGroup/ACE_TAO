@@ -10,7 +10,7 @@
 ACE_RCSID(Client, main, "$Id$")
 
 int
-main (int argc, char *argv[])
+main (int, char *argv[])
 {
   ACE_Service_Config daemon;
   ACE_ARGV new_args;
@@ -27,7 +27,7 @@ main (int argc, char *argv[])
               ASYS_TEXT (new_args.argc ())));
 
   // Print the contents of the combined <ACE_ARGV>.
-  for (int i = 0; i < new_args.argc (); i++)
+  for (size_t i = 0; i < new_args.argc (); i++)
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("(%d) %s\n"),
                 i,

@@ -1,3 +1,9 @@
+Mon Feb  7 17:28:40 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* netsvcs/clients/Naming/Client/main.cpp (main): Removed two
+	  warnings that crept in recently.  Thanks to David Levine
+	  for reporting this.
+
 Mon Feb  7 08:34:26 2000  Darrell Brunsch <brunsch@uci.edu>
 
 	* docs/ACE-subsets.html:
