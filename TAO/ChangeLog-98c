@@ -1,7 +1,9 @@
 Sun Nov 09 22:04:12 1997    <irfan@TWOSTEP>
 
-	* tao/tao_internals.cpp (close_services): Changed
- 	  ACE_Recursive_Thread_Mutex to ACE_SYNCH_RECURSIVE_MUTEX.
+	* tao/orbobj.cpp (ORB_init): 
+	* tao/tao_internals.cpp (close_services): 
+
+	Changed ACE_Recursive_Thread_Mutex to ACE_SYNCH_RECURSIVE_MUTEX.
 
 Sun Nov  9 16:05:56 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
