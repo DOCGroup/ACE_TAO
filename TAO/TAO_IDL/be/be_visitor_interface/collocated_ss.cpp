@@ -101,6 +101,40 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
   *os << "}\n\n";
 
   os->indent ();
+
+  // Generate _is_a implementation.
+  *os << "CORBA::Boolean " << node->full_coll_name () << "::"
+      << "_is_a"  << be_idt
+      << "(" << be_idt_nl
+      << "const CORBA::Char *logical_type_id," << be_nl
+      << "CORBA_Environment &ACE_TRY_ENV" << be_uidt_nl
+      << ")" << be_uidt_nl << be_nl;
+  *os << "{" << be_idt_nl
+      << "if (this->_stubobj ()->orb_core ()->get_collocation_strategy ()"
+         " == TAO_ORB_Core::THRU_POA)" << be_idt_nl
+      << "{" << be_idt_nl;
+  *os <<"TAO_Object_Adapter::Servant_Upcall servant_upcall ("
+      << be_idt << be_idt_nl
+      << "*this->_stubobj ()->servant_orb ()->orb_core ()->object_adapter ()"
+      << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "servant_upcall.prepare_for_upcall (" << be_idt << be_idt_nl
+      << "this->_object_key ()," << be_nl
+      << "\"" << "_is_a" << "\"," << be_nl
+      << "ACE_TRY_ENV" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "ACE_CHECK_RETURN (0);" << be_nl;
+  *os << "return ACE_reinterpret_cast (" << be_idt << be_idt_nl
+      << node->full_skel_name () << "_ptr," << be_nl
+      << "servant_upcall.servant ()->_downcast (" << be_idt << be_idt_nl
+      << "\"" << node->repoID ()  << "\"" << be_uidt_nl
+      << ")" << be_uidt << be_uidt_nl
+      << ")->_is_a (logical_type_id, ACE_TRY_ENV);" << be_uidt << be_uidt_nl;
+  *os << "}" << be_uidt_nl
+      << "return this->servant_->_is_a (logical_type_id, ACE_TRY_ENV);" << be_uidt_nl
+      << "}\n\n" << be_uidt_nl;
+
+  // Generate _get_servant implementation.
   *os << node->full_skel_name () << "_ptr "
       << node->full_coll_name () << "::"
       << "_get_servant (void) const\n"
@@ -109,6 +143,39 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
   *os << "return this->servant_;\n";
   os->decr_indent ();
   *os << "}\n\n";
+
+  os->indent ();
+
+  // Generate _non_existent implementation.
+  *os << "CORBA::Boolean " << node->full_coll_name () << "::"
+      << "_non_existent"  << be_idt
+      << "(" << be_idt_nl
+      << "CORBA_Environment &ACE_TRY_ENV" << be_uidt_nl
+      << ")" << be_uidt_nl << be_nl;
+  *os << "{" << be_idt_nl
+      << "if (this->_stubobj ()->orb_core ()->get_collocation_strategy ()"
+         " == TAO_ORB_Core::THRU_POA)" << be_idt_nl
+      << "{" << be_idt_nl;
+  *os <<"TAO_Object_Adapter::Servant_Upcall servant_upcall ("
+      << be_idt << be_idt_nl
+      << "*this->_stubobj ()->servant_orb ()->orb_core ()->object_adapter ()"
+      << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "servant_upcall.prepare_for_upcall (" << be_idt << be_idt_nl
+      << "this->_object_key ()," << be_nl
+      << "\"" << "_non_existent" << "\"," << be_nl
+      << "ACE_TRY_ENV" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "ACE_CHECK_RETURN (0);" << be_nl;
+  *os << "return ACE_reinterpret_cast (" << be_idt << be_idt_nl
+      << node->full_skel_name () << "_ptr," << be_nl
+      << "servant_upcall.servant ()->_downcast (" << be_idt << be_idt_nl
+      << "\"" << node->repoID ()  << "\"" << be_uidt_nl
+      << ")" << be_uidt << be_uidt_nl
+      << ")->_non_existent (ACE_TRY_ENV);" << be_uidt << be_uidt_nl;
+  *os << "}" << be_uidt_nl
+      << "return this->servant_->_non_existent (ACE_TRY_ENV);" << be_uidt_nl
+      << "}\n\n" << be_uidt_nl;
 
   if (this->visit_scope (node) == -1)
     {
