@@ -72,9 +72,9 @@ Supplier_Client::parse_args (int argc, char *argv[])
                            "blocks.\nPlease #define "
                            "ACE_HAS_TIMED_MESSAGE_BLOCKS in your "
                            "config.h\n"), -1);
-#endif
+#else
         break;
-
+#endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
       case 'e':
         max_events = ACE_OS::atoi (get_opts.optarg);
         break;
