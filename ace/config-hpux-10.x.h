@@ -61,7 +61,8 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 //
 ///////////////////////////////////////////////////////////////////////////
 
-
+// HP/UX needs to have these addresses in a special range.
+#define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
