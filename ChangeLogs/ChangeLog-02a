@@ -1,3 +1,9 @@
+Thu Dec  7 03:33:49 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst:
+
+	  Added RTCORBA MT test.
+
 Wed Dec 06 19:52:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Auto_Ptr.i:
@@ -11,7 +17,7 @@ Wed Dec 06 20:12:35 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  reallocate the existing array.  However, we do need to run the
 	  destructor on the array elements that will be replaced.  Hence,
 	  I added a call to ACE_DES_ARRAY_NOFREE for the elements being
-	  replaced.  
+	  replaced.
 
 	  This fixes bug 704.  Thanks to Martin Krumpolec
 	  <krumpo@pobox.sk> for reporting the bug and for providing an
@@ -34,7 +40,7 @@ Wed Dec  6 14:29:13 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
  	  <jloeliger@chiaro.com> for reporting this.
 
 	* tests/Log_Msg_Test.cpp,
-	* examples/Log_Msg/test_log_msg.cpp (main): 
+	* examples/Log_Msg/test_log_msg.cpp (main):
           Replaced int with u_long to make compilers happy.  Thanks to
  	  Mike Curtis <mccurry@my-deja.com> for pointing this out.
 
