@@ -1,3 +1,10 @@
+Fri Sep 24 12:28:26 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/examples/CosEC/Factory/FactoryDriver.cpp
+	Initialize the ORB before parsing the command line arguments.
+ 	Thanks to Knut-HÅÂvard Aksnes <knut@orion.no> for reporting
+	this bug.
+
 Fri Sep 24 11:57:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * Benchmark/Marshal_Test/TAO/Makefile:
