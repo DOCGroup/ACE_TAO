@@ -1131,6 +1131,8 @@ TAO_POA::create_reference_i (const char *intf,
   // Ask the ORB to create you a reference
   return this->orb_core_.orb ()->key_to_object (key.in (),
                                                 intf,
+                                                0,
+                                                1,
                                                 ACE_TRY_ENV);
 }
 
@@ -1162,9 +1164,11 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
   // requests on those references will cause the object to be
   // activated if necessary, or the default servant used, depending on
   // the applicable policies.
+  PortableServer::Servant servant = 0;
   PortableServer::ObjectId_var system_id;
-  if (this->active_object_map ().find_system_id_using_user_id (user_id,
-                                                               system_id.out ()) != 0)
+  if (this->active_object_map ().find_servant_and_system_id_using_user_id (user_id,
+                                                                           servant,
+                                                                           system_id.out ()) != 0)
     {
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                         CORBA::Object::_nil ());
@@ -1176,6 +1180,8 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
   // Ask the ORB to create you a reference
   return this->orb_core_.orb ()->key_to_object (key.in (),
                                                 intf,
+                                                servant,
+                                                1,
                                                 ACE_TRY_ENV);
 }
 
@@ -1335,6 +1341,8 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant,
   // Ask the ORB to create you a reference
   return this->orb_core_.orb ()->key_to_object (key.in (),
                                                 servant->_interface_repository_id (),
+                                                servant,
+                                                1,
                                                 ACE_TRY_ENV);
 }
 
@@ -1599,6 +1607,8 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
       // Ask the ORB to create you a reference
       return this->orb_core_.orb ()->key_to_object (key.in (),
                                                     servant->_interface_repository_id (),
+                                                    servant,
+                                                    1,
                                                     ACE_TRY_ENV);
     }
   else

@@ -6,6 +6,7 @@
 // ORB:         CORBA_Object operations
 
 #include "tao/Object.h"
+#include "tao/Object_Adapter.h"
 #include "tao/Stub.h"
 #include "tao/Servant_Base.h"
 #include "tao/Request.h"
@@ -50,9 +51,24 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
                      CORBA::Environment &ACE_TRY_ENV)
 {
   // If the object is collocated then try locally....
-  if (this->is_collocated_ && this->servant_ != 0)
-    return this->servant_->_is_a (type_id, ACE_TRY_ENV);
+  if (this->is_collocated_)
+    {
+      // Which collocation strategy should we use?
+      if (this->protocol_proxy_->servant_orb_var ()->orb_core ()->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
+        {
+          TAO_Object_Adapter::Servant_Upcall servant_upcall
+            (*this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ());
+          servant_upcall.prepare_for_upcall (this->_object_key (),
+                                             "_non_existent",
+                                             ACE_TRY_ENV);
+          ACE_CHECK_RETURN (CORBA::Object::_nil ());
+          return servant_upcall.servant ()->_is_a (type_id, ACE_TRY_ENV);
+        }
 
+      // Direct collocation strategy is used.
+      if (this->servant_ != 0)
+        return this->servant_->_is_a (type_id, ACE_TRY_ENV);
+    }
   // NOTE: if istub->type_id is nonzero and we have local knowledge of
   // it, we can answer this question without a costly remote call.
   //
