@@ -293,6 +293,7 @@ Command_Handler::handle_input (ACE_HANDLE fd)
             {
             case CmdJINIT:
               ACE_DEBUG ((LM_DEBUG,"(%P|%t) command_handler:CmdJINIT received from GUI\n"));
+              break;
             case CmdINIT:
               ACE_DEBUG ((LM_DEBUG,"(%P|%t) command_handler:CmdINIT received\n"));
               if (this->init_av () == -1)
