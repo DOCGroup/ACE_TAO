@@ -21,11 +21,13 @@ Fri May 09 16:53:10 2003  Simon McQueen  <sm@prismtechnologies.com>
 Fri May  9 10:42:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
+        * tao/Any.i:
 
-          In Any_var assignment operator from Any_var, added a
+          In Any_var assignment operator from Any_var, and in the
+          Any_var copy constructor from Any_var, added a
           check for a null rhs ptr_ member. Thanks to 
           Huang-Ming Huang <hh1@cs.wustl.edu> for discovering
-          the problem.
+          the problem. Also un-inlined the above copy constructor.
 
 Fri May  9 08:32:16 2003  Chad Elliott  <elliott_c@ociweb.com>
 

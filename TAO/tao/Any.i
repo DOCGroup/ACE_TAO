@@ -25,15 +25,6 @@ CORBA::Any_var::Any_var (CORBA::Any *p)
 }
 
 ACE_INLINE
-CORBA::Any_var::Any_var (const CORBA::Any_var &r)
-{
-  CORBA::Any_ptr nptr;
-  ACE_NEW (nptr,
-           CORBA::Any (*r.ptr_));
-  this->ptr_ = nptr;
-}
-
-ACE_INLINE
 CORBA::Any_var::~Any_var (void)
 {
   delete this->ptr_;
