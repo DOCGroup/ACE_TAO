@@ -210,11 +210,18 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
       this->params_[this->index_].type_def =
         CORBA_IDLType::_duplicate (this->ir_current_.in ());
 
-
-      // Fortunately, AST_Field::Direction and CORBA_ParameterMode
-      // are ordered identically.
-      this->params_[this->index_].mode =
-        (CORBA::ParameterMode) node->direction ();
+      switch (node->direction ())
+      {
+        case AST_Argument::dir_IN:
+          this->params_[this->index_].mode = CORBA::PARAM_IN;
+          break;
+        case AST_Argument::dir_OUT:
+          this->params_[this->index_].mode = CORBA::PARAM_OUT;
+          break;
+        case AST_Argument::dir_INOUT:
+          this->params_[this->index_].mode = CORBA::PARAM_INOUT;
+          break;
+      }
 
       // IfR method create_operation does not use this - it just needs
       // to be non-zero for marshaling.
