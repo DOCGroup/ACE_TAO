@@ -1242,7 +1242,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   if (result != -1)
     {
       // If we are broadcasting, then we need to be smarter about
-      // locking since there can now be multiple threadsd in the
+      // locking since there can now be multiple threads in the
       // crtical section.  If we are signaling, however, we don't have
       // to worry since there will just be 1 thread here.
       if (cv->was_broadcast_)
@@ -1529,7 +1529,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   // Reset errno in case mutex_lock() also fails...
   errno = error;
   return result;
-#endif /* ACE_HAS_STHREADS */
+#endif /* ACE_HAS_WTHREADS */
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
