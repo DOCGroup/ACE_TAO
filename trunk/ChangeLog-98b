@@ -1,3 +1,8 @@
+Fri Oct 23 21:11:03 1998  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* ace/OS.h: Changed a comment to be consistent.  Thanks to Serge
+ 	  Kolgan <skolgan@cisco.com> for reporting this.
+
 Fri Oct 23 11:37:38 1998  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_aix4.2.GNU: Removed -qinitauto=5F from
