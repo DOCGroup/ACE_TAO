@@ -25,6 +25,7 @@ TAO_Acceptor_Registry::TAO_Acceptor_Registry (void)
 
 TAO_Acceptor_Registry::~TAO_Acceptor_Registry (void)
 {
+  this->close_all ();
 }
 
 size_t
@@ -91,7 +92,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
   if (first_endpoint == last_endpoint)
     {
       // No endpoints were specified, we let each protocol pick its
-      // own default...
+      // own default.
 
       // All TAO pluggable protocols are expected to have the ability
       // to create a default endpoint.
@@ -205,10 +206,23 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
                       if (acceptor->open (orb_core,
                                           major, minor,
                                           address) == -1)
-                        return -1;
+                        {
+                          delete acceptor;
+
+                          return -1;
+                        }
 
                       // add acceptor to list.
-                      this->acceptors_.insert (acceptor);
+                      if (this->acceptors_.insert (acceptor) == -1)
+                        {
+                          delete acceptor;
+
+                          ACE_ERROR_RETURN ((LM_ERROR,
+                                             "TAO (%P|%t) unable to add <%s> "
+                                             "to acceptor registry.\n",
+                                             address.c_str ()),
+                                            -1);
+                        }
                     }
                   else
                     {
@@ -280,11 +294,11 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
       return -1;
     }
 
-  // Initialize the acceptor to listen on a default endpoint.  For
-  // IIOP this will just be the default interface and let the kernel
-  // pick a port for us.
+  // Initialize the acceptor to listen on a default endpoint.
   if (acceptor->open_default (orb_core) == -1)
     {
+      delete acceptor;
+
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
                     "TAO (%P|%t) unable to open "
@@ -294,7 +308,18 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
       return -1;
     }
 
-  this->acceptors_.insert (acceptor);
+  if (this->acceptors_.insert (acceptor) == -1)
+    {
+      delete acceptor;
+
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                           "TAO (%P|%t) unable to add <%s> default_acceptor "
+                           "to acceptor registry.\n",
+                           (*factory)->protocol_name ().c_str ()));
+
+      return -1;
+    }
 
   return 0;
 }
