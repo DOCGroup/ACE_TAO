@@ -61,7 +61,6 @@ be_visitor_interface::visit_attribute (be_attribute *node)
 
   // this switch is acceptable rather than having derived visitors overriding
   // this method and differing only in what state they set
-  ACE_DEBUG ((LM_DEBUG, "%d, : %s ", this->ctx_->state () ));
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_INTERFACE_CH:
