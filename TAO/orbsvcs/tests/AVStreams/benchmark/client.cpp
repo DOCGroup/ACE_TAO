@@ -38,7 +38,7 @@ Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
 // server streamendpoints' flowspec which we use to connect our
 // datagram socket.
 CORBA::Boolean
-Client_StreamEndPoint::handle_postconnect (AVStreams::flowSpec& server_spec)
+Client_StreamEndPoint::handle_postconnect (AVStreams::flowSpec& /* server_spec */)
 {
   //  return 1;
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) handle_postconnect called \n"));
@@ -46,24 +46,24 @@ Client_StreamEndPoint::handle_postconnect (AVStreams::flowSpec& server_spec)
 }
 
 int
-Client_StreamEndPoint::handle_start (const AVStreams::flowSpec &the_spec,
-                                           CORBA::Environment &env) 
+Client_StreamEndPoint::handle_start (const AVStreams::flowSpec &/* the_spec */,
+                                     CORBA::Environment &/* env */) 
 
 {
   return -1;
 }
 
 int
-Client_StreamEndPoint::handle_stop (const AVStreams::flowSpec &the_spec,
-                                          CORBA::Environment &env) 
+Client_StreamEndPoint::handle_stop (const AVStreams::flowSpec &/* the_spec */,
+                                    CORBA::Environment &/* env */) 
 
 {
   return -1;
 }
 
 int
-Client_StreamEndPoint::handle_destroy (const AVStreams::flowSpec &the_spec,
-                                             CORBA::Environment &env) 
+Client_StreamEndPoint::handle_destroy (const AVStreams::flowSpec &/* the_spec */,
+                                       CORBA::Environment &/* env */) 
 
 {
   return -1;
@@ -126,7 +126,7 @@ ttcp_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
 }
 
 CORBA::Boolean
-ttcp_Client_StreamEndPoint::handle_postconnect (AVStreams::flowSpec& server_spec)
+ttcp_Client_StreamEndPoint::handle_postconnect (AVStreams::flowSpec& /* server_spec */)
 {
   ACE_DEBUG ((LM_DEBUG,"ttcp_Client_StreamEndPoint::handle_postconnect \n"));
   this->client_->set_stream (this->peer ());

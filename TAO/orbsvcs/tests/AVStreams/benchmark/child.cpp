@@ -24,29 +24,29 @@ Bench_Server_StreamEndPoint::handle_close (void)
 }
 
 int
-Bench_Server_StreamEndPoint::handle_stop (const AVStreams::flowSpec &the_spec,
-                                          CORBA::Environment &env) 
+Bench_Server_StreamEndPoint::handle_stop (const AVStreams::flowSpec &/* the_spec */,
+                                          CORBA::Environment &/* env */) 
 {
   return 0;
 }
   
 int
-Bench_Server_StreamEndPoint::handle_start (const AVStreams::flowSpec &the_spec,  
-                                           CORBA::Environment &env) 
+Bench_Server_StreamEndPoint::handle_start (const AVStreams::flowSpec &/* the_spec */,  
+                                           CORBA::Environment &/* env */) 
 {
  return 0;
 }
   
 int
-Bench_Server_StreamEndPoint::handle_destroy (const AVStreams::flowSpec &the_spec,  
-                                             CORBA::Environment &env) 
+Bench_Server_StreamEndPoint::handle_destroy (const AVStreams::flowSpec &/* the_spec */,  
+                                             CORBA::Environment &/* env */) 
 {
   return 0;
 }
 
 CORBA::Boolean 
 Bench_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &the_spec,  
-                                                          CORBA::Environment &env) 
+                                                          CORBA::Environment &/* env */) 
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Bench_Server_StreamEndPoint::handle_connection_requested:() length =%d\n",
               the_spec.length ()));
@@ -117,7 +117,7 @@ ttcp_Stream_Handler::get_handle (void) const
 // Called by the Reactor when data is ready to be read from the
 // video control handle, which indicates a control message from the client.
 int
-ttcp_Stream_Handler::handle_input (ACE_HANDLE handle)
+ttcp_Stream_Handler::handle_input (ACE_HANDLE /* handle */)
 {
   //  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Bench_Server_StreamEndPoint::handle_input ()\n"));
 
