@@ -4600,14 +4600,14 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
 #endif /* ! VXWORKS */
 
 // @@ gets is evil anyway.
-#if !defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_GETS)
+#if !defined (ACE_LACKS_GETS)
 ACE_INLINE char *
 ACE_OS::gets (char *str)
 {
   // ACE_TRACE ("ACE_OS::gets");
   ACE_OSCALL_RETURN (::gets (str), char *, 0);
 }
-#endif /* ! ACE_HAS_WINCE && ! ACE_LACKS_GETS */
+#endif /* !LACKS_GETS */
 
 ACE_INLINE struct servent *
 ACE_OS::getservbyname_r (const char *svc, const char *proto,
@@ -8235,6 +8235,12 @@ ACE_OS::strcpy (wchar_t *s, const wchar_t *t)
 #endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 
 #if defined (ACE_HAS_UNICODE)
+
+ACE_INLINE int
+ACE_OS::atoi (const wchar_t *s)
+{
+  return ::_wtoi (s);
+}
 
 ACE_INLINE wchar_t *
 ACE_OS::strpbrk (const wchar_t *s, const wchar_t *t)
