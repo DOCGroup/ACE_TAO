@@ -87,7 +87,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "DII_Reply_Dispatcher.inl"
+#  include "DII_Reply_Dispatcher.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
