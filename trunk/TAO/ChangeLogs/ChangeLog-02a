@@ -1,3 +1,10 @@
+Wed Oct 31 15:41:21 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/PICurrent/test_i.cpp (invoke_me):
+
+	  Fixed incorrect ACE_TRY_CHECK macro where ACE_TRY_CHECK_EX macro
+	  was expected.
+
 Tue Oct 30 15:34:32 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/skip.cpp:

@@ -89,7 +89,7 @@ test_i::invoke_me (CORBA::Environment &ACE_TRY_ENV)
   ACE_TRY_EX (foo)
     {
       this->current_->set_slot (this->slot_id_, data, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK_EX (foo);
     }
   ACE_CATCH (PortableInterceptor::InvalidSlot, ex)
     {
