@@ -21,7 +21,7 @@ $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
 else
 ifeq (1,$(using_aix_vacpp))
 $(BIN): %: %.icc $(SRC)
-	vacbld $< -severitylevel=warning
+	vacbld_r $< -severitylevel=warning
 else
 $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
