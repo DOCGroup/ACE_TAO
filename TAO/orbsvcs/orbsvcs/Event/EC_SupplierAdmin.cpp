@@ -60,6 +60,27 @@ TAO_EC_SupplierAdmin::connected (TAO_EC_ProxyPushSupplier *supplier,
 }
 
 void
+TAO_EC_SupplierAdmin::reconnected (TAO_EC_ProxyPushSupplier *supplier,
+                                   CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_GUARD_THROW_EX (
+      ACE_Lock, ace_mon, *this->lock_,
+      RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK;
+
+  ConsumerSetIterator end = this->end ();
+  for (ConsumerSetIterator i = this->begin ();
+       i != end;
+       ++i)
+    {
+      (*i)->reconnected (supplier, ACE_TRY_ENV);
+      ACE_CHECK;
+      supplier->reconnected (*i, ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+}
+
+void
 TAO_EC_SupplierAdmin::disconnected (TAO_EC_ProxyPushSupplier *supplier,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
@@ -90,6 +111,19 @@ TAO_EC_SupplierAdmin::connected (TAO_EC_ProxyPushConsumer *consumer,
   ACE_CHECK;
 
   if (this->all_consumers_.insert (consumer) != 0)
+    ACE_THROW (CORBA::NO_MEMORY ());
+}
+
+void
+TAO_EC_SupplierAdmin::reconnected (TAO_EC_ProxyPushConsumer *consumer,
+                                   CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_GUARD_THROW_EX (
+      ACE_Lock, ace_mon, *this->lock_,
+      RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK;
+
+  if (this->all_consumers_.insert (consumer) == -1)
     ACE_THROW (CORBA::NO_MEMORY ());
 }
 

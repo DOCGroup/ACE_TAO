@@ -127,7 +127,7 @@ TAO_EC_Reactive_SupplierControl::handle_timeout (
 int
 TAO_EC_Reactive_SupplierControl::activate (void)
 {
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   long id = this->reactor_->schedule_timer (&this->adapter_,
                                             0,
                                             this->rate_,

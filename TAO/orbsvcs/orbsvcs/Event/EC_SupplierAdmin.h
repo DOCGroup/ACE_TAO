@@ -68,6 +68,8 @@ public:
 
   virtual void connected (TAO_EC_ProxyPushConsumer*,
                           CORBA::Environment&);
+  virtual void reconnected (TAO_EC_ProxyPushConsumer*,
+                            CORBA::Environment&);
   virtual void disconnected (TAO_EC_ProxyPushConsumer*,
                              CORBA::Environment&);
   // Used to inform the EC that a Consumer has connected or
@@ -75,6 +77,8 @@ public:
 
   virtual void connected (TAO_EC_ProxyPushSupplier*,
                           CORBA::Environment&);
+  virtual void reconnected (TAO_EC_ProxyPushSupplier*,
+                            CORBA::Environment&);
   virtual void disconnected (TAO_EC_ProxyPushSupplier*,
                              CORBA::Environment&);
   // Used to inform the EC that a Supplier has connected or

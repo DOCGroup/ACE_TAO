@@ -37,6 +37,12 @@ TAO_EC_Trivial_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier*,
 }
 
 void
+TAO_EC_Trivial_Supplier_Filter::reconnected (TAO_EC_ProxyPushSupplier*,
+                                             CORBA::Environment &)
+{
+}
+
+void
 TAO_EC_Trivial_Supplier_Filter::disconnected (TAO_EC_ProxyPushSupplier*,
                                               CORBA::Environment &)
 {

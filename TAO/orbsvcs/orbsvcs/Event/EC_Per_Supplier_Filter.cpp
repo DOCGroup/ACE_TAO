@@ -85,6 +85,36 @@ TAO_EC_Per_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier* supplier,
 }
 
 void
+TAO_EC_Per_Supplier_Filter::reconnected (TAO_EC_ProxyPushSupplier* supplier,
+                                         CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+
+  if (this->consumer_ == 0)
+    return;
+
+  const RtecEventChannelAdmin::SupplierQOS& pub =
+    this->consumer_->publications_i ();
+
+  for (CORBA::ULong j = 0; j < pub.publications.length (); ++j)
+    {
+      const RtecEventComm::Event& event =
+        pub.publications[j].event;
+
+      //      ACE_DEBUG ((LM_DEBUG, "Trying %d:%d in %x\n",
+      //                  event.header.source, event.header.type,
+      //                  this));
+      if (supplier->can_match (event.header))
+        {
+          //          ACE_DEBUG ((LM_DEBUG, "  matched %x\n", supplier));
+          this->supplier_set_->connected (supplier, ACE_TRY_ENV);
+          return;
+        }
+    }
+  this->supplier_set_->disconnected (supplier, ACE_TRY_ENV);
+}
+
+void
 TAO_EC_Per_Supplier_Filter::disconnected (TAO_EC_ProxyPushSupplier* supplier,
                                           CORBA::Environment &ACE_TRY_ENV)
 {
