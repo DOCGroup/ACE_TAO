@@ -671,6 +671,8 @@ ACE_OS::umask (mode_t cmask)
 #define ACE_FAIL_RETURN(RESULT) do { \
   switch (errno = ::GetLastError ()) { \
   case ERROR_NOT_ENOUGH_MEMORY: errno = ENOMEM; break; \
+  case ERROR_FILE_EXISTS:       errno = EEXIST; break; \
+  case ERROR_SHARING_VIOLATION: errno = EACCES; break; \
   } \
   return RESULT; } while (0)
 
@@ -6280,22 +6282,9 @@ ACE_OS::open (const char *filename,
                                 0);
 
   if (h == ACE_INVALID_HANDLE)
-    {
-      errno = ::GetLastError ();
-
-      switch (errno)
-        {
-        case ERROR_FILE_EXISTS:
-          errno = EEXIST;
-          break;
-          /* NOTREACHED */
-        case ERROR_SHARING_VIOLATION:
-          errno = EACCES;
-          break;
-          /* NOTREACHED */
-        }
-    }
-  return h;
+    ACE_FAIL_RETURN (h);
+  else
+    return h;
 #else
   ACE_UNUSED_ARG (sa);
   ACE_OSCALL_RETURN (::open (filename, mode, perms), ACE_HANDLE, -1);
@@ -7492,6 +7481,8 @@ ACE_OS::open (const wchar_t *filename,
 
   if ((mode & (_O_CREAT | _O_EXCL)) == (_O_CREAT | _O_EXCL))
     creation = CREATE_NEW;
+  else if ((mode & (_O_CREAT | _O_TRUNC)) == (_O_CREAT | _O_TRUNC))
+    creation = CREATE_ALWAYS;
   else if (ACE_BIT_ENABLED (mode, _O_CREAT))
     creation = OPEN_ALWAYS;
   else if (ACE_BIT_ENABLED (mode, _O_TRUNC))
@@ -7526,14 +7517,9 @@ ACE_OS::open (const wchar_t *filename,
                                 0);
 
   if (h == ACE_INVALID_HANDLE)
-    {
-      switch ((errno = ::GetLastError ()))
-        {
-        case ERROR_FILE_EXISTS:
-          errno = EEXIST;
-        }
-    }
-  return h;
+    ACE_FAIL_RETURN (h);
+  else
+    return h;
 }
 
 ACE_INLINE int 

@@ -1,3 +1,9 @@
+Mon Oct 20 22:34:46 1997    <irfan@TWOSTEP>
+
+	* ace/OS.i (open): Moved Win32 specific errno mappings from open()
+ 	  to ACE_FAIL_RETURN. Also updated the wide-character version of
+ 	  open().
+
 Mon Oct 20 14:07:37 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/config-hpux-10.x.h: Added #define ACE_DEFAULT_BASE_ADDR
