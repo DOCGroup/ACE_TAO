@@ -4,9 +4,8 @@
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
 !IF "$(CFG)" == ""
-CFG=Map_Manager_Test - Win32 Debug
-!MESSAGE No configuration specified.  Defaulting to Map_Manager_Test - Win32\
- Debug.
+CFG=Pipe_Test - Win32 Debug
+!MESSAGE No configuration specified.  Defaulting to Pipe_Test - Win32 Debug.
 !ENDIF 
 
 !IF "$(CFG)" != "CPP_Test - Win32 Debug" && "$(CFG)" !=\
@@ -28,12 +27,12 @@ CFG=Map_Manager_Test - Win32 Debug
  "Thread_Pool_Test - Win32 Debug" && "$(CFG)" != "Future_Test - Win32 Debug" &&\
  "$(CFG)" != "Tokens_Test - Win32 Debug" && "$(CFG)" !=\
  "Message_Queue_Test - Win32 Debug" && "$(CFG)" !=\
- "Map_Manager_Test - Win32 Debug"
+ "Map_Manager_Test - Win32 Debug" && "$(CFG)" != "Pipe_Test - Win32 Debug"
 !MESSAGE Invalid configuration "$(CFG)" specified.
 !MESSAGE You can specify a configuration when running NMAKE on this makefile
 !MESSAGE by defining the macro CFG on the command line.  For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "tests.mak" CFG="Map_Manager_Test - Win32 Debug"
+!MESSAGE NMAKE /f "tests.mak" CFG="Pipe_Test - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -88,6 +87,7 @@ CFG=Map_Manager_Test - Win32 Debug
  "Win32 (x86) Console Application")
 !MESSAGE "Map_Manager_Test - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
+!MESSAGE "Pipe_Test - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 !ERROR An invalid configuration is specified.
 !ENDIF 
@@ -100,8 +100,8 @@ NULL=nul
 ################################################################################
 # Begin Project
 # PROP Target_Last_Scanned "Priority_Buffer_Test - Win32 Debug"
-CPP=cl.exe
 RSC=rc.exe
+CPP=cl.exe
 
 !IF  "$(CFG)" == "CPP_Test - Win32 Debug"
 
@@ -1669,6 +1669,64 @@ LINK32_OBJS= \
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
 
+!ELSEIF  "$(CFG)" == "Pipe_Test - Win32 Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "Pipe_Test\Debug"
+# PROP BASE Intermediate_Dir "Pipe_Test\Debug"
+# PROP BASE Target_Dir "Pipe_Test"
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "."
+# PROP Intermediate_Dir "Debug"
+# PROP Target_Dir "Pipe_Test"
+OUTDIR=.\.
+INTDIR=.\Debug
+
+ALL : "$(OUTDIR)\Pipe_Test.exe"
+
+CLEAN : 
+	-@erase ".\Debug\vc40.pdb"
+	-@erase ".\Debug\vc40.idb"
+	-@erase ".\Pipe_Test.exe"
+	-@erase ".\Debug\Pipe_Test.obj"
+	-@erase ".\Pipe_Test.ilk"
+	-@erase ".\Pipe_Test.pdb"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
+
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
+ /Fp"$(INTDIR)/Pipe_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/Pipe_Test.bsc" 
+BSC32_SBRS=
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
+ comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
+ odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
+ /pdb:"$(OUTDIR)/Pipe_Test.pdb" /debug /machine:I386\
+ /out:"$(OUTDIR)/Pipe_Test.exe" 
+LINK32_OBJS= \
+	"$(INTDIR)/Pipe_Test.obj"
+
+"$(OUTDIR)\Pipe_Test.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
 !ENDIF 
 
 CPP_OBJS=.\Debug/
@@ -2589,11 +2647,46 @@ DEP_CPP_PRIOR=\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Proactor.h"\
+	{$(INCLUDE)}"\ace\ReactorEx.h"\
+	{$(INCLUDE)}"\ace\Service_Config.i"\
+	{$(INCLUDE)}"\ace\Reactor.h"\
+	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
+	{$(INCLUDE)}"\ace\Proactor.i"\
+	{$(INCLUDE)}"\ace\Timer_Queue.i"\
+	{$(INCLUDE)}"\ace\Token.h"\
+	{$(INCLUDE)}"\ace\Local_Tokens.h"\
+	{$(INCLUDE)}"\ace\ReactorEx.i"\
+	{$(INCLUDE)}"\ace\Token.i"\
+	{$(INCLUDE)}"\ace\Stack.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Map_Manager.h"\
+	{$(INCLUDE)}"\ace\Local_Tokens.i"\
+	{$(INCLUDE)}"\ace\Stack.i"\
+	{$(INCLUDE)}"\ace\Stack.cpp"\
+	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Handle_Set.h"\
+	{$(INCLUDE)}"\ace\Pipe.h"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
+	{$(INCLUDE)}"\ace\Reactor.i"\
+	{$(INCLUDE)}"\ace\Handle_Set.i"\
+	{$(INCLUDE)}"\ace\Pipe.i"\
+	{$(INCLUDE)}"\ace\SOCK_IO.h"\
+	{$(INCLUDE)}"\ace\INET_Addr.h"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
+	{$(INCLUDE)}"\ace\SOCK.h"\
+	{$(INCLUDE)}"\ace\SOCK_IO.i"\
+	{$(INCLUDE)}"\ace\Addr.h"\
+	{$(INCLUDE)}"\ace\IPC_SAP.h"\
+	{$(INCLUDE)}"\ace\SOCK.i"\
+	{$(INCLUDE)}"\ace\Addr.i"\
+	{$(INCLUDE)}"\ace\IPC_SAP.i"\
+	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	
 NODEP_CPP_PRIOR=\
 	".\..\ace\ace\ws2tcpip.h"\
@@ -3801,7 +3894,12 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
 	{$(INCLUDE)}"\ace\Token_Invariants.h"\
 	".\test_config.h"\
-	{$(INCLUDE)}"\ace\Process.i"\
+	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Time_Value.i"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
@@ -3819,16 +3917,12 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Time_Value.i"\
 	{$(INCLUDE)}"\ace\Stack.i"\
 	{$(INCLUDE)}"\ace\Stack.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -3891,6 +3985,9 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Pipe.i"\
 	{$(INCLUDE)}"\ace\Token_Invariants.i"\
+	
+NODEP_CPP_TOKEN=\
+	".\..\ace\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Tokens_Test.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"
@@ -4066,6 +4163,41 @@ NODEP_CPP_MAP_M=\
 	
 
 "$(INTDIR)\Map_Manager_Test.obj" : $(SOURCE) $(DEP_CPP_MAP_M) "$(INTDIR)"
+
+
+# End Source File
+# End Target
+################################################################################
+# Begin Target
+
+# Name "Pipe_Test - Win32 Debug"
+################################################################################
+# Begin Source File
+
+SOURCE=.\Pipe_Test.cpp
+DEP_CPP_PIPE_=\
+	{$(INCLUDE)}"\ace\Pipe.h"\
+	".\test_config.h"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\Pipe.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Time_Value.i"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	
+NODEP_CPP_PIPE_=\
+	".\..\ace\ace\ws2tcpip.h"\
+	
+
+"$(INTDIR)\Pipe_Test.obj" : $(SOURCE) $(DEP_CPP_PIPE_) "$(INTDIR)"
 
 
 # End Source File
