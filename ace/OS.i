@@ -1170,8 +1170,7 @@ ACE_INLINE int
 ACE_OS::mutex_lock (ACE_mutex_t *m, int &abandoned)
 {
   // ACE_TRACE ("ACE_OS::mutex_lock");
-#if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_WTHREADS)
+#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_WTHREADS)
   abandoned = 0;
   switch (m->type_)
     {
@@ -1197,11 +1196,10 @@ ACE_OS::mutex_lock (ACE_mutex_t *m, int &abandoned)
       return -1;
     }
   /* NOTREACHED */
-#endif /* ACE_HAS_WTHREADS */
-#else
+#else 		     
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS */		     
+#endif /* ACE_HAS_THREADS and ACE_HAS_WTHREADS */ 
 }
 
 ACE_INLINE int 
