@@ -1,6 +1,13 @@
-Wed Jul 16 00:33:10 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>		
+Wed Jul 16 08:34:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tao/TAO_Internal.cpp: 
+        * orbsvcs/orbsvcs/Event/EC_Sched_Factory.cpp:
+          Fixed incorrect checking of ECScheduling option, priority was
+          checked twice, the first check for priority should be group.
+          Thanks to Kees van Marle <kvmarle@remedy.nl> for reporting this
+
+Wed Jul 16 00:33:10 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/TAO_Internal.cpp:
 
 	  Called the RTScheduler_Loader::init () method to initialize
 	  RTScheduler framework.
@@ -8,7 +15,7 @@ Wed Jul 16 00:33:10 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	* tao/RTScheduling/Current.cpp:
 
 	  Added new debug statements and ensured the other debug
-	  statements are printed when debug level > 0. 
+	  statements are printed when debug level > 0.
 
 	  In delete_all_currents method initialized the
 	  tss->rtscheduler_current_impl_ to
@@ -16,7 +23,7 @@ Wed Jul 16 00:33:10 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	  restored to the state of the previous DT that was serviced by
 	  the same native thread.
 
-	* tao/RTScheduling/RTScheduling_Interceptor:	
+	* tao/RTScheduling/RTScheduling_Interceptor:
 
 	  Added a check to ensure that the scheduler returns a non-null
 	  Guid when a DT request is received.
@@ -24,38 +31,38 @@ Wed Jul 16 00:33:10 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	  Ensured that the debug statements are printed when debug level >
 	  0.
 
-Wed Jul 16 00:03:40 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>	
+Wed Jul 16 00:03:40 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	Tests for the Dynamic Scheduling framework
 
-	* tests/RTScheduling/Scheduler.h: 
-	* tests/RTScheduling/Scheduler.cpp: 	
+	* tests/RTScheduling/Scheduler.h:
+	* tests/RTScheduling/Scheduler.cpp:
 
-	  The scheduler used in the following tests. 
-	
+	  The scheduler used in the following tests.
+
 	VoidData
 	--------
 
 	* tests/RTScheduling/VoidData/test.pidl:
-	* tests/RTScheduling/VoidData/testC.h: 
-	* tests/RTScheduling/VoidData/testC.cpp: 	
-	* tests/RTScheduling/VoidData/testC.i: 		
-	* tests/RTScheduling/VoidData/test.h: 
-	* tests/RTScheduling/VoidData/test_client.cpp: 
-	* tests/RTScheduling/VoidData/README: 	
-	* tests/RTScheduling/VoidData/Makefile: 
+	* tests/RTScheduling/VoidData/testC.h:
+	* tests/RTScheduling/VoidData/testC.cpp:
+	* tests/RTScheduling/VoidData/testC.i:
+	* tests/RTScheduling/VoidData/test.h:
+	* tests/RTScheduling/VoidData/test_client.cpp:
+	* tests/RTScheduling/VoidData/README:
+	* tests/RTScheduling/VoidData/Makefile:
 
 	  A simple test to test the passing of CORBA::VoidData to a
 	  method.
 
 	Current
 	-------
-	
-	* tests/RTScheduling/Current/test.cpp: 
-	* tests/RTScheduling/Current/Thread_Task.cpp: 
-	* tests/RTScheduling/Current/Thread_Task.h: 
-	* tests/RTScheduling/Current/Makefile: 
-	* tests/RTScheduling/Current/README: 
+
+	* tests/RTScheduling/Current/test.cpp:
+	* tests/RTScheduling/Current/Thread_Task.cpp:
+	* tests/RTScheduling/Current/Thread_Task.h:
+	* tests/RTScheduling/Current/Makefile:
+	* tests/RTScheduling/Current/README:
 
 	  This is a test of the various operations in the
 	  RTScheduling::Current Interface used to create and manage
@@ -72,12 +79,12 @@ Wed Jul 16 00:03:40 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	DT_Spawn
 	--------
-	
-	* tests/RTScheduling/DT_Spawn/Thread_Action.h: 
-	* tests/RTScheduling/DT_Spawn/test.cpp: 
-	* tests/RTScheduling/DT_Spawn/Makefile: 
-	* tests/RTScheduling/DT_Spawn/README: 
-	     
+
+	* tests/RTScheduling/DT_Spawn/Thread_Action.h:
+	* tests/RTScheduling/DT_Spawn/test.cpp:
+	* tests/RTScheduling/DT_Spawn/Makefile:
+	* tests/RTScheduling/DT_Spawn/README:
+
  	  This is a test for forking new DTs from existing DTs using
 	  Current::spawn (). A local DT is created with
 	  Current::begin_scheduling_segment() and
@@ -92,12 +99,12 @@ Wed Jul 16 00:03:40 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	Thread_Cancel
 	-------------
 
-	* tests/RTScheduling/Thread_Cancel/test.cpp: 
-	* tests/RTScheduling/Thread_Cancel/Thread_Task.cpp: 
-	* tests/RTScheduling/Thread_Cancel/Thread_Task.h: 
-	* tests/RTScheduling/Thread_Cancel/README: 
-	* tests/RTScheduling/Thread_Cancel/Makefile: 	
-	
+	* tests/RTScheduling/Thread_Cancel/test.cpp:
+	* tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
+	* tests/RTScheduling/Thread_Cancel/Thread_Task.h:
+	* tests/RTScheduling/Thread_Cancel/README:
+	* tests/RTScheduling/Thread_Cancel/Makefile:
+
           This test illustrates the DT cancel mechanism when the DT's are
 	  local (ie. DT's do not span multiple nodes). A reference to each
 	  DT is stored. These references are then used to cancel the
@@ -106,12 +113,12 @@ Wed Jul 16 00:03:40 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	Scheduling_Interceptor
   	----------------------
-	
-	* tests/RTScheduling/Scheduling_Interceptor/test_client.cpp: 
-	* tests/RTScheduling/Scheduling_Interceptor/test_server.cpp: 
-	* tests/RTScheduling/Scheduling_Interceptor/test.idl: 
-	* tests/RTScheduling/Scheduling_Interceptor/Makefile: 
-	* tests/RTScheduling/Scheduling_Interceptor/README: 
+
+	* tests/RTScheduling/Scheduling_Interceptor/test_client.cpp:
+	* tests/RTScheduling/Scheduling_Interceptor/test_server.cpp:
+	* tests/RTScheduling/Scheduling_Interceptor/test.idl:
+	* tests/RTScheduling/Scheduling_Interceptor/Makefile:
+	* tests/RTScheduling/Scheduling_Interceptor/README:
 
 	  This test creates a distributed DT ie. a DT that spans multiple
 	  hosts/processes. In this test they span two hosts/processes. The
@@ -128,8 +135,8 @@ Wed Jul 16 00:03:40 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	  DT when it is cancelled on a remote host/process it is currently
 	  executing in.
 
-	* tests/Makefile: 
-	* tests/RTScheduling/Makefile: 
+	* tests/Makefile:
+	* tests/RTScheduling/Makefile:
 
 	  Corresponding Makefiles to compile all the RTScheduling tests.
 
@@ -139,7 +146,7 @@ Tue Jul 15 16:12:56 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/colocated.conf:
 
 	  Fixed typos in the scripts.
-	
+
 Tue Jul 15 14:49:13 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* tests/Makefile.bor
