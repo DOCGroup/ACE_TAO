@@ -1,3 +1,10 @@
+Thu May 13 18:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Added ACE_LD_SEARCH_PATH defined as PATH. Because Cygwin runs on
+          Windows we must use PATH and not LD_LIBRARY_PATH which is the
+          default in ACE
+
 Thu May 13 15:59:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
