@@ -1,3 +1,9 @@
+Thu Oct 16 19:52:25 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/tests/RTCosScheduling/Object1_i.h: 
+	* orbsvcs/tests/RTCosScheduling/Object1_i.cpp: Fixed compile
+	  errors with no exceptions build.
+
 Thu Oct 16 16:09:21 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/tests/RTCosScheduling/Makefile: Updated dependencies and
