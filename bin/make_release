@@ -48,7 +48,7 @@ my $dot_path = '/project/doc/pkg/gv1.5/bin';
 
 my $doxy_path = '/project/doc/pkg/doxygen-1.2.3/bin';
 my $doxy_version = '1.2.3';
-&can_run($doxy_path.'/doxygen --version | grep -q '.$doxy_version) ||
+&can_run($doxy_path.'/doxygen --version | grep '.$doxy_version.' >/dev/null') ||
   die "$0: doxygen path or version incorrect, please fix the script\n";
 $ENV{'PATH'} = $ENV{'PATH'}.':'.$doxy_path;
 
