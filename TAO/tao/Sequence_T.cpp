@@ -263,6 +263,22 @@ TAO_Object_Manager<T,T_var>::operator=(T_var &p)
   return *this;
 }
 
+template <class T, class T_var> T *&
+TAO_Object_Manager<T,T_var>::out (void)
+{
+  CORBA::release (*this->ptr_);
+  *this->ptr_ = T::_nil ();
+  return *this->ptr_;
+}
+
+template <class T, class T_var> T *
+TAO_Object_Manager<T,T_var>::_retn (void)
+{
+  T *temp = *this->ptr_;
+  *this->ptr_ = T::_nil ();
+  return temp;
+}
+
 // *************************************************************
 // class TAO_Pseudo_Object_Manager
 // *************************************************************
@@ -1073,7 +1089,7 @@ TAO_Bounded_WString_Sequence (const TAO_Bounded_WString_Sequence<MAX> &rhs)
 {
   CORBA::WChar **tmp1 =
     TAO_Bounded_WString_Sequence<MAX>::allocbuf (this->maximum_);
-  CORBA::WChar ** const tmp2 = 
+  CORBA::WChar ** const tmp2 =
     ACE_reinterpret_cast (CORBA::WChar ** ACE_CAST_CONST,
                           rhs.buffer_);
 
@@ -1092,7 +1108,7 @@ TAO_Bounded_WString_Sequence<MAX>::operator=
 
   if (this->release_)
     {
-      CORBA::WChar **tmp = ACE_reinterpret_cast (CORBA::WChar **, 
+      CORBA::WChar **tmp = ACE_reinterpret_cast (CORBA::WChar **,
                                                  this->buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
@@ -1109,9 +1125,9 @@ TAO_Bounded_WString_Sequence<MAX>::operator=
 
   TAO_Bounded_Base_Sequence::operator= (rhs);
 
-  CORBA::WChar **tmp1 = ACE_reinterpret_cast (CORBA::WChar **, 
+  CORBA::WChar **tmp1 = ACE_reinterpret_cast (CORBA::WChar **,
                                               this->buffer_);
-  CORBA::WChar ** const tmp2 = 
+  CORBA::WChar ** const tmp2 =
     ACE_reinterpret_cast (CORBA::WChar ** ACE_CAST_CONST,
                           rhs.buffer_);
 
@@ -1124,7 +1140,7 @@ template<size_t MAX> TAO_SeqElem_WString_Manager
 TAO_Bounded_WString_Sequence<MAX>::operator[] (CORBA::ULong slot) const
 {
   ACE_ASSERT (slot < this->maximum_);
-  CORBA::WChar **const tmp = 
+  CORBA::WChar **const tmp =
     ACE_reinterpret_cast (CORBA::WChar **ACE_CAST_CONST,
                           this->buffer_);
   return TAO_SeqElem_WString_Manager (tmp + slot,
@@ -1177,7 +1193,7 @@ TAO_Bounded_WString_Sequence<MAX>::_deallocate_buffer (void)
 {
   if (this->release_ == 0)
     return;
-  CORBA::WChar **tmp = ACE_reinterpret_cast (CORBA::WChar **, 
+  CORBA::WChar **tmp = ACE_reinterpret_cast (CORBA::WChar **,
                                              this->buffer_);
   TAO_Bounded_WString_Sequence<MAX>::freebuf (tmp);
   this->buffer_ = 0;
