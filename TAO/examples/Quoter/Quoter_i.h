@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/tests/Quoter
+//    TAO/examples/Quoter
 //
 // = FILENAME
 //    Quoter_i.h
@@ -35,8 +35,8 @@ class Quoter_i: public POA_Stock::Quoter
   //   and provides an example for the lifecycle functionality.
 public:
   Quoter_i (const char *obj_name = "",
-               const unsigned char use_LifeCycle_Service = 0,
-               PortableServer::POA_ptr poa_ptr = 0);
+            const unsigned char use_LifeCycle_Service = 0,
+            PortableServer::POA_ptr poa_ptr = 0);
   // Constructor (use_LifeCycle_Service is 1 if the LifeCycle_Service should be used
   // instead of the Quoter Generic_Factory
 
@@ -44,7 +44,7 @@ public:
   // Destructor
 
   virtual CORBA::Long get_quote (const char *stock_name,
-                                 CORBA::Environment &env);
+                                 CORBA::Environment &ACE_TRY_ENV);
   // Returns the current quote for the stock <stock_name>
 
   // = Lifecycle methods
@@ -56,10 +56,10 @@ public:
 
   virtual void move (CosLifeCycle::FactoryFinder_ptr there,
                      const CosLifeCycle::Criteria &the_criteria,
-                     CORBA::Environment &_tao_environment);
+                     CORBA::Environment &ACE_TRY_ENV);
   // Move this object using <there>
 
-  virtual void remove (CORBA::Environment &_tao_environment);
+  virtual void remove (CORBA::Environment &ACE_TRY_ENV);
   // Removes the object.
 
 private:
@@ -90,11 +90,17 @@ public:
   ~Quoter_Factory_i (void);
   // Destructor.
 
+  int Quoter_Factory_i::init (CORBA::Environment &ACE_TRY_ENV);
+  // Initialize everything in the factory
+
   virtual Stock::Quoter_ptr create_quoter (const char *name,
-                                           CORBA::Environment &env);
+                                           CORBA::Environment &ACE_TRY_ENV);
   // Return the quoter by the id <name>.
 
 private:
+  PortableServer::POA_ptr poa_ptr_;
+  // Pointer to the poa.
+
   Quoter_i **my_quoters_;
   // Array of quoters.
 
