@@ -1,3 +1,17 @@
+Tue Sep 19 13:32:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+
+	  Added code to generate ACE_NESTED_CLASS macro in the
+	  stub interceptor request info class constructor when a
+	  primitive type is typedef'd in the same scope as the
+	  operation and used as a parameter in that operation.
+	  Also made a similar addition to the code generation of
+	  the request info class' private member list. Thanks to
+	  Aniruddha Gokhale <gokhale@research.bell-labs.com> for
+	  pointing out this bug.
+
 Tue Sep 19 11:02:39 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/TAO.dsp:
