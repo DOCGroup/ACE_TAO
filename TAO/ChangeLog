@@ -1,3 +1,10 @@
+Mon Apr 28 18:09:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_home.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+
+          Fixed code generation for home-related interfaces.
+
 Mon Apr 28 17:35:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_sequence.cpp:
