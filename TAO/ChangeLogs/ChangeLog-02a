@@ -1,3 +1,13 @@
+Mon Apr 23 22:05:56 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Transport.h:
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
+          Update to match the new Transport classes.
+
+        * tao/IIOP_Transport.cpp:
+          Cosmetic fixes
+
 Mon Apr 23 21:10:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/AMI_Buffering/client.cpp:

@@ -51,14 +51,6 @@ TAO_IIOP_Transport::~TAO_IIOP_Transport (void)
   delete this->messaging_object_;
 }
 
-#if 0
-ACE_HANDLE
-TAO_IIOP_Transport::handle (void)
-{
-  return this->connection_handler_->get_handle ();
-}
-#endif
-
 ACE_Event_Handler *
 TAO_IIOP_Transport::event_handler_i (void)
 {
@@ -523,11 +515,3 @@ TAO_IIOP_Transport::transition_handler_state_i (void)
 {
   this->connection_handler_ = 0;
 }
-
-#if 0
-TAO_Connection_Handler*
-TAO_IIOP_Transport::connection_handler (void) const
-{
-  return this->connection_handler_;
-}
-#endif
