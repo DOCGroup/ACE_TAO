@@ -1,21 +1,29 @@
+Wed Sep  1 12:52:40 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+
+          Split out the ACE specific portion of AutomakeWorkspaceCreator.pm
+          into a new helper module.  The helper module is dynamically loaded
+          in by the AutomakeWorkspaceCreator.
+
 Wed Sep  1 10:01:57 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/SOCK_Dgram_Bcast.cpp:
+        * ace/SOCK_Dgram_Bcast.cpp:
 
-	  Added !defined(__NetBSD__) to conditional so sockaddr.sa_len
-	  version of the code will be used.  Fixes SOCK_Bcast_Dgram_Test
-	  failures.
+          Added !defined(__NetBSD__) to conditional so sockaddr.sa_len
+          version of the code will be used.  Fixes SOCK_Bcast_Dgram_Test
+          failures.
 
-	* ace/Sock_Connect.cpp:
+        * ace/Sock_Connect.cpp:
 
-	  Added !defined(__NetBSD__) to conditional so sockaddr.sa_len
-	  version of the code will be used.
+          Added !defined(__NetBSD__) to conditional so sockaddr.sa_len
+          version of the code will be used.
 
 Wed Sep  1 12:40:28 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-aix-4.x.h: Changed the ACE_HAS_3_PARAM_WCSTOK test to
-	  include _XOPEN_SOURCE >= 500, not == 500. Fixes compile error
-	  on AIX 5.2.
+        * ace/config-aix-4.x.h: Changed the ACE_HAS_3_PARAM_WCSTOK test to
+          include _XOPEN_SOURCE >= 500, not == 500. Fixes compile error
+          on AIX 5.2.
 
 Wed Sep  1 12:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -24,10 +32,10 @@ Wed Sep  1 12:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Sep  1 07:43:46 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* tests/Message_Queue_Notifications_Test.cpp (producer): Fixed 
-	  this test so it works with the changes to
- 	  ACE_Message_Queue::is_full_i() below.  Thanks to Rick Robinson
- 	  for this fix, as well.
+        * tests/Message_Queue_Notifications_Test.cpp (producer): Fixed
+          this test so it works with the changes to
+          ACE_Message_Queue::is_full_i() below.  Thanks to Rick Robinson
+          for this fix, as well.
 
         * ace/Message_Queue_T.inl: Changed the implementation of
           is_full_i() so the comparision operator is >= rather than >,
@@ -35,10 +43,10 @@ Wed Sep  1 07:43:46 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
           the enqueue side of the queue.  Thanks to Rick Robinson
           <rick@oyarsa.com> for reporting this.
 
-	* ace/POSIX_Proactor.h: Updated the documentation to use
-	  the right names for ACE_POSIX_SIG_Proactor and
- 	  ACE_POSIX_AIOCB_Proactor.  Thanks to John D. Robertson
- 	  <john@rrci.com> for motivating this fix.
+        * ace/POSIX_Proactor.h: Updated the documentation to use
+          the right names for ACE_POSIX_SIG_Proactor and
+          ACE_POSIX_AIOCB_Proactor.  Thanks to John D. Robertson
+          <john@rrci.com> for motivating this fix.
 
 Wed Sep  1 07:00:39 2004  Chad Elliott  <elliott_c@ociweb.com>
 
