@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   Options.h
@@ -17,10 +18,10 @@
 #include "Repository_Configuration.h"
 
 #include "tao/ORB.h"
-#include "ace/Singleton.h"
-#include "ace/FILE_Addr.h"
-
 #include "tao/PortableServer/ImplRepoC.h"
+
+#include "ace/Singleton.h"
+
 
 // Forward declarations
 class ACE_ARGV;

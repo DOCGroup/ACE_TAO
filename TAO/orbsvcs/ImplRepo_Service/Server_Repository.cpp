@@ -1,19 +1,22 @@
-/* -*- C++ -*- */
-
-// $Id$
-
 #include "Server_Repository.h"
+#include "XML_ContentHandler.h"
 #include "Options.h"
 
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/FileCharStream.h"
 
-Server_Repository::Server_Repository ()
+
+ACE_RCSID (ImplRepo_Service,
+           Server_Repository,
+           "$Id$")
+
+
+Server_Repository::Server_Repository (void)
 {
 }
 
 
-Server_Repository::~Server_Repository ()
+Server_Repository::~Server_Repository (void)
 {
 }
 
@@ -21,7 +24,7 @@ Server_Repository::~Server_Repository ()
 // Initialize the the configuration class.
 
 int
-Server_Repository::init ()
+Server_Repository::init (void)
 {
   ACE_TCHAR *mode = OPTIONS::instance ()->repository_mode ();
 
@@ -173,7 +176,7 @@ Server_Repository::add (
       ACE_TCHAR buffer[4096];
       ACE_TCHAR *found;
 
-      while (ACE_OS::fgets (buffer, 4096, fp))
+      while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
         {
           /// Obviously, we need to/can update only if we find an
           /// entry for it in the xml file.
@@ -256,7 +259,7 @@ Server_Repository::update (const ACE_CString POA_name,
 
       ACE_TCHAR *found;
 
-      while (ACE_OS::fgets (buffer, 4096, fp))
+      while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
         {
           /// Obviously, we need to/can update only if we find an
           /// entry for it in the xml file.
@@ -388,7 +391,7 @@ Server_Repository::get_running_info (const ACE_CString POA_name,
       ACE_TCHAR buffer[4096];
       ACE_TCHAR *found;
 
-      while (ACE_OS::fgets (buffer, 4096, fp))
+      while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
         {
           found = ACE_OS::strstr (buffer, POA_name.c_str ());
 
@@ -442,7 +445,7 @@ Server_Repository::starting_up (const ACE_CString POA_name,
       ACE_TCHAR buffer[4096];
       ACE_TCHAR *found;
 
-      while (ACE_OS::fgets (buffer, 4096, fp))
+      while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
         {
           found = ACE_OS::strstr (buffer, POA_name.c_str ());
 
@@ -498,7 +501,7 @@ Server_Repository::starting_up (const ACE_CString POA_name)
       ACE_TCHAR buffer[4096];
       ACE_TCHAR *found;
 
-      while (ACE_OS::fgets (buffer, 4096, fp))
+      while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
         {
           found = ACE_OS::strstr (buffer, POA_name.c_str ());
 
@@ -557,7 +560,7 @@ Server_Repository::remove (const ACE_CString POA_name)
       ACE_TCHAR *found;
       // int dtd_section = 0;
 
-      while (ACE_OS::fgets (buffer, 4096, fp))
+      while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
         {
           if (remove_section == 0)
             {
@@ -590,7 +593,7 @@ Server_Repository::remove (const ACE_CString POA_name)
 
       fp = ACE_OS::fopen (filename, "w");
 
-      while (ACE_OS::fgets (buffer, 4096, fp_temp))
+      while (ACE_OS::fgets (buffer, sizeof (buffer), fp_temp))
         {
           ACE_OS::fprintf (fp,
                            buffer);

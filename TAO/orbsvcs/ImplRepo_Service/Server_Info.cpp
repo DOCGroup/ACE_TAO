@@ -1,8 +1,10 @@
-/* -*- C++ -*- */
-
-// $Id$
-
 #include "Server_Info.h"
+
+
+ACE_RCSID (ImplRepo_Service,
+           Server_Info,
+           "$Id$")
+
 
 Server_Info::Server_Info (
     const ACE_CString POA_name,
@@ -25,7 +27,7 @@ Server_Info::Server_Info (
 }
 
 
-Server_Info::~Server_Info ()
+Server_Info::~Server_Info (void)
 {
 }
 
