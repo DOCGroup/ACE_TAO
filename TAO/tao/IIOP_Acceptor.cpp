@@ -446,17 +446,17 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                            ACE_Reactor *reactor)
 {
   ACE_NEW_RETURN (this->creation_strategy_,
-                  TAO_IIOP_CREATION_STRATEGY (this->orb_core_,
-                                              &(this->tcp_properties_),
-                                              this->lite_flag_),
+                  CREATION_STRATEGY (this->orb_core_,
+                                     &(this->tcp_properties_),
+                                     this->lite_flag_),
                   -1);
 
   ACE_NEW_RETURN (this->concurrency_strategy_,
-                  TAO_IIOP_CONCURRENCY_STRATEGY (this->orb_core_),
+                  CONCURRENCY_STRATEGY (this->orb_core_),
                   -1);
 
   ACE_NEW_RETURN (this->accept_strategy_,
-                  TAO_IIOP_ACCEPT_STRATEGY (this->orb_core_),
+                  ACCEPT_STRATEGY (this->orb_core_),
                   -1);
 
   unsigned short requested_port = addr.get_port_number ();

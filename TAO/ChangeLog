@@ -1,3 +1,13 @@
+Wed Aug  4 21:23:52 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/IIOP_Acceptor.h (BASE_ACCEPTOR, CREATION_STRATEGY):
+	  (CONCURRENCY_STRATEGY, ACCEPT_STRATEGY):
+	* tao/IIOP_Acceptor.cpp:
+
+	  Removed the "TAO_IIOP_" prefix from these typedefs.  It was
+	  redundant since these typedefs are already encapsulated within
+	  the TAO_IIOP_Acceptor class.
+
 Wed Aug  4 21:16:42 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ClientCredentials.cpp
