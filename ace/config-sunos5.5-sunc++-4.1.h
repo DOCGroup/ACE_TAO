@@ -21,6 +21,9 @@
 // gets fixed on MP machines, we can't use this with Sun C++ 4.1/4.2 . . .
 // #define ACE_HAS_EXCEPTIONS
 
+// Platform supports pread() and pwrite()
+#define ACE_HAS_P_READ_WRITE
+
 #define ACE_HAS_UNICODE
 
 // Note that SunC++ 4.1 fixes template bugs that prevented earlier
