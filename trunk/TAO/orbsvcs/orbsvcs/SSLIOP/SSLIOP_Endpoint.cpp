@@ -22,12 +22,19 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const SSLIOP::SSL *ssl_component,
 {
   if (ssl_component != 0)
     {
+      // Copy the security association options in the IOR's SSL tagged
+      // component.
       this->ssl_component_.target_supports = ssl_component->target_supports;
       this->ssl_component_.target_requires = ssl_component->target_requires;
       this->ssl_component_.port = ssl_component->port;
     }
   else
     {
+      // No SSL tagged component is available so construct a default
+      // set of security association options, in addition to the IANA
+      // assigned IIOP over SSL port (684).  This is generally a
+      // client side issue.
+
       // Clear all bits in the SSLIOP::SSL association option fields.
       this->ssl_component_.target_supports = 0;
       this->ssl_component_.target_requires = 0;
@@ -40,13 +47,19 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const SSLIOP::SSL *ssl_component,
                     | Security::DetectMisordering
                     | Security::NoDelegation);
 
-      // SSLIOP supports these Security::AssociationOptions by default.
+      // SSLIOP supports these Security::AssociationOptions by
+      // default.
+      //
+      // Note that the Security::NoProtection bit is set since we
+      // can't be sure if the server supports SSL, and TAO's SSLIOP
+      // implementation must support IIOP over SSL and plain IIOP.
       ACE_SET_BITS (this->ssl_component_.target_supports,
                     Security::Integrity
                     | Security::Confidentiality
                     | Security::DetectReplay
                     | Security::DetectMisordering
                     | Security::EstablishTrustInTarget
+                    | Security::NoProtection
                     | Security::NoDelegation);
 
       // Initialize the default SSL port to the IANA assigned IIOP
