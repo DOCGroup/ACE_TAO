@@ -13,6 +13,7 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#define ACE_HAS_EXCEPTIONS
 #define ACE_LACKS_SIGNED_CHAR
 #define ACE_HAS_P_READ_WRITE
 #define ACE_HAS_IRIX62_THREADS
