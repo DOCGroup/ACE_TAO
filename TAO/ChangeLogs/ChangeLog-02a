@@ -1,3 +1,12 @@
+Thu May 24 18:31:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * performance-tests/POA/Implicit_Activation/Test.idl:
+
+          Put a leading underscore in front of an inteface
+          declaration named Factory, which differs from the 
+          IDL keyword 'factory' only by case. Generated code
+          will be unchanged.
+
 Thu May 24 18:19:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * docs/releasenotes/index.html:
