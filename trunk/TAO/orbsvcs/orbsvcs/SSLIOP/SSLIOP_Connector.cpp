@@ -14,6 +14,7 @@
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Invocation.h"
 #include "tao/Thread_Lane_Resources.h"
+#include "tao/Stub.h"
 
 #include "ace/Auto_Ptr.h"
 
