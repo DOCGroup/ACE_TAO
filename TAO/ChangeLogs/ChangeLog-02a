@@ -1,3 +1,9 @@
+Tue Jan 22 12:25:31 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/Strategies/simple_test.idl:
+
+          Changed a 'Boolean' to 'boolean'.
+
 2002-01-22  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile: 
