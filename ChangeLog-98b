@@ -1,3 +1,35 @@
+Wed Aug 19 10:13:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (ACE_Thread_Cleanup::remove): Don't bother to check
+	  the <in_use_> status when the object manager is shutting down.
+	  Otherwise, we are creating another fresh ACE_TSS object all over
+	  again.
+	  (ACE_Thread_Cleanup::detach): When cleaning up a thread key, we
+	  must first remove it from the internal table before actually
+	  freeing the key to avoid race condition (the OS may reassigned
+	  the key to other the_keycreate requests.)
+
+	* ace/Log_Msg.cpp (close): Removed the ACE_Thread::key_free
+	  statement.  This should be handled by TSS cleanup mechanism.
+
+	* ace/Thread_Manager.cpp (at_exit): Moved the return statement
+	  after #endif macros to avoid the no return compiler warning.
+
+	* tests/UPIPE_SAP_Test.cpp (main): Changed to use
+ 	  ACE_Thread_Manager to spawn and wait for threads so the TSS
+ 	  object gets cleanup correctly.  Using plain vanilla
+	  ACE_Thread::spawn and/or ACE_OS::thr_create no longer works
+	  correctly because we have merged ace_thread_adapter and
+	  ace_thread_manager_adapter into one adapter which always creates
+	  ACE_Thread_Exit in TSS.  But it won't get removed when using
+	  ACE_Thread::spawn and/or ACE_OS::thr_create.  The motto here,
+	  ACE_Thread::spawn and ACE_OS::thr_create are not for application
+	  programmers any more.
+
+	  You ***_MUST_NOT_*** use them in your applications anymore.
+	  Only use ACE_Thread_Manager to spawn user threads.  Otherwise,
+	  you'll have memory leaks for all ACE_TSS objects.
+
 Wed Aug 19 10:06:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * etc/ACE-guidelines.html: @added guidelines to check for
