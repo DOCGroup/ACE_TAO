@@ -14,24 +14,6 @@
 #include "Logging_Event_Handler_Ex.h"
 
 
-template <class ACCEPTOR>
-Reactor_Logging_Server<ACCEPTOR>::Reactor_Logging_Server
-  (int argc, char *argv[], ACE_Reactor *reactor)
-  : ACCEPTOR (reactor) {
-  u_short logger_port = argc > 1 ? atoi (argv[1]) : 0;
-  ACE_TYPENAME ACCEPTOR::PEER_ADDR server_addr;
-  int result;
-
-  if (logger_port != 0)
-    result = server_addr.set (logger_port, INADDR_ANY);
-  else
-    result = server_addr.set ("ace_logger", INADDR_ANY);
-  if (result != -1)
-    result = ACCEPTOR::open (server_addr);
-  if (result == -1) reactor->end_reactor_event_loop ();
-}
-
-
 class Quit_Handler : public ACE_Event_Handler {
 private:
   ACE_Manual_Event quit_seen_;
@@ -135,6 +117,7 @@ static void *event_loop (void *arg) {
 typedef Reactor_Logging_Server<Logging_Acceptor_WFMO>
         Server_Logging_Daemon;
 
+
 int main (int argc, char *argv[])
 {
   const size_t N_THREADS = 4;
@@ -142,6 +125,8 @@ int main (int argc, char *argv[])
   ACE_Reactor reactor (&wfmo_reactor);
 
   Server_Logging_Daemon *server;
+  // Ignore argv[0]...
+  --argc; ++argv;
   ACE_NEW_RETURN (server,
                   Server_Logging_Daemon (argc, argv, &reactor),
                   1);

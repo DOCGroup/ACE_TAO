@@ -13,9 +13,11 @@
 
 
 class Service_Reporter : public ACE_Service_Object {
-protected:
+public:
   Service_Reporter (ACE_Reactor *r = ACE_Reactor::instance ())
     : ACE_Service_Object (r) {}
+
+protected:
   // Hook methods inherited from <ACE_Service_Object>.
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int fini ();
