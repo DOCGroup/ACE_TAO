@@ -44,6 +44,8 @@ run Mutex_Test			        # uses Process_Mutex
 
 run Timer_Queue_Test		        # uses Event_Handler, Timer_Queue
 
+run SOCK_Connector_Test                 # uses SOCK_Connector
+
 run Task_Test			        # uses Thread_Manager, Task
 run Thread_Manager_Test		        # uses Thread_Manager, Task
 run Thread_Pool_Test		        # uses Thread_Manager, Task
