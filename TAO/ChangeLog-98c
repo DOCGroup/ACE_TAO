@@ -7,6 +7,7 @@ Wed Nov 25 00:47:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* tao/GIOP.cpp (send_error): 
 	* tao/Connect.cpp (handle_input): Prevent handle_close from being
 	  called in here.  Simply return -1 should do the trick.
+	  Otherwise, servers may crash when communication errors occur.
 
 Tue Nov 24 15:03:19 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
