@@ -1,3 +1,11 @@
+Wed Aug 11 13:06:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* rules.tao.GNU:
+	  Put some sanity back into the definition of the interface_repo
+	  macro. If set to 1 then we enable the interface repository
+	  features in TAO, otherwise it is disabled.  The default is to
+	  have them enabled.
+
 Wed Aug 11 12:13:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
