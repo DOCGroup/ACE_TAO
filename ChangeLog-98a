@@ -1,3 +1,10 @@
+Mon Dec 29 13:57:43 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* ace/OS.h: 
+	  The ACE_*_cast() macros had (IMHO) surprizing priority, added
+	  some parenthesis to make them behave as the new cast operators
+	  are supposed to do.
+
 Mon Dec 29 08:59:28 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Basic_Types.h: Linux w/o glibc 2.0 doesn't have u_longlong_t,
