@@ -265,7 +265,7 @@ void FT_TestReplica_i::set_update (const FT::State & s)
   ACE_THROW ( FT::InvalidUpdate () );
 #else // FT_TEST_LACKS_UPDATE
   KEVORKIAN(BEFORE_SET_UPDATE, set_update)
-  long counter = loadLong(s, 0);
+  long counter = loadLong<FT::State>(s, 0);
   store(counter);
   KEVORKIAN(AFTER_SET_UPDATE, set_update)
 #endif // FT_TEST_LACKS_UPDATE
@@ -295,7 +295,7 @@ void FT_TestReplica_i::set_state (const FT::State & s)
   ACE_THROW ( FT::InvalidState () );
 #else // FT_TEST_LACKS_STATE
   KEVORKIAN(BEFORE_SET_STATE, set_state)
-  long counter = loadLong(s, 0);
+  long counter = loadLong<FT::State>(s, 0);
   store(counter);
   KEVORKIAN(AFTER_SET_STATE, set_state)
 #endif // FT_TEST_LACKS_STATE
@@ -442,7 +442,7 @@ long FT_TestReplica_i::load ()
     unsigned char buffer[sizeof(long)];
     ACE_OS::fread(buffer, 1, sizeof(long), f);
     ACE_OS::fclose(f);
-    counter = loadLong(buffer, 0);
+    counter = loadLong<unsigned char *>(buffer, 0);
   }
   return counter;
 }

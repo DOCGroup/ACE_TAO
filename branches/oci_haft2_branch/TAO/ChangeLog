@@ -1,3 +1,13 @@
+Tue Dec  2 09:59:17 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/tests/FT_App/FTAPP_FactoryRegistry_Main.cpp:
+        * orbsvcs/tests/FT_App/FTAPP_Notifier_Main.cpp:
+        * orbsvcs/tests/FT_App/FT_Creator.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+          Build warnings/errors on Solaris & linux.
+
 Mon Dec  1 16:52:25 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
@@ -11,9 +21,9 @@ Mon Dec  1 16:52:25 2003  Dale Wilson  <wilson_d@ociweb.com>
         * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
           New method: has_member_at to support groups_at_location.
           New method: add_member_to_iogr refactor support for updating IOGR
-          Complete implementations of add_member, create_member, 
+          Complete implementations of add_member, create_member,
           and *populate methods.
-          
+
 
 Mon Dec  1 15:24:27 2003  Dale Wilson  <wilson_d@ociweb.com>
 
