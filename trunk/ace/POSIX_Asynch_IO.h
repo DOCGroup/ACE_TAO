@@ -12,7 +12,7 @@
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
- *  @author Roger Tragin <rtragin@cuseeme.com>
+ *  @author Roger Tragin <r.tragin@computer.org>
  */
 //=============================================================================
 
@@ -1714,10 +1714,24 @@ public:
   ACE_POSIX_AIOCB_Asynch_Read_Dgram (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
   virtual ~ACE_POSIX_AIOCB_Asynch_Read_Dgram (void);
 
-  /// Recv <buffer_count> worth of <buffers> from <addr> using
-  /// overlapped I/O (uses <WSARecvFrom>).  Returns 0 on success.
+  /** This starts off an asynchronous read.  Upto
+   * <message_block->total_size()> will be read and stored in the
+   * <message_block>.  <message_block>'s <wr_ptr> will be updated to reflect
+   * the added bytes if the read operation is successful completed.
+   * Return code of 1 means immediate success and number_of_bytes_recvd
+   * will contain number of bytes read.  The <ACE_Handler::handle_read_dgram>
+   * method will still be called.  Return code of 0 means the IO will
+   * complete proactively.  Return code of -1 means there was an error, use
+   * errno to get the error code.
+   *
+   * Priority of the operation is specified by <priority>. On POSIX4-Unix,
+   * this is supported. Works like <nice> in Unix. Negative values are not
+   * allowed. 0 means priority of the operation same as the process
+   * priority. 1 means priority of the operation is one less than
+   * process.  <signal_number> argument is a no-op on non-POSIX4 systems.
+   */
   virtual ssize_t recv (ACE_Message_Block *message_block,
-                        u_long num_bytes_to_read,
+                        size_t &number_of_bytes_recvd,
                         int flags,
                         int protocol_family,
                         const void *act,
@@ -1776,11 +1790,9 @@ public:
   /// asynchronous write.
   u_long bytes_to_write (void) const;
 
-  /// The address of where the packet was sent
-  int remote_address (ACE_Addr& addr) const;
-
-  sockaddr *saddr () const;
-
+  /// Message block which contains the sent data
+  ACE_Message_Block *message_block (void) const;
+ 
   /// The flags using in the write
   int flags (void) const;
 
@@ -1805,9 +1817,6 @@ public:
    * same as the ACT associated with the asynchronous operation.
    */
   const void *completion_key (void) const;
-
-  /// Message block which contains the sent data
-  ACE_Message_Block *message_block (void) const;
 
   /// Error value if the operation fail.
   u_long error (void) const;
@@ -1857,10 +1866,8 @@ protected:
   /// asynchronous write.
   u_long bytes_to_write_;
 
-  /// The address of where the packet was sent
-  ACE_Addr *remote_address_;
-
-  int addr_len_;
+  /// Message block used for the send.
+  ACE_Message_Block *message_block_;
 
   /// The flags using in the write
   int flags_;
@@ -1868,9 +1875,7 @@ protected:
   /// I/O handle used for writing.
   ACE_HANDLE handle_;
 
-  /// Message block used for the send.
-  ACE_Message_Block *message_block_;
-};
+  };
 
 
 /**
@@ -1894,8 +1899,22 @@ public:
   ACE_POSIX_AIOCB_Asynch_Write_Dgram (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
   virtual ~ACE_POSIX_AIOCB_Asynch_Write_Dgram (void);
 
-  /// Send <buffer_count> worth of <buffers> to <addr> using overlapped
-  /// I/O (uses <WSASentTo>).  Returns 0 on success.
+  /** This starts off an asynchronous send.  Upto
+   * <message_block->total_length()> will be sent.  <message_block>'s 
+   * <rd_ptr> will be updated to reflect the sent bytes if the send operation
+   * is successful completed.
+   * Return code of 1 means immediate success and number_of_bytes_sent
+   * is updated to number of bytes sent.  The <ACE_Handler::handle_write_dgram>
+   * method will still be called.  Return code of 0 means the IO will
+   * complete proactively.  Return code of -1 means there was an error, use
+   * errno to get the error code.
+   *
+   * Priority of the operation is specified by <priority>. On POSIX4-Unix,
+   * this is supported. Works like <nice> in Unix. Negative values are not
+   * allowed. 0 means priority of the operation same as the process
+   * priority. 1 means priority of the operation is one less than
+   * process. And so forth.  <signal_number> is a no-op on non-POSIX4 systems.
+   */
   virtual ssize_t send (ACE_Message_Block *message_block,
                         size_t &number_of_bytes_sent,
                         int flags,
@@ -1961,6 +1980,9 @@ public:
   /// asynchronous read.
   u_long bytes_to_read (void) const;
 
+  /// Message block which contains the read data
+  ACE_Message_Block *message_block (void) const;
+
   /// The address of where the packet came from
   int remote_address (ACE_Addr& addr) const;
 
@@ -1990,9 +2012,6 @@ public:
    * same as the ACT associated with the asynchronous operation.
    */
   const void *completion_key (void) const;
-
-  /// Message block which contains the read data
-  ACE_Message_Block *message_block (void) const;
 
   /// Error value if the operation fail.
   u_long error (void) const;
@@ -2042,6 +2061,9 @@ protected:
   /// Bytes requested when the asynchronous read was initiated.
   u_long bytes_to_read_;
 
+  /// Message block for reading the data into.
+  ACE_Message_Block *message_block_;
+
   /// The address of where the packet came from
   ACE_Addr *remote_address_;
 
@@ -2053,9 +2075,6 @@ protected:
   /// I/O handle used for reading.
   ACE_HANDLE handle_;
 
-  /// Message block for reading the data into.
-  ACE_Message_Block *message_block_;
-  
 };
 
 
@@ -2080,10 +2099,27 @@ public:
   ACE_POSIX_SIG_Asynch_Read_Dgram (ACE_POSIX_SIG_Proactor *posix_aiocb_proactor);
   virtual ~ACE_POSIX_SIG_Asynch_Read_Dgram (void);
 
-  /// Recv <buffer_count> worth of <buffers> from <addr> using
-  /// overlapped I/O (uses <WSARecvFrom>).  Returns 0 on success.
+  /** This starts off an asynchronous read.  Upto
+   * <message_block->total_size()> will be read and stored in the
+   * <message_block>.  <message_block>'s <wr_ptr> will be updated to reflect
+   * the added bytes if the read operation is successful completed.
+   * Return code of 1 means immediate success and number_of_bytes_recvd
+   * will contain number of bytes read.  The <ACE_Handler::handle_read_dgram>
+   * method will still be called.  Return code of 0 means the IO will
+   * complete proactively.  Return code of -1 means there was an error, use
+   * errno to get the error code.
+   *
+   * Priority of the operation is specified by <priority>. On POSIX4-Unix,
+   * this is supported. Works like <nice> in Unix. Negative values are not
+   * allowed. 0 means priority of the operation same as the process
+   * priority. 1 means priority of the operation is one less than
+   * process. And so forth.   <signal_number> is the POSIX4 real-time signal
+   * number to be used for the operation. <signal_number> ranges from
+   * ACE_SIGRTMIN to ACE_SIGRTMAX. This argument is a no-op on non-POSIX4
+   * systems.
+   */
   virtual ssize_t recv (ACE_Message_Block *message_block,
-                        u_long num_bytes_to_read,
+                        size_t &number_of_bytes_recvd,
                         int flags,
                         int protocol_family,
                         const void *act,
@@ -2143,8 +2179,24 @@ public:
   ACE_POSIX_SIG_Asynch_Write_Dgram (ACE_POSIX_SIG_Proactor *posix_aiocb_proactor);
   virtual ~ACE_POSIX_SIG_Asynch_Write_Dgram (void);
 
-  /// Send <buffer_count> worth of <buffers> to <addr> using overlapped
-  /// I/O (uses <WSASentTo>).  Returns 0 on success.
+  /** This starts off an asynchronous send.  Upto
+   * <message_block->total_length()> will be sent.  <message_block>'s 
+   * <rd_ptr> will be updated to reflect the sent bytes if the send operation
+   * is successful completed.
+   * Return code of 1 means immediate success and number_of_bytes_sent
+   * is updated to number of bytes sent.  The <ACE_Handler::handle_write_dgram>
+   * method will still be called.  Return code of 0 means the IO will
+   * complete proactively.  Return code of -1 means there was an error, use
+   * errno to get the error code.
+   *
+   * Priority of the operation is specified by <priority>. On POSIX4-Unix,
+   * this is supported. Works like <nice> in Unix. Negative values are not
+   * allowed. 0 means priority of the operation same as the process
+   * priority. 1 means priority of the operation is one less than
+   * process.  <signal_number> is the POSIX4 real-time signal number to be
+   * used for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+   * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
+   */
   virtual ssize_t send (ACE_Message_Block *message_block,
                         size_t &number_of_bytes_sent,
                         int flags,

@@ -17,7 +17,7 @@
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
- *  @author Roger Tragin <rtragin@cuseeme.com>
+ *  @author Roger Tragin <r.tragin@computer.org>
  */
 //=============================================================================
 
@@ -1383,8 +1383,23 @@ public:
   ACE_WIN32_Asynch_Read_Dgram (ACE_WIN32_Proactor *win32_proactor);
   virtual ~ACE_WIN32_Asynch_Read_Dgram (void);
 
-  /// Recv <buffer_count> worth of <buffers> from <addr> using
-  /// overlapped I/O (uses <WSARecvFrom>).  Returns 0 on success.
+   /** This starts off an asynchronous read.  Upto
+   * <message_block->total_size()> will be read and stored in the
+   * <message_block>.  <message_block>'s <wr_ptr> will be updated to reflect
+   * the added bytes if the read operation is successfully completed.
+   * Return code of 1 means immediate success and <number_of_bytes_recvd>
+   * will contain number of bytes read.  The <ACE_Handler::handle_read_dgram>
+   * method will still be called.  Return code of 0 means the IO will
+   * complete proactively.  Return code of -1 means there was an error, use
+   * errno to get the error code.
+   *
+   * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
+   * method.  Up to IOV_MAX <message_block>'s are supported.  Upto 
+   * <message_block->size()> bytes will be read into each <message block> for
+   * a total of <message_block->total_size()> bytes.  All <message_block>'s
+   * <wr_ptr>'s will be updated to reflect the added bytes for each 
+   * <message_block>
+   */
   virtual ssize_t recv (ACE_Message_Block *message_block,
                         size_t &number_of_bytes_recvd,
                         int flags,
@@ -1552,8 +1567,23 @@ public:
   ACE_WIN32_Asynch_Write_Dgram (ACE_WIN32_Proactor *win32_proactor);
   virtual ~ACE_WIN32_Asynch_Write_Dgram (void);
 
-  /// Send <buffer_count> worth of <buffers> to <addr> using overlapped
-  /// I/O (uses <WSASentTo>).  Returns 0 on success.
+  /** This starts off an asynchronous send.  Upto
+   * <message_block->total_length()> will be sent.  <message_block>'s 
+   * <rd_ptr> will be updated to reflect the sent bytes if the send operation
+   * is successfully completed.
+   * Return code of 1 means immediate success and <number_of_bytes_sent>
+   * is updated to number of bytes sent.  The <ACE_Handler::handle_write_dgram>
+   * method will still be called.  Return code of 0 means the IO will
+   * complete proactively.  Return code of -1 means there was an error, use
+   * errno to get the error code.
+   *
+   * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
+   * method.  Up to IOV_MAX <message_block>'s are supported.  Upto 
+   * <message_block->length()> bytes will be sent from each <message block>
+   * for a total of <message_block->total_length()> bytes.  All
+   * <message_block>'s <rd_ptr>'s will be updated to reflect the bytes sent
+   * from each <message_block>.
+   */
   virtual ssize_t send (ACE_Message_Block *message_block,
                         size_t &number_of_bytes_sent,
                         int flags,

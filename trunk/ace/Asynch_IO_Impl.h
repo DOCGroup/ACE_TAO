@@ -15,7 +15,7 @@
  *  @author Irfan Pyarali (irfan@cs.wustl.edu)
  *  @author Tim Harrison (harrison@cs.wustl.edu)
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
- *  @author Roger Tragin <rtragin@cuseeme.com>
+ *  @author Roger Tragin <r.tragin@computer.org>
  */
 //=============================================================================
 
@@ -519,10 +519,34 @@ class ACE_Export ACE_Asynch_Read_Dgram_Impl : public virtual ACE_Asynch_Operatio
 public:
   virtual ~ACE_Asynch_Read_Dgram_Impl (void);
 
-  /// Recv <buffer_count> worth of <buffers> from <addr> using
-  /// overlapped I/O (uses <WSARecvFrom>).  Returns 0 on success.
+  /** This starts off an asynchronous read.  Upto
+   * <message_block->total_size()> will be read and stored in the
+   * <message_block>.  <message_block>'s <wr_ptr> will be updated to reflect
+   * the added bytes if the read operation is successful completed.
+   * Return code of 1 means immediate success and <number_of_bytes_recvd>
+   * will contain number of bytes read.  The <ACE_Handler::handle_read_dgram>
+   * method will still be called.  Return code of 0 means the IO will
+   * complete proactively.  Return code of -1 means there was an error, use
+   * errno to get the error code.
+   *
+   * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
+   * method.  Up to IOV_MAX <message_block>'s are supported.  Upto 
+   * <message_block->size()> bytes will be read into each <message block> for
+   * a total of <message_block->total_size()> bytes.  All <message_block>'s
+   * <wr_ptr>'s will be updated to reflect the added bytes for each 
+   * <message_block>
+   *
+   * Priority of the operation is specified by <priority>. On POSIX4-Unix,
+   * this is supported. Works like <nice> in Unix. Negative values are not
+   * allowed. 0 means priority of the operation same as the process
+   * priority. 1 means priority of the operation is one less than
+   * process. And so forth. On Win32, <priority> is a no-op.
+   * <signal_number> is the POSIX4 real-time signal number to be used
+   * for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+   * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
+   */
   virtual ssize_t recv (ACE_Message_Block *message_block,
-                        u_long num_bytes_to_read,
+                        size_t &number_of_bytes_recvd,
                         int flags,
                         int protocol_family,
                         const void *act,
@@ -584,8 +608,32 @@ class ACE_Export ACE_Asynch_Write_Dgram_Impl : public virtual ACE_Asynch_Operati
 public:
   virtual ~ACE_Asynch_Write_Dgram_Impl (void);
 
-  /// Send <buffer_count> worth of <buffers> to <addr> using overlapped
-  /// I/O (uses <WSASentTo>).  Returns 0 on success.
+  /** This starts off an asynchronous send.  Upto
+   * <message_block->total_length()> will be sent.  <message_block>'s 
+   * <rd_ptr> will be updated to reflect the sent bytes if the send operation
+   * is successful completed.
+   * Return code of 1 means immediate success and <number_of_bytes_sent>
+   * is updated to number of bytes sent.  The <ACE_Handler::handle_write_dgram>
+   * method will still be called.  Return code of 0 means the IO will
+   * complete proactively.  Return code of -1 means there was an error, use
+   * errno to get the error code.
+   *
+   * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
+   * method.  Up to IOV_MAX <message_block>'s are supported.  Upto 
+   * <message_block->length()> bytes will be sent from each <message block>
+   * for a total of <message_block->total_length()> bytes.  All
+   * <message_block>'s <rd_ptr>'s will be updated to reflect the bytes sent
+   * from each <message_block>.
+   *
+   * Priority of the operation is specified by <priority>. On POSIX4-Unix,
+   * this is supported. Works like <nice> in Unix. Negative values are not
+   * allowed. 0 means priority of the operation same as the process
+   * priority. 1 means priority of the operation is one less than
+   * process. And so forth. On Win32, this argument is a no-op.
+   * <signal_number> is the POSIX4 real-time signal number to be used
+   * for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+   * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
+   */
   virtual ssize_t send (ACE_Message_Block *message_block,
                         size_t &number_of_bytes_sent,
                         int flags,
