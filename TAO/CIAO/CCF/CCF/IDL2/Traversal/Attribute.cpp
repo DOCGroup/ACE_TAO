@@ -49,6 +49,84 @@ namespace CCF
       post (Type&)
       {
       }
+
+      // ReadAttribute
+      //
+      //
+      void ReadAttribute::
+      traverse (Type& a)
+      {
+        pre (a);
+        belongs (a);
+        name (a);
+        post (a);
+      }
+
+      void ReadAttribute::
+      pre (Type&)
+      {
+      }
+
+      void ReadAttribute::
+      belongs (Type& a, EdgeDispatcherBase& d)
+      {
+        d.traverse (a.belongs ());
+      }
+
+      void ReadAttribute::
+      belongs (Type& a)
+      {
+        belongs (a, edge_traverser ());
+      }
+
+      void ReadAttribute::
+      name (Type&)
+      {
+      }
+
+      void ReadAttribute::
+      post (Type&)
+      {
+      }
+
+      // ReadWriteAttribute
+      //
+      //
+      void ReadWriteAttribute::
+      traverse (Type& a)
+      {
+        pre (a);
+        belongs (a);
+        name (a);
+        post (a);
+      }
+
+      void ReadWriteAttribute::
+      pre (Type&)
+      {
+      }
+
+      void ReadWriteAttribute::
+      belongs (Type& a, EdgeDispatcherBase& d)
+      {
+        d.traverse (a.belongs ());
+      }
+
+      void ReadWriteAttribute::
+      belongs (Type& a)
+      {
+        belongs (a, edge_traverser ());
+      }
+
+      void ReadWriteAttribute::
+      name (Type&)
+      {
+      }
+
+      void ReadWriteAttribute::
+      post (Type&)
+      {
+      }
     }
   }
 }
