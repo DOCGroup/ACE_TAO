@@ -1,3 +1,13 @@
+Tue Apr 29 18:30:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        Please direct all immediate build issues to jcohen@atl.lmco.com
+        if problems occur as a result of this check in.  Thank you.
+
+        * ace/ace.mpc
+
+        Added SOCK_SEQPACK_{Association,Acceptor,Connector} and
+        Multihomed_INET_Addr to "Sockets" section of mpc.
+
 Tue Apr 29 18:15:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
         Please direct all immediate build issues to jcohen@atl.lmco.com
