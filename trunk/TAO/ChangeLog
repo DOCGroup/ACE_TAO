@@ -12,6 +12,9 @@ Thu Nov 14 14:33:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	    - the argument is now called "purge".
 	    - a value of 1 will purge the entry from the cache manager and
 	      a value of 0 otherwise.
+	      
+	  This should fix the failure of the Crash_On_Write test in our
+	  daily builds.  
 	    
 Thu Nov 14 14:04:27 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
