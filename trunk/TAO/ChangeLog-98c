@@ -1,3 +1,9 @@
+Tue Nov  4 14:13:52 1997 Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
+
+	* TAO/tests/Cubit/TAO/MT_Cubit/client/Task_Client.cpp: Changed the
+	order of the initializers to remove g++ warnings, and added some
+	ACE_UNUSED_ARGs.
+
 Tue Nov  4 13:47:26 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO/tests/Cubit/TAO/MT_Cubit: Modified the Makefiles in the
