@@ -1,3 +1,13 @@
+Tue Sep 28 13:26:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+	  Added a const cast in the generated code for the
+	  output CDR operator of array sequences. MSVC++ 5.0
+	  needs the cast to const, even though it's on an arg which is
+	  declared const in the signature. At least it doesn't
+	  bother any of the other compilers. Thanks to Carlos
+	  for pointing out this bug.
+
 Tue Sep 28 12:46:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
