@@ -1,3 +1,13 @@
+Wed Nov 24 12:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/SCTP/hist.cpp:
+        * performance-tests/SCTP/Options_Manager.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_clt.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
+        * performance-tests/SCTP/SOCK_STREAM_clt.cpp:
+        * performance-tests/SCTP/SOCK_STREAM_srv.cpp:
+          Replaced NULL with 0
+
 Tue Nov 23 20:41:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/OS_NS_Thread.inl:
@@ -5,7 +15,7 @@ Tue Nov 23 20:41:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Reverted this change "Tue Nov 23 20:26:51 2004  Balachandran
 	  Natarajan  <bala@dre.vanderbilt.edu>" since this has no scope of
 	  working. I guess the policy stuff itself is a bad thing for
-	  Win32. Let me find out from the original contributor. 
+	  Win32. Let me find out from the original contributor.
 
 Tue Nov 23 20:26:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
