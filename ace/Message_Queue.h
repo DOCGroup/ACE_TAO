@@ -236,11 +236,25 @@ protected:
   ACE_SYNCH_MUTEX_T lock_;
   // Protect queue from concurrent access.
 
+#if defined (ACE_LACKS_COND_T)
+  ACE_SYNCH_SEMAPHORE_T not_empty_cond;
+  // Used to make threads sleep until the queue is no longer empty.
+
+  ACE_SYNCH_SEMAPHORE_T not_full_cond;
+  // Used to make threads sleep until the queue is no longer full.
+
+  size_t dequeue_waiters_;
+  // Number of threads waiting to dequeue a <Message_Block>.
+
+  size_t enqueue_waiters_;
+  // Number of threads waiting to enqueue a <Message_Block>.
+#else
   ACE_SYNCH_CONDITION_T notempty_cond_;
   // Used to make threads sleep until the queue is no longer empty.
 
   ACE_SYNCH_CONDITION_T notfull_cond_;
   // Used to make threads sleep until the queue is no longer full.
+#endif /* ACE_LACKS_COND_T */
 };
 
 template <ACE_SYNCH_1>

@@ -1,9 +1,8 @@
-// This short program copies stdin to stdout via the use of an ASX
 // $Id$
 
+// This short program copies stdin to stdout via the use of an ASX
 // Message_Queue.  It illustrates an implementation of the classic
 // "bounded buffer" program.
-
 
 #include "ace/Message_Queue.h"
 #include "ace/Thread_Manager.h"
@@ -30,7 +29,9 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
   for (int n; ; )
     {
       // Allocate a new message.
-      ACE_Message_Block *mb = new ACE_Message_Block (BUFSIZ);
+      ACE_Message_Block *mb;
+
+      ACE_NEW_RETURN (mb, ACE_Message_Block (BUFSIZ), 0);
 
       n = ACE_OS::read (ACE_STDIN, mb->rd_ptr (), mb->size ());
 
@@ -104,7 +105,8 @@ static void *consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 
 // Spawn off two threads that copy stdin to stdout.
 
-int main (int, char *[])
+int 
+main (int, char *[])
 {
   // Message list.
   ACE_Message_Queue<ACE_MT_SYNCH> msg_queue;
