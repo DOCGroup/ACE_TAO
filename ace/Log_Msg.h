@@ -605,6 +605,9 @@ private:
 
   /// Are we deleting this ostream?
   int delete_ostream_;
+  
+  /// Always timestamp?
+  int timestamp_;
 
   /**
    * If we're running in the context of an ACE_Thread_Manager this

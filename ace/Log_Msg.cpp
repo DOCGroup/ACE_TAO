@@ -632,7 +632,8 @@ ACE_Log_Msg::ACE_Log_Msg (void)
     tracing_enabled_ (1), // On by default?
     delete_ostream_(0),
     thr_desc_ (0),
-    priority_mask_ (default_priority_mask_)
+    priority_mask_ (default_priority_mask_),
+    timestamp_ (0)
 {
   // ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
 
@@ -648,6 +649,20 @@ ACE_Log_Msg::ACE_Log_Msg (void)
                                                 ACE_Log_Msg::thr_desc_hook);
 
   this->conditional_values_.is_set_ = 0;
+  
+  char *timestamp = ACE_OS::getenv ("ACE_LOG_TIMESTAMP");
+  if (timestamp != 0)
+  {
+     // If variable is set or is set to date tag so we print date and time.
+     if ( ACE_OS::strcmp (timestamp, "TIME") == 0)
+     {
+        timestamp_ = 1;
+     }
+     else if ( ACE_OS::strcmp (timestamp, "DATE") == 0)
+     {
+        timestamp_ = 2;
+     }
+  }
 }
 
 ACE_Log_Msg::~ACE_Log_Msg (void)
@@ -998,6 +1013,29 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
           bspace--;
         }
     }
+    
+  if (timestamp_ > 0)
+  {
+     ACE_TCHAR day_and_time[35];
+     const ACE_TCHAR *s;
+     if (timestamp_ == 1)
+     {
+        // Print just the time
+        s = ACE::timestamp (day_and_time, sizeof day_and_time, 1);
+     }
+     else
+     {
+        // Print time and date
+        ACE::timestamp (day_and_time, sizeof day_and_time);
+        s = day_and_time;
+     }
+ 
+     for (; bspace > 1 && (*bp = *s) != '\0'; s++, bspace--)
+        bp++;
+ 
+     *bp++ = '|';
+     bspace--;
+  }
 
   while (*format_str != '\0' && bspace > 0)
     {
