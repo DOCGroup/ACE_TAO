@@ -24,6 +24,9 @@
 #endif /* ACE_HAS_WINNT4 */
 #define ACE_HAS_WINNT4 0
 
+#define ACE_LACKS_ACE_TOKEN
+#define ACE_LACKS_ACE_OTHER
+
 // You must use MFC with ACE on CE.
 #if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
 # undef ACE_HAS_MFC
@@ -181,5 +184,11 @@ typedef long off_t;
 
 // @@ This needs to be defined and initialized as a static. (Singleton?)
 #define ACE_DEFAULT_LOG_STREAM 0
+
+// isprint macro is missing.
+inline int isprint (const char c)
+{
+  return (c < 0x20 || c > 0x7e ? 0 : 1);
+}
 
 #endif /* ACE_CONFIG_WINCE_H */
