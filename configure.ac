@@ -7279,9 +7279,17 @@ AC_CONFIG_FILES([
   ACEXML/parser/Makefile
   ACEXML/parser/parser/Makefile
   ACEXML/tests/Makefile
+  Kokyu/Makefile
+  Kokyu/tests/Makefile
+  Kokyu/tests/DSRT_MIF/Makefile
+  Kokyu/tests/EDF/Makefile
+  Kokyu/tests/FIFO/Makefile
 ])
 
 dnl Configure subdirectories if they are present.
+AM_CONDITIONAL([BUILD_KOKYU],
+               [test -d $srcdir/Kokyu])
+
 if test -d $srcdir/TAO -a X$ace_user_with_tao = Xyes; then
   AC_CONFIG_SUBDIRS([TAO])
 fi
