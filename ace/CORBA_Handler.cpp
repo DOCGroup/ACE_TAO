@@ -8,7 +8,7 @@
 #include "ace/CORBA_Handler.i"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_HAS_ORBIX)
+#if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 ACE_ALLOC_HOOK_DEFINE(ACE_ST_CORBA_Handler)
 ACE_ALLOC_HOOK_DEFINE(ACE_CORBA_Handler)
 
@@ -53,7 +53,7 @@ ACE_CORBA_Handler::~ACE_CORBA_Handler (void)
 }
 
 ACE_CORBA_Handler::ACE_CORBA_Handler (void)
-  : reactor_ (ACE_Service_Config::reactor ())
+  : reactor_ (ACE_Reactor::instance ())
 {
   ACE_TRACE ("ACE_CORBA_Handler::ACE_CORBA_Handler");
 }
@@ -339,11 +339,11 @@ ACE_CORBA_Handler::activate_service (const char *service_name,
   return 0;
 }
 
-#if defined (ACE_HAS_MT_ORBIX)
+#if defined (ACE_HAS_MT_ORBIX) && (ACE_HAS_MT_ORBIX != 0)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_MT_CORBA_Handler)
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 // Synchronize output operations.
 ACE_Thread_Mutex ACE_MT_CORBA_Handler::ace_mt_corba_handler_lock_;
 #endif /* ACE_MT_SAFE */
@@ -357,7 +357,7 @@ ACE_MT_CORBA_Handler::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "instance_ = %x", this->instance_));
   ACE_DEBUG ((LM_DEBUG, "\nthr_mgr_ = %x", this->thr_mgr_));
   this->pipe_.dump ();
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   // Double-Check lock.
   ace_mt_corba_handler_lock_.dump ();
 #endif /* ACE_MT_SAFE */
@@ -413,7 +413,7 @@ ACE_MT_CORBA_Handler::resume (void)
 ACE_MT_CORBA_Handler::ACE_MT_CORBA_Handler (void)
 {
   ACE_TRACE ("ACE_MT_CORBA_Handler::ACE_MT_CORBA_Handler");
-  this->thr_mgr (ACE_Service_Config::thr_mgr ());
+  this->thr_mgr (ACE_Thread_Manager::instance ());
 
   int result = 0;
 

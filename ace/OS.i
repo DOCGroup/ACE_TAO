@@ -2621,8 +2621,7 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
       while (rw->ref_count_ < 0 || rw->num_waiting_writers_ > 0)
 	{
 	  rw->num_waiting_readers_++;
-	  if (ACE_OS::cond_wait (&rw->waiting_readers_,
-				 &rw->lock_) == -1)
+	  if (ACE_OS::cond_wait (&rw->waiting_readers_, &rw->lock_) == -1)
 	    {
 	      result = -2; // -2 means that we need to release the mutex.
 	      break;
@@ -2637,7 +2636,7 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_POP (0);
 #endif
-  return result < 0 ? -1 : result;
+  return 0;
 #endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (rw);
@@ -2798,7 +2797,7 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_POP (0);
 #endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
-  return result < 0 ? -1 : result;
+  return 0;
 #endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (rw);
@@ -3176,7 +3175,7 @@ ACE_OS::event_reset (ACE_event_t *event)
 #define ACE_SOCKCALL_RETURN(OP,TYPE,FAILVALUE) ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE)
 #endif /* ACE_WIN32 */
 
-#if defined (ACE_MT_SAFE) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
 #define ACE_NETDBCALL_RETURN(OP,TYPE,FAILVALUE,TARGET,SIZE) \
   do \
   { \

@@ -2,9 +2,10 @@
 // $Id$
 
 #define ACE_BUILD_DLL
+#include "ace/Synch_T.h"
 #include "ace/Dump.h"
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 // Synchronize output operations.
 ACE_Thread_Mutex ACE_ODB::ace_dump_lock_;
 #endif /* ACE_MT_SAFE */

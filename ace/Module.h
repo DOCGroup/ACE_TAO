@@ -18,7 +18,7 @@
 #define ACE_MODULE_H
 
 #include "ace/ACE.h"
-#include "ace/Task.h"
+#include "ace/Task_T.h"
 
 // Forward decl.
 // template <ACE_SYNCH_1> class ACE_Task;

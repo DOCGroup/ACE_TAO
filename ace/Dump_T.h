@@ -50,6 +50,19 @@ private:
   // Pointer to <this> of <class Concrete>.
 };
 
+// Some useful macros for conditionally compiling this feature...
+#if defined (ACE_NDEBUG)
+#define ACE_REGISTER_OBJECT(CLASS)
+#define ACE_REMOVE_OBJECT
+#else
+#define ACE_REGISTER_OBJECT(CLASS) \
+        ACE_ODB::instance ()->register_object \
+          (new ACE_Dumpable_Adapter<CLASS> (this));
+#define ACE_REMOVE_OBJECT \
+        ACE_ODB::instance ()->remove_object    \
+          ((void *) this);
+#endif /* ACE_NDEBUG */
+
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Dump_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
