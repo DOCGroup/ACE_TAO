@@ -2000,12 +2000,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_TCHAR bufr [256];
 
   ACE_OS::sprintf (bufs,
-                   ACE_TEXT ("%lu(%ld)"),
+                   ACE_SIZE_T_FORMAT_SPECIFIER
+                   ACE_TEXT ("(%ld)"),
                    connector.get_total_snd (),
                    connector.get_total_w ());
 
   ACE_OS::sprintf (bufr,
-                   ACE_TEXT ("%lu(%ld)"),
+                   ACE_SIZE_T_FORMAT_SPECIFIER
+                   ACE_TEXT ("(%ld)"),
                    connector.get_total_rcv (),
                    connector.get_total_r ());
 
@@ -2014,11 +2016,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               bufs,
               bufr));
 
-  ACE_OS::sprintf (bufs, ACE_TEXT ("%lu(%ld)"),
+  ACE_OS::sprintf (bufs,
+                   ACE_SIZE_T_FORMAT_SPECIFIER
+                   ACE_TEXT ("(%ld)"),
                    acceptor.get_total_snd (),
                    acceptor.get_total_w ());
 
-  ACE_OS::sprintf (bufr, ACE_TEXT ("%lu(%ld)"),
+  ACE_OS::sprintf (bufr,
+                   ACE_SIZE_T_FORMAT_SPECIFIER
+                   ACE_TEXT ("(%ld)"),
                    acceptor.get_total_rcv (),
                    acceptor.get_total_r ());
 
