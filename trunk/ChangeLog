@@ -1,3 +1,9 @@
+Mon Jan  3 16:53:59 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/TMCast/Member/Makefile.am:
+
+	  Update for ACE prefix being added to TMCast library name.
+
 Mon Jan  3 17:42:39 2005  Steve Huston  <shuston@riverace.com>
 
 	* apps/JAWS/server/server.mpc:

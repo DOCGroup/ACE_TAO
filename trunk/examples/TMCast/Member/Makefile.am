@@ -26,7 +26,7 @@ member_SOURCES = \
   member.cpp
 
 member_LDADD = \
- $(top_builddir)/ace/TMCast/libTMCast.la $(top_builddir)/ace/libACE.la
+ $(top_builddir)/ace/TMCast/libACE_TMCast.la $(top_builddir)/ace/libACE.la
 
 endif BUILD_THREADS
 endif BUILD_EXCEPTIONS
