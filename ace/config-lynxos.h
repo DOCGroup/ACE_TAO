@@ -203,7 +203,7 @@ extern "C"
   int putenv (const char *);
 }
 
-#if 0
+#if _POSIX_VERSION >= 199009L
 // The following are patches for LynxOS 4.0.0, which we'll add as soon
 // as we know the right incantations to avoid breaking earlier
 // versions of LynxOS!
@@ -221,7 +221,7 @@ extern "C"
 
 // Requested for example: $ACE_ROOT/examples/IPC_SAP/DEV_SAP 
 #define ACE_HAS_TERM_IOCTLS
-#endif /* 0 */
+#endif /* _POSIX_VERSION */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */
