@@ -241,7 +241,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
           if (bt->size_type () == be_decl::VARIABLE
               || bt->base_node_type () == AST_Decl::NT_array)
             {
-              *os << "return _tao_retval._retn ();";
+              *os << "return _tao_safe_retval._retn ();";
             }
           else
             {
