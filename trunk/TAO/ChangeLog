@@ -1,3 +1,37 @@
+Wed Aug 27 14:48:17 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/ClientRequestInfo_i.h:
+
+	  No need to included "tao/StringSeqC.h".
+
+	* tao/DLL_ORB.h:
+
+	  Updated documentation to explicitly mark the TAO_DLL_ORB class
+	  as deprecated in the Doxygen generated documentation.
+
+	* tao/ORBInitInfo.h:
+
+	  No need to include "tao/StringSeqC.h".  A forward declaration is
+	  enough.
+
+	  (TAO_ORBInitInfo):
+	* tao/ORBInitInfo.cpp (TAO_ORBInitInfo):
+
+	  Updated to use TAO_Objref_{var,out} templates instead of
+	  defining custom _var and _out types.
+
+	* tao/corba.h:
+
+	  No need to include "tao/varbase.h".
+
+	* tao/Objref_VarOut.h:
+
+	  Corrected documentation.
+
+	* orbsvcs/orbsvcs/AV/UDP.cpp (connect):
+
+	  Fixed warning about potential use of an uninitialized variable.
+
 Wed Aug 27 14:11:35 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/RTSched.dsp: 
