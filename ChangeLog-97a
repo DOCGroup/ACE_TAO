@@ -10,6 +10,10 @@ Mon Mar 31 09:00:54 1997  David L. Levine  <levine@cs.wustl.edu>
 	  moved context_switch_time.cpp from examples/Threads to
 	  performance-tests/Misc.
 
+	* include/makeinclude/platform_sunos5_g++.GNU: removed dependency
+	  of CCFLAGS on CFLAGS to avoid duplicate -g in build command.
+	  Also, added -fno-implicit-templates in comment.
+
 	* performance-tests/Misc/context_switch_time.cpp: this test no
 	  longer worked.  So, reverted to revision 4.5, plus minimum
 	  changes necessary to support build on platforms without threads.
