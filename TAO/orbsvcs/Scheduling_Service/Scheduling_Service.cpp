@@ -70,7 +70,7 @@ TAO_Scheduling_Service::init (int argc, char *argv[])
       if (result < 0)
         return result;
 
-      // Construct a scheduler implementation of the specified type. 
+      // Construct a scheduler implementation of the specified type.
       switch (this->scheduler_type_)
 	{
 
@@ -96,7 +96,7 @@ TAO_Scheduling_Service::init (int argc, char *argv[])
             break;
 
           default:
-            ACE_ERROR_RETURN ((LM_ERROR, 
+            ACE_ERROR_RETURN ((LM_ERROR,
                                "TAO_Naming_Service::init: "
                                "unrecognized Scheduler_Type"), -1);
 	}
@@ -298,11 +298,51 @@ int main (int argc, char *argv[])
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 #if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
 (__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
+template class ACE_Hash_Map_Manager_Ex<int, RtecScheduler::Config_Info *, ACE_Hash<int>, ACE_Equal_To<int>, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<int, RtecScheduler::Dependency_Set *, ACE_Hash<int>, ACE_Equal_To<int>, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<int, RtecScheduler::RT_Info *, ACE_Hash<int>, ACE_Equal_To<int>, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::Config_Info *, ACE_Hash<int>, ACE_Equal_To<int>, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::Dependency_Set *, ACE_Hash<int>, ACE_Equal_To<int>, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::RT_Info *, ACE_Hash<int>, ACE_Equal_To<int>, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Entry<int, RtecScheduler::Config_Info *>;
+template class ACE_Hash_Map_Entry<int, RtecScheduler::Dependency_Set *>;
+template class ACE_Hash_Map_Entry<int, RtecScheduler::RT_Info *>;
+template class ACE_RB_Tree<const char *, RtecScheduler::RT_Info *, ACE_Less_Than<const char *>, ACE_SYNCH_MUTEX>;
+template class ACE_RB_Tree_Node<const char *, RtecScheduler::RT_Info *>;
+template class ACE_RB_Tree_Iterator<const char *, RtecScheduler::RT_Info *, ACE_Less_Than<const char *>, ACE_SYNCH_MUTEX>;
+template class ACE_RB_Tree_Iterator_Base<char const *, RtecScheduler::RT_Info *, ACE_Less_Than<char const *>, ACE_SYNCH_MUTEX>;
+template class ACE_RB_Tree_Reverse_Iterator<const char *, RtecScheduler::RT_Info *, ACE_Less_Than<const char *>, ACE_SYNCH_MUTEX>;
 template class TAO_Reconfig_Scheduler<TAO_MUF_Reconfig_Sched_Strategy, ACE_SYNCH_MUTEX>;
+template class TAO_RSE_Dependency_Visitor<TAO_MUF_Reconfig_Sched_Strategy, ACE_SYNCH_MUTEX>;
+template class TAO_RSE_DFS_Visitor<TAO_MUF_Reconfig_Sched_Strategy, ACE_SYNCH_MUTEX>;
+template class TAO_RSE_Priority_Visitor<TAO_MUF_Reconfig_Sched_Strategy>;
+template class TAO_RSE_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, ACE_SYNCH_MUTEX>;
+template class TAO_RSE_SCC_Visitor<TAO_MUF_Reconfig_Sched_Strategy, ACE_SYNCH_MUTEX>;
+template class TAO_RSE_Utilization_Visitor<TAO_MUF_Reconfig_Sched_Strategy>;
 #  endif /* __GNUC__ */
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
 (__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
+#pragma instantiate ACE_Hash_Map_Manager_Ex<int, RtecScheduler::Config_Info *, ACE_Hash<int>, ACE_Equal_To<int>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<int, RtecScheduler::Dependency_Set *, ACE_Hash<int>, ACE_Equal_To<int>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<int, RtecScheduler::RT_Info *, ACE_Hash<int>, ACE_Equal_To<int>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::Config_Info *, ACE_Hash<int>, ACE_Equal_To<int>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::Dependency_Set *, ACE_Hash<int>, ACE_Equal_To<int>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<int, RtecScheduler::RT_Info *, ACE_Hash<int>, ACE_Equal_To<int>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Entry<int, RtecScheduler::Config_Info *>
+#pragma instantiate ACE_Hash_Map_Entry<int, RtecScheduler::Dependency_Set *>
+#pragma instantiate ACE_Hash_Map_Entry<int, RtecScheduler::RT_Info *>
+#pragma instantiate ACE_RB_Tree<const char *, RtecScheduler::RT_Info *, ACE_Less_Than<const char *>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_RB_Tree_Node<const char *, RtecScheduler::RT_Info *>
+#pragma instantiate ACE_RB_Tree_Iterator<const char *, RtecScheduler::RT_Info *, ACE_Less_Than<const char *>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_RB_Tree_Iterator_Base<char const *, RtecScheduler::RT_Info *, ACE_Less_Than<char const *>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_RB_Tree_Reverse_Iterator<const char *, RtecScheduler::RT_Info *, ACE_Less_Than<const char *>, ACE_SYNCH_MUTEX>
 #pragma instantiate TAO_Reconfig_Scheduler<TAO_MUF_Reconfig_Sched_Strategy, ACE_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Dependency_Visitor<TAO_MUF_Reconfig_Sched_Strategy, ACE_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_DFS_Visitor<TAO_MUF_Reconfig_Sched_Strategy, ACE_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Priority_Visitor<TAO_MUF_Reconfig_Sched_Strategy>
+#pragma instantiate TAO_RSE_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, ACE_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_SCC_Visitor<TAO_MUF_Reconfig_Sched_Strategy, ACE_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Utilization_Visitor<TAO_MUF_Reconfig_Sched_Strategy>
 #  endif /* __GNUC__ */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

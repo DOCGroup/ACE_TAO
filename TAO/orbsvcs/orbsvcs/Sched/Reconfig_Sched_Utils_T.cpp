@@ -122,8 +122,8 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
               ACE_ERROR_RETURN ((LM_ERROR, "RT_Info in map was null"), -1);
             }
 
-          next_rse = ACE_static_cast (TAO_Reconfig_Scheduler_Entry *,
-                                      next_rt_info->volatile_token);
+          next_rse = ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry *,
+                                           next_rt_info->volatile_token);
           if (next_rse == 0)
 	    {
               ACE_ERROR_RETURN ((LM_ERROR, "entry pointer in RT_Info was null"), -1);
@@ -438,8 +438,8 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 
       ACE_DEBUG ((LM_ERROR,
                   "RT_Infos \"%s\" and \"%s\" are part of dependency cycle %d.\n",
-                  entry.actual_rt_info ()->entry_point,
-                  successor.actual_rt_info ()->entry_point,
+                  entry.actual_rt_info ()->entry_point.in (),
+                  successor.actual_rt_info ()->entry_point.in (),
                   this->number_of_cycles_));
     }
 
@@ -569,7 +569,7 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
                 ACE_DEBUG ((LM_ERROR,
                             "RT_Info \"%s\" has unresolved "
                             "remote dependencies.\n",
-                            rse.actual_rt_info ()->entry_point));
+                            rse.actual_rt_info ()->entry_point.in ()));
               }
             else
               {
@@ -578,7 +578,7 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
                 ACE_DEBUG ((LM_ERROR,
                             "RT_Info \"%s\" has unresolved "
                             "local dependencies.\n",
-                            rse.actual_rt_info ()->entry_point));
+                            rse.actual_rt_info ()->entry_point.in ()));
               }
           }
         else
@@ -589,7 +589,7 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
             ACE_DEBUG ((LM_ERROR,
                         "RT_Info \"%s\" specifies %ld "
                         "threads, but no period.\n",
-                        rse.actual_rt_info ()->entry_point,
+                        rse.actual_rt_info ()->entry_point.in (),
                         rse.actual_rt_info ()->threads));
           }
         }
@@ -609,6 +609,8 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                     TAO_Reconfig_Scheduler_Entry &successor,
                     const RtecScheduler::Dependency_Info &di)
 {
+  ACE_UNUSED_ARG (di);
+
   // This method makes a conservative estimate in cases where periods
   // differ, taking the minimum frame size and dividing down the
   // execution multiplier of the longer frame (and rounding the result
@@ -641,17 +643,17 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
           old_exec_multiplier = successor.effective_exec_multiplier ();
 
           // Divide down the new execution multiplier.
-          long new_exec_multiplier =
+          new_exec_multiplier =
             ACE_static_cast (long,
-                             old_exec_multiplier *
-                             successor.effective_period () /
+                             (old_exec_multiplier *
+                              successor.effective_period ()) /
                              entry.effective_period ());
 
           // Adjust for round-off error.
           if (old_exec_multiplier >
               ACE_static_cast (long,
-                               new_exec_multiplier *
-                               entry.effective_period () /
+                               (new_exec_multiplier *
+                                entry.effective_period ()) /
                                successor.effective_period ()))
             {
               ++new_exec_multiplier;
@@ -668,7 +670,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
           old_exec_multiplier = entry.effective_exec_multiplier ();
 
           // Divide down the new execution multiplier.
-          long new_exec_multiplier =
+          new_exec_multiplier =
             ACE_static_cast (long,
                              old_exec_multiplier *
                              entry.effective_period () /
