@@ -1527,7 +1527,10 @@ TAO_ORB_Core::root_poa (ACE_ENV_SINGLE_ARG_DECL)
   // DCL ..
   if (CORBA::is_nil (this->root_poa_.in ()))
     {
-      ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                        monitor,
+                        this->lock_,
+                        0);
 
       if (CORBA::is_nil (this->root_poa_.in ()))
         {
