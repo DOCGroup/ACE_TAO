@@ -17,7 +17,10 @@ main (int, char *[])
 }
 
 #else
-
+// who defines index macro?
+#ifdef index
+#undef index
+#endif
 #include "tao/qt_resource.h"
 #include <qlcdnumber.h>
 #include <qvbox.h>
