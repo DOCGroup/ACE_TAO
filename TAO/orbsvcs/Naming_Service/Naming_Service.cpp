@@ -71,6 +71,7 @@ TAO_Naming_Service::parse_args (int argc,
   ACE_Get_Opt get_opts (argc, argv, "b:do:p:s:t:f:m:");
   int c;
   int time = 0;
+  int i = 0;
   int count_argv = 0;
 
   while ((c = get_opts ()) != -1)
@@ -85,14 +86,14 @@ TAO_Naming_Service::parse_args (int argc,
 
           // Remove the option '-t' from argv []
           // to avoid any confusion that might result.
-          for (int i = count_argv; i != argc; ++i)
+          for (i = count_argv; i != argc; ++i)
             argv [i] = argv [i+2];
 
           // Decrement the value of this->argc_ to reflect the removal
           // of '-t' option.
           argc = argc-2;
           break;
-     
+
         case '?':
         default:
           // Donot do anything. The TAO_Naming_Server::parse_args ()
