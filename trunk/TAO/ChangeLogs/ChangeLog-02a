@@ -1,3 +1,10 @@
+Mon Jan 03 10:55:36 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/Time_Service/Clerk_i.cpp (get_first_IOR):
+          explicitly use unsigned 0 index for bindings_list
+          array element to avoid overloading ambiguity on Irix
+          and HP/UX.
+
 Mon Jan 03 10:46:31 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp (next_n):
