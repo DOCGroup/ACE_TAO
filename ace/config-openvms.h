@@ -283,8 +283,6 @@
 #define ACE_LACKS_MALLOC_H 1
                                         /*Platform lacks malloc.h*/
 #define ACE_LACKS_MKFIFO 1
-                                        /*Platform lacks mkfifo() e.g.,
-                                        VxWorks, Chorus, pSoS, and WinNT.*/
 #define ACE_LACKS_NAMED_POSIX_SEM 1
                                         /*Platform lacks named POSIX
                                         semaphores (e.g., Chorus)*/
