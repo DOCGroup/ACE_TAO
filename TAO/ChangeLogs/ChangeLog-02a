@@ -3,6 +3,21 @@ Sun Jun 17 08:08:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Strategies/GIOP_Message_NonReactive_Base.cpp: Fixed a
 	  compile error with KCC.  
 
+Sat Jun 16 22:00:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+ 
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp
+        * orbsvcs/orbsvcs/AV/RTP.cpp
+        * orbsvcs/orbsvcs/AV/Transport.cpp
+        * orbsvcs/orbsvcs/AV/UDP.cpp
+ 
+          Fixes so that specifying a flow specification of RTP/UDP
+          will actually result in RTP over UDP being used.
+ 
+        * orbsvcs/orbsvcs/AV/QoS_UDP.i
+ 
+          Remove compiler warning.
+
 Sat Jun 16 18:23:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/GIOP_Message_NonReactive_Handler.cpp:
