@@ -135,7 +135,7 @@ ACE_Time_Value::operator FILETIME () const
   file_time.dwHighDateTime = LL_100ns.hi();
 #else
   ULARGE_INTEGER _100ns;
-  _100ns.QuadPart = (((DWORDLONG) this->tv_.tv_sec * (10000 * 1000) +
+ double  _100ns.QuadPart = (((DWORDLONG) this->tv_.tv_sec * (10000 * 1000) +
                       this->tv_.tv_usec * 10) +
                      ACE_Time_Value::FILETIME_to_timval_skew);
 
@@ -170,20 +170,24 @@ ACE_Time_Value::normalize (void)
 
   if (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS)
     {
+      /*! \todo This loop needs some optimization.
+      */
       do
-        {
+      {
           this->tv_.tv_sec++;
           this->tv_.tv_usec -= ACE_ONE_SECOND_IN_USECS;
-        }
+      }
       while (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS);
     }
   else if (this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS)
     {
+      /*! \todo This loop needs some optimization.
+      */
       do
-        {
+      {
           this->tv_.tv_sec--;
           this->tv_.tv_usec += ACE_ONE_SECOND_IN_USECS;
-        }
+      }
       while (this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS);
     }
 
@@ -266,4 +270,30 @@ int
 ACE_Countdown_Time::update (void)
 {
   return this->stop () == 0 && this->start ();
+}
+
+ACE_Time_Value &
+ACE_Time_Value::operator *= (double d)
+{
+    // double is long enough (16 digits) to not loose the accuracy
+    double time_total = ( this->sec()+
+        ( this->usec() * 1.0 ) / ACE_ONE_SECOND_IN_USECS ) * d;
+    // shall we saturate the result?
+    if ( time_total > ACE_INT32_MAX + 0.999999 )
+        time_total = ACE_INT32_MAX + 0.999999;
+    if ( time_total < ACE_INT32_MIN - 0.999999 )
+        time_total = ACE_INT32_MIN - 0.999999;
+    long  time_sec  = long( time_total );
+    time_total      -= time_sec;
+    time_total      *= ACE_ONE_SECOND_IN_USECS;
+    long  time_usec = long( time_total );
+    // round up the result to save the last usec
+    if ( ( time_usec > 0 )  && ( time_total - time_usec ) >= 0.5 )
+        ++time_usec;
+    else   if ( ( time_usec < 0 )  && ( time_total - time_usec ) <= -0.5 )
+        -- time_usec;
+    this->set( time_sec, time_usec );
+    this->normalize (); // protect against future changes in normalization
+
+    return *this;
 }

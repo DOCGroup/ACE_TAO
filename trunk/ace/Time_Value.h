@@ -218,7 +218,12 @@ public:
   /// Subtract @a tv to this.
   ACE_Time_Value &operator -= (const ACE_Time_Value &tv);
 
-  /// Multiply the time value by the @a d factor, which must be >= 0.
+    /** \brief Multiply the time value by the @a d factor.
+
+    \note The result of the operator is valid for results from range
+    < (ACE_INT32_MIN, -999999), (ACE_INT32_MAX, 999999) >. Result
+    outside this range are saturated to a limit.
+     */
   ACE_Time_Value &operator *= (double d);
 
   /// Increment microseconds as postfix.
