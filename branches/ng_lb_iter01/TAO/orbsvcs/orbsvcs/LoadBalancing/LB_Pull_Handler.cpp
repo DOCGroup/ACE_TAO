@@ -25,6 +25,9 @@ TAO_LB_Pull_Handler::handle_timeout (
   TAO_LB_Location_Map::iterator end =
     this->location_map_.end ();
 
+  if (being == end)
+    return 0;       // No work to be done.
+
   // Iterate over all registered load monitors.
   //
   // @todo This could be potentially very slow.  Improve concurrent
@@ -59,6 +62,23 @@ TAO_LB_Pull_Handler::handle_timeout (
           ACE_ENDTRY;
         }
     }
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      this->balancing_strategy_->analyze_loads (this->location_map_,
+                                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Catch the exception and ignore it.
+
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "(%P|%t) Load analysis exception");
+    }
+  ACE_ENDTRY;
 
   return 0;
 }

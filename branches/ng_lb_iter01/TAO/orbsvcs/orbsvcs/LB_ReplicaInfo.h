@@ -25,8 +25,9 @@
 
 #include "orbsvcs/LoadBalancingC.h"
 
-// Fosrward declarations.
+// Forward declarations.
 struct TAO_LB_Location_Map_Entry;
+struct TAO_LB_ObjectGroup_Map_Entry;
 
 struct TAO_LB_ReplicaInfo;
 typedef ACE_Unbounded_Set<TAO_LB_ReplicaInfo *> TAO_LB_ReplicaInfo_Set;
@@ -35,6 +36,8 @@ typedef ACE_Unbounded_Set<TAO_LB_ReplicaInfo *> TAO_LB_ReplicaInfo_Set;
  * @class TAO_LB_ReplicaInfo
  *
  * @brief Class that contains all replica-specific information.
+ *
+ *
  */
 struct TAO_LB_ReplicaInfo
 {
@@ -49,6 +52,11 @@ struct TAO_LB_ReplicaInfo
   /// FactoryCreationId_var will contain a zero pointer if the replica
   /// was not created using a GenericFactory.
   LoadBalancing::GenericFactory::FactoryCreationId_var factory_creation_id;
+
+  /// Pointer to the object group map entry corresponding to the
+  /// object group to which this replica member in this structure
+  /// belongs.
+  TAO_LB_ObjectGroup_Map_Entry *object_group_entry;
 
   /// Pointer to the location map entry containing the information
   /// related to the location the replica corresponding to this

@@ -92,10 +92,10 @@ TAO_LB_Minimum_Dispersion_Strategy::replica (
     }
 }
 
-#if 0
 void
-TAO_LB_Minimum_Dispersion_Strategy::load_changed (TAO_LB_ReplicaProxy *proxy,
-                                               CORBA::Environment &ACE_TRY_ENV)
+TAO_LB_Minimum_Dispersion_Strategy::analyze_loads (
+  TAO_LB_Location_Map &location_map,
+  CORBA::Environment &ACE_TRY_ENV)
 {
   int send_load_advisory = 0;
 
@@ -104,18 +104,21 @@ TAO_LB_Minimum_Dispersion_Strategy::load_changed (TAO_LB_ReplicaProxy *proxy,
                        guard,
                        this->lock_));
 
-    if (this->proxies_.is_empty ())
-      return;
 
-    TAO_LB_ReplicaProxySetIterator begin = this->proxies_.begin ();
-    TAO_LB_ReplicaProxySetIterator end = this->proxies_.end ();
+    TAO_LB_Location_Map::iterator begin =
+      location_map.begin ();
+
+    TAO_LB_Location_Map::iterator end =
+      location_map.end ();
 
     float s = 0;
     CORBA::ULong n = 0;
-    TAO_LB_ReplicaProxySetIterator i = begin;
-    for (;i != end; ++i)
+    TAO_LB_Location_Map::iterator i = begin;
+    for ( ; i != end; ++i)
       {
-        s += (*i)->current_load ();
+        s += (*i)->int_id_.load_list[0].value;  // @@ Hard coded to
+                                                //    get things
+                                                //    going.
         n++;
       }
 
@@ -168,4 +171,3 @@ TAO_LB_Minimum_Dispersion_Strategy::load_changed (TAO_LB_ReplicaProxy *proxy,
       ACE_CHECK;
     }
 }
-#endif  /* 0 */
