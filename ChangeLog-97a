@@ -1,5 +1,9 @@
 Wed Jun 25 02:36:05 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
 
+	* ace/OS.i (gmtime_r): Modified the implementation of gmtime_r
+ 	  when OS doesn't provide one.  Notice that the implementation
+	  only simulate the semantic and is not thread-safe. 
+
 	* ace/OS.h: Moved definition of ACE_SHLIB_HANDLE typedef and
  	  ACE_DEFAULT_SHLIB_MODE global variable for Win32 to where it
  	  belongs.

@@ -287,6 +287,7 @@ JAWS_File::init (void)
   this->error_ = OKIE_DOKIE;
   this->tempname_ = 0;
   this->size_ = 0;
+  this->reference_count_ = 0 ;
 
   ACE_OS::memset (&(this->stat_), 0, sizeof (this->stat_));
 }
