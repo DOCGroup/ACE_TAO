@@ -116,8 +116,9 @@ main (int argc, char *argv[])
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Who is the culprit \n");
-      cerr << "Uncaught CORBA exception" << endl;
-      return 1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Uncaught CORBA exception\n"),
+                        1);
     }
   ACE_ENDTRY;
 
