@@ -1,3 +1,29 @@
+Mon Apr 28 12:24:39 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\Strategies\advanced_resource.cpp: 
+
+	  load_default_protocols(): Reset
+	  <TAO_Default_Resource_Factory::protocol_factories_> after
+	  copying the protocols from it to avoid double deletes.
+
+	  ~TAO_Advanced_Resource_Factory(): delete all protocols in
+	  protocol factory to avoid memory leak.
+
+	* tao\RTPortableServer\RT_POA.cpp (server_protocol): 
+
+	  Fixed code formatting.
+
+	* tao\RTPortableServer\RT_Servant_Dispatcher.cpp: 
+
+	  Avoid a memory leak in pre_invoke_remote_request() by assigning
+	  the result from POA::server_protocol() to a CORBA::Policy_var
+	  instead of a CORBA::Policy_ptr.
+
+	* tao\orbconf.h: 
+
+	  Only set TAO_DEFAULT_ROOTPOA_NAME if not already set by the
+	  user.
+
 Mon Apr 28 09:13:17 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/RTKokyuEvent.dsp: Added the xxx_BUILD_DLL
