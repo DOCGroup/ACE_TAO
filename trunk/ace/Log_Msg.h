@@ -235,8 +235,24 @@ class ACE_Export ACE_Log_Msg
   //     This class is very flexible since it allows formatted error
   //     messages to be printed in a thread-safe manner to stderr or a
   //     distributed logger.  Moreover, the message is kept in a
-  //     thread-specific storage location, which can be used to
-  //     communicate errors between framework methods and callers.
+  //     thread-specific storage location (i.e. there is one ACE_Log_Msg
+  //     object per thread), which can be used to communicate errors
+  //     between framework methods and callers.
+  //
+  //     A message is logged by the log() method, only if the message
+  //     priority is currently enabled.  The ACE_Log_Msg class uses
+  //     two priority masks to control its logging behavior.  The
+  //     <priority_mask_> object attribute is thread specific and
+  //     specifies the priority levels logged by the thread.  The
+  //     <process_priority_mask_> class attribute is not thread
+  //     specific and specifies the priority levels that will be
+  //     logged by all threads in the process.  By default, all
+  //     levels are enabled for <priority_mask_> and all levels
+  //     are disabled for <process_priority_mask_> (i.e. each thread
+  //     determines which priority levels will be logged).  Both
+  //     priority masks can be modified using the priority_mask()
+  //     method of this class.
+
 public:
   // Logger Flags.
   enum
