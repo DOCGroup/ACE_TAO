@@ -116,14 +116,20 @@
         TAO_default_environment ()
       );
 
-      virtual Dynamic::ParameterList * arguments (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+       virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV =
+           TAO_default_environment ())
+       ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual Dynamic::ExceptionList * exceptions (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+        virtual Dynamic::ExceptionList * exceptions (
+      CORBA::Environment &ACE_TRY_ENV =
+         TAO_default_environment ())
+     ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual CORBA::Any * result (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual CORBA::Any * result (
+    CORBA::Environment &ACE_TRY_ENV =
+       TAO_default_environment ())
+   ACE_THROW_SPEC ((CORBA::SystemException));
 
 
 private:
@@ -381,14 +387,20 @@ public:
       TAO_default_environment ()
     );
 
-    virtual Dynamic::ParameterList * arguments (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+     virtual Dynamic::ParameterList * arguments (
+      CORBA::Environment &ACE_TRY_ENV =
+         TAO_default_environment ())
+     ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual Dynamic::ExceptionList * exceptions (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual Dynamic::ExceptionList * exceptions (
+    CORBA::Environment &ACE_TRY_ENV =
+       TAO_default_environment ())
+   ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual CORBA::Any * result (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+virtual CORBA::Any * result (
+  CORBA::Environment &ACE_TRY_ENV =
+     TAO_default_environment ())
+ ACE_THROW_SPEC ((CORBA::SystemException));
 
 
 private:

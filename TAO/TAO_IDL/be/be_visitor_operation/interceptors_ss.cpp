@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_operation.h"
 
@@ -225,21 +225,8 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
         }
     }
 
-  *os << "::"
-      << "arguments (";
-
-  // Generate the CORBA::Environment parameter for the alternative mapping.
-  if (!be_global->exception_support ())
-    {
-      *os << "CORBA::Environment &";
-    }
-  else
-    {
-      *os << "void";
-    }
-
-  *os << ")" << be_idt_nl;
-  *os << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
+  *os << "::arguments (CORBA::Environment &)" << be_idt_nl
+      << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl
       << "// Generate the arg list on demand" << be_nl;
 
@@ -320,21 +307,8 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
         }
     }
 
-  *os << "::"
-      << "exceptions (";
-
-  // Generate the CORBA::Environment parameter for the alternative mapping.
-  if (!be_global->exception_support ())
-    {
-      *os <<"CORBA::Environment &";
-    }
-  else
-    {
-      *os << "void";
-    }
-
-  *os << ")" << be_idt_nl;
-  *os << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
+  *os << "::exceptions (CORBA::Environment &)" << be_idt_nl
+      << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl
       << "// Generate the exception list on demand" << be_nl;
 
@@ -410,21 +384,8 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
         }
     }
 
-  *os << "::"
-      << "result (";
-
-  // Generate the CORBA::Environment parameter for the alternative mapping.
-  if (!be_global->exception_support ())
-    {
-      *os << "CORBA::Environment &";
-    }
-  else
-    {
-      *os << "void";
-    }
-
-  *os << ")"<< be_idt_nl;
-  *os << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
+  *os << "::result (CORBA::Environment &)"<< be_idt_nl
+      << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl
       << "// Generate the result on demand" << be_nl;
 
