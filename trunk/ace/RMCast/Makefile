@@ -85,11 +85,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i
 
 .obj/RMCast_Module.o .obj/RMCast_Module.so .shobj/RMCast_Module.o .shobj/RMCast_Module.so: RMCast_Module.cpp RMCast_Module.h \
- $(ACE_ROOT)/ace/pre.h RMCast.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RMCast.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -112,12 +113,13 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i RMCast_Module.i
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Module.i
 
 .obj/RMCast_Module_Factory.o .obj/RMCast_Module_Factory.so .shobj/RMCast_Module_Factory.o .shobj/RMCast_Module_Factory.so: RMCast_Module_Factory.cpp \
  RMCast_Module_Factory.h \
- $(ACE_ROOT)/ace/pre.h RMCast.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RMCast.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -140,12 +142,13 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i RMCast_Module_Factory.i
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Module_Factory.i
 
 .obj/RMCast_Fragment.o .obj/RMCast_Fragment.so .shobj/RMCast_Fragment.o .shobj/RMCast_Fragment.so: RMCast_Fragment.cpp RMCast_Fragment.h \
- $(ACE_ROOT)/ace/pre.h RMCast_Module.h \
- RMCast.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RMCast_Module.h RMCast.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -167,8 +170,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i RMCast_Module.i \
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Module.i \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -193,7 +196,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -235,8 +237,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Message_Block_T.cpp
 
 .obj/RMCast_Reassembly.o .obj/RMCast_Reassembly.so .shobj/RMCast_Reassembly.o .shobj/RMCast_Reassembly.so: RMCast_Reassembly.cpp RMCast_Reassembly.h \
- $(ACE_ROOT)/ace/pre.h RMCast_Module.h \
- RMCast.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RMCast_Module.h RMCast.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -258,8 +261,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i RMCast_Module.i \
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Module.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -296,7 +299,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
@@ -319,6 +321,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
  $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
@@ -403,7 +406,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/RMCast_Partial_Message.o .obj/RMCast_Partial_Message.so .shobj/RMCast_Partial_Message.o .shobj/RMCast_Partial_Message.so: RMCast_Partial_Message.cpp \
  RMCast_Partial_Message.h \
- $(ACE_ROOT)/ace/pre.h RMCast_Export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RMCast_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -459,7 +463,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -536,8 +539,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  RMCast_Partial_Message.i
 
 .obj/RMCast_Proxy.o .obj/RMCast_Proxy.so .shobj/RMCast_Proxy.o .shobj/RMCast_Proxy.so: RMCast_Proxy.cpp RMCast_Proxy.h \
- $(ACE_ROOT)/ace/pre.h RMCast_Module.h \
- RMCast.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RMCast_Module.h RMCast.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -559,12 +563,13 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i RMCast_Module.i RMCast_Proxy.i
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Module.i RMCast_Proxy.i
 
 .obj/RMCast_Membership.o .obj/RMCast_Membership.so .shobj/RMCast_Membership.o .shobj/RMCast_Membership.so: RMCast_Membership.cpp RMCast_Membership.h \
- $(ACE_ROOT)/ace/pre.h RMCast_Module.h \
- RMCast.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RMCast_Module.h RMCast.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -586,8 +591,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i RMCast_Module.i \
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Module.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -633,14 +638,14 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  RMCast_Membership.i RMCast_Proxy.h RMCast_Proxy.i
 
 .obj/RMCast_Retransmission.o .obj/RMCast_Retransmission.so .shobj/RMCast_Retransmission.o .shobj/RMCast_Retransmission.so: RMCast_Retransmission.cpp \
  RMCast_Retransmission.h \
- $(ACE_ROOT)/ace/pre.h RMCast_Module.h \
- RMCast.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RMCast_Module.h RMCast.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -662,9 +667,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i RMCast_Module.i RMCast_Copy_On_Write.h RMCast_Worker.h \
- RMCast_Worker.i RMCast_Worker.cpp \
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Module.i RMCast_Copy_On_Write.h \
+ RMCast_Worker.h RMCast_Worker.i RMCast_Worker.cpp \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -689,7 +694,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -734,6 +738,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/RB_Tree.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
  $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
@@ -751,7 +756,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/RMCast_Resend_Worker.o .obj/RMCast_Resend_Worker.so .shobj/RMCast_Resend_Worker.o .shobj/RMCast_Resend_Worker.so: RMCast_Resend_Worker.cpp \
  RMCast_Resend_Worker.h \
- $(ACE_ROOT)/ace/pre.h RMCast.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RMCast.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -774,9 +780,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i RMCast_Copy_On_Write.h RMCast_Worker.h RMCast_Worker.i \
- RMCast_Worker.cpp \
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Copy_On_Write.h RMCast_Worker.h \
+ RMCast_Worker.i RMCast_Worker.cpp \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -801,7 +807,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -835,9 +840,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i RMCast_Module.i RMCast_Copy_On_Write.h RMCast_Worker.h \
- RMCast_Worker.i RMCast_Worker.cpp \
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Module.i RMCast_Copy_On_Write.h \
+ RMCast_Worker.h RMCast_Worker.i RMCast_Worker.cpp \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -862,7 +867,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -907,6 +911,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/RB_Tree.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
  $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
@@ -921,8 +926,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Message_Block_T.cpp
 
 .obj/RMCast_Reordering.o .obj/RMCast_Reordering.so .shobj/RMCast_Reordering.o .shobj/RMCast_Reordering.so: RMCast_Reordering.cpp RMCast_Reordering.h \
- $(ACE_ROOT)/ace/pre.h RMCast_Module.h \
- RMCast.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RMCast_Module.h RMCast.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -944,8 +950,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i RMCast_Module.i \
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Module.i \
  $(ACE_ROOT)/ace/RB_Tree.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -977,7 +983,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -1014,6 +1019,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/RB_Tree.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
  $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
@@ -1053,10 +1059,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i RMCast_Module_Factory.i RMCast_Reliable_Factory.i \
- RMCast_Receiver_Module.h RMCast_Module.h RMCast_Module.i \
- RMCast_Receiver_Module.i RMCast_Reassembly.h \
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Module_Factory.i \
+ RMCast_Reliable_Factory.i RMCast_Receiver_Module.h RMCast_Module.h \
+ RMCast_Module.i RMCast_Receiver_Module.i RMCast_Reassembly.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1093,7 +1099,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
@@ -1116,6 +1121,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
  $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
@@ -1186,12 +1192,14 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i RMCast_Module_Factory.i RMCast_Singleton_Factory.i
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Module_Factory.i \
+ RMCast_Singleton_Factory.i
 
 .obj/RMCast_Resend_Handler.o .obj/RMCast_Resend_Handler.so .shobj/RMCast_Resend_Handler.o .shobj/RMCast_Resend_Handler.so: RMCast_Resend_Handler.cpp \
  RMCast_Resend_Handler.h \
- $(ACE_ROOT)/ace/pre.h RMCast_Export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RMCast_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1244,7 +1252,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -1287,6 +1294,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/RB_Tree.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
  $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
@@ -1297,8 +1305,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/RMCast_Receiver_Module.o .obj/RMCast_Receiver_Module.so .shobj/RMCast_Receiver_Module.o .shobj/RMCast_Receiver_Module.so: RMCast_Receiver_Module.cpp \
  RMCast_Receiver_Module.h \
- $(ACE_ROOT)/ace/pre.h RMCast_Module.h \
- RMCast.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RMCast_Module.h RMCast.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1320,9 +1329,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i RMCast_Module.i RMCast_Receiver_Module.i RMCast_Proxy.h \
- RMCast_Proxy.i $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Module.i RMCast_Receiver_Module.i \
+ RMCast_Proxy.h RMCast_Proxy.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
@@ -1330,8 +1340,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/RMCast_Sequencer.o .obj/RMCast_Sequencer.so .shobj/RMCast_Sequencer.o .shobj/RMCast_Sequencer.so: RMCast_Sequencer.cpp RMCast_Sequencer.h \
- $(ACE_ROOT)/ace/pre.h RMCast_Module.h \
- RMCast.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RMCast_Module.h RMCast.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1353,8 +1364,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i RMCast_Module.i \
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Module.i \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -1379,7 +1390,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -1388,8 +1398,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  RMCast_Sequencer.i
 
 .obj/RMCast_Fork.o .obj/RMCast_Fork.so .shobj/RMCast_Fork.o .shobj/RMCast_Fork.so: RMCast_Fork.cpp RMCast_Fork.h \
- $(ACE_ROOT)/ace/pre.h RMCast_Module.h \
- RMCast.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RMCast_Module.h RMCast.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1411,12 +1422,13 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i RMCast_Module.i RMCast_Fork.i
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Module.i RMCast_Fork.i
 
 .obj/RMCast_IO_UDP.o .obj/RMCast_IO_UDP.so .shobj/RMCast_IO_UDP.o .shobj/RMCast_IO_UDP.so: RMCast_IO_UDP.cpp RMCast_IO_UDP.h \
- $(ACE_ROOT)/ace/pre.h RMCast_Module.h \
- RMCast.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RMCast_Module.h RMCast.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1438,8 +1450,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i RMCast_Module.i \
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Module.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -1488,7 +1500,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
@@ -1511,6 +1522,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
  $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
@@ -1559,7 +1571,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/RMCast_UDP_Event_Handler.o .obj/RMCast_UDP_Event_Handler.so .shobj/RMCast_UDP_Event_Handler.o .shobj/RMCast_UDP_Event_Handler.so: RMCast_UDP_Event_Handler.cpp \
  RMCast_UDP_Event_Handler.h \
- $(ACE_ROOT)/ace/pre.h RMCast_Export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RMCast_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1635,7 +1648,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
@@ -1656,6 +1668,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
  $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
@@ -1698,8 +1711,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  RMCast_UDP_Proxy.i RMCast_Module_Factory.h RMCast_Module_Factory.i
 
 .obj/RMCast_UDP_Proxy.o .obj/RMCast_UDP_Proxy.so .shobj/RMCast_UDP_Proxy.o .shobj/RMCast_UDP_Proxy.so: RMCast_UDP_Proxy.cpp RMCast_UDP_Proxy.h \
- $(ACE_ROOT)/ace/pre.h RMCast_Proxy.h \
- RMCast_Module.h RMCast.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RMCast_Proxy.h RMCast_Module.h RMCast.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1722,8 +1735,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i RMCast_Module.i RMCast_Proxy.i \
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Module.i RMCast_Proxy.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -1773,7 +1786,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
@@ -1796,6 +1808,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
  $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
@@ -1867,10 +1880,11 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i RMCast_Module_Factory.i RMCast_Singleton_Factory.i \
- RMCast_Reliable_Factory.h RMCast_Reliable_Factory.i RMCast_IO_UDP.h \
- RMCast_Module.h RMCast_Module.i \
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Module_Factory.i \
+ RMCast_Singleton_Factory.i RMCast_Reliable_Factory.h \
+ RMCast_Reliable_Factory.i RMCast_IO_UDP.h RMCast_Module.h \
+ RMCast_Module.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -1919,7 +1933,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
@@ -1942,6 +1955,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
  $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
@@ -2010,9 +2024,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i RMCast_Export.h \
- RMCast.i RMCast_Module_Factory.i RMCast_Singleton_Factory.i \
- RMCast_IO_UDP.h RMCast_Module.h RMCast_Module.i \
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Module_Factory.i \
+ RMCast_Singleton_Factory.i RMCast_IO_UDP.h RMCast_Module.h \
+ RMCast_Module.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -2061,7 +2076,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
@@ -2084,6 +2098,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
  $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
