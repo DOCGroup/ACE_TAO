@@ -1004,6 +1004,8 @@ Hamed Azizadah <Azizadah@ix.netcom.com>
 Keo Kelly <kkelly@fallschurch.esys.com>
 Joachim Achtzehnter <joachima@realtimeint.com>
 Tomer Amiaz <Tomer@bandwiz.com>
+Sergey Osokin <osa@freebsd.org.ru>
+Nick Logvinov
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
