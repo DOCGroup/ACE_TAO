@@ -1,9 +1,10 @@
-Wed Mar  7 07:46:51 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+Wed Mar  7 07:46:51 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/Makefile.bor
         * tests/ior_corbaloc/*.bor
+        * tests/Single_Read/*.bor
 
-          Added BCB specific makefiles for this test
+          Added BCB specific makefiles for these tests
 
 Tue Mar  6 21:22:51 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
