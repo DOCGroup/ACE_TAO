@@ -88,6 +88,18 @@ TAO_Notify_AdminProperties::set_admin (const CosNotification::AdminProperties & 
     }
 }
 
+CORBA::Boolean
+TAO_Notify_AdminProperties::queue_full (void)
+{
+  if (this->max_queue_length() == 0)
+    return 0;
+  else
+    if (this->queue_length ()->value () > this->max_queue_length())
+      return 1;
+
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Atomic_Op<ACE_SYNCH_MUTEX,int>;

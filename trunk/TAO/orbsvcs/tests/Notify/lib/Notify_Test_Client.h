@@ -72,6 +72,9 @@ class Notify_Test_Client
 
   CosNotification::AdminProperties initial_admin_;
   // Initial admin props specified to the factory when creating the EC.
+
+  CORBA::Boolean done_;
+  // Set when we should shutdown.
 };
 
 #endif /* NOTIFY_TEST_CLIENT_H */
