@@ -252,6 +252,7 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     PortableServer::ObjectId_var oid;
+
     this->container_->uninstall_component (comp,
                                            oid.out ()
                                            ACE_ENV_ARG_PARAMETER);
