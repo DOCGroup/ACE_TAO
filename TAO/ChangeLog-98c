@@ -1,3 +1,11 @@
+Mon Nov 30 01:10:35 1998  Matt Braun  <mjb2@cs.wustl.edu>
+
+	* tests/Param_Test/ub_any_seq.cpp: Added test for const char* and
+	  changed sequence length from 1 to 5 because the "random" choice
+	  of types was only pseudo-random and the various test types
+	  wern't being tested. Currently, the test segfaults, but I
+	  believe this to be indicative of a deeper problem.
+
 Sun Nov 29 18:09:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB.{h,cpp} (resolve_initial_references): Allows this
