@@ -1,3 +1,14 @@
+Tue Jan 20 17:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* include/makeinclude/compiler.bor:
+	  When using BCB6 and release builds we get errors about __strcmp__ is
+	  undefined. This is caused by the optimizer of BCB6 which generates
+	  code for common functions like strcpy() within the calling function's
+	  scope. The compiler flag is -Oi and this is set when the complete -O2
+	  optimisation options is passed. So, with BCB6 in release builds,
+          we don't set -O2, but set all specific optimisation flags but just not
+          -Oi. This is the only way I could fix this.
+
 Tue Jan 20 16:00:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
