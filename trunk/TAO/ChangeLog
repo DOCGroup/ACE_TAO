@@ -1,6 +1,7 @@
 Thu Feb 20 11:07:01 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Thread_Lane_Resources.h:
+	* tao/Thread_Lane_Resources_Manager.h:
 
 	  "corbafwd.h" is unfortunately needed for the emulated exception
 	  case.
@@ -53,7 +54,7 @@ Thu Feb 20 09:07:56 2003  Ossama Othman  <ossama@uci.edu>
 
 	  Made generated "_var" classes inherit privately from
 	  TAO_Base_var instead of publically.  Specifically, private
-	  inheritance from TAO_Base_var is done to emphasize that 
+	  inheritance from TAO_Base_var is done to emphasize that
   	  a given "_var" does not satisfy the IS-A relationship with
 	  TAO_Base_var.  "_var" classes are merely IMPLEMENTED-IN-TERMS-OF
 	  TAO_Base_var.  This also correctly invalidates assignments like:
@@ -791,13 +792,13 @@ Mon Feb 17 15:37:47 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* tests/RTCORBA/Persistent_IOR/client.bor: Linked the client with
 	  RTCORBA library to get the static constructors in so that they
-	  can do its job. 
+	  can do its job.
 
 Mon Feb 17 15:26:32 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/RTCORBA/MT_Client_Protocol_Priority/client.conf: This file
 	  missed the previous checkin somehow. Adding this file to the
-	  repo. 
+	  repo.
 
 Mon Feb 17 09:09:54 2003  Heather Drury  <drury_h@ociweb.com>
 
