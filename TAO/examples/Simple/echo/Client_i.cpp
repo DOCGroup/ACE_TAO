@@ -18,6 +18,7 @@ Client_i::Client_i (void)
 }
 
 // Reads the Server factory IOR from a file.
+
 int
 Client_i::read_ior (char *filename)
 {
@@ -169,20 +170,20 @@ int
 Client_i::via_naming_service(void)
 {
   TAO_TRY
-   {
+    {
       // Initialization of the naming service.
       if (naming_services_client_.init (orb_.in (), argc_, argv_) != 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-			 " (%P|%t) Unable to initialize "
-			 "the TAO_Naming_Client. \n"),
-			 -1);
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to initialize "
+			   "the TAO_Naming_Client. \n"),
+			  -1);
       CosNaming::Name echo_ref_name (1);
       echo_ref_name.length (1);
       echo_ref_name[0].id = CORBA::string_dup ("Echo");
 
       CORBA::Object_var echo_obj =
 	this->naming_services_client_->resolve (echo_ref_name,
-					    TAO_TRY_ENV);
+						TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       // The CORBA::Object_var object is downcast to Echo_var using
@@ -191,14 +192,13 @@ Client_i::via_naming_service(void)
         Echo::_narrow (echo_obj.in (),
 		       TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
-       }
-      TAO_CATCHANY
-       {
-        TAO_TRY_ENV.print_exception ("Echo::via_naming_service\n");
-          return -1;
-       }
-      TAO_ENDTRY;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Echo::via_naming_service\n");
+      return -1;
+    }
+  TAO_ENDTRY;
 
   return 0;
 }
