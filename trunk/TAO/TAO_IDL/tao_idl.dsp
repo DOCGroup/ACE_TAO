@@ -352,7 +352,7 @@ SOURCE=.\be\be_visitor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\be\be_visitor_args.cpp
+SOURCE=.\be\be_visitor_argument.cpp
 # End Source File
 # Begin Source File
 
@@ -820,7 +820,7 @@ SOURCE=.\be_include\be_visitor.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\be_include\be_visitor_args.h
+SOURCE=.\be_include\be_visitor_argument.h
 # End Source File
 # Begin Source File
 
