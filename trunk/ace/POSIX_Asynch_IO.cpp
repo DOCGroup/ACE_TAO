@@ -78,7 +78,7 @@ ACE_POSIX_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor)
 {
   // Get to the platform specific implementation.
   ACE_POSIX_Proactor *posix_proactor = ACE_dynamic_cast (ACE_POSIX_Proactor *,
-                                                         proactor_impl);
+                                                         proactor);
 
   if (posix_proactor == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "Dynamic cast to POSIX Proactor failed\n"), -1);
