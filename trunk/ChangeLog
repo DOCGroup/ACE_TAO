@@ -1,3 +1,12 @@
+Thu Aug 07 16:36:29 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/MakeProjectCreator/config/qt-min.mpb: Added a minimal Qt
+	  base project for those projects which require to use Qt library
+	  but not ACE_QtReactor.
+
+	* bin/MakeProjectCreator/config/qt-min_moc.mpb: Same twist for
+	  qt_moc.mpb.  Things can probably be condensed more, later.
+
 Thu Aug  7 13:29:22 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
         * Makefile: Added Kokyu directory to DIRS and CLONE variables, so
