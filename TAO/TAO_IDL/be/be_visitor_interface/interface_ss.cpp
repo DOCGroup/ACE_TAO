@@ -338,6 +338,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);" << be_nl
       << "ACE_CHECK_RETURN (0);" << be_nl
+      << "if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())" << be_idt_nl
       << "switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())" << be_idt_nl
       << "{" << be_nl
       << "case TAO_ORB_Core::THRU_POA:" << be_idt_nl;
@@ -359,6 +360,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << "default:" << be_idt_nl
       << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "else" << be_idt_nl
+      << "{" << be_idt_nl
+      << "// stub->_incr_refcnt ();" << be_nl
+      << "CORBA::Object_var obj = new CORBA::Object (stub);" << be_nl
+      << "return " << node->local_name () << "::_unchecked_narrow (obj);" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
       << "}\n\n";
 
