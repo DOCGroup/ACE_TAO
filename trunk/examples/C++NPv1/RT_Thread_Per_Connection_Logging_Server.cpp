@@ -4,6 +4,7 @@
 ** Copyright 2001 Addison Wesley. All Rights Reserved.
 */
 
+#include "ace/Auto_Ptr.h"
 #include "ace/FILE_IO.h"
 #include "ace/Log_Msg.h"
 #include "ace/Sched_Params.h"
