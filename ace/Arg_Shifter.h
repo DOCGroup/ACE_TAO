@@ -166,6 +166,12 @@ public:
   int num_ignored_args (void) const;
 
 private:
+  /// Copy Constructor should not be used.
+  ACE_Arg_Shifter (const ACE_Arg_Shifter&);
+
+  /// Assignment '=' operator should not be used.
+  ACE_Arg_Shifter operator= (const ACE_Arg_Shifter&);
+
   /// Refactor the constructor logic.
   void init (void);
 

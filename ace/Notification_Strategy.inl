@@ -14,7 +14,7 @@ ACE_Notification_Strategy::event_handler (ACE_Event_Handler *eh)
 }
 
 ACE_INLINE ACE_Reactor_Mask
-ACE_Notification_Strategy::mask (void)
+ACE_Notification_Strategy::mask (void) const
 {
   return mask_;
 }

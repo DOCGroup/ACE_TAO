@@ -48,8 +48,6 @@
 #    include "ace/config-win32-ghs.h"
 #elif defined (__MINGW32__)
 #    include "ace/config-win32-mingw.h"
-#elif defined (__CYGWIN32__)
-#    include "ace/config-cygwin32.h"
 #else
 #    error Compiler is not supported
 #endif
