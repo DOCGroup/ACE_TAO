@@ -1,0 +1,24 @@
+// $Id$
+// Bank.idl
+
+module Bank
+{
+  // = TITLE
+  //   @@ Give a brief explain of what this module does.
+
+  interface Account
+    {
+      // = TITLE
+      //   @@ Give a brief explain of what this interface does.
+
+      float balance ();
+    };
+
+  interface AccountManager
+    {
+      // = TITLE
+      //   @@ Give a brief explain of what this interface does.
+
+      Account open (in string name);
+    };
+};
