@@ -1,3 +1,14 @@
+Tue Feb  1 16:50:28 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg_shared/com.cpp:
+	* orbsvcs/tests/AVStreams/mpeg_shared/fileio.cpp:
+	* orbsvcs/tests/AVStreams/mpeg_shared/filters.cpp:
+	* orbsvcs/tests/AVStreams/mpeg_shared/routine.cpp:
+	* orbsvcs/tests/AVStreams/mpeg_shared/sendpt.cpp:
+	* orbsvcs/tests/AVStreams/mpeg_mib/mibDrawArea.cpp:
+
+	 Fixed warnings for egcs on SunOS5.7.
+	
 Tue Feb  1 13:51:21 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* docs/ec_options.html:
