@@ -6,19 +6,19 @@
 //   orbsvcs
 //
 // = FILENAME
-//   Notify_StructuredPushConsumer.h
+//   Notify_SequencePushConsumer.h
 //
 // = DESCRIPTION
 //   This is a utility class is to be used by clients of the Notification
-//   Service to implement the servant for CosNotifyComm::PushConsumer
+//   Service to implement the servant for CosNotifyComm::SequencePushConsumer
 //
 // = AUTHOR
 //    Pradeep Gore <pradeep@cs.wustl.edu>
 //
 // ==========================================================================
 
-#ifndef NOTIFY_STRUCTUREDPUSHCONSUMER_H
-#define NOTIFY_STRUCTUREDPUSHCONSUMER_H
+#ifndef NOTIFY_SEQUENCEPUSHCONSUMER_H
+#define NOTIFY_SEQUENCEPUSHCONSUMER_H
 #include "ace/pre.h"
 
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
@@ -31,17 +31,17 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_NOTIFY_TEST_Export TAO_Notify_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPushConsumer, public PortableServer::RefCountServantBase
+class TAO_NOTIFY_TEST_Export TAO_Notify_SequencePushConsumer : public POA_CosNotifyComm::SequencePushConsumer, public PortableServer::RefCountServantBase
 {
   // = TITLE
-  //   Notify_StructuredPushConsumer
+  //   Notify_SequencePushConsumer
   //
   // = DESCRIPTION
-  //   Implements a common servant for the StructuredPushConsumer.
+  //   Implements a common servant for the SequencePushConsumer.
   //
  public:
   // = Initialization and Termination code
-  TAO_Notify_StructuredPushConsumer (void);
+  TAO_Notify_SequencePushConsumer (void);
   // Constructor.
 
   void init (PortableServer::POA_ptr poa, CORBA::Environment &ACE_TRY_ENV);
@@ -58,14 +58,14 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_StructuredPushConsumer : public POA_CosN
   void deactivate (CORBA::Environment &ACE_TRY_ENV);
   // Deactivate the object from the default POA.
 
-  CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier (void);
+  CosNotifyChannelAdmin::SequenceProxyPushSupplier_ptr get_proxy_supplier (void);
   // Accessor for <proxy_supplier_>.
 
   // = ServantBase operations
   virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 protected:
   // = Data Members
-  CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxy_supplier_;
+  CosNotifyChannelAdmin::SequenceProxyPushSupplier_var proxy_supplier_;
   // The proxy that we are connected to.
 
   CosNotifyChannelAdmin::ProxyID proxy_supplier_id_;
@@ -74,7 +74,7 @@ protected:
   PortableServer::POA_var default_POA_;
   // The default POA.
 
-  virtual ~TAO_Notify_StructuredPushConsumer (void);
+  virtual ~TAO_Notify_SequencePushConsumer (void);
   // Destructor
 
   // = NotifyPublish method
@@ -88,9 +88,9 @@ protected:
         CosNotifyComm::InvalidEventType
       ));
 
-  // = StructuredPushSupplier methods
-  virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification,
+  // = SequencePushConsumer methods
+  virtual void push_structured_events (
+        const CosNotification::EventBatch & notifications,
         CORBA::Environment &ACE_TRY_ENV
       )
       ACE_THROW_SPEC ((
@@ -99,7 +99,7 @@ protected:
        ));
   // Default does nothing.
 
-  virtual void disconnect_structured_push_consumer (
+  virtual void disconnect_sequence_push_consumer (
         CORBA::Environment &ACE_TRY_ENV
       )
       ACE_THROW_SPEC ((
@@ -112,4 +112,4 @@ protected:
 #endif /* _MSC_VER */
 
 #include "ace/post.h"
-#endif /* NOTIFY_STRUCTUREDPUSHCONSUMER_H */
+#endif /* NOTIFY_SEQUENCEPUSHCONSUMER_H */

@@ -11,7 +11,11 @@ TAO_Notify_PushConsumer::TAO_Notify_PushConsumer (void)
 
 TAO_Notify_PushConsumer::~TAO_Notify_PushConsumer ()
 {
-  // No-Op.
+  // release all resources ...
+  this->default_POA_ = PortableServer::POA::_nil ();
+
+  this->supplier_proxy_ =
+    CosNotifyChannelAdmin::ProxyPushSupplier::_nil ();
 }
 
 void TAO_Notify_PushConsumer::init (PortableServer::POA_ptr poa, CORBA::Environment & /*ACE_TRY_ENV*/)
@@ -49,25 +53,25 @@ TAO_Notify_PushConsumer::connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consu
   this->supplier_proxy_->connect_any_push_consumer (objref.in (),
                                                     ACE_TRY_ENV);
   ACE_CHECK;
+
+  // give ownership to POA
+  this->_remove_ref ();
 }
 
 void
 TAO_Notify_PushConsumer::deactivate (CORBA::Environment &ACE_TRY_ENV)
 {
+  PortableServer::POA_var poa =
+        this->_default_POA ();
+
   PortableServer::ObjectId_var id =
-    this->default_POA_->servant_to_id (this,
-                                       ACE_TRY_ENV);
+    poa->servant_to_id (this,
+                        ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->default_POA_->deactivate_object (id.in (),
-                                         ACE_TRY_ENV);
+  poa->deactivate_object (id.in (),
+                          ACE_TRY_ENV);
   ACE_CHECK;
-
-  // release all resources ...
-  this->default_POA_ = PortableServer::POA::_nil ();
-
-  this->supplier_proxy_ =
-    CosNotifyChannelAdmin::ProxyPushSupplier::_nil ();
 }
 
 void
@@ -87,6 +91,16 @@ TAO_Notify_PushConsumer::offer_change (const CosNotification::EventTypeSeq &/*ad
                    ))
 {
   // TODO:
+}
+
+void
+TAO_Notify_PushConsumer::push (const CORBA::Any & /*data*/, CORBA::Environment &/*ACE_TRY_ENV*/)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosEventComm::Disconnected
+                   ))
+{
+  // no op.
 }
 
 void
