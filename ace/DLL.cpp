@@ -79,9 +79,9 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
 
   // Transform the pathname into the appropriate dynamic link library
   // by searching the ACE_LD_SEARCH_PATH.
-  int result = ACE_Lib_Find::ldfind (dll_filename,
-                                     dll_pathname,
-                                     (sizeof dll_pathname / sizeof (ACE_TCHAR)));
+  ACE_Lib_Find::ldfind (dll_filename,
+                        dll_pathname,
+                        (sizeof dll_pathname / sizeof (ACE_TCHAR)));
 
   // The ACE_SHLIB_HANDLE object is obtained.
   this->handle_ = ACE_OS::dlopen (dll_pathname,

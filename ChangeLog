@@ -1,3 +1,10 @@
+Wed May 15 17:18:58 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/DLL.cpp (open):
+
+	  Removed unreferenced return value.  Thanks to Nanbor 
+	  for noticing this.
+
 Wed May 15 16:44:27 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/DLL.cpp (save_last_error):
