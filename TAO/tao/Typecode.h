@@ -27,7 +27,7 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Unbounded_Queue.h"
 
-#include "tao/UserException.h"
+#include "tao/Exception.h"
 #include "tao/Environment.h"
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/Objref_VarOut_T.h"
@@ -190,7 +190,6 @@ namespace CORBA
 
     /// Duplicates i.e., increments ref count.
     static CORBA::TypeCode_ptr _duplicate (CORBA::TypeCode_ptr tc);
-    static void _release (CORBA::TypeCode_ptr tc);
 
     /// Returns a NULL typecode.
     static CORBA::TypeCode_ptr _nil (void);
@@ -291,16 +290,19 @@ namespace CORBA
      * parent
      */
     TypeCode (CORBA::TCKind kind,
-              size_t length,
-              const char *buffer,
-              CORBA::Boolean orb_owns_tc,
-              CORBA::ULong size,
-              CORBA::TypeCode_ptr parent = 0);
+                    size_t length,
+                    const char *buffer,
+                    CORBA::Boolean orb_owns_tc,
+                    CORBA::ULong size,
+                    CORBA::TypeCode_ptr parent = 0);
 
     /// destructor
     ~TypeCode (void);
 
-
+    /// These are used to indicate the status of marshaling.
+    // Reference counting operations.
+    CORBA::ULong _incr_refcnt (void);
+    CORBA::ULong _decr_refcnt (void);
 
     // = Following three are deprecated
 
@@ -402,12 +404,8 @@ namespace CORBA
     // Useful for template programming.
 
   private:
-
     // = All the private/helper methods
-    /// These are used to indicate the status of marshaling.
-    // Reference counting operations.
-    CORBA::ULong _incr_refcnt (void);
-    CORBA::ULong _decr_refcnt (void);
+
     /**
      * equal() and equivalent() must both recurse, but their
      * behavior is somewhat different (as defined in CORBA 2.3).
@@ -624,11 +622,11 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<CORBA::TypeCode>
   {
-    static CORBA::TypeCode_ptr duplicate (CORBA::TypeCode_ptr);
-    static void release (CORBA::TypeCode_ptr);
-    static CORBA::TypeCode_ptr nil (void);
-    static CORBA::Boolean marshal (CORBA::TypeCode_ptr p,
-                                   TAO_OutputCDR & cdr);
+    static CORBA::TypeCode_ptr tao_duplicate (CORBA::TypeCode_ptr);
+    static void tao_release (CORBA::TypeCode_ptr);
+    static CORBA::TypeCode_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (CORBA::TypeCode_ptr p,
+                                       TAO_OutputCDR & cdr);
   };
 
   /**

@@ -22,7 +22,7 @@ ACE_RCSID (ace, Process, "$Id$")
 // This function acts as a signal handler for SIGCHLD. We don't really want
 // to do anything with the signal - it's just needed to interrupt a sleep.
 // See wait() for more info.
-#if !defined (ACE_WIN32) && !defined(ACE_LACKS_UNIX_SIGNALS)
+#if !defined (ACE_WIN32)
 static void
 sigchld_nop (int, siginfo_t *, ucontext_t *)
 {
@@ -198,66 +198,6 @@ ACE_Process::spawn (ACE_Process_Options &options)
     }
 
   return this->child_id_;
-#elif defined(ACE_OPENVMS)
-  if (ACE_BIT_ENABLED (options.creation_flags (),
-                       ACE_Process_Options::NO_EXEC))
-    ACE_NOTSUP_RETURN (ACE_INVALID_PID);
-
-  int saved_stdin = ACE_STDIN;
-  int saved_stdout = ACE_STDOUT;
-  int saved_stderr = ACE_STDERR;
-  // Save STD file descriptors and redirect
-  if (options.get_stdin () != ACE_INVALID_HANDLE) {
-    if ((saved_stdin = ACE_OS::dup (ACE_STDIN)) == -1 && errno != EBADF)
-      ACE_OS::exit (errno);
-    if (ACE_OS::dup2 (options.get_stdin (), ACE_STDIN) == -1)
-      ACE_OS::exit (errno);
-  }
-  if (options.get_stdout () != ACE_INVALID_HANDLE) {
-    if ((saved_stdout = ACE_OS::dup (ACE_STDOUT)) == -1 && errno != EBADF)
-      ACE_OS::exit (errno);
-    if (ACE_OS::dup2 (options.get_stdout (), ACE_STDOUT) == -1)
-      ACE_OS::exit (errno);
-  }
-  if (options.get_stderr () != ACE_INVALID_HANDLE) {
-    if ((saved_stderr = ACE_OS::dup (ACE_STDERR)) == -1 && errno != EBADF)
-      ACE_OS::exit (errno);
-    if (ACE_OS::dup2 (options.get_stderr (), ACE_STDERR) == -1)
-      ACE_OS::exit (errno);
-  }
-
-  if (options.working_directory () != 0)
-    ACE_NOTSUP_RETURN (ACE_INVALID_PID);
-
-  this->child_id_ = vfork();
-  if (this->child_id_ == 0) {
-      ACE_OS::execvp (options.process_name (),
-                options.command_line_argv ());
-      // something went wrong
-      this->child_id_ = ACE_INVALID_PID;
-  }
-
-  // restore STD file descriptors (if necessary)
-  if (options.get_stdin () != ACE_INVALID_HANDLE) {
-    if (saved_stdin == -1)
-      ACE_OS::close (ACE_STDIN);
-    else
-      ACE_OS::dup2 (saved_stdin, ACE_STDIN);
-  }
-  if (options.get_stdout () != ACE_INVALID_HANDLE) {
-    if (saved_stdout == -1)
-      ACE_OS::close (ACE_STDOUT);
-    else
-      ACE_OS::dup2 (saved_stdout, ACE_STDOUT);
-  }
-  if (options.get_stderr () != ACE_INVALID_HANDLE) {
-    if (saved_stderr == -1)
-      ACE_OS::close (ACE_STDERR);
-    else
-      ACE_OS::dup2 (saved_stderr, ACE_STDERR);
-  }
-
-  return this->child_id_;
 #else /* ACE_WIN32 */
   // Fork the new process.
   this->child_id_ = ACE::fork (options.process_name (),
@@ -344,56 +284,31 @@ ACE_Process::spawn (ACE_Process_Options &options)
         // Child process executes the command.
         int result = 0;
 
-        // Wide-char builds not on Windows need narrow-char strings for
-        // exec() and environment variables. Don't need to worry about
-        // releasing any of the converted string memory since this
-        // process will either exec() or exit() shortly.
-# if defined (ACE_USES_WCHAR)
-        ACE_Wide_To_Ascii n_procname (options.process_name ());
-        const char *procname = n_procname.char_rep ();
-
-        wchar_t * const *wargv = options.command_line_argv ();
-        size_t vcount, i;
-        for (vcount = 0; wargv[vcount] != 0; ++vcount)
-          ;
-        char **procargv = new char *[vcount + 1];  // Need 0 at the end
-        procargv[vcount] = 0;
-        for (i = 0; i < vcount; ++i)
-          procargv[i] = ACE_Wide_To_Ascii::convert (wargv[i]);
-
-        wargv = options.env_argv ();
-        for (vcount = 0; wargv[vcount] != 0; ++vcount)
-          ;
-        char **procenv = new char *[vcount + 1];  // Need 0 at the end
-        procenv[vcount] = 0;
-        for (i = 0; i < vcount; ++i)
-          procenv[i] = ACE_Wide_To_Ascii::convert (wargv[i]);
-# else
-        const char *procname = options.process_name ();
-        char *const *procargv = options.command_line_argv ();
-        char *const *procenv = options.env_argv ();
-# endif /* ACE_USES_WCHAR */
-
         if (options.inherit_environment ())
           {
             // Add the new environment variables to the environment
             // context of the context before doing an <execvp>.
-            for (size_t i = 0; procenv[i] != 0; i++)
-              if (ACE_OS::putenv (procenv[i]) != 0)
+            for (char *const *user_env = options.env_argv ();
+                 *user_env != 0;
+                 user_env++)
+              if (ACE_OS::putenv (*user_env) != 0)
                 return ACE_INVALID_PID;
 
             // Now the forked process has both inherited variables and
             // the user's supplied variables.
-            result = ACE_OS::execvp (procname, procargv);
+            result = ACE_OS::execvp (options.process_name (),
+                                     options.command_line_argv ());
           }
         else
           {
-# if defined (ghs)
+#if defined (ghs)
             // GreenHills 1.8.8 (for VxWorks 5.3.x) can't compile this
             // code.  Processes aren't supported on VxWorks anyways.
             ACE_NOTSUP_RETURN (ACE_INVALID_PID);
-# else
-            result = ACE_OS::execve (procname, procargv, procenv);
+#else
+            result = ACE_OS::execve (options.process_name (),
+                                     options.command_line_argv (),
+                                     options.env_argv ());
 # endif /* ghs */
           }
         if (result == -1)
@@ -473,45 +388,7 @@ ACE_Process::wait (const ACE_Time_Value &tv,
       ACE_OS::set_errno_to_last_error ();
       return -1;
     }
-#elif defined(ACE_LACKS_UNIX_SIGNALS)
-  if (tv == ACE_Time_Value::zero)
-    {
-      pid_t retv =
-        ACE_OS::waitpid (this->child_id_,
-                         &this->exit_code_,
-                         WNOHANG);
-      if (status != 0)
-        *status = this->exit_code_;
-
-      return retv;
-    }
-
-  if (tv == ACE_Time_Value::max_time)
-    return this->wait (status);
-
-  pid_t pid = 0;
-  ACE_Time_Value sleeptm (1);    // 1 msec
-  if (sleeptm > tv)              // if sleeptime > waittime
-      sleeptm = tv;
-  ACE_Time_Value tmo (tv);       // Need one we can change
-  for (ACE_Countdown_Time time_left (&tmo); tmo > ACE_Time_Value::zero ; time_left.update ())
-    {
-      pid = ACE_OS::waitpid (this->getpid (),
-                             &this->exit_code_,
-                             WNOHANG);
-      if (status != 0)
-        *status = this->exit_code_;
-
-      if (pid > 0 || pid == ACE_INVALID_PID)
-        break;          // Got a child or an error - all done
-
-      // pid 0, nothing is ready yet, so wait.
-      // Do a (very) short sleep (only this thread sleeps).
-      ACE_OS::sleep (sleeptm);
-    }
-
-  return pid;
-#else /* !ACE_WIN32 && !ACE_LACKS_UNIX_SIGNALS */
+#else /* ACE_WIN32 */
   if (tv == ACE_Time_Value::zero)
     {
       pid_t retv =

@@ -16,7 +16,7 @@
 #ifndef TAO_SIMPLE_DYNAMIC_H
 #define TAO_SIMPLE_DYNAMIC_H
 
-#include "orbsvcs/Trader/Trader_Utils.h"
+#include "orbsvcs/orbsvcs/Trader/Trader_Utils.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

@@ -36,7 +36,7 @@
   ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
   ace___->set (__FILE__, __LINE__, -1, __ace_error, ace___->restart (), \
                ace___->msg_ostream (), ace___->msg_callback ()); \
-  ace___->log (LM_ERROR, ACE_LIB_TEXT ("ACE_ASSERT: file %N, line %l assertion failed for '%s'.%a\n"), ACE_TEXT_CHAR_TO_TCHAR (#X), -1); \
+  ace___->log (LM_ERROR, ACE_LIB_TEXT ("ACE_ASSERT: file %N, line %l assertion failed for '%s'.%a\n"), #X, -1); \
   } } while (0)
 #endif  /* ACE_NDEBUG */
 
@@ -100,17 +100,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// These workarounds are necessary for nasty libraries or platforms
-// that #define STDERR or THREAD (e.g. LynxOS). We simply #undef
-// these macros as there is no way to save the macro definition using
-// the pre-processor. See Bugzilla Bug #299 for more info.
-
-#if defined (STDERR)
+#if defined (__Lynx__) || defined (INTEGRITY)
 # undef STDERR
-#endif /* STDERR */
+#endif /* __Lynx__ */
 
 #if defined (THREAD)
-# undef THREAD
+// This workaround is necessary for nasty libraries that #define
+// THREAD 1.
+#define ACE_THREAD_HACK THREAD
+#undef THREAD
 #endif /* THREAD */
 
 class ACE_Log_Msg_Callback;
@@ -710,6 +708,11 @@ void
 ACE_TSS_cleanup (void *ptr);
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #endif /* ACE_MT_SAFE */
+
+#if defined (ACE_THREAD_HACK)
+#define THREAD ACE_THREAD_HACK
+#undef ACE_THREAD_HACK
+#endif /* ACE_THREAD_HACK */
 
 #if defined(ACE_LEGACY_MODE)
 #include "ace/Log_Msg_Callback.h"

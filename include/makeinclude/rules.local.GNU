@@ -83,7 +83,9 @@ build.local: $(VBUILD)
 STATIC_LINK_FLAG ?=
 static_link ?= 0
 ifeq ($(static_link),1)
-  LDFLAGS += $(STATIC_LINK_FLAG)
+  ifeq ($(static_libs_only),1)
+    LDFLAGS += $(STATIC_LINK_FLAG)
+  endif # static_libs_only = 1
 endif # static_link = 1
 
 OS ?=
@@ -405,7 +407,7 @@ depend.local: $(MAKEFILE) idl_stubs.local
 	ACE_PLATFORM_CONFIG=$(ACE_PLATFORM_CONFIG) \
 	ACE_DEPEND_SED_CMD="$(ACE_DEPEND_SED_CMD)" \
 	$(DEPGEN) -A $(DEPEND_CMD_ARGS) -e config.h -f $(DEPENDENCY_FILE) $(CPPFLAGS) \
-	-DMAKEDEPEND $(CCFLAGS) $(LSRC) $(SRC) $(PSRC)
+	-DMAKEDEPEND $(LSRC) $(SRC) $(PSRC)
 	@if cmp -s $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old ;\
 	then echo "GNUmakefile dependencies unchanged." ;\
 	else \

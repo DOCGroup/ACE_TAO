@@ -10,7 +10,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 
 class CNamingObject
 {

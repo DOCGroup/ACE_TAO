@@ -117,7 +117,7 @@ extern "C" { char * cuserid (char *s); }
 #define ACE_HAS_SYSV_IPC
 
 // Compiler/platform contains the <sys/syscall.h> file.
-#define ACE_HAS_SYS_SYSCALL_H
+#define ACE_HAS_SYSCALL_H
 
 #if (__FreeBSD_version >= 300000)
 #define ACE_HAS_SIGINFO_T
@@ -190,7 +190,7 @@ extern "C" { char * cuserid (char *s); }
 #define ACE_HAS_STRERROR
 
 // Compiler/platform provides the sockio.h file.
-#define ACE_HAS_SYS_SOCKIO_H
+#define ACE_HAS_SOCKIO_H
 
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
@@ -264,6 +264,12 @@ typedef union sigval sigval_t;
 #define ACE_LACKS_WCSDUP
 #define ACE_LACKS_ITOW
 #define ACE_HAS_3_PARAM_WCSTOK
+
+// Even though we do have tolower, we have a conflict when ACE_HAS_WCHAR is defined.
+#define ACE_LACKS_TOWLOWER
+
+// Even though we do have toupper, we have a conflict when ACE_HAS_WCHAR is defined.
+#define ACE_LACKS_TOWUPPER
 
 #if (__FreeBSD_version >= 501000)
 #  define ACE_HAS_PTHREAD_SETSTACK

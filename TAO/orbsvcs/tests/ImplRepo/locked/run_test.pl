@@ -17,7 +17,7 @@ $pfile = PerlACE::LocalFile ("persistence.dat");
 
 $IMR_LOCATOR = new PerlACE::Process ("../../../ImplRepo_Service/ImplRepo_Service");
 $IMR_ACTIVATOR = new PerlACE::Process ("../../../ImplRepo_Service/ImR_Activator");
-$TAO_IMR = new PerlACE::Process ("../../../../../bin/tao_imr");
+$TAO_IMR = new PerlACE::Process ("../../../ImplRepo_Service/tao_imr");
 
 ################################################################################
 
@@ -57,7 +57,7 @@ if (PerlACE::waitforfile_timed ($imr_activator_ior, 10) == -1) {
 print "===== Adding a server\n";
 
 $TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_locator_ior"
-                  . " add Foo -c foobarbaz");
+		    . " add Foo -c foobarbaz");
 
 $taoimr = $TAO_IMR->SpawnWaitKill (60);
 

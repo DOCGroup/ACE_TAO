@@ -26,8 +26,4 @@ project : taolib, core, portableserver {
   Resource_Files {
     Utils
   }
-
-  PIDL_Files {
-  }
-
 }

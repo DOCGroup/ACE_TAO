@@ -45,11 +45,16 @@ be_visitor_component::visit_attribute (be_attribute *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_INTERFACE_CH:
+    case TAO_CodeGen::TAO_ROOT_CH:
+      break;
     case TAO_CodeGen::TAO_ROOT_CS:
+      break;
     case TAO_CodeGen::TAO_ROOT_SH:
+      break;
     case TAO_CodeGen::TAO_ROOT_IH:
+      break;
     case TAO_CodeGen::TAO_ROOT_SS:
+      break;
     case TAO_CodeGen::TAO_ROOT_IS:
       break;
     default:
@@ -84,7 +89,7 @@ be_visitor_component::visit_operation (be_operation *node)
     {
     // These first two cases may have the context state changed
     // by a strategy, so we use the visitor factory below.
-    case TAO_CodeGen::TAO_INTERFACE_CH:
+    case TAO_CodeGen::TAO_ROOT_CH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
       break;
     case TAO_CodeGen::TAO_ROOT_CS:
@@ -218,7 +223,7 @@ be_visitor_component::visit_structure (be_structure *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_INTERFACE_CH:
+    case TAO_CodeGen::TAO_ROOT_CH:
       {
         be_visitor_structure_ch visitor (&ctx);
         status = node->accept (&visitor);
@@ -287,7 +292,7 @@ be_visitor_component::visit_typedef (be_typedef *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_INTERFACE_CH:
+    case TAO_CodeGen::TAO_ROOT_CH:
       {
         be_visitor_typedef_ch visitor (&ctx);
         status = node->accept (&visitor);

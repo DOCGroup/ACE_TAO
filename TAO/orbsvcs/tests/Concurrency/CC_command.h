@@ -20,7 +20,7 @@
 //
 // ============================================================================
 
-#include "orbsvcs/CosConcurrencyControlC.h"
+#include "orbsvcs/orbsvcs/CosConcurrencyControlC.h"
 
 #ifndef _CC_COMMAND_H_
 #define _CC_COMMAND_H_

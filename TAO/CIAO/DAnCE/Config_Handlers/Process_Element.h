@@ -12,8 +12,8 @@
 #ifndef PROCESS_ELEMENT_H
 #define PROCESS_ELEMENT_H
 
-#include "ciao/DeploymentC.h"
-#include "Config.h"
+#include "DeploymentC.h"
+#include "Deployment.h"
 #include "Basic_Handler.h"
 #include "Config_Handler_export.h"
 #include "ace/SString.h"

@@ -17,10 +17,10 @@
 #ifndef COSECCONSUMER_H_
 #define COSECCONSUMER_H_
 
-#include "orbsvcs/CosEventCommC.h"
-#include "orbsvcs/CosEventChannelAdminC.h"
-#include "orbsvcs/CosEventCommS.h"
-#include "orbsvcs/CosEventChannelAdminS.h"
+#include "orbsvcs/orbsvcs/CosEventCommC.h"
+#include "orbsvcs/orbsvcs/CosEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/CosEventCommS.h"
+#include "orbsvcs/orbsvcs/CosEventChannelAdminS.h"
 #include "Multiple.h"
 
 class Consumer : public POA_CosEventComm::PushConsumer, public Multiple

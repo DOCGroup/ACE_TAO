@@ -39,25 +39,21 @@ endif
 
 # First, extract the OS version number.
 HPVERS_WORDS := $(subst ., ,$(shell uname -r))
-HPMODEL := $(shell uname -m))
 HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 #
 CC		= /bin/cc
 CXX		= aCC
 
-# Determine compiler version
-CXXVERS_WORDS := $(subst ., , $(shell $(CXX) -V 2>&1))
-CXXMINORVERS := $(word 8, $(CXXVERS_WORDS))
-CXXMAJORVERS := $(word 7, $(CXXVERS_WORDS))
-
 ifeq (,$(stdcpplib))
 # If the user didn't explicitly set stdcpplib, assume that the compiler
 # can do -AA, unless it's a .2x version (e.g., 03.24). 03.27 can do -AA,
 # so check for that one explicitly and enable it if so.
-  ifeq (,$(filter 2%,$(CXXMINORVERS)))
+  CXXVERS_WORDS := $(subst ., , $(shell $(CXX) -V 2>&1))
+  CXXVERS := $(word 8, $(CXXVERS_WORDS))
+  ifeq (,$(filter 2%,$(CXXVERS)))
     stdcpplib = 1
   else
-    ifeq (27,$(CXXMINORVERS))
+    ifeq (27,$(CXXVERS))
       stdcpplib = 1
     else
       stdcpplib = 0
@@ -67,20 +63,13 @@ endif
 
 ifeq (1,$(stdcpplib))
   CCFLAGS += -AA
-  ifeq (03,$(CXXMAJORVERS))
-    # Warning 930 is spurious when new(std::nothrow) is used. Reported to HP
-    # as support call 3201224717. (Steve Huston, 23-Nov-2002)
-    CCFLAGS += +W930
-  endif
+  # Warning 930 is spurious when new(std::nothrow) is used. Reported to HP
+  # as support call 3201224717. (Steve Huston, 23-Nov-2002)
+  CCFLAGS += +W930
 # Compile errors using -AA and +noeh together - HP problem report
 # JAGad12608, fix slated for Dec 2001 Release -- Steve Huston, April 10, 2001.
 # If you still have problems with this area, uncomment the following line:
 #  exceptions = 1
-endif
-
-ifeq (05,$(CXXMAJORVERS))
-  # Warnings about binary incompatiblity
-  CCFLAGS += +W1016,1031
 endif
 
 # Set the appropriate preprocessor defs for threading based on OS version
@@ -108,14 +97,8 @@ else
   endif
 endif
 
-ifeq ($(HPMODEL), ia64)
-  itanium = 1
-endif
-
-ifeq (03,$(CXXMAJORVERS))
-  # Suppress Warning 302 ((...) parameter list is a non-portable feature)
-  CCFLAGS                += +W302
-endif
+# Suppress warning 302 ((...) parameter list is a non-portable feature)
+CCFLAGS		+= +W302
 CPPFLAGS	+= $(THR_DEFS) -D_HPUX_SOURCE -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE
 
 # If exception support is explicitly disabled, tell the compiler.
@@ -143,7 +126,7 @@ AR              = /usr/ccs/bin/ar
 ARFLAGS		= ruv
 RANLIB		= echo
 LDFLAGS		= -Wl,+s -z
-SOFLAGS		+= -b
+SOFLAGS		+= -b 
 
 ifeq ($(distrib),1)
 
@@ -163,29 +146,18 @@ endif
 SOEXT		= sl
 
 ifeq ($(buildbits),32)
-  ifeq ($(itanium),1)
-    CCFLAGS += +DD32
-  else
-    CCFLAGS += +DA1.1 +DS1.1
-  endif
+CCFLAGS		+= +DA1.1 +DS1.1
 else
 ifeq ($(buildbits),64)
-  ifeq ($(itanium),1)
-    CCFLAGS += +DD64
+  ifeq ($(word 2,$(HPVERS_WORDS)), 11)
+    ## Without the W, it isn't really a 64-bit build
+    CCFLAGS     += +DA2.0W +DS2.0W
   else
-    ifeq ($(word 2,$(HPVERS_WORDS)), 11)
-      ## Without the W, it isn't really a 64-bit build
-      CCFLAGS += +DA2.0W +DS2.0W
-    else
-      CCFLAGS += +DA2.0 +DS2.0
-    endif
+    CCFLAGS     += +DA2.0 +DS2.0
   endif
 LDFLAGS		+= -Wl,+vnocompatwarnings
 else
-  ifneq ($(itanium),1)
-    # HP aCC on Itanium doesn't support this option, defaults to 32bit then.
-    CCFLAGS += +DAportable
-  endif
+CCFLAGS         += +DAportable
 endif
 endif
 

@@ -6,7 +6,7 @@
 
 ACE_INLINE ssize_t
 ACE_OS::readv (ACE_HANDLE handle,
-               const iovec *iov,
+               iovec *iov,
                int iovlen)
 {
   ACE_OS_TRACE ("ACE_OS::readv");
@@ -15,15 +15,7 @@ ACE_OS::readv (ACE_HANDLE handle,
                      ssize_t,
                      -1);
 #else /* ACE_LACKS_READV */
-#if defined (ACE_HAS_NONCONST_READV)
-  ACE_OSCALL_RETURN (::readv (handle, 
-                              const_cast<iovec *>(iov), 
-                              iovlen), ssize_t, -1);
-#else
-  ACE_OSCALL_RETURN (::readv (handle, 
-                              iov,
-                              iovlen), ssize_t, -1);
-#endif /* ACE_HAS_NONCONST_READV */
+  ACE_OSCALL_RETURN (::readv (handle, iov, iovlen), ssize_t, -1);
 #endif /* ACE_LACKS_READV */
 }
 
@@ -35,17 +27,11 @@ ACE_OS::writev (ACE_HANDLE handle,
   ACE_OS_TRACE ("ACE_OS::writev");
 #if defined (ACE_LACKS_WRITEV)
   ACE_OSCALL_RETURN (ACE_OS::writev_emulation (handle,
-                                               iov,
+                                               (ACE_WRITEV_TYPE *) iov,
                                                iovcnt), ssize_t, -1);
 #else /* ACE_LACKS_WRITEV */
-#if defined (ACE_HAS_NONCONST_WRITEV)
   ACE_OSCALL_RETURN (::writev (handle,
-                               const_cast<iovec *>(iov),
+                               (ACE_WRITEV_TYPE *) iov,
                                iovcnt), ssize_t, -1);
-#else
-  ACE_OSCALL_RETURN (::writev (handle,
-                               iov,
-                               iovcnt), ssize_t, -1);
-#endif /* ACE_HAS_NONCONST_WRITEV */
 #endif /* ACE_LACKS_WRITEV */
 }

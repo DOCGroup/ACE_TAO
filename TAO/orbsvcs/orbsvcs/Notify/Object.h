@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,7 +22,7 @@
 
 #include "tao/PortableServer/Servant_Base.h"
 
-#include "orbsvcs/NotifyExtC.h"
+#include "orbsvcs/orbsvcs/NotifyExtC.h"
 
 #include "QoSProperties.h"
 #include "AdminProperties.h"
@@ -39,7 +39,7 @@ class TAO_Notify_Timer;
  * @brief Base Object for RT_Notify's CORBA Objects.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_Object : public TAO_Notify_Refcountable
+class TAO_Notify_Export TAO_Notify_Object : public TAO_Notify_Refcountable
 {
   friend class TAO_Notify_Builder;
 

@@ -17,9 +17,9 @@
 #ifndef RTEVENT_SUPPLIER_H
 #define RTEVENT_SUPPLIER_H
 
-#include "orbsvcs/RtecEventCommS.h"
-#include "orbsvcs/RTEventLogAdminC.h"
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/orbsvcs/RTEventLogAdminC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -991,19 +991,19 @@ namespace
     }
 
     virtual void
-    pre (InParameter&)
+    pre (InParameter& p)
     {
       os << "in ";
     }
 
     virtual void
-    pre (OutParameter&)
+    pre (OutParameter& p)
     {
       os << "out ";
     }
 
     virtual void
-    pre (InOutParameter&)
+    pre (InOutParameter& p)
     {
       os << "inout ";
     }
@@ -1119,7 +1119,7 @@ namespace
     }
 
     virtual void
-    names (Type&)
+    names (Type& h)
     {
       os << "{"
          << STRS[COMP_EC] << " "
@@ -1464,7 +1464,7 @@ namespace
     }
 
     virtual void
-    implements (Type&)
+    implements (Type& i)
     {
       // os << " : ";
 

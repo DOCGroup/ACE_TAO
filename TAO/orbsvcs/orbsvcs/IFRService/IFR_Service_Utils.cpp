@@ -4,10 +4,10 @@
 #include "IDLType_i.h"
 #include "Container_i.h"
 #include "Contained_i.h"
-#include "orbsvcs/IFRService/ComponentRepository_i.h"
-#include "orbsvcs/IFRService/Options.h"
-#include "orbsvcs/IFRService/IFR_ComponentsS.h"
-#include "orbsvcs/IOR_Multicast.h"
+#include "orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h"
+#include "orbsvcs/orbsvcs/IFRService/Options.h"
+#include "orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h"
+#include "orbsvcs/orbsvcs/IOR_Multicast.h"
 #include "tao/IORTable/IORTable.h"
 #include "tao/ORB_Core.h"
 #include "tao/default_ports.h"
@@ -576,7 +576,7 @@ TAO_IFR_Service_Utils::valid_container (
 
   if (error_flag == 1)
     {
-      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 4,
+      ACE_THROW (CORBA::BAD_PARAM (4,
                                    CORBA::COMPLETED_NO));
     }
 }
@@ -616,7 +616,7 @@ TAO_IFR_Service_Utils::id_exists (const char *id,
                                          holder)
        == 0)
     {
-      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 2,
+      ACE_THROW (CORBA::BAD_PARAM (2,
                                    CORBA::COMPLETED_NO));
     }
 }
@@ -663,7 +663,7 @@ TAO_IFR_Service_Utils::name_exists (
 
           if ((*checker) (member_name.fast_rep ()) != 0)
             {
-              ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 3,
+              ACE_THROW (CORBA::BAD_PARAM (3,
                                            CORBA::COMPLETED_NO));
             }
         }
@@ -808,7 +808,7 @@ TAO_IFR_Service_Utils::check_subsection (
 
       if ((*checker) (entry_name.fast_rep ()) != 0)
         {
-          ACE_THROW (CORBA::BAD_PARAM (3,
+          ACE_THROW (CORBA::BAD_PARAM (5,
                                        CORBA::COMPLETED_NO));
           return;
         }

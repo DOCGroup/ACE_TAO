@@ -1,9 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project(RTSched) : orbsvcslib, core, naming, portableserver, svc_utils {
+project(RTSched) : orbsvcslib, core, naming {
   sharedname   = TAO_RTSched
-  idlflags    += -Wb,export_macro=TAO_RTSched_Export -Wb,export_include=orbsvcs/Sched/sched_export.h
+  idlflags    += -Wb,export_macro=TAO_RTSched_Export -Wb,export_include=Sched/sched_export.h
   dynamicflags = TAO_RTSCHED_BUILD_DLL
   tagchecks   += Sched
 
@@ -20,9 +20,6 @@ project(RTSched) : orbsvcslib, core, naming, portableserver, svc_utils {
       Scheduler_Utilities.cpp
       Sched
     }
-  }
-
-  Template_Files {
   }
 
   // To avoid picking up RTSchedEvent.rc as well, explicitly list the files.

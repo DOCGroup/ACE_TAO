@@ -5,7 +5,6 @@ ACE_RCSID (Log,
            "$Id$")
 
 TAO_LogMgr_i::TAO_LogMgr_i (void)
-  : max_id_ (0)
 {
   // No-Op.
 }

@@ -278,7 +278,9 @@ ACE::log2 (u_long num)
 {
   u_long log = 0;
 
-  for (; num > 0; ++log)
+  for (;
+       num > 0;
+       log++)
     num >>= 1;
 
   return log;
@@ -287,11 +289,8 @@ ACE::log2 (u_long num)
 ACE_INLINE ACE_TCHAR
 ACE::nibble2hex (u_int n)
 {
-  // Hexadecimal characters.
-  static const ACE_TCHAR hex_chars[] = ACE_LIB_TEXT ("0123456789abcdef");
-
   // @@ UNICODE does this work?
-  return hex_chars[n & 0x0f];
+  return ACE::hex_chars_[n & 0x0f];
 }
 
 ACE_INLINE u_char
@@ -303,4 +302,16 @@ ACE::hex2byte (ACE_TCHAR c)
     return (u_char) (10 + c - ACE_LIB_TEXT ('a'));
   else
     return (u_char) (10 + c - ACE_LIB_TEXT ('A'));
+}
+
+ACE_INLINE char
+ACE::debug (void)
+{
+  return ACE::debug_;
+}
+
+ACE_INLINE void
+ACE::debug (char c)
+{
+  ACE::debug_ = c;
 }

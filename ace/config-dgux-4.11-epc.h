@@ -32,7 +32,7 @@
 #define ACE_HAS_MSG
 
 // Compiler/platform contains the <sys/syscall.h> file.
-// #define ACE_HAS_SYS_SYSCALL_H
+// #define ACE_HAS_SYSCALL_H
 
 // Platform supports reentrant functions (i.e., all the POSIX *_r functions).
 #define ACE_HAS_REENTRANT_FUNCTIONS
@@ -81,7 +81,7 @@
 #define ACE_HAS_SIGINFO_T
 
 // Compiler/platform provides the sockio.h file.
-#define ACE_HAS_SYS_SOCKIO_H
+#define ACE_HAS_SOCKIO_H
 
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T

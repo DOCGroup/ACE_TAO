@@ -13,14 +13,14 @@
 #define TAO_SUBSCRIPTION_CHANGE_WORKER_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosNotificationC.h"
-#include "orbsvcs/ESF/ESF_Worker.h"
+#include "orbsvcs/orbsvcs/CosNotificationC.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Worker.h"
 
 class TAO_Notify_Proxy;
 
@@ -30,7 +30,7 @@ class TAO_Notify_Proxy;
  * @brief
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_Subscription_Change_Worker : public TAO_ESF_Worker<TAO_Notify_Proxy>
+class TAO_Notify_Export TAO_Notify_Subscription_Change_Worker : public TAO_ESF_Worker<TAO_Notify_Proxy>
 {
 public:
   /// Constuctor

@@ -8,7 +8,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/CDR.h"
-#include "tao/SystemException.h"
 
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
@@ -298,7 +297,7 @@ TAO_Profile::create_tagged_profile (void)
 #else
       this->tagged_profile_->profile_data.length (length);
       CORBA::Octet *buffer =
-        this->tagged_profile_->profile_data.get_buffer ();
+        this->tagged_profile_.profile_data.get_buffer ();
 
       for (const ACE_Message_Block *i = encap.begin ();
            i != encap.end ();
@@ -593,7 +592,7 @@ TAO_Profile::verify_orb_configuration (ACE_ENV_SINGLE_ARG_DECL)
       //        updated.
       ACE_THROW (CORBA::BAD_PARAM (
                    CORBA::SystemException::_tao_minor_code (
-                      0,
+                      TAO_DEFAULT_MINOR_CODE,
                       EINVAL),
                    CORBA::COMPLETED_NO));
     }
@@ -624,7 +623,7 @@ TAO_Profile::verify_profile_version (ACE_ENV_SINGLE_ARG_DECL)
       //        updated.
       ACE_THROW (CORBA::BAD_PARAM (
                    CORBA::SystemException::_tao_minor_code (
-                     0,
+                     TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                    CORBA::COMPLETED_NO));
     }
@@ -635,12 +634,6 @@ TAO_Profile::supports_multicast (void) const
 {
   // Most profiles do not support multicast endpoints.
   return 0;
-}
-
-bool
-TAO_Profile::supports_non_blocking_oneways (void) const
-{
-  return !(this->version_.major == 1 && this->version_.minor == 0);
 }
 
 void
@@ -659,7 +652,7 @@ TAO_Profile::addressing_mode (CORBA::Short addr
     default:
       ACE_THROW (CORBA::BAD_PARAM (
              CORBA::SystemException::_tao_minor_code (
-               0,
+               TAO_DEFAULT_MINOR_CODE,
                EINVAL),
              CORBA::COMPLETED_NO));
     }
@@ -673,7 +666,7 @@ TAO_Profile::parse_string (const char *ior
     {
       ACE_THROW (CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
-                     0,
+                     TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                    CORBA::COMPLETED_NO));
     }
@@ -705,7 +698,7 @@ TAO_Profile::parse_string (const char *ior
     {
       ACE_THROW (CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
-                     0,
+                     TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                    CORBA::COMPLETED_NO));
     }

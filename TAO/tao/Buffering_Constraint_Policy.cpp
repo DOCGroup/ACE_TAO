@@ -6,12 +6,8 @@
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 #include "TAOC.h"
-#include "SystemException.h"
 
-ACE_RCSID (tao,
-           Buffering_Constraint_Policy,
-           "$Id$")
-
+ACE_RCSID(TAO, Buffering_Constraint_Policy, "$Id$")
 
 #if ! defined (__ACE_INLINE__)
 #include "tao/Buffering_Constraint_Policy.i"

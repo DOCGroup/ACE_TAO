@@ -1,5 +1,6 @@
 //$Id$
-project : taolib, core, messaging, minimum_corba {
+project : taolib, core, messaging {
+  avoids += minimum_corba
   sharedname   = TAO_DynamicInterface
   dynamicflags = TAO_DYNAMICINTERFACE_BUILD_DLL
 
@@ -21,8 +22,5 @@ project : taolib, core, messaging, minimum_corba {
 
   Resource_files {
     DynamicInterface
-  }
-
-  PIDL_Files {
   }
 }

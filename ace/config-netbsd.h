@@ -1,155 +1,181 @@
 /* -*- C++ -*- */
 // $Id$
 
+// ***** This configuration file is still under testing. *****
+
+// The following configuration file is designed to work for NetBSD
+// platforms using GNU g++.
+
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
+#include /**/ "ace/pre.h"
 
-#define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R 1
-#define ACE_HAS_3_PARAM_WCSTOK 1
-#define ACE_HAS_4_4BSD_SENDMSG_RECVMSG 1
-#define ACE_HAS_ALT_CUSERID 1
-#define ACE_HAS_AUTOMATIC_INIT_FINI 1
-#define ACE_HAS_CLOCK_GETTIME 1
-#define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES 1
-#define ACE_HAS_CPLUSPLUS_HEADERS 1
-#define ACE_HAS_DIRENT 1
-#define ACE_HAS_EXCEPTIONS 1
-#define ACE_HAS_GETIFADDRS 1
-#define ACE_HAS_GETPAGESIZE 1
-#define ACE_HAS_GETRUSAGE 1
-#define ACE_HAS_GETRUSAGE_PROTOTYPE 1
-#define ACE_HAS_GNU_CSTRING_H 1
-#define ACE_HAS_GPERF 1
-#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT 1
-#define ACE_HAS_IP_MULTICAST 1
-#define ACE_HAS_MEMCHR 1
-#define ACE_HAS_MSG 1
-#define ACE_HAS_NEW_NOTHROW 1
-#define ACE_HAS_NEW_NO_H 1
-#define ACE_HAS_NONCONST_SELECT_TIMEVAL 1
-#define ACE_HAS_ONLY_SCHED_OTHER 1
-#define ACE_HAS_POLL 1
-#define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
-#define ACE_HAS_POSIX_NONBLOCK 1
-#define ACE_HAS_POSIX_TIME 1
-#define ACE_HAS_PTHREADS 1
-#define ACE_HAS_PTHREADS_STD 1
-#define ACE_HAS_PTHREADS_UNIX98_EXT 1
-#define ACE_HAS_PTHREAD_RESUME_NP 1
-#define ACE_HAS_PTHREAD_SUSPEND_NP 1
-#define ACE_HAS_P_READ_WRITE 1
-#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS 1
-#define ACE_HAS_REENTRANT_FUNCTIONS 1
-#define ACE_HAS_SIGACTION_CONSTP2 1
-#define ACE_HAS_SIGINFO_T 1
-#define ACE_HAS_SIGSUSPEND 1
-#define ACE_HAS_SIGTIMEDWAIT 1
-#define ACE_HAS_SIGWAIT 1
-#define ACE_HAS_SIG_ATOMIC_T 1
-#define ACE_HAS_SIG_C_FUNC 1
-#define ACE_HAS_SIN_LEN 1
-#define ACE_HAS_SNPRINTF 1
-#define ACE_HAS_SOCKADDR_MSG_NAME 1
-#define ACE_HAS_SOCKLEN_T 1
-#define ACE_HAS_SSIZE_T 1
-#define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#define ACE_HAS_STDCPP_STL_INCLUDES 1
-#define ACE_HAS_STDEXCEPT_NO_H 1
-#define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 1
-#define ACE_HAS_STD_TEMPLATE_SPECIALIZATION 1
-#define ACE_HAS_STRERROR 1
-#define ACE_HAS_STRINGS 1
-#define ACE_HAS_STRING_CLASS 1
-#define ACE_HAS_STRPTIME 1
-#define ACE_HAS_SVR4_DYNAMIC_LINKING 1
-#define ACE_HAS_SYSV_IPC 1
-#define ACE_HAS_SYS_ERRLIST 1
-#define ACE_HAS_SYS_FILIO_H 1
-#define ACE_HAS_SYS_IOCTL_H 1
-#define ACE_HAS_SYS_SIGLIST 1
-#define ACE_HAS_SYS_SOCKIO_H 1
-#define ACE_HAS_SYS_SYSCALL_H 1
-#define ACE_HAS_TEMPLATE_SPECIALIZATION 1
-#define ACE_HAS_TEMPLATE_TYPEDEFS 1
-#define ACE_HAS_THREADS 1
-#define ACE_HAS_THREAD_SPECIFIC_STORAGE 1
-#define ACE_HAS_TIMEZONE 1
-#define ACE_HAS_TIMEZONE_GETTIMEOFDAY 1
-#define ACE_HAS_TYPENAME_KEYWORD 1
-#define ACE_HAS_UALARM 1
-#define ACE_HAS_UCONTEXT_T 1
-#define ACE_HAS_USING_KEYWORD 1
-#define ACE_HAS_VOIDPTR_MMAP 1
-#define ACE_HAS_VOIDPTR_SOCKOPT 1
-#define ACE_HAS_WCHAR 1
-#define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR 1
-#define ACE_HAS_XPG4_MULTIBYTE_CHAR 1
-#define ACE_IOCTL_TYPE_ARG2 u_long
-#define ACE_LACKS_CONDATTR_PSHARED 1
-#define ACE_LACKS_GETHOSTENT 1
-#define ACE_LACKS_IOSTREAM_FX 1
-#define ACE_LACKS_ITOW 1
-#define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
-#define ACE_LACKS_MSG_ACCRIGHTS 1
-#define ACE_LACKS_MUTEXATTR_PSHARED 1
-#define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS 1
-#define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1
-#define ACE_LACKS_PRAGMA_ONCE 1
-#define ACE_LACKS_PRI_T 1
-#define ACE_LACKS_PTHREAD_THR_SIGSETMASK 1
-#define ACE_LACKS_PTHREAD_YIELD 1
-#define ACE_LACKS_PWD_REENTRANT_FUNCTIONS 1
-#define ACE_LACKS_RWLOCKATTR_PSHARED 1
-#define ACE_LACKS_RWLOCK_T 1
-#define ACE_LACKS_SETSCHED 1
-#define ACE_LACKS_SIGINFO_H 1
-#define ACE_LACKS_STROPTS_H 1
-#define ACE_LACKS_STRRECVFD 1
-#define ACE_LACKS_TIMEDWAIT_PROTOTYPES 1
-#define ACE_LACKS_TIMESPEC_T 1
-#define ACE_LACKS_UNBUFFERED_STREAMBUF 1
-#define ACE_LACKS_WCSDUP 1
-#define ACE_LACKS_WCSICMP 1
-#define ACE_LACKS_WCSNICMP 1
-#define ACE_MT_SAFE 1
-#define ACE_NEW_THROWS_EXCEPTIONS 1
-#define ACE_TEMPLATES_REQUIRE_SOURCE 1
-#define ACE_UINT64_TYPEDEF unsigned long long
-#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+#if ! defined (__ACE_INLINE__)
+#define __ACE_INLINE__
+#endif /* ! __ACE_INLINE__ */
 
-typedef unsigned long long ACE_UINT64;
+// ********************************************************
+// uncomment next line if you are using FreeBSD 2.1.x[R]
+// #define FreeBSD_2_1
+// ********************************************************
+#define ACE_NETBSD
 
-#if defined(__x86_64__)
-#define ACE_SIZEOF_DOUBLE 8
-#define ACE_SIZEOF_FLOAT 4
-#define ACE_SIZEOF_INT 4
-#define ACE_SIZEOF_LONG 8
-#define ACE_SIZEOF_LONG_DOUBLE 16
-#define ACE_SIZEOF_LONG_LONG 8
-#define ACE_SIZEOF_SHORT 2
-#define ACE_SIZEOF_VOID_P 8
-#define ACE_SIZEOF_WCHAR 4
-#define ACE_SSIZE_T_FORMAT_SPECIFIER	ACE_LIB_TEXT ("%ld")
-#define ACE_SIZE_T_FORMAT_SPECIFIER	ACE_LIB_TEXT ("%lu")
-
-#elif defined(__i386__)
-#define ACE_HAS_PENTIUM 1
-
-#define ACE_SIZEOF_DOUBLE 8
-#define ACE_SIZEOF_FLOAT 4
-#define ACE_SIZEOF_INT 4
-#define ACE_SIZEOF_LONG 4
 #define ACE_SIZEOF_LONG_DOUBLE 12
-#define ACE_SIZEOF_LONG_LONG 8
-#define ACE_SIZEOF_SHORT 2
-#define ACE_SIZEOF_VOID_P 4
-#define ACE_SIZEOF_WCHAR 4
-#else
-# error unknown CPU architecture
-#endif
 
-#endif  /* ACE_CONFIG_H */
+#if defined (__GNUG__)
+# include "ace/config-g++-common.h"
+#endif /* __GNUG__ */
 
-// Local Variables:
-// mode:C++
-// End:
+// #define ACE_HAS_BROKEN_NETBSD_MSYNC
+
+// Platform specific directives
+#define ACE_LACKS_GETPGID
+#define ACE_LACKS_SETPGID
+#define ACE_LACKS_SETREGID
+#define ACE_LACKS_SETREUID
+#define ACE_LACKS_RWLOCK_T
+#define ACE_HAS_SIG_MACROS
+#define ACE_HAS_CHARPTR_DL
+#define ACE_USES_ASM_SYMBOL_IN_DLSYM
+
+// NetBSD appears to have dirent support.
+#define ACE_HAS_DIRENT
+
+// NetBSD appears to have a sigset_t type.
+// #define ACE_LACKS_SIGSET
+
+// This is for 2.1.x only.  By default, gcc defines __FreeBSD__ automatically
+#if defined(FreeBSD_2_1)
+
+#define ACE_HAS_CPLUSPLUS_HEADERS
+
+// This is to fix the nested struct if_data definition on FreeBSD 2.1.x
+#include <sys/types.h>
+#include <sys/time.h>
+struct  if_data {
+/* generic interface information */
+  u_char  ifi_type;       /* ethernet, tokenring, etc */
+  u_char  ifi_physical;   /* e.g., AUI, Thinnet, 10base-T, etc */
+  u_char  ifi_addrlen;    /* media address length */
+  u_char  ifi_hdrlen;     /* media header length */
+  u_long  ifi_mtu;        /* maximum transmission unit */
+  u_long  ifi_metric;     /* routing metric (external only) */
+  u_long  ifi_baudrate;   /* linespeed */
+/* volatile statistics */
+  u_long  ifi_ipackets;   /* packets received on interface */
+  u_long  ifi_ierrors;    /* input errors on interface */
+  u_long  ifi_opackets;   /* packets sent on interface */
+  u_long  ifi_oerrors;    /* output errors on interface */
+  u_long  ifi_collisions; /* collisions on csma interfaces */
+  u_long  ifi_ibytes;     /* total number of octets received */
+  u_long  ifi_obytes;     /* total number of octets sent */
+  u_long  ifi_imcasts;    /* packets received via multicast */
+  u_long  ifi_omcasts;    /* packets sent via multicast */
+  u_long  ifi_iqdrops;    /* dropped on input, this interface */
+  u_long  ifi_noproto;    /* destined for unsupported protocol */
+  struct  timeval ifi_lastchange;/* time of last administrative ch
+ange */
+} ;
+
+// this is a hack, but since this only occured in FreeBSD 2.1.x,
+// I guess it is ok.
+#define ACE_HAS_BROKEN_TIMESPEC_MEMBERS
+
+#endif /* defined FreeBSD_2_1 */
+
+// Platform supports POSIX timers via struct timespec.
+#define ACE_HAS_POSIX_TIME
+#define ACE_HAS_UALARM
+
+// Platform defines struct timespec but not timespec_t
+#define ACE_LACKS_TIMESPEC_T
+
+#define ACE_LACKS_SYSTIME_H
+
+#define ACE_LACKS_STRRECVFD
+
+#define ACE_HAS_SIN_LEN
+
+// Platform supports System V IPC (most versions of UNIX, but not Win32)
+#define ACE_HAS_SYSV_IPC
+
+// Compiler/platform contains the <sys/syscall.h> file.
+#define ACE_HAS_SYSCALL_H
+
+#if !defined(FreeBSD_2_1)
+#define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
+#endif /* defined FreeBSD_2_1 */
+
+// Compiler/platform supports SVR4 signal typedef
+#define ACE_HAS_SVR4_SIGNAL_T
+
+// Compiler/platform supports alloca().
+// Although ACE does have alloca() on this compiler/platform combination, it is
+// disabled by default since it can be dangerous.  Uncomment the following line
+// if you ACE to use it.
+//#define ACE_HAS_ALLOCA
+
+// Compiler/platform supports SVR4 dynamic linking semantics..
+#define ACE_HAS_SVR4_DYNAMIC_LINKING
+
+// Compiler/platform correctly calls init()/fini() for shared libraries.
+#define ACE_HAS_AUTOMATIC_INIT_FINI
+
+// Explicit dynamic linking permits "lazy" symbol resolution
+#define ACE_HAS_RTLD_LAZY_V
+
+// platform supports POSIX O_NONBLOCK semantics
+#define ACE_HAS_POSIX_NONBLOCK
+
+// platform supports IP multicast
+#define ACE_HAS_IP_MULTICAST
+
+// Lacks perfect filtering, must bind group address.
+#if !defined ACE_LACKS_PERFECT_MULTICAST_FILTERING
+# define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1
+#endif /* ACE_LACKS_PERFECT_MULTICAST_FILTERING */
+
+// Compiler/platform has <alloca.h>
+//#define ACE_HAS_ALLOCA_H
+
+// Compiler/platform has the getrusage() system call.
+#define ACE_HAS_GETRUSAGE
+
+// Compiler/platform defines the sig_atomic_t typedef.
+#define ACE_HAS_SIG_ATOMIC_T
+
+// Compiler/platform supports sys_siglist array.
+// *** This refers to (_sys_siglist) instead of (sys_siglist)
+// #define ACE_HAS_SYS_SIGLIST
+
+// Compiler/platform defines a union semun for SysV shared memory.
+#define ACE_HAS_SEMUN
+
+// Compiler supports the ssize_t typedef.
+#define ACE_HAS_SSIZE_T
+
+// Compiler/platform supports strerror ().
+#define ACE_HAS_STRERROR
+
+// Compiler/platform provides the sockio.h file.
+#define ACE_HAS_SOCKIO_H
+
+// Defines the page size of the system.
+#define ACE_PAGE_SIZE 4096
+
+// Platform provides <sys/filio.h> header.
+#define ACE_HAS_SYS_FILIO_H
+
+// Platform/compiler supports timezone * as second parameter to gettimeofday().
+#define ACE_HAS_TIMEZONE_GETTIMEOFDAY
+
+#define ACE_HAS_MSG
+#define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
+
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
+#define ACE_LACKS_GETHOSTENT
+
+#include /**/ "ace/post.h"
+#endif /* ACE_CONFIG_H */

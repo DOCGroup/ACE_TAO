@@ -34,7 +34,6 @@ TAO_Storable_Naming_Context_Activator (CORBA::ORB_ptr orb,
 
 TAO_Storable_Naming_Context_Activator::~TAO_Storable_Naming_Context_Activator ()
 {
-  delete factory_;
 }
 
 PortableServer::Servant
@@ -57,10 +56,10 @@ TAO_Storable_Naming_Context_Activator::incarnate (const PortableServer::ObjectId
   // the persistence elment needs to be read in.
 
   // Does this already exist on disk?
-  ACE_TString file_name(persistence_directory_);
-  file_name += ACE_TEXT("/");
-  file_name += ACE_TEXT_CHAR_TO_TCHAR(poa_id.in());
-  TAO_Storable_Base * fl = factory_->create_stream(ACE_TEXT_ALWAYS_CHAR(file_name.c_str()), ACE_TEXT("rw"));
+  ACE_CString file_name(persistence_directory_);
+  file_name += "/";
+  file_name += poa_id.in();
+  TAO_Storable_Base * fl = factory_->create_stream(file_name, "rw");
   if (!fl->exists()) {
     ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
                       0);

@@ -16,8 +16,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
 
 #include "Event/event_export.h"
 
@@ -244,7 +244,7 @@ private:
 
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event_Utilities.i"
+#include "orbsvcs/orbsvcs/Event_Utilities.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

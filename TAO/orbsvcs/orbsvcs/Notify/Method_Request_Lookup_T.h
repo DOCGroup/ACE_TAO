@@ -13,13 +13,13 @@
 #define TAO_Notify_METHOD_REQUEST_LOOKUP_T_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/ESF/ESF_Worker.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Worker.h"
 #include "ProxySupplier.h"
 
 /**
@@ -29,7 +29,7 @@
  *
  */
 template <class EVENT, class PROXY, class EVENT_PARAM, class PROXY_PARAM>
-class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup_T : public TAO_ESF_Worker<TAO_Notify_ProxySupplier>
+class TAO_Notify_Export TAO_Notify_Method_Request_Lookup_T : public TAO_ESF_Worker<TAO_Notify_ProxySupplier>
 {
 public:
   /// Constuctor

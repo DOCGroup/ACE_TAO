@@ -23,7 +23,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Basic_Types.h"
 #include "ace/SString.h"
 #include "ace/Functor_String.h"
 
@@ -54,12 +53,11 @@ typedef char ACEXML_UTF8;
  * using the built-in conversion functions as they only perform simple
  * copy without any encoding conversion.
  */
-typedef ACE_TCHAR ACEXML_Char;
 # if defined (ACE_USES_WCHAR)
-//typedef ACEXML_UTF16 ACEXML_Char;
+typedef ACEXML_UTF16 ACEXML_Char;
 typedef ACE_WString ACEXML_String;
 # else
-//typedef ACEXML_UTF8 ACEXML_Char;
+typedef ACEXML_UTF8 ACEXML_Char;
 typedef ACE_CString ACEXML_String;
 # endif /* ACE_USES_WCHAR */
 

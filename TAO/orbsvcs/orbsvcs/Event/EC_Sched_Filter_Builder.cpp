@@ -1,7 +1,7 @@
 // $Id$
 
 #include "EC_Sched_Filter.h"
-#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
 #include "EC_Sched_Filter_Builder.h"
 #include "EC_Type_Filter.h"
 #include "EC_Conjunction_Filter.h"

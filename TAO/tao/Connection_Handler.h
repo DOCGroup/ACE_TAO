@@ -93,10 +93,6 @@ public:
    */
   virtual int open_handler (void *) = 0;
 
-  /// A close() hook, called by the Transport Connector when they want to close
-  /// this handler
-  virtual int close_handler (void);
-
 protected:
 
   /// Return our TAO_ORB_Core pointer
@@ -125,12 +121,7 @@ protected:
   int handle_output_eh (ACE_HANDLE h, ACE_Event_Handler * eh);
 
   /// Implement the handle_input() callback
-  // We're actually going to pull the code from the protocol-specific
-  // handlers back into this class, because they ALL look exactly the same.
-  // If some other protocol comes along and needs to do something different,
-  // it is always free to override handle_input() as it sees fit.
   int handle_input_eh (ACE_HANDLE h, ACE_Event_Handler * eh);
-  int handle_input_internal (ACE_HANDLE h, ACE_Event_Handler *eh);
 
   /// Implement close_connection() for Connection_Handlers that are
   /// also Event_Handlers.

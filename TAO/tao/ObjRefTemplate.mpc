@@ -1,5 +1,5 @@
 //$Id$
-project : valuetype, portableserver, core {
+project : valuetype, core {
   sharedname   = TAO_ObjRefTemplate
   dynamicflags = TAO_ORT_BUILD_DLL
 
@@ -20,10 +20,6 @@ project : valuetype, portableserver, core {
   }
 
   Resource_Files {
-    ObjRefTemplate
-  }
-
-  PIDL_Files {
     ObjRefTemplate
   }
 }

@@ -10,8 +10,8 @@
 
 #include "Loopback_Supplier.h"
 #include "tao/Utils/Servant_Var.h"
-#include "orbsvcs/RtecEventCommS.h"
-#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -95,7 +95,7 @@ else
 
 endif
 
-# Test for template instantiation, add to SOFLAGS if versioned_so set,
+# Test for template instantiation, add to SOFLAGS if versioned_so set, 
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU

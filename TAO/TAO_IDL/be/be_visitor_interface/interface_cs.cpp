@@ -67,7 +67,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
           << node->name () << "_ptr" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::duplicate ("
+          << "TAO::Objref_Traits<" << node->name () << ">::tao_duplicate ("
           << be_idt << be_idt_nl
           << node->name () << "_ptr p" << be_uidt_nl
           << ")" << be_uidt_nl
@@ -78,7 +78,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
           << "void" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::release ("
+          << "TAO::Objref_Traits<" << node->name () << ">::tao_release ("
           << be_idt << be_idt_nl
           << node->name () << "_ptr p" << be_uidt_nl
           << ")" << be_uidt_nl
@@ -89,7 +89,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
           << node->name () << "_ptr" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::nil (void)"
+          << "TAO::Objref_Traits<" << node->name () << ">::tao_nil (void)"
           << be_nl
           << "{" << be_idt_nl
           << "return " << node->name () << "::_nil ();" << be_uidt_nl
@@ -98,7 +98,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
           << "CORBA::Boolean" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
+          << "TAO::Objref_Traits<" << node->name () << ">::tao_marshal ("
           << be_idt << be_idt_nl
           << node->name () << "_ptr p," << be_nl
           << "TAO_OutputCDR & cdr" << be_uidt_nl
@@ -562,7 +562,7 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
                                                   be_interface *base,
                                                   TAO_OutStream *os)
 {
-  if (!base->is_abstract ())
+  if (node == base)
     {
       return 0;
     }
@@ -581,7 +581,7 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_interface_cs::"
-                             "gen_abstract_ops_helper - "
+                             "abstract_base_ops_helper - "
                              "bad node in this scope\n"),
                             -1);
         }

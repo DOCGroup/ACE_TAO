@@ -19,17 +19,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/DsLogAdminS.h"
+#include "orbsvcs/orbsvcs/DsLogAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/DsNotifyLogAdminS.h"
-#include "orbsvcs/Log/Log_i.h"
-#include "orbsvcs/Log/NotifyLogConsumer.h"
+#include "orbsvcs/orbsvcs/DsNotifyLogAdminS.h"
+#include "orbsvcs/orbsvcs/Log/Log_i.h"
+#include "orbsvcs/orbsvcs/Log/NotifyLogConsumer.h"
 
-#include "notifylog_serv_export.h"
+#include "notifylog_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -50,7 +50,7 @@ class TAO_NotifyLogFactory_i;
  * It is used to log events that pass through the EventChannel.
  * The class supports the @c destroy> method to destroy the Log.
  */
-class TAO_NotifyLog_Serv_Export TAO_NotifyLog_i : 
+class TAO_NotifyLog_Export TAO_NotifyLog_i : 
   public TAO_Log_i,
   public POA_DsNotifyLogAdmin::NotifyLog,
   public virtual PortableServer::RefCountServantBase

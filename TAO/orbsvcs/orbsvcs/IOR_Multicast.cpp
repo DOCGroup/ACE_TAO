@@ -41,10 +41,7 @@ TAO_IOR_Multicast::TAO_IOR_Multicast (const char *ior,
 
 TAO_IOR_Multicast::~TAO_IOR_Multicast (void)
 {
-  if (this->mcast_dgram_.leave (this->mcast_addr_) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "%p\n", "leave"));
-    }
+  this->mcast_dgram_.leave (this->mcast_addr_);
 }
 
 int

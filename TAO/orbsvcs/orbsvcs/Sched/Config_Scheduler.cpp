@@ -4,8 +4,8 @@
 //
 // ============================================================================
 
-#include "orbsvcs/Time_Utilities.h"
-#include "orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
 
 #include "Config_Scheduler.h"
 

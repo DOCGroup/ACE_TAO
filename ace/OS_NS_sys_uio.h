@@ -37,13 +37,13 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t readv (ACE_HANDLE handle,
-                 const iovec *iov,
+                 iovec *iov,
                  int iovlen);
 
 #if defined (ACE_LACKS_READV)
   extern ACE_Export
   ssize_t readv_emulation (ACE_HANDLE handle,
-                           const iovec *iov,
+                           ACE_READV_TYPE *iov,
                            int iovcnt);
 #endif /* ACE_LACKS_READV */
 
@@ -57,7 +57,7 @@ namespace ACE_OS {
 #if defined (ACE_LACKS_WRITEV)
   extern ACE_Export
   ssize_t writev_emulation (ACE_HANDLE handle,
-                            const iovec *iov,
+                            ACE_WRITEV_TYPE *iov,
                             int iovcnt);
 #endif /* ACE_LACKS_WRITEV */
 

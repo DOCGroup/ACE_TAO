@@ -14,8 +14,8 @@
 // ============================================================================
 
 
-#include "orbsvcs/CosLifeCycleC.h"
-#include "orbsvcs/LifeCycleServiceC.h"
+#include "orbsvcs/orbsvcs/CosLifeCycleC.h"
+#include "orbsvcs/orbsvcs/LifeCycleServiceC.h"
 
 #ifndef CRITERIA_EVALUATOR_H_H
 #define CRITERIA_EVALUATOR_H_H

@@ -121,22 +121,19 @@ BE_produce (void)
       BE_abort ();
     }
 
-  if (be_global->do_ccm_preproc ())
-    {
-      // Make a pass over the AST and introduce
-      // CCM specific nodes.
-      be_visitor_ccm_pre_proc ccm_preproc_visitor (&ctx);
+  // Make a pass over the AST and introduce
+  // CCM specific nodes.
+  be_visitor_ccm_pre_proc ccm_preproc_visitor (&ctx);
 
-      if (root->accept (&ccm_preproc_visitor) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%N:%l) be_produce - "
-                      "CCM preprocessing for Root failed\n"));
-          BE_abort ();
-        }
+  if (root->accept (&ccm_preproc_visitor) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%N:%l) be_produce - "
+                  "CCM preprocessing for Root failed\n"));
+      BE_abort ();
     }
 
-  if (be_global->ami_call_back ())
+  if (be_global->ami_call_back () == I_TRUE)
     {
       // Make a pass over the AST and introduce
       // AMI specific interfaces, methods and valuetypes.
@@ -151,7 +148,7 @@ BE_produce (void)
         }
     }
 
-  if (be_global->gen_amh_classes ())
+  if (be_global->gen_amh_classes () == I_TRUE)
     {
       // Make a pass over the AST and introduce
       // AMH specific code

@@ -15,8 +15,8 @@
 #define TAO_CONSTRAINT_VISITOR_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Trader/Interpreter_Utils.h"
-#include "orbsvcs/Trader/trading_serv_export.h"
+#include "orbsvcs/orbsvcs/Trader/Interpreter_Utils.h"
+#include "orbsvcs/orbsvcs/Trader/trading_export.h"
 #include "ace/Containers.h"
 
 class TAO_DynSequence_i;
@@ -45,7 +45,7 @@ class TAO_Noop_Constraint;
  * method to deal with each possible type of node in an
  * expression tree; one for each operator in the grammar.
  */
-class TAO_Trading_Serv_Export TAO_Constraint_Visitor
+class TAO_Trading_Export TAO_Constraint_Visitor
 {
 public:
 
@@ -85,7 +85,7 @@ public:
   virtual int visit_property (TAO_Property_Constraint* literal) = 0;
 };
 
-#include "orbsvcs/Trader/Constraint_Nodes.h"
+#include "orbsvcs/orbsvcs/Trader/Constraint_Nodes.h"
 
 /**
  * @class TAO_Constraint_Validator
@@ -107,7 +107,7 @@ public:
  * at which point we can back out of the traversal and indicate
  * failure.
  */
-class TAO_Trading_Serv_Export TAO_Constraint_Validator : public TAO_Constraint_Visitor
+class TAO_Trading_Export TAO_Constraint_Validator : public TAO_Constraint_Visitor
 {
 public:
   /// Constructor.
@@ -217,7 +217,7 @@ private:
  * evaluation time errors are a divide by a property whose value
  * is zero and undefined properties.
  */
-class TAO_Trading_Serv_Export TAO_Constraint_Evaluator : public TAO_Constraint_Visitor
+class TAO_Trading_Export TAO_Constraint_Evaluator : public TAO_Constraint_Visitor
 {
 public:
 
@@ -306,7 +306,7 @@ public:
 
 private:
 
-  class TAO_Trading_Serv_Export Operand_Queue :
+  class TAO_Trading_Export Operand_Queue :
     public ACE_Unbounded_Queue <TAO_Literal_Constraint>
   // = TITLE
   // A queue adapter with methods to setting and getting operands

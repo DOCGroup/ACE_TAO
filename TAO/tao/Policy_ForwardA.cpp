@@ -26,7 +26,6 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "Policy_ForwardC.h"
-#include "tao/SystemException.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Dual_Impl_T.h"
 #include "tao/Any_Basic_Impl_T.h"
@@ -418,3 +417,4 @@ CORBA::Boolean operator>>= (
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

@@ -1,7 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ace/config-all.h"
+// Typed_SV_Message.i
+
 #include "ace/Global_Macros.h"
 
 template <class T> ACE_INLINE

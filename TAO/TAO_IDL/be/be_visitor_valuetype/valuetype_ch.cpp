@@ -160,13 +160,25 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
       *os << "public virtual CORBA::ValueBase";
     }
-    
-  // Generate the supported interfaces.  
-  for (i = 0; i < node->n_supports (); ++i)
+
+  if (node->supports_abstract ())
     {
-      *os << "," << be_nl
-          << "public virtual "
-          << node->supports ()[i]->name ();
+      status =
+        node->traverse_supports_list_graphs (
+            be_valuetype::abstract_supports_helper,
+            os,
+            I_TRUE,
+            I_FALSE
+          );    
+
+      if (status == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_valuetype_ch::"
+                             "visit_valuetype - "
+                             "traversal of supported interfaces failed\n"),
+                            -1);
+        }
     }
 
   // Generate the body.
@@ -237,10 +249,9 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  // If we inherit from CORBA::Object and/or CORBA::AbstractBase
-  // (in addition to CORBA::ValueBase) we have to add these 
-  // to avoid ambiguity.
-  if (node->n_supports () > 0)
+  // If we inherit from both CORBA::ValueBase and CORBA::AbstractBase,
+  // we have to add this to avoid ambiguity.
+  if (node->supports_abstract ())
     {
       *os << be_uidt_nl << be_nl << "public:" << be_idt_nl;
       *os << be_nl << "virtual void _add_ref (void) = 0;" << be_nl;

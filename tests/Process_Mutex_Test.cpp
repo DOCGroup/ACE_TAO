@@ -132,11 +132,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Child process code.
   if (child_process)
     {
-      ACE_TCHAR lognm[MAXPATHLEN];
-      int mypid (ACE_OS::getpid ());
-      ACE_OS::sprintf(lognm, ACE_TEXT ("Process_Mutex_Test-child-%d"), mypid);
-
-      ACE_START_TEST (lognm);
+      ACE_APPEND_LOG (ACE_TEXT("Process_Mutex_Test-children"));
       acquire_release ();
       ACE_END_LOG;
     }
@@ -151,27 +147,20 @@ run_main (int argc, ACE_TCHAR *argv[])
       // Process_Mutex shall control the destruction of mutex better.
       ACE_Process_Mutex mutex( mutex_name );
 #     endif
+      ACE_INIT_LOG (ACE_TEXT("Process_Mutex_Test-children"));
 
       ACE_Process_Options options;
       if (release_mutex == 0)
         options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
                               ACE_TEXT ("Process_Mutex_Test")
                               ACE_PLATFORM_EXE_SUFFIX
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                              ACE_TEXT (" -c -n %ls -d"),
-#else
                               ACE_TEXT (" -c -n %s -d"),
-#endif /* !ACE_WIN32 && ACE_USES_WCHAR */
                               mutex_name);
       else
         options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
                               ACE_TEXT ("Process_Mutex_Test")
                               ACE_PLATFORM_EXE_SUFFIX
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                              ACE_TEXT (" -c -n %ls"),
-#else
                               ACE_TEXT (" -c -n %s"),
-#endif /* !ACE_WIN32 && ACE_USES_WCHAR */
                               mutex_name);
 
       // Spawn <n_processes> child processes that will contend for the

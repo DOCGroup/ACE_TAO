@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): namingexe, portableserver {
+project(*server): namingexe, naming {
   Source_Files {
     status_i.cpp
     server.cpp
   }
 }
 
-project(*client): namingexe, portableserver {
+project(*client): namingexe {
   exename = client
 
   Source_Files {

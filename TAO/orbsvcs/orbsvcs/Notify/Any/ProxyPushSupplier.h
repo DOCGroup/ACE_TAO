@@ -20,8 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/Event_ForwarderS.h"
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/orbsvcs/Event_ForwarderS.h"
 
 #include "../ProxySupplier_T.h"
 
@@ -33,7 +33,7 @@
 #endif /* _MSC_VER */
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-template class TAO_Notify_Serv_Export
+template class TAO_Notify_Export
 TAO_Notify_ProxySupplier_T<POA_Event_Forwarder::ProxyPushSupplier>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
@@ -43,7 +43,7 @@ TAO_Notify_ProxySupplier_T<POA_Event_Forwarder::ProxyPushSupplier>;
  * @brief
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_ProxyPushSupplier
+class TAO_Notify_Export TAO_Notify_ProxyPushSupplier
   : public virtual TAO_Notify_ProxySupplier_T <POA_Event_Forwarder::ProxyPushSupplier>
 {
   friend class TAO_Notify_Builder;

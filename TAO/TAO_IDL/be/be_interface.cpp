@@ -520,7 +520,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           << ")" << be_nl
           << ": ";
 
-      if (this->has_mixed_parentage_)
+      if (this->has_mixed_parentage_ && ! this->is_abstract ())
         {
           *os << "ACE_NESTED_CLASS (CORBA, AbstractBase) ("
               << be_idt << be_idt << be_idt_nl
@@ -553,7 +553,19 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           *os << be_idt;
         }
 
-      if (!is_abstract_)
+      if (is_abstract_)
+        {
+          if (this->pd_n_inherits == 0)
+            {
+              *os << "ACE_NESTED_CLASS (CORBA, AbstractBase) ("
+                  << be_idt << be_idt_nl
+                  << "objref," << be_nl
+                  << "_tao_collocated," << be_nl
+                  << "servant" << be_uidt_nl
+                  << ")" << be_uidt;
+            }
+        }
+      else
         {
           *os << "ACE_NESTED_CLASS (CORBA, Object) ("
               << be_idt << be_idt_nl
@@ -1356,31 +1368,19 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
 void
 be_interface::analyze_parentage (void)
 {
-  if (this->has_mixed_parentage_ != -1)
-    {
-      return;
-    }
-  
   this->has_mixed_parentage_ = 0;
 
   for (long i = 0; i < this->pd_n_inherits; ++i)
     {
-      be_interface *parent =
-        be_interface::narrow_from_decl (this->pd_inherits[i]);
-    
-      if (parent->is_abstract () || parent->has_mixed_parentage ())
+      if (this->pd_inherits[i]->is_abstract ())
         {
           this->has_mixed_parentage_ = 1;
           break;
         }
     }
-    
-  AST_Decl::NodeType nt = this->node_type ();
-  idl_bool can_be_mixed = nt == AST_Decl::NT_interface 
-                          || nt == AST_Decl::NT_component
-                          || nt == AST_Decl::NT_home;
 
-  if (this->has_mixed_parentage_ == 1 && can_be_mixed)
+  if (this->has_mixed_parentage_ == 1
+      && this->node_type () == AST_Decl::NT_interface)
     {
       be_global->mixed_parentage_interfaces.enqueue_tail (this);
     }
@@ -1456,8 +1456,6 @@ be_interface::traverse_inheritance_graph (
       // If we are doing a component, we check for a parent.
       if (intf->node_type () == AST_Decl::NT_component)
         {
-          (void) this->insert_non_dup (be_global->ccmobject ());
-
           AST_Component *base =
             AST_Component::narrow_from_decl (intf)->base_component ();
 
@@ -1473,6 +1471,10 @@ be_interface::traverse_inheritance_graph (
                   (void) this->insert_non_dup (supports[j],
                                                abstract_paths_only);
                 }
+            }
+          else
+            {
+              (void) this->insert_non_dup (be_global->ccmobject ());
             }
         }
 

@@ -69,7 +69,7 @@ struct ip_mreq
 #define ACE_HAS_SYSV_IPC
 
 // Sun has the wrong prototype for sendmsg.
-#define ACE_HAS_NONCONST_SENDMSG
+#define ACE_HAS_BROKEN_SENDMSG
 
 // The SunOS 5.x version of rand_r is inconsistent with the header files...
 #define ACE_HAS_BROKEN_RANDR
@@ -84,7 +84,7 @@ struct ip_mreq
 #define ACE_HAS_MSG
 
 // Compiler/platform contains the <sys/syscall.h> file.
-#define ACE_HAS_SYS_SYSCALL_H
+#define ACE_HAS_SYSCALL_H
 
 #if !defined (ACE_HAS_FSU_PTHREADS)
 // Platform supports reentrant functions (i.e., all the POSIX *_r functions).
@@ -144,7 +144,7 @@ struct ip_mreq
 #define ACE_HAS_UCONTEXT_T
 
 // Compiler/platform provides the sockio.h file.
-#define ACE_HAS_SYS_SOCKIO_H
+#define ACE_HAS_SOCKIO_H
 
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T

@@ -14,7 +14,4 @@ project(ETCL) : orbsvcslib, core {
   Source_Files {
     ETCL
   }
-
-  Template_Files {
-  }
 }

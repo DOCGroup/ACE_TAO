@@ -33,14 +33,9 @@
 //   patch < diffs/Current.diff
 // ================================================================
 
-#ifndef TAO_CURRENT_PIDL
-#define TAO_CURRENT_PIDL
-
 #pragma prefix "omg.org"
 
 module CORBA
 {
   local interface Current {};
 };
-
-#endif  /* TAO_CURRENT_PIDL */

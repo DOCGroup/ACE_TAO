@@ -2,6 +2,7 @@
 
 #include "Object_Factory_i.h"
 #include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/ObjectReferenceTemplate.h"
 
 Object_Factory_i::Object_Factory_i (CORBA::ORB_ptr orb,
                                     PortableServer::POA_ptr gateway_poa)
@@ -28,9 +29,7 @@ Object_Factory_i::create_object (const char *interface_repository_id,
   const PortableInterceptor::ObjectId *obj_id =
     ACE_reinterpret_cast (const PortableInterceptor::ObjectId *,
                           &id.in ());
-  ACE_UNUSED_ARG(obj_id);
-  ACE_UNUSED_ARG(interface_repository_id);
-/*
+
   TAO_POA *poa = dynamic_cast <TAO_POA *> (this->gateway_poa_);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
@@ -44,7 +43,7 @@ Object_Factory_i::create_object (const char *interface_repository_id,
     ort->make_object (interface_repository_id,
                       *obj_id
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());*/
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  return CORBA::Object::_nil();
+  return object_ptr;
 }

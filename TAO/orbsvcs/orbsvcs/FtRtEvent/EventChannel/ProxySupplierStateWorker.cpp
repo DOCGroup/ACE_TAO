@@ -1,9 +1,9 @@
 // $Id$
 
-#include "orbsvcs/FtRtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/FtRtecEventChannelAdminC.h"
 #include "ProxySupplierStateWorker.h"
-#include "orbsvcs/Event/EC_Event_Channel_Base.h"
-#include "orbsvcs/Event/EC_ProxyConsumer.h"
+#include "orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.h"
+#include "orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h"
 
 ACE_RCSID (EventChannel,
            ProxySupplierStateWorker,

@@ -31,14 +31,6 @@
 #define ACE_CC_PREPROCESSOR ""
 #define ACE_CC_PREPROCESSOR_ARGS ""
 
-#define ACE_HAS_CUSTOM_EXPORT_MACROS
-#define ACE_Proper_Export_Flag __declspec (dllexport)
-#define ACE_Proper_Import_Flag __declspec (dllimport)
-#define ACE_EXPORT_SINGLETON_DECLARATION(T) template class  T
-#define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class __declspec (dllexport) SINGLETON_TYPE<CLASS, LOCK>;
-#define ACE_IMPORT_SINGLETON_DECLARATION(T) template class T
-#define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class SINGLETON_TYPE <CLASS, LOCK>;
-
 // By default WIN32 has FD_SETSIZE of 64, which places the limit
 // between 61 and 64 on the number of clients a server using the
 // Select Reactor can support at the same time (i.e., 64 - standard in,
@@ -82,44 +74,9 @@
 #define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64u")
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 
-#define ACE_LACKS_NET_IF_H
-#define ACE_LACKS_NETINET_IN_H
-#define ACE_LACKS_DIRENT_H
-#define ACE_LACKS_DLFCN_H
-#define ACE_LACKS_NETDB_H
-#define ACE_LACKS_PWD_H
-#define ACE_LACKS_SEMAPHORE_H
-#define ACE_LACKS_STDINT_H
-#define ACE_LACKS_STRINGS_H
-#define ACE_LACKS_SYS_IOCTL_H
-#define ACE_LACKS_STROPTS_H
-#define ACE_LACKS_UCONTEXT_H
-#define ACE_LACKS_SYS_IPC_H
-#define ACE_LACKS_SYS_MMAN_H
-#define ACE_LACKS_SYS_RESOURCE_H
-#define ACE_LACKS_SYS_SELECT_H
-#define ACE_LACKS_SYS_SEM_H
-#define ACE_LACKS_SYS_SOCKET_H
-#define ACE_LACKS_SYS_TIME_H
-#define ACE_LACKS_SYS_UIO_H
-#define ACE_LACKS_SYS_WAIT_H
-#define ACE_LACKS_SYS_SHM_H
-#define ACE_LACKS_SYS_MSG_H
-#define ACE_LACKS_TERMIOS_H
-#define ACE_LACKS_POLL_H
-#define ACE_LACKS_NETINET_TCP_H
-#define ACE_HAS_3_PARAM_WCSTOK
-#define ACE_LACKS_STRCASECMP
-#define ENOTEMPTY     WSAENOTEMPTY
-#define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
-
 #undef WIFEXITED
 #undef WEXITSTATUS
 
-#define _O_CREAT  O_CREAT
-#define _O_TRUNC   O_TRUNC
-#define _O_TEMPORARY   0
-#define _O_EXCL   O_EXCL
 #define _O_RDWR   O_RDWR
 #define _O_WRONLY O_WRONLY
 #define _O_RDONLY O_RDONLY

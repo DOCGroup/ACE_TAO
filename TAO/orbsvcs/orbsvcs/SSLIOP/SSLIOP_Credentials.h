@@ -23,43 +23,36 @@
 
 #include "SSLIOP_X509.h"
 #include "SSLIOP_EVP_PKEY.h"
-#include "orbsvcs/SecurityLevel3C.h"
+#include "orbsvcs/orbsvcs/SecurityLevel3C.h"
 #include "tao/LocalObject.h"
 
 namespace TAO
 {
-  class SSLIOP_Credentials;
+  namespace SSLIOP
+  {
 
-   namespace SSLIOP
-   {
-     typedef SSLIOP_Credentials* Credentials_ptr;
-     typedef TAO_Pseudo_Var_T<SSLIOP_Credentials> Credentials_var;
-     typedef TAO_Pseudo_Out_T<SSLIOP_Credentials, Credentials_var> Credentials_out;
-   }
+    class Credentials;
+    typedef Credentials* Credentials_ptr;
+    typedef TAO_Pseudo_Var_T<Credentials> Credentials_var;
+    typedef TAO_Pseudo_Out_T<Credentials, Credentials_var> Credentials_out;
 
     /**
-     * @class SSLIOP_Credentials
+     * @class Credentials
      *
      * @brief SSLIOP-specific implementation of the
      *        SecurityLevel3::Credentials interface.
      *
      * This class encapsulates the X.509 certificate associated with a
      * given a principal.
-     *
-     * @note Why is this class not the TAO::SSLIOP namespace?  Because
-     *       brain damaged MSVC++ 6 cannot call a base class
-     *       constructor of class declared in a namespace that is more
-     *       than one level deep in a sub-class base member
-     *       initializer list.
      */
-    class TAO_SSLIOP_Export SSLIOP_Credentials
+    class TAO_SSLIOP_Export Credentials
       : public virtual SecurityLevel3::Credentials,
         public virtual TAO_Local_RefCounted_Object
     {
     public:
 
       /// Constructor
-      SSLIOP_Credentials (::X509 * cert, ::EVP_PKEY * evp);
+      Credentials (::X509 * cert, ::EVP_PKEY * evp);
 
       /**
        * @name SecurityLevel3::Credentials Methods
@@ -116,19 +109,19 @@ namespace TAO
       ::EVP_PKEY *evp (void);
       //@}
 
-      bool operator== (const SSLIOP_Credentials &rhs);
+      bool operator== (const Credentials &rhs);
 
       CORBA::ULong hash (void) const;
 
       // The static operations.
-      static SSLIOP::Credentials_ptr _duplicate (SSLIOP::Credentials_ptr obj);
+      static Credentials_ptr _duplicate (Credentials_ptr obj);
 
-      static SSLIOP::Credentials_ptr _narrow (CORBA::Object_ptr obj
-                                              ACE_ENV_ARG_DECL);
+      static Credentials_ptr _narrow (CORBA::Object_ptr obj
+                                      ACE_ENV_ARG_DECL);
 
-      static SSLIOP::Credentials_ptr _nil (void)
+      static Credentials_ptr _nil (void)
       {
-        return (SSLIOP::Credentials_ptr) 0;
+        return (Credentials_ptr) 0;
       }
 
       //@}
@@ -140,17 +133,17 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting  mechanism.
        */
-      ~SSLIOP_Credentials (void);
+      ~Credentials (void);
 
     protected:
 
       /// Reference to the X.509 certificate associated with this SSLIOP
       /// Credentials object.
-      SSLIOP::X509_var x509_;
+      X509_var x509_;
 
       /// Reference to the private key associated with the X.509
       /// certificate.
-      SSLIOP::EVP_PKEY_var evp_;
+      EVP_PKEY_var evp_;
 
       /// Credentials Identifier.
       CORBA::String_var id_;
@@ -166,7 +159,7 @@ namespace TAO
 
     };
 
-//   } // End SSLIOP namespace
+  } // End SSLIOP namespace
 }   // End TAO namespace
 
 #if defined (__ACE_INLINE__)

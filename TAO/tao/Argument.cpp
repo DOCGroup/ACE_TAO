@@ -19,8 +19,6 @@ TAO::Argument::demarshal (TAO_InputCDR &)
   return 1;
 }
 
-#if TAO_HAS_INTERCEPTORS == 1
-
 void
 TAO::Argument::interceptor_param (Dynamic::Parameter &)
 {
@@ -30,6 +28,4 @@ void
 TAO::Argument::interceptor_result (CORBA::Any *)
 {
 }
-
-#endif /* TAO_HAS_INTERCEPTORS */
 

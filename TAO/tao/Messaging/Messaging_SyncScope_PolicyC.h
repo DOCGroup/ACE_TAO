@@ -227,14 +227,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Messaging_Export Objref_Traits<Messaging::SyncScopePolicy>
   {
-    static Messaging::SyncScopePolicy_ptr duplicate (
+    static Messaging::SyncScopePolicy_ptr tao_duplicate (
         Messaging::SyncScopePolicy_ptr
       );
-    static void release (
+    static void tao_release (
         Messaging::SyncScopePolicy_ptr
       );
-    static Messaging::SyncScopePolicy_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static Messaging::SyncScopePolicy_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
         Messaging::SyncScopePolicy_ptr p,
         TAO_OutputCDR & cdr
       );

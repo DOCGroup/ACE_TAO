@@ -1,13 +1,22 @@
 // -*- MPC -*-
 // $Id$
 
-project(CosNotification) : orbsvcslib, core, event {
+project(CosNotification) : orbsvcslib, core, svc_utils, etcl, dynamicany {
   sharedname   = TAO_CosNotification
-  dynamicflags = TAO_NOTIFY_BUILD_DLL
+  // Warning : The idlflags must match exactly those used in CosEvent, because
+  //           we don't know which project will actually generate the IDL.
+  //           For this reason we also just use the event_export.h and macros for
+  //           both services.
+  idlflags    += -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h
 
-  idlflags    += -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h
+  // Set both DLL flags because of the shared idl files
+  dynamicflags = TAO_NOTIFY_BUILD_DLL TAO_EVENT_BUILD_DLL
+
+  tagchecks   += Notify
 
   IDL_Files {
+    CosEventComm.idl
+    CosEventChannelAdmin.idl
     CosNotification.idl
     CosNotifyComm.idl
     CosNotifyFilter.idl
@@ -16,96 +25,27 @@ project(CosNotification) : orbsvcslib, core, event {
     Event_Forwarder.idl
   }
 
-  Source_Files {
-    CosNotificationC.cpp
-    CosNotifyCommC.cpp
-    CosNotifyFilterC.cpp
-    CosNotifyChannelAdminC.cpp
-    NotifyExtC.cpp
-    Event_ForwarderC.cpp
-    Notify/Notify_Extensions.cpp
-  }
-
-  Header_Files {
-    CosNotificationC.h
-    CosNotifyCommC.h
-    CosNotifyFilterC.h
-    CosNotifyChannelAdminC.h
-    NotifyExtC.h
-    Event_ForwarderC.h
-    Notify/Notify_Extensions.h
-  }
-
-  Inline_Files {
-    CosNotificationC.inl
-    CosNotifyCommC.inl
-    CosNotifyFilterC.inl
-    CosNotifyChannelAdminC.inl
-    NotifyExtC.inl
-    Event_ForwarderC.inl
-  }
-
-  Template_Files {
-  }
- 
-  // explicit Resource_Files to avoid including _Skel & _Serv rc files.
-  Resource_Files{
-    CosNotification.rc
-  }
-}
-
-
-project(CosNotification_Skel) : orbsvcslib, core, notification, event_skel, portableserver {
-  sharedname   = TAO_CosNotification_Skel
-  dynamicflags = TAO_NOTIFY_SKEL_BUILD_DLL
-
-  IDL_Files {
-  }
-
-  Source_Files {
-    CosNotificationS.cpp
-    CosNotifyCommS.cpp
-    CosNotifyFilterS.cpp
-    CosNotifyChannelAdminS.cpp
-    NotifyExtS.cpp
-    Event_ForwarderS.cpp
-  }
-
-  Header_Files {
-    CosNotificationS.h
-    CosNotifyCommS.h
-    CosNotifyFilterS.h
-    CosNotifyChannelAdminS.h
-    NotifyExtS.h
-    Event_ForwarderS.h
-  }
-
-  Inline_Files {
-    CosNotificationS.inl
-    CosNotifyCommS.inl
-    CosNotifyFilterS.inl
-    CosNotifyChannelAdminS.inl
-    NotifyExtS.inl
-    Event_ForwarderS.inl
-  }
-
-  Template_Files {
-  }
-}
-
-project(CosNotification_Serv) : orbsvcslib, core, notification_skel, dynamicany, etcl {
-  sharedname   = TAO_CosNotification_Serv
-  dynamicflags = TAO_NOTIFY_SERV_BUILD_DLL
-  tagchecks   += Notify
-
-  IDL_Files {
-  }
-
   // The following could be simplified if RT stuff was
   // put into another subdirectory.
 
   Source_Files(ORBSVCS_COMPONENTS) {
     Notify {
+      CosEventCommC.cpp
+      CosEventCommS.cpp
+      CosEventChannelAdminC.cpp
+      CosEventChannelAdminS.cpp
+      CosNotificationC.cpp
+      CosNotificationS.cpp
+      CosNotifyCommC.cpp
+      CosNotifyCommS.cpp
+      CosNotifyFilterC.cpp
+      CosNotifyFilterS.cpp
+      CosNotifyChannelAdminC.cpp
+      CosNotifyChannelAdminS.cpp
+      NotifyExtC.cpp
+      NotifyExtS.cpp
+      Event_ForwarderC.cpp
+      Event_ForwarderS.cpp
       Notify/Admin.cpp
       Notify/AdminProperties.cpp
       Notify/Buffering_Strategy.cpp
@@ -138,6 +78,7 @@ project(CosNotification_Serv) : orbsvcslib, core, notification_skel, dynamicany,
       Notify/Notify_Default_EMO_Factory.cpp
       Notify/Notify_Default_POA_Factory.cpp
       Notify/Notify_EventChannelFactory_i.cpp
+      Notify/Notify_Extensions.cpp
       Notify/Object.cpp
       Notify/Peer.cpp
       Notify/POA_Helper.cpp
@@ -175,8 +116,5 @@ project(CosNotification_Serv) : orbsvcslib, core, notification_skel, dynamicany,
       Notify/Structured/StructuredPushConsumer.cpp
       Notify/Structured/StructuredPushSupplier.cpp
     }
-  }
-
-  Template_Files {
   }
 }

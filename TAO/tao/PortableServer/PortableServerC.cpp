@@ -42,7 +42,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "PortableServerC.inl"
+#include "PortableServerC.i"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
@@ -466,7 +466,7 @@ void PortableServer::IDs::_tao_any_destructor (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ThreadPolicy_ptr
-TAO::Objref_Traits<PortableServer::ThreadPolicy>::duplicate (
+TAO::Objref_Traits<PortableServer::ThreadPolicy>::tao_duplicate (
     PortableServer::ThreadPolicy_ptr p
   )
 {
@@ -475,7 +475,7 @@ TAO::Objref_Traits<PortableServer::ThreadPolicy>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableServer::ThreadPolicy>::release (
+TAO::Objref_Traits<PortableServer::ThreadPolicy>::tao_release (
     PortableServer::ThreadPolicy_ptr p
   )
 {
@@ -484,14 +484,14 @@ TAO::Objref_Traits<PortableServer::ThreadPolicy>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ThreadPolicy_ptr
-TAO::Objref_Traits<PortableServer::ThreadPolicy>::nil (void)
+TAO::Objref_Traits<PortableServer::ThreadPolicy>::tao_nil (void)
 {
   return PortableServer::ThreadPolicy::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableServer::ThreadPolicy>::marshal (
+TAO::Objref_Traits<PortableServer::ThreadPolicy>::tao_marshal (
     PortableServer::ThreadPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -617,7 +617,7 @@ PortableServer::ThreadPolicy::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::LifespanPolicy_ptr
-TAO::Objref_Traits<PortableServer::LifespanPolicy>::duplicate (
+TAO::Objref_Traits<PortableServer::LifespanPolicy>::tao_duplicate (
     PortableServer::LifespanPolicy_ptr p
   )
 {
@@ -626,7 +626,7 @@ TAO::Objref_Traits<PortableServer::LifespanPolicy>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableServer::LifespanPolicy>::release (
+TAO::Objref_Traits<PortableServer::LifespanPolicy>::tao_release (
     PortableServer::LifespanPolicy_ptr p
   )
 {
@@ -635,14 +635,14 @@ TAO::Objref_Traits<PortableServer::LifespanPolicy>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::LifespanPolicy_ptr
-TAO::Objref_Traits<PortableServer::LifespanPolicy>::nil (void)
+TAO::Objref_Traits<PortableServer::LifespanPolicy>::tao_nil (void)
 {
   return PortableServer::LifespanPolicy::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableServer::LifespanPolicy>::marshal (
+TAO::Objref_Traits<PortableServer::LifespanPolicy>::tao_marshal (
     PortableServer::LifespanPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -766,7 +766,7 @@ PortableServer::LifespanPolicy::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::IdUniquenessPolicy_ptr
-TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>::duplicate (
+TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>::tao_duplicate (
     PortableServer::IdUniquenessPolicy_ptr p
   )
 {
@@ -775,7 +775,7 @@ TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>::release (
+TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>::tao_release (
     PortableServer::IdUniquenessPolicy_ptr p
   )
 {
@@ -784,14 +784,14 @@ TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::IdUniquenessPolicy_ptr
-TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>::nil (void)
+TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>::tao_nil (void)
 {
   return PortableServer::IdUniquenessPolicy::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>::marshal (
+TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>::tao_marshal (
     PortableServer::IdUniquenessPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -915,7 +915,7 @@ PortableServer::IdUniquenessPolicy::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::IdAssignmentPolicy_ptr
-TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::duplicate (
+TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::tao_duplicate (
     PortableServer::IdAssignmentPolicy_ptr p
   )
 {
@@ -924,7 +924,7 @@ TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::release (
+TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::tao_release (
     PortableServer::IdAssignmentPolicy_ptr p
   )
 {
@@ -933,14 +933,14 @@ TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::IdAssignmentPolicy_ptr
-TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::nil (void)
+TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::tao_nil (void)
 {
   return PortableServer::IdAssignmentPolicy::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::marshal (
+TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::tao_marshal (
     PortableServer::IdAssignmentPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1066,7 +1066,7 @@ PortableServer::IdAssignmentPolicy::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ImplicitActivationPolicy_ptr
-TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::duplicate (
+TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::tao_duplicate (
     PortableServer::ImplicitActivationPolicy_ptr p
   )
 {
@@ -1075,7 +1075,7 @@ TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::release (
+TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::tao_release (
     PortableServer::ImplicitActivationPolicy_ptr p
   )
 {
@@ -1084,14 +1084,14 @@ TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ImplicitActivationPolicy_ptr
-TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::nil (void)
+TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::tao_nil (void)
 {
   return PortableServer::ImplicitActivationPolicy::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::marshal (
+TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::tao_marshal (
     PortableServer::ImplicitActivationPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1219,7 +1219,7 @@ PortableServer::ImplicitActivationPolicy::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ServantRetentionPolicy_ptr
-TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::duplicate (
+TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::tao_duplicate (
     PortableServer::ServantRetentionPolicy_ptr p
   )
 {
@@ -1228,7 +1228,7 @@ TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::release (
+TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::tao_release (
     PortableServer::ServantRetentionPolicy_ptr p
   )
 {
@@ -1237,14 +1237,14 @@ TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ServantRetentionPolicy_ptr
-TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::nil (void)
+TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::tao_nil (void)
 {
   return PortableServer::ServantRetentionPolicy::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::marshal (
+TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::tao_marshal (
     PortableServer::ServantRetentionPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1372,7 +1372,7 @@ PortableServer::ServantRetentionPolicy::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::RequestProcessingPolicy_ptr
-TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::duplicate (
+TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::tao_duplicate (
     PortableServer::RequestProcessingPolicy_ptr p
   )
 {
@@ -1381,7 +1381,7 @@ TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::release (
+TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::tao_release (
     PortableServer::RequestProcessingPolicy_ptr p
   )
 {
@@ -1390,14 +1390,14 @@ TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::RequestProcessingPolicy_ptr
-TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::nil (void)
+TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::tao_nil (void)
 {
   return PortableServer::RequestProcessingPolicy::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::marshal (
+TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::tao_marshal (
     PortableServer::RequestProcessingPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1523,7 +1523,7 @@ PortableServer::RequestProcessingPolicy::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::POAManager_ptr
-TAO::Objref_Traits<PortableServer::POAManager>::duplicate (
+TAO::Objref_Traits<PortableServer::POAManager>::tao_duplicate (
     PortableServer::POAManager_ptr p
   )
 {
@@ -1532,7 +1532,7 @@ TAO::Objref_Traits<PortableServer::POAManager>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableServer::POAManager>::release (
+TAO::Objref_Traits<PortableServer::POAManager>::tao_release (
     PortableServer::POAManager_ptr p
   )
 {
@@ -1541,14 +1541,14 @@ TAO::Objref_Traits<PortableServer::POAManager>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::POAManager_ptr
-TAO::Objref_Traits<PortableServer::POAManager>::nil (void)
+TAO::Objref_Traits<PortableServer::POAManager>::tao_nil (void)
 {
   return PortableServer::POAManager::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableServer::POAManager>::marshal (
+TAO::Objref_Traits<PortableServer::POAManager>::tao_marshal (
     PortableServer::POAManager_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1771,7 +1771,7 @@ PortableServer::POAManager::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::AdapterActivator_ptr
-TAO::Objref_Traits<PortableServer::AdapterActivator>::duplicate (
+TAO::Objref_Traits<PortableServer::AdapterActivator>::tao_duplicate (
     PortableServer::AdapterActivator_ptr p
   )
 {
@@ -1780,7 +1780,7 @@ TAO::Objref_Traits<PortableServer::AdapterActivator>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableServer::AdapterActivator>::release (
+TAO::Objref_Traits<PortableServer::AdapterActivator>::tao_release (
     PortableServer::AdapterActivator_ptr p
   )
 {
@@ -1789,14 +1789,14 @@ TAO::Objref_Traits<PortableServer::AdapterActivator>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::AdapterActivator_ptr
-TAO::Objref_Traits<PortableServer::AdapterActivator>::nil (void)
+TAO::Objref_Traits<PortableServer::AdapterActivator>::tao_nil (void)
 {
   return PortableServer::AdapterActivator::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableServer::AdapterActivator>::marshal (
+TAO::Objref_Traits<PortableServer::AdapterActivator>::tao_marshal (
     PortableServer::AdapterActivator_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1916,7 +1916,7 @@ PortableServer::AdapterActivator::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ServantManager_ptr
-TAO::Objref_Traits<PortableServer::ServantManager>::duplicate (
+TAO::Objref_Traits<PortableServer::ServantManager>::tao_duplicate (
     PortableServer::ServantManager_ptr p
   )
 {
@@ -1925,7 +1925,7 @@ TAO::Objref_Traits<PortableServer::ServantManager>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableServer::ServantManager>::release (
+TAO::Objref_Traits<PortableServer::ServantManager>::tao_release (
     PortableServer::ServantManager_ptr p
   )
 {
@@ -1934,14 +1934,14 @@ TAO::Objref_Traits<PortableServer::ServantManager>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ServantManager_ptr
-TAO::Objref_Traits<PortableServer::ServantManager>::nil (void)
+TAO::Objref_Traits<PortableServer::ServantManager>::tao_nil (void)
 {
   return PortableServer::ServantManager::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableServer::ServantManager>::marshal (
+TAO::Objref_Traits<PortableServer::ServantManager>::tao_marshal (
     PortableServer::ServantManager_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -2061,7 +2061,7 @@ PortableServer::ServantManager::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ServantActivator_ptr
-TAO::Objref_Traits<PortableServer::ServantActivator>::duplicate (
+TAO::Objref_Traits<PortableServer::ServantActivator>::tao_duplicate (
     PortableServer::ServantActivator_ptr p
   )
 {
@@ -2070,7 +2070,7 @@ TAO::Objref_Traits<PortableServer::ServantActivator>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableServer::ServantActivator>::release (
+TAO::Objref_Traits<PortableServer::ServantActivator>::tao_release (
     PortableServer::ServantActivator_ptr p
   )
 {
@@ -2079,14 +2079,14 @@ TAO::Objref_Traits<PortableServer::ServantActivator>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ServantActivator_ptr
-TAO::Objref_Traits<PortableServer::ServantActivator>::nil (void)
+TAO::Objref_Traits<PortableServer::ServantActivator>::tao_nil (void)
 {
   return PortableServer::ServantActivator::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableServer::ServantActivator>::marshal (
+TAO::Objref_Traits<PortableServer::ServantActivator>::tao_marshal (
     PortableServer::ServantActivator_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -2210,7 +2210,7 @@ PortableServer::ServantActivator::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ServantLocator_ptr
-TAO::Objref_Traits<PortableServer::ServantLocator>::duplicate (
+TAO::Objref_Traits<PortableServer::ServantLocator>::tao_duplicate (
     PortableServer::ServantLocator_ptr p
   )
 {
@@ -2219,7 +2219,7 @@ TAO::Objref_Traits<PortableServer::ServantLocator>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableServer::ServantLocator>::release (
+TAO::Objref_Traits<PortableServer::ServantLocator>::tao_release (
     PortableServer::ServantLocator_ptr p
   )
 {
@@ -2228,14 +2228,14 @@ TAO::Objref_Traits<PortableServer::ServantLocator>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ServantLocator_ptr
-TAO::Objref_Traits<PortableServer::ServantLocator>::nil (void)
+TAO::Objref_Traits<PortableServer::ServantLocator>::tao_nil (void)
 {
   return PortableServer::ServantLocator::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableServer::ServantLocator>::marshal (
+TAO::Objref_Traits<PortableServer::ServantLocator>::tao_marshal (
     PortableServer::ServantLocator_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -2361,7 +2361,7 @@ PortableServer::ServantLocator::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::POA_ptr
-TAO::Objref_Traits<PortableServer::POA>::duplicate (
+TAO::Objref_Traits<PortableServer::POA>::tao_duplicate (
     PortableServer::POA_ptr p
   )
 {
@@ -2370,7 +2370,7 @@ TAO::Objref_Traits<PortableServer::POA>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableServer::POA>::release (
+TAO::Objref_Traits<PortableServer::POA>::tao_release (
     PortableServer::POA_ptr p
   )
 {
@@ -2379,14 +2379,14 @@ TAO::Objref_Traits<PortableServer::POA>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::POA_ptr
-TAO::Objref_Traits<PortableServer::POA>::nil (void)
+TAO::Objref_Traits<PortableServer::POA>::tao_nil (void)
 {
   return PortableServer::POA::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableServer::POA>::marshal (
+TAO::Objref_Traits<PortableServer::POA>::tao_marshal (
     PortableServer::POA_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -3538,7 +3538,7 @@ PortableServer::POA::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::Current_ptr
-TAO::Objref_Traits<PortableServer::Current>::duplicate (
+TAO::Objref_Traits<PortableServer::Current>::tao_duplicate (
     PortableServer::Current_ptr p
   )
 {
@@ -3547,7 +3547,7 @@ TAO::Objref_Traits<PortableServer::Current>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableServer::Current>::release (
+TAO::Objref_Traits<PortableServer::Current>::tao_release (
     PortableServer::Current_ptr p
   )
 {
@@ -3556,14 +3556,14 @@ TAO::Objref_Traits<PortableServer::Current>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::Current_ptr
-TAO::Objref_Traits<PortableServer::Current>::nil (void)
+TAO::Objref_Traits<PortableServer::Current>::tao_nil (void)
 {
   return PortableServer::Current::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableServer::Current>::marshal (
+TAO::Objref_Traits<PortableServer::Current>::tao_marshal (
     PortableServer::Current_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -4767,3 +4767,4 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::RequestProcessing
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

@@ -26,7 +26,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/orbsvcs/RtecSchedulerC.h"
 #include "old_event_export.h"
 
 /**

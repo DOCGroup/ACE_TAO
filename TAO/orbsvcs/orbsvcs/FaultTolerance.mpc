@@ -1,11 +1,12 @@
 // -*- MPC -*-
 // $Id$
 
-project(FaultTolerance): orbsvcslib, core, notification, ftorb, portablegroup, minimum_corba {
+project(FaultTolerance): orbsvcslib, core, notification, ftorb, portablegroup {
   sharedname   = TAO_FaultTolerance
-  idlflags    += -Wb,export_macro=TAO_FT_Export -Wb,export_include=orbsvcs/FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h
+  idlflags    += -Wb,export_macro=TAO_FT_Export -Wb,export_include=FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h
   dynamicflags = TAO_FT_BUILD_DLL
   tagchecks   += FaultTolerance
+  avoids      += minimum_corba
 
   IDL_Files {
     FT_CORBA.idl
@@ -29,8 +30,5 @@ project(FaultTolerance): orbsvcslib, core, notification, ftorb, portablegroup, m
       FT_ReplicationManagerS.cpp
       FT_ReplicationManagerC.cpp
     }
-  }
-
-  Template_Files {
   }
 }

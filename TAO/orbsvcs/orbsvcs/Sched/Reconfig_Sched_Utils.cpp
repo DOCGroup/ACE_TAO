@@ -22,7 +22,7 @@
 #include "Reconfig_Sched_Utils.h"
 
 
-#include "orbsvcs/Time_Utilities.h"
+#include "orbsvcs/orbsvcs/Time_Utilities.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

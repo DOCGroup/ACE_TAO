@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/orbsvcs/CosNotifyCommC.h"
 #include "../Consumer.h"
 
 class TAO_Notify_ProxySupplier;
@@ -30,7 +30,7 @@ class TAO_Notify_ProxySupplier;
  * @brief Wrapper for the StructuredPushConsumer that connect to the EventChannel.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_StructuredPushConsumer : public TAO_Notify_Consumer
+class TAO_Notify_Export TAO_Notify_StructuredPushConsumer : public TAO_Notify_Consumer
 {
 public:
   /// Constuctor

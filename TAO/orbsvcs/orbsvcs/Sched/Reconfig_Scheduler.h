@@ -23,8 +23,8 @@
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/RB_Tree.h"
-#include "orbsvcs/Scheduler_Factory.h"
-#include "orbsvcs/RtecSchedulerS.h"
+#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/orbsvcs/RtecSchedulerS.h"
 #include "Reconfig_Sched_Utils.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -4,12 +4,11 @@
 #include "Invocation_Adapter.h"
 #include "IFR_Client_Adapter.h"
 #include "ORB_Core.h"
-#include "SystemException.h"
 
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (tao,
-           Remote_Object_Proxy_Broker,
+           TAO_Object_Remote_Proxy_Broker,
            "$Id$")
 
 namespace TAO

@@ -20,7 +20,7 @@
 // ============================================================================
 
 #include "Factory_Trader.h"
-#include "orbsvcs/CosTradingC.h"
+#include "orbsvcs/orbsvcs/CosTradingC.h"
 
 ACE_RCSID (LifeCycle_Service, 
            Factory_Trader, 

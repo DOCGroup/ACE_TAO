@@ -20,17 +20,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
+#include "orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosEvent/CEC_EventChannel.h"
-#include "orbsvcs/DsEventLogAdminS.h"
-#include "orbsvcs/CosEvent/CEC_Default_Factory.h"
-#include "orbsvcs/CosEventCommS.h"
-#include "eventlog_serv_export.h"
+#include "orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/orbsvcs/DsEventLogAdminS.h"
+#include "orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h"
+#include "orbsvcs/orbsvcs/CosEventCommS.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -44,7 +43,7 @@
  *
  * @brief Used to forward log generated events to a logging server.
  */
-class TAO_EventLog_Serv_Export TAO_EventLogNotification :
+class TAO_EventLog_Export TAO_EventLogNotification :
   public TAO_LogNotification,
   public POA_CosEventComm::PushSupplier
 {

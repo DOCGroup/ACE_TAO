@@ -1,9 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project(PortableGroup) : orbsvcslib, core, naming, iormanip, messaging, minimum_corba {
+project(PortableGroup) : orbsvcslib, core, naming, iormanip, minimum_corba {
   sharedname   = TAO_PortableGroup
-  idlflags    += -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=orbsvcs/PortableGroup/portablegroup_export.h
+  idlflags    += -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=PortableGroup/portablegroup_export.h
   dynamicflags = TAO_PORTABLEGROUP_BUILD_DLL
   tagchecks   += PortableGroup
   after       += FTORB_Utils
@@ -26,8 +26,5 @@ project(PortableGroup) : orbsvcslib, core, naming, iormanip, messaging, minimum_
       PortableGroup_Simple_DSC.cpp
       PortableGroup
     }
-  }
-
-  Template_Files {
   }
 }

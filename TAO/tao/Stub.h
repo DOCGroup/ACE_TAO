@@ -47,11 +47,6 @@ namespace TAO
   class ObjectKey;
 }
 
-namespace IOP
-{
-  struct IOR;
-}
-
 /**
  * @class TAO_Stub
  *
@@ -270,7 +265,8 @@ public:
    */
   int create_ior_info (IOP::IOR *&ior_info,
                        CORBA::ULong &index
-                       ACE_ENV_ARG_DECL);
+                       ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return a reference to the reference count lock.
   /**
@@ -330,7 +326,8 @@ private:
   /// THREAD-SAFE Create the IOR info
   int get_profile_ior_info (TAO_MProfile &profile,
                             IOP::IOR *&ior_info
-                            ACE_ENV_ARG_DECL);
+                            ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 

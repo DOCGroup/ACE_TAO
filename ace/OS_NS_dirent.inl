@@ -51,11 +51,9 @@ ACE_OS::opendir (const ACE_TCHAR *filename)
 #  else /* ! ACE_PSOS */
 #    if defined (ACE_WIN32) && defined (ACE_LACKS_OPENDIR)
   return ::ACE_OS::opendir_emulation (filename);
-#    elif defined (VXWORKS)
-  // VxWorks' ::opendir () is declared with a non-const argument.
-  return ::opendir (const_cast<char *> (filename));
 #    else /* ! ACE_WIN32 && ACE_LACKS_OPENDIR */
-  return ::opendir (ACE_TEXT_ALWAYS_CHAR (filename));
+  // VxWorks' ::opendir () is declared with a non-const argument.
+  return ::opendir (const_cast<ACE_TCHAR *> (filename));
 #    endif /* ACE_WIN32 && ACE_LACKS_OPENDIR */
 #  endif /* ACE_PSOS */
 #else
@@ -167,14 +165,7 @@ ACE_OS::scandir (const ACE_TCHAR *dirname,
                                     const struct dirent **f2))
 {
 #if defined (ACE_HAS_SCANDIR)
-  return ::scandir (ACE_TEXT_ALWAYS_CHAR (dirname),
-                    namelist,
-                    selector,
-#  if defined (ACE_SCANDIR_CMP_USES_VOIDPTR)
-                    reinterpret_cast<int(*)(const void*, const void*)> (comparator));
-#  else
-                    comparator);
-#  endif /* ACE_SCANDIR_CMP_USES_VOIDPTR */
+  return ::scandir (dirname, namelist, selector, comparator);
 #else /* ! defined ( ACE_HAS_SCANDIR) */
   return ACE_OS::scandir_emulation (dirname, namelist, selector, comparator);
 #endif /* ACE_HAS_SCANDIR */

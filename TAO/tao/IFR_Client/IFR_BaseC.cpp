@@ -616,7 +616,7 @@ namespace TAO
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::IRObject_ptr
-TAO::Objref_Traits<CORBA::IRObject>::duplicate (
+TAO::Objref_Traits<CORBA::IRObject>::tao_duplicate (
     CORBA::IRObject_ptr p
   )
 {
@@ -625,7 +625,7 @@ TAO::Objref_Traits<CORBA::IRObject>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<CORBA::IRObject>::release (
+TAO::Objref_Traits<CORBA::IRObject>::tao_release (
     CORBA::IRObject_ptr p
   )
 {
@@ -634,14 +634,14 @@ TAO::Objref_Traits<CORBA::IRObject>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::IRObject_ptr
-TAO::Objref_Traits<CORBA::IRObject>::nil (void)
+TAO::Objref_Traits<CORBA::IRObject>::tao_nil (void)
 {
   return CORBA::IRObject::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<CORBA::IRObject>::marshal (
+TAO::Objref_Traits<CORBA::IRObject>::tao_marshal (
     CORBA::IRObject_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -851,7 +851,7 @@ CORBA::IRObject::marshal (TAO_OutputCDR &cdr)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Contained_ptr
-TAO::Objref_Traits<CORBA::Contained>::duplicate (
+TAO::Objref_Traits<CORBA::Contained>::tao_duplicate (
     CORBA::Contained_ptr p
   )
 {
@@ -860,7 +860,7 @@ TAO::Objref_Traits<CORBA::Contained>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<CORBA::Contained>::release (
+TAO::Objref_Traits<CORBA::Contained>::tao_release (
     CORBA::Contained_ptr p
   )
 {
@@ -869,14 +869,14 @@ TAO::Objref_Traits<CORBA::Contained>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Contained_ptr
-TAO::Objref_Traits<CORBA::Contained>::nil (void)
+TAO::Objref_Traits<CORBA::Contained>::tao_nil (void)
 {
   return CORBA::Contained::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<CORBA::Contained>::marshal (
+TAO::Objref_Traits<CORBA::Contained>::tao_marshal (
     CORBA::Contained_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -2376,7 +2376,7 @@ void CORBA::EnumMemberSeq::_tao_any_destructor (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Container_ptr
-TAO::Objref_Traits<CORBA::Container>::duplicate (
+TAO::Objref_Traits<CORBA::Container>::tao_duplicate (
     CORBA::Container_ptr p
   )
 {
@@ -2385,7 +2385,7 @@ TAO::Objref_Traits<CORBA::Container>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<CORBA::Container>::release (
+TAO::Objref_Traits<CORBA::Container>::tao_release (
     CORBA::Container_ptr p
   )
 {
@@ -2394,14 +2394,14 @@ TAO::Objref_Traits<CORBA::Container>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Container_ptr
-TAO::Objref_Traits<CORBA::Container>::nil (void)
+TAO::Objref_Traits<CORBA::Container>::tao_nil (void)
 {
   return CORBA::Container::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<CORBA::Container>::marshal (
+TAO::Objref_Traits<CORBA::Container>::tao_marshal (
     CORBA::Container_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -3591,7 +3591,7 @@ CORBA::Container::marshal (TAO_OutputCDR &cdr)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::IDLType_ptr
-TAO::Objref_Traits<CORBA::IDLType>::duplicate (
+TAO::Objref_Traits<CORBA::IDLType>::tao_duplicate (
     CORBA::IDLType_ptr p
   )
 {
@@ -3600,7 +3600,7 @@ TAO::Objref_Traits<CORBA::IDLType>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<CORBA::IDLType>::release (
+TAO::Objref_Traits<CORBA::IDLType>::tao_release (
     CORBA::IDLType_ptr p
   )
 {
@@ -3609,14 +3609,14 @@ TAO::Objref_Traits<CORBA::IDLType>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::IDLType_ptr
-TAO::Objref_Traits<CORBA::IDLType>::nil (void)
+TAO::Objref_Traits<CORBA::IDLType>::tao_nil (void)
 {
   return CORBA::IDLType::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<CORBA::IDLType>::marshal (
+TAO::Objref_Traits<CORBA::IDLType>::tao_marshal (
     CORBA::IDLType_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -3792,7 +3792,7 @@ CORBA::IDLType::marshal (TAO_OutputCDR &cdr)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::TypedefDef_ptr
-TAO::Objref_Traits<CORBA::TypedefDef>::duplicate (
+TAO::Objref_Traits<CORBA::TypedefDef>::tao_duplicate (
     CORBA::TypedefDef_ptr p
   )
 {
@@ -3801,7 +3801,7 @@ TAO::Objref_Traits<CORBA::TypedefDef>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<CORBA::TypedefDef>::release (
+TAO::Objref_Traits<CORBA::TypedefDef>::tao_release (
     CORBA::TypedefDef_ptr p
   )
 {
@@ -3810,14 +3810,14 @@ TAO::Objref_Traits<CORBA::TypedefDef>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::TypedefDef_ptr
-TAO::Objref_Traits<CORBA::TypedefDef>::nil (void)
+TAO::Objref_Traits<CORBA::TypedefDef>::tao_nil (void)
 {
   return CORBA::TypedefDef::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<CORBA::TypedefDef>::marshal (
+TAO::Objref_Traits<CORBA::TypedefDef>::tao_marshal (
     CORBA::TypedefDef_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -4104,7 +4104,7 @@ CORBA::Boolean operator<< (
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag =
-            TAO::Objref_Traits<CORBA::InterfaceDef>::marshal (
+            TAO::Objref_Traits<CORBA::InterfaceDef>::tao_marshal (
                 _tao_sequence[i].in (), strm
               );
         }
@@ -4179,7 +4179,7 @@ CORBA::Boolean operator<< (
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag =
-            TAO::Objref_Traits<CORBA::ValueDef>::marshal (
+            TAO::Objref_Traits<CORBA::ValueDef>::tao_marshal (
                 _tao_sequence[i].in (), strm
               );
         }
@@ -4254,7 +4254,7 @@ CORBA::Boolean operator<< (
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag =
-            TAO::Objref_Traits<CORBA::AbstractInterfaceDef>::marshal (
+            TAO::Objref_Traits<CORBA::AbstractInterfaceDef>::tao_marshal (
                 _tao_sequence[i].in (), strm
               );
         }
@@ -4329,7 +4329,7 @@ CORBA::Boolean operator<< (
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag =
-            TAO::Objref_Traits<CORBA::LocalInterfaceDef>::marshal (
+            TAO::Objref_Traits<CORBA::LocalInterfaceDef>::tao_marshal (
                 _tao_sequence[i].in (), strm
               );
         }
@@ -4404,7 +4404,7 @@ CORBA::Boolean operator<< (
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag =
-            TAO::Objref_Traits<CORBA::ExtInterfaceDef>::marshal (
+            TAO::Objref_Traits<CORBA::ExtInterfaceDef>::tao_marshal (
                 _tao_sequence[i].in (), strm
               );
         }
@@ -4479,7 +4479,7 @@ CORBA::Boolean operator<< (
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag =
-            TAO::Objref_Traits<CORBA::ExtValueDef>::marshal (
+            TAO::Objref_Traits<CORBA::ExtValueDef>::tao_marshal (
                 _tao_sequence[i].in (), strm
               );
         }
@@ -4554,7 +4554,7 @@ CORBA::Boolean operator<< (
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag =
-            TAO::Objref_Traits<CORBA::ExtAbstractInterfaceDef>::marshal (
+            TAO::Objref_Traits<CORBA::ExtAbstractInterfaceDef>::tao_marshal (
                 _tao_sequence[i].in (), strm
               );
         }
@@ -4629,7 +4629,7 @@ CORBA::Boolean operator<< (
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag =
-            TAO::Objref_Traits<CORBA::ExtLocalInterfaceDef>::marshal (
+            TAO::Objref_Traits<CORBA::ExtLocalInterfaceDef>::tao_marshal (
                 _tao_sequence[i].in (), strm
               );
         }

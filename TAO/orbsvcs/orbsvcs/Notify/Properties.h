@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,7 +24,7 @@
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 
-#include "orbsvcs/CosNotificationC.h"
+#include "orbsvcs/orbsvcs/CosNotificationC.h"
 
 class TAO_Notify_Factory;
 class TAO_Notify_Builder;
@@ -35,7 +35,7 @@ class TAO_Notify_Builder;
  * @brief Global properties that strategize Notify's run-time behaviour.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_Properties
+class TAO_Notify_Export TAO_Notify_Properties
 {
   friend class TAO_Singleton<TAO_Notify_Properties, TAO_SYNCH_MUTEX>;
 
@@ -136,7 +136,7 @@ protected:
 
 typedef TAO_Singleton<TAO_Notify_Properties, TAO_SYNCH_MUTEX> TAO_Notify_PROPERTIES;
 
-TAO_NOTIFY_SERV_SINGLETON_DECLARE (TAO_Singleton, TAO_Notify_Properties, TAO_SYNCH_MUTEX)
+TAO_NOTIFY_SINGLETON_DECLARE (TAO_Singleton, TAO_Notify_Properties, TAO_SYNCH_MUTEX)
 
 #if defined (__ACE_INLINE__)
 #include "Properties.inl"

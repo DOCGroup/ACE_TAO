@@ -1,14 +1,16 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, amh {
+project(*Server): taoserver {
+  idlflags += -Gv -GH
   Source_Files {
     server.cpp
   }
 }
 
-project(*Client): taoserver, amh {
+project(*Client): taoserver {
   exename = client
+  idlflags += -Gv -GH
   Source_Files {
     client.cpp
   }

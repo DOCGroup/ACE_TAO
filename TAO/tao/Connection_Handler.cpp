@@ -209,43 +209,6 @@ TAO_Connection_Handler::handle_output_eh (
 
 int
 TAO_Connection_Handler::handle_input_eh (
-  ACE_HANDLE h, ACE_Event_Handler *eh)
-{
-  if (this->transport ()->acts_as_server () && 
-      this->orb_core_->get_tss_resources ()->upcalls_temporarily_suspended_on_this_thread_)
-    {
-#if 0 // DON'T IMPLEMENT YET, BUT RECORD THE IDEA FOR POSTERITY
-      // ACE_Time_Value this->spin_prevention_backoff_delay_;
-      ACE_OS::usleep (this->spin_prevention_backoff_delay_);
-      this->spin_prevention_backoff_delay_ = 2 * this->spin_prevention_backoff_delay_ + 1;
-#endif
-      if (TAO_debug_level > 6)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Connection_Handler[%d] - not going to handle_input "
-                    "on Transport %d "
-                    "because upcalls temporarily suspended on this thread\n",
-                    this->transport()->id(),
-                    this->transport()->id()));
-      return 0;
-    }
-
-#if 0
-  this->spin_prevention_backoff_delay_ = 0;
-#endif
-
-  int result = this->handle_input_internal (h, eh);
-  
-  if (result == -1)
-    {
-      this->close_connection ();
-      return 0;
-    }
-
-  return result;
-}
-
-int
-TAO_Connection_Handler::handle_input_internal (
     ACE_HANDLE h, ACE_Event_Handler * eh)
 {
   // Let the transport know that it is used
@@ -302,7 +265,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
     {
       ACE_DEBUG  ((LM_DEBUG,
                    "TAO (%P|%t) - Connection_Handler[%d]::"
-                   "close_connection_eh, purging entry from cache\n",
+                   "close_connection, purging entry from cache\n",
                    handle));
     }
 
@@ -348,7 +311,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
         {
           ACE_DEBUG  ((LM_DEBUG,
                        "TAO (%P|%t) - Connection_Handler[%d]::"
-                       "close_connection_eh, removing from the reactor\n",
+                       "close_connection, removing from the reactor\n",
                        handle));
         }
 
@@ -362,7 +325,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
         {
           ACE_DEBUG  ((LM_DEBUG,
                        "TAO (%P|%t) - Connection_Handler[%d]::"
-                       "close_connection_eh, cancel all timers\n",
+                       "close_connection, cancel all timers\n",
                        handle));
         }
 
@@ -386,7 +349,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
     {
       ACE_DEBUG  ((LM_DEBUG,
                    "TAO (%P|%t) - Connection_Handler[%d]::"
-                   "close_connection_eh\n",
+                   "close_connection\n",
                    id));
     }
 
@@ -407,12 +370,4 @@ TAO_Connection_Handler::pre_io_hook (int & )
 void
 TAO_Connection_Handler::pos_io_hook (int & )
 {
-}
-
-int
-TAO_Connection_Handler::close_handler (void)
-{
-  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
-  this->transport ()->remove_reference ();
-  return 0;
 }

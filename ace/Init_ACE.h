@@ -6,8 +6,7 @@
  *
  *  $Id$
  *
- *  Initialize ACE library services.  Can be called only once per
- *  program invocation.
+ * This class consolidates the operations on the Handles.
  *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
@@ -28,11 +27,13 @@
 /**
  * @class ACE_Init_ACE
  *
- * @brief
+ * @brief Initialize ACE library services.  Can be called only once
+ *   per program invocation.
  *
  */
-namespace ACE
+class ACE_Export ACE_Init_ACE
 {
+public:
   /**
    * This class implements the functions for the initialization and
    * shutting down ACE.  These functions are called only once per ACE
@@ -40,7 +41,7 @@ namespace ACE
    * @return Returns 0 on success, -1 on failure, and 1 if it had already been
    * called.
    */
-  extern ACE_Export int init (void);
+  static int init (void);
 
   /**
    * Shut down ACE library services.  Can be called only once per
@@ -48,18 +49,16 @@ namespace ACE
    * @return Returns 0 on success, -1 on failure, and 1 if it had already been
    * called.
    */
-  extern ACE_Export int fini (void);
+  static int fini (void);
 
-  // private:
-  //  Used internally, so not exported.
-
+private:
   /**
    * Counter to match <init()>/<fini()> calls.  <init()> must increment it;
    * <fini()> must decrement it.  <fini()> then does nothing until it
    * reaches 0.
    */
-  extern unsigned int init_fini_count_;
-}
+  static unsigned int init_fini_count_;
+};
 
 #include /**/ "ace/post.h"
 

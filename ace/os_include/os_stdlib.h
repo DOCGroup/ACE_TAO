@@ -18,7 +18,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/config-lite.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -67,22 +67,21 @@ extern "C"
    int putenv (char *); // stdlib.h
 #endif /* ACE_PSOS_SNARFS_HEADER_INFO */
 
+// These prototypes are chronically lacking from many versions of
+// UNIX.
+#if !defined (ACE_WIN32) && defined (ACE_LACKS_MKTEMP)
+  char *mktemp (char *);
+#endif /* !ACE_WIN32 && ACE_LACKS_MKTEMP */
 
 #if defined (DIGITAL_UNIX)
   extern int _Prand_r (unsigned int *seedptr);
 #endif /* DIGITAL_UNIX */
 
-#if defined (ACE_LACKS_PUTENV_PROTOTYPE)
+#if defined (__Lynx__)
   int putenv (char *);
-#endif /* ACE_LACKS_PUTENV_PROTOTYPE */
-
-#if defined (ACE_LACKS_MKTEMP_PROTOTYPE)
   char *mktemp (char *);
-#endif /* ACE_LACKS_MKTEMP_PROTOTYPE */
-
-#if defined (ACE_LACKS_MKSTEMP_PROTOTYPE)
   int mkstemp(char *);
-#endif /* ACE_LACKS_MKSTEMP_PROTOTYPE */
+#endif /* __Lynx__ */
 
 #ifdef __cplusplus
 }

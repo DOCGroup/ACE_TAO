@@ -59,7 +59,7 @@ namespace TAO
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 TAO::ConnectionTimeoutPolicy_ptr
-TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::duplicate (
+TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::tao_duplicate (
     TAO::ConnectionTimeoutPolicy_ptr p
   )
 {
@@ -68,7 +68,7 @@ TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::release (
+TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::tao_release (
     TAO::ConnectionTimeoutPolicy_ptr p
   )
 {
@@ -77,14 +77,14 @@ TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 TAO::ConnectionTimeoutPolicy_ptr
-TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::nil (void)
+TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::tao_nil (void)
 {
   return TAO::ConnectionTimeoutPolicy::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::marshal (
+TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::tao_marshal (
     TAO::ConnectionTimeoutPolicy_ptr p,
     TAO_OutputCDR & cdr
   )

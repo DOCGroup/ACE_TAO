@@ -27,8 +27,6 @@
 #include "tao/Marshal.h"
 #include "tao/Any_Impl.h"
 #include "tao/CDR.h"
-#include "tao/SystemException.h"
-
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (tao,
@@ -99,7 +97,7 @@ TAO_Marshal_Primitive::append (CORBA::TypeCode_ptr tc,
         ACE_TEXT ("TAO_Marshal_Primitive::append detected error\n")
       ));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (0,
+  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
 }
@@ -114,12 +112,12 @@ TAO_Marshal_Any::append (CORBA::TypeCode_ptr,
   CORBA::TypeCode_var elem_tc;
 
   if (!(*src >> elem_tc.inout ()))
-    ACE_THROW_RETURN (CORBA::MARSHAL (0,
+    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                       CORBA::COMPLETED_MAYBE),
                       TAO::TRAVERSE_STOP);
 
   if (!(*dest << elem_tc.in ()))
-    ACE_THROW_RETURN (CORBA::MARSHAL (0,
+    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                       CORBA::COMPLETED_MAYBE),
                       TAO::TRAVERSE_STOP);
 
@@ -137,7 +135,7 @@ TAO_Marshal_Any::append (CORBA::TypeCode_ptr,
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO_Marshal_Any::append detected error\n")));
 
-      ACE_THROW_RETURN (CORBA::MARSHAL (0,
+      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                         CORBA::COMPLETED_MAYBE),
                         TAO::TRAVERSE_STOP);
     }
@@ -258,7 +256,7 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
                   ACE_TEXT ("TAO_Marshal_TypeCode::append detected error\n")));
     }
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (0,
+  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
 }
@@ -344,7 +342,7 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
         ACE_TEXT ("TAO_Marshal_ObjRef::append detected error\n")
       ));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (0,
+  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
 }
@@ -387,7 +385,7 @@ TAO_Marshal_Struct::append (CORBA::TypeCode_ptr  tc,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Struct::append detected error\n")));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (0,
+  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
 }
@@ -678,7 +676,7 @@ TAO_Marshal_String::append (CORBA::TypeCode_ptr,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_TypeCode::append detected error\n")));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (0,
+  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
 }
@@ -1122,7 +1120,7 @@ TAO_Marshal_Alias::append (CORBA::TypeCode_ptr  tc,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Alias::append detected error\n")));
-  ACE_THROW_RETURN (CORBA::MARSHAL (0,
+  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
 }
@@ -1176,7 +1174,7 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Except::append detected error\n")));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (0,
+  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
 }
@@ -1206,7 +1204,7 @@ TAO_Marshal_WString::append (CORBA::TypeCode_ptr,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_WString::append detected error\n")));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (0,
+  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
 }
@@ -1312,7 +1310,7 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Value::append detected error\n")));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (0,
+  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
 }

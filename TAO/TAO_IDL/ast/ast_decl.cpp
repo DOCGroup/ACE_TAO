@@ -871,6 +871,11 @@ AST_Decl::repoID (char *value)
     }
     
   this->repoID_ = value;
+
+  // Forces version to be set to the last id component.
+  delete [] this->version_;
+  this->version_ = 0;
+  (void) this->version ();
 }
 
 const char *
@@ -914,10 +919,6 @@ AST_Decl::version (void)
       if (! this->typeid_set_ && tail2 != 0)
         {
           this->version_ = ACE::strnew (tail2 + 1);
-        }
-      else
-        {
-          this->version_ = ACE::strnew ("1.0");
         }
     }
 

@@ -1,9 +1,9 @@
 // $Id$
 
-#include "orbsvcs/Event/EC_Gateway_IIOP_Factory.h"
-#include "orbsvcs/Event/ECG_Defaults.h"
-#include "orbsvcs/Event_Utilities.h"
-#include "orbsvcs/Time_Utilities.h"
+#include "orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.h"
+#include "orbsvcs/orbsvcs/Event/ECG_Defaults.h"
+#include "orbsvcs/orbsvcs/Event_Utilities.h"
+#include "orbsvcs/orbsvcs/Time_Utilities.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"

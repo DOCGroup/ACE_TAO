@@ -22,9 +22,9 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/LoadBalancing/LB_Location_Index_Map.h"
+#include "orbsvcs/orbsvcs/LoadBalancing/LB_Location_Index_Map.h"
 
-#include "orbsvcs/CosLoadBalancingS.h"
+#include "orbsvcs/orbsvcs/CosLoadBalancingS.h"
 
 /**
  * @class TAO_LB_RoundRobin_Strategy

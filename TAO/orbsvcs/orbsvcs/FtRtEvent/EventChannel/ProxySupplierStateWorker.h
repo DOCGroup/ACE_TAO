@@ -13,8 +13,8 @@
 #ifndef PROXYSUPPLIERSTATEWORKER_H
 #define PROXYSUPPLIERSTATEWORKER_H
 
-#include "orbsvcs/Event/EC_ConsumerAdmin.h"
-#include "orbsvcs/ESF/ESF_Worker.h"
+#include "orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Worker.h"
 #include "FTEC_ProxySupplier.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

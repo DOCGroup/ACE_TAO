@@ -24,8 +24,9 @@ SUBDIRS += \
 	Event_Service \
 	Dump_Schedule \
 	CosEvent_Service \
-	Concurrency_Service \
-	performance-tests \
-	tests
+	Concurrency_Service
 
+#
+#	 performance-tests \
+#	 tests \
 #	 examples

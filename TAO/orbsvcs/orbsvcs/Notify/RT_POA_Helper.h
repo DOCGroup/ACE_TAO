@@ -20,7 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "POA_Helper.h"
-#include "orbsvcs/NotifyExtC.h"
+#include "orbsvcs/orbsvcs/NotifyExtC.h"
 
 /**
  * @class TAO_Notify_RT_POA_Helper

@@ -2,8 +2,6 @@
 
 #include "ace/Read_Buffer.h"
 
-#include "ace/config-all.h"
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Read_Buffer.inl"
 #endif /* __ACE_INLINE__ */

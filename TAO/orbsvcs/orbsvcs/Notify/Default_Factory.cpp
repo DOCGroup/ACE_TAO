@@ -10,8 +10,8 @@ ACE_RCSID (Notify,
            TAO_Notify_Default_Factory, 
            "$Id$")
 
-#include "orbsvcs/ESF/ESF_Proxy_List.h"
-#include "orbsvcs/ESF/ESF_Copy_On_Write.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_List.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.h"
 
 #include "EventChannelFactory.h"
 #include "EventChannel.h"
@@ -192,7 +192,7 @@ TAO_Notify_Default_Factory::create (TAO_Notify_SequenceProxyPushSupplier*& proxy
                     CORBA::NO_MEMORY ());
 }
 
-ACE_FACTORY_DEFINE (TAO_Notify_Serv, TAO_Notify_Default_Factory)
+ACE_FACTORY_DEFINE (TAO_Notify, TAO_Notify_Default_Factory)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -116,15 +116,15 @@ be_visitor_traits::visit_interface (be_interface *node)
           << "struct " << be_global->stub_export_macro () << " Objref_Traits<"
           << " ::" << node->name () << ">" << be_nl
           << "{" << be_idt_nl
-          << "static ::" << node->name () << "_ptr duplicate ("
+          << "static ::" << node->name () << "_ptr tao_duplicate ("
           << be_idt << be_idt_nl
           << "::" << node->name () << "_ptr" << be_uidt_nl
           << ");" << be_uidt_nl
-          << "static void release (" << be_idt << be_idt_nl
+          << "static void tao_release (" << be_idt << be_idt_nl
           << "::" << node->name () << "_ptr" << be_uidt_nl
           << ");" << be_uidt_nl
-          << "static ::" << node->name () << "_ptr nil (void);" << be_nl
-          << "static CORBA::Boolean marshal (" << be_idt << be_idt_nl
+          << "static ::" << node->name () << "_ptr tao_nil (void);" << be_nl
+          << "static CORBA::Boolean tao_marshal (" << be_idt << be_idt_nl
           << "::" << node->name () << "_ptr p," << be_nl
           << "TAO_OutputCDR & cdr" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
@@ -191,10 +191,10 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
           << "struct " << be_global->stub_export_macro () << " Value_Traits<"
           << node->name () << ">" << be_nl
           << "{" << be_idt_nl
-          << "static void add_ref (" << node->name () << " *);" << be_nl
-          << "static void remove_ref (" << node->name () << " *);"
+          << "static void tao_add_ref (" << node->name () << " *);" << be_nl
+          << "static void tao_remove_ref (" << node->name () << " *);"
           << be_nl
-          << "static void release (" << node->name () << " *);"
+          << "static void tao_release (" << node->name () << " *);"
           << be_uidt_nl
           << "};";
 
@@ -388,6 +388,39 @@ be_visitor_traits::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  // Generate the array traits specialization definitions,
+  // guarded by #ifdef on unaliased array element type and length.
+
+  ACE_CString unique;
+  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  AST_Decl::NodeType nt = bt->node_type ();
+
+  if (nt == AST_Decl::NT_typedef)
+    {
+      be_typedef *td = be_typedef::narrow_from_decl (bt);
+      unique = td->primitive_base_type ()->flat_name ();
+    }
+  else
+    {
+      unique = bt->flat_name ();
+    }
+
+  char buf[NAMEBUFSIZE];
+
+  for (unsigned long i = 0; i < node->n_dims (); ++i)
+    {
+      ACE_OS::memset (buf,
+                      '\0',
+                      NAMEBUFSIZE);
+      ACE_OS::sprintf (buf,
+                       "_%ld",
+                       node->dims ()[i]->ev ()->u.ulval);
+      unique += buf;
+    }
+
+  unique += "_traits";
+//  os->gen_ifdef_macro (unique.fast_rep ());
+
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
       << "struct " << be_global->stub_export_macro () << " Array_Traits<"
@@ -397,20 +430,20 @@ be_visitor_traits::visit_array (be_array *node)
       << name << "_tag" << be_uidt_nl
       << ">" << be_uidt_nl
       << "{" << be_idt_nl
-      << "static void free (" << be_idt << be_idt_nl
+      << "static void tao_free (" << be_idt << be_idt_nl
       << name << "_slice * _tao_slice" << be_uidt_nl
       << ");" << be_uidt_nl
-      << "static " << name << "_slice * dup ("
+      << "static " << name << "_slice * tao_dup ("
       << be_idt << be_idt_nl
       << "const " << name << "_slice * _tao_slice"
       << be_uidt_nl
       << ");" << be_uidt_nl
-      << "static void copy (" << be_idt << be_idt_nl
+      << "static void tao_copy (" << be_idt << be_idt_nl
       << name << "_slice * _tao_to," << be_nl
       << "const " << name << "_slice * _tao_from"
       << be_uidt_nl
       << ");" << be_uidt_nl
-      << "static " << name << "_slice * alloc (void);"
+      << "static " << name << "_slice * tao_alloc (void);"
       << be_uidt_nl
       << "};";
 

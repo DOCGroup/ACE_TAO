@@ -6,8 +6,6 @@
 #include "CEC_SupplierAdmin.h"
 #include "CEC_ConsumerAdmin.h"
 
-#include "orbsvcs/Time_Utilities.h"
-
 #include "tao/Messaging/Messaging.h"
 #include "tao/ORB_Core.h"
 
@@ -21,12 +19,10 @@ ACE_RCSID(CosEvent, CEC_Reactive_Pulling_Strategy, "$Id$")
 
 TAO_CEC_Reactive_Pulling_Strategy::
     TAO_CEC_Reactive_Pulling_Strategy (const ACE_Time_Value &rate,
-                                       const ACE_Time_Value &relative_timeout,
                                        TAO_CEC_EventChannel *event_channel,
                                        CORBA::ORB_ptr orb)
   :  adapter_ (this),
      rate_ (rate),
-     relative_timeout_ (relative_timeout),
      event_channel_ (event_channel),
      orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -55,20 +51,12 @@ TAO_CEC_Reactive_Pulling_Strategy::handle_timeout (
                                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_TRY_EX (query)
-        {
-          TAO_CEC_Pull_Event worker (this->event_channel_->consumer_admin (),
-                                     this->event_channel_->supplier_control ());
+      TAO_CEC_Pull_Event worker (this->event_channel_->consumer_admin (),
+                                 this->event_channel_->supplier_control ());
 
-          this->event_channel_->supplier_admin ()->for_each (&worker
-                                                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (query);
-        }
-      ACE_CATCHANY
-        {
-          // Ignore all exceptions
-        }
-      ACE_ENDTRY;
+      this->event_channel_->supplier_admin ()->for_each (&worker
+                                                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       this->policy_current_->set_policy_overrides (policies.in (),
                                                    CORBA::SET_OVERRIDE
@@ -113,10 +101,8 @@ TAO_CEC_Reactive_Pulling_Strategy::activate (void)
 
       // Pre-compute the policy list to the set the right timeout
       // value...
-      // We need to convert the relative timeout into 100's of nano seconds.
-      TimeBase::TimeT timeout;
-      ORBSVCS_Time::Time_Value_to_TimeT (timeout,
-                                         this->relative_timeout_);
+      // @@ TODO It is currently hard-coded to 10 milliseconds
+      TimeBase::TimeT timeout = 10 * 10000;
       CORBA::Any any;
       any <<= timeout;
 

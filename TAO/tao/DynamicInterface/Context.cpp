@@ -10,7 +10,6 @@ ACE_RCSID (DynamicInterface,
 #include "tao/NVList.h"
 #include "tao/Environment.h"
 #include "tao/CORBA_String.h"
-#include "tao/SystemException.h"
 
 #include "ace/Guard_T.h"
 

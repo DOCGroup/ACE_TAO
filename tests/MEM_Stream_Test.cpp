@@ -34,10 +34,10 @@
 
 ACE_RCSID(tests, MEM_Stream_Test, "$Id$")
 
-#if (defined (ACE_HAS_THREADS) || defined (ACE_HAS_PROCESS_SPAWN)) && \
+#if (defined (ACE_HAS_THREADS) || !defined (ACE_LACKS_FORK)) && \
     (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-#if !defined (ACE_HAS_PROCESS_SPAWN) && defined (ACE_HAS_THREADS)
+#if defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS)   // Win32, et al
 #  define _TEST_USES_THREADS
 #else
 #  define _TEST_USES_PROCESSES
@@ -219,7 +219,6 @@ run_client (u_short port,
   return status;
 }
 
-#if defined (_TEST_USES_THREADS)
 static ACE_THR_FUNC_RETURN
 connect_client (void *arg)
 {
@@ -227,7 +226,6 @@ connect_client (void *arg)
   run_client (*sport, client_strategy);
   return 0;
 }
-#endif
 
 static void
 create_reactor (void)
@@ -287,13 +285,9 @@ test_reactive (const ACE_TCHAR *prog,
                                                 &sport) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n ()")));
 #else
+  ACE_UNUSED_ARG (connect_client);
   ACE_Process_Options opts;
-#  if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
-  const ACE_TCHAR *cmdline_fmt = ACE_TEXT ("%s -p%d -r");
-#  else
-  const ACE_TCHAR *cmdline_fmt = ACE_TEXT ("%ls -p%d -r");
-#  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
-  opts.command_line (cmdline_fmt, prog, sport);
+  opts.command_line (ACE_TEXT ("%s -p%d -r"), prog, sport);
   if (ACE_Process_Manager::instance ()->spawn_n (NUMBER_OF_REACTIVE_CONNECTIONS,
                                                  opts) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n ()")));
@@ -378,13 +372,9 @@ test_concurrent (const ACE_TCHAR *prog,
                                                 &sport) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n()")));
 #else
+  ACE_UNUSED_ARG (connect_client);
   ACE_Process_Options opts;
-#  if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
-  const ACE_TCHAR *cmdline_fmt = ACE_TEXT ("%s -p%d -m");
-#  else
-  const ACE_TCHAR *cmdline_fmt = ACE_TEXT ("%ls -p%d -m");
-#  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
-  opts.command_line (cmdline_fmt, prog, sport);
+  opts.command_line (ACE_TEXT ("%s -p%d -m"), prog, sport);
   if (ACE_Process_Manager::instance ()->spawn_n (NUMBER_OF_MT_CONNECTIONS,
                                                  opts) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n()")));
@@ -554,4 +544,4 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
-#endif /* (ACE_HAS_THREADS || ACE_HAS_PROCESS_SPAWN) && ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
+#endif /* (ACE_HAS_THREADS || ACE_HAS_FORK) && ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

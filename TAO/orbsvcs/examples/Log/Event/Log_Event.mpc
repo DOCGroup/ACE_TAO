@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Consumer) : orbsvcsexe, dseventlogadmin, event_skel, naming {
+project(*Consumer) : orbsvcsexe, event, dseventlogadmin {
   exename = consumer
   source_files {
     Event_Consumer.cpp
   }
 }
 
-project(*Supplier) : orbsvcsexe, dseventlogadmin, event_skel, naming {
+project(*Supplier) : orbsvcsexe, event, dseventlogadmin {
   exename = supplier
   source_files {
     Event_Supplier.cpp

@@ -44,10 +44,23 @@ typedef struct timespec timespec_t;
 #define ACE_ONE_SECOND_IN_USECS 1000000L
 #define ACE_ONE_SECOND_IN_NSECS 1000000000L
 
+// -------------------------------------------------------------------
+// These forward declarations are only used to circumvent a bug in
+// MSVC 6.0 compiler.  They shouldn't cause any problem for other
+// compilers and they can be removed once MS release a SP that contains
+// the fix.
+class ACE_Time_Value;
+ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
+                                         const ACE_Time_Value &tv2);
+
+ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
+                                         const ACE_Time_Value &tv2);
+
 // This forward declaration is needed by the set() and FILETIME() functions
 #if defined (ACE_LACKS_LONGLONG_T)
 class ACE_Export ACE_U_LongLong;
 #endif  /* ACE_LACKS_LONGLONG_T */
+// -------------------------------------------------------------------
 
 # if !defined (ACE_HAS_POSIX_TIME) && !defined (ACE_PSOS)
 // Definition per POSIX.
@@ -67,9 +80,6 @@ typedef struct timespec
 typedef struct timespec timespec_t;
 # endif /* ACE_LACKS_TIMESPEC_T */
 
-// needed for ACE_UINT64
-#include "ace/Basic_Types.h"
-
 // -------------------------------------------------------------------
 
 /**
@@ -82,15 +92,6 @@ typedef struct timespec timespec_t;
  * ACE.  These time values are typically used in conjunction with OS
  * mechanisms like <select>, <poll>, or <cond_timedwait>.
  */
-#if defined (ACE_WIN32) && defined (_WIN32_WCE)
-// Something is a bit brain-damaged here and I'm not sure what... this code
-// compiled before the OS reorg for ACE 5.4. Since then it hasn't - eVC
-// complains that the operators that return ACE_Time_Value are C-linkage
-// functions that can't return a C++ class. The only way I've found to
-// defeat this is to wrap the whole class in extern "C++".
-//    - Steve Huston, 23-Aug-2004
-extern "C++" {
-#endif
 class ACE_Export ACE_Time_Value
 {
 public:
@@ -150,28 +151,13 @@ public:
   /// Converts from ACE_Time_Value format into milli-seconds format.
   /**
    * @return Sum of second field (in milliseconds) and microsecond field
-   *         (in milliseconds).  Note that this method can overflow if
-   *         the second and microsecond field values are large, so use
-   *         the msec (ACE_UINT64 &ms) method instead.
+   *         (in milliseconds).
    *
    * @note The semantics of this method differs from the sec() and
    *       usec() methods.  There is no analogous "millisecond"
    *       component in an ACE_Time_Value.
    */
   unsigned long msec (void) const;
-
-#if !defined (ACE_LACKS_LONGLONG_T)
-  /**
-   * @return Sum of second field (in milliseconds) and microsecond field
-   *         (in milliseconds) and return them via the @param ms parameter.
-   *
-   * @note The semantics of this method differs from the sec() and
-   *       usec() methods.  There is no analogous "millisecond"
-   *       component in an ACE_Time_Value.
-   */
-  void msec (ACE_UINT64 &ms) const;
-
-#endif /*ACE_LACKS_LONGLONG_T */
 
   /// Converts from milli-seconds format into ACE_Time_Value format.
   /**
@@ -334,9 +320,6 @@ private:
   /// Store the values as a timeval.
   timeval tv_;
 };
-#if defined (ACE_WIN32) && defined (_WIN32_WCE)
-}
-#endif
 
 /**
  * @class ACE_Countdown_Time

@@ -88,7 +88,7 @@
 //#define ACE_HAS_SYSV_IPC
 
 // Compiler/platform contains the <sys/syscall.h> file.
-#define ACE_HAS_SYS_SYSCALL_H
+#define ACE_HAS_SYSCALL_H
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
@@ -124,7 +124,7 @@
 #define ACE_HAS_STRERROR
 
 // Compiler/platform provides the sockio.h file.
-#define ACE_HAS_SYS_SOCKIO_H
+#define ACE_HAS_SOCKIO_H
 
 // Defines the page size of the system.
 #define ACE_HAS_GETPAGESIZE
@@ -150,6 +150,8 @@
 #endif /* ! ACE_MT_SAFE */
 #define ACE_HAS_PTHREADS
 #define ACE_HAS_PTHREADS_STD
+#define ACE_HAS_PTHREAD_KILL
+#define ACE_HAS_PTHREAD_CANCEL
 #define ACE_HAS_PTHREAD_SIGMASK
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE

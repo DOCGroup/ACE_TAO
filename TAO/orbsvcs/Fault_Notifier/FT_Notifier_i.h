@@ -34,9 +34,9 @@ namespace TAO
 }
 
 
-#include <orbsvcs/FT_NotifierS.h>
-#include <orbsvcs/FT_ReplicationManagerC.h>
-#include <orbsvcs/Notify/Notify_EventChannelFactory_i.h>
+#include <orbsvcs/orbsvcs/FT_NotifierS.h>
+#include <orbsvcs/orbsvcs/FT_ReplicationManagerC.h>
+#include <orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h>
 #include <ace/Vector_T.h>
 
 /////////////////////

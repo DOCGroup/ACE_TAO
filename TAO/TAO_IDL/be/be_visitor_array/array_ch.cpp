@@ -276,7 +276,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
     }
   else
     {
-      storage_class = "TAO_EXPORT_MACRO ";
+      storage_class = "";
     }
 
   if (td != 0)

@@ -21,7 +21,7 @@
 
 #include "CEC_ConsumerControl.h"
 
-#include "orbsvcs/ESF/ESF_Worker.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Worker.h"
 
 #include "tao/ORB.h"
 
@@ -48,7 +48,7 @@ class TAO_CEC_TypedEventChannel;
  * periodically wakeup and verify the state of the consumers
  * registered with the Event Channel.
  */
-class TAO_Event_Serv_Export TAO_CEC_ConsumerControl_Adapter : public ACE_Event_Handler
+class TAO_Event_Export TAO_CEC_ConsumerControl_Adapter : public ACE_Event_Handler
 {
 public:
   /// Constructor
@@ -74,7 +74,7 @@ private:
  * = LOCKING
  * = TODO
  */
-class TAO_Event_Serv_Export TAO_CEC_Reactive_ConsumerControl 
+class TAO_Event_Export TAO_CEC_Reactive_ConsumerControl 
   : public TAO_CEC_ConsumerControl
 {
 public:
@@ -82,7 +82,6 @@ public:
   /// parameter.
   TAO_CEC_Reactive_ConsumerControl (const ACE_Time_Value &rate,
                                     const ACE_Time_Value &timeout,
-                                    unsigned int retries,
                                     TAO_CEC_EventChannel *event_channel,
                                     CORBA::ORB_ptr orb);
 
@@ -91,7 +90,6 @@ public:
   TAO_CEC_Reactive_ConsumerControl (
       const ACE_Time_Value &rate,
       const ACE_Time_Value &timeout,
-      unsigned int retries,
       TAO_CEC_TypedEventChannel *typed_event_channel,
       CORBA::ORB_ptr orb
     );
@@ -115,15 +113,6 @@ public:
                                  CORBA::SystemException &
                                  ACE_ENV_ARG_DECL_NOT_USED);
 
-  /// Do we need to disconnect this supplier?  The parameter type for
-  /// proxy is PortableServer::ServantBase* due to the fact that this
-  /// method will be used for TAO_CEC_ProxyPushSupplier's and
-  /// TAO_CEC_ProxyPullSupplier's.
-  virtual bool need_to_disconnect (PortableServer::ServantBase* proxy);
-
-  /// Allow others to inform us when a send or receive was successful.
-  virtual void successful_transmission (PortableServer::ServantBase* proxy);
-
 private:
   /// Check if the consumers still exists.  It is a helper method for
   /// handle_timeout() to isolate the exceptions.
@@ -135,9 +124,6 @@ private:
 
   /// The polling timeout
   ACE_Time_Value timeout_;
-
-  /// The number of retries per proxy until it is disconnected
-  unsigned int retries_;
 
   /// The Adapter for the reactor events
   TAO_CEC_ConsumerControl_Adapter adapter_;

@@ -1,19 +1,19 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Service) : orbsvcsexe, event, event_serv, naming {
+project(*Service) : orbsvcsexe, event {
   Source_Files {
     Service.cpp
   }
 }
 
-project(*Consumer) : orbsvcsexe, event, event_skel {
+project(*Consumer) : orbsvcsexe, event {
   Source_Files {
     Consumer.cpp
   }
 }
 
-project(*Supplier) : orbsvcsexe, event, event_skel {
+project(*Supplier) : orbsvcsexe, event {
   Source_Files {
     Supplier.cpp
   }

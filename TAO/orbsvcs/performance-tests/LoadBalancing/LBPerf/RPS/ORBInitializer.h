@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/LoadBalancing/LB_LoadAlert.h"
+#include "orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

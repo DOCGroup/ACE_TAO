@@ -35,6 +35,7 @@
 #define _REENTRANT
 #define ACE_MT_SAFE 1
 #define __ACE_INLINE__
+#define ACE_HAS_ONE_DEFINITION_RULE
 
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
@@ -97,6 +98,7 @@
 #define ACE_LACKS_MUTEXATTR_PSHARED
 #define ACE_LACKS_PIPE
 #define ACE_LACKS_RLIMIT
+#define ACE_LACKS_RPC_H
 #define ACE_LACKS_RECVMSG
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_SEMBUF_T
@@ -110,6 +112,7 @@
 #endif
 #define ACE_LACKS_FILE_FCNTL
 #define ACE_LACKS_FCNTL
+#define ACE_LACKS_SYS_FILE_H
 #if 0
 #define ACE_LACKS_DIRECTORY_FUNCTIONS
 #define ACE_LACKS_UNLINK
@@ -129,7 +132,7 @@
 #define ACE_LACKS_PID_STUFF
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 #define ACE_LACKS_IPC_H
-#define ACE_LACKS_SYS_PARAM_H
+#define ACE_LACKS_PARAM_H
 #define ACE_LACKS_SYS_MSG_H
 #define ACE_LACKS_UTSNAME_T
 #define ACE_LACKS_ISATTY

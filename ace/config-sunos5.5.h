@@ -175,7 +175,7 @@
 #define ACE_HAS_MSG
 
 // Compiler/platform contains the <sys/syscall.h> file.
-#define ACE_HAS_SYS_SYSCALL_H
+#define ACE_HAS_SYSCALL_H
 
 // Platform has terminal ioctl flags like TCGETS and TCSETS.
 #define ACE_HAS_TERM_IOCTLS
@@ -229,7 +229,7 @@
 #define ACE_HAS_UCONTEXT_T
 
 // Compiler/platform provides the sockio.h file.
-#define ACE_HAS_SYS_SOCKIO_H
+#define ACE_HAS_SOCKIO_H
 
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T

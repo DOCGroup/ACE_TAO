@@ -4,8 +4,8 @@
 #ifndef EC_WRAPPER_H
 #define EC_WRAPPER_H
 
-#include "orbsvcs/RtecEventChannelAdminS.h"
-#include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.h"
 #include "ECMcastTests_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -13,7 +13,7 @@
 #ifndef TAO_LB_LOAD_ALERT_REPLY_HANDLER_H
 #define TAO_LB_LOAD_ALERT_REPLY_HANDLER_H
 
-#include "orbsvcs/CosLoadBalancingS.h"
+#include "orbsvcs/orbsvcs/CosLoadBalancingS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -22,8 +22,4 @@ project : taolib, core {
   Resource_Files {
     Strategies
   }
-
-  PIDL_Files {
-    Strategies
-  }
 }

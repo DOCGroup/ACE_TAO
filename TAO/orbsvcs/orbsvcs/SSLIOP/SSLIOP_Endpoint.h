@@ -24,10 +24,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_OwnCredentials.h"
+#include "SSLIOP_Credentials.h"
 
-#include "orbsvcs/SSLIOPC.h"
-#include "orbsvcs/SecurityC.h"
+#include "orbsvcs/orbsvcs/SSLIOPC.h"
+#include "orbsvcs/orbsvcs/SecurityC.h"
 
 #include "tao/IIOP_Endpoint.h"
 #include "ace/INET_Addr.h"
@@ -123,7 +123,7 @@ namespace TAO
       ::Security::EstablishTrust trust (void) const;
 
       /// Set the credentials for this endpoint.
-      void credentials (TAO::SSLIOP::OwnCredentials_ptr creds);
+      void credentials (TAO::SSLIOP::Credentials_ptr creds);
 
       /// Get the credentials for this endpoint.
       /**
@@ -133,7 +133,7 @@ namespace TAO
        *       that no additional locks occur when checking the
        *       transport cache.
        */
-      TAO::SSLIOP::OwnCredentials * credentials (void) const;
+      TAO::SSLIOP::Credentials * credentials (void) const;
       //@}
 
     private:
@@ -169,7 +169,7 @@ namespace TAO
       ::Security::EstablishTrust trust_;
 
       /// SSLIOP-specific credentials for this endpoint object.
-      TAO::SSLIOP::OwnCredentials_var credentials_;
+      TAO::SSLIOP::Credentials_var credentials_;
 
     };
 

@@ -142,7 +142,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
   //Get host ip address
   if (host_name)
     {
-      hostent *hp = ACE_OS::gethostbyname (ACE_TEXT_ALWAYS_CHAR (host_name));
+      hostent *hp = ACE_OS::gethostbyname (host_name);
 
       if (hp == 0)
         return -1;
@@ -162,7 +162,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
     }
 
 
-#if !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__)
+#if !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__)
   for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0;
        n--, ifr++)
 #else
@@ -180,7 +180,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
             ifr = (struct ifreq *)
               ((caddr_t) &ifr->ifr_addr + ifr->ifr_addr.sa_len)) :
           (nbytes -= sizeof (struct ifreq), ifr++)))
-#endif /* !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) */
+#endif /* !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) */
     {
 #if defined (__QNX__)
       // Silently skip link interfaces

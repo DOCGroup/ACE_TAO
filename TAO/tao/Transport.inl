@@ -38,25 +38,6 @@ TAO_Transport::bidirectional_flag (int flag)
   this->bidirectional_flag_ = flag;
 }
 
-ACE_INLINE TAO::Connection_Role
-TAO_Transport::opened_as () const
-{
-  return this->opening_connection_role_;
-}
-
-ACE_INLINE void
-TAO_Transport::opened_as (TAO::Connection_Role role)
-{
-  this->opening_connection_role_ = role;
-}
-
-ACE_INLINE bool
-TAO_Transport::acts_as_server (void) const
-{
-  return (this->opened_as () == TAO::TAO_SERVER_ROLE ||
-          this->bidirectional_flag_ == 1) ? true : false;
-}
-
 ACE_INLINE TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *
 TAO_Transport::cache_map_entry (void)
 {
@@ -162,23 +143,6 @@ ACE_INLINE void
 TAO_Transport::first_request_sent (void)
 {
   this->first_request_ = 0;
-}
-
-ACE_INLINE bool
-TAO_Transport::is_connected (void) const
-{
-  ACE_GUARD_RETURN (ACE_Lock,
-                    ace_mon,
-                    *this->handler_lock_,
-                    false);
-
-  return this->is_connected_;
-}
-
-ACE_INLINE TAO_Connection_Handler *
-TAO_Transport::connection_handler (void)
-{
-  return this->connection_handler_i();
 }
 
 /*****************************************************/

@@ -49,8 +49,6 @@ namespace StringLiterals
     YCH,
     SEP,
     VAR_SIZE,
-    EXTRACT,
-    EXTRACT_TMP,
     SIZE
   };
 

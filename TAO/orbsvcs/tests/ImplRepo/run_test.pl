@@ -41,7 +41,7 @@ $endpoint = "-ORBEndpoint " . "$protocol" . "://" . "$host" . ":" . $port;
 
 $IMR_LOCATOR = new PerlACE::Process ("../../ImplRepo_Service/ImplRepo_Service");
 $IMR_ACTIVATOR = new PerlACE::Process ("../../ImplRepo_Service/ImR_Activator");
-$TAO_IMR = new PerlACE::Process("$ACE_ROOT/bin/tao_imr");
+$TAO_IMR = new PerlACE::Process("../../ImplRepo_Service/tao_imr");
 
 $A_SVR = new PerlACE::Process (PerlACE::LocalFile ("airplane_server"));
 $A_CLI = new PerlACE::Process (PerlACE::LocalFile ("airplane_client"),
@@ -133,7 +133,7 @@ sub nt_service_test
     my $result = 0;
 
     # Just to show that it's possible, this test uses corbaloc instead of ior file.
-    my $imr_initref = "-orbinitref ImplRepoService=corbaloc::localhost:8888/ImplRepoService";
+    my $imr_initref = "-orbinitref ImplRepoService=corbaloc::localhost:8888/ImplRepoService"; 
 
     # To avoid having to ensure that they LocalSystem account has the correct path
     # we simply copy the imr executables to the same directory as the DLL's.
@@ -575,7 +575,7 @@ sub persistent_ir_test
         $status = 1;
     }
 
-    return $status;
+    return $status;   
 }
 
 ###############################################################################
@@ -610,7 +610,7 @@ sub both_ir_test
                        . " -ORBUseIMR 1 $refstyle -o $nestea_ior $imr_initref\"");
     $TAO_IMR->SpawnWaitKill (10);
 
-    $TAO_IMR->Arguments ("$imr_initref add airplane_server -c \""
+    $TAO_IMR->Arguments ("$imr_initref add airplane_server -c \"" 
                         . $A_SVR->Executable ()
                        . " -ORBUseIMR 1 $refstyle -o $airplane_ior $imr_initref\"");
     $TAO_IMR->SpawnWaitKill (10);

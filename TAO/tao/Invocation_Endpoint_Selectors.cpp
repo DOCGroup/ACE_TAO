@@ -6,7 +6,6 @@
 #include "Base_Transport_Property.h"
 #include "Profile_Transport_Resolver.h"
 #include "ORB_Constants.h"
-#include "SystemException.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Invocation_Endpoint_Selectors.i"
@@ -44,34 +43,28 @@ TAO_Default_Endpoint_Selector::select_endpoint (
     {
       r->profile (r->stub ()->profile_in_use ());
 
-      // Check whether we need to do a blocked wait or we have a
-      // non-blocked wait and we support that.  If this is not the
-      // case we can't use this profile so try the next.
-      if (r->blocked () ||
-         (!r->blocked () && r->profile ()->supports_non_blocking_oneways ()))
+      const size_t endpoint_count =
+        r->profile ()->endpoint_count ();
+
+      TAO_Endpoint *ep =
+        r->profile ()->endpoint ();
+
+      for (size_t i = 0; i < endpoint_count; ++i)
         {
-          const size_t endpoint_count =
-            r->profile ()->endpoint_count ();
+          TAO_Base_Transport_Property desc (ep);
 
-          TAO_Endpoint *ep =
-            r->profile ()->endpoint ();
+          bool retval =
+            r->try_connect (&desc,
+                            max_wait_time
+                            ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
 
-          for (size_t i = 0; i < endpoint_count; ++i)
-            {
-              TAO_Base_Transport_Property desc (ep);
-              const bool retval =
-                r->try_connect (&desc,
-                                max_wait_time
-                                ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
+          // Check if the connect has completed.
+          if (retval)
+            return;
 
-              // Check if the connect has completed.
-              if (retval)
-                return;
-
-              // Go to the next endpoint in this profile.
-              ep = ep->next ();
-            }
+          // Go to the next endpoint in this profile.
+          ep = ep->next ();
         }
     }
   while (r->stub ()->next_profile_retry () != 0);

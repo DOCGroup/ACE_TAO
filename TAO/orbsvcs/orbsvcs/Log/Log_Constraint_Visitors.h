@@ -26,12 +26,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/ETCL/ETCL_Constraint_Visitor.h"
-#include "orbsvcs/DsLogAdminC.h"
+#include "orbsvcs/orbsvcs/ETCL/ETCL_Constraint_Visitor.h"
+#include "orbsvcs/orbsvcs/DsLogAdminC.h"
 
 #include "tao/Typecode.h"
 
-#include "log_serv_export.h"
+#include "log_export.h"
 
 class TAO_ETCL_Constraint;
 class TAO_ETCL_Literal_Constraint;
@@ -42,7 +42,7 @@ class TAO_Log_Property_Constraint;
  *
  * @brief "ETCL" Visitor for the Log queries.
  */
-class TAO_Log_Serv_Export TAO_Log_Constraint_Visitor :
+class TAO_Log_Export TAO_Log_Constraint_Visitor :
   public TAO_ETCL_Constraint_Visitor
 {
 public:

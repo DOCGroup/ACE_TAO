@@ -1,7 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcslib {
+project : iortable, messaging, svc_utils {
   after     += CosNaming
   libs      += TAO_CosNaming
+  tagchecks += Naming
 }

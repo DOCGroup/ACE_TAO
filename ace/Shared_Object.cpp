@@ -3,7 +3,6 @@
 
 #include "ace/Shared_Object.h"
 #include "ace/Global_Macros.h"
-#include "ace/config-all.h"
 
 /* Provide the abstract base class used to access dynamic linking
    facilities */

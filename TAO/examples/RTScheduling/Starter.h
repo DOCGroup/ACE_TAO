@@ -2,8 +2,7 @@
 #ifndef STARTER_H
 #define STARTER_H
 
-#include "orbsvcs/Naming/Naming_Client.h"
-#include "orbsvcs/Naming/Naming_Server.h"
+#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
 #include "SynchC.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"

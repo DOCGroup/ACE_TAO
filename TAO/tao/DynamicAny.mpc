@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, core {
+project : valuetype, taolib, core {
   sharedname    = TAO_DynamicAny
   dynamicflags  = TAO_DYNAMICANY_BUILD_DLL
 
@@ -20,10 +20,6 @@ project : taolib, core {
   }
 
   Resource_Files {
-    DynamicAny
-  }
-
-  PIDL_Files {
     DynamicAny
   }
 }

@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/RtecBaseC.h"
+#include "orbsvcs/orbsvcs/RtecBaseC.h"
 
 #include /**/ "event_export.h"
 

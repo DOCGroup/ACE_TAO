@@ -4,69 +4,31 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 - (Johnny/Ossama) Bug 1420-Protocols in Transport Cache not amenable for
   strict policy enforcement
 
+- (Johnny/Ossama) Bug 1476-SyncScope::NONE blocks during connects
+
 - (Johnny/Ossama) Location Forwarding fixes
 
-- (Ossama) Typecode overhaul
-
-  . ONGOING - ETA 8/31
+- (Ossama) Typecode refactoring fixes
 
 - (Ossama) Remainder of CSIv2 code that didn't make it into TAO 1.4.2
 
-  . ONGOING - ETA 9/26
-
 - (Ossama/Jeff) Skeleton refactoring
-
-  . TO BE STARTED - 9/1
 
 - (Johnny/Ossama) POA refactoring/modularization
 
-  . ONGOING - ETA unknown
-
 - (JTC/Ossama) autoconf support for TAO
-
-  . ONGOING - ETA unknown
-
-- (Bala) Implementation Repository enhancements
 
 - (OCI) Naming Service implementation fixes
 
-  Wed Aug 25 16:03:29 2004  Chris Cleeland  <cleeland_c@ociweb.com>
-
 - (OCI) Wait on LF No Upcalls wait strategy
-
-  Thu Aug 19 16:49:24 2004  Chris Cleeland  <cleeland_c@ociweb.com>
 
 - (OCI) Parse-magic-bytes re-integration
 
-  Chris/Bala--need to coordinate.  Hopefully week of 8/30?
+- (OCI) TSS memory leak fixes (Bug 1542)
 
 - (OCI) [hopeful] Notification Service EventReliability and ConnectionReliability QoS
 
-  Dale Wilson, Ongoing.
-
 - (OCI) better compatibility with JDK orb
-
-  Dale Wilson will do this week of 8/30.
-
-- (JTC) Split ORB Services into stub, skeleton, and implementation libraries.
-
-  Naming, Trading, Event, Notification, and Logging Services have commited.
-
-- (OCI) Install common utilities (tao_imr, tao_ifr, nslist, nsadd,
-  nsdel, NamingViewer) in $ACE_ROOT/bin.
-
-  Sat Sep 11 12:25:07 2004  Steve Totten  <totten_s@ociweb.com>
-
-USER VISIBLE CHANGES BETWEEN TAO-1.4.2 and TAO-1.4.3
-====================================================
-
-. ORB
-  - Bug 1476-SyncScope::NONE blocks during connects
-
-. POA
-  - The PortableServer library isn't depended anymore on the
-    ObjRefTemplate and IORInterceptor libraries.  ObjRefTemplate and
-    IORInterceptor are loaded on demand and depend on PortableServer.
 
 USER VISIBLE CHANGES BETWEEN TAO-1.4.1 and TAO-1.4.2
 ====================================================

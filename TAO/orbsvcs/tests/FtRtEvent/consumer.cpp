@@ -1,18 +1,18 @@
 // $Id$
 
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/FtRtecEventChannelAdminC.h"
-#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/FtRtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/Event_Utilities.h"
 #include "PushConsumer.h"
 #include "ace/Get_Opt.h"
-#include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
-#include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
+#include "orbsvcs/orbsvcs/FtRtEvent/Utils/resolve_init.h"
+#include "orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
 
 /// include this file to statically linked with FT ORB
-#include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
+#include "orbsvcs/orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 
 /// include this file to statically linked with Transaction Depth
-#include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
+#include "orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
 
 ACE_RCSID (FtRtEvent,
            PushConsumer,

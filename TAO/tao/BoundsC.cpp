@@ -30,7 +30,6 @@
 
 
 #include "BoundsC.h"
-#include "tao/SystemException.h"
 #include "tao/CDR.h"
 #include "tao/Typecode.h"
 #include "ace/OS_NS_string.h"

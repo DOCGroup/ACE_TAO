@@ -1,5 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project: taoexe, portableserver, bidir_giop, minimum_corba {
+project: taoexe, portableserver, bidir_giop {
+	
+	avoids += minimum_corba
 }
+

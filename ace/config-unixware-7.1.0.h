@@ -36,6 +36,7 @@
 
 #define ACE_HAS_NEW_NO_H 1
 #define ACE_HAS_STDEXCEPT_NO_H 1
+#define ACE_HAS_IOMANIP_NO_H 1
 
 /* Platform provides <sys/ioctl.h> header */
 #define ACE_HAS_SYS_IOCTL_H 1
@@ -118,7 +119,7 @@
 
 /* Platform has a getrusage () prototype in sys/resource.h that differs from
    the one in ace/OS.i. */
-#define ACE_HAS_GETRUSAGE_PROTOTYPE 1
+#define ACE_HAS_GETRUSAGE_PROTO 1
 
 /* Denotes that GNU has cstring.h as standard which redefines memchr() */
 #define ACE_HAS_GNU_CSTRING_H
@@ -228,7 +229,7 @@
 #define ACE_HAS_SIZET_SOCKET_LEN 1
 
 /* Compiler/platform provides the sys/sockio.h file */
-#define ACE_HAS_SYS_SOCKIO_H 1
+#define ACE_HAS_SOCKIO_H 1
 
 /* Compiler supports the ssize_t typedef */
 #define ACE_HAS_SSIZE_T 1
@@ -267,7 +268,7 @@
 #define ACE_HAS_SVR4_TLI 1
 
 /* Compiler/platform contains the <sys/syscall.h> file. */
-#define ACE_HAS_SYS_SYSCALL_H 1
+#define ACE_HAS_SYSCALL_H 1
 
 /* Platform supports system configuration information */
 #define ACE_HAS_SYSINFO 1

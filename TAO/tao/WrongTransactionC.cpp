@@ -32,7 +32,6 @@
 #include "WrongTransactionC.h"
 #include "tao/CDR.h"
 #include "tao/Typecode.h"
-#include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -198,3 +197,4 @@ CORBA::Boolean operator>> (
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/Handle_Set.h"
@@ -51,6 +53,7 @@ ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream (void)
   ACE_TRACE ("ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream");
 
   ::SSL_free (this->ssl_);
+  this->ssl_ = 0;
 
   // @@ Question: should we reference count the Context object or
   // leave that to the application developer? We do not reference

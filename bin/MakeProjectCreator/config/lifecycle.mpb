@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : naming, portableserver {
+project : naming {
   libs      += TAO_CosLifeCycle
   after     += CosLifeCycle
   tagchecks += LifeCycle

@@ -1,7 +1,7 @@
 // $Id$
 
 #include "TT_Info.h"
-#include "orbsvcs/Trader/Trader_Utils.h"
+#include "orbsvcs/orbsvcs/Trader/Trader_Utils.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 

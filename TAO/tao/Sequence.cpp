@@ -6,7 +6,7 @@
 #include "tao/Sequence.i"
 #endif /* __ACE_INLINE__ */
 
-#include "SystemException.h"
+#include "Exception.h"
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
 # include "ace/Message_Block.h"

@@ -1,10 +1,11 @@
 // -*- MPC -*-
 // $Id$
 
-project (FtRtEvent) : orbsvcslib, core, ftorbutils, rtevent, naming, minimum_corba {
+project (FtRtEvent) : orbsvcslib, core, ftorbutils, rtevent, naming {
   sharedname   = TAO_FtRtEvent
+  avoids      += minimum_corba
 
-  idlflags     += -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=orbsvcs/FtRtEvent/Utils/ftrtevent_export.h
+  idlflags     += -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=FtRtEvent/Utils/ftrtevent_export.h
   dynamicflags = TAO_FTRTEVENT_BUILD_DLL
   tagchecks    = FtRtEvent
 
@@ -32,9 +33,6 @@ project (FtRtEvent) : orbsvcslib, core, ftorbutils, rtevent, naming, minimum_cor
       FtRtEvent/Utils
     }
   }
-
-  Template_Files {
-  }
 }
 
 project (FTRT_ClientORB) :  messaging, orbsvcslib, core {
@@ -51,20 +49,15 @@ project (FTRT_ClientORB) :  messaging, orbsvcslib, core {
       FtRtEvent/ClientORB
     }
   }
-
-  Inline_Files {
-  }
-
-  Template_Files {
-  }
 }
 
-project (FTRT_EventChannel) :  orbsvcslib, core, ftrtevent, utils, corba_messaging {
+project (FTRT_EventChannel) :  orbsvcslib, ftrtevent, utils {
   sharedname   = TAO_FTRT_EventChannel
   dynamicflags = TAO_FTRTEC_BUILD_DLL
   tagchecks    = FTRT_EventChannel
   includes    += $(TAO_ROOT)/orbsvcs/orbsvcs/FtRtEvent/EventChannel
   after       += FTORB_Utils
+  requires    += corba_messaging
 
   IDL_Files {
   }

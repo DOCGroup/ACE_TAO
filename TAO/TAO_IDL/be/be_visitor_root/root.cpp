@@ -400,6 +400,10 @@ int be_visitor_root::visit_root (be_root *node)
     case TAO_CodeGen::TAO_ROOT_CH:
       (void) tao_cg->end_client_header ();
       break;
+    case TAO_CodeGen::TAO_ROOT_CI:
+    case TAO_CodeGen::TAO_ROOT_CS:
+      *os << "\n\n";
+      break;
     case TAO_CodeGen::TAO_ROOT_SH:
       (void) tao_cg->end_server_header ();
       break;
@@ -435,9 +439,6 @@ int be_visitor_root::visit_root (be_root *node)
     default:
       break;
     }
-
-  // Make sure each file ends with a newline.
-  *os << "\n";
 
   return 0;
 }
@@ -1104,8 +1105,6 @@ be_visitor_root::visit_component (be_component *node)
     case TAO_CodeGen::TAO_ROOT_CH:
       {
         be_visitor_component_ch visitor (&ctx);
-        // This is the only context state involved in strategies.
-        ctx.state (TAO_CodeGen::TAO_INTERFACE_CH);
         status = node->accept (&visitor);
         break;
       }
@@ -1669,8 +1668,6 @@ be_visitor_root::gen_explicit_tmplinst (be_root *node,
       if (be_global->gen_anyop_files ())
         {
           tao_cg->anyop_source ()->gen_endif_AHETI ();
-          
-          *tao_cg->anyop_source () << "\n";
         }
     }
   else if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SS)

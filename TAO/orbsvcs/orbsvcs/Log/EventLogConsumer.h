@@ -19,18 +19,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/DsLogAdminS.h"
+#include "orbsvcs/orbsvcs/DsLogAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "orbsvcs/DsEventLogAdminS.h"
-#include "orbsvcs/Log/Log_i.h"
-#include "orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/orbsvcs/DsEventLogAdminS.h"
+#include "orbsvcs/orbsvcs/Log/Log_i.h"
+#include "orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h"
 
-#include "eventlog_serv_export.h"
+#include "eventlog_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

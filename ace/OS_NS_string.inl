@@ -166,6 +166,16 @@ ACE_OS::strcspn (const wchar_t *s, const wchar_t *reject)
 }
 #endif /* ACE_HAS_WCHAR */
 
+ACE_INLINE char *
+ACE_OS::strerror (int errnum)
+{
+#if defined (ACE_LACKS_STRERROR)
+  return ACE_OS::strerror_emulation (errnum);
+#else /* ACE_LACKS_STRERROR */
+  return ::strerror (errnum);
+#endif /* ACE_LACKS_STRERROR */
+}
+
 ACE_INLINE size_t
 ACE_OS::strlen (const char *s)
 {

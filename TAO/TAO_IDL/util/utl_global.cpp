@@ -179,11 +179,11 @@ IDL_GlobalData::IDL_GlobalData (void)
     gperf_path_ (0),
     temp_dir_ (0),
     ident_string_ (0),
+    obv_support_ (I_TRUE),
     case_diff_error_ (I_TRUE),
     nest_orb_ (I_FALSE),
     idl_flags_ (""),
-    preserve_cpp_keywords_ (I_TRUE),
-    pass_orb_idl_ (I_FALSE)
+    preserve_cpp_keywords_ (I_TRUE)
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
@@ -191,7 +191,6 @@ IDL_GlobalData::IDL_GlobalData (void)
   // in the environment.
   // Form the absolute pathname.
   char* ace_root = ACE_OS::getenv ("ACE_ROOT");
-  
   if (ace_root == 0)
     // This may not cause any problem if -g option is used to specify
     // the correct path for the  gperf program. Let us ignore this
@@ -981,6 +980,18 @@ IDL_GlobalData::ident_string (void) const
 }
 
 void
+IDL_GlobalData::obv_support (idl_bool val)
+{
+  this->obv_support_ = val;
+}
+
+idl_bool
+IDL_GlobalData::obv_support (void)
+{
+  return this->obv_support_;
+}
+
+void
 IDL_GlobalData::case_diff_error (idl_bool val)
 {
   this->case_diff_error_ = val;
@@ -1308,16 +1319,86 @@ IDL_GlobalData::file_prefixes (void)
   return this->file_prefixes_;
 }
 
-idl_bool
-IDL_GlobalData::pass_orb_idl (void) const
-{
-  return this->pass_orb_idl_;
-}
-
 void
-IDL_GlobalData::pass_orb_idl (idl_bool val)
+IDL_GlobalData::create_uses_multiple_stuff (
+    AST_Component *c,
+    AST_Component::port_description &pd
+  )
 {
-  this->pass_orb_idl_ = val;
+  ACE_CString struct_name (pd.id->get_string ());
+  struct_name += "Connection";
+  Identifier struct_id (struct_name.c_str ());
+  UTL_ScopedName sn (&struct_id, 0);
+  AST_Structure *connection =
+    idl_global->gen ()->create_structure (&sn, 0, 0);
+  struct_id.destroy ();
+
+  Identifier object_id ("objref");
+  UTL_ScopedName object_name (&object_id,
+                              0);
+  AST_Field *object_field =
+    idl_global->gen ()->create_field (pd.impl,
+                                      &object_name,
+                                      AST_Field::vis_NA);
+  (void) DeclAsScope (connection)->fe_add_field (object_field);
+  object_id.destroy ();
+
+  Identifier local_id ("Cookie");
+  UTL_ScopedName local_name (&local_id,
+                             0);
+  Identifier module_id ("Components");
+  UTL_ScopedName scoped_name (&module_id,
+                              &local_name);
+  AST_Decl *d = c->lookup_by_name (&scoped_name,
+                                   I_TRUE);
+  local_id.destroy ();
+  module_id.destroy ();
+
+  if (d == 0)
+    {
+      // This would happen if we haven't included Componennts.idl.
+      idl_global->err ()->lookup_error (&scoped_name);
+      return;
+    }
+
+  AST_ValueType *cookie = AST_ValueType::narrow_from_decl (d);
+
+  Identifier cookie_id ("ck");
+  UTL_ScopedName cookie_name (&cookie_id,
+                              0);
+  AST_Field *cookie_field =
+    idl_global->gen ()->create_field (cookie,
+                                      &cookie_name,
+                                      AST_Field::vis_NA);
+  (void) DeclAsScope (connection)->fe_add_field (cookie_field);
+  cookie_id.destroy ();
+
+  (void) c->fe_add_structure (connection);
+
+  ACE_UINT64 bound = 0;
+  AST_Expression *bound_expr =
+    idl_global->gen ()->create_expr (bound,
+                                     AST_Expression::EV_ulong);
+  AST_Sequence *sequence =
+    idl_global->gen ()->create_sequence (bound_expr,
+                                         connection,
+                                         0,
+                                         0,
+                                         0);
+
+  ACE_CString seq_string (pd.id->get_string ());
+  seq_string += "Connections";
+  Identifier seq_id (seq_string.c_str ());
+  UTL_ScopedName seq_name (&seq_id,
+                           0);
+  AST_Typedef *connections =
+    idl_global->gen ()->create_typedef (sequence,
+                                        &seq_name,
+                                        0,
+                                        0);
+  seq_id.destroy ();
+
+  (void) c->fe_add_typedef (connections);
 }
 
 // Return 0 on success, -1 failure. The <errno> corresponding to the

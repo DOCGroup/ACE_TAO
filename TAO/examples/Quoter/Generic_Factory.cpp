@@ -15,7 +15,7 @@
 
 #include "Generic_Factory.h"
 
-#include "orbsvcs/LifeCycleServiceC.h"
+#include "orbsvcs/orbsvcs/LifeCycleServiceC.h"
 
 ACE_RCSID (Quoter, 
            Generic_Factory, 

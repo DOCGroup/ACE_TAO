@@ -144,7 +144,7 @@ namespace CIAO
       // destructor
 
       typedef ACE_Hash_Map_Manager_Ex<const char *,
-        Deployment::PackageConfiguration,
+        Deployment::PackageConfiguration*,
         ACE_Hash<const char *>, ACE_Equal_To<const char *>,
         TAO_SYNCH_MUTEX> pc_table;
 
@@ -157,7 +157,7 @@ namespace CIAO
 
       pc_table pc_table_;
     };
-}
+};
 
 #include /**/ "ace/post.h"
 #endif /* REPOSITORYMANAGER_IMPL_H */

@@ -5,7 +5,6 @@
 #include "Object.h"
 #include "Environment.h"
 #include "ORB_Constants.h"
-#include "SystemException.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
@@ -54,7 +53,7 @@ TAO_DLL_Parser::parse_string (const char *ior,
       ACE_THROW_RETURN
         (CORBA::INV_OBJREF
          (CORBA::SystemException::_tao_minor_code (
-            0,
+            TAO_DEFAULT_MINOR_CODE,
             EINVAL),
           CORBA::COMPLETED_NO),
          CORBA::Object::_nil ());

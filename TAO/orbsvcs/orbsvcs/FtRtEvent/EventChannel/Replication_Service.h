@@ -13,7 +13,7 @@
 #ifndef REPLCATION_SERVICE_H
 #define REPLCATION_SERVICE_H
 
-#include "orbsvcs/FtRtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/FtRtecEventChannelAdminC.h"
 #include "FTEC_Become_Primary_Listener.h"
 #include "tao/PortableInterceptorC.h"
 #include "ace/Service_Object.h"

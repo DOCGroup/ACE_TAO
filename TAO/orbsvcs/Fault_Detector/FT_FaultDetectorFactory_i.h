@@ -32,8 +32,8 @@ namespace TAO
 /////////////////////////////////
 // Includes needed by this header
 #include <ace/Vector_T.h>
-#include <orbsvcs/FT_FaultDetectorFactoryS.h>
-#include <orbsvcs/FT_ReplicationManagerC.h>
+#include <orbsvcs/orbsvcs/FT_FaultDetectorFactoryS.h>
+#include <orbsvcs/orbsvcs/FT_ReplicationManagerC.h>
 #include <ace/Thread_Manager.h>
 
 /////////////////////

@@ -18,11 +18,7 @@
 #define IMR_MULTIADDR imr_multiaddr
 #endif /* ! defined (IMR_MULTIADDR) */
 
-
-ACE_RCSID (QoS,
-           SOCK_Dgram_Mcast_QoS,
-           "$Id$")
-
+ACE_RCSID(ace, SOCK_Dgram_Mcast_QoS, "$Id $")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram_Mcast_QoS)
 
@@ -104,7 +100,8 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
       ACE_INET_Addr *if_addrs = 0;
       size_t if_cnt;
 
-      if (ACE::get_ip_interfaces (if_cnt, if_addrs) != 0)
+      if (ACE_Sock_Connect::get_ip_interfaces (if_cnt,
+                                               if_addrs) != 0)
         return -1;
 
       size_t nr_subscribed = 0;
@@ -216,24 +213,24 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
       // Check if the mcast_addr passed into this method is the
       // same as the QoS session address.
       if (mcast_addr == qos_session->dest_addr ())
-        {
-          // Subscribe to the QoS session.
-          if (this->qos_manager_.join_qos_session (qos_session) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_LIB_TEXT ("Unable to join QoS Session\n")),
-                              -1);
-        }
+      	{
+	  // Subscribe to the QoS session.
+	  if (this->qos_manager_.join_qos_session (qos_session) == -1)
+	    ACE_ERROR_RETURN ((LM_ERROR,
+			       ACE_LIB_TEXT ("Unable to join QoS Session\n")),
+			      -1);
+	}
       else
-        {
-          if (this->close () != 0)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_LIB_TEXT ("Unable to close socket\n")));
+	{
+	  if (this->close () != 0)
+	    ACE_ERROR ((LM_ERROR,
+			ACE_LIB_TEXT ("Unable to close socket\n")));
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_LIB_TEXT ("Dest Addr in the QoS Session does")
                                ACE_LIB_TEXT (" not match the address passed into")
                                ACE_LIB_TEXT (" subscribe\n")),
                               -1);
-        }
+	}
 
       ip_mreq ret_mreq;
       this->make_multicast_ifaddr (&ret_mreq, mcast_addr, net_if);
@@ -248,9 +245,13 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
         return -1;
 
       else
-        if (qos_params.socket_qos () != 0)
-          qos_session->qos (*(qos_params.socket_qos ()));
+	if (qos_params.socket_qos () != 0)
+	  qos_session->qos (*(qos_params.socket_qos ()));
 
       return 0;
     }
 }
+
+
+
+

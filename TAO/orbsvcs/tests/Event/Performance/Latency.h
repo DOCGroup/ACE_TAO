@@ -17,8 +17,8 @@
 #ifndef EC_LATENCY_H
 #define EC_LATENCY_H
 
-#include "orbsvcs/RtecEventCommS.h"
-#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
 #include "ace/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

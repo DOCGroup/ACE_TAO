@@ -23,7 +23,9 @@
 #include "ExecutorMappingGenerator.hpp"
 #include "ServantGenerator.hpp"
 #include "ExecImplGenerator.hpp"
+/*
 #include "RepositoryIdGenerator.hpp"
+*/
 #include "DescriptorGenerator.hpp"
 #include "SizeTypeCalculator.hpp"
 
@@ -96,7 +98,9 @@ main (int argc, char* argv[])
     ExecutorMappingGenerator lem_gen;
     ServantGenerator svnt_gen (cl);
     ExecImplGenerator impl_gen (cl);
+    /*
     RepositoryIdGenerator repid_gen;
+    */
     DescriptorGenerator desc_gen;
     SizeTypeCalculator sizetype_calc;
 
@@ -194,6 +198,8 @@ main (int argc, char* argv[])
       return 0;
     }
 
+    //}
+
     Diagnostic::Stream dout;
     ErrorDetector detector (cerr.rdbuf ());
     cerr.rdbuf (&detector);
@@ -281,11 +287,6 @@ main (int argc, char* argv[])
       sizetype_calc.calculate (tu);
     }
 
-    // Compute repository IDs in a separate pass.
-    {
-      if (!repid_gen.generate (tu)) return 1;
-    }
-
     // Generate servant code.
     {
       svnt_gen.generate (tu, file_path);
@@ -297,6 +298,14 @@ main (int argc, char* argv[])
       impl_gen.generate (tu, file_path);
     }
 
+    /*
+
+    // Compute repository IDs in a separate pass.
+    {
+      repid_gen.generate (tu);
+    }
+
+    */
     // Generate descriptor code.
     {
       desc_gen.generate (cl, tu);

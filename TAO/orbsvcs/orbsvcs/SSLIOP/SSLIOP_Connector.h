@@ -81,9 +81,6 @@ namespace TAO
        */
       virtual TAO_Profile * make_profile (ACE_ENV_SINGLE_ARG_DECL);
 
-      /// Cancel the passed cvs handler from the connector
-      virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
-
       /// IIOP-specific connection establishment.
       /**
        * @note The IIOP endpoint is extracted from the SSLIOP endpoint.

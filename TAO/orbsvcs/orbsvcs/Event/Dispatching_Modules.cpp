@@ -1,8 +1,8 @@
 // $Id$
 
 #include "ace/Sched_Params.h"
-#include "orbsvcs/Scheduler_Factory.h"
-#include "orbsvcs/Time_Utilities.h"
+#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/orbsvcs/Time_Utilities.h"
 #include "Memory_Pools.h"
 
 #include "Dispatching_Modules.h"

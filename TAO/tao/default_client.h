@@ -87,8 +87,7 @@ private:
   {
     TAO_WAIT_ON_LEADER_FOLLOWER,
     TAO_WAIT_ON_REACTOR,
-    TAO_WAIT_ON_READ,
-    TAO_WAIT_ON_LF_NO_UPCALL
+    TAO_WAIT_ON_READ
   };
 
   /// The wait-for-reply strategy.

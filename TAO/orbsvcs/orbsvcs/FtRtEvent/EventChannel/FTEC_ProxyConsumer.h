@@ -12,9 +12,9 @@
 #ifndef TAO_FTEC_PROXYCONSUMER_H
 #define TAO_FTEC_PROXYCONSUMER_H
 
-#include "orbsvcs/Event/EC_Default_ProxyConsumer.h"
+#include "orbsvcs/orbsvcs/Event/EC_Default_ProxyConsumer.h"
 #include "ace/SString.h"
-#include "orbsvcs/FtRtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/FtRtecEventChannelAdminC.h"
 #include "Request_Context_Repository.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

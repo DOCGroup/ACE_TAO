@@ -111,7 +111,7 @@
 #define ACE_HAS_SYSV_IPC
 
 // Compiler/platform contains the <sys/syscall.h> file.
-#define ACE_HAS_SYS_SYSCALL_H
+#define ACE_HAS_SYSCALL_H
 
 // OpenBSD supports the getifaddrs interface
 #define ACE_HAS_GETIFADDRS
@@ -169,7 +169,7 @@
 #define ACE_HAS_STRERROR
 
 // Compiler/platform provides the sockio.h file.
-#define ACE_HAS_SYS_SOCKIO_H
+#define ACE_HAS_SOCKIO_H
 
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
@@ -229,6 +229,8 @@
 // OpenBSD actually has the clearerr call, but it causes a
 // bogus compiler syntax error.
 #define ACE_LACKS_CLEARERR
+
+#define ACE_HAS_MKSTEMP
 
 #define ACE_HAS_SNPRINTF
 

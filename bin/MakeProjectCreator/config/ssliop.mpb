@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: interceptors, security, portableserver, ssl {
+project: security, portableserver, ssl {
     after     += SSLIOP
     libs      += TAO_SSLIOP
     tagchecks += SSLIOP

@@ -464,38 +464,15 @@ TAO_POA::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 ACE_INLINE PortableInterceptor::ObjectReferenceTemplate *
-TAO_POA::get_adapter_template (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_POA::get_adapter_template ()
 {
-  if (this->ORT_adapter (ACE_ENV_SINGLE_ARG_PARAMETER))
-    {
-      return this->ort_adapter_->get_adapter_template();
-    }
-
-  return 0;
-}
-
-ACE_INLINE PortableInterceptor::ObjectReferenceTemplate *
-TAO_POA::get_adapter_template_i ()
-{
-  if (this->ORT_adapter_i ())
-    {
-      return this->ort_adapter_->get_adapter_template ();
-    }
-
-  return 0;
+  return this->ort_template_;
 }
 
 ACE_INLINE PortableInterceptor::ObjectReferenceFactory *
-TAO_POA::get_obj_ref_factory (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_POA::get_obj_ref_factory ()
 {
-  if (this->ORT_adapter (ACE_ENV_SINGLE_ARG_PARAMETER))
-    {
-      return this->ort_adapter_->get_obj_ref_factory();
-    }
-
-  return 0;
+  return this->obj_ref_factory_;
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0)

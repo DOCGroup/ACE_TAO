@@ -30,7 +30,6 @@
 
 
 #include "PollableC.h"
-#include "tao/SystemException.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
@@ -58,7 +57,7 @@ namespace TAO
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Pollable_ptr
-TAO::Objref_Traits<CORBA::Pollable>::duplicate (
+TAO::Objref_Traits<CORBA::Pollable>::tao_duplicate (
     CORBA::Pollable_ptr p
   )
 {
@@ -67,7 +66,7 @@ TAO::Objref_Traits<CORBA::Pollable>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<CORBA::Pollable>::release (
+TAO::Objref_Traits<CORBA::Pollable>::tao_release (
     CORBA::Pollable_ptr p
   )
 {
@@ -76,14 +75,14 @@ TAO::Objref_Traits<CORBA::Pollable>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Pollable_ptr
-TAO::Objref_Traits<CORBA::Pollable>::nil (void)
+TAO::Objref_Traits<CORBA::Pollable>::tao_nil (void)
 {
   return CORBA::Pollable::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<CORBA::Pollable>::marshal (
+TAO::Objref_Traits<CORBA::Pollable>::tao_marshal (
     CORBA::Pollable_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -92,7 +91,7 @@ TAO::Objref_Traits<CORBA::Pollable>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*CORBA__TAO_Pollable_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -113,10 +112,10 @@ CORBA::Pollable::_narrow (
     {
       return Pollable::_nil ();
     }
-
+  
   Pollable_ptr proxy =
     dynamic_cast<Pollable_ptr> (_tao_objref);
-
+  
   return Pollable::_duplicate (proxy);
 }
 
@@ -130,10 +129,10 @@ CORBA::Pollable::_unchecked_narrow (
     {
       return Pollable::_nil ();
     }
-
+  
   Pollable_ptr proxy =
     dynamic_cast<Pollable_ptr> (_tao_objref);
-
+  
   return Pollable::_duplicate (proxy);
 }
 
@@ -144,7 +143,7 @@ CORBA::Pollable::_duplicate (Pollable_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -195,7 +194,7 @@ CORBA::Pollable::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::DIIPollable_ptr
-TAO::Objref_Traits<CORBA::DIIPollable>::duplicate (
+TAO::Objref_Traits<CORBA::DIIPollable>::tao_duplicate (
     CORBA::DIIPollable_ptr p
   )
 {
@@ -204,7 +203,7 @@ TAO::Objref_Traits<CORBA::DIIPollable>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<CORBA::DIIPollable>::release (
+TAO::Objref_Traits<CORBA::DIIPollable>::tao_release (
     CORBA::DIIPollable_ptr p
   )
 {
@@ -213,14 +212,14 @@ TAO::Objref_Traits<CORBA::DIIPollable>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::DIIPollable_ptr
-TAO::Objref_Traits<CORBA::DIIPollable>::nil (void)
+TAO::Objref_Traits<CORBA::DIIPollable>::tao_nil (void)
 {
   return CORBA::DIIPollable::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<CORBA::DIIPollable>::marshal (
+TAO::Objref_Traits<CORBA::DIIPollable>::tao_marshal (
     CORBA::DIIPollable_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -229,7 +228,7 @@ TAO::Objref_Traits<CORBA::DIIPollable>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*CORBA__TAO_DIIPollable_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -250,10 +249,10 @@ CORBA::DIIPollable::_narrow (
     {
       return DIIPollable::_nil ();
     }
-
+  
   DIIPollable_ptr proxy =
     dynamic_cast<DIIPollable_ptr> (_tao_objref);
-
+  
   return DIIPollable::_duplicate (proxy);
 }
 
@@ -267,10 +266,10 @@ CORBA::DIIPollable::_unchecked_narrow (
     {
       return DIIPollable::_nil ();
     }
-
+  
   DIIPollable_ptr proxy =
     dynamic_cast<DIIPollable_ptr> (_tao_objref);
-
+  
   return DIIPollable::_duplicate (proxy);
 }
 
@@ -281,7 +280,7 @@ CORBA::DIIPollable::_duplicate (DIIPollable_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -336,7 +335,7 @@ CORBA::DIIPollable::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::PollableSet_ptr
-TAO::Objref_Traits<CORBA::PollableSet>::duplicate (
+TAO::Objref_Traits<CORBA::PollableSet>::tao_duplicate (
     CORBA::PollableSet_ptr p
   )
 {
@@ -345,7 +344,7 @@ TAO::Objref_Traits<CORBA::PollableSet>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<CORBA::PollableSet>::release (
+TAO::Objref_Traits<CORBA::PollableSet>::tao_release (
     CORBA::PollableSet_ptr p
   )
 {
@@ -354,14 +353,14 @@ TAO::Objref_Traits<CORBA::PollableSet>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::PollableSet_ptr
-TAO::Objref_Traits<CORBA::PollableSet>::nil (void)
+TAO::Objref_Traits<CORBA::PollableSet>::tao_nil (void)
 {
   return CORBA::PollableSet::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<CORBA::PollableSet>::marshal (
+TAO::Objref_Traits<CORBA::PollableSet>::tao_marshal (
     CORBA::PollableSet_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -370,12 +369,12 @@ TAO::Objref_Traits<CORBA::PollableSet>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*CORBA__TAO_PollableSet_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::PollableSet::NoPossiblePollable::NoPossiblePollable (void)
@@ -460,7 +459,7 @@ void CORBA::PollableSet::NoPossiblePollable::_tao_decode (
 
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::PollableSet::UnknownPollable::UnknownPollable (void)
@@ -561,10 +560,10 @@ CORBA::PollableSet::_narrow (
     {
       return PollableSet::_nil ();
     }
-
+  
   PollableSet_ptr proxy =
     dynamic_cast<PollableSet_ptr> (_tao_objref);
-
+  
   return PollableSet::_duplicate (proxy);
 }
 
@@ -578,10 +577,10 @@ CORBA::PollableSet::_unchecked_narrow (
     {
       return PollableSet::_nil ();
     }
-
+  
   PollableSet_ptr proxy =
     dynamic_cast<PollableSet_ptr> (_tao_objref);
-
+  
   return PollableSet::_duplicate (proxy);
 }
 
@@ -592,7 +591,7 @@ CORBA::PollableSet::_duplicate (PollableSet_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -650,7 +649,7 @@ CORBA::PollableSet::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         CORBA::PollableSet
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         CORBA::PollableSet
@@ -665,7 +664,7 @@ CORBA::PollableSet::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         CORBA::Pollable
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         CORBA::Pollable
@@ -680,7 +679,7 @@ CORBA::PollableSet::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         CORBA::DIIPollable
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         CORBA::DIIPollable
@@ -697,7 +696,7 @@ CORBA::PollableSet::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T< \
         CORBA::PollableSet
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         CORBA::PollableSet
@@ -712,7 +711,7 @@ CORBA::PollableSet::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T< \
         CORBA::Pollable
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         CORBA::Pollable
@@ -727,10 +726,11 @@ CORBA::PollableSet::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T< \
         CORBA::DIIPollable
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         CORBA::DIIPollable
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+

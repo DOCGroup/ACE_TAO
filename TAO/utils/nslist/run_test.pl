@@ -5,7 +5,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-# This is a Perl script that runs some Naming Service tests.
+# This is a Perl script that runs some Naming Service tests.  
 # It runs all the tests that will run with min CORBA.
 # It starts all the servers and clients as necessary.
 
@@ -19,8 +19,8 @@ use PerlACE::Run_Test;
 my $iorfile = PerlACE::LocalFile ("ns.ior");
 my $NS = new PerlACE::Process ("../../orbsvcs/Naming_Service/Naming_Service");
 my $CL = new PerlACE::Process ("../../orbsvcs/tests/Simple_Naming/client");
-my $LS = new PerlACE::Process ("../../../bin/nslist");
-my $AD = new PerlACE::Process ("../../../bin/nsadd");
+my $LS = new PerlACE::Process ("nslist");
+my $AD = new PerlACE::Process ("nsadd");
 my $status = 0;
 
 
@@ -37,7 +37,7 @@ sub name_server
 
     if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
         print STDERR "ERROR: cannot find IOR file <$iorfile>\n";
-        $NS->Kill ();
+        $NS->Kill (); 
         exit 1;
     }
 }

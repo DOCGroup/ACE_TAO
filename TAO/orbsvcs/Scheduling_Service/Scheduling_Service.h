@@ -26,11 +26,11 @@
 #define TAO_SCHEDULING_SERVICE_H
 
 #include "tao/PortableServer/ORB_Manager.h"
-#include "orbsvcs/Sched/Reconfig_Scheduler.h"
+#include "orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h"
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
-#include "orbsvcs/Sched/Strategy_Scheduler.h"
+#include "orbsvcs/orbsvcs/Sched/Strategy_Scheduler.h"
 #endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
-#include "orbsvcs/Sched/Config_Scheduler.h"
+#include "orbsvcs/orbsvcs/Sched/Config_Scheduler.h"
 #include "ace/SString.h"
 
 class TAO_Scheduling_Service

@@ -1,16 +1,12 @@
-// -*- C++ -*-
-//
 // $Id$
 
-#include "tao/Exception.h"
 #include "ace/Swap.h"
 
 template <class T>
-ACE_INLINE T *
-TAO::Utils::Servant_Var<T>::_duplicate (T * p)
+ACE_INLINE T * TAO::Utils::Servant_Var<T>::
+_duplicate(T * p)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       if (p != 0)
         {
@@ -23,52 +19,53 @@ TAO::Utils::Servant_Var<T>::_duplicate (T * p)
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   return p;
 }
 
 template <class T>
 ACE_INLINE void
-TAO::Utils::Servant_Var<T>::swap (Servant_Var<T> & rhs) ACE_THROW_SPEC(())
+TAO::Utils::Servant_Var<T>::swap(Servant_Var<T> & rhs) ACE_THROW_SPEC(())
 {
-  ACE_Swap<T*>::swap (this->ptr_, rhs.ptr_);
+  ACE_Swap<T*>::swap(this->ptr_, rhs.ptr_);
 }
 
 template <class T>
-ACE_INLINE TAO::Utils::Servant_Var<T>::Servant_Var (T * p)
-  : ptr_ (p)
+ACE_INLINE TAO::Utils::Servant_Var<T>::
+Servant_Var(T * p)
+  : ptr_(p)
 {
 }
 
 // If _add_ref throws, this object will not be completely constructed
 // so the destructor will not be called.
 template <class T>
-ACE_INLINE TAO::Utils::Servant_Var<T>::Servant_Var (Servant_Var<T> const & rhs)
-  : ptr_ (Servant_Var<T>::_duplicate(rhs.ptr_))
+ACE_INLINE TAO::Utils::Servant_Var<T>::
+Servant_Var(Servant_Var<T> const & rhs)
+  : ptr_(Servant_Var<T>::_duplicate(rhs.ptr_))
 {
 }
 
 template <class T>
-ACE_INLINE TAO::Utils::Servant_Var<T> &
-TAO::Utils::Servant_Var<T>::operator= (Servant_Var<T> const & rhs)
+ACE_INLINE TAO::Utils::Servant_Var<T> & TAO::Utils::Servant_Var<T>::
+operator=(Servant_Var<T> const & rhs)
 {
-  TAO::Utils::Servant_Var<T> tmp (rhs);
-  this->swap (tmp);
+  TAO::Utils::Servant_Var<T> tmp(rhs);
+  this->swap(tmp);
   return *this;
 }
 
 template <class T>
-ACE_INLINE typename TAO::Utils::Servant_Var<T> &
-TAO::Utils::Servant_Var<T>::operator= (T * p)
+ACE_INLINE ACE_TYPENAME TAO::Utils::Servant_Var<T> & TAO::Utils::Servant_Var<T>::
+operator=(T * p)
 {
-  TAO::Utils::Servant_Var<T> tmp (p);
-  this->swap (tmp);
+  TAO::Utils::Servant_Var<T> tmp(p);
+  this->swap(tmp);
   return *this;
 }
 
 template <class T> ACE_INLINE
-TAO::Utils::Servant_Var<T>::~Servant_Var (void)
+TAO::Utils::Servant_Var<T>::~Servant_Var ()
   ACE_THROW_SPEC (())
 {
   // Unfortunately, there is no throw spec on _remove_ref, so we
@@ -92,95 +89,99 @@ TAO::Utils::Servant_Var<T>::~Servant_Var (void)
 
 #if !defined(ACE_LACKS_MEMBER_TEMPLATES)
 template <class T> template <class Y>
-ACE_INLINE TAO::Utils::Servant_Var<T>::Servant_Var (Y * p)
-  : ptr_ (p)
+ACE_INLINE TAO::Utils::Servant_Var<T>::
+Servant_Var(Y * p)
+  : ptr_(p)
 {
 }
 
 template <class T> template <class Y>
-ACE_INLINE TAO::Utils::Servant_Var<T>::Servant_Var (Servant_Var<Y> const & rhs)
-  : ptr_ (Servant_Var<T>::_duplicate (rhs.in ()))
+ACE_INLINE TAO::Utils::Servant_Var<T>::
+Servant_Var(Servant_Var<Y> const & rhs)
+  : ptr_(Servant_Var<T>::_duplicate(rhs.in()))
 {
 }
 
 template <class T> template <class Y>
-ACE_INLINE typename TAO::Utils::Servant_Var<T> &
-TAO::Utils::Servant_Var<T>::
+ACE_INLINE ACE_TYPENAME TAO::Utils::Servant_Var<T> & TAO::Utils::Servant_Var<T>::
 operator=(Servant_Var<Y> const & rhs)
 {
-  TAO::Utils::Servant_Var<T> tmp (rhs);
-  this->swap (tmp);
+  TAO::Utils::Servant_Var<T> tmp(rhs);
+  this->swap(tmp);
   return *this;
 }
 
 template <class T> template <class Y>
-ACE_INLINE typename TAO::Utils::Servant_Var<T> &
-TAO::Utils::Servant_Var<T>::operator= (Y * p)
+ACE_INLINE ACE_TYPENAME TAO::Utils::Servant_Var<T> & TAO::Utils::Servant_Var<T>::
+operator=(Y * p)
 {
-  TAO::Utils::Servant_Var<T> tmp (p);
-  this->swap (tmp);
+  TAO::Utils::Servant_Var<T> tmp(p);
+  this->swap(tmp);
   return *this;
 }
 #endif /* ACE_LACKS_MEMBER_TEMPLATES */
 
 template <class T>
-ACE_INLINE T const *
-TAO::Utils::Servant_Var<T>::operator->() const
+ACE_INLINE T const * TAO::Utils::Servant_Var<T>::
+operator->() const
 {
   return ptr_;
 }
 
 template <class T>
-ACE_INLINE T *
-TAO::Utils::Servant_Var<T>::operator->()
+ACE_INLINE T * TAO::Utils::Servant_Var<T>::
+operator->()
 {
   return ptr_;
 }
 
 template <class T>
-ACE_INLINE T const & TAO::Utils::Servant_Var<T>::operator*() const
+ACE_INLINE T const & TAO::Utils::Servant_Var<T>::
+operator*() const
 {
   return *ptr_;
 }
 
 template <class T>
-ACE_INLINE T & TAO::Utils::Servant_Var<T>::operator*()
+ACE_INLINE T & TAO::Utils::Servant_Var<T>::
+operator*()
 {
   return *ptr_;
 }
 
 template <class T>
-ACE_INLINE TAO::Utils::Servant_Var<T>::operator void const * () const
+ACE_INLINE TAO::Utils::Servant_Var<T>::
+operator void const * () const
 {
   return ptr_;
 }
 
 template <class T>
-ACE_INLINE T *
-TAO::Utils::Servant_Var<T>::in (void) const
+ACE_INLINE T * TAO::Utils::Servant_Var<T>::
+in() const
 {
   return ptr_;
 }
 
 template <class T>
-ACE_INLINE T *&
-TAO::Utils::Servant_Var<T>::inout (void)
+ACE_INLINE T *& TAO::Utils::Servant_Var<T>::
+inout()
 {
   return ptr_;
 }
 
 template <class T>
-ACE_INLINE T *&
-TAO::Utils::Servant_Var<T>::out (void)
+ACE_INLINE T *& TAO::Utils::Servant_Var<T>::
+out()
 {
   TAO::Utils::Servant_Var<T> tmp;
-  this->swap (tmp);
+  this->swap(tmp);
   return ptr_;
 }
 
 template <class T>
-ACE_INLINE T *
-TAO::Utils::Servant_Var<T>::_retn (void)
+ACE_INLINE T * TAO::Utils::Servant_Var<T>::
+_retn()
 {
   T * rval = ptr_;
   ptr_ = 0;
@@ -189,16 +190,18 @@ TAO::Utils::Servant_Var<T>::_retn (void)
 
 template <class X, class Y>
 ACE_INLINE bool
-operator== (typename TAO::Utils::Servant_Var<X> const & x,
-            typename TAO::Utils::Servant_Var<Y> const & y)
+operator==(ACE_TYPENAME TAO::Utils::Servant_Var<X> const & x,
+           ACE_TYPENAME TAO::Utils::Servant_Var<Y> const & y)
 {
-  return x.in () == y.in ();
+  return x.in() == y.in();
 }
 
+// -*- C++ -*-
+// $Id$
 template <class X, class Y>
 ACE_INLINE bool
-operator!= (typename TAO::Utils::Servant_Var<X> const & x,
-            typename TAO::Utils::Servant_Var<Y> const & y)
+operator!=(ACE_TYPENAME TAO::Utils::Servant_Var<X> const & x,
+           ACE_TYPENAME TAO::Utils::Servant_Var<Y> const & y)
 {
-  return x.in () != y.in ();
+  return x.in() != y.in();
 }

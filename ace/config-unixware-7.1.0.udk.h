@@ -41,6 +41,7 @@
 
 #define ACE_HAS_NEW_NO_H 1
 #define ACE_HAS_STDEXCEPT_NO_H 1
+#define ACE_HAS_IOMANIP_NO_H 1
 
 /* Platform provides <sys/ioctl.h> header */
 #define ACE_HAS_SYS_IOCTL_H 1
@@ -146,7 +147,7 @@
 
 /* Platform has a getrusage () prototype in sys/resource.h that differs from
    the one in ace/OS.i. */
-#define ACE_HAS_GETRUSAGE_PROTOTYPE
+#define ACE_HAS_GETRUSAGE_PROTO
 
 /* The GPERF utility is compiled for this platform */
 #define ACE_HAS_GPERF
@@ -282,7 +283,7 @@
 #define ACE_HAS_SIZET_SOCKET_LEN
 
 /* Compiler/platform provides the sys/sockio.h file */
-#define ACE_HAS_SYS_SOCKIO_H
+#define ACE_HAS_SOCKIO_H
 
 /* Compiler supports the ssize_t typedef */
 #define ACE_HAS_SSIZE_T
@@ -327,7 +328,7 @@
 #define ACE_HAS_SVR4_TLI
 
 /* Compiler/platform contains the <sys/syscall.h> file. */
-#define ACE_HAS_SYS_SYSCALL_H
+#define ACE_HAS_SYSCALL_H
 
 /* Platform supports system configuration information */
 #define ACE_HAS_SYSINFO 1

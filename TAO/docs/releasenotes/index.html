@@ -185,9 +185,6 @@ Notification Service
 <li>
 <a href="../../CIAO/docs/releasenotes/index.html">CORBA Component Model (CIAO)</a></li>
 <li>
-<a href="../../CIAO/docs/releasenotes/dance.html">Deployment and
-    Configuration Engine (DAnCE)</a></li>
-<li>
 <a href="../../CIAO/CIDLC/README.html">Component Implementation
 Definition Language Compiler (CIDLC)</a></li>
 <li>
@@ -279,7 +276,7 @@ WFMO_Reactor_Test, Timer_Cancellation_Test</ul>
 <h3>
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:j.parsons@vanderbilt.edu">Jeff Parsons</a>
-<p>Current status: (As of August 14, 2004.)
+<p>Current status: (As of July 6, 2004.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
@@ -438,8 +435,11 @@ far only the repository ID is output, but this may be enhanced when requirements
 and/or desires become clearer.</li>
 
 <li>
-The IDL compiler has support for valuetypes (see release notes
-for valuetypes for details). </li>
+The IDL compiler now has limited support for valuetypes (see release notes
+for valuetypes for details). If the TAO library is built with TAO_HAS_VALUETYPE
+defined, and IDL_HAS_VALUETYPE is also defined, then the IDL compiler will
+enable OBV support with the command line option -Gv, and disable it with
+the option -Sv (the default).</li>
 
 <li>
 As part of the implementation of interceptors, the TAO IDL compiler now
@@ -626,15 +626,6 @@ changed. Instead of spawning a separate process for each IDL file, the
 IDL compiler now processes the files sequentially in a single process.
 Note that, for each file, execution of the preprocessor spawns a new
 process, as it always has.
-</li>
-
-<li>
-Added command line option -Sm to suppress the action of CCM preprocessing
-visitor, which is by default launched before the C++ generating visitors,
-in order to add CCM equivalent IDL to the AST. There is a new tool in CIAO
-which converts IDL files by replacing IDL3 constructs with equivalent IDL2
-constructs, and if the IDL compiler is run on these files, we do not want
-the CCM preprocessing to occur.
 </li>
 </ul>
 

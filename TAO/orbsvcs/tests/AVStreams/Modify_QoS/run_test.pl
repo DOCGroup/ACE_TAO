@@ -7,7 +7,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib '../../../../../bin';
 use PerlACE::Run_Test;
-use File::stat;
 
 # amount of delay between running the servers
 
@@ -17,14 +16,11 @@ $status = 0;
 $nsior = PerlACE::LocalFile ("ns.ior");
 $outfile = PerlACE::LocalFile ("output");
 
-# generate test stream data
-$input = PerlACE::generate_test_file("test_input", 102400);
-
 unlink $nsior;
 
 $NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
 $SV = new PerlACE::Process ("receiver", "-ORBInitRef NameService=file://$nsior");
-$CL = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -f $input");
+$CL = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior");
 
 print STDERR "Starting Naming Service\n";
 
@@ -32,7 +28,7 @@ $NS->Spawn ();
 
 if (PerlACE::waitforfile_timed ($nsior, 5) == -1) {
     print STDERR "ERROR: cannot find naming service IOR file\n";
-    $NS->Kill ();
+    $NS->Kill (); 
     exit 1;
 }
 
@@ -66,6 +62,6 @@ if ($nserver != 0) {
 }
 
 unlink $nsior;
-unlink $output, $input;
+unlink $output;
 
 exit $status;

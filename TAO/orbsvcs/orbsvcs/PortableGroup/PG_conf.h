@@ -22,7 +22,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/PortableGroupC.h"
+#include "orbsvcs/orbsvcs/PortableGroupC.h"
 
 #ifndef TAO_PG_MAX_OBJECT_GROUPS  // @@ why create arbitrary limits?
 /// The maximum number of object groups to be managed by the

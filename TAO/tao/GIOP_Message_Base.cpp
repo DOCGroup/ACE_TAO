@@ -11,17 +11,14 @@
 #include "LF_Strategy.h"
 #include "Request_Dispatcher.h"
 #include "Codeset_Manager.h"
-#include "SystemException.h"
 
 #if !defined (__ACE_INLINE__)
 # include "GIOP_Message_Base.i"
 #endif /* __ACE_INLINE__ */
 
-
 ACE_RCSID (tao,
            GIOP_Message_Base,
            "$Id$")
-
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                                               size_t /*input_cdr_size*/)
@@ -906,7 +903,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
 
       // Throw an exception if the
       if (parse_error != 0)
-        ACE_TRY_THROW (CORBA::MARSHAL (0,
+        ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                        CORBA::COMPLETED_NO));
       request_id = request.request_id ();
 
@@ -995,7 +992,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
         }
       else if (TAO_debug_level > 0)
         {
-          // It is unfortunate that an exception (probably a system
+          // It is unfotunate that an exception (probably a system
           // exception) was thrown by the upcall code (even by the
           // user) when the client was not expecting a response.
           // However, in this case, we cannot close the connection
@@ -1040,8 +1037,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
               if (TAO_debug_level > 0)
                 {
                   ACE_ERROR ((LM_ERROR,
-                              ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_request[3], ")
-                              ACE_TEXT ("%p: ")
+                              ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: ")
                               ACE_TEXT ("cannot send exception\n"),
                               ACE_TEXT ("process_request ()")));
                   ACE_PRINT_EXCEPTION (
@@ -1097,7 +1093,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
 
       if (parse_error != 0)
         {
-          ACE_TRY_THROW (CORBA::MARSHAL (0,
+          ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                          CORBA::COMPLETED_NO));
         }
 
@@ -1126,7 +1122,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
 
       if (parse_error != 0)
         {
-          ACE_TRY_THROW (CORBA::MARSHAL (0,
+          ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                          CORBA::COMPLETED_NO));
         }
 
@@ -1144,8 +1140,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
           status_info.status = TAO_GIOP_OBJECT_FORWARD;
           status_info.forward_location_var = forward_to;
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
-                      ACE_TEXT ("called: forwarding\n")));
+                      ACE_TEXT ("handle_locate has been called: forwarding\n")));
         }
       else if (server_request.exception_type () == TAO_GIOP_NO_EXCEPTION)
         {
@@ -1153,8 +1148,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
           status_info.status = TAO_GIOP_OBJECT_HERE;
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
-                        ACE_TEXT ("found\n")));
+                        ACE_TEXT ("TAO: (%P|%t) handle_locate() : found\n")));
         }
       else
         {
@@ -1164,16 +1158,14 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
             {
               status_info.status = TAO_GIOP_OBJECT_FORWARD;
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
-                          ACE_TEXT ("forwarding\n")));
+                          ACE_TEXT ("handle_locate has been called: forwarding\n")));
             }
           else
             {
               // Normal exception, so the object is not here
               status_info.status = TAO_GIOP_UNKNOWN_OBJECT;
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
-                          ACE_TEXT ("not here\n")));
+                          ACE_TEXT ("handle_locate has been called: not here\n")));
             }
         }
     }
@@ -1184,7 +1176,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
       status_info.status = TAO_GIOP_UNKNOWN_OBJECT;
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
+                    ACE_TEXT ("TAO (%P|%t) TAO_GIOP_Message_Base::process_locate_request - ")
                     ACE_TEXT ("CORBA exception raised\n")));
     }
 #if defined (TAO_HAS_EXCEPTIONS)

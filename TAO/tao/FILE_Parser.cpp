@@ -3,7 +3,6 @@
 #include "FILE_Parser.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
-#include "tao/Object.h"
 
 #include "ace/Read_Buffer.h"
 

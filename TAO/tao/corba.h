@@ -37,8 +37,7 @@
 #include "tao/Typecode.h"
 
 #include "tao/Environment.h"
-#include "tao/SystemException.h"
-#include "tao/UserException.h"
+#include "tao/Exception.h"
 
 #include "tao/NVList.h"
 

@@ -13,7 +13,7 @@
 //
 // ============================================================================
 
-#include "orbsvcs/LifeCycleServiceS.h"
+#include "orbsvcs/orbsvcs/LifeCycleServiceS.h"
 #include "Factory_Trader.h"
 #include "Criteria_Evaluator.h"
 

@@ -133,7 +133,7 @@ else
   ifeq ($(findstring k, $(MAKEFLAGS)),k)
     LIBCHECK = 1
   else
-    LIBCHECK ?= $(filter-out $(foreach lib,<%libs%>,$(findstring $(lib),$(foreach libpath,<%libpaths%> /usr/lib $(INSLIB),$(wildcard $(libpath)/lib$(lib).* $(libpath)/$(lib).lib)))),<%libs%>)
+    LIBCHECK ?= $(filter-out $(foreach lib,<%libs%>,$(findstring $(lib),$(foreach libpath,<%libpaths%> $(INSLIB),$(wildcard $(libpath)/lib$(lib).* $(libpath)/$(lib).lib)))),<%libs%>)
     ifeq ($(LIBCHECK),)
       LIBCHECK = 1
     endif
@@ -257,7 +257,7 @@ ifeq ($(<%require%>),1)
 ifneq ($(<%avoid%>),1)
 <%endfor%>
 ifeq ($(LIBCHECK), 1)
-BIN    = $(BIN_UNCHECKED)$(EXEEXT)
+BIN    = $(BIN_UNCHECKED)
 else
   all: lib_warning
 endif
@@ -290,8 +290,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 <%if(install && exename)%>
 
 ifneq ($(OUTPUT_DIRECTORY),.)
-  INSTALL = $(VBIN:%=$(INSBIN)/%)
-  CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%)
+  INSTALL = $(VBIN:%=$(INSBIN)/%$(EXEEXT))
+  CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%$(EXEEXT))
 endif
 
 <%endif%>

@@ -70,7 +70,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
           << "void" << be_nl
-          << "TAO::Value_Traits<" << node->name  () << ">::add_ref ("
+          << "TAO::Value_Traits<" << node->name  () << ">::tao_add_ref ("
           << be_idt << be_idt_nl
           << node->name () << " * p" << be_uidt_nl
           << ")" << be_uidt_nl
@@ -81,7 +81,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
           << "void" << be_nl
-          << "TAO::Value_Traits<" << node->name () << ">::remove_ref ("
+          << "TAO::Value_Traits<" << node->name () << ">::tao_remove_ref ("
           << be_idt << be_idt_nl
           << node->name () << " * p" << be_uidt_nl
           << ")" << be_uidt_nl
@@ -92,7 +92,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
           << "void" << be_nl
-          << "TAO::Value_Traits<" << node->name () << ">::release ("
+          << "TAO::Value_Traits<" << node->name () << ">::tao_release ("
           << be_idt << be_idt_nl
           << node->name () << " * p" << be_uidt_nl
           << ")" << be_uidt_nl
@@ -232,10 +232,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "return retval;" << be_uidt_nl
       << "}";
 
-  // If we inherit from CORBA::Object and/or CORBA::AbstractBase
-  // (in addition to CORBA::ValueBase) we have to add these
-  // to avoid ambiguity.
-  if (node->n_supports () > 0)
+  if (node->supports_abstract ())
     {
       *os << be_nl << be_nl
           << "CORBA::ValueBase *" << be_nl

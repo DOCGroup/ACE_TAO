@@ -1,7 +1,7 @@
 // $Id$
 
-#include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
 
 #include "tao/Messaging/Messaging.h"
 #include "tao/Strategies/advanced_resource.h"

@@ -1,9 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project(RTEventLogAdmin) : orbsvcslib, core, naming, rtoldevent, dslogadmin_serv {
+project(RTEventLogAdmin) : orbsvcslib, core, naming, rtoldevent, dslogadmin {
   sharedname   = TAO_RTEventLogAdmin
-  idlflags    += -Wb,export_macro=TAO_RTEventLog_Export -Wb,export_include=orbsvcs/Log/rteventlog_export.h
+  idlflags    += -Wb,export_macro=TAO_RTEventLog_Export -Wb,export_include=Log/rteventlog_export.h
   dynamicflags = TAO_RTEVENTLOG_BUILD_DLL
   tagchecks   += RTEventLog
 
@@ -20,8 +20,5 @@ project(RTEventLogAdmin) : orbsvcslib, core, naming, rtoldevent, dslogadmin_serv
       Log/RTEventLogConsumer.cpp
       Log/RTEventLogNotification.cpp
     }
-  }
-
-  Template_Files {
   }
 }

@@ -37,13 +37,13 @@
 #define TAO_ECG_UDP_RECEIVER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/RtecUDPAdminS.h"
+#include "orbsvcs/orbsvcs/RtecUDPAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminS.h"
 #include /**/ "event_export.h"
 
 #include "ECG_Adapters.h"

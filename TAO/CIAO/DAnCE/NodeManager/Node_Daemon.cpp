@@ -1,14 +1,35 @@
 // $Id$
 
+//==============================================================
+/**
+ * @file Node_Daemon.cpp
+ *
+ * @brief CIAO's Node Daemon implementation
+ *
+ * NodeDaemon is the bootstraping mechanism to create new
+ * NodeApplication on the localhost.  We currently depend on
+ * starting the NodeApplicationManager process on some port of all
+ * the hosts that have NodeApplication install to function properly.
+ * The port to run this daemon can be set by using the TAO ORB options
+ * command of -ORBEndpoint <port>. This replaces the earlier CIAO_Daemon
+ * implementation of CIAO as defined in the CCM specification.
+ *
+ * @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
+ * @author Tao Lu <lu@dre.vanderbilt.edu>
+ */
+//===============================================================
+
 #include "NodeDaemon_Impl.h"
-#include "orbsvcs/CosNamingC.h"
 #include "tao/IORTable/IORTable.h"
+
+// Include Name Service header
+#include "orbsvcs/orbsvcs/CosNamingC.h"
+
 #include "ace/SString.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/os_include/os_netdb.h"
 #include "ciao/Server_init.h"
 #include "ciao/CIAO_common.h"
 
@@ -90,17 +111,14 @@ write_IOR(const char* ior)
   return 0;
 }
 
-bool
+int
 register_with_ns (const char * name_context,
                   CORBA::ORB_ptr orb,
-                  CIAO::NodeDaemon_ptr obj
-                  ACE_ENV_ARG_DECL)
+                  CIAO::NodeDaemon_ptr obj)
 {
   // Naming Service related operations
   CORBA::Object_var naming_context_object =
-    orb->resolve_initial_references ("NameService"
-                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    orb->resolve_initial_references ("NameService");
 
   CosNaming::NamingContext_var naming_context =
     CosNaming::NamingContext::_narrow (naming_context_object.in ());
@@ -108,12 +126,13 @@ register_with_ns (const char * name_context,
   // Initialize the Naming Sequence
   CosNaming::Name name (1);
   name.length (1);
-  name[0].id = name_context;
+  // Register the name with the NS
+  name[0].id = CORBA::string_dup (name_context);
 
   // Register the servant with the Naming Service
   naming_context->bind (name, obj);
 
-  return true;
+  return 0;
 }
 
 int
@@ -122,7 +141,6 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       // Initialize orb
-      // @@TODO: Add error checking. There is absoluteley none.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             ""
@@ -177,39 +195,30 @@ main (int argc, char *argv[])
                       spawn_delay),
                       -1);
       PortableServer::ServantBase_var safe_daemon (daemon_servant);
-
       // Implicit activation
-      CIAO::NodeDaemon_var daemon =
-        daemon_servant->_this ();
 
-      CORBA::String_var str =
-        orb->object_to_string (daemon.in ()
-                               ACE_ENV_ARG_PARAMETER);
+      CIAO::NodeDaemon_var daemon = daemon_servant->_this ();
+
+      CORBA::String_var str = orb->object_to_string (daemon.in ()
+                                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      adapter->bind ("NodeManager",
-                     str.in ()
-                     ACE_ENV_ARG_PARAMETER);
+      adapter->bind ("NodeManager", str.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (write_to_ior_)
         write_IOR (str.in ());
       else if (register_with_ns_)
         {
-          char name [MAXHOSTNAMELEN + 1];
+          char name [100];
           if (ACE_OS::hostname (name, 100) == -1)
             {
-              ACE_ERROR ((LM_ERROR,
-                          "gethostname call failed! \n"));
+              ACE_DEBUG ((LM_DEBUG, "gethostname call failed! \n"));
               exit (1);
             }
 
           // Register this name with the Naming Service
-          (void) register_with_ns (name,
-                                   orb.in (),
-                                   daemon.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          register_with_ns (name, orb.in (), daemon.in ());
         }
 
       ACE_DEBUG ((LM_INFO, "CIAO_NodeDaemon IOR: %s\n", str.in ()));

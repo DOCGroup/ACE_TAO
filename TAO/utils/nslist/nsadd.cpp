@@ -17,7 +17,7 @@
 //
 // ================================================================
 
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
@@ -96,11 +96,11 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var obj;
-      if (ior)
-        {
-          obj = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
+      if(ior)
+      {
+         obj = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      }
 
       CORBA::Object_var nc_obj =
         orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);

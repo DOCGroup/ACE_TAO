@@ -120,10 +120,8 @@ sub run_program ($)
        }
     }
 
-    print "auto_run_tests: tests/$program\n";
-    my $start_time = time();
+    print STDERR "Running $program\n";
     $status = $P->SpawnWaitKill (400);
-    my $time = time() - $start_time;
 
     ### Check for problems
 
@@ -135,8 +133,6 @@ sub run_program ($)
     elsif ($status != 0) {
         print STDERR "Error: $program FAILED with exit status $status\n";
     }
-
-    print "\nauto_run_tests_finished: test/$program Time:$time"."s Result:$status\n";
 
     check_log ($program);
 

@@ -79,9 +79,7 @@ namespace StringLiterals
     "// Your code here.",                                 // YCH
     "//==================================================================", // SEP
 
-    "variable-size",                                      // VAR_SIZE
-    "_ciao_extract_val",                                  // EXTRACT
-    "_ciao_extract_tmp"                                   // EXTRACT_TMP
+    "variable-size"                                       // VAR_SIZE
   };
 }
 

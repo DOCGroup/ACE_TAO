@@ -5,8 +5,8 @@
 #include "EC_Event_Channel_Base.h"
 #include "EC_QOS_Info.h"
 
-#include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/orbsvcs/RtecSchedulerC.h"
 
 #include "ace/Sched_Params.h"
 

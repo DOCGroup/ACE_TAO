@@ -1,5 +1,4 @@
 //$Id$
-
 #include "Invocation_Adapter.h"
 #include "Profile_Transport_Resolver.h"
 #include "operation_details.h"
@@ -20,6 +19,7 @@
 ACE_RCSID (tao,
            Invocation_Adapter,
            "$Id$")
+
 
 namespace TAO
 {
@@ -163,10 +163,9 @@ namespace TAO
                                     details,
                                     this->type_ == TAO_TWOWAY_INVOCATION);
 
-    status =
-      coll_inv.invoke (this->cpb_,
-                       strat
-                       ACE_ENV_ARG_PARAMETER);
+    status = coll_inv.invoke (this->cpb_,
+                              strat
+                              ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
     if (status == TAO_INVOKE_RESTART &&
@@ -184,41 +183,6 @@ namespace TAO
     return status;
   }
 
-  void
-  Invocation_Adapter::set_response_flags (
-    TAO_Stub *stub,
-    TAO_Operation_Details &details)
-  {
-    switch (this->type_)
-      {
-      case TAO_ONEWAY_INVOCATION:
-        {
-          // Grab the syncscope policy from the ORB.
-          Messaging::SyncScope sync_scope;
-    
-          bool has_synchronization = false;
-
-          stub->orb_core ()->call_sync_scope_hook (stub,
-                                                   has_synchronization,
-                                                   sync_scope);
-          if (has_synchronization)
-            details.response_flags (CORBA::Octet (sync_scope));
-          else
-            details.response_flags (
-              CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT));
-          break;
-        }
-      case TAO_TWOWAY_INVOCATION:
-        {
-          // @@note: Need to change this to something better. Too many
-          // hash defines meaning the same things.
-          details.response_flags (TAO_TWOWAY_RESPONSE_FLAG);
-          break;
-        }
-      }
-
-    return;
-  }
 
   Invocation_Status
   Invocation_Adapter::invoke_remote_i (TAO_Stub *stub,
@@ -235,15 +199,10 @@ namespace TAO
     if (is_timeout)
       max_wait_time = &tmp_wait_time;
 
-    (void) this->set_response_flags (stub,
-                                     details);
-
     // Create the resolver which will pick (or create) for us a
     // transport and a profile from the effective_target.
-    Profile_Transport_Resolver resolver (
-      effective_target.in (),
-      stub,
-      (details.response_flags () != Messaging::SYNC_NONE));
+    Profile_Transport_Resolver resolver (effective_target.in (),
+                                         stub);
 
     resolver.resolve (max_wait_time
                       ACE_ENV_ARG_PARAMETER);
@@ -264,6 +223,9 @@ namespace TAO
       }
     else if (this->type_ == TAO_TWOWAY_INVOCATION)
       {
+        // @@ NOTE:Need to change this to something better. Too many
+        // hash defines meaning the same  thing..
+        details.response_flags (TAO_TWOWAY_RESPONSE_FLAG);
         return this->invoke_twoway (details,
                                     effective_target,
                                     resolver,
@@ -275,7 +237,7 @@ namespace TAO
   }
 
   Invocation_Status
-  Invocation_Adapter::invoke_twoway (TAO_Operation_Details &details,
+  Invocation_Adapter::invoke_twoway (TAO_Operation_Details &op,
                                      CORBA::Object_var &effective_target,
                                      Profile_Transport_Resolver &r,
                                      ACE_Time_Value *&max_wait_time
@@ -295,7 +257,7 @@ namespace TAO
 
     TAO::Synch_Twoway_Invocation synch (this->target_,
                                         r,
-                                        details);
+                                        op);
 
     Invocation_Status status =
       synch.remote_twoway (max_wait_time
@@ -305,8 +267,7 @@ namespace TAO
     if (status == TAO_INVOKE_RESTART &&
         synch.is_forwarded ())
       {
-        effective_target =
-          synch.steal_forwarded_reference ();
+        effective_target = synch.steal_forwarded_reference ();
 
         this->object_forwarded (effective_target,
                                 r.stub ()
@@ -318,15 +279,28 @@ namespace TAO
   }
 
   Invocation_Status
-  Invocation_Adapter::invoke_oneway (TAO_Operation_Details &details,
+  Invocation_Adapter::invoke_oneway (TAO_Operation_Details &op,
                                      CORBA::Object_var &effective_target,
                                      Profile_Transport_Resolver &r,
                                      ACE_Time_Value *&max_wait_time
                                      ACE_ENV_ARG_DECL)
   {
+    // Grab the syncscope policy from the ORB.
+    bool has_synchronization = false;
+    Messaging::SyncScope sync_scope;
+
+    r.stub ()->orb_core ()->call_sync_scope_hook (r.stub (),
+                                                  has_synchronization,
+                                                  sync_scope);
+
+    if (has_synchronization)
+      op.response_flags (CORBA::Octet (sync_scope));
+    else
+      op.response_flags (CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT));
+
     TAO::Synch_Oneway_Invocation synch (this->target_,
                                         r,
-                                        details);
+                                        op);
 
     Invocation_Status s =
       synch.remote_oneway (max_wait_time
@@ -336,8 +310,7 @@ namespace TAO
     if (s == TAO_INVOKE_RESTART &&
         synch.is_forwarded ())
       {
-        effective_target =
-          synch.steal_forwarded_reference ();
+        effective_target = synch.steal_forwarded_reference ();
 
         this->object_forwarded (effective_target,
                                 r.stub ()

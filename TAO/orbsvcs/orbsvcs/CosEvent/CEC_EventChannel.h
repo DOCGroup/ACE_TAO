@@ -26,11 +26,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosEventChannelAdminS.h"
+#include "orbsvcs/orbsvcs/CosEventChannelAdminS.h"
 
 #include "CEC_Defaults.h"
-#include "event_serv_export.h"
-#include "ace/Hash_Map_Manager.h"
+#include "event_export.h"
 
 /**
  * @class TAO_CEC_EventChannel_Attributes
@@ -48,7 +47,7 @@
  * an easy mechanism to extend the attributes without requiring
  * changes in the EC constructor.
  */
-class TAO_Event_Serv_Export TAO_CEC_EventChannel_Attributes
+class TAO_Event_Export TAO_CEC_EventChannel_Attributes
 {
 public:
   /**
@@ -98,23 +97,9 @@ private:
  * ConsumerAdmin and Dispatching) and to provide a simpler
  * interface to the CEC_Factory.
  */
-class TAO_Event_Serv_Export TAO_CEC_EventChannel : public POA_CosEventChannelAdmin::EventChannel
+class TAO_Event_Export TAO_CEC_EventChannel : public POA_CosEventChannelAdmin::EventChannel
 {
 public:
-  class ServantBaseHash
-  {
-  public:
-    u_long operator() (PortableServer::ServantBase* const & ptr) const {
-      return ACE_reinterpret_cast(u_long, ptr);
-    }
-  };
-
-  typedef ACE_Hash_Map_Manager_Ex<PortableServer::ServantBase*,
-                                  unsigned int,
-                                  ServantBaseHash,
-                                  ACE_Equal_To<PortableServer::ServantBase*>,
-                                  TAO_SYNCH_MUTEX> ServantRetryMap;
-
   /**
    * constructor
    * If <own_factory> is not 0 it assumes ownership of the factory.
@@ -253,8 +238,6 @@ public:
   virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  ServantRetryMap& get_servant_retry_map (void);
-
 private:
   /// The POAs used to activate "supplier-side" and "consumer-side"
   /// objects.
@@ -294,8 +277,6 @@ private:
   /// suppliers
   TAO_CEC_ConsumerControl *consumer_control_;
   TAO_CEC_SupplierControl *supplier_control_;
-
-  ServantRetryMap retry_map_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -51,10 +51,10 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void
+void 
 TAO::BufferingConstraint::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -71,7 +71,7 @@ TAO::BufferingConstraint::_tao_any_destructor (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 TAO::BufferingConstraintPolicy_ptr
-TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::duplicate (
+TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::tao_duplicate (
     TAO::BufferingConstraintPolicy_ptr p
   )
 {
@@ -80,7 +80,7 @@ TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::release (
+TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::tao_release (
     TAO::BufferingConstraintPolicy_ptr p
   )
 {
@@ -89,14 +89,14 @@ TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 TAO::BufferingConstraintPolicy_ptr
-TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::nil (void)
+TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::tao_nil (void)
 {
   return TAO::BufferingConstraintPolicy::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::marshal (
+TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::tao_marshal (
     TAO::BufferingConstraintPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -105,7 +105,7 @@ TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*TAO__TAO_BufferingConstraintPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -116,7 +116,7 @@ TAO::BufferingConstraintPolicy::BufferingConstraintPolicy (void)
 TAO::BufferingConstraintPolicy::~BufferingConstraintPolicy (void)
 {}
 
-void
+void 
 TAO::BufferingConstraintPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   BufferingConstraintPolicy *_tao_tmp_pointer =
@@ -134,10 +134,10 @@ TAO::BufferingConstraintPolicy::_narrow (
     {
       return BufferingConstraintPolicy::_nil ();
     }
-
+  
   BufferingConstraintPolicy_ptr proxy =
     dynamic_cast<BufferingConstraintPolicy_ptr> (_tao_objref);
-
+  
   return BufferingConstraintPolicy::_duplicate (proxy);
 }
 
@@ -151,10 +151,10 @@ TAO::BufferingConstraintPolicy::_unchecked_narrow (
     {
       return BufferingConstraintPolicy::_nil ();
     }
-
+  
   BufferingConstraintPolicy_ptr proxy =
     dynamic_cast<BufferingConstraintPolicy_ptr> (_tao_objref);
-
+  
   return BufferingConstraintPolicy::_duplicate (proxy);
 }
 
@@ -165,7 +165,7 @@ TAO::BufferingConstraintPolicy::_duplicate (BufferingConstraintPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -264,7 +264,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         TAO::BufferingConstraintPolicy
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         TAO::BufferingConstraintPolicy
@@ -291,10 +291,11 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         TAO::BufferingConstraintPolicy
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         TAO::BufferingConstraintPolicy
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+

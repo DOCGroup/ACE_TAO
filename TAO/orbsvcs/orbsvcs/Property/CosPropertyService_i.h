@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Property/property_export.h"
+#include "orbsvcs/orbsvcs/Property/property_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosPropertyServiceS.h"
+#include "orbsvcs/orbsvcs/CosPropertyServiceS.h"
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"

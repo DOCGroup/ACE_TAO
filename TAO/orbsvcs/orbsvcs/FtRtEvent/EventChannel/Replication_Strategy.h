@@ -12,7 +12,7 @@
 
 #ifndef REPLICATION_STRATEGY_H
 #define REPLICATION_STRATEGY_H
-#include "orbsvcs/FtRtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/FtRtecEventChannelAdminC.h"
 #include "tao/PortableInterceptorC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

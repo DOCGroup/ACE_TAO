@@ -8,7 +8,6 @@
 #include "GIOP_Utils.h"
 #include "Transport.h"
 #include "CDR.h"
-#include "SystemException.h"
 
 #if !defined (__ACE_INLINE__)
 # include "TAO_Server_Request.i"
@@ -175,9 +174,8 @@ TAO_ServerRequest::init_reply (void)
       if ((*this->outgoing_ << object_ptr) == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - ServerRequest::init_reply, ")
                       ACE_TEXT ("TAO_GIOP_ServerRequest::marshal - ")
-                      ACE_TEXT ("marshal encoding forwarded objref failed\n")));
+                      ACE_TEXT ("encoding forwarded objref failed\n")));
         }
     }
   this->transport_->assign_translators (0,this->outgoing_);
@@ -221,8 +219,8 @@ TAO_ServerRequest::send_no_exception_reply (void)
           // is required.
           ACE_ERROR ((
                       LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - ServerRequest::send_no_exception_reply, ")
-                      ACE_TEXT ("cannot send NO_EXCEPTION reply\n")
+                      ACE_TEXT ("TAO: (%P|%t) %p: cannot send NO_EXCEPTION reply\n"),
+                      ACE_TEXT ("TAO_GIOP_ServerRequest::send_no_exception_reply")
                       ));
         }
     }
@@ -241,8 +239,9 @@ TAO_ServerRequest::tao_send_reply (void)
           // No exception but some kind of error, yet a response
           // is required.
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - ServerRequest::tao_send_reply, ")
-                      ACE_TEXT ("cannot send reply\n")));
+                      ACE_TEXT ("TAO: (%P|%t) %p: cannot send reply\n"),
+                      ACE_TEXT ("TAO_ServerRequest::tao_send_reply")));
+
         }
     }
 }
@@ -301,7 +300,7 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
                                                       ex) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - ServerRequest::tao_send_reply_exception, ")
+                      ACE_TEXT ("TAO: (%P|%t|%N|%l): ")
                       ACE_TEXT ("could not make exception reply\n")));
 
         }
@@ -312,7 +311,7 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
                                           TAO_Transport::TAO_REPLY) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - ServerRequest::tao_send_reply_exception, ")
+                      ACE_TEXT ("TAO: (%P|%t|%N|%l):  ")
                       ACE_TEXT ("could not send exception reply\n")));
         }
     }
@@ -325,8 +324,7 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
       // down, since it really isn't the client's fault.
 
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - ServerRequest::tao_send_reply_exception, ")
-                  ACE_TEXT ("exception thrown ")
+                  ACE_TEXT ("(%P|%t) exception thrown ")
                   ACE_TEXT ("but client is not waiting a response\n")));
     }
 }
@@ -378,7 +376,7 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
                                                reply_params) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - ServerRequest::send_cached_reply, ")
+                  ACE_TEXT ("TAO: (%P|%t|%N|%l): ")
                   ACE_TEXT ("could not make cached reply\n")));
 
     }
@@ -390,7 +388,7 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
 
   if (!this->outgoing_->good_bit ())
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("TAO (%P|%t) - ServerRequest::send_cached_reply, ")
+                ACE_TEXT ("TAO: (%P|%t|%N|%l):  ")
                 ACE_TEXT ("could not marshal reply\n")));
 
   // Send the message
@@ -399,7 +397,7 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
                                       TAO_Transport::TAO_REPLY) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - ServerRequest::send_cached_reply, ")
+                  ACE_TEXT ("TAO: (%P|%t|%N|%l):  ")
                   ACE_TEXT ("could not send cached reply\n")));
     }
 }

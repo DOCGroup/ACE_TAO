@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Callback_Quoter notifier): namingexe, naming_serv {
+project(Callback_Quoter notifier): namingexe {
   Source_Files {
     Notifier_i.cpp
     Notifier_Input_Handler.cpp
@@ -9,7 +9,7 @@ project(Callback_Quoter notifier): namingexe, naming_serv {
   }
 }
 
-project(Callback_Quoter consumer): namingexe, portableserver {
+project(Callback_Quoter consumer): namingexe {
   Source_Files {
     Consumer_Input_Handler.cpp
     Consumer_Signal_Handler.cpp
@@ -19,7 +19,7 @@ project(Callback_Quoter consumer): namingexe, portableserver {
   }
 }
 
-project(Callback_Quoter supplier): namingexe, portableserver {
+project(Callback_Quoter supplier): namingexe {
   Source_Files {
     Supplier_i.cpp
     Supplier_Timer_Handler.cpp

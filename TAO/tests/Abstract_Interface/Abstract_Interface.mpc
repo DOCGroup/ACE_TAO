@@ -1,40 +1,15 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client) : taoexe, valuetype {
-  idlflags += -Sc
-
-  IDL_Files {
-    test.idl
-  }
-
-  Source_Files {
+project(*client) : taoexe, portableserver {
+  source_files {
     client.cpp
-    testC.cpp
-  }
-
-  Header_Files {
-    testC.h
   }
 }
 
-project(*server) : taoexe, portableserver, valuetype {
-  idlflags += -Sc
-
-  IDL_Files {
-    test.idl
-  }
-
-  Source_Files {
+project(*server) : taoexe, portableserver {
+  source_files {
     server.cpp
     test_i.cpp
-    testC.cpp
-    testS.cpp
-  }
-
-  Header_Files {
-    test_i.h
-    testC.h
-    testS.h
   }
 }

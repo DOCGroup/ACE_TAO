@@ -1,9 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-#include "ace/Time_Value.h"
-
 
 ACE_INLINE TimeBase::TimeT
 ORBSVCS_Time::zero ()

@@ -20,7 +20,6 @@
 #include "debug.h"
 #include "Any_Unknown_IDL_Type.h"
 #include "ORB_Constants.h"
-#include "SystemException.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
     || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -3642,7 +3641,7 @@ CORBA::Any_ptr
 CORBA::TypeCode::parameter (const CORBA::Long /* slot */
                            ACE_ENV_ARG_DECL)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (0,
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                          CORBA::COMPLETED_NO),
                     0);
 }
@@ -3652,58 +3651,29 @@ CORBA::TypeCode::parameter (const CORBA::Long /* slot */
 namespace TAO
 {
   CORBA::TypeCode_ptr
-  Objref_Traits<CORBA::TypeCode>::duplicate (CORBA::TypeCode_ptr p)
+  Objref_Traits<CORBA::TypeCode>::tao_duplicate (CORBA::TypeCode_ptr p)
   {
     return CORBA::TypeCode::_duplicate (p);
   }
 
   void
-  Objref_Traits<CORBA::TypeCode>::release (CORBA::TypeCode_ptr p)
+  Objref_Traits<CORBA::TypeCode>::tao_release (CORBA::TypeCode_ptr p)
   {
     CORBA::release (p);
   }
 
   CORBA::TypeCode_ptr
-  Objref_Traits<CORBA::TypeCode>::nil (void)
+  Objref_Traits<CORBA::TypeCode>::tao_nil (void)
   {
     return CORBA::TypeCode::_nil ();
   }
 
   CORBA::Boolean
-  Objref_Traits<CORBA::TypeCode>::marshal (CORBA::TypeCode_ptr p,
-                                           TAO_OutputCDR & cdr)
+  Objref_Traits<CORBA::TypeCode>::tao_marshal (CORBA::TypeCode_ptr p,
+                                               TAO_OutputCDR & cdr)
   {
     return cdr << p;
   }
-}
-
-/*static*/ CORBA::TypeCode_ptr
-CORBA::TypeCode::_duplicate (CORBA::TypeCode_ptr tc)
-{
-  if (tc)
-    {
-      if (tc->orb_owns_)
-        {
-          tc->_incr_refcnt ();
-          return tc;
-        }
-      else
-        {
-          CORBA::TypeCode_ptr tmp = 0;
-          ACE_NEW_RETURN (tmp,
-              CORBA::TypeCode (static_cast<CORBA::TCKind> (tc->kind_),
-                               tc->length_,
-                               tc->buffer_,
-                               true,
-                               0,
-                               tc->parent_),
-                          0);
-
-          return tmp;
-        }
-    }
-
-  return 0;
 }
 
 // ****************************************************************
@@ -3714,7 +3684,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
   if (x == 0)
     {
       ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_THROW_RETURN (CORBA::MARSHAL (0,
+      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                         CORBA::COMPLETED_MAYBE),
                         0);
     }

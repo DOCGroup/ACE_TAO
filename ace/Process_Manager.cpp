@@ -40,7 +40,7 @@ ACE_Process_Manager::cleanup (void *, void *)
 // This function acts as a signal handler for SIGCHLD. We don't really want
 // to do anything with the signal - it's just needed to interrupt a sleep.
 // See wait() for more info.
-#if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SIGNALS)
+#if !defined (ACE_WIN32)
 static void
 sigchld_nop (int, siginfo_t *, ucontext_t *)
 {
@@ -190,9 +190,6 @@ ACE_Process_Manager::resize (size_t size)
 {
   ACE_TRACE ("ACE_Process_Manager::resize");
 
-  if (size <= this->max_process_table_size_)
-    return 0;
-
   ACE_Process_Descriptor *temp;
 
   ACE_NEW_RETURN (temp,
@@ -224,7 +221,7 @@ ACE_Process_Manager::open (size_t size,
   if (r)
     {
       this->reactor (r);
-#if !defined (ACE_WIN32) && !defined (ACE_PSOS) && !defined (ACE_LACKS_UNIX_SIGNALS)
+#if !defined (ACE_WIN32) && !defined (ACE_PSOS)
       // Register signal handler object.
       if (r->register_handler (SIGCHLD, this) == -1)
         return -1;
@@ -267,7 +264,7 @@ ACE_Process_Manager::close (void)
 {
   ACE_TRACE ("ACE_Process_Manager::close");
 
-#if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SIGNALS)
+#if !defined (ACE_WIN32)
   if (this->reactor ())
     {
       this->reactor ()->remove_handler (SIGCHLD, (ACE_Sig_Action *) 0);
@@ -379,7 +376,9 @@ ACE_Process_Manager::handle_signal (int,
     }
 #else /* !ACE_WIN32 */
   ACE_UNUSED_ARG (si);
-  return reactor ()->notify (this, ACE_Event_Handler::READ_MASK);
+  return reactor ()->notify
+    (this,
+     ACE_Event_Handler::READ_MASK);
 #endif /* !ACE_WIN32 */
 }
 
@@ -441,7 +440,8 @@ ACE_Process_Manager::spawn (ACE_Process *process,
   pid_t pid = process->spawn (options);
 
   // Only include the pid in the parent's table.
-  if (pid == ACE_INVALID_PID || pid == 0)
+  if (pid == ACE_INVALID_PID
+      || pid == 0)
     return pid;
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
@@ -492,35 +492,33 @@ ACE_Process_Manager::append_proc (ACE_Process *proc)
 {
   ACE_TRACE ("ACE_Process_Manager::append_proc");
 
-  // Try to resize the array to twice its existing size (or the DEFAULT_SIZE,
-  // if there are no array entries) if we run out of space...
-  if (this->current_count_ >= this->max_process_table_size_)
+  // Try to resize the array to twice its existing size if we run out
+  // of space...
+  if (this->current_count_ >= this->max_process_table_size_
+      && this->resize (this->max_process_table_size_ * 2) == -1)
+    return -1;
+  else
     {
-      size_t new_size = this->max_process_table_size_ * 2;
-      if (new_size == 0)
-        new_size = ACE_Process_Manager::DEFAULT_SIZE;
-      if (this->resize (new_size) == -1)
-        return -1;
-    }
+      ACE_Process_Descriptor &proc_desc =
+        this->process_table_[this->current_count_];
 
-  ACE_Process_Descriptor &proc_desc =
-    this->process_table_[this->current_count_];
-
-  proc_desc.process_ = proc;
-  proc_desc.exit_notify_ = 0;
+      proc_desc.process_ = proc;
+      proc_desc.exit_notify_ = 0;
 
 #if defined (ACE_WIN32)
-  // If we have a Reactor, then we're supposed to reap Processes
-  // automagically.  Get a handle to this new Process and tell the
-  // Reactor we're interested in <handling_input> on it.
+      // If we have a Reactor, then we're supposed to reap Processes
+      // automagically.  Get a handle to this new Process and tell the
+      // Reactor we're interested in <handling_input> on it.
 
-  ACE_Reactor *r = this->reactor ();
-  if (r != 0)
-    r->register_handler (this, proc->gethandle ());
+      ACE_Reactor *r = this->reactor ();
+      if (r != 0)
+        r->register_handler (this,
+                             proc->gethandle ());
 #endif /* ACE_WIN32 */
 
-  this->current_count_++;
-  return 0;
+      this->current_count_++;
+      return 0;
+    }
 }
 
 // Insert a process into the pool (checks for duplicates and doesn't
@@ -840,23 +838,6 @@ ACE_Process_Manager::wait (pid_t pid,
         }
       else
         {
-# if defined (ACE_LACKS_UNIX_SIGNALS)
-          pid = 0;
-          ACE_Time_Value sleeptm (1);    // 1 msec
-          if (sleeptm > timeout)         // if sleeptime > waittime
-            sleeptm = timeout;
-          ACE_Time_Value tmo (timeout);  // Need one we can change
-          for (ACE_Countdown_Time time_left (&tmo); tmo > ACE_Time_Value::zero ; time_left.update ())
-            {
-              pid = ACE_OS::waitpid (-1, status, WNOHANG);
-              if (pid > 0 || pid == ACE_INVALID_PID)
-                break;          // Got a child or an error - all done
-
-              // pid 0, nothing is ready yet, so wait.
-              // Do a (very) short sleep (only this thread sleeps).
-              ACE_OS::sleep (sleeptm);
-            }
-# else
           // Force generation of SIGCHLD, even though we don't want to
           // catch it - just need it to interrupt the sleep below.
           // If this object has a reactor set, assume it was given at
@@ -893,7 +874,6 @@ ACE_Process_Manager::wait (pid_t pid,
             {
               old_action.register_action (SIGCHLD);
             }
-# endif /* !ACE_LACKS_UNIX_SIGNALS */
         }
 #endif /* !defined (ACE_WIN32) */
     }

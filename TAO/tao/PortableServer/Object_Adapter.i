@@ -1,8 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
-#include "tao/SystemException.h"
 
 
 ACE_INLINE

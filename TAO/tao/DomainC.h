@@ -428,14 +428,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<CORBA::DomainManager>
   {
-    static CORBA::DomainManager_ptr duplicate (
+    static CORBA::DomainManager_ptr tao_duplicate (
         CORBA::DomainManager_ptr
       );
-    static void release (
+    static void tao_release (
         CORBA::DomainManager_ptr
       );
-    static CORBA::DomainManager_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static CORBA::DomainManager_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
         CORBA::DomainManager_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -449,14 +449,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<CORBA::ConstructionPolicy>
   {
-    static CORBA::ConstructionPolicy_ptr duplicate (
+    static CORBA::ConstructionPolicy_ptr tao_duplicate (
         CORBA::ConstructionPolicy_ptr
       );
-    static void release (
+    static void tao_release (
         CORBA::ConstructionPolicy_ptr
       );
-    static CORBA::ConstructionPolicy_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static CORBA::ConstructionPolicy_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
         CORBA::ConstructionPolicy_ptr p,
         TAO_OutputCDR & cdr
       );

@@ -16,15 +16,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Security/security_export.h"
+#include "orbsvcs/orbsvcs/Security/security_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Security/SL3_CredentialsCurator.h"
+#include "orbsvcs/orbsvcs/Security/SL3_CredentialsCurator.h"
 
-#include "orbsvcs/SecurityLevel3C.h"
+#include "orbsvcs/orbsvcs/SecurityLevel3C.h"
 
 
 namespace TAO

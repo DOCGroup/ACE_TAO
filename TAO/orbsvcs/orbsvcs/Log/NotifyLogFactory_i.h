@@ -18,14 +18,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/DsNotifyLogAdminS.h"
+#include "orbsvcs/orbsvcs/DsNotifyLogAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/DsLogAdminS.h"
-#include "orbsvcs/Log/LogMgr_i.h"
+#include "orbsvcs/orbsvcs/DsLogAdminS.h"
+#include "orbsvcs/orbsvcs/Log/LogMgr_i.h"
 #include "NotifyLog_i.h"
 
 #if defined(_MSC_VER)
@@ -43,7 +43,7 @@ class TAO_NotifyLogNotification;
  *
  * @brief The NotifyLogFactory is a factory that is used to create NotifyLogs which are event-aware.
  */
-class TAO_NotifyLog_Serv_Export TAO_NotifyLogFactory_i :
+class TAO_NotifyLog_Export TAO_NotifyLogFactory_i :
   public POA_DsNotifyLogAdmin::NotifyLogFactory,
   public TAO_LogMgr_i
 {

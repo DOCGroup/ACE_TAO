@@ -2,8 +2,6 @@
 //
 // $Id$
 
-#include "SystemException.h"
-
 ACE_INLINE void
 TAO_ClientRequestInfo::check_validity (ACE_ENV_SINGLE_ARG_DECL)
 {

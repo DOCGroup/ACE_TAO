@@ -13,16 +13,12 @@ use PerlACE::Run_Test;
 
 $imr_ior = PerlACE::LocalFile ("imr.ior");
 $name_ior = PerlACE::LocalFile ("name.ior");
-$activator_ior = PerlACE::LocalFile("activator.ior");
 
 $IMR = new PerlACE::Process ("../../../ImplRepo_Service/ImplRepo_Service");
-$ACTIVATOR = new PerlACE::Process("../../../ImplRepo_Service/ImR_Activator");
 $NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service");
-$TAO_IMR = new PerlACE::Process ("../../../../../bin/tao_imr");
+$TAO_IMR = new PerlACE::Process ("../../../ImplRepo_Service/tao_imr");
 
 $TEST = new PerlACE::Process ("test");
-
-$imr_init_ref = "-ORBInitRef ImplRepoService=file://$imr_ior";
 
 ################################################################################
 
@@ -34,32 +30,22 @@ unlink $name_ior;
 ################################################################################
 ## Start the implementation Repository
 
-$IMR->Arguments ("-o $imr_ior -d 1");
+$IMR->Arguments ("-o $imr_ior -d 0");
 $IMR->Spawn ();
 
-if (PerlACE::waitforfile_timed ($imr_ior, 10) == -1) {
+if (PerlACE::waitforfile_timed ($imr_ior, 5) == -1) {
     print STDERR "ERROR: waiting for $imr_ior\n";
     $IMR->Kill ();
-    exit 1;
-}
-
-$ACTIVATOR->Arguments("-d 1 -o $activator_ior $imr_init_ref");
-$ACTIVATOR->Spawn();
-
-if (PerlACE::waitforfile_timed ($activator_ior, 10) == -1) {
-    print STDERR "ERROR: waiting for $activator_ior\n";
-    $IMR->Kill ();
-    $ACTIVATOR->Kill();
     exit 1;
 }
 
 ################################################################################
 ## Register the NameService
 
-$TAO_IMR->Arguments("$imr_init_ref"
+$TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_ior"
                     . " add NameService "
                     ." -c \"" . $NS->Executable ()
-                       ." $imr_init_ref"
+                       ." -ORBInitRef ImplRepoService=file://$imr_ior"
                        ." -ORBUseIMR 1 .\"");
 
 $taoimr = $TAO_IMR->SpawnWaitKill (60);
@@ -72,7 +58,8 @@ if ($taoimr != 0) {
 ################################################################################
 ## Create IOR for NameService
 
-$TAO_IMR->Arguments ("$imr_init_ref ior NameService -f $name_ior");
+$TAO_IMR->Arguments ("-ORBInitRef ImplRepoService=file://$imr_ior"
+                     . " ior NameService -f $name_ior");
 
 
 $taoimr = $TAO_IMR->SpawnWaitKill (60);
@@ -110,13 +97,6 @@ if ($taoimr != 0) {
 
 ################################################################################
 ## Kill the IMR
-
-$iserver = $ACTIVATOR->TerminateWaitKill (5);
-
-if ($iserver != 0) {
-    print STDERR "ERROR: ImR_Activator returned $iserver\n";
-    ++$errors;
-}
 
 $iserver = $IMR->TerminateWaitKill (5);
 

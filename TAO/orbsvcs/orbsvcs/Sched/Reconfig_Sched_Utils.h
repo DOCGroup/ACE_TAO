@@ -24,8 +24,8 @@
 
 #include "ace/config-all.h"
 
-#include "orbsvcs/Scheduler_Factory.h"
-#include "orbsvcs/RtecSchedulerS.h"
+#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/orbsvcs/RtecSchedulerS.h"
 #include "sched_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -14,7 +14,7 @@
 #define EC_BCAST_H
 
 #include "Driver.h"
-#include "orbsvcs/RtecUDPAdminS.h"
+#include "orbsvcs/orbsvcs/RtecUDPAdminS.h"
 
 class ACE_INET_Addr;
 

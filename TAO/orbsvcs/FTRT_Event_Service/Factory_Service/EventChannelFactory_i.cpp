@@ -5,7 +5,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
-#include "orbsvcs/FtRtEvent/Utils/UUID.h"
+#include "orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.h"
 
 ACE_RCSID (Factory_Service,
            EventChannelFactory_i,

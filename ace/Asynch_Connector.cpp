@@ -22,8 +22,6 @@ ACE_RCSID(ace, Asynch_Connector, "$Id$")
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"
 
-template <class HANDLER>
-const ACE_INET_Addr ACE_Asynch_Connector<HANDLER>::local_default = (u_short) 0;
 
 template <class HANDLER>
 ACE_Asynch_Connector<HANDLER>::ACE_Asynch_Connector (void)
@@ -98,7 +96,7 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
 
   // set blocking mode
   if (!error &&
-      ACE::clr_flags
+      ACE_Flag_Manip::clr_flags
         (result.connect_handle (), ACE_NONBLOCK) != 0)
     {
       error = 1;

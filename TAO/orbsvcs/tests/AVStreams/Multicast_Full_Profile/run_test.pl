@@ -7,7 +7,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib '../../../../../bin';
 use PerlACE::Run_Test;
-use File::stat;
 
 # amount of delay between running the servers
 
@@ -17,16 +16,14 @@ $status = 0;
 $nsior = PerlACE::LocalFile ("ns.ior");
 $test1 = PerlACE::LocalFile ("test1");
 $test2 = PerlACE::LocalFile ("test2");
-
-# generate test stream data
-$input = PerlACE::generate_test_file("test_input", 102400);
+$makefile = PerlACE::LocalFile ("Makefile");
 
 unlink $nsior, $test1, $test2;
 
 $NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
 $SV1 = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior -f $test1");
 $SV2 = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior -f $test2");
-$CL  = new PerlACE::Process ("ftp", "-ORBInitRef NameService=file://$nsior -f $input");
+$CL  = new PerlACE::Process ("ftp", "-ORBInitRef NameService=file://$nsior -f $makefile");
 
 print STDERR "Starting Naming Service\n";
 
@@ -34,7 +31,7 @@ $NS->Spawn ();
 
 if (PerlACE::waitforfile_timed ($nsior, 5) == -1) {
     print STDERR "ERROR: cannot find naming service IOR file\n";
-    $NS->Kill ();
+    $NS->Kill (); 
     exit 1;
 }
 
@@ -80,6 +77,6 @@ if ($nserver != 0) {
     $status = 1;
 }
 
-unlink $nsior, $test1, $test2, $input;
+unlink $nsior, $test1, $test2;
 
 exit $status;

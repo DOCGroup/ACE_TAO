@@ -110,7 +110,6 @@ public:
   // @@ (JP) I added these to get the ~ operator to work with all the
   // relevant aritmetic types, but eventually, we should get rid of
   // this whole enum.
-      , EK_bool
       , EK_short
       , EK_ushort
       , EK_long
@@ -286,7 +285,7 @@ public:
 
 protected:
   // Evaluate different sets of operators.
-  AST_ExprValue *eval_bin_op (void);
+  AST_ExprValue *eval_bin_op (EvalKind ek);
 
   AST_ExprValue *eval_bit_op (EvalKind ek);
 

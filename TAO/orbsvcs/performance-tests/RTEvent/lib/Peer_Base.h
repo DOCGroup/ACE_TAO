@@ -11,7 +11,7 @@
 #define TAO_RTEC_PERF_PEER_BASE_H
 
 #include "Federated_TestS.h"
-#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

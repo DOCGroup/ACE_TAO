@@ -216,7 +216,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
       ACE_OS::strcpy (this->backing_store_name_,
                       ACE_DEFAULT_BACKING_STORE);
 #else /* ACE_DEFAULT_BACKING_STORE */
-      if (ACE::get_temp_dir (this->backing_store_name_,
+      if (ACE_Lib_Find::get_temp_dir (this->backing_store_name_,
                                       MAXPATHLEN - 17) == -1)
         // -17 for ace-malloc-XXXXXX
         {
@@ -485,6 +485,12 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (const void *base_add
   // for backwards compatability
   if (base_addr_ == 0 && use_fixed_addr_ == ALWAYS_FIXED)
     use_fixed_addr_ = FIRSTCALL_FIXED;
+
+  // HP-UX 11, 64-bit bug workaround.
+#if defined (__hpux) && defined (__LP64__)
+  long temp = ACE_DEFAULT_BASE_ADDRL;
+  base_addr_ = (void *) temp;
+#endif /* defined (__hpux) && defined (__LP64__) */
 }
 
 // Handle SIGSEGV and SIGBUS signals to remap memory properly.  When a
@@ -628,6 +634,11 @@ ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options (const char *base
     segment_size_ (segment_size)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options");
+  // HP-UX 11, 64-bit bug workaround
+#if defined (__hpux) && defined (__LP64__)
+  long temp = ACE_DEFAULT_BASE_ADDRL;
+  base_addr_ = (char *) temp;
+#endif /* defined (__hpux) && defined (__LP64__) */
 }
 
 void
@@ -851,15 +862,14 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (const ACE_TCHAR *backing_store_n
       // key.
 
       int segment_key;
-      int result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (backing_store_name),
+      int result = ::sscanf (backing_store_name,
                              "%d",
                              &segment_key);
 
       if (result == 0 || result == EOF)
         // The conversion to a number failed so hash with crc32
         // ACE::crc32 is also used in <SV_Semaphore_Simple>.
-        this->base_shm_key_ =
-          (key_t) ACE::crc32 (ACE_TEXT_ALWAYS_CHAR (backing_store_name));
+        this->base_shm_key_ = (key_t) ACE::crc32 (backing_store_name);
       else
         this->base_shm_key_ = segment_key;
 

@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/SecurityLevel2C.h"
+#include "orbsvcs/orbsvcs/SecurityLevel2C.h"
 #include "tao/ORB_Core.h"
 #include "tao/LocalObject.h"
 

@@ -411,7 +411,6 @@ performance_producer (void *args)
 
       // Set a character in the current message block at its
       // read pointer position, and adjust the write pointer.
-      mb->reset();
       *mb->wr_ptr () = 'a';
       mb->wr_ptr (1);
 

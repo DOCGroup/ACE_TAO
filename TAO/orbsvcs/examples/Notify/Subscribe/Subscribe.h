@@ -16,9 +16,9 @@
 #ifndef NOTIFY_SUBSCRIBE_CLIENT_H
 #define NOTIFY_SUBSCRIBE_CLIENT_H
 
-#include "orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/CosNotifyCommC.h"
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

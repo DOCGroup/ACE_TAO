@@ -19,17 +19,17 @@
 #define TAO_LOG_RECORD_STORE_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/DsLogAdminS.h"
+#include "orbsvcs/orbsvcs/DsLogAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/DsLogAdminC.h"
+#include "orbsvcs/orbsvcs/DsLogAdminC.h"
 #include "ace/Containers.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
-#include "log_serv_export.h"
+#include "log_export.h"
 
 #define LOG_DEFAULT_MAX_REC_LIST_LEN 30
 
@@ -44,7 +44,7 @@
  * entries. Other features include searching by time ranges.
  * @@ pradeep: The ACE_RB_Tree will come later.
  */
-class TAO_Log_Serv_Export TAO_LogRecordStore
+class TAO_Log_Export TAO_LogRecordStore
 {
  public:
 

@@ -4,7 +4,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_macros.h"
 
 ACE_INLINE ACE_HANDLE
 ACE_OS::creat (const ACE_TCHAR *filename, mode_t mode)
@@ -25,7 +24,7 @@ ACE_OS::creat (const ACE_TCHAR *filename, mode_t mode)
   ACE_UNUSED_ARG (mode);
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_OSCALL_RETURN (::creat (ACE_TEXT_ALWAYS_CHAR (filename), mode),
+  ACE_OSCALL_RETURN (::creat (filename, mode),
                      ACE_HANDLE, ACE_INVALID_HANDLE);
 #endif /* ACE_WIN32 */
 }
@@ -138,7 +137,7 @@ ACE_OS::filesize (const ACE_TCHAR *filename)
 }
 
 ACE_INLINE int
-ACE_OS::lstat (const char *file, ACE_stat *stp)
+ACE_OS::lstat (const ACE_TCHAR *file, ACE_stat *stp)
 {
   ACE_OS_TRACE ("ACE_OS::lstat");
 # if defined (ACE_LACKS_LSTAT)
@@ -151,19 +150,6 @@ ACE_OS::lstat (const char *file, ACE_stat *stp)
   ACE_OSCALL_RETURN (::lstat (file, stp), int, -1);
 # endif /* ACE_LACKS_LSTAT */
 }
-
-#if defined (ACE_HAS_WCHAR)
-ACE_INLINE int
-ACE_OS::lstat (const wchar_t *file, ACE_stat *stp)
-{
-  ACE_OS_TRACE ("ACE_OS::lstat");
-# if defined (ACE_LACKS_LSTAT)
-  return ACE_OS::stat (file, stp);
-# else
-  return ACE_OS::lstat (ACE_Wide_To_Ascii (file).char_rep (), stp);
-# endif /* ACE_LACKS_LSTAT */
-}
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::mkdir (const char *path, mode_t mode)
@@ -215,7 +201,7 @@ ACE_OS::mkdir (const char *path, mode_t mode)
   ACE_OSCALL_RETURN (::_mkdir ((char *) path), int, -1);
 #elif defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (mode);
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CreateDirectory (ACE_TEXT_CHAR_TO_TCHAR (path), 0),
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CreateDirectory (path, 0),
                                           ace_result_),
                         int, -1);
 #elif defined (ACE_WIN32)
@@ -255,7 +241,7 @@ ACE_OS::mkfifo (const ACE_TCHAR *file, mode_t mode)
   ACE_UNUSED_ARG (mode);
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_OSCALL_RETURN (::mkfifo (ACE_TEXT_ALWAYS_CHAR (file), mode), int, -1);
+  ACE_OSCALL_RETURN (::mkfifo (file, mode), int, -1);
 #endif /* ACE_LACKS_MKFIFO */
 }
 
@@ -276,7 +262,7 @@ ACE_OS::stat (const char *file, ACE_stat *stp)
 
   HANDLE fhandle;
 
-  fhandle = ::FindFirstFile (ACE_TEXT_CHAR_TO_TCHAR (file), &fdata);
+  fhandle = ::FindFirstFile (file, &fdata);
   if (fhandle == INVALID_HANDLE_VALUE)
     {
       ACE_OS::set_errno_to_last_error ();
@@ -299,11 +285,7 @@ ACE_OS::stat (const char *file, ACE_stat *stp)
    // wrapper for _xstat().
   ACE_OSCALL_RETURN (::_xstat (_STAT_VER, file, stp), int, -1);
 #elif defined (ACE_WIN32)
-# if defined(__IBMCPP__)
-  ACE_OSCALL_RETURN (::_stat (file,  stp), int, -1);
-#else
   ACE_OSCALL_RETURN (::_stat (file, (struct _stat *) stp), int, -1);
-#endif /* __IBMCPP__ */
 #else /* VXWORKS */
   ACE_OSCALL_RETURN (::stat (file, stp), int, -1);
 #endif /* VXWORKS */

@@ -5,15 +5,13 @@ namespace TAO
   ACE_INLINE
   Profile_Transport_Resolver::
       Profile_Transport_Resolver (CORBA::Object *p,
-                                  TAO_Stub *stub,
-                                  bool block)
+                                  TAO_Stub *stub)
     : obj_ (p)
       , stub_ (stub)
       , transport_ (0)
       , profile_ (0)
       , is_released_ (false)
       , inconsistent_policies_ (0)
-      , blocked_ (block)
   {
   }
 
@@ -39,12 +37,6 @@ namespace TAO
   Profile_Transport_Resolver::transport (void) const
   {
     return this->transport_;
-  }
-
-  ACE_INLINE bool
-  Profile_Transport_Resolver::blocked (void) const
-  {
-    return this->blocked_;
   }
 
   ACE_INLINE void

@@ -2,7 +2,6 @@
 
 #include "Policy_Set.h"
 #include "Environment.h"
-#include "SystemException.h"
 #include "debug.h"
 
 #if !defined (__ACE_INLINE__)

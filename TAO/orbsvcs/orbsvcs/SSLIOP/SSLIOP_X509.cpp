@@ -6,12 +6,6 @@ ACE_RCSID (SSLIOP,
            "$Id$")
 
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO::SSLIOP::OpenSSL_st_var< ::X509 >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate TAO::SSLIOP::OpenSSL_st_var< ::X509 >
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#if !defined (__ACE_INLINE__)
+#include "SSLIOP_X509.inl"
+#endif  /* !__ACE_INLINE__ */

@@ -463,6 +463,12 @@ public:
   virtual const char *ident_string (void) const;
   // Get the value of the #ident string.
 
+  virtual void obv_support (idl_bool);
+  // set enable/disable OBV (Valuetype) support
+
+  virtual idl_bool obv_support (void);
+  // check if OBV (Valuetype) support is enabled
+
   virtual void case_diff_error (idl_bool);
   // report an error (1) for indentifiers in the same scope
   // that differ only by case, or report a warning (0).
@@ -529,11 +535,12 @@ public:
 
   ACE_Hash_Map_Manager<ACE_CString, char *, ACE_Null_Mutex> &
   file_prefixes (void);
-  // Accessor for the IDL file prefix container.
+  // Accessor for the IDL keyword container.
   
-  idl_bool pass_orb_idl (void) const;
-  void pass_orb_idl (idl_bool val);
-  // Accessor for the pass_orb_idl_ member.
+  void create_uses_multiple_stuff (AST_Component *c,
+                                   AST_Component::port_description &pd);
+  // We must do this in the front end since the executor
+  // mapping IDL will have these data types.
   
   int check_gperf (void);
   // Currently called only from IDL backend, but could be useful elsewhere.
@@ -593,6 +600,9 @@ private:
   // Holds a string that begins with #ident, to be passed from the IDL
   // file to the generated files.
 
+  idl_bool obv_support_;
+  // Do we support OBV (Valuetype)?
+
   idl_bool case_diff_error_;
   // Do we report an error for indentifiers in the same scope that differ
   // only by case? or just a warning?
@@ -620,9 +630,6 @@ private:
 
   ACE_Hash_Map_Manager<ACE_CString, char *, ACE_Null_Mutex> file_prefixes_;
   // Associates a prefix with a file.
-  
-  idl_bool pass_orb_idl_;
-  // Treat orb.idl like any other included IDL file.
 };
 
 

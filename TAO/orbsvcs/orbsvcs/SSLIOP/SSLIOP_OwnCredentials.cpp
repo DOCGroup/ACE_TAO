@@ -9,7 +9,7 @@ ACE_RCSID (SSLIOP,
 
 
 TAO::SSLIOP::OwnCredentials::OwnCredentials (X509 *cert, EVP_PKEY *evp)
-  : SSLIOP_Credentials (cert, evp)
+  : TAO::SSLIOP::Credentials (cert, evp)
 {
 }
 
@@ -71,15 +71,3 @@ TAO::SSLIOP::OwnCredentials::release_credentials (
 {
   this->creds_state_ = SecurityLevel3::CS_PendingRelease;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Pseudo_Var_T<TAO::SSLIOP::OwnCredentials>;
-template class TAO_Pseudo_Out_T<TAO::SSLIOP::OwnCredentials, TAO::SSLIOP::OwnCredentials_var>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate TAO_Pseudo_Var_T<TAO::SSLIOP::OwnCredentials>
-# pragma instantiate TAO_Pseudo_Out_T<TAO::SSLIOP::OwnCredentials, TAO::SSLIOP::OwnCredentials_var>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

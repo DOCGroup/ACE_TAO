@@ -4,7 +4,6 @@
 
 #include "ORB_Core.h"
 #include "ORBInitInfo.h"
-#include "SystemException.h"
 
 ACE_RCSID (tao,
            PICurrent_ORBInitializer,
@@ -27,7 +26,7 @@ TAO_PICurrent_ORBInitializer::pre_init (
                     TAO::PICurrent (orb_core),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        0,
+                        TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;

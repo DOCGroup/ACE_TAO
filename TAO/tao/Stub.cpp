@@ -15,7 +15,6 @@
 #include "Sync_Strategies.h"
 #include "debug.h"
 #include "Policy_Manager.h"
-#include "SystemException.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Stub.i"
@@ -168,6 +167,7 @@ int
 TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
                            CORBA::ULong &index
                            ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // We are creating the IOR info. Let us not be disturbed. So grab a
   // lock.
@@ -259,6 +259,7 @@ int
 TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles,
                                 IOP::IOR *&ior_info
                                 ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
 

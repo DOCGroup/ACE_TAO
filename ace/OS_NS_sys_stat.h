@@ -34,7 +34,7 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-# if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__) && !defined(__IBMCPP__)
+# if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__)
       typedef struct _stat ACE_stat;
 # else
       typedef struct stat ACE_stat;
@@ -63,14 +63,8 @@ namespace ACE_OS {
              ACE_stat *);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int lstat (const char *,
+  int lstat (const ACE_TCHAR *,
              ACE_stat *);
-
-#if defined (ACE_HAS_WCHAR)
-  ACE_NAMESPACE_INLINE_FUNCTION
-  int lstat (const wchar_t *,
-             ACE_stat *);
-#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int mkdir (const char *path,

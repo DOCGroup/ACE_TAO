@@ -8,8 +8,8 @@
 #include "EC_Scheduling_Strategy.h"
 #include "EC_ConsumerControl.h"
 #include "EC_SupplierAdmin.h"
-#include "orbsvcs/ESF/ESF_RefCount_Guard.h"
-#include "orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_RefCount_Guard.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h"
 
 #include "ace/Reverse_Lock_T.h"
 

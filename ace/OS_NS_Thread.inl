@@ -88,7 +88,7 @@ ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
         // Zero the entire TSS array.  Do it manually instead of using
         // memset, for optimum speed.  Though, memset may be faster :-)
         void **tss_base_p =
-          reinterpret_cast<void **> (taskIdCurrent->ACE_VXWORKS_SPARE);
+          reinterpret_cast> (void **> (taskIdCurrent->ACE_VXWORKS_SPARE);
         for (u_int i = 0; i < ACE_TSS_THREAD_KEYS_MAX; ++i, ++tss_base_p)
           {
             *tss_base_p = 0;
@@ -668,9 +668,9 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
     {
 #   if defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)
 #     if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)
-      (void) ACE_ADAPT_RETVAL (::pthread_mutexattr_setpshared (attributes,
-                                                               lock_scope),
-                               result);
+      ACE_ADAPT_RETVAL (::pthread_mutexattr_setpshared (attributes,
+                                                        lock_scope),
+                        result);
 #     endif /* _POSIX_THREAD_PROCESS_SHARED && !ACE_LACKS_MUTEXATTR_PSHARED */
 #   else /* Pthreads draft 6 */
 #     if !defined (ACE_LACKS_MUTEXATTR_PSHARED)
@@ -4557,7 +4557,7 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
 
 # elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)
   // Force the use of USYNC_THREAD!
-  return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg, 0, lock_type);
+  return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg, lock_type);
 
 # elif defined (VXWORKS) || defined (ACE_PSOS)
   return mutex_init (m, type, name, arg);

@@ -62,8 +62,14 @@ AH_TEMPLATE([ACE_LACKS_SYSTIMES_H],[The `sys/times.h' header is unavailable])
 AH_TEMPLATE([ACE_LACKS_UNBUFFERED_STREAMBUF],[])
 AH_TEMPLATE([ACE_HAS_STDCPP_STL_INCLUDES],[])
 
+AH_TEMPLATE([ACE_HAS_LIBC_H],[])
+AH_TEMPLATE([ACE_HAS_OSFCN_H],[])
 AH_TEMPLATE([ACE_HAS_NEW_NO_H],[Platform provides new style C++ <new> header])
+AH_TEMPLATE([ACE_HAS_NEW_H],[Platform provides C++ <new.h> header])
 AH_TEMPLATE([ACE_HAS_STDEXCEPT_NO_H],[Platform provides C++ <stdexcept> header])
+AH_TEMPLATE([ACE_HAS_EXCEPTION_H],[Platform provides C++ <exception.h> header])
+
+AH_TEMPLATE([ACE_HAS_SYS_IOCTL_H],[Platform provides <sys/ioctl.h> header.])
 
 dnl Deprecated! (or soon to be?)
 AH_TEMPLATE([ACE_HAS_OSF1_GETTIMEOFDAY],
@@ -125,7 +131,7 @@ dnl MVS specific configuration parameters
 dnl Nothing yet
 
 dnl NetBSD specific configuration parameters
-dnl Nothing yet
+AH_TEMPLATE([ACE_NETBSD],[Configure for use on NetBSD])
 
 dnl OSF/1 and Digital Unix specific configuration parameters
 AH_TEMPLATE([DEC_CXX],[])
@@ -189,6 +195,7 @@ AH_TEMPLATE([ACE_HAS_DLL],[Build ACE using the frigging PC DLL nonsense...])
 AH_TEMPLATE([ACE_HAS_STRICT],[Use the STRICT compilation mode on Win32.])
 
 AH_TEMPLATE([CYGWIN32], [GNU Win32 environement])
+AH_TEMPLATE([ACE_HAS_CYGWIN32_SOCKET_H],[Platform has cygwin32 socket.h.])
 
 
 dnl ACE internals
@@ -201,6 +208,7 @@ AH_TEMPLATE([ACE_MALLOC_ALIGN],[])
 AH_TEMPLATE([ACE_MAP_PRIVATE],[])
 AH_TEMPLATE([ACE_THR_PRI_FIFO_DEF],[])
 AH_TEMPLATE([ACE_TIMER_SKEW],[])
+AH_TEMPLATE([ACE_UINT64_FORMAT_SPECIFIER],[The format specifier (e.g. "%Lu") for the 64 bit unsigned integer type])
 AH_TEMPLATE([ACE_USE_RCSID],[Enable embedding of global RCS ID strings into compiled object file])
 AH_TEMPLATE([IP_ADD_MEMBERSHIP],[])
 AH_TEMPLATE([IP_DROP_MEMBERSHIP],[])
@@ -209,7 +217,6 @@ AH_TEMPLATE([IP_DROP_MEMBERSHIP],[])
 dnl Specify sizes of given built-in types.  If a size isn't defined here,
 dnl then ace/Basic_Types.h will attempt to deduce the size.
 dnl AH_TEMPLATE([ACE_SIZEOF_CHAR],[Size of native "char" type])
-AH_TEMPLATE([ACE_SIZEOF_WCHAR],[Size of native "wchar_t" type])
 AH_TEMPLATE([ACE_SIZEOF_SHORT],[Size of the native "short" type])
 AH_TEMPLATE([ACE_SIZEOF_INT],[Size of the native "int" type])
 AH_TEMPLATE([ACE_SIZEOF_LONG],[Size of the native "long" type])
@@ -260,6 +267,9 @@ AH_TEMPLATE([ACE_DEFAULT_THREAD_KEYS],
 AH_TEMPLATE([ACE_THREADS_DONT_INHERIT_LOG_MSG],
 [Specify this if you don't want threads to inherit parent thread's
 ACE_Log_Msg properties.])
+
+AH_TEMPLATE([ACE_HAS_ONE_DEFINITION_RULE],
+[Compiler enforces C++ One Definition Rule])
 
 AH_TEMPLATE([ACE_HAS_PRIOCNTL],[OS has priocntl (2)])
 
@@ -359,8 +369,18 @@ AH_TEMPLATE([ACE_HAS_BROKEN_RANDR],
 [OS/compiler's header files are inconsistent with libC definition of
 rand_r().])
 
+AH_TEMPLATE([ACE_HAS_BROKEN_READV],
+[OS/Compiler's header files are not consistent with readv() definition.])
+
 AH_TEMPLATE([ACE_HAS_BROKEN_SAP_ANY],
 [Compiler can't handle the static ACE_Addr::sap_any construct.])
+
+AH_TEMPLATE([ACE_HAS_BROKEN_SENDMSG],
+[OS/compiler omits the const from the sendmsg() prototype.])
+
+AH_TEMPLATE([ACE_HAS_BROKEN_SETRLIMIT],
+[OS/compiler omits the const from the rlimit parameter in the
+setrlimit() prototype.])
 
 AH_TEMPLATE([ACE_HAS_BROKEN_T_ERROR],
 [Compiler/platform has the wrong prototype for t_error(), i.e.,
@@ -371,8 +391,14 @@ AH_TEMPLATE([ACE_HAS_BROKEN_TIMESPEC_MEMBERS],
 instead of tv_sec and tv_nsec.  This is highly non-portable.
 Currently only FreeBSD 2.1.x uses it.])
 
+AH_TEMPLATE([ACE_HAS_BROKEN_WRITEV],
+[OS/compiler omits the const from the iovec parameter in the
+writev() prototype.])
+
 AH_TEMPLATE([ACE_HAS_BSTRING],
 [Platform has <bstring.h> (which contains bzero() prototype)])
+
+AH_TEMPLATE([ACE_HAS_BYTESEX_H],[Platform has <bytesex.h>.])
 
 AH_TEMPLATE([ACE_HAS_CHARPTR_DL],
 [OS/platform uses char * for dlopen/dlsym args, rather than const char *.])
@@ -404,9 +430,20 @@ AH_TEMPLATE([ACE_HAS_EXCEPTIONS],[Compiler supports C++ exception handling.])
 
 AH_TEMPLATE([ACE_HAS_FL],[Platform has Fast-Light (FL) toolkit installed.])
 
+AH_TEMPLATE([ACE_HAS_GETIFADDRS],
+[Platform supports getifaddrs() / freeifaddrs().])
+
 AH_TEMPLATE([ACE_HAS_GETPAGESIZE],
 [Platform supports getpagesize() call (otherwise, ACE_PAGE_SIZE must
 be defined, except on Win32).])
+
+AH_TEMPLATE([ACE_HAS_GETRUSAGE_PROTO],
+[Platform has a getrusage () prototype in sys/resource.h that
+   differs from the one in ace/OS.i.])
+
+AH_TEMPLATE([ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS],
+[GNUC 2.7.3 mistakenly takes the template definition as the place
+   where an inline function of an argument class is first used.])
 
 AH_TEMPLATE([ACE_HAS_GNU_CSTRING_H],
 [Denotes that GNU has cstring.h as standard which redefines memchr()])
@@ -487,23 +524,13 @@ AH_TEMPLATE([ACE_HAS_NONCONST_GETBY],
 AH_TEMPLATE([ACE_HAS_NONCONST_MSGSND],
 [Platform has a non-const parameter to msgsnd() (e.g., SCO).])
 
-AH_TEMPLATE([ACE_HAS_NONCONST_READV],
-[Platform omits const qualifier from iovec parameter in readv() prototype.])
-
 AH_TEMPLATE([ACE_HAS_NONCONST_SELECT_TIMEVAL],
 [Platform's select() uses non-const timeval* (only found on Linux
    right now)])
 
-AH_TEMPLATE([ACE_HAS_NONCONST_SENDMSG],
-[Platform omits const qualifier from msghdr parameter in sendmsg()
- prototype.])
-
-AH_TEMPLATE([ACE_HAS_NONCONST_SETRLIMIT],
-[Platform omits const qualifier from rlimit parameter in setrlimit()
- prototype.])
-
-AH_TEMPLATE([ACE_HAS_NONCONST_WRITEV],
-[Platform omits const qualifier from iovec parameter in writev() prototype.])
+AH_TEMPLATE([ACE_HAS_GNUG_PRE_2_8],
+[Platform has "old" GNU compiler,  i.e. does not completely support
+   standard C++. (compiling with g++ prior to version 2.8.0)])
 
 AH_TEMPLATE([ACE_HAS_OLD_MALLOC],
 [Compiler/platform uses old malloc()/free() prototypes (ugh)])
@@ -551,6 +578,8 @@ AH_TEMPLATE([ACE_HAS_POWERPC_TIMER],
 [Platform supports PowerPC time-base register.])
 
 AH_TEMPLATE([ACE_HAS_PRUSAGE_T],[Platform supports the prusage_t struct])
+
+AH_TEMPLATE([ACE_HAS_PTHREADS],[Platform supports POSIX Threads])
 
 AH_TEMPLATE([ACE_HAS_PTHREADS_DRAFT4],
 [Platform supports POSIX Threads .4a Draft 4])
@@ -634,6 +663,12 @@ AH_TEMPLATE([ACE_LACKS_NETDB_REENTRANT_FUNCTIONS],
 AH_TEMPLATE([ACE_HAS_REGEX],
 [Platform supports the POSIX regular expression library])
 
+AH_TEMPLATE([ACE_HAS_SCANDIR],
+[Platform supports the scandir() function.])
+
+AH_TEMPLATE([ACE_HAS_SELECT_H],
+[Platform has special header for select().])
+
 AH_TEMPLATE([ACE_HAS_SEMUN],
 [Compiler/platform defines a union semun for SysV shared memory ])
 
@@ -670,6 +705,9 @@ AH_TEMPLATE([ACE_HAS_SOCKADDR_MSG_NAME],
 [Platform requires (struct sockaddr *) for msg_name field of
    struct msghdr.])
 
+AH_TEMPLATE([ACE_HAS_SOCKIO_H],
+[Compiler/platform provides the sys/sockio.h file])
+
 AH_TEMPLATE([ACE_HAS_SOCKLEN_T],
 [Platform provides socklen_t type, such as Linux with glibc2.])
 
@@ -677,6 +715,8 @@ AH_TEMPLATE([ACE_HAS_SPARCWORKS_401_SIGNALS],
 [Compiler has brain-damaged SPARCwork SunOS 4.x signal prototype...])
 
 AH_TEMPLATE([ACE_HAS_SSIZE_T],[Compiler supports the ssize_t typedef])
+
+AH_TEMPLATE([ACE_HAS_STHREADS],[Platform supports UNIX International Threads])
 
 AH_TEMPLATE([ACE_HAS_THR_YIELD],[Platform has thr_yield()])
 
@@ -727,6 +767,8 @@ AH_TEMPLATE([ACE_HAS_SYSCALL_GETRUSAGE],
 AH_TEMPLATE([ACE_HAS_SYSCALL_H],
 [Compiler/platform contains the <sys/syscall.h> file.])
 
+AH_TEMPLATE([ACE_HAS_SYSENT_H],[Platform provides <sysent.h> header])
+
 AH_TEMPLATE([ACE_HAS_SYSINFO],
 [Platform supports system configuration information.])
 
@@ -735,6 +777,8 @@ AH_TEMPLATE([ACE_HAS_SYSV_IPC],
 
 AH_TEMPLATE([ACE_HAS_SYS_ERRLIST],
 [Platform/compiler supports _sys_errlist symbol])
+
+AH_TEMPLATE([ACE_HAS_SYS_FILIO_H],[Platform provides <sys/filio.h> header])
 
 AH_TEMPLATE([ACE_HAS_SYS_SIGLIST],
 [Compiler/platform supports _sys_siglist array])
@@ -810,6 +854,8 @@ AH_TEMPLATE([ACE_HAS_UNIXWARE_SVR4_SIGNAL_T],
 
 AH_TEMPLATE([ACE_HAS_WCHAR],[Platform/compiler supports wchar_t])
 
+AH_TEMPLATE([ACE_HAS_UTIME],[Platform has <utime.h> header file])
+
 AH_TEMPLATE([ACE_HAS_TYPENAME_KEYWORD],
 [Compiler supports the C++ typename keyword])
 
@@ -821,7 +867,7 @@ AH_TEMPLATE([ACE_HAS_VERBOSE_NOTSUP],
    origin of ACE_NOTSUP.])
 
 AH_TEMPLATE([ACE_HAS_VOIDPTR_GETTIMEOFDAY],
-[Platform/compiler supports void * as second parameter to
+[Platform/compiler supports void * as second parameter to 
    gettimeofday() and has a prototype.])
 
 AH_TEMPLATE([ACE_HAS_VOIDPTR_MMAP],[Platform requires void * for mmap().])
@@ -887,6 +933,16 @@ AH_TEMPLATE([ACE_LACKS_FILELOCKS],[Platform lacks file locking mechanism])
 AH_TEMPLATE([ACE_LACKS_FLOATING_POINT],
 [Platform does not support floating point operations])
 
+AH_TEMPLATE([ACE_LACKS_GETOPT_PROTO],
+[Platform lacks the getopt() prototype (e.g., LynxOS)])
+
+AH_TEMPLATE([ACE_LACKS_GETPGID],
+[Platform lacks getpgid() call (e.g., Win32, Chorus, and FreeBSD).])
+
+AH_TEMPLATE([ACE_LACKS_SETREGID],[Platform lacks setregid() call.])
+
+AH_TEMPLATE([ACE_LACKS_SETREUID],[Platform lacks setreuid() call.])
+
 AH_TEMPLATE([ACE_LACKS_GETSERVBYNAME],
 [Platforms lacks getservbyname() (e.g., VxWorks and Chorus).])
 
@@ -901,6 +957,19 @@ AH_TEMPLATE([ACE_LACKS_LONGLONG_T],
 
 AH_TEMPLATE([ACE_LACKS_U_LONGLONG_T],
 [Platform does not have u_longlong_t typedef])
+
+AH_TEMPLATE([ACE_LACKS_MALLOC_H],[Platform lacks malloc.h])
+
+AH_TEMPLATE([ACE_LACKS_MEMORY_H],
+[Platform lacks memory.h (e.g., VxWorks and Chorus)])
+
+AH_TEMPLATE([ACE_LACKS_STDINT_H],
+[Platform lacks stdint.h (e.g., UnixWare)])
+
+AH_TEMPLATE([ACE_LACKS_INTTYPES_H],
+[Platform lacks inittypes.h (e.g. Unixware)])
+
+AH_TEMPLATE([ACE_LACKS_MKTEMP],[ACE has no mktemp()])
 
 AH_TEMPLATE([ACE_LACKS_MMAP],
 [The platform doesn't have mmap(2) (e.g., SCO UNIX).])
@@ -923,6 +992,8 @@ AH_TEMPLATE([ACE_LACKS_NULL_PTHREAD_STATUS],
 AH_TEMPLATE([ACE_HAS_MUTEX_TIMEOUTS],
 [Compiler supports timed mutex acquisitions (e.g. pthread_mutex_timedlock()).])
 
+AH_TEMPLATE([ACE_LACKS_PARAM_H],[Platform lacks <sys/param.h> (e.g., MVS)])
+
 AH_TEMPLATE([ACE_LACKS_NAMED_POSIX_SEM],
 [Platform lacks named POSIX semaphores (e.g., Chorus)])
 
@@ -932,6 +1003,9 @@ AH_TEMPLATE([ACE_LACKS_NATIVE_STRPTIME],
 AH_TEMPLATE([ACE_LACKS_RLIMIT],
 [Platform/compiler lacks {get,set}rlimit() function (e.g., VxWorks,
    Chorus, and SCO UNIX)])
+
+AH_TEMPLATE([ACE_LACKS_RLIMIT_PROTOTYPE],
+[Platform/compiler lacks {get,set}rlimit() prototypes (e.g., Tandem)])
 
 AH_TEMPLATE([ACE_LACKS_RWLOCKATTR_PSHARED],
 [Platform lacks pthread_rwlockattr_setpshared().])
@@ -1001,6 +1075,9 @@ AH_TEMPLATE([ACE_LACKS_SI_ADDR],
 AH_TEMPLATE([ACE_LACKS_SYSV_SHMEM],
 [Platform lacks System V shared memory (e.g., Win32 and VxWorks)])
 
+AH_TEMPLATE([ACE_LACKS_SIGINFO_H],
+[Platform lacks the siginfo.h include file (e.g., MVS)])
+
 AH_TEMPLATE([ACE_LACKS_SOCKET_BUFSIZ],
 [Platform doesn't support SO_SNDBUF/SO_RCVBUF (used in TAO)])
 
@@ -1008,6 +1085,11 @@ AH_TEMPLATE([ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES],
 [Compiler doesn't support static data member templates])
 
 AH_TEMPLATE([ACE_LACKS_STRRECVFD],[Platform doesn't define struct strrecvfd.])
+
+AH_TEMPLATE([ACE_LACKS_SYS_SELECT_H],
+[Platform lacks <sys/select.h> header file])
+
+AH_TEMPLATE([ACE_LACKS_SYS_TYPES_H],[Platform lacks <sys/types.h> header file])
 
 AH_TEMPLATE([ACE_LACKS_T_ERRNO],[Header files lack t_errno for TLI])
 
@@ -1021,8 +1103,20 @@ AH_TEMPLATE([ACE_LACKS_THREAD_PROCESS_SCOPING],
 AH_TEMPLATE([ACE_LACKS_THREAD_STACK_SIZE],
 [Platform lacks pthread_attr_setstacksize() (e.g., Linux pthreads)])
 
+AH_TEMPLATE([ACE_LACKS_TIMEDWAIT_PROTOTYPES],
+[MIT pthreads platform lacks the timedwait prototypes])
+
 AH_TEMPLATE([ACE_LACKS_TIMESPEC_T],
 [Platform does not define timepec_t as a typedef for struct timespec.])
+
+AH_TEMPLATE([ACE_LACKS_GETPGID_PROTOTYPE],
+[Platform/compiler lacks the getpgid() prototype])
+
+AH_TEMPLATE([ACE_LACKS_SETREGID_PROTOTYPE],
+[Platform/compiler lacks the setregid() prototype])
+
+AH_TEMPLATE([ACE_LACKS_SETREUID_PROTOTYPE],
+[Platform/compiler lacks the setreuid() prototype])
 
 AH_TEMPLATE([ACE_LACKS_STRPTIME_PROTOTYPE],
 [Platform/compiler lacks the strptime() prototype])
@@ -1041,6 +1135,9 @@ AH_TEMPLATE([ACE_LACKS_LLSEEK_PROTOTYPE],
 AH_TEMPLATE([ACE_LACKS_PREAD_PROTOTYPE],
 [Platform/compiler lacks the pread() and pwrite() prototypes])
 
+AH_TEMPLATE([ACE_LACKS_UALARM_PROTOTYPE],
+[Platform/compiler lacks the ualarm() prototype (e.g., Solaris)])
+
 AH_TEMPLATE([ACE_LACKS_CHAR_RIGHT_SHIFTS],
 [Compiler does not have any istream operator>> for chars, u_chars, or
    signed chars.])
@@ -1048,6 +1145,11 @@ AH_TEMPLATE([ACE_LACKS_CHAR_RIGHT_SHIFTS],
 AH_TEMPLATE([ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS],
 [Compiler does not have operator>> (istream &, u_char *) or
    operator>> (istream &, signed char *)])
+
+AH_TEMPLATE([ACE_LACKS_UCONTEXT_H],[Platform lacks the ucontext.h file])
+
+AH_TEMPLATE([ACE_LACKS_UNISTD_H],
+[Platform lacks the unistd.h file (e.g., VxWorks and Win32) ])
 
 AH_TEMPLATE([ACE_LACKS_UNIX_DOMAIN_SOCKETS],
 [ACE platform has no UNIX domain sockets])

@@ -9,7 +9,7 @@
 ##  Process this file with automake to create Makefile.in
 ##
 
-AUTOMAKE_OPTIONS = foreign
+AUTOMAKE_OPTIONS = 1.9 foreign
 
 ACLOCAL = @ACLOCAL@
 ACLOCAL_AMFLAGS = -I ../m4
@@ -21,8 +21,7 @@ man_MANS = tao-config.1
 SUBDIRS = \
         TAO_IDL \
         tao \
-	orbsvcs \
-	utils
+	orbsvcs
 
 ## For some reason, automake doesn't include acconfig.h in the distribution
 EXTRA_DIST =  \
@@ -33,7 +32,7 @@ EXTRA_DIST =  \
   README.sun \
   tao-config.in \
   tao-config.1.in \
-  taoConf.sh.in
+  taoConf.sh.in 
 
 DISTCLEANFILES = tao-config taoConf.sh tao-config.1
 

@@ -4,9 +4,9 @@
 // Include Section
 // ******************************************************************
 
-#include "orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/CosNotifyCommC.h"
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "Notify_StructuredPushSupplier.h"
 #include "controlS.h"
 #include "Notify_Test_Client.h"

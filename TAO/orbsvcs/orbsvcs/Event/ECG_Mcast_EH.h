@@ -26,7 +26,7 @@
 #include "ace/Array_Base.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 
-#include "orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminS.h"
 
 #include /**/ "event_export.h"
 #include "ECG_Adapters.h"

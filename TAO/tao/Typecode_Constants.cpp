@@ -29,9 +29,8 @@
 #include "tao/Typecode_Constants.h"
 #include "tao/Typecode.h"
 #include "tao/NVList.h"
-#include "tao/ORB.h"
+#include "ORB.h"
 #include "tao/Object.h"
-#include "tao/SystemException.h"
 
 #if defined (TAO_HAS_AMI_POLLER) && (TAO_HAS_AMI_POLLER == 1)
 #include "tao/PollableC.h"

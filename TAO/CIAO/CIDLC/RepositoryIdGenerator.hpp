@@ -15,7 +15,7 @@ class RepositoryIdGenerator
 {
 public:
   bool
-  generate (CCF::CIDL::SemanticGraph::TranslationUnit& u);
+  generate (CCF::CIDL::SyntaxTree::TranslationUnitPtr const&);
 };
 
 #endif  // CIDLC_REPOSITORY_ID_GENERATOR_HPP

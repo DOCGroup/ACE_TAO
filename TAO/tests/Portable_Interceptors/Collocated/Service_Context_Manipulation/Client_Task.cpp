@@ -47,7 +47,7 @@ Client_Task::svc (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught in client task:");
+			                     "Exception caught:");
       return 1;
     }
   ACE_ENDTRY;

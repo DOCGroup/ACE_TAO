@@ -133,6 +133,8 @@ ACE_THREAD_MANAGER_USES_SAFE_SPAWN      Disable the "check before lock" feature
                                         macro avoids a potential race condition
                                         on platforms with aggressive read/write
                                         reordering.
+ACE_HAS_GNUG_PRE_2_8                    Compiling with g++ prior to
+                                        version 2.8.0.
 ACE_HAS_PRIOCNTL                        OS has priocntl (2).
 ACE_HAS_RECURSIVE_MUTEXES               Mutexes are inherently recursive
                                         (e.g., Win32)
@@ -241,6 +243,14 @@ ACE_HAS_BROKEN_POSIX_TIME               Platform defines struct
 ACE_HAS_BROKEN_RANDR                    OS/compiler's header files are
                                         inconsistent with libC
                                         definition of rand_r().
+ACE_HAS_BROKEN_READV()                  OS/Compiler's header files are
+                                        not consistent with readv()
+                                        definition.
+ACE_HAS_BROKEN_SENDMSG                  OS/compiler omits the const
+                                        from the sendmsg() prototype.
+ACE_HAS_BROKEN_SETRLIMIT                OS/compiler omits the const
+                                        from the rlimit parameter in
+                                        the setrlimit() prototype.
 ACE_HAS_BROKEN_T_ERROR                  Compiler/platform has the wrong
                                         prototype for t_error(), i.e.,
                                         t_error(char *) rather than
@@ -251,6 +261,9 @@ ACE_HAS_BROKEN_TIMESPEC_MEMBERS         platform define struct
                                         tv_nsec.  This is highly
                                         non-portable.  Currently only
                                         FreeBSD 2.1.x uses it.
+ACE_HAS_BROKEN_WRITEV                   OS/compiler omits the const
+                                        from the iovec parameter in
+                                        the writev() prototype.
 ACE_HAS_BSTRING                         Platform has <bstring.h>
                                         (which contains bzero()
                                         prototype)
@@ -318,7 +331,7 @@ ACE_HAS_GETPAGESIZE                     Platform supports
                                         except on Win32)
 ACE_HAS_GETRUSAGE                       Platform supports the
                                         getrusage() system call.
-ACE_HAS_GETRUSAGE_PROTOTYPE             Platform has a getrusage ()
+ACE_HAS_GETRUSAGE_PROTO                 Platform has a getrusage ()
                                         prototype in sys/resource.h
                                         that differs from the one in
                                         ace/OS.i.
@@ -347,9 +360,9 @@ ACE_HAS_INLINED_OSCALLS                 Inline all the static class OS
                                         overhead
 ACE_HAS_IP_MULTICAST                    Platform supports IP multicast
 ACE_HAS_IPV6                            Platform supports IPv6.
-ACE_USES_IPV4_IPV6_MIGRATION            Enable IPv6 support in ACE on
-                                        platforms that don't have IPv6
-                                        turned on by default.
+ACE_USES_IPV4_IPV6_MIGRATION		Enable IPv6 support in ACE on
+					platforms that don't have IPv6
+					turned on by default.
 ACE_HAS_IRIX62_THREADS                  Platform supports the very odd
                                         IRIX 6.2 threads...
 ACE_HAS_NONSTATIC_OBJECT_MANAGER        Causes the ACE_Object_Manager
@@ -381,31 +394,21 @@ ACE_HAS_MSG                             Platform supports recvmsg and
 ACE_HAS_MT_SAFE_MKTIME                  Platform supports MT safe
                                         mktime() call (do any of
                                         them?)
-ACE_HAS_MUTEX_TIMEOUTS                  Compiler supports timed mutex
+ACE_HAS_MUTEX_TIMEOUTS			Compiler supports timed mutex
                                         acquisitions
                                         (e.g. pthread_mutex_timedlock()).
-ACE_HAS_NEW_NOTHROW                     Compiler offers new (nothrow).
+ACE_HAS_NEW_NOTHROW			Compiler offers new (nothrow).
 ACE_HAS_NONCONST_GETBY                  Platform uses non-const char *
                                         in calls to gethostbyaddr,
                                         gethostbyname, getservbyname
 ACE_HAS_NONCONST_MSGSND                 Platform has a non-const
                                         parameter to msgsend() (e.g.,
                                         SCO).
-ACE_HAS_NONCONST_READV			Platform omits const qualifier from
-					iovec parameter in readv() prototype.
 ACE_HAS_NONCONST_SELECT_TIMEVAL         Platform's select() uses
                                         non-const timeval* (only found
                                         on Linux right now)
-ACE_HAS_NONCONST_SENDMSG		Platform omits const qualifier
-					from msghdr parameter in sendmsg()
-					prototype.
-ACE_HAS_NONCONST_SETRLIMIT              Platform omits const qualifier
-					from rlimit parameter in setrlimit()
-					prototype.
 ACE_HAS_NONCONST_SWAB                   Platform's swab function has non
                                         const src argument
-ACE_HAS_NONCONST_WRITEV                 Platform omits const qualifier from
-					iovec parameter in writev() prototype.
 ACE_HAS_OLD_MALLOC                      Compiler/platform uses old
                                         malloc()/free() prototypes
                                         (ugh)
@@ -532,6 +535,8 @@ ACE_HAS_SIZET_SOCKET_LEN                OS/compiler uses size_t *
 ACE_HAS_SOCKADDR_MSG_NAME               Platform requires (struct
                                         sockaddr *) for msg_name field
                                         of struct msghdr.
+ACE_HAS_SOCKIO_H                        Compiler/platform provides the
+                                        sockio.h file
 ACE_HAS_SOCKLEN_T                       Platform provides socklen_t
                                         type, such as Linux with
                                         glibc2.
@@ -577,6 +582,8 @@ ACE_HAS_SVR4_TLI                        Compiler/platform supports
                                         isn't used if ACE_HAS_XTI is set.
 ACE_HAS_SYSCALL_GETRUSAGE               HP/UX has an undefined syscall
                                         for GETRUSAGE...
+ACE_HAS_SYSCALL_H                       Compiler/platform contains the
+                                        <sys/syscall.h> file.
 ACE_HAS_SYSENT_H                        Platform provides <sysent.h>
                                         header
 ACE_HAS_SYSINFO                         Platform supports system
@@ -588,16 +595,8 @@ ACE_HAS_SYS_ERRLIST                     Platform/compiler supports
                                         _sys_errlist symbol
 ACE_HAS_SYS_FILIO_H                     Platform provides
                                         <sys/filio.h> header
-ACE_HAS_SYS_LOADAVG_H                   Compiler/platform contains the
-                                        <sys/loadavg.h> file.
-ACE_HAS_SYS_PSTAT_H                     Compiler/platform contains the
-                                        <sys/pstat.h> file.
 ACE_HAS_SYS_SIGLIST                     Compiler/platform supports
                                         _sys_siglist array
-ACE_HAS_SYS_SOCKIO_H                    Compiler/platform provides the
-                                        sockio.h file
-ACE_HAS_SYS_SYSCALL_H                   Compiler/platform contains the
-                                        <sys/syscall.h> file.
 ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA   Compiler's template
                                         instantiation mechanism
                                         supports the use of "#pragma
@@ -632,8 +631,6 @@ ACE_HAS_THR_C_DEST                      The pthread_keycreate()
 ACE_HAS_THR_C_FUNC                      The pthread_create() routine
                                         *must* take extern C
                                         functions.
-ACE_HAS_TIMEZONE			Platform/compiler supports
-					global "timezone" variable.
 ACE_HAS_TIMEZONE_GETTIMEOFDAY           Platform/compiler supports
                                         timezone * as second parameter
                                         to gettimeofday()
@@ -669,8 +666,8 @@ ACE_HAS_VERBOSE_NOTSUP                  Prints out console message in
                                         tracking down origin of
                                         ACE_NOTSUP.
 ACE_HAS_VOIDPTR_GETTIMEOFDAY            Platform/compiler supports
-                                        void * as second parameter
-                                        to gettimeofday
+					void * as second parameter
+					to gettimeofday
 ACE_HAS_VOIDPTR_MMAP                    Platform requires void * for
                                         mmap().
 ACE_HAS_VOIDPTR_SOCKOPT                 OS/compiler uses void * arg 4
@@ -757,7 +754,7 @@ ACE_LACKS_FLOATING_POINT                Platform does not support
 ACE_LACKS_FORK                          Platform lacks the fork()
                                         system call (e.g., Win32,
                                         VxWorks, Chorus)
-ACE_LACKS_GETOPT_PROTOTYPE              Platform lacks the getopt()
+ACE_LACKS_GETOPT_PROTO                  Platform lacks the getopt()
                                         prototype (e.g., LynxOS)
 ACE_LACKS_GETPGID                       Platform lacks getpgid() call
                                         (e.g., Win32, Chorus, and
@@ -767,9 +764,6 @@ ACE_LACKS_GETSERVBYNAME                 Platforms lacks
                                         and Chorus).
 ACE_LACKS_INET_ATON                     Platform lacks the inet_aton()
                                         function.
-ACE_LACKS_INET_ATON_PROTOTYPE           Platform/compiler lacks the
-                                        inet_aton() prototype (e.g.,
-                                        LynxOS)
 ACE_LACKS_IOSTREAMS_TOTALLY             Iostreams are not supported
                                         adequately on the given platform.
 ACE_LACKS_IOSTREAM_FX                   iostream header does not
@@ -791,12 +785,6 @@ ACE_LACKS_MEMORY_H                      Platform lacks memory.h (e.g.,
 ACE_LACKS_MKFIFO                        Platform lacks mkfifo() e.g.,
                                         VxWorks, Chorus, pSoS, and WinNT.
 ACE_LACKS_MKTEMP                        ACE has no mktemp()
-ACE_LACKS_MKTEMP_PROTOTYPE              Platform/compiler lacks the
-                                        mktemp() prototype (e.g.,
-                                        LynxOS)
-ACE_LACKS_MKSTEMP_PROTOTYPE             Platform/compiler lacks the
-                                        mkstemp() prototype (e.g.,
-                                        LynxOS)
 ACE_LACKS_MMAP                          The platform doesn't have
                                         mmap(2) (e.g., SCO UNIX).
 ACE_LACKS_MODE_MASKS                    Platform/compiler doesn't have
@@ -828,6 +816,8 @@ ACE_LACKS_NEW_H                         OS doesn't have, or we don't want to
                                         use, new.h.
 ACE_LACKS_NULL_PTHREAD_STATUS           OS requires non-null status pointer
                                         for ::pthread_join ().
+ACE_LACKS_PARAM_H                       Platform lacks <sys/param.h>
+                                        (e.g., MVS)
 ACE_LACKS_PERFECT_MULTICAST_FILTERING   Platform lacks IGMPv3 "perfect" filtering
                                         of multicast dgrams at the socket level.
                                         If == 1, ACE_SOCK_Dgram_Mcast will bind
@@ -843,9 +833,6 @@ ACE_LACKS_PTHREAD_SIGMASK               Platform lacks pthread_sigmask ().
 ACE_LACKS_PTHREAD_THR_SIGSETMASK        Platform lacks
                                         pthread_thr_sigsetmask (e.g.,
                                         MVS, HP/UX, and OSF/1 3.2)
-ACE_LACKS_PUTENV_PROTOTYPE              Platform/compiler lacks the
-                                        putenv() prototype (e.g.,
-                                        LynxOS)
 ACE_LACKS_PWD_REENTRANT_FUNCTIONS       Platform lacks getpwnam_r()
                                         methods (e.g., SGI 6.2).
 ACE_LACKS_SID                           Platform lacks setsid
@@ -868,8 +855,7 @@ ACE_LACKS_READDIR_R                     Platform uses ACE_HAS_DIRENT
                                         but does not have readdir_r
                                         ().
 ACE_LACKS_REALPATH                      Platform/compiler lacks
-                                        realpath () function (e.g.,
-                                        LynxOS)
+                                        realpath () function.
 ACE_LACKS_RECVMSG                       Platform lacks recvmsg()
                                         (e.g., Linux)
 ACE_LACKS_RWLOCK_T                      Platform lacks readers/writer
@@ -909,10 +895,8 @@ ACE_LACKS_SYS_NERR                      Platforms/compiler lacks the
                                         VxWorks and MVS).
 ACE_LACKS_SYSTIME_H                     <time.h> doesn't automatically
                                         #include /**/ <sys/time.h>
-ACE_LACKS_SYS_MSG_H                     Platform lacks sys/msg.h
+ACE_LACKS_SYS_MSG_H                    Platform lacks sys/msg.h
                                         (e.g., Chorus and VxWorks)
-ACE_LACKS_SYS_PARAM_H                   Platform lacks <sys/param.h>
-                                        (e.g., MVS)
 ACE_LACKS_SENDMSG                       Platform lacks sendmsg()
                                         (e.g., Linux)
 ACE_LACKS_SI_ADDR                       Platform lacks the si_addr
@@ -933,12 +917,6 @@ ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES  Compiler doesn't support
 ACE_LACKS_STRCASECMP                    Compiler/platform lacks
                                         strcasecmp() (e.g., DG/UX,
                                         UNIXWARE, VXWORKS)
-ACE_LACKS_STRCASECMP_PROTOTYPE          Platform/compiler lacks the
-                                        strcasecmp() prototype (e.g.,
-                                        LynxOS)
-ACE_LACKS_STRNCASECMP_PROTOTYPE         Platform/compiler lacks the
-                                        strncasecmp() prototype (e.g.,
-                                        LynxOS)
 ACE_LACKS_STRRECVFD                     Platform doesn't define struct
                                         strrecvfd.
 ACE_LACKS_SYSCALL                       Platform doesn't have
@@ -998,7 +976,7 @@ ACE_LEGACY_MODE                         When defined, it will enable some code t
 ACE_NEEDS_DEV_IO_CONVERSION             Necessary with some compilers
                                         to pass ACE_TTY_IO as
                                         parameter to DEV_Connector.
-ACE_NEEDS_FUNC_DEFINITIONS              Compiler requires a definition
+ACE_NEEDS_FUNC_DEFINITIONS           Compiler requires a definition
                                         for a "hidden" function, e.g.,
                                         a private, unimplemented copy
                                         constructor or assignment
@@ -1033,15 +1011,15 @@ ACE_WSTRING_HAS_USHORT_SUPPORT          If a platform has wchar_t as a separate 
                                         macro enables one. (mostly used my ACE Name Space).
 
 ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK
-                                        Under QNX/RTP the objects preallocated
-                                        in ACE_OS_Object_Manager cannot be
-                                        destroyed after a fork() call.
-                                        Since these objects are only destroyed
-                                        at application shutdown we take the
-                                        simpler approach of not destroying
-                                        them at all.
-                                        Both QNX/RTP and LynxOS suffer from
-                                        this problem.
+					Under QNX/RTP the objects preallocated
+					in ACE_OS_Object_Manager cannot be
+					destroyed after a fork() call.
+					Since these objects are only destroyed
+					at application shutdown we take the
+					simpler approach of not destroying
+					them at all.
+					Both QNX/RTP and LynxOS suffer from
+					this problem.
 
 ACE_LACKS_MEMBER_TEMPLATES              Compiler does not support
                                         member template feature.
@@ -1663,20 +1641,20 @@ ACE_QTREACTOR_CLEAR_PENDING_EVENTS:
 ----------------------------
   Used in:
     ace/QtReactor.cpp:
-    QtReactor by default does not clear qt events pending for
-    activated socket. Clearing costs much, at least 2 hash accesses
-    in ACE, and 2 another in Qt. It is also better to not clear
-    pending events as some side effects are unknown. However,
-    when events are not clear, then some user applications may be
-    confused by handle_input/output/exception called without any
-    data eg. in ACE_Acceptor::make_svc_handler. This swithc is
-    intended to quickly fix user application which does not
+    QtReactor by default does not clear qt events pending for 
+    activated socket. Clearing costs much, at least 2 hash accesses 
+    in ACE, and 2 another in Qt. It is also better to not clear 
+    pending events as some side effects are unknown. However, 
+    when events are not clear, then some user applications may be 
+    confused by handle_input/output/exception called without any 
+    data eg. in ACE_Acceptor::make_svc_handler. This swithc is 
+    intended to quickly fix user application which does not 
     follow some reactor rules.
  Linux:
-   It seems linux::qt does not queue pending events. Do not define
+   It seems linux::qt does not queue pending events. Do not define 
    this switch.
  Windows:
-   Windows::qt queues pending events. If user application has handle_*
-   methods which cannot be called without data, then turn on this switch
-   to quickly fix the bug. However, one should seriously fix the
+   Windows::qt queues pending events. If user application has handle_* 
+   methods which cannot be called without data, then turn on this switch 
+   to quickly fix the bug. However, one should seriously fix the 
    application then.

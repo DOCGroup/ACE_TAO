@@ -3,8 +3,8 @@
 #include "distributer.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
-#include "orbsvcs/AV/Protocol_Factory.h"
-#include "orbsvcs/AV/FlowSpec_Entry.h"
+#include "orbsvcs/orbsvcs/AV/Protocol_Factory.h"
+#include "orbsvcs/orbsvcs/AV/FlowSpec_Entry.h"
 
 #include "tao/Strategies/advanced_resource.h"
 

@@ -332,7 +332,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
             ACE_INET_Addr *if_addrs = 0;
             size_t if_cnt;
 
-            if (ACE::get_ip_interfaces (if_cnt, if_addrs) != 0)
+            if (ACE_Sock_Connect::get_ip_interfaces (if_cnt, if_addrs) != 0)
               return -1;
 
             size_t nr_subscribed = 0;
@@ -383,7 +383,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
       ACE_INET_Addr *if_addrs = 0;
       size_t if_cnt;
 
-      if (ACE::get_ip_interfaces (if_cnt, if_addrs) != 0)
+      if (ACE_Sock_Connect::get_ip_interfaces (if_cnt, if_addrs) != 0)
         return -1;
 
       size_t nr_subscribed = 0;
@@ -692,7 +692,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
           // is a limitation of the way <get_ip_interfaces> works with
           // old versions of MSVC.  The reliable way of getting the interface
           // list is available only with MSVC 5 and newer.
-          if (ACE::get_ip_interfaces (if_cnt, if_addrs) != 0)
+          if (ACE_Sock_Connect::get_ip_interfaces (if_cnt, if_addrs) != 0)
             return -1;
 
           size_t nr_unsubscribed = 0;
@@ -741,7 +741,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
       // is a limitation of the way <get_ip_interfaces> works with
       // old versions of MSVC.  The reliable way of getting the interface list
       // is available only with MSVC 5 and newer.
-      if (ACE::get_ip_interfaces (if_cnt, if_addrs) != 0)
+      if (ACE_Sock_Connect::get_ip_interfaces (if_cnt, if_addrs) != 0)
         return -1;
 
       size_t nr_unsubscribed = 0;
@@ -975,7 +975,7 @@ ACE_SOCK_Dgram_Mcast::make_multicast_ifaddr (ip_mreq *ret_mreq,
       // Look up the interface by number, not name.
       if_address.ifr_ifno = ACE_OS::atoi (net_if);
 #else
-      ACE_OS::strcpy (if_address.ifr_name, ACE_TEXT_ALWAYS_CHAR (net_if));
+      ACE_OS::strcpy (if_address.ifr_name, net_if);
 #endif /* defined (ACE_PSOS) */
 
       if (ACE_OS::ioctl (this->get_handle (),

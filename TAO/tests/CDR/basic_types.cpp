@@ -20,13 +20,10 @@
 #include "tao/ORB.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
-#include "tao/Any.h"
 
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (CDR,
-           basic_types,
-           "$Id$")
+ACE_RCSID(CDR, basic_types, "$Id$")
 
 static int n = 4096;
 static int nloops = 100;

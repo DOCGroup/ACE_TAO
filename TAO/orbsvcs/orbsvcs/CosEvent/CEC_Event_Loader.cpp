@@ -18,9 +18,9 @@
 #include "CEC_Event_Loader.h"
 #include "ace/Dynamic_Service.h"
 
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/CosEvent/CEC_EventChannel.h"
-#include "orbsvcs/CosEvent/CEC_Default_Factory.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
@@ -459,7 +459,7 @@ TAO_CEC_Event_Loader::fini (void)
   return 0;
 }
 
-ACE_FACTORY_DEFINE (TAO_Event_Serv, TAO_CEC_Event_Loader)
+ACE_FACTORY_DEFINE (TAO_Event, TAO_CEC_Event_Loader)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Dynamic_Service<TAO_CEC_Event_Loader>;

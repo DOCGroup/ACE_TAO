@@ -1,7 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcslib, event {
+project : etcl, dynamicany, portableserver, svc_utils {
   after     += CosNotification
   libs      += TAO_CosNotification
+  tagchecks += Notify
 }

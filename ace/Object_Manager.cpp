@@ -16,7 +16,6 @@
 #include "ace/Signal.h"
 #include "ace/Framework_Component.h"
 #include "ace/Atomic_Op.h"
-#include "ace/OS_NS_sys_time.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Object_Manager.inl"
@@ -604,7 +603,7 @@ ACE_Object_Manager::fini (void)
   // No mutex here.  Only the main thread should destroy the singleton
   // ACE_Object_Manager instance.
 
-  // Indicate that this ACE_Object_Manager instance is being
+  // First, indicate that this ACE_Object_Manager instance is being
   // shut down.
   object_manager_state_ = OBJ_MAN_SHUTTING_DOWN;
 

@@ -6,10 +6,8 @@
 #include "Protocols_Hooks.h"
 #include "Connect_Strategy.h"
 #include "Thread_Lane_Resources.h"
-#include "Profile_Transport_Resolver.h"
 #include "Transport.h"
 #include "Wait_Strategy.h"
-#include "SystemException.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
@@ -56,7 +54,7 @@ int
 TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
   // @@todo: The functionality of the following two statements could
-  // be done in the constructor, but that involves changing the
+  // be  done in the constructor, but that involves changing the
   // interface of the pluggable transport factory.
 
   // Set the ORB Core
@@ -134,41 +132,31 @@ TAO_IIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 }
 
 TAO_Transport *
-TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
+TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                      TAO_Transport_Descriptor_Interface &desc,
-                                     ACE_Time_Value *timeout)
+                                     ACE_Time_Value *max_wait_time)
 {
-  TAO_IIOP_Endpoint *iiop_endpoint =
-    this->remote_endpoint (desc.endpoint ());
+  TAO_IIOP_Endpoint *iiop_endpoint = this->remote_endpoint (desc.endpoint ());
 
   if (iiop_endpoint == 0)
     return 0;
 
-  const ACE_INET_Addr &remote_address =
-    iiop_endpoint->object_addr ();
+  const ACE_INET_Addr &remote_address = iiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                "to <%s:%d> which should %s\n",
-                ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host()),
-                iiop_endpoint->port(),
-                r->blocked () ? ACE_TEXT("block") : ACE_TEXT("nonblock")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                  "to <%s:%d>\n",
+                  ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host()),
+                  iiop_endpoint->port()));
+    }
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
 
-  this->active_connect_strategy_->synch_options (timeout,
+  this->active_connect_strategy_->synch_options (max_wait_time,
                                                  synch_options);
-
-  // If we don't need to block for a transport just set the timeout to
-  // be zero.
-  ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
-  if (!r->blocked ())
-    {
-      synch_options.timeout (ACE_Time_Value::zero);
-      timeout = &tmp_zero;
-    }
 
   TAO_IIOP_Connection_Handler *svc_handler = 0;
 
@@ -179,14 +167,13 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                    synch_options);
 
   // The connect() method creates the service handler and bumps the
-  // #REFCOUNT# up one extra.  There are four possibilities from
+  // #REFCOUNT# up one extra.  There are three possibilities from
   // calling connect(): (a) connection succeeds immediately - in this
   // case, the #REFCOUNT# on the handler is two; (b) connection
   // completion is pending - in this case, the #REFCOUNT# on the
   // handler is also two; (c) connection fails immediately - in this
   // case, the #REFCOUNT# on the handler is one since close() gets
-  // called on the handler; (d) the connect immediately returns when we
-  // have specified that it shouldn't block.
+  // called on the handler.
   //
   // The extra reference count in
   // TAO_Connect_Creation_Strategy::make_svc_handler() is needed in
@@ -197,67 +184,118 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   // another thread pick up the completion and potentially deletes the
   // handler before we get a chance to increment the reference count.
 
-  // Make sure that we always do a remove_reference
-  ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
-
-  TAO_Transport *transport =
-    svc_handler->transport ();
-
-  if (result == -1)
+  // No immediate result.  Wait for completion.
+  if (result == -1 && errno == EWOULDBLOCK)
     {
-      // No immediate result, wait for completion
-      if (errno == EWOULDBLOCK)
+      if (TAO_debug_level > 2)
         {
-          // Try to wait until connection completion. Incase we block, then we
-          // get a connected transport or not. In case of non block we get
-          // a connected or not connected transport
-          if (!this->wait_for_connection_completion (r,
-                                                     transport,
-                                                     timeout))
-            {
-              if (TAO_debug_level > 2)
-                ACE_ERROR ((LM_ERROR, "TAO (%P|%t) - IIOP_Connector::"
-                                      "make_connection, "
-                                      "wait for completion failed\n"));
-            }
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                      "going to wait for connection completion on local"
+                      "handle [%d]\n",
+                      svc_handler->get_handle ()));
         }
-      else
+
+      // Wait for connection completion.
+      result =
+        this->active_connect_strategy_->wait (svc_handler,
+                                              max_wait_time);
+
+      if (TAO_debug_level > 2)
         {
-          // Transport is not usable
-          transport = 0;
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - IIOP_Connector::make_connection"
+                      "wait done for handle[%d], result = %d\n",
+                      svc_handler->get_handle (), result));
+        }
+
+      // There are three possibilities when wait() returns: (a)
+      // connection succeeded; (b) connection failed; (c) wait()
+      // failed because of some other error.  It is easy to deal with
+      // (a) and (b).  (c) is tricky since the connection is still
+      // pending and may get completed by some other thread.  The
+      // following code deals with (c).
+
+      // Check if the handler has been closed.
+      int closed =
+        svc_handler->is_closed ();
+
+      // In case of failures and close() has not be called.
+      if (result == -1 && !closed)
+        {
+          // First, cancel from connector.
+          this->base_connector_.cancel (svc_handler);
+
+          // Double check to make sure the handler has not been closed
+          // yet.  This double check is required to ensure that the
+          // connection handler was not closed yet by some other
+          // thread since it was still registered with the connector.
+          // Once connector.cancel() has been processed, we are
+          // assured that the connector will no longer open/close this
+          // handler.
+          closed = svc_handler->is_closed ();
+
+          // If closed, there is nothing to do here.  If not closed,
+          // it was either opened or is still pending.
+          if (!closed)
+            {
+              // Check if the handler has been opened.
+              const int open = svc_handler->is_open ();
+
+              // Some other thread was able to open the handler even
+              // though wait failed for this thread.
+              if (open)
+                // Overwrite <result>.
+                result = 0;
+              else
+                {
+                  // Assert that it is still connecting.
+                  ACE_ASSERT (svc_handler->is_connecting ());
+
+                  // Force close the handler now.
+                  svc_handler->close ();
+                }
+            }
         }
     }
 
-  // In case of errors transport is zero
-  if (transport == 0)
+  // Irrespective of success or failure, remove the extra #REFCOUNT#.
+  svc_handler->remove_reference ();
+
+  // In case of errors.
+  if (result == -1)
     {
       // Give users a clue to the problem.
-      if (TAO_debug_level > 3)
+      if (TAO_debug_level)
+        {
           ACE_DEBUG ((LM_ERROR,
                       "TAO (%P|%t) - IIOP_Connector::make_connection, "
                       "connection to <%s:%d> failed (%p)\n",
-                      iiop_endpoint->host (), iiop_endpoint->port (),
+                      ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host ()), iiop_endpoint->port (),
                       ACE_TEXT("errno")));
+        }
 
       return 0;
     }
 
-  // At this point, the connection has be successfully created
-  // connected or not connected, but we have a connection.
+  // At this point, the connection has be successfully connected.
+  // #REFCOUNT# is one.
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                "new %s connection to <%s:%d> on Transport[%d]\n",
-                transport->is_connected() ? "connected" : "not connected",
-                iiop_endpoint->host (),
-                iiop_endpoint->port (),
-                svc_handler->peer ().get_handle ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                  "new connection to <%s:%d> on Transport[%d]\n",
+                  ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host ()),
+                  iiop_endpoint->port (),
+                  svc_handler->peer ().get_handle ()));
+    }
+
+  TAO_Transport *transport = svc_handler->transport ();
 
   // Add the handler to Cache
   int retval =
-    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (
-      &desc,
-      transport);
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
+                                                                             transport);
 
   // Failure in adding to cache.
   if (retval != 0)
@@ -275,24 +313,26 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       return 0;
     }
 
-  if (transport->is_connected () &&
-      transport->wait_strategy ()->register_handler () != 0)
-    {
-      // Registration failures.
+  // If the wait strategy wants us to be registered with the reactor
+  // then we do so. If registeration is required and it succeeds,
+  // #REFCOUNT# becomes two.
+  retval =  transport->wait_strategy ()->register_handler ();
 
-      // Purge from the connection cache, if we are not in the cache, this
-      // just does nothing.
-      (void) transport->purge_entry ();
+  // Registration failures.
+  if (retval != 0)
+    {
+      // Purge from the connection cache.
+      transport->purge_entry ();
 
       // Close the handler.
-      (void) transport->close_connection ();
+      svc_handler->close ();
 
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - IIOP_Connector [%d]::make_connection, "
-                    "could not register the transport "
-                    "in the reactor.\n",
-                    transport->id ()));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                      "could not register the new connection in the reactor\n"));
+        }
 
       return 0;
     }
@@ -303,7 +343,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 TAO_Profile *
 TAO_IIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
-  TAO_Profile *pfile = 0;
+  TAO_Profile *pfile;
   ACE_NEW_RETURN (pfile,
                   TAO_IIOP_Profile (this->orb_core ()),
                   0);
@@ -331,7 +371,7 @@ TAO_IIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
                     TAO_IIOP_Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        0,
+                        TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
@@ -395,8 +435,7 @@ TAO_IIOP_Connector::init_tcp_properties (void)
   int no_delay = this->orb_core ()->orb_params ()->nodelay ();
   int enable_network_priority = 0;
 
-  TAO_Protocols_Hooks *tph =
-    this->orb_core ()->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
+  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (tph != 0)
@@ -442,24 +481,4 @@ TAO_IIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
     return 0;
 
   return iiop_endpoint;
-}
-
-int
-TAO_IIOP_Connector::cancel_svc_handler (
-  TAO_Connection_Handler * svc_handler)
-{
-  TAO_IIOP_Connection_Handler* handler=
-    dynamic_cast<TAO_IIOP_Connection_Handler*>(svc_handler);
-
-  if (handler)
-    {
-      // Cancel from the connector
-      this->base_connector_.cancel (handler);
-
-      return 0;
-    }
-  else
-    {
-      return -1;
-    }
 }

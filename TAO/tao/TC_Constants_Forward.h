@@ -17,8 +17,6 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
-
 namespace CORBA
 {
   /**

@@ -18,7 +18,7 @@
 #define CEC_MT_DISCONNECT_H
 
 #include "ace/Task.h"
-#include "orbsvcs/CosEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/CosEventChannelAdminC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

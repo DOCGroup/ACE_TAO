@@ -36,7 +36,8 @@ ACE_RCSID(tests, SOCK_Test, "$Id$")
 
 #if !defined (ACE_WIN32)
 
-static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
+static const ACE_TCHAR ACE_ALPHABET[] =
+  ACE_TEXT ("abcdefghijklmnopqrstuvwxyz");
 
 // This length is used for the "big buffer" send/receive.
 static const size_t big_size = (BUFSIZ * 4);
@@ -115,9 +116,9 @@ server (void *arg)
 
   // On AIX, select() always seems to select a fifo handle as a normal file,
   // always readable. Just wait a second...
-# if defined (AIX) || defined (HPUX)
+# if defined (AIX)
   ACE_OS::sleep (1);
-# endif /* AIX || HPUX */
+# endif /* AIX */
 
   // Read the things the client is sending; alphabet, huge overflow, then
   // alphabet.
@@ -193,7 +194,7 @@ test_fifo_msg (void)
   // Reader side opens first - it may fail if fifo not supported on this
   // platform.
   ACE_TCHAR fifo_path[MAXPATHLEN];
-  if (ACE::get_temp_dir (fifo_path, MAXPATHLEN) == -1)
+  if (ACE_Lib_Find::get_temp_dir (fifo_path, MAXPATHLEN) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("get_temp_dir")), 1);
   ACE_OS::strcat (fifo_path, ACE_TEXT ("FIFO_Test"));
@@ -224,7 +225,7 @@ test_fifo_msg (void)
   int status = 0;    // Test status; innocent until proven guilty.
 
 #if !defined (ACE_LACKS_FORK)
-  switch (ACE_OS::fork (ACE_TEXT ("child")))
+  switch (ACE_OS::fork ("child"))
     {
     case -1:
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("fork failed")));

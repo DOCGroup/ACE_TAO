@@ -42,7 +42,8 @@ namespace ACE_OS {
    *  equivalents.
    *
    *  Since they are often implemented as macros, we don't use the same name
-   *  here.  Instead, we change by prepending "ace_".
+   *  here.  Instead, we change by prepending "ace_" (with the exception of
+   *  to_lower and to_upper).
    */
   //@{
 
@@ -92,22 +93,22 @@ namespace ACE_OS {
 
   /// Converts a character to lower case (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_tolower (int c);
+  int to_lower (int c);
 
 #if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_TOWLOWER)
   /// Converts a character to lower case (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  wint_t ace_towlower (wint_t c);
+  wint_t to_lower (wint_t c);
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_TOWLOWER */
 
   /// Converts a character to upper case (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_toupper (int c);
+  int to_upper (int c);
 
 #if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_TOWUPPER)
   /// Converts a character to upper case (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  wint_t ace_towupper (wint_t c);
+  wint_t to_upper (wint_t c);
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_TOWUPPER */
 
   //@}

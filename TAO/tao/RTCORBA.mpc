@@ -24,8 +24,4 @@ project : taolib, core {
   Resource_Files {
     RTCORBA
   }
-
-  PIDL_Files {
-    RTCORBA
-  }
 }

@@ -21,10 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_STREAM_PIPES)
-#  include "ace/OS_NS_stropts.h"
-#endif /* ACE_HAS_STREAM_PIPES */
-
 // Forward Decls
 class ACE_Str_Buf;
 

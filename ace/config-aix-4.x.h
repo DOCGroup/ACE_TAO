@@ -252,15 +252,8 @@
 
 #define ACE_HAS_UTIME
 
-// Platform has XPG4 wide character type and functions. However, the size
-// of wchar_t changes for 32- vs. 64-bit builds (unsigned short vs. unsigned
-// int, respectively).
+// Platform has XPG4 wide character type and functions
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
-#ifdef __64BIT__
-#  define ACE_SIZEOF_WCHAR 4
-#else
-#  define ACE_SIZEOF_WCHAR 2
-#endif /* __64BIT__ */
 
 #define ACE_LACKS_NETINET_TCP_H
 
@@ -316,7 +309,7 @@
 
 #define ACE_MALLOC_ALIGN 8
 
-#if (_XOPEN_SOURCE >= 500) && !defined(_UNIX95)
+#if (_XOPEN_SOURCE == 500) && !defined(_UNIX95)
 # define ACE_HAS_3_PARAM_WCSTOK
 #endif /* _XOPEN_SOURCE == 500 && !_UNIX95 */
 

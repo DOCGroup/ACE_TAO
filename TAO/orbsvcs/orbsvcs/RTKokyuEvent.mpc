@@ -18,7 +18,4 @@ project(RTKokyuEvent) : orbsvcslib, core, rtevent, rtsched, kokyu {
       Event/EC_Kokyu_Scheduling.cpp
     }
   }
-
-  Template_Files {
-  }
 }

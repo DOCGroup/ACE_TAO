@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminS.h"
 
 #include "ace/Stats.h"
 #include "ace/Task.h"

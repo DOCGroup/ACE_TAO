@@ -23,9 +23,6 @@
 //
 // ================================================================
 
-#ifndef TAO_GIOP_PIDL
-#define TAO_GIOP_PIDL
-
 #include "IOP.pidl"
 
 #pragma prefix "omg.org"
@@ -56,5 +53,3 @@ module GIOP
     case ReferenceAddr: IORAddressingInfo ior;
   };
 };
-
-#endif  /* TAO_GIOP_PIDL */

@@ -76,7 +76,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
   *os << "{" <<be_nl;
   *os << "}" << be_nl << be_nl;
 
-  if (be_global->gen_copy_ctor () && !node->is_local ())
+  if (be_global->gen_copy_ctor ())
     {
       *os << "//Implementation Skeleton Copy Constructor" << be_nl;
 
@@ -88,7 +88,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
           << be_global->impl_class_suffix () << "& rhs)" << be_idt_nl
           << ": TAO_Abstract_ServantBase (rhs)," << be_nl
           << "  TAO_ServantBase (rhs)";
-          
+
       if (node->traverse_inheritance_graph (be_interface::copy_ctor_helper,
                                             os)
            == -1)
@@ -99,22 +99,19 @@ be_visitor_interface_is::visit_interface (be_interface *node)
                             -1);
         }
 
-      if (!node->is_local ())
+      *os << "," << be_nl;
+
+      if (node->is_nested ())
         {
-          *os << "," << be_nl;
+          be_decl *scope;
+          scope = be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
-          if (node->is_nested ())
-            {
-              be_decl *scope;
-              scope = be_scope::narrow_from_scope (node->defined_in ())->decl ();
-
-              *os << "  ACE_NESTED_CLASS (POA_" << scope->name () << ", "
-                  << node->local_name () << ") (rhs)";
-            }
-          else
-            {
-              *os << "  " << node->full_skel_name () << " (rhs)";
-            }
+          *os << "  ACE_NESTED_CLASS (POA_" << scope->name () << ", "
+              << node->local_name () << ") (rhs)";
+        }
+      else
+        {
+          *os << "  " << node->full_skel_name () << " (rhs)";
         }
 
       *os << be_uidt_nl

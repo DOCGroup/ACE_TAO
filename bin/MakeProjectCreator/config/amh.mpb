@@ -1,6 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: taoidldefaults, messaging {
+project: taoidldefaults {
+  requires += ami // There is no separate 
   idlflags += -GH
 }

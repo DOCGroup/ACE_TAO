@@ -24,7 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/IORManipulation/IORManip_Loader.h"
-#include "orbsvcs/FT_CORBA_ORBC.h"
+#include "orbsvcs/orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/IOPC.h"
 #include "FT_ORB_Utils_export.h"
 

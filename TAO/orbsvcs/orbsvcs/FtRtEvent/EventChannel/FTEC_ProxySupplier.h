@@ -12,9 +12,9 @@
 
 #ifndef TAO_FTEC_PROXYSUPPLIER_H
 #define TAO_FTEC_PROXYSUPPLIER_H
-#include "orbsvcs/Event/EC_Default_ProxySupplier.h"
+#include "orbsvcs/orbsvcs/Event/EC_Default_ProxySupplier.h"
 #include "ace/SString.h"
-#include "orbsvcs/FtRtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/FtRtecEventChannelAdminC.h"
 #include "Request_Context_Repository.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

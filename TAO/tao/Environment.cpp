@@ -1,6 +1,6 @@
 #include "Environment.h"
 #include "ORB_Core.h"
-#include "SystemException.h"
+#include "Exception.h"
 
 #include "ace/OS_NS_string.h"
 

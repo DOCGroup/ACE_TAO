@@ -15,7 +15,7 @@
 #include /**/ "ace/pre.h"
 #include "tao/corba.h"
 #include "tao/PortableServer/Servant_Base.h"
-#include "orbsvcs/FtRtecEventCommC.h"
+#include "orbsvcs/orbsvcs/FtRtecEventCommC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

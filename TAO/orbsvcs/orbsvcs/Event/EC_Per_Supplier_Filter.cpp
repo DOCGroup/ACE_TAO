@@ -7,9 +7,9 @@
 #include "EC_Scheduling_Strategy.h"
 #include "EC_QOS_Info.h"
 
-#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h"
 
-#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Per_Supplier_Filter.i"

@@ -88,7 +88,7 @@
 //  #endif
 
 // Define the special export macros needed to export symbols outside a dll
-#if !defined(__BORLANDC__) && !defined(__IBMCPP__)
+#ifndef __BORLANDC__
 #define ACE_HAS_CUSTOM_EXPORT_MACROS
 #define ACE_Proper_Export_Flag __declspec (dllexport)
 #define ACE_Proper_Import_Flag __declspec (dllimport)
@@ -219,10 +219,9 @@
 #define ACE_LACKS_REWINDDIR
 #define ACE_LACKS_READDIR_R
 #define ACE_LACKS_INET_ATON
-#define ACE_LACKS_SYS_PARAM_H
+#define ACE_LACKS_PARAM_H
 #define ACE_LACKS_PTHREAD_H
 #define ACE_LACKS_ARPA_INET_H
-#define ACE_LACKS_MADVISE
 
 #define ACE_HAS_SNPRINTF
 #define ACE_HAS_VFWPRINTF

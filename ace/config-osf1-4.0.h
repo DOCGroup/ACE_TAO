@@ -123,9 +123,9 @@
 
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 #define ACE_HAS_AUTOMATIC_INIT_FINI
-#define ACE_HAS_NONCONST_SETRLIMIT
+#define ACE_HAS_BROKEN_SETRLIMIT
 #define ACE_HAS_BROKEN_T_ERROR
-#define ACE_HAS_NONCONST_WRITEV
+#define ACE_HAS_BROKEN_WRITEV
 #define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 #define ACE_HAS_CPLUSPLUS_HEADERS
@@ -153,7 +153,7 @@
 #define ACE_HAS_STRPTIME
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_SVR4_SIGNAL_T
-#define ACE_HAS_SYS_SYSCALL_H
+#define ACE_HAS_SYSCALL_H
 #define ACE_HAS_SYSV_IPC
 #if (ACE_MT_SAFE == 0)
 // clearerr is not defined when _REENTRANT is not defined
@@ -178,7 +178,7 @@
 // approporiate ordering of the include files. The Platinum release
 // now temporarily supports both forms.  Platform's implementation of
 // sendmsg() has a non-const msgheader parameter.
-#define ACE_HAS_NONCONST_SENDMSG
+#define ACE_HAS_BROKEN_SENDMSG
 #define ACE_HAS_IDTYPE_T
 
 #include /**/ "ace/post.h"

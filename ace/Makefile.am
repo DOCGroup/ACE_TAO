@@ -785,7 +785,6 @@ HEADER_FILES = \
   Hash_Map_Manager_T.h \
   Hash_Map_With_Allocator_T.h \
   High_Res_Timer.h \
-  If_Then_Else.h \
   INET_Addr.h \
   Init_ACE.h \
   Intrusive_List.h \
@@ -1367,7 +1366,7 @@ ACE_EXTRA_DIST = os_include
 dist-hook:
 	(cd $(srcdir); tar cf - $(ACE_EXTRA_DIST)) | (cd $(distdir); \
           tar xfBp -)
-	list=`find $(distdir) -type d -a \( -name CVS -o -name .svn \) -a -print`; for p in $$list; do \
+	list=`find $(distdir) -type d -name CVS -print`; for p in $$list; do \
           rm -rf $$p; \
         done
 
@@ -1382,7 +1381,7 @@ clean-local:
 ## os_include subdirectory just for installation purposes seemed like
 ## overkill.
 install-data-local:
-	list=`(cd $(srcdir); find os_include -type d -a \! \( \( -name CVS -o -name .svn \) -prune \) )`; for p in $$list; do \
+	list=`(cd $(srcdir); find os_include -type d | $(EGREP) -v CVS)`; for p in $$list; do \
 	  $(mkdir_p) $(DESTDIR)$(pkgincludedir)/$$p; \
 	  files=`(cd $(srcdir)/$$p; $(ECHO) *.h)`; \
           test "$$files" != "*.h"  && \

@@ -1,11 +1,11 @@
 // $Id$
 
-#include "orbsvcs/Time_Utilities.h"
-#include "orbsvcs/Runtime_Scheduler.h"
+#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/orbsvcs/Runtime_Scheduler.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Runtime_Scheduler.i"
+#include "orbsvcs/orbsvcs/Runtime_Scheduler.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (orbsvcs,

@@ -1707,8 +1707,6 @@ eval_kind(AST_Expression::AST_ExprValue *ev, AST_Expression::EvalKind ek)
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EK_octet:
       return coerce_value (ev, AST_Expression::EV_octet);
-    case AST_Expression::EK_bool:
-      return coerce_value (ev, AST_Expression::EV_bool);
     default:
       return 0;
   }
@@ -1716,19 +1714,11 @@ eval_kind(AST_Expression::AST_ExprValue *ev, AST_Expression::EvalKind ek)
 
 // Private operations.
 
-// @@@ (JP) CORBA 2.6 and earlier say that in a constant expression,
-// each subexpression must fall within the range of the assigned type.
-// However, this may be hard for the compiler in some cases (must
-// evaluate all grouping possibilities). So there is an outstanding
-// issue, #1139, and the best guess is that it will ultimately be
-// decided that only the final value must fall within the range of
-// the assigned type. So there are no checks here, only in coerce().
-
 // Apply binary operators to an AST_Expression after evaluating
 // its sub-expressions.
 // Operations supported: '+', '-', '*', '/'
 AST_Expression::AST_ExprValue *
-AST_Expression::eval_bin_op (void)
+AST_Expression::eval_bin_op (AST_Expression::EvalKind /* ek */)
 {
   AST_ExprValue *retval = 0;
 
@@ -1736,14 +1726,29 @@ AST_Expression::eval_bin_op (void)
     {
       return 0;
     }
-    
+// @@@ (JP) See comment below.
+/*
+  this->pd_v1->set_ev (this->pd_v1->eval_internal (ek));
+
+  if (this->pd_v1->ev () == 0)
+    {
+      return 0;
+    }
+*/
   this->pd_v1->set_ev (this->pd_v1->coerce (EV_double));
 
   if (this->pd_v1->ev () == 0)
     {
       return 0;
     }
+/*
+  this->pd_v2->set_ev (this->pd_v2->eval_internal (ek));
 
+  if (this->pd_v2->ev () == 0)
+    {
+      return 0;
+    }
+*/
   this->pd_v2->set_ev (this->pd_v2->coerce (EV_double));
 
   if (pd_v2->ev () == 0)
@@ -1793,6 +1798,15 @@ AST_Expression::eval_bin_op (void)
       return 0;
     }
 
+  // @@@ (JP) CORBA 2.6 and earlier say that in a constant expression,
+  // each subexpression must fall within the range of the assigned type.
+  // However, this may be hard for the compiler in some cases (must
+  // evaluate all grouping possibilities). So there is an outstanding
+  // issue, #1139, and the best guess is that it will ultimately be
+  // decided that only the final value must fall within the range of
+  // the assigned type. So I've commented out the checks above, and
+  // added this final evaluation below. (02-06-25).
+//  return eval_kind (retval, ek);
   return retval;
 }
 
@@ -1827,12 +1841,6 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
       this->pd_v1->set_ev (this->pd_v1->coerce (EV_ulong));
       this->pd_v2->set_ev (this->pd_v2->coerce (EV_ulong));
       retval->et = EV_ulong;
-    }
-  else if (ek == EK_bool)
-    {
-      this->pd_v1->set_ev (this->pd_v1->coerce (EV_bool));
-      this->pd_v2->set_ev (this->pd_v2->coerce (EV_bool));
-      retval->et = EV_bool;
     }
   else
     {
@@ -2169,9 +2177,6 @@ AST_Expression::coerce (AST_Expression::ExprType t)
     case EV_octet:
       this->pd_ev = this->eval_internal (EK_octet);
       break;
-    case EV_bool:
-      this->pd_ev = this->eval_internal (EK_bool);
-      break;
     default:
       this->pd_ev = this->eval_internal (EK_const);
       break;
@@ -2272,13 +2277,6 @@ AST_Expression::eval_internal (AST_Expression::EvalKind ek)
       return eval_kind (this->pd_ev,
                         ek);
     }
-    
-  if (ek == EK_bool || ek == EK_octet)
-    {
-      // Operators may be used only with integer or floating point types.
-      idl_global->err ()->illegal_infix ();
-      return 0;
-    }
 
   //  OK, must evaluate operator.
   switch (this->pd_ec)
@@ -2288,7 +2286,7 @@ AST_Expression::eval_internal (AST_Expression::EvalKind ek)
     case EC_mul:
     case EC_div:
     case EC_mod:
-      this->pd_ev = this->eval_bin_op ();
+      this->pd_ev = this->eval_bin_op (ek);
       return eval_kind (this->pd_ev,
                         ek);
     case EC_or:

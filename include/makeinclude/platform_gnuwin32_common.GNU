@@ -55,11 +55,7 @@ CC      = gcc
 CXX     = g++
 RC      = windres
 
-ifeq (3.4,$(findstring 3.4,$(GNUWIN32_CXX_VERSION)))
-  MODEL_FLAGS += -mtune=$(TCPU)
-else
-  MODEL_FLAGS += -mcpu=$(TCPU)
-endif
+MODEL_FLAGS += -mcpu=$(TCPU)
 
 CFLAGS  += -W -Wall -Wpointer-arith
 ifeq ($(threads),1)
@@ -99,7 +95,7 @@ SHLIBBUILD = \
   && mv $(VSHDIR)/$@.def $(VSHDIR)/$@.def.old \
   && sed 's/;.*$$//g' < $(VSHDIR)/$@.def.old > $(VSHDIR)/$@.def \
   && $(SOLINK.cc) -Wl,--enable-auto-image-base -Wl,--out-implib,$@.a \
-    -shared -o $@ $(LDFLAGS) -Wl,$(VSHDIR)/$@.def \
+    -shared -o $@ $(LDFLAGS) $(VSHDIR)/$@.def \
     $(VSHOBJS1) $(ACE_SHLIBS) $(LIBS)
 
 ifneq ($(GNUWIN32_DLL_ALLOW_EXECP), 1)
@@ -111,7 +107,7 @@ endif
 
 PRELIB  = @true
 
-# Test for template instantiation, add to SOFLAGS if SONAME set,
+# Test for template instantiation, add to SOFLAGS if SONAME set, 
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU

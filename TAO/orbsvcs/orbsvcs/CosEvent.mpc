@@ -1,78 +1,32 @@
 // $Id$
 
-project (CosEvent) : orbsvcslib, core, minimum_corba, ec_typed_events {
+project (CosEvent) : ec_typed_events, orbsvcslib, messaging, core, naming {
   sharedname   = TAO_CosEvent
-  dynamicflags = TAO_EVENT_BUILD_DLL
+  avoids      += minimum_corba
 
-  idlflags    += -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h
+  // Warning : The idlflags must match exactly those used in
+  //           CosNotification, because we don't know which project
+  //           will actually generate the IDL.  For this reason we
+  //           also just use the event_export.h and macros for both
+  //           services.
+  idlflags    += -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h
+
+  // Set both DLL flags because of the shared idl files
+  dynamicflags = TAO_EVENT_BUILD_DLL TAO_NOTIFY_BUILD_DLL
+
+  tagchecks   += CosEvent
 
   IDL_Files {
     CosEventComm.idl
     CosEventChannelAdmin.idl
   }
 
-  Source_Files {
-    CosEventCommC.cpp
-    CosEventChannelAdminC.cpp
-  }
-
-  Header_Files {
-    CosEventCommC.h
-    CosEventChannelAdminC.h
-  }
-
-  Inline_Files {
-    CosEventCommC.inl
-    CosEventChannelAdminC.inl
-  }
-
-  Template_Files {
-  }
-
-  // explicit Resource_Files to avoid including _Skel & _Serv rc files.
-  Resource_Files {
-    CosEvent.rc
-  }
-}
-
-
-project (CosEvent_Skel) : orbsvcslib, core, minimum_corba, event, portableserver, ec_typed_events_skel {
-  sharedname   = TAO_CosEvent_Skel
-  dynamicflags = TAO_EVENT_SKEL_BUILD_DLL
-
-  IDL_Files {
-  }
-
-  Source_Files {
-    CosEventCommS.cpp
-    CosEventChannelAdminS.cpp
-  }
-
-  Header_Files {
-    CosEventCommS.h
-    CosEventChannelAdminS.h
-  }
-
-  Inline_Files {
-    CosEventCommS.inl
-    CosEventChannelAdminS.inl
-  }
-
-  Template_Files {
-  }
-}
-
-
-project (CosEvent_Serv) : orbsvcslib, core, minimum_corba, event_skel, ec_typed_events_serv, messaging, naming, svc_utils {
-  sharedname   = TAO_CosEvent_Serv
-  dynamicflags = TAO_EVENT_SERV_BUILD_DLL
-  tagchecks   += CosEvent
-
-  IDL_Files {
-  }
-
   Source_Files(ORBSVCS_COMPONENTS) {
     CosEvent {
+      CosEventCommC.cpp
+      CosEventChannelAdminC.cpp
+      CosEventCommS.cpp
+      CosEventChannelAdminS.cpp
       CosEvent/CEC_ConsumerAdmin.cpp
       CosEvent/CEC_ConsumerControl.cpp
       CosEvent/CEC_Default_Factory.cpp
@@ -93,8 +47,5 @@ project (CosEvent_Serv) : orbsvcslib, core, minimum_corba, event_skel, ec_typed_
       CosEvent/CEC_SupplierAdmin.cpp
       CosEvent/CEC_SupplierControl.cpp
     }
-  }
-
-  Template_Files {
   }
 }

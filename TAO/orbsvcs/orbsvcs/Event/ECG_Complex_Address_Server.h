@@ -16,7 +16,7 @@
 
 #include /**/ "event_export.h"
 
-#include "orbsvcs/RtecUDPAdminS.h"
+#include "orbsvcs/orbsvcs/RtecUDPAdminS.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/INET_Addr.h"
 #include "ace/Null_Mutex.h"

@@ -13,8 +13,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/FtRtecEventChannelAdminC.h"
-#include "orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/orbsvcs/FtRtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminS.h"
 
 namespace TAO_FTRTEC
 {

@@ -36,8 +36,8 @@ namespace TAO
 }
 
 
-#include "orbsvcs/FT_NotifierC.h"
-#include "orbsvcs/FT_ReplicaC.h"
+#include "orbsvcs/orbsvcs/FT_NotifierC.h"
+#include "orbsvcs/orbsvcs/FT_ReplicaC.h"
 #include "ace/Time_Value.h"
 
 

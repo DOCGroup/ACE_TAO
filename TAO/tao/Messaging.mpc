@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, core, portableserver, valuetype {
+project : taolib, core, portableserver {
   sharedname   = TAO_Messaging
   dynamicflags = TAO_MESSAGING_BUILD_DLL
 
@@ -20,10 +20,6 @@ project : taolib, core, portableserver, valuetype {
   }
 
   Resource_Files {
-    Messaging
-  }
-
-  PIDL_Files {
     Messaging
   }
 }

@@ -32,10 +32,8 @@
 // First the machine specific part
 
 #if defined (__alpha)
-# if __GLIBC_MINOR__ < 2
   // This is necessary on Alphas with glibc 2.0.7-13.
 # define ACE_POLL_IS_BROKEN
-# endif
 #elif defined (__powerpc__)
 # if !defined (ACE_DEFAULT_BASE_ADDR)
 #   define ACE_DEFAULT_BASE_ADDR ((char *) 0x40000000)
@@ -51,7 +49,7 @@
 // Then glibc/libc5 specific parts
 
 #if defined(__GLIBC__)
-# define ACE_HAS_NONCONST_SETRLIMIT
+# define ACE_HAS_BROKEN_SETRLIMIT
 # define ACE_HAS_RUSAGE_WHO_ENUM enum __rusage_who
 # define ACE_HAS_RLIMIT_RESOURCE_ENUM enum __rlimit_resource
 # define ACE_HAS_SOCKLEN_T
@@ -207,6 +205,8 @@
 #define ACE_LACKS_ITOW
 #define ACE_LACKS_WCSICMP
 #define ACE_LACKS_WCSNICMP
+#define ACE_LACKS_TOWLOWER
+#define ACE_LACKS_TOWUPPER
 
 #if __GLIBC__ >= 2
 # define ACE_HAS_3_PARAM_WCSTOK
@@ -227,7 +227,7 @@
 
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
-#define ACE_HAS_GETRUSAGE_PROTOTYPE
+#define ACE_HAS_GETRUSAGE_PROTO
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
@@ -269,16 +269,15 @@
 
 #endif
 
+// glibc supports the mkstemp() function.
+#define ACE_HAS_MKSTEMP
+
 // glibc requires _XOPEN_SOURCE_EXTENDED to make this prototype
 // visible, so force ACE to declare one.  Yuk!
 #define ACE_LACKS_MKSTEMP_PROTOTYPE
 
 // Platform defines struct timespec but not timespec_t
 #define ACE_LACKS_TIMESPEC_T
-
-// Platform supplies scandir()
-#define ACE_HAS_SCANDIR
-#define ACE_SCANDIR_CMP_USES_VOIDPTR
 
 //#define ACE_LACKS_STRRECVFD
 #define ACE_HAS_STRBUF_T
@@ -293,10 +292,7 @@
 #define ACE_HAS_SYSV_IPC
 
 // Compiler/platform contains the <sys/syscall.h> file.
-#define ACE_HAS_SYS_SYSCALL_H
-
-// Platform/compiler supports global timezone variable.
-#define ACE_HAS_TIMEZONE
+#define ACE_HAS_SYSCALL_H
 
 // Platform/compiler supports void * as second parameter to gettimeofday().
 #define ACE_HAS_VOIDPTR_GETTIMEOFDAY
@@ -325,7 +321,7 @@
 
 #define ACE_HAS_DIRENT
 
-#if defined (__ia64) || defined(__alpha)
+#if defined (__ia64)
 // On 64 bit platforms, the "long" type is 64-bits.  Override the
 // default 32-bit platform-specific format specifiers appropriately.
 # define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")

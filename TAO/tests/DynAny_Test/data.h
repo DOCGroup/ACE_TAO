@@ -13,7 +13,6 @@
 
 
 #include "tao/ORB.h"
-#include "tao/Object.h"
 #include "tao/TC_Constants_Forward.h"
 
 class Data

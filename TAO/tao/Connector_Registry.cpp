@@ -8,7 +8,6 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/CDR.h"
-#include "tao/SystemException.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Connector_Registry.i"
@@ -119,7 +118,7 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
     // Failure: Null IOR string pointer
     ACE_THROW_RETURN (CORBA::INV_OBJREF (
       CORBA::SystemException::_tao_minor_code (
-        0,
+        TAO_DEFAULT_MINOR_CODE,
         EINVAL),
       CORBA::COMPLETED_NO),
       -1);
@@ -146,7 +145,7 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
         // Failure: Null pointer to connector in connector registry.
         ACE_THROW_RETURN (CORBA::INV_OBJREF (
           CORBA::SystemException::_tao_minor_code (
-            0,
+            TAO_DEFAULT_MINOR_CODE,
             EINVAL),
           CORBA::COMPLETED_NO),
           -1);

@@ -291,17 +291,13 @@ protected:
   void add_to_local_types (AST_Decl *e);
 
   // Has this node been referenced here already?
-  virtual idl_bool referenced (AST_Decl *e,
-                               Identifier *id = 0);
+  idl_bool referenced (AST_Decl *e,
+                       Identifier *id = 0);
 
-  // Look up a scoped name in the inherited list.
+  // Look up a scoped name in the inherited interfaces of an
+  // interface.
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *,
                                        idl_bool treat_as_ref);
-                                       
-  // Look up a scoped name in the supported interface list.
-  virtual AST_Decl *look_in_supported (UTL_ScopedName *,
-                                       idl_bool treat_as_ref);
-                                       
   // Lookup based on the local name.
   AST_Decl *lookup_for_add (AST_Decl *d,
                             idl_bool treat_as_ref);

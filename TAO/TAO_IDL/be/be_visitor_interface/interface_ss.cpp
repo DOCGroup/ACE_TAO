@@ -443,7 +443,7 @@ be_visitor_interface_ss::gen_abstract_ops_helper (be_interface *node,
                                                   be_interface *base,
                                                   TAO_OutStream *os)
 {
-  if (!base->is_abstract ())
+  if (node == base)
     {
       return 0;
     }
@@ -463,7 +463,7 @@ be_visitor_interface_ss::gen_abstract_ops_helper (be_interface *node,
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_interface_ss::"
-                             "gen_abstract_ops_helper - "
+                             "abstract_base_ops_helper - "
                              "bad node in this scope\n"),
                             -1);
         }

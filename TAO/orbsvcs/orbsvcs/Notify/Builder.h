@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,8 +22,8 @@
 
 #include "tao/PortableServer/PortableServer.h"
 
-#include "orbsvcs/CosNotifyChannelAdminC.h"
-#include "orbsvcs/NotifyExtC.h"
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminC.h"
+#include "orbsvcs/orbsvcs/NotifyExtC.h"
 
 #include "AdminProperties.h"
 
@@ -40,7 +40,7 @@ class TAO_Notify_Object;
  * @brief Helper class to create and activate CORBA objects.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_Builder
+class TAO_Notify_Export TAO_Notify_Builder
 {
 public:
   TAO_Notify_Builder (void);

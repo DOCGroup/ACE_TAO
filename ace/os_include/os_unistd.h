@@ -18,7 +18,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/config-lite.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -166,14 +166,11 @@ extern "C"
 
 # endif /* ACE_LACKS_TIMEDWAIT_PROTOTYPES */
 
-#if defined (ACE_LACKS_SWAB_PROTOTYPE)
+#if defined (__Lynx__)
   void swab(const void *, void *, ssize_t);
-#endif /* ACE_LACKS_SWAB_PROTOTYPE */
-  
-#if defined (ACE_LACKS_GETOPT_PROTOTYPE)
   int getopt(int, char * const [], const char *);
-#endif /* ACE_LACKS_GETOPT_PROTOTYPE */
-  
+#endif /* __Lynx__ */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

@@ -2,14 +2,13 @@
 
 project (Config_Handlers) : ciao_deployment_stub {
 
-  after     += CIAO_DnC_Server
   sharedname = Config_Handlers
   dynamicflags   = CONFIG_HANDLER_BUILD_DLL
   macros   += XML_USE_PTHREADS
   requires += exceptions
-  includes += $(XERCESCROOT)/include 
-  libpaths += $(XERCESCROOT)/lib
-  libs     += xerces-c CIAO_DnC_Server TAO_IFR_Client TAO_Valuetype
+  includes += /usr/include $(XERCESCROOT)/include 
+  libpaths += /usr/lib $(XERCESCROOT)/lib
+  libs     += xerces-c CIAO_DnC_Server TAO_IFR_Client
 
   Source_Files {
     Utils.cpp
@@ -45,44 +44,5 @@ project (Config_Handlers) : ciao_deployment_stub {
     SPK_Handler.cpp
     TPD_Handler.cpp
     XercesString.cpp
-  }
-}
-
-project (XSC_Config_Handlers) : ciao_deployment_stub {
-
-  requires += dummy_label
-
-  sharedname = XSC_Config_Handlers
-  dynamicflags   = CONFIG_HANDLER_BUILD_DLL
-  macros   += XML_USE_PTHREADS
-  requires += exceptions
-  includes += $(XERCESCROOT)/include  .
-  libpaths += $(XERCESCROOT)/lib
-  libs     += xerces-c CIAO_DnC_Server TAO_IFR_Client
-
-  Source_Files {
-    Basic_Deployment_Data.cpp
-    ccd.cpp
-    cdd.cpp
-    cdp.cpp
-    cid.cpp
-    cpd.cpp
-    Deployment.cpp
-    iad.cpp
-    pcd.cpp
-    toplevel.cpp
-  }
-
-  Header_Files {
-    Basic_Deployment_Data.hpp
-    ccd.hpp
-    cdd.hpp
-    cdp.hpp
-    cid.hpp
-    cpd.hpp
-    Deployment.hpp
-    iad.hpp
-    pcd.hpp
-    toplevel.hpp
   }
 }

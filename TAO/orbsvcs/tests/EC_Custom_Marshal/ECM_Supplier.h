@@ -17,7 +17,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Channel_Clients_T.h"
+#include "orbsvcs/orbsvcs/Channel_Clients_T.h"
 
 class ECMS_Driver;
 

@@ -7,7 +7,6 @@
 #include "tao/ORB_Constants.h"
 #include "tao/CDR.h"
 #include "tao/Any_Impl.h"
-#include "tao/SystemException.h"
 
 #include "ace/Containers_T.h"
 #include "ace/Hash_Map_Manager_T.h"
@@ -66,7 +65,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
+  
   if (name == 0 || !this->valid_name (name))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
@@ -175,7 +174,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
       if (!valid_member)
         {
-          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 2,
+          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (2,
                                                  CORBA::COMPLETED_NO),
                             CORBA::TypeCode::_nil ());
         }
@@ -1229,7 +1228,7 @@ TAO_TypeCodeFactory_i::valid_name (const char *name)
     {
       return 1;
     }
-
+    
   if (!isalpha (*name))
     {
       return 0;
@@ -1486,7 +1485,7 @@ TAO_TypeCodeFactory_i::assemble_tc (TAO_OutputCDR &cdr,
                     CORBA::TypeCode (kind,
                                      consolidated_block.length (),
                                      consolidated_block.rd_ptr (),
-                                     true,
+                                     0,
                                      0),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());

@@ -16,13 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/CosTypedEventChannelAdminS.h"
+#include "orbsvcs/orbsvcs/CosTypedEventChannelAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/ESF/ESF_Proxy_Admin.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h"
 
 #include "CEC_ProxyPushSupplier.h"
 #include "CEC_TypedEvent.h"
@@ -30,7 +30,7 @@
 class TAO_CEC_TypedEventChannel;
 
 //Class TAO_CEC_TypedConsumerAdmin
-class TAO_Event_Serv_Export TAO_CEC_TypedConsumerAdmin
+class TAO_Event_Export TAO_CEC_TypedConsumerAdmin
   : public POA_CosTypedEventChannelAdmin::TypedConsumerAdmin
 {
 public:

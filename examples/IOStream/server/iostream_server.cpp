@@ -10,7 +10,6 @@
 #include "ace/Signal.h"
 
 #include "iostream_server.h"
-#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(server, iostream_server, "$Id$")
 

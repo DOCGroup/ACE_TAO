@@ -1,7 +1,7 @@
 // $Id$
 
-#include "orbsvcs/Event/EC_ProxyConsumer.h"
-#include "orbsvcs/Event/EC_Event_Channel_Base.h"
+#include "orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h"
+#include "orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "FTEC_ConsumerAdmin.h"
 #include "FTEC_ProxySupplier.h"
 #include "ProxySupplierStateWorker.h"

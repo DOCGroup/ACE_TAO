@@ -17,7 +17,6 @@
 #ifndef _RWHO_DB_MANAGER_H
 #define _RWHO_DB_MANAGER_H
 
-#include <sys/types.h>
 #include <protocols/rwhod.h>
 #include "ace/Dirent.h"
 

@@ -85,14 +85,10 @@ public:
 
   // = ACE_Stream plumbing operations
 
-  /// Add a new module <mod> right below the Stream head.  The
-  /// <open()> hook methods of the <ACE_Tasks> in this <ACE_Module>
-  /// are invoked to initialize the tasks.
+  /// Add a new module <mod> right below the Stream head.
   virtual int push (ACE_Module<ACE_SYNCH_USE> *mod);
 
   /// Remove the <mod> right below the Stream head and close it down.
-  //  The <close()> hook methods of the <ACE_Tasks> in this <ACE_Module>
-  /// are invoked to cleanup the tasks.
   virtual int pop (int flags = M_DELETE);
 
   /// Return the top module on the stream (right below the stream

@@ -17,8 +17,8 @@
 #ifndef TAO_BASIC_LOG_TEST_H
 #define TAO_BASIC_LOG_TEST_H
 
-#include "orbsvcs/DsLogAdminC.h"
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/DsLogAdminC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 
 class BasicLog_Test
 {

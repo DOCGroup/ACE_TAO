@@ -28,8 +28,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SString.h"
-#include <orbsvcs/RTCosSchedulingS.h>
-#include <orbsvcs/RTCosScheduling/RTCosScheduling_export.h>
+#include <orbsvcs/orbsvcs/RTCosSchedulingS.h>
+#include <orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_export.h>
 #include "RTCosScheduling_PCP_Manager.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"

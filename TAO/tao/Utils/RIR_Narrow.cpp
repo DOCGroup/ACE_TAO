@@ -2,7 +2,6 @@
 #define TAO_UTILS_RIR_NARROW_CPP
 
 #include "RIR_Narrow.h"
-#include "tao/SystemException.h"
 #include <stdexcept>
 
 ACE_RCSID (Utils,

@@ -57,7 +57,7 @@ namespace TAO
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 DynamicAny::DynAny_ptr
-TAO::Objref_Traits<DynamicAny::DynAny>::duplicate (
+TAO::Objref_Traits<DynamicAny::DynAny>::tao_duplicate (
     DynamicAny::DynAny_ptr p
   )
 {
@@ -66,7 +66,7 @@ TAO::Objref_Traits<DynamicAny::DynAny>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<DynamicAny::DynAny>::release (
+TAO::Objref_Traits<DynamicAny::DynAny>::tao_release (
     DynamicAny::DynAny_ptr p
   )
 {
@@ -75,14 +75,14 @@ TAO::Objref_Traits<DynamicAny::DynAny>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 DynamicAny::DynAny_ptr
-TAO::Objref_Traits<DynamicAny::DynAny>::nil (void)
+TAO::Objref_Traits<DynamicAny::DynAny>::tao_nil (void)
 {
   return DynamicAny::DynAny::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<DynamicAny::DynAny>::marshal (
+TAO::Objref_Traits<DynamicAny::DynAny>::tao_marshal (
     DynamicAny::DynAny_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -364,7 +364,7 @@ DynamicAny::DynAny::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 DynamicAny::DynFixed_ptr
-TAO::Objref_Traits<DynamicAny::DynFixed>::duplicate (
+TAO::Objref_Traits<DynamicAny::DynFixed>::tao_duplicate (
     DynamicAny::DynFixed_ptr p
   )
 {
@@ -373,7 +373,7 @@ TAO::Objref_Traits<DynamicAny::DynFixed>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<DynamicAny::DynFixed>::release (
+TAO::Objref_Traits<DynamicAny::DynFixed>::tao_release (
     DynamicAny::DynFixed_ptr p
   )
 {
@@ -382,14 +382,14 @@ TAO::Objref_Traits<DynamicAny::DynFixed>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 DynamicAny::DynFixed_ptr
-TAO::Objref_Traits<DynamicAny::DynFixed>::nil (void)
+TAO::Objref_Traits<DynamicAny::DynFixed>::tao_nil (void)
 {
   return DynamicAny::DynFixed::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<DynamicAny::DynFixed>::marshal (
+TAO::Objref_Traits<DynamicAny::DynFixed>::tao_marshal (
     DynamicAny::DynFixed_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -505,7 +505,7 @@ DynamicAny::DynFixed::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 DynamicAny::DynEnum_ptr
-TAO::Objref_Traits<DynamicAny::DynEnum>::duplicate (
+TAO::Objref_Traits<DynamicAny::DynEnum>::tao_duplicate (
     DynamicAny::DynEnum_ptr p
   )
 {
@@ -514,7 +514,7 @@ TAO::Objref_Traits<DynamicAny::DynEnum>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<DynamicAny::DynEnum>::release (
+TAO::Objref_Traits<DynamicAny::DynEnum>::tao_release (
     DynamicAny::DynEnum_ptr p
   )
 {
@@ -523,14 +523,14 @@ TAO::Objref_Traits<DynamicAny::DynEnum>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 DynamicAny::DynEnum_ptr
-TAO::Objref_Traits<DynamicAny::DynEnum>::nil (void)
+TAO::Objref_Traits<DynamicAny::DynEnum>::tao_nil (void)
 {
   return DynamicAny::DynEnum::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<DynamicAny::DynEnum>::marshal (
+TAO::Objref_Traits<DynamicAny::DynEnum>::tao_marshal (
     DynamicAny::DynEnum_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -744,7 +744,7 @@ DynamicAny::NameDynAnyPairSeq::~NameDynAnyPairSeq (void)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 DynamicAny::DynStruct_ptr
-TAO::Objref_Traits<DynamicAny::DynStruct>::duplicate (
+TAO::Objref_Traits<DynamicAny::DynStruct>::tao_duplicate (
     DynamicAny::DynStruct_ptr p
   )
 {
@@ -753,7 +753,7 @@ TAO::Objref_Traits<DynamicAny::DynStruct>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<DynamicAny::DynStruct>::release (
+TAO::Objref_Traits<DynamicAny::DynStruct>::tao_release (
     DynamicAny::DynStruct_ptr p
   )
 {
@@ -762,14 +762,14 @@ TAO::Objref_Traits<DynamicAny::DynStruct>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 DynamicAny::DynStruct_ptr
-TAO::Objref_Traits<DynamicAny::DynStruct>::nil (void)
+TAO::Objref_Traits<DynamicAny::DynStruct>::tao_nil (void)
 {
   return DynamicAny::DynStruct::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<DynamicAny::DynStruct>::marshal (
+TAO::Objref_Traits<DynamicAny::DynStruct>::tao_marshal (
     DynamicAny::DynStruct_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -885,7 +885,7 @@ DynamicAny::DynStruct::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 DynamicAny::DynUnion_ptr
-TAO::Objref_Traits<DynamicAny::DynUnion>::duplicate (
+TAO::Objref_Traits<DynamicAny::DynUnion>::tao_duplicate (
     DynamicAny::DynUnion_ptr p
   )
 {
@@ -894,7 +894,7 @@ TAO::Objref_Traits<DynamicAny::DynUnion>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<DynamicAny::DynUnion>::release (
+TAO::Objref_Traits<DynamicAny::DynUnion>::tao_release (
     DynamicAny::DynUnion_ptr p
   )
 {
@@ -903,14 +903,14 @@ TAO::Objref_Traits<DynamicAny::DynUnion>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 DynamicAny::DynUnion_ptr
-TAO::Objref_Traits<DynamicAny::DynUnion>::nil (void)
+TAO::Objref_Traits<DynamicAny::DynUnion>::tao_nil (void)
 {
   return DynamicAny::DynUnion::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<DynamicAny::DynUnion>::marshal (
+TAO::Objref_Traits<DynamicAny::DynUnion>::tao_marshal (
     DynamicAny::DynUnion_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1117,7 +1117,7 @@ DynamicAny::DynAnySeq::~DynAnySeq (void)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 DynamicAny::DynSequence_ptr
-TAO::Objref_Traits<DynamicAny::DynSequence>::duplicate (
+TAO::Objref_Traits<DynamicAny::DynSequence>::tao_duplicate (
     DynamicAny::DynSequence_ptr p
   )
 {
@@ -1126,7 +1126,7 @@ TAO::Objref_Traits<DynamicAny::DynSequence>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<DynamicAny::DynSequence>::release (
+TAO::Objref_Traits<DynamicAny::DynSequence>::tao_release (
     DynamicAny::DynSequence_ptr p
   )
 {
@@ -1135,14 +1135,14 @@ TAO::Objref_Traits<DynamicAny::DynSequence>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 DynamicAny::DynSequence_ptr
-TAO::Objref_Traits<DynamicAny::DynSequence>::nil (void)
+TAO::Objref_Traits<DynamicAny::DynSequence>::tao_nil (void)
 {
   return DynamicAny::DynSequence::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<DynamicAny::DynSequence>::marshal (
+TAO::Objref_Traits<DynamicAny::DynSequence>::tao_marshal (
     DynamicAny::DynSequence_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1258,7 +1258,7 @@ DynamicAny::DynSequence::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 DynamicAny::DynArray_ptr
-TAO::Objref_Traits<DynamicAny::DynArray>::duplicate (
+TAO::Objref_Traits<DynamicAny::DynArray>::tao_duplicate (
     DynamicAny::DynArray_ptr p
   )
 {
@@ -1267,7 +1267,7 @@ TAO::Objref_Traits<DynamicAny::DynArray>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<DynamicAny::DynArray>::release (
+TAO::Objref_Traits<DynamicAny::DynArray>::tao_release (
     DynamicAny::DynArray_ptr p
   )
 {
@@ -1276,14 +1276,14 @@ TAO::Objref_Traits<DynamicAny::DynArray>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 DynamicAny::DynArray_ptr
-TAO::Objref_Traits<DynamicAny::DynArray>::nil (void)
+TAO::Objref_Traits<DynamicAny::DynArray>::tao_nil (void)
 {
   return DynamicAny::DynArray::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<DynamicAny::DynArray>::marshal (
+TAO::Objref_Traits<DynamicAny::DynArray>::tao_marshal (
     DynamicAny::DynArray_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1399,7 +1399,7 @@ DynamicAny::DynArray::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 DynamicAny::DynValue_ptr
-TAO::Objref_Traits<DynamicAny::DynValue>::duplicate (
+TAO::Objref_Traits<DynamicAny::DynValue>::tao_duplicate (
     DynamicAny::DynValue_ptr p
   )
 {
@@ -1408,7 +1408,7 @@ TAO::Objref_Traits<DynamicAny::DynValue>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<DynamicAny::DynValue>::release (
+TAO::Objref_Traits<DynamicAny::DynValue>::tao_release (
     DynamicAny::DynValue_ptr p
   )
 {
@@ -1417,14 +1417,14 @@ TAO::Objref_Traits<DynamicAny::DynValue>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 DynamicAny::DynValue_ptr
-TAO::Objref_Traits<DynamicAny::DynValue>::nil (void)
+TAO::Objref_Traits<DynamicAny::DynValue>::tao_nil (void)
 {
   return DynamicAny::DynValue::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<DynamicAny::DynValue>::marshal (
+TAO::Objref_Traits<DynamicAny::DynValue>::tao_marshal (
     DynamicAny::DynValue_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1540,7 +1540,7 @@ DynamicAny::DynValue::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 DynamicAny::DynAnyFactory_ptr
-TAO::Objref_Traits<DynamicAny::DynAnyFactory>::duplicate (
+TAO::Objref_Traits<DynamicAny::DynAnyFactory>::tao_duplicate (
     DynamicAny::DynAnyFactory_ptr p
   )
 {
@@ -1549,7 +1549,7 @@ TAO::Objref_Traits<DynamicAny::DynAnyFactory>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<DynamicAny::DynAnyFactory>::release (
+TAO::Objref_Traits<DynamicAny::DynAnyFactory>::tao_release (
     DynamicAny::DynAnyFactory_ptr p
   )
 {
@@ -1558,14 +1558,14 @@ TAO::Objref_Traits<DynamicAny::DynAnyFactory>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 DynamicAny::DynAnyFactory_ptr
-TAO::Objref_Traits<DynamicAny::DynAnyFactory>::nil (void)
+TAO::Objref_Traits<DynamicAny::DynAnyFactory>::tao_nil (void)
 {
   return DynamicAny::DynAnyFactory::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<DynamicAny::DynAnyFactory>::marshal (
+TAO::Objref_Traits<DynamicAny::DynAnyFactory>::tao_marshal (
     DynamicAny::DynAnyFactory_ptr p,
     TAO_OutputCDR & cdr
   )

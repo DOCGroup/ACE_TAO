@@ -31,7 +31,7 @@
 #define ACE_HAS_MSG
 
 // Compiler/platform contains the <sys/syscall.h> file.
-#define ACE_HAS_SYS_SYSCALL_H
+#define ACE_HAS_SYSCALL_H
 
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
@@ -56,7 +56,7 @@
 #define ACE_HAS_SEMUN
 
 // Compiler/platform provides the sockio.h file.
-#define ACE_HAS_SYS_SOCKIO_H
+#define ACE_HAS_SOCKIO_H
 
 // Compiler has brain-damaged SPARCwork signal prototype...
 #define ACE_HAS_SPARCWORKS_401_SIGNALS

@@ -1,9 +1,6 @@
 #include "PolicyFactory_Registry.h"
 #include "PortableInterceptorC.h"
 #include "ORB_Constants.h"
-#include "SystemException.h"
-#include "PolicyC.h"
-
 
 ACE_RCSID (tao,
            PolicyFactory_Registry,
@@ -39,7 +36,7 @@ TAO_PolicyFactory_Registry::register_policy_factory (
     {
       ACE_THROW (CORBA::BAD_PARAM (
                    CORBA::SystemException::_tao_minor_code (
-                     0,
+                     TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                    CORBA::COMPLETED_NO));
     }

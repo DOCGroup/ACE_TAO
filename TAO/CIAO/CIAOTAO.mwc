@@ -14,5 +14,4 @@ workspace {
   DAnCE
   ciao
   tools
-  tests
 }

@@ -1000,7 +1000,7 @@ AST_Module::fe_add_constant (AST_Constant *t)
         {
           idl_global->err ()->redefinition_in_scope (t,
                                                      d);
-          return 0;
+          return NULL;
         }
     }
 
@@ -1631,21 +1631,6 @@ AST_Module::be_add_interface (AST_Interface *i,
                            ix);
 
   return 0;
-}
-
-// Has this node been referenced here before?
-idl_bool
-AST_Module::referenced (AST_Decl *e,
-                        Identifier *id)
-{
-  idl_bool refd = this->UTL_Scope::referenced (e, id);
-  
-  if (refd)
-    {
-      return I_TRUE;
-    }
-    
-  return this->look_in_previous (e->local_name ()) != 0;
 }
 
 void

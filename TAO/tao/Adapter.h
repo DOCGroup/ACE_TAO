@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/SystemException.h"
+#include "tao/Exception.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

@@ -43,8 +43,6 @@ module PortableInterceptor
   typedef string ORBId;
   typedef CORBA::StringSeq AdapterName;
   typedef CORBA::OctetSeq ObjectId;
-  typedef long AdapterManagerId;
-  typedef short AdapterState;
 };
 
 #endif  /* _PI_FORWARD_IDL_ */

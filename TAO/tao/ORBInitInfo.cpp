@@ -4,7 +4,6 @@
 #include "ORB_Core.h"
 #include "ORB.h"
 #include "CodecFactory.h"
-#include "SystemException.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "PICurrent.h"
@@ -23,7 +22,7 @@ ACE_RCSID (TAO,
 // Traits specializations for TAO_ORBInitInfo.
 
 TAO_ORBInitInfo_ptr
-TAO::Objref_Traits<TAO_ORBInitInfo>::duplicate (
+TAO::Objref_Traits<TAO_ORBInitInfo>::tao_duplicate (
     TAO_ORBInitInfo_ptr p
   )
 {
@@ -31,7 +30,7 @@ TAO::Objref_Traits<TAO_ORBInitInfo>::duplicate (
 }
 
 void
-TAO::Objref_Traits<TAO_ORBInitInfo>::release (
+TAO::Objref_Traits<TAO_ORBInitInfo>::tao_release (
     TAO_ORBInitInfo_ptr p
   )
 {
@@ -39,13 +38,13 @@ TAO::Objref_Traits<TAO_ORBInitInfo>::release (
 }
 
 TAO_ORBInitInfo_ptr
-TAO::Objref_Traits<TAO_ORBInitInfo>::nil (void)
+TAO::Objref_Traits<TAO_ORBInitInfo>::tao_nil (void)
 {
   return TAO_ORBInitInfo::_nil ();
 }
 
 CORBA::Boolean
-TAO::Objref_Traits<TAO_ORBInitInfo>::marshal (
+TAO::Objref_Traits<TAO_ORBInitInfo>::tao_marshal (
     TAO_ORBInitInfo_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -83,7 +82,7 @@ TAO_ORBInitInfo::arguments (ACE_ENV_SINGLE_ARG_DECL)
                     CORBA::StringSeq,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        0,
+                        TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
@@ -126,7 +125,7 @@ TAO_ORBInitInfo::codec_factory (ACE_ENV_SINGLE_ARG_DECL)
                         TAO_CodecFactory (this->orb_core_),
                           CORBA::NO_MEMORY (
                             CORBA::SystemException::_tao_minor_code (
-                              0,
+                              TAO_DEFAULT_MINOR_CODE,
                               ENOMEM),
                             CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (IOP::CodecFactory::_nil ());
@@ -202,7 +201,7 @@ TAO_ORBInitInfo::add_client_request_interceptor (
   ACE_UNUSED_ARG (interceptor);
   ACE_THROW (CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
-                 0,
+                 TAO_DEFAULT_MINOR_CODE,
                  ENOTSUP),
                CORBA::COMPLETED_NO));
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
@@ -226,7 +225,7 @@ TAO_ORBInitInfo::add_server_request_interceptor (
   ACE_UNUSED_ARG (interceptor);
   ACE_THROW (CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
-                 0,
+                 TAO_DEFAULT_MINOR_CODE,
                  ENOTSUP),
                CORBA::COMPLETED_NO));
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
@@ -260,7 +259,7 @@ TAO_ORBInitInfo::allocate_slot_id (ACE_ENV_SINGLE_ARG_DECL)
 #else
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
                       CORBA::SystemException::_tao_minor_code (
-                        0,
+                        TAO_DEFAULT_MINOR_CODE,
                         ENOTSUP),
                       CORBA::COMPLETED_NO),
                     0);
@@ -301,7 +300,7 @@ TAO_ORBInitInfo::allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup
   if (result != 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (
                         CORBA::SystemException::_tao_minor_code (
-                          0,
+                          TAO_DEFAULT_MINOR_CODE,
                           errno),
                         CORBA::COMPLETED_NO),
                       0);
@@ -320,7 +319,7 @@ TAO_ORBInitInfo::check_validity (ACE_ENV_SINGLE_ARG_DECL)
       // this instance to zero when it is done initializing the ORB,
       // which is why we base "existence" on the validity of the ORB
       // core pointer.
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST (0,
+      ACE_THROW (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE,
                                           CORBA::COMPLETED_NO));
     }
 }

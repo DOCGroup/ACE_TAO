@@ -2,8 +2,6 @@
 //
 // $Id$
 
-#include "SystemException.h"
-
 ACE_INLINE void
 TAO_ClientRequestInfo_i::exception (CORBA::Exception *exception)
 {

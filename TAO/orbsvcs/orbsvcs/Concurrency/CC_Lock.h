@@ -25,7 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosConcurrencyControlC.h"
+#include "orbsvcs/orbsvcs/CosConcurrencyControlC.h"
 #include "concurrency_export.h"
 
 /// This constant defines the number of lock modes. There is really no

@@ -17,11 +17,11 @@
 #ifndef NOTIFY_CONSUMER_H
 #define NOTIFY_CONSUMER_H
 
-#include "orbsvcs/DsNotifyLogAdminS.h"
-#include "orbsvcs/DsEventLogAdminC.h"
-#include "orbsvcs/CosEventCommS.h"
-#include "orbsvcs/CosNotifyCommS.h"
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/DsNotifyLogAdminS.h"
+#include "orbsvcs/orbsvcs/DsEventLogAdminC.h"
+#include "orbsvcs/orbsvcs/CosEventCommS.h"
+#include "orbsvcs/orbsvcs/CosNotifyCommS.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

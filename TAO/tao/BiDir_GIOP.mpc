@@ -22,8 +22,4 @@ project : taolib, core {
   Resource_Files {
     BiDir_GIOP
   }
-
-  PIDL_Files {
-    BiDir_GIOP
-  }
 }

@@ -24,7 +24,7 @@
 
 #include "PG_MemberInfo.h"
 
-#include "orbsvcs/PortableGroupC.h"
+#include "orbsvcs/orbsvcs/PortableGroupC.h"
 
 #include "tao/PortableServer/Key_Adapters.h"
 #include "tao/PortableServer/PortableServerC.h"

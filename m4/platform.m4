@@ -104,6 +104,8 @@ dnl  */
     AC_DEFINE([IP_DROP_MEMBERSHIP], [0x14])
     ACE_CPPFLAGS="$ACE_CPPFLAGS -D_POSIX4A_DRAFT10_SOURCE -D_POSIX4_DRAFT_SOURCE"
     ;;
+  *freebsd*)
+    ;;
   *fsu*)
 dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     AC_DEFINE([PTHREAD_STACK_MIN], [(1024*10)])
@@ -186,6 +188,9 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     ;;
   *mvs*)
     ACE_CPPFLAGS="$ACE_CPPFLAGS -D_ALL_SOURCE"
+    ;;
+  *netbsd*)
+    AC_DEFINE([ACE_NETBSD])
     ;;
   *osf3.2*)
     AC_EGREP_CPP([ACE_DEC_CXX],
@@ -345,125 +350,5 @@ dnl    AC_DEFINE(ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
     ;;
 esac
 
-ACE_FUNC_IOCTL_ARGTYPES
-
-ACE_CHECK_FORMAT_SPECIFIERS
-ACE_CHECK_LACKS_PERFECT_MULTICAST_FILTERING
-
 dnl End ACE_SET_PLATFORM_MACROS
-])
-
-
-
-# ACE_CHECK_FORMAT_SPECIFIERS
-#
-# Override default *printf format specifiers for size_t, ssize_t, ACE_INT64, 
-# and ACE_UINT64
-#
-# FIXME: Is it possible to write a portable feature test, or is checking
-#        the the target OS / target CPU the best we can do?
-# 
-#---------------------------------------------------------------------------
-AC_DEFUN([ACE_CHECK_FORMAT_SPECIFIERS],
-[dnl
-AH_TEMPLATE([ACE_SIZE_T_FORMAT_SPECIFIER],
-[Define to the *printf format specifier  (e.g. "%u") for size_t])dnl
-AH_TEMPLATE([ACE_SSIZE_T_FORMAT_SPECIFIER],
-[Define to the *printf format specifier  (e.g. "%d") for ssize_t])dnl
-AH_TEMPLATE([ACE_INT64_FORMAT_SPECIFIER],
-[Define to the *printf format specifier (e.g. "%lld") for the 64 bit signed integer type])dnl
-AH_TEMPLATE([ACE_UINT64_FORMAT_SPECIFIER],
-[Define to the *printf format specifier (e.g. "%llu") for the 64 bit signed integer type])dnl
-
-case "$target_os" in
-darwin*)
-  AC_DEFINE([ACE_SIZE_T_FORMAT_SPECIFIER], ["%lu"])
-  ;;
-netbsd*)
-  case "$target_cpu" in
-    x86_64)
-      AC_DEFINE([ACE_SIZE_T_FORMAT_SPECIFIER], ["%lu"])
-      AC_DEFINE([ACE_SSIZE_T_FORMAT_SPECIFIER], ["%ld"])
-      ;;
-    *)
-      ;;
-  esac
-  ;;
-
-*)
-  ;;
-esac])
-
-
-# ACE_CHECK_PERFECT_MULTICAST_FILTERING
-#
-# Checks whether platform lacks "perfect" multicast filtering.
-#
-# FIXME: Is it possible to write a portable feature test, or is checking
-#        the the target OS the best we can do?
-# 
-#---------------------------------------------------------------------------
-AC_DEFUN([ACE_CHECK_LACKS_PERFECT_MULTICAST_FILTERING],
-[AC_CACHE_CHECK([whether platform lacks perfect multicast filtering],
-  [ace_cv_lacks_perfect_multicast_filtering],
-  [case "$target_os" in
-  darwin* | freebsd* | netbsd* | openbsd* | qnx*)
-    ace_cv_lacks_perfect_multicast_filtering=yes ;;
-  *)
-    ace_cv_lacks_perfect_multicast_filtering=no ;;
-  esac])
-    
-if test $ace_cv_lacks_perfect_multicast_filtering = yes; then
-  AC_DEFINE([ACE_LACKS_PERFECT_MULTICAST_FILTERING], 1,
-[Define to 1 if platform lacks IGMPv3 "perfect" filtering of multicast 
-datagrams at the socket level.  If defined, ACE_SOCK_Dgram_Mcast will bind 
-the first joined multicast group to the socket, and all future joins on that
-socket will fail with an error.])
-fi
-])
-
-
-# ACE_FUNC_IOCTL_ARGTYPES
-#
-# Determine the correct type to be passed to ioctl's second argument and
-# define the types in ACE_IOCTL_TYPE_ARG2.
-#
-# FIXME: Should we support ioctl's third argument as well...?
-# 
-# FIXME: Is it possible to write a portable feature test, or is checking
-#        the the target OS the best we can do?
-# 
-#---------------------------------------------------------------------------
-AC_DEFUN([ACE_FUNC_IOCTL_ARGTYPES],
-[AC_CACHE_CHECK([types of arguments for ioctl()],
-  [ace_cv_func_ioctl_arg2],
-  [case "$target_os" in
-   darwin* | freebsd* | netbsd* | openbsd*)
-    ace_cv_func_ioctl_arg2="unsigned long" ;;
-   *)
-    ace_cv_func_ioctl_arg2="int" ;;
-   esac])
-
-AC_DEFINE_UNQUOTED(ACE_IOCTL_TYPE_ARG2, $ace_cv_func_ioctl_arg2,
-	           [Define to the type of arg 2 for `ioctl'.])
-])
- 
-
-# ACE_VAR_TIMEZONE
-#
-# Checks whether platform has global "timezone" variable.
-#
-#---------------------------------------------------------------------------
-AC_DEFUN([ACE_VAR_TIMEZONE],
-[AC_CACHE_CHECK([for timezone variable],
-		[ace_cv_var_timezone],
-		[AC_TRY_LINK([#include <time.h>],
-			     [return (int)timezone;],
-		             [ace_cv_var_timezone=yes],
-			     [ace_cv_var_timezone=no])
-		])
-if test "$ace_cv_var_timezone" = yes; then
-  AC_DEFINE([ACE_HAS_TIMEZONE], 1,
-	    [Define to 1 if platform has global timezone variable])
-fi
 ])

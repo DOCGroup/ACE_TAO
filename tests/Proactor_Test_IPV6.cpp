@@ -90,14 +90,14 @@ static int loglevel;       // 0 full , 1 only errors
 
 static size_t xfer_limit;  // Number of bytes for Sender to send.
 
-static char complete_message[] =
-  "GET / HTTP/1.1\r\n"
-  "Accept: */*\r\n"
-  "Accept-Language: C++\r\n"
-  "Accept-Encoding: gzip, deflate\r\n"
-  "User-Agent: Proactor_Test_IPv6/1.0 (non-compatible)\r\n"
-  "Connection: Keep-Alive\r\n"
-  "\r\n";
+static ACE_TCHAR complete_message[] =
+  ACE_TEXT ("GET / HTTP/1.1\r\n")
+  ACE_TEXT ("Accept: */*\r\n")
+  ACE_TEXT ("Accept-Language: C++\r\n")
+  ACE_TEXT ("Accept-Encoding: gzip, deflate\r\n")
+  ACE_TEXT ("User-Agent: Proactor_Test_IPv6/1.0 (non-compatible)\r\n")
+  ACE_TEXT ("Connection: Keep-Alive\r\n")
+  ACE_TEXT ("\r\n");
 
 class LogLocker
 {
@@ -1737,7 +1737,7 @@ set_proactor_type (const ACE_TCHAR *ptype)
   if (!ptype)
     return 0;
 
-  switch (ACE_OS::ace_toupper (*ptype))
+  switch (ACE_OS::to_upper (*ptype))
     {
     case 'D':
       proactor_type = DEFAULT;

@@ -31,7 +31,7 @@ namespace TAO
 /////////////////////////////////
 // Includes needed by this header
 #include "portablegroup_export.h"
-#include "orbsvcs/PortableGroupS.h"
+#include "orbsvcs/orbsvcs/PortableGroupS.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"

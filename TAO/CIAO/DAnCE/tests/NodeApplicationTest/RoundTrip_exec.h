@@ -109,8 +109,7 @@ namespace RoundTrip_Impl
     {
     }
 
-    virtual CORBA::Long cube_long (CORBA::Long data 
-		    	           ACE_ENV_ARG_DECL)
+    virtual CORBA::Long cube_long (CORBA::Long data)
         ACE_THROW_SPEC ((CORBA::SystemException));
   };
 

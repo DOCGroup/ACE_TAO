@@ -16,16 +16,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/SSLIOP/SSLIOP_Export.h"
+#include "orbsvcs/orbsvcs/SSLIOP/SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/SSLIOP/SSLIOP_Credentials.h"
-#include "orbsvcs/SSLIOP/SSLIOP_SSL.h"
+#include "orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h"
 
-#include "orbsvcs/SecurityLevel3C.h"
+#include "orbsvcs/orbsvcs/SecurityLevel3C.h"
 
 #include "tao/LocalObject.h"
 
@@ -35,7 +34,6 @@
 #endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
 
 namespace TAO
 {
@@ -50,14 +48,12 @@ namespace TAO
      */
     class TAO_SSLIOP_Export ClientCredentials
       : public virtual SecurityLevel3::ClientCredentials,
-        public virtual SSLIOP_Credentials
+        public virtual Credentials
     {
     public:
 
       /// Constructor
-      ClientCredentials (::X509 * cert,
-                         ::EVP_PKEY * evp,
-                         ::SSL * ssl);
+      ClientCredentials (::X509 *cert, ::EVP_PKEY *evp);
 
       /**
        * @name SecurityLevel3::Credentials Methods
@@ -130,12 +126,6 @@ namespace TAO
        * through the reference counting mechanism.
        */
       ~ClientCredentials (void);
-
-    private:
-
-      /// Reference to the OpenSSL @c SSL data structure associated
-      /// with the current security context (e.g. SSL connection).
-      TAO::SSLIOP::SSL_var ssl_;
 
     };
 

@@ -13,13 +13,13 @@
 #define TAO_Notify_PEER_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosNotificationC.h"
+#include "orbsvcs/orbsvcs/CosNotificationC.h"
 #include "EventTypeSeq.h"
 
 class TAO_Notify_Proxy;
@@ -33,7 +33,7 @@ class TAO_Notify_Peer;
  *        This object delegates its reference count to its creator proxy object.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_Peer
+class TAO_Notify_Export TAO_Notify_Peer
 {
 public:
   /// Constuctor

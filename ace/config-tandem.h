@@ -37,7 +37,7 @@
 #define ACE_HAS_SYSV_IPC
 
 // OS/compiler omits the const from the sendmsg() prototype.
-#define ACE_HAS_NONCONST_SENDMSG
+#define ACE_HAS_BROKEN_SENDMSG
 
 //OS/compiler's header files are inconsistent with libC definition of rand_r().
 //#define ACE_HAS_BROKEN_RANDR          // Defines it the same way as sunos5.4
@@ -52,7 +52,7 @@
 #define ACE_HAS_MSG
 
 //Compiler/platform contains the <sys/syscall.h> file.
-#define ACE_HAS_SYS_SYSCALL_H
+#define ACE_HAS_SYSCALL_H
 
 //Platform provides <sysent.h> header
 #define ACE_HAS_SYSENT_H
@@ -116,7 +116,7 @@
 #define ACE_HAS_SIGWAIT
 
 //Compiler/platform provides the sockio.h file
-#define ACE_HAS_SYS_SOCKIO_H
+#define ACE_HAS_SOCKIO_H
 
 // Compiler supports the ssize_t typedef
 #define ACE_HAS_SSIZE_T    // Limits.h must be included
@@ -272,9 +272,9 @@
 // files with extern "C".
 //ACE_HAS_BROKEN_POSIX_TIME             Platform defines struct timespec in
 // <sys/timers.h>
-//ACE_HAS_NONCONST_SETRLIMIT             OS/compiler omits the const from the
+//ACE_HAS_BROKEN_SETRLIMIT             OS/compiler omits the const from the
 // rlimit parameter in the setrlimit() prototype.
-//ACE_HAS_NONCONST_WRITEV                OS/compiler omits the const from the
+//ACE_HAS_BROKEN_WRITEV                OS/compiler omits the const from the
 // iovec parameter in the writev() prototype.
 // There is a bstring in the Tandem but where man bstring OK, find bstring NOK
 // ? ACE_HAS_BSTRING                     Platform has <bstring.h> (which contains bzero() prototype)
@@ -327,6 +327,8 @@
 //? ACE_HAS_STRUCT_NETDB_DATA           Compiler/platform has strange
 // hostent API for socket *_r() calls
 //ACE_HAS_VOIDPTR_GETTIMEOFDAY           
+//? ACE_HAS_SYSCALL_GETRUSAGE           HP/UX has an undefined syscall for
+//GETRUSAGE...
 //ACE_HAS_TEMPLATE_TYPEDEFS             Compiler implements templates that
 // support typedefs inside of classes used as formal arguments to a template
 // class.
@@ -368,7 +370,7 @@
 //ACE_LACKS_NETDB_REENTRANT_FUNCTIONS   Platform does not support reentrant
 // netdb functions (getprotobyname_r, getprotobynumber_r, gethostbyaddr_r,
 // gethostbyname_r, getservbyname_r).
-//ACE_LACKS_SYS_PARAM_H                     Platform lacks <sys/param.h> (e.g.,
+//ACE_LACKS_PARAM_H                     Platform lacks <sys/param.h> (e.g.,
 //MVS)
 //certain System V functions like shared memory and message queues.
 //ACE_LACKS_RECVMSG                     Platform lacks recvmsg() (e.g., Linux)

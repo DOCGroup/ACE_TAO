@@ -76,9 +76,9 @@ protected:
   // a class with no instance data.
 #else
   LOG_MESSAGE_RECEIVER receiver_;
-  ACE_TString host_name_;
+  ACE_CString host_name_;
 #endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
-  const ACE_TCHAR *host_name (void);
+  const char *host_name (void);
   // Name of the host we are connected to.
 
   LOG_MESSAGE_RECEIVER &receiver (void){ return receiver_; }
@@ -106,11 +106,11 @@ class ACE_Server_Logging_Acceptor_T : public ACE_Strategy_Acceptor<SERVER_LOGGIN
   //     easily be factored into the <ACE_Strategy_Acceptor>.
 public:
   ACE_Server_Logging_Acceptor_T (void);
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  virtual int init (int argc, char *argv[]);
   // Dynamic linking hook.
 
 protected:
-  int parse_args (int argc, ACE_TCHAR *argv[]);
+  int parse_args (int argc, char *argv[]);
   // Parse svc.conf arguments.
 
   virtual int make_svc_handler (SERVER_LOGGING_HANDLER *&);

@@ -213,7 +213,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     }
 
   // If we inherit from both CORBA::Object and CORBA::AbstractBase,
-  // we have to override _add_ref() to avoid ambiguity.
+  // we have to override _add_ref() to avoid ambiguity, because it is
+  // called in _tao_Queryinterface().
   if (node->has_mixed_parentage ())
     {
       *os << "virtual void _add_ref (void);" << be_nl << be_nl;
@@ -378,7 +379,7 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
                                                   be_interface *base,
                                                   TAO_OutStream *os)
 {
-  if (!base->is_abstract ())
+  if (node == base)
     {
       return 0;
     }
@@ -397,7 +398,7 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_interface::"
-                             "gen_abstract_ops_helper - "
+                             "abstract_base_ops_helper - "
                              "bad node in this scope\n"),
                             -1);
         }

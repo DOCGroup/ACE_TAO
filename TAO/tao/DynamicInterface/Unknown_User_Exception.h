@@ -26,7 +26,7 @@
 #  pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/UserException.h"
+#include "tao/Exception.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

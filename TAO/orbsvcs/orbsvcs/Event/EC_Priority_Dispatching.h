@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/orbsvcs/RtecSchedulerC.h"
 #include "sched_event_export.h"
 
 #include "ace/Thread_Manager.h"

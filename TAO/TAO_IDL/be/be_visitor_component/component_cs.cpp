@@ -68,7 +68,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
           << node->name () << "_ptr" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::duplicate ("
+          << "TAO::Objref_Traits<" << node->name () << ">::tao_duplicate ("
           << be_idt << be_idt_nl
           << node->name () << "_ptr p" << be_uidt_nl
           << ")" << be_uidt_nl
@@ -79,7 +79,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
           << "void" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::release ("
+          << "TAO::Objref_Traits<" << node->name () << ">::tao_release ("
           << be_idt << be_idt_nl
           << node->name () << "_ptr p" << be_uidt_nl
           << ")" << be_uidt_nl
@@ -90,7 +90,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
           << node->name () << "_ptr" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::nil (void)"
+          << "TAO::Objref_Traits<" << node->name () << ">::tao_nil (void)"
           << be_nl
           << "{" << be_idt_nl
           << "return " << node->name () << "::_nil ();" << be_uidt_nl
@@ -99,36 +99,13 @@ be_visitor_component_cs::visit_component (be_component *node)
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
           << "CORBA::Boolean" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
+          << "TAO::Objref_Traits<" << node->name () << ">::tao_marshal ("
           << be_idt << be_idt_nl
           << node->name () << "_ptr p," << be_nl
           << "TAO_OutputCDR & cdr" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
           << "return cdr << p;" << be_uidt_nl
-          << "}";
-    }
-
-  if (node->has_mixed_parentage ())
-    {
-      *os << be_nl << be_nl
-          << "void" << be_nl
-          << "CORBA::release ("
-          << node->name ()
-          << "_ptr p)" << be_nl
-          << "{" << be_idt_nl
-          << "CORBA::AbstractBase_ptr abs = p;" << be_nl
-          << "CORBA::release (abs);" << be_uidt_nl
-          << "}";
-
-      *os << be_nl << be_nl
-          << "CORBA::Boolean" << be_nl
-          << "CORBA::is_nil ("
-          << node->name ()
-          << "_ptr p)" << be_nl
-          << "{" << be_idt_nl
-          << "CORBA::Object_ptr obj = p;" << be_nl
-          << "return CORBA::is_nil (obj);" << be_uidt_nl
           << "}";
     }
 
@@ -192,16 +169,6 @@ be_visitor_component_cs::visit_component (be_component *node)
           << node->local_name () << " *_tao_tmp_pointer = static_cast<"
           << node->local_name () << " *> (_tao_void_pointer);" << be_nl
           << "CORBA::release (_tao_tmp_pointer);" << be_uidt_nl
-          << "}" << be_nl << be_nl;
-    }
-
-  if (node->has_mixed_parentage ())
-    {
-      *os << "void" << be_nl
-          << node->name () << "::_add_ref (void)" << be_nl
-          << "{" << be_idt_nl
-          << "this->ACE_NESTED_CLASS (CORBA, Object)::_add_ref ();"
-          << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
 

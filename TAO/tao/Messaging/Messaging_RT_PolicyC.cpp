@@ -112,7 +112,7 @@ namespace Messaging
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RelativeRoundtripTimeoutPolicy_ptr
-TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::duplicate (
+TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_duplicate (
     Messaging::RelativeRoundtripTimeoutPolicy_ptr p
   )
 {
@@ -121,7 +121,7 @@ TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::release (
+TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_release (
     Messaging::RelativeRoundtripTimeoutPolicy_ptr p
   )
 {
@@ -130,14 +130,14 @@ TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RelativeRoundtripTimeoutPolicy_ptr
-TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::nil (void)
+TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_nil (void)
 {
   return Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::marshal (
+TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_marshal (
     Messaging::RelativeRoundtripTimeoutPolicy_ptr p,
     TAO_OutputCDR & cdr
   )

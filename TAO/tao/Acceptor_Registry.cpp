@@ -12,7 +12,6 @@
 #include "tao/Acceptor_Filter.h"
 #include "tao/Endpoint.h"
 #include "tao/ORB_Constants.h"
-#include "tao/SystemException.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
@@ -118,7 +117,8 @@ int
 TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                              ACE_Reactor *reactor,
                              int ignore_address
-                             ACE_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // protocol_factories is in the following form
   //   IOP1://addr1,addr2,...,addrN/;IOP2://addr1,...addrM/;...

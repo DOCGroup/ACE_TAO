@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/SystemException.h"
+#include "tao/Exception.h"
 
 class TAO_ORB_Core;
 class TAO_Service_Callbacks;

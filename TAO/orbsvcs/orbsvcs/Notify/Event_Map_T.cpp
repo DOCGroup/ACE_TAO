@@ -4,7 +4,7 @@
 #define TAO_Notify_EVENT_MAP_T_C
 
 #include "Event_Map_T.h"
-#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h"
 #include "Event_Map_Entry_T.h"
 #include "Properties.h"
 #include "Factory.h"

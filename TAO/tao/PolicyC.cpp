@@ -32,7 +32,6 @@
 #include "PolicyC.h"
 #include "tao/CDR.h"
 #include "tao/Exception_Data.h"
-#include "tao/SystemException.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
 #include "tao/Typecode.h"
@@ -457,7 +456,7 @@ CORBA::TypeCode_ptr CORBA::InvalidPolicies::_type (void) const
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Policy_ptr
-TAO::Objref_Traits<CORBA::Policy>::duplicate (
+TAO::Objref_Traits<CORBA::Policy>::tao_duplicate (
     CORBA::Policy_ptr p
   )
 {
@@ -466,7 +465,7 @@ TAO::Objref_Traits<CORBA::Policy>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<CORBA::Policy>::release (
+TAO::Objref_Traits<CORBA::Policy>::tao_release (
     CORBA::Policy_ptr p
   )
 {
@@ -475,14 +474,14 @@ TAO::Objref_Traits<CORBA::Policy>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Policy_ptr
-TAO::Objref_Traits<CORBA::Policy>::nil (void)
+TAO::Objref_Traits<CORBA::Policy>::tao_nil (void)
 {
   return CORBA::Policy::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<CORBA::Policy>::marshal (
+TAO::Objref_Traits<CORBA::Policy>::tao_marshal (
     CORBA::Policy_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -734,7 +733,7 @@ CORBA::Policy::marshal (TAO_OutputCDR &cdr)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::PolicyManager_ptr
-TAO::Objref_Traits<CORBA::PolicyManager>::duplicate (
+TAO::Objref_Traits<CORBA::PolicyManager>::tao_duplicate (
     CORBA::PolicyManager_ptr p
   )
 {
@@ -743,7 +742,7 @@ TAO::Objref_Traits<CORBA::PolicyManager>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<CORBA::PolicyManager>::release (
+TAO::Objref_Traits<CORBA::PolicyManager>::tao_release (
     CORBA::PolicyManager_ptr p
   )
 {
@@ -752,14 +751,14 @@ TAO::Objref_Traits<CORBA::PolicyManager>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::PolicyManager_ptr
-TAO::Objref_Traits<CORBA::PolicyManager>::nil (void)
+TAO::Objref_Traits<CORBA::PolicyManager>::tao_nil (void)
 {
   return CORBA::PolicyManager::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<CORBA::PolicyManager>::marshal (
+TAO::Objref_Traits<CORBA::PolicyManager>::tao_marshal (
     CORBA::PolicyManager_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -879,7 +878,7 @@ CORBA::PolicyManager::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::PolicyCurrent_ptr
-TAO::Objref_Traits<CORBA::PolicyCurrent>::duplicate (
+TAO::Objref_Traits<CORBA::PolicyCurrent>::tao_duplicate (
     CORBA::PolicyCurrent_ptr p
   )
 {
@@ -888,7 +887,7 @@ TAO::Objref_Traits<CORBA::PolicyCurrent>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<CORBA::PolicyCurrent>::release (
+TAO::Objref_Traits<CORBA::PolicyCurrent>::tao_release (
     CORBA::PolicyCurrent_ptr p
   )
 {
@@ -897,14 +896,14 @@ TAO::Objref_Traits<CORBA::PolicyCurrent>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::PolicyCurrent_ptr
-TAO::Objref_Traits<CORBA::PolicyCurrent>::nil (void)
+TAO::Objref_Traits<CORBA::PolicyCurrent>::tao_nil (void)
 {
   return CORBA::PolicyCurrent::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<CORBA::PolicyCurrent>::marshal (
+TAO::Objref_Traits<CORBA::PolicyCurrent>::tao_marshal (
     CORBA::PolicyCurrent_ptr p,
     TAO_OutputCDR & cdr
   )

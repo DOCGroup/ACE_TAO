@@ -8,6 +8,7 @@
 #include "Stub.h"
 #include "Bind_Dispatcher_Guard.h"
 #include "operation_details.h"
+#include "Pluggable_Messaging.h"
 #include "Wait_Strategy.h"
 #include "debug.h"
 #include "ORB_Constants.h"
@@ -52,31 +53,12 @@ namespace TAO
     TAO_Synch_Reply_Dispatcher rd (this->resolver_.stub ()->orb_core (),
                                    this->details_.reply_service_info ());
 
-    TAO_Target_Specification tspec;
-    this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
-
-    TAO_OutputCDR &cdr =
-      this->resolver_.transport ()->out_stream ();
-
-    Invocation_Status s = TAO_INVOKE_FAILURE;
-
-    this->write_header (tspec,
-                        cdr
-                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (s);
-
-    this->marshal_data (cdr
-                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (s);
-
-
     // Register a reply dispatcher for this invocation. Use the
     // preallocated reply dispatcher.
     TAO_Bind_Dispatcher_Guard dispatch_guard (
-         this->details_.request_id (),
-         &rd,
-         this->resolver_.transport ()->tms ());
+        this->details_.request_id (),
+        &rd,
+        this->resolver_.transport ()->tms ());
 
     if (dispatch_guard.status () != 0)
       {
@@ -84,13 +66,16 @@ namespace TAO
         // we close the connection?
         this->resolver_.transport ()->close_connection ();
 
-        ACE_THROW_RETURN (
-            CORBA::INTERNAL (
-                0,
-                CORBA::COMPLETED_NO),
-            s);
+        ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+                                           CORBA::COMPLETED_NO),
+                          TAO_INVOKE_FAILURE);
       }
 
+    TAO_Target_Specification tspec;
+    this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    Invocation_Status s = TAO_INVOKE_FAILURE;
 
 #if TAO_HAS_INTERCEPTORS == 1
     // Start the interception point here..
@@ -102,13 +87,26 @@ namespace TAO
       return s;
 #endif /*TAO_HAS_INTERCEPTORS */
 
-    countdown.update ();
+    TAO_OutputCDR &cdr =
+      this->resolver_.transport ()->messaging_object ()->out_stream ();
 
     // We have started the interception flow. We need to call the
     // ending interception flow if things go wrong. The purpose of the
     // try block is to do just this.
     ACE_TRY
       {
+        this->write_header (tspec,
+                            cdr
+                            ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        this->marshal_data (cdr
+                            ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+
+        countdown.update ();
+
         s = this->send_message (cdr,
                                 TAO_Transport::TAO_TWOWAY_REQUEST,
                                 max_wait_time
@@ -293,7 +291,7 @@ namespace TAO
         if (TAO_debug_level > 3)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - Synch_Twoway_Invocation::wait_for_reply, "
+                        "TAO (%P|%t) - Synch_Twoway_Invocation::wait_for_reply , "
                         "recovering after an error \n"));
           }
 
@@ -408,7 +406,7 @@ namespace TAO
             {
               // Could not demarshal the addressing disposition, raise an local
               // CORBA::MARSHAL
-            ACE_THROW_RETURN (CORBA::MARSHAL (0,
+            ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                               CORBA::COMPLETED_MAYBE),
                               TAO_INVOKE_FAILURE);
             }
@@ -482,7 +480,7 @@ namespace TAO
       {
         // Could not demarshal the exception id, raise an local
         // CORBA::MARSHAL
-        ACE_THROW_RETURN (CORBA::MARSHAL (0,
+        ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                           CORBA::COMPLETED_MAYBE),
                           TAO_INVOKE_FAILURE);
       }
@@ -541,7 +539,7 @@ namespace TAO
       {
         // Could not demarshal the exception id, raise an local
         // CORBA::MARSHAL
-        ACE_THROW_RETURN (CORBA::MARSHAL (0,
+        ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                           CORBA::COMPLETED_MAYBE),
                           TAO_INVOKE_FAILURE);
       }
@@ -552,7 +550,7 @@ namespace TAO
     if ((cdr >> minor) == 0
         || (cdr >> completion) == 0)
       {
-        ACE_THROW_RETURN (CORBA::MARSHAL (0,
+        ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                           CORBA::COMPLETED_MAYBE),
                           TAO_INVOKE_FAILURE);
       }
@@ -631,7 +629,7 @@ namespace TAO
     if (TAO_debug_level > 4)
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Synch_Twoway_Invocation::"
-                  "handle_system_exception, about to raise\n"));
+                  "handle_system_exception  about to raise\n"));
 
     mon.set_status (TAO_INVOKE_SYSTEM_EXCEPTION);
 
@@ -661,21 +659,16 @@ namespace TAO
     const CORBA::Octet response_flags =
        this->details_.response_flags ();
 
-    Invocation_Status s = TAO_INVOKE_FAILURE;
-
     if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_SERVER) ||
         response_flags == CORBA::Octet (Messaging::SYNC_WITH_TARGET))
-      {
-        s = Synch_Twoway_Invocation::remote_twoway (max_wait_time
-                                                    ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
-
-        return s;
-      }
+      return Synch_Twoway_Invocation::remote_twoway (max_wait_time
+                                                     ACE_ENV_ARG_PARAMETER);
 
     TAO_Target_Specification tspec;
     this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    Invocation_Status s = TAO_INVOKE_FAILURE;
 
 #if TAO_HAS_INTERCEPTORS == 1
     s = this->send_request_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -685,11 +678,8 @@ namespace TAO
       return s;
 #endif /*TAO_HAS_INTERCEPTORS */
 
-    TAO_Transport* transport =
-      this->resolver_.transport ();
-
     TAO_OutputCDR &cdr =
-      transport->out_stream ();
+      this->resolver_.transport ()->messaging_object ()->out_stream ();
 
     ACE_TRY
       {
@@ -704,24 +694,21 @@ namespace TAO
 
         countdown.update ();
 
-        if (transport->is_connected())
+        if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT))
           {
-            // We have a connected transport so we can send the message
             s = this->send_message (cdr,
-                                    TAO_Transport::TAO_ONEWAY_REQUEST,
+                                    TAO_Transport::TAO_TWOWAY_REQUEST,
                                     max_wait_time
                                     ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
           }
         else
           {
-            if (TAO_debug_level > 4)
-              ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) - Synch_Oneway_Invocation::"
-                          "remote_oneway, queueing message\n"));
-
-            if (transport->format_queue_message (cdr) != 0)
-              s = TAO_INVOKE_FAILURE;
+            s = this->send_message (cdr,
+                                    TAO_Transport::TAO_ONEWAY_REQUEST,
+                                    max_wait_time
+                                    ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
           }
 
 #if TAO_HAS_INTERCEPTORS == 1

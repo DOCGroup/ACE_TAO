@@ -20,17 +20,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/DsNotifyLogAdminS.h"
+#include "orbsvcs/orbsvcs/DsNotifyLogAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosEventCommS.h"
-#include "orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/orbsvcs/CosEventCommS.h"
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 
-#include "notifylog_serv_export.h"
+#include "notifylog_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -44,7 +45,7 @@
  *
  * @brief Used to forward log generated events to a logging server.
  */
-class TAO_NotifyLog_Serv_Export TAO_NotifyLogNotification : 
+class TAO_NotifyLog_Export TAO_NotifyLogNotification : 
   public TAO_LogNotification, 
   public POA_CosNotifyComm::PushSupplier, 
   public PortableServer::RefCountServantBase

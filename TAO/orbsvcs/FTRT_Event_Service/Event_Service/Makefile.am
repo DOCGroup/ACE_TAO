@@ -7,9 +7,6 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.FTRT_Event_Service.am 
 
-if BUILD_CORBA_MESSAGING
-if !BUILD_MINIMUM_CORBA
-
 noinst_PROGRAMS = ftrt_eventservice
 
 ftrt_eventservice_CPPFLAGS = \
@@ -17,15 +14,12 @@ ftrt_eventservice_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
   -I$(TAO_ROOT)/orbsvcs/FtRtEvent/EventChannel \
   -I$(TAO_ROOT)/orbsvcs/FtRtEvent/Utils
 
 ftrt_eventservice_SOURCES = \
-  FT_EventService.cpp \
-  FT_EventService.h \
-  TP_Task.h
+  FT_EventService.cpp
 
 ftrt_eventservice_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTRT_EventChannel.la \
@@ -34,18 +28,22 @@ ftrt_eventservice_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTSchedEvent.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTSched.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
+  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
-endif BUILD_CORBA_MESSAGING
+noinst_HEADERS = \
+  FT_EventService.h \
+  TP_Task.h
 
 ## Clean up template repositories, etc.
 clean-local:

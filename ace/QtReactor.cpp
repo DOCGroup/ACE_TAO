@@ -1,6 +1,8 @@
 //$Id$
 #include "ace/QtReactor.h"
 #if defined (ACE_HAS_QT)
+#include <qeventloop.h>
+
 ACE_ALLOC_HOOK_DEFINE (ACE_QtReactor)
 
 // Must be called with lock held

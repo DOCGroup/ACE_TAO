@@ -1,6 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Ntf Perf RedGreen): notifytest {
+project(*Ntf Perf RedGreen): notifytest, naming {
   exename = RedGreen_Test
 }

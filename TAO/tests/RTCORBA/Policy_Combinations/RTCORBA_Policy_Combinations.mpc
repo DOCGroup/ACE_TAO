@@ -1,7 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): rt_server, minimum_corba {
+project(*Server): rt_server {
+  avoids += minimum_corba
   Source_Files {
     server.cpp
   }

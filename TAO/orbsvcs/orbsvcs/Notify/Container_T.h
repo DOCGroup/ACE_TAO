@@ -14,13 +14,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h"
 
 /**
  * @class TAO_Notify_Container_T
@@ -30,7 +30,7 @@
  *
  */
 template <class TYPE>
-class TAO_Notify_Serv_Export TAO_Notify_Container_T
+class TAO_Notify_Export TAO_Notify_Container_T
 {
   typedef TAO_ESF_Proxy_Collection<TYPE> COLLECTION;
  public:

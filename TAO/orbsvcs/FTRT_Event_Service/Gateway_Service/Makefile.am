@@ -7,9 +7,6 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.FTRTEC_Gateway_Service.am 
 
-if BUILD_ACE_UUID
-if !BUILD_MINIMUM_CORBA
-
 noinst_PROGRAMS = ftrtec_gateway_service
 
 ftrtec_gateway_service_CPPFLAGS = \
@@ -17,8 +14,7 @@ ftrtec_gateway_service_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
   -I$(TAO_ROOT)/orbsvcs/FtRtEvent/Utils
 
 ftrtec_gateway_service_SOURCES = \
@@ -28,19 +24,20 @@ ftrtec_gateway_service_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTRT_ClientORB.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FtRtEvent.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ClientORB.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTORB_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
+  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
-endif BUILD_ACE_UUID
 
 ## Clean up template repositories, etc.
 clean-local:

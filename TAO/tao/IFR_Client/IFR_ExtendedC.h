@@ -1297,14 +1297,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::ValueDef>
   {
-    static CORBA::ValueDef_ptr duplicate (
+    static CORBA::ValueDef_ptr tao_duplicate (
         CORBA::ValueDef_ptr
       );
-    static void release (
+    static void tao_release (
         CORBA::ValueDef_ptr
       );
-    static CORBA::ValueDef_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static CORBA::ValueDef_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
         CORBA::ValueDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -1318,14 +1318,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::ValueBoxDef>
   {
-    static CORBA::ValueBoxDef_ptr duplicate (
+    static CORBA::ValueBoxDef_ptr tao_duplicate (
         CORBA::ValueBoxDef_ptr
       );
-    static void release (
+    static void tao_release (
         CORBA::ValueBoxDef_ptr
       );
-    static CORBA::ValueBoxDef_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static CORBA::ValueBoxDef_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
         CORBA::ValueBoxDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -1339,14 +1339,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::ExtValueDef>
   {
-    static CORBA::ExtValueDef_ptr duplicate (
+    static CORBA::ExtValueDef_ptr tao_duplicate (
         CORBA::ExtValueDef_ptr
       );
-    static void release (
+    static void tao_release (
         CORBA::ExtValueDef_ptr
       );
-    static CORBA::ExtValueDef_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static CORBA::ExtValueDef_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
         CORBA::ExtValueDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -1360,14 +1360,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::FixedDef>
   {
-    static CORBA::FixedDef_ptr duplicate (
+    static CORBA::FixedDef_ptr tao_duplicate (
         CORBA::FixedDef_ptr
       );
-    static void release (
+    static void tao_release (
         CORBA::FixedDef_ptr
       );
-    static CORBA::FixedDef_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static CORBA::FixedDef_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
         CORBA::FixedDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -1381,14 +1381,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::ValueMemberDef>
   {
-    static CORBA::ValueMemberDef_ptr duplicate (
+    static CORBA::ValueMemberDef_ptr tao_duplicate (
         CORBA::ValueMemberDef_ptr
       );
-    static void release (
+    static void tao_release (
         CORBA::ValueMemberDef_ptr
       );
-    static CORBA::ValueMemberDef_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static CORBA::ValueMemberDef_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
         CORBA::ValueMemberDef_ptr p,
         TAO_OutputCDR & cdr
       );

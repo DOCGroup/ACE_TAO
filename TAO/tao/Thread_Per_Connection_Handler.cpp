@@ -40,7 +40,7 @@ TAO_Thread_Per_Connection_Handler::activate (long flags,
   if (TAO_debug_level)
     {
       ACE_DEBUG  ((LM_DEBUG,
-                   ACE_TEXT ("TAO (%P|%t) - Thread_Per_Connection_Handler::")
+                   ACE_TEXT ("TAO (%P|%t) - IIOP_Connection_Handler::")
                    ACE_TEXT ("activate %d threads, flags = %d\n"),
                    n_threads,
                    flags));
@@ -61,8 +61,9 @@ TAO_Thread_Per_Connection_Handler::activate (long flags,
 int
 TAO_Thread_Per_Connection_Handler::svc (void)
 {
-  ACE::clr_flags (this->ch_->transport ()->event_handler_i ()->get_handle (),
-                  ACE_NONBLOCK);
+  ACE_Flag_Manip::clr_flags (
+      this->ch_->transport ()->event_handler_i ()->get_handle (),
+      ACE_NONBLOCK);
 
   // Call the implementation here
   return this->ch_->svc_i ();

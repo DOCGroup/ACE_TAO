@@ -17,7 +17,7 @@
 #define RTEC_BASED_COSEC_H
 
 #include "CosEvent_Utilities.h"
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 
 #if defined (_MSC_VER)
 #pragma warning(push)

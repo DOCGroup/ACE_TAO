@@ -38,7 +38,7 @@
  * set in the service configurator file.
  * = MEMORY MANAGMENT
  */
-class TAO_Event_Serv_Export TAO_CEC_Default_Factory : public TAO_CEC_Factory
+class TAO_Event_Export TAO_CEC_Default_Factory : public TAO_CEC_Factory
 {
 public:
   /// Constructor
@@ -199,9 +199,6 @@ private:
   /// The consumer and supplier control timeout in usecs
   ACE_Time_Value consumer_control_timeout_;
   ACE_Time_Value supplier_control_timeout_;
-
-  /// The number of retries before disconnecting a proxy
-  unsigned int proxy_disconnect_retries_;
 };
 
 #if defined (__ACE_INLINE__)
@@ -209,7 +206,7 @@ private:
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_CEC_Default_Factory)
-ACE_FACTORY_DECLARE (TAO_Event_Serv, TAO_CEC_Default_Factory)
+ACE_FACTORY_DECLARE (TAO_Event, TAO_CEC_Default_Factory)
 
 #include /**/ "ace/post.h"
 

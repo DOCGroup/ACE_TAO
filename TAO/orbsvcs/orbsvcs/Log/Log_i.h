@@ -20,16 +20,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Log/LogRecordStore.h"
+#include "orbsvcs/orbsvcs/Log/LogRecordStore.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Log/LogNotification.h"
-#include "orbsvcs/DsLogAdminS.h"
+#include "orbsvcs/orbsvcs/Log/LogNotification.h"
+#include "orbsvcs/orbsvcs/DsLogAdminS.h"
 #include "ace/Reactor.h"
-#include "log_serv_export.h"
+#include "log_export.h"
 
 /**
  * @class TAO_Log_i
@@ -39,7 +39,7 @@
  * This implementation attempts to conform to the telecom
  * logging specification.
  */
-class TAO_Log_Serv_Export TAO_Log_i : public virtual POA_DsLogAdmin::Log
+class TAO_Log_Export TAO_Log_i : public virtual POA_DsLogAdmin::Log
 {
 
 public:

@@ -41,7 +41,7 @@
  */
 //=============================================================================
 
-#include "ace/config-lite.h"
+#include "ace/config-all.h"
 
 #ifndef ACE_BASIC_TYPES_H
 # define ACE_BASIC_TYPES_H
@@ -65,9 +65,9 @@
 
 # include "ace/os_include/sys/os_types.h"
 
-# if !defined (ACE_LACKS_SYS_PARAM_H)
+# if !defined (ACE_LACKS_PARAM_H)
 #  include /**/ <sys/param.h>
-# endif /* ACE_LACKS_SYS_PARAM_H */
+# endif /* ACE_LACKS_PARAM_H */
 
 # include "ace/ACE_export.h"
 
@@ -75,15 +75,11 @@
 # define ACE_SIZEOF_CHAR 1
 
 // Unfortunately, there isn't a portable way to determine the size of a wchar.
-// So we just define them on a platform basis. If the platform doesn't
-// define it and it's an XPG4 system, assume wchar_t is 4 bytes. Some code
-// uses ACE_SIZEOF_WCHAR in preprocessor statements, so sizeof() isn't valid.
-// If the platform config doesn't set this, and this guess is wrong,
-// Basic_Types_Test should catch the inconsistency.
+// So we just define them on a platform basis.
 # if defined (ACE_HAS_WCHAR)
 #   if !defined (ACE_SIZEOF_WCHAR)
 #     if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
-#       define ACE_SIZEOF_WCHAR 4
+#       define ACE_SIZEOF_WCHAR sizeof (wchar_t)
 #     else
 // 0 so the Basic_Types test will catch this.
 #       define ACE_SIZEOF_WCHAR 0
@@ -563,17 +559,17 @@ typedef ptrdiff_t ptr_arith_t;
 # endif /* ! ACE_WIN32  &&  ! ACE_LACKS_LONGLONG_T */
 
 #if !defined (ACE_UINT64_FORMAT_SPECIFIER)
-#  if ACE_SIZEOF_LONG == 8
-#    define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
-#  else
+#  if ACE_SIZEOF_LONG == 8 
+#    define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu") 
+#  else 
 #    define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%llu")
 #  endif /* ACE_SIZEOF_LONG == 8*/
 #endif /* ACE_UINT64_FORMAT_SPECIFIER */
 
 #if !defined (ACE_INT64_FORMAT_SPECIFIER)
-#  if ACE_SIZEOF_LONG == 8
-#    define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%ld")
-#  else
+#  if ACE_SIZEOF_LONG == 8 
+#    define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%ld") 
+#  else 
 #    define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lld")
 #  endif /* ACE_SIZEOF_LONG == 8 */
 #endif /* ACE_INT64_FORMAT_SPECIFIER */
@@ -636,7 +632,7 @@ typedef ptrdiff_t ptr_arith_t;
 #     define ACE_SIZEOF_LONG_DOUBLE 8
 #   elif LDBL_MAX_EXP == 16384
 #     if defined (LDBL_DIG)  &&  LDBL_DIG == 18
-#       if defined (__ia64) || defined (__x86_64)
+#       if defined (__ia64)
 #         define ACE_SIZEOF_LONG_DOUBLE 16
 #       else /* ! __ia64 */
 #       define ACE_SIZEOF_LONG_DOUBLE 12

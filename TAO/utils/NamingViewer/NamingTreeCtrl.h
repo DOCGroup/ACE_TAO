@@ -7,7 +7,7 @@
 #endif // _MSC_VER > 1000
 // NamingTreeCtrl.h : header file
 //
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 class CNamingObject;
 
 /////////////////////////////////////////////////////////////////////////////

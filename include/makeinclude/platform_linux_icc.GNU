@@ -52,31 +52,33 @@ PLATFORM_WX_LDFLAGS = $(shell wx-config --ldflags)  $(PLATFORM_GTK_LDFLAGS)
 PLATFORM_AIO_SUPPORT := \
        $(shell test -e /usr/lib/librt.so && echo -DACE_HAS_AIO_CALLS)
 
+#
+# Intel compiler comes in two flavors with different binaries. The first, 
+# icc, is for IA32 platforms and the second, ecc, is for IA64 platforms. 
+# They share most options except those influencing target machine code 
+# generation, therefore we should pick sensible defaults for both
+# depending on system architecture.
+#
 SYSARCH := $(shell uname -m)
 
 ifeq ($(insure),1)
-  CC  = insure
-  CXX = insure
+CC  = insure
+CXX = insure
 else
-  CC  = icc
-  CXX = icc
-endif
-
-ifndef CXX_VERSION
-  CXX_VERSION := $(shell $(CXX) --version)
-endif
-
-ifeq (8.0,$(findstring 8.0,$(CXX_VERSION)))
-  CFLAGS += -wd1476,1505
-endif
-ifeq (8.1,$(findstring 8.1,$(CXX_VERSION)))
-  CFLAGS += -wd1476,1505 -no-gcc
+  ifeq ($(SYSARCH),ia64)
+    CC  = ecc
+    CXX = ecc
+  else
+    CC  = icc
+    CXX = icc
+  endif
 endif
 
 CFLAGS  += -w1
 ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads
+
 
 CCFLAGS += $(CFLAGS) $(IMPLICIT_TEMPLATES_FLAG) -ip
 DCFLAGS += -g

@@ -22,8 +22,8 @@
 #include /**/ "ace/pre.h"
 
 #include "sched_export.h"
-#include "orbsvcs/RtecSchedulerC.h"
-#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
 #include "ace/Containers.h"
 
 //////////////////////

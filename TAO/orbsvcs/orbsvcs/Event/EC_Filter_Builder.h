@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
 
 #include /**/ "event_export.h"
 

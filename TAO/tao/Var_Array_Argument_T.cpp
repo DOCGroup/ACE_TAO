@@ -23,8 +23,6 @@ TAO::In_Var_Array_Argument_T<S,S_slice,S_forany>::marshal (
   return cdr << this->x_;
 }
 
-#if TAO_HAS_INTERCEPTORS == 1
-
 template<typename S, typename S_slice, typename S_forany>
 void
 TAO::In_Var_Array_Argument_T<S,S_slice,S_forany>::interceptor_param (
@@ -34,8 +32,6 @@ TAO::In_Var_Array_Argument_T<S,S_slice,S_forany>::interceptor_param (
   p.argument <<= this->x_;
   p.mode = CORBA::PARAM_IN;
 }
-
-#endif /* TAO_HAS_INTERCEPTORS */
 
 // ===========================================================
 
@@ -57,8 +53,6 @@ TAO::Inout_Var_Array_Argument_T<S,S_slice,S_forany>::demarshal (
   return cdr >> this->x_;
 }
 
-#if TAO_HAS_INTERCEPTORS == 1
-
 template<typename S, typename S_slice, typename S_forany>
 void
 TAO::Inout_Var_Array_Argument_T<S,S_slice,S_forany>::interceptor_param (
@@ -68,8 +62,6 @@ TAO::Inout_Var_Array_Argument_T<S,S_slice,S_forany>::interceptor_param (
   p.argument <<= this->x_;
   p.mode = CORBA::PARAM_INOUT;
 }
-
-#endif /* TAO_HAS_INTERCEPTORS */
 
 // ==============================================================
 
@@ -86,13 +78,11 @@ TAO::Out_Var_Array_Argument_T<S,S_slice,S_var,S_out,S_forany,S_tag>::demarshal (
 {
   typedef TAO::Array_Traits<S,S_slice,S_tag> ARRAY_TRAITS;
   ACE_ALLOCATOR_RETURN (this->x_,
-                        ARRAY_TRAITS::alloc (),
+                        ARRAY_TRAITS::tao_alloc (),
                         0);
   S_forany tmp (this->x_);
   return cdr >> tmp;
 }
-
-#if TAO_HAS_INTERCEPTORS == 1
 
 template<typename S,
          typename S_slice,
@@ -107,8 +97,6 @@ interceptor_param (Dynamic::Parameter & p)
   p.argument <<= this->x_;
   p.mode = CORBA::PARAM_OUT;
 }
-
-#endif /* TAO_HAS_INTERCEPTORS */
 
 // ============================================================
 
@@ -125,14 +113,12 @@ TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::demarshal (
   typedef TAO::Array_Traits<S,S_slice,S_tag> ARRAY_TRAITS;
   S_slice * tmp_ptr = 0;
   ACE_ALLOCATOR_RETURN (tmp_ptr,
-                        ARRAY_TRAITS::alloc (),
+                        ARRAY_TRAITS::tao_alloc (),
                         0);
   this->x_ = tmp_ptr;
   S_forany tmp (this->x_.ptr ());
   return cdr >> tmp;
 }
-
-#if TAO_HAS_INTERCEPTORS == 1
 
 template<typename S,
          typename S_slice,
@@ -145,7 +131,5 @@ interceptor_result (CORBA::Any * any)
 {
   (*any) <<= S_forany (this->x_.ptr ());
 }
-
-#endif /* TAO_HAS_INTERCEPTORS */
 
 #endif /* TAO_VAR_ARRAY_ARGUMENT_T_C */

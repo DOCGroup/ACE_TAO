@@ -5,20 +5,15 @@
 #include "ORB_Constants.h"
 #include "DynamicC.h"
 #include "Exception_Data.h"
-#include "SystemException.h"
-
 #include "ace/OS_NS_string.h"
-
 
 #if !defined (__ACE_INLINE__)
 # include "tao/operation_details.i"
 #endif /* ! __ACE_INLINE__ */
 
-
 ACE_RCSID (tao,
            operation_details,
            "$Id$")
-
 
 CORBA::Exception *
 TAO_Operation_Details::corba_exception (const char *id
@@ -39,7 +34,7 @@ TAO_Operation_Details::corba_exception (const char *id
 
       if (exception == 0)
         {
-          ACE_THROW_RETURN (CORBA::NO_MEMORY (0,
+          ACE_THROW_RETURN (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                               CORBA::COMPLETED_YES),
                             0);
         }
@@ -49,7 +44,7 @@ TAO_Operation_Details::corba_exception (const char *id
     }
 
   // If there are no matches return an unknown exception.
-  ACE_THROW_RETURN (CORBA::UNKNOWN (0,
+  ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_YES),
                     0);
 }
@@ -78,8 +73,6 @@ TAO_Operation_Details::demarshal_args (TAO_InputCDR &cdr)
   return true;
 }
 
-#if TAO_HAS_INTERCEPTORS == 1
-
 bool
 TAO_Operation_Details::parameter_list (Dynamic::ParameterList &param_list)
 {
@@ -92,7 +85,6 @@ TAO_Operation_Details::parameter_list (Dynamic::ParameterList &param_list)
    return true;
 }
 
-#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
 bool
 TAO_Operation_Details::exception_list (Dynamic::ExceptionList &exception_list)
@@ -114,8 +106,6 @@ TAO_Operation_Details::exception_list (Dynamic::ExceptionList &exception_list)
 }
 
 
-#if TAO_HAS_INTERCEPTORS == 1
-
 bool
 TAO_Operation_Details::result (CORBA::Any *any)
 {
@@ -124,5 +114,3 @@ TAO_Operation_Details::result (CORBA::Any *any)
 
   return true;
 }
-
-#endif /* TAO_HAS_INTERCEPTORS == 1 */

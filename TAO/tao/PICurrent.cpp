@@ -14,7 +14,6 @@ ACE_RCSID (tao,
 #include "ORB_Core.h"
 #include "TAO_Server_Request.h"
 #include "PICurrent_Copy_Callback.h"
-#include "SystemException.h"
 
 
 TAO::PICurrent::PICurrent (TAO_ORB_Core * orb_core)
@@ -121,7 +120,7 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId id
                         CORBA::Any (table[id]), // Make a copy.
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            0,
+                            TAO_DEFAULT_MINOR_CODE,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (any);
@@ -135,7 +134,7 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId id
                         CORBA::Any,
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            0,
+                            TAO_DEFAULT_MINOR_CODE,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (any);

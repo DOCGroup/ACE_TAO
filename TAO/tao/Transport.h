@@ -43,20 +43,6 @@ class TAO_Resume_Handle;
 class TAO_Stub;
 struct iovec;
 
-namespace TAO
-{
-  /**
-   * @NOTE: Should this be in TAO namespace. Seems like a candidate
-   * that should be in the transport
-   */
-  enum Connection_Role
-    {
-      TAO_UNSPECIFIED_ROLE = 0,
-      TAO_SERVER_ROLE = 1,
-      TAO_CLIENT_ROLE = 2
-    };
-}
-
 /**
  * @class TAO_Transport
  *
@@ -219,7 +205,7 @@ namespace TAO
  *
  * <B>See Also:</B>
  *
- * http://cvs.doc.wustl.edu/ace-latest.cgi/ACE_wrappers/TAO/docs/pluggable_protocols/index.html
+ * http://deuce.doc.wustl.edu/cvsweb/ace-latest.cgi/ACE_wrappers/TAO/docs/pluggable_protocols/index.html
  *
  */
 class TAO_Export TAO_Transport
@@ -291,23 +277,6 @@ public:
   size_t id (void) const;
   void id (size_t id);
 
-  /**
-   * Methods dealing with the role of the connection, e.g., CLIENT or SERVER.
-   * See CORBA 2.6 Specification, Section 15.5.1 for origin of definitions.
-   */
-  TAO::Connection_Role opened_as (void) const;
-  void opened_as (TAO::Connection_Role);
-
-  /**
-   * Predicate that returns true if it is valid for this transport to act in a server
-   * role.  This would, for example, be true if opened_as() == TAO_SERVER_ROLE
-   * or bidirectional_flag() == 1.
-   *
-   * \return 0 cannot act in server role
-   * \return 1 can acts in server role
-   */
-  bool acts_as_server (void) const;
-
   /// Get and Set the purging order. The purging strategy uses the set
   /// version to set the purging order.
   unsigned long purging_order (void) const;
@@ -327,6 +296,13 @@ public:
    *        transport should place its handler
    */
   void provide_handler (TAO_Connection_Handler_Set &handlers);
+
+
+  /// Remove all messages from the outgoing queue.
+  /**
+   * @todo shouldn't this be automated?
+   */
+  // void dequeue_all (void);
 
   /// Register the handler with the reactor.
   /**
@@ -472,22 +448,8 @@ public:
    * adapter class (TAO_Transport_Event_Handler or something), this
    * will reduce footprint and simplify the process of implementing a
    * pluggable protocol.
-   *
-   * @todo This method has to be renamed to event_handler()
    */
   virtual ACE_Event_Handler * event_handler_i (void) = 0;
-
-  /// Is this transport really connected
-  bool is_connected (void) const;
-
-  /// Perform all the actions when this transport get opened
-  bool post_open (size_t id);
-
-  /// Get the connection handler for this transport
-  TAO_Connection_Handler * connection_handler (void);
-
-  /// Accessor for the output CDR stream
-  TAO_OutputCDR &out_stream (void);
 
 protected:
 
@@ -672,12 +634,7 @@ protected:
                              const ACE_Message_Block *message_block,
                              ACE_Time_Value *max_wait_time);
 
-  /// Queue a message for @a message_block
-  int queue_message_i (const ACE_Message_Block *message_block);
-
 public:
-  /// Format and queue a message for @a stream
-  int format_queue_message (TAO_OutputCDR &stream);
 
   /// Send a message block chain,
   int send_message_block_chain (const ACE_Message_Block *message_block,
@@ -689,7 +646,7 @@ public:
                                   size_t &bytes_transferred,
                                   ACE_Time_Value *max_wait_time);
   /// Cache management
-  int purge_entry (void);
+  void purge_entry (void);
 
   /// Cache management
   int make_idle (void);
@@ -809,8 +766,8 @@ private:
    */
   void cleanup_queue (size_t byte_count);
 
-  /// Cleanup the complete queue
-  void cleanup_queue_i ();
+  /// Copy the contents of a message block into a Queued_Message
+  /// TAO_Queued_Message *copy_message_block (const ACE_Message_Block *mb);
 
   /// Check if the buffering constraints have been reached
   int check_buffering_constraints_i (TAO_Stub *stub, int &must_flush);
@@ -901,8 +858,6 @@ protected:
    */
   int bidirectional_flag_;
 
-  TAO::Connection_Role opening_connection_role_;
-
   /// Implement the outgoing data queue
   TAO_Queued_Message *head_;
   TAO_Queued_Message *tail_;
@@ -929,7 +884,7 @@ protected:
    * a null lock for single-threaded systems, and a real lock for
    * multi-threaded systems.
    */
-  mutable ACE_Lock *handler_lock_;
+  ACE_Lock *handler_lock_;
 
   /// A unique identifier for the transport.
   /**
@@ -949,11 +904,6 @@ protected:
 
   /// Number of bytes sent.
   size_t sent_byte_count_;
-
-  /// Is this transport really connected or not. In case of oneways with
-  /// SYNC_NONE Policy we don't wait until the connection is ready and we
-  /// buffer the requests in this transport until the connection is ready
-  bool is_connected_;
 
 private:
 
@@ -988,7 +938,7 @@ private:
 /**
  * @class TAO_Transport_Refcount_Guard
  *
- * @brief Helper class that increments the refcount on construction
+ * @brief Helper class that increments the refount on construction
  *  and decrements the refcount on destruction.
  */
 class TAO_Export TAO_Transport_Refcount_Guard

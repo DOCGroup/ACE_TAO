@@ -154,7 +154,7 @@ sub write_comps {
       print $fh $crlf,
                 "\t\$(KEEP_GOING)\@";
       if (defined $dirprj{$project}) {
-        print $fh "cd ", $self->mpc_dirname($project),
+        print $fh "cd ", dirname($project),
                   " && \$(MAKE) -f ", basename($project), $crlf;
       }
       else {
@@ -162,13 +162,10 @@ sub write_comps {
       }
     }
     print $fh $crlf,
-              'REMAINING_TARGETS := ',
-              '$(subst all, , $(TARGETS_NESTED:.nested=)) $(CUSTOM_TARGETS)',
-              $crlf;
+              "REMAINING_TARGETS := \$(subst all, , \$(TARGETS_NESTED:.nested=))$crlf",
   }
   else {
-    print $fh 'REMAINING_TARGETS := $(TARGETS_NESTED:.nested=) ',
-              '$(CUSTOM_TARGETS)', $crlf;
+    print $fh "REMAINING_TARGETS := \$(TARGETS_NESTED:.nested=)$crlf",
   }
 
   ## Print out the remaing targets.
@@ -177,7 +174,7 @@ sub write_comps {
   foreach my $project (@lprj) {
     print $fh "\t\$(KEEP_GOING)\@";
     if (defined $dirprj{$project}) {
-      print $fh "cd ", $self->mpc_dirname($project),
+      print $fh "cd ", dirname($project),
                 " && \$(MAKE) -f ", basename($project), " \$(\@)", $crlf;
     }
     else {

@@ -16,7 +16,7 @@
 #ifndef IDASSIGNMENT_H
 #define IDASSIGNMENT_H
 
-#include "orbsvcs/CosNotifyChannelAdminC.h"
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminC.h"
 
 class IdAssignment
 {

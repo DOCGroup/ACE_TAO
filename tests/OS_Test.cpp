@@ -781,44 +781,6 @@ string_convert_test (void)
 #endif /* ACE_HAS_WCHAR */
 }
 
-// Test the methods for getting cpu info
-int
-cpu_info_test (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Testing cpu info methods\n")));
-
-  long number_processors = ACE_OS::num_processors();
-  long number_processors_online = ACE_OS::num_processors_online();
-
-  if (number_processors == -1)
-    {
-      ACE_ERROR ((LM_INFO,
-                  ACE_TEXT ("number of processors not supported on ")
-                  ACE_TEXT ("this platform\n")));
-    }
-  else
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("This system has %d processors\n"),
-                  number_processors));
-    }
-
-  if (number_processors_online == -1)
-    {
-      ACE_ERROR ((LM_INFO,
-                  ACE_TEXT ("number of processors online not supported on ")
-                  ACE_TEXT ("this platform\n")));
-    }
-  else
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("This system has %d processors online\n"),
-                  number_processors_online));
-    }
-
-  return 0;
-}
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -840,10 +802,7 @@ run_main (int, ACE_TCHAR *[])
   if ((result = ctime_r_test ()) != 0)
     status = result;
 
-  if ((result = string_strsncpy_test ()) != 0)
-      status = result;
-
-  if ((result = cpu_info_test ()) != 0)
+  if ((result =  string_strsncpy_test ()) != 0)
       status = result;
 
   ACE_END_TEST;

@@ -1,6 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-project: namingexe, portableserver {
+project: namingexe {
   exename = client
 }

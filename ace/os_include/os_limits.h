@@ -18,7 +18,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/config-lite.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,15 +31,9 @@
 # include /**/ <limits.h>
 #endif /* !ACE_LACKS_LIMITS_H */
 
-#if !defined (ACE_LACKS_SYS_PARAM_H)
+#if !defined (ACE_LACKS_PARAM_H)
 #  include /**/ <sys/param.h>
-#endif /* ACE_LACKS_SYS_PARAM_H */
-
-// On VxWorks _POSIX_TIMER_MAX is defined in time.h, report this to WindRiver
-// support.
-#if defined (VXWORKS)
-#  include /**/ <time.h>
-#endif /* VXWORKS */
+#endif /* ACE_LACKS_PARAM_H */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcslib, dslogadmin, dseventlogadmin, event, notification {
+project : dseventlogadmin, notification, naming {
   after      += DsNotifyLogAdmin
   libs       += TAO_DsNotifyLogAdmin
 }

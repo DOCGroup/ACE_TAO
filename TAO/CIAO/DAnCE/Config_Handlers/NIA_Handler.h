@@ -12,7 +12,7 @@
 #define NIA_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "ciao/DeploymentC.h"
+#include "DeploymentC.h"
 #include "Config_Handler_export.h"
 #include "Basic_Handler.h"
 

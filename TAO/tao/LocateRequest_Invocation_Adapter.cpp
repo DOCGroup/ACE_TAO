@@ -30,7 +30,7 @@ namespace TAO
     if (stub == 0)
       ACE_THROW (CORBA::INTERNAL (
                      CORBA::SystemException::_tao_minor_code (
-                       0,
+                       TAO_DEFAULT_MINOR_CODE,
                          EINVAL),
                         CORBA::COMPLETED_NO));
 
@@ -49,8 +49,7 @@ namespace TAO
            s == TAO_INVOKE_RESTART)
       {
         Profile_Transport_Resolver resolver (effective_target,
-                                             stub,
-                                             true);
+                                             stub);
 
         ACE_TRY
           {

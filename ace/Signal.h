@@ -232,10 +232,8 @@ class ACE_Export ACE_Sig_Guard
 {
 public:
   // = Initialization and termination methods.
-  /// This is kind of conditional Guard, needed when guard should be
-  /// activated only when a spcific condition met. When condition ==
-  /// true (default), Guard is activated
-  ACE_Sig_Guard (ACE_Sig_Set *mask = 0, bool condition = true);
+  /// Block out signals in <mask>.  Default is to block all signals!
+  ACE_Sig_Guard (ACE_Sig_Set *mask = 0);
 
   /// Restore blocked signals.
   ~ACE_Sig_Guard (void);
@@ -249,9 +247,6 @@ public:
 private:
   /// Original signal mask.
   ACE_Sig_Set omask_;
-
-  /// Guard Condition
-  bool condition_;
 };
 
 /**

@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,7 +22,7 @@
 
 #include "ace/SString.h"
 
-#include "orbsvcs/CosNotificationC.h"
+#include "orbsvcs/orbsvcs/CosNotificationC.h"
 
 class TAO_Notify_PropertySeq;
 

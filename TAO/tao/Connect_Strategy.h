@@ -24,7 +24,6 @@
 class TAO_ORB_Core;
 class TAO_Connector;
 class TAO_Connection_Handler;
-class TAO_Transport;
 class ACE_Synch_Options;
 class ACE_Time_Value;
 
@@ -66,9 +65,6 @@ public:
    * connection handler is set appropriately.
    */
   virtual int wait (TAO_Connection_Handler *ch,
-                     ACE_Time_Value *val) = 0;
-
-  virtual int wait (TAO_Transport *t,
                     ACE_Time_Value *val) = 0;
 
 protected:

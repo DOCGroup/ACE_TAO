@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, portableserver, objreftemplate, core {
+project : taolib, objreftemplate, core {
   sharedname    = TAO_IORInterceptor
   dynamicflags  = TAO_IORINTERCEPTOR_BUILD_DLL
 
@@ -20,10 +20,6 @@ project : taolib, portableserver, objreftemplate, core {
   }
 
   Resource_Files {
-    IORInterceptor
-  }
-
-  PIDL_Files {
     IORInterceptor
   }
 }

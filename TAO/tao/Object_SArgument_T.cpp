@@ -21,8 +21,6 @@ TAO::In_Object_SArgument_T<S_ptr,S_var>::demarshal (TAO_InputCDR &cdr)
   return cdr >> this->x_.out ();
 }
 
-#if TAO_HAS_INTERCEPTORS == 1
-
 template<typename S_ptr, typename S_var>
 void
 TAO::In_Object_SArgument_T<S_ptr,S_var>::interceptor_param (
@@ -32,8 +30,6 @@ TAO::In_Object_SArgument_T<S_ptr,S_var>::interceptor_param (
   p.argument <<= this->x_.in ();
   p.mode = CORBA::PARAM_IN;
 }
-
-#endif /* TAO_HAS_INTERCEPTORS */
 
 // ===========================================================
 
@@ -51,8 +47,6 @@ TAO::Inout_Object_SArgument_T<S_ptr,S_var>::demarshal (TAO_InputCDR & cdr)
   return cdr >> this->x_.out ();
 }
 
-#if TAO_HAS_INTERCEPTORS == 1
-
 template<typename S_ptr, typename S_var>
 void
 TAO::Inout_Object_SArgument_T<S_ptr,S_var>::interceptor_param (
@@ -63,8 +57,6 @@ TAO::Inout_Object_SArgument_T<S_ptr,S_var>::interceptor_param (
   p.mode = CORBA::PARAM_INOUT;
 }
 
-#endif /* TAO_HAS_INTERCEPTORS */
-
 // ==============================================================
 
 template<typename S_ptr, typename S_var, typename S_out>
@@ -73,8 +65,6 @@ TAO::Out_Object_SArgument_T<S_ptr,S_var,S_out>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << this->x_.in ();
 }
-
-#if TAO_HAS_INTERCEPTORS == 1
 
 template<typename S_ptr, typename S_var, typename S_out>
 void
@@ -86,8 +76,6 @@ TAO::Out_Object_SArgument_T<S_ptr,S_var,S_out>::interceptor_param (
   p.mode = CORBA::PARAM_OUT;
 }
 
-#endif /* TAO_HAS_INTERCEPTORS */
-
 // ============================================================
 
 template<typename S_ptr, typename S_var>
@@ -97,8 +85,6 @@ TAO::Ret_Object_SArgument_T<S_ptr,S_var>::marshal (TAO_OutputCDR & cdr)
   return cdr << this->x_.in ();
 }
 
-#if TAO_HAS_INTERCEPTORS == 1
-
 template<typename S_ptr, typename S_var>
 void
 TAO::Ret_Object_SArgument_T<S_ptr,S_var>::interceptor_result (
@@ -107,7 +93,5 @@ TAO::Ret_Object_SArgument_T<S_ptr,S_var>::interceptor_result (
 {
   (*any) <<= this->x_.in ();
 }
-
-#endif /* TAO_HAS_INTERCEPTORS */
 
 #endif /* TAO_OBJECT_SARGUMENT_T_C */

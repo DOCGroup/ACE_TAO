@@ -23,8 +23,6 @@ TAO::In_BD_String_Argument_T<S,to_S,from_S,BOUND>::marshal (
   return cdr << from_S (this->x_, BOUND);
 }
 
-#if TAO_HAS_INTERCEPTORS == 1
-
 template<typename S, typename to_S, typename from_S, size_t BOUND>
 void
 TAO::In_BD_String_Argument_T<S,to_S,from_S,BOUND>::interceptor_param (
@@ -34,8 +32,6 @@ TAO::In_BD_String_Argument_T<S,to_S,from_S,BOUND>::interceptor_param (
   p.argument <<= from_S (this->x_, BOUND);
   p.mode = CORBA::PARAM_IN;
 }
-
-#endif /* TAO_HAS_INTERCEPTORS */
 
 // ===========================================================
 
@@ -58,8 +54,6 @@ TAO::Inout_BD_String_Argument_T<S,to_S,from_S,BOUND>::demarshal (
   return cdr >> to_S (this->x_, BOUND);
 }
 
-#if TAO_HAS_INTERCEPTORS == 1
-
 template<typename S, typename to_S, typename from_S, size_t BOUND>
 void
 TAO::Inout_BD_String_Argument_T<S,to_S,from_S,BOUND>::interceptor_param (
@@ -69,8 +63,6 @@ TAO::Inout_BD_String_Argument_T<S,to_S,from_S,BOUND>::interceptor_param (
   p.argument <<= from_S (this->x_, BOUND);
   p.mode = CORBA::PARAM_INOUT;
 }
-
-#endif /* TAO_HAS_INTERCEPTORS */
 
 // ==============================================================
 
@@ -87,8 +79,6 @@ TAO::Out_BD_String_Argument_T<S,S_out,to_S,from_S,BOUND>::demarshal (
   return cdr >> to_S (this->x_, BOUND);
 }
 
-#if TAO_HAS_INTERCEPTORS == 1
-
 template<typename S, 
          typename S_out, 
          typename to_S, 
@@ -102,8 +92,6 @@ TAO::Out_BD_String_Argument_T<S,S_out,to_S,from_S,BOUND>::interceptor_param (
   p.argument <<= from_S (this->x_, BOUND);
   p.mode = CORBA::PARAM_OUT;
 }
-
-#endif /* TAO_HAS_INTERCEPTORS */
 
 // ============================================================
 
@@ -120,8 +108,6 @@ TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND>::demarshal (
   return cdr >> to_S (this->x_.out (), BOUND);
 }
 
-#if TAO_HAS_INTERCEPTORS == 1
-
 template<typename S, 
          typename S_var, 
          typename to_S, 
@@ -134,7 +120,5 @@ TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND>::interceptor_result (
 {
   (*any) <<= from_S (this->x_.in (), BOUND);
 }
-
-#endif /* TAO_HAS_INTERCEPTORS */
 
 #endif /* TAO_BD_STRING_ARGUMENT_T_C */

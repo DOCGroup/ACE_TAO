@@ -25,7 +25,12 @@ use vars qw(@ISA);
 
 sub workspace_file_name {
   my($self) = shift;
-  return $self->get_modified_workspace_name('Makefile', '.bor');
+  if ($self->make_coexistence()) {
+    return $self->get_modified_workspace_name('Makefile', '.bor');
+  }
+  else {
+    return $self->get_modified_workspace_name('Makefile', '');
+  }
 }
 
 
@@ -63,7 +68,7 @@ sub write_project_targets {
   my($crlf)   = $self->crlf();
 
   foreach my $project (@$list) {
-    my($dir)    = $self->mpc_dirname($project);
+    my($dir)    = dirname($project);
     my($chdir)  = 0;
     my($back)   = '';
 

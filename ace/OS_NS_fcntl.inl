@@ -16,3 +16,4 @@ ACE_OS::fcntl (ACE_HANDLE handle, int cmd, long arg)
   ACE_OSCALL_RETURN (::fcntl (handle, cmd, arg), int, -1);
 # endif /* ACE_LACKS_FCNTL */
 }
+

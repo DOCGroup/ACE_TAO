@@ -18,15 +18,15 @@
 #define TAO_TLS_LOGMGR_I_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/DsLogAdminS.h"
+#include "orbsvcs/orbsvcs/DsLogAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Log/Log_i.h"
+#include "orbsvcs/orbsvcs/Log/Log_i.h"
 
-#include "log_serv_export.h"
+#include "log_export.h"
 
 /**
  * @class TAO_LogMgr_i
@@ -36,7 +36,7 @@
  * This factory base class is used to maintain a list of logs 
  * created by it. Logs can also be removed from the list.
  */
-class TAO_Log_Serv_Export TAO_LogMgr_i : public virtual POA_DsLogAdmin::LogMgr
+class TAO_Log_Export TAO_LogMgr_i : public virtual POA_DsLogAdmin::LogMgr
 {
 public:
 
@@ -73,6 +73,7 @@ public:
  /// remove the given entry from the hash table.
  int remove (DsLogAdmin::LogId id);
 
+
 protected:
 
   /// Define the HASHMAP.
@@ -88,6 +89,5 @@ protected:
   /// A list of the current log ids.
   DsLogAdmin::LogIdList logid_list_;
 };
-
 #include /**/ "ace/post.h"
 #endif /* TAO_TLS_LOGMGR_I_H */

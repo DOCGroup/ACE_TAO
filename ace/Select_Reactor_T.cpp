@@ -64,16 +64,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::any_ready
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::any_ready_i
   (ACE_Select_Reactor_Handle_Set &wait_set)
 {
-  ACE_TRACE ("ACE_Select_Reactor_T::any_ready_i");
-
   int number_ready = this->ready_set_.rd_mask_.num_set ()
     + this->ready_set_.wr_mask_.num_set ()
     + this->ready_set_.ex_mask_.num_set ();
 
-  // number_ready > 0 meaning there are handles in the ready_set
-  // &wait_set != &(this->ready_set_) means that we need to copy
-  // the handles from the ready_set to the wait set because the
-  // wait_set_ doesn't contain all the handles in the ready_set_
   if (number_ready > 0 && &wait_set != &(this->ready_set_))
     {
       wait_set.rd_mask_ = this->ready_set_.rd_mask_;
@@ -542,10 +536,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
    ACE_Reactor_Notify *notify,
    int mask_signals,
    int s_queue)
-    : ACE_Select_Reactor_Impl (mask_signals)
-    , token_ (*this, s_queue)
-    , lock_adapter_ (token_)
-    , deactivated_ (0)
+    : token_ (*this, s_queue),
+      lock_adapter_ (token_),
+      deactivated_ (0),
+      mask_signals_ (mask_signals)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::ACE_Select_Reactor_T");
 
@@ -594,10 +588,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
    ACE_Reactor_Notify *notify,
    int mask_signals,
    int s_queue)
-    : ACE_Select_Reactor_Impl (mask_signals)
-    , token_ (*this, s_queue)
-    , lock_adapter_ (token_)
-    , deactivated_ (0)
+    : token_ (*this, s_queue),
+      lock_adapter_ (token_),
+      deactivated_ (0),
+      mask_signals_ (mask_signals)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::ACE_Select_Reactor_T");
 
@@ -1015,11 +1009,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_i (ACE_HANDLE handle)
       this->suspend_set_.ex_mask_.set_bit (handle);
       this->wait_set_.ex_mask_.clr_bit (handle);
     }
-
-  // Kobi: we need to remove that handle from the
-  // dispatch set as well. We use that function with all the relevant
-  // masks - rd/wr/ex - all the mask. it is completely suspended
-  this->clear_dispatch_mask (handle, ACE_Event_Handler::RWE_MASK);
   return 0;
 }
 
@@ -1184,8 +1173,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_timer_handlers
   (int &number_of_handlers_dispatched)
 {
   number_of_handlers_dispatched += this->timer_queue_->expire ();
-
-  return 0;
+  if (this->state_changed_)
+    return -1;
+  else
+    return 0;
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
@@ -1200,21 +1191,15 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_notification_handlers
   // ACE_Select_Reactor_T's internal tables or the notify pipe is
   // enabled.  We'll handle all these threads and notifications, and
   // then break out to continue the event loop.
-  int n =
-    this->notify_handler_->dispatch_notifications (number_of_active_handles,
-                                                   dispatch_set.rd_mask_);
+
+  int n = this->notify_handler_->dispatch_notifications (number_of_active_handles,
+                                                         dispatch_set.rd_mask_);
   if (n == -1)
     return -1;
   else
     number_of_handlers_dispatched += n;
 
-  // Same as dispatch_timer_handlers
-  // No need to do anything with the state changed. That is because
-  // unbind already handles the case where someone unregister some
-  // kind of handle and unbind it. (::unbind calls the function
-  // state_changed ()  to reflect ant change with that)
-  //   return this->state_changed_ ? -1 : 0;
-  return 0;
+  return this->state_changed_ ? -1 : 0;
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
@@ -1226,34 +1211,25 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_io_set
    ACE_Handle_Set &ready_mask,
    ACE_EH_PTMF callback)
 {
-  ACE_TRACE ("ACE_Select_Reactor_T::dispatch_io_set");
   ACE_HANDLE handle;
 
   ACE_Handle_Set_Iterator handle_iter (dispatch_mask);
 
-  while ((handle = handle_iter ()) != ACE_INVALID_HANDLE &&
-         number_of_handlers_dispatched < number_of_active_handles)
+  while ((handle = handle_iter ()) != ACE_INVALID_HANDLE
+         && number_of_handlers_dispatched < number_of_active_handles
+         && this->state_changed_ == 0)
     {
+      // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Select_Reactor_T::dispatching\n")));
       ++number_of_handlers_dispatched;
-
       this->notify_handle (handle,
                            mask,
                            ready_mask,
                            this->handler_rep_.find (handle),
                            callback);
-
-      // clear the bit from that dispatch mask,
-      // so when we need to restart the iteration (rebuilding the iterator...)
-      // we will not dispatch the already dipatched handlers
-      this->clear_dispatch_mask (handle, mask);
-
-      if (this->state_changed_)
-        {
-
-          handle_iter.reset_state ();
-          this->state_changed_ = false;
-        }
     }
+
+  if (number_of_handlers_dispatched > 0 && this->state_changed_)
+    return -1;
 
   return 0;
 }
@@ -1264,12 +1240,11 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_io_handlers
    int &number_of_active_handles,
    int &number_of_handlers_dispatched)
 {
-  ACE_TRACE ("ACE_Select_Reactor_T::dispatch_io_handlers");
-
   // Handle output events (this code needs to come first to handle the
   // obscure case of piggy-backed data coming along with the final
   // handshake message of a nonblocking connection).
 
+  // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Select_Reactor_T::dispatch - WRITE\n")));
   if (this->dispatch_io_set (number_of_active_handles,
                              number_of_handlers_dispatched,
                              ACE_Event_Handler::WRITE_MASK,
@@ -1338,7 +1313,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
       // every iteration (i.e., due to signals), our state starts out
       // unchanged again.
 
-      this->state_changed_ = false;
+      this->state_changed_ = 0;
 
       // Perform the Template Method for dispatching all the handlers.
 
@@ -1451,21 +1426,14 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events_i
 
   ACE_SEH_TRY
     {
-      // We use the data member dispatch_set_ as the current dispatch
-      // set.
-
-      // We need to start from a clean dispatch_set
-      this->dispatch_set_.rd_mask_.reset ();
-      this->dispatch_set_.wr_mask_.reset ();
-      this->dispatch_set_.ex_mask_.reset ();
+      ACE_Select_Reactor_Handle_Set dispatch_set;
 
       int number_of_active_handles =
-        this->wait_for_multiple_events (this->dispatch_set_,
+        this->wait_for_multiple_events (dispatch_set,
                                         max_wait_time);
 
-      result =
-        this->dispatch (number_of_active_handles,
-                        this->dispatch_set_);
+      result = this->dispatch (number_of_active_handles,
+                               dispatch_set);
     }
   ACE_SEH_EXCEPT (this->release_token ())
     {
@@ -1473,6 +1441,8 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events_i
       // structured exceptions so that we can make sure to release the
       // <token_> lock correctly.
     }
+
+  this->state_changed_ = 1;
 
   return result;
 }
@@ -1534,6 +1504,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
         {
           result = 1;
           this->remove_handler_i (h, ACE_Event_Handler::ALL_EVENTS_MASK);
+          this->state_changed_ = 1;
         }
       rd_mask.clr_bit (h);
 #else /* !ACE_WIN32 && !MVS && !ACE_PSOS */
@@ -1543,6 +1514,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
         {
           result = 1;
           this->remove_handler_i (h, ACE_Event_Handler::ALL_EVENTS_MASK);
+          this->state_changed_ = 1;
         }
 #endif /* ACE_WIN32 || MVS || ACE_PSOS */
     }

@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/SystemException.h"
+#include "tao/Exception.h"
 
 class TAO_Operation_Details;
 class TAO_Target_Specification;

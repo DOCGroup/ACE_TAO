@@ -4,7 +4,6 @@
 #include "Wait_On_Read.h"
 #include "Wait_On_Reactor.h"
 #include "Wait_On_Leader_Follower.h"
-#include "Wait_On_LF_No_Upcall.h"
 #include "Exclusive_TMS.h"
 #include "Muxed_TMS.h"
 #include "Blocked_Connect_Strategy.h"
@@ -109,10 +108,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   ACE_TEXT("-ORBClientConnectionHandler")) == 0
-               ||
-               ACE_OS::strcasecmp (argv[curarg],
-                                   ACE_TEXT("-ORBWaitStrategy")) == 0)
+                                   ACE_TEXT("-ORBClientConnectionHandler")) == 0)
         {
           curarg++;
           if (curarg < argc)
@@ -128,9 +124,6 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (name,
                                            ACE_TEXT("RW")) == 0)
                 this->wait_strategy_ = TAO_WAIT_ON_READ;
-              else if (ACE_OS::strcasecmp (name,
-                                           ACE_TEXT("MT_NOUPCALL")) == 0)
-                this->wait_strategy_ = TAO_WAIT_ON_LF_NO_UPCALL;
               else
                 this->report_option_value_error (ACE_TEXT("-ORBClientConnectionHandler"), name);
             }
@@ -293,10 +286,6 @@ TAO_Default_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transp
   else if (this->wait_strategy_ == TAO_WAIT_ON_REACTOR)
     ACE_NEW_RETURN (ws,
                     TAO_Wait_On_Reactor (transport),
-                    0);
-  else if (this->wait_strategy_ == TAO_WAIT_ON_LF_NO_UPCALL)
-    ACE_NEW_RETURN (ws,
-                    TAO::Wait_On_LF_No_Upcall (transport),
                     0);
   else
     {

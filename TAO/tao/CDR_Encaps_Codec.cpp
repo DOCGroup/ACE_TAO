@@ -11,12 +11,10 @@
 #include "Typecode.h"
 #include "Marshal.h"
 #include "Any_Unknown_IDL_Type.h"
-#include "SystemException.h"
 #include "ORB_Constants.h"
-
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (TAO_CodecFactory,
            CDR_Encaps_Codec,
            "$Id$")
 
@@ -64,7 +62,7 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
                         CORBA::OctetSeq,
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            0,
+                            TAO_DEFAULT_MINOR_CODE,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (0);
@@ -130,7 +128,7 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
                         CORBA::Any,
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            0,
+                            TAO_DEFAULT_MINOR_CODE,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (0);
@@ -203,7 +201,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
                         CORBA::OctetSeq,
                         CORBA::NO_MEMORY (
                             CORBA::SystemException::_tao_minor_code (
-                                0,
+                                TAO_DEFAULT_MINOR_CODE,
                                 ENOMEM
                               ),
                             CORBA::COMPLETED_NO
@@ -341,7 +339,7 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
                             CORBA::Any,
                             CORBA::NO_MEMORY (
                                 CORBA::SystemException::_tao_minor_code (
-                                    0,
+                                    TAO_DEFAULT_MINOR_CODE,
                                     ENOMEM
                                   ),
                                 CORBA::COMPLETED_NO

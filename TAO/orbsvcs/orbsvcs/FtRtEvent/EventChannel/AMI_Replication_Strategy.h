@@ -15,7 +15,7 @@
 
 #include "ace/Task.h"
 #include "tao/PortableServer/PortableServerC.h"
-#include "orbsvcs/FTRT_GroupManagerC.h"
+#include "orbsvcs/orbsvcs/FTRT_GroupManagerC.h"
 #include "Replication_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

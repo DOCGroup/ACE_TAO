@@ -7,41 +7,41 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.LifeCycle_Service.am 
 
-if !BUILD_MINIMUM_CORBA
-
-bin_PROGRAMS = LifeCycle_Service
+noinst_PROGRAMS = LifeCycle_Service
 
 LifeCycle_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
 LifeCycle_Service_SOURCES = \
-  Criteria_Evaluator.cpp \
   Factory_Trader.cpp \
+  Criteria_Evaluator.cpp \
   LifeCycle_Service.cpp \
-  LifeCycle_Service_i.cpp \
-  Criteria_Evaluator.h \
-  Factory_Trader.h \
-  LifeCycle_Service.h \
-  LifeCycle_Service_i.h
+  LifeCycle_Service_i.cpp
 
 LifeCycle_Service_LDADD = \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading_Serv.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading_Skel.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosLifeCycle.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
+ $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading.la \
+ $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+ $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosLifeCycle.la \
+ $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+ $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
+ $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+ $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+ $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
+ $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
+ $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+ $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+ $(TAO_BUILDDIR)/tao/libTAO.la \
+ $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_MINIMUM_CORBA
+noinst_HEADERS = \
+  LifeCycle_Service_i.h \
+  Factory_Trader.h \
+  Criteria_Evaluator.h \
+  LifeCycle_Service.h
 
 ## Clean up template repositories, etc.
 clean-local:

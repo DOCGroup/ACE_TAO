@@ -16,21 +16,20 @@
 #define TAO_CEC_TYPEDPROXYPUSHCONSUMER_H_
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/CosTypedEventChannelAdminS.h"
+#include "orbsvcs/orbsvcs/CosTypedEventChannelAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/ESF/ESF_Worker.h"
-#include "event_serv_export.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Worker.h"
 
 class TAO_CEC_TypedEvent;
 class TAO_CEC_TypedEventChannel;
 class TAO_CEC_DynamicImplementationServer;
 
 //Class TAO_CEC_TypedProxyPushConsumer
-class TAO_Event_Serv_Export TAO_CEC_TypedProxyPushConsumer
+class TAO_Event_Export TAO_CEC_TypedProxyPushConsumer
   : public virtual POA_CosTypedEventChannelAdmin::TypedProxyPushConsumer
 {
 public:
@@ -148,7 +147,7 @@ private:
  * the reference count on the proxy, eliminating the need to hold
  * mutexes during long operations.
  */
-class TAO_Event_Serv_Export TAO_CEC_TypedProxyPushConsumer_Guard
+class TAO_Event_Export TAO_CEC_TypedProxyPushConsumer_Guard
 {
 public:
   /// Constructor

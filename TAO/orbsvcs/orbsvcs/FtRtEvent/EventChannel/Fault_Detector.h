@@ -16,7 +16,7 @@
 #include "ace/Task.h"
 #include "ace/Reactor.h"
 
-#include "orbsvcs/FTRT_GroupManagerC.h"
+#include "orbsvcs/orbsvcs/FTRT_GroupManagerC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -43,48 +43,21 @@ namespace CIAO
             typename EXEC_VAR, 
             typename CONTEXT>
   class Servant_Impl : public virtual BASE_SKEL,
-                       public virtual Servant_Impl_Base
+                       public Servant_Impl_Base
   {
   public:
-    Servant_Impl (EXEC * exe,
+    Servant_Impl (EXEC * exe, 
                   Session_Container * c);
-                  
     virtual ~Servant_Impl (void);
    
-    // Operations for CCMObject interface.
-
-    virtual CORBA::Boolean
-    same_component (CORBA::Object_ptr object_ref
-                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual ::Components::FacetDescriptions *
+    get_all_facets (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-
-    virtual ::Components::CCMHome_ptr
-    get_ccm_home (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  
+    virtual ::Components::ConsumerDescriptions *
+    get_all_consumers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-
-    virtual CORBA::Object_ptr
-    _get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-   // CIAO-specific operations.
-
-    void
-    ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-    void
-    ciao_activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-    void
-    ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-    /// @@NOTE: The busted operation.
-    void
-    _ciao_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
+      
   protected: 
     EXEC_VAR executor_;    
     

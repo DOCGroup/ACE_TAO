@@ -13,7 +13,7 @@
 #define FTEC_EVENT_CHANNEL_H
 
 #include "ftrtec_export.h"
-#include "orbsvcs/FtRtecEventChannelAdminS.h"
+#include "orbsvcs/orbsvcs/FtRtecEventChannelAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

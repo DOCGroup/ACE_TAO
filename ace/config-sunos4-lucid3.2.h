@@ -24,7 +24,7 @@
 #define ACE_HAS_MSG
 
 // Compiler/platform contains the <sys/syscall.h> file.
-#define ACE_HAS_SYS_SYSCALL_H
+#define ACE_HAS_SYSCALL_H
 
 // Compiler/platform supports alloca()
 // Although ACE does have alloca() on this compiler/platform combination, it is
@@ -54,7 +54,7 @@
 #define ACE_HAS_SEMUN
 
 // Compiler/platform provides the sockio.h file.
-#define ACE_HAS_SYS_SOCKIO_H
+#define ACE_HAS_SOCKIO_H
 
 // Compiler/platform supports struct strbuf
 #define ACE_HAS_STRBUF_T

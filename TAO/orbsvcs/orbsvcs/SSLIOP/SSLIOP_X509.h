@@ -21,58 +21,84 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_OpenSSL_st_T.h"
+#include "tao/varbase.h"
 
 #include <openssl/x509.h>
 #include <openssl/crypto.h>
-
 
 namespace TAO
 {
   namespace SSLIOP
   {
-    // OpenSSL @c X509 structure traits specialization.
-    template <>
-    struct OpenSSL_traits< ::X509 >
+    /**
+     * @name CORBA-style Reference Count Manipulation Methods
+     */
+    /// Increase the reference count on the given X509 structure.
+    ::X509 *_duplicate (::X509 *cert);
+
+    /// Decrease the reference count on the given X509 structure.
+    void release (::X509 *cert);
+
+    /**
+     * @class X509_var
+     *
+     * @brief "_var" class for the OpenSSL @param X509 structure.
+     *
+     * This class is simply used to make operations on instances of
+     * the OpenSSL @c X509 structures exception safe.  It is only used
+     * internally by the SSLIOP pluggable protocol.
+     */
+    class X509_var : private TAO_Base_var
     {
-      /// OpenSSL lock ID for use in OpenSSL CRYPTO_add() reference
-      /// count manipulation function.
-      enum { LOCK_ID = CRYPTO_LOCK_X509 };
+    public:
 
-      /// Increase the reference count on the given OpenSSL structure.
       /**
-       * @note This used to be in a function template but MSVC++ 6
-       *       can't handle function templates correctly so reproduce
-       *       the code in each specialization.  *sigh*
+       * @name Constructors
        */
-      static ::X509 * _duplicate (::X509 * st)
-      {
-        if (st != 0)
-          CRYPTO_add (&(st->references),
-                      1,
-                      LOCK_ID);
+      //@{
+      X509_var (void);
+      X509_var (::X509 *x);
+      X509_var (const X509_var &);
+      X509_var (const ::X509 &x);
+      //@}
 
-        return st;
-      }
+      /// Destructor
+      ~X509_var (void);
 
-      /// Perform deep copy of the given OpenSSL structure.
-      static ::X509 * copy (::X509 const & st)
-      {
-        return ::X509_dup (const_cast< ::X509 *> (&st));
-      }
+      X509_var &operator= (::X509 *);
+      X509_var &operator= (const X509_var &);
+      X509_var &operator= (const ::X509 &);
+      const ::X509 *operator-> (void) const;
+      ::X509 *operator-> (void);
 
-      /// Decrease the reference count on the given OpenSSL
-      /// structure.
-      static void release (::X509 * st)
-      {
-        ::X509_free (st);
-      }
+      operator const ::X509 &() const;
+      operator ::X509 &();
+
+      ::X509 *in (void) const;
+      ::X509 *&inout (void);
+      ::X509 *&out (void);
+      ::X509 *_retn (void);
+      ::X509 *ptr (void) const;
+
+    private:
+
+      // Unimplemented - prevents widening assignment.
+      X509_var (const TAO_Base_var &rhs);
+      X509_var &operator= (const TAO_Base_var &rhs);
+
+    private:
+
+      /// The OpenSSL X509 structure that represents a X.509 certificate.
+      ::X509 *x509_;
+
     };
-
-    typedef OpenSSL_st_var< ::X509 > X509_var;
-
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
+
+
+#if defined (__ACE_INLINE__)
+#include "SSLIOP_X509.inl"
+#endif  /* __ACE_INLINE__ */
 
 
 #include /**/ "ace/post.h"

@@ -8,7 +8,7 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/ORB_Core.h"
-#include "orbsvcs/NotifyExtC.h"
+#include "orbsvcs/orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"
 
 ACE_RCSID (Notify,
@@ -260,7 +260,7 @@ ACE_STATIC_SVC_DEFINE (TAO_CosNotify_Service,
                        0)
 
 
-ACE_FACTORY_DEFINE (TAO_Notify_Serv, TAO_CosNotify_Service)
+ACE_FACTORY_DEFINE (TAO_Notify, TAO_CosNotify_Service)
 
 /*********************************************************************************************************************/
 

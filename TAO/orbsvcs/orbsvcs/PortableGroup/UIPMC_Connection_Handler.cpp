@@ -145,13 +145,9 @@ TAO_UIPMC_Connection_Handler::open (void*)
                  this->local_addr_.get_port_number ()));
   }
 
+  // Set the id in the transport now that we're active.
+  this->transport ()->id ((size_t) this->udp_socket_.get_handle ());
   this->using_mcast_ = 0;
-
-  // Set that the transport is now connected, if fails we return -1
-  // Use C-style cast b/c otherwise we get warnings on lots of
-  // compilers
-  if (!this->transport ()->post_open ((size_t) this->udp_socket_.get_handle ()))
-    return -1;
 
   return 0;
 }
@@ -191,7 +187,16 @@ TAO_UIPMC_Connection_Handler::close_connection (void)
 int
 TAO_UIPMC_Connection_Handler::handle_input (ACE_HANDLE h)
 {
-  return this->handle_input_eh (h, this);
+  int result =
+    this->handle_input_eh (h, this);
+
+  if (result == -1)
+    {
+      this->close_connection ();
+      return 0;
+    }
+
+  return result;
 }
 
 int

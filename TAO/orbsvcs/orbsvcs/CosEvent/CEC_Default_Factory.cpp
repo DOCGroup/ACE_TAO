@@ -13,12 +13,12 @@
 #include "CEC_Reactive_ConsumerControl.h"
 #include "CEC_Reactive_SupplierControl.h"
 
-#include "orbsvcs/ESF/ESF_Immediate_Changes.h"
-#include "orbsvcs/ESF/ESF_Delayed_Changes.h"
-#include "orbsvcs/ESF/ESF_Copy_On_Write.h"
-#include "orbsvcs/ESF/ESF_Copy_On_Read.h"
-#include "orbsvcs/ESF/ESF_Proxy_List.h"
-#include "orbsvcs/ESF/ESF_Proxy_RB_Tree.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_List.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.h"
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Sched_Params.h"
@@ -334,8 +334,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECConsumerControlTimeout")) == 0 ||
-               ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECConsumerControlRoundtripTimeout")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECConsumerControlTimeout")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -348,8 +347,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECSupplierControlTimeout")) == 0 ||
-               ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECSupplierControlRoundtripTimeout")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECSupplierControlTimeout")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -358,18 +356,6 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               const ACE_TCHAR* opt = arg_shifter.get_current ();
 			  unsigned long timeout_ = ACE_OS::strtoul(opt, 0, 10);
               this->supplier_control_timeout_.usec(timeout_);
-              arg_shifter.consume_arg ();
-            }
-        }
-
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECProxyDisconnectRetries")) == 0)
-        {
-          arg_shifter.consume_arg ();
-
-          if (arg_shifter.is_parameter_next ())
-            {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
-              this->proxy_disconnect_retries_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
         }
@@ -447,9 +433,8 @@ TAO_CEC_Default_Factory::create_pulling_strategy (TAO_CEC_EventChannel *ec)
         CORBA::ORB_init (argc, argv, this->orbid_);
 
       ACE_Time_Value rate (0, this->reactive_pulling_period_);
-      return new TAO_CEC_Reactive_Pulling_Strategy (
-                                 rate, this->supplier_control_timeout_,
-                                 ec, orb.in ());
+      return new TAO_CEC_Reactive_Pulling_Strategy (rate, ec,
+                                                    orb.in ());
     }
   return 0;
 }
@@ -1229,10 +1214,7 @@ TAO_CEC_Default_Factory::create_consumer_control (TAO_CEC_EventChannel* ec)
         CORBA::ORB_init (argc, argv, this->orbid_);
 
       ACE_Time_Value rate (0, this->consumer_control_period_);
-      return new TAO_CEC_Reactive_ConsumerControl (
-                                 rate, this->consumer_control_timeout_,
-                                 this->proxy_disconnect_retries_,
-                                 ec, orb.in ());
+      return new TAO_CEC_Reactive_ConsumerControl (rate, consumer_control_timeout_, ec, orb.in ());
     }
   return 0;
 }
@@ -1251,10 +1233,7 @@ TAO_CEC_Default_Factory::create_consumer_control (TAO_CEC_TypedEventChannel* ec)
         CORBA::ORB_init (argc, argv, this->orbid_);
 
       ACE_Time_Value rate (0, this->consumer_control_period_);
-      return new TAO_CEC_Reactive_ConsumerControl (
-                                 rate, this->consumer_control_timeout_,
-                                 this->proxy_disconnect_retries_,
-                                 ec, orb.in ());
+      return new TAO_CEC_Reactive_ConsumerControl (rate, consumer_control_timeout_, ec, orb.in ());
     }
   return 0;
 }
@@ -1278,11 +1257,8 @@ TAO_CEC_Default_Factory::create_supplier_control (TAO_CEC_EventChannel* ec)
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_);
 
-      ACE_Time_Value rate (0, this->supplier_control_period_);
-      return new TAO_CEC_Reactive_SupplierControl (
-                                 rate, this->supplier_control_timeout_,
-                                 this->proxy_disconnect_retries_,
-                                 ec, orb.in ());
+      ACE_Time_Value rate (0, this->consumer_control_period_);
+      return new TAO_CEC_Reactive_SupplierControl (rate, supplier_control_timeout_, ec, orb.in ());
     }
   return 0;
 }
@@ -1300,11 +1276,8 @@ TAO_CEC_Default_Factory::create_supplier_control (TAO_CEC_TypedEventChannel* ec)
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_);
 
-      ACE_Time_Value rate (0, this->supplier_control_period_);
-      return new TAO_CEC_Reactive_SupplierControl (
-                                 rate, this->supplier_control_timeout_,
-                                 this->proxy_disconnect_retries_,
-                                 ec, orb.in ());
+      ACE_Time_Value rate (0, this->consumer_control_period_);
+      return new TAO_CEC_Reactive_SupplierControl (rate, supplier_control_timeout_, ec, orb.in ());
     }
   return 0;
 }
@@ -1324,7 +1297,7 @@ ACE_STATIC_SVC_DEFINE (TAO_CEC_Default_Factory,
                        &ACE_SVC_NAME (TAO_CEC_Default_Factory),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
-ACE_FACTORY_DEFINE (TAO_Event_Serv, TAO_CEC_Default_Factory)
+ACE_FACTORY_DEFINE (TAO_Event, TAO_CEC_Default_Factory)
 
 // ****************************************************************
 

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): namingexe, iortable, svc_utils {
+project(*server): namingexe {
   Source_Files {
     server_i.cpp
     MCast_Server_i.cpp
@@ -9,7 +9,7 @@ project(*server): namingexe, iortable, svc_utils {
   }
 }
 
-project(*client): namingexe, iortable, svc_utils {
+project(*client): namingexe {
   exename = client
 
   Source_Files {

@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "notify_export.h"
 
 #include "ace/Auto_Ptr.h"
 
@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/CosEventChannelAdminC.h"
 
 #include "Refcountable_Guard_T.h"
 #include "Event.h"
@@ -38,7 +38,7 @@ class TAO_Notify_Supplier;
  * @brief Base class for all types of ProxyConsumer implementations.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer : public virtual TAO_Notify_Proxy
+class TAO_Notify_Export TAO_Notify_ProxyConsumer : public virtual TAO_Notify_Proxy
 {
 public:
   /// Constuctor

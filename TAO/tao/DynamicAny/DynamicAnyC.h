@@ -2296,14 +2296,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynAny>
   {
-    static DynamicAny::DynAny_ptr duplicate (
+    static DynamicAny::DynAny_ptr tao_duplicate (
         DynamicAny::DynAny_ptr
       );
-    static void release (
+    static void tao_release (
         DynamicAny::DynAny_ptr
       );
-    static DynamicAny::DynAny_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static DynamicAny::DynAny_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
         DynamicAny::DynAny_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2317,14 +2317,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynFixed>
   {
-    static DynamicAny::DynFixed_ptr duplicate (
+    static DynamicAny::DynFixed_ptr tao_duplicate (
         DynamicAny::DynFixed_ptr
       );
-    static void release (
+    static void tao_release (
         DynamicAny::DynFixed_ptr
       );
-    static DynamicAny::DynFixed_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static DynamicAny::DynFixed_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
         DynamicAny::DynFixed_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2338,14 +2338,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynEnum>
   {
-    static DynamicAny::DynEnum_ptr duplicate (
+    static DynamicAny::DynEnum_ptr tao_duplicate (
         DynamicAny::DynEnum_ptr
       );
-    static void release (
+    static void tao_release (
         DynamicAny::DynEnum_ptr
       );
-    static DynamicAny::DynEnum_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static DynamicAny::DynEnum_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
         DynamicAny::DynEnum_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2359,14 +2359,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynStruct>
   {
-    static DynamicAny::DynStruct_ptr duplicate (
+    static DynamicAny::DynStruct_ptr tao_duplicate (
         DynamicAny::DynStruct_ptr
       );
-    static void release (
+    static void tao_release (
         DynamicAny::DynStruct_ptr
       );
-    static DynamicAny::DynStruct_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static DynamicAny::DynStruct_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
         DynamicAny::DynStruct_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2380,14 +2380,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynUnion>
   {
-    static DynamicAny::DynUnion_ptr duplicate (
+    static DynamicAny::DynUnion_ptr tao_duplicate (
         DynamicAny::DynUnion_ptr
       );
-    static void release (
+    static void tao_release (
         DynamicAny::DynUnion_ptr
       );
-    static DynamicAny::DynUnion_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static DynamicAny::DynUnion_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
         DynamicAny::DynUnion_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2401,14 +2401,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynSequence>
   {
-    static DynamicAny::DynSequence_ptr duplicate (
+    static DynamicAny::DynSequence_ptr tao_duplicate (
         DynamicAny::DynSequence_ptr
       );
-    static void release (
+    static void tao_release (
         DynamicAny::DynSequence_ptr
       );
-    static DynamicAny::DynSequence_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static DynamicAny::DynSequence_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
         DynamicAny::DynSequence_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2422,14 +2422,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynArray>
   {
-    static DynamicAny::DynArray_ptr duplicate (
+    static DynamicAny::DynArray_ptr tao_duplicate (
         DynamicAny::DynArray_ptr
       );
-    static void release (
+    static void tao_release (
         DynamicAny::DynArray_ptr
       );
-    static DynamicAny::DynArray_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static DynamicAny::DynArray_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
         DynamicAny::DynArray_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2443,14 +2443,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynValue>
   {
-    static DynamicAny::DynValue_ptr duplicate (
+    static DynamicAny::DynValue_ptr tao_duplicate (
         DynamicAny::DynValue_ptr
       );
-    static void release (
+    static void tao_release (
         DynamicAny::DynValue_ptr
       );
-    static DynamicAny::DynValue_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static DynamicAny::DynValue_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
         DynamicAny::DynValue_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2464,14 +2464,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynAnyFactory>
   {
-    static DynamicAny::DynAnyFactory_ptr duplicate (
+    static DynamicAny::DynAnyFactory_ptr tao_duplicate (
         DynamicAny::DynAnyFactory_ptr
       );
-    static void release (
+    static void tao_release (
         DynamicAny::DynAnyFactory_ptr
       );
-    static DynamicAny::DynAnyFactory_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static DynamicAny::DynAnyFactory_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
         DynamicAny::DynAnyFactory_ptr p,
         TAO_OutputCDR & cdr
       );

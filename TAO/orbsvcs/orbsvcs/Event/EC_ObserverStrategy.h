@@ -20,7 +20,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/ESF/ESF_Worker.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Worker.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,7 +30,7 @@
 #include "ace/RB_Tree.h"
 #include "ace/Map_Manager.h"
 
-#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
 
 #include /**/ "event_export.h"
 

@@ -1,7 +1,7 @@
 // $Id$
 
 // The following configuration file is designed to work for LynxOS,
-// version 3.0.0 and later, using the GNU g++ compiler.
+// version 2.5.0 and later, using the GNU g++ compiler.
 
 // Note on why ACE_HAS_POSIX_SEM is not #defined:
 // ACE_HAS_POSIX_SEM would cause native LynxOS mutexes and condition
@@ -21,8 +21,30 @@
 #endif /* ! __ACE_INLINE__ */
 
 #if defined (__GNUG__)
-# include "ace/config-g++-common.h"
+# if __GNUC_MINOR__ == 7
+
+#   include "ace/config-g++-common.h"
+
+    // The g++ that's distributed with LynxOS 3.0.0 needs this.
+    // It won't hurt with 2.5.0.
+#   undef ACE_HAS_TEMPLATE_SPECIALIZATION
+# elif __LYNXOS_SDK_VERSION <= 199603L
+    /* LynxOS <= 2.5.0 */
+    // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
+    // this must appear before its #include.
+
+    // If ACE_HAS_STRING_CLASS is used with LynxOS 3.0.0, some
+    // executables, such as IOStream_Test, require linking with
+    // libg++.
+#   define ACE_HAS_STRING_CLASS
+
+#   include "ace/config-g++-common.h"
+# endif /* __GNUC_MINOR__ == 7 */
 #endif /* __GNUG__ */
+
+#if defined ( __LYNXOS_SDK_VERSION ) &&  ( __LYNXOS_SDK_VERSION <= 199701L )
+# define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 0
+#endif /* __LYNXOS_SDK_VERSION */
 
 #if _POSIX_VERSION >= 199506L
   // LynxOS 3.1.0 or greater need ipc_1c.h to be included before net/if.h
@@ -45,9 +67,9 @@
 #define ACE_HAS_ALLOCA
 #define ACE_HAS_ALLOCA_H
 #define ACE_HAS_AUTOMATIC_INIT_FINI
-#define ACE_HAS_NONCONST_READV
-#define ACE_HAS_NONCONST_SETRLIMIT
-#define ACE_HAS_NONCONST_WRITEV
+#define ACE_HAS_BROKEN_READV
+#define ACE_HAS_BROKEN_SETRLIMIT
+#define ACE_HAS_BROKEN_WRITEV
 #define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_CPLUSPLUS_HEADERS
 #define ACE_HAS_DIRENT
@@ -71,7 +93,7 @@
 #define ACE_HAS_SIGINFO_T
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIG_ATOMIC_T
-#define ACE_HAS_SYS_SOCKIO_H
+#define ACE_HAS_SOCKIO_H
 #define ACE_HAS_SSIZE_T
 #define ACE_HAS_STRBUF_T
 #define ACE_HAS_STREAMS
@@ -81,24 +103,16 @@
 #define ACE_HAS_TERM_IOCTLS
 #define ACE_HAS_TYPENAME_KEYWORD
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
-#define ACE_LACKS_SWAB_PROTOTYPE
 #define ACE_LACKS_CONST_TIMESPEC_PTR
-#define ACE_LACKS_GETOPT_PROTOTYPE
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_SETPGID
 #define ACE_LACKS_SETREGID
 #define ACE_LACKS_SETREUID
-#define ACE_LACKS_INET_ATON_PROTOTYPE
 #define ACE_LACKS_MADVISE
-#define ACE_LACKS_MKTEMP_PROTOTYPE
-#define ACE_LACKS_MKSTEMP_PROTOTYPE
-#define ACE_LACKS_PUTENV_PROTOTYPE
 #define ACE_LACKS_REALPATH
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_SIGINFO_H
 #define ACE_LACKS_SI_ADDR
-#define ACE_LACKS_STRCASECMP_PROTOTYPE
-#define ACE_LACKS_STRNCASECMP_PROTOTYPE
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_DLFCN_H
@@ -168,8 +182,6 @@
 #  define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 #  define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
 #  define ACE_HAS_TEMPLATE_SPECIALIZATION
-#  define ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION
-#  undef ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #endif /* __GNUC__ == 2  &&  __GNUC_MINOR__ == 9 */
 
 // By default, don't include RCS Id strings in object code.

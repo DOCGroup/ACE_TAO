@@ -23,11 +23,11 @@
 
 #include "ace/High_Res_Timer.h"
 #include "ace/Condition_Thread_Mutex.h"
-#include "orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/RtecEventCommS.h"
-#include "orbsvcs/Channel_Clients_T.h"
-#include "orbsvcs/Event/EC_Gateway_Sched.h"
-#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/orbsvcs/Channel_Clients_T.h"
+#include "orbsvcs/orbsvcs/Event/EC_Gateway_Sched.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 
 class Test_ECG;
 

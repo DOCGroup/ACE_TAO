@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
+ *  @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
 
@@ -38,7 +38,7 @@ namespace TAO
      */
     class TAO_SSLIOP_Export TargetCredentials
       : public virtual SecurityLevel3::TargetCredentials,
-        public virtual SSLIOP_Credentials
+        public virtual Credentials
     {
     public:
 

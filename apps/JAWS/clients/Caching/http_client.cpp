@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    apps/JAWS/clients/Caching
-//
+// 
 // = FILENAME
 //    http_client.cpp
 //
@@ -14,11 +14,9 @@
 //
 // = AUTHOR
 //    James Hu
-//
+// 
 // ============================================================================
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/os_include/os_ctype.h"
 #include "http_handler.h"
 
 ACE_RCSID(Caching, http_client, "$Id$")
@@ -52,8 +50,8 @@ main (int, char *[])
 
       if (*s == '!')
         {
-          do
-	    s++;
+          do 
+	    s++; 
 	  while (isspace (*s));
 
           // Shell command.

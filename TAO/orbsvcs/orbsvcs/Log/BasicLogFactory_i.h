@@ -19,14 +19,14 @@
 #define TAO_TLS_BASICLOGFACTORY_I_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/DsLogAdminS.h"
+#include "orbsvcs/orbsvcs/DsLogAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Log/LogMgr_i.h"
-#include "orbsvcs/Log/BasicLog_i.h"
+#include "orbsvcs/orbsvcs/Log/LogMgr_i.h"
+#include "orbsvcs/orbsvcs/Log/BasicLog_i.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -42,7 +42,7 @@
  *
  * @brief The BasicLogFactory is a factory that is used to create event-unaware Logs.
  */
-class TAO_Log_Serv_Export TAO_BasicLogFactory_i : 
+class TAO_Log_Export TAO_BasicLogFactory_i : 
   public POA_DsLogAdmin::BasicLogFactory,
   public TAO_LogMgr_i
 {

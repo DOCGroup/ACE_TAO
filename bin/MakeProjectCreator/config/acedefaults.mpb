@@ -9,10 +9,6 @@ project: ace_qt, zzip {
   // Support the alternative Borland Make project type
   specific(bmake) {
     unicode_flags += -DACE_USES_WCHAR
-    macros += ACE_LD_DECORATOR_STR=ACE_LIB_TEXT(\\"$(LIBMODIFIER)\\")
-  }
-
-  specific(automake) {
-    includes += $(ACE_BUILDDIR)
+    macros += ACE_LD_DECORATOR_STR=ACE_LIB_TEXT(\\"$(LIB_MODIFIER)\\")
   }
 }

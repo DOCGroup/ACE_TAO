@@ -1,11 +1,12 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcslib, core, naming, iormanip, portablegroup, ami, minimum_corba, iorinterceptor {
+project : orbsvcslib, core, naming, iormanip, portablegroup, ami {
   sharedname   = TAO_CosLoadBalancing
-  idlflags    += -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=orbsvcs/LoadBalancing/LoadBalancing_export.h
+  idlflags    += -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=LoadBalancing/LoadBalancing_export.h
   dynamicflags = TAO_LOADBALANCING_BUILD_DLL
   tagchecks   += CosLoadBalancing
+  avoids      += minimum_corba
 
   IDL_Files {
     CosLoadBalancing.idl
@@ -44,8 +45,5 @@ project : orbsvcslib, core, naming, iormanip, portablegroup, ami, minimum_corba,
       LoadBalancing/LB_CPU_Utilization_Monitor.cpp
       LoadBalancing/LB_CPU_Load_Average_Monitor.cpp
     }
-  }
-
-  Template_Files {
   }
 }

@@ -15,6 +15,7 @@
 
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
+#include "ace/os_include/netinet/os_tcp.h"
 
 ACE_RCSID (tao,
            IIOP_Connection_Handler,
@@ -140,11 +141,9 @@ TAO_IIOP_Connection_Handler::open (void*)
                   client, this->peer ().get_handle ()));
     }
 
-  // Set that the transport is now connected, if fails we return -1
-  // Use C-style cast b/c otherwise we get warnings on lots of
-  // compilers
-  if (!this->transport ()->post_open ((size_t) this->get_handle ()))
-    return -1;
+  // Set the id in the transport now that we're active.
+  // Use C-style cast b/c otherwise we get warnings on lots of compilers
+  this->transport ()->id ((size_t) this->get_handle ());
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 
@@ -166,7 +165,16 @@ TAO_IIOP_Connection_Handler::close_connection (void)
 int
 TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 {
-  return this->handle_input_eh (h, this);
+  const int result =
+    this->handle_input_eh (h, this);
+
+  if (result == -1)
+    {
+      this->close_connection ();
+      return 0;
+    }
+
+  return result;
 }
 
 int
@@ -205,7 +213,9 @@ TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE,
 int
 TAO_IIOP_Connection_Handler::close (u_long)
 {
-  return this->close_handler ();
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+  this->transport ()->remove_reference ();
+  return 0;
 }
 
 int
@@ -246,14 +256,6 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
   // Get the size of the list
   const CORBA::ULong len = listen_list.length ();
 
-  if (TAO_debug_level > 0 && len == 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::")
-                  ACE_TEXT("process_listen_point_list, ")
-                  ACE_TEXT("Received list of size 0, check client config.\n")));
-    }
-
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       IIOP::ListenPoint listen_point = listen_list[i];
@@ -282,9 +284,7 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
 
       // The property for this handler has changed. Recache the
       // handler with this property
-      int retval =
-        this->transport ()->recache_transport (&prop);
-
+      int retval = this->transport ()->recache_transport (&prop);
       if (retval == -1)
         return retval;
 

@@ -21,10 +21,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/ESF/ESF_Worker.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Worker.h"
 
 #include "tao/ORB.h"
-#include "tao/PolicyC.h"
 
 #include "ace/Event_Handler.h"
 
@@ -43,7 +42,7 @@ class TAO_CEC_Reactive_Pulling_Strategy;
  * periodically wakeup and try top pull events from each
  * PullSupplier connected to the EventChannel.
  */
-class TAO_Event_Serv_Export TAO_CEC_Pulling_Strategy_Adapter : public ACE_Event_Handler
+class TAO_Event_Export TAO_CEC_Pulling_Strategy_Adapter : public ACE_Event_Handler
 {
 public:
   /// Constructor
@@ -68,13 +67,12 @@ private:
  * The events are dispatched in FIFO ordering, using the invoking
  * thread to push the event to the consumer.
  */
-class TAO_Event_Serv_Export TAO_CEC_Reactive_Pulling_Strategy : public TAO_CEC_Pulling_Strategy
+class TAO_Event_Export TAO_CEC_Reactive_Pulling_Strategy : public TAO_CEC_Pulling_Strategy
 {
 public:
   /// The scheduler is used to find the range of priorities and similar
   /// info.
   TAO_CEC_Reactive_Pulling_Strategy (const ACE_Time_Value &rate,
-                                     const ACE_Time_Value &relative_timeout,
                                      TAO_CEC_EventChannel *event_channel,
                                      CORBA::ORB_ptr orb);
 
@@ -92,9 +90,6 @@ private:
 
   /// The polling rate
   ACE_Time_Value rate_;
-
-  /// The relative timeout
-  ACE_Time_Value relative_timeout_;
 
   /// The event channel
   TAO_CEC_EventChannel *event_channel_;

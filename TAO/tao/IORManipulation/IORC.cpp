@@ -613,7 +613,7 @@ CORBA::TypeCode_ptr TAO_IOP::MultiProfileList::_type (void) const
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 TAO_IOP::TAO_IOR_Property_ptr
-TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::duplicate (
+TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::tao_duplicate (
     TAO_IOP::TAO_IOR_Property_ptr p
   )
 {
@@ -622,7 +622,7 @@ TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::release (
+TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::tao_release (
     TAO_IOP::TAO_IOR_Property_ptr p
   )
 {
@@ -631,14 +631,14 @@ TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 TAO_IOP::TAO_IOR_Property_ptr
-TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::nil (void)
+TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::tao_nil (void)
 {
   return TAO_IOP::TAO_IOR_Property::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::marshal (
+TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::tao_marshal (
     TAO_IOP::TAO_IOR_Property_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -758,7 +758,7 @@ TAO_IOP::TAO_IOR_Property::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 TAO_IOP::TAO_IOR_Manipulation_ptr
-TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::duplicate (
+TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::tao_duplicate (
     TAO_IOP::TAO_IOR_Manipulation_ptr p
   )
 {
@@ -767,7 +767,7 @@ TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::release (
+TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::tao_release (
     TAO_IOP::TAO_IOR_Manipulation_ptr p
   )
 {
@@ -776,14 +776,14 @@ TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 TAO_IOP::TAO_IOR_Manipulation_ptr
-TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::nil (void)
+TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::tao_nil (void)
 {
   return TAO_IOP::TAO_IOR_Manipulation::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::marshal (
+TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::tao_marshal (
     TAO_IOP::TAO_IOR_Manipulation_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1207,3 +1207,4 @@ CORBA::Boolean operator>> (
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

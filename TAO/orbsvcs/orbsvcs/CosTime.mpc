@@ -1,9 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project(CosTime) : orbsvcslib, core, portableserver {
+project(CosTime) : orbsvcslib, core, naming {
   sharedname   = TAO_CosTime
-  idlflags    += -Wb,export_macro=TAO_Time_Export -Wb,export_include=orbsvcs/Time/time_export.h
+  idlflags    += -Wb,export_macro=TAO_Time_Export -Wb,export_include=Time/time_export.h
   dynamicflags = TAO_TIME_BUILD_DLL
   tagchecks   += Time
 
@@ -17,8 +17,5 @@ project(CosTime) : orbsvcslib, core, portableserver {
       TimeServiceS.cpp
       Time
     }
-  }
-
-  Template_Files {
   }
 }

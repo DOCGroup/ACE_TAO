@@ -20,17 +20,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/DsEventLogAdminS.h"
+#include "orbsvcs/orbsvcs/DsEventLogAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/DsLogAdminS.h"
-#include "orbsvcs/Log/LogMgr_i.h"
-#include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
-#include "orbsvcs/CosEvent/CEC_EventChannel.h"
-#include "orbsvcs/CosEvent/CEC_Default_Factory.h"
+#include "orbsvcs/orbsvcs/DsLogAdminS.h"
+#include "orbsvcs/orbsvcs/Log/LogMgr_i.h"
+#include "orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
+#include "orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h"
 #include "EventLog_i.h"
 
 #if defined(_MSC_VER)
@@ -48,7 +48,7 @@ class TAO_EventLogNotification;
  *
  * @brief The EventLogFactory is a factory that is used to create EventLogs which are event-aware.
  */
-class TAO_EventLog_Serv_Export TAO_EventLogFactory_i :
+class TAO_EventLog_Export TAO_EventLogFactory_i :
   public POA_DsEventLogAdmin::EventLogFactory,
   public TAO_LogMgr_i
 

@@ -10,8 +10,8 @@
 #include "CEC_Dispatching.h"
 #include "CEC_EventChannel.h"
 #include "CEC_ConsumerControl.h"
-#include "orbsvcs/ESF/ESF_RefCount_Guard.h"
-#include "orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_RefCount_Guard.h"
+#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h"
 #include "tao/debug.h"
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 #include "CEC_TypedEvent.h"
@@ -46,8 +46,6 @@ TAO_CEC_ProxyPushSupplier::TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* ec)
 
   this->default_POA_ =
     this->event_channel_->supplier_poa ();
-
-  this->event_channel_->get_servant_retry_map ().bind (this, 0);
 }
 
 // TAO_CEC_ProxyPushSupplier Constructure (Typed EC)
@@ -63,14 +61,11 @@ TAO_CEC_ProxyPushSupplier::TAO_CEC_ProxyPushSupplier (TAO_CEC_TypedEventChannel*
 
   this->default_POA_ =
     this->typed_event_channel_->typed_supplier_poa ();
-
-  this->event_channel_->get_servant_retry_map ().bind (this, 0);
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 TAO_CEC_ProxyPushSupplier::~TAO_CEC_ProxyPushSupplier (void)
 {
-  this->event_channel_->get_servant_retry_map ().unbind (this);
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   if (this->is_typed_ec () )
     {
@@ -603,23 +598,24 @@ TAO_CEC_ProxyPushSupplier::push_to_consumer (const CORBA::Any& event
       CosEventComm::PushConsumer::_duplicate (this->consumer_.in ());
   }
 
-  TAO_CEC_ConsumerControl *control =
-               this->event_channel_->consumer_control ();
   ACE_TRY
     {
       consumer->push (event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      // Inform the control that we were able to push something
-      control->successful_transmission(this);
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_used)
     {
+      TAO_CEC_ConsumerControl *control =
+        this->event_channel_->consumer_control ();
+
       control->consumer_not_exist (this ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
+      TAO_CEC_ConsumerControl *control =
+        this->event_channel_->consumer_control ();
+
       control->system_exception (this,
                                  sysex
                                  ACE_ENV_ARG_PARAMETER);
@@ -647,24 +643,24 @@ TAO_CEC_ProxyPushSupplier::reactive_push_to_consumer (
       CosEventComm::PushConsumer::_duplicate (this->consumer_.in ());
   }
 
-  TAO_CEC_ConsumerControl *control =
-                  this->event_channel_->consumer_control ();
-
   ACE_TRY
     {
       consumer->push (event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      // Inform the control that we were able to push something
-      control->successful_transmission(this);
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_used)
     {
+      TAO_CEC_ConsumerControl *control =
+        this->event_channel_->consumer_control ();
+
       control->consumer_not_exist (this ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
+      TAO_CEC_ConsumerControl *control =
+        this->event_channel_->consumer_control ();
+
       control->system_exception (this,
                                  sysex
                                  ACE_ENV_ARG_PARAMETER);

@@ -32,12 +32,12 @@ ACE_FILE_Connector::ACE_FILE_Connector (void)
 
 int
 ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
-                             const ACE_FILE_Addr &remote_sap,
-                             ACE_Time_Value *timeout,
-                             const ACE_Addr &,
-                             int,
-                             int flags,
-                             int perms)
+			     const ACE_FILE_Addr &remote_sap,
+			     ACE_Time_Value *timeout,
+			     const ACE_Addr &,
+			     int,
+			     int flags,
+			     int perms)
 {
   ACE_TRACE ("ACE_FILE_Connector::connect");
   ACE_ASSERT (new_io.get_handle () == ACE_INVALID_HANDLE);
@@ -65,7 +65,7 @@ ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
       handle = ACE_OS::mkstemp (filename); // mkstemp() replaces "XXXXXX"
 
       if (handle == ACE_INVALID_HANDLE
-          || new_io.addr_.set (ACE_TEXT_CHAR_TO_TCHAR (filename)) != 0)
+          || new_io.addr_.set (filename) != 0)
         return -1;
 
       new_io.set_handle (handle);
@@ -76,7 +76,7 @@ ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
   else
     new_io.addr_ = remote_sap; // class copy.
 
-  handle = ACE::handle_timed_open (timeout,
+  handle = ACE_Handle_Ops::handle_timed_open (timeout,
                                               new_io.addr_.get_path_name (),
                                               flags,
                                               perms);

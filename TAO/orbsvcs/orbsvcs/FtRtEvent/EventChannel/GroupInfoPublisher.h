@@ -13,7 +13,7 @@
 #ifndef GROUPINFOPUBLISHER_H
 #define GROUPINFOPUBLISHER_H
 
-#include "orbsvcs/FtRtecEventChannelAdminC.h"
+#include "orbsvcs/orbsvcs/FtRtecEventChannelAdminC.h"
 #include "tao/PortableServer/PortableServerC.h"
 #include "ace/Vector_T.h"
 #include "ace/Singleton.h"

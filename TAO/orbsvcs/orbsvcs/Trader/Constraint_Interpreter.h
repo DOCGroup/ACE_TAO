@@ -19,8 +19,8 @@
 #include "Constraint_Visitors.h"
 #include "Interpreter.h"
 
-#include "orbsvcs/CosTradingS.h"
-#include "orbsvcs/CosTradingReposS.h"
+#include "orbsvcs/orbsvcs/CosTradingS.h"
+#include "orbsvcs/orbsvcs/CosTradingReposS.h"
 
 class TAO_Constraint_Evaluator;
 class TAO_Constraint_Validator;
@@ -41,7 +41,7 @@ class TAO_Constraint_Validator;
  * EvaluationVisitor, which will evaluate the tree and decide
  * whether the offer meets the constraints.
  */
-class TAO_Trading_Serv_Export TAO_Constraint_Interpreter : public TAO_Interpreter
+class TAO_Trading_Export TAO_Constraint_Interpreter : public TAO_Interpreter
 {
 public:
   // = Initialization and termination methods.
@@ -88,7 +88,7 @@ public:
  * the offers, it will extract the offers in order using the
  * remove_offer method.
  */
-class TAO_Trading_Serv_Export TAO_Preference_Interpreter : public TAO_Interpreter
+class TAO_Trading_Export TAO_Preference_Interpreter : public TAO_Interpreter
 {
 public:
   // = Initialization and termination methods.

@@ -22,8 +22,4 @@ project : taolib, rtcorba, portableserver, core, corba_messaging {
   Resource_Files {
     RTScheduling
   }
-
-  PIDL_Files {
-    RTScheduling
-  }
 }
