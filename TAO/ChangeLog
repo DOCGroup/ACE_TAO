@@ -1,3 +1,10 @@
+Mon Nov 10 07:18:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/PortableServer/ImR_ActivatorC.cpp:
+
+	  Not sure why this file is there. Anyway, just removed the vague
+	  includes that it has.
+
 Sun Nov  9 23:23:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Remote_Object_Proxy_Impl.cpp:
