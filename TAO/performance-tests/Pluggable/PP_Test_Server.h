@@ -69,6 +69,9 @@ private:
   Pluggable_Test_Factory_i *factory_impl_;
   // Implementation object of the Pluggable Test factory.
 
+  CORBA::String_var factory_id_;
+  // ID of the factory.
+
   int argc_;
   // Number of commandline arguments.
 
