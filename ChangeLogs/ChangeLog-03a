@@ -1,5 +1,6 @@
-Sat Oct 19 09:19:10 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+Sat Oct 19 09:25:52 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* examples/Reactor/Misc/test_timer_queue.cpp,
 	* tests/Timer_Queue_Test.cpp: Fixed warnings with G++.
 	  Thanks to Bala for reporting this.
 
