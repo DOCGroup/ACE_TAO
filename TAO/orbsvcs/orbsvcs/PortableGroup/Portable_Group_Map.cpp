@@ -111,7 +111,7 @@ TAO_Portable_Group_Map::dispatch (PortableGroup::TagGroupTaggedComponent* group_
                                   ACE_ENV_ARG_DECL)
 {
   // Look up the GroupId.
-  Map_Entry *entry;
+  Map_Entry *entry = 0;
   if (this->map_.find (group_id,
                        entry) == 0)
     {
@@ -119,9 +119,9 @@ TAO_Portable_Group_Map::dispatch (PortableGroup::TagGroupTaggedComponent* group_
       // Save the read pointer in the message block since
       // every time we dispatch the request, we need to
       // reset it so that the request demarshals correctly.
-      TAO_InputCDR &tao_in = request.incoming ();
+      TAO_InputCDR *tao_in = request.incoming ();
       ACE_Message_Block *msgblk =
-          const_cast<ACE_Message_Block *> (tao_in.start ());
+          const_cast<ACE_Message_Block *> (tao_in->start ());
       char *read_ptr = msgblk->rd_ptr ();
 
       // Iterate through the list of ObjectKeys.
