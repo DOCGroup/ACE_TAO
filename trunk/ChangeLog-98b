@@ -7,7 +7,8 @@ Wed Aug 12 21:32:05 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  resets the Message_Block. There were other ways to do this (like
 	  calling data_block->base()), but some users find it convenient.
 	  I also modified the Data_Block::base() method to release any
-	  memory held by the class before the method is called.
+	  memory held by the class before the method is called. Thanks to
+	  Peter.Gorgia@libnet.com for pointing this out.
 
 Wed Aug 12 17:43:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
