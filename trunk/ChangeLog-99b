@@ -1,3 +1,15 @@
+Fri Dec 10 17:29:54 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc.h:
+	* ace/Malloc.cpp:  Added <print_alignment_info> methods for both
+	  control block.  They are only available for debug version.
+
+	* tests/Malloc_Test.cpp: Removed temporary debug print out and
+	  changed to use <print_alignment_info>.
+
+	  This test no longer forces the mmap to remap.  Linux doesn't
+	  handle the case correctly.
+
 Fri Dec 10 15:37:09 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ACE-INSTALL.html: Clarified how the clone procedure should
@@ -16,7 +28,7 @@ Fri Dec 10 15:55:53 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  in the template instantiations because the resulting template
 	  instantiation for the single-threaded case already exists in
 	  ACE.  Thanks to Doug for letting me know about this.
-	
+
 	* m4/compiler.m4 (CXXFLAGS):
 
 	  Added missing flags that fix Sun C++ 5.0 weirdness on Solaris.

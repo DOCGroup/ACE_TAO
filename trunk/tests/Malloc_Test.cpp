@@ -206,18 +206,22 @@ parent (Test_Data *data)
   // Sleep for a 200 msecs so that the child will have a chance to spin!
   ACE_OS::sleep (ACE_Time_Value (0, 200 * 1000));
 
+#if 1
   char *small_buf[1024];
   int cntr;
 
   for (cntr = 0 ; cntr < 1024; ++cntr)
     small_buf[cntr] = (char *) myalloc->malloc (1);
   char *big_buf = (char *) myalloc->malloc (1024 * 4069);
+#endif /* 0 */
 
   int result = myalloc->bind ("bar", data);
 
+#if 1
   myalloc->free (big_buf);
   for (cntr = 0 ; cntr < 1024; ++cntr)
     myalloc->free (small_buf[cntr]);
+#endif /* 0 */
 
   ACE_ASSERT (result != -1);
   return 0;
@@ -257,21 +261,11 @@ main (int argc, ASYS_TCHAR *[])
 
       init_test (PARENT_BASE_ADDR);
 
-#if 0
-      cout << "Sizeof header padding: " << ACE_MALLOC_PADDING << endl
-           << "Sizeof ptr: " << sizeof (char *) << endl
-           << "Sizeof size_t: " << sizeof (size_t) << endl
-           << "Sizeof long: " << sizeof (long) << endl
-           << "Sizeof double: " << sizeof (double) << endl
-           << "Sizeof MALLOC_ALIGN: " << ACE_MALLOC_ALIGN << endl
-           << "Sizeof ACE_MALLOC_HEADER_SIZE: " << ACE_MALLOC_HEADER_SIZE << endl
-           << "Sizeof (Malloc Header): " << sizeof (ACE_Malloc_Header) << endl
-           << "Sizeof ACE_CONTROL_BLOCK_SIZE: " << ACE_CONTROL_BLOCK_SIZE << endl
-           << "Sizeof (control align long: " << ACE_CONTROL_BLOCK_ALIGN_LONGS << endl
-           << "Sizeof (Control Block): " << sizeof (ACE_Control_Block) << endl
-           << "Sizeof padding size: " << ACE_MALLOC_PADDING_SIZE << endl
-        ;
-#endif
+      ACE_Control_Block::print_alignment_info ();
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+      ACE_PI_Control_Block::print_alignment_info ();
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+
       // No arguments means we're the parent process.
       ACE_Process_Options options (1);
       options.command_line (ACE_TEXT (".")
