@@ -102,8 +102,12 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "return 0;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl
-      << "TAO_InputCDR stream (_tao_any._tao_get_cdr ());"
-      << be_nl
+
+      << "TAO_InputCDR stream (" << be_idt << be_idt_nl
+      << "_tao_any._tao_get_cdr ()," << be_nl
+      << "_tao_any._tao_byte_order ()" << be_uidt_nl
+      << ");" << be_uidt_nl
+
       << "CORBA::Object_var _tao_obj_var;" << be_nl
       << "ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);" << be_nl
       << "if (stream.decode (" << node->tc_name ()
