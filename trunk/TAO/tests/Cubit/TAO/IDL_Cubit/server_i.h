@@ -62,9 +62,6 @@ private:
   // Initialises the name server and registers cubit factory with the
   // name server.
 
-  int num_of_objs_;
-  // Number of cubit objects we export.
-
   int use_naming_service_;
   //Flag to tell server not to use the TAO Naming Service to register
   //the cubit factory.
@@ -79,17 +76,9 @@ private:
   // An instance of the name server used for registering the factory
   // objects.
 
-  Cubit_Factory_i factory_impl_;
+  Cubit_Factory_i *factory_impl_;
   // Implementation object of the cubit factory.
        
-  Cubit_Factory_var factory;
-  // Factory_var to register with NamingService.
-
-  Cubit_Shutdown_i shutdown_impl_;
-  // Implementation object of shutdown object.
-
-  Cubit_Shutdown_var shutdown_;
-
   CosNaming::NamingContext_var cubit_context_;
   // Naming context for the cubit_factory.
 

@@ -21,9 +21,8 @@ LSRC = $(PROG_SRCS)
 
 NESTEDUPCALLS_SVR_OBJS = ReactorS.o ReactorC.o server.o reactor_i.o
 NESTEDUPCALLS_CLT_OBJS = ReactorS.o ReactorC.o client.o eh_i.o
-TEST_OBJS			   = NestedUpCalls_Test.o
 
-BIN = server client NestedUpCalls_Test
+BIN = server client
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
@@ -56,12 +55,9 @@ server:	$(addprefix $(VDIR),$(NESTEDUPCALLS_SVR_OBJS))
 client:	$(addprefix $(VDIR),$(NESTEDUPCALLS_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-NestedUpCalls_Test: $(addprefix $(VDIR),$(TEST_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
 realclean: clean
 	-/bin/rm -rf ReactorS.* ReactorC.* ReactorS_T.*
-	-/bin/rm -rf client server NestedUpCalls_Test
+	-/bin/rm -rf client server 
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

@@ -21,10 +21,6 @@
 // Forward declarations.
 class Cubit_i;
 
-// Typedefs.
-typedef Cubit_i *Cubit_i_ptr;
-typedef Cubit_i_ptr Cubit_i_ref;
-
 class Cubit_i : public POA_Cubit
 {
   // = TITLE
@@ -35,7 +31,7 @@ class Cubit_i : public POA_Cubit
   //    Implementation of the cubit example at the servant side.
   //    Cubes an octet, short, long, struct and union.
 public:
-  Cubit_i (const char *obj_name = 0);
+  Cubit_i (CORBA::ORB_ptr orb);
   // Constructor
 
   ~Cubit_i (void);
@@ -79,24 +75,12 @@ public:
 
   virtual void shutdown (CORBA::Environment &env);
   // Shutdown routine.
+
+protected:
+
+  CORBA::ORB_var orb_;
+  // Keep a pointer to the ORB so we can shut it down.
 };
-
-class Cubit_Shutdown_i : public POA_Cubit_Shutdown
-{
-public:
-  Cubit_Shutdown_i (const char *obj_name = 0);
-  // Constructor
-
-  ~Cubit_Shutdown_i (void);
-  // Destructor
-
-  virtual void shutdown (CORBA::Environment &env);
-  // Shutdown routine.
-};
-
-class Cubit_Factory_i;
-
-typedef Cubit_Factory_i *Cubit_Factory_i_ptr;
 
 class Cubit_Factory_i: public POA_Cubit_Factory
 {
@@ -106,15 +90,14 @@ class Cubit_Factory_i: public POA_Cubit_Factory
   // = DESCRIPTION
   //   Factory object returning the cubit objrefs
 public:
-  Cubit_Factory_i (void);
+  Cubit_Factory_i (CORBA::ORB_ptr orb);
   // Constructor.
 
   ~Cubit_Factory_i (void);
   // Destructor.
 
-  virtual Cubit_ptr make_cubit (const char *key,
-                                CORBA::Environment &env);
-  // Make the cubit object whose key is "key".
+  virtual Cubit_ptr make_cubit (CORBA::Environment &env);
+  // Make a cubit object.
 
 private:
   Cubit_i my_cubit_;

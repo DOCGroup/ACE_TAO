@@ -81,7 +81,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_Client_Timeprobe_Description,
 // Constructor.
 Cubit_Client::Cubit_Client (void)
   : cubit_factory_key_ (0),
-    cubit_key_ (ACE_OS::strdup ("key0")),
     loop_count_ (250),
     shutdown_ (0),
     cubit_ (Cubit::_nil ()),
@@ -118,14 +117,17 @@ Cubit_Client::read_ior (char *filename)
                        filename),
                       -1);
   ACE_Read_Buffer ior_buffer (this->f_handle_);
-  this->cubit_factory_key_ =
-    ior_buffer.read ();
+  char *data = ior_buffer.read ();
 
-  if (this->cubit_factory_key_ == 0)
+  if (data == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to allocate memory to read ior: %p\n"),
                       -1);
-   return 0;
+
+  this->cubit_factory_key_ = ACE_OS::strdup (data);
+  ACE_Allocator::instance ()->free (data);
+
+  return 0;
 }
 
 // Parses the command line arguments and returns an error status.
@@ -805,45 +807,16 @@ Cubit_Client::run (int testing_collocation)
       // Make sure we call the following method "remotely" so
       // the right ORB could be used.
 
+      if (this->init_naming_service () == -1)
+        return -1;
+
       TAO_TRY
         {
-          // @@ This code should be replaced with the
-          // TAO_Naming_Client helper class.
-          CORBA::Object_var naming_obj =
-            this->orb_->resolve_initial_references ("NameService");
-
-          if (CORBA::is_nil (naming_obj.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               " (%P|%t) Unable to resolve the NameService.\n"),
-                              -1);
-
-          CosNaming::NamingContext_var naming_context =
-            CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                               TAO_TRY_ENV);
+          this->cubit_ =
+            this->factory_->make_cubit (TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
-          CosNaming::Name cubit_shutdown_name (2);
-          cubit_shutdown_name.length (2);
-          cubit_shutdown_name[0].id = 
-            CORBA::string_dup ("IDL_Cubit");
-          cubit_shutdown_name[1].id =
-            CORBA::string_dup ("shutdown");
-
-          CORBA::Object_var shutdown_obj =
-            naming_context->resolve (cubit_shutdown_name,
-                                     TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-
-          Cubit_Shutdown_var shutdown =
-            Cubit_Shutdown::_narrow (shutdown_obj.in (),
-                                     TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-
-          if (CORBA::is_nil (shutdown.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "null cubit objref returned by factory\n"),
-                              -1);
-          shutdown->shutdown (this->env_);
+          this->cubit_->shutdown (TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
           dexc (this->env_,
@@ -921,13 +894,8 @@ Cubit_Client::~Cubit_Client (void)
   if (this->f_handle_ != ACE_INVALID_HANDLE)
     ACE_OS::close (this->f_handle_);
 
-  CORBA::release (this->cubit_);
-
   if (this->cubit_factory_key_ != 0)
-    delete [] (this->cubit_factory_key_);
-
-  if (this->cubit_key_ != 0)
-    ACE_OS::free (this->cubit_key_);
+    ACE_OS::free (this->cubit_factory_key_);
 }
 
 int
@@ -1035,8 +1003,7 @@ Cubit_Client::init (int argc, char **argv)
 
       // Now retrieve the Cubit obj ref corresponding to the key.
       this->cubit_ =
-        this->factory_->make_cubit (this->cubit_key_,
-                                    TAO_TRY_ENV);
+        this->factory_->make_cubit (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       if (CORBA::is_nil (this->cubit_))

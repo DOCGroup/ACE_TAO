@@ -80,18 +80,9 @@ interface Cubit
   // shutdown the application.
 };
 
-interface Cubit_Shutdown
-{
-  // = TITLE
-  //    We need this class to shutdown the server
-  //    when testing collocation.
-  oneway void shutdown ();
-  // shutdown the program.
-};
-
 interface Cubit_Factory
   // = TITLE
   //    Creates Cubit objects.
 {
-  Cubit make_cubit (in string key);
+  Cubit make_cubit ();
 };

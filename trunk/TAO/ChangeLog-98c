@@ -1,3 +1,86 @@
+Fri Aug 07 01:10:48 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB.cpp 
+
+	  (shutdown): Restored the <wait_for_completion> flag.  In
+ 	  shutdown, we try to cancel all the threads in the ORB (e.g.,
+ 	  threads from a thread-per-connection policy). If the
+ 	  <wait_for_completion> flag is set, we wait for all threads to
+ 	  exit.  Note that there is one problem with this: on platforms
+ 	  that do not support thread cancellation, the threads won't get
+ 	  cancelled.  Therefore, the only way they will wake up and
+ 	  realize that the ORB has shutdown is that a client makes a
+ 	  request to them.  Hence the <wait_for_completion> flag cannot
+ 	  reliably used on platforms that do not have thread cancellation.
+
+	  (run): Simplified code for accessing shutdown_lock_ and
+ 	  should_shutdown_
+
+	* tao/ORB.i (should_shutdown): Added set and get methods for the
+ 	  should_shutdown_ flag.
+
+	* tao/ORB_Core.cpp 
+
+	  (Pre_Allocated): Added a constructor that makes sure that the
+ 	  thread manager does not wait for threads by default.
+
+	  (init): Set the <shutdown_lock_> for the ORB.
+
+	* tao/Connect.cpp
+
+	  (handle_input): Check to see if we've been cancelled
+ 	  cooperatively before executing the client request.
+
+  	  (TAO_Server_Connection_Handler::TAO_Server_Connection_Handler,
+ 	  TAO_Client_Connection_Handler::TAO_Client_Connection_Handler) 
+	  If the thread manager of the svc_handlers is zero, set them to
+ 	  TAO_ORB_Core_instance ()->thr_mgr () and not
+ 	  ACE_Thread_Manager::instance ().
+
+	  (activate): There is no need to assign the thr_mgr (again) as it
+ 	  was already set correctly at creation time.
+
+	  (TAO_Client_Connection_Handler::close): Removed this method. The
+ 	  base class already does this.
+
+	* tests/Cubit/TAO/IDL_Cubit/IDL_Cubit_Test.cpp:
+	  tests/NestedUpcall/Reactor/NestedUpCalls_Test.cpp:
+	  Removed these tests since they have been superseded by the perl
+ 	  scripts. Also updated the Makefiles.
+
+	* tests/Cubit/CORBAplus/IDL_Cubit:
+	* tests/Cubit/TAO/IDL_Cubit:
+	  Removed references to TAO_ORB_Core_Instance.
+
+	* tests/Cubit/TAO/IDL_Cubit/svc.conf: Added back the tss flag for
+ 	  ORBresources.  This is necessary because the collocation test
+ 	  uses two threads.
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit.idl: Removed the Cubit_Shutdown
+ 	  object. It is not needed. Also removed the string from
+ 	  make_cubit since it was not being used.
+
+	* tests/Cubit/TAO/IDL_Cubit/server_i: 
+
+	  Changed <factory_impl_> to a Cubit_Factory_i pointer and created
+ 	  it dynamically so that we can pass it the ORB pointer.
+
+	  Removed <factory>, <shutdown_impl_>, <num_of_objs_> <shutdown_>,
+ 	  <Cubit_i_ptr>, <Cubit_i_ref>, <Cubit_Factory_i_ptr>, <obj_name>
+	
+	* tests/Cubit/TAO/IDL_Cubit/client_i: 
+
+	  <cubit_key_> was removed since it was not needed anymore.
+
+	  Changed <cubit_> to a Cubit_var from a Cubit_ptr.
+
+	  Fixed the memory management for <cubit_factory_key_>.
+
+	  Instead of using the Cubit_Shutdown object, we simply turn off
+ 	  collocation, reinit all our vars (converting them from
+ 	  collocated to regular objects), and then call shutdown on the
+ 	  cubit object.
+
 Thu Aug  6 21:49:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/tests/Trading/Makefile: Changed
