@@ -150,7 +150,7 @@ public:
   void pid (long);
 
   /// Get the message data of the <Log_Record>.
-  ACE_TCHAR *msg_data (void);
+  const ACE_TCHAR *msg_data (void) const;
 
   /// Set the message data of the <Log_Record>.
   void msg_data (const ACE_TCHAR *data);

@@ -92,8 +92,8 @@ ACE_Log_Record::pid (long p)
   this->pid_ = (ACE_UINT32) p;
 }
 
-ASYS_INLINE ACE_TCHAR *
-ACE_Log_Record::msg_data (void)
+ASYS_INLINE const ACE_TCHAR *
+ACE_Log_Record::msg_data (void) const
 {
   ACE_TRACE ("ACE_Log_Record::msg_data");
   return this->msg_data_;
