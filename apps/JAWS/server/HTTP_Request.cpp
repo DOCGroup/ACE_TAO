@@ -138,11 +138,11 @@ HTTP_Request::parse_request_line (char *const request_line)
   this->got_request_line_ = 1;
 
   if (this->method (ACE_OS::strtok_r (buf, " \t", &lasts))
-      && this->uri (ACE_OS::strtok_r (NULL, " \t", &lasts)))
+      && this->uri (ACE_OS::strtok_r (0, " \t", &lasts)))
     {
       this->type (this->method ());
 
-      if (this->version (ACE_OS::strtok_r (NULL, " \t", &lasts)) == 0
+      if (this->version (ACE_OS::strtok_r (0, " \t", &lasts)) == 0
           && this->type () != HTTP_Request::GET)
         this->status_ = HTTP_Status_Code::STATUS_NOT_IMPLEMENTED;
 
@@ -170,7 +170,7 @@ HTTP_Request::init (char *const buffer,
   datalen_ = 0;
 
   // Set the datalen
-  if (data_ != NULL)
+  if (data_ != 0)
     datalen_ = buflen;
   else
     datalen_ = 0;
@@ -506,7 +506,7 @@ HTTP_Request::cgi_in_path (char *uri_string, char *&extra_path_info)
           }
         extra_path_info = 0;
 
-        cgi_path_next = ACE_OS::strtok_r (NULL, ":", &lasts);
+        cgi_path_next = ACE_OS::strtok_r (0, ":", &lasts);
       }
     while (cgi_path_next);
 
