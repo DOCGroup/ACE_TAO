@@ -13,18 +13,28 @@
 
 #include "DeploymentC.h"
 #include "Config_Handler_export.h"
+#include "ace/SString.h"
+#include "ace/Hash_Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_main.h"
+#include "tao/Exception.h"
+#include "XercesString.h"
+#include <xercesc/util/XMLUniDefs.hpp>
 #include <xercesc/util/XercesDefs.hpp>
 #include <xercesc/dom/DOM.hpp>
-#include "XercesString.h"
+#include <xercesc/util/XMLURL.hpp>
+#include <xercesc/util/XMLUri.hpp>
 
 using Config_Handler::XStr;
 using xercesc::XMLUni;
+using xercesc::XMLUri;
+using xercesc::XMLURL;
 using xercesc::XMLString;
 using xercesc::XMLException;
 using xercesc::DOMException;
@@ -32,6 +42,7 @@ using xercesc::DOMBuilder;
 using xercesc::DOMImplementationRegistry;
 using xercesc::DOMImplementationLS;
 using xercesc::DOMImplementation;
+using xercesc::DOMInputSource;
 using xercesc::DOMText;
 using xercesc::DOMNamedNodeMap;
 using xercesc::DOMLocator;
@@ -41,6 +52,10 @@ using xercesc::DOMDocumentTraversal;
 using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
+using xercesc::DOMNamedNodeMap;
+
+typedef ACE_Hash_Map_Manager<ACE_TString, ACE_TString, ACE_SYNCH_RW_MUTEX> REF_MAP;
+typedef ACE_Hash_Map_Iterator<ACE_TString, ACE_TString, ACE_SYNCH_RW_MUTEX> REF_ITER;
 
 namespace CIAO 
 {
@@ -73,15 +88,85 @@ namespace CIAO
       ~Domain_Handler(void);
 
       /// Process the Domain type
-      void process_domain (::Deployment::Domain &domain);
+      void process_domain (Deployment::Domain& domain);
 
       /// Process the UUID attribute
-      void process_uuid (const XMLCh* uuid, ::Deployment::Domain &domain);
+      void process_uuid (const XMLCh* uuid,
+                         Deployment::Domain& domain);
 
       /// Process the label attribute
-      void process_label (const XMLCh* label, ::Deployment::Domain &domain);
+      void process_label (const XMLCh* label,
+                          Deployment::Domain& domain);
+
+      /// process the node attribute
+      void process_domain_node (Deployment::Node& domain_node);
+
+      /// process the node attribute
+      void process_domain_bridge (Deployment::Bridge& domain_bridge);
+
+      /// process the node attribute
+      void process_domain_interconnect (Deployment::Interconnect& domain_ic);
+
+      /// process the node attribute
+      void process_domain_sr (Deployment::SharedResource& domain_sr);
+
+      /// process the Node name attribute
+      void process_node_name (const XMLCh* name,
+                              Deployment::Node& domain_node);
+
+      /// process the Interconnect name attribute
+      void process_ic_name (const XMLCh* name,
+                            Deployment::Interconnect& domain_ic);
+
+      /// process the Bridge name attribute
+      void process_bridge_name (const XMLCh* name,
+                                Deployment::Bridge& domain_bridge);
+
+      /// process the SharedResource name attribute
+      void process_sr_name (const XMLCh* name,
+                            Deployment::SharedResource& domain_sr);
+
+      /// process the Node label attribute
+      void process_node_label (const XMLCh* label,
+                               Deployment::Node& domain_node);
+
+      /// process the Bridge label attribute
+      void process_bridge_label (const XMLCh* label,
+                                 Deployment::Bridge& domain_bridge);
+
+      /// process the Interconnect label attribute
+      void process_ic_label (const XMLCh* label,
+                             Deployment::Interconnect& domain_ic);
+
+      /// process the Node name attribute
+      void process_sr_resource_type (const XMLCh* resource_type,
+                                     Deployment::SharedResource& domain_sr);
+
+      /// dump the XML descriptors
+      void dump (Deployment::Domain& domain);
+
+      /// create a document
+      DOMDocument* create_document (const char *url);
+
+      /// parse the node in a HREF format
+      void parse_node_href_doc (DOMDocument* doc, unsigned long filter,
+                                Deployment::Node& domain_node);
+
+      /// parse the shared resource in a HREF format
+      void parse_sr_href_doc (DOMDocument* doc, unsigned long filter,
+                              Deployment::SharedResource& domain_sr);
+
+      /// parse the interconnect in a HREF format
+      void parse_ic_href_doc (DOMDocument* doc, unsigned long filter,
+                              Deployment::Interconnect& domain_ic);
+
+      /// parse the shared resource in a HREF format
+      void parse_bridge_href_doc (DOMDocument* doc, unsigned long filter,
+                                  Deployment::Bridge& domain_bridge);
 
     private:
+
+      DOMDocumentTraversal* traverse_;
 
       DOMDocument* doc_;
 
@@ -92,6 +177,8 @@ namespace CIAO
       DOMNodeIterator* iter_;
 
       bool release_;
+
+      REF_MAP id_map_;
 
     };
   };
