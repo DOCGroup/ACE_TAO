@@ -586,6 +586,29 @@ Command_Handler::stat_stream (CORBA::Char_out ch,
 CORBA::Boolean 
 Command_Handler::close (void)
 {
+
+  if (audioSocket >=0)
+    {
+      unsigned char tmp = CmdCLOSE;
+      int result = 
+        this->stop_playing();
+      if (result < 0)
+        return result;
+    
+      if (audioSocket >= 0)
+        {
+          if (ABpid > 0) {
+            kill(ABpid, SIGUSR1);
+            ABpid = -1;
+          }
+          usleep(10000);
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
+          AudioWrite(&tmp, 1);
+          ComCloseConn(audioSocket);
+          audioSocket = -1;
+        }
+    }
+ 
   if (this->video_control_.in () == 0)
     return CORBA::B_TRUE;
   TAO_TRY
@@ -796,9 +819,9 @@ Command_Handler::play (int auto_exp,
   unsigned int  ats;
   int cmdstarted = 0;
   int stuffsamples = 0;
-  /*
+  
  fprintf (stderr, "CTR: PLAY . . .\n");
- */
+ 
   this->stop_playing ();
 
   if (!shared->live && !shared->config.rt && videoSocket >= 0) {
@@ -859,7 +882,9 @@ Command_Handler::play (int auto_exp,
       tmp = CmdPLAY;
       AudioWrite (&tmp, 1);
       AudioWrite (&para, sizeof (para));
+      //      ACE_DEBUG ((LM_DEBUG,"(%P|%t)Reached line %d in %s",__LINE__,__FILE__));
       read_int (audioSocket, (int *)&ats);
+      //      ACE_DEBUG ((LM_DEBUG,"(%P|%t)Reached line %d in %s",__LINE__,__FILE__));
     }
 
   if (videoSocket >= 0 && shared->nextFrame < shared->totalFrames)
@@ -933,7 +958,7 @@ Command_Handler::play (int auto_exp,
       this->video_control_->play (para,
                                   vts,
                                   env);
-      
+      ACE_DEBUG ((LM_DEBUG,"(%P|%t)Reached line %d in %s",__LINE__,__FILE__));
       if (shared->config.qosEffective) {
         /*
           fprintf (stderr, "CTR start FeedBack with init frameRateLimit %lf\n",
@@ -1204,6 +1229,7 @@ Command_Handler::stop_playing (void)
   
   if (precmd == CmdFF || precmd == CmdFB || precmd == CmdPLAY)
     {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
       unsigned char tmp = CmdSTOP;
       NewCmd(CmdSTOP);
     
@@ -1509,7 +1535,7 @@ Client_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
       ACE_DEBUG ((LM_DEBUG, 
                   "(%t) %S: not handled, returning to program\n", 
                   signum));
-      break;
+      return 0;
     }
   TimerProcessing ();
   return 0;

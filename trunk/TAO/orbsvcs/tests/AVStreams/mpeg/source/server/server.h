@@ -153,6 +153,8 @@ private:
   ACE_Sig_Set sig_set;
 };
 
+typedef ACE_Acceptor <AV_Svc_Handler, ACE_SOCK_ACCEPTOR> AV_ACCEPTOR;
+
 class AV_Server
 {
   // = TITLE
@@ -174,13 +176,16 @@ public:
   int run (CORBA::Environment& env);
   // Run the AV_Server
 
+  AV_ACCEPTOR *acceptor (void);
+  // Returns the acceptor.
+
   static void on_exit_routine (void);
   // Routine called when this process exits.
 
   ~AV_Server (void);
   // Destructor
+  //private:
 private:
-
   // @@ Why are some of these data members pointers and others
   // objects?  Shouldn't we be consistent here?
 
@@ -193,7 +198,7 @@ private:
   // %% need to comment!!
   //  typedef ACE_Strategy_Acceptor <AV_Svc_Handler, ACE_SOCK_ACCEPTOR> AV_ACCEPTOR;
   //  typedef ACE_Thread_Strategy <AV_Svc_Handler> AV_THREAD_STRATEGY;
-  typedef ACE_Acceptor <AV_Svc_Handler, ACE_SOCK_ACCEPTOR> AV_ACCEPTOR;
+
   //  AV_THREAD_STRATEGY thread_strategy_;
   // the strategy
   
@@ -210,5 +215,7 @@ private:
                   char **argv);
   // Parse the arguments.
 };
+
+typedef ACE_Singleton<AV_Server,ACE_Null_Mutex> AV_SERVER;
 
 #endif /* TAO_AV_SERVER_H */

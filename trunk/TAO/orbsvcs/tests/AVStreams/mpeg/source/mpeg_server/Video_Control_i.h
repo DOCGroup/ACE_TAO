@@ -78,9 +78,6 @@ protected:
   ACE_Reactor *reactor_;
   // The Reactor
 
-  TAO_ORB_Manager *orb_manager_;
-  // The ORB manager
-
   Video_Control_State *state_;
   // State pattern - pointer to abstract State object
 

@@ -5,37 +5,46 @@
 interface Audio_Control
 {
 
+  struct AudioParameter
+  {
+    short encodeType;
+    short channels;
+    short samplesPerSecond;
+    short bytesPerSample;
+  };
+
+
   /* CmdINITaudio parameter of fixed structure of 3 integers and a AudioPara,
      replys with CmdINITaudio followed by reply or CmdFAIL followed by a string */
   struct INITaudioPara
   {
-    int sn;
-    int version;
+    short sn;
+    short version;
     AudioParameter para;
-    int nameLength;
+    short nameLength;
     sequence <char> audiofile;
     /* char audioFile[] */
   };
 
   struct INITaudioReply
   {
-    int live;
-    int format;
+    short live;
+    short format;
   
     AudioParameter para;
-    int totalSamples;
+    short totalSamples;
   };
 
 
   /* CmdPLAY parameter */
   struct PLAYPara
   {
-    int sn;
-    int nextSample;
-    int samplesPerSecond; /* audio playback speed */
-    int samplesPerPacket; /* Number of samples in a packet */
-    int ABsamples; /* size of client VB buffer in samples */
-    int spslimit;  /* QoS parameter: sps supported by the audio channel */
+    short sn;
+    short nextSample;
+    short samplesPerSecond; /* audio playback speed */
+    short samplesPerPacket; /* Number of samples in a packet */
+    short ABsamples; /* size of client VB buffer in samples */
+    short spslimit;  /* QoS parameter: sps supported by the audio channel */
   };
 
   /* STOP followed only by SN */
@@ -43,10 +52,10 @@ interface Audio_Control
   /* CmdSPEED parameter */
   struct  SPEEDPara
   {
-    int sn;
-    int samplesPerSecond;
-    int samplesPerPacket; /* Number of samples in a packet */
-    int spslimit;
+    short sn;
+    short samplesPerSecond;
+    short samplesPerPacket; /* Number of samples in a packet */
+    short spslimit;
   };
 
   boolean init_audio (in INITaudioPara para,

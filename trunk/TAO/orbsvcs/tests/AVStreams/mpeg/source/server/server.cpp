@@ -105,6 +105,7 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
                              "(%P|%t) semaphore acquire failed: %p\n",
                              "acquire"),
                             -1);
+        // ~~?? remove the semaphore.
         // Wait until a ACE_SV_Semaphore's value is greater than 0, the
         // decrement it by 1 and return. Dijkstra's P operation, Tannenbaums
         // DOWN operation.
@@ -124,37 +125,55 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
       break;
     case CmdINITaudio:
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) Received CmdINITaudio\n"));
-      // %% need to fork here
-      switch (ACE_OS::fork ("child"))
-        {
-        case 0:
-          ACE_DEBUG ((LM_DEBUG,"(%P|%t) New process forked \n"));
-          if (Mpeg_Global::live_audio)
-            LeaveLiveAudio ();
-          ACE_NEW_RETURN (this->as_,
-                          Audio_Server,
-                          -1);
-          ACE_DEBUG ((LM_DEBUG,"(%P|%t) AudioServer created\n"));
-          int result;
-          result = this->as_->init (this->peer (),
-                                    Mpeg_Global::rttag,
-                                    -INET_SOCKET_BUFFER_SIZE);
-          if (result < 0)
-          ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t) Audio_Server init failed ()\n"),-1);
-          result = as_->run ();
-          //    ACE_Reactor::instance ()->end_event_loop ();
-          TAO_ORB_Core_instance ()->orb ()-> shutdown ();
-          if (result != 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%P|%t) handle_connection : %d\n"),
-                              result);
-          return result;
-          break;
-        default:
-          this->destroy ();
-          return 0;
-        }
+      {
+        ACE_Process_Options audio_process_options;
+        
+        char command_str[BUFSIZ];
+        sprintf (command_str,"./as -ORBport 0 -f %d",this->peer ().get_handle ());
+        ACE_DEBUG ((LM_DEBUG,"Audio command string %s",command_str));
+        audio_process_options.command_line (command_str);
+        
+        ACE_Process audio_process;
+        
+        audio_process.spawn (audio_process_options);
+      }
+      this->destroy ();
       break;
+      // %% need to fork here
+//       switch (ACE_OS::fork ("child"))
+//         {
+//         case 0:
+//           TAO_ORB_Core_instance ()->orb ()-> shutdown ();
+//           // Remove the acceptor handler and other signal handlers registered by the parent.
+//           TAO_ORB_Core_instance ()->reactor ()->remove_handler (AV_SERVER::instance ()->acceptor (),
+//                                                                 ACE_Event_Handler::ACCEPT_MASK);
+
+//           ACE_DEBUG ((LM_DEBUG,"(%P|%t) New process forked \n"));
+//           if (Mpeg_Global::live_audio)
+//             LeaveLiveAudio ();
+//           ACE_NEW_RETURN (this->as_,
+//                           Audio_Server,
+//                           -1);
+//           ACE_DEBUG ((LM_DEBUG,"(%P|%t) AudioServer created\n"));
+//           int result;
+//           result = this->as_->init (this->peer (),
+//                                     Mpeg_Global::rttag,
+//                                     -INET_SOCKET_BUFFER_SIZE);
+//           if (result < 0)
+//             ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t) Audio_Server init failed ()\n"),-1);
+//           result = as_->run ();
+          
+//           if (result != 0)
+//             ACE_ERROR_RETURN ((LM_ERROR,
+//                                "(%P|%t) handle_connection : %d\n"),
+//                               result);
+//           return result;
+//           break;
+//         default:
+//           this->destroy ();
+//           return 0;
+//         }
+//       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)Unknown command received\n"),-1);
       break;
@@ -473,6 +492,13 @@ AV_Server::run (CORBA::Environment& env){
   
 }
 
+AV_ACCEPTOR *
+AV_Server::acceptor (void)
+{
+  return &(this->acceptor_);
+}
+
+
 AV_Server::~AV_Server (void)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -495,16 +521,19 @@ AV_Server::~AV_Server (void)
 int
 main (int argc, char **argv)
 {
-  AV_Server vcr_server; 
+  //  AV_Server vcr_server; 
 
   TAO_TRY
     {
       // Parses the arguments, and initializes the server.
-      if (vcr_server.init (argc, argv, TAO_TRY_ENV) == -1)
+      //      if (vcr_server.init (argc, argv, TAO_TRY_ENV) == -1)
+      if (AV_SERVER::instance ()->init (argc, argv, TAO_TRY_ENV) == -1)
         return 1;
-  
+      TAO_CHECK_ENV;
       // Runs the reactor event loop.
-      vcr_server.run (TAO_TRY_ENV);
+      //      vcr_server.run (TAO_TRY_ENV);
+      AV_SERVER::instance ()->run (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {

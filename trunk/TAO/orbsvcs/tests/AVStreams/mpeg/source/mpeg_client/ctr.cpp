@@ -2814,10 +2814,11 @@ static void on_exit_routine(void)
     ComCloseConn(audioSocket);
     audioSocket = -1;
   }
+ 
   if (videoSocket >= 0)
   {
-    write(videoSocket, &tmp, 1);
-    ComCloseConn(videoSocket);
+    //   write(videoSocket, &tmp, 1);
+    //    ComCloseConn(videoSocket);
     videoSocket = -1;
     if (VBpid > 0) {
       kill(VBpid, SIGUSR1);
