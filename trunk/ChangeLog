@@ -1,3 +1,12 @@
+Mon Dec 13 04:34:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Release:
+	  Removed some old files from the release
+
+	* bin/make_Release:
+
+	  Bootstrapped autoconf with TAO instead of just ACE.
+
 Mon Dec 13 04:25:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Release:
