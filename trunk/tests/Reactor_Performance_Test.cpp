@@ -88,8 +88,10 @@ Read_Handler::open (void *)
 
 // Handle incoming data
 int 
-Read_Handler::handle_input (ACE_HANDLE h)
+Read_Handler::handle_input (ACE_HANDLE handle)
 {
+  ACE_UNUSED_ARG (handle);
+
   char buf[BUFSIZ];
   
   ssize_t result = this->peer ().recv (buf, sizeof (buf));
@@ -113,6 +115,9 @@ int
 Read_Handler::handle_close (ACE_HANDLE handle,
 			    ACE_Reactor_Mask close_mask)
 {
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (close_mask);
+
   // Reduce count
   waiting_--;
 
