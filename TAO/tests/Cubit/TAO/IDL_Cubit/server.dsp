@@ -90,7 +90,7 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
-SOURCE=.\cubit_i.cpp
+SOURCE=.\Cubit_Client.cpp
 # End Source File
 # Begin Source File
 
@@ -106,7 +106,7 @@ SOURCE=.\server.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\server_i.cpp
+SOURCE=.\Cubit_Server.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -114,7 +114,7 @@ SOURCE=.\server_i.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
-SOURCE=.\cubit_i.h
+SOURCE=.\Cubit_Client.h
 # End Source File
 # Begin Source File
 
@@ -126,7 +126,7 @@ SOURCE=.\cubitS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\server_i.h
+SOURCE=.\Cubit_Server.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"

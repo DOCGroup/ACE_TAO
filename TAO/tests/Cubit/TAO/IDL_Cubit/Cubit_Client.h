@@ -7,7 +7,7 @@
 //    TAO/tests/IDL_Cubit
 //
 // = FILENAME
-//    client.h
+//    Cubit_Client.h
 //
 // = DESCRIPTION
 //      This class implements a simple "cube" CORBA client for the Cubit
@@ -17,6 +17,9 @@
 //    Aniruddha Gokhale, Sumedh Mungee, and Sergio Flores-Gaitan
 //
 // ============================================================================
+
+#if !defined (_CUBIT_CLIENT_H)
+#define _CUBIT_CLIENT_H
 
 #include "ace/Get_Opt.h"
 #include "ace/Profile_Timer.h"
@@ -91,6 +94,9 @@ private:
   void cube_octet_sequence (int i, int l);
   // Cube a sequence of octets, <l> is the length of the sequence.
 
+  void cube_rti_data (int i, int numUpdates, int numAttrs);
+  // Cube a sequence <l> is the length of the sequence.
+
   int run_void (void);
   // This method runs only the cube_void() test.
 
@@ -150,3 +156,5 @@ private:
   // An instance of the name client used for resolving the factory
   // objects.
 };
+
+#endif /* _CUBIT_CLIENT_H */

@@ -4,7 +4,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-unshift @INC, '../../../../../bin';
+use lib $ENV{'ACE_ROOT'}.'/bin';
 require Process;
 require ACEutils;
 
