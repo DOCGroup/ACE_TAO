@@ -90,7 +90,7 @@ CosSchedulingLockList::CosSchedulingLockList(CosSchedulingLockNode *lock_array,
         {
           lock_array[i].next(&lock_array[i + 1]);
            ACE_NEW_THROW_EX(lock_array[i].condition_,
-                           ACE_Thread_Condition<ACE_Thread_Mutex>(*mutex),
+                           ACE_SYNCH_CONDITION(*mutex),
                            CORBA::NO_MEMORY());
         }
       ACE_TRY_CHECK;

@@ -96,7 +96,7 @@ struct CosSchedulingLockNode
   int next_offset_;
 
   /// Condition Variable to wait on Mutex
-  ACE_Thread_Condition<ACE_Thread_Mutex> *condition_;
+  ACE_SYNCH_CONDITION *condition_;
 
   /**
    * Translates the offset to the next lock
@@ -130,7 +130,7 @@ class CosSchedulingLockList
    * @param size The size of the lock list
    * @param mutex the mutex that guards the CosSchedulingLockList
    */
-  CosSchedulingLockList(CosSchedulingLockNode *lock_array, int size, ACE_Thread_Mutex *mutex);
+  CosSchedulingLockList(CosSchedulingLockNode *lock_array, int size, ACE_SYNCH_MUTEX *mutex);
 
   /**
    * Calls ACE_Thread::remove() on all conditions in the list;
@@ -162,7 +162,7 @@ class CosSchedulingLockList
    * @param mutex The mutex that guards the locks.
    */
   int defer_lock(const CosSchedulingLockNode& L,
-    ACE_Thread_Mutex &mutex);
+    ACE_SYNCH_MUTEX &mutex);
 
   /**
    * Removes a node from the granted lock list whose threadID_
