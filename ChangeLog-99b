@@ -1,6 +1,6 @@
 Mon Jan 11 15:30:26 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Process.i (get_process_attributes,get_thread_attributes):
+	* ace/Process.{h,i} (get_process_attributes,get_thread_attributes):
 	  Removed the constness from the return value to avoid Intel C++
 	  warnings.  Thanks to Karel Zuiderveld
 	  <kzuiderveld@vitalimages.com> for reporting this.
