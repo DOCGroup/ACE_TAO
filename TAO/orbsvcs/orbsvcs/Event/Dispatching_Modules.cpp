@@ -401,9 +401,6 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
       if (errno != EPIPE)
         {
           ACE_THROW (CORBA::NO_MEMORY ());
-          // @@ Orbix parameters
-          // 0, ,
-          // "ACE_ES_Priority_Dispatching::push enqueue failed"));
         }
       else
         {
