@@ -12,8 +12,8 @@
  *  Object pattern, which is available in the POSA2 book
  *  <http://www.cs.wustl.edu/~schmidt/POSA>.
  *
- *  @author Christopher Kohlhoff <chris@kohlhoff.com> */
- *
+ *  @author Christopher Kohlhoff <chris@kohlhoff.com>
+ */
 //=============================================================================
 
 #include "test_config.h"
