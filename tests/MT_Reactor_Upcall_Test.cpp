@@ -136,7 +136,7 @@ Event_Loop_Task::svc (void)
   return this->reactor_.run_reactor_event_loop ();
 }
 
-static void
+void
 test_reactor_upcall (ACE_Reactor &reactor)
 {
   Handler handler (reactor);
@@ -168,7 +168,7 @@ test_reactor_upcall (ACE_Reactor &reactor)
   ACE_ASSERT (result == 0);
 }
 
-static int
+int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("t:m:s:l:"));

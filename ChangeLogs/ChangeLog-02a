@@ -1,3 +1,8 @@
+Wed Apr 24 03:14:11 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* tests/MT_Reactor_Upcall_Test.cpp: Fix warnings on threads=0
+	build.
+
 Tue Apr 23 16:01:47 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Prevented the Miop/McastHello test from
