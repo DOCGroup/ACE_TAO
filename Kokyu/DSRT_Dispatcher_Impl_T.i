@@ -8,6 +8,7 @@ ACE_INLINE int
 DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 init (const DSRT_ConfigInfo& config_info)
 {
+  DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, INIT2, 0, 0, NULL);
   return this->init_i (config_info);
 }
 

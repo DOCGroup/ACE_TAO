@@ -8,6 +8,9 @@
 #include "Dispatch_Deferrer.i"
 #endif /* __ACE_INLINE__ */
 
+#include "kokyu_config.h"
+#include "kokyu_dsui_families.h"
+#include <dsui.h>
 ACE_RCSID(Kokyu, Dispatch_Deferrer, "$Id$")
 
 namespace Kokyu
@@ -17,7 +20,7 @@ int
 Dispatch_Deferrer::init(const Dispatch_Deferrer_Attributes& attr)
 {
   //set up reactor for timeouts
-  this->react_.open(0); 
+  this->react_.open(0);
   //Don't need any handles, since we're only using it for timeouts
 
   this->timers_.open();
@@ -51,13 +54,14 @@ Dispatch_Deferrer::dispatch (Dispatch_Queue_Item *qitem)
 
   //@BT INSTRUMENT with event ID: EVENT_DEFERRED_ENQUEUE Measure time
   //between release and enqueue into dispatch queue because of RG
+  DSUI_EVENT_LOG(DISP_DEFERRER_FAM, EVENT_DEFERRED_ENQUEUE, timer_id, 0, NULL);
 
   //buffer until timer expires
   return this->rgq_.enqueue_deadline(qitem,&tv);
 }
 
 
-int 
+int
 Dispatch_Deferrer::handle_timeout (const ACE_Time_Value &,
                                    const void *)
 {
@@ -91,10 +95,11 @@ Dispatch_Deferrer::handle_timeout (const ACE_Time_Value &,
 	}
       //else got timer_id
       this->react_.cancel_timer(timer_id);
-      
+
       //@BT INSTRUMENT with event ID: EVENT_DEFERRED_DEQUEUE Measure
       //time between release and enqueue into dispatch queue because
       //of RG
+      DSUI_EVENT_LOG (DISP_DEFERRER_FAM, EVENT_DEFERRED_DEQUEUE, timer_id, 0, NULL);
 
       this->task_->enqueue(qitem);
 
