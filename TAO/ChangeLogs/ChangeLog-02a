@@ -1,3 +1,9 @@
+Sat Jun  3 15:51:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/PolicyC.cpp:
+	  Removed unused arguments in the new _tao_encode methods
+	  and made some cosmetic changes.
+
 Sat Jun  3 13:30:28 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Profile.i (TAO_Profile):
