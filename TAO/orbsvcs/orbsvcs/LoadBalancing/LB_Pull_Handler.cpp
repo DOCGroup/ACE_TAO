@@ -34,23 +34,25 @@ TAO_LB_Pull_Handler::handle_timeout (
        ++i)
     {
       TAO_LB_Location_Map_Entry *location = (*i).int_id_;
-
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      if (!CORBA::is_nil (location->load_monitor.in ()))
         {
-          location->load_list =
-            location->load_monitor->current_load (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          // Catch the exception and ignore it.
+          ACE_DECLARE_NEW_CORBA_ENV;
+          ACE_TRY
+            {
+              location->load_list =
+                location->load_monitor->current_load (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+          ACE_CATCHANY
+            {
+              // Catch the exception and ignore it.
 
-          if (TAO_debug_level > 0)
-            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                 "(%P|%t) Load monitoring exception");
+              if (TAO_debug_level > 0)
+                ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                     "(%P|%t) Load monitoring exception");
+            }
+          ACE_ENDTRY;
         }
-      ACE_ENDTRY;
     }
 
   return 0;
