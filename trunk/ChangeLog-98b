@@ -1,3 +1,8 @@
+Fri Nov 06 12:58:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp: Removed several superfluous parens so
+	  the code looks clearer and less error-prone.
+
 1998-11-06  James CE Johnson  <jim@adt1.lads.com>
 
         * docs/tutorials/013/block.cpp
