@@ -29,7 +29,7 @@
 #include "ace/Message_Queue.h"
 #include "ace/Process_Mutex.h"
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
 // If we don't have WinSOCK2, we need these defined
 #if !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0)
 /*
@@ -573,7 +573,7 @@ private:
   /// thread up (e.g., when the <notify> method is called).
   ACE_Auto_Event wakeup_one_thread_;
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
 // because Sun C++ 4.1 can't cope with this declaration:
   ACE_Message_Queue<ACE_MT_SYNCH> message_queue_;
 #endif /* ACE_WIN32 */
@@ -592,7 +592,7 @@ private:
   int max_notify_iterations_;
 };
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
 /**
  * @class ACE_WFMO_Reactor
  *

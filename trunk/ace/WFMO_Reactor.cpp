@@ -13,7 +13,7 @@
 ACE_RCSID(ace, WFMO_Reactor, "$Id$")
 
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
 
 #include "ace/Auto_Ptr.h"
 
@@ -1674,16 +1674,27 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
                                          this->atomic_wait_array_,
                                          TRUE,
                                          timeout);
+
+      if (result != WAIT_IO_COMPLETION)
+        break;
+
+#elif defined (ACE_HAS_WINCE)
+      result = ::WaitForMultipleObjects (sizeof this->atomic_wait_array_ / sizeof (ACE_HANDLE),
+                                         this->atomic_wait_array_,
+                                         TRUE,
+                                         timeout);
+      break;  // CE does not have WAIT_IO_COMPLETION defined.
 #else
       result = ::WaitForMultipleObjectsEx (sizeof this->atomic_wait_array_ / sizeof (ACE_HANDLE),
                                            this->atomic_wait_array_,
                                            TRUE,
                                            timeout,
                                            alertable);
-#endif /* ACE_HAS_PHARLAP */
 
       if (result != WAIT_IO_COMPLETION)
         break;
+
+#endif /* ACE_HAS_PHARLAP */
     }
 
   switch (result)
@@ -1710,7 +1721,7 @@ ACE_WFMO_Reactor::wait_for_multiple_events (int timeout,
   // Wait for any of handles_ to be active, or until timeout expires.
   // If <alertable> is enabled allow asynchronous completion of
   // ReadFile and WriteFile operations.
-#if defined (ACE_HAS_PHARLAP)
+#if defined (ACE_HAS_PHARLAP) || defined (ACE_HAS_WINCE)
   // PharLap doesn't do async I/O and doesn't implement
   // WaitForMultipleObjectsEx, so use WaitForMultipleObjects.
   ACE_UNUSED_ARG (alertable);
@@ -1783,8 +1794,10 @@ ACE_WFMO_Reactor::dispatch (int wait_status)
       errno = ETIME;
       return handlers_dispatched;
 
+#ifndef ACE_HAS_WINCE
     case WAIT_IO_COMPLETION: // APC.
       return handlers_dispatched;
+#endif  // ACE_HAS_WINCE
 
     default:  // Dispatch.
       // We'll let dispatch worry about abandoned mutes.
