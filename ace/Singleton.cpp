@@ -17,7 +17,9 @@
 #include "ace/Singleton.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Singleton, "$Id$")
+ACE_RCSID (ace,
+           Singleton,
+           "$Id$")
 
 template <class TYPE, class ACE_LOCK> void
 ACE_Singleton<TYPE, ACE_LOCK>::dump (void)
@@ -86,9 +88,11 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
           if (singleton == 0)
             {
               ACE_NEW_RETURN (singleton, (ACE_Singleton<TYPE, ACE_LOCK>), 0);
+#endif /* ACE_MT_SAFE */
 
               // Register for destruction with ACE_Object_Manager.
               ACE_Object_Manager::at_exit (singleton);
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
             }
         }
 #endif /* ACE_MT_SAFE */
@@ -267,9 +271,11 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
             {
               ACE_NEW_RETURN (singleton, (ACE_TSS_Singleton<TYPE, ACE_LOCK>),
                               0);
+#endif /* ACE_MT_SAFE */
 
               // Register for destruction with ACE_Object_Manager.
               ACE_Object_Manager::at_exit (singleton);
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
             }
         }
 #endif /* ACE_MT_SAFE */
