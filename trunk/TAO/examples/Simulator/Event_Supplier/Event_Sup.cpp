@@ -31,6 +31,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 
 #include "ace/os_include/os_ctype.h"
 

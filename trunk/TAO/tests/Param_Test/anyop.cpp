@@ -18,6 +18,7 @@
 #include "param_testC.h"
 
 #include "tao/debug.h"
+#include "ace/OS_NS_string.h"
 
 // Not normally needed, but we create an object reference in this test,
 // and we have to narrow it.

@@ -15,6 +15,7 @@
 
 #include "orbsvcs/Property/CosPropertyService_i.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(Property, CosPropertyService_i, "$Id$")
 

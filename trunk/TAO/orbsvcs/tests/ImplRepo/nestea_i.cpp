@@ -6,6 +6,7 @@
 #include "ace/FILE_Connector.h"
 #include "ace/FILE_IO.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 
 const size_t MAX_UINT32_STR_LEN = 11;  // Largest UINT32 is 8589934591 + NUL is 11 characters
 
