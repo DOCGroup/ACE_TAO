@@ -1,0 +1,23 @@
+project(*Server): taoserver, orbsvcsexe, iormanip, ftorb {
+  requires += interceptors
+  idlflags += -Gv -DCORBA3 -I$(TAO_ROOT)
+
+  Source_Files {
+    test_i.cpp
+    testS.cpp
+    Server_ORBInitializer.cpp
+    Server_Request_Interceptor.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoclient, orbsvcsexe, iormanip, ftorb {
+  requires += interceptors
+  idlflags += -Gv -DCORBA3 -I$(TAO_ROOT)
+
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
+
