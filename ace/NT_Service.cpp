@@ -604,7 +604,7 @@ ACE_NT_Service::wait_for_service_state (DWORD desired_state,
       ::Sleep (this->svc_status_.dwWaitHint);
     }
     
-  return service_ok == 0 ? -1 : 0;
+  return;
 }
 
 #endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
