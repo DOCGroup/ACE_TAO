@@ -1,3 +1,9 @@
+Tue Jun 15 12:23:26 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB.h (CORBA_ORB): Removed old comments about perform_work()
+	  and work_pending().  Thanks to Pradeep Gore for pointing this
+	  out.
+
 Tue Jun 15 10:57:08 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* docs/compiler.html: Improved the TAO IDL compiler documentation.
@@ -35,7 +41,7 @@ Tue Jun 15 11:06:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Mon Jun 14 22:58:34 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h: 	
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: Fixed
  	  ACE_THROW_SPEC issues again. Included the
  	  CORBA::SystemException.
@@ -96,13 +102,13 @@ Mon Jun 14 21:04:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Mon Jun 14 20:53:44 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: Fixed a few more
-	  ACE_THROW_SPEC errors. Thanks to Carlos for pointing these. 
+	  ACE_THROW_SPEC errors. Thanks to Carlos for pointing these.
 
 Mon Jun 14 19:38:47 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h: 
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
-	  Fixed the problems with the ACE_THROW_SPEC.		
+	  Fixed the problems with the ACE_THROW_SPEC.
 
 Mon Jun 14 19:36:32 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
