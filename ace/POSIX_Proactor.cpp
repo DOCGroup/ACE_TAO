@@ -1760,6 +1760,7 @@ ACE_POSIX_SIG_Proactor::create_asynch_timer (ACE_Handler &handler,
   return implementation;
 }
 
+#if 0
 static void
 sig_handler (int sig_num, siginfo_t *, ucontext_t *)
 {
@@ -1768,6 +1769,7 @@ sig_handler (int sig_num, siginfo_t *, ucontext_t *)
               "%N:%l:(%P | %t)::sig_handler received signal: %d\n",
                sig_num));
 }
+#endif /*if 0*/
 
 int
 ACE_POSIX_SIG_Proactor::setup_signal_handler (int signal_number) const
