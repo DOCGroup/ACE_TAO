@@ -1,5 +1,9 @@
 Fri Feb 05 12:02:31 1999  Steve Huston  <shuston@riverace.com>
 
+        * tests/run_tests.sh: Added SHLIB_PATH support for HP-UX. Fixed
+          the LD_LIBRARY_PATH setting to work if there was no path set
+          on entry to the script.
+
         * ace/config-hpux-9.x.h, config-hpux-(10,11).x-hpc++.h:
           Removed ACE_HAS_BROKEN_ENUMS.  This affects the HP C++ compiler, not
           aC++.  I made this change based on David's experience with the
