@@ -1,3 +1,49 @@
+Wed Jul 23 13:28:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Argument.cpp:
+        * tao/Argument.h:
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Fixed_Array_Argument_T.inl:
+        * tao/Fixed_Size_Argument_T.cpp:
+        * tao/Fixed_Size_Argument_T.h:
+        * tao/Object_Argument_T.cpp:
+        * tao/Object_Argument_T.h:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Argument_T.h:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.h:
+        * tao/Var_Array_Argument_T.inl:
+        * tao/Var_Size_Argument_T.cpp:
+        * tao/Var_Size_Argument_T.h:
+
+	  Added and removed methods related to interceptors
+	  based on a clearer understanding, thanks to Ossama
+	  <ossama@dre.vanderbilt.edu> and Bala <bala@dre.vanderbilt.edu>.
+	  Also change the return signature of some of the arg()
+	  methods for arrays.
+
+        * tao/TAO.dsp:
+
+	  Added a missing file to the project.
+
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/exceptlist_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/proxy_impl_xh.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+
+	  Added generation of '_set' or '_get_ prefix to 
+	  operation names for atttributes in thru-POA
+	  collocated proxy classes on the skeleton side.
+          Also added generation of exception data in stub operations.
+
 Tue Jul 22 17:44:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:

@@ -510,6 +510,15 @@ be_visitor_operation::gen_stub_operation_body (
   *os << be_uidt_nl
       << "};" << be_uidt;
 
+  if (this->gen_pre_stub_info (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_cs::"
+                         "visit_operation - "
+                         "codegen for exceptiondata failed\n"),
+                        -1);
+    }
+
   *os << be_nl << be_nl
       << "TAO::Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
       << "this," << be_nl

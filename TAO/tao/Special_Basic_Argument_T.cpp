@@ -30,15 +30,6 @@ TAO::In_Special_Basic_Argument_T<S,to_S,from_S>::interceptor_param (
   p.mode = CORBA::PARAM_IN;
 }
 
-template<typename S, typename to_S, typename from_S>
-CORBA::Boolean
-TAO::In_Special_Basic_Argument_T<S,to_S,from_S>::interceptor_replace (
-    CORBA::Any & any
-  )
-{
-  return any >>= to_S (ACE_const_cast (S &, this->x_));
-}
-
 // ===========================================================
 
 template<typename S, typename to_S, typename from_S>
@@ -69,15 +60,6 @@ TAO::Inout_Special_Basic_Argument_T<S,to_S,from_S>::interceptor_param (
   p.mode = CORBA::PARAM_INOUT;
 }
 
-template<typename S, typename to_S, typename from_S>
-CORBA::Boolean
-TAO::Inout_Special_Basic_Argument_T<S,to_S,from_S>::interceptor_replace (
-    CORBA::Any & any
-  )
-{
-  return any >>= to_S (this->x_);
-}
-
 // ==============================================================
 
 template<typename S, typename to_S, typename from_S>
@@ -87,6 +69,16 @@ TAO::Out_Special_Basic_Argument_T<S,to_S,from_S>::demarshal (
   )
 {
   return cdr >> to_S (this->x_);
+}
+
+template<typename S, typename to_S, typename from_S>
+void
+TAO::Out_Special_Basic_Argument_T<S,to_S,from_S>::interceptor_param (
+    Dynamic::Parameter & p
+  )
+{
+  p.argument <<= from_S (this->x_);
+  p.mode = CORBA::PARAM_OUT;
 }
 
 // ============================================================
@@ -109,15 +101,6 @@ TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S>::interceptor_result (
   (*any) <<= this->x_;
 }
 
-template<typename S, typename to_S, typename from_S>
-CORBA::Boolean
-TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S>::interceptor_replace (
-    CORBA::Any & any
-  )
-{
-  return any >>= to_S (this->x_);
-}
-
 // ============================================================
 
 template<typename S, typename to_S, typename from_S>
@@ -137,15 +120,6 @@ TAO::In_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_param (
 {
   p.argument <<= from_S (this->x_);
   p.mode = CORBA::PARAM_IN;
-}
-
-template<typename S, typename to_S, typename from_S>
-CORBA::Boolean
-TAO::In_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_replace (
-    CORBA::Any & any
-  )
-{
-  return any >>= to_S (this->x_);
 }
 
 // ===========================================================
@@ -178,15 +152,6 @@ TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_param (
   p.mode = CORBA::PARAM_INOUT;
 }
 
-template<typename S, typename to_S, typename from_S>
-CORBA::Boolean
-TAO::Inout_Special_Basic_SArgument_T <S,to_S,from_S>::interceptor_replace (
-    CORBA::Any & any
-  )
-{
-  return any >>= to_S (this->x_);
-}
-
 // ==============================================================
 
 template<typename S, typename to_S, typename from_S>
@@ -196,6 +161,16 @@ TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S>::marshal (
   )
 {
   return cdr << from_S (this->x_);
+}
+
+template<typename S, typename to_S, typename from_S>
+void
+TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_param (
+    Dynamic::Parameter & p
+  )
+{
+  p.argument <<= from_S (this->x_);
+  p.mode = CORBA::PARAM_OUT;
 }
 
 // ==============================================================
@@ -216,15 +191,6 @@ TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_result (
   )
 {
   (*any) <<= this->x_;
-}
-
-template<typename S, typename to_S, typename from_S>
-CORBA::Boolean
-TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_replace (
-    CORBA::Any & any
-  )
-{
-  return any >>= to_S (this->x_);
 }
 
 #endif /* TAO_SPECIAL_BASIC_ARGUMENT_T_C */

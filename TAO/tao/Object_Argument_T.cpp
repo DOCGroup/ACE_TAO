@@ -28,13 +28,6 @@ TAO::In_Object_Argument_T<S_ptr>::interceptor_param (Dynamic::Parameter & p)
   p.mode = CORBA::PARAM_IN;
 }
 
-template<typename S_ptr>
-CORBA::Boolean
-TAO::In_Object_Argument_T<S_ptr>::interceptor_replace (CORBA::Any & any)
-{
-  return any >>= this->x_;
-}
-
 // ===========================================================
 
 template<typename S_ptr>
@@ -62,13 +55,6 @@ TAO::Inout_Object_Argument_T<S_ptr>::interceptor_param (
   p.mode = CORBA::PARAM_INOUT;
 }
 
-template<typename S_ptr>
-CORBA::Boolean
-TAO::Inout_Object_Argument_T<S_ptr>::interceptor_replace (CORBA::Any & any)
-{
-  return any >>= this->x_;
-}
-
 // ==============================================================
 
 template<typename S_ptr, typename S_out>
@@ -76,6 +62,16 @@ CORBA::Boolean
 TAO::Out_Object_Argument_T<S_ptr,S_out>::demarshal (TAO_InputCDR & cdr)
 {
   return cdr >> this->x_;
+}
+
+template<typename S_ptr, typename S_out>
+void
+TAO::Out_Object_Argument_T<S_ptr,S_out>::interceptor_param (
+    Dynamic::Parameter & p
+  )
+{
+  p.argument <<= this->x_;
+  p.mode = CORBA::PARAM_OUT;
 }
 
 // ============================================================
@@ -92,15 +88,6 @@ void
 TAO::Ret_Object_Argument_T<S_ptr,S_var>::interceptor_result (CORBA::Any * any)
 {
   (*any) <<= this->x_.in ();
-}
-
-template<typename S_ptr, typename S_var>
-CORBA::Boolean
-TAO::Ret_Object_Argument_T<S_ptr,S_var>::interceptor_replace (
-    CORBA::Any & any
-  )
-{
-  return any >>= this->x_;
 }
 
 // ============================================================
@@ -120,15 +107,6 @@ TAO::In_Object_SArgument_T<S_ptr,S_var>::interceptor_param (
 {
   p.argument <<= this->x_.in ();
   p.mode = CORBA::PARAM_IN;
-}
-
-template<typename S_ptr, typename S_var>
-CORBA::Boolean
-TAO::In_Object_SArgument_T<S_ptr,S_var>::interceptor_replace (
-    CORBA::Any & any
-  )
-{
-  return any >>= this->x_.out ();
 }
 
 // ===========================================================
@@ -157,15 +135,6 @@ TAO::Inout_Object_SArgument_T<S_ptr,S_var>::interceptor_param (
   p.mode = CORBA::PARAM_INOUT;
 }
 
-template<typename S_ptr, typename S_var>
-CORBA::Boolean
-TAO::Inout_Object_SArgument_T<S_ptr,S_var>::interceptor_replace (
-    CORBA::Any & any
-  )
-{
-  return any >>= this->x_.out ();
-}
-
 // ==============================================================
 
 template<typename S_ptr, typename S_var, typename S_out>
@@ -173,6 +142,16 @@ CORBA::Boolean
 TAO::Out_Object_SArgument_T<S_ptr,S_var,S_out>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << this->x_.in ();
+}
+
+template<typename S_ptr, typename S_var, typename S_out>
+void
+TAO::Out_Object_SArgument_T<S_ptr,S_var,S_out>::interceptor_param (
+    Dynamic::Parameter & p
+  )
+{
+  p.argument <<= this->x_.in ();
+  p.mode = CORBA::PARAM_OUT;
 }
 
 // ============================================================
@@ -191,15 +170,6 @@ TAO::Ret_Object_SArgument_T<S_ptr,S_var>::interceptor_result (
   )
 {
   (*any) <<= this->x_.in ();
-}
-
-template<typename S_ptr, typename S_var>
-CORBA::Boolean
-TAO::Ret_Object_SArgument_T<S_ptr,S_var>::interceptor_replace (
-    CORBA::Any & any
-  )
-{
-  return any >>= this->x_.out ();
 }
 
 #endif /* TAO_OBJECT_ARGUMENT_T_C */

@@ -9,7 +9,7 @@ In_Fixed_Array_Argument_T (const S x)
 
 template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
-const S &
+const S_slice *
 TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany>::arg (void) const
 {
   return this->x_.in ();
@@ -17,34 +17,34 @@ TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany>::arg (void) const
 
 // ===========================================================================
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
-TAO::Inout_Fixed_Array_Argument_T<S,S_forany>::Inout_Fixed_Array_Argument_T (
-    S x
-  )
+TAO::Inout_Fixed_Array_Argument_T<S,S_slice,S_forany>::
+Inout_Fixed_Array_Argument_T (S x)
   : x_ (x)
 {}
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
-S &
-TAO::Inout_Fixed_Array_Argument_T<S,S_forany>::arg (void)
+S_slice *
+TAO::Inout_Fixed_Array_Argument_T<S,S_slice,S_forany>::arg (void)
 {
   return this->x_.inout ();
 }
 
 // ===========================================================================
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
-TAO::Out_Fixed_Array_Argument_T<S,S_forany>::Out_Fixed_Array_Argument_T (S x)
+TAO::Out_Fixed_Array_Argument_T<S,S_slice,S_forany>::
+Out_Fixed_Array_Argument_T (S x)
   : x_ (x)
 {}
 
 template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
-S &
-TAO::Out_Fixed_Array_Argument_T<S,S_forany>::arg (void)
+S_slice *&
+TAO::Out_Fixed_Array_Argument_T<S,S_slice,S_forany>::arg (void)
 {
   return this->x_.out ();
 }

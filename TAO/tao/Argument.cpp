@@ -30,8 +30,3 @@ TAO::Argument::interceptor_result (CORBA::Any *)
 {
 }
 
-CORBA::Boolean
-TAO::Argument::interceptor_replace (CORBA::Any &)
-{
-  return 1;
-}
