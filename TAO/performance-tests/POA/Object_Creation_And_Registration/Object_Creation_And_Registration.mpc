@@ -1,3 +1,0 @@
-project(registration): taoexe, portableserver {
-  exename = registration
-}

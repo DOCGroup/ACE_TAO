@@ -1,4 +1,0 @@
-project : valuetype {
-  after += ObjRefTemplate
-  libs  += TAO_ObjRefTemplate
-}

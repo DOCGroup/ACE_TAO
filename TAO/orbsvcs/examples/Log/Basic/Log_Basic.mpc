@@ -1,3 +1,0 @@
-project(*Client) : orbsvcsexe, dslogadmin, naming {
-  exename = client
-}
