@@ -882,6 +882,25 @@ bgcolor="#ffffff">
   <a href="http://www.cs.wustl.edu/~schmidt/TAO-overview.html">TAO</a>
   Guidelines</h3>
 <ul>
+  <li>When enhancing, updating, or fixing ACE or TAO, always:<p>
+  <ol>
+    <li>Test your change on at least one platorm.<p>
+    <li>Commit your change with a meaningful message.<p>
+    <li>An an entry to the appropriate ChangeLog.  TAO and some
+      ACE subdirectories, such as <a href="../ASNMP">ASNMP</a>,
+      <a href="../apps/JAWS">JAWS</a>, and
+      <a href="../apps/gperf">gperf,</a> have their
+      own ChangeLogs.  If you don't use one of those, use the
+      <a href="../ChangeLog">ChangeLog</a> in the top-level
+      <a href="..">ACE_wrappers</a> directory.<p>
+    <li>If the change is in response to a request by someone else:
+    <ol>
+      <li>Make sure that person is acknowledged in
+        <a href="../README">ACE_wrappers/README</a>, and<p>
+      <li>Respond to that person.<p>
+    </ol>
+  </ol>
+
   <li>Never add copyrighted, confidential, or otherwise restricted
       code to the ACE or TAO distributions without written permission
       from the owner.<p>
