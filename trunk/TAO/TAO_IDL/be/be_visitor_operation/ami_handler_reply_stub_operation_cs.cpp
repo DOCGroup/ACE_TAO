@@ -302,11 +302,16 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::gen_raise_exception (
   if (this->void_return_type (bt))
     { 
       if (idl_global->use_raw_throw ())
-        *os << "throw (";
+        *os << "throw ";
       else
         *os << "ACE_THROW (";
 
-      *os << excep << " (" << completion_status << "));\n";
+      *os << excep << " (" << completion_status << ")";
+
+      if (idl_global->use_raw_throw ())
+        *os << ";\n";
+      else
+        *os << ");\n";
     }
   else
     {
@@ -497,7 +502,7 @@ be_compiled_visitor_operation_ami_handler_reply_stub_operation_cs::
       *os << be_uidt << be_uidt_nl
           << " ))" << be_nl;
       if (idl_global->use_raw_throw ())
-        *os << "throw (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
+        *os << "throw CORBA::MARSHAL ();" << be_uidt_nl << be_nl;
       else
         *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
     }

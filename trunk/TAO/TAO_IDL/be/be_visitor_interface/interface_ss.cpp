@@ -229,7 +229,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "CORBA::String_var value;" << be_nl;
   *os << "if (!(_tao_in >> value.out ()))" << be_idt_nl;
   if (idl_global->use_raw_throw ())
-    *os << "throw (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
+    *os << "throw CORBA::MARSHAL ();" << be_uidt_nl << be_nl;
   else
     *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
   *os << "_tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);" << be_nl;
@@ -239,7 +239,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
   *os << "if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))" << be_idt_nl;
   if (idl_global->use_raw_throw ())
-    *os << "throw (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
+    *os << "throw CORBA::MARSHAL ();" << be_uidt << be_uidt_nl;
   else
     *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
@@ -263,7 +263,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
   *os << "if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))" << be_idt_nl;
   if (idl_global->use_raw_throw ())
-    *os << "throw (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
+    *os << "throw CORBA::MARSHAL ();" << be_uidt << be_uidt_nl;
   else
     *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
   *os << "}\n\n";
@@ -333,7 +333,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 //  *os << "{" << be_idt_nl;
 //  *os << "ACE_ERROR ((LM_ERROR, \"Bad operation <%s>\\n\", opname));" << be_nl;
 //  if (idl_global->use_raw_throw ())
-//    *os << "throw (CORBA_BAD_OPERATION ());";
+//    *os << "throw CORBA_BAD_OPERATION ();";
 //  else
 //    *os << "ACE_THROW (CORBA_BAD_OPERATION ());";
 //  *os << be_uidt_nl;
