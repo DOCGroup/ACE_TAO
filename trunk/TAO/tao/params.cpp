@@ -1,6 +1,10 @@
+#if 0
 #include "tao/params.h"
 #include "tao/connect.h"
 #include "tao/objtable.h"
+#endif
+
+#include "tao/corba.h"
 
 TAO_OA_Parameters *
 TAO_OA_Parameters::instance (void)

@@ -8,6 +8,7 @@
 // based implementation, and can neither be used by other kinds of
 // objref nor have a default implementation.
 
+#if 0
 #include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #include <objbase.h>
 #include <initguid.h>
@@ -19,6 +20,9 @@
 #if !defined (__ACE_INLINE__)
 #  include "iiopobj.i"
 #endif /* __ACE_INLINE__ */
+#endif /* 0 */
+
+#include "tao/corba.h"
 
 IIOP::ProfileBody::ProfileBody (const IIOP::ProfileBody &src)
   : iiop_version (src.iiop_version),
@@ -31,8 +35,8 @@ IIOP::ProfileBody::ProfileBody (const IIOP::ProfileBody &src)
 
   object_key.length = object_key.maximum = src.object_key.length;
 
-  //  object_key.buffer = (CORBA_Octet *) ACE_OS::malloc (object_key.maximum);
-  object_key.buffer = new CORBA_Octet [object_key.maximum];
+  //  object_key.buffer = (CORBA::Octet *) ACE_OS::malloc (object_key.maximum);
+  object_key.buffer = new CORBA::Octet [object_key.maximum];
 
  (void) ACE_OS::memcpy (object_key.buffer,
                          src.object_key.buffer,
@@ -40,8 +44,8 @@ IIOP::ProfileBody::ProfileBody (const IIOP::ProfileBody &src)
 }
 
 IIOP::ProfileBody::ProfileBody (const IIOP::Version &v,
-                                const CORBA_String &h,
-                                const CORBA_UShort &p,
+                                const CORBA::String &h,
+                                const CORBA::UShort &p,
                                 const opaque &key)
   : iiop_version (v),
     port (p)
@@ -50,8 +54,8 @@ IIOP::ProfileBody::ProfileBody (const IIOP::Version &v,
   
   object_key.length = object_key.maximum = key.length;
 
-  //  object_key.buffer = (CORBA_Octet *) ACE_OS::malloc (object_key.maximum);
-  object_key.buffer = new CORBA_Octet [object_key.maximum];
+  //  object_key.buffer = (CORBA::Octet *) ACE_OS::malloc (object_key.maximum);
+  object_key.buffer = new CORBA::Octet [object_key.maximum];
 
  (void) ACE_OS::memcpy (object_key.buffer, key.buffer,
                          object_key.length);
@@ -61,11 +65,11 @@ IIOP::ProfileBody::ProfileBody (const IIOP::Version &v,
 //
 // NOTE that this must NOT go across the network!
 
-CORBA_ULong
-IIOP_Object::hash (CORBA_ULong max,
-                   CORBA_Environment &env)
+CORBA::ULong
+IIOP_Object::hash (CORBA::ULong max,
+                   CORBA::Environment &env)
 {
-  CORBA_ULong   hashval;
+  CORBA::ULong   hashval;
 
   env.clear ();
 
@@ -92,20 +96,20 @@ IIOP_Object::hash (CORBA_ULong max,
 //
 // NOTE that this must NOT go across the network!
 
-CORBA_Boolean
-IIOP_Object::is_equivalent (CORBA_Object_ptr other_obj,
-                            CORBA_Environment &env)
+CORBA::Boolean
+IIOP_Object::is_equivalent (CORBA::Object_ptr other_obj,
+                            CORBA::Environment &env)
 {
   IIOP::ProfileBody *body, *body2;
   IIOP_Object *other_iiop_obj;
 
   env.clear ();
 
-  if (CORBA_is_nil (other_obj) == CORBA_B_TRUE
+  if (CORBA::is_nil (other_obj) == CORBA::B_TRUE
       || other_obj->QueryInterface (IID_IIOP_Object,
                                     (void **) &other_iiop_obj) != NOERROR)
-    return CORBA_B_FALSE;
-  CORBA_release (other_obj);
+    return CORBA::B_FALSE;
+  CORBA::release (other_obj);
 
   // Compare all the bytes of the object address -- must be the same
 
@@ -132,7 +136,7 @@ DEFINE_GUID (IID_IIOP_Object,
 
 #if 0
 // Added by BRM: 2/21/97
-// IID_STUB_Object and IID_CORBA_Object were not being defined.
+// IID_STUB_Object and IID_CORBA::Object were not being defined.
 // Need a central place for all of these macros.
 
 #if 0 //defined(WIN32)
@@ -144,10 +148,10 @@ DEFINE_GUID(IID_STUB_Object,
 #endif /* 0 */
 
 // {A201E4C2-F258-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_CORBA_Object,
+DEFINE_GUID (IID_CORBA::Object,
 0xa201e4c2, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
-// End - Added by BRM: 2/21/97 IID_STUB_Object and IID_CORBA_Object
+// End - Added by BRM: 2/21/97 IID_STUB_Object and IID_CORBA::Object
 // were not being defined.  Need a central place for all of these
 // macros.
 #endif /* 0 */
@@ -183,7 +187,7 @@ IIOP_Object::Release (void)
 // STUB_OBJECT ... inherited by this one
 // IIOP_OBJECT ... this one
 //
-// CORBA_Object ... contained within this; it delegates back
+// CORBA::Object ... contained within this; it delegates back
 //      to this one as its "parent"
 
 HRESULT __stdcall
@@ -207,7 +211,7 @@ IIOP_Object::QueryInterface (REFIID riid,
 }
 
 //TAO extensions
-CORBA_String IIOP_Object::_get_name (CORBA_Environment &)
+CORBA::String IIOP_Object::_get_name (CORBA::Environment &)
 {
-  return (CORBA_String) this->profile.object_key.buffer;
+  return (CORBA::String) this->profile.object_key.buffer;
 }

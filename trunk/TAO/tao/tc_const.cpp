@@ -14,108 +14,112 @@
 // THREADING NOTE:  no issues, these are immutable constants
 //
 
+#if 0
 #include "tao/orb.h"
 #include "tao/typecode.h"
+#endif
+
+#include "tao/corba.h"
 
 // Null and void
 
-static CORBA_TypeCode tc_null (tk_null);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Null = (CORBA_TypeCode_ptr) &tc_null;
+static CORBA::TypeCode tc_null (CORBA::tk_null);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_null = (CORBA::TypeCode_ptr) &tc_null;
 
-CORBA_TypeCode_ptr
-CORBA_TypeCode::_nil (void)
+CORBA::TypeCode_ptr
+CORBA::TypeCode::_nil (void)
 {
   return &tc_null;
 }
 
-static CORBA_TypeCode tc_void (tk_void);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Void = &tc_void;
+static CORBA::TypeCode tc_void (CORBA::tk_void);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_void = &tc_void;
 
 
 // Basic numeric types:  short, long, longlong, and unsigned variants
 
-static CORBA_TypeCode tc_short (tk_short);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Short = &tc_short;
+static CORBA::TypeCode tc_short (CORBA::tk_short);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_short = &tc_short;
 
-static CORBA_TypeCode tc_long (tk_long);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Long = &tc_long;
+static CORBA::TypeCode tc_long (CORBA::tk_long);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_long = &tc_long;
 
-static CORBA_TypeCode tc_longlong (tk_longlong);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_LongLong = &tc_longlong;
+static CORBA::TypeCode tc_longlong (CORBA::tk_longlong);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_longlong = &tc_longlong;
 
-static CORBA_TypeCode tc_ushort (tk_ushort);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_UShort = &tc_ushort;
+static CORBA::TypeCode tc_ushort (CORBA::tk_ushort);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_ushort = &tc_ushort;
 
-static CORBA_TypeCode tc_ulong (tk_ulong);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_ULong = &tc_ulong;
+static CORBA::TypeCode tc_ulong (CORBA::tk_ulong);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_ulong = &tc_ulong;
 
-static CORBA_TypeCode tc_ulonglong (tk_ulonglong);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_ULongLong = &tc_ulonglong;
+static CORBA::TypeCode tc_ulonglong (CORBA::tk_ulonglong);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_ulonglong = &tc_ulonglong;
 
 // Floating point types:  single, double, quad precision
 
-static CORBA_TypeCode tc_float (tk_float);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Float = &tc_float;
+static CORBA::TypeCode tc_float (CORBA::tk_float);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_float = &tc_float;
 
-static CORBA_TypeCode tc_double (tk_double);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Double = &tc_double;
+static CORBA::TypeCode tc_double (CORBA::tk_double);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_double = &tc_double;
 
-static CORBA_TypeCode tc_longdouble (tk_longdouble);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_LongDouble = &tc_longdouble;
+static CORBA::TypeCode tc_longdouble (CORBA::tk_longdouble);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_longdouble = &tc_longdouble;
 
 // Various simple quantities
 
-static CORBA_TypeCode tc_boolean (tk_boolean);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Boolean = &tc_boolean;
+static CORBA::TypeCode tc_boolean (CORBA::tk_boolean);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_boolean = &tc_boolean;
 
-static CORBA_TypeCode tc_octet (tk_octet);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Octet = &tc_octet;
+static CORBA::TypeCode tc_octet (CORBA::tk_octet);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_octet = &tc_octet;
 
 // Internationalization-related data types: ISO Latin/1 and "wide"
 // characters, and strings of each.  "wchar" is probably Unicode 1.1,
 // "wstring" being null-terminated sets thereof.
 
-static CORBA_TypeCode tc_char (tk_char);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Char = &tc_char;
+static CORBA::TypeCode tc_char (CORBA::tk_char);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_char = &tc_char;
 
-static CORBA_TypeCode tc_wchar (tk_wchar);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_WChar = &tc_wchar;
+static CORBA::TypeCode tc_wchar (CORBA::tk_wchar);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_wchar = &tc_wchar;
 
 // a string/wstring have a simple parameter list that indicates the length 
-static const CORBA_Long _oc_string [] = 
+static const CORBA::Long _oc_string [] = 
 {	// CDR typecode octets
   1,				// native endian + padding; "tricky"
   0				// ... unbounded string
 };
-static CORBA_TypeCode tc_string (tk_string,
+static CORBA::TypeCode tc_string (CORBA::tk_string,
 			  sizeof _oc_string,
 			  (u_char *) &_oc_string,
-			  CORBA_B_FALSE);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_String = &tc_string;
+			  CORBA::B_FALSE);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_string = &tc_string;
 
-static const CORBA_Long _oc_wstring [] =
+static const CORBA::Long _oc_wstring [] =
 {	// CDR typecode octets
   1,				// native endian + padding; "tricky"
   0				// ... unbounded string
 };
-static CORBA_TypeCode tc_wstring (tk_wstring,
+static CORBA::TypeCode tc_wstring (CORBA::tk_wstring,
 			  sizeof _oc_wstring,
 			  (u_char *) &_oc_wstring,
-			  CORBA_B_FALSE);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_WString = &tc_wstring;
+			  CORBA::B_FALSE);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_wstring = &tc_wstring;
 
 //
 // Various things that can be passed as "general" parameters:
 // Any, TypeCode_ptr, Principal_ptr, Object_ptr
 //
-static CORBA_TypeCode tc_any (tk_any);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Any = &tc_any;
+static CORBA::TypeCode tc_any (CORBA::tk_any);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_any = &tc_any;
 
-static CORBA_TypeCode tc_typecode (tk_TypeCode);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_TypeCode = &tc_typecode;
+static CORBA::TypeCode tc_typecode (CORBA::tk_TypeCode);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_TypeCode = &tc_typecode;
 
-static CORBA_TypeCode tc_principal (tk_Principal);
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Principal = &tc_principal;
+static CORBA::TypeCode tc_principal (CORBA::tk_Principal);
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_Principal = &tc_principal;
 
 // typecode for objref is complex, has two string parameters
 //
@@ -138,10 +142,10 @@ static const u_char oc_objref [] =
   'c', 't', '\0', 0,
 };
 
-static CORBA_TypeCode tc_objref (tk_objref,
+static CORBA::TypeCode tc_objref (CORBA::tk_objref,
 				 sizeof oc_objref,
 				 (u_char *) &oc_objref,
-				 CORBA_B_FALSE);
+				 CORBA::B_FALSE);
 
-ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Object = &tc_objref;
+ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_Object = &tc_objref;
 

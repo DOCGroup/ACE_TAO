@@ -1,8 +1,13 @@
-#include "tao/objtable.h"
+#include "tao/corba.h"
+
+// destructor
+TAO_Object_Table::~TAO_Object_Table (void)
+{
+}
 
 // Template Specialization for char*. Needed for the dynamic hash lookup
 int 
-ACE_Hash_Map_Manager<const char *, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX>::equal (const char *const &id1,
+ACE_Hash_Map_Manager<const char *, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>::equal (const char *const &id1,
 										 const char *const &id2)
 {
   // do a string compare
@@ -11,13 +16,13 @@ ACE_Hash_Map_Manager<const char *, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX>::equal 
 
 // Template Specialization for char *
 u_long
-ACE_Hash_Map_Manager<const char *, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX>::hash (const char *const &ext_id)
+ACE_Hash_Map_Manager<const char *, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>::hash (const char *const &ext_id)
 {
   // Use the hash_pjw hash function available in the ACE library
   return ACE::hash_pjw (ext_id);
 }
 
-TAO_Dynamic_Hash_ObjTable::TAO_Dynamic_Hash_ObjTable (CORBA_ULong size)
+TAO_Dynamic_Hash_ObjTable::TAO_Dynamic_Hash_ObjTable (CORBA::ULong size)
 {
   if (size > 0)
     this->hash_.open (size);
@@ -33,8 +38,8 @@ TAO_Dynamic_Hash_ObjTable::~TAO_Dynamic_Hash_ObjTable (void)
        iterator.next (entry) != 0;
        iterator.advance ())
     {
-      CORBA_string_free ((char *)entry->ext_id_); // we had allocated memory and stored
-					  // the string. So we free the memory
+      CORBA::string_free ((char *)entry->ext_id_); // we had allocated memory and stored
+      // the string. So we free the memory
       entry->int_id_ = 0;  // we do not own this. So we just set it to 0
     }
 
@@ -42,19 +47,19 @@ TAO_Dynamic_Hash_ObjTable::~TAO_Dynamic_Hash_ObjTable (void)
 }
 
 int
-TAO_Dynamic_Hash_ObjTable::bind (const CORBA_OctetSeq &key,
-				 CORBA_Object_ptr obj)
+TAO_Dynamic_Hash_ObjTable::bind (const CORBA::OctetSeq &key,
+				 CORBA::Object_ptr obj)
 {
   // the key is an octet sequence. Hence, we cannot simply cast the buffer to a
   // char* as it may result in an arbitrary name. Hence we must first convert
   // it to a string and then save a copy of the string in the table.
   ACE_CString objkey ((char *)key.buffer, key.length);
-  return this->hash_.bind (CORBA_string_dup (objkey.rep ()), obj);
+  return this->hash_.bind (CORBA::string_dup (objkey.rep ()), obj);
 }
 
 int
-TAO_Dynamic_Hash_ObjTable::find (const CORBA_OctetSeq &key,
-				 CORBA_Object_ptr &obj)
+TAO_Dynamic_Hash_ObjTable::find (const CORBA::OctetSeq &key,
+				 CORBA::Object_ptr &obj)
 {
   // the key is an octet sequence. Hence, we cannot simply cast the buffer to a
   // char* as it may result in an arbitrary name due to absence of a NULL
@@ -65,7 +70,7 @@ TAO_Dynamic_Hash_ObjTable::find (const CORBA_OctetSeq &key,
 }
 
 // Linear search strategy
-TAO_Linear_ObjTable::TAO_Linear_ObjTable (CORBA_ULong size)
+TAO_Linear_ObjTable::TAO_Linear_ObjTable (CORBA::ULong size)
   : next_ (0),
     tablesize_ (size),
     tbl_ (new TAO_Linear_ObjTable_Entry[size])
@@ -78,16 +83,16 @@ TAO_Linear_ObjTable::~TAO_Linear_ObjTable (void)
 }
 
 int
-TAO_Linear_ObjTable::bind (const CORBA_OctetSeq &key,
-			   CORBA_Object_ptr obj)
+TAO_Linear_ObjTable::bind (const CORBA::OctetSeq &key,
+			   CORBA::Object_ptr obj)
 {
-  CORBA_ULong i = this->next_;
+  CORBA::ULong i = this->next_;
 
   if (i < this->tablesize_)
     {
       // store the string and the corresponding object pointer
-      this->tbl_[i].opname_ = CORBA_string_alloc (key.length); // allocates one
-							       // more
+      this->tbl_[i].opname_ = CORBA::string_alloc (key.length); // allocates one
+      // more
       ACE_OS::memset (this->tbl_[i].opname_, '\0', key.length+1);
       ACE_OS::strncpy (this->tbl_[i].opname_, (char *)key.buffer, key.length);
       this->tbl_[i].obj_ = obj;
@@ -100,12 +105,13 @@ TAO_Linear_ObjTable::bind (const CORBA_OctetSeq &key,
 
 // find if the key exists
 int
-TAO_Linear_ObjTable::find (const CORBA_OctetSeq &key,
-			   CORBA_Object_ptr &obj)
+TAO_Linear_ObjTable::find (const CORBA::OctetSeq &key,
+			   CORBA::Object_ptr &obj)
 {
   ACE_ASSERT (this->next_ <= this->tablesize_);
 
-  for (CORBA_ULong i = 0; i < this->next_; i++)
+  //  ACE_CString objkey ((char *)key.buffer, key.length);
+  for (CORBA::ULong i = 0; i < this->next_; i++)
     {
       // linearly search thru the table
       if (!ACE_OS::strncmp (this->tbl_[i].opname_, (char *)key.buffer, key.length))
@@ -127,13 +133,13 @@ TAO_Linear_ObjTable_Entry::TAO_Linear_ObjTable_Entry (void)
 
 TAO_Linear_ObjTable_Entry::~TAO_Linear_ObjTable_Entry (void)
 {
-  CORBA_string_free (this->opname_); // reclaim space consumed by the string
+  CORBA::string_free (this->opname_); // reclaim space consumed by the string
   this->obj_ = 0;  // cannot delete this as we do not own it
 }
 
 // Active Demux search strategy
 // constructor
-TAO_Active_Demux_ObjTable::TAO_Active_Demux_ObjTable (CORBA_ULong size)
+TAO_Active_Demux_ObjTable::TAO_Active_Demux_ObjTable (CORBA::ULong size)
   : next_ (0),
     tablesize_ (size),
     tbl_ (new TAO_Active_Demux_ObjTable_Entry[size])
@@ -149,12 +155,13 @@ TAO_Active_Demux_ObjTable::~TAO_Active_Demux_ObjTable ()
 
 // bind the object based on the key
 int
-TAO_Active_Demux_ObjTable::bind (const CORBA_OctetSeq &key,
-				 CORBA_Object_ptr obj)
+TAO_Active_Demux_ObjTable::bind (const CORBA::OctetSeq &key,
+				 CORBA::Object_ptr obj)
 {
   // The active demux strategy works on the assumption that the key is a
   // stringified form of an index into the table
-  CORBA_ULong i = ACE_OS::atoi ((char *)key.buffer);
+  ACE_CString objkey ((char *)key.buffer, key.length);
+  CORBA::ULong i = ACE_OS::atoi (objkey.rep ());
 
   if (i < this->tablesize_)
     {
@@ -173,10 +180,11 @@ TAO_Active_Demux_ObjTable::bind (const CORBA_OctetSeq &key,
 }
 
 int
-TAO_Active_Demux_ObjTable::find (const CORBA_OctetSeq &key,
-				 CORBA_Object_ptr& obj)
+TAO_Active_Demux_ObjTable::find (const CORBA::OctetSeq &key,
+				 CORBA::Object_ptr& obj)
 {
-  CORBA_ULong i = ACE_OS::atoi ((char *)key.buffer);
+  ACE_CString objkey ((char *)key.buffer, key.length);
+  CORBA::ULong i = ACE_OS::atoi (objkey.rep ());
 
   ACE_ASSERT (i < this->tablesize_); // cannot be equal to
   obj = this->tbl_[i].obj_;
@@ -194,14 +202,17 @@ TAO_Active_Demux_ObjTable_Entry::~TAO_Active_Demux_ObjTable_Entry (void)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Iterator<char const*, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Manager<char const*, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Entry<char const*, CORBA_Object_ptr>;
+template class ACE_Hash_Map_Iterator<char const*, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Manager<char const*, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Entry<char const*, CORBA::Object_ptr>;
 template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
 template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
 template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Iterator<char const*, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager<char const*, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Entry<char const*, CORBA_Object_ptr>
+#pragma instantiate ACE_Hash_Map_Iterator<char const*, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager<char const*, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Entry<char const*, CORBA::Object_ptr>
+#pragma instantiate ACE_Guard<ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

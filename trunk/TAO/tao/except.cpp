@@ -7,6 +7,7 @@
 // THREADING NOTE:  calling thread handles mutual exclusion policy
 // on all of these data structures.
 
+#if 0
 #include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #include <objbase.h>
 #include <initguid.h>
@@ -15,6 +16,9 @@
 
 #include "tao/orb.h"
 #include "tao/cdr.h"
+#endif
+
+#include "tao/corba.h"
 
 #if defined (HAVE_WIDEC_H)
 #  include <widec.h>
@@ -33,7 +37,7 @@ DEFINE_GUID (IID_CORBA_SystemException,
 0x77420084, 0xf276, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
 
-CORBA_Exception::CORBA_Exception (CORBA_TypeCode_ptr tc) 
+CORBA_Exception::CORBA_Exception (CORBA::TypeCode_ptr tc) 
   : _type (tc),
     refcount_ (1)
 {
@@ -79,10 +83,10 @@ CORBA_Exception::operator = (const CORBA_Exception &src)
   return *this;
 }
 
-TAO_CONST CORBA_String
+TAO_CONST CORBA::String
 CORBA_Exception::id (void) const
 {
-  CORBA_Environment env;
+  CORBA::Environment env;
 
   assert (refcount_ > 0);
   if (_type)
@@ -91,7 +95,7 @@ CORBA_Exception::id (void) const
     return 0;
 }
 
-TAO_CONST CORBA_TypeCode_ptr
+TAO_CONST CORBA::TypeCode_ptr
 CORBA_Exception::type (void) const
 {
   assert (refcount_ > 0);
@@ -122,9 +126,9 @@ CORBA_Exception::Release (void)
 
   }
 
-  // CORBA_TypeCode_ptr		tc = _type->_duplicate ();
+  // CORBA::TypeCode_ptr		tc = _type->_duplicate ();
 
-  CORBA_Any free_it_all (_type, this, CORBA_B_TRUE); 
+  CORBA::Any free_it_all (_type, this, CORBA::B_TRUE); 
 
   // tc->Release ();
 
@@ -153,7 +157,7 @@ CORBA_Exception::QueryInterface (REFIID	riid,
 
 // Avoid zillions of not-quite-inlined copies of utilities.
 
-CORBA_UserException::CORBA_UserException (CORBA_TypeCode_ptr tc) 
+CORBA_UserException::CORBA_UserException (CORBA::TypeCode_ptr tc) 
   : CORBA_Exception (tc)
 {
 }
@@ -162,12 +166,12 @@ CORBA_UserException::~CORBA_UserException (void)
 {
 }
 
-CORBA_SystemException::CORBA_SystemException (CORBA_TypeCode_ptr tc,
-					      CORBA_ULong code,
-					      CORBA_CompletionStatus completed) 
+CORBA::SystemException::CORBA_SystemException (CORBA::TypeCode_ptr tc,
+					      CORBA::ULong code,
+					      CORBA::CompletionStatus completed) 
   : _minor (code),
     _completed (completed),
-    CORBA_Exception (tc)
+    CORBA::Exception (tc)
 {
 }
 
@@ -178,8 +182,8 @@ CORBA_SystemException::~CORBA_SystemException (void)
 #define	NUM_SYS_EXCEPTIONS 26		// update correctly!
 #define	TC_BUFLEN 160		// preallocated tc buffer
 
-static CORBA_TypeCode_ptr sys_exceptions [NUM_SYS_EXCEPTIONS];
-CORBA_ExceptionList __system_exceptions;
+static CORBA::TypeCode_ptr sys_exceptions [NUM_SYS_EXCEPTIONS];
+CORBA::ExceptionList __system_exceptions;
 
 // Make the TypeCode for a standard exception ... note that "buffer"
 // holds the (unscoped) name originally, and is then overwritten.
@@ -188,11 +192,11 @@ CORBA_ExceptionList __system_exceptions;
 // exercise in CPU time; it allocates no new memory.
 
 static void
-make_standard_typecode (CORBA_TypeCode_ptr tcp,
+make_standard_typecode (CORBA::TypeCode_ptr tcp,
 			const char *name,
 			unsigned char *buffer,
 			size_t buflen,
-			CORBA_Environment &env)
+			CORBA::Environment &env)
 {
   static const char *minor = "minor";
   static const char *completion = "completion";
@@ -206,13 +210,13 @@ make_standard_typecode (CORBA_TypeCode_ptr tcp,
     0, 0,
     0, 0
   };
-  static CORBA_TypeCode
-    tc_completion_status (tk_enum, 
+  static CORBA::TypeCode
+    tc_completion_status (CORBA::tk_enum, 
 			  sizeof oc_completion_status,
  (unsigned char *) &oc_completion_status,
-			  CORBA_B_FALSE);
+			  CORBA::B_FALSE);
 
-  static const CORBA_TypeCode_ptr completion_status = &tc_completion_status;
+  static const CORBA::TypeCode_ptr completion_status = &tc_completion_status;
 
   // Create a CDR stream ... juggle the alignment here a bit, we
   // know it's good enough for tye typecode.
@@ -233,27 +237,27 @@ make_standard_typecode (CORBA_TypeCode_ptr tcp,
  (void) ACE_OS::sprintf (full_id, "IDL:omg.org/CORBA/%s:1.0", name);
   assert (strlen (full_id) <= sizeof full_id);
 
-  if (stream.put_byte (MY_BYTE_SEX) != CORBA_B_TRUE
-      || stream.encode (_tc_CORBA_String, 
+  if (stream.put_byte (MY_BYTE_SEX) != CORBA::B_TRUE
+      || stream.encode (CORBA::_tc_string, 
 		       &strptr, 0, 
-		       env) != CORBA_TypeCode::TRAVERSE_CONTINUE
-      || stream.encode (_tc_CORBA_String, 
+		       env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+      || stream.encode (CORBA::_tc_string, 
 		       &name, 0, 
-		       env) != CORBA_TypeCode::TRAVERSE_CONTINUE
-      || stream.put_ulong (2L) != CORBA_B_TRUE
-      || stream.encode (_tc_CORBA_String, 
+		       env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+      || stream.put_ulong (2L) != CORBA::B_TRUE
+      || stream.encode (CORBA::_tc_string, 
 		       &minor, 0, 
-		       env) != CORBA_TypeCode::TRAVERSE_CONTINUE
-      || stream.encode (_tc_CORBA_TypeCode, 
-		       &_tc_CORBA_ULong, 0, 
-		       env) != CORBA_TypeCode::TRAVERSE_CONTINUE
-      || stream.encode (_tc_CORBA_String, 
+		       env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+      || stream.encode (CORBA::_tc_TypeCode, 
+		       &CORBA::_tc_ulong, 0, 
+		       env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+      || stream.encode (CORBA::_tc_string, 
 		       &completion, 0, 
-		       env) != CORBA_TypeCode::TRAVERSE_CONTINUE
-      || stream.encode (_tc_CORBA_TypeCode, 
+		       env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+      || stream.encode (CORBA::_tc_TypeCode, 
 		       &completion_status, 0, 
-		       env) != CORBA_TypeCode::TRAVERSE_CONTINUE) {
-    env.exception (new CORBA_INITIALIZE (COMPLETED_NO));
+		       env) != CORBA::TypeCode::TRAVERSE_CONTINUE) {
+    env.exception (new CORBA_INITIALIZE (CORBA::COMPLETED_NO));
     return;
   }
 
@@ -263,9 +267,9 @@ make_standard_typecode (CORBA_TypeCode_ptr tcp,
   // always accept as part of any operation response!
 
   sys_exceptions [__system_exceptions.length++]
-    = new (tcp) CORBA_TypeCode (tk_except,
+    = new (tcp) CORBA::TypeCode (CORBA::tk_except,
 				stream.next - stream.buffer,
-				stream.buffer, CORBA_B_FALSE);
+				stream.buffer, CORBA::B_FALSE);
 
   assert (tcp->_length <= TC_BUFLEN);
   return;
@@ -312,8 +316,8 @@ make_standard_typecode (CORBA_TypeCode_ptr tcp,
 
 #define	SYSEX(name) \
     static long tc_buf_ ## name [TC_BUFLEN / sizeof (long)]; \
-    static CORBA_TypeCode tc_std_ ## name (tk_except); \
-    CORBA_TypeCode_ptr _tc_CORBA_ ## name = &tc_std_ ## name;
+    static CORBA::TypeCode tc_std_ ## name (CORBA::tk_except); \
+    CORBA::TypeCode_ptr CORBA::_tc_ ## name = &tc_std_ ## name;
 STANDARD_EXCEPTION_LIST
 #undef	SYSEX
 
@@ -321,7 +325,7 @@ STANDARD_EXCEPTION_LIST
 // from CORBA::ORB::init ().
 
 void
-__TC_init_standard_exceptions (CORBA_Environment &env)
+__TC_init_standard_exceptions (CORBA::Environment &env)
 {
   // Initialize the list of system exceptions, used when
   // unmarshaling.
@@ -345,7 +349,7 @@ __TC_init_standard_exceptions (CORBA_Environment &env)
 // Static initialization of the two user-defined exceptions that
 // are part of the ORB.
 
-static CORBA_Octet tc_buf_Bounds [] = 
+static CORBA::Octet tc_buf_Bounds [] = 
 {
   0, 0, 0, 0,		// big endian, padded
   0, 0, 0, 38,	// strlen (id) + 1
@@ -362,14 +366,14 @@ static CORBA_Octet tc_buf_Bounds [] =
   0, 0, 0, 0		// no members to this typecode
 };
 
-static CORBA_TypeCode tc_std_Bounds (tk_except,
+static CORBA::TypeCode tc_std_Bounds (CORBA::tk_except,
 				     sizeof tc_buf_Bounds,
 				     tc_buf_Bounds, 
-				     CORBA_B_FALSE);
+				     CORBA::B_FALSE);
 
-CORBA_TypeCode_ptr _tc_CORBA_Bounds = &tc_std_Bounds;
+CORBA::TypeCode_ptr CORBA::_tc_Bounds = &tc_std_Bounds;
 
-static CORBA_Octet tc_buf_BadKind [] = 
+static CORBA::Octet tc_buf_BadKind [] = 
 { 
   0, 0, 0, 0,		// big endian, padded
   0, 0, 0, 39,	// strlen (id) + 1
@@ -386,22 +390,22 @@ static CORBA_Octet tc_buf_BadKind [] =
   0, 0, 0, 0		// no members to this typecode
 };
 
-static CORBA_TypeCode tc_std_BadKind (tk_except, 
+static CORBA::TypeCode tc_std_BadKind (CORBA::tk_except, 
 				      sizeof tc_buf_BadKind,
 				      tc_buf_BadKind, 
-				      CORBA_B_FALSE);
-CORBA_TypeCode_ptr _tc_CORBA_BadKind = &tc_std_BadKind;
+				      CORBA::B_FALSE);
+CORBA::TypeCode_ptr CORBA::_tc_BadKind = &tc_std_BadKind;
 
 // Convenience -- say if the exception is a system exception or not.
 
-CORBA_ExceptionType
-CORBA_Environment::exception_type (void) const
+CORBA::ExceptionType
+CORBA::Environment::exception_type (void) const
 {
   static char sysex_prefix [] = "IDL:omg.org/CORBA/";
   static char typecode_extra [] = "TypeCode/";
 
   if (!_exception)
-    return NO_EXCEPTION;
+    return CORBA::NO_EXCEPTION;
 
   // All exceptions currently (CORBA 2.0) defined in the CORBA
   // scope are system exceptions ... except for a couple that
@@ -412,9 +416,9 @@ CORBA_Environment::exception_type (void) const
   if (ACE_OS::strncmp (id, sysex_prefix, sizeof sysex_prefix - 1) == 0
       && ACE_OS::strncmp (id + sizeof sysex_prefix - 1,
 			  typecode_extra, sizeof typecode_extra - 1) != 0)
-    return SYSTEM_EXCEPTION;
+    return CORBA::SYSTEM_EXCEPTION;
 
-  return USER_EXCEPTION;
+  return CORBA::USER_EXCEPTION;
 }
 
 // Diagnostic utility routine:  describe the exception onto
@@ -423,11 +427,11 @@ CORBA_Environment::exception_type (void) const
 // XXX make this a member function on "Environment"
 
 void ACE_Svc_Export
-print_exception (const CORBA_Exception *x,
+print_exception (const CORBA::Exception *x,
 		 const char *info,
 		 FILE *stream)
 {
-  CORBA_String id = x->id ();
+  CORBA::String id = x->id ();
 
   ACE_DEBUG ((LM_ERROR, "EXCEPTION, %s\n", info));
 
@@ -438,7 +442,7 @@ print_exception (const CORBA_Exception *x,
       && ACE_OS::strncmp ((char *) id, "IDL:omg.org/CORBA/TypeCode/", 19) != 0) 
     {
       // XXX this should be a QueryInterface call instead
-      CORBA_SystemException *x2 = (CORBA_SystemException *) x;
+      CORBA::SystemException *x2 = (CORBA::SystemException *) x;
 
       // XXX there are a other few "user exceptions" in the CORBA
       // scope, they're not all standard/system exceptions ... really
@@ -451,13 +455,13 @@ print_exception (const CORBA_Exception *x,
 
       switch (x2->completion ()) 
 	{
-	case COMPLETED_YES:
+	case CORBA::COMPLETED_YES:
 	  fputs ("YES", stream);
 	  break;
-	case COMPLETED_NO:
+	case CORBA::COMPLETED_NO:
 	  fputs ("NO", stream);
 	  break;
-	case COMPLETED_MAYBE:
+	case CORBA::COMPLETED_MAYBE:
 	  fputs ("MAYBE", stream);
 	  break;
 	default:

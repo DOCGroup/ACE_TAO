@@ -1,5 +1,6 @@
 //     $Id$
 
+#if 0
 #include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #include <objbase.h>
 #include <initguid.h>
@@ -15,22 +16,25 @@
 #include "tao/orbobj.h"
 #include "tao/nvlist.h"
 #include "tao/debug.h"
+#endif
+
+#include "tao/corba.h"
 
 // Forward declarations...
 static void request_dispatcher (GIOP::RequestHeader &req,
 				CDR &request_body,
 				CDR *reply,
 				TAO_Dispatch_Context *context,
-				CORBA_Environment &env);
+				CORBA::Environment &env);
 
 static GIOP::LocateStatusType request_forwarder (opaque &target_key,
-						 CORBA_Object_ptr &forward_reference,
+						 CORBA::Object_ptr &forward_reference,
 						 TAO_Dispatch_Context *ctx);
 
 ROA_ptr
-ROA::init (CORBA_ORB_ptr parent,
+ROA::init (CORBA::ORB_ptr parent,
 	   ACE_INET_Addr &,
-	   CORBA_Environment &env)
+	   CORBA::Environment &env)
 {
   env.clear ();
   TAO_OA_Parameters *p = TAO_OA_PARAMS::instance ();
@@ -39,7 +43,7 @@ ROA::init (CORBA_ORB_ptr parent,
 
   if (p->oa ())
     {
-      env.exception (new CORBA_INITIALIZE (COMPLETED_NO));
+      env.exception (new CORBA_INITIALIZE (CORBA::COMPLETED_NO));
       return 0;
     }
 
@@ -54,15 +58,15 @@ ROA::init (CORBA_ORB_ptr parent,
   return rp;
 }
 
-ROA::ROA (CORBA_ORB_ptr owning_orb,
-	  CORBA_Environment &)
-  : do_exit_ (CORBA_B_FALSE), 
+ROA::ROA (CORBA::ORB_ptr owning_orb,
+	  CORBA::Environment &)
+  : do_exit_ (CORBA::B_FALSE), 
     orb_ (owning_orb),
     call_count_ (0),
     skeleton_ (0)
 {
   TAO_OA_Parameters *p = TAO_OA_PARAMS::instance ();
-  TAO_Server_Factory &f = owning_orb->server_factory ();
+  TAO_Server_Strategy_Factory &f = owning_orb->server_factory ();
 
   ACE_ASSERT (p->oa () == 0);
 
@@ -91,7 +95,7 @@ ROA::~ROA (void)
 
 int
 ROA::handle_message (TAO_Dispatch_Context &ctx,
-		     CORBA_Environment &env)
+		     CORBA::Environment &env)
 {
   int result =
     GIOP::incoming_message (ctx.endpoint_,
@@ -109,22 +113,22 @@ ROA::handle_message (TAO_Dispatch_Context &ctx,
 
 // Create an objref
 
-CORBA_Object_ptr
-ROA::create (CORBA_OctetSeq &key,
-             CORBA_String type_id,
-             CORBA_Environment &env)
+CORBA::Object_ptr
+ROA::create (CORBA::OctetSeq &key,
+             CORBA::String type_id,
+             CORBA::Environment &env)
 {
-  CORBA_String id;
+  CORBA::String id;
   IIOP_Object *data;
 
   if (type_id)
-    id = CORBA_string_copy (type_id);
+    id = CORBA::string_copy (type_id);
   else
     id = 0;
 
   IIOP::Version ver (IIOP::MY_MAJOR, IIOP::MY_MINOR);
   // Cast below de-warns on Sun's C++
-  CORBA_String h = (char*)addr_.get_host_name ();
+  CORBA::String h = (char*)addr_.get_host_name ();
 
   data = new IIOP_Object (id, IIOP::ProfileBody (ver,
 						 h,
@@ -134,16 +138,16 @@ ROA::create (CORBA_OctetSeq &key,
     env.clear ();
   else
     {
-      env.exception (new CORBA_NO_MEMORY (COMPLETED_NO));
+      env.exception (new CORBA_NO_MEMORY (CORBA::COMPLETED_NO));
       return 0;
     }
 
-  // Return the CORBA_Object_ptr interface to this objref.
-  CORBA_Object_ptr new_obj;
+  // Return the CORBA::Object_ptr interface to this objref.
+  CORBA::Object_ptr new_obj;
 
   if (data->QueryInterface (IID_CORBA_Object,
 			    (void**)&new_obj) != NOERROR)
-    env.exception (new CORBA_INTERNAL (COMPLETED_NO));
+    env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_NO));
 
   data->Release ();
   return new_obj;
@@ -151,12 +155,12 @@ ROA::create (CORBA_OctetSeq &key,
 
 // Return the key fed into an object at creation time.
 
-CORBA_OctetSeq *
-ROA::get_key (CORBA_Object_ptr,
-	      CORBA_Environment &env)
+CORBA::OctetSeq *
+ROA::get_key (CORBA::Object_ptr,
+	      CORBA::Environment &env)
 {
   // XXX implement me ! ... must have been created by this OA.
-  env.exception (new CORBA_IMP_LIMIT (COMPLETED_NO));
+  env.exception (new CORBA_IMP_LIMIT (CORBA::COMPLETED_NO));
   return 0;
 }
 
@@ -166,8 +170,8 @@ ROA::get_key (CORBA_Object_ptr,
 // NOTE: as with all "in" parameters to a call, this memory is freed
 // by the ORB not by the object implementation.
 
-CORBA_OctetSeq *
-TCP_OA::get_target_key (CORBA_Environment &env)
+CORBA::OctetSeq *
+TCP_OA::get_target_key (CORBA::Environment &env)
 {
   env.clear ();
 
@@ -179,8 +183,8 @@ TCP_OA::get_target_key (CORBA_Environment &env)
 // NOTE: as with all "in" parameters to a call, this memory is freed
 // by the ORB not by the object implementation.
 
-CORBA_Principal_ptr
-ROA::get_client_principal (CORBA_Environment &env)
+CORBA::Principal_ptr
+ROA::get_client_principal (CORBA::Environment &env)
 {
   env.clear ();
 
@@ -190,17 +194,17 @@ ROA::get_client_principal (CORBA_Environment &env)
 
 // Used by method code to ask the OA to shut down.
 void
-ROA::please_shutdown (CORBA_Environment &env)
+ROA::please_shutdown (CORBA::Environment &env)
 {
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, roa_mon, lock_));
 
   env.clear ();
-  do_exit_ = CORBA_B_TRUE;
+  do_exit_ = CORBA::B_TRUE;
 }
 
 // Used by non-method code to tell the OA to shut down.
 void
-ROA::clean_shutdown (CORBA_Environment &env)
+ROA::clean_shutdown (CORBA::Environment &env)
 {
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, roa_mon, lock_));
 
@@ -209,7 +213,7 @@ ROA::clean_shutdown (CORBA_Environment &env)
   if (call_count_ != 0)
     {
       dmsg ("called clean_shutdown with requests outstanding");
-      env.exception (new CORBA_BAD_INV_ORDER (COMPLETED_NO));
+      env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
       return;
     }
 
@@ -219,12 +223,12 @@ ROA::clean_shutdown (CORBA_Environment &env)
 // For BOA -- BOA operations for which we provide the vtable entry
 
 void
-ROA::register_dir (CORBA_BOA::dsi_handler handler,
-		   void *ctx, CORBA_Environment &env)
+ROA::register_dir (CORBA::BOA::dsi_handler handler,
+		   void *ctx, CORBA::Environment &env)
 {
   if (handler == 0)
     {
-      env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
+      env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
       return;
     }
 
@@ -292,7 +296,7 @@ request_dispatcher (GIOP::RequestHeader &req,
 		    CDR &request_body,
 		    CDR *reply,
 		    TAO_Dispatch_Context *helper,
-		    CORBA_Environment &env)
+		    CORBA::Environment &env)
 {
   TAO_OA_Parameters *p = TAO_OA_PARAMS::instance ();
   IIOP_ServerRequest svr_req (&request_body,
@@ -311,8 +315,8 @@ request_dispatcher (GIOP::RequestHeader &req,
  (void) ACE_Thread::setspecific (p->oa ().req_key_, &req);
 #endif /* ROA_NEEDS_REQ_KEY */
 
-  CORBA_BOA_ptr oa = p->oa ();
-  CORBA_BOA::dsi_handler ptmf = helper->skeleton_;
+  CORBA::BOA_ptr oa = p->oa ();
+  CORBA::BOA::dsi_handler ptmf = helper->skeleton_;
  (oa->*ptmf) (req.object_key, svr_req, helper->context_, env);
   // is this the correct way to do it? skeleton is a member function
 
@@ -335,36 +339,36 @@ request_dispatcher (GIOP::RequestHeader &req,
   // reported using the other mechanism could be "lost".  Perhaps only
   // the language mapped one should be used for system exceptions.
 
-  CORBA_TypeCode_ptr tc;
+  CORBA::TypeCode_ptr tc;
   const void *value;
 
   if (!svr_req._params && env.exception () == 0) 
     {
       dmsg ("DSI user error, didn't supply params");
-      env.exception (new CORBA_BAD_INV_ORDER (COMPLETED_NO));
+      env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
     }
 
   if (env.exception () != 0) 
     {	// standard exceptions only
-      CORBA_Environment	env2;
-      CORBA_Exception *x = env.exception ();
-      CORBA_TypeCode_ptr except_tc = x->type ();
+      CORBA::Environment	env2;
+      CORBA::Exception *x = env.exception ();
+      CORBA::TypeCode_ptr except_tc = x->type ();
 
       reply->put_ulong (GIOP::SYSTEM_EXCEPTION);
       (void) reply->encode (except_tc, x, 0, env2);
     }
   else if (svr_req._exception)
     {	// any exception at all
-      CORBA_Exception *x;
-      CORBA_TypeCode_ptr except_tc;
+      CORBA::Exception *x;
+      CORBA::TypeCode_ptr except_tc;
 
-      x = (CORBA_Exception *) svr_req._exception->value ();
+      x = (CORBA::Exception *) svr_req._exception->value ();
       except_tc = svr_req._exception->type ();
 
       // Finish the GIOP Reply header, then marshal the exception.
       //
       // XXX x->type () someday ...
-      if (svr_req._ex_type == SYSTEM_EXCEPTION)
+      if (svr_req._ex_type == CORBA::SYSTEM_EXCEPTION)
 	reply->put_ulong (GIOP::SYSTEM_EXCEPTION);
       else
 	reply->put_ulong (GIOP::USER_EXCEPTION);
@@ -387,10 +391,10 @@ request_dispatcher (GIOP::RequestHeader &req,
       // ... followed by "inout" and "out" parameters, left to right
       for (u_int i = 0; i < svr_req._params->count (); i++)
 	{
-	  CORBA_NamedValue_ptr	nv = svr_req._params->item (i);
-	  CORBA_Any_ptr any;
+	  CORBA::NamedValue_ptr	nv = svr_req._params->item (i);
+	  CORBA::Any_ptr any;
 
-	  if (!(nv->flags () & (CORBA_ARG_INOUT|CORBA_ARG_OUT)))
+	  if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))
 	    continue;
 
 	  any = nv->value ();
@@ -406,10 +410,10 @@ request_dispatcher (GIOP::RequestHeader &req,
 
 static GIOP::LocateStatusType
 request_forwarder (opaque &target_key,
-		   CORBA_Object_ptr &forward_reference,
+		   CORBA::Object_ptr &forward_reference,
 		   TAO_Dispatch_Context *helper)
 {
-  CORBA_Environment env;
+  CORBA::Environment env;
 
   assert (helper->check_forward_ != 0);
   helper->check_forward_ (target_key, forward_reference, helper->context_, env);

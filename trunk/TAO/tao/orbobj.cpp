@@ -9,6 +9,7 @@
 // component and have a loose table-driven coupling to ORB/protocol
 // library components.
 
+#if 0
 #include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #include <objbase.h>
 #include <initguid.h>
@@ -21,9 +22,12 @@
 #include "tao/roa.h"
 #include "tao/nvlist.h"
 #include "tao/debug.h"
+#endif /* 0 */
+
+#include "tao/corba.h"
 
 extern void __TC_init_table (void);
-extern void __TC_init_standard_exceptions (CORBA_Environment &env);
+extern void __TC_init_standard_exceptions (CORBA::Environment &env);
 
 #if defined (SIG_IGN_BROKEN)
 #	undef SIG_IGN 
@@ -34,22 +38,23 @@ extern void __TC_init_standard_exceptions (CORBA_Environment &env);
 
 // {A201E4C6-F258-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_CORBA_ORB,
-0xa201e4c6, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
+	     0xa201e4c6, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
 // CJC Why was this commented out?
 // {A201E4C7-F258-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_STUB_Object,
-0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
+	     0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
 TAO_Client_Strategy_Factory &
 CORBA_ORB::client_factory (void)
 {
+#if 0 // XXXASG: Broken code
   if (client_factory_ == 0)
     {
       // Look in the service repository for an instance.
       client_factory_ =
         ACE_Dynamic_Service<TAO_Client_Strategy_Factory>::instance ("Client_Strategy_Factory");
-      client_factory_from_service_config_ = CORBA_B_TRUE;
+      client_factory_from_service_config_ = CORBA::B_TRUE;
     }
 
   if (client_factory_ == 0)
@@ -59,25 +64,26 @@ CORBA_ORB::client_factory (void)
       // platforms.  
       ACE_NEW (client_factory_, TAO_Default_Client_Strategy_Factory);
 
-      client_factory_from_service_config_ = CORBA_B_FALSE;
+      client_factory_from_service_config_ = CORBA::B_FALSE;
       // @@ At this point we need to register this with the
       // Service_Repository in order to get it cleaned up properly.
       // But, for now we let it leak.
     }
-  
+#endif /* 0 */  
   return *client_factory_;
 }
 
 TAO_Server_Strategy_Factory &
 CORBA_ORB::server_factory (void)
 {
+#if 0 // XXASG Broken code
   if (server_factory_ == 0)
     {
       // Look in the service repository for an instance.
       server_factory_ =
         ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance ("Server_Strategy_Factory");
 
-      server_factory_from_service_config_ = CORBA_B_TRUE;
+      server_factory_from_service_config_ = CORBA::B_TRUE;
     }
 
   if (server_factory_ == 0)
@@ -87,12 +93,12 @@ CORBA_ORB::server_factory (void)
       // platforms.
       ACE_NEW (server_factory_, TAO_Default_Server_Strategy_Factory);
 
-      server_factory_from_service_config_ = CORBA_B_FALSE;
+      server_factory_from_service_config_ = CORBA::B_FALSE;
       // @@ At this point we need to register this with the
       // Service_Repository in order to get it cleaned up properly.
       // But, for now we let it leak.
     }
-  
+#endif /* 0 */  
   return *server_factory_;
 }
 
@@ -129,11 +135,11 @@ argvec_shift (int& argc, char *argv[], int numslots)
   argc -= numslots;
 }
   
-CORBA_ORB_ptr
-CORBA_ORB_init (int &argc,
-		char *const *argv,
-		char *orb_name,
-		CORBA_Environment &env)
+CORBA::ORB_ptr
+CORBA::ORB_init (int &argc,
+		 char *const *argv,
+		 char *orb_name,
+		 CORBA::Environment &env)
 {
 #if defined (ACE_HAS_THREADS)
   // @@ This use of a static is evil.  Please fix...
@@ -149,16 +155,16 @@ CORBA_ORB_init (int &argc,
   //
   // NOTE:  we still "just" assume that native floating point is IEEE.
 
-  if (sizeof (CORBA_Short) != 2
-      || sizeof (CORBA_Long) != 4
-      || sizeof (CORBA_LongLong) != 8
-      || sizeof (CORBA_Float) != 4
-      || sizeof (CORBA_Double) != 8
-      || sizeof (CORBA_LongDouble) != 16
-      || sizeof (CORBA_WChar) < 2
+  if (sizeof (CORBA::Short) != 2
+      || sizeof (CORBA::Long) != 4
+      || sizeof (CORBA::LongLong) != 8
+      || sizeof (CORBA::Float) != 4
+      || sizeof (CORBA::Double) != 8
+      || sizeof (CORBA::LongDouble) != 16
+      || sizeof (CORBA::WChar) < 2
       || sizeof (void *) != SIZEOF_VOID_P)
     {
-      env.exception (new CORBA_INITIALIZE (COMPLETED_NO));
+      env.exception (new CORBA::INITIALIZE (CORBA::COMPLETED_NO));
       return 0;
     }
 
@@ -173,11 +179,14 @@ CORBA_ORB_init (int &argc,
   //
   // @@ Should we consume arguments we understand or leave all
   // arguments in the vector?
-  
+
   // Prepare a copy of the argument vector
-  char *svc_config_argv[]; // @@ Should this be a data member?
-                           // Probably, but there's no object in which to scope it.
+  //  char *svc_config_argv[]; // @@ Should this be a data member? 
+  // XXXASG - compiler doesn't like this
+  char **svc_config_argv; // @@ Should this be a data member?
+  // Probably, but there's no object in which to scope it.
   int svc_config_argc = 0;
+#if 0 // XXASG : Code is broken. ACE_NEW returns, arg type conflict in argvec_shift
   ACE_NEW (svc_config_argv, char *[argc + 1]);
 
   // Be certain to copy the program name.
@@ -212,7 +221,7 @@ CORBA_ORB_init (int &argc,
           argvec_shift (argc, argv[i], 1);
         }
     }
-
+#endif /* 0  */
 #if defined (DEBUG)
   // Make it a little easier to debug programs using this code.
   {
@@ -241,13 +250,13 @@ CORBA_ORB_init (int &argc,
   // makes it always use URL-style stringified objrefs, where the
   // hostname and TCP port number are explicit (and the whole objref
   // is readable by mortals).
-  CORBA_Boolean	use_ior;
+  CORBA::Boolean	use_ior;
 
   if (orb_name != 0
       && ACE_OS::strcmp (orb_name, "internet") == 0)
-    use_ior = CORBA_B_FALSE;
+    use_ior = CORBA::B_FALSE;
   else
-    use_ior = CORBA_B_TRUE;
+    use_ior = CORBA::B_TRUE;
 
 #if defined (SIGPIPE)
   // @@ Is there a better way to deal with this in a portable manner? --cjc
@@ -256,7 +265,7 @@ CORBA_ORB_init (int &argc,
   // implementation artifact of potential writes to dead connections,
   // as it'd be way expensive.  Do it here; who cares about SIGPIPE in
   // these kinds of applications, anyway?
- (void) ACE_OS::signal (SIGPIPE, SIG_IGN);
+  (void) ACE_OS::signal (SIGPIPE, SIG_IGN);
 #endif /* SIGPIPE */
 
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
@@ -274,25 +283,25 @@ CORBA_ORB_init (int &argc,
 
   // Inititalize the "ORB" pseudo-object now.
   IIOP_ORB_ptr the_orb = TAO_ORB::instance ();
-  the_orb->use_omg_ior_format (CORBA_Boolean (use_ior));
+  the_orb->use_omg_ior_format (CORBA::Boolean (use_ior));
   
   return the_orb;
 }
 
 void
-CORBA_ORB::create_list (CORBA_Long count,
-                        CORBA_NVList_ptr &retval)
+CORBA_ORB::create_list (CORBA::Long count,
+                        CORBA::NVList_ptr &retval)
 {
-  assert (CORBA_ULong (count) <= UINT_MAX);
+  assert (CORBA::ULong (count) <= UINT_MAX);
 
-  retval = new CORBA_NVList;
+  retval = new CORBA::NVList;
 
   if (count != 0) 
     {
       retval->_len = 0;
       retval->_max = (u_int) count;
-      retval->_values = (CORBA_NamedValue_ptr) ACE_OS::calloc ((u_int) count,
-							       sizeof (CORBA_NamedValue));
+      retval->_values = (CORBA::NamedValue_ptr) ACE_OS::calloc ((u_int) count,
+								sizeof (CORBA::NamedValue));
     }
 }
 
@@ -303,31 +312,33 @@ CORBA_ORB::create_list (CORBA_Long count,
 //
 // XXX it's server-side so should be OA-specific and not in this module
 
-CORBA_ORB_ptr
+CORBA::ORB_ptr
 _orb (void)
 {
   return TAO_ORB::instance ();
 }
 
-CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
-				   char **argv,
-				   const char *boa_identifier)
+CORBA::BOA_ptr 
+CORBA_ORB::BOA_init (int &argc,
+		     char **argv,
+		     const char *boa_identifier)
 {
   // parse the arguments looking for options starting with -OA. After
   // processing these options, move all these to the end of the argv
   // list and decrement argc appropriately.
 
   TAO_OA_Parameters *params = TAO_OA_PARAMS::instance ();  //should have been BOA_Parameters
-  CORBA_BOA_ptr rp;
-  CORBA_String_var id = boa_identifier;
-  CORBA_String_var host = CORBA_string_dup ("");
-  CORBA_String_var demux = CORBA_string_dup ("dynamic_hash"); // default, at least for now
-  CORBA_UShort port = 5001;  // some default port -- needs to be a #defined value
-  CORBA_ULong tablesize = 0; // default table size for lookup tables
-  CORBA_Boolean use_threads = CORBA_B_FALSE;
+  CORBA::BOA_ptr rp;
+  CORBA::String_var id = boa_identifier;
+  CORBA::String_var host = CORBA::string_dup ("");
+  CORBA::String_var demux = CORBA::string_dup ("dynamic_hash"); // default, at least for now
+  CORBA::UShort port = 5001;  // some default port -- needs to be a #defined value
+  CORBA::ULong tablesize = 0; // default table size for lookup tables
+  CORBA::Boolean use_threads = CORBA::B_FALSE;
   ACE_INET_Addr rendezvous;
-  CORBA_Environment env;
+  CORBA::Environment env;
 
+#if 0 /* XXXASG- code is broken. argvec_shift arg2 in conflict */
   for (int i = 0; i < argc; )
     {
       // @@ Can you please add comments describing each of these options? --doug
@@ -337,7 +348,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
         {
           // Specify the name of the OA
 	  if (i + 1 < argc)
-	    id = CORBA_string_dup (argv[i + 1]);
+	    id = CORBA::string_dup (argv[i + 1]);
 
           argvec_shift (argc, argv[i], 2);
         }
@@ -346,7 +357,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
           // Specify the name of the host (i.e., interface) on which
           // the server should listen
 	  if (i + 1 < argc)
-	    host = CORBA_string_dup (argv[i + 1]);
+	    host = CORBA::string_dup (argv[i + 1]);
 
           argvec_shift (argc, argv[i], 2);
 	}
@@ -364,7 +375,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
           // Specify the demultiplexing strategy to be used for object
           // demultiplexing
 	  if (i + 1 < argc)
-	    demux = CORBA_string_dup (argv[i+1]);
+	    demux = CORBA::string_dup (argv[i+1]);
 
           argvec_shift (argc, argv[i], 2);
 	}
@@ -387,12 +398,13 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
       else if (ACE_OS::strcmp (argv[i], "-OAthread") == 0)
 	{
           // Specify whether or not threads should be used.
-	  use_threads = CORBA_B_TRUE;
+	  use_threads = CORBA::B_TRUE;
           argvec_shift (argc, argv[i], 1);
 	}
       else
 	i++;
     }
+#endif /* 0 */
   
   // create a INET_Addr
   if (ACE_OS::strlen (host) > 0)
@@ -404,7 +416,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
 
   if (params->oa ())
     {
-      env.exception (new CORBA_INITIALIZE (COMPLETED_NO));
+      env.exception (new CORBA::INITIALIZE (CORBA::COMPLETED_NO));
       return 0;
     }
 
@@ -412,11 +424,11 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
   params->using_threads (use_threads);
   params->demux_strategy (demux);
   params->addr (rendezvous);
-  params->upcall (CORBA_BOA::dispatch);
+  params->upcall (CORBA::BOA::dispatch);
   params->tablesize (tablesize);
 
 #if defined (ROA_NEEDS_REQ_KEY)
- (void) ACE_Thread::keycreate (&req_key_);
+  (void) ACE_Thread::keycreate (&req_key_);
 #endif /* ROA_NEEDS_REQ_KEY */
     
   ACE_NEW_RETURN (rp, ROA (this, env), 0);
@@ -424,6 +436,3 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
   return rp;
 }
 
-#if !defined (__ACE_INLINE__)
-#  include "orbobj.i"
-#endif /* __ACE_INLINE__ */

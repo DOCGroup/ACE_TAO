@@ -19,25 +19,27 @@
 #if !defined (TAO_MARSHAL_H)
 #define TAO_MARSHAL_H
 
+#if 0
 #include "ace/OS.h"
 #include "ace/Synch.h"
 #include "ace/Singleton.h"
 
 #include "tao/typecode.h"
-#include "tao/object.h"  // CORBA_Object::_duplicate() needed by inline method
+#include "tao/object.h"  // CORBA::Object::_duplicate() needed by inline method
 #include "tao/principa.h"
+#endif /* 0 */
 
-CORBA_TypeCode::traverse_status
-DEEP_COPY (CORBA_TypeCode_ptr  param,
+CORBA::TypeCode::traverse_status
+DEEP_COPY (CORBA::TypeCode_ptr  param,
 	   const void *source,
 	   const void *dest,
-	   CORBA_Environment &env);
+	   CORBA::Environment &env);
 
-CORBA_TypeCode::traverse_status
-DEEP_FREE (CORBA_TypeCode_ptr  param,
+CORBA::TypeCode::traverse_status
+DEEP_FREE (CORBA::TypeCode_ptr  param,
 	   const void *source,
 	   const void *dest,
-	   CORBA_Environment &env);
+	   CORBA::Environment &env);
 
 // = Forward declarations.
 class TAO_Marshal_Object;
@@ -68,8 +70,8 @@ public:
   virtual ~TAO_Marshal_Factory (void);
   // destructor
 
-  virtual TAO_Marshal_Object *make_marshal_object (CORBA_TypeCode_ptr tc,
-						  CORBA_Environment &env);
+  virtual TAO_Marshal_Object *make_marshal_object (CORBA::TypeCode_ptr tc,
+						  CORBA::Environment &env);
   // Factory method that returns the appropriate marshal object.
 
 private:
@@ -78,9 +80,8 @@ private:
     TAO_Marshal_Object *obj_;  
   };
 
-  TAO_Marshal_Object_Entry mobj_table_[TC_KIND_COUNT];
-  // A table of specialized marshal objects indexed by the _kind
-  // field.
+  TAO_Marshal_Object_Entry mobj_table_[CORBA::TC_KIND_COUNT];
+  // A table of specialized marshal objects indexed by the _kind field
 
 #if 0
   // define data members that are instances of various Marshal_Object classes
@@ -125,21 +126,19 @@ class TAO_Marshal_Object
   //    Provides a set of virtual methods for encoding, decoding,
   //    deep_copying, and deep_freeing.
 public:
-  // = Encoding and decoding operations.
-
-  virtual CORBA_TypeCode::traverse_status encode (CORBA_TypeCode_ptr tc,
+  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &env) = 0;
-  // Encoding operation.
+                                                  CORBA::Environment &env) = 0;
+  // encoding operation
 
-  virtual CORBA_TypeCode::traverse_status decode (CORBA_TypeCode_ptr tc,
+  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &env) = 0;
-  // Decoding operation.
+                                                  CORBA::Environment &env) = 0;
+  // decoding operation
 
   TAO_Marshal_Object (void);
   // constructor
@@ -158,24 +157,24 @@ public:
 
   virtual ~TAO_Marshal_Primitive (void);
 
-  virtual CORBA_TypeCode::traverse_status encode (CORBA_TypeCode_ptr tc,
+  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  virtual CORBA_TypeCode::traverse_status decode (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_copy (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
                                                   const void *source,
                                                   const void *dest,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_free (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &env);
+                                                  CORBA::Environment &env);
 };
 
 // Create a type for the singleton
@@ -191,24 +190,24 @@ public:
 
   virtual ~TAO_Marshal_Any (void);
 
-  virtual CORBA_TypeCode::traverse_status encode (CORBA_TypeCode_ptr tc,
+  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  virtual CORBA_TypeCode::traverse_status decode (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_copy (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
                                                   const void *source,
                                                   const void *dest,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_free (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *source,
                                                   const void *,
-                                                  CORBA_Environment &env);
+                                                  CORBA::Environment &env);
 };
 
 // Create a type for the singleton
@@ -224,24 +223,24 @@ public:
 
   virtual ~TAO_Marshal_TypeCode (void);
 
-  virtual CORBA_TypeCode::traverse_status encode (CORBA_TypeCode_ptr tc,
+  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  virtual CORBA_TypeCode::traverse_status decode (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_copy (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
                                                   const void *source,
                                                   const void *dest,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_free (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &env);
+                                                  CORBA::Environment &env);
 };
 
 // Create a type for the singleton
@@ -257,24 +256,24 @@ public:
 
   virtual ~TAO_Marshal_Principal (void);
 
-  virtual CORBA_TypeCode::traverse_status encode (CORBA_TypeCode_ptr tc,
+  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  virtual CORBA_TypeCode::traverse_status decode (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_copy (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
                                                   const void *source,
                                                   const void *dest,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_free (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &env);
+                                                  CORBA::Environment &env);
 };
 
 // Create a type for the singleton
@@ -290,24 +289,24 @@ public:
 
   virtual ~TAO_Marshal_ObjRef (void);
 
-  virtual CORBA_TypeCode::traverse_status encode (CORBA_TypeCode_ptr tc,
+  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  virtual CORBA_TypeCode::traverse_status decode (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_copy (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
                                                   const void *source,
                                                   const void *dest,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_free (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &env);
+                                                  CORBA::Environment &env);
 };
 
 // Create a type for the singleton
@@ -323,24 +322,24 @@ public:
 
   virtual ~TAO_Marshal_Struct (void);
 
-  virtual CORBA_TypeCode::traverse_status encode (CORBA_TypeCode_ptr tc,
+  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  virtual CORBA_TypeCode::traverse_status decode (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_copy (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
                                                   const void *source,
                                                   const void *dest,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_free (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &env);
+                                                  CORBA::Environment &env);
 };
 
 // Create a type for the singleton
@@ -356,24 +355,24 @@ public:
 
   virtual ~TAO_Marshal_Union (void);
 
-  virtual CORBA_TypeCode::traverse_status encode (CORBA_TypeCode_ptr tc,
+  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  virtual CORBA_TypeCode::traverse_status decode (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_copy (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
                                                   const void *source,
                                                   const void *dest,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_free (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &env);
+                                                  CORBA::Environment &env);
 };
 
 // Create a type for the singleton
@@ -389,24 +388,24 @@ public:
 
   virtual ~TAO_Marshal_String (void);
 
-  virtual CORBA_TypeCode::traverse_status encode (CORBA_TypeCode_ptr tc,
+  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  virtual CORBA_TypeCode::traverse_status decode (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_copy (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
                                                   const void *source,
                                                   const void *dest,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_free (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &env);
+                                                  CORBA::Environment &env);
 };
 
 // Create a type for the singleton
@@ -422,24 +421,24 @@ public:
 
   virtual ~TAO_Marshal_Sequence (void);
 
-  virtual CORBA_TypeCode::traverse_status encode (CORBA_TypeCode_ptr tc,
+  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  virtual CORBA_TypeCode::traverse_status decode (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_copy (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
                                                   const void *source,
                                                   const void *dest,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_free (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &env);
+                                                  CORBA::Environment &env);
 };
 
 // Create a type for the singleton
@@ -455,24 +454,24 @@ public:
 
   virtual ~TAO_Marshal_Array (void);
 
-  virtual CORBA_TypeCode::traverse_status encode (CORBA_TypeCode_ptr tc,
+  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  virtual CORBA_TypeCode::traverse_status decode (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_copy (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
                                                   const void *source,
                                                   const void *dest,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_free (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &env);
+                                                  CORBA::Environment &env);
 };
 
 // Create a type for the singleton
@@ -488,24 +487,24 @@ public:
 
   virtual ~TAO_Marshal_Alias (void);
 
-  virtual CORBA_TypeCode::traverse_status encode (CORBA_TypeCode_ptr tc,
+  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  virtual CORBA_TypeCode::traverse_status decode (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_copy (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
                                                   const void *source,
                                                   const void *dest,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_free (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &env);
+                                                  CORBA::Environment &env);
 };
 
 // Create a type for the singleton
@@ -520,24 +519,24 @@ public:
   TAO_Marshal_Except (void);
   ~TAO_Marshal_Except (void);
 
-  virtual CORBA_TypeCode::traverse_status encode (CORBA_TypeCode_ptr tc,
+  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  virtual CORBA_TypeCode::traverse_status decode (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_copy (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
                                                   const void *source,
                                                   const void *dest,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_free (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &env);
+                                                  CORBA::Environment &env);
 };
 
 // Create a type for the singleton
@@ -552,24 +551,24 @@ public:
   TAO_Marshal_WString (void);
   ~TAO_Marshal_WString (void);
 
-  virtual CORBA_TypeCode::traverse_status encode (CORBA_TypeCode_ptr tc,
+  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  virtual CORBA_TypeCode::traverse_status decode (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *parent_typecode,
                                                   void *context,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_copy (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_copy (CORBA::TypeCode_ptr tc,
                                                   const void *source,
                                                   const void *dest,
-                                                  CORBA_Environment &env);
-  static CORBA_TypeCode::traverse_status deep_free (CORBA_TypeCode_ptr tc,
+                                                  CORBA::Environment &env);
+  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  CORBA_Environment &env);
+                                                  CORBA::Environment &env);
 };
 
 // Create a type for the singleton
@@ -589,7 +588,7 @@ typedef ACE_Singleton<TAO_Marshal_WString, ACE_SYNCH_MUTEX>
 #    define ACE_INLINE inline
 #    define do_undef_on_ACE_INLINE
 #  endif /* __ACE_INLINE__ */
-#  include "marshal.i"
+//#  include "marshal.i"
 #  if defined (do_undef_on_ACE_INLINE)
 #    undef do_undef_on_ACE_INLINE
 #    undef ACE_INLINE

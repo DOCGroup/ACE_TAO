@@ -1,8 +1,4 @@
-#include "tao/factories.h"
-
-#if !defined(__ACE_INLINE__)
-#  include "factories.i"
-#endif
+#include "tao/corba.h"
 
 // Template specializations which allow the cached connection manager
 // to work better.

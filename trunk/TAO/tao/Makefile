@@ -12,7 +12,7 @@ SHLIB    = $(LIBNAME).so
 # These are components that are only headers and must be installed
 CORBA_HDRS = orb sequence stub orbconf objtable optable $(CORBA_SRCS)
 CORBA_SRCS = any corbacom except nvlist object orbobj principa \
-	request svrrqst boa typecode optable
+	request svrrqst boa typecode
 
 # These are components that are only headers and must be installed
 OTHERS_HDRS = align cdr giop iiopobj iioporb xdr roa connect params marshal debug \
@@ -32,8 +32,8 @@ OTHERS_SRCS = \
 	server_factory \
 	client_factory \
 	objtable \
+	optable \
 	connect \
-	xdr \
 	cdr \
 	debug \
 	interp \
@@ -65,7 +65,7 @@ LDLIBS = -lACE
 LIBS = -lACE
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BUILD	= $(VSHLIB) $(VBIN)
+BUILD	= $(VSHLIB) $(VLIB) $(VBIN)
 
 
 #----------------------------------------------------------------------------
@@ -88,7 +88,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #RLDFLAGS := $(subst -L,-Wl\,-rpath ,$(LDFLAGS))
 #CPPFLAGS += -D__IIOP_BUILD -I$(COMPATDIR) -DDEBUG
-CPPFLAGS += -I$(TAO_ROOT) -I$(COMPATDIR)
+CPPFLAGS += -I$(TAO_ROOT) -I$(COMPATDIR) #-H
 LDFLAGS += $(RLDFLAGS)
 
 INSINC = ../proto/include

@@ -23,6 +23,7 @@
 #if !defined (TAO_PRINCIPAL_H)
 #  define TAO_PRINCIPAL_H
 
+#if 0
 #  include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #  include <objbase.h>
 #  include <initguid.h>
@@ -30,18 +31,15 @@
 #  include "ace/Synch.h"
 
 #  include "tao/sequence.h"
-
-extern "C" const IID IID_CORBA_Principal;
-
-void CORBA_release (CORBA_Principal_ptr principal);
-CORBA_Boolean CORBA_is_nil (CORBA_Principal_ptr principal);
+#endif
 
 class ACE_Svc_Export CORBA_Principal : public IUnknown
 {
 public:
   // To applications, the identifier is an opaque ID.
 
-  CORBA_SEQUENCE <CORBA_Octet> id;
+  //  CORBA::SEQUENCE <CORBA::Octet> id;
+  CORBA::OctetSeq id;
 
   // XXX add "==", "<", ">" operators
 
@@ -61,8 +59,8 @@ private:
   virtual ~CORBA_Principal (void);
 
   // = these are not provided
-  CORBA_Principal &operator = (const CORBA_Principal_ptr &);
-  CORBA_Principal (const CORBA_Principal_ptr &);
+  CORBA_Principal &operator = (const CORBA::Principal_ptr &);
+  CORBA_Principal (const CORBA::Principal_ptr &);
 
 #if defined (__GNUG__)
   //

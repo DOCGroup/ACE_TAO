@@ -18,6 +18,7 @@
 #if !defined (TAO_DEFAULT_SERVER_FACTORY_H)
 #  define TAO_DEFAULT_SERVER_FACTORY_H
 
+#if 0
 #  include "ace/SOCK_Acceptor.h"
 #  include "ace/Svc_Handler.h"
 #  include "ace/Strategies_T.h"
@@ -27,6 +28,7 @@
 
 #  include "tao/connect.h"
 #  include "tao/objtable.h"
+#endif /* 0 */
 
 #  if !defined(SERVER_OBJECT_TABLE_SIZE)
 #    define SERVER_OBJECT_TABLE_SIZE 64
@@ -87,9 +89,5 @@ private:
 };
 
 ACE_SVC_FACTORY_DECLARE (TAO_Default_Server_Strategy_Factory)
-
-#  if defined(__ACE_INLINE__)
-#    include "default_server.i"
-#  endif
 
 #endif /* TAO_DEFAULT_SERVER_FACTORY_H */

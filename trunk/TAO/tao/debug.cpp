@@ -11,8 +11,12 @@
 //
 // XXX on Windows, make it always use OutputDebugString () instead of stdio
 
+#if 0
 #include "tao/orb.h"
 #include "tao/debug.h"
+#endif
+
+#include "tao/corba.h"
 
 #if !defined (ACE_HAS_PTHREADS)		// _POSIX_THREAD_SAFE_FUNCTIONS implied
 #define	flockfile(f)
@@ -192,10 +196,10 @@ dmsg_v (const char *_FAR fmt,
 }
 
 void ACE_Svc_Export
-_dmsg_x (CORBA_Environment _FAR	&env,
+_dmsg_x (CORBA::Environment _FAR	&env,
 	 const char *_FAR info)
 {
-  const CORBA_Exception	*ex = env.exception ();
+  const CORBA::Exception	*ex = env.exception ();
 
   setup ();
   flockfile (debug_stream);
@@ -203,7 +207,7 @@ _dmsg_x (CORBA_Environment _FAR	&env,
   ACE_OS::fprintf (debug_stream, "exception '%s' at '%s'\n", ex->id (), info);
   if (env.exception_type () == SYSTEM_EXCEPTION) 
     {
-      CORBA_SystemException *sysex = (CORBA_SystemException *) ex;
+      CORBA::SystemException *sysex = (CORBA::SystemException *) ex;
 
       emit_prefix (debug_stream);
       ACE_OS::fprintf (debug_stream, "minor %#lx, completion %#lx\n",

@@ -18,6 +18,7 @@
 #if !defined (TAO_SERVER_FACTORY_H)
 #  define TAO_SERVER_FACTORY_H
 
+#if 0
 #  include "ace/SOCK_Acceptor.h"
 #  include "ace/Svc_Handler.h"
 #  include "ace/Strategies_T.h"
@@ -27,6 +28,7 @@
 
 #  include "tao/connect.h"
 #  include "tao/objtable.h"
+#endif /* 0 */
 
 class TAO_Server_Strategy_Factory : public ACE_Service_Object
   // = TITLE
@@ -70,10 +72,5 @@ public:
   virtual TAO_Object_Table *object_lookup_strategy (void);
   // Return the concrete object lookup strategy.
 };
-
-
-#  if defined(__ACE_INLINE__)
-#    include "server_factory.i"
-#  endif /* __ACE_INLINE__ */
 
 #endif /* TAO_SERVER_FACTORY_H */

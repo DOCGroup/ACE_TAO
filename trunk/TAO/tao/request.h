@@ -21,30 +21,24 @@
 #if !defined (TAO_REQUEST_H)
 #  define TAO_REQUEST_H
 
+#if 0
 #  include "ace/OS.h"
 
 #  include "tao/sequence.h"
 #  include "tao/except.h"
-
-void ACE_Svc_Export CORBA_release (CORBA_Request_ptr req);
-CORBA_Boolean ACE_Svc_Export CORBA_is_nil (CORBA_Request_ptr req);
-
-typedef CORBA_SEQUENCE <CORBA_TypeCode_ptr> CORBA_ExceptionList;
-typedef CORBA_ExceptionList *CORBA_ExceptionList_ptr;
-
-extern "C" const IID IID_CORBA_Request;
+#endif
 
 class ACE_Svc_Export CORBA_Request : public IUnknown
 {
 public:
   // XXX these should not be inlined
 
-  CORBA_Object_ptr target (void) const { return _target; }
-  const CORBA_Char *operation (void) const { return _opname; }
-  CORBA_NVList_ptr arguments (void) { return _args; }
-  CORBA_NamedValue_ptr result (void) { return _result; }
-  CORBA_ExceptionList_ptr exceptions (void) { return &_exceptions; }
-  CORBA_Environment *env (void) { return &_env; }
+  CORBA::Object_ptr target (void) const { return _target; }
+  const CORBA::Char *operation (void) const { return _opname; }
+  CORBA::NVList_ptr arguments (void) { return _args; }
+  CORBA::NamedValue_ptr result (void) { return _result; }
+  CORBA::ExceptionList_ptr exceptions (void) { return &_exceptions; }
+  CORBA::Environment *env (void) { return &_env; }
 
   void invoke (void);
   void send_oneway (void);
@@ -59,24 +53,24 @@ public:
 private:
   friend class CORBA_Object;
 
-  CORBA_Request (CORBA_Object_ptr obj,
-		 const CORBA_Char *op,
-		 CORBA_NVList_ptr args,
-		 CORBA_NamedValue_ptr result,
-		 CORBA_Flags flags);
+  CORBA_Request (CORBA::Object_ptr obj,
+		 const CORBA::Char *op,
+		 CORBA::NVList_ptr args,
+		 CORBA::NamedValue_ptr result,
+		 CORBA::Flags flags);
 
-  CORBA_Request (CORBA_Object_ptr obj,
-		 const CORBA_Char *op);
+  CORBA_Request (CORBA::Object_ptr obj,
+		 const CORBA::Char *op);
 
   virtual ~CORBA_Request (void);
 
-  CORBA_Object_ptr _target;
-  const CORBA_Char *_opname;
-  CORBA_NVList_ptr _args;
-  CORBA_NamedValue_ptr _result;
-  CORBA_Flags _flags;
-  CORBA_Environment _env;
-  CORBA_ExceptionList _exceptions;
+  CORBA::Object_ptr _target;
+  const CORBA::Char *_opname;
+  CORBA::NVList_ptr _args;
+  CORBA::NamedValue_ptr _result;
+  CORBA::Flags _flags;
+  CORBA::Environment _env;
+  CORBA::ExceptionList _exceptions;
 
   ACE_SYNCH_MUTEX lock_;
   u_int refcount_;

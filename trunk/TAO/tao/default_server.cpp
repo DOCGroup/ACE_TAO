@@ -10,8 +10,13 @@
 //     $Id$
 // ============================================================================
 
+#if 0 // XXXASG - commenting out temporarily as it doesn't compile
 #define ACE_BUILD_SVC_DLL
+#if 0
 #include "default_server.h"
+#endif /* 0 */
+
+#include "tao/corba.h"
 
 TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : thread_flags_ (0),
@@ -139,7 +144,6 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
 		      TAO_Linear_ObjTable (this->object_table_size_),
 		      -1);
       break;
-#if 0
       // Don't do this one right now until we determine how to deal
       // with its reliance on a global singleton.
     case TAO_USER_DEFINED:
@@ -147,7 +151,6 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
       // user-defined instance of the object table
       this->objtable_ = p->userdef_lookup_strategy ();
       break;
-#endif /* 0 */
     case TAO_ACTIVE_DEMUX:
       ACE_NEW_RETURN (this->objtable_,
 		      TAO_Active_Demux_ObjTable (this->object_table_size_),
@@ -171,3 +174,4 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
 
 ACE_SVC_FACTORY_DEFINE (TAO_Default_Server_Strategy_Factory)
 
+#endif /* 0 */

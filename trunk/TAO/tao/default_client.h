@@ -17,7 +17,7 @@
 
 #if !defined (TAO_DEFAULT_CLIENT_H)
 #  define TAO_DEFAULT_CLIENT_H
-
+#if 0
 #  include "ace/SOCK_Acceptor.h"
 #  include "ace/SOCK_Connector.h"
 #  include "ace/Strategies_T.h"
@@ -27,6 +27,7 @@
 #  include "tao/params.h"
 #  include "tao/connect.h"
 #  include "tao/objtable.h"
+#endif /* 0 */
 
 class TAO_Default_Client_Strategy_Factory : public TAO_Client_Strategy_Factory
   // = TITLE
