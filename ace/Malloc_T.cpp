@@ -168,19 +168,20 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::open (void)
       // Initialize the freelist pointer to point to the dummy
       // <ACE_Malloc_Header>.
       new ((void *) &this->cb_ptr_->freep_) ACE_MALLOC_HEADER_PTR (&this->cb_ptr_->base_);
+      new ((void *) &this->cb_ptr_->freep_->next_block_) ACE_MALLOC_HEADER_PTR (this->cb_ptr_->freep_.addr ());
       new ((void *) &this->cb_ptr_->name_head_) ACE_NAME_NODE_PTR;
+      this->cb_ptr_->freep_->size_ = 0;
 #else
       // Initialize the freelist pointer to point to the dummy
       // <ACE_Malloc_Header>.
       this->cb_ptr_->freep_ = &this->cb_ptr_->base_;
       // initialize the name list to 0
+      this->cb_ptr_->freep_->size_ = 0;
+      // Initialize the dummy <ACE_Malloc_Header> to point to itself.
+      this->cb_ptr_->freep_->next_block_ = this->cb_ptr_->freep_;
 #endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
       this->cb_ptr_->name_head_ = (ACE_Name_Node *) 0;
-
-      // Initialize the dummy <ACE_Malloc_Header> to point to itself.
-      this->cb_ptr_->freep_->size_ = 0;
-      this->cb_ptr_->freep_->next_block_ = this->cb_ptr_->freep_;
 
       if (rounded_bytes > (sizeof *this->cb_ptr_ + sizeof (ACE_Malloc_Header)))
         {
