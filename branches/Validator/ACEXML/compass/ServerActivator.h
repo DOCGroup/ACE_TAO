@@ -27,7 +27,7 @@ namespace Deployment
   public:
     friend class ACE_Singleton <ServerActivator, ACE_SYNCH_MUTEX>;
 
-    ComponentServer* create_component_server (ConfigValues* config)
+    ComponentServer* create_component_server (ConfigValues* config = 0)
       ACE_THROW_SPEC ((CreateFailure, InvalidConfiguration));
 
     void remove_component_server (ComponentServer* server)

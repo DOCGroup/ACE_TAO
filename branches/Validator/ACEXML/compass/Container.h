@@ -23,7 +23,7 @@ namespace Deployment
     ~Container();
 
     CCMHome* install_home (const UUID& id, const string& entrypt,
-                           const ConfigValues* config)
+                           const ConfigValues* config = 0)
       ACE_THROW_SPEC ((UnknownImplId, ImplEntryPointNotFound,
                        InstallationFailure, InvalidConfiguration));
 

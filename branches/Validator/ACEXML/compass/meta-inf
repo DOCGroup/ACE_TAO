@@ -3,14 +3,11 @@
 <softpkg name="EventChannelPkg" version="0.1">
  <pkgtype>CORBA Component</pkgtype>
  <title>EventChannel</title>
- <author> <company>DOC group </company>
-          <webpage href="http://www.cs.wustl.edu/~doc"/>
- </author>
  <description>A simple Event Channel test </description>
   <dependency type="DSO" >
     <localfile name="libTAO.so"/>
   </dependency>
-  <implementation id="EventChannel" >
+  <implementation id="Service" >
     <os name="Linux" version="2,4,0,0" />
     <processor name="x86" />
     <compiler name="gcc" />

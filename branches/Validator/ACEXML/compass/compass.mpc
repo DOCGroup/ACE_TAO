@@ -3,4 +3,19 @@ project (Compass) : acelib {
    sharedname = Compass
    dllflags   = COMPASS_BUILD
    libs = ACEXML ACEXML_Parser zzip z
+   Source_Files {
+      Property.cpp
+      PropertyFile_Handler.cpp
+      SoftPkgHandler.cpp
+      SoftPkg.cpp
+      EC_Property.cpp
+   }
+}
+
+project (Deployment) : aceexe {
+   exename = Deployment
+   libs = Compass ACEXML_Parser ACEXML zzip z
+   Source_Files {
+      Deployment.cpp
+   }
 }
