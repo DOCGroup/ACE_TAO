@@ -1,3 +1,14 @@
+Mon May 17 12:40:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/POSIX_CB_Proactor.cpp (handle_events_i):
+        * ace/Semaphore.cpp (constructor):
+        * ace/Thread_Semaphore.cpp (constructor):
+          Made method signature the same as in the header file, this fixes
+          doxygen warnings.
+
+        * ace/Thread_Semaphore.h:
+          Doxygen documentation fixes.
+
 Mon May 17 12:32:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Hash_Cache_Map_Manager_T.{cpp,i}:
