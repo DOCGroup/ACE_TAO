@@ -1542,6 +1542,10 @@ typedef rwlock_t ACE_rwlock_t;
 #endif /* ACE_LACKS_RWLOCK_T */
 
 #else /* !ACE_HAS_THREADS, i.e., the OS/platform doesn't support threading. */
+
+#include /**/ <sys/types.h>
+#include /**/ <sys/stat.h>
+
 // Give these things some reasonable value...
 #define ACE_SCOPE_PROCESS 0
 #define ACE_SCOPE_LWP 1
@@ -1576,9 +1580,6 @@ typedef int ACE_thread_t;
 typedef int ACE_hthread_t;
 typedef u_int ACE_thread_key_t;
 #endif /* ACE_HAS_THREADS */
-
-#include /**/ <sys/types.h>
-#include /**/ <sys/stat.h>
 
 #include "ace/stdcpp.h"
 
