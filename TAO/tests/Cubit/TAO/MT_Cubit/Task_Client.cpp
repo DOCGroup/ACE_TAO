@@ -110,7 +110,6 @@ Task_State::parse_args (int argc,char **argv)
       continue;
     case 'n':                   // loop count
       loop_count_ = (u_int) ACE_OS::atoi (opts.optarg);
-      ACE_DEBUG ((LM_DEBUG,"(%P|%t) Loop_count:%d\n",loop_count_));
       continue;
     case 't':
       thread_count_ = (u_int) ACE_OS::atoi (opts.optarg);
@@ -406,7 +405,8 @@ Client::svc (void)
 
   double frequency = 0.0;
 
-  ACE_DEBUG ((LM_DEBUG,"I'm thread %t\n"));
+  ACE_DEBUG ((LM_DEBUG, "I'm thread %t\n"));
+
   /// Add "-ORBobjrefstyle url" argument to the argv vector for the
   //orb to / use a URL style to represent the ior.
 
@@ -423,7 +423,8 @@ Client::svc (void)
                   " -ORBrcvsock 32768 "
                   " -ORBsndsock 32768 ");
 
-  ACE_DEBUG ((LM_DEBUG,tmp_buf));
+  ACE_DEBUG ((LM_DEBUG, tmp_buf));
+
   // Convert back to argv vector style.
   ACE_ARGV tmp_args2 (tmp_buf);
   int argc = tmp_args2.argc ();
@@ -442,20 +443,14 @@ Client::svc (void)
       env.print_exception ("ORB_init()\n");
       return -1;
     }
-  ACE_DEBUG ((LM_DEBUG,
-              "in svc() ts_->one_ior_ = \"%s\"\n",
-              ts_->one_ior_));
 
   if (this->id_ == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "parsing the arguments\n"));
-      int result = this->ts_->parse_args (argc,argv);
 
-      ACE_DEBUG ((LM_DEBUG,
-
-                  "in svc(), AFTER parse_args() ts_->one_ior_ = \"%s\"\n",
-                  ts_->one_ior_));
+      int result = this->ts_->parse_args (argc,
+					  argv);
 
       if (result < 0)
         return -1;
@@ -488,6 +483,7 @@ Client::svc (void)
 
     ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) Out of ACE_MT\n"));
+
     if (ts_->thread_per_rate_ == 0)
       {
         if (this->id_ == 0)
@@ -607,12 +603,6 @@ Client::svc (void)
               }
           }
 
-        ACE_DEBUG ((LM_DEBUG,
-                    "ts_->one_ior_=%s, this->id_=%d \t naming_success=%d\n",
-                    ts_->one_ior_,
-                    this->id_,
-                    naming_success));
-
         if (naming_success == CORBA::B_FALSE)
           {
             char *my_ior =
@@ -632,9 +622,10 @@ Client::svc (void)
                                 -1);
 
             ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) my ior is:%s\n",
-                        my_ior));
-            // If we are running the "1 to n" test make sure all low
+			"(%P|%t) The ior I'm using is: \"%s\"\n",
+			my_ior));
+
+            // if we are running the "1 to n" test make sure all low
             // priority clients use only 1 low priority servant.
             if (this->id_ > 0 && ts_->one_to_n_test_ == 1)
               my_ior = ts_->iors_[1];
@@ -801,9 +792,6 @@ Client::run_tests (Cubit_ptr cb,
 
   // Make the calls in a loop.
 
-  ACE_DEBUG((LM_DEBUG,
-             "(%P|%t)loop_count:%d",
-             loop_count));
   for (i = 0;
        // keep running for loop count, OR
        i < loop_count ||
