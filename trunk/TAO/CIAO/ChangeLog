@@ -1,3 +1,9 @@
+Wed Jul 09 21:06:12 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/ServerActivator/ServerActivator.cpp: Fixed compilation due
+	  to earlier change in the signature of ServerActivator_Impl::init
+	  method.
+
 Tue Jul 08 10:52:56 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tools/Daemon/CIAO_Daemon.cpp:
