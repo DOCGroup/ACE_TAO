@@ -825,6 +825,10 @@ ACE_Service_Config::close_singletons (void)
 {
   ACE_TRACE ("ACE_Service_Config::close_singletons");
 
+  ACE_Process_Manager::close_singleton ();
+  // The Process Manager may be registered with the Reactor singleton
+  // so we need to close it down first.
+
   ACE_Reactor::close_singleton ();
 #if (((defined (ACE_HAS_WINNT)) && (ACE_HAS_WINNT == 1)) || (defined (ACE_HAS_AIO_CALLS)))
   ACE_Proactor::close_singleton ();
@@ -832,7 +836,6 @@ ACE_Service_Config::close_singletons (void)
 #if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
   ACE_Thread_Manager::close_singleton ();
 #endif /* ! ACE_THREAD_MANAGER_LACKS_STATICS */
-  ACE_Process_Manager::close_singleton ();
 
   return 0;
 }
