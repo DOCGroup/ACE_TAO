@@ -1,3 +1,15 @@
+Thu Aug 20 18:18:43 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+	  Modified IDL compiler to reflect the CORBA spec, which
+	  states that objects need only one version of the <<=
+	  operator.
+
+	* tao/CurrentC.{h,cpp}:
+	  Modified this IDL-generated file to reflect the above
+	  change.
+
 Thu Aug 20 17:36:52 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* orbsvcs/tests/CosPropertyService/: Removed. For equivalent
