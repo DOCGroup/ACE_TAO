@@ -29,7 +29,7 @@
 
 class TAO_Object_Adapter;
 
-class TAO_Default_Resource_Factory : public TAO_Resource_Factory
+class TAO_Export TAO_Default_Resource_Factory : public TAO_Resource_Factory
 {
   // = TITLE
   //   TAO's default resource factory

@@ -208,8 +208,6 @@ CORBA_ORB::open (void)
   if (this->open_called_ == 1)
     return 1;
 
-  this->open_called_ = 1;
-
   TAO_Acceptor_Registry *ar = this->orb_core_->acceptor_registry ();
   // get a reference to the acceptor_registry!
 
@@ -219,6 +217,8 @@ CORBA_ORB::open (void)
   if (ar->open (this->orb_core_) == -1)
     // Need to return an error somehow!!  Maybe set do_exit?
     return -1;
+
+  this->open_called_ = 1;
 
   return 0;
 }
