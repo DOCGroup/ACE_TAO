@@ -53,6 +53,7 @@ ACE_RCSID (PortableServer,
 #include "tao/PortableServer/IdAssignmentStrategy.h"
 #include "tao/PortableServer/ServantRetentionStrategy.h"
 #include "tao/PortableServer/ImplicitActivationStrategy.h"
+#include "tao/PortableServer/ThreadStrategy.h"
 
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
@@ -2734,6 +2735,21 @@ TAO_POA::set_servant (PortableServer::Servant servant
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+int
+TAO_POA::enter ()
+{
+  return this->active_policy_strategies_.thread_strategy ()->enter();
+}
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+int
+TAO_POA::exit ()
+{
+  return this->active_policy_strategies_.thread_strategy ()->exit();
+}
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 TAO::ORT_Adapter *
 TAO_POA::ORT_adapter (ACE_ENV_SINGLE_ARG_DECL)

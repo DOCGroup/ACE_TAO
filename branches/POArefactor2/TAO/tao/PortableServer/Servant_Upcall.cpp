@@ -5,8 +5,6 @@
 #include "tao/PortableServer/POA.h"
 #include "tao/PortableServer/Default_Servant_Dispatcher.h"
 #include "tao/PortableServer/Collocated_Object_Proxy_Broker.h"
-#include "tao/PortableServer/ThreadStrategy.h"
-#include "tao/PortableServer/ServantRetentionStrategy.h"
 #include "tao/PortableServer/POAManager.h"
 #include "tao/PortableServer/Active_Object_Map.h"
 
@@ -387,7 +385,7 @@ namespace TAO
       // lock.  Otherwise, the thread that wants to release this lock will
       // not be able to do so since it can't acquire the object adapterx
       // lock.
-        int result = this->poa_->active_policy_strategies().thread_strategy ()->enter();
+        int result = this->poa_->enter();
 
         if (result == -1)
           // Locking error.
@@ -402,7 +400,7 @@ namespace TAO
     {
     #if (TAO_HAS_MINIMUM_POA == 0)
       // Since the servant lock was acquired, we must release it.
-      int result = this->poa_->active_policy_strategies().thread_strategy ()->exit ();
+      int result = this->poa_->exit ();
     #endif /* TAO_HAS_MINIMUM_POA == 0 */
     }
 

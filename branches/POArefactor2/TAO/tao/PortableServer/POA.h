@@ -524,6 +524,12 @@ public:
 
 protected:
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+  int enter (void);
+
+  int exit (void);
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
   /// Template method for creating new POA's of this type.
   virtual TAO_POA *new_POA (const String &name,
                             TAO_POA_Manager &poa_manager,
