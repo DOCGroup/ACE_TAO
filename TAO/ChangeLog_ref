@@ -1,3 +1,9 @@
+Tue Apr 22 06:30:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* be/be_visitor_sequence/sequence_ch.cpp: 
+	* be/be_visitor_sequence/sequence_cs.cpp: Use the new managed type
+	  out classes when the IDL compiler comes across managed types. 
+
 Tue Apr 22 06:22:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Seq_Out_T.cpp:
