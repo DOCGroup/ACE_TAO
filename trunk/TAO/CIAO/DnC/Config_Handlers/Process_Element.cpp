@@ -12,6 +12,8 @@
 #include "ace/Auto_Ptr.h"
 #include "Utils.h"
 
+BEGIN_DEPLOYMENT_NAMESPACE
+
 /*
  *  Process references
  */
@@ -79,3 +81,5 @@ process_ref(DOMNode*& node,
         }
     }
 }
+
+END_DEPLOYMENT_NAMESPACE

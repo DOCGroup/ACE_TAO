@@ -1,3 +1,10 @@
+Wed Jun 23 13:24:23 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Process_Element.cpp:
+        * DnC/Config_Handlers/Process_Element.h:
+
+          Added missing includes to fix compilation errors.
+
 Wed Jun 23 13:07:13 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/RepositoryManager/Repository_Manager.cpp:
