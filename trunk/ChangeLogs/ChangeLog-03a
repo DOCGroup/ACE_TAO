@@ -1,3 +1,13 @@
+Tue Dec 31 15:05:42 2002  Steve Huston  <shuston@riverace.com>
+
+        * ACEXML/apps/svcconf/Svcconf.cpp: Changed the condition for when
+          a dummy entrypoint is needed from AIX 4.3 to AIX and Visual Age C++
+          version 5. Thanks for Jon Wackley for this adjustment. Also see:
+          Fri Dec 27 19:46:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * netsvcs/clients/Naming/Client/Makefile: If building this stuff,
+          reset OBJDIRS to $(VDIR) and $(VSHDIR) to clean up both.
+
 Mon Dec 30 21:30:41 2002  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_hpux_gcc.GNU: Removed the SOVERSION=
