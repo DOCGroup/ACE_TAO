@@ -1,3 +1,21 @@
+Fri Oct 29 17:03:46 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+
+	  Applied a patch from Bill Somerville <bill@classdesign.com>
+	  which fixes an incorrect implementation of ~ (twiddle) option. 
+
+	  a ~ b
+
+          should be true if a is a substring of b, it is implemented as
+	  true if b is a substring of a. The OMG spec is no help, but the
+	  TAO TradingService docs, code comments, and other sources all
+	  seem to agree with this interpretation.
+	
+	* orbsvcs/tests/Trading/TT_Info.cpp:
+
+	  Enhanced the test for the above.
+
 Fri Oct 29 10:09:56 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_union.cpp:
