@@ -1,5 +1,24 @@
 Sat Oct  4 11:57:25 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/SV_Semaphore_Simple: Added support for IPC_EXCL in order to
+ 	  determine, upon creating the semaphore, if it already exists
+	  (which means a bad key was selected), another daemon is still
+ 	  running or the previous daemon didn't remove its resources.  I
+ 	  have this implemented now by first opening the semaphore and if
+ 	  that fails then creating it.  To support this, added another
+ 	  enum, ACE_EXCL = IPC_EXCL, to the class header.
+	  Also, changed the ACE_SV_Semaphore_Simple::open( key_t, ... )
+	  method to use 
+
+	  if (ACE_BIT_ENABLED (flags, IPC_CREAT)) 
+
+	  rather than
+
+	  if (flags == IPC_CREAT)
+
+          Thanks to Michael McKnight <mcknight@signalsoftcorp.com> for
+ 	  reporting this.
+
         * ace: Replaced all uses of the template param LOCK with ACE_LOCK
  	  to avoid conflicts with some systems that have a macro named
  	  LOCK.

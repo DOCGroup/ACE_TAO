@@ -29,6 +29,7 @@ public:
   enum 
   {
     ACE_CREATE = IPC_CREAT, 
+    ACE_EXEL = IPC_EXEL,
     ACE_OPEN = 0
   };
 
