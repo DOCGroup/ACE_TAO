@@ -26,9 +26,8 @@
 #include "ciao/Container_Base.h"
 
 class HELLO_SERVANT_Export CIAO_HelloWorld_Context :
-  public virtual CCM_HelloWorld_Context
-// @@ The following line is causing compiler to barf.
-//  , public virtual ::Components::SessionContext
+  public virtual CCM_HelloWorld_Context,
+  public virtual ::Components::SessionContext
 {
 public:
   // Ctor.
@@ -36,6 +35,13 @@ public:
 
   // Dtor.
   virtual ~CIAO_HelloWorld_Context ();
+
+  // We need to overwrite the following method to avoid ambiguity
+  // This is strange, but thankfully, this is generated code so it's
+  // okay (?) to mess with this.
+
+  virtual void *_tao_QueryInterface (ptr_arith_t type);
+  virtual const char* _interface_repository_id (void) const;
 
   // Operations for HellowWorld attributes, event source, and
   // receptable defined in CCM_HelloWorld_Context.

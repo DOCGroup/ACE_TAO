@@ -7,7 +7,11 @@
 // The purpose of this IDL file is to serve as a template for the CIDL
 // generated equivalent executor file.  The CIDL does *NOT* generate
 // this file directly, but instead, generates the C++ mappings for
-// the stuff defined in this file.
+// the stuff defined in this file into a set of
+// <idl-name>EC.{h,inl,cpp} files.
+//
+// What are missing in the executor mappings are the exception
+// specifications for most operations.
 //
 // @author Nanbor Wang <nanbor@cs.wustl.edu>
 //
