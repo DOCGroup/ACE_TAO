@@ -282,8 +282,20 @@ int be_visitor_root::visit_root (be_root *node)
 
           if (be_global->any_support ())
             {
+              if (be_global->gen_anyop_files ())
+                {
+                  // Switch streams, ctx will be reassigned when this
+                  // pass is done.
+                  ctx.stream (tao_cg->anyop_header ());
+                }
+
               be_visitor_root_any_op visitor (&ctx);
               status = node->accept (&visitor);
+
+              if (be_global->gen_anyop_files ())
+                {
+                  (void) tao_cg->end_anyop_header ();
+                }
             }
 
           break;
@@ -294,8 +306,20 @@ int be_visitor_root::visit_root (be_root *node)
 
           if (be_global->any_support ())
             {
+              if (be_global->gen_anyop_files ())
+                {
+                  // Switch streams, ctx will be reassigned when this
+                  // pass is done.
+                  ctx.stream (tao_cg->anyop_source ());
+                }
+
               be_visitor_root_any_op visitor (&ctx);
               status = node->accept (&visitor);
+
+              if (be_global->gen_anyop_files ())
+                {
+                  (void) tao_cg->end_anyop_source ();
+                }
             }
 
           break;
@@ -326,7 +350,6 @@ int be_visitor_root::visit_root (be_root *node)
                          "failed to generate Any operators\n"),
                         -1);
     }
-
 
   // Make another pass over the entire tree and generate the CDR operators.
   ctx = *this->ctx_;
@@ -1703,6 +1726,11 @@ be_visitor_root::gen_explicit_tmplinst (be_root *node,
 
       os->gen_ifdef_AHETI ();
 
+      if (be_global->gen_anyop_files ())
+        {
+          tao_cg->anyop_source ()->gen_ifdef_AHETI ();
+        }
+
       be_visitor_tmplinst_cs visitor (this->ctx_);
 
       if (node->accept (&visitor) == -1)
@@ -1716,6 +1744,11 @@ be_visitor_root::gen_explicit_tmplinst (be_root *node,
 
       os->gen_elif_AHETI ();
 
+      if (be_global->gen_anyop_files ())
+        {
+          tao_cg->anyop_source ()->gen_elif_AHETI ();
+        }
+
       visitor.switch_mode ();
 
       if (node->accept (&visitor) == -1)
@@ -1728,6 +1761,11 @@ be_visitor_root::gen_explicit_tmplinst (be_root *node,
         }
 
       os->gen_endif_AHETI ();
+
+      if (be_global->gen_anyop_files ())
+        {
+          tao_cg->anyop_source ()->gen_endif_AHETI ();
+        }
     }
   else if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SS)
     {

@@ -51,6 +51,8 @@ BE_GlobalData::BE_GlobalData (void)
     server_template_skeleton_ending_ (ACE::strnew ("S_T.cpp")),
     server_inline_ending_ (ACE::strnew ("S.i")),
     server_template_inline_ending_ (ACE::strnew ("S_T.i")),
+    anyop_hdr_ending_ (ACE::strnew ("A.h")),
+    anyop_src_ending_ (ACE::strnew ("A.cpp")),
     output_dir_ (0),
     any_support_ (I_TRUE),
     tc_support_ (I_TRUE),
@@ -75,7 +77,8 @@ BE_GlobalData::BE_GlobalData (void)
     gen_tmplinst_ (I_FALSE),
     lookup_strategy_ (TAO_PERFECT_HASH),
     void_type_ (0),
-    ccmobject_ (0)
+    ccmobject_ (0),
+    gen_anyop_files_ (I_FALSE)
 {
 }
 
@@ -269,6 +272,24 @@ BE_GlobalData::be_get_server_template_inline (UTL_String *idl_file_name,
 }
 
 const char *
+BE_GlobalData::be_get_anyop_header (UTL_String *idl_file_name,
+                                    int base_name_only)
+{
+  return be_change_idl_file_extension (idl_file_name,
+                                       be_global->anyop_header_ending (),
+                                       base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_anyop_source (UTL_String *idl_file_name,
+                                    int base_name_only)
+{
+  return be_change_idl_file_extension (idl_file_name,
+                                       be_global->anyop_source_ending (),
+                                       base_name_only);
+}
+
+const char *
 BE_GlobalData::be_get_client_hdr_fname (int base_name_only)
 {
   return be_get_client_hdr (idl_global->stripped_filename (),
@@ -347,6 +368,20 @@ BE_GlobalData::be_get_server_template_inline_fname (int base_name_only)
 {
   return be_get_server_template_inline (idl_global->stripped_filename (),
                                         base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_anyop_header_fname (int base_name_only)
+{
+  return be_get_anyop_header (idl_global->stripped_filename (),
+                              base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_anyop_source_fname (int base_name_only)
+{
+  return be_get_anyop_source (idl_global->stripped_filename (),
+                              base_name_only);
 }
 
 const char*
@@ -607,6 +642,18 @@ const char*
 BE_GlobalData::server_template_inline_ending (void) const
 {
   return this->server_template_inline_ending_;
+}
+
+const char*
+BE_GlobalData::anyop_header_ending (void) const
+{
+  return this->anyop_hdr_ending_;
+}
+
+const char*
+BE_GlobalData::anyop_source_ending (void) const
+{
+  return this->anyop_src_ending_;
 }
 
 void
@@ -903,5 +950,17 @@ void
 BE_GlobalData::ccmobject (be_interface *val)
 {
   this->ccmobject_ = val;
+}
+
+idl_bool
+BE_GlobalData::gen_anyop_files (void) const
+{
+  return this->gen_anyop_files_;
+}
+
+void
+BE_GlobalData::gen_anyop_files (idl_bool val)
+{
+  this->gen_anyop_files_ = val;
 }
 

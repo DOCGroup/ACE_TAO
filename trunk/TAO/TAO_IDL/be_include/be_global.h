@@ -97,6 +97,12 @@ public:
   static const char *be_get_server_template_inline_fname (
       int base_name_only = 0
     );
+  static const char *be_get_anyop_header_fname (
+      int base_name_only = 0
+    );
+  static const char *be_get_anyop_source_fname (
+      int base_name_only = 0
+    );
 
   // Helper functions: obtain the names of each generated file given
   // the IDL file name.
@@ -125,6 +131,10 @@ public:
                                            int base_name_only = 0);
   static const char *be_get_server_template_inline (UTL_String *idl_file_name,
                                                     int base_name_only = 0);
+  static const char *be_get_anyop_header (UTL_String *idl_file_name,
+                                          int base_name_only = 0);
+  static const char *be_get_anyop_source (UTL_String *idl_file_name,
+                                          int base_name_only = 0);
 
   const char* skel_export_macro (void) const;
   // returns the macro name for exporting server side classes in Win32
@@ -259,6 +269,10 @@ public:
 
   const char* server_template_inline_ending (void) const;
   // Get the server_template_inline_ending.
+
+  const char* anyop_header_ending (void) const;
+  const char* anyop_source_ending (void) const;
+  // TAO developers only.
 
   void output_dir (const char* s);
   // Set the directory where all the IDL-Compiler-Generated files are
@@ -405,6 +419,10 @@ public:
   void ccmobject (be_interface *val);
   // Accessors for the member.
 
+  idl_bool gen_anyop_files (void) const;
+  void gen_anyop_files (idl_bool val);
+  // Accessors for the member.
+
 private:
   size_t changing_standard_include_files_;
   // To switch between changing or non-changing standard include
@@ -460,6 +478,10 @@ private:
 
   // Server's template inline file name ending. Default is "S_T.i".
   char* server_template_inline_ending_;
+
+  // Any operator file name endings.
+  char* anyop_hdr_ending_;
+  char* anyop_src_ending_;
 
   char* output_dir_;
   // Directory where all the IDL-Compiler-Generated files are to be
@@ -531,6 +553,9 @@ private:
 
   be_interface *ccmobject_;
   // Reference holder for component skeleton visitors.
+
+  idl_bool gen_anyop_files_;
+  // @@@ (TAO TEAM ONLY) Separate files for generated Any operators?
 };
 
 #endif /* _BE_GLOBAL_H */

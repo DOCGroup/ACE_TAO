@@ -1169,6 +1169,12 @@ DRV_parse_args (long ac, char **av)
                   // AMH classes.
                   be_global->gen_amh_classes (I_TRUE);
                 }
+              else if (av[i][2] == 'A')
+                {
+                  // TAO-team-only, undocumented option to generate
+                  // Any operators into a separate set of files.
+                  be_global->gen_anyop_files (I_TRUE);
+                }
               else if (av[i][2] == 'e')
                 {
                   idl_global->append_idl_flag (av[i+1]);
