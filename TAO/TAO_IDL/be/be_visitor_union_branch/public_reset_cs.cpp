@@ -119,7 +119,7 @@ be_visitor_union_branch_public_reset_cs::visit_array (be_array *node)
   char fname [NAMEBUFSIZE];  // to hold the full and
 
   // save the node's local name and full name in a buffer for quick use later
-  // on 
+  // on
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
   if (bt->node_type () != AST_Decl::NT_typedef // not a typedef
       && bt->is_child (bu)) // bt is defined inside the union
@@ -131,7 +131,7 @@ be_visitor_union_branch_public_reset_cs::visit_array (be_array *node)
       if (bt->is_nested ())
         {
           be_decl *parent = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (), 
+          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (),
                            bt->local_name ()->get_string ());
         }
       else
@@ -146,9 +146,10 @@ be_visitor_union_branch_public_reset_cs::visit_array (be_array *node)
     }
 
   os = this->ctx_->stream ();
-  *os << fname << "_free (this->u_." << ub->local_name () 
-      << "_);" << be_nl;
-  *os << "break;" << be_uidt_nl;
+  *os << fname << "_free (this->u_." << ub->local_name ()
+      << "_);" << be_nl
+      << "this->u_." << ub->local_name () << "_ = 0;" << be_nl
+      << "break;" << be_uidt_nl;
   return 0;
 }
 
@@ -191,10 +192,13 @@ be_visitor_union_branch_public_reset_cs::visit_interface (be_interface *)
                          "bad context information\n"
                          ), -1);
     }
+
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "delete this->u_." << ub->local_name () << "_;" << be_nl;
-  *os << "ACE_OS::memset ((void *) &this->u_, 0, sizeof (this->u_));" << be_nl;
-  *os << "break;" << be_uidt_nl;
+  *os << "delete this->u_."
+      << ub->local_name () << "_;" << be_nl
+      << "this->u_." << ub->local_name ()
+      << "_ = 0;" << be_nl
+      << "break;" << be_uidt_nl;
 
   return 0;
 }
@@ -216,9 +220,11 @@ be_visitor_union_branch_public_reset_cs::visit_interface_fwd (be_interface_fwd *
                          ), -1);
     }
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "delete this->u_." << ub->local_name () << "_;" << be_nl;
-  *os << "ACE_OS::memset ((void *) &this->u_, 0, sizeof (this->u_));" << be_nl;
-  *os << "break;" << be_uidt_nl;
+  *os << "delete this->u_."
+      << ub->local_name () << "_;" << be_nl
+      << "this->u_." << ub->local_name ()
+      << "_ = 0;" << be_nl
+      << "break;" << be_uidt_nl;
 
   return 0;
 }
@@ -235,7 +241,7 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (be_predefined_ty
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
-                         "visit_interface - "
+                         "visit_predefined_type - "
                          "bad context information\n"
                          ), -1);
     }
@@ -246,13 +252,17 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (be_predefined_ty
     {
     case AST_PredefinedType::PT_pseudo:
       *os << "CORBA::release (this->u_."
-	  << ub->local_name () << "_);" << be_nl;
-      *os << "break;" << be_uidt_nl;
+	  << ub->local_name () << "_);" << be_nl
+          << "this->u_." << ub->local_name ()
+          << "_ = 0;" << be_nl
+          << "break;" << be_uidt_nl;
       break;
     case AST_PredefinedType::PT_any:
       *os << "delete this->u_."
-	  << ub->local_name () << "_;" << be_nl;
-      *os << "break;" << be_uidt_nl;
+	  << ub->local_name () << "_;" << be_nl
+          << "this->u_." << ub->local_name ()
+          << "_ = 0;" << be_nl
+          << "break;" << be_uidt_nl;
       break;
     case AST_PredefinedType::PT_void:
       break;
@@ -280,8 +290,12 @@ be_visitor_union_branch_public_reset_cs::visit_sequence (be_sequence *)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "delete this->u_." << ub->local_name () << "_;" << be_nl;
-  *os << "break;" << be_uidt_nl;
+  *os << "delete this->u_."
+      << ub->local_name () << "_;" << be_nl
+      << "this->u_."
+      << ub->local_name ()
+      << "_ = 0;" << be_nl
+      << "break;" << be_uidt_nl;
 
   return 0;
 }
@@ -304,8 +318,12 @@ be_visitor_union_branch_public_reset_cs::visit_string (be_string *)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "CORBA::string_free (this->u_." << ub->local_name () << "_);" << be_nl;
-  *os << "break;" << be_uidt_nl;
+  *os << "CORBA::string_free (this->u_."
+      << ub->local_name () << "_);" << be_nl
+      << "this->u_."
+      << ub->local_name ()
+      << "_ = 0;" << be_nl
+      << "break;" << be_uidt_nl;
 
   return 0;
 }
@@ -337,8 +355,12 @@ be_visitor_union_branch_public_reset_cs::visit_structure (be_structure *node)
   os = this->ctx_->stream ();
   if (bt->size_type () == be_type::VARIABLE)
     {
-      *os << "delete this->u_." << ub->local_name () << "_;" << be_nl;
-    }
+      *os << "delete this->u_." << ub->local_name ()
+          << "_;" << be_nl
+          << "this->u_."
+          << ub->local_name ()
+          << "_ = 0;" << be_nl;
+   }
 
   *os << "break;" << be_uidt_nl;
 
@@ -384,8 +406,11 @@ be_visitor_union_branch_public_reset_cs::visit_union (be_union *)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "delete this->u_." << ub->local_name () << "_;" << be_nl;
-  *os << "break;" << be_uidt_nl;
+  *os << "delete this->u_."
+      << ub->local_name () << "_;" << be_nl
+      << "this->u_."
+      << ub->local_name () << "_ = 0;" << be_nl
+      << "break;" << be_uidt_nl;
 
   return 0;
 }

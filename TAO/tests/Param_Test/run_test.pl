@@ -99,7 +99,8 @@ for ($i = 0; $i <= $#ARGV; $i++)
           "any_sequence",
           "ub_short_sequence", "ub_long_sequence",
           "bd_short_sequence", "bd_long_sequence",
-          "fixed_array", "var_array", "typecode", "exception");
+          "fixed_array", "var_array", "typecode", "exception",
+	  "big_union");
 
 if ($type ne "")
 {

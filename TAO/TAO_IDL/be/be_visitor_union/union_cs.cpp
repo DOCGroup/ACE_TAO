@@ -103,8 +103,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
       *os << "// Operations for union " << node->name () << be_nl;
       *os << "// *************************************************************\n\n";
 
-      this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
-
       // generate the copy constructor and the assignment operator here
       os->indent ();
       *os << "// default constructor" << be_nl
@@ -115,12 +113,12 @@ int be_visitor_union_cs::visit_union (be_union *node)
           << "ACE_OS::memset (&this->u_, 0, sizeof (this->u_));" << be_uidt_nl
           << "}" << be_nl << be_nl;
 
+      this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
+
       *os << "// copy constructor" << be_nl;
-      *os << node->name () << "::" << node->local_name () << " (const " <<
-        node->name () << " &u)" << be_nl;
+      *os << node->name () << "::" << node->local_name ()
+          << " (const " << node->name () << " &u)" << be_nl;
       *os << "{" << be_idt_nl;
-      // first reset and set the discriminant
-      *os << "this->_reset (u.disc_, 0);" << be_nl;
       *os << "this->disc_ = u.disc_;" << be_nl;
       // now switch based on the disc value
       *os << "switch (this->disc_)" << be_nl;
@@ -138,6 +136,8 @@ int be_visitor_union_cs::visit_union (be_union *node)
       *os << "}\n";
       os->decr_indent ();
       *os << "}\n\n";
+
+      this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
 
       // assignment operator
       os->indent ();
@@ -175,8 +175,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
       *os << "void " << node->name () << "::_reset (" << bt->name ()
           << " new_disc_val, CORBA::Boolean finalize)" << be_nl;
       *os << "{" << be_idt_nl;
-      *os << "if ((this->disc_ != new_disc_val) || finalize)" << be_nl;
-      *os << "{" << be_idt_nl;
       *os << "switch (this->disc_)" << be_nl;
       *os << "{" << be_idt_nl;
       if (this->visit_scope (node) == -1)
@@ -188,7 +186,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
         }
 
       *os << be_uidt_nl << "}" << be_uidt_nl
-          << "}" << be_uidt_nl
           << "}\n\n";
 
       // the access method

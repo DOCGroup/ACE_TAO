@@ -725,6 +725,18 @@ Param_Test_i::test_exception (CORBA::ULong s1,
   return 0;
 }
 
+Param_Test::Big_Union*
+Param_Test_i::test_big_union (const Param_Test::Big_Union& u1,
+			      Param_Test::Big_Union& u2,
+			      Param_Test::Big_Union_out u3,
+			      CORBA::Environment &env)
+{
+  Param_Test::Big_Union_var ret (new Param_Test::Big_Union (u1));
+  u2 = u1;
+  u3 = new Param_Test::Big_Union (u1);
+  return ret._retn ();
+}
+
 void
 Param_Test_i::shutdown (CORBA::Environment &)
 {

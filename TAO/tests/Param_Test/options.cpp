@@ -137,6 +137,8 @@ Options::parse_args (int argc, char **argv)
           this->test_type_ = Options::TEST_MULTDIM_ARRAY;
         else if (!ACE_OS::strcmp (get_opts.optarg, "exception"))
           this->test_type_ = Options::TEST_EXCEPTION;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "big_union"))
+          this->test_type_ = Options::TEST_BIG_UNION;
         break;
 
       case '?':
