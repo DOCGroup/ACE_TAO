@@ -1,3 +1,19 @@
+Sun Nov 16 23:30:26 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* orbsvcs/tests/Logger/svr.cpp (main): 
+	Changed the code to use the resolve_initial_references ()
+	interface to get the object refrence to the naming service.
+	
+	* orbsvcs/tests/Logger/clnt.cpp (main): Now uses the
+ 	resolve_initial_references() to get the naming service object
+ 	reference, to get the logger factory object reference.
+
+	* orbsvcs/bin/Naming_Service/svr.cpp (main): 
+	* orbsvcs/bin/Naming_Service/svr.h: 
+	Added code to respond to multicast requests for the IOR.
+
+	Added code to respond to multicast requests for the IOR.
+
 Sun Nov 16 23:14:45 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* TAO_IDL/be/be_array.cpp: 

@@ -23,14 +23,14 @@
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "loggerC.h"
+#include "CosNamingC.h"
 #include "clnt.h"
-#include "ior_multicast.h"
 
 // constructor
 
 Logger_Client::Logger_Client (void)
   : logger_factory_key_ ("factory"),
-    hostname_ ("localhost"),
+    hostname_ (ACE_DEFAULT_SERVER_HOST),
     portnum_ (TAO_DEFAULT_SERVER_PORT),
     exit_later_ (0),
     factory_ (Logger_Factory::_nil ()),
@@ -132,100 +132,41 @@ Logger_Client::init (int argc, char **argv)
       return 1;
     }
 
-#if !defined (ACE_HAS_IP_MULTICAST)
-  ACE_DEBUG ((LM_ERROR, "IP multicast not supported.\n"));  
-
-  // Retrieve a factory objref.
-  this->objref_ = Logger_Factory::_bind (this->hostname_,
-                                        this->portnum_,
-                                        this->logger_factory_key_,
-                                        this->env_);
-
-  if (this->env_.exception () != 0)
-    {
-      this->env_.print_exception ("Logger_Factory::_bind");
-      return 1;
-    }
-
-  if (CORBA::is_nil (this->objref_) == CORBA::B_TRUE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " _bind returned null object for key (%s), host (%s), port (%d)\n",
-                       this->logger_factory_key_,
-                       this->hostname_,
-                       this->portnum_),
-                      1);
-
-  // Narrow the CORBA::Object reference to the stub object, checking
-  // the type along the way using _is_a.  There is really no need to
-  // narrow <objref> because <_bind> will return us the
-  // <Logger_Factory> pointer.  However, we do it so that we can
-  // explicitly test the _narrow function.
-  this->factory_ = Logger_Factory::_narrow (this->objref_);
-
-  if (this->factory_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-		       " (%P|%t) Unable to narrow object reference to a Logger_Factory_ptr.\n"),
-		      1);
-#else
-  char buf[BUFSIZ];
-
-  ACE_SOCK_Dgram_Mcast logger;
-  ACE_INET_Addr server, remote_addr;
+  CORBA::Object_ptr  obj_ptr = 
+    this->orb_ptr_->resolve_initial_references ("NameService");
   
-  // This starts out initialized to all zeros!
-  server = ACE_INET_Addr(DEFAULT_LOGGER_SERVER_REQUEST_PORT, 
-			 DEFAULT_LOGGER_SERVER_MULTICAST_ADDR);
+  if (CORBA::is_nil (obj_ptr) == CORBA::B_TRUE)
+    ACE_ERROR_RETURN ((LM_ERROR, "resolve_initial_references"), 1);  
+  
+  // resolve the naming service
+  CosNaming::NamingContext_ptr naming_service = 
+    CosNaming::NamingContext::_narrow (obj_ptr, this->env_);
 
-  if (logger.subscribe (server) == -1)
-      perror("can't subscribe to multicast group");
+  if (CORBA::is_nil (naming_service) == CORBA::B_TRUE)
+    ACE_ERROR_RETURN ((LM_ERROR, "CosNaming::NamingContext::_narrow"), 1);
 
-  ACE_INET_Addr response_addr (DEFAULT_LOGGER_SERVER_REPLY_PORT);
-  ACE_SOCK_Dgram response (response_addr);
+  // Create the name of the logger factory.
+  CosNaming::Name n(1);
+  n.length (1);
+  n[0].id = CORBA::string_dup ("logger_factory");  
 
-  ssize_t retcode = logger.send (buf, 1);
-  if (retcode == -1)
-    return -1;
+  // @@ destroy the naming service reference
 
-  ACE_DEBUG ((LM_ERROR, "@@ Sent multicast @@\n"));
+  // Resolve the logger factory to a corba object pointer
+  obj_ptr = naming_service->resolve (n, this->env_);
+  
+  if (CORBA::is_nil (obj_ptr) == CORBA::B_TRUE)
+    ACE_ERROR_RETURN ((LM_ERROR, "resolve"), 1);
 
-  ACE_Time_Value timeout (DEFAULT_LOGGER_SERVER_TIMEOUT); 
- 
-  if ((retcode = response.recv (buf, 
-				BUFSIZ, 
-				remote_addr, 
-				0,
-				&timeout)) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_SOCK_Dgram::recv"));
-
-  buf[retcode] = 0; // null terminate message
-
-  ACE_DEBUG ((LM_ERROR, "server returned '%s'\n", buf));
-
-  this->objref_ = this->orb_ptr_->string_to_object ((CORBA::String) buf, 
-						    this->env_);
+  // Narrow it to a logger factory pointer
+  this->factory_ = Logger_Factory::_narrow (obj_ptr, this->env_);
 
   if (this->env_.exception () != 0)
     {
-      this->env_.print_exception ("string2object");
+      this->env_.print_exception ("Logger_Factory::_narrow");
       return 1;
     }
 
-  if (CORBA::is_nil (this->objref_) == CORBA::B_TRUE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-		       "%s:  must identify non-null target objref\n",
-		       this->argv_ [0]),
-		      -1);
-
-  // Narrow the CORBA::Object reference to the stub object, checking
-  // the type along the way using _is_a.
-  this->factory_ = Logger_Factory::_narrow (this->objref_, this->env_);
-
-  if (this->factory_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-		       " (%P|%t) Unable to narrow object reference to a Logger_ptr.\n"),
-		      -1);
-
-#endif   
   // Now retrieve the Logger obj ref corresponding to key1 and key2
   this->logger_1_ = this->factory_->make_logger ("key1", this->env_);
   this->logger_2_ = this->factory_->make_logger ("key2", this->env_);
