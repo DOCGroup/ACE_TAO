@@ -468,7 +468,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::get_first (void)
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> int
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire ()
 {
-  return INHERITED::expire();
+  return ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK>::expire();
 }
 
 

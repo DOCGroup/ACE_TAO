@@ -103,7 +103,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Wheel_T (size_t wheelsize,
                                                            size_t prealloc,
                                                            FUNCTOR *upcall_functor,
                                                            ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
-  : INHERITED (upcall_functor, freelist),
+  : ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK> (upcall_functor, freelist),
     wheel_size_ (wheelsize),
     resolution_ (resolution),
     earliest_pos_ (0)
@@ -135,7 +135,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Wheel_T (size_t wheelsize,
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Wheel_T (FUNCTOR *upcall_functor,
                                                            ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
-  : INHERITED (upcall_functor, freelist),
+  : ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK> (upcall_functor, freelist),
     wheel_size_ (ACE_DEFAULT_TIMER_WHEEL_SIZE),
     resolution_ (ACE_DEFAULT_TIMER_WHEEL_RESOLUTION),
     earliest_pos_ (0)
@@ -506,7 +506,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::iter (void)
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::expire ()
 {
-  return INHERITED::expire ();
+  return ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK>::expire ();
 }
 
 
