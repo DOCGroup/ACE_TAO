@@ -1,3 +1,11 @@
+Fri May 23 11:16:31 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	From David Kinder <david.kinder@sophos.com>
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp (operator==):
+
+	  Fixed logic error in comparison of two TAO_SSLIOP_Credentials
+	  objects.  [Bug 1509]
+
 Fri May 23 10:59:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Valuetype_Adapter.h: Cleaned the interface to the ORB to
