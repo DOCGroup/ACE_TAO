@@ -820,7 +820,6 @@ typedef int ACE_thread_key_t;
 #include <ctype.h>
 #include <signal.h>
 #include <string.h>
-#include <iostream.h>
 #include <stdarg.h>
 #include <fcntl.h>
 #include <errno.h>

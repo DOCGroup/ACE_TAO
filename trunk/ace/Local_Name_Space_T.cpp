@@ -10,40 +10,40 @@
 #include "ace/Local_Name_Space.h"
 
 template <class ALLOCATOR>
-ACE_Name_Space_Map<ALLOCATOR>::ACE_Name_Space_Map (ALLOCATOR *allocator)
-  : MAP_MANAGER (allocator)
+ACE_Name_Space_Map<ALLOCATOR>::ACE_Name_Space_Map (ALLOCATOR *alloc)
+  : MAP_MANAGER (alloc)
 {
   ACE_TRACE ("ACE_Name_Space_Map::ACE_Name_Space_Map");
 }
 
 template <class ALLOCATOR> int 
-ACE_Name_Space_Map<ALLOCATOR>::close (ALLOCATOR* allocator)
+ACE_Name_Space_Map<ALLOCATOR>::close (ALLOCATOR* alloc)
 {
   ACE_TRACE ("ACE_Name_Space_Map::close");
 
-  this->allocator_ = allocator;
+  this->allocator_ = alloc;
   return this->close_i ();
 }
 
 template <class ALLOCATOR> int 
 ACE_Name_Space_Map<ALLOCATOR>::bind (const ACE_NS_String &ext_id,
 				     const ACE_NS_Internal &int_id,
-				     ALLOCATOR *allocator)
+				     ALLOCATOR *alloc)
 {
   ACE_TRACE ("ACE_Name_Space_Map::bind");
 
-  this->allocator_ = allocator;
+  this->allocator_ = alloc;
   return this->bind_i (ext_id, int_id);
 }
 
 template <class ALLOCATOR> int 
 ACE_Name_Space_Map<ALLOCATOR>::unbind (const ACE_NS_String &ext_id, 
 				       ACE_NS_Internal &int_id,
-				       ALLOCATOR *allocator)
+				       ALLOCATOR *alloc)
 {
   ACE_TRACE ("ACE_Name_Space_Map::unbind");
 
-  this->allocator_ = allocator;
+  this->allocator_ = alloc;
   return this->unbind_i (ext_id, int_id);
 }
 
@@ -52,22 +52,22 @@ ACE_Name_Space_Map<ALLOCATOR>::rebind (const ACE_NS_String &ext_id,
 				       const ACE_NS_Internal &int_id,
 				       ACE_NS_String &old_ext_id, 
 				       ACE_NS_Internal &old_int_id,
-				       ALLOCATOR *allocator)
+				       ALLOCATOR *alloc)
 {
   ACE_TRACE ("ACE_Name_Space_Map::rebind");
 
-  this->allocator_ = allocator;
+  this->allocator_ = alloc;
   return this->rebind_i (ext_id, int_id, old_ext_id, old_int_id);
 }
 
 template <class ALLOCATOR> int 
 ACE_Name_Space_Map<ALLOCATOR>::find (const ACE_NS_String &ext_id,
 				     ACE_NS_Internal &int_id,
-				     ALLOCATOR *allocator)
+				     ALLOCATOR *alloc)
 {
   ACE_TRACE ("ACE_Name_Space_Map::find");
 
-  this->allocator_ = allocator;
+  this->allocator_ = alloc;
   return this->find_i (ext_id, int_id);
 }
 
@@ -82,7 +82,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::remap (EXCEPTION_POINTERS *ep)
   // The following requires Memory Pool to have ::remap()
   // defined. Thus currently this will only work for
   // ACE_MMap_Memory_Pool.
-  if (this->allocator_->allocator ().memory_pool ().remap (addr) == -1)
+  if (this->allocator_->alloc ().memory_pool ().remap (addr) == -1)
     // Kick it upstairs...
     return (DWORD) EXCEPTION_CONTINUE_SEARCH; 
 

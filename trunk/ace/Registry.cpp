@@ -342,7 +342,7 @@ ACE_Registry::Naming_Context::bind_new_context (const Name &name,
 {
   return this->bind_new_context (ACE_Registry::make_string (name),
 				 naming_context,
-				 persistence.
+				 persistence,
 				 security_access,
 				 security_attributes);
 }
@@ -407,7 +407,7 @@ ACE_Registry::Naming_Context::bind_context (const Name &name,
 {
   return this->bind_context (ACE_Registry::make_string (name),
 			     naming_context,
-			     persistence.
+			     persistence,
 			     security_access,
 			     security_attributes);
 }

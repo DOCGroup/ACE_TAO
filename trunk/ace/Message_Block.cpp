@@ -178,22 +178,22 @@ ACE_Message_Block::init (size_t sz,
 			 ACE_Message_Type msg_type, 
 			 ACE_Message_Block *msg_cont, 
 			 const char *msg_data,
-			 ACE_Allocator *allocator)
+			 ACE_Allocator *alloc)
 {
   ACE_TRACE ("ACE_Message_Block::init");
   this->flags_ = 0;
 
   if (msg_data == 0)
     {
-      if (allocator == 0)
+      if (alloc == 0)
 	{
 	  this->allocator_ = 0;
 	  ACE_NEW_RETURN (this->base_, char[sz], -1);
 	}
       else // Use the allocator!
 	{
-	  this->allocator_ = allocator;
-	  this->base_ = (char *) allocator->malloc (sz);
+	  this->allocator_ = alloc;
+	  this->base_ = (char *) alloc->malloc (sz);
 	  if (this->base_ == 0)
 	    {
 	      errno = ENOMEM;
