@@ -51,23 +51,29 @@ public:
   virtual void register_callback (const char *stock_name,
                                   CORBA::Long threshold_value,
                                   Callback_Quoter::Consumer_ptr consumer_handler,
-                                  CORBA::Environment &TAO_TRY_ENV);
+                                  CORBA::Environment &TAO_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Callback_Quoter::Invalid_Stock));
   // Register a distributed callback handler that is invoked when the
   // given stock reaches the desired threshold value.
 
   virtual void unregister_callback (Callback_Quoter::Consumer_ptr consumer_handler,
-                                    CORBA::Environment &TAO_TRY_ENV);
+                                    CORBA::Environment &TAO_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Callback_Quoter::Invalid_Handle));
   // Remove the consumer object.
 
   virtual void market_status (const char *stock_name,
                               CORBA::Long stock_value,
-                              CORBA::Environment &TAO_TRY_ENV);
+                              CORBA::Environment &TAO_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Get the market status.
 
   void orb (CORBA::ORB_ptr orb);
   // Get the orb pointer.
 
-  virtual void shutdown (CORBA::Environment &env);
+  virtual void shutdown (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Shutdown the Notifier.
 
   // CONSUMER_MAP* get_consumer_map_ptr ();

@@ -89,11 +89,11 @@ int Quoter_Factory_i::init (CORBA::Environment &ACE_TRY_ENV)
 // Return the quoter by the id <name>.
 
 Stock::Quoter_ptr
-Quoter_Factory_i::create_quoter (const char *name,
+Quoter_Factory_i::create_quoter (const char *,
                                  CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Stock::Invalid_Quoter))
 {
-  ACE_UNUSED_ARG (name);
-
   this->next_quoter_ = (this->next_quoter_ + 1) % this->quoter_num_;
 
   if (TAO_debug_level > 0)
@@ -127,12 +127,12 @@ Quoter_i::~Quoter_i (void)
 // For now, just return 42.  It was a good day on Wall Street.
 
 CORBA::Long
-Quoter_i::get_quote (char const *stock_name,
-                     class CORBA_Environment &ACE_TRY_ENV)
+Quoter_i::get_quote (char const *,
+                     class CORBA_Environment &)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Stock::Invalid_Stock,
+                       Stock::Invalid_Quoter))
 {
-  ACE_UNUSED_ARG (stock_name);
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
   return 42;
 }
 
@@ -143,6 +143,11 @@ CosLifeCycle::LifeCycleObject_ptr
 Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
                 const CosLifeCycle::Criteria &the_criteria,
                 CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosLifeCycle::NoFactory,
+                       CosLifeCycle::NotCopyable,
+                       CosLifeCycle::InvalidCriteria,
+                       CosLifeCycle::CannotMeetCriteria))
 {
   const char *exception_message = "Null message";
   ACE_TRY
@@ -266,6 +271,11 @@ void
 Quoter_i::move (CosLifeCycle::FactoryFinder_ptr there,
                 const CosLifeCycle::Criteria &the_criteria,
                 CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosLifeCycle::NoFactory,
+                       CosLifeCycle::NotMovable,
+                       CosLifeCycle::InvalidCriteria,
+                       CosLifeCycle::CannotMeetCriteria))
 {
   const char *exception_message = "Null message";
 
@@ -353,10 +363,10 @@ Quoter_i::move (CosLifeCycle::FactoryFinder_ptr there,
 // Removes the object.  Once we shut down the ORB we can call it a day.
 
 void
-Quoter_i::remove (CORBA::Environment &ACE_TRY_ENV)
+Quoter_i::remove (CORBA::Environment &)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosLifeCycle::NotRemovable))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "I have been asked to shut down.\n"));
 

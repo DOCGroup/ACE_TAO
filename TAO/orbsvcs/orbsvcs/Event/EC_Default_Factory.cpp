@@ -670,12 +670,18 @@ ACE_FACTORY_DEFINE (TAO_ORBSVCS, TAO_EC_Default_Factory)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+#if defined (ACE_HAS_THREADS)
 template class TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_SYNCH_MUTEX>;
+#endif /* ACE_HAS_THREADS */
+
 template class TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_Null_Mutex>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
+#if defined (ACE_HAS_THREADS)
 #pragma instantiate TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_SYNCH_MUTEX>
+#endif /* ACE_HAS_THREADS */
+
 #pragma instantiate TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_Null_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -20,6 +20,7 @@ public:
   Ping_i (int debug = 0) : debug_ (debug) {}
 
   virtual void ping (CORBA::Environment &)
+    ACE_THROW_SPEC (())
     {
       if (this->debug_)
         ACE_DEBUG ((LM_DEBUG, "Pong!\n"));

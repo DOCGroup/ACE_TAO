@@ -31,12 +31,10 @@ Quoter_Generic_Factory_i::~Quoter_Generic_Factory_i (void)
 }
 
 CORBA::Boolean 
-Quoter_Generic_Factory_i::supports (const CosLifeCycle::Key &factory_key,
-                                    CORBA::Environment &ACE_TRY_ENV)
+Quoter_Generic_Factory_i::supports (const CosLifeCycle::Key &,
+                                    CORBA::Environment &)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (factory_key);
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
   return 0;
 }
 
@@ -107,11 +105,13 @@ Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_k
   
 CORBA::Object_ptr
 Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key, 
-                                            const CosLifeCycle::Criteria &the_criteria,
-                                            CORBA::Environment &TAO_IN_ENV_there)
+                                         const CosLifeCycle::Criteria &,
+                                         CORBA::Environment &TAO_IN_ENV_there)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosLifeCycle::NoFactory,
+                       CosLifeCycle::InvalidCriteria,
+                       CosLifeCycle::CannotMeetCriteria))
 {
-  ACE_UNUSED_ARG (the_criteria);
-
   CORBA::Environment env_here;
 
   CosNaming::NamingContext_var quoterNamingContext_var = 

@@ -98,17 +98,18 @@ Globals::sched_fifo_init (void)
                            "%n: ACE_OS::sched_params failed\n%a"),
                           -1);
     }
-#else
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "Test will not run.  This platform doesn't seem to have threads.\n"),
-                    -1);
-#endif /* ACE_HAS_THREADS */
 
   ACE_SET_BITS (GLOBALS::instance ()->thr_create_flags, THR_BOUND);
   ACE_SET_BITS (GLOBALS::instance ()->thr_create_flags, THR_SCHED_FIFO);
   GLOBALS::instance ()->default_priority = ACE_THR_PRI_FIFO_DEF;
 
   return 0;
+#else
+
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "Test will not run.  This platform doesn't seem to have threads.\n"),
+                    -1);
+#endif /* ACE_HAS_THREADS */
 }
 
 MT_Priority::MT_Priority (void)
@@ -139,6 +140,9 @@ MT_Priority::get_low_priority (u_int num_low_priority,
                                ACE_Sched_Priority prev_priority,
                                u_int use_multiple_priority)
 {
+#if !defined (ACE_HAS_THREADS)
+  return -1;
+#else
   ACE_Sched_Priority low_priority = ACE_THR_PRI_FIFO_DEF;
 
   // Drop the priority.
@@ -182,6 +186,7 @@ MT_Priority::get_low_priority (u_int num_low_priority,
                                            prev_priority,
                                            ACE_SCOPE_THREAD);
   return low_priority;
+#endif /* ACE_HAS_THREADS */
 }
 
 u_int
@@ -198,7 +203,5 @@ MT_Priority::grain (void)
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Condition<ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate ACE_Condition<ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

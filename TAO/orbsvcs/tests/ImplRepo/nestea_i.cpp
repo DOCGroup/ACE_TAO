@@ -34,6 +34,7 @@ Nestea_i::~Nestea_i (void)
 void 
 Nestea_i::drink (CORBA::Long cans,
                  CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 
@@ -54,6 +55,7 @@ Nestea_i::drink (CORBA::Long cans,
 void 
 Nestea_i::crush (CORBA::Long cans,
                  CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 
@@ -76,6 +78,7 @@ Nestea_i::crush (CORBA::Long cans,
 
 CORBA::Long 
 Nestea_i::bookshelf_size (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 
@@ -92,6 +95,7 @@ Nestea_i::bookshelf_size (CORBA::Environment &ACE_TRY_ENV)
 
 char *
 Nestea_i::get_praise (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 
