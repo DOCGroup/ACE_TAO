@@ -1,3 +1,23 @@
+Wed Feb  6 18:56:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/ORB.cpp:
+        * tao/corbafwd.h:
+        * tao/orb.idl:
+
+          Added the enum TCKind to orb.idl, and added the CDR operators
+          for it to corbafwd.h and ORB.cpp.
+
+        * TAO_IDL/ast/ast_module.cpp:
+
+          Removed the addition of TCKind to the CORBA module, when orb.idl
+          is included. It now gets added directly from the idl file.
+
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Fixed lookup function, and changed many instances of iterators
+          to be created on the stack. Thanks to Carlos O"Ryan <coryan@uci.edu>
+          for reporting the bug in the handling of TCKind.
+
 Wed Feb  6 16:34:49 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be_include/be_valuetype.h:
