@@ -54,7 +54,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_field_cdr_op_ch::"
+                         "(%N:%l) be_visitor_array_ci::"
                          "visit_array - "
                          "bad base type\n"),
                         -1);

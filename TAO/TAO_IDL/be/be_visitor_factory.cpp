@@ -448,7 +448,7 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_ARRAY_CDR_OP_CI:
       return new be_visitor_array_cdr_op_ci (new_ctx);
     case TAO_CodeGen::TAO_ARRAY_CDR_OP_CS:
-      return new be_visitor_decl (new_ctx);
+      return new be_visitor_array_cdr_op_cs (new_ctx);
 
     case TAO_CodeGen::TAO_ARGUMENT_AMI:
       // @@ Alex: I am not sure about this case, yet (Alex).
