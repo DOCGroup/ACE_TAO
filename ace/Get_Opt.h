@@ -90,7 +90,7 @@ public:
    *                      @a argv element, or from the following @a argv
    *                      element (only valid for required arguments;
    *                      optional arguments must always reside in the same
-   *                      @argv element). The argument value, if any is
+   *                      @a argv element). The argument value, if any is
    *                      returned by the @c opt_arg() method.
    *                      @a optstring can be extended by adding long options
    *                      with corresponding short options via the
