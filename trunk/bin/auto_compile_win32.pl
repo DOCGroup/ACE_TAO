@@ -196,17 +196,17 @@ EOD
                        "SPIPE_Test.dsp",
                        "SString_Test.dsp",
                        "SV_Shared_Memory_Test.dsp",
-                       "ask_Test.dsp",
-                       "hread_Manager_Test.dsp",
-                       "hread_Mutex_Test.dsp",
-                       "hread_Pool_Reactor_Test.dsp",
-                       "hread_Pool_Test.dsp",
-                       "imeprobe_Test.dsp",
-                       "imer_Queue_Test.dsp",
-                       "ime_Service_Test.dsp",
-                       "ime_Value_Test.dsp",
-                       "okens_Test.dsp",
-                       "SS_Test.dsp",
+                       "Task_Test.dsp",
+                       "Thread_Manager_Test.dsp",
+                       "Thread_Mutex_Test.dsp",
+                       "Thread_Pool_Reactor_Test.dsp",
+                       "Thread_Pool_Test.dsp",
+                       "Timeprobe_Test.dsp",
+                       "Timer_Queue_Test.dsp",
+                       "Time_Service_Test.dsp",
+                       "Time_Value_Test.dsp",
+                       "Tokens_Test.dsp",
+                       "TSS_Test.dsp",
                        "Upgradable_RW_Test.dsp",
                        "UPIPE_SAP_Test.dsp" );
 
@@ -252,9 +252,9 @@ sub Build_Config
 
 sub Build_Version_Test
 {
-    my $Config = shift
+    my $Config = shift;
     my $Cntr = 0;
-    my $Command_Line = ""
+    my $Command_Line = "";
 
     chdir ("$ENV{ACE_ROOT}/tests/version_tests");
     for ($Cntr = 0; $Cntr < scalar (@Version_Tests_List); $Cntr++)
@@ -287,9 +287,8 @@ sub Build_Collection
         $Config = $Lists[$Cntr];
         print "Building $Config of $Target{$Config}\n" if ( $Debug );
         Build_Config ($Config, $Target{$Config});
+        Build_Version_Test ($Config);
     }
-
-    Build_Version_Test ($Config);
 }
 
 
@@ -326,12 +325,12 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ )
     }
     elsif ( $ARGV[0] eq '-D' )  # Build DLL only
     {
-        print "Build DLL only" if ( $Verbose );
+        print "Build DLL only\n" if ( $Verbose );
         $Build_LIB = 0;
     }
     elsif ( $ARGV[0] eq '-L' )  # Build LIB only
     {
-        print "Build LIB only" if ( $Verbose );
+        print "Build LIB only\n" if ( $Verbose );
         $Build_DLL = 0;
     }
     elsif ( $ARGV[0] eq '-v' )   # Verbose mode
