@@ -110,15 +110,17 @@ class _EXPCLASS CORBA_Object : public IUnknown
 				    void	**ppv
 				);
 
-				CORBA_Object (IUnknown *p);
+				CORBA_Object (IUnknown *p = NULL);
 				virtual ~CORBA_Object ();
 
     virtual skeleton                    lookup(const CORBA_String &opname) { return
 								       optable_->lookup(opname); } 
 protected:
     TAO_Operation_Table         *optable_;
+  void  set_parent(IUnknown *p);
 private:
-    IUnknown			*const parent;
+  //    IUnknown			*const parent;
+    IUnknown			*parent;
 
     //
     // these two are not provided!

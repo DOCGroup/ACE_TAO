@@ -25,7 +25,14 @@ TAO_Operation_Table::~TAO_Operation_Table()
 CORBA_Object::CORBA_Object (IUnknown *_jan)
 : parent (_jan)
 {
-    assert (parent != 0);
+  //    assert (parent != 0);
+  // we removed this as it doesn't fit in our schema of things
+}
+
+void CORBA_Object::set_parent(IUnknown *p)
+{
+  this->parent = p;
+  assert (this->parent != 0);
 }
 
 CORBA_Object::~CORBA_Object ()
