@@ -77,8 +77,8 @@ TAO_MProfile::get_cprev (void)
     current_--;
   else // current_ == 0 or 1, 0 => list never read before and == 1
     current_ = last_;
-  else
-    return pfiles_[current_ - 1];
+
+  return pfiles_[current_ - 1];
 }
 
 ACE_INLINE TAO_Profile *

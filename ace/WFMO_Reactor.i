@@ -382,19 +382,19 @@ ACE_INLINE int
 ACE_WFMO_Reactor_Handler_Repository::changes_required (void)
 {
   // Check if handles have be scheduled for additions or removal
-  return this->handles_to_be_added_ > 0 ||
-    this->handles_to_be_deleted_ > 0    ||
-    this->handles_to_be_suspended_ > 0  ||
-    this->handles_to_be_resumed_ > 0;
+  return this->handles_to_be_added_ > 0 
+    || this->handles_to_be_deleted_ > 0    
+    || this->handles_to_be_suspended_ > 0  
+    || this->handles_to_be_resumed_ > 0;
 }
 
 ACE_INLINE int
 ACE_WFMO_Reactor_Handler_Repository::make_changes (void)
 {
   // This method must ONLY be called by the
-  // <WFMO_Reactor->change_state_thread_>. We therefore assume that there
-  // will be no contention for this method and hence no guards are
-  // neccessary.
+  // <WFMO_Reactor->change_state_thread_>. We therefore assume that
+  // there will be no contention for this method and hence no guards
+  // are neccessary.
 
   // Deletions and suspensions in current_info_
   this->make_changes_in_current_infos ();
@@ -428,8 +428,6 @@ ACE_WFMO_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
 
   return result;
 }
-
-/************************************************************/
 
 ACE_INLINE long
 ACE_WFMO_Reactor::schedule_timer (ACE_Event_Handler *handler,
@@ -520,7 +518,6 @@ ACE_WFMO_Reactor::register_handler (ACE_HANDLE event_handle,
                                    io_handle,
                                    event_handler,
                                    mask);
-
 }
 
 ACE_INLINE int
@@ -535,7 +532,10 @@ ACE_WFMO_Reactor::register_handler (const ACE_Handle_Set &handles,
   ACE_HANDLE h;
 
   while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
-    if (this->register_handler_i (h, ACE_INVALID_HANDLE, handler, mask) == -1)
+    if (this->register_handler_i (h,
+                                  ACE_INVALID_HANDLE,
+                                  handler,
+                                  mask) == -1)
       return -1;
 
   return 0;
@@ -548,7 +548,8 @@ ACE_WFMO_Reactor::schedule_wakeup (ACE_HANDLE io_handle,
   // This GUARD is necessary since we are updating shared state.
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
-  return this->schedule_wakeup_i (io_handle, masks_to_be_added);
+  return this->schedule_wakeup_i (io_handle,
+                                  masks_to_be_added);
 }
 
 ACE_INLINE int
@@ -558,21 +559,24 @@ ACE_WFMO_Reactor::schedule_wakeup (ACE_Event_Handler *event_handler,
   // This GUARD is necessary since we are updating shared state.
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
-  return this->schedule_wakeup_i (event_handler->get_handle (), masks_to_be_added);
+  return this->schedule_wakeup_i (event_handler->get_handle (),
+                                  masks_to_be_added);
 }
 
 ACE_INLINE int
 ACE_WFMO_Reactor::remove_handler (ACE_Event_Handler *event_handler,
                                   ACE_Reactor_Mask mask)
 {
-  return this->handler_rep_.unbind (event_handler->get_handle (), mask);
+  return this->handler_rep_.unbind (event_handler->get_handle (),
+                                    mask);
 }
 
 ACE_INLINE int
 ACE_WFMO_Reactor::remove_handler (ACE_HANDLE handle,
                                   ACE_Reactor_Mask mask)
 {
-  return this->handler_rep_.unbind (handle, mask);
+  return this->handler_rep_.unbind (handle,
+                                    mask);
 }
 
 ACE_INLINE int
@@ -600,14 +604,16 @@ ACE_INLINE int
 ACE_WFMO_Reactor::cancel_wakeup (ACE_HANDLE io_handle,
                                  ACE_Reactor_Mask masks_to_be_removed)
 {
-  return this->remove_handler (io_handle, masks_to_be_removed);
+  return this->remove_handler (io_handle,
+                               masks_to_be_removed);
 }
 
 ACE_INLINE int
 ACE_WFMO_Reactor::cancel_wakeup (ACE_Event_Handler *event_handler,
                                  ACE_Reactor_Mask masks_to_be_removed)
 {
-  return this->remove_handler (event_handler, masks_to_be_removed);
+  return this->remove_handler (event_handler,
+                               masks_to_be_removed);
 }
 
 ACE_INLINE int
@@ -616,7 +622,9 @@ ACE_WFMO_Reactor::suspend_handler (ACE_HANDLE handle)
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
   int changes_required = 0;
-  int result = this->handler_rep_.suspend_handler_i (handle, changes_required);
+  int result =
+    this->handler_rep_.suspend_handler_i (handle,
+                                          changes_required);
 
   if (changes_required)
     // Wake up all threads in WaitForMultipleObjects so that they can
@@ -642,7 +650,8 @@ ACE_WFMO_Reactor::suspend_handler (const ACE_Handle_Set &handles)
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
   while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
-    if (this->handler_rep_.suspend_handler_i (h, changes_required) == -1)
+    if (this->handler_rep_.suspend_handler_i (h,
+                                              changes_required) == -1)
       return -1;
 
   // Wake up all threads in WaitForMultipleObjects so that they can
@@ -661,19 +670,24 @@ ACE_WFMO_Reactor::suspend_handlers (void)
 
   // First suspend all current handles
   int changes_required = 0;
-  for (size_t i = 0; i < this->handler_rep_.max_handlep1_ && error == 0; i++)
+
+  for (size_t i = 0;
+       i < this->handler_rep_.max_handlep1_ && error == 0;
+       i++)
     {
-      result = this->handler_rep_.suspend_handler_i (this->handler_rep_.current_handles_[i], changes_required);
+      result = 
+        this->handler_rep_.suspend_handler_i (this->handler_rep_.current_handles_[i],
+                                              changes_required);
       if (result == -1)
         error = 1;
     }
 
   if (!error)
     // Then suspend all to_be_added_handles
-    for (size_t i = 0; i < this->handler_rep_.handles_to_be_added_; i++)
-      {
-        this->handler_rep_.to_be_added_info_[i].suspend_entry_ = 1;
-      }
+    for (size_t i = 0;
+         i < this->handler_rep_.handles_to_be_added_;
+         i++)
+      this->handler_rep_.to_be_added_info_[i].suspend_entry_ = 1;
 
   // Wake up all threads in WaitForMultipleObjects so that they can
   // reconsult the handle set
@@ -688,7 +702,9 @@ ACE_WFMO_Reactor::resume_handler (ACE_HANDLE handle)
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
   int changes_required = 0;
-  int result = this->handler_rep_.resume_handler_i (handle, changes_required);
+  int result =
+    this->handler_rep_.resume_handler_i (handle,
+                                         changes_required);
 
   if (changes_required)
     // Wake up all threads in WaitForMultipleObjects so that they can
@@ -714,7 +730,8 @@ ACE_WFMO_Reactor::resume_handler (const ACE_Handle_Set &handles)
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
   while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
-    if (this->handler_rep_.resume_handler_i (h, changes_required) == -1)
+    if (this->handler_rep_.resume_handler_i (h,
+                                             changes_required) == -1)
       return -1;
 
   // Wake up all threads in WaitForMultipleObjects so that they can
@@ -732,20 +749,23 @@ ACE_WFMO_Reactor::resume_handlers (void)
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
   int changes_required = 0;
-  for (size_t i = 0; i < this->handler_rep_.suspended_handles_ && error == 0; i++)
+  for (size_t i = 0;
+       i < this->handler_rep_.suspended_handles_ && error == 0;
+       i++)
     {
-      result = this->handler_rep_.resume_handler_i (this->handler_rep_.current_suspended_info_[i].event_handle_,
-                                                    changes_required);
+      result =
+        this->handler_rep_.resume_handler_i (this->handler_rep_.current_suspended_info_[i].event_handle_,
+                                             changes_required);
       if (result == -1)
         error = 1;
     }
 
   if (!error)
     // Then resume all to_be_added_handles
-    for (size_t i = 0; i < this->handler_rep_.handles_to_be_added_; i++)
-      {
-        this->handler_rep_.to_be_added_info_[i].suspend_entry_ = 0;
-      }
+    for (size_t i = 0;
+         i < this->handler_rep_.handles_to_be_added_;
+         i++)
+      this->handler_rep_.to_be_added_info_[i].suspend_entry_ = 0;
 
   // Wake up all threads in WaitForMultipleObjects so that they can
   // reconsult the handle set
@@ -888,7 +908,8 @@ ACE_WFMO_Reactor::register_handler (const ACE_Sig_Set &sigset,
 #if (ACE_NSIG > 0)
   for (int s = 1; s < ACE_NSIG; s++)
     if (sigset.is_member (s)
-        && this->signal_handler_->register_handler (s, new_sh,
+        && this->signal_handler_->register_handler (s,
+                                                    new_sh,
                                                     new_disp) == -1)
       result = -1;
 #else
@@ -906,7 +927,10 @@ ACE_WFMO_Reactor::remove_handler (int signum,
                                   ACE_Sig_Action *old_disp,
                                   int sigkey)
 {
-  return this->signal_handler_->remove_handler (signum, new_disp, old_disp, sigkey);
+  return this->signal_handler_->remove_handler (signum,
+                                                new_disp,
+                                                old_disp,
+                                                sigkey);
 }
 
 ACE_INLINE int
@@ -929,7 +953,8 @@ ACE_WFMO_Reactor::remove_handler (const ACE_Sig_Set &sigset)
 ACE_INLINE int
 ACE_WFMO_Reactor::handler (int signum, ACE_Event_Handler **eh)
 {
-  ACE_Event_Handler *handler = this->signal_handler_->handler (signum);
+  ACE_Event_Handler *handler =
+    this->signal_handler_->handler (signum);
 
   if (handler == 0)
     return -1;
