@@ -401,7 +401,7 @@ Consumer_i::~Consumer_i (void)
 
 void
 Consumer_i::push (const Event_Comm::Event &event,
-		  CORBA::Environment &ACE_TRY_ENV)
+		  CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const char *tmpstr = event.tag_;
@@ -416,7 +416,7 @@ Consumer_i::push (const Event_Comm::Event &event,
 
 void
 Consumer_i::disconnect (const char *reason,
-			CORBA::Environment &ACE_TRY_ENV)
+			CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
