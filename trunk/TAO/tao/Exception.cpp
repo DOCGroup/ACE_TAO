@@ -142,12 +142,8 @@ CORBA_Exception::Release (void)
   this->refcount_--;
   if (this->refcount_ != 0)
     return this->refcount_;
-
-  // CORBA::TypeCode_ptr                tc = type_->_duplicate ();
-
-  CORBA::Any free_it_all (this->type_, this, CORBA::B_TRUE);
-
-  // tc->Release ();
+  
+  delete this;
 
   return 0;
 }
