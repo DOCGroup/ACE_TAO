@@ -2175,13 +2175,19 @@ sub write_output_file {
   my($tover)    = $self->get_template_override();
   my($template) = (defined $tover ? $tover : $self->get_template());
 
-  if (! ($template =~ /$TemplateExtension/)) {
+  ## If the template files does not end in the template extension
+  ## then we will add it on.
+  if ($template !~ /$TemplateExtension$/) {
     $template = $template . ".$TemplateExtension";
   }
-  my($tfile) = "";
-  if ($template =~ /^\//) {
+
+  ## If the template file does not contain a full path, then we
+  ## will search through the include paths for it.
+  my($tfile) = undef;
+  if ($template =~ /^([a-z]:)?[\/\\]/i) {
     $tfile = $template;
-  } else { 
+  }
+  else {
     $tfile = $self->search_include_path($template);
   }
 
