@@ -739,6 +739,7 @@ endif
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -1487,6 +1488,7 @@ endif
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/PICurrent.h \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \

@@ -28,6 +28,8 @@
 #include "ace/Basic_Types.h"
 #include "ace/Synch_T.h"
 #include "ace/CORBA_macros.h"
+#include "tao/Object_Argument_T.h"
+#include "tao/Arg_Traits_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -201,6 +203,19 @@ operator<< (TAO_OutputCDR&, const CORBA::ValueBase *);
 
 TAO_Valuetype_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, CORBA::ValueBase *&);
+
+/// Used in generated code if CORBA::ValueBase is an argument or return type.
+namespace TAO
+{
+  template<>
+  class TAO_Valuetype_Export Arg_Traits<CORBA::ValueBase>
+    : public Object_Arg_Traits_T<CORBA::ValueBase *,
+                                 CORBA::ValueBase_var,
+                                 CORBA::ValueBase_out,
+                                 TAO::Value_Traits<CORBA::ValueBase> >
+  {
+  };
+};
 
 #if defined (__ACE_INLINE__)
 # include "ValueBase.inl"

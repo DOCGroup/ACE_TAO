@@ -440,6 +440,21 @@ endif
   $(TAO_ROOT)/tao/Tagged_Profile.i \
   $(TAO_ROOT)/tao/Service_Context.h \
   $(TAO_ROOT)/tao/Service_Context.inl \
+  $(TAO_ROOT)/tao/PICurrent.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/DynamicC.i \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/ORB.h \
@@ -457,16 +472,6 @@ endif
   $(TAO_ROOT)/tao/params.h \
   $(TAO_ROOT)/tao/params.i \
   $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
-  $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/PI_ForwardC.i \
-  $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/DynamicC.i \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/Parser_Registry.h \
   $(TAO_ROOT)/tao/Parser_Registry.i \
   $(TAO_ROOT)/tao/Service_Callbacks.h \
@@ -474,9 +479,6 @@ endif
   $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
   $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
-  $(ACE_ROOT)/ace/Array_Base.h \
-  $(ACE_ROOT)/ace/Array_Base.inl \
-  $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
   $(TAO_ROOT)/tao/ObjectKey_Table.h \
@@ -485,7 +487,6 @@ endif
   $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
-  $(TAO_ROOT)/tao/PICurrent.h \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -521,6 +522,11 @@ endif
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.h \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
   $(TAO_ROOT)/tao/Profile.i \
+  $(TAO_ROOT)/tao/RequestInfo_Util.h \
+  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
+  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
+  $(TAO_ROOT)/tao/PortableServer/ServerInterceptorAdapter.h \
+  $(TAO_ROOT)/tao/PortableServer/ServerInterceptorAdapter.inl \
   $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \

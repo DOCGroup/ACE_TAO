@@ -30,6 +30,25 @@ namespace TAO
       TAO_INVOKE_FAILURE
     };
 
+  /// Enums for invocation types
+  enum Invocation_Type {
+    TAO_ONEWAY_INVOCATION,
+    TAO_TWOWAY_INVOCATION
+    // , TAO_LOCATEREQUEST_INVOCATION
+  };
+
+  /// Enum for invocation modes
+  enum Invocation_Mode {
+    /// Standard synchronous twoway
+    TAO_SYNCHRONOUS_INVOCATION,
+    /// Asynchronous twoway with callback model for collecting the
+    /// replies.
+    TAO_ASYNCHRONOUS_CALLBACK_INVOCATION,
+    /// Asynchronous twoway with poller model for collecting the
+    /// replies.
+    /// @NOTE: This is not supported in TAO now
+    TAO_ASYNCHRONOUS_POLLER_INVOCATION
+  };
 };
 
 #include "ace/post.h"

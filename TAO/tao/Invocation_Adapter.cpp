@@ -50,14 +50,9 @@ namespace TAO
   {
     // Should stub object be refcounted here?
     TAO_Stub *stub =
-      this->target_->_stubobj ();
+      this->get_stub (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
 
-    if (stub == 0)
-      ACE_THROW (CORBA::INTERNAL (
-                   CORBA::SystemException::_tao_minor_code (
-                     TAO_DEFAULT_MINOR_CODE,
-                     EINVAL),
-                   CORBA::COMPLETED_NO));
 
     TAO_Operation_Details op_details (this->operation_,
                                       this->op_len_,
@@ -67,19 +62,14 @@ namespace TAO
                                       ex_data,
                                       ex_count);
     if (this->cpb_)
-      {
-        this->invoke_collocated (stub,
-                                 op_details
-                                 ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+      return this->invoke_collocated (stub,
+                                      op_details
+                                      ACE_ENV_ARG_PARAMETER);
 
-        return;
-      }
+    return this->invoke_remote (stub,
+                                op_details
+                                ACE_ENV_ARG_PARAMETER);
 
-    this->invoke_remote (stub,
-                         op_details
-                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
   void
@@ -243,6 +233,22 @@ namespace TAO
                                                    timeout);
 
     return has_timeout;
+  }
+
+  TAO_Stub *
+  Invocation_Adapter::get_stub (ACE_ENV_SINGLE_ARG_DECL) const
+  {
+    TAO_Stub *stub =
+      this->target_->_stubobj ();
+
+    if (stub == 0)
+      ACE_THROW (CORBA::INTERNAL (
+                   CORBA::SystemException::_tao_minor_code (
+                     TAO_DEFAULT_MINOR_CODE,
+                     EINVAL),
+                   CORBA::COMPLETED_NO));
+
+    return stub;
   }
 
 } // End namespace TAO

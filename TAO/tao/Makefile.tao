@@ -766,11 +766,11 @@ realclean:
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   Transport_Connector.inl Transport.h Exception.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   Exception.i \
   Transport_Descriptor_Interface.h \
-  corbafwd.h \
   Transport_Descriptor_Interface.inl \
   Transport_Cache_Manager.h \
   Cache_Entries.h \
@@ -1066,7 +1066,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -1157,13 +1158,13 @@ realclean:
   $(ACE_ROOT)/ace/OS_Memory.inl \
   corbafwd.i \
   Exception.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   Exception.i \
   Transport_Descriptor_Interface.h \
-  corbafwd.h \
   Transport_Descriptor_Interface.inl \
   Transport_Cache_Manager.h \
   Cache_Entries.h \
@@ -1459,7 +1460,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -1873,7 +1875,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -1957,6 +1960,7 @@ realclean:
   $(ACE_ROOT)/ace/OS_Memory.inl \
   corbafwd.i \
   ORB.h Exception.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -1964,7 +1968,6 @@ realclean:
   Exception.i \
   ServicesC.h \
   OctetSeqC.h \
-  corbafwd.h \
   Seq_Var_T.h \
   Seq_Var_T.inl \
   Seq_Var_T.cpp \
@@ -2247,7 +2250,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -2641,6 +2645,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -3171,6 +3176,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -3312,13 +3318,13 @@ realclean:
   OBV_Constants.h \
   corbafwd.i \
   ORB.h Exception.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   Exception.i \
   ServicesC.h \
   OctetSeqC.h \
-  corbafwd.h \
   Seq_Var_T.h \
   Seq_Var_T.inl \
   Seq_Var_T.cpp \
@@ -3542,7 +3548,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -3799,12 +3806,12 @@ realclean:
   OBV_Constants.h \
   corbafwd.i \
   Exception.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   Exception.i \
   Transport_Descriptor_Interface.h \
-  corbafwd.h \
   Transport_Descriptor_Interface.inl \
   Transport_Cache_Manager.h \
   Cache_Entries.h \
@@ -3941,6 +3948,11 @@ realclean:
   Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Export.h \
@@ -3990,11 +4002,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -4271,6 +4278,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -4344,6 +4352,11 @@ realclean:
   corbafwd.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -4385,11 +4398,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -4793,6 +4801,11 @@ realclean:
   corbafwd.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -4834,11 +4847,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -5203,6 +5211,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   ORB_Core.i \
   Server_Strategy_Factory.h \
   Transport_Cache_Manager.h \
@@ -5282,6 +5291,11 @@ realclean:
   corbafwd.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -5323,11 +5337,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -5692,6 +5701,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   ORB_Core.i \
   Server_Strategy_Factory.h \
   Transport_Cache_Manager.h \
@@ -6079,7 +6089,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -6571,6 +6582,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   ORB_Core.i \
   Server_Strategy_Factory.h \
   Thread_Lane_Resources.h \
@@ -7080,8 +7092,9 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h ORB_Core.i \
-  Client_Strategy_Factory.h Base_Transport_Property.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl ORB_Core.i Client_Strategy_Factory.h \
+  Base_Transport_Property.h \
   Transport_Descriptor_Interface.h \
   Transport_Descriptor_Interface.inl \
   Base_Transport_Property.inl \
@@ -7557,6 +7570,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   ORB_Core.i \
   Server_Strategy_Factory.h \
   Transport_Cache_Manager.h \
@@ -8034,6 +8048,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   ORB_Core.i \
   Server_Strategy_Factory.h \
   IIOP_Transport.h \
@@ -8590,6 +8605,16 @@ realclean:
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Export.h \
@@ -8597,8 +8622,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -8611,9 +8634,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -8658,11 +8678,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -8741,12 +8756,12 @@ realclean:
   OBV_Constants.h \
   corbafwd.i \
   ORB.h Exception.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   Exception.i \
   ServicesC.h \
   OctetSeqC.h \
-  corbafwd.h \
   Seq_Var_T.h \
   Seq_Var_T.inl \
   Seq_Var_T.cpp \
@@ -8933,7 +8948,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -9005,6 +9021,11 @@ realclean:
   corbafwd.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -9046,11 +9067,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -9329,6 +9345,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -9359,6 +9376,16 @@ realclean:
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Export.h \
@@ -9366,8 +9393,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -9380,9 +9405,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -9427,11 +9449,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -9717,6 +9734,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -9816,6 +9834,16 @@ realclean:
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Export.h \
@@ -9823,8 +9851,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -9837,9 +9863,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -9884,11 +9907,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -10033,6 +10051,16 @@ realclean:
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Export.h \
@@ -10040,8 +10068,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -10054,9 +10080,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -10101,11 +10124,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -10588,6 +10606,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -11118,6 +11137,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -11765,6 +11785,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -12377,12 +12398,11 @@ realclean:
 
 .obj/Exception.o .obj/Exception.so .shobj/Exception.o .shobj/Exception.so: Exception.cpp Exception.h \
   $(ACE_ROOT)/ace/pre.h \
-  TAO_Export.h \
+  corbafwd.h \
+  $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  Basic_Types.h \
-  $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
@@ -12405,12 +12425,22 @@ realclean:
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
+  orbconf.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  TAO_Export.h \
+  Basic_Types.h \
+  OBV_Constants.h \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
+  corbafwd.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/iosfwd.h \
-  $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
   Exception.i \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -12422,9 +12452,6 @@ realclean:
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
@@ -12432,8 +12459,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_strings.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
-  $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
   $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
@@ -12489,7 +12514,6 @@ realclean:
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(ACE_ROOT)/ace/Malloc_Base.h \
-  orbconf.h \
   Exception.h \
   Pseudo_VarOut_T.h \
   Pseudo_VarOut_T.inl \
@@ -12499,9 +12523,6 @@ realclean:
   Objref_VarOut_T.inl \
   Objref_VarOut_T.cpp \
   Environment.h \
-  corbafwd.h \
-  OBV_Constants.h \
-  corbafwd.i \
   Environment.i \
   Object_Argument_T.h \
   Argument.h \
@@ -12706,7 +12727,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -13100,6 +13122,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -13157,7 +13180,13 @@ realclean:
   Incoming_Message_Queue.inl \
   Transport.inl \
   Invocation.i \
-  PortableInterceptor.h
+  PortableInterceptor.h \
+  RequestInfo_Util.h \
+  ClientRequestInfo_i.h \
+  Invocation_Utils.h \
+  ClientRequestInfo_i.inl \
+  ClientInterceptorAdapter.h \
+  ClientInterceptorAdapter.inl
 
 .obj/Environment.o .obj/Environment.so .shobj/Environment.o .shobj/Environment.so: Environment.cpp \
   Environment.h \
@@ -13507,6 +13536,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -13881,6 +13911,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -14563,6 +14594,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -14631,6 +14663,7 @@ realclean:
   $(ACE_ROOT)/ace/OS_Memory.inl \
   corbafwd.i \
   Exception.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -14638,7 +14671,6 @@ realclean:
   Exception.i \
   ServicesC.h \
   OctetSeqC.h \
-  corbafwd.h \
   Seq_Var_T.h \
   Seq_Var_T.inl \
   Seq_Var_T.cpp \
@@ -14948,6 +14980,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -14985,7 +15018,8 @@ realclean:
   Profile.i default_ports.h ORBInitInfo.h PortableInterceptorC.h \
   LocalObject.h StringSeqC.h ORBInitInfo.inl ORBInitializer_Registry.h \
   CodecFactory_ORBInitializer.h TypeCodeFactory_Adapter.h \
-  Valuetype_Adapter.h Object_KeyC.h \
+  Valuetype_Adapter.h PICurrent_ORBInitializer.h PICurrent.h \
+  Object_KeyC.h \
   $(ACE_ROOT)/ace/Dynamic_Service.h \
   $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
   $(ACE_ROOT)/ace/Dynamic_Service.i \
@@ -15422,6 +15456,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -15798,6 +15833,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -15855,7 +15891,13 @@ realclean:
   Incoming_Message_Queue.inl \
   Transport.inl \
   Invocation.i \
-  PortableInterceptor.h
+  PortableInterceptor.h \
+  RequestInfo_Util.h \
+  ClientRequestInfo_i.h \
+  Invocation_Utils.h \
+  ClientRequestInfo_i.inl \
+  ClientInterceptorAdapter.h \
+  ClientInterceptorAdapter.inl
 
 .obj/Policy_Validator.o .obj/Policy_Validator.so .shobj/Policy_Validator.o .shobj/Policy_Validator.so: Policy_Validator.cpp Policy_Validator.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -16187,7 +16229,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -16286,7 +16329,10 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  corbafwd.i
+  corbafwd.i \
+  Pseudo_VarOut_T.h \
+  Pseudo_VarOut_T.inl \
+  Pseudo_VarOut_T.cpp
 
 .obj/Object_Proxy_Broker.o .obj/Object_Proxy_Broker.so .shobj/Object_Proxy_Broker.o .shobj/Object_Proxy_Broker.so: Object_Proxy_Broker.cpp \
   Object_Proxy_Broker.h \
@@ -16777,6 +16823,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -17190,6 +17237,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -17248,6 +17296,12 @@ realclean:
   Transport.inl \
   Invocation.i \
   PortableInterceptor.h \
+  RequestInfo_Util.h \
+  ClientRequestInfo_i.h \
+  Invocation_Utils.h \
+  ClientRequestInfo_i.inl \
+  ClientInterceptorAdapter.h \
+  ClientInterceptorAdapter.inl \
   IFR_Client_Adapter.h \
   $(ACE_ROOT)/ace/Dynamic_Service.h \
   $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
@@ -17607,6 +17661,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -17663,7 +17718,8 @@ realclean:
   Pluggable_Messaging_Utils.i \
   Incoming_Message_Queue.inl \
   Transport.inl \
-  Invocation.i
+  Invocation.i \
+  RequestInfo_Util.h
 
 .obj/Principal.o .obj/Principal.so .shobj/Principal.o .shobj/Principal.so: Principal.cpp \
   Principal.h \
@@ -18679,6 +18735,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -18856,10 +18913,13 @@ realclean:
   $(ACE_ROOT)/ace/Malloc_Base.h \
   orbconf.h \
   Exception.h \
-  TAO_Export.h \
-  Basic_Types.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
+  TAO_Export.h \
+  Basic_Types.h \
+  OBV_Constants.h \
+  corbafwd.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -18872,9 +18932,6 @@ realclean:
   Objref_VarOut_T.inl \
   Objref_VarOut_T.cpp \
   Environment.h \
-  corbafwd.h \
-  OBV_Constants.h \
-  corbafwd.i \
   Environment.i \
   Object_Argument_T.h \
   Argument.h \
@@ -19345,6 +19402,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -19377,6 +19435,16 @@ realclean:
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Export.h \
@@ -19384,8 +19452,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -19398,9 +19464,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -19445,11 +19508,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -19829,6 +19887,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -19886,7 +19945,13 @@ realclean:
   Incoming_Message_Queue.inl \
   Transport.inl \
   Invocation.i \
-  PortableInterceptor.h
+  PortableInterceptor.h \
+  RequestInfo_Util.h \
+  ClientRequestInfo_i.h \
+  Invocation_Utils.h \
+  ClientRequestInfo_i.inl \
+  ClientInterceptorAdapter.h \
+  ClientInterceptorAdapter.inl
 
 .obj/Protocols_Hooks.o .obj/Protocols_Hooks.so .shobj/Protocols_Hooks.o .shobj/Protocols_Hooks.so: Protocols_Hooks.cpp Protocols_Hooks.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -20900,6 +20965,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -21185,28 +21251,58 @@ realclean:
   IOP_IORC.i \
   Object.i \
   Invocation_Utils.h \
-  Stub.h \
-  MProfile.h \
-  PolicyC.h \
-  CurrentC.h \
-  Any_Impl_T.h \
+  ClientRequestInfo_i.h \
+  PortableInterceptorC.h \
+  PI_ForwardC.h \
+  StringSeqC.h \
+  StringSeqC.i \
+  PI_ForwardC.i \
+  DynamicC.h \
+  Any_Dual_Impl_T.h \
   Any.h \
   Var_Size_Argument_T.h \
   Var_Size_Argument_T.inl \
   Var_Size_Argument_T.cpp \
   Any.i \
-  Any_Impl_T.inl \
-  Any_Impl_T.cpp \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  DynamicC.i \
+  Messaging_SyncScopeC.h \
+  Messaging_SyncScopeC.i \
+  IOPC.h \
+  IOP_CodecC.h \
+  Any_Impl_T.h \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  IOP_CodecC.i \
+  IOPC.i \
+  PolicyC.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
   PolicyC.i \
+  PortableInterceptorC.i \
+  PICurrent.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  LocalObject.h \
+  LocalObject.i \
+  PICurrent.inl \
+  ClientRequestInfo_i.inl \
+  ClientRequestInterceptor_Adapter.h \
+  Interceptor_List.h \
+  Interceptor_List.inl \
+  ClientRequestInterceptor_Adapter.inl \
+  Stub.h \
+  MProfile.h \
   MProfile.i \
   ORB.h \
   ServicesC.h \
@@ -21219,8 +21315,6 @@ realclean:
   Policy_Manager.h \
   Policy_Set.h \
   Policy_Set.i \
-  LocalObject.h \
-  LocalObject.i \
   Policy_Manager.i \
   Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -21262,23 +21356,6 @@ realclean:
   Adapter.h \
   Adapter.i \
   PolicyFactory_Registry.h \
-  PortableInterceptorC.h \
-  PI_ForwardC.h \
-  StringSeqC.h \
-  StringSeqC.i \
-  PI_ForwardC.i \
-  DynamicC.h \
-  Any_Dual_Impl_T.h \
-  Any_Dual_Impl_T.inl \
-  Any_Dual_Impl_T.cpp \
-  DynamicC.i \
-  Messaging_SyncScopeC.h \
-  Messaging_SyncScopeC.i \
-  IOPC.h \
-  IOP_CodecC.h \
-  IOP_CodecC.i \
-  IOPC.i \
-  PortableInterceptorC.i \
   $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -21289,18 +21366,12 @@ realclean:
   Fault_Tolerance_Service.h \
   Fault_Tolerance_Service.i \
   Cleanup_Func_Registry.h \
-  $(ACE_ROOT)/ace/Array_Base.h \
-  $(ACE_ROOT)/ace/Array_Base.inl \
-  $(ACE_ROOT)/ace/Array_Base.cpp \
   Cleanup_Func_Registry.inl \
   Object_Ref_Table.h \
   ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h \
-  Interceptor_List.inl \
-  PICurrent.h \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -21328,7 +21399,8 @@ realclean:
   Stub.i \
   operation_details.h corbafwd.h Service_Context.h \
   Service_Context.inl \
-  target_specification.h target_specification.i operation_details.i
+  target_specification.h target_specification.i operation_details.i \
+  RequestInfo_Util.h DynamicC.h
 
 .obj/Invocation_Adapter.o .obj/Invocation_Adapter.so .shobj/Invocation_Adapter.o .shobj/Invocation_Adapter.so: Invocation_Adapter.cpp Invocation_Adapter.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -21340,6 +21412,7 @@ realclean:
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/OS_Export.h \
+  Invocation_Utils.h \
   Object.h \
   Policy_ForwardC.h \
   Sequence.h \
@@ -21686,6 +21759,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -21714,7 +21788,10 @@ realclean:
   ORB_Core.h Synch_Invocation.h \
   Remote_Invocation.h \
   Invocation_Base.h \
-  Invocation_Utils.h \
+  ClientRequestInfo_i.h \
+  ClientRequestInfo_i.inl \
+  ClientRequestInterceptor_Adapter.h \
+  ClientRequestInterceptor_Adapter.inl \
   Collocated_Invocation.h Transport.h Exception.h \
   Transport_Descriptor_Interface.h \
   Transport_Descriptor_Interface.inl \
@@ -21735,12 +21812,11 @@ realclean:
   Profile_Transport_Resolver.h \
   $(ACE_ROOT)/ace/pre.h \
   Exception.h \
-  TAO_Export.h \
+  corbafwd.h \
+  $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  Basic_Types.h \
-  $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
@@ -21763,18 +21839,11 @@ realclean:
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
-  $(ACE_ROOT)/ace/CORBA_macros.h \
-  $(ACE_ROOT)/ace/Exception_Macros.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
-  $(ACE_ROOT)/ace/iosfwd.h \
+  orbconf.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/OS_Export.h \
-  Exception.i \
-  Profile.h \
-  Tagged_Components.h \
-  IOPC.h \
-  corbafwd.h \
-  orbconf.h \
+  TAO_Export.h \
+  Basic_Types.h \
   OBV_Constants.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
@@ -21782,6 +21851,14 @@ realclean:
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   corbafwd.i \
+  $(ACE_ROOT)/ace/CORBA_macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  Exception.i \
+  Profile.h \
+  Tagged_Components.h \
+  IOPC.h \
   IOP_IORC.h \
   OctetSeqC.h \
   Seq_Var_T.h \
@@ -22103,6 +22180,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -22374,29 +22452,58 @@ realclean:
   IOP_IORC.i \
   Object.i \
   Invocation_Utils.h \
-  Profile.h \
-  Tagged_Components.h \
-  IOPC.h \
-  IOP_CodecC.h \
-  Any_Impl_T.h \
+  ClientRequestInfo_i.h \
+  PortableInterceptorC.h \
+  PI_ForwardC.h \
+  StringSeqC.h \
+  StringSeqC.i \
+  PI_ForwardC.i \
+  DynamicC.h \
+  Any_Dual_Impl_T.h \
   Any.h \
   Var_Size_Argument_T.h \
   Var_Size_Argument_T.inl \
   Var_Size_Argument_T.cpp \
   Any.i \
-  Any_Impl_T.inl \
-  Any_Impl_T.cpp \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  Any_Dual_Impl_T.h \
-  Any_Dual_Impl_T.inl \
-  Any_Dual_Impl_T.cpp \
+  DynamicC.i \
+  Messaging_SyncScopeC.h \
+  Messaging_SyncScopeC.i \
+  IOPC.h \
+  IOP_CodecC.h \
+  Any_Impl_T.h \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
+  PolicyC.h \
+  CurrentC.h \
+  CurrentC.i \
+  Remote_Object_Proxy_Impl.h \
+  Object_Proxy_Impl.h \
+  PolicyC.i \
+  PortableInterceptorC.i \
+  PICurrent.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  LocalObject.h \
+  LocalObject.i \
+  PICurrent.inl \
+  ClientRequestInfo_i.inl \
+  ClientRequestInterceptor_Adapter.h \
+  Interceptor_List.h \
+  Interceptor_List.inl \
+  ClientRequestInterceptor_Adapter.inl \
+  Profile.h \
+  Tagged_Components.h \
   CONV_FRAMEC.h \
   CONV_FRAMEC.i \
   Tagged_Components.i \
@@ -22407,12 +22514,6 @@ realclean:
   Profile.i Profile_Transport_Resolver.h target_specification.h \
   target_specification.i IOP_IORC.h Stub.h \
   MProfile.h \
-  PolicyC.h \
-  CurrentC.h \
-  CurrentC.i \
-  Remote_Object_Proxy_Impl.h \
-  Object_Proxy_Impl.h \
-  PolicyC.i \
   MProfile.i \
   ORB.h \
   ServicesC.h \
@@ -22425,8 +22526,6 @@ realclean:
   Policy_Manager.h \
   Policy_Set.h \
   Policy_Set.i \
-  LocalObject.h \
-  LocalObject.i \
   Policy_Manager.i \
   Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -22466,16 +22565,6 @@ realclean:
   Adapter.h \
   Adapter.i \
   PolicyFactory_Registry.h \
-  PortableInterceptorC.h \
-  PI_ForwardC.h \
-  StringSeqC.h \
-  StringSeqC.i \
-  PI_ForwardC.i \
-  DynamicC.h \
-  DynamicC.i \
-  Messaging_SyncScopeC.h \
-  Messaging_SyncScopeC.i \
-  PortableInterceptorC.i \
   $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -22486,18 +22575,12 @@ realclean:
   Fault_Tolerance_Service.h \
   Fault_Tolerance_Service.i \
   Cleanup_Func_Registry.h \
-  $(ACE_ROOT)/ace/Array_Base.h \
-  $(ACE_ROOT)/ace/Array_Base.inl \
-  $(ACE_ROOT)/ace/Array_Base.cpp \
   Cleanup_Func_Registry.inl \
   Object_Ref_Table.h \
   ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h \
-  Interceptor_List.inl \
-  PICurrent.h \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -22778,29 +22861,58 @@ realclean:
   IOP_IORC.i \
   Object.i \
   Invocation_Utils.h \
-  Collocation_Proxy_Broker.h operation_details.h corbafwd.h \
-  Service_Context.h \
-  IOPC.h \
-  IOP_CodecC.h \
-  Any_Impl_T.h \
+  ClientRequestInfo_i.h \
+  PortableInterceptorC.h \
+  PI_ForwardC.h \
+  StringSeqC.h \
+  StringSeqC.i \
+  PI_ForwardC.i \
+  DynamicC.h \
+  Any_Dual_Impl_T.h \
   Any.h \
   Var_Size_Argument_T.h \
   Var_Size_Argument_T.inl \
   Var_Size_Argument_T.cpp \
   Any.i \
-  Any_Impl_T.inl \
-  Any_Impl_T.cpp \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  Any_Dual_Impl_T.h \
-  Any_Dual_Impl_T.inl \
-  Any_Dual_Impl_T.cpp \
+  DynamicC.i \
+  Messaging_SyncScopeC.h \
+  Messaging_SyncScopeC.i \
+  IOPC.h \
+  IOP_CodecC.h \
+  Any_Impl_T.h \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
+  PolicyC.h \
+  CurrentC.h \
+  CurrentC.i \
+  Remote_Object_Proxy_Impl.h \
+  Object_Proxy_Impl.h \
+  PolicyC.i \
+  PortableInterceptorC.i \
+  PICurrent.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  LocalObject.h \
+  LocalObject.i \
+  PICurrent.inl \
+  ClientRequestInfo_i.inl \
+  ClientRequestInterceptor_Adapter.h \
+  Interceptor_List.h \
+  Interceptor_List.inl \
+  ClientRequestInterceptor_Adapter.inl \
+  Collocation_Proxy_Broker.h operation_details.h corbafwd.h \
+  Service_Context.h \
   Service_Context.inl \
   target_specification.h target_specification.i operation_details.i
 
@@ -23042,29 +23154,58 @@ realclean:
   IOP_IORC.i \
   Object.i \
   Invocation_Utils.h \
-  Profile_Transport_Resolver.h Profile.h \
-  Tagged_Components.h \
-  IOPC.h \
-  IOP_CodecC.h \
-  Any_Impl_T.h \
+  ClientRequestInfo_i.h \
+  PortableInterceptorC.h \
+  PI_ForwardC.h \
+  StringSeqC.h \
+  StringSeqC.i \
+  PI_ForwardC.i \
+  DynamicC.h \
+  Any_Dual_Impl_T.h \
   Any.h \
   Var_Size_Argument_T.h \
   Var_Size_Argument_T.inl \
   Var_Size_Argument_T.cpp \
   Any.i \
-  Any_Impl_T.inl \
-  Any_Impl_T.cpp \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  Any_Dual_Impl_T.h \
-  Any_Dual_Impl_T.inl \
-  Any_Dual_Impl_T.cpp \
+  DynamicC.i \
+  Messaging_SyncScopeC.h \
+  Messaging_SyncScopeC.i \
+  IOPC.h \
+  IOP_CodecC.h \
+  Any_Impl_T.h \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
+  PolicyC.h \
+  CurrentC.h \
+  CurrentC.i \
+  Remote_Object_Proxy_Impl.h \
+  Object_Proxy_Impl.h \
+  PolicyC.i \
+  PortableInterceptorC.i \
+  PICurrent.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  LocalObject.h \
+  LocalObject.i \
+  PICurrent.inl \
+  ClientRequestInfo_i.inl \
+  ClientRequestInterceptor_Adapter.h \
+  Interceptor_List.h \
+  Interceptor_List.inl \
+  ClientRequestInterceptor_Adapter.inl \
+  Profile_Transport_Resolver.h Profile.h \
+  Tagged_Components.h \
   CONV_FRAMEC.h \
   CONV_FRAMEC.i \
   Tagged_Components.i \
@@ -23100,12 +23241,6 @@ realclean:
   Pluggable_Messaging_Utils.i \
   Incoming_Message_Queue.inl Transport.inl Stub.h \
   MProfile.h \
-  PolicyC.h \
-  CurrentC.h \
-  CurrentC.i \
-  Remote_Object_Proxy_Impl.h \
-  Object_Proxy_Impl.h \
-  PolicyC.i \
   MProfile.i \
   ORB.h \
   ServicesC.h \
@@ -23118,8 +23253,6 @@ realclean:
   Policy_Manager.h \
   Policy_Set.h \
   Policy_Set.i \
-  LocalObject.h \
-  LocalObject.i \
   Policy_Manager.i \
   Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -23152,16 +23285,6 @@ realclean:
   Adapter.h \
   Adapter.i \
   PolicyFactory_Registry.h \
-  PortableInterceptorC.h \
-  PI_ForwardC.h \
-  StringSeqC.h \
-  StringSeqC.i \
-  PI_ForwardC.i \
-  DynamicC.h \
-  DynamicC.i \
-  Messaging_SyncScopeC.h \
-  Messaging_SyncScopeC.i \
-  PortableInterceptorC.i \
   $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -23172,18 +23295,12 @@ realclean:
   Fault_Tolerance_Service.h \
   Fault_Tolerance_Service.i \
   Cleanup_Func_Registry.h \
-  $(ACE_ROOT)/ace/Array_Base.h \
-  $(ACE_ROOT)/ace/Array_Base.inl \
-  $(ACE_ROOT)/ace/Array_Base.cpp \
   Cleanup_Func_Registry.inl \
   Object_Ref_Table.h \
   ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h \
-  Interceptor_List.inl \
-  PICurrent.h \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -23606,6 +23723,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -24033,6 +24151,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -24421,6 +24540,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -24446,7 +24566,8 @@ realclean:
   ORB_Core_Auto_Ptr.h \
   ORB_Core_Auto_Ptr.inl \
   Stub.i \
-  Argument.h
+  Argument.h \
+  $(ACE_ROOT)/ace/streams.h
 
 .obj/ClientRequestInfo.o .obj/ClientRequestInfo.so .shobj/ClientRequestInfo.o .shobj/ClientRequestInfo.so: ClientRequestInfo.cpp ClientRequestInfo.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -24476,45 +24597,14 @@ realclean:
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/OS_Export.h \
-  ClientRequestInfo_i.h
-
-.obj/ClientRequestInfo_i.o .obj/ClientRequestInfo_i.so .shobj/ClientRequestInfo_i.o .shobj/ClientRequestInfo_i.so: ClientRequestInfo_i.cpp ClientRequestInfo_i.h \
-  $(ACE_ROOT)/ace/pre.h \
-  orbconf.h \
-  $(ACE_ROOT)/ace/Basic_Types.h \
-  $(ACE_ROOT)/ace/post.h \
-  $(ACE_ROOT)/ace/ace_wchar.h \
-  $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/os_include/os_limits.h \
-  $(ACE_ROOT)/ace/os_include/os_unistd.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
-  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
-  $(ACE_ROOT)/ace/os_include/os_stdint.h \
-  $(ACE_ROOT)/ace/os_include/os_stdio.h \
-  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
-  $(ACE_ROOT)/ace/os_include/os_float.h \
-  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/Basic_Types.i \
-  $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  Invocation_Base.h \
-  Object.h \
-  Policy_ForwardC.h \
-  Sequence.h \
+  PortableInterceptorC.h \
+  PI_ForwardC.h \
+  TAO_Export.h \
+  OctetSeqC.h \
   corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
-  TAO_Export.h \
   Basic_Types.h \
   OBV_Constants.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
@@ -24523,6 +24613,13 @@ realclean:
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   corbafwd.i \
+  Seq_Var_T.h \
+  Seq_Var_T.inl \
+  Seq_Var_T.cpp \
+  Seq_Out_T.h \
+  Seq_Out_T.inl \
+  Seq_Out_T.cpp \
+  Sequence.h \
   Managed_Types.h \
   CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
@@ -24640,16 +24737,19 @@ realclean:
   Array_VarOut_T.h \
   Array_VarOut_T.inl \
   Array_VarOut_T.cpp \
-  CDR.h \
+  OctetSeqC.i \
+  StringSeqC.h \
+  StringSeqC.i \
+  PI_ForwardC.i \
+  DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
+  Object.h \
+  Policy_ForwardC.h \
+  CDR.h \
   CDR.i \
-  Seq_Var_T.h \
-  Seq_Var_T.inl \
-  Seq_Var_T.cpp \
-  Seq_Out_T.h \
-  Seq_Out_T.inl \
-  Seq_Out_T.cpp \
   Policy_ForwardC.i \
   Object_KeyC.h \
   Object_KeyC.i \
@@ -24707,36 +24807,340 @@ realclean:
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Synch_T.cpp \
   IOP_IORC.h \
-  OctetSeqC.h \
-  OctetSeqC.i \
   VarOut_T.h \
   VarOut_T.inl \
   VarOut_T.cpp \
   IOP_IORC.i \
   Object.i \
-  Invocation_Utils.h \
-  Stub.h \
-  MProfile.h \
-  PolicyC.h \
-  CurrentC.h \
-  Any_Impl_T.h \
-  Any.h \
   Var_Size_Argument_T.h \
   Var_Size_Argument_T.inl \
   Var_Size_Argument_T.cpp \
   Any.i \
-  Any_Impl_T.inl \
-  Any_Impl_T.cpp \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  DynamicC.i \
+  Messaging_SyncScopeC.h \
+  Messaging_SyncScopeC.i \
+  IOPC.h \
+  IOP_CodecC.h \
+  Any_Impl_T.h \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  IOP_CodecC.i \
+  IOPC.i \
+  PolicyC.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
   PolicyC.i \
+  PortableInterceptorC.i \
+  LocalObject.h \
+  LocalObject.i \
+  ClientRequestInfo.inl ClientRequestInfo_i.h \
+  PICurrent.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  PICurrent.inl \
+  Invocation_Utils.h \
+  ClientRequestInfo_i.inl \
+  $(ACE_ROOT)/ace/streams.h
+
+.obj/ClientRequestInfo_i.o .obj/ClientRequestInfo_i.so .shobj/ClientRequestInfo_i.o .shobj/ClientRequestInfo_i.so: ClientRequestInfo_i.cpp ClientRequestInfo_i.h \
+  $(ACE_ROOT)/ace/pre.h \
+  orbconf.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/post.h \
+  $(ACE_ROOT)/ace/ace_wchar.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/os_limits.h \
+  $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
+  $(ACE_ROOT)/ace/os_include/os_stdint.h \
+  $(ACE_ROOT)/ace/os_include/os_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  PortableInterceptorC.h \
+  PI_ForwardC.h \
+  TAO_Export.h \
+  OctetSeqC.h \
+  corbafwd.h \
+  $(ACE_ROOT)/ace/CDR_Base.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/CDR_Base.inl \
+  Basic_Types.h \
+  OBV_Constants.h \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
+  corbafwd.i \
+  Seq_Var_T.h \
+  Seq_Var_T.inl \
+  Seq_Var_T.cpp \
+  Seq_Out_T.h \
+  Seq_Out_T.inl \
+  Seq_Out_T.cpp \
+  Sequence.h \
+  Managed_Types.h \
+  CORBA_String.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  CORBA_String.inl \
+  Managed_Types.i \
+  $(ACE_ROOT)/ace/CORBA_macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/os_include/os_dirent.h \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_strings.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/os_include/os_netdb.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/os_include/os_assert.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_tcp.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_shm.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_termios.h \
+  $(ACE_ROOT)/ace/os_include/os_aio.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_un.h \
+  $(ACE_ROOT)/ace/os_include/os_poll.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_msg.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/os_include/os_syslog.h \
+  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Message_Block.i \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  Sequence.i \
+  Sequence_T.h \
+  Objref_VarOut_T.h \
+  varbase.h \
+  Objref_VarOut_T.inl \
+  Objref_VarOut_T.cpp \
+  Environment.h \
+  Pseudo_VarOut_T.h \
+  Pseudo_VarOut_T.inl \
+  Pseudo_VarOut_T.cpp \
+  Environment.i \
+  Sequence_T.i \
+  Sequence_T.cpp \
+  Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/Flag_Manip.h \
+  $(ACE_ROOT)/ace/Flag_Manip.i \
+  $(ACE_ROOT)/ace/Handle_Ops.h \
+  $(ACE_ROOT)/ace/Handle_Ops.i \
+  $(ACE_ROOT)/ace/Lib_Find.h \
+  $(ACE_ROOT)/ace/Lib_Find.i \
+  $(ACE_ROOT)/ace/Init_ACE.h \
+  $(ACE_ROOT)/ace/Init_ACE.i \
+  $(ACE_ROOT)/ace/Sock_Connect.h \
+  $(ACE_ROOT)/ace/Sock_Connect.i \
+  $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Guard_T.h \
+  $(ACE_ROOT)/ace/Lock.h \
+  $(ACE_ROOT)/ace/Lock.inl \
+  $(ACE_ROOT)/ace/Guard_T.inl \
+  $(ACE_ROOT)/ace/Guard_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  Exception.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  Exception.i \
+  Object_Argument_T.h \
+  Argument.h \
+  Object_Argument_T.inl \
+  Object_Argument_T.cpp \
+  Arg_Traits_T.h \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(ACE_ROOT)/ace/Synch_Traits.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.inl \
+  Typecode.i \
+  Array_VarOut_T.h \
+  Array_VarOut_T.inl \
+  Array_VarOut_T.cpp \
+  OctetSeqC.i \
+  StringSeqC.h \
+  StringSeqC.i \
+  PI_ForwardC.i \
+  DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  Object.h \
+  Policy_ForwardC.h \
+  CDR.h \
+  CDR.i \
+  Policy_ForwardC.i \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Auto_Event.h \
+  $(ACE_ROOT)/ace/Event.h \
+  $(ACE_ROOT)/ace/Event.inl \
+  $(ACE_ROOT)/ace/Auto_Event.inl \
+  $(ACE_ROOT)/ace/Barrier.h \
+  $(ACE_ROOT)/ace/Condition_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Condition_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Barrier.inl \
+  $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Manual_Event.h \
+  $(ACE_ROOT)/ace/Manual_Event.inl \
+  $(ACE_ROOT)/ace/Mutex.h \
+  $(ACE_ROOT)/ace/Mutex.inl \
+  $(ACE_ROOT)/ace/Null_Barrier.h \
+  $(ACE_ROOT)/ace/Null_Condition.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
+  $(ACE_ROOT)/ace/Null_Semaphore.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
+  $(ACE_ROOT)/ace/RW_Mutex.inl \
+  $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Semaphore.h \
+  $(ACE_ROOT)/ace/Semaphore.inl \
+  $(ACE_ROOT)/ace/Thread_Semaphore.h \
+  $(ACE_ROOT)/ace/Thread_Semaphore.inl \
+  $(ACE_ROOT)/ace/TSS_Adapter.h \
+  $(ACE_ROOT)/ace/TSS_Adapter.inl \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Lock_Adapter_T.h \
+  $(ACE_ROOT)/ace/Lock_Adapter_T.inl \
+  $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
+  $(ACE_ROOT)/ace/Reverse_Lock_T.h \
+  $(ACE_ROOT)/ace/Reverse_Lock_T.inl \
+  $(ACE_ROOT)/ace/Reverse_Lock_T.cpp \
+  $(ACE_ROOT)/ace/TSS_T.h \
+  $(ACE_ROOT)/ace/TSS_T.inl \
+  $(ACE_ROOT)/ace/TSS_T.cpp \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Condition_T.h \
+  $(ACE_ROOT)/ace/Condition_T.inl \
+  $(ACE_ROOT)/ace/Condition_T.cpp \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  IOP_IORC.h \
+  VarOut_T.h \
+  VarOut_T.inl \
+  VarOut_T.cpp \
+  IOP_IORC.i \
+  Object.i \
+  Var_Size_Argument_T.h \
+  Var_Size_Argument_T.inl \
+  Var_Size_Argument_T.cpp \
+  Any.i \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
+  Marshal.h \
+  Marshal.i \
+  debug.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  DynamicC.i \
+  Messaging_SyncScopeC.h \
+  Messaging_SyncScopeC.i \
+  IOPC.h \
+  IOP_CodecC.h \
+  Any_Impl_T.h \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  IOP_CodecC.i \
+  IOPC.i \
+  PolicyC.h \
+  CurrentC.h \
+  CurrentC.i \
+  Remote_Object_Proxy_Impl.h \
+  Object_Proxy_Impl.h \
+  PolicyC.i \
+  PortableInterceptorC.i \
+  PICurrent.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  LocalObject.h \
+  LocalObject.i \
+  PICurrent.inl \
+  Invocation_Utils.h \
+  ClientRequestInfo_i.inl Invocation_Base.h \
+  ClientRequestInfo_i.h \
+  ClientRequestInterceptor_Adapter.h \
+  Interceptor_List.h \
+  Interceptor_List.inl \
+  ClientRequestInterceptor_Adapter.inl \
+  Stub.h \
+  MProfile.h \
   MProfile.i \
   ORB.h \
   ServicesC.h \
@@ -24749,8 +25153,6 @@ realclean:
   Policy_Manager.h \
   Policy_Set.h \
   Policy_Set.i \
-  LocalObject.h \
-  LocalObject.i \
   Policy_Manager.i \
   Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -24792,23 +25194,6 @@ realclean:
   Adapter.h \
   Adapter.i \
   PolicyFactory_Registry.h \
-  PortableInterceptorC.h \
-  PI_ForwardC.h \
-  StringSeqC.h \
-  StringSeqC.i \
-  PI_ForwardC.i \
-  DynamicC.h \
-  Any_Dual_Impl_T.h \
-  Any_Dual_Impl_T.inl \
-  Any_Dual_Impl_T.cpp \
-  DynamicC.i \
-  Messaging_SyncScopeC.h \
-  Messaging_SyncScopeC.i \
-  IOPC.h \
-  IOP_CodecC.h \
-  IOP_CodecC.i \
-  IOPC.i \
-  PortableInterceptorC.i \
   $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -24819,18 +25204,12 @@ realclean:
   Fault_Tolerance_Service.h \
   Fault_Tolerance_Service.i \
   Cleanup_Func_Registry.h \
-  $(ACE_ROOT)/ace/Array_Base.h \
-  $(ACE_ROOT)/ace/Array_Base.inl \
-  $(ACE_ROOT)/ace/Array_Base.cpp \
   Cleanup_Func_Registry.inl \
   Object_Ref_Table.h \
   ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h \
-  Interceptor_List.inl \
-  PICurrent.h \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -25154,14 +25533,731 @@ realclean:
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h
+  $(ACE_ROOT)/ace/OS_Export.h \
+  Interceptor_List.h corbafwd.h \
+  $(ACE_ROOT)/ace/CDR_Base.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/CDR_Base.inl \
+  orbconf.h \
+  TAO_Export.h \
+  Basic_Types.h \
+  OBV_Constants.h \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
+  corbafwd.i \
+  PortableInterceptorC.h PI_ForwardC.h OctetSeqC.h \
+  corbafwd.h \
+  Seq_Var_T.h \
+  Seq_Var_T.inl \
+  Seq_Var_T.cpp \
+  Seq_Out_T.h \
+  Seq_Out_T.inl \
+  Seq_Out_T.cpp \
+  Sequence.h \
+  Managed_Types.h \
+  CORBA_String.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  CORBA_String.inl \
+  Managed_Types.i \
+  $(ACE_ROOT)/ace/CORBA_macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/os_include/os_dirent.h \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_strings.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/os_include/os_netdb.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/os_include/os_assert.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_tcp.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_shm.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_termios.h \
+  $(ACE_ROOT)/ace/os_include/os_aio.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_un.h \
+  $(ACE_ROOT)/ace/os_include/os_poll.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_msg.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/os_include/os_syslog.h \
+  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Message_Block.i \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  Sequence.i \
+  Sequence_T.h \
+  Objref_VarOut_T.h \
+  varbase.h \
+  Objref_VarOut_T.inl \
+  Objref_VarOut_T.cpp \
+  Environment.h \
+  Pseudo_VarOut_T.h \
+  Pseudo_VarOut_T.inl \
+  Pseudo_VarOut_T.cpp \
+  Environment.i \
+  Sequence_T.i \
+  Sequence_T.cpp \
+  Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/Flag_Manip.h \
+  $(ACE_ROOT)/ace/Flag_Manip.i \
+  $(ACE_ROOT)/ace/Handle_Ops.h \
+  $(ACE_ROOT)/ace/Handle_Ops.i \
+  $(ACE_ROOT)/ace/Lib_Find.h \
+  $(ACE_ROOT)/ace/Lib_Find.i \
+  $(ACE_ROOT)/ace/Init_ACE.h \
+  $(ACE_ROOT)/ace/Init_ACE.i \
+  $(ACE_ROOT)/ace/Sock_Connect.h \
+  $(ACE_ROOT)/ace/Sock_Connect.i \
+  $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Guard_T.h \
+  $(ACE_ROOT)/ace/Lock.h \
+  $(ACE_ROOT)/ace/Lock.inl \
+  $(ACE_ROOT)/ace/Guard_T.inl \
+  $(ACE_ROOT)/ace/Guard_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  Exception.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  Exception.i \
+  Object_Argument_T.h \
+  Argument.h \
+  Object_Argument_T.inl \
+  Object_Argument_T.cpp \
+  Arg_Traits_T.h \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(ACE_ROOT)/ace/Synch_Traits.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.inl \
+  Typecode.i \
+  Array_VarOut_T.h \
+  Array_VarOut_T.inl \
+  Array_VarOut_T.cpp \
+  OctetSeqC.i StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
+  DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  Object.h \
+  Policy_ForwardC.h \
+  CDR.h \
+  CDR.i \
+  Policy_ForwardC.i \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Auto_Event.h \
+  $(ACE_ROOT)/ace/Event.h \
+  $(ACE_ROOT)/ace/Event.inl \
+  $(ACE_ROOT)/ace/Auto_Event.inl \
+  $(ACE_ROOT)/ace/Barrier.h \
+  $(ACE_ROOT)/ace/Condition_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Condition_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Barrier.inl \
+  $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Manual_Event.h \
+  $(ACE_ROOT)/ace/Manual_Event.inl \
+  $(ACE_ROOT)/ace/Mutex.h \
+  $(ACE_ROOT)/ace/Mutex.inl \
+  $(ACE_ROOT)/ace/Null_Barrier.h \
+  $(ACE_ROOT)/ace/Null_Condition.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
+  $(ACE_ROOT)/ace/Null_Semaphore.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
+  $(ACE_ROOT)/ace/RW_Mutex.inl \
+  $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Semaphore.h \
+  $(ACE_ROOT)/ace/Semaphore.inl \
+  $(ACE_ROOT)/ace/Thread_Semaphore.h \
+  $(ACE_ROOT)/ace/Thread_Semaphore.inl \
+  $(ACE_ROOT)/ace/TSS_Adapter.h \
+  $(ACE_ROOT)/ace/TSS_Adapter.inl \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Lock_Adapter_T.h \
+  $(ACE_ROOT)/ace/Lock_Adapter_T.inl \
+  $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
+  $(ACE_ROOT)/ace/Reverse_Lock_T.h \
+  $(ACE_ROOT)/ace/Reverse_Lock_T.inl \
+  $(ACE_ROOT)/ace/Reverse_Lock_T.cpp \
+  $(ACE_ROOT)/ace/TSS_T.h \
+  $(ACE_ROOT)/ace/TSS_T.inl \
+  $(ACE_ROOT)/ace/TSS_T.cpp \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Condition_T.h \
+  $(ACE_ROOT)/ace/Condition_T.inl \
+  $(ACE_ROOT)/ace/Condition_T.cpp \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  IOP_IORC.h \
+  OctetSeqC.h \
+  VarOut_T.h \
+  VarOut_T.inl \
+  VarOut_T.cpp \
+  IOP_IORC.i \
+  Object.i \
+  Var_Size_Argument_T.h \
+  Var_Size_Argument_T.inl \
+  Var_Size_Argument_T.cpp \
+  Any.i \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
+  Marshal.h \
+  Marshal.i \
+  debug.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h \
+  IOP_CodecC.h \
+  Any_Impl_T.h \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  IOP_CodecC.i \
+  IOPC.i PolicyC.h CurrentC.h CurrentC.i Policy_ForwardC.h \
+  Remote_Object_Proxy_Impl.h \
+  Object_Proxy_Impl.h \
+  PolicyC.i PortableInterceptorC.i \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  Interceptor_List.inl ClientInterceptorAdapter.inl ClientRequestInfo.h \
+  PortableInterceptorC.h \
+  LocalObject.h \
+  LocalObject.i \
+  ClientRequestInfo.inl ClientRequestInfo_i.h \
+  StringSeqC.h \
+  PICurrent.h \
+  PICurrent.inl \
+  Invocation_Utils.h \
+  ClientRequestInfo_i.inl Invocation.h CDR.h Synch_Reply_Dispatcher.h \
+  Reply_Dispatcher.h \
+  Reply_Dispatcher.i \
+  LF_Invocation_Event.h \
+  LF_Event.h \
+  LF_Event.inl \
+  LF_Invocation_Event.inl \
+  GIOP_Message_Version.h \
+  GIOP_Message_Version.inl \
+  operation_details.h Service_Context.h \
+  IOPC.h \
+  Service_Context.inl \
+  target_specification.h target_specification.i operation_details.i \
+  Transport.h Exception.h Transport_Descriptor_Interface.h \
+  Transport_Descriptor_Interface.inl \
+  Transport_Cache_Manager.h \
+  Cache_Entries.h \
+  Transport_Descriptor_Interface.h \
+  $(ACE_ROOT)/ace/Recyclable.h \
+  $(ACE_ROOT)/ace/Recyclable.inl \
+  Cache_Entries.inl \
+  Transport_Cache_Manager.inl \
+  Transport_Timer.h TAO_Export.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.i \
+  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
+  $(ACE_ROOT)/ace/Event_Handler.i \
+  Incoming_Message_Queue.h Pluggable_Messaging_Utils.h \
+  Pluggable_Messaging_Utils.i \
+  Incoming_Message_Queue.inl Transport.inl Invocation.i ORB_Core.h ORB.h \
+  ServicesC.h ServicesC.i CORBA_String.h ObjectIdListC.h ObjectIdListC.i \
+  objectid.h \
+  ORB.i \
+  Environment.h Policy_Manager.h \
+  Policy_Set.h \
+  PolicyC.h \
+  Policy_Set.i \
+  Policy_Manager.i \
+  Resource_Factory.h \
+  $(ACE_ROOT)/ace/Service_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/DLL.h \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  $(ACE_ROOT)/ace/Unbounded_Set.h \
+  $(ACE_ROOT)/ace/Unbounded_Set.inl \
+  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+  $(ACE_ROOT)/ace/SString.h \
+  $(ACE_ROOT)/ace/String_Base.h \
+  $(ACE_ROOT)/ace/String_Base_Const.h \
+  $(ACE_ROOT)/ace/String_Base.i \
+  $(ACE_ROOT)/ace/String_Base.cpp \
+  $(ACE_ROOT)/ace/SString.i \
+  CONV_FRAMEC.h \
+  CONV_FRAMEC.i \
+  params.h \
+  params.i \
+  TAO_Singleton_Manager.h \
+  TAO_Singleton_Manager.inl \
+  TAO_Singleton.h \
+  TAO_Singleton.inl \
+  TAO_Singleton.cpp \
+  TAO_Singleton.h \
+  $(ACE_ROOT)/ace/Object_Manager.h \
+  $(ACE_ROOT)/ace/Object_Manager.i \
+  $(ACE_ROOT)/ace/Managed_Object.h \
+  $(ACE_ROOT)/ace/Managed_Object.i \
+  $(ACE_ROOT)/ace/Managed_Object.cpp \
+  TAO_Singleton_Manager.h \
+  Adapter.h Adapter.i PolicyFactory_Registry.h \
+  $(ACE_ROOT)/ace/Map_Manager.h \
+  $(ACE_ROOT)/ace/Map_Manager.i \
+  $(ACE_ROOT)/ace/Map_Manager.cpp \
+  Parser_Registry.h \
+  Parser_Registry.i \
+  Service_Callbacks.h \
+  Service_Callbacks.i \
+  Fault_Tolerance_Service.h \
+  Fault_Tolerance_Service.i \
+  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
+  ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  PICurrent.h \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/Thread_Exit.h \
+  $(ACE_ROOT)/ace/Thread_Control.h \
+  $(ACE_ROOT)/ace/Thread_Control.inl \
+  $(ACE_ROOT)/ace/Containers.h \
+  $(ACE_ROOT)/ace/Containers.i \
+  $(ACE_ROOT)/ace/Containers_T.h \
+  $(ACE_ROOT)/ace/Containers_T.i \
+  $(ACE_ROOT)/ace/Containers_T.cpp \
+  $(ACE_ROOT)/ace/Free_List.h \
+  $(ACE_ROOT)/ace/Free_List.i \
+  $(ACE_ROOT)/ace/Free_List.cpp \
+  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/Singleton.i \
+  $(ACE_ROOT)/ace/Singleton.cpp \
+  $(ACE_ROOT)/ace/Framework_Component.h \
+  $(ACE_ROOT)/ace/Framework_Component.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.h \
+  $(ACE_ROOT)/ace/Framework_Component_T.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
+  $(ACE_ROOT)/ace/Thread_Manager.i \
+  ORB_Core.i
 
 .obj/ClientRequestInterceptor_Adapter.o .obj/ClientRequestInterceptor_Adapter.so .shobj/ClientRequestInterceptor_Adapter.o .shobj/ClientRequestInterceptor_Adapter.so: ClientRequestInterceptor_Adapter.cpp \
   ClientRequestInterceptor_Adapter.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
-  $(ACE_ROOT)/ace/ace_wchar.inl
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  Interceptor_List.h corbafwd.h \
+  $(ACE_ROOT)/ace/CDR_Base.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/os_include/os_limits.h \
+  $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
+  $(ACE_ROOT)/ace/os_include/os_stdint.h \
+  $(ACE_ROOT)/ace/os_include/os_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/CDR_Base.inl \
+  orbconf.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  TAO_Export.h \
+  Basic_Types.h \
+  OBV_Constants.h \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
+  corbafwd.i \
+  PortableInterceptorC.h PI_ForwardC.h OctetSeqC.h \
+  corbafwd.h \
+  Seq_Var_T.h \
+  Seq_Var_T.inl \
+  Seq_Var_T.cpp \
+  Seq_Out_T.h \
+  Seq_Out_T.inl \
+  Seq_Out_T.cpp \
+  Sequence.h \
+  Managed_Types.h \
+  CORBA_String.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  CORBA_String.inl \
+  Managed_Types.i \
+  $(ACE_ROOT)/ace/CORBA_macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/os_include/os_dirent.h \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_strings.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/os_include/os_netdb.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/os_include/os_assert.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_tcp.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_shm.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_termios.h \
+  $(ACE_ROOT)/ace/os_include/os_aio.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_un.h \
+  $(ACE_ROOT)/ace/os_include/os_poll.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_msg.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/os_include/os_syslog.h \
+  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Message_Block.i \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  Sequence.i \
+  Sequence_T.h \
+  Objref_VarOut_T.h \
+  varbase.h \
+  Objref_VarOut_T.inl \
+  Objref_VarOut_T.cpp \
+  Environment.h \
+  Pseudo_VarOut_T.h \
+  Pseudo_VarOut_T.inl \
+  Pseudo_VarOut_T.cpp \
+  Environment.i \
+  Sequence_T.i \
+  Sequence_T.cpp \
+  Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/Flag_Manip.h \
+  $(ACE_ROOT)/ace/Flag_Manip.i \
+  $(ACE_ROOT)/ace/Handle_Ops.h \
+  $(ACE_ROOT)/ace/Handle_Ops.i \
+  $(ACE_ROOT)/ace/Lib_Find.h \
+  $(ACE_ROOT)/ace/Lib_Find.i \
+  $(ACE_ROOT)/ace/Init_ACE.h \
+  $(ACE_ROOT)/ace/Init_ACE.i \
+  $(ACE_ROOT)/ace/Sock_Connect.h \
+  $(ACE_ROOT)/ace/Sock_Connect.i \
+  $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Guard_T.h \
+  $(ACE_ROOT)/ace/Lock.h \
+  $(ACE_ROOT)/ace/Lock.inl \
+  $(ACE_ROOT)/ace/Guard_T.inl \
+  $(ACE_ROOT)/ace/Guard_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  Exception.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  Exception.i \
+  Object_Argument_T.h \
+  Argument.h \
+  Object_Argument_T.inl \
+  Object_Argument_T.cpp \
+  Arg_Traits_T.h \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(ACE_ROOT)/ace/Synch_Traits.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.inl \
+  Typecode.i \
+  Array_VarOut_T.h \
+  Array_VarOut_T.inl \
+  Array_VarOut_T.cpp \
+  OctetSeqC.i StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
+  DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  Object.h \
+  Policy_ForwardC.h \
+  CDR.h \
+  CDR.i \
+  Policy_ForwardC.i \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Auto_Event.h \
+  $(ACE_ROOT)/ace/Event.h \
+  $(ACE_ROOT)/ace/Event.inl \
+  $(ACE_ROOT)/ace/Auto_Event.inl \
+  $(ACE_ROOT)/ace/Barrier.h \
+  $(ACE_ROOT)/ace/Condition_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Condition_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Barrier.inl \
+  $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Manual_Event.h \
+  $(ACE_ROOT)/ace/Manual_Event.inl \
+  $(ACE_ROOT)/ace/Mutex.h \
+  $(ACE_ROOT)/ace/Mutex.inl \
+  $(ACE_ROOT)/ace/Null_Barrier.h \
+  $(ACE_ROOT)/ace/Null_Condition.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
+  $(ACE_ROOT)/ace/Null_Semaphore.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
+  $(ACE_ROOT)/ace/RW_Mutex.inl \
+  $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Semaphore.h \
+  $(ACE_ROOT)/ace/Semaphore.inl \
+  $(ACE_ROOT)/ace/Thread_Semaphore.h \
+  $(ACE_ROOT)/ace/Thread_Semaphore.inl \
+  $(ACE_ROOT)/ace/TSS_Adapter.h \
+  $(ACE_ROOT)/ace/TSS_Adapter.inl \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Lock_Adapter_T.h \
+  $(ACE_ROOT)/ace/Lock_Adapter_T.inl \
+  $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
+  $(ACE_ROOT)/ace/Reverse_Lock_T.h \
+  $(ACE_ROOT)/ace/Reverse_Lock_T.inl \
+  $(ACE_ROOT)/ace/Reverse_Lock_T.cpp \
+  $(ACE_ROOT)/ace/TSS_T.h \
+  $(ACE_ROOT)/ace/TSS_T.inl \
+  $(ACE_ROOT)/ace/TSS_T.cpp \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Condition_T.h \
+  $(ACE_ROOT)/ace/Condition_T.inl \
+  $(ACE_ROOT)/ace/Condition_T.cpp \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  IOP_IORC.h \
+  OctetSeqC.h \
+  VarOut_T.h \
+  VarOut_T.inl \
+  VarOut_T.cpp \
+  IOP_IORC.i \
+  Object.i \
+  Var_Size_Argument_T.h \
+  Var_Size_Argument_T.inl \
+  Var_Size_Argument_T.cpp \
+  Any.i \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
+  Marshal.h \
+  Marshal.i \
+  debug.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h \
+  IOP_CodecC.h \
+  Any_Impl_T.h \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  IOP_CodecC.i \
+  IOPC.i PolicyC.h CurrentC.h CurrentC.i Policy_ForwardC.h \
+  Remote_Object_Proxy_Impl.h \
+  Object_Proxy_Impl.h \
+  PolicyC.i PortableInterceptorC.i \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  Interceptor_List.inl ClientRequestInterceptor_Adapter.inl \
+  ClientRequestInfo.h \
+  PortableInterceptorC.h \
+  LocalObject.h \
+  LocalObject.i \
+  ClientRequestInfo.inl ClientRequestInfo_i.h \
+  StringSeqC.h \
+  PICurrent.h \
+  PICurrent.inl \
+  Invocation_Utils.h \
+  ClientRequestInfo_i.inl Invocation_Base.h \
+  ClientRequestInfo_i.h \
+  ClientRequestInterceptor_Adapter.h \
+  ORB_Core.h ORB.h Exception.h ServicesC.h ServicesC.i CORBA_String.h \
+  ObjectIdListC.h ObjectIdListC.i objectid.h \
+  ORB.i \
+  Environment.h Policy_Manager.h \
+  Policy_Set.h \
+  PolicyC.h \
+  Policy_Set.i \
+  Policy_Manager.i \
+  Resource_Factory.h \
+  $(ACE_ROOT)/ace/Service_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.i \
+  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
+  $(ACE_ROOT)/ace/Event_Handler.i \
+  $(ACE_ROOT)/ace/DLL.h \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  $(ACE_ROOT)/ace/Unbounded_Set.h \
+  $(ACE_ROOT)/ace/Unbounded_Set.inl \
+  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+  $(ACE_ROOT)/ace/SString.h \
+  $(ACE_ROOT)/ace/String_Base.h \
+  $(ACE_ROOT)/ace/String_Base_Const.h \
+  $(ACE_ROOT)/ace/String_Base.i \
+  $(ACE_ROOT)/ace/String_Base.cpp \
+  $(ACE_ROOT)/ace/SString.i \
+  CONV_FRAMEC.h \
+  CONV_FRAMEC.i \
+  params.h \
+  params.i \
+  TAO_Singleton_Manager.h \
+  TAO_Singleton_Manager.inl \
+  TAO_Singleton.h \
+  TAO_Singleton.inl \
+  TAO_Singleton.cpp \
+  TAO_Singleton.h \
+  $(ACE_ROOT)/ace/Object_Manager.h \
+  $(ACE_ROOT)/ace/Object_Manager.i \
+  $(ACE_ROOT)/ace/Managed_Object.h \
+  $(ACE_ROOT)/ace/Managed_Object.i \
+  $(ACE_ROOT)/ace/Managed_Object.cpp \
+  TAO_Singleton_Manager.h \
+  Adapter.h Adapter.i PolicyFactory_Registry.h \
+  $(ACE_ROOT)/ace/Map_Manager.h \
+  $(ACE_ROOT)/ace/Map_Manager.i \
+  $(ACE_ROOT)/ace/Map_Manager.cpp \
+  Parser_Registry.h \
+  Parser_Registry.i \
+  Service_Callbacks.h \
+  IOPC.h \
+  Service_Callbacks.i \
+  Fault_Tolerance_Service.h \
+  Fault_Tolerance_Service.i \
+  Cleanup_Func_Registry.h TAO_Export.h Cleanup_Func_Registry.inl \
+  Object_Ref_Table.h ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  PICurrent.h \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/Thread_Exit.h \
+  $(ACE_ROOT)/ace/Thread_Control.h \
+  $(ACE_ROOT)/ace/Thread_Control.inl \
+  $(ACE_ROOT)/ace/Containers.h \
+  $(ACE_ROOT)/ace/Containers.i \
+  $(ACE_ROOT)/ace/Containers_T.h \
+  $(ACE_ROOT)/ace/Containers_T.i \
+  $(ACE_ROOT)/ace/Containers_T.cpp \
+  $(ACE_ROOT)/ace/Free_List.h \
+  $(ACE_ROOT)/ace/Free_List.i \
+  $(ACE_ROOT)/ace/Free_List.cpp \
+  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/Singleton.i \
+  $(ACE_ROOT)/ace/Singleton.cpp \
+  $(ACE_ROOT)/ace/Framework_Component.h \
+  $(ACE_ROOT)/ace/Framework_Component.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.h \
+  $(ACE_ROOT)/ace/Framework_Component_T.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
+  $(ACE_ROOT)/ace/Thread_Manager.i \
+  ORB_Core.i
 
 .obj/PI_ForwardC.o .obj/PI_ForwardC.so .shobj/PI_ForwardC.o .shobj/PI_ForwardC.so: PI_ForwardC.cpp PI_ForwardC.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -25675,6 +26771,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -25733,7 +26830,15 @@ realclean:
   Incoming_Message_Queue.inl \
   Transport.inl \
   Invocation.i \
-  PortableInterceptor.h
+  PortableInterceptor.h \
+  RequestInfo_Util.h \
+  DynamicC.h \
+  ClientRequestInfo_i.h \
+  StringSeqC.h \
+  Invocation_Utils.h \
+  ClientRequestInfo_i.inl \
+  ClientInterceptorAdapter.h \
+  ClientInterceptorAdapter.inl
 
 .obj/PICurrent.o .obj/PICurrent.so .shobj/PICurrent.o .shobj/PICurrent.so: PICurrent.cpp PICurrent.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -25775,7 +26880,324 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  corbafwd.i
+  corbafwd.i \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  PortableInterceptorC.h PI_ForwardC.h OctetSeqC.h \
+  Seq_Var_T.h \
+  Seq_Var_T.inl \
+  Seq_Var_T.cpp \
+  Seq_Out_T.h \
+  Seq_Out_T.inl \
+  Seq_Out_T.cpp \
+  Sequence.h \
+  Managed_Types.h \
+  CORBA_String.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  CORBA_String.inl \
+  Managed_Types.i \
+  $(ACE_ROOT)/ace/CORBA_macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/os_include/os_dirent.h \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_strings.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
+  $(ACE_ROOT)/ace/os_include/os_netdb.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/os_include/os_assert.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_tcp.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_shm.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_termios.h \
+  $(ACE_ROOT)/ace/os_include/os_aio.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_un.h \
+  $(ACE_ROOT)/ace/os_include/os_poll.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_msg.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/os_include/os_syslog.h \
+  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Message_Block.i \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  Sequence.i \
+  Sequence_T.h \
+  Objref_VarOut_T.h \
+  varbase.h \
+  Objref_VarOut_T.inl \
+  Objref_VarOut_T.cpp \
+  Environment.h \
+  Pseudo_VarOut_T.h \
+  Pseudo_VarOut_T.inl \
+  Pseudo_VarOut_T.cpp \
+  Environment.i \
+  Sequence_T.i \
+  Sequence_T.cpp \
+  Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/Flag_Manip.h \
+  $(ACE_ROOT)/ace/Flag_Manip.i \
+  $(ACE_ROOT)/ace/Handle_Ops.h \
+  $(ACE_ROOT)/ace/Handle_Ops.i \
+  $(ACE_ROOT)/ace/Lib_Find.h \
+  $(ACE_ROOT)/ace/Lib_Find.i \
+  $(ACE_ROOT)/ace/Init_ACE.h \
+  $(ACE_ROOT)/ace/Init_ACE.i \
+  $(ACE_ROOT)/ace/Sock_Connect.h \
+  $(ACE_ROOT)/ace/Sock_Connect.i \
+  $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Guard_T.h \
+  $(ACE_ROOT)/ace/Lock.h \
+  $(ACE_ROOT)/ace/Lock.inl \
+  $(ACE_ROOT)/ace/Guard_T.inl \
+  $(ACE_ROOT)/ace/Guard_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  Exception.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  Exception.i \
+  Object_Argument_T.h \
+  Argument.h \
+  Object_Argument_T.inl \
+  Object_Argument_T.cpp \
+  Arg_Traits_T.h \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(ACE_ROOT)/ace/Synch_Traits.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.inl \
+  Typecode.i \
+  Array_VarOut_T.h \
+  Array_VarOut_T.inl \
+  Array_VarOut_T.cpp \
+  OctetSeqC.i StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
+  DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  Object.h \
+  Policy_ForwardC.h \
+  CDR.h \
+  CDR.i \
+  Policy_ForwardC.i \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Auto_Event.h \
+  $(ACE_ROOT)/ace/Event.h \
+  $(ACE_ROOT)/ace/Event.inl \
+  $(ACE_ROOT)/ace/Auto_Event.inl \
+  $(ACE_ROOT)/ace/Barrier.h \
+  $(ACE_ROOT)/ace/Condition_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Condition_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Barrier.inl \
+  $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Manual_Event.h \
+  $(ACE_ROOT)/ace/Manual_Event.inl \
+  $(ACE_ROOT)/ace/Mutex.h \
+  $(ACE_ROOT)/ace/Mutex.inl \
+  $(ACE_ROOT)/ace/Null_Barrier.h \
+  $(ACE_ROOT)/ace/Null_Condition.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
+  $(ACE_ROOT)/ace/Null_Semaphore.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
+  $(ACE_ROOT)/ace/RW_Mutex.inl \
+  $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Semaphore.h \
+  $(ACE_ROOT)/ace/Semaphore.inl \
+  $(ACE_ROOT)/ace/Thread_Semaphore.h \
+  $(ACE_ROOT)/ace/Thread_Semaphore.inl \
+  $(ACE_ROOT)/ace/TSS_Adapter.h \
+  $(ACE_ROOT)/ace/TSS_Adapter.inl \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Lock_Adapter_T.h \
+  $(ACE_ROOT)/ace/Lock_Adapter_T.inl \
+  $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
+  $(ACE_ROOT)/ace/Reverse_Lock_T.h \
+  $(ACE_ROOT)/ace/Reverse_Lock_T.inl \
+  $(ACE_ROOT)/ace/Reverse_Lock_T.cpp \
+  $(ACE_ROOT)/ace/TSS_T.h \
+  $(ACE_ROOT)/ace/TSS_T.inl \
+  $(ACE_ROOT)/ace/TSS_T.cpp \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Condition_T.h \
+  $(ACE_ROOT)/ace/Condition_T.inl \
+  $(ACE_ROOT)/ace/Condition_T.cpp \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  IOP_IORC.h \
+  OctetSeqC.h \
+  VarOut_T.h \
+  VarOut_T.inl \
+  VarOut_T.cpp \
+  IOP_IORC.i \
+  Object.i \
+  Var_Size_Argument_T.h \
+  Var_Size_Argument_T.inl \
+  Var_Size_Argument_T.cpp \
+  Any.i \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
+  Marshal.h \
+  Marshal.i \
+  debug.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h \
+  IOP_CodecC.h \
+  Any_Impl_T.h \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  IOP_CodecC.i \
+  IOPC.i PolicyC.h CurrentC.h CurrentC.i Policy_ForwardC.h \
+  Remote_Object_Proxy_Impl.h \
+  Object_Proxy_Impl.h \
+  PolicyC.i PortableInterceptorC.i LocalObject.h Object.h Object_KeyC.h \
+  LocalObject.i PICurrent.inl ORB_Core.h corbafwd.h ORB.h Exception.h \
+  ServicesC.h ServicesC.i CORBA_String.h ObjectIdListC.h ObjectIdListC.i \
+  objectid.h \
+  ORB.i \
+  Environment.h Policy_Manager.h \
+  Policy_Set.h \
+  PolicyC.h \
+  Policy_Set.i \
+  LocalObject.h \
+  Policy_Manager.i \
+  Resource_Factory.h \
+  $(ACE_ROOT)/ace/Service_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.i \
+  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
+  $(ACE_ROOT)/ace/Event_Handler.i \
+  $(ACE_ROOT)/ace/DLL.h \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  $(ACE_ROOT)/ace/Unbounded_Set.h \
+  $(ACE_ROOT)/ace/Unbounded_Set.inl \
+  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+  $(ACE_ROOT)/ace/SString.h \
+  $(ACE_ROOT)/ace/String_Base.h \
+  $(ACE_ROOT)/ace/String_Base_Const.h \
+  $(ACE_ROOT)/ace/String_Base.i \
+  $(ACE_ROOT)/ace/String_Base.cpp \
+  $(ACE_ROOT)/ace/SString.i \
+  CONV_FRAMEC.h \
+  CONV_FRAMEC.i \
+  params.h \
+  params.i \
+  TAO_Singleton_Manager.h \
+  TAO_Singleton_Manager.inl \
+  TAO_Singleton.h \
+  TAO_Singleton.inl \
+  TAO_Singleton.cpp \
+  TAO_Singleton.h \
+  $(ACE_ROOT)/ace/Object_Manager.h \
+  $(ACE_ROOT)/ace/Object_Manager.i \
+  $(ACE_ROOT)/ace/Managed_Object.h \
+  $(ACE_ROOT)/ace/Managed_Object.i \
+  $(ACE_ROOT)/ace/Managed_Object.cpp \
+  TAO_Singleton_Manager.h \
+  Adapter.h Adapter.i PolicyFactory_Registry.h \
+  $(ACE_ROOT)/ace/Map_Manager.h \
+  $(ACE_ROOT)/ace/Map_Manager.i \
+  $(ACE_ROOT)/ace/Map_Manager.cpp \
+  Parser_Registry.h \
+  Parser_Registry.i \
+  Service_Callbacks.h \
+  IOPC.h \
+  Service_Callbacks.i \
+  Fault_Tolerance_Service.h \
+  Fault_Tolerance_Service.i \
+  Cleanup_Func_Registry.h TAO_Export.h Cleanup_Func_Registry.inl \
+  Object_Ref_Table.h ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Interceptor_List.h Interceptor_List.inl \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/Thread_Exit.h \
+  $(ACE_ROOT)/ace/Thread_Control.h \
+  $(ACE_ROOT)/ace/Thread_Control.inl \
+  $(ACE_ROOT)/ace/Containers.h \
+  $(ACE_ROOT)/ace/Containers.i \
+  $(ACE_ROOT)/ace/Containers_T.h \
+  $(ACE_ROOT)/ace/Containers_T.i \
+  $(ACE_ROOT)/ace/Containers_T.cpp \
+  $(ACE_ROOT)/ace/Free_List.h \
+  $(ACE_ROOT)/ace/Free_List.i \
+  $(ACE_ROOT)/ace/Free_List.cpp \
+  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/Singleton.i \
+  $(ACE_ROOT)/ace/Singleton.cpp \
+  $(ACE_ROOT)/ace/Framework_Component.h \
+  $(ACE_ROOT)/ace/Framework_Component.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.h \
+  $(ACE_ROOT)/ace/Framework_Component_T.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
+  $(ACE_ROOT)/ace/Thread_Manager.i \
+  ORB_Core.i TAO_Server_Request.h Tagged_Profile.h \
+  GIOPC.h \
+  GIOPC.i \
+  Tagged_Profile.i \
+  Service_Context.h \
+  Service_Context.inl \
+  TAO_Server_Request.i debug.h
 
 .obj/PICurrent_ORBInitializer.o .obj/PICurrent_ORBInitializer.so .shobj/PICurrent_ORBInitializer.o .shobj/PICurrent_ORBInitializer.so: PICurrent_ORBInitializer.cpp \
   PICurrent_ORBInitializer.h \
@@ -26014,7 +27436,124 @@ realclean:
   VarOut_T.cpp \
   IOP_IORC.i \
   Object.i \
-  Object_KeyC.h LocalObject.i
+  Object_KeyC.h LocalObject.i PortableInterceptorC.h PI_ForwardC.h \
+  OctetSeqC.h StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
+  DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any.h \
+  Object.h \
+  Var_Size_Argument_T.h \
+  Var_Size_Argument_T.inl \
+  Var_Size_Argument_T.cpp \
+  Any.i \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
+  Marshal.h \
+  Marshal.i \
+  debug.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h \
+  IOP_CodecC.h \
+  Any_Impl_T.h \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  IOP_CodecC.i \
+  IOPC.i PolicyC.h CurrentC.h CurrentC.i Policy_ForwardC.h \
+  Remote_Object_Proxy_Impl.h \
+  Object_Proxy_Impl.h \
+  PolicyC.i PortableInterceptorC.i PICurrent.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  PICurrent.inl ORB_Core.h corbafwd.h ORB.h Exception.h ServicesC.h \
+  ServicesC.i CORBA_String.h ObjectIdListC.h ObjectIdListC.i objectid.h \
+  ORB.i \
+  Environment.h Policy_Manager.h \
+  Policy_Set.h \
+  PolicyC.h \
+  Policy_Set.i \
+  LocalObject.h \
+  Policy_Manager.i \
+  Resource_Factory.h \
+  $(ACE_ROOT)/ace/Service_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.i \
+  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
+  $(ACE_ROOT)/ace/Event_Handler.i \
+  $(ACE_ROOT)/ace/DLL.h \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  $(ACE_ROOT)/ace/Unbounded_Set.h \
+  $(ACE_ROOT)/ace/Unbounded_Set.inl \
+  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+  $(ACE_ROOT)/ace/SString.h \
+  $(ACE_ROOT)/ace/String_Base.h \
+  $(ACE_ROOT)/ace/String_Base_Const.h \
+  $(ACE_ROOT)/ace/String_Base.i \
+  $(ACE_ROOT)/ace/String_Base.cpp \
+  $(ACE_ROOT)/ace/SString.i \
+  CONV_FRAMEC.h \
+  CONV_FRAMEC.i \
+  params.h \
+  params.i \
+  TAO_Singleton_Manager.h \
+  TAO_Singleton_Manager.inl \
+  TAO_Singleton.h \
+  TAO_Singleton.inl \
+  TAO_Singleton.cpp \
+  TAO_Singleton.h \
+  $(ACE_ROOT)/ace/Object_Manager.h \
+  $(ACE_ROOT)/ace/Object_Manager.i \
+  $(ACE_ROOT)/ace/Managed_Object.h \
+  $(ACE_ROOT)/ace/Managed_Object.i \
+  $(ACE_ROOT)/ace/Managed_Object.cpp \
+  TAO_Singleton_Manager.h \
+  Adapter.h Adapter.i PolicyFactory_Registry.h \
+  $(ACE_ROOT)/ace/Map_Manager.h \
+  $(ACE_ROOT)/ace/Map_Manager.i \
+  $(ACE_ROOT)/ace/Map_Manager.cpp \
+  Parser_Registry.h \
+  Parser_Registry.i \
+  Service_Callbacks.h \
+  IOPC.h \
+  Service_Callbacks.i \
+  Fault_Tolerance_Service.h \
+  Fault_Tolerance_Service.i \
+  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
+  ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Interceptor_List.h Interceptor_List.inl \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/Thread_Exit.h \
+  $(ACE_ROOT)/ace/Thread_Control.h \
+  $(ACE_ROOT)/ace/Thread_Control.inl \
+  $(ACE_ROOT)/ace/Containers.h \
+  $(ACE_ROOT)/ace/Containers.i \
+  $(ACE_ROOT)/ace/Containers_T.h \
+  $(ACE_ROOT)/ace/Containers_T.i \
+  $(ACE_ROOT)/ace/Containers_T.cpp \
+  $(ACE_ROOT)/ace/Free_List.h \
+  $(ACE_ROOT)/ace/Free_List.i \
+  $(ACE_ROOT)/ace/Free_List.cpp \
+  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/Singleton.i \
+  $(ACE_ROOT)/ace/Singleton.cpp \
+  $(ACE_ROOT)/ace/Framework_Component.h \
+  $(ACE_ROOT)/ace/Framework_Component.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.h \
+  $(ACE_ROOT)/ace/Framework_Component_T.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
+  $(ACE_ROOT)/ace/Thread_Manager.i \
+  ORB_Core.i ORBInitInfo.h ORBInitInfo.inl
 
 .obj/DynamicC.o .obj/DynamicC.so .shobj/DynamicC.o .shobj/DynamicC.so: DynamicC.cpp DynamicC.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -26368,6 +27907,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -26425,7 +27965,13 @@ realclean:
   Incoming_Message_Queue.inl \
   Transport.inl \
   Invocation.i \
-  PortableInterceptor.h
+  PortableInterceptor.h \
+  RequestInfo_Util.h \
+  ClientRequestInfo_i.h \
+  Invocation_Utils.h \
+  ClientRequestInfo_i.inl \
+  ClientInterceptorAdapter.h \
+  ClientInterceptorAdapter.inl
 
 .obj/OctetSeqC.o .obj/OctetSeqC.so .shobj/OctetSeqC.o .shobj/OctetSeqC.so: OctetSeqC.cpp OctetSeqC.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -26756,7 +28302,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -27308,6 +28855,29 @@ realclean:
   Tagged_Profile.i \
   Service_Context.h \
   Service_Context.inl \
+  PICurrent.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  PortableInterceptorC.h \
+  PI_ForwardC.h \
+  StringSeqC.h \
+  StringSeqC.i \
+  PI_ForwardC.i \
+  DynamicC.h \
+  DynamicC.i \
+  Messaging_SyncScopeC.h \
+  Messaging_SyncScopeC.i \
+  PolicyC.h \
+  CurrentC.h \
+  CurrentC.i \
+  Remote_Object_Proxy_Impl.h \
+  Object_Proxy_Impl.h \
+  PolicyC.i \
+  PortableInterceptorC.i \
+  LocalObject.h \
+  LocalObject.i \
+  PICurrent.inl \
   TAO_Server_Request.i \
   operation_details.h \
   target_specification.h \
@@ -27368,6 +28938,16 @@ realclean:
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Export.h \
@@ -27375,8 +28955,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -27389,9 +28967,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -27436,11 +29011,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -27588,6 +29158,7 @@ realclean:
   $(ACE_ROOT)/ace/OS_Memory.inl \
   corbafwd.i \
   ORB.h Exception.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -27595,7 +29166,6 @@ realclean:
   Exception.i \
   ServicesC.h \
   OctetSeqC.h \
-  corbafwd.h \
   Seq_Var_T.h \
   Seq_Var_T.inl \
   Seq_Var_T.cpp \
@@ -27878,7 +29448,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -28006,6 +29577,9 @@ realclean:
   LF_Strategy.h \
   LF_Strategy.inl \
   LF_Event_Loop_Thread_Helper.inl \
+  ClientRequestInfo.h \
+  PortableInterceptorC.h \
+  ClientRequestInfo.inl \
   $(ACE_ROOT)/ace/Dynamic_Service.h \
   $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
   $(ACE_ROOT)/ace/Dynamic_Service.i \
@@ -28058,6 +29632,7 @@ realclean:
   $(ACE_ROOT)/ace/OS_Memory.inl \
   corbafwd.i \
   ORB.h Exception.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -28065,7 +29640,6 @@ realclean:
   Exception.i \
   ServicesC.h \
   OctetSeqC.h \
-  corbafwd.h \
   Seq_Var_T.h \
   Seq_Var_T.inl \
   Seq_Var_T.cpp \
@@ -28348,7 +29922,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -28381,6 +29956,16 @@ realclean:
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Export.h \
@@ -28388,8 +29973,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -28402,9 +29985,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -28449,11 +30029,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -28516,6 +30091,11 @@ realclean:
   Collocation_Resolver.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
@@ -28563,11 +30143,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -28810,6 +30385,11 @@ realclean:
   corbafwd.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -28851,11 +30431,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -29051,13 +30626,13 @@ realclean:
   OBV_Constants.h \
   corbafwd.i \
   ORB.h Exception.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   Exception.i \
   ServicesC.h \
   OctetSeqC.h \
-  corbafwd.h \
   Seq_Var_T.h \
   Seq_Var_T.inl \
   Seq_Var_T.cpp \
@@ -29214,7 +30789,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -29592,6 +31168,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -29975,6 +31552,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -30359,6 +31937,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -30742,6 +32321,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -31162,6 +32742,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -31568,6 +33149,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -32018,6 +33600,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -32183,14 +33766,22 @@ realclean:
   $(ACE_ROOT)/ace/Dynamic_Service.cpp \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -32203,9 +33794,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -32249,11 +33837,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -32519,6 +34102,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -32587,6 +34171,11 @@ realclean:
   corbafwd.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -32628,11 +34217,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -33026,6 +34610,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -33098,6 +34683,11 @@ realclean:
   corbafwd.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -33139,11 +34729,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -33416,7 +35001,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -33732,20 +35318,27 @@ realclean:
   Tagged_Profile.i \
   OctetSeqC.h Service_Context.h \
   Service_Context.inl \
-  Object.h TAO_Server_Request.i CDR.h Environment.h Principal.h \
+  Object.h PICurrent.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  PortableInterceptorC.h PI_ForwardC.h StringSeqC.h Sequence.h \
+  StringSeqC.i PI_ForwardC.i DynamicC.h DynamicC.i Messaging_SyncScopeC.h \
+  Messaging_SyncScopeC.i IOPC.h PolicyC.h CurrentC.h CurrentC.i \
+  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
+  Object_Proxy_Impl.h \
+  PolicyC.i PortableInterceptorC.i LocalObject.h Object_KeyC.h \
+  LocalObject.i PICurrent.inl TAO_Server_Request.i CDR.h Environment.h \
+  Principal.h \
   Principal.i \
   ORB_Core.h ORB.h Exception.h ServicesC.h ServicesC.i CORBA_String.h \
-  ObjectIdListC.h ObjectIdListC.i objectid.h PolicyC.h CurrentC.h \
-  CurrentC.i Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
-  Object_Proxy_Impl.h \
-  PolicyC.i \
+  ObjectIdListC.h ObjectIdListC.i objectid.h \
   ORB.i \
   Policy_Manager.h \
   Policy_Set.h \
   PolicyC.h \
   Policy_Set.i \
   LocalObject.h \
-  LocalObject.i \
   Policy_Manager.i \
   Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -33780,10 +35373,7 @@ realclean:
   $(ACE_ROOT)/ace/Managed_Object.i \
   $(ACE_ROOT)/ace/Managed_Object.cpp \
   TAO_Singleton_Manager.h \
-  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
-  PI_ForwardC.h StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
-  DynamicC.h DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i \
-  IOPC.h PortableInterceptorC.i \
+  Adapter.h Adapter.i PolicyFactory_Registry.h \
   $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -33793,15 +35383,12 @@ realclean:
   Service_Callbacks.i \
   Fault_Tolerance_Service.h \
   Fault_Tolerance_Service.i \
-  Cleanup_Func_Registry.h TAO_Export.h \
-  $(ACE_ROOT)/ace/Array_Base.h \
-  $(ACE_ROOT)/ace/Array_Base.inl \
-  $(ACE_ROOT)/ace/Array_Base.cpp \
-  Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
+  Cleanup_Func_Registry.h TAO_Export.h Cleanup_Func_Registry.inl \
+  Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -33954,10 +35541,13 @@ realclean:
   $(ACE_ROOT)/ace/Malloc_Base.h \
   orbconf.h \
   Exception.h \
-  TAO_Export.h \
-  Basic_Types.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
+  TAO_Export.h \
+  Basic_Types.h \
+  OBV_Constants.h \
+  corbafwd.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -33970,9 +35560,6 @@ realclean:
   Objref_VarOut_T.inl \
   Objref_VarOut_T.cpp \
   Environment.h \
-  corbafwd.h \
-  OBV_Constants.h \
-  corbafwd.i \
   Environment.i \
   Object_Argument_T.h \
   Argument.h \
@@ -34367,6 +35954,16 @@ realclean:
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Export.h \
@@ -34374,8 +35971,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -34388,9 +35983,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -34435,11 +36027,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -34459,18 +36046,18 @@ realclean:
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/Service_Object.i \
   Exception.h \
-  TAO_Export.h \
-  Basic_Types.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
+  orbconf.h \
+  TAO_Export.h \
+  Basic_Types.h \
+  OBV_Constants.h \
+  corbafwd.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   Exception.i \
-  OBV_Constants.h \
-  corbafwd.h \
-  orbconf.h \
-  corbafwd.i \
   $(ACE_ROOT)/ace/Dynamic_Service.h \
   $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
   $(ACE_ROOT)/ace/Dynamic_Service.i \
@@ -35152,6 +36739,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -35547,6 +37135,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -36496,7 +38085,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -37027,6 +38617,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -37576,6 +39167,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -38200,6 +39792,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -38257,7 +39850,13 @@ realclean:
   Incoming_Message_Queue.inl \
   Transport.inl \
   Invocation.i \
-  PortableInterceptor.h
+  PortableInterceptor.h \
+  RequestInfo_Util.h \
+  ClientRequestInfo_i.h \
+  Invocation_Utils.h \
+  ClientRequestInfo_i.inl \
+  ClientInterceptorAdapter.h \
+  ClientInterceptorAdapter.inl
 
 .obj/IOPC.o .obj/IOPC.so .shobj/IOPC.o .shobj/IOPC.so: IOPC.cpp IOPC.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -38610,6 +40209,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -38667,17 +40267,22 @@ realclean:
   Incoming_Message_Queue.inl \
   Transport.inl \
   Invocation.i \
-  PortableInterceptor.h
+  PortableInterceptor.h \
+  RequestInfo_Util.h \
+  ClientRequestInfo_i.h \
+  Invocation_Utils.h \
+  ClientRequestInfo_i.inl \
+  ClientInterceptorAdapter.h \
+  ClientInterceptorAdapter.inl
 
 .obj/PollableC.o .obj/PollableC.so .shobj/PollableC.o .shobj/PollableC.so: PollableC.cpp PollableC.h \
   $(ACE_ROOT)/ace/pre.h \
   Exception.h \
-  TAO_Export.h \
+  corbafwd.h \
+  $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  Basic_Types.h \
-  $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
@@ -38700,12 +40305,22 @@ realclean:
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
+  orbconf.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  TAO_Export.h \
+  Basic_Types.h \
+  OBV_Constants.h \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
+  corbafwd.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/iosfwd.h \
-  $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
   Exception.i
 
 .obj/CONV_FRAMEC.o .obj/CONV_FRAMEC.so .shobj/CONV_FRAMEC.o .shobj/CONV_FRAMEC.so: CONV_FRAMEC.cpp \
@@ -39316,6 +40931,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -39879,11 +41495,19 @@ realclean:
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/OS_Export.h \
   Exception.h \
-  TAO_Export.h \
-  Basic_Types.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
+  TAO_Export.h \
+  Basic_Types.h \
+  OBV_Constants.h \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
+  corbafwd.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -39891,11 +41515,6 @@ realclean:
   Exception.i \
   CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
   $(ACE_ROOT)/ace/os_include/os_string.h \
@@ -39911,9 +41530,6 @@ realclean:
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
-  corbafwd.h \
-  OBV_Constants.h \
-  corbafwd.i \
   CDR.i \
   BoundsC.i \
   Stub.h \
@@ -40202,6 +41818,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -40259,7 +41876,13 @@ realclean:
   Incoming_Message_Queue.inl \
   Transport.inl \
   Invocation.i \
-  PortableInterceptor.h
+  PortableInterceptor.h \
+  RequestInfo_Util.h \
+  ClientRequestInfo_i.h \
+  Invocation_Utils.h \
+  ClientRequestInfo_i.inl \
+  ClientInterceptorAdapter.h \
+  ClientInterceptorAdapter.inl
 
 .obj/TAOC.o .obj/TAOC.so .shobj/TAOC.o .shobj/TAOC.so: TAOC.cpp TAOC.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -40527,6 +42150,16 @@ realclean:
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Export.h \
@@ -40534,8 +42167,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -40548,9 +42179,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -40595,11 +42223,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -40619,10 +42242,14 @@ realclean:
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/Service_Object.i \
   Exception.h \
-  TAO_Export.h \
-  Basic_Types.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
+  orbconf.h \
+  TAO_Export.h \
+  Basic_Types.h \
+  OBV_Constants.h \
+  corbafwd.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -40782,9 +42409,12 @@ realclean:
   TAO_Export.h \
   TAO_Singleton_Manager.inl \
   Exception.h \
-  Basic_Types.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
+  Basic_Types.h \
+  OBV_Constants.h \
+  corbafwd.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -40820,9 +42450,6 @@ realclean:
   Objref_VarOut_T.inl \
   Objref_VarOut_T.cpp \
   Environment.h \
-  corbafwd.h \
-  OBV_Constants.h \
-  corbafwd.i \
   Environment.i \
   Object_Argument_T.h \
   Argument.h \
@@ -40846,6 +42473,16 @@ realclean:
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Export.h \
@@ -40853,8 +42490,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -40867,9 +42502,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -40914,11 +42546,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -41495,6 +43122,11 @@ realclean:
   corbafwd.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -41536,11 +43168,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -41886,6 +43513,11 @@ realclean:
   Exception.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -41926,11 +43558,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -42184,6 +43811,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -42280,6 +43908,11 @@ realclean:
   Exception.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -42320,11 +43953,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -42399,6 +44027,11 @@ realclean:
   Exception.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -42439,11 +44072,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -42685,6 +44313,11 @@ realclean:
   Exception.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -42725,11 +44358,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -42995,6 +44623,11 @@ realclean:
   Exception.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -43035,11 +44668,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -43295,7 +44923,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -43377,6 +45006,11 @@ realclean:
   Exception.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -43417,11 +45051,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -43723,6 +45352,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -43797,6 +45427,11 @@ realclean:
   Exception.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -43837,11 +45472,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -44098,7 +45728,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -44752,6 +46383,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -45124,6 +46756,7 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -45201,6 +46834,11 @@ realclean:
   Exception.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -45241,11 +46879,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -45320,6 +46953,11 @@ realclean:
   Exception.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -45360,11 +46998,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -45432,6 +47065,11 @@ realclean:
   corbafwd.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -45473,11 +47111,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -45832,7 +47465,7 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -47174,6 +48807,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -47710,6 +49344,16 @@ realclean:
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Export.h \
@@ -47717,8 +49361,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -47731,9 +49373,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -47778,11 +49417,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -47802,10 +49436,14 @@ realclean:
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/Service_Object.i \
   Exception.h \
-  TAO_Export.h \
-  Basic_Types.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
+  orbconf.h \
+  TAO_Export.h \
+  Basic_Types.h \
+  OBV_Constants.h \
+  corbafwd.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -48643,6 +50281,11 @@ realclean:
   corbafwd.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -48684,11 +50327,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -48765,13 +50403,13 @@ realclean:
   $(ACE_ROOT)/ace/OS_Memory.inl \
   corbafwd.i \
   Exception.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   Exception.i \
   Transport_Descriptor_Interface.h \
-  corbafwd.h \
   Transport_Descriptor_Interface.inl \
   Transport_Cache_Manager.h \
   Cache_Entries.h \
@@ -49024,13 +50662,13 @@ realclean:
   $(ACE_ROOT)/ace/OS_Memory.inl \
   corbafwd.i \
   Exception.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   Exception.i \
   Transport_Descriptor_Interface.h \
-  corbafwd.h \
   Transport_Descriptor_Interface.inl \
   Transport_Cache_Manager.h \
   Cache_Entries.h \
@@ -49326,7 +50964,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -49661,12 +51300,12 @@ realclean:
   OBV_Constants.h \
   corbafwd.i \
   Exception.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   Exception.i \
   Transport_Descriptor_Interface.h \
-  corbafwd.h \
   Transport_Descriptor_Interface.inl \
   Transport_Cache_Manager.h \
   Cache_Entries.h \
@@ -49902,7 +51541,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -50034,12 +51674,12 @@ realclean:
   OBV_Constants.h \
   corbafwd.i \
   Exception.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   Exception.i \
   Transport_Descriptor_Interface.h \
-  corbafwd.h \
   Transport_Descriptor_Interface.inl \
   Transport_Cache_Manager.h \
   Cache_Entries.h \
@@ -50275,7 +51915,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -50766,12 +52407,12 @@ realclean:
   OBV_Constants.h \
   corbafwd.i \
   Exception.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   Exception.i \
   Transport_Descriptor_Interface.h \
-  corbafwd.h \
   Transport_Descriptor_Interface.inl \
   Transport_Cache_Manager.h \
   Cache_Entries.h \
@@ -50969,13 +52610,13 @@ realclean:
   $(ACE_ROOT)/ace/OS_Memory.inl \
   corbafwd.i \
   Exception.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   Exception.i \
   Transport_Descriptor_Interface.h \
-  corbafwd.h \
   Transport_Descriptor_Interface.inl \
   Transport_Cache_Manager.h \
   Cache_Entries.h \
@@ -51483,6 +53124,11 @@ realclean:
   corbafwd.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -51524,11 +53170,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -51952,6 +53593,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -52071,6 +53713,11 @@ realclean:
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -52112,11 +53759,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -52381,6 +54023,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -52463,6 +54106,11 @@ realclean:
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -52504,11 +54152,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -52786,6 +54429,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -52865,6 +54509,11 @@ realclean:
   corbafwd.i \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -52906,11 +54555,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -53191,6 +54835,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -53483,19 +55128,25 @@ realclean:
   Tagged_Profile.i \
   OctetSeqC.h Service_Context.h \
   Service_Context.inl \
-  Object.h TAO_Server_Request.i ORB_Core.h ORB.h Exception.h ServicesC.h \
-  ServicesC.i CORBA_String.h ObjectIdListC.h ObjectIdListC.i objectid.h \
-  PolicyC.h CurrentC.h CurrentC.i Policy_ForwardC.h \
-  Remote_Object_Proxy_Impl.h \
+  Object.h PICurrent.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  PortableInterceptorC.h PI_ForwardC.h StringSeqC.h Sequence.h \
+  StringSeqC.i PI_ForwardC.i DynamicC.h DynamicC.i Messaging_SyncScopeC.h \
+  Messaging_SyncScopeC.i IOPC.h PolicyC.h CurrentC.h CurrentC.i \
+  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
-  PolicyC.i \
+  PolicyC.i PortableInterceptorC.i LocalObject.h Object_KeyC.h \
+  LocalObject.i PICurrent.inl TAO_Server_Request.i ORB_Core.h ORB.h \
+  Exception.h ServicesC.h ServicesC.i CORBA_String.h ObjectIdListC.h \
+  ObjectIdListC.i objectid.h \
   ORB.i \
   Environment.h Policy_Manager.h \
   Policy_Set.h \
   PolicyC.h \
   Policy_Set.i \
   LocalObject.h \
-  LocalObject.i \
   Policy_Manager.i \
   Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -53530,10 +55181,7 @@ realclean:
   $(ACE_ROOT)/ace/Managed_Object.i \
   $(ACE_ROOT)/ace/Managed_Object.cpp \
   TAO_Singleton_Manager.h \
-  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
-  PI_ForwardC.h StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
-  DynamicC.h DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i \
-  IOPC.h PortableInterceptorC.i \
+  Adapter.h Adapter.i PolicyFactory_Registry.h \
   $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -53543,15 +55191,12 @@ realclean:
   Service_Callbacks.i \
   Fault_Tolerance_Service.h \
   Fault_Tolerance_Service.i \
-  Cleanup_Func_Registry.h TAO_Export.h \
-  $(ACE_ROOT)/ace/Array_Base.h \
-  $(ACE_ROOT)/ace/Array_Base.inl \
-  $(ACE_ROOT)/ace/Array_Base.cpp \
-  Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
+  Cleanup_Func_Registry.h TAO_Export.h Cleanup_Func_Registry.inl \
+  Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -53584,6 +55229,16 @@ realclean:
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Export.h \
@@ -53591,8 +55246,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -53605,9 +55258,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -53652,11 +55302,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -53787,6 +55432,10 @@ realclean:
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -53798,10 +55447,6 @@ realclean:
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   TAO_Export.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \
   ORB_Core.h corbafwd.h \
@@ -53812,12 +55457,12 @@ realclean:
   OBV_Constants.h \
   corbafwd.i \
   ORB.h Exception.h \
+  corbafwd.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
   Exception.i \
   ServicesC.h \
   OctetSeqC.h \
-  corbafwd.h \
   Seq_Var_T.h \
   Seq_Var_T.inl \
   Seq_Var_T.cpp \
@@ -54020,7 +55665,7 @@ realclean:
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   Cleanup_Func_Registry.inl Object_Ref_Table.h Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h \
+  Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -54962,6 +56607,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -55261,6 +56907,16 @@ realclean:
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Export.h \
@@ -55268,8 +56924,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
-  $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -55282,9 +56936,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
@@ -55329,11 +56980,6 @@ realclean:
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -55601,6 +57247,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -55976,6 +57623,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -56628,6 +58276,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -57185,6 +58834,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -57562,7 +59212,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -57981,6 +59632,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -58597,23 +60249,28 @@ realclean:
   target_specification.h target_specification.i operation_details.i CDR.h \
   Any.h debug.h OctetSeqC.h Pluggable_Messaging_Utils.h \
   Pluggable_Messaging_Utils.i \
-  TAO_Server_Request.h Tagged_Profile.h Object.h TAO_Server_Request.i \
-  GIOP_Message_State.h \
+  TAO_Server_Request.h Tagged_Profile.h Object.h PICurrent.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  PortableInterceptorC.h PI_ForwardC.h StringSeqC.h Sequence.h \
+  StringSeqC.i PI_ForwardC.i DynamicC.h DynamicC.i Messaging_SyncScopeC.h \
+  Messaging_SyncScopeC.i IOPC.h PolicyC.h CurrentC.h CurrentC.i \
+  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
+  Object_Proxy_Impl.h \
+  PolicyC.i PortableInterceptorC.i LocalObject.h Object_KeyC.h \
+  LocalObject.i PICurrent.inl TAO_Server_Request.i GIOP_Message_State.h \
   GIOP_Message_Version.h \
   GIOP_Message_Version.inl \
   GIOP_Message_State.inl \
   CORBA_String.h ORB_Core.h ORB.h Exception.h ServicesC.h ServicesC.i \
-  ObjectIdListC.h ObjectIdListC.i objectid.h PolicyC.h CurrentC.h \
-  CurrentC.i Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
-  Object_Proxy_Impl.h \
-  PolicyC.i \
+  ObjectIdListC.h ObjectIdListC.i objectid.h \
   ORB.i \
   Environment.h Policy_Manager.h \
   Policy_Set.h \
   PolicyC.h \
   Policy_Set.i \
   LocalObject.h \
-  LocalObject.i \
   Policy_Manager.i \
   Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -58648,10 +60305,7 @@ realclean:
   $(ACE_ROOT)/ace/Managed_Object.i \
   $(ACE_ROOT)/ace/Managed_Object.cpp \
   TAO_Singleton_Manager.h \
-  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
-  PI_ForwardC.h StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
-  DynamicC.h DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i \
-  IOPC.h PortableInterceptorC.i \
+  Adapter.h Adapter.i PolicyFactory_Registry.h \
   $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -58661,15 +60315,12 @@ realclean:
   Service_Callbacks.i \
   Fault_Tolerance_Service.h \
   Fault_Tolerance_Service.i \
-  Cleanup_Func_Registry.h TAO_Export.h \
-  $(ACE_ROOT)/ace/Array_Base.h \
-  $(ACE_ROOT)/ace/Array_Base.inl \
-  $(ACE_ROOT)/ace/Array_Base.cpp \
-  Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
+  Cleanup_Func_Registry.h TAO_Export.h Cleanup_Func_Registry.inl \
+  Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -59030,11 +60681,17 @@ realclean:
   target_specification.h target_specification.i operation_details.i CDR.h \
   Any.h debug.h Pluggable_Messaging_Utils.h \
   Pluggable_Messaging_Utils.i \
-  TAO_Server_Request.h Tagged_Profile.h OctetSeqC.h Object.h \
-  TAO_Server_Request.i TAOC.h PolicyC.h CurrentC.h CurrentC.i \
+  TAO_Server_Request.h Tagged_Profile.h OctetSeqC.h Object.h PICurrent.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  PortableInterceptorC.h PI_ForwardC.h StringSeqC.h Sequence.h \
+  StringSeqC.i PI_ForwardC.i DynamicC.h DynamicC.i Messaging_SyncScopeC.h \
+  Messaging_SyncScopeC.i IOPC.h PolicyC.h CurrentC.h CurrentC.i \
   Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
-  PolicyC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i TimeBaseC.h \
+  PolicyC.i PortableInterceptorC.i LocalObject.h Object_KeyC.h \
+  LocalObject.i PICurrent.inl TAO_Server_Request.i TAOC.h TimeBaseC.h \
   TimeBaseC.i VarOut_T.h TAOC.i ORB_Core.h ORB.h Exception.h ServicesC.h \
   ServicesC.i CORBA_String.h ObjectIdListC.h ObjectIdListC.i objectid.h \
   ORB.i \
@@ -59043,7 +60700,6 @@ realclean:
   PolicyC.h \
   Policy_Set.i \
   LocalObject.h \
-  LocalObject.i \
   Policy_Manager.i \
   Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -59078,9 +60734,7 @@ realclean:
   $(ACE_ROOT)/ace/Managed_Object.i \
   $(ACE_ROOT)/ace/Managed_Object.cpp \
   TAO_Singleton_Manager.h \
-  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
-  PI_ForwardC.h StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
-  DynamicC.h DynamicC.i IOPC.h PortableInterceptorC.i \
+  Adapter.h Adapter.i PolicyFactory_Registry.h \
   $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -59090,15 +60744,12 @@ realclean:
   Service_Callbacks.i \
   Fault_Tolerance_Service.h \
   Fault_Tolerance_Service.i \
-  Cleanup_Func_Registry.h TAO_Export.h \
-  $(ACE_ROOT)/ace/Array_Base.h \
-  $(ACE_ROOT)/ace/Array_Base.inl \
-  $(ACE_ROOT)/ace/Array_Base.cpp \
-  Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
+  Cleanup_Func_Registry.h TAO_Export.h Cleanup_Func_Registry.inl \
+  Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -59541,6 +61192,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -60389,6 +62041,7 @@ realclean:
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -60795,7 +62448,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  Interceptor_List.h Interceptor_List.inl PICurrent.h \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \

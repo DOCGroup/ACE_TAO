@@ -25,6 +25,10 @@
 #include "tao/Pseudo_VarOut_T.h"
 #include "ace/CORBA_macros.h"
 #include "ace/OS.h"
+#include "tao/Object_Argument_T.h"
+#include "tao/Arg_Traits_T.h"
+#include "tao/Objref_VarOut_T.h"
+
 
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
@@ -133,6 +137,18 @@ operator<< (TAO_OutputCDR &, const CORBA::AbstractBase_ptr);
 TAO_Valuetype_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, CORBA::AbstractBase_ptr &);
 
+/// Used in generated code if CORBA::AbstractBase is an argument or return type.
+namespace TAO
+{
+  template<>
+  class TAO_Valuetype_Export Arg_Traits<CORBA::AbstractBase>
+    : public Object_Arg_Traits_T<CORBA::AbstractBase_ptr,
+                                 CORBA::AbstractBase_var,
+                                 CORBA::AbstractBase_out,
+                                 TAO::Objref_Traits<CORBA::AbstractBase> >
+  {
+  };
+};
 
 #if defined (__ACE_INLINE__)
 # include "AbstractBase.inl"
