@@ -1,3 +1,9 @@
+Fri Jul 11 00:38:16 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace\Dev_Poll_Reactor.h (ACE_Dev_Poll_Reactor): 
+
+	  Added find_handler() method.
+
 Thu Jul 10 19:51:52 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\Conn_Test.cpp: 
