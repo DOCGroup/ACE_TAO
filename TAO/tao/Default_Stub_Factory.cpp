@@ -4,13 +4,16 @@
 #include "Stub.h"
 #include "ORB_Constants.h"
 
-ACE_RCSID (tao, 
-           TAO_Default_Stub_Factory, 
+#include "ace/Log_Msg.h"
+
+
+ACE_RCSID (tao,
+           TAO_Default_Stub_Factory,
            "$Id$")
+
 
 TAO_Default_Stub_Factory::~TAO_Default_Stub_Factory (void)
 {
-  // No-Op.
 }
 
 TAO_Stub *

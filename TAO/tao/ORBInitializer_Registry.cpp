@@ -3,10 +3,15 @@
 #include "ORB.h"
 #include "TAO_Singleton.h"
 #include "ORB_Constants.h"
+#include "TAO_Singleton_Manager.h"
+
+#include "ace/Static_Object_Lock.h"
+
 
 ACE_RCSID (tao,
            ORBInitializer_Registry,
            "$Id$")
+
 
 // ****************************************************************
 

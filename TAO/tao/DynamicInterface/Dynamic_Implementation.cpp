@@ -1,10 +1,10 @@
-// $Id$
-
 #include "Dynamic_Implementation.h"
+
 
 ACE_RCSID (DynamicInterface,
            Dynamic_Implementation,
            "$Id$")
+
 
 #include "Server_Request.h"
 #include "tao/ORB_Core.h"
@@ -13,6 +13,8 @@ ACE_RCSID (DynamicInterface,
 #include "tao/PortableServer/POA.h"
 
 #include "ace/Dynamic_Service.h"
+#include "ace/OS_NS_string.h"
+
 
 CORBA::Boolean
 TAO_DynamicImplementation::_is_a (const char *logical_type_id

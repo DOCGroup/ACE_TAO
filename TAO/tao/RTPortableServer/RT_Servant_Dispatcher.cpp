@@ -13,6 +13,9 @@
 #include "tao/Protocols_Hooks.h"
 #include "tao/debug.h"
 
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (RTPortableServer,
            RT_Servant_Dispatcher,

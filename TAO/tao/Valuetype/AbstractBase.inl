@@ -2,6 +2,8 @@
 //
 // $Id$
 
+#include "ace/OS_NS_string.h"
+
 ACE_INLINE
 CORBA::AbstractBase_ptr
 CORBA::AbstractBase::_nil (void)

@@ -11,11 +11,16 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/IIOP_EndpointsC.h"
+
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 
-ACE_RCSID (DIOP,
+
+ACE_RCSID (Strategies,
            DIOP_Profile,
            "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 # include "DIOP_Profile.i"

@@ -43,14 +43,14 @@ TAO_Base_Sequence::TAO_Base_Sequence (const TAO_Base_Sequence & rhs)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::Boolean
 TAO_Base_Sequence::release (void) const
 {
   return this->release_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Base_Sequence &
 TAO_Base_Sequence::operator= (const TAO_Base_Sequence & rhs)
 {
@@ -60,7 +60,7 @@ TAO_Base_Sequence::operator= (const TAO_Base_Sequence & rhs)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::ULong
 TAO_Base_Sequence::maximum (void) const
 {
@@ -94,14 +94,14 @@ TAO_Unbounded_Base_Sequence::TAO_Unbounded_Base_Sequence (
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::ULong
 TAO_Unbounded_Base_Sequence::length (void) const
 {
   return this->length_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 void
 TAO_Unbounded_Base_Sequence::length (CORBA::ULong length)
 {
@@ -146,14 +146,14 @@ TAO_Bounded_Base_Sequence::TAO_Bounded_Base_Sequence (
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::ULong
 TAO_Bounded_Base_Sequence::length (void) const
 {
   return this->length_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 void
 TAO_Bounded_Base_Sequence::length (CORBA::ULong length)
 {
@@ -211,14 +211,14 @@ TAO_Unbounded_WString_Sequence::TAO_Unbounded_WString_Sequence (
 
 // ****************************************************************
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::Octet *
 TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (CORBA::ULong size)
 {
   return new CORBA::Octet[size];
 }
 
-ACE_INLINE 
+ACE_INLINE
 void
 TAO_Unbounded_Sequence<CORBA::Octet>::freebuf (CORBA::Octet * buffer)
 {
@@ -261,15 +261,15 @@ TAO_Unbounded_Sequence<CORBA::Octet>::TAO_Unbounded_Sequence (
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 const CORBA::Octet *
 TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (void) const
 {
-  return ACE_reinterpret_cast (const CORBA::Octet * ACE_CAST_CONST, 
+  return ACE_reinterpret_cast (const CORBA::Octet * ACE_CAST_CONST,
                                this->buffer_);
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::Octet &
 TAO_Unbounded_Sequence<CORBA::Octet>::operator[] (CORBA::ULong i)
 {
@@ -278,18 +278,18 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator[] (CORBA::ULong i)
   return tmp[i];
 }
 
-ACE_INLINE 
+ACE_INLINE
 const CORBA::Octet &
 TAO_Unbounded_Sequence<CORBA::Octet>::operator[] (CORBA::ULong i) const
 {
   TAO_SEQUENCE_ASSERT (i, this->maximum_);
-  CORBA::Octet * const tmp = 
+  CORBA::Octet * const tmp =
     ACE_reinterpret_cast (CORBA::Octet * ACE_CAST_CONST, this->buffer_);
   return tmp[i];
 }
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-ACE_INLINE 
+ACE_INLINE
 ACE_Message_Block *
 TAO_Unbounded_Sequence<CORBA::Octet>::mb (void) const
 {

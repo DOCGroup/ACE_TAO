@@ -21,17 +21,20 @@
 #include "Any_Unknown_IDL_Type.h"
 #include "ORB_Constants.h"
 
-#include "ace/Null_Mutex.h"
-#include "ace/OS_NS_string.h"
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
     || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #  include "tao/Sequence_T.h"
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#include "ace/Guard_T.h"
+#include "ace/Malloc_Base.h"
+#include "ace/Null_Mutex.h"
+#include "ace/OS_NS_string.h"
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Typecode.i"
 #endif /* ! __ACE_INLINE__ */
+
 
 ACE_RCSID (tao,
            Typecode,
@@ -294,11 +297,11 @@ CORBA::TypeCode::~TypeCode (void)
   // Free up our private state.
   delete this->private_state_;
   this->private_state_ = 0;
-  
+
   if (this->offset_map_ != 0)
     {
       OFFSET_MAP_ENTRY *entry = 0;
-      
+
       for (CORBA::TypeCode::OFFSET_MAP_ITERATOR iter (*this->offset_map_);
            iter.next (entry) != 0;
            iter.advance ())
@@ -3856,11 +3859,11 @@ template class TAO::Ret_Object_Argument_T<CORBA::TypeCode*,
 
 template class TAO::In_Object_Argument_T<CORBA::TypeCode*>;
 
-template class 
+template class
   TAO::Inout_Object_Argument_T<CORBA::TypeCode*,
                                TAO::Objref_Traits<CORBA::TypeCode> >;
 
-template class 
+template class
   TAO::Out_Object_Argument_T<
       CORBA::TypeCode*,
       TAO_Pseudo_Out_T<CORBA::TypeCode,

@@ -20,9 +20,13 @@
 # include "Stub.i"
 #endif /* ! __ACE_INLINE__ */
 
+#include "ace/Auto_Ptr.h"
+
+
 ACE_RCSID (tao,
            TAO_Stub,
            "$Id$")
+
 
 TAO_Stub::TAO_Stub (const char *repository_id,
                     const TAO_MProfile &profiles,

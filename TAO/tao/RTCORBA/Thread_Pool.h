@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Thread_Pool.h
@@ -28,6 +30,7 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/New_Leader_Generator.h"
 #include "ace/Task.h"
+#include "ace/Null_Mutex.h"
 
 class TAO_Thread_Lane;
 

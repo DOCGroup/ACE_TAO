@@ -196,7 +196,7 @@ namespace TAO
     ACE_ENDTRY;
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
-    PortableInterceptor::ReplyStatus status =
+    const PortableInterceptor::ReplyStatus status =
       this->req_info_.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
@@ -255,7 +255,7 @@ namespace TAO
                                       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (PortableInterceptor::UNKNOWN);
 
-    PortableInterceptor::ReplyStatus status =
+    const PortableInterceptor::ReplyStatus status =
       this->req_info_.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (status);
 
@@ -273,7 +273,7 @@ namespace TAO
                                       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (PortableInterceptor::UNKNOWN);
 
-    PortableInterceptor::ReplyStatus status =
+    const PortableInterceptor::ReplyStatus status =
       this->req_info_.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (status);
 

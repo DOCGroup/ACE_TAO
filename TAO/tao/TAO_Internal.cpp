@@ -23,10 +23,15 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Env_Value_T.h"
+#include "ace/ACE.h"
+#include "ace/Static_Object_Lock.h"
+#include "ace/OS_NS_stdio.h"
+
 
 ACE_RCSID (tao,
            TAO_Internal,
            "$Id$")
+
 
 #if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP) && \
     defined (TAO_DEFAULT_RESOURCE_FACTORY_ARGS)

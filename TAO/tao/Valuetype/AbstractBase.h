@@ -26,6 +26,7 @@
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
 #include "tao/Objref_VarOut_T.h"
+#include "tao/Object.h"  /* For CORBA::Object_var */
 
 class TAO_Stub;
 class TAO_Abstract_ServantBase;

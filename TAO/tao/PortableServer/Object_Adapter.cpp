@@ -31,9 +31,13 @@
 # include "Object_Adapter.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PortableServer,
+#include "ace/OS_NS_string.h"
+
+
+ACE_RCSID (PortableServer,
            Object_Adapter,
            "$Id$")
+
 
 // Timeprobes class
 #include "tao/Timeprobe.h"

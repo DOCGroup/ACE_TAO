@@ -9,12 +9,13 @@
 #include "Transport.h"
 #include "Wait_Strategy.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_string.h"
 
-//#include "ace/Strategies_T.h"
 
 ACE_RCSID (TAO,
            IIOP_Connector,
            "$Id$")
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>;

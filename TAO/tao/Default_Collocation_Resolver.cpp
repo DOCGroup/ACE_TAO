@@ -2,8 +2,8 @@
 
 #include "tao/Default_Collocation_Resolver.h"
 
-ACE_RCSID (tao, 
-           Default_Collocation_Resolver, 
+ACE_RCSID (tao,
+           Default_Collocation_Resolver,
            "$Id$")
 
 #include "tao/Object.h"
@@ -11,6 +11,9 @@ ACE_RCSID (tao,
 #if !defined (__ACE_INLINE__)
 # include "tao/Default_Collocation_Resolver.i"
 #endif /* ! __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
+
 
 CORBA::Boolean
 TAO_Default_Collocation_Resolver::is_collocated (CORBA::Object_ptr object

@@ -1,4 +1,3 @@
-
 #include "tao/PortableServer/POA.h"
 
 ACE_RCSID (PortableServer,
@@ -35,6 +34,8 @@ ACE_RCSID (PortableServer,
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_netdb.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 
 #include "PortableGroup_Hooks.h"
 

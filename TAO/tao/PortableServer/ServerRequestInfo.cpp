@@ -14,6 +14,8 @@ ACE_RCSID (TAO_PortableServer,
 #include "tao/PolicyC.h"
 #include "tao/ORB_Core.h"
 
+#include "ace/OS_NS_string.h"
+
 # if !defined (__ACE_INLINE__)
 #   include "ServerRequestInfo.inl"
 # endif /* !__ACE_INLINE__ */

@@ -366,4 +366,3 @@ CORBA::Any_out::operator-> (void)
 {
   return this->ptr_;
 }
-

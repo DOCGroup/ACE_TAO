@@ -7,13 +7,16 @@
 
 #include "tao/ORB_Constants.h"
 
-ACE_RCSID (tao, 
-           RT_TAO_Stub_Factory, 
+#include "ace/Log_Msg.h"
+
+
+ACE_RCSID (RTCORBA,
+           RT_TAO_Stub_Factory,
            "$Id$")
+
 
 TAO_RT_Stub_Factory::~TAO_RT_Stub_Factory (void)
 {
-  // No-Op.
 }
 
 TAO_Stub *

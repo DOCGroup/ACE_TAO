@@ -5,26 +5,27 @@
 #include "orbconf.h"
 
 #include "ace/Dynamic_Service.h"
+#include "ace/ACE.h"
+
 
 ACE_RCSID (tao,
            Resource_Factory,
            "$Id$")
 
+
 // ****************************************************************
 
 TAO_Protocol_Item::TAO_Protocol_Item (const ACE_CString &name)
-  :   name_ (name),
-      factory_ (0),
-      factory_owner_ (0)
+  : name_ (name),
+    factory_ (0),
+    factory_owner_ (0)
 {
 }
 
 TAO_Protocol_Item::~TAO_Protocol_Item (void)
 {
   if (this->factory_owner_ == 1)
-    {
-      delete this->factory_;
-    }
+    delete this->factory_;
 }
 
 const ACE_CString &

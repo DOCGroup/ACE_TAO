@@ -25,6 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Objref_VarOut_T.h"
+#include "tao/Pseudo_VarOut_T.h"
+
 
 class TAO_ORB_Core;
 class TAO_ServerRequest;

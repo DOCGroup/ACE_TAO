@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//
 // $Id$
 
 #include "tao/Acceptor_Registry.h"
@@ -16,14 +14,17 @@
 #include "tao/ORB_Constants.h"
 
 #include "ace/Auto_Ptr.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Acceptor_Registry.i"
 #endif /* __ACE_INLINE__ */
 
+
 ACE_RCSID (tao,
            Acceptor_Registry,
            "$Id$")
+
 
 TAO_Acceptor_Registry::TAO_Acceptor_Registry (void)
   : acceptors_ (0),
@@ -36,15 +37,13 @@ TAO_Acceptor_Registry::~TAO_Acceptor_Registry (void)
   this->close_all ();
 
   delete [] this->acceptors_;
-  this->acceptors_ = 0;
-  this->size_ = 0;
 }
 
 size_t
 TAO_Acceptor_Registry::endpoint_count (void)
 {
   int count = 0;
-  TAO_AcceptorSetIterator end = this->end ();
+  const TAO_AcceptorSetIterator end = this->end ();
 
   for (TAO_AcceptorSetIterator i = this->begin (); i != end; ++i)
     {
@@ -57,21 +56,22 @@ TAO_Acceptor_Registry::endpoint_count (void)
 int
 TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
 {
-  TAO_AcceptorSetIterator end = this->end ();
+  const TAO_AcceptorSetIterator end = this->end ();
+
+  const CORBA::ULong count = mprofile.profile_count ();
 
   // If at least one endpoint in one of the profiles matches one of
   // the acceptors, we are collocated.
   for (TAO_AcceptorSetIterator i = this->begin (); i != end; ++i)
     {
-      for (TAO_PHandle j = 0; j != mprofile.profile_count (); ++j)
+      for (TAO_PHandle j = 0; j != count; ++j)
         {
           const TAO_Profile *profile = mprofile.get_profile (j);
 
           // @@ We need to invoke a nonconst <endpoint> method on
-          // <profile>.  The content of profile/endpoint
-          // will not be modified.
-          TAO_Profile *pf = ACE_const_cast (TAO_Profile *,
-                                            profile);
+          //    <profile>.  The content of profile/endpoint will not
+          //    be modified.
+          TAO_Profile *pf = ACE_const_cast (TAO_Profile *, profile);
 
           // Check all endpoints for address equality.
           if ((*i)->tag () == pf->tag ())
@@ -122,31 +122,29 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
   // protocol_factories is in the following form
   //   IOP1://addr1,addr2,...,addrN/;IOP2://addr1,...addrM/;...
   TAO_EndpointSet endpoint_set = orb_core->orb_params ()->endpoints ();
-  
+
   // Check to see if there is an additional endpoint value defined
   // as an environment property.
   ACE_CString env_endpoint = ACE_OS::getenv ("TAO_ORBENDPOINT");
   if (ACE_OS::strcmp (env_endpoint.c_str(), "") != 0)
-  {
-    endpoint_set.enqueue_tail (env_endpoint);
-  }
-
-  if (endpoint_set.is_empty ())
     {
+      endpoint_set.enqueue_tail (env_endpoint);
+    }
+
+  if (endpoint_set.is_empty ()
       // No endpoints were specified, we let each protocol pick its
       // own default.
 
       // All TAO pluggable protocols are expected to have the ability
       // to create a default endpoint.
-      if (this->open_default (orb_core, reactor, 0) == -1)
-        {
-          ACE_THROW_RETURN (CORBA::INTERNAL (
-                              CORBA::SystemException::_tao_minor_code (
-                                TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                                0),
-                              CORBA::COMPLETED_NO),
-                            -1);
-        }
+      && this->open_default (orb_core, reactor, 0) == -1)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+                            0),
+                          CORBA::COMPLETED_NO),
+                        -1);
     }
 
   // Count the maximum number of endpoints in the set.  This will be
@@ -162,7 +160,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 
       // IOP://address1,address2
       //    ^ slot
-      int slot = iop.find ("://", 0);
+      const int slot = iop.find ("://", 0);
 
       if (slot == iop.npos)
         {
@@ -223,7 +221,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 
       // IOP://address1,address2
       //    ^ slot
-      int slot = iop.find ("://", 0);
+      const int slot = iop.find ("://", 0);
 
       if (slot == iop.npos)
         {
@@ -243,7 +241,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
             -1);
         }
 
-      ACE_CString prefix = iop.substring (0, slot);
+      const ACE_CString prefix (iop.substring (0, slot));
 
       // @@ We could move the protocol factory loop to the outermost
       //    level but for now we leave it inside the endpoint loop
@@ -251,12 +249,12 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       //    than protocols.
 
       // Now get the list of available protocol factories.
-      TAO_ProtocolFactorySetItor end =
+      const TAO_ProtocolFactorySetItor end =
         orb_core->protocol_factories ()->end ();
 
-      int found = 0;
+      bool found = false;
       // If usable protocol (factory) is found then this will be
-      // set equal to 1.
+      // set equal to true.
 
       for (TAO_ProtocolFactorySetItor factory =
              orb_core->protocol_factories ()->begin ();
@@ -268,12 +266,12 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
               // increment slot past the "://" (i.e. add 3)
               ACE_CString addrs = iop.substring (slot + 3);
 
-              int result = this->open_i (orb_core,
-                                         reactor,
-                                         addrs,
-                                         factory,
-                                         ignore_address
-                                          ACE_ENV_ARG_PARAMETER);
+              const int result = this->open_i (orb_core,
+                                               reactor,
+                                               addrs,
+                                               factory,
+                                               ignore_address
+                                               ACE_ENV_ARG_PARAMETER);
               ACE_CHECK_RETURN (-1);
 
               if (result != 0)
@@ -281,7 +279,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                   return -1;
                 }
 
-              found = 1;  // A usable protocol was found.
+              found = true;  // A usable protocol was found.
             }
           else
             {
@@ -289,7 +287,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
             }
         }
 
-      if (found == 0)
+      if (found == false)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_LIB_TEXT ("TAO (%P|%t) ")
@@ -332,11 +330,11 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                       -1);
     }
 
-  TAO_ProtocolFactorySetItor end = pfs->end ();
+  const TAO_ProtocolFactorySetItor end = pfs->end ();
 
   // Flag that indicates at least one endpoint was opened.  If one
   // wasn't opened then there is a problem.
-  int opened_endpoint = 0;
+  bool opened_endpoint = false;
 
   // Loop through all the loaded protocols...
   for (TAO_ProtocolFactorySetItor i = pfs->begin (); i != end; ++i)
@@ -353,13 +351,12 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                                   TAO_DEF_GIOP_MAJOR,  // default major
                                   TAO_DEF_GIOP_MINOR,  // default minor
                                   i,
-                                  options)
-                != 0)
+                                  options) != 0)
             {
               return -1;
             }
 
-          opened_endpoint = 1;
+          opened_endpoint = true;
         }
     }
 
@@ -418,8 +415,7 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                               reactor,
                               major,
                               minor,
-                              options)
-        == -1)
+                              options) == -1)
     {
       delete acceptor;
 
@@ -445,7 +441,7 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
 int
 TAO_Acceptor_Registry::close_all (void)
 {
-  TAO_AcceptorSetIterator end = this->end ();
+  const TAO_AcceptorSetIterator end = this->end ();
 
   for (TAO_AcceptorSetIterator i = this->begin (); i != end; ++i)
     {
@@ -468,7 +464,7 @@ TAO_Acceptor_Registry::extract_endpoint_options (ACE_CString &addrs,
                                                  ACE_CString &options,
                                                  TAO_Protocol_Factory *factory)
 {
-  int options_index =
+  const int options_index =
     addrs.find (factory->options_delimiter ());
 
   if (options_index == ACE_static_cast (int,
@@ -524,7 +520,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
     options = options_tmp.c_str ();
 
   char *last_addr = 0;
-  ACE_Auto_Basic_Array_Ptr <char> addr_str (addrs.rep ());
+  ACE_Auto_Basic_Array_Ptr<char> addr_str (addrs.rep ());
 
   const char *astr = ACE_OS::strtok_r (addr_str.get (),
                                        ",",
@@ -554,7 +550,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                                           minor);
 
           // Check for existence of endpoint.
-          if (address.length () == 0 || ignore_address)
+          if (ignore_address || address.length () == 0)
             {
               // Protocol prefix was specified without any endpoints.
               // All TAO pluggable protocols are expected to have the
@@ -585,12 +581,11 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                                    major,
                                    minor,
                                    address.c_str (),
-                                   options)
-                == -1)
+                                   options) == -1)
             {
               /* Need to save the errno value from the acceptor->open(),
-               * because errno will get reset when we delete acceptor */ 
-              int errno_value = errno;
+               * because errno will get reset when we delete acceptor */
+              const int errno_value = errno;
               delete acceptor;
 
               if (TAO_debug_level > 0)

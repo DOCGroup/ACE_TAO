@@ -5,6 +5,8 @@
 #include "DynAnyFactory.h"
 #include "tao/Any_Unknown_IDL_Type.h"
 #include "ace/OS_NS_wchar.h"
+#include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (DynamicAny,
            DynAny_i,
@@ -442,7 +444,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
                                           ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        CORBA::ULong bound = 
+        CORBA::ULong bound =
           unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
@@ -481,7 +483,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
                                           ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        CORBA::ULong bound = 
+        CORBA::ULong bound =
           unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 

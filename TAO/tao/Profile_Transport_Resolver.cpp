@@ -22,7 +22,6 @@ ACE_RCSID (tao,
 namespace TAO
 {
 
-
   Profile_Transport_Resolver::~Profile_Transport_Resolver (void)
   {
     if (this->profile_)
@@ -40,24 +39,21 @@ namespace TAO
         this->transport_->remove_reference ();
       }
 
-    if (this->inconsistent_policies_)
-      {
-        delete this->inconsistent_policies_;
-      }
+    delete this->inconsistent_policies_;
   }
 
   void
   Profile_Transport_Resolver::profile (TAO_Profile *p)
   {
-    // @@ NOTE:This is just a workaround for a more serious problem with
-    // profile management. This would cover some potential issues that
-    // Ossama is working on.
-    // Ossama, please remove them when you are done.
-    TAO_Profile *tmp = this->profile_;
-
     // Dont do anything if the incoming profile is null
     if (p)
       {
+        // @note This is just a workaround for a more serious problem
+        // with profile management. This would cover some potential
+        // issues that Ossama is working on.  Ossama, please remove
+        // them when you are done.
+        TAO_Profile *tmp = this->profile_;
+
         (void) p->_incr_refcnt ();
         this->profile_ = p;
 
@@ -65,7 +61,7 @@ namespace TAO
           {
             (void) tmp->_decr_refcnt ();
           }
-    }
+      }
   }
 
 
@@ -137,7 +133,7 @@ namespace TAO
 
     ACE_Time_Value connection_timeout;
 
-    bool is_conn_timeout =
+    const bool is_conn_timeout =
       this->get_connection_timeout (connection_timeout);
 
 
@@ -185,7 +181,8 @@ namespace TAO
   }
 
   bool
-  Profile_Transport_Resolver::get_connection_timeout (ACE_Time_Value &max_wait_time)
+  Profile_Transport_Resolver::get_connection_timeout (
+    ACE_Time_Value &max_wait_time)
   {
     bool is_conn_timeout = false;
 
@@ -199,7 +196,8 @@ namespace TAO
 
 
   void
-  Profile_Transport_Resolver::init_inconsistent_policies (ACE_ENV_SINGLE_ARG_DECL)
+  Profile_Transport_Resolver::init_inconsistent_policies (
+    ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_NEW_THROW_EX (this->inconsistent_policies_,

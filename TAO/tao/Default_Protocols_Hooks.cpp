@@ -8,12 +8,14 @@
 # include "Default_Protocols_Hooks.i"
 #endif /* ! __ACE_INLINE__ */
 
+#include "ace/Log_Msg.h"
+
+
 ACE_RCSID (tao,
            Default_Protocols_Hooks,
            "$Id$")
 
 
-/// destructor
 TAO_Default_Protocols_Hooks::~TAO_Default_Protocols_Hooks (void)
 {
 }

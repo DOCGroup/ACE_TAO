@@ -8,10 +8,12 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
 #include "MCAST_Parser.i"
 #endif /* __ACE_INLINE__ */
+
 
 ACE_RCSID (tao,
            MCAST_Parser,

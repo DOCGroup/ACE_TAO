@@ -39,6 +39,8 @@
 #include "IORInterceptorC.i"
 #endif /* !defined INLINE */
 
+#include "ace/OS_NS_string.h"
+
 // TAO_IDL - Generated from
 // be/be_visitor_arg_traits.cpp:60
 
@@ -200,7 +202,7 @@ TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*PortableInterceptor__TAO_IORInterceptor_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -221,10 +223,10 @@ PortableInterceptor::IORInterceptor::_narrow (
     {
       return IORInterceptor::_nil ();
     }
-  
+
   IORInterceptor_ptr proxy =
     dynamic_cast<IORInterceptor_ptr> (_tao_objref);
-  
+
   return IORInterceptor::_duplicate (proxy);
 }
 
@@ -235,7 +237,7 @@ PortableInterceptor::IORInterceptor::_duplicate (IORInterceptor_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -294,7 +296,7 @@ PortableInterceptor::IORInterceptor::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         PortableInterceptor::IORInterceptor
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         PortableInterceptor::IORInterceptor
@@ -306,7 +308,7 @@ PortableInterceptor::IORInterceptor::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         PortableInterceptor::IORInfo
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         PortableInterceptor::IORInfo
@@ -320,7 +322,7 @@ PortableInterceptor::IORInterceptor::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T< \
         PortableInterceptor::IORInterceptor
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableInterceptor::IORInterceptor
@@ -332,11 +334,10 @@ PortableInterceptor::IORInterceptor::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T< \
         PortableInterceptor::IORInfo
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableInterceptor::IORInfo
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

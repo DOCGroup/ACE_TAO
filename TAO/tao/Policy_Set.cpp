@@ -1,15 +1,18 @@
 // $Id$
 
 #include "Policy_Set.h"
-#include "tao/debug.h"
+#include "Environment.h"
+#include "debug.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Policy_Set.i"
+# include "Policy_Set.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           Policy_Set, 
+
+ACE_RCSID (tao,
+           Policy_Set,
            "$Id$")
+
 
 TAO_Policy_Set::~TAO_Policy_Set (void)
 {
@@ -27,8 +30,7 @@ TAO_Policy_Set::~TAO_Policy_Set (void)
 }
 
 TAO_Policy_Set::TAO_Policy_Set (const TAO_Policy_Set &rhs)
-  :
-    scope_ (rhs.scope_)
+  : scope_ (rhs.scope_)
 {
   // Initialize the cache.
   for (int i = 0; i < TAO_CACHED_POLICY_MAX_CACHED; ++i)
@@ -57,7 +59,7 @@ TAO_Policy_Set::TAO_Policy_Set (const TAO_Policy_Set &rhs)
           // Add the "cacheable" policies into the cache.
           if (copy->_tao_cached_type () != TAO_CACHED_POLICY_UNCACHED)
             {
-              this->cached_policies_[copy->_tao_cached_type ()] = 
+              this->cached_policies_[copy->_tao_cached_type ()] =
                 copy.ptr ();
             }
 
@@ -80,7 +82,7 @@ TAO_Policy_Set::TAO_Policy_Set (const TAO_Policy_Set &rhs)
 
 void
 TAO_Policy_Set::copy_from (TAO_Policy_Set *source
-                                    ACE_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
 {
   if (source == 0)
     {
@@ -104,7 +106,7 @@ TAO_Policy_Set::copy_from (TAO_Policy_Set *source
           ACE_THROW (CORBA::NO_PERMISSION ());
         }
 
-      CORBA::Policy_var copy = 
+      CORBA::Policy_var copy =
         policy->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
@@ -114,8 +116,7 @@ TAO_Policy_Set::copy_from (TAO_Policy_Set *source
       // Add the "cacheable" policies into the cache.
       if (copy->_tao_cached_type () != TAO_CACHED_POLICY_UNCACHED)
         {
-          this->cached_policies_[copy->_tao_cached_type ()] = 
-            copy.ptr ();
+          this->cached_policies_[copy->_tao_cached_type ()] = copy.ptr ();
         }
 
       this->policy_list_[length] = copy._retn ();
@@ -125,10 +126,9 @@ TAO_Policy_Set::copy_from (TAO_Policy_Set *source
 void
 TAO_Policy_Set::cleanup_i (ACE_ENV_SINGLE_ARG_DECL)
 {
-  CORBA::ULong i;
-
+  const CORBA::ULong len = this->policy_list_.length ();
   // Cleanup the policy list.
-  for (i = 0; i < this->policy_list_.length (); ++i)
+  for (CORBA::ULong i = 0; i < len; ++i)
     {
       this->policy_list_[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
@@ -138,9 +138,9 @@ TAO_Policy_Set::cleanup_i (ACE_ENV_SINGLE_ARG_DECL)
   this->policy_list_.length (0);
 
   // Cleanup the cache.
-  for (i = 0; i < TAO_CACHED_POLICY_MAX_CACHED; ++i)
+  for (CORBA::ULong j = 0; j < TAO_CACHED_POLICY_MAX_CACHED; ++j)
     {
-      this->cached_policies_[i] = 0;
+      this->cached_policies_[j] = 0;
     }
 }
 
@@ -164,9 +164,11 @@ TAO_Policy_Set::set_policy_overrides (const CORBA::PolicyList &policies,
 
   // Flag, indicating whether we have already overridden
   // RTCORBA::ServerProtocolPolicy during this call.
-  int server_protocol_set = 0;
+  bool server_protocol_set = false;
 
-  for (CORBA::ULong i = 0; i < policies.length ();  ++i)
+  const CORBA::ULong plen = policies.length ();
+
+  for (CORBA::ULong i = 0; i < plen; ++i)
     {
       // Because MSVC 5 has a bug, we had to replace
       // a simple CORBA::Policy_var policy = policies[i];
@@ -179,7 +181,7 @@ TAO_Policy_Set::set_policy_overrides (const CORBA::PolicyList &policies,
           continue;
         }
 
-      CORBA::PolicyType policy_type = 
+      const CORBA::PolicyType policy_type =
         policy->policy_type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
@@ -191,12 +193,12 @@ TAO_Policy_Set::set_policy_overrides (const CORBA::PolicyList &policies,
           // User-caused exceptional conditions can leave the Policy
           // Manager in an inconsistent state.  It is the
           // responsibility of the user to return it to consistent state.
-          if (server_protocol_set != 0)
+          if (server_protocol_set)
             {
               ACE_THROW (CORBA::INV_POLICY ());
             }
 
-          server_protocol_set = 1;
+          server_protocol_set = true;
         }
 
       this->set_policy (policy.in () ACE_ENV_ARG_PARAMETER);
@@ -213,14 +215,15 @@ TAO_Policy_Set::set_policy (const CORBA::Policy_ptr policy
       ACE_THROW (CORBA::NO_PERMISSION ());
     }
 
-  CORBA::PolicyType policy_type = policy->policy_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  const CORBA::PolicyType policy_type =
+    policy->policy_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Policy_var copy = policy->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::ULong j = 0;
-  CORBA::ULong length = this->policy_list_.length ();
+  const CORBA::ULong length = this->policy_list_.length ();
 
   while (j != length)
     {
@@ -263,19 +266,17 @@ CORBA::PolicyList *
 TAO_Policy_Set::get_policy_overrides (const CORBA::PolicyTypeSeq &types
                                       ACE_ENV_ARG_DECL)
 {
-  CORBA::ULong types_length = types.length ();
-  CORBA::ULong slots = types_length;
+  const CORBA::ULong slots = types.length ();
   CORBA::PolicyList *policy_list_ptr;
 
   if (slots == 0)
     {
-      slots = this->policy_list_.length ();
+      // Copy our own policy list.
       ACE_NEW_THROW_EX (policy_list_ptr,
-                        CORBA::PolicyList (slots),
+                        CORBA::PolicyList (this->policy_list_),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
-      *policy_list_ptr = this->policy_list_;
       return policy_list_ptr;
     }
 
@@ -288,14 +289,14 @@ TAO_Policy_Set::get_policy_overrides (const CORBA::PolicyTypeSeq &types
   policy_list->length (slots);
   CORBA::ULong n = 0;
 
-  for (CORBA::ULong j = 0; j < types.length ();  ++j)
+  for (CORBA::ULong j = 0; j < slots; ++j)
     {
-      CORBA::ULong slot = types[j];
-      CORBA::ULong length = this->policy_list_.length ();
+      const CORBA::ULong slot = types[j];
+      const CORBA::ULong length = this->policy_list_.length ();
 
-      for (CORBA::ULong i = 0; i != length; ++i)
+      for (CORBA::ULong i = 0; i < length; ++i)
         {
-          CORBA::ULong current =
+          const CORBA::ULong current =
             this->policy_list_[i]->policy_type (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
@@ -310,7 +311,8 @@ TAO_Policy_Set::get_policy_overrides (const CORBA::PolicyTypeSeq &types
         }
     }
 
-  policy_list->length (n);
+  policy_list->length (n);  // Truncate buffer if necessary.
+
   return policy_list._retn ();
 }
 
@@ -318,11 +320,11 @@ CORBA::Policy_ptr
 TAO_Policy_Set::get_policy (CORBA::PolicyType type
                                      ACE_ENV_ARG_DECL)
 {
-  CORBA::ULong length = this->policy_list_.length ();
+  const CORBA::ULong length = this->policy_list_.length ();
 
-  for (CORBA::ULong i = 0; i != length; ++i)
+  for (CORBA::ULong i = 0; i < length; ++i)
     {
-      CORBA::ULong current =
+      const CORBA::ULong current =
         this->policy_list_[i]->policy_type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
@@ -340,7 +342,7 @@ TAO_Policy_Set::get_policy (CORBA::PolicyType type
 CORBA::Policy_ptr
 TAO_Policy_Set::get_cached_const_policy (TAO_Cached_Policy_Type type) const
 {
-  if (type != TAO_CACHED_POLICY_UNCACHED 
+  if (type != TAO_CACHED_POLICY_UNCACHED
       && type < TAO_CACHED_POLICY_MAX_CACHED)
     {
       return this->cached_policies_[type];
@@ -352,7 +354,7 @@ TAO_Policy_Set::get_cached_const_policy (TAO_Cached_Policy_Type type) const
 CORBA::Policy_ptr
 TAO_Policy_Set::get_cached_policy (TAO_Cached_Policy_Type type)
 {
-  if (type != TAO_CACHED_POLICY_UNCACHED 
+  if (type != TAO_CACHED_POLICY_UNCACHED
       && type < TAO_CACHED_POLICY_MAX_CACHED)
     {
       return CORBA::Policy::_duplicate (this->cached_policies_[type]);

@@ -8,9 +8,13 @@
 
 #include "tao/Protocols_Hooks.h"
 
-ACE_RCSID (tao,
+#include "ace/Log_Msg.h"
+
+
+ACE_RCSID (RTCORBA,
            RT_Endpoint_Selector_Factory,
            "$Id$")
+
 
 // ****************************************************************
 

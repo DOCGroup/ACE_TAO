@@ -1,19 +1,23 @@
-// $Id$
-
 #include "UIOP_Profile.h"
 
 #if TAO_HAS_UIOP == 1
+
+#include "uiop_endpoints.h"
 
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-#include "uiop_endpoints.h"
+
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (Strategies,
            UIOP_Profile,
            "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 # include "UIOP_Profile.i"
