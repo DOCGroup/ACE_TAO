@@ -1,3 +1,12 @@
+Sat Dec 30 11:12:08 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Hash_Map_Manager_T.h:
+	* ace/Map_T.i:
+	* ace/Message_Block_T.cpp: Added patches provided by J. Russell
+	  Noseworthy <rnosewor@objectsciences.com> for SPRO 5.1. The patch
+	  to confi-sunos-5.5.h has not been applaed as it breaks builds at
+	  WashU on SunCC 5.0.
+
 Fri Dec 29 17:08:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/auto_compile:
