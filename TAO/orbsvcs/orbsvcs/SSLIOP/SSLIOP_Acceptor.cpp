@@ -89,30 +89,29 @@ TAO_SSLIOP_Acceptor::~TAO_SSLIOP_Acceptor (void)
 
 // TODO =
 //    2) For V1.[1,2] there are tagged components
-
 int
 TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
-                                      TAO_MProfile &mprofile)
+                                    TAO_MProfile &mprofile,
+                                    CORBA::Boolean share_profile)
 {
   // Sanity check.
   if (this->endpoint_count_ == 0)
     return -1;
 
-  // If RT_CORBA is enabled, only one IIOP profile is created per
-  // <mprofile> and all SSLIOP endpoints are added into that profile.
-  // If RT_CORBA is not enabled, we create a separate profile for each
-  // endpoint.
+  // Check if multiple endpoints should be put in one profile or
+  // if they should be spread across multiple profiles.
+  if (share_profile == 1)
+    return this->create_shared_profile (object_key,
+                                        mprofile);
+  else
+    return this->create_new_profiles (object_key,
+                                     mprofile);
+}
 
-#if (TAO_HAS_RT_CORBA == 1)
-
-  // @@ RTCORBA_SUBSETTING
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("This method is deprecated for RTCORBA, \ncreate_endpoint_for_mprofile should be called instead")));
-  // This method should not be called anymore
-  return -1;
-
-#endif  /* TAO_HAS_RT_CORBA == 1 */
-
+int
+TAO_SSLIOP_Acceptor::create_new_mprofile (const TAO_ObjectKey &object_key,
+                                          TAO_MProfile &mprofile)
+{
   // Adding this->endpoint_count_ to the TAO_MProfile.
   int count = mprofile.profile_count ();
   if ((mprofile.size () - count) < this->endpoint_count_
@@ -196,8 +195,8 @@ TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
 }
 
 int
-TAO_SSLIOP_Acceptor::create_endpoint_for_mprofile (const TAO_ObjectKey &object_key,
-                                                   TAO_MProfile &mprofile)
+TAO_SSLIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
+                                            TAO_MProfile &mprofile)
 {
   size_t index = 0;
   TAO_Profile *pfile = 0;
