@@ -1,3 +1,7 @@
+Sun May 02 22:11:42 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile: always build Trader with LifeCycle.
+
 Sun May 02 22:09:42 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/CosEvent/{Consumer,Supplier}Admin_i.cpp,
@@ -32,9 +36,9 @@ Sun May 02 14:32:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Sun May 02 14:02:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * orbsvcs/orbsvcs/Makefile: added dependency of Event on
-          Sched, and Event2 on Event's IDL_SRC's.  Thanks to
-          Carlos for letting me know that they're necessary.
+        * orbsvcs/orbsvcs/Makefile: always build Sched with Event
+          or Event2.  Added dependency on Event's IDL_SRC's.  Thanks
+          to Carlos for letting me know that these are necessary.
           Reordered subset support to be top-to-bottom, so that
           lower level services can be easily included if needed
           only by higher level services.
