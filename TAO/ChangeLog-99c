@@ -1,135 +1,140 @@
+Tue May 11 09:22:08 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/DomainC.cpp: added TAO_Object_Field_T<CORBA_DomainManager>
+          explicit template instantiation.
+
 Mon May 10 22:57:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/DomainC.cpp:
-	  Added missing #include
+        * tao/DomainC.cpp:
+          Added missing #include
 
 Mon May 10 22:40:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/releasenotes/TODO.html:
-	* docs/releasenotes/ec.html:
-	  Updated to include the latest EC results.
+        * docs/releasenotes/TODO.html:
+        * docs/releasenotes/ec.html:
+          Updated to include the latest EC results.
 
 Mon May 10 22:39:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/AST_Expression.cpp:
-	* TAO_IDL/include/AST_Expression.h:
-	  Added constructors for AST_Expressions of type
-	  long long and unsigned long long - bracketed with
-	  ifdefs concerning ACE_LACKS_LONGLONG_T.
+        * TAO_IDL/ast/AST_Expression.cpp:
+        * TAO_IDL/include/AST_Expression.h:
+          Added constructors for AST_Expressions of type
+          long long and unsigned long long - bracketed with
+          ifdefs concerning ACE_LACKS_LONGLONG_T.
 
 Mon May 10 21:54:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/Makefile:
-	  Added the Event directory
+        * orbsvcs/tests/Makefile:
+          Added the Event directory
 
-	* orbsvcs/tests/Event/Basic/Reconnect.h:
-	* orbsvcs/tests/Event/Basic/Reconnect.cpp:
-	  Added new option to control the number of disconnections, fixed
-	  some minor problems. Removed execution of the regular test since 
-	  it will take too long to run thousands of consumers and
-	  suppliers.
+        * orbsvcs/tests/Event/Basic/Reconnect.h:
+        * orbsvcs/tests/Event/Basic/Reconnect.cpp:
+          Added new option to control the number of disconnections, fixed
+          some minor problems. Removed execution of the regular test since
+          it will take too long to run thousands of consumers and
+          suppliers.
 
-	* orbsvcs/tests/Event/lib/Driver.h:
-	* orbsvcs/tests/Event/lib/Driver.i:
-	* orbsvcs/tests/Event/lib/Driver.cpp:
-	  Fixed and cleaned up memory managment for tasks.
-	  Fixed computation of the Supplier QOS
-	  Fixed argument parsing
-	  Fixed throughput computation
+        * orbsvcs/tests/Event/lib/Driver.h:
+        * orbsvcs/tests/Event/lib/Driver.i:
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+          Fixed and cleaned up memory managment for tasks.
+          Fixed computation of the Supplier QOS
+          Fixed argument parsing
+          Fixed throughput computation
 
-	* orbsvcs/tests/Event/lib/Supplier.cpp:
-	  Better error handling if the QoS is invalid
+        * orbsvcs/tests/Event/lib/Supplier.cpp:
+          Better error handling if the QoS is invalid
 
-	* orbsvcs/tests/Event/lib/Consumer.cpp:
-	  Fixed throughput computation
+        * orbsvcs/tests/Event/lib/Consumer.cpp:
+          Fixed throughput computation
 
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
-	  Implemented reconnection of suppliers
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+          Implemented reconnection of suppliers
 
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
-	  Fixed typo
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+          Fixed typo
 
 Mon May 10 19:44:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* Domain.pidl:
-	* DomainC.{h,i,cpp}:
-	* DomainS.{h,cpp}:
-	* DomainS_T.{h,i,cpp}:
-	  New files incorporating the (as yet unimplemented)
-	  classes DomainManager, ConstructionPolicy, and
-	  DomainManagerList.
+        * Domain.pidl:
+        * DomainC.{h,i,cpp}:
+        * DomainS.{h,cpp}:
+        * DomainS_T.{h,i,cpp}:
+          New files incorporating the (as yet unimplemented)
+          classes DomainManager, ConstructionPolicy, and
+          DomainManagerList.
 
-	* corbafwd.h:
-	* POA_CORBA.h:
-	* Typecode_Constants.cpp:
-	* TAO.dsp:
-	* TAO_Static.dsp:
-	* Makefile:
-	  All the necessary modifications corresponding to
-	  the above new files. Also removed the (nonexistent) 
-	  file PolicyS.h from the two projects.
+        * corbafwd.h:
+        * POA_CORBA.h:
+        * Typecode_Constants.cpp:
+        * TAO.dsp:
+        * TAO_Static.dsp:
+        * Makefile:
+          All the necessary modifications corresponding to
+          the above new files. Also removed the (nonexistent)
+          file PolicyS.h from the two projects.
 
 Mon May 10 17:21:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
-	  New class TAO_EC_Event_Channel_Attributes used to initialize the
-	  event channel. This will close the interface for the EC
-	  constructor, yet will allow us to add more (optional or
-	  mandatory) arguments.
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+          New class TAO_EC_Event_Channel_Attributes used to initialize the
+          event channel. This will close the interface for the EC
+          constructor, yet will allow us to add more (optional or
+          mandatory) arguments.
 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	  The event channel can be configured to support multiple
-	  connect() calls to the same ProxyPushSupplier.
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          The event channel can be configured to support multiple
+          connect() calls to the same ProxyPushSupplier.
 
-	* orbsvcs/Event_Service/Event_Service.cpp:
-	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
-	* orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
-	  Use the TAO_EC_Event_Channel_Attributes class to initiliaze
-	  TAO_EC_Event_Channel
+        * orbsvcs/Event_Service/Event_Service.cpp:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+        * orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+          Use the TAO_EC_Event_Channel_Attributes class to initiliaze
+          TAO_EC_Event_Channel
 
-	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
-	  Minor cosmetic fixes.
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
+          Minor cosmetic fixes.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
-	  Removed dead code.
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+          Removed dead code.
 
 Mon May 10 16:46:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO-INSTALL.html (href): Added a link to Barry Hoggard's CORBA
-	  page which contains TAO specific information.
+        * TAO-INSTALL.html (href): Added a link to Barry Hoggard's CORBA
+          page which contains TAO specific information.
 
 Mon May 10 15:02:21 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Exception.h:
-	* tao/Exception.cpp:
-	* tao/corbafwd.h: Added new exceptions in TAO_SYSTEM_EXCEPTIONS
-	viz.TRANSACTION_REQUIRED, TRANSACTION_ROLLEDBACK &
-	INVALID_TRANSACTION. These are part of the spec, v2.2, section
-	3.5.3, page 3-39. We had not implemented this and it was flagged
-	of by the branding test suite.
+        * tao/Exception.h:
+        * tao/Exception.cpp:
+        * tao/corbafwd.h: Added new exceptions in TAO_SYSTEM_EXCEPTIONS
+        viz.TRANSACTION_REQUIRED, TRANSACTION_ROLLEDBACK &
+        INVALID_TRANSACTION. These are part of the spec, v2.2, section
+        3.5.3, page 3-39. We had not implemented this and it was flagged
+        of by the branding test suite.
 
 Mon May 10 12:47:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init): TAO_IDL will try
-	  to figure out where MSVC is located if CPP_LOCATION is not
-	  defined.  It does this by checking if MSVCDir environment
-	  variable is defined.  Although this approach ties TAO_IDL closer
-	  to MSVC, it is probably the most widely used compiler on Win32
-	  platforms.  Therefore, I think it is not really a "bad taste."
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init): TAO_IDL will try
+          to figure out where MSVC is located if CPP_LOCATION is not
+          defined.  It does this by checking if MSVCDir environment
+          variable is defined.  Although this approach ties TAO_IDL closer
+          to MSVC, it is probably the most widely used compiler on Win32
+          platforms.  Therefore, I think it is not really a "bad taste."
 
-	  Thanks to Jonathan Biggar <jon@floorboard.com> for suggesting
-	  this.
+          Thanks to Jonathan Biggar <jon@floorboard.com> for suggesting
+          this.
 
 Mon May 10 11:43:04 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * COPYING: Made some updates suggested by Richard Stallman
- 	  <rms@gnu.org> of the Free Software Foundation
- 	  (http://www.fsf.org/).
+          <rms@gnu.org> of the Free Software Foundation
+          (http://www.fsf.org/).
 
 Mon May 10 08:24:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
