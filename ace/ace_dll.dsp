@@ -647,6 +647,10 @@ SOURCE=.\Timer_Queue.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Timer_Queue_Adapters.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Timer_Wheel.cpp
 # End Source File
 # Begin Source File
