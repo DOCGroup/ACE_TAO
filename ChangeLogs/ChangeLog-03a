@@ -4,6 +4,10 @@ Fri Jul 07 17:17:21 2000  George Reid <greid@entrenet.com>
           version 2.6, so only #define ACE_LACKS_LONGLONG_T with
           if __COMPILER_VER__ < 0x22060000.
 
+        * ace/config-mvs.h: added #define ACE_LACKS_PLACEMENT_OPERATOR_DELETE,
+          even though it doesn't seem to have an effect on
+          ace/Svc_Handler.cpp.
+
 Fri Jul  7 09:47:36 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * netsvcs/lib/Server_Logging_Handler_T.cpp (open_common): Don't
