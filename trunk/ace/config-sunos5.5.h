@@ -184,44 +184,45 @@
 // Platform supports XPG4 wide characters
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
-/* Comment out the following defines if you want to disable threading. */
-// Compile using multi-thread libraries.
-#if !defined (ACE_MT_SAFE)
-# define ACE_MT_SAFE 1
-#endif
+#if defined (_REENTRANT)
+  /* Comment out the following defines if you want to disable threading. */
+  // Compile using multi-thread libraries.
+# if !defined (ACE_MT_SAFE)
+#   define ACE_MT_SAFE 1
+# endif
 
-// Platform supports threads.
-#define ACE_HAS_THREADS
+# define ACE_HAS_THREADS
 
-// Platform supports POSIX pthreads *and* Solaris threads!  If you
-// only want to use POSIX pthreads just comment out ACE_HAS_STHREADS.
-// Or, add -D_POSIX_PTHREAD_SEMANTICS to your CFLAGS.
-#if defined (_POSIX_PTHREAD_SEMANTICS)
-# define ACE_HAS_PTHREADS_1003_DOT_1C
-#else  /* ! _POSIX_PTHREAD_SEMANTICS */
-# define ACE_HAS_STHREADS
-#endif /* ! _POSIX_PTHREAD_SEMANTICS */
+  // Platform supports POSIX pthreads *and* Solaris threads!  If you
+  // only want to use POSIX pthreads just comment out ACE_HAS_STHREADS.
+  // Or, add -D_POSIX_PTHREAD_SEMANTICS to your CFLAGS.
+# if defined (_POSIX_PTHREAD_SEMANTICS)
+#   define ACE_HAS_PTHREADS_1003_DOT_1C
+# else  /* ! _POSIX_PTHREAD_SEMANTICS */
+#   define ACE_HAS_STHREADS
+# endif /* ! _POSIX_PTHREAD_SEMANTICS */
 
-#define ACE_HAS_PTHREADS
-// . . . but only supports SCHED_OTHER scheduling policy
-#define ACE_HAS_ONLY_SCHED_OTHER
-#define ACE_HAS_SIGWAIT
+# define ACE_HAS_PTHREADS
+  // . . . but only supports SCHED_OTHER scheduling policy
+# define ACE_HAS_ONLY_SCHED_OTHER
+# define ACE_HAS_SIGWAIT
 
-// Compiler/platform has thread-specific storage
-#define ACE_HAS_THREAD_SPECIFIC_STORAGE
+  // Compiler/platform has thread-specific storage
+# define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
-// Platform supports reentrant functions (i.e., all the POSIX *_r functions).
-#define ACE_HAS_REENTRANT_FUNCTIONS
+  // Platform supports reentrant functions (i.e., all the POSIX *_r functions).
+# define ACE_HAS_REENTRANT_FUNCTIONS
 
-/* End of threading #defines. */
+# define ACE_HAS_PRIOCNTL
+# define ACE_NEEDS_LWP_PRIO_SET
+# define ACE_HAS_PTHREAD_SIGMASK
+# define ACE_HAS_THR_YIELD
+# define ACE_LACKS_PTHREAD_YIELD
 
-#define ACE_HAS_PRIOCNTL
-#define ACE_NEEDS_LWP_PRIO_SET
+  /* End of threading #defines */
+#endif /* _REENTRANT */
 
 #define ACE_HAS_ONEARG_SIGWAIT
-#define ACE_HAS_PTHREAD_SIGMASK
-#define ACE_HAS_THR_YIELD
-#define ACE_LACKS_PTHREAD_YIELD
 
 // Platform supports ACE_TLI timod STREAMS module.
 #define ACE_HAS_TIMOD_H
