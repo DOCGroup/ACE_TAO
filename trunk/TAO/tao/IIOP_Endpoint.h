@@ -10,6 +10,9 @@
 // = FILENAME
 //     IIOP_Endpoint.h
 //
+// = DESCRIPTION
+//     IIOP implementation of PP Framework Endpoint interface.
+//
 // = AUTHOR
 //     Marina Spivak <marina@cs.wustl.edu>
 //
@@ -35,68 +38,57 @@ class TAO_IIOP_Client_Connection_Handler;
 class TAO_Export TAO_IIOP_Endpoint : public TAO_Endpoint
 {
   // = TITLE
-  //   This class defines the protocol specific attributes required
-  //   for locating ORBs over a TCP/IP network.
+  //   TAO_IIOP_Endpoint
   //
   // = DESCRIPTION
-  //   This class defines the IIOP profile as specified in the CORBA
-  //   specification.
+  //   IIOP-specific implementation of PP Framework Endpoint interface.
+  //
 public:
 
   friend class TAO_IIOP_Profile;
   friend class TAO_SSLIOP_Profile;
 
-  TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
-                     int use_dotted_decimal_addresses);
-  // Profile constructor
+  // = Initialization and termination methods.
+
+  TAO_IIOP_Endpoint (void);
+  // Default constructor.
 
   TAO_IIOP_Endpoint (const char *host,
                      CORBA::UShort port,
                      const ACE_INET_Addr &addr);
-  // Endpoint constructor, this is the most efficient since it
-  // doesn't require any address resolution processing.
+  // Constructor.  This is the most efficient constructor since it
+  // does not require any address resolution processing.
+
+  TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
+                     int use_dotted_decimal_addresses);
+  // Constructor.
 
   TAO_IIOP_Endpoint (const char *host,
                      CORBA::UShort port,
                      CORBA::Short priority);
-  // Endpoint constructor - used when decoding endpoints from the wire.
-
-  TAO_IIOP_Endpoint (void);
-  // Endpoint constructor, default.
+  // Constructor.  This constructor is used when decoding endpoints.
 
   ~TAO_IIOP_Endpoint (void);
-  // Destructor is to be called only through <_decr_refcnt>.
+  // Destructor.
 
-  CORBA::Boolean is_equivalent (const TAO_IIOP_Endpoint *other_endpoint);
-  // Return true if this profile is equivalent to other_profile.  Two
-  // profiles are equivalent iff their key, port, host, object_key and
-  // version are the same.
+  // = Implementation of abstract TAO_Endpoint methods.  See
+  // Endpoint.h for their documentation.
 
-  CORBA::ULong hash (void);
-  // Return a hash value for this object.
-
-  // = Abstract Endpoint interface methods.
-
-  TAO_Endpoint *next (void);
-  // Return the next endpoint in the list.
-
+  virtual TAO_Endpoint *next (void);
   virtual int addr_to_string (char *buffer, size_t length);
-  // Return a string representation for the address.
-
   virtual void reset_hint (void);
-  //  Reset the hint's value.
 
-  // = IIOP Endpoint methods.
+  // = IIOP_Endpoint-specific methods.
 
   const ACE_INET_Addr &object_addr (void) const;
-  //  return a reference to the object_addr.
+  // Return a reference to the <object_addr>.
 
   const char *host (void) const;
   // Return a pointer to the host string.  This object maintains
   // ownership of this string.
 
   const char *host (const char *h);
-  // Copy the string h into <host_> and return the resulting pointer.
+  // Copy the string <h> into <host_> and return the resulting pointer.
   // This object maintains ownership of this string.
 
   CORBA::UShort port (void) const;
@@ -106,29 +98,37 @@ public:
   // Set the port number.
 
   TAO_IIOP_Client_Connection_Handler *&hint (void);
-  //  This is a hint for which connection handler to use.
+  // Access to our <hint_>.
+
+  CORBA::Boolean is_equivalent (const TAO_IIOP_Endpoint *other_endpoint);
+  // Return true if this endpoint is equivalent to <other_endpoint>.  Two
+  // endpoints are equivalent iff their port and host are the same.
+
+  CORBA::ULong hash (void);
+  // Return a hash value for this object.
 
 private:
   int set (const ACE_INET_Addr &addr,
            int use_dotted_decimal_addresses);
-  // helper method to set the INET_Addr.
+  // Helper method for setting INET_Addr.
 
   CORBA::String_var host_;
-  // String representing the hosts name.
+  // String representing the host name.
 
   CORBA::UShort port_;
-  // TCP port number
+  // TCP port number.
 
   ACE_INET_Addr object_addr_;
   // Cached instance of <ACE_INET_Addr> for use in making
   // invocations, etc.
 
   TAO_IIOP_Client_Connection_Handler *hint_;
-  // Pointer to a connection handler which we successfully used
-  // already.
+  // Hint indicating the last successfully used connection handler for
+  // a connection established through this endpoint's acceptor.
 
   TAO_IIOP_Endpoint *next_;
-  // Next endpoint in the list.
+  // IIOP Endpoints can be stringed into a list.  Return the next
+  // endpoint in the list, if any.
 };
 
 #if defined (__ACE_INLINE__)

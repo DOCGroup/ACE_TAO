@@ -129,7 +129,7 @@ int
 TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                     TAO_MProfile &mprofile)
 {
-  // If RT_CORBA is enabled, only one UIOP profile is created for
+  // If RT_CORBA is enabled, only one UIOP profile is created per
   // <mprofile>, and all UIOP endpoints are added into that profile.
   // If RT_CORBA is not enabled, we create a separate profile for each
   // endpoint.
@@ -172,7 +172,7 @@ TAO_UIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
     }
   else
     {
-      // There already is a UIOP_Profile - just add our endpoint to it.
+      // A UIOP_Profile already exists - just add our endpoint to it.
       ACE_UNIX_Addr addr;
       
       if (this->base_acceptor_.acceptor ().get_local_addr (addr) == -1)

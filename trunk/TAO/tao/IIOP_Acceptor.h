@@ -105,8 +105,10 @@ private:
 
   int create_rt_mprofile (const TAO_ObjectKey &object_key,
                           TAO_MProfile &mprofile);
-  // Rather than creating a profile for each endpoint, this version of
-  // <create_mprofile> adds all endpoints to a single IIOP profile.
+  // Rather than creating a separate profile for each endpoint, this
+  // version of <create_mprofile> method adds all endpoints to a
+  // single IIOP profile, i.e., <mprofile> will not contain more than
+  // one IIOP_Profile, no matter how many acceptors there are.
 
 protected:
   ACE_INET_Addr *addrs_;

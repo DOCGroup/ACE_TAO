@@ -80,29 +80,63 @@ public:
   ~TAO_SSLIOP_Profile (void);
   // Destructor is to be called only through <_decr_refcnt>.
 
-  virtual TAO_Endpoint *endpoint (void);
-  // Head of the list of endpoints for this profile.
-
-  void add_endpoint (TAO_SSLIOP_Endpoint *endp);
-  //
-
   // = Please see Profile.h for the documentation of these methods.
   virtual int decode (TAO_InputCDR& cdr);
   virtual int encode (TAO_OutputCDR &stream) const;
   // Encode this profile in a stream, i.e. marshal it.
   virtual CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
 
+  virtual TAO_Endpoint *endpoint (void);
+  // Return pointer to the head of this profile's endpoints list,
+  // i.e., <ssl_endpoint_> accessor.
+
+  void add_endpoint (TAO_SSLIOP_Endpoint *endp);
+  // Add <endp> to this profile's list of endpoints (it is inserted
+  // next to the head of the list).  This profiles takes ownership of
+  // <endp>.  If <endp>'s <iiop_endpoint_> member is not 0, it is
+  // added to our parent's class endpoint list.
+
 private:
 
   int encode_endpoints (void);
-  // Encodes endpoints from this profile into a tagged component.
+  // Helper for <encode>.
+  // Encodes this profile's endpoints into a tagged component.
+  // This is done only if RTCORBA is enabled, since currently this is
+  // the only case when we have more than one endpoint per profile.
+  //
+  // SSL endpoints are transmitted using TAO-proprietory tagged component.
+  // Component tag is TAO_TAG_SSL_ENDPOINTS and component data is an
+  // encapsulation of a sequence of structs, each representing a
+  // single endpoint.  Data format is specified in ssl_endpoins.pidl.
 
   int decode_endpoints (void);
-  // Decodes endpoints of this profile from a tagged component.
-
+  // Helper for <decode>.  Decodes endpoints from a tagged component.
+  // Decode only if RTCORBA is enabled.  
 
   TAO_SSLIOP_Endpoint ssl_endpoint_;
+  // Head of this profile's list of endpoints.  This endpoint is not
+  // dynamically allocated because a profile always contains at least
+  // one endpoint.
   //
+  // Currently, a profile contains more than one endpoint, i.e., list
+  // contains more than just the head, only when RTCORBA is enabled.
+  // However, in the near future, this will be used in nonRT mode as
+  // well, e.g., to support TAG_ALTERNATE_IIOP_ADDRESS feature.
+  //
+  // Since SSLIOP profile is an extension of IIOP profile, its
+  // addressing info is contained in two places:  IIOP parent class
+  // contains all iiop addressing while this class contains
+  // ssl-specific addressing additions to iiop.  This means that
+  // there are two lists of endpoints: one maintained in the parent
+  // class and one maintained here.  Each ssl endpoint maintains a
+  // pointer to its counterpart in the parent class endpoint list.
+  //
+  // For transmission of iiop addressing information, see
+  // TAO_IIOP_Profile.  Addressing info of the default ssl endpoint,
+  // i.e., head of the list, is transmitted using standard
+  // SSLIOP::TAG_SSL_SEC_TRANS tagged component.  See
+  // <encode_endpoints> method documentation above for how the rest of
+  // the ssl endpoint list is transmitted.
 };
 
 #if defined (__ACE_INLINE__)

@@ -96,14 +96,16 @@ private:
 
   int create_rt_mprofile (const TAO_ObjectKey &object_key,
                           TAO_MProfile &mprofile);
-  // Rather than creating a profile for each endpoint, this version of
-  // <create_mprofile> adds an endpoint to an existing UIOP profile
-  // if one already exists.
+  // Rather than creating a separate profile for each endpoint, this
+  // version of <create_mprofile> method adds all endpoints to a
+  // single UIOP profile, i.e., <mprofile> will not contain more than
+  // one UIOP_Profile, no matter how many acceptors there are.
 
   int create_profile (const TAO_ObjectKey &object_key,
                       TAO_MProfile &mprofile);
-  // Create a UIOP profile representing this acceptor.  Factors out
-  // common functionality of <create_mprofile> and <create_rt_mprofile>.
+  // Create a UIOP profile representing this acceptor.  This method
+  // factors out common functionality of <create_mprofile> and
+  // <create_rt_mprofile>.
 
 private:
   TAO_UIOP_BASE_ACCEPTOR base_acceptor_;

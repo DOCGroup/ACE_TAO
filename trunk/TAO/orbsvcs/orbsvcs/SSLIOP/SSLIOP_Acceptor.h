@@ -88,8 +88,10 @@ private:
 
   int create_rt_mprofile (const TAO_ObjectKey &object_key,
                           TAO_MProfile &mprofile);
-  // Rather than creating a profile for each endpoint, this version of
-  // <create_mprofile> adds all endpoints to a single SSLIOP profile.
+  // Rather than creating a separate profile for each endpoint, this
+  // version of <create_mprofile> method adds all endpoints to a
+  // single SSLIOP profile, i.e., <mprofile> will not contain more than
+  // one SSLIOP_Profile, no matter how many acceptors there are.
 
 private:
   TAO_SSLIOP_BASE_ACCEPTOR ssl_acceptor_;

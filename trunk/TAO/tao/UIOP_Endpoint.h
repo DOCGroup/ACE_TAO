@@ -10,6 +10,9 @@
 // = FILENAME
 //     UIOP_Endpoint.h
 //
+// = DESCRIPTION
+//     UIOP implementation of PP Framework Endpoint interface.
+//
 // = AUTHOR
 //     Marina Spivak <marina@cs.wustl.edu>
 //
@@ -34,55 +37,51 @@ class TAO_UIOP_Client_Connection_Handler;
 class TAO_Export TAO_UIOP_Endpoint : public TAO_Endpoint
 {
   // = TITLE
-  //   This class defines the protocol specific attributes required
-  //   for locating ORBs over a TCP/IP network.
+  //   TAO_UIOP_Endpoint
   //
   // = DESCRIPTION
-  //   This class defines the IIOP profile as specified in the CORBA
-  //   specification.
+  //   UIOP-specific implementation of PP Framework Endpoint interface.
+  //
 public:
 
   friend class TAO_UIOP_Profile;
 
-  TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr);
-  // Profile constructor
+  // = Initialization and termination methods.
 
   TAO_UIOP_Endpoint (void);
-  // Endpoint constructor, default.
+  // Default constructor.
+
+  TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr);
+  // Constructor.
 
   ~TAO_UIOP_Endpoint (void);
-  // Destructor is to be called only through <_decr_refcnt>.
+  // Destructor.
 
-  CORBA::Boolean is_equivalent (const TAO_UIOP_Endpoint *other_endpoint);
-  // Return true if this profile is equivalent to other_profile.  Two
-  // profiles are equivalent iff their key, port, host, object_key and
-  // version are the same.
+  // = Implementation of abstract TAO_Endpoint methods.  See
+  // Endpoint.h for their documentation.
 
-  CORBA::ULong hash (void);
-  // Return a hash value for this object.
-
-  // = Abstract Endpoint interface methods.
-
-  TAO_Endpoint *next (void);
-  // Return the next endpoint in the list.
-
+  virtual TAO_Endpoint *next (void);
   virtual int addr_to_string (char *buffer, size_t length);
-  // Return a string representation for the address.
-
   virtual void reset_hint (void);
-  //  Reset the hint's value.
 
-  // = UIOP Endpoint methods.
+  // = UIOP_Endpoint-specific methods.
+
+  const ACE_UNIX_Addr &object_addr (void) const;
+  // Return a reference to the <object_addr>.
 
   const char *rendezvous_point (void) const;
   // Return a pointer to the rendezvous point string.
   // This object maintains ownership of the returned string.
 
-  const ACE_UNIX_Addr &object_addr (void) const;
-  //  return a reference to the object_addr.
-
   TAO_UIOP_Client_Connection_Handler *&hint (void);
-  //  This is a hint for which connection handler to use.
+  // Access to our <hint_>.
+
+  CORBA::Boolean is_equivalent (const TAO_UIOP_Endpoint *other_endpoint);
+  // Return true if this endpoint is equivalent to <other_endpoint>.  Two
+  // endpoints are equivalent iff their rendezvous points are the same.
+
+  CORBA::ULong hash (void);
+  // Return a hash value for this object.
 
 private:
 
@@ -91,11 +90,12 @@ private:
   // invocations, etc.
 
   TAO_UIOP_Client_Connection_Handler *hint_;
-  // Pointer to a connection handler which we successfully used
-  // already.
+  // Hint indicating the last successfully used connection handler for
+  // a connection established through this endpoint's acceptor.
 
   TAO_UIOP_Endpoint *next_;
-  // Next endpoint in the list.
+  // UIOP Endpoints can be stringed into a list.  Return the next
+  // endpoint in the list, if any.
 };
 
 #if defined (__ACE_INLINE__)
