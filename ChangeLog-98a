@@ -1,4 +1,4 @@
-Fri Dec 26 11:46:17 1997    <nw1@CHA-CHA>
+Fri Dec 2 11:46:17 1997    <nw1@CHA-CHA>
 
 	* ace/Proactor.cpp (ACE_Proactor): Reenabled Proactor's thread
 	  manager to wait on its Timer_Handler thread.
@@ -8,6 +8,7 @@ Fri Dec 26 11:46:17 1997    <nw1@CHA-CHA>
 	  (wait): Close down thread handles when removing detached
 	  threads.  Avoid performing wait when the program is shutting
 	  down. 
+	  (remove_thr_all):  Extracted out this protected member function.
 	  (close): Changed to use the new remove_thr_all function.
 
 	* ace/Proactor.cpp (handle_events): Changed the magic number 258
