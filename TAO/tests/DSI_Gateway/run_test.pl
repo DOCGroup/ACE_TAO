@@ -9,6 +9,7 @@ unshift @INC, '../../../bin';
 require ACEutils;
 
 $svfile = "server.ior";
+unlink $svfile;
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
                        " -o $svfile");
 
@@ -19,13 +20,14 @@ if (ACE::waitforfile_timed ($svfile, 5) == -1) {
 }
 
 $gwfile = "gateway.ior";
+unlink $gwfile;
 $GW = Process::Create ($EXEPREFIX."gateway$EXE_EXT ",
                        " -k file://$svfile"
 		       . " -o $gwfile");
 
 if (ACE::waitforfile_timed ($gwfile, 5) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
-  $SV->Kill (); $SV->TimedWait (1);
+  $GW->Kill (); $GW->TimedWait (1);
   exit 1;
 }
 
@@ -48,10 +50,11 @@ if ($server == -1) {
 $gateway = $GW->TimedWait (5);
 if ($server == -1) {
   print STDERR "ERROR: server timedout\n";
-  $SV->Kill (); $SV->TimedWait (1);
+  $GW->Kill (); $GW->TimedWait (1);
 }
 
-unlink $iorfile;
+unlink $svfile;
+unlink $gwfile;
 
 if ($server != 0
     || $gateway != 0

@@ -177,9 +177,9 @@ Scheduler_Generic::register_task (RT_Info *rt_info [],
           if (output_level () >= 5)
             {
               ACE_OS::printf ("registered task \"%s\" with RT_Info starting "
-                                "at %X\n",
+                              "at %lX\n",
                               (const char*)rt_info[0]->entry_point,
-                              (void *) rt_info[0]);
+                              (long)rt_info[0]);
             }
         }
         break;
