@@ -26,6 +26,8 @@
 
 #include "api/api.H"
 
+ACE_RCSID(COOL, client, "$Id$")
+
 int print_usage (void);
 
 char Usage[] =

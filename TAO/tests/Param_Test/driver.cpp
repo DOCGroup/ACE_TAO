@@ -22,6 +22,8 @@
 #include "tests.h"
 #include "driver.h"
 
+ACE_RCSID(Param_Test, driver, "$Id$")
+
 // This function runs the test (main program)
 int
 main (int argc, char **argv)

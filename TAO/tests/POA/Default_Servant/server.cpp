@@ -1,5 +1,5 @@
 // $Id$
-//
+
 //===================================================================
 //  = LIBRARY
 //      TAO/tests/POA/Default_Servant/server
@@ -18,6 +18,8 @@
 
 #include "ace/streams.h"
 #include "File_i.h"
+
+ACE_RCSID(Default_Servant, server, "$Id$")
 
 int 
 main (int argc, char **argv)

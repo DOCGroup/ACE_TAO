@@ -25,6 +25,8 @@
 #include "tao/debug.h"
 #include "testC.h"
 
+ACE_RCSID(OctetSeq, OctetSeq, "$Id$")
+
 static int
 test_write_octet (TAO_OutputCDR &cdr,
                   char* buf, size_t bufsize,

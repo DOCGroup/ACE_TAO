@@ -17,6 +17,8 @@
 #include "Servant_Activator.h"
 #include "Servant_Locator.h"
 
+ACE_RCSID(On_Demand_Activation, server, "$Id$")
+
 int
 main (int argc, char **argv)
 {

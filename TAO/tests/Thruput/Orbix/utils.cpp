@@ -2,6 +2,8 @@
 
 #include "ttcp_decl.h"
 
+ACE_RCSID(Orbix, utils, "$Id$")
+
 void
 err (char *s)
 {

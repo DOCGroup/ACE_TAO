@@ -2,6 +2,8 @@
 
 #include "server.h"
 
+ACE_RCSID(Reactor, server, "$Id$")
+
 NestedUpCalls_Server::NestedUpCalls_Server (void)
   : use_naming_service_ (1),
     ior_output_file_ (0)

@@ -22,6 +22,8 @@
 #include "ttcpC.h"
 #include "ttcp_decl.h"
 
+ACE_RCSID(TAO, client, "$Id$")
+
 int print_usage (void);
 
 char Usage[] =

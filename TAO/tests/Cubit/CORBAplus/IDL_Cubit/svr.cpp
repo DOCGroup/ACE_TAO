@@ -26,6 +26,8 @@
 
 #include "cubit_i.h"
 
+ACE_RCSID(IDL_Cubit, svr, "$Id$")
+
 // Global Variables
 static int num_of_objs = 1;
 static pbbool killSelf = pbfalse;

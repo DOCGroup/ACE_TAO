@@ -3,6 +3,8 @@
 #include "client_i.h"
 #include "tao/Timeprobe.h"
 
+ACE_RCSID(IDL_Cubit, client, "$Id$")
+
 // This function runs the test.
 
 int

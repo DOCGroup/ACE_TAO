@@ -3,6 +3,8 @@
 #include "cubit_impl.h"
 #include "ace/ACE.h"
 
+ACE_RCSID(MT_Cubit, cubit_impl, "$Id$")
+
 CORBA::Octet Cubit_Impl:: cube_octet (CORBA::Octet o, CORBA::Environment &IT_env) 
 {
   //  ACE_DEBUG ((LM_DEBUG, "octet cubed is %d\n", o*o*o));

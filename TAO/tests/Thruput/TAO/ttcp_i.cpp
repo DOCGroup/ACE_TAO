@@ -5,6 +5,8 @@
 #include "ttcp_i.h"
 #include "ttcp_decl.h"
 
+ACE_RCSID(TAO, ttcp_i, "$Id$")
+
 /* the ttcp_i class implementation */
 ttcp_sequence_i::ttcp_sequence_i()
 {

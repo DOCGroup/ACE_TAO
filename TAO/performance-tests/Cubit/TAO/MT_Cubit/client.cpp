@@ -20,6 +20,8 @@
 #include "quantify.h"
 #endif /* NO_ACE_QUANTIFY */
 
+ACE_RCSID(MT_Cubit, client, "$Id$")
+
 #if defined (VXWORKS)
 u_int ctx = 0;
 u_int ct = 0;

@@ -3,6 +3,8 @@
 #include "tao/corba.h"
 #include "cubit_i.h"
 
+ACE_RCSID(MT_Cubit, cubit_i, "$Id$")
+
 Cubit_i::Cubit_i (Task_State *ts)
   :ts_ (ts),
    util_started_ (0)

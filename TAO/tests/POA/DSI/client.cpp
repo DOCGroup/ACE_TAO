@@ -1,5 +1,5 @@
 // $Id$
-//
+
 //===================================================================
 //  = LIBRARY
 //      TAO/tests/POA/Default_Servant/client
@@ -17,6 +17,8 @@
 
 #include "ace/Get_Opt.h"
 #include "DatabaseC.h"
+
+ACE_RCSID(DSI, client, "$Id$")
 
 static char *ior = 0;
 

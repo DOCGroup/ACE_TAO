@@ -19,6 +19,8 @@
 #include "Factory_Finder_Impl.h"
 #include "QuoterC.h"
 
+ACE_RCSID(Quoter, Factory_Finder_Impl, "$Id$")
+
 // Constructor
 Quoter_Factory_Finder_Impl::Quoter_Factory_Finder_Impl (void)
 {

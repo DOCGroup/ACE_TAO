@@ -2,6 +2,8 @@
 
 #include "tao.h"
 
+ACE_RCSID(CodeGen, objcreate, "$Id$")
+
 long GenObjectCreateCode(ACE_Unbounded_Queue<ACE_CString> &arr, int limit)
 {
   // code for creating objects. The strategy will be based on active demux or

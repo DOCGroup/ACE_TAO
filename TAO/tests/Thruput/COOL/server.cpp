@@ -1,4 +1,5 @@
 // $Id$
+
 // ============================================================================
 //
 // = Chorus COOL tests
@@ -31,6 +32,8 @@
 #include "ttcp.H"
 #include "sk_ttcp.H"
 #include "sk_ttcp.C"
+
+ACE_RCSID(COOL, server, "$Id$")
 
 char Usage[] = "\
 Usage: server [COOL options] [Common options] \n\

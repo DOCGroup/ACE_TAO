@@ -2,6 +2,7 @@
 
 #include "ttcp_i.h"
 
+ACE_RCSID(Orbix, Srv_Main, "$Id$")
 
 char Usage[] = "\
 Usage: server [options] \n\

@@ -5,6 +5,8 @@
 #include "pbroker/corba/boad/boafull.h"   // will force usage of "Full" BOA API
 #include "Task_Client.h"
 
+ACE_RCSID(client, Task_Client, "$Id$")
+
 Task_State::Task_State (int argc, char **argv)
   : start_count_ (0),
     loop_count_ (5),

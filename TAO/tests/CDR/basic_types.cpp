@@ -20,6 +20,8 @@
 #include "tao/corba.h"
 #include "tao/debug.h"
 
+ACE_RCSID(CDR, basic_types, "$Id$")
+
 static const int n = 4096;
 static int nloops = 100;
 

@@ -1,4 +1,5 @@
 // $Id$
+
 // ============================================================================
 //
 // = TAO tests
@@ -16,6 +17,8 @@
 #include "ace/Get_Opt.h"
 
 #include "ttcp_i.h"
+
+ACE_RCSID(TAO, server, "$Id$")
 
 char Usage[] = "\
 Usage: server [TAO options] [options] \n\
