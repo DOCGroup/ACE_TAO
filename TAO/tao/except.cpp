@@ -215,7 +215,7 @@ make_standard_typecode (CORBA::TypeCode_ptr tcp,
   static const char *minor = "minor";
   static const char *completion = "completion";
 
-  static const unsigned long oc_completion_status [] =
+  static const CORBA::ULong oc_completion_status [] =
   {
     TAO_ENCAP_BYTE_ORDER,		// byte order flag, tricky
     0, 0,		// type ID omitted
@@ -329,7 +329,7 @@ make_standard_typecode (CORBA::TypeCode_ptr tcp,
 // it works that way in most systems.
 
 #define	TAO_SYSTEM_EXCEPTION(name) \
-    static long tc_buf_ ## name [TC_BUFLEN / sizeof (long)]; \
+    static CORBA::Long tc_buf_ ## name [TC_BUFLEN / sizeof (long)]; \
     static CORBA::TypeCode tc_std_ ## name (CORBA::tk_except); \
     CORBA::TypeCode_ptr CORBA::_tc_ ## name = &tc_std_ ## name;
 STANDARD_EXCEPTION_LIST
