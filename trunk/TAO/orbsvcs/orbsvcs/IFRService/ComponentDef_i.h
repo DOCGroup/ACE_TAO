@@ -28,6 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "IFR_ComponentsS.h"
+#include "IFR_Service_Utils_T.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -234,6 +235,34 @@ public:
   // Called from TAO_IFR_Service_Utils::name_exists() when we
   // are a base component.
 };
+
+// Specialization.
+template<>
+void
+TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::UsesDescriptionSeq>::get_is_multiple (
+    CORBA::ComponentIR::UsesDescriptionSeq &desc_seq,
+    ACE_Configuration *config,
+    ACE_Configuration_Section_Key &key,
+    CORBA::ULong index
+  );
+
+// Specialization.
+template<>
+void 
+TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::EventPortDescriptionSeq>::port_base_type (
+    CORBA::ComponentIR::EventPortDescriptionSeq &desc_seq,
+    ACE_TString &holder,
+    CORBA::ULong index
+  );
+
+/// Specialization.
+template<>
+void
+TAO_Port_Utils<CORBA::ComponentIR::UsesDef>::set_is_multiple (
+    CORBA::Boolean is_multiple,
+    ACE_Configuration *config,
+    ACE_Configuration_Section_Key &key
+  );
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)

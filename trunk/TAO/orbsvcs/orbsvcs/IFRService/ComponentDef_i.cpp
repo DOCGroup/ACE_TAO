@@ -10,7 +10,6 @@
 #include "ConsumesDef_i.h"
 #include "ExtAttributeDef_i.h"
 #include "IFR_Service_Utils.h"
-#include "IFR_Service_Utils_T.h"
 
 ACE_RCSID (IFRService, 
            ComponentDef_i, 
