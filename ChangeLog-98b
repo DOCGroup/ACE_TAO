@@ -1,3 +1,7 @@
+Wed Oct 07 02:37:58 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.5.49 released.
+
 Wed Oct  7 00:11:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACE-INSTALL.html: Added more information on using MFC with ACE,
