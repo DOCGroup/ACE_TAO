@@ -32,7 +32,7 @@ ACE_RCSID(tests, Get_Opt_Test, "$Id$")
 static int
 parse_args (int test_number,
             int ordering, 
-            ACE_TCHAR *test_args,
+            const ACE_TCHAR *test_args,
             int skip_argv0 = 1,
             int report_errors = 1)
 {
@@ -44,7 +44,7 @@ parse_args (int test_number,
     {
       test = "Test_";
       ACE_TCHAR s[20];
-      test += ACE_OS::itoa(test_number, s, 10);
+      test += ACE_OS::itoa (test_number, s, 10);
       test += " ";
     }
 
@@ -295,7 +295,8 @@ run_test (int& test_number, int ordering)
 int
 main (int, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ACE_TEXT ("Get_Opt_Test.cpp"));
+  ACE_START_TEST (ACE_TEXT ("Get_Opt_Test"));
+  ACE_UNUSED_ARG (argv);
   int retval = 0;
   int test_number = 0;
 

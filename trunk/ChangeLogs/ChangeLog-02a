@@ -1,3 +1,16 @@
+Tue Dec 25 09:30:14 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tests/Get_Opt_Test.cpp: Make the "test_args" parameter to 
+	  parse_args() a *const* ACE_TCHAR rather than just an ACE_TCHAR.
+	
+	* tests/Get_Opt_Test.cpp (main): Added an ACE_UNUSED_ARG(argv) and
+	  replaced the name of the test so the log file stuff will work
+ 	  properly.
+
+	* ace/Get_Opt.{h,i}: Changed the return type of opt_ind() from
+	  int to int& so that optind++ will work correctly!  Thanks
+	  to Don Hinton for this fix.
+
 Tue Dec 25 09:07:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Threads/tss2.cpp: 
