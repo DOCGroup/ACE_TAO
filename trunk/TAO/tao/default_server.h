@@ -19,6 +19,16 @@
 
 #include "tao/corba.h"
 
+template <class SH>
+class TAO_Reactive_Strategy : public ACE_Reactive_Strategy<SH>
+{
+public:
+  TAO_Reactive_Strategy (void);
+  ~TAO_Reactive_Strategy (void);
+
+  virtual int activate_svc_handler (SH *sh, void *arg);
+};
+
 class TAO_Default_Server_Strategy_Factory : public TAO_Server_Strategy_Factory
   // = TITLE
   //   This is the default strategy factory for CORBA servers.  It
@@ -65,7 +75,7 @@ private:
   // The type of lookup/demultiplexing strategy being used
 
   // = Strategies Used.
-  ACE_Reactive_Strategy<TAO_Server_Connection_Handler> reactive_strategy_;
+  TAO_Reactive_Strategy<TAO_Server_Connection_Handler> reactive_strategy_;
   // A strategy for passively establishing connections which utilizes
   // the Reactor.
 
