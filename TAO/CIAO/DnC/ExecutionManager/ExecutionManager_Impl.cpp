@@ -134,5 +134,5 @@ CIAO::ExecutionManager_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Shtudown the ORB on which it is runing
-  this->orb_->shutdown (1 ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  this->orb_->shutdown (0 ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 }
