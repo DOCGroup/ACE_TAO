@@ -1,3 +1,10 @@
+Fri Oct 09 16:35:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/Timer_Queue_Adapters.cpp
+          ace/ace_dll.dsp
+          examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{cpp, h}:
+          Fixes for deferred callbacks in the BPR example on NT.
+	
 Fri Oct 09 11:59:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/wrapper_macros.GNU: removed RM override
