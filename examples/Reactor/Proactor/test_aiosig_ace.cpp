@@ -70,7 +70,7 @@ setup_signal_delivery (void)
                       -1);
   
   // Mask them.
-  if (pthread_sigmask (SIG_SETMASK, &full_set, 0) != 0)
+  if (ACE_OS::pthread_sigmask (SIG_SETMASK, &full_set, 0) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:(%P | %t):%p\n",
                        "pthread_sigmask failed"),
