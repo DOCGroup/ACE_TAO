@@ -241,7 +241,7 @@ worker_parent (void *arg)
   // portably.  Also, pass the test number, as well.
   ACE_OS::sprintf (pid_str,
                    "-p %ld -t %d",
-                   parent_pid,
+                   ACE_static_cast (long, parent_pid),
                    test_number);
 
   // We're going to create a new process that runs this program again,
