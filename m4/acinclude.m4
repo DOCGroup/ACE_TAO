@@ -43,6 +43,15 @@ AC_DEFUN(ACE_CHECK_FOR_CVS_DIR,
       Doing so will prevent accidentally committing automatically
       generated files into the CVS repository and help ensure that
       the generated files and build scheme are correct.
+
+      For example, try the following from the top-level source
+      directory:
+
+          mkdir objdir
+          cd objdir
+          ../configure
+
+      This will create a build space in the directory \`objdir'.
      ])
  fi
 ])
