@@ -1,3 +1,41 @@
+Fri Nov 28 11:21:05 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	The following are fixes for problems exposed by running
+	"autoreconf" the "--warnings=all" command line option.
+
+	* configure.ac:
+
+	  Precompute the absolute path of the ACE "tests" build
+	  directory.
+
+	* Makefile.am (CONFIGURE_DEPENDENCIES):
+
+	  Updated configure script dependency list to reflect latest set
+	  of M4 filenames.
+
+	* ace/Makefile.am:
+	* ace/QoS/Makefile.am:
+	* ace/RMCast/Makefile.am:
+	* ace/SSL/Makefile.am:
+	* apps/gperf/src/Makefile.am:
+	* tests/SSL/Makefile.am:
+
+	  "INCLUDES" -> "AM_CPPFLAGS".  The former is obsolete.
+
+	* tests/Makefile.am (libdir):
+
+	  Do not set this variable to the absolute path of the current
+	  working directory via the "$(shell pwd)" GNU Make extension.
+	  Instead pre-compute it inside the `configure' script, and then
+	  substitute the actual value inside the generated Makefile.
+	  "$(shell pwd)" is not portable to non-GNU Make implementations.
+
+	* m4/ace.m4:
+
+	  Ran `autoupdate' on this file to update obsolete Autoconf
+	  macros.  In particular, "AC_HELP_STRING" is now
+	  "AS_HELP_STRING".
+
 Fri Nov 28 15:37:36 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Makefile.tests:
