@@ -1,0 +1,26 @@
+/**
+ * @file
+ *
+ * $Id$
+ *
+ * @author Carlos O'Ryan <coryan@atdesk.com>
+ *
+ */
+#ifndef Test__idl_
+#define Test__idl_
+
+module Test
+{
+  typedef sequence<octet> Payload;
+  interface Echo
+  {
+    Payload echo_payload(in Payload data);
+  };
+
+  interface Server
+  {
+    void start_task(in Echo client);
+  };
+};
+
+#endif /* Test__idl_ */
