@@ -175,12 +175,21 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::find_or_create_svc_handler_i
       // Set the flag
       found = 0;
 
+      // We need to use a temporary variable here since we are not
+      // allowed to change <sh> because other threads may use this
+      // when we let go of the lock during the OS level connect.
+      //
+      // Note that making a new svc_handler, connecting remotely,
+      // binding to the map, and assigning of the hint and recycler
+      // should be atomic to the outside world.
+      SVC_HANDLER *potential_handler = 0;
+
       // Create a new svc_handler
-      if (this->make_svc_handler (sh) == -1)
+      if (this->make_svc_handler (potential_handler) == -1)
         return -1;
 
       // Connect using the svc_handler.
-      if (this->cached_connect (sh,
+      if (this->cached_connect (potential_handler,
                                 remote_addr,
                                 timeout,
                                 local_addr,
@@ -188,9 +197,8 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::find_or_create_svc_handler_i
                                 flags,
                                 perms) == -1)
         {
-          // Close the svc handler and reset <sh>.
-          sh->close (0);
-          sh = 0;
+          // Close the svc handler.
+          potential_handler->close (0);
 
           return -1;
         }
@@ -198,15 +206,17 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::find_or_create_svc_handler_i
         {
           // Insert the new SVC_HANDLER instance into the cache.
           if (this->connection_cache_.bind (search_addr,
-                                            sh,
+                                            potential_handler,
                                             entry) == -1)
             {
               // Close the svc handler and reset <sh>.
-              sh->close (0);
-              sh = 0;
+              potential_handler->close (0);
 
               return -1;
             }
+
+          // Everything succeeded as planned. Assign <sh> to <potential_handler>.
+          sh = potential_handler;
 
           // Set the recycler and the recycling act
           this->assign_recycler (sh, this, entry);

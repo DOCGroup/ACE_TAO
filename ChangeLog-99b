@@ -1,7 +1,36 @@
+Mon Nov 22 18:02:19 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Strategies_T.cpp:
+	* ace/Cached_Connect_Strategy_T.cpp:
+
+	  There was a strange interaction in
+	  find_or_create_svc_handler_i() because of these two changes:
+
+	  Fri Nov 12 00:30:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	  and
+
+	  Mon Jul 19 22:46:54 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	  Basically, <sh> was assigned to the newly created svc_handler.
+	  It had, however, not been added to the connection map nor had it
+	  been assigned a hint or recycler, i.e., it was partially
+	  initialized.
+
+	  However, we let go of the connector lock during the OS level
+	  connect call, hence exposing the partially initialized
+	  svc_handler to other threads.
+
+	  The solution is to use a temporary variable until the
+	  svc_handler is completely initialized.  After this we can assign
+	  <sh> to <potential_handler>. Note that making a new svc_handler,
+	  connecting remotely, binding to the map, and assigning of the
+	  hint and recycler should be atomic to the outside world.
+
 Mon Nov 22 17:06:34 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * bin/auto_compile_win32.pl:  Changed the project file for
-          ImplRepo_Service.  Thanks to Derek Dominish 
+          ImplRepo_Service.  Thanks to Derek Dominish
           <Derek.Dominish@Australia.Boeing.com> for pointing this out.
 
 Mon Nov 22 14:15:23 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
@@ -73,7 +102,7 @@ Fri Nov 19 02:21:11 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * ace/Configuration.h:
         * ace/Configuration.cpp:
           Altered the Unicode macros used so it compiles in the two
-          Unicode configurations.  Thanks to Ruibiao Qiu 
+          Unicode configurations.  Thanks to Ruibiao Qiu
           <ruibiao@arl.wustl.edu> for noticing this.
 
 Thu Nov 18 22:49:09 1999  David L. Levine  <levine@cs.wustl.edu>
