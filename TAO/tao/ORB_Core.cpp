@@ -1482,6 +1482,12 @@ TAO_Resource_Factory::App_Allocated::App_Allocated (void)
 {
 }
 
+TAO_Resource_Factory::App_Allocated::~App_Allocated (void)
+{
+  delete this->input_cdr_dblock_allocator_;
+  delete this->input_cdr_buffer_allocator_;
+}
+
 TAO_Resource_Factory::Pre_Allocated::~Pre_Allocated (void)
 {
   // Zap the creation strategy that we created earlier
