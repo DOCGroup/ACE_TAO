@@ -1,3 +1,10 @@
+Sun Jan 03 21:39:49 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA.cpp (encode_sequence_to_string): Removed extra call to
+ 	  isascii().  It's followed by an isprint(): if byte is printable,
+ 	  then it must be ascii.  Thanks to David Levine and Chris
+ 	  Cleeland for helping with this.
+
 Sun Jan  3 21:10:42 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	Addded a function to check if it is the first server or clerk.
