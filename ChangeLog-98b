@@ -8,6 +8,13 @@ Fri Jun 26 11:50:03 1998  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/wrapper_macros.GNU,ACE-INSTALL.html:
           added rtti make option.
 
+        * ace/Message_Queue.*: on VxWorks, added ACE_Message_Queue_Vx,
+          which wraps native VxWorks messages queues.  See the header
+          file for limitations.
+
+        * ace/Message_Queue_T.*,Makefile: split Message_Queue into
+          template and non-template files.
+
 Fri Jun 26 11:39:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ACE-INSTALL.html: Added more infomation in {Free,Net}BSD.
@@ -35,7 +42,6 @@ Fri Jun 26 10:43:02 EET DST 1998 Wei Chiang <wei.chiang@ntc.nokia.com>
         ACE_CLASSIX_OS::ACE_CLASSIX_OS()
         After created an CLASSIX reactor as an actor-wide singleton
         reactor, delete the original reator singleton, if any.
-
 
 Fri Jun 26 02:18:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
