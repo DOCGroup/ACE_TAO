@@ -29,7 +29,7 @@ if ($client == -1) {
   $CL->Kill (); $CL->TimedWait (1);
 }
 
-$server = $SV->TimedWait (1);
+$server = $SV->TimedWait (100);
 if ($server == -1) {
   $time = localtime;
   print STDERR "ERROR: server timedout at $time\n";
