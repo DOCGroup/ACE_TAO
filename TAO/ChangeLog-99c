@@ -1,170 +1,180 @@
+Fri Apr 23 16:17:04 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.{h,cpp}:
+          use ACE_THR_PRI_OTHER_DEF instead of ACE_THR_PRI_FIFO_DEF,
+          and THR_NEW_LWP instead of THR_BOUND, if not using FIFO scheduling.
+          Thanks to David H. Whittington <david.h.whittington@boeing.com>
+          for testing these changes on HP/UX (where we're still not
+          successful) and Irix (where we are successful), not running
+          as root.
+
 Fri Apr 23 11:12:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/Event_Service/Event_Service.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.i:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
-	* orbsvcs/orbsvcs/Event/EC_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.i:
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
-	  Cleaned up EC_Event_Channel initialization: now it takes the POA 
-	  for the consumer and suppliers in the constructor instead of
-	  using the factory.  This is was required since not all factories 
-	  can be initialized with the right POAs.
+        * orbsvcs/Event_Service/Event_Service.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.i:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/EC_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.i:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+          Cleaned up EC_Event_Channel initialization: now it takes the POA
+          for the consumer and suppliers in the constructor instead of
+          using the factory.  This is was required since not all factories
+          can be initialized with the right POAs.
 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
-	* orbsvcs/tests/EC_Mcast/svc.conf:
-	  This test also uses the default factory now.
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/tests/EC_Mcast/svc.conf:
+          This test also uses the default factory now.
 
 Fri Apr 23 10:15:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Factory.cpp:
-	  The factory is a service object now.
-	  Some factories will require the user to set the POA objects.
+        * orbsvcs/orbsvcs/Event/EC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Factory.cpp:
+          The factory is a service object now.
+          Some factories will require the user to set the POA objects.
 
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-	  Added new EC_Factory that uses the command line arguments to
-	  control which strategies and objects are created, it is not very 
-	  efficient, but is very useful for experimentation.
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+          Added new EC_Factory that uses the command line arguments to
+          control which strategies and objects are created, it is not very
+          efficient, but is very useful for experimentation.
 
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
-	  Added new methods to set the POAs in the factory, they should be 
-	  used for factories that require them.
-	  Added support for controlling ownership of the factory
-	  class.
-	  If the user does not specify any factories explicitly we try to
-	  dynamically load the abstract factory. If that fails we fall
-	  back of the EC_Default_Factory.
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+          Added new methods to set the POAs in the factory, they should be
+          used for factories that require them.
+          Added support for controlling ownership of the factory
+          class.
+          If the user does not specify any factories explicitly we try to
+          dynamically load the abstract factory. If that fails we fall
+          back of the EC_Default_Factory.
 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
-	  The proxy was not reporting its destruction to the EC, thus it
-	  wasn't removed from all the data structures.
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+          The proxy was not reporting its destruction to the EC, thus it
+          wasn't removed from all the data structures.
 
-	* orbsvcs/Event_Service/Event_Service.h:
-	* orbsvcs/Event_Service/Event_Service.cpp:
-	* orbsvcs/Event_Service/svc.conf:
-	  The new Event Service is configured using the EC_Default_Factory 
-	  and the svc.conf file.
+        * orbsvcs/Event_Service/Event_Service.h:
+        * orbsvcs/Event_Service/Event_Service.cpp:
+        * orbsvcs/Event_Service/svc.conf:
+          The new Event Service is configured using the EC_Default_Factory
+          and the svc.conf file.
 
-	* orbsvcs/tests/EC_Throughput/run_test.pl: 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	* orbsvcs/tests/EC_Throughput/ec.conf:
-	  Added support for the new "dynamically loadable"
-	  EC_Default_Factory.
-	  The ec.conf file contains the proper configuration for this
-	  test.
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/tests/EC_Throughput/ec.conf:
+          Added support for the new "dynamically loadable"
+          EC_Default_Factory.
+          The ec.conf file contains the proper configuration for this
+          test.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.h:
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
-	  Added option to disable EC shutdown on program exit.
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+          Added option to disable EC shutdown on program exit.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
-	  Minor fixes in debugging messages.
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+          Minor fixes in debugging messages.
 
 Fri Apr 23 000:39:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Marshal.{h,i}:
-	  TAO_Marshal_Any::deep_free() was a no-op! I just forced
-	  the Any's destructor call. This may not be portable, but
-	  the alternative would probably necessitate un-inlining
-	  the function. Time will tell. Anyway, this fixed memory
-	  leaks due to Anys containing Anys.
-	* tao/append.cpp:
-	  TAO_Marshal_Any::append() was causing client side memory
-	  leaks due to unreleased typecodes. Also fixed some Any
-	  weirdness I noticed by chance in TAO_Marshal_Union.
-	* tao/skip.cpp:
+        * tao/Marshal.{h,i}:
+          TAO_Marshal_Any::deep_free() was a no-op! I just forced
+          the Any's destructor call. This may not be portable, but
+          the alternative would probably necessitate un-inlining
+          the function. Time will tell. Anyway, this fixed memory
+          leaks due to Anys containing Anys.
+        * tao/append.cpp:
+          TAO_Marshal_Any::append() was causing client side memory
+          leaks due to unreleased typecodes. Also fixed some Any
+          weirdness I noticed by chance in TAO_Marshal_Union.
+        * tao/skip.cpp:
           TAO_Marshal_Any::skip() was causing server side memory
-	  leaks due to unreleased typecodes.
+          leaks due to unreleased typecodes.
 
-	  Thanks to Frank Buschmann <Frank.Buschmann@mchp.siemens.de>
-	  for providing a tortuous Any test idea.
+          Thanks to Frank Buschmann <Frank.Buschmann@mchp.siemens.de>
+          for providing a tortuous Any test idea.
 
 Thu Apr 22 20:18:58 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* man/man7/TAO.7: 
+        * man/man7/TAO.7:
 
-	  Moved `man/man1/TAO.1' to `man/man7/TAO.7' since TAO.1 doesn't
-	  describe a user program.  It seems to fit better in
-	  "Miscellaneous," i.e. man section 7.
+          Moved `man/man1/TAO.1' to `man/man7/TAO.7' since TAO.1 doesn't
+          describe a user program.  It seems to fit better in
+          "Miscellaneous," i.e. man section 7.
 
-	* man/man1/*:
+        * man/man1/*:
 
-	  Updated to reflect move of TAO.1 to man/man7/TAO.7.
+          Updated to reflect move of TAO.1 to man/man7/TAO.7.
 
 Thu Apr 22 17:24:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Typecode.cpp:
-	  Cosmetic changes to ~TC_Private_State so I can read it.
+        * tao/Typecode.cpp:
+          Cosmetic changes to ~TC_Private_State so I can read it.
 
 Thu Apr 22 13:37:49 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* man/man1/tao_idl.1: 
+        * man/man1/tao_idl.1:
 
-	Moved tao_idl man page to newly created man page directory.
+        Moved tao_idl man page to newly created man page directory.
 
-	* man/man1/TAO.1:
-	* man/man1/TAO_Concurrency_Service.1:
-	* man/man1/TAO_CosEvent_Service.1:
-	* man/man1/TAO_Event_Service.1:
+        * man/man1/TAO.1:
+        * man/man1/TAO_Concurrency_Service.1:
+        * man/man1/TAO_CosEvent_Service.1:
+        * man/man1/TAO_Event_Service.1:
 
-	Started added man pages for TAO and TAO's ORB services.  There are
-	still several more to complete.  Some of the ones listed above need
-	to be revised.
+        Started added man pages for TAO and TAO's ORB services.  There are
+        still several more to complete.  Some of the ones listed above need
+        to be revised.
 
 Thu Apr 22 07:53:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* examples/POA/Reference_Counted_Servant/Makefile:
-	  Fixed small compilation problems.
+        * examples/POA/Reference_Counted_Servant/Makefile:
+          Fixed small compilation problems.
 
 Wed Apr 21 22:15:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POA: Phase three of the POA rearchitecturing is now
-	  complete.  This phase includes:
+        * tao/POA: Phase three of the POA rearchitecturing is now
+          complete.  This phase includes:
 
-	  - Addition of reference counting to servants.  This includes:
+          - Addition of reference counting to servants.  This includes:
 
-	  (a) obeying reference counting protocol between the POA and the
+          (a) obeying reference counting protocol between the POA and the
               servant
-	  (b) addition of the ServantBase_var class to TAO
-	  (c) addition of the RefCountServantBase class to TAO
-	  (d) addition of reference counting hooks to the ServantBase
-	      class
-	  (e) addition of reference counting to active object map entries
-	      to help in counting the number of outstanding requests on
-	      the servant
+          (b) addition of the ServantBase_var class to TAO
+          (c) addition of the RefCountServantBase class to TAO
+          (d) addition of reference counting hooks to the ServantBase
+              class
+          (e) addition of reference counting to active object map entries
+              to help in counting the number of outstanding requests on
+              the servant
 
-	  - Etherealization of servants has now been fixed.
-	    <remaining_activations> and <cleanup_in_progress> should both
-	    have correct values.
+          - Etherealization of servants has now been fixed.
+            <remaining_activations> and <cleanup_in_progress> should both
+            have correct values.
 
-	  - New methods were added that help in deactivating and cleaning
-	    up servants.  These methods are used by both the POA and the
-	    POA Manager.
+          - New methods were added that help in deactivating and cleaning
+            up servants.  These methods are used by both the POA and the
+            POA Manager.
 
           - New example was added. Reference_Counted_Servant shows how to
-	    use reference counted servants to automatically manage dynamic
-	    memory for servants.
+            use reference counted servants to automatically manage dynamic
+            memory for servants.
 
-	  - Setting up of POA Current object id was only done with the
-	    RETAIN policy.  This has now been fixed such that it works
-	    properly for all policies.  Thanks to Steve Totten
-	    <totten_s@ociweb.com> for pointing this out.
+          - Setting up of POA Current object id was only done with the
+            RETAIN policy.  This has now been fixed such that it works
+            properly for all policies.  Thanks to Steve Totten
+            <totten_s@ociweb.com> for pointing this out.
 
 Wed Apr 21 21:56:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
