@@ -1,3 +1,15 @@
+Tue Mar 08 09:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Collocated/Dynamic/Client_Task.cpp:
+        * tests/Portable_Interceptors/Collocated/Dynamic/Collocated_Test.cpp:
+        * tests/Portable_Interceptors/Collocated/Dynamic/interceptors.cpp:
+        * tests/Portable_Interceptors/Collocated/Dynamic/Server_Task.cpp:
+          Changed this test so that the validations are correct. The checks
+          where in the client and server task, but because we are collocated
+          this is risky because the interceptors are called by the client task,
+          but we validate in the server task. Moved all validations to the main
+          where we can safely check things after the worker threads are ended.
+
 Tue Mar 08 09:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Collocated/Dynamic/Server_Task.cpp:
