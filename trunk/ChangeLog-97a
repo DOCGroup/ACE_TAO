@@ -20,15 +20,10 @@ Sun Jun  8 11:39:06 1997  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 Sun Jun  8 01:37:52 1997  Nanbor Wang  <nw1@siesta.cs.wustl.edu>
 
-	* examples/Log_Msg/Log_Msg.{dsp,dsw}: Added project file and
-	  workspace file for MSVC 5.0.
-
 	* examples/Log_Msg/README: Added a README file.
 
 	* tests/Sigset_Ops_Test.cpp (main): bug fixed.
 
-	* ace/ace.{dsp,dsw}: Added project file and workspace file for
-	  MSVC 5.0. 
 
 Sat Jun  7 16:40:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
