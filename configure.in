@@ -7358,9 +7358,8 @@ ACE_CACHE_CHECK(if generated ACE configuration is usable,
 The generated configuration appears to be unusable.  Please verify
 that your system path and environment variables are correct.  If they
 appear to be correct then please send the maintainer of this configure
-script:
-   Ossama Othman <othman@cs.wustl.edu>
-the \`config.log' file and the following information:
+script Ossama Othman <othman@cs.wustl.edu> the \`config.log' file and
+the following information:
 
   ACE \`configure' Script Information
   ==================================
@@ -7373,9 +7372,7 @@ the \`config.log' file and the following information:
   Linker Flags:       $LDFLAGS
   Libraries:          $LIBS
   System type information:
-    Build:  $build
-    Host:   $host
-    Target: $target
+    Build: $build  Host: $host  Target: $target
 
 In the meantime, please use the stock ACE build procedure detailed in
 the file \`ACE-INSTALL.html'.
