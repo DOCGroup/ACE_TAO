@@ -733,7 +733,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_OutputCDR& rhs,
     this->start_.copy (i->rd_ptr (), i->length ());
 }
 
-ACE_INLINE ACE_CDR::Boolean
+ACE_CDR::Boolean
 ACE_InputCDR::skip_wchar (void)
 {
   if (ACE_static_cast (ACE_CDR::Short, major_version_) == 1
