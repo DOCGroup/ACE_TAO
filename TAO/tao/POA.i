@@ -308,7 +308,7 @@ TAO_POA::destroy (CORBA::Boolean etherealize_objects,
   {
     // Lock access to the POA for the duration of this transaction
     TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
-    
+
     this->destroy_i (etherealize_objects,
                      wait_for_completion,
                      env);
@@ -622,7 +622,7 @@ TAO_POA::rfind (const TAO_ObjectKey &key,
 }
 
 ACE_INLINE PortableServer::ObjectId *
-TAO_POA::create_object_id (PortableServer::Servant servant, 
+TAO_POA::create_object_id (PortableServer::Servant servant,
                            CORBA::Environment &env)
 {
   return this->active_object_map ().create_object_id (servant, env);
@@ -632,18 +632,6 @@ ACE_INLINE CORBA::ULong
 TAO_POA::system_id_size (void) const
 {
   return this->active_object_map ().system_id_size ();
-}
-
-ACE_INLINE ACE_Lock &
-TAO_POA_Manager::lock (void)
-{
-  return *this->lock_;
-}
-
-ACE_INLINE TAO_POA_Manager *
-TAO_POA_Manager::clone (void)
-{
-  return new TAO_POA_Manager;
 }
 
 ACE_INLINE void
