@@ -1,6 +1,5 @@
-/* Simple file transfer example */
 // $Id$
-
+/* Simple file transfer example */
 
 #include "ace/Thread_Manager.h"
 #include "ace/TLI_Acceptor.h"
@@ -13,17 +12,23 @@ void *
 read_file (void *fd)
 {
   ACE_TLI_Stream stream;
-  char	     buf[BUFSIZ];
-  int	     flags = 0;
-  int	     n;
+  char       buf[BUFSIZ];
+  int        flags = 0;
+  int        n;
 
+#if defined (ACE_HAS_64BIT_LONGS)
+  stream.set_handle (long (fd));
+#else /* ! ACE_HAS_64BIT_LONGS */
   stream.set_handle (int (fd));
+#endif /* ! ACE_HAS_64BIT_LONGS */
 
   ACE_OS::printf ("start  (tid = %d, fd = %d)\n", ACE_OS::thr_self (), stream.get_handle ());
   ACE_OS::fflush (stdout);
 
   while ((n = stream.recv (buf, sizeof buf, &flags)) > 0)
     continue;
+
+  ACE_UNUSED_ARG (n);
 
   ACE_OS::printf ("finish (tid = %d, fd = %d)\n", ACE_OS::thr_self (), stream.get_handle ());
 
@@ -33,13 +38,13 @@ read_file (void *fd)
   return 0;
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   u_short port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
   ACE_TLI_Acceptor   server;
   ACE_TLI_Stream     new_stream;
-  
+
   /* Allow up to 100 simultaneous threads */
   if (thr_mgr.open (100) == -1)
     ACE_OS::perror ("thr_mgr.open"), ACE_OS::exit (1);
@@ -52,18 +57,19 @@ main (int argc, char *argv[])
 
   for (int count = 1; ; count++)
     {
-      ACE_OS::fprintf (stderr, "thread %d, blocking for accept #%d\n", 
-		       ACE_OS::thr_self (), count);
+      ACE_OS::fprintf (stderr, "thread %d, blocking for accept #%d\n",
+                       ACE_OS::thr_self (), count);
 
       if (server.accept (new_stream) == -1)
-	ACE_OS::t_error ("server.accept error");
+        ACE_OS::t_error ("server.accept error");
 
-      else if (thr_mgr.spawn (ACE_THR_FUNC (read_file), 
-			      (void *) new_stream.get_handle (),
-			      THR_DETACHED | THR_BOUND) == -1)
-	ACE_OS::perror ("can't create worker thread\n");
+      else if (thr_mgr.spawn (ACE_THR_FUNC (read_file),
+                              (void *) new_stream.get_handle (),
+                              THR_DETACHED | THR_BOUND) == -1)
+        ACE_OS::perror ("can't create worker thread\n");
     }
-  return 0;
+
+  ACE_NOTREACHED (return 0);
 }
 #else
 #include <stdio.h>
