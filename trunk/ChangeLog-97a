@@ -6,6 +6,10 @@ Mon Mar 24 08:20:45 1997  David L. Levine  <levine@cs.wustl.edu>
 	* examples/Reactor/Multicast/server.cpp (Server_Events ctor):
 	  rearranged initializers to match declaration order.
 
+	* examples/IOStream/server/iostream_server.cpp,
+	                    client/iostream_client.cpp:
+	  added template specializations.
+
 Sun Mar 23 13:25:39 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
 	* ace/High_Res_Timer.h: Removed <scale_factor> from the
