@@ -3,14 +3,15 @@
 // Inserts an element onto the free list (if it isn't past the high water mark)
 
 template <class T, class LOCK> ACE_INLINE T *
-ACE_Locked_Simple_Free_List<T, LOCK>::remove ()
+ACE_Locked_Simple_Free_List<T, LOCK>::remove (void)
 {
   ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->lock_, NULL));
   T *retv = this->head_;
+
   if (retv != 0)
     {
       this->head_ = retv->get_next ();
-      this->size_ --;
+      this->size_--;
     }
   return retv;
 }
@@ -21,13 +22,18 @@ ACE_Locked_Simple_Free_List<T, LOCK>::add (T *mem)
   ACE_MT (ACE_GUARD (LOCK, ace_mon, this->lock_));
   mem->set_next (this->head_);
   this->head_ = mem;
-  this->size_ ++;
+  this->size_++;
 }
 
 template <class T, class LOCK> ACE_INLINE size_t
-ACE_Locked_Simple_Free_List<T, LOCK>::size ()
+ACE_Locked_Simple_Free_List<T, LOCK>::size (void)
 {
   return this->size_;
+}
+
+template <class T, class LOCK> ACE_INLINE void
+ACE_Locked_Simple_Free_List<T, LOCK>::resize (size_t)
+{
 }
 
 template <class T, class LOCK> ACE_INLINE void 

@@ -48,7 +48,7 @@ public:
 template <class T, class LOCK>
 class ACE_Locked_Simple_Free_List : public ACE_Free_List<T>
 // = TITLE
-//      Implement a simple free list
+//      Implement a simple free list.
 //
 // = DESCRIPTION
 //      This class maintains a free list.  It is different from
@@ -58,10 +58,10 @@ class ACE_Locked_Simple_Free_List : public ACE_Free_List<T>
 //      set_next () method.  
 {
 public:
-  ACE_Locked_Simple_Free_List ();
+  ACE_Locked_Simple_Free_List (void);
   // Create a Memory free list
   
-  virtual T *remove ();
+  virtual T *remove (void);
   // get next element in the free list.  Return NULL if the list is empty
 
   virtual void add (T *);
@@ -70,18 +70,18 @@ public:
   virtual ~ACE_Locked_Simple_Free_List ();
   // Destructor - does *not* delete elements it holds
 
-  virtual size_t size ();
+  virtual size_t size (void);
   // Returns the current size of the free list
 
-  virtual void resize (size_t) { }
+  virtual void resize (size_t);
   // This operation doesn't have any meaning here
 
 private:
   size_t size_ ;
-  // Maintian the current size of the free list
+  // Maintian the current size of the free list.
 
   LOCK lock_;
-  // Integrity keeper
+  // Integrity keeper.
 
   T *head_;
   // Free list head;

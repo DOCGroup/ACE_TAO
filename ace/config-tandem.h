@@ -172,23 +172,21 @@
 // Defines the page size of the system (not used on Win32 or
 // with ACE_HAS_GETPAGESIZE).
 
-
 /****** THREAD SPECIFIC **********/
+/* If you want to remove threading then comment out the following four #defines .*/
+#define ACE_MT_SAFE			//Compile using multi-thread libraries
 #define ACE_HAS_THREADS			//Platform supports threads
 #define ACE_HAS_STHREADS		//Platform supports Solaris threads
-#define ACE_HAS_THR_MINSTACK            // Tandem uses thr_minstack instead of thr_min_stack
-#define ACE_LACKS_PRI_T                 // Tandem lacks pri_t
-#define ACE_MT_SAFE			//Compile using multi-thread libraries
-//ACE_HAS_MT_SAFE_SOCKETS		Sockets may be called in multi-
-// threaded programs
 
 // Compiler/platform has threadspecific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE   
 //Platform supports thr_keydelete  (e.g,. UNIXWARE)
+
+#define ACE_HAS_THR_MINSTACK            // Tandem uses thr_minstack instead of thr_min_stack
+#define ACE_LACKS_PRI_T                 // Tandem lacks pri_t
 #define ACE_HAS_THR_KEYDELETE
 
-
-
+#define ACE_HAS_MT_SAFE_SOCKETS		// Sockets may be called in multi-threaded programs
 
 //ACE_HAS_REENTRANT_FUNCTIONS 		Platform supports reentrant 
 // functions (i.e., all the POSIX *_r functions).
