@@ -101,6 +101,10 @@ public:
 
   virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
 
+  virtual be_interface *replacement (void);
+  // Returns the node, which is used instead of the original node,
+  // e.g. the reply handler to the actual node.
+
 protected:
 
   char *local_name_;
@@ -199,7 +203,8 @@ class be_interface_ami_strategy
   : public be_interface_default_strategy
 {
 public:
-  be_interface_ami_strategy (be_interface *node);
+  be_interface_ami_strategy (be_interface *node,
+                             be_interface *handler);
 
   virtual ~be_interface_ami_strategy ();
 
@@ -208,6 +213,11 @@ public:
                                             int is_extra_state = 0);
 
   virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
+
+  virtual be_interface *replacement (void);
+
+private:
+  be_interface *handler_;
 };
 
 

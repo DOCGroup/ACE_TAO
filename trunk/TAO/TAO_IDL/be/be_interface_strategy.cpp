@@ -287,6 +287,11 @@ be_interface_strategy::has_extra_code_generation (TAO_CodeGen::CG_STATE current_
   return 0;
 }
 
+be_interface *
+be_interface_strategy::replacement (void)
+{
+  return 0;
+}
 
 
 // ****************************************************************
@@ -362,10 +367,11 @@ be_interface_ami_exception_holder_strategy::has_extra_code_generation (TAO_CodeG
 // ****************************************************************
 // AMI Strategy
 
-be_interface_ami_strategy::be_interface_ami_strategy (be_interface *node)
+be_interface_ami_strategy::be_interface_ami_strategy (be_interface *node,
+                                                      be_interface *handler)
   : be_interface_default_strategy (node, 
-                                   AMI_INTERFACE)
-
+                                   AMI_INTERFACE),
+    handler_ (handler)
 {
 }
 
@@ -410,6 +416,11 @@ be_interface_ami_strategy::has_extra_code_generation (TAO_CodeGen::CG_STATE curr
     return 0;
 }
 
+be_interface *
+be_interface_ami_strategy::replacement (void)
+{
+  return handler_;
+}
 
 // ****************************************************************
 // Default Strategy

@@ -52,16 +52,28 @@ be_visitor_ami_interface_ch::visit_interface (be_interface *node)
       // Grab the stream.
       os = this->ctx_->stream ();
 
-      os->indent (); // start with whatever indentation level we are at
 
+      os->gen_ifdef_macro (node->replacement ()->flat_name (), "_ptr");
+
+      os->indent (); // start with whatever indentation level we are at
       // forward declaration
+      *os << "class " << node->replacement ()->local_name () << ";" << be_nl;
+
+      // generate the _ptr declaration
+      *os << "typedef " << node->replacement ()->local_name () 
+          << " *" << node->replacement ()->local_name ()
+          << "_ptr;" << be_nl << be_nl;
+
+
+/*      // forward declaration
       *os << "class AMI_" << node->local_name () << "Handler;" << be_nl;
 
       // generate the _ptr declaration
       *os << "typedef AMI_" << node->local_name () 
           << "Handler *AMI_" << node->local_name ()
           << "Handler_ptr;" << be_nl << be_nl;
-
+*/
+      os->gen_endif ();
     }
 
   return 0;
