@@ -41,7 +41,7 @@ operator new (size_t size)
 
   static char *buf_start = 0;          // Large array used to reduce calls to NEW.
   static char *buf_end = 0;            // Indicates end of BUF_START.
-  static int   buf_size = 4 * BUFSIZ; // Size of buffer pointed to by BUF_START.
+  static size_t buf_size = 4 * BUFSIZ; // Size of buffer pointed to by BUF_START.
   char *temp;
 
   // Align this on correct boundaries, just to be safe...
