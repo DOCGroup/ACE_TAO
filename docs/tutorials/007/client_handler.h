@@ -65,8 +65,8 @@ public:
 
   /*
      When an ACE_Task<> object falls out of the svc() method, the framework
-         will call the close() method.  That's where we want to cleanup ourselves
-         if we're running in either thread-per-connection or thread-pool mode.
+     will call the close() method.  That's where we want to cleanup ourselves
+     if we're running in either thread-per-connection or thread-pool mode.
    */
   int close(u_long flags = 0);
 
@@ -79,6 +79,9 @@ public:
      handle_close() exactly which method failed.  That way, you don't have to
      maintain state information between your handle_* method calls. The _handle
      parameter is explained below...
+     As a side-effect, the reactor will also invoke remove_handler()
+     for the object on the mask that caused the -1 return.  This means 
+     that we don't have to do that ourselves!
    */
   int handle_close (ACE_HANDLE _handle, ACE_Reactor_Mask _mask);
 

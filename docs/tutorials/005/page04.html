@@ -1,10 +1,10 @@
 <HTML>
 <HEAD>
-   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
-   <META NAME="Author" CONTENT="Billy Quinn">
-   <META NAME="Description" CONTENT="A first step towards using ACE productively">
-   <TITLE>ACE Tutorial 005</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
+<META NAME="Author" CONTENT="Billy Quinn">
+<META NAME="Description" CONTENT="A first step towards using ACE productively">
+<TITLE>ACE Tutorial 005</TITLE>
 </HEAD>
 <BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
 
@@ -27,163 +27,116 @@ the definition where all of the real work of the application takes place.
 <P>
 <HR WIDTH="100%">
 
-<P><FONT FACE="Arial,Helvetica">// $Id$</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<pre><FONT FACE="Arial,Helvetica">
+#ifndef CLIENT_HANDLER_H
+#define CLIENT_HANDLER_H
 
-<P><FONT FACE="Arial,Helvetica">#ifndef CLIENT_HANDLER_H</FONT>
-<BR><FONT FACE="Arial,Helvetica">#define CLIENT_HANDLER_H</FONT><FONT FACE="Arial,Helvetica"></FONT>
+/*
+   Our client handler must exist somewhere in the ACE_Event_Handler object
+   hierarchy.  This is a requirement of the ACE_Reactor because it maintains
+   ACE_Event_Handler pointers for each registered event handler.  You could
+   derive our Client_Handler directly from ACE_Event_Handler but you still have
+   to have an ACE_SOCK_Stream for the actually connection.  With a direct
+   derivative of ACE_Event_Handler, you'll have to contain and maintain an
+   ACE_SOCK_Stream instance yourself.  With ACE_Svc_Handler (which is a
+   derivative of ACE_Event_Handler) some of those details are handled for you.
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Our client handler must exist
-somewhere in the ACE_Event_Handler object</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; hierarchy.&nbsp; This is
-a requirement of the ACE_Reactor because it maintains</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; ACE_Event_Handler pointers
-for each registered event handler.&nbsp; You could</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; derive our Client_Handler
-directly from ACE_Event_Handler but you still have</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; to have an ACE_SOCK_Stream
-for the actually connection.&nbsp; With a direct</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; derivative of ACE_Event_Handler,
-you'll have to contain and maintain an</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; ACE_SOCK_Stream instance
-yourself.&nbsp; With ACE_Svc_Handler (which is a</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; derivative of ACE_Event_Handler)
-some of those details are handled for you.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT><FONT FACE="Arial,Helvetica"></FONT>
+ */
 
-<P><FONT FACE="Arial,Helvetica">#include "ace/Svc_Handler.h"</FONT>
-<BR><FONT FACE="Arial,Helvetica">#include "ace/SOCK_Stream.h"</FONT><FONT FACE="Arial,Helvetica"></FONT>
+#include "ace/Svc_Handler.h"
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Another feature of ACE_Svc_Handler
-is it's ability to present the ACE_Task&lt;></FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; interface as well.&nbsp;
-That's what the ACE_NULL_SYNCH parameter below is all</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; about.&nbsp; That's beyond
-our scope here but we'll come back to it in the next</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; tutorial when we start looking
-at concurrency options.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">class Client_Handler : public ACE_Svc_Handler
-&lt; ACE_SOCK_STREAM, ACE_NULL_SYNCH ></FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">public:</FONT><FONT FACE="Arial,Helvetica"></FONT>
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; // Constructor...</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; Client_Handler (void);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+#include "ace/SOCK_Stream.h"
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; The destroy()
-method is our preferred method of destruction.&nbsp; We could</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; have overloaded
-the &lt;i>delete&lt;/i> operator but that is neither easy nor</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; intuitive (at
-least to me).&nbsp; Instead, we provide a new method of</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; destruction and
-we make our destructor protected so that only ourselves,</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; our derivatives
-and our friends can &lt;i>delete&lt;/i> us. It's a nice</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; compromise.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; void destroy (void);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+/*
+   Another feature of ACE_Svc_Handler is it's ability to present the ACE_Task<>
+   interface as well.  That's what the ACE_NULL_SYNCH parameter below is all
+   about.  That's beyond our scope here but we'll come back to it in the next
+   tutorial when we start looking at concurrency options.
+ */
+class Client_Handler : public ACE_Svc_Handler < ACE_SOCK_STREAM, ACE_NULL_SYNCH >
+{
+public:
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Most ACE objects
-have an open() method.&nbsp; That's how you make them ready</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; to do work.&nbsp;
-ACE_Event_Handler has a virtual open() method which allows us</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; to create this
-overrride.&nbsp; ACE_Acceptor&lt;> will invoke this method after</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; creating a new
-Client_Handler when a client connects. Notice that the</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; parameter to
-open() is a void*.&nbsp; It just so happens that the pointer</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; points to the
-acceptor which created us.&nbsp; You would like for the parameter</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; to be an ACE_Acceptor&lt;>*
-but since ACE_Event_Handler is generic, that</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; would tie it
-too closely to the ACE_Acceptor&lt;> set of objects.&nbsp; In our</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; definition of
-open() you'll see how we get around that.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; int open (void *_acceptor);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  // Constructor...
+  Client_Handler (void);
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; When there is
-activity on a registered handler, the handle_input() method</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; of the handler
-will be invoked.&nbsp; If that method returns an error code (eg</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; -- -1) then the
-reactor will invoke handle_close() to allow the object to</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; clean itself
-up. Since an event handler can be registered for more than</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; one type of callback,
-the callback mask is provided to inform</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; handle_close()
-exactly which method failed.&nbsp; That way, you don't have to</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; maintain state
-information between your handle_* method calls. The _handle</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; parameter is
-explained below...</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; int handle_close (ACE_HANDLE _handle,
-ACE_Reactor_Mask _mask);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  /*
+     The destroy() method is our preferred method of destruction.  We could
+     have overloaded the delete operator but that is neither easy nor
+     intuitive (at least to me).  Instead, we provide a new method of
+     destruction and we make our destructor protected so that only ourselves,
+     our derivatives and our friends can delete us. It's a nice
+     compromise.
+   */
+  void destroy (void);
 
-<P><FONT FACE="Arial,Helvetica">protected:</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  /*
+     Most ACE objects have an open() method.  That's how you make them ready
+     to do work.  ACE_Event_Handler has a virtual open() method which allows us
+     to create this overrride.  ACE_Acceptor<> will invoke this method after
+     creating a new Client_Handler when a client connects. Notice that the
+     parameter to open() is a void*.  It just so happens that the pointer
+     points to the acceptor which created us.  You would like for the parameter
+     to be an ACE_Acceptor<>* but since ACE_Event_Handler is generic, that
+     would tie it too closely to the ACE_Acceptor<> set of objects.  In our
+     definition of open() you'll see how we get around that.
+   */
+  int open (void *_acceptor);
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; When we register
-with the reactor, we're going to tell it that we want to</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; be notified of
-READ events.&nbsp; When the reactor sees that there is read</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; activity for
-us, our handle_input() will be invoked. The &lt;i>_handle&lt;/i></FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; provided is the
-handle (file descriptor in Unix) of the actual connection</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; causing the activity.&nbsp;
-Since we're derived from ACE_Svc_Handler&lt;> and it</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; maintains it's
-own peer (ACE_SOCK_Stream) object, this is redundant for</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; us.&nbsp; However,
-if we had been derived directly from ACE_Event_Handler, we</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; may have chosen
-not to contain the peer.&nbsp; In that case, the &lt;i>_handle&lt;/i></FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; would be important
-to us for reading the client's data.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; int handle_input (ACE_HANDLE _handle);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  /*
+     When there is activity on a registered handler, the handle_input() method
+     of the handler will be invoked.  If that method returns an error code (eg
+     -- -1) then the reactor will invoke handle_close() to allow the object to
+     clean itself up. Since an event handler can be registered for more than
+     one type of callback, the callback mask is provided to inform
+     handle_close() exactly which method failed.  That way, you don't have to
+     maintain state information between your handle_* method calls. The _handle
+     parameter is explained below...
+     As a side-effect, the reactor will also invoke remove_handler()
+     for the object on the mask that caused the -1 return.  This means 
+     that we don't have to do that ourselves!
+   */
+  int handle_close (ACE_HANDLE _handle, ACE_Reactor_Mask _mask);
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; This has nothing
-at all to do with ACE.&nbsp; I've added this here as a worker</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; function which
-I will call from handle_input().&nbsp; That allows me to</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; introduce concurrencly
-in later tutorials with a no changes to the worker</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; function.&nbsp;
-You can think of process() as application-level code and</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; everything elase
-as application-framework code.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; int process (char *_rdbuf, int
-_rdbuf_len);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+protected:
 
-<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; We don't really
-do anything in our destructor but we've declared it to be</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; protected to
-prevent casual deletion of this object.&nbsp; As I said above, I</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; really would
-prefer that everyone goes through the destroy() method to get</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; rid of us.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; ~Client_Handler (void);</FONT>
-<BR><FONT FACE="Arial,Helvetica">};</FONT><FONT FACE="Arial,Helvetica"></FONT>
+  /*
+     When we register with the reactor, we're going to tell it that we want to
+     be notified of READ events.  When the reactor sees that there is read
+     activity for us, our handle_input() will be invoked. The _handleg
+     provided is the handle (file descriptor in Unix) of the actual connection
+     causing the activity.  Since we're derived from ACE_Svc_Handler<> and it
+     maintains it's own peer (ACE_SOCK_Stream) object, this is redundant for
+     us.  However, if we had been derived directly from ACE_Event_Handler, we
+     may have chosen not to contain the peer.  In that case, the _handleg
+     would be important to us for reading the client's data.
+   */
+  int handle_input (ACE_HANDLE _handle);
 
-<P><FONT FACE="Arial,Helvetica">#endif // CLIENT_HANDLER_H</FONT>
+  /*
+     This has nothing at all to do with ACE.  I've added this here as a worker
+     function which I will call from handle_input().  That allows me to
+     introduce concurrencly in later tutorials with a no changes to the worker
+     function.  You can think of process() as application-level code and
+     everything elase as application-framework code.
+   */
+  int process (char *_rdbuf, int _rdbuf_len);
 
-<P>
+  /*
+     We don't really do anything in our destructor but we've declared it to be
+     protected to prevent casual deletion of this object.  As I said above, I
+     really would prefer that everyone goes through the destroy() method to get
+     rid of us.
+   */
+   ~Client_Handler (void);
+};
+
+#endif // CLIENT_HANDLER_H
+</pre>
 <HR WIDTH="100%">
 <CENTER>[<A HREF="..">Tutorial
 Index</A>] [<A HREF="page05.html">Continue This Tutorial</A>]</CENTER>

@@ -34,6 +34,10 @@ Client_Handler::Client_Handler (void)
  */
 Client_Handler::~Client_Handler (void)
 {
+        // Make sure that our peer closes when we're deleted.  This
+        // will probably happend when the peer is deleted but it
+        // doesn't hurt to be explicit.
+    this->peer ().close ();
 }
 
 /*
@@ -46,13 +50,6 @@ Client_Handler::~Client_Handler (void)
  */
 void Client_Handler::destroy (void)
 {
-  /*
-     We probably got here because of an error on the stream, so the peer
-     connection is probably already closed.  Still... there are other ways to
-     get here and closing a closed peer doesn't hurt.  
-   */
-  this->peer ().close ();
-
   /*
      Tell the reactor to forget all about us.  Notice that we use the same args
      here that we use in the open() method to register ourselves.  In addition,
@@ -186,15 +183,16 @@ int Client_Handler::handle_input (ACE_HANDLE _handle)
 
 /*
    If we return -1 out of handle_input() or if the reactor sees other problems
-   with us then handle_close() will be called.  It uses our destroy() method to 
-   shut us down cleanly and get rid of our instance. 
+   with us then handle_close() will be called.  The reactor framework
+   will take care of removing us (due to the -1), so we don't need to
+   use the destroy() method.  Instead, we just delete ourselves directly.
  */
 int Client_Handler::handle_close (ACE_HANDLE _handle, ACE_Reactor_Mask _mask)
 {
   ACE_UNUSED_ARG (_handle);
   ACE_UNUSED_ARG (_mask);
 
-  this->destroy ();
+  delete this;
   return 0;
 }
 

@@ -69,6 +69,9 @@ public:
      handle_close() exactly which method failed.  That way, you don't have to
      maintain state information between your handle_* method calls. The _handle
      parameter is explained below...
+     As a side-effect, the reactor will also invoke remove_handler()
+     for the object on the mask that caused the -1 return.  This means 
+     that we don't have to do that ourselves!
    */
   int handle_close (ACE_HANDLE _handle, ACE_Reactor_Mask _mask);
 
