@@ -44,12 +44,12 @@ $server_reverse_nt_conf  = PerlACE::LocalFile ("server_reverse_nt$PerlACE::svcco
 # UIOP only available on Unix.  Substitute with alternative tests on Windows.
 if ($^O eq "MSWin32") {
     @server_opts =
-        ("-ORBendpoint iiop://",
+        ("-ORBSndSock 54321 -ORBendpoint iiop://",
 
          "-ORBsvcconf $server_reverse_nt_conf "
          ."-ORBEndpoint shmiop:// -ORBendpoint iiop://",
 
-         "-ORBsvcconf $server_iiop_shmiop_conf "
+         "-ORBRcvSock 12345 -ORBsvcconf $server_iiop_shmiop_conf "
         ."-ORBEndpoint iiop:// -ORBEndpoint shmiop:// "
         ."-p 1413566210");
 
