@@ -1,10 +1,13 @@
 This directory contains groups of client and server test programs that
 exercise the various C++ wrappers for sockets.  In general, the test
-programs do more or less the same thing -- they transfer data from
-client to the server.  Unless noted differently, the server is
-implemented as an "iterative server," i.e., it only deals with one
-client at a time.  The following describes each set of tests in more
-detail:
+programs do more or less the same thing -- the client establishes a
+connection with the server and then transfers data to the server,
+which keeps printing the data until EOF is reached (e.g., user types
+^D).
+
+Unless noted differently, the server is implemented as an "iterative
+server," i.e., it only deals with one client at a time.  The following
+describes each set of tests in more detail:
 
 	. C-inclient.cpp/C-inserver.cpp -- This is basically a C code
 	  implementation that opens a connection to the server and
