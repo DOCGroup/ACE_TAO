@@ -1,3 +1,8 @@
+Tue Dec  8 07:22:42 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp : Fixed the template
+	  instantiation problems. Thanks to Andy for reporting this.
+
 Tue Dec  8 02:09:47 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/POA/On_Demand_Loading/server.cpp (main): Changed the 
