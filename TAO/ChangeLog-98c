@@ -1,3 +1,11 @@
+Fri Jun 12 11:48:00 1998  Michael Kircher <mk1@cs.wustl.edu>
+
+        * tao/POAC.cpp: The TAO_IDL compiler generates platform
+	  dependent code for typecodes right now. POA.idl is !not!
+	  recompiled on a compilation, because it has been customized.
+	  This means, that a ifdef is needed to cover for the 
+	  platform dependence.
+
 Fri Jun 12 09:43:14 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Connect.cpp (send_error): dereferenced
