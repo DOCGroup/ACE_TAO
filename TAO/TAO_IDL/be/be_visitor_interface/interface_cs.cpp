@@ -104,7 +104,18 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "TAO_OutputCDR & cdr" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
-          << "return p->marshal (cdr);" << be_uidt_nl
+          << "return ";
+          
+          if (node->is_abstract ())
+            {
+              *os << "cdr << p;"
+            }
+          else
+            {
+              *os << "CORBA::Object::marshal (p, cdr);"
+            }
+            
+      *os << be_uidt_nl
           << "}";
     }
 

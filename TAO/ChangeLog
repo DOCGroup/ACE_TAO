@@ -1,3 +1,14 @@
+Wed Apr 14 17:48:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        
+          Fixed generation of TAO::Objref_Traits<>::tao_marshal() method
+          to check for a null object reference.
+          
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        
+          Removed file, visitor is no longer used.
+
 Wed Apr 14 12:39:37 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/Simple/time-date/Simple_time_date.mpc:
