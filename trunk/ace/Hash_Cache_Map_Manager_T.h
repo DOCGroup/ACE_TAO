@@ -28,8 +28,10 @@
 class ACE_Allocator;
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES>
-class ACE_Hash_Cache_Map_Manager : public ACE_Cache_Map_Manager< KEY, VALUE, HASH_KEY, COMPARE_KEYS,
+class ACE_Hash_Cache_Map_Manager : public ACE_Cache_Map_Manager< KEY, VALUE, 
                                    ACE_Hash_Map_Manager_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
+                                   ACE_Hash_Map_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
+                                   ACE_Hash_Map_Reverse_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
                                    CACHING_STRATEGY, ATTRIBUTES>
 {
   // = TITLE
@@ -57,9 +59,6 @@ class ACE_Hash_Cache_Map_Manager : public ACE_Cache_Map_Manager< KEY, VALUE, HAS
   typedef ACE_Hash_Map_Entry<KEY, CACHE_VALUE> CACHE_ENTRY;
   typedef KEY key_type;
   typedef VALUE mapped_type;
-  typedef ACE_TYPENAME HASH_MAP::ITERATOR IMPLEMENTATION;
-  typedef ACE_TYPENAME HASH_MAP::REVERSE_ITERATOR REVERSE_IMPLEMENTATION;
-
   // The actual value mapped to the key in the map. The <attributes>
   // are used by the strategy and is transparent to the user of this
   // class.
@@ -166,9 +165,11 @@ class ACE_Hash_Cache_Map_Manager : public ACE_Cache_Map_Manager< KEY, VALUE, HAS
 
 protected:
 
-  typedef ACE_Cache_Map_Manager< KEY, VALUE, HASH_KEY, COMPARE_KEYS,
-                                 ACE_Hash_Map_Manager_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
-                                 CACHING_STRATEGY, ATTRIBUTES>
+  typedef ACE_Cache_Map_Manager<KEY, VALUE, 
+                                ACE_Hash_Map_Manager_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
+                                ACE_Hash_Map_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
+                                ACE_Hash_Map_Reverse_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
+                                CACHING_STRATEGY, ATTRIBUTES>
     ACE_HCMM_BASE;
   // Base class.
 };
