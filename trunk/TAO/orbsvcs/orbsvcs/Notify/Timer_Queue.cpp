@@ -1,6 +1,8 @@
 // $Id$
 
 #include "Timer_Queue.h"
+#include "ace/Timer_Heap.h"
+#include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Timer_Queue.inl"
@@ -8,7 +10,6 @@
 
 ACE_RCSID(Notify, TAO_NS_Timer_Queue, "$id$")
 
-#include "ace/Timer_Heap.h"
 
 TAO_NS_Timer_Queue::TAO_NS_Timer_Queue (void)
   :timer_queue_ (new ACE_Timer_Heap ())
