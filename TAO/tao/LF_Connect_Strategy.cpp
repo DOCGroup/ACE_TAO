@@ -92,27 +92,3 @@ TAO_LF_Connect_Strategy::wait (TAO_Connection_Handler *ch,
 
   return result;
 }
-
-
-
-
-int
-TAO_LF_Connect_Strategy::post_failed_connect (TAO_Connection_Handler *ch)
-{
-  int ref = 0;
-  if (!ch->successful ())
-    {
-      // We need to do this here else we will leak memory. We cannot call
-      // close_connection () for the following reasons
-      // . the event_handlers get_handle () will return could return
-      //   an ACE_INVALID_HANDLE is things havent been shutdown
-      //   properly.
-      // . We cannot relax the conditions since the conditions are right
-      //   for other natural cases ie. LF
-      // Hence the blocked startegy will have to take of things itself.
-      ch->transport (0);
-      ref =  ch->decr_refcount ();
-    }
-
-  return ref;
-}
