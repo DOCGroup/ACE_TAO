@@ -488,7 +488,7 @@ TAO_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
   ACE_TRY
     {
       kind = type->kind (ACE_TRY_ENV);
-      // ACE_TRY_CHECK;
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -522,11 +522,12 @@ TAO_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
       break;
     case CORBA::tk_alias:
       {
+        CORBA::TCKind kind = CORBA::tk_void;
         ACE_TRY_EX (label2)
           {
             CORBA::TypeCode_ptr typecode = type->content_type (ACE_TRY_ENV);
             ACE_TRY_CHECK_EX (label2);
-            CORBA::TCKind kind = typecode->kind (ACE_TRY_ENV);
+            kind = typecode->kind (ACE_TRY_ENV);
             ACE_TRY_CHECK_EX (label2);;
           }
         ACE_CATCHANY
