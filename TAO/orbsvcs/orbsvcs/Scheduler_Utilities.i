@@ -9,9 +9,9 @@ ACE_RT_Info::ACE_RT_Info (const char* entry_point_,
 			  RtecScheduler::Time worst_time_,
 			  RtecScheduler::Time typical_time_,
 			  RtecScheduler::Time cached_time_,
-			  RtecScheduler::Period period_,
-			  RtecScheduler::Importance importance_,
-			  RtecScheduler::Quantum quantum_,
+			  RtecScheduler::Period_t period_,
+			  RtecScheduler::Importance_t importance_,
+			  RtecScheduler::Quantum_t quantum_,
 			  CORBA::Long threads_)
 {
   this->entry_point = entry_point_;

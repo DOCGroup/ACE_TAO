@@ -103,8 +103,8 @@ ACE_RT_Task::svc (void)
 #endif
 
       RtecScheduler::OS_Priority thread_priority;
-      RtecScheduler::Preemption_Subpriority subpriority;
-      RtecScheduler::Preemption_Priority preemption_priority;
+      RtecScheduler::Preemption_Subpriority_t subpriority;
+      RtecScheduler::Preemption_Priority_t preemption_priority;
 
       ACE_Scheduler_Factory::server ()->priority
         (this->rt_info_,
@@ -285,8 +285,8 @@ ACE_RT_Task::synch_threads (size_t threads)
     // Add threads.
     {
       RtecScheduler::OS_Priority thread_priority;
-      RtecScheduler::Preemption_Subpriority subpriority;
-      RtecScheduler::Preemption_Priority preemption_priority;
+      RtecScheduler::Preemption_Subpriority_t subpriority;
+      RtecScheduler::Preemption_Priority_t preemption_priority;
 
       TAO_TRY
         {

@@ -37,14 +37,14 @@ TAO_EC_ST_Timer_Module::shutdown (void)
 }
 
 RtecScheduler::handle_t
-TAO_EC_ST_Timer_Module::rt_info (RtecScheduler::Preemption_Priority)
+TAO_EC_ST_Timer_Module::rt_info (RtecScheduler::Preemption_Priority_t)
 {
   // @@ TODO......
   return 0;
 }
 
 int
-TAO_EC_ST_Timer_Module::schedule_timer (RtecScheduler::Preemption_Priority,
+TAO_EC_ST_Timer_Module::schedule_timer (RtecScheduler::Preemption_Priority_t,
                                         ACE_Event_Handler* eh,
                                         void* act,
                                         const ACE_Time_Value& delta,
@@ -54,7 +54,7 @@ TAO_EC_ST_Timer_Module::schedule_timer (RtecScheduler::Preemption_Priority,
 }
 
 int
-TAO_EC_ST_Timer_Module::cancel_timer (RtecScheduler::Preemption_Priority,
+TAO_EC_ST_Timer_Module::cancel_timer (RtecScheduler::Preemption_Priority_t,
                                       int id,
                                       const void*& act)
 {
@@ -62,7 +62,7 @@ TAO_EC_ST_Timer_Module::cancel_timer (RtecScheduler::Preemption_Priority,
 }
 
 int
-TAO_EC_ST_Timer_Module::register_handler (RtecScheduler::Preemption_Priority,
+TAO_EC_ST_Timer_Module::register_handler (RtecScheduler::Preemption_Priority_t,
                                           ACE_Event_Handler* eh,
                                           ACE_HANDLE handle)
 {
@@ -70,7 +70,7 @@ TAO_EC_ST_Timer_Module::register_handler (RtecScheduler::Preemption_Priority,
 }
 
 ACE_Reactor*
-TAO_EC_ST_Timer_Module::reactor (RtecScheduler::Preemption_Priority)
+TAO_EC_ST_Timer_Module::reactor (RtecScheduler::Preemption_Priority_t)
 {
   return this->reactor_;
 }
@@ -110,8 +110,8 @@ void TAO_EC_RPT_Timer_Module::activate (void)
       ACE_Time_Value period_tv;
       ORBSVCS_Time::TimeT_to_Time_Value (period_tv, ACE_Scheduler_Rates[i]);
 
-      RtecScheduler::Period period = period_tv.sec () * 10000000 +
-                                     period_tv.usec () * 10;
+      RtecScheduler::Period_t period = period_tv.sec () * 10000000 +
+                                       period_tv.usec () * 10;
 
       ACE_NEW (this->reactorTasks[i], ReactorTask);
 
@@ -145,13 +145,13 @@ TAO_EC_RPT_Timer_Module::shutdown (void)
 }
 
 RtecScheduler::handle_t
-TAO_EC_RPT_Timer_Module::rt_info (RtecScheduler::Preemption_Priority priority)
+TAO_EC_RPT_Timer_Module::rt_info (RtecScheduler::Preemption_Priority_t priority)
 {
   return this->GetReactorTask (priority)->rt_info ();
 }
 
 int
-TAO_EC_RPT_Timer_Module::schedule_timer (RtecScheduler::Preemption_Priority priority,
+TAO_EC_RPT_Timer_Module::schedule_timer (RtecScheduler::Preemption_Priority_t priority,
                                          ACE_Event_Handler* eh,
                                          void* act,
                                          const ACE_Time_Value& delta,
@@ -161,7 +161,7 @@ TAO_EC_RPT_Timer_Module::schedule_timer (RtecScheduler::Preemption_Priority prio
 }
 
 int
-TAO_EC_RPT_Timer_Module::cancel_timer (RtecScheduler::Preemption_Priority priority,
+TAO_EC_RPT_Timer_Module::cancel_timer (RtecScheduler::Preemption_Priority_t priority,
                                        int id,
                                        const void*& act)
 {
@@ -169,7 +169,7 @@ TAO_EC_RPT_Timer_Module::cancel_timer (RtecScheduler::Preemption_Priority priori
 }
 
 int
-TAO_EC_RPT_Timer_Module::register_handler (RtecScheduler::Preemption_Priority priority,
+TAO_EC_RPT_Timer_Module::register_handler (RtecScheduler::Preemption_Priority_t priority,
                                            ACE_Event_Handler* eh,
                                            ACE_HANDLE handle)
 {
@@ -177,7 +177,7 @@ TAO_EC_RPT_Timer_Module::register_handler (RtecScheduler::Preemption_Priority pr
 }
 
 ACE_Reactor*
-TAO_EC_RPT_Timer_Module::reactor (RtecScheduler::Preemption_Priority priority)
+TAO_EC_RPT_Timer_Module::reactor (RtecScheduler::Preemption_Priority_t priority)
 {
   return &this->GetReactorTask (priority)->get_reactor ();
 }

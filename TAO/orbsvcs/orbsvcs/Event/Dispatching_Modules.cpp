@@ -183,8 +183,8 @@ ACE_ES_Priority_Dispatching::initialize_queues (void)
       ACE_Time_Value period_tv;
       ORBSVCS_Time::TimeT_to_Time_Value (period_tv, ACE_Scheduler_Rates[x]);
 
-      RtecScheduler::Period period = period_tv.sec () * 10000000 +
-                                     period_tv.usec () * 10;
+      RtecScheduler::Period_t period = period_tv.sec () * 10000000 +
+                                       period_tv.usec () * 10;
 
       ACE_NEW (this->queues_[x],
 	       ACE_ES_Dispatch_Queue (this, &notification_strategy_));
@@ -305,8 +305,8 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
   ACE_TIMEPROBE (TAO_DISPATCHING_MODULES_PUSH_SOURCE_TYPE_CORRELATION_MODULE);
 
   RtecScheduler::OS_Priority thread_priority;
-  RtecScheduler::Preemption_Subpriority subpriority;
-  RtecScheduler::Preemption_Priority preemption_priority;
+  RtecScheduler::Preemption_Subpriority_t subpriority;
+  RtecScheduler::Preemption_Priority_t preemption_priority;
 
   if (request->rt_info () != 0)
     {
@@ -493,7 +493,7 @@ ACE_ES_Dispatch_Queue::ACE_ES_Dispatch_Queue (ACE_ES_Dispatching_Base *dispatchi
 }
 
 int
-ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period &period,
+ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period_t &period,
                                    int threads)
 {
   // First set up the correct message queue according to whether the
