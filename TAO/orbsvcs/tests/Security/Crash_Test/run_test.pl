@@ -16,7 +16,7 @@ unlink $iorfile;
 $server_conf = PerlACE::LocalFile ("server$PerlACE::svcconf_ext");
 $client_conf = PerlACE::LocalFile ("client$PerlACE::svcconf_ext");
 
-$client_args = "-ORBSvcConf $client_conf -w 9 -k file://$iorfile";
+$client_args = "-ORBSvcConf $client_conf -w 15 -k file://$iorfile";
 
 # Set the SSL environment
 $ENV{'SSL_CERT_FILE'} = 'cacert.pem';
