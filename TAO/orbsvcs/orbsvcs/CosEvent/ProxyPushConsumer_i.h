@@ -44,7 +44,7 @@ class TAO_ORBSVCS_Export TAO_CosEC_ProxyPushConsumer_i : public POA_CosEventChan
 public:
   // = Initialization and termination methods.
   TAO_CosEC_ProxyPushConsumer_i (const RtecEventChannelAdmin::SupplierQOS &qos,
-                                 RtecEventChannelAdmin::ProxyPushConsumer_ptr ppc);
+                                 RtecEventChannelAdmin::ProxyPushConsumer_ptr proxypushconsumer);
   // Constructor.
 
   ~TAO_CosEC_ProxyPushConsumer_i (void);
@@ -69,7 +69,7 @@ private:
   const RtecEventChannelAdmin::SupplierQOS &qos_;
   // The SupplierQOS specified by the user of this class.
 
-  RtecEventChannelAdmin::ProxyPushConsumer_var ppc_;
+  RtecEventChannelAdmin::ProxyPushConsumer_var proxypushconsumer_;
   // The Rtec ProxyPushConsumer specified by the user of this class.
 
   TAO_CosEC_PushSupplierWrapper *wrapper_;
