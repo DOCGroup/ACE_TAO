@@ -76,6 +76,8 @@ ORB_CORE_FILES = \
   ORB \
   PolicyC \
   PolicyS \
+  DomainC \
+  DomainS \
   TimeBaseC \
   TimeBaseS \
   Principal \

@@ -13,6 +13,7 @@ Mon May 10 19:44:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* Typecode_Constants.cpp:
 	* TAO.dsp:
 	* TAO_Static.dsp:
+	* Makefile:
 	  All the necessary modifications corresponding to
 	  the above new files. Also removed the (nonexistent) 
 	  file PolicyS.h from the two projects.
