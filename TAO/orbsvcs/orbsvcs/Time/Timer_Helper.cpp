@@ -33,7 +33,12 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
   // The following are used to keep a track of the inaccuracy
   // in synchronization.
 
-  CORBA::ULongLong lowest_time = 0xFFFFFFFFFFFFFFFF;
+  #if defined (ACE_LACKS_LONGLONG_T)
+    CORBA::ULongLong lowest_time (0xFFFFFFFFFFFFFFFFull);
+  #else
+    CORBA::ULongLong lowest_time = 0xFFFFFFFFFFFFFFFFull;
+  #endif
+
   CORBA::ULongLong highest_time  = 0;
 
   TAO_TRY
