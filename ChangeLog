@@ -10,27 +10,28 @@ Thu May 13 18:37:52 2004  Steve Huston  <shuston@riverace.com>
 	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Added missing
 	  #include "ace/Service_Object.h" for the non-AIO case.
 
-Thu May 13 21:39:00 2004-05-13  Marek Brudka  <mbrudka@elka.pw.edu.pl>
+Thu May 13 21:39:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* bin/MakeProjectCreator/templates/gnu.mpd: Changed dependency file 
-	name to make file names shorter. Thanks to Chad Elliott 
+	* bin/MakeProjectCreator/templates/gnu.mpd: Changed dependency file
+	name to make file names shorter. Thanks to Chad Elliott
 	<elliott_c@ociweb.com> for a patch.
 
 Thu May 13 21:39:00 2004-05-13  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* docs/ACE-guidelines.html: added guideline about lonmg file names
+	* docs/ACE-guidelines.html: Added guideline about long file
+	names.
 
 Thu May 13 18:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
           Added ACE_LD_SEARCH_PATH defined as PATH. Because Cygwin runs on
           Windows we must use PATH and not LD_LIBRARY_PATH which is the
-          default in ACE
+          default in ACE.
 
 Thu May 13 15:59:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
-          Added ACE_HAS_SNPRINTF. Cygwin supports this
+          Added ACE_HAS_SNPRINTF. Cygwin supports this.
 
 Thu May 13 15:28:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
