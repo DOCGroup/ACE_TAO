@@ -1,3 +1,15 @@
+Mon May 10 17:08:29 1999  James C. Hu <jxh@entera.com>
+
+        * ace/ACE.cpp:
+        * ace/config-sunos5.6.h:
+        * ace/README: Added support to enter_recv_timedwait,
+          enter_send_timedwait, handle_timed_complete, and
+          handle_timed_accept to use poll() instead of select() if
+          poll() is available and select() is known to have problems.
+          Created ACE_HAS_LIMITED_SELECT macro.  Certain versions of
+          SunOS 5.6 do not correctly select on file descriptors that
+          are larger than 1023.
+
 Mon May 10 16:48:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACE-INSTALL.html: Changed to use ACE_NO_INLINE to supress
