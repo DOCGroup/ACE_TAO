@@ -62,9 +62,9 @@ public:
   ULONG __stdcall Release (void);
 
   // = TAO-specific methods.
-  TAO_Client_Strategy_Factory &client_factory (void);
-  TAO_Server_Strategy_Factory &server_factory (void);
-  TAO_ORB_Parameters &params (void);
+  TAO_Client_Strategy_Factory *client_factory (void);
+  TAO_Server_Strategy_Factory *server_factory (void);
+  TAO_ORB_Parameters *params (void);
 
 protected:
   CORBA_ORB (void);

@@ -65,8 +65,8 @@ CORBA_ORB::AddRef (void)
 }
 
 ACE_INLINE
-TAO_ORB_Parameters&
+TAO_ORB_Parameters *
 CORBA_ORB::params(void)
 {
-  return params_;
+  return &params_;
 }

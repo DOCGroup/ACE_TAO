@@ -66,22 +66,22 @@ ROA::ROA (CORBA::ORB_ptr owning_orb,
     skeleton_ (0)
 {
   TAO_OA_Parameters *p = TAO_OA_PARAMS::instance ();
-  TAO_Server_Strategy_Factory &f = owning_orb->server_factory ();
+  TAO_Server_Strategy_Factory *f = owning_orb->server_factory ();
 
   ACE_ASSERT (p->oa () == 0);
 
   // Initialize the endpoint ... or try!
   if (client_acceptor_.open (p->addr (),
 			     ACE_Reactor::instance (),
-			     f.creation_strategy (),
-			     f.accept_strategy (),
-			     f.concurrency_strategy (),
-			     f.scheduling_strategy ()) == -1)
+			     f->creation_strategy (),
+			     f->accept_strategy (),
+			     f->concurrency_strategy (),
+			     f->scheduling_strategy ()) == -1)
     // XXXCJC Need to return an error somehow!!  Maybe set do_exit?
     ;
 
   client_acceptor_.acceptor ().get_local_addr (addr_);
-  this->objtable_ = f.object_lookup_strategy ();
+  this->objtable_ = f->object_lookup_strategy ();
 
   if (this->objtable_ != 0)
     p->oa (this);
