@@ -16,9 +16,13 @@
 
 #include "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "ace/ACE_export.h"
 
-#if (ACE_USES_CLASSIC_SVC_CONF == 0)
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if (ACE_USES_CLASSIC_SVC_CONF==0)
 /**
  * @class ACE_XML_Svc_Conf
  *
@@ -36,11 +40,10 @@
  *
  *
  */
+
 class ACE_Export ACE_XML_Svc_Conf
 {
 public:
-  typedef ACE_XML_Svc_Conf *(*Factory)(void);
-
   virtual ~ACE_XML_Svc_Conf (void) = 0;
 
   virtual int parse_file (const ACE_TCHAR file[]) = 0;
