@@ -365,7 +365,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   test_timer.elapsed_time (elapsed_time);
 
   double elapsed_time_per_invocation =
-    ACE_UINT64_DBLCAST_ADAPTER (elapsed_time / number_of_messages);
+    static_cast<double> (elapsed_time / number_of_messages);
 
   /*ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Throughput is [%f] \n",
