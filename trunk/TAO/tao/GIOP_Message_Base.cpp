@@ -290,10 +290,13 @@ TAO_GIOP_Message_Base::missing_data (ACE_Message_Block &incoming)
 
   size_t len = incoming.length ();
 
-  if (len > msg_size)
+  // If we have too many messages or if we have less than even a size
+  // of the GIOP header then ..
+  if (len > msg_size ||
+      len < TAO_GIOP_MESSAGE_HEADER_LEN)
     {
       return -1;
-     }
+    }
   else if (len == msg_size)
      return 0;
 
