@@ -13,6 +13,7 @@ Mon Dec 24 08:08:40 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	  to ACE_Proactor, a la the Reactor!
 
 	* tests/Thread_Pool_Reactor_Resume_Test.cpp,
+	* tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp,
 	* tests/Thread_Pool_Reactor_Test.cpp: Changed the signature of the
 	  reactor_event_hook() method to conform to the minor
  	  modifications outlined below.

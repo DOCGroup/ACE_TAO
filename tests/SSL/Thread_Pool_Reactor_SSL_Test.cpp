@@ -178,7 +178,7 @@ Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 }
 
 static int
-reactor_event_hook (void *)
+reactor_event_hook (ACE_Reactor *)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%t) handling events ....\n"));
