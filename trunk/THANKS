@@ -875,6 +875,7 @@ Raj Narayanaswamy <rnarayanaswamy@hologic.com>
 Iain Melville <Iain.Melville@opentrade.co.uk>
 Daniel Lang <dl@leo.org>
 Chris Leishman <chris_leishman@freeonline.com.au>
+Russell L. Carter <rcarter@pinyon.org>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
