@@ -676,7 +676,9 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
         {
           // we do not inherit from anybody, hence we do so from the base
           // CORBA::Object class
-          *os << " : public virtual CORBA::Object" << be_nl;
+          // Generate code that uses the macro. This is required to deal with
+          // the MSVC++ insanity
+          *os << " : public virtual ACE_CORBA_1 (Object)" << be_nl;
         }
 
       // generate the body

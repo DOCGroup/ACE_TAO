@@ -112,7 +112,7 @@ class CurrentBase;
 #if !defined (_PORTABLESERVER_CURRENTBASE_CH_)
 #define _PORTABLESERVER_CURRENTBASE_CH_
 
-  class TAO_Export CurrentBase: public virtual CORBA::Object
+  class TAO_Export CurrentBase: public virtual ACE_CORBA_1 (Object)
   {
   public:
     // the static operations
@@ -1132,7 +1132,7 @@ class POAManager;
 #if !defined (_PORTABLESERVER_POAMANAGER_CH_)
 #define _PORTABLESERVER_POAMANAGER_CH_
 
-  class TAO_Export POAManager: public virtual CORBA::Object
+  class TAO_Export POAManager: public virtual ACE_CORBA_1 (Object)
   {
   public:
     // the static operations
@@ -1260,7 +1260,7 @@ class AdapterActivator;
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR_CH_
 
-  class TAO_Export AdapterActivator: public virtual CORBA::Object
+  class TAO_Export AdapterActivator: public virtual ACE_CORBA_1 (Object)
   {
   public:
     // the static operations
@@ -1358,7 +1358,7 @@ class ServantManager;
 #if !defined (_PORTABLESERVER_SERVANTMANAGER_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER_CH_
 
-  class TAO_Export ServantManager: public virtual CORBA::Object
+  class TAO_Export ServantManager: public virtual ACE_CORBA_1 (Object)
   {
   public:
     // the static operations
@@ -1656,7 +1656,7 @@ class POA;
 #if !defined (_PORTABLESERVER_POA_CH_)
 #define _PORTABLESERVER_POA_CH_
 
-  class TAO_Export POA: public virtual CORBA::Object
+  class TAO_Export POA: public virtual ACE_CORBA_1 (Object)
   {
   public:
     // the static operations

@@ -210,17 +210,30 @@ public:
   // return the underlying ORB
 
   TAO_POA *oa (void);
-  // retturn the Object Adapter
+  // return the Object Adapter
+
+  //
+  // = TAO extensions
+  // meant to be used internally.
+  //
 
   virtual void demarshal (CORBA::Environment &env,
                           const TAO_Call_Data_Skel *info,
                           ...);
-  // demarshal incoming parameters
+  // demarshal incoming parameters. Used by the SSI skeleton (i.e., the IDL
+  // compiler generated skeleton)
 
   virtual void marshal (CORBA::Environment &env,
                         const TAO_Call_Data_Skel *info,
                         ...);
-  // marshal outgoing parameters and return value
+  // marshal outgoing parameters and return value. This is used by the SSI
+  // i.e., by the IDL compiler generated skeletons.
+
+  virtual void dsi_marshal (CORBA::Environment &env,
+                            const TAO_Call_Data_Skel *info,
+                            ...);
+  // does the marshaling of outgoing parameters and is used by the DSI based
+  // scheme
 
   virtual void init_reply (CORBA::Environment &env);
   // start a Reply message
@@ -241,14 +254,17 @@ private:
   CORBA::String_var opname_;
   // Operation name.
 
-  TAO_InputCDR *incoming_;               
+  TAO_InputCDR *incoming_;
   // Incoming stream.
 
-  TAO_OutputCDR *outgoing_;               
+  TAO_OutputCDR *outgoing_;
   // Outgoing stream.
 
   CORBA::ULong reqid_;
   // request ID
+
+  CORBA::Boolean response_expected__;
+  // is it oneway or twoway
 
   CORBA::NVList_ptr params_;
   // Incoming parameters.
@@ -259,8 +275,9 @@ private:
   CORBA::Any_ptr exception_;
   // Any exception which might be raised.
 
-  int is_user_exception_;
-  // Flag to decide if the exception was a user exception or not.
+  //  TAO_GIOP_ReplyStatusType exception_type_;
+  CORBA::ULong exception_type_;
+  // exception type (will be NO_EXCEPTION in the majority of the cases)
 
   u_int refcount_;
   // Number of things hold references to here.

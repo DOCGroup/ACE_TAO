@@ -924,7 +924,6 @@ int be_visitor_exception_ctor_assign::visit_predefined_type (be_predefined_type 
   be_decl *bd = this->ctx_->node ();
 
   os->indent ();
-  return 0;
   // check if the type is an any
   if (node->pt () == AST_PredefinedType::PT_any)
     {

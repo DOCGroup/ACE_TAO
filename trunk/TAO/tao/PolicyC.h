@@ -80,7 +80,7 @@ private:
 #if !defined (_CORBA_POLICY_CH_)
 #define _CORBA_POLICY_CH_
 
-class TAO_Export  CORBA_Policy : public virtual CORBA::Object
+class TAO_Export  CORBA_Policy : public virtual ACE_CORBA_1 (Object)
 {
 public:
   // the static operations
