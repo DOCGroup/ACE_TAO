@@ -16,6 +16,10 @@
 
 #include "tao/PortableServer/PortableServerC.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 /**
  * @class ImR_Adapter_Activator
  *
@@ -26,11 +30,10 @@
  * the POA structure that the request expects.  For each POA created, the
  * same ServantLocator will be registered in each one.
  */
-class ImR_Adapter_Activator : public PortableServer::AdapterActivator
+class ImR_Adapter : public PortableServer::AdapterActivator
 {
 public:
-  /// Constructor
-  ImR_Adapter_Activator (PortableServer::ServantLocator_ptr servant);
+  ImR_Adapter();
 
   /// Called when a POA needs to be created.
   virtual CORBA::Boolean unknown_adapter (
@@ -40,6 +43,7 @@ public:
   )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  void init(PortableServer::ServantLocator_ptr servant);
 private:
   /// The ServantLocator registered in each new POA.
   PortableServer::ServantLocator_ptr servant_locator_;
