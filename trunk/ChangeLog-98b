@@ -1,3 +1,25 @@
+Sun Sep 27 00:18:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Makefile: Updated dependency.
+
+	* ace/OS.cpp (invoke):
+	* ace/Thread_Manager.cpp (ace_thread_manager_adapter):
+	  (ACE_Thread_Exit::instance): Removed conditional macro
+	  ACE_HAS_PTHREAD_SIGMASK so the Thread_Exit instance can be place
+	  in TSS.  This was guarded by ACE_HAS_PTHERAD_1003_DOT_3 which
+	  later merged with ACE_HAS_PTHERAD_SIGMASK.  However, the
+	  origianl intension of this condition was to fix a bug in Xavier
+	  pthread implementation.  The effect of merging the two macros
+	  forces ACE_Thread_Exit be allocated from stacks which, in turn,
+	  prevent threads from exiting properly when pthread_cancel is
+	  used.
+
+	  Linux is the only platform that I know which uses Xavier thread
+	  library.  The bug has apparently been fixed.  If your platform
+	  segfaults while spawning threads, please let me know.  Thanks to
+	  Chris Gill for noticing the abnormal behavior when calling
+	  ACE_Thread::thr_cancel.
+
 Sat Sep 26 23:20:52 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* ace/Proactor.cpp: Fixed the g++ warnings.
