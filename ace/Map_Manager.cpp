@@ -15,7 +15,7 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Entry)
 
-  template <class EXT_ID, class INT_ID>
+template <class EXT_ID, class INT_ID>
 ACE_Map_Entry<EXT_ID, INT_ID>::~ACE_Map_Entry (void)
 {
   // No-op just to keep some compilers happy...
@@ -33,7 +33,7 @@ ACE_Map_Entry<EXT_ID, INT_ID>::dump (void) const
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Manager)
 
-  template <class EXT_ID, class INT_ID, class ACE_LOCK> void
+template <class EXT_ID, class INT_ID, class ACE_LOCK> void
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::dump");
