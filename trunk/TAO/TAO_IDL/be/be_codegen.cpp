@@ -1389,7 +1389,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       this->gen_standard_include (this->client_header_,
                                   "tao/Valuetype/ValueBase.h");
     }
-                                  
+
   if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
                        idl_global->decls_seen_masks.valuetype_seen_))
     {
@@ -1400,7 +1400,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
           this->gen_standard_include (this->client_header_,
                                       "tao/Valuetype/ValueBase.h");
         }
-                                  
+
       this->gen_standard_include (this->client_header_,
                                   "tao/Valuetype/Valuetype_Adapter_Impl.h");
 
@@ -1478,7 +1478,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
   // Always generated.
   this->gen_standard_include (this->client_stubs_,
                               "tao/CDR.h");
-                              
+
   // Conditional includes.
 
   // Operations for local interfaces are pure virtual.
@@ -1523,7 +1523,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
               this->gen_standard_include (this->client_stubs_,
                                           "tao/Valuetype/ValueBase.h");
             }
-            
+
           this->gen_standard_include (this->client_stubs_,
                                       "tao/Valuetype/Valuetype_Adapter_Impl.h");
         }
@@ -1619,6 +1619,8 @@ TAO_CodeGen::gen_skel_src_includes (void)
                               "tao/Typecode.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/DynamicC.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/CDR.h");
 
   if (be_global->gen_thru_poa_collocation ()
       || be_global->gen_direct_collocation ())
