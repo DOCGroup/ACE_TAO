@@ -28,8 +28,6 @@ project(TAO_IDL_BE) : acelib, taoversion, core, tao_output {
   dynamicflags = TAO_IDL_BE_BUILD_DLL
   staticflags += TAO_AS_STATIC_LIBS
   after       += TAO_IDL_FE
-  pch_header   = be_pch.h
-  pch_source   = be/be_pch.cpp
 
   Source_Files {
     be
@@ -46,8 +44,6 @@ project(TAO_IDL_FE) : acelib, taoversion, core, tao_output {
   includes    += include fe
   dynamicflags = TAO_IDL_FE_BUILD_DLL
   staticflags += TAO_AS_STATIC_LIBS
-  pch_header   = fe_pch.h
-  pch_source   = fe/fe_pch.cpp
 
   Source_Files {
     fe

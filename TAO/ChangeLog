@@ -1,3 +1,34 @@
+Wed Jun 25 12:14:39 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/tao_idl.mpc:
+        * orbsvcs/orbsvcs/AV.mpc:
+        * orbsvcs/orbsvcs/CosConcurrency.mpc:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/CosLifeCycle.mpc:
+        * orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosProperty.mpc:
+        * orbsvcs/orbsvcs/CosTime.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+        * orbsvcs/orbsvcs/ETCL.mpc:
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
+        * orbsvcs/orbsvcs/IFRService.mpc:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/RTCORBAEvent.mpc:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/RTSched.mpc:
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+        * orbsvcs/orbsvcs/Security.mpc:
+        * orbsvcs/orbsvcs/Svc_Utils.mpc:
+
+          Removed precompiled header related information.
+
 Wed Jun 25 11:00:00 2003  Justin Michel  <michel_j@ociweb.com>
 
         * TAOACE.mwc:
@@ -319,14 +350,14 @@ Wed Jun 25 11:00:00 2003  Justin Michel  <michel_j@ociweb.com>
         * utils/catior/catior.mpc:
 
           Added and updated mpc files to use the latest
-        features and make use of base projects. 
+        features and make use of base projects.
 
 Wed Jun 25 09:40:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/TAO_Static.dsp:
-	* tao/IORInterceptor/TAO_IORInterceptor_Static.dsp: Added missing
-	  files into the project. Thanks to Tommy Andreasen
-	  <Tommy.Andreasen@Radiometer.dk> for provind the patches. 
+        * tao/TAO_Static.dsp:
+        * tao/IORInterceptor/TAO_IORInterceptor_Static.dsp: Added missing
+          files into the project. Thanks to Tommy Andreasen
+          <Tommy.Andreasen@Radiometer.dk> for provind the patches.
 
 Tue Jun 25 11:26:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -340,156 +371,156 @@ Tue Jun 25 11:00:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jun 24 18:40:08 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/run_test.pl:
-	  uncommented code that should have been enabled.
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/run_test.pl:
+          uncommented code that should have been enabled.
 
-	* orbsvcs/tests/Notify/Basic/run_test.pl:
-	  Added build option for RT Notification.
+        * orbsvcs/tests/Notify/Basic/run_test.pl:
+          Added build option for RT Notification.
 
-	* orbsvcs/tests/Notify/Basic/notify.rt.conf:
-	  Conf file for RT Notification.
+        * orbsvcs/tests/Notify/Basic/notify.rt.conf:
+          Conf file for RT Notification.
 
 Tue June 24 16:26:06 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/orbsvcs/AV/AV_Core.cpp: Check if the peer address is
-	  set for B endpoint when initializing forward flows. If set use
-	  that address to create acceptors. This case happens when no
-	  address is specified for the A endpoint.
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp: Check if the peer address is
+          set for B endpoint when initializing forward flows. If set use
+          that address to create acceptors. This case happens when no
+          address is specified for the A endpoint.
 
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: Changed the flow spec entry from
-	  "Flowname\Direction\Format\Flow_Prtocol\Sender_Address" to
-	  "Flowname\Direction\Format\Flow_Prtocol\Sender_Address\Receiver_Address".
-	  The additonal Receiver_Address field allows the user to specify
-	  the receiver address that will be used to receive the
-	  data. This addition helps to solve the problem arising on a
-	  multihomed host where the acceptor was by default accepting on
-	  all interfaces. This was not acceptable in some cases. Hence,
-	  by specifying the sender and receiver addresses explicitly only
-	  the required interfaces on a multihomed host are used.
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: Changed the flow spec entry from
+          "Flowname\Direction\Format\Flow_Prtocol\Sender_Address" to
+          "Flowname\Direction\Format\Flow_Prtocol\Sender_Address\Receiver_Address".
+          The additonal Receiver_Address field allows the user to specify
+          the receiver address that will be used to receive the
+          data. This addition helps to solve the problem arising on a
+          multihomed host where the acceptor was by default accepting on
+          all interfaces. This was not acceptable in some cases. Hence,
+          by specifying the sender and receiver addresses explicitly only
+          the required interfaces on a multihomed host are used.
 
         * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
-	* orbsvcs/orbsvcs/AV/UDP.cpp:Made changes to create sockets on the
-	  specified local and remote addresses to send and receive data
-	  correspondingly.
+        * orbsvcs/orbsvcs/AV/UDP.cpp:Made changes to create sockets on the
+          specified local and remote addresses to send and receive data
+          correspondingly.
 
-	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp: The source host and port in the
-	  TSpec for setting the RSVP sending_qos were not set
-	  correctly. This was fixed.
+        * orbsvcs/orbsvcs/AV/QoS_UDP.cpp: The source host and port in the
+          TSpec for setting the RSVP sending_qos were not set
+          correctly. This was fixed.
 
-	  Thanks to Craig Rodrigues <crodrigu@bbn.com> for bringing this
-	  problem to our notice.
+          Thanks to Craig Rodrigues <crodrigu@bbn.com> for bringing this
+          problem to our notice.
 
 Tue Jun 24 11:54:29 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp  (bind_new_context):
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp  (bind_new_context):
 
-	  Fixed compile errors where there was a return with no value.
-	  This only caused problems on a few platforms for some reason.
+          Fixed compile errors where there was a return with no value.
+          This only caused problems on a few platforms for some reason.
 
 Tue Jun 24 11:34:53 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	Simple example to show how to use RTCORBA Lanes with RT Notification.
+        Simple example to show how to use RTCORBA Lanes with RT Notification.
 
-	* orbsvcs/examples/Notify/Lanes/Consumer.cpp:
-	* orbsvcs/examples/Notify/Lanes/Consumer.h:
+        * orbsvcs/examples/Notify/Lanes/Consumer.cpp:
+        * orbsvcs/examples/Notify/Lanes/Consumer.h:
 
-	  Structured Consumer implementation.
+          Structured Consumer implementation.
 
- 	* orbsvcs/examples/Notify/Lanes/Consumer_Client.cpp:
- 	* orbsvcs/examples/Notify/Lanes/Consumer_Client.h:
+        * orbsvcs/examples/Notify/Lanes/Consumer_Client.cpp:
+        * orbsvcs/examples/Notify/Lanes/Consumer_Client.h:
 
-	  Client program.
+          Client program.
 
-	* orbsvcs/examples/Notify/Lanes/ORB_Objects.cpp:
-	* orbsvcs/examples/Notify/Lanes/ORB_Objects.h:
+        * orbsvcs/examples/Notify/Lanes/ORB_Objects.cpp:
+        * orbsvcs/examples/Notify/Lanes/ORB_Objects.h:
 
-	  Holder for common ORB objects.
+          Holder for common ORB objects.
 
-	* orbsvcs/examples/Notify/Lanes/ORB_Run_Task.cpp:
-	* orbsvcs/examples/Notify/Lanes/ORB_Run_Task.h:
+        * orbsvcs/examples/Notify/Lanes/ORB_Run_Task.cpp:
+        * orbsvcs/examples/Notify/Lanes/ORB_Run_Task.h:
 
-	  Task to run ORB::run method.
+          Task to run ORB::run method.
 
-	* orbsvcs/examples/Notify/Lanes/Supplier.cpp:
-	* orbsvcs/examples/Notify/Lanes/Supplier.h:
+        * orbsvcs/examples/Notify/Lanes/Supplier.cpp:
+        * orbsvcs/examples/Notify/Lanes/Supplier.h:
 
-	  Structured Supplier implementation.
+          Structured Supplier implementation.
 
-	* orbsvcs/examples/Notify/Lanes/Supplier_Client.cpp:
-	* orbsvcs/examples/Notify/Lanes/Supplier_Client.h:
+        * orbsvcs/examples/Notify/Lanes/Supplier_Client.cpp:
+        * orbsvcs/examples/Notify/Lanes/Supplier_Client.h:
 
-	  Supplier Client.
+          Supplier Client.
 
-	* orbsvcs/examples/Notify/Lanes/client.conf:
-	* orbsvcs/examples/Notify/Lanes/notify.conf:
-	* orbsvcs/examples/Notify/Lanes/run_test.pl:
-	* orbsvcs/examples/Notify/Lanes/Lanes.dsp:
-	* orbsvcs/examples/Notify/Lanes/Supplier.dsp:
-	* orbsvcs/examples/Notify/Lanes/Consumer.dsp:
-	* orbsvcs/examples/Notify/Lanes/Lanes.mpc:
-	* orbsvcs/examples/Notify/Lanes/Makefile:
+        * orbsvcs/examples/Notify/Lanes/client.conf:
+        * orbsvcs/examples/Notify/Lanes/notify.conf:
+        * orbsvcs/examples/Notify/Lanes/run_test.pl:
+        * orbsvcs/examples/Notify/Lanes/Lanes.dsp:
+        * orbsvcs/examples/Notify/Lanes/Supplier.dsp:
+        * orbsvcs/examples/Notify/Lanes/Consumer.dsp:
+        * orbsvcs/examples/Notify/Lanes/Lanes.mpc:
+        * orbsvcs/examples/Notify/Lanes/Makefile:
 
-	  Conf files, run script and project files.
+          Conf files, run script and project files.
 
-	* orbsvcs/examples/Notify/Lanes/README:
+        * orbsvcs/examples/Notify/Lanes/README:
 
-	  README for this example.
+          README for this example.
 
-	* orbsvcs/examples/Notify/Notify_Examples.dsw:
+        * orbsvcs/examples/Notify/Notify_Examples.dsw:
 
-	  Updated to include Lanes example.
+          Updated to include Lanes example.
 
 Tue Jun 24 03:49:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: Added patches supplied by
-	  Rob Andzik to get it compiling on VxWORKS.
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp: Added patches supplied by
+          Rob Andzik to get it compiling on VxWORKS.
 
 
 Mon Jun 23 22:28:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp: Removed the
-	  usage of TAO_Event_CRC. Used ACE::crc32 () instead. Thanks to
-	  Carlos for pointing it out.
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp: Removed the
+          usage of TAO_Event_CRC. Used ACE::crc32 () instead. Thanks to
+          Carlos for pointing it out.
 
-	* orbsvcs/orbsvcs/Makefile.RTEvent:
-	* orbsvcs/orbsvcs/RTEvent.bor: Removed CRC.{h,cpp} from the
-	  library.
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+        * orbsvcs/orbsvcs/RTEvent.bor: Removed CRC.{h,cpp} from the
+          library.
 
 Mon Jun 23 19:35:58 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ObjRefTemplate/ObjRefTemplate.mpc: Changed parent project
-	  named "valuetype_only" to "valuetype".  There doesn't seem to be
-	  a base project called "valuetype_only".
+        * tao/ObjRefTemplate/ObjRefTemplate.mpc: Changed parent project
+          named "valuetype_only" to "valuetype".  There doesn't seem to be
+          a base project called "valuetype_only".
 
 Mon Jun 23 20:18:31 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	More fixes for compile warnings and errors:
+        More fixes for compile warnings and errors:
 
-	* orbsvcs/tests/Notify/lib/PushConsumer.h:
- 	* orbsvcs/tests/Notify/lib/PushSupplier.h:
- 	* orbsvcs/tests/Notify/lib/SequencePushConsumer.h:
-	* orbsvcs/tests/Notify/lib/SequencePushSupplier.h:
- 	* orbsvcs/tests/Notify/lib/StructuredPushConsumer.h:
- 	* orbsvcs/tests/Notify/lib/StructuredPushSupplier.h:
+        * orbsvcs/tests/Notify/lib/PushConsumer.h:
+        * orbsvcs/tests/Notify/lib/PushSupplier.h:
+        * orbsvcs/tests/Notify/lib/SequencePushConsumer.h:
+        * orbsvcs/tests/Notify/lib/SequencePushSupplier.h:
+        * orbsvcs/tests/Notify/lib/StructuredPushConsumer.h:
+        * orbsvcs/tests/Notify/lib/StructuredPushSupplier.h:
 
-	  Added missing export directive to class declaration.
+          Added missing export directive to class declaration.
 
- 	* orbsvcs/tests/Notify/lib/Supplier_T.cpp:
-	* orbsvcs/tests/Notify/lib/Consumer_T.cpp:
+        * orbsvcs/tests/Notify/lib/Supplier_T.cpp:
+        * orbsvcs/tests/Notify/lib/Consumer_T.cpp:
 
-	  Added missing ACE_TYPENAME.
+          Added missing ACE_TYPENAME.
 
- 	* orbsvcs/tests/Notify/lib/Task_Stats.cpp:
- 	* orbsvcs/tests/Notify/lib/Task_Stats.h:
- 	* orbsvcs/tests/Notify/lib/Task_Stats.inl:
+        * orbsvcs/tests/Notify/lib/Task_Stats.cpp:
+        * orbsvcs/tests/Notify/lib/Task_Stats.h:
+        * orbsvcs/tests/Notify/lib/Task_Stats.inl:
 
-	  Changed all parameter types to ACE_UINT64.
+          Changed all parameter types to ACE_UINT64.
 
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp
 
-	  Specify the correct scope for call to <activate> method.
+          Specify the correct scope for call to <activate> method.
 
 Mon Jun 23 19:04:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -498,25 +529,25 @@ Mon Jun 23 19:04:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Pseudo_VarOut_T.h:
         * tao/Seq_Var_T.h:
         * tao/VarOut_T.h:
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
 
-	  Added typedefs of the return types of the .in(), .inout(),
-	  .out() and ._retn() operations for _vars. Also added
-	  typedefs of the stub type, stub _ptr type and stub _var type
-	  to the code generation for the corresponding skeleton class
-	  for interfaces. This closes [BUGID:1083]. Thanks to
-	  Andrew Sutton <ansutton@sep.com>, Holger Krekel <krekel@merlinux.de>
-	  and Jody Hagins <jody@atdesk.com> for their suggestions.
+          Added typedefs of the return types of the .in(), .inout(),
+          .out() and ._retn() operations for _vars. Also added
+          typedefs of the stub type, stub _ptr type and stub _var type
+          to the code generation for the corresponding skeleton class
+          for interfaces. This closes [BUGID:1083]. Thanks to
+          Andrew Sutton <ansutton@sep.com>, Holger Krekel <krekel@merlinux.de>
+          and Jody Hagins <jody@atdesk.com> for their suggestions.
 
 Mon Jun 23 16:53:58 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
 
-	  Removed '<>' from explicit instantiation for template function
-	  to try to placate the Redhat 7.1 explicit instantiation build.
+          Removed '<>' from explicit instantiation for template function
+          to try to placate the Redhat 7.1 explicit instantiation build.
 
 Mon Jun 23 12:37:48 2003  Chad Elliott  <elliott_c@ociweb.com>
 

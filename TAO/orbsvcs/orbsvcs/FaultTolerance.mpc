@@ -3,8 +3,6 @@ project(FaultTolerance) : orbsvcslib, core, notification, ftorb {
   idlflags    += -Wb,export_macro=TAO_FT_Export -Wb,export_include=FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h
   dynamicflags = TAO_FT_BUILD_DLL
   tagchecks    = FaultTolerance
-  pch_header   =
-  pch_source   =
 
   IDL_Files {
     FT_CORBA.idl

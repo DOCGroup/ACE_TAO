@@ -3,8 +3,6 @@ project(CosLifeCycle) : orbsvcslib, core, naming {
   idlflags    += -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle/lifecycle_export.h
   dynamicflags = TAO_LIFECYCLE_BUILD_DLL
   tagchecks    = LifeCycle
-  pch_header   =
-  pch_source   =
 
   IDL_Files {
     CosLifeCycle.idl

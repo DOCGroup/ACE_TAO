@@ -3,8 +3,6 @@ project(RTCORBAEvent) : orbsvcslib, core, rtevent, naming, svc_utils, iortable, 
   idlflags    += -Wb,export_macro=TAO_Naming_Export -Wb,export_include=naming_export.h
   dynamicflags = TAO_RTCORBAEVENT_BUILD_DLL
   tagchecks    = RTCORBAEvent
-  pch_header   =
-  pch_source   =
 
   IDL_Files {
   }

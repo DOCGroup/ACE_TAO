@@ -3,8 +3,6 @@ project(CosConcurrency) : orbsvcslib, core, portableserver {
   idlflags    += -Wb,export_macro=TAO_Concurrency_Export -Wb,export_include=Concurrency/concurrency_export.h
   dynamicflags = TAO_CONCURRENCY_BUILD_DLL
   tagchecks    = Concurrency
-  pch_header   =
-  pch_source   =
 
   IDL_Files {
     CosConcurrencyControl.idl
