@@ -41,6 +41,10 @@ Mon Sep 07 09:52:12 1998  David L. Levine  <levine@cs.wustl.edu>
           links will fail at this point.  VxWorks only has
           a few opendir-related functions.
 
+        * ace/Log_Msg.cpp (log): initialized local "c" to '\0' so that
+          egcs 1.1b won't complain that it might be used without
+          initialization.
+
 Mon Sep  7 01:02:58 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/ACE.i: Changed ACE_INLINE to ASYS_INLINE.
