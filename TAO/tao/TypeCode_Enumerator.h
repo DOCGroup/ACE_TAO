@@ -58,8 +58,8 @@ namespace TAO
      * \code
      *   TAO::TypeCode::Enumerator _tao_enumerators_Color[] =
      *     {
-     *       "RED",
-     *       "BLUE",
+     *       { "RED" },
+     *       { "BLUE" }
      *     };
      * \endcode
      */

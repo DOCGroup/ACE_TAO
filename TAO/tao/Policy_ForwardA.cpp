@@ -29,7 +29,7 @@
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
 #include "tao/Alias_TypeCode.h"
-#include "tao/TypeCode_Non_Default_Case.h"
+#include "tao/TypeCode_Enumerator.h"
 #include "tao/Enum_TypeCode.h"
 #include "tao/Sequence_TypeCode.h"
 #include "tao/CDR.h"
@@ -156,8 +156,8 @@ namespace CORBA
 
 static TAO::TypeCode::Enumerator<char const *> const _tao_enumerators_CORBA_SetOverrideType[] =
   {
-    "SET_OVERRIDE",
-    "ADD_OVERRIDE"
+    { "SET_OVERRIDE" },
+    { "ADD_OVERRIDE" }
     
   };
 
