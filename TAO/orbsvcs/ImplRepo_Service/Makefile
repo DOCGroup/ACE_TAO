@@ -17,14 +17,16 @@ LDLIBS = -lorbsvcs -lTAO
 PROG_SRCS = \
         ImplRepo.cpp \
         ImplRepo_i.cpp \
-        Repository.cpp
+        Repository.cpp \
+        Options.cpp
 
 SRC = $(PROG_SRCS)
 
 SIMPLE_SVR_OBJS = \
                 ImplRepo.o \
                 ImplRepo_i.o \
-                Repository.o
+                Repository.o \
+                Options.o
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
