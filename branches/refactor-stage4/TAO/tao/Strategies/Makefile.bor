@@ -1,0 +1,62 @@
+#
+# Makefile for building the TAO Strategies library
+#
+
+NAME = TAO_Strategies
+
+OBJFILES = \
+	$(OBJDIR)\UIOP_Factory.obj \
+	$(OBJDIR)\UIOP_Lite_Factory.obj \
+	$(OBJDIR)\UIOP_Profile.obj \
+	$(OBJDIR)\UIOP_Transport.obj \
+	$(OBJDIR)\UIOP_Connector.obj \
+	$(OBJDIR)\UIOP_Acceptor.obj \
+	$(OBJDIR)\UIOP_Connection_Handler.obj \
+	$(OBJDIR)\UIOP_Endpoint.obj \
+	$(OBJDIR)\SHMIOP_Factory.obj \
+	$(OBJDIR)\SHMIOP_Profile.obj \
+	$(OBJDIR)\SHMIOP_Transport.obj \
+	$(OBJDIR)\SHMIOP_Connector.obj \
+	$(OBJDIR)\SHMIOP_Acceptor.obj \
+	$(OBJDIR)\SHMIOP_Connection_Handler.obj \
+	$(OBJDIR)\SHMIOP_Endpoint.obj \
+	$(OBJDIR)\DIOP_Factory.obj \
+	$(OBJDIR)\DIOP_Profile.obj \
+	$(OBJDIR)\DIOP_Transport.obj \
+	$(OBJDIR)\DIOP_Connector.obj \
+	$(OBJDIR)\DIOP_Acceptor.obj \
+	$(OBJDIR)\DIOP_Connection_Handler.obj \
+	$(OBJDIR)\DIOP_Endpoint.obj \
+	$(OBJDIR)\uiop_endpoints.obj \
+   $(OBJDIR)\SCIOP_Acceptor.obj \
+   $(OBJDIR)\SCIOP_Connection_Handler.obj \
+   $(OBJDIR)\SCIOP_Connector.obj \
+   $(OBJDIR)\SCIOP_Endpoint.obj \
+   $(OBJDIR)\SCIOP_Factory.obj \
+   $(OBJDIR)\SCIOP_Lite_Factory.obj \
+   $(OBJDIR)\SCIOP_Profile.obj \
+   $(OBJDIR)\SCIOP_Transport.obj \
+   $(OBJDIR)\sciop_endpoints.obj \
+	$(OBJDIR)\advanced_resource.obj \
+	$(OBJDIR)\FIFO_Connection_Purging_Strategy.obj \
+	$(OBJDIR)\LFU_Connection_Purging_Strategy.obj \
+	$(OBJDIR)\NULL_Connection_Purging_Strategy.obj \
+	$(OBJDIR)\LF_Strategy_Null.obj
+
+RESOURCE = $(OBJDIR)\TAO_Strategies.res
+
+!ifdef STATIC
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_STRATEGIES_CFLAGS)
+!else
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_STRATEGIES_CFLAGS) \
+	-DTAO_STRATEGIES_BUILD_DLL
+!endif
+
+CPPDIR = .
+
+INCDIR_NAME = tao\Strategies
+INCLUDES = *.h *.i *.inl *.pidl
+
+LIBFILES = $(ACE_LIB) $(TAO_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>

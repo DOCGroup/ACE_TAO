@@ -1,0 +1,485 @@
+Fri Jun 27 14:42:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+
+          Changed logic for generation of declarations for Objref_Traits,
+          Value_Traits, and Array_Traits specializations. These may
+          not need to be generated in all cases.
+
+        * tao/Arg_Traits_T.h:
+
+          Cosmetic changes.
+
+        * tao/Basic_Arguments.cpp:
+
+          Added missing explicit template instantiation.
+
+        * tao/TAO.dsp:
+
+          Added missing header file to project.
+
+Fri Jun 27 11:16:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+          Replace 'template<>' with 'ACE_TEMPLATE_SPECIALIZATION'
+          in declarations of specialized template classes in
+          generated stub header files. Also removed 'template<>'
+          from the specialization implementations in the stub
+          source file. These changes please a larger number of
+          compilers.
+
+        * tao/PolicyC.cpp:
+        * tao/Policy_ForwardC.h:
+
+          Made changes corresponding to those above for the one
+          interface in TAO that is forward declared in one .pidl
+          files and fully defined in another - CORBA::Policy.
+
+        * tao/Object_Argument_T.cpp:
+
+          Removed #if 0/#endif pair that was inadvertently checked
+          in.
+
+        * tao/Sequence_T.h:
+
+          Added include file need by gcc/cygwin.
+
+Thu Jun 26 17:13:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * tao/Array_VarOut_T.cpp:
+        * tao/Array_VarOut_T.h:
+        * tao/Array_VarOut_T.inl:
+
+          Added Array_Traits to Array_VarOut_T.h. Even though
+          only the slice type is used in this traits template,
+          I had to have the array type for a parameter as well,
+          to distinguish among more than one array with the 
+          same element type. So this parameter had to be added
+          to the _var and _out classes, and changed in generated
+          code.
+
+        * TAO_IDL/be_include/be_typedef.h:
+        * TAO_IDL/be/be_typedef.cpp:
+
+          Added overrides for the seen_in_* and used_in_*
+          methods to propagate these flags to the underlying
+          type.
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be_include/be_visitor_traits.h:
+
+          Completed the traits generation methods.
+
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Object_Argument_T.h:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.h:
+
+          Minor changes.
+
+        * tao/corba.h:
+
+          Added the argument helper files to corba.h.
+
+Wed Jun 25 19:01:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_visitor_traits.h:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+
+          New files, a visitor that generates specialized traits template
+          classes in a separate pass over the AST.
+
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/TAO_IDL_BE.bor:
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/be/be_argument.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface_fwd.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_interface_fwd.h:
+        * TAO_IDL/be_include/be_type.h:
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+        * tao/PolicyC.cpp:
+        * tao/Policy_ForwardC.h:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/Valuetype/Sequence_T.inl:
+        * tao/Valuetype/Value_VarOut_T.cpp:
+        * tao/Valuetype/Value_VarOut_T.h:
+
+	        Partial support for traits code generation, along with
+	        corresponding changes to ORB code, some of it temporary
+	        until the hand-crafted files can be regenerated. These
+	        changes add code generation for interface and valuetype
+	        traits, and  modify sequence code to use some of these
+	        traits.
+
+          Also removed the _upcast and _downcast methods from
+          bounded and unbounded versions of object sequences.
+          These methods never seem to be called.
+
+Wed Jun 25 08:36:06 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.i:
+
+          Added the TAO::Object_Cast<> template struct that contains static
+          wrappers for the _narrow() and upcast() methods for interfaces.
+          This template is used instead of the existing tao_*_cast structs
+          in generated code by sequences of interfaces. Specializations of
+          this template will be added to generated code, however, to deal 
+          with the case when an undefined forward declared interface is
+          used in a sequence.
+
+        * tao/PolicyC.cpp:
+        * tao/Policy_ForwardC.h:
+
+          Hand-crafted additions of TAO::Objref_Traits<> and 
+          TAO::Object_Cast<> for CORBA::Policy, since it is forward declared
+          in Policy_Forward.pidl and defined in Policy.pidl.
+
+Tue Jun 24 18:12:24 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Arg_Traits_T.h:
+
+          Cosmetic changes.
+
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/Typecode.cpp:
+        * tao/Typecode.h:
+
+          Changed these predefined pseudo objects to use the
+          specialization approach for their argument traits,
+          instead of the typedef approach, as mentioned in
+
+          Tue Jun 24 13:48:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+
+          Added template base class for the interface traits - the static
+          methods used by the _var, _out and sequence classes. At the
+          moment, the interface _var and _out template classes are
+          using these template-wrapped static methods. The base class is
+          specialized in generated code. When the existing hand-crafted
+          files are regenerated, the template implementations in
+          Objref_VarOut_T.cpp can be removed, as well as the T_life
+          parameter from the _var and _out template classes.
+
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+
+          Corresponding changes for the T_cast parameter, passed to 
+          sequence of objects. This struct parameter wraps methods used
+          in object sequences to narrow and widen interfaces.
+
+Tue Jun 24 13:48:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Arg_Traits_T.h:
+
+          Added this file to the repository again, decided to go back to
+          the template specialization approach to specific arg traits
+          instead of the typedef approach.
+
+        * tao/Basic_Arguments.cpp:
+        * tao/Basic_Arguments.h:
+        * tao/Special_Basic_Arguments.cpp:
+        * tao/Special_Basic_Arguments.h:
+        * tao/UB_String_Arguments.cpp:
+        * tao/UB_String_Arguments.h:
+
+          Change to support the above change in approach.
+
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+
+          Made a start on templatizing helper structs of interface
+          traits that have been generated by the IDL compler up to now.
+
+        * tests/Bench/wire/testC.cpp:
+        * tests/Bench/wire/testS.cpp:
+
+          Changed test code to reflect the change in approach to
+          specific arg traits mentioned above.
+
+Mon Jun 23 16:50:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Cleanup_Func_Registry.h:
+
+          Added #include that was added in the main trunk, to avoid a
+          build errorin this branch.
+
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.h:
+
+          New files, for handling array arguments.
+
+        * tao/TAO.dsp:
+        * tao/Makefile.tao:
+
+          Added new files to project and makefile.
+
+        * tao/Var_Size_Argument_T.cpp:
+
+          Changed demarshaling and Any extraction methods to call
+          .inout() on the _var member instead of .out(). The _var's
+          pointer has already been allocated but not initialized,
+          and calling .out() will destroy it, expecting a new
+          allocation, which is not the intended behavior.
+
+Sun Jun 22 000:31:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Argument_T.h:
+
+          Removed unnecessary template parameter.
+
+        * tao/Var_Size_Argument_T.cpp:
+        * tao/Var_Size_Argument_T.h:
+        * tao/Fixed_Size_Argument_T.cpp:
+        * tao/Fixed_Size_Argument_T.h:
+        * tao/Makefile.tao:
+        * tao/TAO.dsp:
+
+          Added new files and classes for fixed and variable size structs,
+          unions, and sequences.
+
+Fri Jun 20 17:17:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Basic_Argument_T.h:
+        * tao/Basic_Arguments.h:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_Arguments.h:
+
+          Made sure at least one significant included file appears before
+          the '#pragma once' directive.
+
+        * tao/Makefile.bor:
+        * tao/Makefile.tao:
+
+          Added new files to the makefiles.
+
+Fri Jun 20 16:09:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Argument.cpp:
+
+          New file. Placing TAO::Argument's method implementations in
+          the header file was causing circular dependencies.
+
+        * tao/TAO.dsp:
+
+          Added new file to project.
+
+        * tao/Argument.h:
+        * tao/Object_Argument_T.cpp:
+        * tao/Object_Argument_T.h:
+        * tao/Special_Basic_Arguments.h:
+
+          Changes to file includes.
+
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/Typecode.cpp:
+        * tao/Typecode.h:
+
+          Added typedefs for TypeCode_Arg_Traits and Object_Arg_Traits,
+          to be used in generated code.
+
+        * tao/Policy_ForwardC.cpp:
+
+          Corrected typo in #pragma instantiation.
+
+Fri Jun 20 13:12:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Arg_Traits_T.h:
+
+          Eliminated the need for the TAO::Arg_Traits_T<> class
+          and removed this file.
+
+        * tao/BD_String_Argument_T.h:
+        * tao/Basic_Arguments.cpp:
+        * tao/Basic_Arguments.h:
+        * tao/Special_Basic_Arguments.cpp:
+        * tao/Special_Basic_Arguments.h:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Arguments.cpp:
+        * tao/UB_String_Arguments.h:
+
+          Replaced TAO::Arg_Traits_T<> subclass of the above
+          basic arguments type classes with typedefs whose
+          names can be easily generated by the IDL compiler.
+
+        * tao/Object_Argument_T.cpp:
+        * tao/Object_Argument_T.h:
+
+          New files, for interface and pseudo object arguments.
+
+        * tests/Bench/wire/testC.cpp:
+        * tests/Bench/wire/testS.cpp:
+
+          Changed these hand crafted files to use the typedefs
+          mentioned above.
+
+Thu Jun 19 22:24:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+
+	  Updated the interface of the rest of the existing template
+	  classes for IDL argument types.
+
+Thu Jun 19 20:39:25 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+
+          Updates to make these files correspond with the 
+          unbounded version.
+
+Thu Jun 19 17:31:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Bench/wire/client.cpp:
+        * tests/Bench/wire/client.dsp:
+        * tests/Bench/wire/server.cpp:
+        * tests/Bench/wire/server.dsp:
+        * tests/Bench/wire/test.idl:
+        * tests/Bench/wire/testC.cpp:
+        * tests/Bench/wire/testC.h:
+        * tests/Bench/wire/testC.i:
+        * tests/Bench/wire/testS.cpp:
+        * tests/Bench/wire/testS.h:
+        * tests/Bench/wire/test_i.cpp:
+        * tests/Bench/wire/test_i.h:
+
+	        New files, handcrafted example for testing
+	        changes in this branch.
+
+        * tao/Argument.h:
+        * tao/BD_String_Argument_T.h:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/Basic_Arguments.cpp:
+        * tao/Basic_Arguments.h:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_Arguments.h:
+
+	        Changes to the new TAO template args/traits
+	        interface.
+
+        * tao/CORBA_String.h:
+        * tao/CORBA_String.inl:
+
+	        Added ptr() method to (w)string _var classes,
+	        to get a return value of T * without giving
+	        up ownership of the underlying pointer.
+
+Wed Jun 18 22:57:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+	* tao/TAO.dsp:
+
+	  New files, for bounded string and wstring arguments.
+
+        * tao/Arg_Traits_T.h:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_Arguments.cpp:
+
+	  Fixed mistakes in comments.
+
+Wed Jun 18 19:09:55 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Arg_Traits_T.h:
+
+          Renamed Traits_T.h as this.
+
+        * tao/Argument.h:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/Basic_Arguments.cpp:
+        * tao/Basic_Arguments.h:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/Special_Basic_Arguments.cpp:
+        * tao/Special_Basic_Arguments.h:
+
+          Removed string argument name member - it's never used.
+
+        * tao/Traits_T.h:
+
+          Renamed this as Arg_Traits_T.h.
+
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_Arguments.cpp:
+        * tao/UB_String_Arguments.h:
+        * tao/TAO.dsp:
+
+          New files, for unbounded string and wstring arguments.
+
+Tue Jun 17 18:27:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Argument.h:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/TAO.dsp:
+
+          Changes to existing files added to this branch.
+
+        * tao/Basic_Arguments.cpp:
+        * tao/Basic_Arguments.h:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/Special_Basic_Arguments.cpp:
+        * tao/Special_Basic_Arguments.h:
+        * tao/Traits_T.h:
+
+          New files, completing support for the basic IDL argument
+          types.
+
+Fri Jun 13 18:20:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Argument.h:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+
+          New files, a start on refactoring arg handling during invocations
+          and upcalls.
+
+        * tao/TAO.dsp:
+
+          Added new files to project.
+
