@@ -44,13 +44,13 @@ Quoter_Factory_i::~Quoter_Factory_i (void)
 
 int Quoter_Factory_i::init (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_NEW_RETURN (this->my_quoters_, 
-                  Quoter_i *[this->quoter_num_], 
+  ACE_NEW_RETURN (this->my_quoters_,
+                  Quoter_i *[this->quoter_num_],
                   -1);
 
   for (size_t i = 0; i < this->quoter_num_; i++)
     {
-      ACE_NEW_RETURN (this->my_quoters_[i], 
+      ACE_NEW_RETURN (this->my_quoters_[i],
                       Quoter_i("x",  // name
                                0,    // don't use the LifeCycle_Service
                                this->poa_ptr_), // a reference to the poa
@@ -240,7 +240,7 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
 
       CosLifeCycle::LifeCycleObject_ptr lifeCycleObject_ptr =
         CosLifeCycle::LifeCycleObject::_duplicate ((CosLifeCycle::LifeCycleObject_ptr) quoter_var.in());
-  
+
       // Duplicate and return an object reference to the newly created Quoter.
       return lifeCycleObject_ptr;
     }
@@ -248,15 +248,15 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
     {
       ACE_ERROR ((LM_ERROR, "Quoter_i::copy - %s\n", exception_message));
       ACE_TRY_ENV.print_exception ("SYS_EX");
-      
+
       // Report a NoFactory exception back to the caller
       ACE_TRY_THROW (CosLifeCycle::NoFactory ());
     }
   ACE_ENDTRY;
 
   ACE_CHECK_RETURN (CosLifeCycle::LifeCycleObject::_nil());
-  
-  return 0;
+
+  ACE_NOTREACHED (return 0);
 }
 
 
@@ -268,7 +268,7 @@ Quoter_i::move (CosLifeCycle::FactoryFinder_ptr there,
                 CORBA::Environment &ACE_TRY_ENV)
 {
   const char *exception_message = "Null message";
-  
+
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,"Quoter_i::move: being called\n"));
 
@@ -279,7 +279,7 @@ Quoter_i::move (CosLifeCycle::FactoryFinder_ptr there,
         {
           ACE_ERROR ((LM_ERROR,
                       "Quoter_i::move: No Factory Finder, don't know how to go on.\n"));
-          
+
           ACE_THROW (CosLifeCycle::NoFactory ());
         }
 
@@ -307,7 +307,7 @@ Quoter_i::move (CosLifeCycle::FactoryFinder_ptr there,
       // Set the POA, so that the requests will be forwarded to the new location
 
       // new location
-      CORBA::Object_var forward_to_var = 
+      CORBA::Object_var forward_to_var =
         CORBA::Object::_duplicate ((CORBA::Object_ptr) lifeCycleObject_var.in());
 
       if (!CORBA::is_nil (forward_to_var.in ()))
