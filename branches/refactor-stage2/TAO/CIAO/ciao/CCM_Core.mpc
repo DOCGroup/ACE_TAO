@@ -1,0 +1,81 @@
+project (CIAO_Client) : taolib_with_idl {
+  depends += IFR_Client
+  sharedname  = CIAO_Client
+  libs       += TAO TAO_IFR_Client
+  idlflags  += -I $(TAO_ROOT) -Wb,stub_export_include=CIAO_Client_Export.h -Wb,skel_export_include=CIAO_Container_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
+  dllflags    = CIAO_CLIENT_BUILD_DLL
+
+  IDL_Files {
+    CCM_Base.idl
+    CCM_Event.idl
+    CCM_Component.idl
+    CIAO_Value.idl
+  }
+
+  Source_Files {
+    CCM_BaseC.cpp
+    CCM_EventC.cpp
+    CCM_ComponentC.cpp
+    CIAO_ValueC.cpp
+    Client_init.cpp
+  }
+}
+
+project (CIAO_Container) : taolib_with_idl {
+  depends += CIAO_Client PortableServer Security
+  sharedname  = CIAO_Container
+  libs       += TAO TAO_PortableServer TAO_IORInterceptor TAO_ObjRefTemplate TAO_Valuetype TAO_IFR_Client TAO_Security CIAO_Client
+  idlflags  += -I $(TAO_ROOT) -I$ $(TAO_ROOT)/orbsvcs/orbsvcs -Wb,export_include=CIAO_Container_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
+  dllflags    = CIAO_CONTAINER_BUILD_DLL
+  includes += $(TAO_ROOT)/orbsvcs/orbsvcs
+
+  IDL_Files {
+    CCM_Transaction.idl
+    CosPersistentState.idl
+    CCM_Container.idl
+    CCM_Container_Ex.idl
+  }
+
+  Source_Files {
+    CCM_TransactionC.cpp
+    CosPersistentStateC.cpp
+    CCM_ContainerC.cpp
+    CCM_Container_ExC.cpp
+    CCM_BaseS.cpp
+    CCM_EventS.cpp
+    CCM_ComponentS.cpp
+    Cookies.cpp
+  }
+}
+
+project (CIAO_Server) :taolib_with_idl {
+  depends += CIAO_Container
+  sharedname  = CIAO_Server
+  libs       += TAO TAO_PortableServer TAO_IORInterceptor TAO_ObjRefTemplate TAO_Valuetype TAO_IFR_Client TAO_Security
+  idlflags  += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs/orbsvcs -Wb,export_include=CIAO_Server_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
+
+  dllflags    = CIAO_SERVER_BUILD_DLL
+  includes += $(TAO_ROOT)/orbsvcs/orbsvcs
+
+  IDL_Files {
+    CCM_Deployment.idl
+    CIAO_Servers.idl
+//    HomeRegistrar.idl
+  }
+
+  Source_Files {
+    CCM_DeploymentC.cpp
+    CCM_DeploymentS.cpp
+    CIAO_ServersC.cpp
+    CIAO_ServersS.cpp
+//    HomeRegistrarC.cpp
+//    HomeRegistrarS.cpp
+    ComponentInstallation_Impl.cpp
+    ComponentServer_Impl.cpp
+    Container_Base.cpp
+    Container_Impl.cpp
+//    HomeRegistrar_i.cpp
+    Server_init.cpp
+    ServerActivator_Impl.cpp
+  }
+}

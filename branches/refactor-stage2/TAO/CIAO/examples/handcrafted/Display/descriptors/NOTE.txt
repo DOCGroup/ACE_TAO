@@ -1,0 +1,141 @@
+This directory contains various XML descriptors and configuration
+files required to compose the HUDisplay application in a variety of
+different ways.  Let's go over a few important files first:
+
+test.dat:
+---------
+
+  This file describes the deployment daemons CIAO's Assembly_Manager
+  will contact to instantiate ComponentServer's, home's, and component
+  instances.  Each line specify the name of a installation
+  "destination" (I used this to specify <processcollocation>
+  destination in various *.cad files) and the corresponding IOR for
+  the CIAO_Daemon.  The first entry is the "default" destination the
+  deployment framework will use.
+
+  For example, test.dat now contains:
+
+      Default corbaloc:iiop:localhost:10000/ServerActivator
+      Remote  corbaloc:iiop:localhost:12000/ServerActivator
+
+  You can copy and modify the copy to deploy the components in various
+  different locations to let the application truely "distributed".
+  For example, changing the remote ServerActivator to:
+    corbaloc:iiop:deuce.doc.wustl.edu:13000/ServerActivator
+
+  Remember to start up the Assembly_Manager in Step 2 using the
+  revised "test.dat" you created, and start up the CIAO_Daemon's in
+  Step 1 according to the specification.
+
+*.cad:
+------
+
+  These files specify how an application should be composed.  The
+  specification includes, where to install a component, what
+  implementation to use, and how to connect components together.
+  Currently, we have:
+
+  HUDisplay.cad: Plain vanilla assembly descriptor.  This file install
+                 all components using the "Default" (the first daemon)
+                 in 'test.dat.  You can see the application output
+                 from the default daemon shell.
+
+  HUDisplayGUI.cad: Same as HUDisplay.cad, but instead of a text-based
+                    NavDisplay component and a GPS component that
+                    generates random coordinations, this descriptor
+                    instantiate a GUI NavDisplay window and a GPS
+                    component that emulate a trace.
+
+  RemoteDisplay.cad: This descriptor causes the NavDisplay component
+                     to be instantiated in the "Remote" daemon.
+
+  RemoteDisplayGUI.cad: Similar to RemoteDisplay.cad but uses a
+                        GUI-based NavDisplay and the tracing GPS
+                        components.
+
+  DuelDisplay.cad: A combination of HUDisplay.cad and
+                   RemoteDisplayGUI.cad.  This example uses 4
+                   components (two display components) and hooks them
+                   up together. I think this is really cool.
+
+Unfortunately, there's no run_test.pl for starting and running these
+example configurations/assemblies as these daemons/managers programs
+are still under development.  You will need several shell windows for
+them.  All the following step should be run from this subdirectory
+($CIAO_ROOT/examples/handcrafted/Display/descriptors/).  Here are the
+steps to demonstrate the examples:
+
+Step 1:
+=======
+
+  You need to start up all the CIAO_Daemon's as specified in the
+  deployment configuration file 'test.dat' (Notice the endpoint
+  specification.)  I recommend running each CIAO_Daemon in its own
+  shell window so you can tell where a component in the example
+  application is running.  Here are some hints on how to start the
+  daemons:
+
+    $(CIAO_ROOT)/tools/Daemon/CIAO_Daemon  -ORBEndpoint iiop://localhost:10000 -n ../../../../tools/ComponentServer/ComponentServer
+
+    $(CIAO_ROOT)/tools/Daemon/CIAO_Daemon  -ORBEndpoint iiop://localhost:12000 -n ../../../../tools/ComponentServer/ComponentServer
+
+Step 2:
+=======
+
+  Next, you will need to start up the Assembly_Manager which actually
+  does the assembly work.  This should also be started in a separate
+  shell window.
+
+    $(CIAO_ROOT)/tools/Assembly_Deployer/Assembly_Manager -o ior -c test.dat
+
+Step 3:
+=======
+
+  You then need to instruct the Assembly_Manager to deploy a specific
+  compoennt assembly descriptor.  For example:
+
+    $(CIAO_ROOT)/tools/Assembly_Deployer/Assembly_Deployer -k file://ior  -a HUDisplay.cad
+
+  Replace "HUDisplay.cad" with other '.cad' files as you like.
+
+Step 4:
+=======
+
+  All the .cad files instruct the Assembly_Manager to write the IOR of
+  the RateGen component to a file called "rategen.ior" in this
+  directory.  You will then need to use a controller program in a
+  separate shell window to switch on/off the Rate Generator.  Cont
+
+  Execute the controller with:
+
+    ../RateGen/controller -o          # To switch on the RateGen
+
+  See its source to check what options are available to start up the
+  controller.  (Hints: you can control the rate (hertz) of the Rate
+  Generator component.)
+
+  Once the controller is running, check out the Daemon window (for
+  text-based NavDisplay component) or the GUI window for the output.
+  Once you are happy with it, you can stop the RateGen by executing
+  the controller as:
+
+    ../RateGen/controller -f          # To switch off the RateGen
+
+  Repeat this step again to instruct the RateGen component to start
+  generating events.
+
+Step 5:
+=======
+
+  Once you are done with the test.  Press <enter> in the shell window
+  running Assembly_Deployer that you started in Step 3.  This will
+  tear_down the application, kill all ComponentServer's, and terminate
+  both the Assembly_Deployer and Assembly_Manager process.
+
+  Repeat Step 2-5 using different configurations and assembly
+  descriptors.
+
+Step 6:
+=======
+
+  Terminate CIAO_Daemon (either using ^C or DaemonController.)

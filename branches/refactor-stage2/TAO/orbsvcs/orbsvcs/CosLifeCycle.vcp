@@ -1,0 +1,6918 @@
+# Microsoft eMbedded Visual Tools Project File - Name="CosLifeCycle" - Package Owner=<4>
+# Microsoft eMbedded Visual Tools Generated Build File, Format Version 6.02
+# ** DO NOT EDIT **
+
+# TARGTYPE "Win32 (WCE x86em) Dynamic-Link Library" 0x7f02
+# TARGTYPE "Win32 (WCE SH3) Dynamic-Link Library" 0x8102
+# TARGTYPE "Win32 (WCE x86) Dynamic-Link Library" 0x8302
+# TARGTYPE "Win32 (WCE ARM) Dynamic-Link Library" 0x8502
+# TARGTYPE "Win32 (WCE SH4) Dynamic-Link Library" 0x8602
+# TARGTYPE "Win32 (WCE MIPS) Dynamic-Link Library" 0x8202
+
+CFG=CosLifeCycle - Win32 (WCE MIPS) Debug
+!MESSAGE This is not a valid makefile. To build this project using NMAKE,
+!MESSAGE use the Export Makefile command and run
+!MESSAGE 
+!MESSAGE NMAKE /f "CosLifeCycle.vcn".
+!MESSAGE 
+!MESSAGE You can specify a configuration when running NMAKE
+!MESSAGE by defining the macro CFG on the command line. For example:
+!MESSAGE 
+!MESSAGE NMAKE /f "CosLifeCycle.vcn" CFG="CosLifeCycle - Win32 (WCE MIPS) Debug"
+!MESSAGE 
+!MESSAGE Possible choices for configuration are:
+!MESSAGE 
+!MESSAGE "CosLifeCycle - Win32 (WCE MIPS) Release" (based on "Win32 (WCE MIPS) Dynamic-Link Library")
+!MESSAGE "CosLifeCycle - Win32 (WCE MIPS) Debug" (based on "Win32 (WCE MIPS) Dynamic-Link Library")
+!MESSAGE "CosLifeCycle - Win32 (WCE SH4) Release" (based on "Win32 (WCE SH4) Dynamic-Link Library")
+!MESSAGE "CosLifeCycle - Win32 (WCE SH4) Debug" (based on "Win32 (WCE SH4) Dynamic-Link Library")
+!MESSAGE "CosLifeCycle - Win32 (WCE SH3) Release" (based on "Win32 (WCE SH3) Dynamic-Link Library")
+!MESSAGE "CosLifeCycle - Win32 (WCE SH3) Debug" (based on "Win32 (WCE SH3) Dynamic-Link Library")
+!MESSAGE "CosLifeCycle - Win32 (WCE ARM) Release" (based on "Win32 (WCE ARM) Dynamic-Link Library")
+!MESSAGE "CosLifeCycle - Win32 (WCE ARM) Debug" (based on "Win32 (WCE ARM) Dynamic-Link Library")
+!MESSAGE "CosLifeCycle - Win32 (WCE x86em) Release" (based on "Win32 (WCE x86em) Dynamic-Link Library")
+!MESSAGE "CosLifeCycle - Win32 (WCE x86em) Debug" (based on "Win32 (WCE x86em) Dynamic-Link Library")
+!MESSAGE "CosLifeCycle - Win32 (WCE x86) Debug" (based on "Win32 (WCE x86) Dynamic-Link Library")
+!MESSAGE 
+
+# Begin Project
+# PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
+# PROP ATL_Project 2
+
+!IF  "$(CFG)" == "CosLifeCycle - Win32 (WCE MIPS) Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "MIPSRel"
+# PROP BASE Intermediate_Dir "MIPSRel"
+# PROP BASE CPU_ID "{D6519010-710F-11D3-99F2-00105A0DF099}"
+# PROP BASE Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "MIPSRel"
+# PROP Intermediate_Dir "MIPSRel"
+# PROP CPU_ID "{D6519010-710F-11D3-99F2-00105A0DF099}"
+# PROP Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "NDEBUG" /d "$(CePlatform)" /d "MIPS" /d "_MIPS_" /r
+# ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "NDEBUG" /d "$(CePlatform)" /d "MIPS" /d "_MIPS_" /r
+CPP=clmips.exe
+# ADD BASE CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "MIPS" /D "_MIPS_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /YX /Oxs /M$(CECrtMT) /c
+# ADD CPP /nologo /W3 /I "$(ACE_ROOT)" /I "$(TAO_ROOT)" /I "$(TAO_ROOT)/orbsvcs" /D "MIPS" /D "_MIPS_" /D "NDEBUG" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "TAO_LIFECYCLE_BUILD_DLL" /D "TAO_ORBSVCS_HAS_LIFECYCLE" /YX /Oxs /M$(CECrtMT) /c
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE MIPS) Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "MIPSDbg"
+# PROP BASE Intermediate_Dir "MIPSDbg"
+# PROP BASE CPU_ID "{D6519010-710F-11D3-99F2-00105A0DF099}"
+# PROP BASE Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "MIPSDbg"
+# PROP Intermediate_Dir "MIPSDbg"
+# PROP CPU_ID "{D6519010-710F-11D3-99F2-00105A0DF099}"
+# PROP Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "MIPS" /d "_MIPS_" /r
+# ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "MIPS" /d "_MIPS_" /r
+CPP=clmips.exe
+# ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "MIPS" /D "_MIPS_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /YX /M$(CECrtMTDebug) /c
+# ADD CPP /nologo /W3 /Zi /Od /I "$(ACE_ROOT)" /I "$(TAO_ROOT)" /I "$(TAO_ROOT)/orbsvcs" /D "DEBUG" /D "MIPS" /D "_MIPS_" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "TAO_LIFECYCLE_BUILD_DLL" /D "TAO_ORBSVCS_HAS_LIFECYCLE" /YX /M$(CECrtMTDebug) /c
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH4) Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "SH4Rel"
+# PROP BASE Intermediate_Dir "SH4Rel"
+# PROP BASE CPU_ID "{D6519021-710F-11D3-99F2-00105A0DF099}"
+# PROP BASE Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "SH4Rel"
+# PROP Intermediate_Dir "SH4Rel"
+# PROP CPU_ID "{D6519021-710F-11D3-99F2-00105A0DF099}"
+# PROP Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "NDEBUG" /d "UNICODE" /d "_UNICODE" /d "$(CePlatform)" /d "SHx" /d "SH4" /d "_SH4_" /r
+# ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "NDEBUG" /d "UNICODE" /d "_UNICODE" /d "$(CePlatform)" /d "SHx" /d "SH4" /d "_SH4_" /r
+CPP=shcl.exe
+# ADD BASE CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "SHx" /D "SH4" /D "_SH4_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /YX /Qsh4 /Oxs /M$(CECrtMT) /c
+# ADD CPP /nologo /W3 /I "$(ACE_ROOT)" /I "$(TAO_ROOT)" /I "$(TAO_ROOT)/orbsvcs" /D "SHx" /D "SH4" /D "_SH4_" /D "NDEBUG" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "TAO_LIFECYCLE_BUILD_DLL" /D "TAO_ORBSVCS_HAS_LIFECYCLE" /YX /Qsh4 /Oxs /M$(CECrtMT) /c
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH4
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH4
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH4) Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "SH4Dbg"
+# PROP BASE Intermediate_Dir "SH4Dbg"
+# PROP BASE CPU_ID "{D6519021-710F-11D3-99F2-00105A0DF099}"
+# PROP BASE Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "SH4Dbg"
+# PROP Intermediate_Dir "SH4Dbg"
+# PROP CPU_ID "{D6519021-710F-11D3-99F2-00105A0DF099}"
+# PROP Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "DEBUG" /d "UNICODE" /d "_UNICODE" /d "$(CePlatform)" /d "SHx" /d "SH4" /d "_SH4_" /r
+# ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "DEBUG" /d "UNICODE" /d "_UNICODE" /d "$(CePlatform)" /d "SHx" /d "SH4" /d "_SH4_" /r
+CPP=shcl.exe
+# ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "SHx" /D "SH4" /D "_SH4_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /YX /Qsh4 /M$(CECrtMTDebug) /c
+# ADD CPP /nologo /W3 /Zi /Od /I "$(ACE_ROOT)" /I "$(TAO_ROOT)" /I "$(TAO_ROOT)/orbsvcs" /D "DEBUG" /D "SHx" /D "SH4" /D "_SH4_" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "TAO_LIFECYCLE_BUILD_DLL" /D "TAO_ORBSVCS_HAS_LIFECYCLE" /YX /Qsh4 /M$(CECrtMTDebug) /c
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH4
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH4
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH3) Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "SH3Rel"
+# PROP BASE Intermediate_Dir "SH3Rel"
+# PROP BASE CPU_ID "{D6519020-710F-11D3-99F2-00105A0DF099}"
+# PROP BASE Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "SH3Rel"
+# PROP Intermediate_Dir "SH3Rel"
+# PROP CPU_ID "{D6519020-710F-11D3-99F2-00105A0DF099}"
+# PROP Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+PFILE=pfile.exe
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "NDEBUG" /d "$(CePlatform)" /d "SHx" /d "SH3" /d "_SH3_" /r
+# ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "NDEBUG" /d "$(CePlatform)" /d "SHx" /d "SH3" /d "_SH3_" /r
+CPP=shcl.exe
+# ADD BASE CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "SHx" /D "SH3" /D "_SH3_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /YX /Oxs /M$(CECrtMT) /c
+# ADD CPP /nologo /W3 /I "$(ACE_ROOT)" /I "$(TAO_ROOT)" /I "$(TAO_ROOT)/orbsvcs" /D "SHx" /D "SH3" /D "_SH3_" /D "NDEBUG" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "TAO_LIFECYCLE_BUILD_DLL" /D "TAO_ORBSVCS_HAS_LIFECYCLE" /YX /Oxs /M$(CECrtMT) /c
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH3
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH3
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH3) Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "SH3Dbg"
+# PROP BASE Intermediate_Dir "SH3Dbg"
+# PROP BASE CPU_ID "{D6519020-710F-11D3-99F2-00105A0DF099}"
+# PROP BASE Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "SH3Dbg"
+# PROP Intermediate_Dir "SH3Dbg"
+# PROP CPU_ID "{D6519020-710F-11D3-99F2-00105A0DF099}"
+# PROP Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+PFILE=pfile.exe
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "SHx" /d "SH3" /d "_SH3_" /r
+# ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "SHx" /d "SH3" /d "_SH3_" /r
+CPP=shcl.exe
+# ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "SHx" /D "SH3" /D "_SH3_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /YX /M$(CECrtMTDebug) /c
+# ADD CPP /nologo /W3 /Zi /Od /I "$(ACE_ROOT)" /I "$(TAO_ROOT)" /I "$(TAO_ROOT)/orbsvcs" /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "TAO_LIFECYCLE_BUILD_DLL" /D "TAO_ORBSVCS_HAS_LIFECYCLE" /YX /M$(CECrtMTDebug) /c
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH3
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH3
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE ARM) Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "ARMRel"
+# PROP BASE Intermediate_Dir "ARMRel"
+# PROP BASE CPU_ID "{D6518FFC-710F-11D3-99F2-00105A0DF099}"
+# PROP BASE Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "../../LIB/Release/ARM"
+# PROP Intermediate_Dir "Release/ARM"
+# PROP CPU_ID "{D6518FFC-710F-11D3-99F2-00105A0DF099}"
+# PROP Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "NDEBUG" /d "$(CePlatform)" /d "ARM" /d "_ARM_" /r
+# ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "NDEBUG" /d "$(CePlatform)" /d "ARM" /d "_ARM_" /r
+CPP=clarm.exe
+# ADD BASE CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "ARM" /D "_ARM_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /YX /Oxs /M$(CECrtMT) /c
+# ADD CPP /nologo /W3 /I "$(ACE_ROOT)" /I "$(TAO_ROOT)" /I "$(TAO_ROOT)/orbsvcs" /D "ARM" /D "_ARM_" /D "NDEBUG" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "TAO_LIFECYCLE_BUILD_DLL" /D "TAO_ORBSVCS_HAS_LIFECYCLE" /YX /Oxs /M$(CECrtMT) /c
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /align:"4096" /MACHINE:ARM
+# ADD LINK32 commctrl.lib coredll.lib TAO_CosNaming.lib TAO.lib ace.lib ace_os.lib TAO_PortableServer.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /nodefaultlib:"$(CENoDefaultLib)" /out:"../../../bin/Release/ARM/TAO_CosLifeCycle.dll" /libpath:"../../LIB/Release/ARM" /libpath:"../../../LIB/Release/ARM" /subsystem:$(CESubsystem) /align:"4096" /MACHINE:ARM
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE ARM) Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "ARMDbg"
+# PROP BASE Intermediate_Dir "ARMDbg"
+# PROP BASE CPU_ID "{D6518FFC-710F-11D3-99F2-00105A0DF099}"
+# PROP BASE Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "../../LIB/Debug/ARM"
+# PROP Intermediate_Dir "Debug/ARM"
+# PROP CPU_ID "{D6518FFC-710F-11D3-99F2-00105A0DF099}"
+# PROP Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "ARM" /d "_ARM_" /r
+# ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "ARM" /d "_ARM_" /r
+CPP=clarm.exe
+# ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "ARM" /D "_ARM_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /YX /M$(CECrtMTDebug) /c
+# ADD CPP /nologo /W3 /Zi /Od /I "$(ACE_ROOT)" /I "$(TAO_ROOT)" /I "$(TAO_ROOT)/orbsvcs" /D "DEBUG" /D "ARM" /D "_ARM_" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "TAO_LIFECYCLE_BUILD_DLL" /D "TAO_ORBSVCS_HAS_LIFECYCLE" /YX /M$(CECrtMTDebug) /c
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /align:"4096" /MACHINE:ARM
+# ADD LINK32 commctrl.lib coredll.lib TAO_CosNamingd.lib TAOd.lib aced.lib ace_osd.lib TAO_PortableServerd.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /debug /nodefaultlib:"$(CENoDefaultLib)" /out:"../../../bin/Debug/ARM/TAO_CosLifeCycled.dll" /libpath:"../../LIB/Debug/ARM" /libpath:"../../../LIB/Debug/ARM" /subsystem:$(CESubsystem) /align:"4096" /MACHINE:ARM
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86em) Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "X86EMRel"
+# PROP BASE Intermediate_Dir "X86EMRel"
+# PROP BASE CPU_ID "{D6518FF4-710F-11D3-99F2-00105A0DF099}"
+# PROP BASE Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "../../LIB/Release/X86EM"
+# PROP Intermediate_Dir "Release/X86EM"
+# PROP CPU_ID "{D6518FF4-710F-11D3-99F2-00105A0DF099}"
+# PROP Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+EMPFILE=empfile.exe
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "NDEBUG" /d "$(CePlatform)" /d "_X86_" /d "x86" /d "i486" /r
+# ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "NDEBUG" /d "$(CePlatform)" /d "_X86_" /d "x86" /d "i486" /r
+CPP=cl.exe
+# ADD BASE CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "$(CePlatform)" /D "i486" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /D "NDEBUG" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /YX /Gz /Oxs /c
+# ADD CPP /nologo /W3 /I "$(ACE_ROOT)" /I "$(TAO_ROOT)" /I "$(TAO_ROOT)/orbsvcs" /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "i486" /D "_X86_" /D "x86" /D "NDEBUG" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "TAO_LIFECYCLE_BUILD_DLL" /D "TAO_ORBSVCS_HAS_LIFECYCLE" /YX /Gz /Oxs /c
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "NDEBUG" /o "NUL" /win32
+# SUBTRACT MTL /mktyplib203
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 commctrl.lib coredll.lib $(CEx86Corelibc) /nologo /stack:0x10000,0x1000 /dll /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /windowsce:emulation /MACHINE:IX86
+# ADD LINK32 commctrl.lib coredll.lib $(CEx86Corelibc) TAO.lib ace.lib ace_os.lib /nologo /stack:0x10000,0x1000 /dll /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /libpath:"$(TAO_ROOT)/LIB/Release/X86EM" /libpath:"$(ACE_ROOT)/LIB/Release/X86EM" /windowsce:emulation /MACHINE:IX86
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86em) Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "X86EMDbg"
+# PROP BASE Intermediate_Dir "X86EMDbg"
+# PROP BASE CPU_ID "{D6518FF4-710F-11D3-99F2-00105A0DF099}"
+# PROP BASE Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "../../LIB/Debug/X86EM"
+# PROP Intermediate_Dir "Debug/X86EM"
+# PROP CPU_ID "{D6518FF4-710F-11D3-99F2-00105A0DF099}"
+# PROP Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+EMPFILE=empfile.exe
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "_X86_" /d "x86" /d "i486" /r
+# ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "_X86_" /d "x86" /d "i486" /r
+CPP=cl.exe
+# ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "$(CePlatform)" /D "i486" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /YX /Gz /c
+# ADD CPP /nologo /W3 /Zi /Od /I "$(ACE_ROOT)" /I "$(TAO_ROOT)" /I "$(TAO_ROOT)/orbsvcs" /D "DEBUG" /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "i486" /D "_X86_" /D "x86" /D "_USRDLL" /D "CosLifeCycle_EXPORTS" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "TAO_LIFECYCLE_BUILD_DLL" /D "TAO_ORBSVCS_HAS_LIFECYCLE" /YX /Gz /c
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "_DEBUG" /o "NUL" /win32
+# SUBTRACT MTL /mktyplib203
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 commctrl.lib coredll.lib $(CEx86Corelibc) /nologo /stack:0x10000,0x1000 /dll /debug /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /windowsce:emulation /MACHINE:IX86
+# ADD LINK32 commctrl.lib coredll.lib $(CEx86Corelibc) TAOd.lib aced.lib ace_osd.lib /nologo /stack:0x10000,0x1000 /dll /debug /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /libpath:"$(TAO_ROOT)/LIB/Debug/X86EM" /libpath:"$(ACE_ROOT)/LIB/Debug/X86EM" /windowsce:emulation /MACHINE:IX86
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86) Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "X86Dbg"
+# PROP BASE Intermediate_Dir "X86Dbg"
+# PROP BASE CPU_ID "{D6518FF3-710F-11D3-99F2-00105A0DF099}"
+# PROP BASE Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "../../LIB/Debug/X86EM"
+# PROP Intermediate_Dir "Debug/X86EM"
+# PROP CPU_ID "{D6518FF3-710F-11D3-99F2-00105A0DF099}"
+# PROP Platform_ID "{8A9A2F80-6887-11D3-842E-005004848CBA}"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "_X86_" /d "x86" /d "_i386_" /r
+# ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "_X86_" /d "x86" /d "_i386_" /r
+CPP=cl.exe
+# ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "_i386_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /YX /Gs8192 /GF /c
+# ADD CPP /nologo /W3 /Zi /Od /I "$(ACE_ROOT)" /I "$(TAO_ROOT)" /I "$(TAO_ROOT)/orbsvcs" /D "DEBUG" /D "_i386_" /D "_X86_" /D "x86" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "TAO_LIFECYCLE_BUILD_DLL" /D "TAO_ORBSVCS_HAS_LIFECYCLE" /YX /Gs8192 /GF /c
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 commctrl.lib coredll.lib $(CEx86Corelibc) /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /debug /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /subsystem:$(CESubsystem) /MACHINE:IX86
+# ADD LINK32 commctrl.lib coredll.lib $(CEx86Corelibc) TAO_CosNamingd.lib TAOd.lib aced.lib ace_osd.lib TAO_PortableServerd.lib /nologo /base:"0x00100000" /stack:0x10000,0x1000 /entry:"_DllMainCRTStartup" /dll /debug /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /out:"../../../bin/Debug/X86EM/TAO_CosLifeCycled.dll" /libpath:"../../LIB/Debug/X86EM" /libpath:"../../../LIB/Debug/X86EM" /subsystem:$(CESubsystem) /MACHINE:IX86
+
+!ENDIF 
+
+# Begin Target
+
+# Name "CosLifeCycle - Win32 (WCE MIPS) Release"
+# Name "CosLifeCycle - Win32 (WCE MIPS) Debug"
+# Name "CosLifeCycle - Win32 (WCE SH4) Release"
+# Name "CosLifeCycle - Win32 (WCE SH4) Debug"
+# Name "CosLifeCycle - Win32 (WCE SH3) Release"
+# Name "CosLifeCycle - Win32 (WCE SH3) Debug"
+# Name "CosLifeCycle - Win32 (WCE ARM) Release"
+# Name "CosLifeCycle - Win32 (WCE ARM) Debug"
+# Name "CosLifeCycle - Win32 (WCE x86em) Release"
+# Name "CosLifeCycle - Win32 (WCE x86em) Debug"
+# Name "CosLifeCycle - Win32 (WCE x86) Debug"
+# Begin Group "Source Files"
+
+# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+# Begin Source File
+
+SOURCE=.\CosLifeCycleC.cpp
+
+!IF  "$(CFG)" == "CosLifeCycle - Win32 (WCE MIPS) Release"
+
+DEP_CPP_COSLI=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLI=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\Naming\ace\config-all.h"\
+	".\tao\ClientInterceptorAdapter.h"\
+	".\tao\ClientRequestInfo.h"\
+	".\tao\corba.h"\
+	".\tao\Invocation.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE MIPS) Debug"
+
+DEP_CPP_COSLI=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLI=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\Naming\ace\config-all.h"\
+	".\tao\ClientInterceptorAdapter.h"\
+	".\tao\ClientRequestInfo.h"\
+	".\tao\corba.h"\
+	".\tao\Invocation.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH4) Release"
+
+DEP_CPP_COSLI=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLI=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\Naming\ace\config-all.h"\
+	".\tao\ClientInterceptorAdapter.h"\
+	".\tao\ClientRequestInfo.h"\
+	".\tao\corba.h"\
+	".\tao\Invocation.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH4) Debug"
+
+DEP_CPP_COSLI=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLI=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\Naming\ace\config-all.h"\
+	".\tao\ClientInterceptorAdapter.h"\
+	".\tao\ClientRequestInfo.h"\
+	".\tao\corba.h"\
+	".\tao\Invocation.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH3) Release"
+
+DEP_CPP_COSLI=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLI=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\Naming\ace\config-all.h"\
+	".\tao\ClientInterceptorAdapter.h"\
+	".\tao\ClientRequestInfo.h"\
+	".\tao\corba.h"\
+	".\tao\Invocation.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH3) Debug"
+
+DEP_CPP_COSLI=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLI=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\Naming\ace\config-all.h"\
+	".\tao\ClientInterceptorAdapter.h"\
+	".\tao\ClientRequestInfo.h"\
+	".\tao\corba.h"\
+	".\tao\Invocation.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE ARM) Release"
+
+DEP_CPP_COSLI=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLI=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	"..\tao\Adapter.h"\
+	"..\tao\Adapter.i"\
+	"..\tao\Cleanup_Func_Registry.h"\
+	"..\tao\Cleanup_Func_Registry.inl"\
+	"..\tao\ClientInterceptorAdapter.inl"\
+	"..\tao\ClientRequestInfo.h"\
+	"..\tao\ClientRequestInfo.inl"\
+	"..\tao\CurrentC.h"\
+	"..\tao\DomainC.i"\
+	"..\tao\DynamicC.h"\
+	"..\tao\DynamicC.i"\
+	"..\tao\Encodable.h"\
+	"..\tao\Environment.h"\
+	"..\tao\Exception.h"\
+	"..\tao\Fault_Tolerance_Service.h"\
+	"..\tao\GIOP_Message_Version.h"\
+	"..\tao\Interceptor_List.h"\
+	"..\tao\Interceptor_List.inl"\
+	"..\tao\Invocation.i"\
+	"..\tao\Invocation_Endpoint_Selectors.h"\
+	"..\tao\IOPC.h"\
+	"..\tao\IOPC.i"\
+	"..\tao\LF_Event.inl"\
+	"..\tao\LocalObject.i"\
+	"..\tao\MessagingC.h"\
+	"..\tao\MessagingC.i"\
+	"..\tao\object.h"\
+	"..\tao\Object_Ref_Table.h"\
+	"..\tao\OctetSeqC.h"\
+	"..\tao\OctetSeqC.i"\
+	"..\tao\operation_details.h"\
+	"..\tao\operation_details.i"\
+	"..\tao\orb.h"\
+	"..\tao\ORB_Core.i"\
+	"..\tao\params.h"\
+	"..\tao\Parser_Registry.h"\
+	"..\tao\PICurrent.h"\
+	"..\tao\PICurrent.inl"\
+	"..\tao\Policy_Manager.h"\
+	"..\tao\PolicyC.h"\
+	"..\tao\PolicyFactory_Registry.h"\
+	"..\tao\PollableC.h"\
+	"..\tao\PollableC.i"\
+	"..\tao\PortableInterceptorC.i"\
+	"..\tao\Profile.i"\
+	"..\tao\Protocols_Hooks.h"\
+	"..\tao\Remote_Object_Proxy_Impl.h"\
+	"..\tao\Resource_Factory.h"\
+	"..\tao\sequence.h"\
+	"..\tao\Service_Callbacks.h"\
+	"..\tao\Service_Context.h"\
+	"..\tao\Services.h"\
+	"..\tao\SmartProxies\Smart_Proxies.inl"\
+	"..\tao\SmartProxies\smartproxies_export.h"\
+	"..\tao\StringSeqC.i"\
+	"..\tao\stub.h"\
+	"..\tao\Synch_Reply_Dispatcher.h"\
+	"..\tao\Tagged_Components.h"\
+	"..\tao\TAO_Export.h"\
+	"..\tao\TAOC.h"\
+	"..\tao\TAOC.i"\
+	"..\tao\target_specification.h"\
+	"..\tao\target_specification.i"\
+	"..\tao\TimeBaseC.h"\
+	"..\tao\TimeBaseC.i"\
+	"..\tao\ValueBase.h"\
+	"..\tao\ValueFactory.h"\
+	".\ao\any.h"\
+	".\ao\Any.i"\
+	".\ao\BoundsC.h"\
+	".\ao\BoundsC.i"\
+	".\ao\cdr.h"\
+	".\ao\CDR.i"\
+	".\ao\ClientInterceptorAdapter.h"\
+	".\ao\CONV_FRAMEC.h"\
+	".\ao\CONV_FRAMEC.i"\
+	".\ao\corba.h"\
+	".\ao\CORBA_String.h"\
+	".\ao\CORBA_String.inl"\
+	".\ao\corbafwd.h"\
+	".\ao\corbafwd.i"\
+	".\ao\CurrentC.i"\
+	".\ao\debug.h"\
+	".\ao\DomainC.h"\
+	".\ao\Environment.i"\
+	".\ao\Exception.i"\
+	".\ao\Fault_Tolerance_Service.i"\
+	".\ao\GIOP_Message_Version.inl"\
+	".\ao\Invocation.h"\
+	".\ao\Invocation_Endpoint_Selectors.i"\
+	".\ao\LF_Event.h"\
+	".\ao\LocalObject.h"\
+	".\ao\Managed_Types.h"\
+	".\ao\Managed_Types.i"\
+	".\ao\MProfile.h"\
+	".\ao\MProfile.i"\
+	".\ao\nvlist.h"\
+	".\ao\NVList.i"\
+	".\ao\Object.i"\
+	".\ao\Object_KeyC.h"\
+	".\ao\Object_KeyC.i"\
+	".\ao\Object_Proxy_Broker.h"\
+	".\ao\Object_Proxy_Impl.h"\
+	".\ao\ObjectIDList.h"\
+	".\ao\ObjectIDList.i"\
+	".\ao\ORB.i"\
+	".\ao\orb_core.h"\
+	".\ao\orbconf.h"\
+	".\ao\params.i"\
+	".\ao\Parser_Registry.i"\
+	".\ao\Pluggable.h"\
+	".\ao\Pluggable.i"\
+	".\ao\Policy_Manager.i"\
+	".\ao\Policy_Set.h"\
+	".\ao\Policy_Set.i"\
+	".\ao\PolicyC.i"\
+	".\ao\PortableInterceptor.h"\
+	".\ao\PortableInterceptorC.h"\
+	".\ao\Principal.h"\
+	".\ao\Principal.i"\
+	".\ao\Profile.h"\
+	".\ao\Protocol_Factory.h"\
+	".\ao\Reply_Dispatcher.h"\
+	".\ao\Reply_Dispatcher.i"\
+	".\ao\RequestInfo_Util.h"\
+	".\ao\Sequence.i"\
+	".\ao\Sequence_T.cpp"\
+	".\ao\Sequence_T.h"\
+	".\ao\Sequence_T.i"\
+	".\ao\Service_Callbacks.i"\
+	".\ao\Service_Context.inl"\
+	".\ao\Services.i"\
+	".\AO\SmartProxies\Smart_Proxies.h"\
+	".\ao\StringSeqC.h"\
+	".\ao\Stub.i"\
+	".\ao\Tagged_Components.i"\
+	".\ao\TAO_Singleton.cpp"\
+	".\ao\TAO_Singleton.h"\
+	".\ao\TAO_Singleton.inl"\
+	".\ao\TAO_Singleton_Manager.h"\
+	".\ao\TAO_Singleton_Manager.inl"\
+	".\ao\try_macros.h"\
+	".\ao\typecode.h"\
+	".\ao\Typecode.i"\
+	".\ao\ValueBase.i"\
+	".\ao\ValueFactory.i"\
+	".\ao\varbase.h"\
+	".\ao\WrongTransactionC.h"\
+	".\ce\ACE.h"\
+	".\ce\ACE.i"\
+	".\ce\ACE_export.h"\
+	".\ce\ace_wchar.h"\
+	".\ce\ace_wchar.inl"\
+	".\ce\Array_Base.cpp"\
+	".\ce\Array_Base.h"\
+	".\ce\Array_Base.inl"\
+	".\ce\Atomic_Op.i"\
+	".\ce\Base_Thread_Adapter.h"\
+	".\ce\Base_Thread_Adapter.inl"\
+	".\ce\Basic_Types.h"\
+	".\ce\Basic_Types.i"\
+	".\ce\CDR_Base.h"\
+	".\ce\CDR_Base.inl"\
+	".\ce\CDR_Stream.h"\
+	".\ce\CDR_Stream.i"\
+	".\ce\config-all.h"\
+	".\ce\config-cygwin32-common.h"\
+	".\ce\config-cygwin32.h"\
+	".\ce\config-g++-common.h"\
+	".\ce\config-ghs-common.h"\
+	".\ce\config-win32-borland.h"\
+	".\ce\config-win32-common.h"\
+	".\ce\config-win32-ghs.h"\
+	".\ce\config-win32-mingw.h"\
+	".\ce\config-win32-msvc-5.h"\
+	".\ce\config-win32-msvc-6.h"\
+	".\ce\config-win32-msvc-7.h"\
+	".\ce\config-win32-msvc.h"\
+	".\ce\config-win32-visualage.h"\
+	".\ce\config-win32.h"\
+	".\ce\config-WinCE.h"\
+	".\ce\config.h"\
+	".\ce\Containers.h"\
+	".\ce\Containers.i"\
+	".\ce\Containers_T.cpp"\
+	".\ce\Containers_T.h"\
+	".\ce\Containers_T.i"\
+	".\ce\CORBA_macros.h"\
+	".\ce\Event_Handler.h"\
+	".\ce\Event_Handler.i"\
+	".\ce\File_Lock.h"\
+	".\ce\File_Lock.inl"\
+	".\ce\Flag_Manip.h"\
+	".\ce\Flag_Manip.i"\
+	".\ce\Free_List.cpp"\
+	".\ce\Free_List.h"\
+	".\ce\Free_List.i"\
+	".\ce\Functor.h"\
+	".\ce\Functor.i"\
+	".\ce\Functor_T.cpp"\
+	".\ce\Functor_T.h"\
+	".\ce\Functor_T.i"\
+	".\ce\Handle_Ops.h"\
+	".\ce\Handle_Ops.i"\
+	".\ce\Handle_Set.h"\
+	".\ce\Handle_Set.i"\
+	".\ce\Hash_Map_Manager.h"\
+	".\ce\Hash_Map_Manager_T.cpp"\
+	".\ce\Hash_Map_Manager_T.h"\
+	".\ce\Hash_Map_Manager_T.i"\
+	".\ce\Init_ACE.h"\
+	".\ce\Init_ACE.i"\
+	".\ce\iosfwd.h"\
+	".\ce\Lib_Find.h"\
+	".\ce\Lib_Find.i"\
+	".\ce\Log_Msg.h"\
+	".\ce\Log_Msg_Callback.h"\
+	".\ce\Log_Priority.h"\
+	".\ce\Log_Record.h"\
+	".\ce\Log_Record.i"\
+	".\ce\Malloc.h"\
+	".\ce\Malloc.i"\
+	".\ce\Malloc_Allocator.h"\
+	".\ce\Malloc_Allocator.i"\
+	".\ce\Malloc_Base.h"\
+	".\ce\Malloc_T.cpp"\
+	".\ce\Malloc_T.h"\
+	".\ce\Malloc_T.i"\
+	".\ce\Managed_Object.cpp"\
+	".\ce\Managed_Object.h"\
+	".\ce\Managed_Object.i"\
+	".\ce\Map_Manager.cpp"\
+	".\ce\Map_Manager.h"\
+	".\ce\Map_Manager.i"\
+	".\ce\Mem_Map.h"\
+	".\ce\Mem_Map.i"\
+	".\ce\Memory_Pool.h"\
+	".\ce\Memory_Pool.i"\
+	".\ce\Message_Block.h"\
+	".\ce\Message_Block.i"\
+	".\ce\Message_Block_T.cpp"\
+	".\ce\Message_Block_T.h"\
+	".\ce\Message_Block_T.i"\
+	".\ce\Min_Max.h"\
+	".\ce\Node.cpp"\
+	".\ce\Node.h"\
+	".\ce\Object_Manager.h"\
+	".\ce\Object_Manager.i"\
+	".\ce\OS.h"\
+	".\ce\OS.i"\
+	".\ce\OS_Dirent.h"\
+	".\ce\OS_Dirent.inl"\
+	".\ce\OS_Errno.h"\
+	".\ce\OS_Errno.inl"\
+	".\ce\OS_Export.h"\
+	".\ce\OS_Log_Msg_Attributes.h"\
+	".\ce\OS_Log_Msg_Attributes.inl"\
+	".\ce\OS_Memory.h"\
+	".\ce\OS_Memory.inl"\
+	".\ce\OS_String.h"\
+	".\ce\OS_String.inl"\
+	".\ce\OS_TLI.h"\
+	".\ce\OS_TLI.inl"\
+	".\ce\post.h"\
+	".\ce\pre.h"\
+	".\ce\Process_Mutex.h"\
+	".\ce\Process_Mutex.inl"\
+	".\ce\Process_Semaphore.h"\
+	".\ce\Process_Semaphore.inl"\
+	".\ce\Reactor.h"\
+	".\ce\Reactor.i"\
+	".\ce\Reactor_Impl.h"\
+	".\ce\RW_Process_Mutex.h"\
+	".\ce\RW_Process_Mutex.inl"\
+	".\ce\Service_Config.h"\
+	".\ce\Service_Config.i"\
+	".\ce\Service_Object.h"\
+	".\ce\Service_Object.i"\
+	".\ce\Shared_Object.h"\
+	".\ce\Shared_Object.i"\
+	".\ce\Signal.h"\
+	".\ce\Signal.i"\
+	".\ce\Singleton.cpp"\
+	".\ce\Singleton.h"\
+	".\ce\Singleton.i"\
+	".\ce\Sock_Connect.h"\
+	".\ce\Sock_Connect.i"\
+	".\ce\SString.h"\
+	".\ce\SString.i"\
+	".\ce\streams.h"\
+	".\ce\SV_Semaphore_Complex.h"\
+	".\ce\SV_Semaphore_Complex.i"\
+	".\ce\SV_Semaphore_Simple.h"\
+	".\ce\SV_Semaphore_Simple.i"\
+	".\ce\Svc_Conf_Tokens.h"\
+	".\ce\svc_export.h"\
+	".\ce\Synch.h"\
+	".\ce\Synch.i"\
+	".\ce\Synch_T.cpp"\
+	".\ce\Synch_T.h"\
+	".\ce\Synch_T.i"\
+	".\ce\Test_and_Set.cpp"\
+	".\ce\Test_and_Set.h"\
+	".\ce\Test_and_Set.i"\
+	".\ce\Thread.h"\
+	".\ce\Thread.i"\
+	".\ce\Thread_Adapter.h"\
+	".\ce\Thread_Adapter.inl"\
+	".\ce\Thread_Control.h"\
+	".\ce\Thread_Control.inl"\
+	".\ce\Thread_Exit.h"\
+	".\ce\Thread_Hook.h"\
+	".\ce\Thread_Manager.h"\
+	".\ce\Thread_Manager.i"\
+	".\ce\Timer_Queue.h"\
+	".\ce\Timer_Queue_T.cpp"\
+	".\ce\Timer_Queue_T.h"\
+	".\ce\Timer_Queue_T.i"\
+	".\ce\Trace.h"\
+	".\ce\Unbounded_Queue.cpp"\
+	".\ce\Unbounded_Queue.h"\
+	".\ce\Unbounded_Queue.inl"\
+	".\ce\Unbounded_Set.cpp"\
+	".\ce\Unbounded_Set.h"\
+	".\ce\Unbounded_Set.inl"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE ARM) Debug"
+
+DEP_CPP_COSLI=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLI=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	"..\tao\Adapter.h"\
+	"..\tao\Adapter.i"\
+	"..\tao\Cleanup_Func_Registry.h"\
+	"..\tao\Cleanup_Func_Registry.inl"\
+	"..\tao\ClientInterceptorAdapter.inl"\
+	"..\tao\ClientRequestInfo.h"\
+	"..\tao\ClientRequestInfo.inl"\
+	"..\tao\CurrentC.h"\
+	"..\tao\DomainC.i"\
+	"..\tao\DynamicC.h"\
+	"..\tao\DynamicC.i"\
+	"..\tao\Encodable.h"\
+	"..\tao\Environment.h"\
+	"..\tao\Exception.h"\
+	"..\tao\Fault_Tolerance_Service.h"\
+	"..\tao\GIOP_Message_Version.h"\
+	"..\tao\Interceptor_List.h"\
+	"..\tao\Interceptor_List.inl"\
+	"..\tao\Invocation.i"\
+	"..\tao\Invocation_Endpoint_Selectors.h"\
+	"..\tao\IOPC.h"\
+	"..\tao\IOPC.i"\
+	"..\tao\LF_Event.inl"\
+	"..\tao\LocalObject.i"\
+	"..\tao\MessagingC.h"\
+	"..\tao\MessagingC.i"\
+	"..\tao\object.h"\
+	"..\tao\Object_Ref_Table.h"\
+	"..\tao\OctetSeqC.h"\
+	"..\tao\OctetSeqC.i"\
+	"..\tao\operation_details.h"\
+	"..\tao\operation_details.i"\
+	"..\tao\orb.h"\
+	"..\tao\ORB_Core.i"\
+	"..\tao\params.h"\
+	"..\tao\Parser_Registry.h"\
+	"..\tao\PICurrent.h"\
+	"..\tao\PICurrent.inl"\
+	"..\tao\Policy_Manager.h"\
+	"..\tao\PolicyC.h"\
+	"..\tao\PolicyFactory_Registry.h"\
+	"..\tao\PollableC.h"\
+	"..\tao\PollableC.i"\
+	"..\tao\PortableInterceptorC.i"\
+	"..\tao\Profile.i"\
+	"..\tao\Protocols_Hooks.h"\
+	"..\tao\Remote_Object_Proxy_Impl.h"\
+	"..\tao\Resource_Factory.h"\
+	"..\tao\sequence.h"\
+	"..\tao\Service_Callbacks.h"\
+	"..\tao\Service_Context.h"\
+	"..\tao\Services.h"\
+	"..\tao\SmartProxies\Smart_Proxies.inl"\
+	"..\tao\SmartProxies\smartproxies_export.h"\
+	"..\tao\StringSeqC.i"\
+	"..\tao\stub.h"\
+	"..\tao\Synch_Reply_Dispatcher.h"\
+	"..\tao\Tagged_Components.h"\
+	"..\tao\TAO_Export.h"\
+	"..\tao\TAOC.h"\
+	"..\tao\TAOC.i"\
+	"..\tao\target_specification.h"\
+	"..\tao\target_specification.i"\
+	"..\tao\TimeBaseC.h"\
+	"..\tao\TimeBaseC.i"\
+	"..\tao\ValueBase.h"\
+	"..\tao\ValueFactory.h"\
+	".\ao\any.h"\
+	".\ao\Any.i"\
+	".\ao\BoundsC.h"\
+	".\ao\BoundsC.i"\
+	".\ao\cdr.h"\
+	".\ao\CDR.i"\
+	".\ao\ClientInterceptorAdapter.h"\
+	".\ao\CONV_FRAMEC.h"\
+	".\ao\CONV_FRAMEC.i"\
+	".\ao\corba.h"\
+	".\ao\CORBA_String.h"\
+	".\ao\CORBA_String.inl"\
+	".\ao\corbafwd.h"\
+	".\ao\corbafwd.i"\
+	".\ao\CurrentC.i"\
+	".\ao\debug.h"\
+	".\ao\DomainC.h"\
+	".\ao\Environment.i"\
+	".\ao\Exception.i"\
+	".\ao\Fault_Tolerance_Service.i"\
+	".\ao\GIOP_Message_Version.inl"\
+	".\ao\Invocation.h"\
+	".\ao\Invocation_Endpoint_Selectors.i"\
+	".\ao\LF_Event.h"\
+	".\ao\LocalObject.h"\
+	".\ao\Managed_Types.h"\
+	".\ao\Managed_Types.i"\
+	".\ao\MProfile.h"\
+	".\ao\MProfile.i"\
+	".\ao\nvlist.h"\
+	".\ao\NVList.i"\
+	".\ao\Object.i"\
+	".\ao\Object_KeyC.h"\
+	".\ao\Object_KeyC.i"\
+	".\ao\Object_Proxy_Broker.h"\
+	".\ao\Object_Proxy_Impl.h"\
+	".\ao\ObjectIDList.h"\
+	".\ao\ObjectIDList.i"\
+	".\ao\ORB.i"\
+	".\ao\orb_core.h"\
+	".\ao\orbconf.h"\
+	".\ao\params.i"\
+	".\ao\Parser_Registry.i"\
+	".\ao\Pluggable.h"\
+	".\ao\Pluggable.i"\
+	".\ao\Policy_Manager.i"\
+	".\ao\Policy_Set.h"\
+	".\ao\Policy_Set.i"\
+	".\ao\PolicyC.i"\
+	".\ao\PortableInterceptor.h"\
+	".\ao\PortableInterceptorC.h"\
+	".\ao\Principal.h"\
+	".\ao\Principal.i"\
+	".\ao\Profile.h"\
+	".\ao\Protocol_Factory.h"\
+	".\ao\Reply_Dispatcher.h"\
+	".\ao\Reply_Dispatcher.i"\
+	".\ao\RequestInfo_Util.h"\
+	".\ao\Sequence.i"\
+	".\ao\Sequence_T.cpp"\
+	".\ao\Sequence_T.h"\
+	".\ao\Sequence_T.i"\
+	".\ao\Service_Callbacks.i"\
+	".\ao\Service_Context.inl"\
+	".\ao\Services.i"\
+	".\AO\SmartProxies\Smart_Proxies.h"\
+	".\ao\StringSeqC.h"\
+	".\ao\Stub.i"\
+	".\ao\Tagged_Components.i"\
+	".\ao\TAO_Singleton.cpp"\
+	".\ao\TAO_Singleton.h"\
+	".\ao\TAO_Singleton.inl"\
+	".\ao\TAO_Singleton_Manager.h"\
+	".\ao\TAO_Singleton_Manager.inl"\
+	".\ao\try_macros.h"\
+	".\ao\typecode.h"\
+	".\ao\Typecode.i"\
+	".\ao\ValueBase.i"\
+	".\ao\ValueFactory.i"\
+	".\ao\varbase.h"\
+	".\ao\WrongTransactionC.h"\
+	".\ce\ACE.h"\
+	".\ce\ACE.i"\
+	".\ce\ACE_export.h"\
+	".\ce\ace_wchar.h"\
+	".\ce\ace_wchar.inl"\
+	".\ce\Array_Base.cpp"\
+	".\ce\Array_Base.h"\
+	".\ce\Array_Base.inl"\
+	".\ce\Atomic_Op.i"\
+	".\ce\Base_Thread_Adapter.h"\
+	".\ce\Base_Thread_Adapter.inl"\
+	".\ce\Basic_Types.h"\
+	".\ce\Basic_Types.i"\
+	".\ce\CDR_Base.h"\
+	".\ce\CDR_Base.inl"\
+	".\ce\CDR_Stream.h"\
+	".\ce\CDR_Stream.i"\
+	".\ce\config-all.h"\
+	".\ce\config-cygwin32-common.h"\
+	".\ce\config-cygwin32.h"\
+	".\ce\config-g++-common.h"\
+	".\ce\config-ghs-common.h"\
+	".\ce\config-win32-borland.h"\
+	".\ce\config-win32-common.h"\
+	".\ce\config-win32-ghs.h"\
+	".\ce\config-win32-mingw.h"\
+	".\ce\config-win32-msvc-5.h"\
+	".\ce\config-win32-msvc-6.h"\
+	".\ce\config-win32-msvc-7.h"\
+	".\ce\config-win32-msvc.h"\
+	".\ce\config-win32-visualage.h"\
+	".\ce\config-win32.h"\
+	".\ce\config-WinCE.h"\
+	".\ce\config.h"\
+	".\ce\Containers.h"\
+	".\ce\Containers.i"\
+	".\ce\Containers_T.cpp"\
+	".\ce\Containers_T.h"\
+	".\ce\Containers_T.i"\
+	".\ce\CORBA_macros.h"\
+	".\ce\Event_Handler.h"\
+	".\ce\Event_Handler.i"\
+	".\ce\File_Lock.h"\
+	".\ce\File_Lock.inl"\
+	".\ce\Flag_Manip.h"\
+	".\ce\Flag_Manip.i"\
+	".\ce\Free_List.cpp"\
+	".\ce\Free_List.h"\
+	".\ce\Free_List.i"\
+	".\ce\Functor.h"\
+	".\ce\Functor.i"\
+	".\ce\Functor_T.cpp"\
+	".\ce\Functor_T.h"\
+	".\ce\Functor_T.i"\
+	".\ce\Handle_Ops.h"\
+	".\ce\Handle_Ops.i"\
+	".\ce\Handle_Set.h"\
+	".\ce\Handle_Set.i"\
+	".\ce\Hash_Map_Manager.h"\
+	".\ce\Hash_Map_Manager_T.cpp"\
+	".\ce\Hash_Map_Manager_T.h"\
+	".\ce\Hash_Map_Manager_T.i"\
+	".\ce\Init_ACE.h"\
+	".\ce\Init_ACE.i"\
+	".\ce\iosfwd.h"\
+	".\ce\Lib_Find.h"\
+	".\ce\Lib_Find.i"\
+	".\ce\Log_Msg.h"\
+	".\ce\Log_Msg_Callback.h"\
+	".\ce\Log_Priority.h"\
+	".\ce\Log_Record.h"\
+	".\ce\Log_Record.i"\
+	".\ce\Malloc.h"\
+	".\ce\Malloc.i"\
+	".\ce\Malloc_Allocator.h"\
+	".\ce\Malloc_Allocator.i"\
+	".\ce\Malloc_Base.h"\
+	".\ce\Malloc_T.cpp"\
+	".\ce\Malloc_T.h"\
+	".\ce\Malloc_T.i"\
+	".\ce\Managed_Object.cpp"\
+	".\ce\Managed_Object.h"\
+	".\ce\Managed_Object.i"\
+	".\ce\Map_Manager.cpp"\
+	".\ce\Map_Manager.h"\
+	".\ce\Map_Manager.i"\
+	".\ce\Mem_Map.h"\
+	".\ce\Mem_Map.i"\
+	".\ce\Memory_Pool.h"\
+	".\ce\Memory_Pool.i"\
+	".\ce\Message_Block.h"\
+	".\ce\Message_Block.i"\
+	".\ce\Message_Block_T.cpp"\
+	".\ce\Message_Block_T.h"\
+	".\ce\Message_Block_T.i"\
+	".\ce\Min_Max.h"\
+	".\ce\Node.cpp"\
+	".\ce\Node.h"\
+	".\ce\Object_Manager.h"\
+	".\ce\Object_Manager.i"\
+	".\ce\OS.h"\
+	".\ce\OS.i"\
+	".\ce\OS_Dirent.h"\
+	".\ce\OS_Dirent.inl"\
+	".\ce\OS_Errno.h"\
+	".\ce\OS_Errno.inl"\
+	".\ce\OS_Export.h"\
+	".\ce\OS_Log_Msg_Attributes.h"\
+	".\ce\OS_Log_Msg_Attributes.inl"\
+	".\ce\OS_Memory.h"\
+	".\ce\OS_Memory.inl"\
+	".\ce\OS_String.h"\
+	".\ce\OS_String.inl"\
+	".\ce\OS_TLI.h"\
+	".\ce\OS_TLI.inl"\
+	".\ce\post.h"\
+	".\ce\pre.h"\
+	".\ce\Process_Mutex.h"\
+	".\ce\Process_Mutex.inl"\
+	".\ce\Process_Semaphore.h"\
+	".\ce\Process_Semaphore.inl"\
+	".\ce\Reactor.h"\
+	".\ce\Reactor.i"\
+	".\ce\Reactor_Impl.h"\
+	".\ce\RW_Process_Mutex.h"\
+	".\ce\RW_Process_Mutex.inl"\
+	".\ce\Service_Config.h"\
+	".\ce\Service_Config.i"\
+	".\ce\Service_Object.h"\
+	".\ce\Service_Object.i"\
+	".\ce\Shared_Object.h"\
+	".\ce\Shared_Object.i"\
+	".\ce\Signal.h"\
+	".\ce\Signal.i"\
+	".\ce\Singleton.cpp"\
+	".\ce\Singleton.h"\
+	".\ce\Singleton.i"\
+	".\ce\Sock_Connect.h"\
+	".\ce\Sock_Connect.i"\
+	".\ce\SString.h"\
+	".\ce\SString.i"\
+	".\ce\streams.h"\
+	".\ce\SV_Semaphore_Complex.h"\
+	".\ce\SV_Semaphore_Complex.i"\
+	".\ce\SV_Semaphore_Simple.h"\
+	".\ce\SV_Semaphore_Simple.i"\
+	".\ce\Svc_Conf_Tokens.h"\
+	".\ce\svc_export.h"\
+	".\ce\Synch.h"\
+	".\ce\Synch.i"\
+	".\ce\Synch_T.cpp"\
+	".\ce\Synch_T.h"\
+	".\ce\Synch_T.i"\
+	".\ce\Test_and_Set.cpp"\
+	".\ce\Test_and_Set.h"\
+	".\ce\Test_and_Set.i"\
+	".\ce\Thread.h"\
+	".\ce\Thread.i"\
+	".\ce\Thread_Adapter.h"\
+	".\ce\Thread_Adapter.inl"\
+	".\ce\Thread_Control.h"\
+	".\ce\Thread_Control.inl"\
+	".\ce\Thread_Exit.h"\
+	".\ce\Thread_Hook.h"\
+	".\ce\Thread_Manager.h"\
+	".\ce\Thread_Manager.i"\
+	".\ce\Timer_Queue.h"\
+	".\ce\Timer_Queue_T.cpp"\
+	".\ce\Timer_Queue_T.h"\
+	".\ce\Timer_Queue_T.i"\
+	".\ce\Trace.h"\
+	".\ce\Unbounded_Queue.cpp"\
+	".\ce\Unbounded_Queue.h"\
+	".\ce\Unbounded_Queue.inl"\
+	".\ce\Unbounded_Set.cpp"\
+	".\ce\Unbounded_Set.h"\
+	".\ce\Unbounded_Set.inl"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86em) Release"
+
+DEP_CPP_COSLI=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLI=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\Naming\ace\config-all.h"\
+	".\tao\ClientInterceptorAdapter.h"\
+	".\tao\ClientRequestInfo.h"\
+	".\tao\corba.h"\
+	".\tao\Invocation.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86em) Debug"
+
+DEP_CPP_COSLI=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLI=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\Naming\ace\config-all.h"\
+	".\tao\ClientInterceptorAdapter.h"\
+	".\tao\ClientRequestInfo.h"\
+	".\tao\corba.h"\
+	".\tao\Invocation.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86) Debug"
+
+DEP_CPP_COSLI=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLI=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	"..\tao\Adapter.h"\
+	"..\tao\Adapter.i"\
+	"..\tao\Cleanup_Func_Registry.h"\
+	"..\tao\Cleanup_Func_Registry.inl"\
+	"..\tao\ClientInterceptorAdapter.inl"\
+	"..\tao\ClientRequestInfo.h"\
+	"..\tao\ClientRequestInfo.inl"\
+	"..\tao\CurrentC.h"\
+	"..\tao\DomainC.i"\
+	"..\tao\DynamicC.h"\
+	"..\tao\DynamicC.i"\
+	"..\tao\Encodable.h"\
+	"..\tao\Environment.h"\
+	"..\tao\Exception.h"\
+	"..\tao\Fault_Tolerance_Service.h"\
+	"..\tao\GIOP_Message_Version.h"\
+	"..\tao\Interceptor_List.h"\
+	"..\tao\Interceptor_List.inl"\
+	"..\tao\Invocation.i"\
+	"..\tao\Invocation_Endpoint_Selectors.h"\
+	"..\tao\IOPC.h"\
+	"..\tao\IOPC.i"\
+	"..\tao\LF_Event.inl"\
+	"..\tao\LocalObject.i"\
+	"..\tao\MessagingC.h"\
+	"..\tao\MessagingC.i"\
+	"..\tao\object.h"\
+	"..\tao\Object_Ref_Table.h"\
+	"..\tao\OctetSeqC.h"\
+	"..\tao\OctetSeqC.i"\
+	"..\tao\operation_details.h"\
+	"..\tao\operation_details.i"\
+	"..\tao\orb.h"\
+	"..\tao\ORB_Core.i"\
+	"..\tao\params.h"\
+	"..\tao\Parser_Registry.h"\
+	"..\tao\PICurrent.h"\
+	"..\tao\PICurrent.inl"\
+	"..\tao\Policy_Manager.h"\
+	"..\tao\PolicyC.h"\
+	"..\tao\PolicyFactory_Registry.h"\
+	"..\tao\PollableC.h"\
+	"..\tao\PollableC.i"\
+	"..\tao\PortableInterceptorC.i"\
+	"..\tao\Profile.i"\
+	"..\tao\Protocols_Hooks.h"\
+	"..\tao\Remote_Object_Proxy_Impl.h"\
+	"..\tao\Resource_Factory.h"\
+	"..\tao\sequence.h"\
+	"..\tao\Service_Callbacks.h"\
+	"..\tao\Service_Context.h"\
+	"..\tao\Services.h"\
+	"..\tao\SmartProxies\Smart_Proxies.inl"\
+	"..\tao\SmartProxies\smartproxies_export.h"\
+	"..\tao\StringSeqC.i"\
+	"..\tao\stub.h"\
+	"..\tao\Synch_Reply_Dispatcher.h"\
+	"..\tao\Tagged_Components.h"\
+	"..\tao\TAO_Export.h"\
+	"..\tao\TAOC.h"\
+	"..\tao\TAOC.i"\
+	"..\tao\target_specification.h"\
+	"..\tao\target_specification.i"\
+	"..\tao\TimeBaseC.h"\
+	"..\tao\TimeBaseC.i"\
+	"..\tao\ValueBase.h"\
+	"..\tao\ValueFactory.h"\
+	".\ao\any.h"\
+	".\ao\Any.i"\
+	".\ao\BoundsC.h"\
+	".\ao\BoundsC.i"\
+	".\ao\cdr.h"\
+	".\ao\CDR.i"\
+	".\ao\ClientInterceptorAdapter.h"\
+	".\ao\CONV_FRAMEC.h"\
+	".\ao\CONV_FRAMEC.i"\
+	".\ao\corba.h"\
+	".\ao\CORBA_String.h"\
+	".\ao\CORBA_String.inl"\
+	".\ao\corbafwd.h"\
+	".\ao\corbafwd.i"\
+	".\ao\CurrentC.i"\
+	".\ao\debug.h"\
+	".\ao\DomainC.h"\
+	".\ao\Environment.i"\
+	".\ao\Exception.i"\
+	".\ao\Fault_Tolerance_Service.i"\
+	".\ao\GIOP_Message_Version.inl"\
+	".\ao\Invocation.h"\
+	".\ao\Invocation_Endpoint_Selectors.i"\
+	".\ao\LF_Event.h"\
+	".\ao\LocalObject.h"\
+	".\ao\Managed_Types.h"\
+	".\ao\Managed_Types.i"\
+	".\ao\MProfile.h"\
+	".\ao\MProfile.i"\
+	".\ao\nvlist.h"\
+	".\ao\NVList.i"\
+	".\ao\Object.i"\
+	".\ao\Object_KeyC.h"\
+	".\ao\Object_KeyC.i"\
+	".\ao\Object_Proxy_Broker.h"\
+	".\ao\Object_Proxy_Impl.h"\
+	".\ao\ObjectIDList.h"\
+	".\ao\ObjectIDList.i"\
+	".\ao\ORB.i"\
+	".\ao\orb_core.h"\
+	".\ao\orbconf.h"\
+	".\ao\params.i"\
+	".\ao\Parser_Registry.i"\
+	".\ao\Pluggable.h"\
+	".\ao\Pluggable.i"\
+	".\ao\Policy_Manager.i"\
+	".\ao\Policy_Set.h"\
+	".\ao\Policy_Set.i"\
+	".\ao\PolicyC.i"\
+	".\ao\PortableInterceptor.h"\
+	".\ao\PortableInterceptorC.h"\
+	".\ao\Principal.h"\
+	".\ao\Principal.i"\
+	".\ao\Profile.h"\
+	".\ao\Protocol_Factory.h"\
+	".\ao\Reply_Dispatcher.h"\
+	".\ao\Reply_Dispatcher.i"\
+	".\ao\RequestInfo_Util.h"\
+	".\ao\Sequence.i"\
+	".\ao\Sequence_T.cpp"\
+	".\ao\Sequence_T.h"\
+	".\ao\Sequence_T.i"\
+	".\ao\Service_Callbacks.i"\
+	".\ao\Service_Context.inl"\
+	".\ao\Services.i"\
+	".\AO\SmartProxies\Smart_Proxies.h"\
+	".\ao\StringSeqC.h"\
+	".\ao\Stub.i"\
+	".\ao\Tagged_Components.i"\
+	".\ao\TAO_Singleton.cpp"\
+	".\ao\TAO_Singleton.h"\
+	".\ao\TAO_Singleton.inl"\
+	".\ao\TAO_Singleton_Manager.h"\
+	".\ao\TAO_Singleton_Manager.inl"\
+	".\ao\try_macros.h"\
+	".\ao\typecode.h"\
+	".\ao\Typecode.i"\
+	".\ao\ValueBase.i"\
+	".\ao\ValueFactory.i"\
+	".\ao\varbase.h"\
+	".\ao\WrongTransactionC.h"\
+	".\ce\ACE.h"\
+	".\ce\ACE.i"\
+	".\ce\ACE_export.h"\
+	".\ce\ace_wchar.h"\
+	".\ce\ace_wchar.inl"\
+	".\ce\Array_Base.cpp"\
+	".\ce\Array_Base.h"\
+	".\ce\Array_Base.inl"\
+	".\ce\Atomic_Op.i"\
+	".\ce\Base_Thread_Adapter.h"\
+	".\ce\Base_Thread_Adapter.inl"\
+	".\ce\Basic_Types.h"\
+	".\ce\Basic_Types.i"\
+	".\ce\CDR_Base.h"\
+	".\ce\CDR_Base.inl"\
+	".\ce\CDR_Stream.h"\
+	".\ce\CDR_Stream.i"\
+	".\ce\config-all.h"\
+	".\ce\config-cygwin32-common.h"\
+	".\ce\config-cygwin32.h"\
+	".\ce\config-g++-common.h"\
+	".\ce\config-ghs-common.h"\
+	".\ce\config-win32-borland.h"\
+	".\ce\config-win32-common.h"\
+	".\ce\config-win32-ghs.h"\
+	".\ce\config-win32-mingw.h"\
+	".\ce\config-win32-msvc-5.h"\
+	".\ce\config-win32-msvc-6.h"\
+	".\ce\config-win32-msvc-7.h"\
+	".\ce\config-win32-msvc.h"\
+	".\ce\config-win32-visualage.h"\
+	".\ce\config-win32.h"\
+	".\ce\config-WinCE.h"\
+	".\ce\config.h"\
+	".\ce\Containers.h"\
+	".\ce\Containers.i"\
+	".\ce\Containers_T.cpp"\
+	".\ce\Containers_T.h"\
+	".\ce\Containers_T.i"\
+	".\ce\CORBA_macros.h"\
+	".\ce\Event_Handler.h"\
+	".\ce\Event_Handler.i"\
+	".\ce\File_Lock.h"\
+	".\ce\File_Lock.inl"\
+	".\ce\Flag_Manip.h"\
+	".\ce\Flag_Manip.i"\
+	".\ce\Free_List.cpp"\
+	".\ce\Free_List.h"\
+	".\ce\Free_List.i"\
+	".\ce\Functor.h"\
+	".\ce\Functor.i"\
+	".\ce\Functor_T.cpp"\
+	".\ce\Functor_T.h"\
+	".\ce\Functor_T.i"\
+	".\ce\Handle_Ops.h"\
+	".\ce\Handle_Ops.i"\
+	".\ce\Handle_Set.h"\
+	".\ce\Handle_Set.i"\
+	".\ce\Hash_Map_Manager.h"\
+	".\ce\Hash_Map_Manager_T.cpp"\
+	".\ce\Hash_Map_Manager_T.h"\
+	".\ce\Hash_Map_Manager_T.i"\
+	".\ce\Init_ACE.h"\
+	".\ce\Init_ACE.i"\
+	".\ce\iosfwd.h"\
+	".\ce\Lib_Find.h"\
+	".\ce\Lib_Find.i"\
+	".\ce\Log_Msg.h"\
+	".\ce\Log_Msg_Callback.h"\
+	".\ce\Log_Priority.h"\
+	".\ce\Log_Record.h"\
+	".\ce\Log_Record.i"\
+	".\ce\Malloc.h"\
+	".\ce\Malloc.i"\
+	".\ce\Malloc_Allocator.h"\
+	".\ce\Malloc_Allocator.i"\
+	".\ce\Malloc_Base.h"\
+	".\ce\Malloc_T.cpp"\
+	".\ce\Malloc_T.h"\
+	".\ce\Malloc_T.i"\
+	".\ce\Managed_Object.cpp"\
+	".\ce\Managed_Object.h"\
+	".\ce\Managed_Object.i"\
+	".\ce\Map_Manager.cpp"\
+	".\ce\Map_Manager.h"\
+	".\ce\Map_Manager.i"\
+	".\ce\Mem_Map.h"\
+	".\ce\Mem_Map.i"\
+	".\ce\Memory_Pool.h"\
+	".\ce\Memory_Pool.i"\
+	".\ce\Message_Block.h"\
+	".\ce\Message_Block.i"\
+	".\ce\Message_Block_T.cpp"\
+	".\ce\Message_Block_T.h"\
+	".\ce\Message_Block_T.i"\
+	".\ce\Min_Max.h"\
+	".\ce\Node.cpp"\
+	".\ce\Node.h"\
+	".\ce\Object_Manager.h"\
+	".\ce\Object_Manager.i"\
+	".\ce\OS.h"\
+	".\ce\OS.i"\
+	".\ce\OS_Dirent.h"\
+	".\ce\OS_Dirent.inl"\
+	".\ce\OS_Errno.h"\
+	".\ce\OS_Errno.inl"\
+	".\ce\OS_Export.h"\
+	".\ce\OS_Log_Msg_Attributes.h"\
+	".\ce\OS_Log_Msg_Attributes.inl"\
+	".\ce\OS_Memory.h"\
+	".\ce\OS_Memory.inl"\
+	".\ce\OS_String.h"\
+	".\ce\OS_String.inl"\
+	".\ce\OS_TLI.h"\
+	".\ce\OS_TLI.inl"\
+	".\ce\post.h"\
+	".\ce\pre.h"\
+	".\ce\Process_Mutex.h"\
+	".\ce\Process_Mutex.inl"\
+	".\ce\Process_Semaphore.h"\
+	".\ce\Process_Semaphore.inl"\
+	".\ce\Reactor.h"\
+	".\ce\Reactor.i"\
+	".\ce\Reactor_Impl.h"\
+	".\ce\RW_Process_Mutex.h"\
+	".\ce\RW_Process_Mutex.inl"\
+	".\ce\Service_Config.h"\
+	".\ce\Service_Config.i"\
+	".\ce\Service_Object.h"\
+	".\ce\Service_Object.i"\
+	".\ce\Shared_Object.h"\
+	".\ce\Shared_Object.i"\
+	".\ce\Signal.h"\
+	".\ce\Signal.i"\
+	".\ce\Singleton.cpp"\
+	".\ce\Singleton.h"\
+	".\ce\Singleton.i"\
+	".\ce\Sock_Connect.h"\
+	".\ce\Sock_Connect.i"\
+	".\ce\SString.h"\
+	".\ce\SString.i"\
+	".\ce\streams.h"\
+	".\ce\SV_Semaphore_Complex.h"\
+	".\ce\SV_Semaphore_Complex.i"\
+	".\ce\SV_Semaphore_Simple.h"\
+	".\ce\SV_Semaphore_Simple.i"\
+	".\ce\Svc_Conf_Tokens.h"\
+	".\ce\svc_export.h"\
+	".\ce\Synch.h"\
+	".\ce\Synch.i"\
+	".\ce\Synch_T.cpp"\
+	".\ce\Synch_T.h"\
+	".\ce\Synch_T.i"\
+	".\ce\Test_and_Set.cpp"\
+	".\ce\Test_and_Set.h"\
+	".\ce\Test_and_Set.i"\
+	".\ce\Thread.h"\
+	".\ce\Thread.i"\
+	".\ce\Thread_Adapter.h"\
+	".\ce\Thread_Adapter.inl"\
+	".\ce\Thread_Control.h"\
+	".\ce\Thread_Control.inl"\
+	".\ce\Thread_Exit.h"\
+	".\ce\Thread_Hook.h"\
+	".\ce\Thread_Manager.h"\
+	".\ce\Thread_Manager.i"\
+	".\ce\Timer_Queue.h"\
+	".\ce\Timer_Queue_T.cpp"\
+	".\ce\Timer_Queue_T.h"\
+	".\ce\Timer_Queue_T.i"\
+	".\ce\Trace.h"\
+	".\ce\Unbounded_Queue.cpp"\
+	".\ce\Unbounded_Queue.h"\
+	".\ce\Unbounded_Queue.inl"\
+	".\ce\Unbounded_Set.cpp"\
+	".\ce\Unbounded_Set.h"\
+	".\ce\Unbounded_Set.inl"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosLifeCycleS.cpp
+
+!IF  "$(CFG)" == "CosLifeCycle - Win32 (WCE MIPS) Release"
+
+DEP_CPP_COSLIF=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLIF=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\Dynamic_Service.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\Naming\ace\config-all.h"\
+	".\tao\corba.h"\
+	".\tao\IFR_Client_Adapter.h"\
+	".\tao\ORB_Core.h"\
+	".\tao\PICurrent.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\PortableServer\Collocated_Object.h"\
+	".\tao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\tao\PortableServer\Object_Adapter.h"\
+	".\tao\PortableServer\Operation_Table.h"\
+	".\tao\PortableServer\PortableServer.h"\
+	".\tao\PortableServer\Servant_Base.h"\
+	".\tao\PortableServer\ServerInterceptorAdapter.h"\
+	".\tao\PortableServer\ServerRequestInfo.h"\
+	".\tao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	".\tao\TAO_Server_Request.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE MIPS) Debug"
+
+DEP_CPP_COSLIF=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLIF=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\Dynamic_Service.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\Naming\ace\config-all.h"\
+	".\tao\corba.h"\
+	".\tao\IFR_Client_Adapter.h"\
+	".\tao\ORB_Core.h"\
+	".\tao\PICurrent.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\PortableServer\Collocated_Object.h"\
+	".\tao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\tao\PortableServer\Object_Adapter.h"\
+	".\tao\PortableServer\Operation_Table.h"\
+	".\tao\PortableServer\PortableServer.h"\
+	".\tao\PortableServer\Servant_Base.h"\
+	".\tao\PortableServer\ServerInterceptorAdapter.h"\
+	".\tao\PortableServer\ServerRequestInfo.h"\
+	".\tao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	".\tao\TAO_Server_Request.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH4) Release"
+
+DEP_CPP_COSLIF=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLIF=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\Dynamic_Service.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\Naming\ace\config-all.h"\
+	".\tao\corba.h"\
+	".\tao\IFR_Client_Adapter.h"\
+	".\tao\ORB_Core.h"\
+	".\tao\PICurrent.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\PortableServer\Collocated_Object.h"\
+	".\tao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\tao\PortableServer\Object_Adapter.h"\
+	".\tao\PortableServer\Operation_Table.h"\
+	".\tao\PortableServer\PortableServer.h"\
+	".\tao\PortableServer\Servant_Base.h"\
+	".\tao\PortableServer\ServerInterceptorAdapter.h"\
+	".\tao\PortableServer\ServerRequestInfo.h"\
+	".\tao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	".\tao\TAO_Server_Request.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH4) Debug"
+
+DEP_CPP_COSLIF=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLIF=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\Dynamic_Service.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\Naming\ace\config-all.h"\
+	".\tao\corba.h"\
+	".\tao\IFR_Client_Adapter.h"\
+	".\tao\ORB_Core.h"\
+	".\tao\PICurrent.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\PortableServer\Collocated_Object.h"\
+	".\tao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\tao\PortableServer\Object_Adapter.h"\
+	".\tao\PortableServer\Operation_Table.h"\
+	".\tao\PortableServer\PortableServer.h"\
+	".\tao\PortableServer\Servant_Base.h"\
+	".\tao\PortableServer\ServerInterceptorAdapter.h"\
+	".\tao\PortableServer\ServerRequestInfo.h"\
+	".\tao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	".\tao\TAO_Server_Request.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH3) Release"
+
+DEP_CPP_COSLIF=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLIF=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\Dynamic_Service.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\Naming\ace\config-all.h"\
+	".\tao\corba.h"\
+	".\tao\IFR_Client_Adapter.h"\
+	".\tao\ORB_Core.h"\
+	".\tao\PICurrent.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\PortableServer\Collocated_Object.h"\
+	".\tao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\tao\PortableServer\Object_Adapter.h"\
+	".\tao\PortableServer\Operation_Table.h"\
+	".\tao\PortableServer\PortableServer.h"\
+	".\tao\PortableServer\Servant_Base.h"\
+	".\tao\PortableServer\ServerInterceptorAdapter.h"\
+	".\tao\PortableServer\ServerRequestInfo.h"\
+	".\tao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	".\tao\TAO_Server_Request.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH3) Debug"
+
+DEP_CPP_COSLIF=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLIF=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\Dynamic_Service.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\Naming\ace\config-all.h"\
+	".\tao\corba.h"\
+	".\tao\IFR_Client_Adapter.h"\
+	".\tao\ORB_Core.h"\
+	".\tao\PICurrent.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\PortableServer\Collocated_Object.h"\
+	".\tao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\tao\PortableServer\Object_Adapter.h"\
+	".\tao\PortableServer\Operation_Table.h"\
+	".\tao\PortableServer\PortableServer.h"\
+	".\tao\PortableServer\Servant_Base.h"\
+	".\tao\PortableServer\ServerInterceptorAdapter.h"\
+	".\tao\PortableServer\ServerRequestInfo.h"\
+	".\tao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	".\tao\TAO_Server_Request.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE ARM) Release"
+
+DEP_CPP_COSLIF=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLIF=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	"..\tao\Adapter.h"\
+	"..\tao\Adapter.i"\
+	"..\tao\any.h"\
+	"..\tao\cdr.h"\
+	"..\tao\Cleanup_Func_Registry.h"\
+	"..\tao\Cleanup_Func_Registry.inl"\
+	"..\tao\corbafwd.h"\
+	"..\tao\DomainC.i"\
+	"..\tao\DynamicC.h"\
+	"..\tao\DynamicC.i"\
+	"..\tao\Encodable.h"\
+	"..\tao\Exception.h"\
+	"..\tao\Fault_Tolerance_Service.h"\
+	"..\tao\GIOP_Message_Version.h"\
+	"..\tao\GIOPC.i"\
+	"..\tao\Interceptor_List.inl"\
+	"..\tao\IOPC.h"\
+	"..\tao\IOPC.i"\
+	"..\tao\LocalObject.h"\
+	"..\tao\LocalObject.i"\
+	"..\tao\MessagingC.h"\
+	"..\tao\MessagingC.i"\
+	"..\tao\Object_Ref_Table.h"\
+	"..\tao\OctetSeqC.i"\
+	"..\tao\ORB_Core.i"\
+	"..\tao\params.h"\
+	"..\tao\Parser_Registry.h"\
+	"..\tao\PICurrent.h"\
+	"..\tao\PICurrent.inl"\
+	"..\tao\Policy_Manager.h"\
+	"..\tao\PolicyFactory_Registry.h"\
+	"..\tao\PollableC.h"\
+	"..\tao\PollableC.i"\
+	"..\tao\PortableInterceptorC.i"\
+	"..\tao\PortableServer\Active_Object_Map.h"\
+	"..\tao\PortableServer\Active_Object_Map.i"\
+	"..\tao\PortableServer\Collocated_Object.i"\
+	"..\tao\PortableServer\Default_Policy_Validator.h"\
+	"..\tao\PortableServer\Key_Adapters.h"\
+	"..\tao\PortableServer\Key_Adapters.i"\
+	"..\tao\PortableServer\Object_Adapter.h"\
+	"..\tao\PortableServer\Object_Adapter.i"\
+	"..\tao\PortableServer\poa_macros.h"\
+	"..\tao\PortableServer\POA_Policies.h"\
+	"..\tao\PortableServer\POA_Policies.i"\
+	"..\tao\PortableServer\POA_Policy_Set.h"\
+	"..\tao\PortableServer\POA_Policy_Set.i"\
+	"..\tao\PortableServer\Policy_Validator.h"\
+	"..\tao\PortableServer\portableserver_export.h"\
+	"..\tao\PortableServer\PortableServerC.h"\
+	"..\tao\PortableServer\PortableServerC.i"\
+	"..\tao\PortableServer\Servant_Base.h"\
+	"..\tao\PortableServer\Servant_Base.i"\
+	"..\tao\PortableServer\ServerInterceptorAdapter.inl"\
+	"..\tao\PortableServer\ServerRequestInfo.inl"\
+	"..\tao\Profile.i"\
+	"..\tao\Protocols_Hooks.h"\
+	"..\tao\Remote_Object_Proxy_Impl.h"\
+	"..\tao\Resource_Factory.h"\
+	"..\tao\Service_Callbacks.h"\
+	"..\tao\SmartProxies\Smart_Proxies.inl"\
+	"..\tao\SmartProxies\smartproxies_export.h"\
+	"..\tao\StringSeqC.i"\
+	"..\tao\Tagged_Components.h"\
+	"..\tao\Tagged_Profile.h"\
+	"..\tao\TAO_Export.h"\
+	"..\tao\TAO_Server_Request.i"\
+	"..\tao\TAO_Singleton.h"\
+	"..\tao\TimeBaseC.h"\
+	"..\tao\TimeBaseC.i"\
+	"..\tao\ValueBase.h"\
+	"..\tao\ValueFactory.h"\
+	".\ao\Abstract_Servant_Base.h"\
+	".\ao\Any.i"\
+	".\ao\BoundsC.h"\
+	".\ao\BoundsC.i"\
+	".\ao\CDR.i"\
+	".\ao\CONV_FRAMEC.h"\
+	".\ao\CONV_FRAMEC.i"\
+	".\ao\corba.h"\
+	".\ao\CORBA_String.h"\
+	".\ao\CORBA_String.inl"\
+	".\ao\corbafwd.i"\
+	".\ao\CurrentC.h"\
+	".\ao\CurrentC.i"\
+	".\ao\debug.h"\
+	".\ao\DomainC.h"\
+	".\ao\Environment.h"\
+	".\ao\Environment.i"\
+	".\ao\Exception.i"\
+	".\ao\Fault_Tolerance_Service.i"\
+	".\ao\GIOP_Message_Version.inl"\
+	".\ao\GIOPC.h"\
+	".\ao\IFR_Client_Adapter.h"\
+	".\ao\Interceptor_List.h"\
+	".\ao\Managed_Types.h"\
+	".\ao\Managed_Types.i"\
+	".\ao\MProfile.h"\
+	".\ao\MProfile.i"\
+	".\ao\nvlist.h"\
+	".\ao\NVList.i"\
+	".\ao\object.h"\
+	".\ao\Object.i"\
+	".\ao\Object_KeyC.h"\
+	".\ao\Object_KeyC.i"\
+	".\ao\Object_Proxy_Broker.h"\
+	".\ao\Object_Proxy_Impl.h"\
+	".\ao\ObjectIDList.h"\
+	".\ao\ObjectIDList.i"\
+	".\ao\OctetSeqC.h"\
+	".\ao\orb.h"\
+	".\ao\ORB.i"\
+	".\ao\orb_core.h"\
+	".\ao\orbconf.h"\
+	".\ao\params.i"\
+	".\ao\Parser_Registry.i"\
+	".\ao\Pluggable.h"\
+	".\ao\Pluggable.i"\
+	".\ao\Policy_Manager.i"\
+	".\ao\Policy_Set.h"\
+	".\ao\Policy_Set.i"\
+	".\ao\PolicyC.h"\
+	".\ao\PolicyC.i"\
+	".\ao\PortableInterceptor.h"\
+	".\ao\PortableInterceptorC.h"\
+	".\ao\PortableServer\Collocated_Object.h"\
+	".\ao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\ao\PortableServer\Operation_Table.h"\
+	".\ao\PortableServer\PortableServer.h"\
+	".\ao\PortableServer\ServerInterceptorAdapter.h"\
+	".\ao\PortableServer\ServerRequestInfo.h"\
+	".\ao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\ao\Principal.h"\
+	".\ao\Principal.i"\
+	".\ao\Profile.h"\
+	".\ao\Protocol_Factory.h"\
+	".\ao\RequestInfo_Util.h"\
+	".\ao\sequence.h"\
+	".\ao\Sequence.i"\
+	".\ao\Sequence_T.cpp"\
+	".\ao\Sequence_T.h"\
+	".\ao\Sequence_T.i"\
+	".\ao\Server_Strategy_Factory.h"\
+	".\ao\Service_Callbacks.i"\
+	".\ao\Service_Context.h"\
+	".\ao\Service_Context.inl"\
+	".\ao\Services.h"\
+	".\ao\Services.i"\
+	".\AO\SmartProxies\Smart_Proxies.h"\
+	".\ao\StringSeqC.h"\
+	".\ao\stub.h"\
+	".\ao\Stub.i"\
+	".\ao\Tagged_Components.i"\
+	".\ao\Tagged_Profile.i"\
+	".\ao\TAO_Server_Request.h"\
+	".\ao\TAO_Singleton.cpp"\
+	".\ao\TAO_Singleton.inl"\
+	".\ao\TAO_Singleton_Manager.h"\
+	".\ao\TAO_Singleton_Manager.inl"\
+	".\ao\try_macros.h"\
+	".\ao\typecode.h"\
+	".\ao\Typecode.i"\
+	".\ao\ValueBase.i"\
+	".\ao\ValueFactory.i"\
+	".\ao\varbase.h"\
+	".\ao\WrongTransactionC.h"\
+	".\ce\ACE.h"\
+	".\ce\ACE.i"\
+	".\ce\ACE_export.h"\
+	".\ce\ace_wchar.h"\
+	".\ce\ace_wchar.inl"\
+	".\ce\Active_Map_Manager.h"\
+	".\ce\Active_Map_Manager.i"\
+	".\ce\Active_Map_Manager_T.cpp"\
+	".\ce\Active_Map_Manager_T.h"\
+	".\ce\Active_Map_Manager_T.i"\
+	".\ce\Array_Base.cpp"\
+	".\ce\Array_Base.h"\
+	".\ce\Array_Base.inl"\
+	".\ce\Atomic_Op.i"\
+	".\ce\Base_Thread_Adapter.h"\
+	".\ce\Base_Thread_Adapter.inl"\
+	".\ce\Basic_Types.h"\
+	".\ce\Basic_Types.i"\
+	".\ce\CDR_Base.h"\
+	".\ce\CDR_Base.inl"\
+	".\ce\CDR_Stream.h"\
+	".\ce\CDR_Stream.i"\
+	".\ce\config-all.h"\
+	".\ce\config-cygwin32-common.h"\
+	".\ce\config-cygwin32.h"\
+	".\ce\config-g++-common.h"\
+	".\ce\config-ghs-common.h"\
+	".\ce\config-win32-borland.h"\
+	".\ce\config-win32-common.h"\
+	".\ce\config-win32-ghs.h"\
+	".\ce\config-win32-mingw.h"\
+	".\ce\config-win32-msvc-5.h"\
+	".\ce\config-win32-msvc-6.h"\
+	".\ce\config-win32-msvc-7.h"\
+	".\ce\config-win32-msvc.h"\
+	".\ce\config-win32-visualage.h"\
+	".\ce\config-win32.h"\
+	".\ce\config-WinCE.h"\
+	".\ce\config.h"\
+	".\ce\Containers.h"\
+	".\ce\Containers.i"\
+	".\ce\Containers_T.cpp"\
+	".\ce\Containers_T.h"\
+	".\ce\Containers_T.i"\
+	".\ce\CORBA_macros.h"\
+	".\ce\Dynamic_Service.cpp"\
+	".\ce\Dynamic_Service.h"\
+	".\ce\Dynamic_Service.i"\
+	".\ce\Dynamic_Service_Base.h"\
+	".\ce\Event_Handler.h"\
+	".\ce\Event_Handler.i"\
+	".\ce\File_Lock.h"\
+	".\ce\File_Lock.inl"\
+	".\ce\Flag_Manip.h"\
+	".\ce\Flag_Manip.i"\
+	".\ce\Free_List.cpp"\
+	".\ce\Free_List.h"\
+	".\ce\Free_List.i"\
+	".\ce\Functor.h"\
+	".\ce\Functor.i"\
+	".\ce\Functor_T.cpp"\
+	".\ce\Functor_T.h"\
+	".\ce\Functor_T.i"\
+	".\ce\Handle_Ops.h"\
+	".\ce\Handle_Ops.i"\
+	".\ce\Handle_Set.h"\
+	".\ce\Handle_Set.i"\
+	".\ce\Hash_Map_Manager.h"\
+	".\ce\Hash_Map_Manager_T.cpp"\
+	".\ce\Hash_Map_Manager_T.h"\
+	".\ce\Hash_Map_Manager_T.i"\
+	".\ce\Init_ACE.h"\
+	".\ce\Init_ACE.i"\
+	".\ce\iosfwd.h"\
+	".\ce\Lib_Find.h"\
+	".\ce\Lib_Find.i"\
+	".\ce\Log_Msg.h"\
+	".\ce\Log_Msg_Callback.h"\
+	".\ce\Log_Priority.h"\
+	".\ce\Log_Record.h"\
+	".\ce\Log_Record.i"\
+	".\ce\Malloc.h"\
+	".\ce\Malloc.i"\
+	".\ce\Malloc_Allocator.h"\
+	".\ce\Malloc_Allocator.i"\
+	".\ce\Malloc_Base.h"\
+	".\ce\Malloc_T.cpp"\
+	".\ce\Malloc_T.h"\
+	".\ce\Malloc_T.i"\
+	".\ce\Managed_Object.cpp"\
+	".\ce\Managed_Object.h"\
+	".\ce\Managed_Object.i"\
+	".\ce\Map.h"\
+	".\ce\Map_Manager.cpp"\
+	".\ce\Map_Manager.h"\
+	".\ce\Map_Manager.i"\
+	".\ce\Map_T.cpp"\
+	".\ce\Map_T.h"\
+	".\ce\Map_T.i"\
+	".\ce\Mem_Map.h"\
+	".\ce\Mem_Map.i"\
+	".\ce\Memory_Pool.h"\
+	".\ce\Memory_Pool.i"\
+	".\ce\Message_Block.h"\
+	".\ce\Message_Block.i"\
+	".\ce\Message_Block_T.cpp"\
+	".\ce\Message_Block_T.h"\
+	".\ce\Message_Block_T.i"\
+	".\ce\Min_Max.h"\
+	".\ce\Node.cpp"\
+	".\ce\Node.h"\
+	".\ce\Object_Manager.h"\
+	".\ce\Object_Manager.i"\
+	".\ce\OS.h"\
+	".\ce\OS.i"\
+	".\ce\OS_Dirent.h"\
+	".\ce\OS_Dirent.inl"\
+	".\ce\OS_Errno.h"\
+	".\ce\OS_Errno.inl"\
+	".\ce\OS_Export.h"\
+	".\ce\OS_Log_Msg_Attributes.h"\
+	".\ce\OS_Log_Msg_Attributes.inl"\
+	".\ce\OS_Memory.h"\
+	".\ce\OS_Memory.inl"\
+	".\ce\OS_String.h"\
+	".\ce\OS_String.inl"\
+	".\ce\OS_TLI.h"\
+	".\ce\OS_TLI.inl"\
+	".\ce\Pair.h"\
+	".\ce\Pair_T.cpp"\
+	".\ce\Pair_T.h"\
+	".\ce\Pair_T.i"\
+	".\ce\post.h"\
+	".\ce\pre.h"\
+	".\ce\Process_Mutex.h"\
+	".\ce\Process_Mutex.inl"\
+	".\ce\Process_Semaphore.h"\
+	".\ce\Process_Semaphore.inl"\
+	".\ce\Reactor.h"\
+	".\ce\Reactor.i"\
+	".\ce\Reactor_Impl.h"\
+	".\ce\RW_Process_Mutex.h"\
+	".\ce\RW_Process_Mutex.inl"\
+	".\ce\Service_Config.h"\
+	".\ce\Service_Config.i"\
+	".\ce\Service_Object.h"\
+	".\ce\Service_Object.i"\
+	".\ce\Shared_Object.h"\
+	".\ce\Shared_Object.i"\
+	".\ce\Signal.h"\
+	".\ce\Signal.i"\
+	".\ce\Singleton.cpp"\
+	".\ce\Singleton.h"\
+	".\ce\Singleton.i"\
+	".\ce\Sock_Connect.h"\
+	".\ce\Sock_Connect.i"\
+	".\ce\SString.h"\
+	".\ce\SString.i"\
+	".\ce\streams.h"\
+	".\ce\SV_Semaphore_Complex.h"\
+	".\ce\SV_Semaphore_Complex.i"\
+	".\ce\SV_Semaphore_Simple.h"\
+	".\ce\SV_Semaphore_Simple.i"\
+	".\ce\Svc_Conf_Tokens.h"\
+	".\ce\svc_export.h"\
+	".\ce\Synch.h"\
+	".\ce\Synch.i"\
+	".\ce\Synch_T.cpp"\
+	".\ce\Synch_T.h"\
+	".\ce\Synch_T.i"\
+	".\ce\Test_and_Set.cpp"\
+	".\ce\Test_and_Set.h"\
+	".\ce\Test_and_Set.i"\
+	".\ce\Thread.h"\
+	".\ce\Thread.i"\
+	".\ce\Thread_Adapter.h"\
+	".\ce\Thread_Adapter.inl"\
+	".\ce\Thread_Control.h"\
+	".\ce\Thread_Control.inl"\
+	".\ce\Thread_Exit.h"\
+	".\ce\Thread_Hook.h"\
+	".\ce\Thread_Manager.h"\
+	".\ce\Thread_Manager.i"\
+	".\ce\Timer_Queue.h"\
+	".\ce\Timer_Queue_T.cpp"\
+	".\ce\Timer_Queue_T.h"\
+	".\ce\Timer_Queue_T.i"\
+	".\ce\Trace.h"\
+	".\ce\Unbounded_Queue.cpp"\
+	".\ce\Unbounded_Queue.h"\
+	".\ce\Unbounded_Queue.inl"\
+	".\ce\Unbounded_Set.cpp"\
+	".\ce\Unbounded_Set.h"\
+	".\ce\Unbounded_Set.inl"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE ARM) Debug"
+
+DEP_CPP_COSLIF=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLIF=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	"..\tao\Adapter.h"\
+	"..\tao\Adapter.i"\
+	"..\tao\any.h"\
+	"..\tao\cdr.h"\
+	"..\tao\Cleanup_Func_Registry.h"\
+	"..\tao\Cleanup_Func_Registry.inl"\
+	"..\tao\corbafwd.h"\
+	"..\tao\DomainC.i"\
+	"..\tao\DynamicC.h"\
+	"..\tao\DynamicC.i"\
+	"..\tao\Encodable.h"\
+	"..\tao\Exception.h"\
+	"..\tao\Fault_Tolerance_Service.h"\
+	"..\tao\GIOP_Message_Version.h"\
+	"..\tao\GIOPC.i"\
+	"..\tao\Interceptor_List.inl"\
+	"..\tao\IOPC.h"\
+	"..\tao\IOPC.i"\
+	"..\tao\LocalObject.h"\
+	"..\tao\LocalObject.i"\
+	"..\tao\MessagingC.h"\
+	"..\tao\MessagingC.i"\
+	"..\tao\Object_Ref_Table.h"\
+	"..\tao\OctetSeqC.i"\
+	"..\tao\ORB_Core.i"\
+	"..\tao\params.h"\
+	"..\tao\Parser_Registry.h"\
+	"..\tao\PICurrent.h"\
+	"..\tao\PICurrent.inl"\
+	"..\tao\Policy_Manager.h"\
+	"..\tao\PolicyFactory_Registry.h"\
+	"..\tao\PollableC.h"\
+	"..\tao\PollableC.i"\
+	"..\tao\PortableInterceptorC.i"\
+	"..\tao\PortableServer\Active_Object_Map.h"\
+	"..\tao\PortableServer\Active_Object_Map.i"\
+	"..\tao\PortableServer\Collocated_Object.i"\
+	"..\tao\PortableServer\Default_Policy_Validator.h"\
+	"..\tao\PortableServer\Key_Adapters.h"\
+	"..\tao\PortableServer\Key_Adapters.i"\
+	"..\tao\PortableServer\Object_Adapter.h"\
+	"..\tao\PortableServer\Object_Adapter.i"\
+	"..\tao\PortableServer\poa_macros.h"\
+	"..\tao\PortableServer\POA_Policies.h"\
+	"..\tao\PortableServer\POA_Policies.i"\
+	"..\tao\PortableServer\POA_Policy_Set.h"\
+	"..\tao\PortableServer\POA_Policy_Set.i"\
+	"..\tao\PortableServer\Policy_Validator.h"\
+	"..\tao\PortableServer\portableserver_export.h"\
+	"..\tao\PortableServer\PortableServerC.h"\
+	"..\tao\PortableServer\PortableServerC.i"\
+	"..\tao\PortableServer\Servant_Base.h"\
+	"..\tao\PortableServer\Servant_Base.i"\
+	"..\tao\PortableServer\ServerInterceptorAdapter.inl"\
+	"..\tao\PortableServer\ServerRequestInfo.inl"\
+	"..\tao\Profile.i"\
+	"..\tao\Protocols_Hooks.h"\
+	"..\tao\Remote_Object_Proxy_Impl.h"\
+	"..\tao\Resource_Factory.h"\
+	"..\tao\Service_Callbacks.h"\
+	"..\tao\SmartProxies\Smart_Proxies.inl"\
+	"..\tao\SmartProxies\smartproxies_export.h"\
+	"..\tao\StringSeqC.i"\
+	"..\tao\Tagged_Components.h"\
+	"..\tao\Tagged_Profile.h"\
+	"..\tao\TAO_Export.h"\
+	"..\tao\TAO_Server_Request.i"\
+	"..\tao\TAO_Singleton.h"\
+	"..\tao\TimeBaseC.h"\
+	"..\tao\TimeBaseC.i"\
+	"..\tao\ValueBase.h"\
+	"..\tao\ValueFactory.h"\
+	".\ao\Abstract_Servant_Base.h"\
+	".\ao\Any.i"\
+	".\ao\BoundsC.h"\
+	".\ao\BoundsC.i"\
+	".\ao\CDR.i"\
+	".\ao\CONV_FRAMEC.h"\
+	".\ao\CONV_FRAMEC.i"\
+	".\ao\corba.h"\
+	".\ao\CORBA_String.h"\
+	".\ao\CORBA_String.inl"\
+	".\ao\corbafwd.i"\
+	".\ao\CurrentC.h"\
+	".\ao\CurrentC.i"\
+	".\ao\debug.h"\
+	".\ao\DomainC.h"\
+	".\ao\Environment.h"\
+	".\ao\Environment.i"\
+	".\ao\Exception.i"\
+	".\ao\Fault_Tolerance_Service.i"\
+	".\ao\GIOP_Message_Version.inl"\
+	".\ao\GIOPC.h"\
+	".\ao\IFR_Client_Adapter.h"\
+	".\ao\Interceptor_List.h"\
+	".\ao\Managed_Types.h"\
+	".\ao\Managed_Types.i"\
+	".\ao\MProfile.h"\
+	".\ao\MProfile.i"\
+	".\ao\nvlist.h"\
+	".\ao\NVList.i"\
+	".\ao\object.h"\
+	".\ao\Object.i"\
+	".\ao\Object_KeyC.h"\
+	".\ao\Object_KeyC.i"\
+	".\ao\Object_Proxy_Broker.h"\
+	".\ao\Object_Proxy_Impl.h"\
+	".\ao\ObjectIDList.h"\
+	".\ao\ObjectIDList.i"\
+	".\ao\OctetSeqC.h"\
+	".\ao\orb.h"\
+	".\ao\ORB.i"\
+	".\ao\orb_core.h"\
+	".\ao\orbconf.h"\
+	".\ao\params.i"\
+	".\ao\Parser_Registry.i"\
+	".\ao\Pluggable.h"\
+	".\ao\Pluggable.i"\
+	".\ao\Policy_Manager.i"\
+	".\ao\Policy_Set.h"\
+	".\ao\Policy_Set.i"\
+	".\ao\PolicyC.h"\
+	".\ao\PolicyC.i"\
+	".\ao\PortableInterceptor.h"\
+	".\ao\PortableInterceptorC.h"\
+	".\ao\PortableServer\Collocated_Object.h"\
+	".\ao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\ao\PortableServer\Operation_Table.h"\
+	".\ao\PortableServer\PortableServer.h"\
+	".\ao\PortableServer\ServerInterceptorAdapter.h"\
+	".\ao\PortableServer\ServerRequestInfo.h"\
+	".\ao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\ao\Principal.h"\
+	".\ao\Principal.i"\
+	".\ao\Profile.h"\
+	".\ao\Protocol_Factory.h"\
+	".\ao\RequestInfo_Util.h"\
+	".\ao\sequence.h"\
+	".\ao\Sequence.i"\
+	".\ao\Sequence_T.cpp"\
+	".\ao\Sequence_T.h"\
+	".\ao\Sequence_T.i"\
+	".\ao\Server_Strategy_Factory.h"\
+	".\ao\Service_Callbacks.i"\
+	".\ao\Service_Context.h"\
+	".\ao\Service_Context.inl"\
+	".\ao\Services.h"\
+	".\ao\Services.i"\
+	".\AO\SmartProxies\Smart_Proxies.h"\
+	".\ao\StringSeqC.h"\
+	".\ao\stub.h"\
+	".\ao\Stub.i"\
+	".\ao\Tagged_Components.i"\
+	".\ao\Tagged_Profile.i"\
+	".\ao\TAO_Server_Request.h"\
+	".\ao\TAO_Singleton.cpp"\
+	".\ao\TAO_Singleton.inl"\
+	".\ao\TAO_Singleton_Manager.h"\
+	".\ao\TAO_Singleton_Manager.inl"\
+	".\ao\try_macros.h"\
+	".\ao\typecode.h"\
+	".\ao\Typecode.i"\
+	".\ao\ValueBase.i"\
+	".\ao\ValueFactory.i"\
+	".\ao\varbase.h"\
+	".\ao\WrongTransactionC.h"\
+	".\ce\ACE.h"\
+	".\ce\ACE.i"\
+	".\ce\ACE_export.h"\
+	".\ce\ace_wchar.h"\
+	".\ce\ace_wchar.inl"\
+	".\ce\Active_Map_Manager.h"\
+	".\ce\Active_Map_Manager.i"\
+	".\ce\Active_Map_Manager_T.cpp"\
+	".\ce\Active_Map_Manager_T.h"\
+	".\ce\Active_Map_Manager_T.i"\
+	".\ce\Array_Base.cpp"\
+	".\ce\Array_Base.h"\
+	".\ce\Array_Base.inl"\
+	".\ce\Atomic_Op.i"\
+	".\ce\Base_Thread_Adapter.h"\
+	".\ce\Base_Thread_Adapter.inl"\
+	".\ce\Basic_Types.h"\
+	".\ce\Basic_Types.i"\
+	".\ce\CDR_Base.h"\
+	".\ce\CDR_Base.inl"\
+	".\ce\CDR_Stream.h"\
+	".\ce\CDR_Stream.i"\
+	".\ce\config-all.h"\
+	".\ce\config-cygwin32-common.h"\
+	".\ce\config-cygwin32.h"\
+	".\ce\config-g++-common.h"\
+	".\ce\config-ghs-common.h"\
+	".\ce\config-win32-borland.h"\
+	".\ce\config-win32-common.h"\
+	".\ce\config-win32-ghs.h"\
+	".\ce\config-win32-mingw.h"\
+	".\ce\config-win32-msvc-5.h"\
+	".\ce\config-win32-msvc-6.h"\
+	".\ce\config-win32-msvc-7.h"\
+	".\ce\config-win32-msvc.h"\
+	".\ce\config-win32-visualage.h"\
+	".\ce\config-win32.h"\
+	".\ce\config-WinCE.h"\
+	".\ce\config.h"\
+	".\ce\Containers.h"\
+	".\ce\Containers.i"\
+	".\ce\Containers_T.cpp"\
+	".\ce\Containers_T.h"\
+	".\ce\Containers_T.i"\
+	".\ce\CORBA_macros.h"\
+	".\ce\Dynamic_Service.cpp"\
+	".\ce\Dynamic_Service.h"\
+	".\ce\Dynamic_Service.i"\
+	".\ce\Dynamic_Service_Base.h"\
+	".\ce\Event_Handler.h"\
+	".\ce\Event_Handler.i"\
+	".\ce\File_Lock.h"\
+	".\ce\File_Lock.inl"\
+	".\ce\Flag_Manip.h"\
+	".\ce\Flag_Manip.i"\
+	".\ce\Free_List.cpp"\
+	".\ce\Free_List.h"\
+	".\ce\Free_List.i"\
+	".\ce\Functor.h"\
+	".\ce\Functor.i"\
+	".\ce\Functor_T.cpp"\
+	".\ce\Functor_T.h"\
+	".\ce\Functor_T.i"\
+	".\ce\Handle_Ops.h"\
+	".\ce\Handle_Ops.i"\
+	".\ce\Handle_Set.h"\
+	".\ce\Handle_Set.i"\
+	".\ce\Hash_Map_Manager.h"\
+	".\ce\Hash_Map_Manager_T.cpp"\
+	".\ce\Hash_Map_Manager_T.h"\
+	".\ce\Hash_Map_Manager_T.i"\
+	".\ce\Init_ACE.h"\
+	".\ce\Init_ACE.i"\
+	".\ce\iosfwd.h"\
+	".\ce\Lib_Find.h"\
+	".\ce\Lib_Find.i"\
+	".\ce\Log_Msg.h"\
+	".\ce\Log_Msg_Callback.h"\
+	".\ce\Log_Priority.h"\
+	".\ce\Log_Record.h"\
+	".\ce\Log_Record.i"\
+	".\ce\Malloc.h"\
+	".\ce\Malloc.i"\
+	".\ce\Malloc_Allocator.h"\
+	".\ce\Malloc_Allocator.i"\
+	".\ce\Malloc_Base.h"\
+	".\ce\Malloc_T.cpp"\
+	".\ce\Malloc_T.h"\
+	".\ce\Malloc_T.i"\
+	".\ce\Managed_Object.cpp"\
+	".\ce\Managed_Object.h"\
+	".\ce\Managed_Object.i"\
+	".\ce\Map.h"\
+	".\ce\Map_Manager.cpp"\
+	".\ce\Map_Manager.h"\
+	".\ce\Map_Manager.i"\
+	".\ce\Map_T.cpp"\
+	".\ce\Map_T.h"\
+	".\ce\Map_T.i"\
+	".\ce\Mem_Map.h"\
+	".\ce\Mem_Map.i"\
+	".\ce\Memory_Pool.h"\
+	".\ce\Memory_Pool.i"\
+	".\ce\Message_Block.h"\
+	".\ce\Message_Block.i"\
+	".\ce\Message_Block_T.cpp"\
+	".\ce\Message_Block_T.h"\
+	".\ce\Message_Block_T.i"\
+	".\ce\Min_Max.h"\
+	".\ce\Node.cpp"\
+	".\ce\Node.h"\
+	".\ce\Object_Manager.h"\
+	".\ce\Object_Manager.i"\
+	".\ce\OS.h"\
+	".\ce\OS.i"\
+	".\ce\OS_Dirent.h"\
+	".\ce\OS_Dirent.inl"\
+	".\ce\OS_Errno.h"\
+	".\ce\OS_Errno.inl"\
+	".\ce\OS_Export.h"\
+	".\ce\OS_Log_Msg_Attributes.h"\
+	".\ce\OS_Log_Msg_Attributes.inl"\
+	".\ce\OS_Memory.h"\
+	".\ce\OS_Memory.inl"\
+	".\ce\OS_String.h"\
+	".\ce\OS_String.inl"\
+	".\ce\OS_TLI.h"\
+	".\ce\OS_TLI.inl"\
+	".\ce\Pair.h"\
+	".\ce\Pair_T.cpp"\
+	".\ce\Pair_T.h"\
+	".\ce\Pair_T.i"\
+	".\ce\post.h"\
+	".\ce\pre.h"\
+	".\ce\Process_Mutex.h"\
+	".\ce\Process_Mutex.inl"\
+	".\ce\Process_Semaphore.h"\
+	".\ce\Process_Semaphore.inl"\
+	".\ce\Reactor.h"\
+	".\ce\Reactor.i"\
+	".\ce\Reactor_Impl.h"\
+	".\ce\RW_Process_Mutex.h"\
+	".\ce\RW_Process_Mutex.inl"\
+	".\ce\Service_Config.h"\
+	".\ce\Service_Config.i"\
+	".\ce\Service_Object.h"\
+	".\ce\Service_Object.i"\
+	".\ce\Shared_Object.h"\
+	".\ce\Shared_Object.i"\
+	".\ce\Signal.h"\
+	".\ce\Signal.i"\
+	".\ce\Singleton.cpp"\
+	".\ce\Singleton.h"\
+	".\ce\Singleton.i"\
+	".\ce\Sock_Connect.h"\
+	".\ce\Sock_Connect.i"\
+	".\ce\SString.h"\
+	".\ce\SString.i"\
+	".\ce\streams.h"\
+	".\ce\SV_Semaphore_Complex.h"\
+	".\ce\SV_Semaphore_Complex.i"\
+	".\ce\SV_Semaphore_Simple.h"\
+	".\ce\SV_Semaphore_Simple.i"\
+	".\ce\Svc_Conf_Tokens.h"\
+	".\ce\svc_export.h"\
+	".\ce\Synch.h"\
+	".\ce\Synch.i"\
+	".\ce\Synch_T.cpp"\
+	".\ce\Synch_T.h"\
+	".\ce\Synch_T.i"\
+	".\ce\Test_and_Set.cpp"\
+	".\ce\Test_and_Set.h"\
+	".\ce\Test_and_Set.i"\
+	".\ce\Thread.h"\
+	".\ce\Thread.i"\
+	".\ce\Thread_Adapter.h"\
+	".\ce\Thread_Adapter.inl"\
+	".\ce\Thread_Control.h"\
+	".\ce\Thread_Control.inl"\
+	".\ce\Thread_Exit.h"\
+	".\ce\Thread_Hook.h"\
+	".\ce\Thread_Manager.h"\
+	".\ce\Thread_Manager.i"\
+	".\ce\Timer_Queue.h"\
+	".\ce\Timer_Queue_T.cpp"\
+	".\ce\Timer_Queue_T.h"\
+	".\ce\Timer_Queue_T.i"\
+	".\ce\Trace.h"\
+	".\ce\Unbounded_Queue.cpp"\
+	".\ce\Unbounded_Queue.h"\
+	".\ce\Unbounded_Queue.inl"\
+	".\ce\Unbounded_Set.cpp"\
+	".\ce\Unbounded_Set.h"\
+	".\ce\Unbounded_Set.inl"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86em) Release"
+
+DEP_CPP_COSLIF=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLIF=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\Dynamic_Service.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\Naming\ace\config-all.h"\
+	".\tao\corba.h"\
+	".\tao\IFR_Client_Adapter.h"\
+	".\tao\ORB_Core.h"\
+	".\tao\PICurrent.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\PortableServer\Collocated_Object.h"\
+	".\tao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\tao\PortableServer\Object_Adapter.h"\
+	".\tao\PortableServer\Operation_Table.h"\
+	".\tao\PortableServer\PortableServer.h"\
+	".\tao\PortableServer\Servant_Base.h"\
+	".\tao\PortableServer\ServerInterceptorAdapter.h"\
+	".\tao\PortableServer\ServerRequestInfo.h"\
+	".\tao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	".\tao\TAO_Server_Request.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86em) Debug"
+
+DEP_CPP_COSLIF=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLIF=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\Dynamic_Service.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\Naming\ace\config-all.h"\
+	".\tao\corba.h"\
+	".\tao\IFR_Client_Adapter.h"\
+	".\tao\ORB_Core.h"\
+	".\tao\PICurrent.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\PortableServer\Collocated_Object.h"\
+	".\tao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\tao\PortableServer\Object_Adapter.h"\
+	".\tao\PortableServer\Operation_Table.h"\
+	".\tao\PortableServer\PortableServer.h"\
+	".\tao\PortableServer\Servant_Base.h"\
+	".\tao\PortableServer\ServerInterceptorAdapter.h"\
+	".\tao\PortableServer\ServerRequestInfo.h"\
+	".\tao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	".\tao\TAO_Server_Request.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86) Debug"
+
+DEP_CPP_COSLIF=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_COSLIF=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	"..\tao\Adapter.h"\
+	"..\tao\Adapter.i"\
+	"..\tao\any.h"\
+	"..\tao\cdr.h"\
+	"..\tao\Cleanup_Func_Registry.h"\
+	"..\tao\Cleanup_Func_Registry.inl"\
+	"..\tao\corbafwd.h"\
+	"..\tao\DomainC.i"\
+	"..\tao\DynamicC.h"\
+	"..\tao\DynamicC.i"\
+	"..\tao\Encodable.h"\
+	"..\tao\Exception.h"\
+	"..\tao\Fault_Tolerance_Service.h"\
+	"..\tao\GIOP_Message_Version.h"\
+	"..\tao\GIOPC.i"\
+	"..\tao\Interceptor_List.inl"\
+	"..\tao\IOPC.h"\
+	"..\tao\IOPC.i"\
+	"..\tao\LocalObject.h"\
+	"..\tao\LocalObject.i"\
+	"..\tao\MessagingC.h"\
+	"..\tao\MessagingC.i"\
+	"..\tao\Object_Ref_Table.h"\
+	"..\tao\OctetSeqC.i"\
+	"..\tao\ORB_Core.i"\
+	"..\tao\params.h"\
+	"..\tao\Parser_Registry.h"\
+	"..\tao\PICurrent.h"\
+	"..\tao\PICurrent.inl"\
+	"..\tao\Policy_Manager.h"\
+	"..\tao\PolicyFactory_Registry.h"\
+	"..\tao\PollableC.h"\
+	"..\tao\PollableC.i"\
+	"..\tao\PortableInterceptorC.i"\
+	"..\tao\PortableServer\Active_Object_Map.h"\
+	"..\tao\PortableServer\Active_Object_Map.i"\
+	"..\tao\PortableServer\Collocated_Object.i"\
+	"..\tao\PortableServer\Default_Policy_Validator.h"\
+	"..\tao\PortableServer\Key_Adapters.h"\
+	"..\tao\PortableServer\Key_Adapters.i"\
+	"..\tao\PortableServer\Object_Adapter.h"\
+	"..\tao\PortableServer\Object_Adapter.i"\
+	"..\tao\PortableServer\poa_macros.h"\
+	"..\tao\PortableServer\POA_Policies.h"\
+	"..\tao\PortableServer\POA_Policies.i"\
+	"..\tao\PortableServer\POA_Policy_Set.h"\
+	"..\tao\PortableServer\POA_Policy_Set.i"\
+	"..\tao\PortableServer\Policy_Validator.h"\
+	"..\tao\PortableServer\portableserver_export.h"\
+	"..\tao\PortableServer\PortableServerC.h"\
+	"..\tao\PortableServer\PortableServerC.i"\
+	"..\tao\PortableServer\Servant_Base.h"\
+	"..\tao\PortableServer\Servant_Base.i"\
+	"..\tao\PortableServer\ServerInterceptorAdapter.inl"\
+	"..\tao\PortableServer\ServerRequestInfo.inl"\
+	"..\tao\Profile.i"\
+	"..\tao\Protocols_Hooks.h"\
+	"..\tao\Remote_Object_Proxy_Impl.h"\
+	"..\tao\Resource_Factory.h"\
+	"..\tao\Service_Callbacks.h"\
+	"..\tao\SmartProxies\Smart_Proxies.inl"\
+	"..\tao\SmartProxies\smartproxies_export.h"\
+	"..\tao\StringSeqC.i"\
+	"..\tao\Tagged_Components.h"\
+	"..\tao\Tagged_Profile.h"\
+	"..\tao\TAO_Export.h"\
+	"..\tao\TAO_Server_Request.i"\
+	"..\tao\TAO_Singleton.h"\
+	"..\tao\TimeBaseC.h"\
+	"..\tao\TimeBaseC.i"\
+	"..\tao\ValueBase.h"\
+	"..\tao\ValueFactory.h"\
+	".\ao\Abstract_Servant_Base.h"\
+	".\ao\Any.i"\
+	".\ao\BoundsC.h"\
+	".\ao\BoundsC.i"\
+	".\ao\CDR.i"\
+	".\ao\CONV_FRAMEC.h"\
+	".\ao\CONV_FRAMEC.i"\
+	".\ao\corba.h"\
+	".\ao\CORBA_String.h"\
+	".\ao\CORBA_String.inl"\
+	".\ao\corbafwd.i"\
+	".\ao\CurrentC.h"\
+	".\ao\CurrentC.i"\
+	".\ao\debug.h"\
+	".\ao\DomainC.h"\
+	".\ao\Environment.h"\
+	".\ao\Environment.i"\
+	".\ao\Exception.i"\
+	".\ao\Fault_Tolerance_Service.i"\
+	".\ao\GIOP_Message_Version.inl"\
+	".\ao\GIOPC.h"\
+	".\ao\IFR_Client_Adapter.h"\
+	".\ao\Interceptor_List.h"\
+	".\ao\Managed_Types.h"\
+	".\ao\Managed_Types.i"\
+	".\ao\MProfile.h"\
+	".\ao\MProfile.i"\
+	".\ao\nvlist.h"\
+	".\ao\NVList.i"\
+	".\ao\object.h"\
+	".\ao\Object.i"\
+	".\ao\Object_KeyC.h"\
+	".\ao\Object_KeyC.i"\
+	".\ao\Object_Proxy_Broker.h"\
+	".\ao\Object_Proxy_Impl.h"\
+	".\ao\ObjectIDList.h"\
+	".\ao\ObjectIDList.i"\
+	".\ao\OctetSeqC.h"\
+	".\ao\orb.h"\
+	".\ao\ORB.i"\
+	".\ao\orb_core.h"\
+	".\ao\orbconf.h"\
+	".\ao\params.i"\
+	".\ao\Parser_Registry.i"\
+	".\ao\Pluggable.h"\
+	".\ao\Pluggable.i"\
+	".\ao\Policy_Manager.i"\
+	".\ao\Policy_Set.h"\
+	".\ao\Policy_Set.i"\
+	".\ao\PolicyC.h"\
+	".\ao\PolicyC.i"\
+	".\ao\PortableInterceptor.h"\
+	".\ao\PortableInterceptorC.h"\
+	".\ao\PortableServer\Collocated_Object.h"\
+	".\ao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\ao\PortableServer\Operation_Table.h"\
+	".\ao\PortableServer\PortableServer.h"\
+	".\ao\PortableServer\ServerInterceptorAdapter.h"\
+	".\ao\PortableServer\ServerRequestInfo.h"\
+	".\ao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\ao\Principal.h"\
+	".\ao\Principal.i"\
+	".\ao\Profile.h"\
+	".\ao\Protocol_Factory.h"\
+	".\ao\RequestInfo_Util.h"\
+	".\ao\sequence.h"\
+	".\ao\Sequence.i"\
+	".\ao\Sequence_T.cpp"\
+	".\ao\Sequence_T.h"\
+	".\ao\Sequence_T.i"\
+	".\ao\Server_Strategy_Factory.h"\
+	".\ao\Service_Callbacks.i"\
+	".\ao\Service_Context.h"\
+	".\ao\Service_Context.inl"\
+	".\ao\Services.h"\
+	".\ao\Services.i"\
+	".\AO\SmartProxies\Smart_Proxies.h"\
+	".\ao\StringSeqC.h"\
+	".\ao\stub.h"\
+	".\ao\Stub.i"\
+	".\ao\Tagged_Components.i"\
+	".\ao\Tagged_Profile.i"\
+	".\ao\TAO_Server_Request.h"\
+	".\ao\TAO_Singleton.cpp"\
+	".\ao\TAO_Singleton.inl"\
+	".\ao\TAO_Singleton_Manager.h"\
+	".\ao\TAO_Singleton_Manager.inl"\
+	".\ao\try_macros.h"\
+	".\ao\typecode.h"\
+	".\ao\Typecode.i"\
+	".\ao\ValueBase.i"\
+	".\ao\ValueFactory.i"\
+	".\ao\varbase.h"\
+	".\ao\WrongTransactionC.h"\
+	".\ce\ACE.h"\
+	".\ce\ACE.i"\
+	".\ce\ACE_export.h"\
+	".\ce\ace_wchar.h"\
+	".\ce\ace_wchar.inl"\
+	".\ce\Active_Map_Manager.h"\
+	".\ce\Active_Map_Manager.i"\
+	".\ce\Active_Map_Manager_T.cpp"\
+	".\ce\Active_Map_Manager_T.h"\
+	".\ce\Active_Map_Manager_T.i"\
+	".\ce\Array_Base.cpp"\
+	".\ce\Array_Base.h"\
+	".\ce\Array_Base.inl"\
+	".\ce\Atomic_Op.i"\
+	".\ce\Base_Thread_Adapter.h"\
+	".\ce\Base_Thread_Adapter.inl"\
+	".\ce\Basic_Types.h"\
+	".\ce\Basic_Types.i"\
+	".\ce\CDR_Base.h"\
+	".\ce\CDR_Base.inl"\
+	".\ce\CDR_Stream.h"\
+	".\ce\CDR_Stream.i"\
+	".\ce\config-all.h"\
+	".\ce\config-cygwin32-common.h"\
+	".\ce\config-cygwin32.h"\
+	".\ce\config-g++-common.h"\
+	".\ce\config-ghs-common.h"\
+	".\ce\config-win32-borland.h"\
+	".\ce\config-win32-common.h"\
+	".\ce\config-win32-ghs.h"\
+	".\ce\config-win32-mingw.h"\
+	".\ce\config-win32-msvc-5.h"\
+	".\ce\config-win32-msvc-6.h"\
+	".\ce\config-win32-msvc-7.h"\
+	".\ce\config-win32-msvc.h"\
+	".\ce\config-win32-visualage.h"\
+	".\ce\config-win32.h"\
+	".\ce\config-WinCE.h"\
+	".\ce\config.h"\
+	".\ce\Containers.h"\
+	".\ce\Containers.i"\
+	".\ce\Containers_T.cpp"\
+	".\ce\Containers_T.h"\
+	".\ce\Containers_T.i"\
+	".\ce\CORBA_macros.h"\
+	".\ce\Dynamic_Service.cpp"\
+	".\ce\Dynamic_Service.h"\
+	".\ce\Dynamic_Service.i"\
+	".\ce\Dynamic_Service_Base.h"\
+	".\ce\Event_Handler.h"\
+	".\ce\Event_Handler.i"\
+	".\ce\File_Lock.h"\
+	".\ce\File_Lock.inl"\
+	".\ce\Flag_Manip.h"\
+	".\ce\Flag_Manip.i"\
+	".\ce\Free_List.cpp"\
+	".\ce\Free_List.h"\
+	".\ce\Free_List.i"\
+	".\ce\Functor.h"\
+	".\ce\Functor.i"\
+	".\ce\Functor_T.cpp"\
+	".\ce\Functor_T.h"\
+	".\ce\Functor_T.i"\
+	".\ce\Handle_Ops.h"\
+	".\ce\Handle_Ops.i"\
+	".\ce\Handle_Set.h"\
+	".\ce\Handle_Set.i"\
+	".\ce\Hash_Map_Manager.h"\
+	".\ce\Hash_Map_Manager_T.cpp"\
+	".\ce\Hash_Map_Manager_T.h"\
+	".\ce\Hash_Map_Manager_T.i"\
+	".\ce\Init_ACE.h"\
+	".\ce\Init_ACE.i"\
+	".\ce\iosfwd.h"\
+	".\ce\Lib_Find.h"\
+	".\ce\Lib_Find.i"\
+	".\ce\Log_Msg.h"\
+	".\ce\Log_Msg_Callback.h"\
+	".\ce\Log_Priority.h"\
+	".\ce\Log_Record.h"\
+	".\ce\Log_Record.i"\
+	".\ce\Malloc.h"\
+	".\ce\Malloc.i"\
+	".\ce\Malloc_Allocator.h"\
+	".\ce\Malloc_Allocator.i"\
+	".\ce\Malloc_Base.h"\
+	".\ce\Malloc_T.cpp"\
+	".\ce\Malloc_T.h"\
+	".\ce\Malloc_T.i"\
+	".\ce\Managed_Object.cpp"\
+	".\ce\Managed_Object.h"\
+	".\ce\Managed_Object.i"\
+	".\ce\Map.h"\
+	".\ce\Map_Manager.cpp"\
+	".\ce\Map_Manager.h"\
+	".\ce\Map_Manager.i"\
+	".\ce\Map_T.cpp"\
+	".\ce\Map_T.h"\
+	".\ce\Map_T.i"\
+	".\ce\Mem_Map.h"\
+	".\ce\Mem_Map.i"\
+	".\ce\Memory_Pool.h"\
+	".\ce\Memory_Pool.i"\
+	".\ce\Message_Block.h"\
+	".\ce\Message_Block.i"\
+	".\ce\Message_Block_T.cpp"\
+	".\ce\Message_Block_T.h"\
+	".\ce\Message_Block_T.i"\
+	".\ce\Min_Max.h"\
+	".\ce\Node.cpp"\
+	".\ce\Node.h"\
+	".\ce\Object_Manager.h"\
+	".\ce\Object_Manager.i"\
+	".\ce\OS.h"\
+	".\ce\OS.i"\
+	".\ce\OS_Dirent.h"\
+	".\ce\OS_Dirent.inl"\
+	".\ce\OS_Errno.h"\
+	".\ce\OS_Errno.inl"\
+	".\ce\OS_Export.h"\
+	".\ce\OS_Log_Msg_Attributes.h"\
+	".\ce\OS_Log_Msg_Attributes.inl"\
+	".\ce\OS_Memory.h"\
+	".\ce\OS_Memory.inl"\
+	".\ce\OS_String.h"\
+	".\ce\OS_String.inl"\
+	".\ce\OS_TLI.h"\
+	".\ce\OS_TLI.inl"\
+	".\ce\Pair.h"\
+	".\ce\Pair_T.cpp"\
+	".\ce\Pair_T.h"\
+	".\ce\Pair_T.i"\
+	".\ce\post.h"\
+	".\ce\pre.h"\
+	".\ce\Process_Mutex.h"\
+	".\ce\Process_Mutex.inl"\
+	".\ce\Process_Semaphore.h"\
+	".\ce\Process_Semaphore.inl"\
+	".\ce\Reactor.h"\
+	".\ce\Reactor.i"\
+	".\ce\Reactor_Impl.h"\
+	".\ce\RW_Process_Mutex.h"\
+	".\ce\RW_Process_Mutex.inl"\
+	".\ce\Service_Config.h"\
+	".\ce\Service_Config.i"\
+	".\ce\Service_Object.h"\
+	".\ce\Service_Object.i"\
+	".\ce\Shared_Object.h"\
+	".\ce\Shared_Object.i"\
+	".\ce\Signal.h"\
+	".\ce\Signal.i"\
+	".\ce\Singleton.cpp"\
+	".\ce\Singleton.h"\
+	".\ce\Singleton.i"\
+	".\ce\Sock_Connect.h"\
+	".\ce\Sock_Connect.i"\
+	".\ce\SString.h"\
+	".\ce\SString.i"\
+	".\ce\streams.h"\
+	".\ce\SV_Semaphore_Complex.h"\
+	".\ce\SV_Semaphore_Complex.i"\
+	".\ce\SV_Semaphore_Simple.h"\
+	".\ce\SV_Semaphore_Simple.i"\
+	".\ce\Svc_Conf_Tokens.h"\
+	".\ce\svc_export.h"\
+	".\ce\Synch.h"\
+	".\ce\Synch.i"\
+	".\ce\Synch_T.cpp"\
+	".\ce\Synch_T.h"\
+	".\ce\Synch_T.i"\
+	".\ce\Test_and_Set.cpp"\
+	".\ce\Test_and_Set.h"\
+	".\ce\Test_and_Set.i"\
+	".\ce\Thread.h"\
+	".\ce\Thread.i"\
+	".\ce\Thread_Adapter.h"\
+	".\ce\Thread_Adapter.inl"\
+	".\ce\Thread_Control.h"\
+	".\ce\Thread_Control.inl"\
+	".\ce\Thread_Exit.h"\
+	".\ce\Thread_Hook.h"\
+	".\ce\Thread_Manager.h"\
+	".\ce\Thread_Manager.i"\
+	".\ce\Timer_Queue.h"\
+	".\ce\Timer_Queue_T.cpp"\
+	".\ce\Timer_Queue_T.h"\
+	".\ce\Timer_Queue_T.i"\
+	".\ce\Trace.h"\
+	".\ce\Unbounded_Queue.cpp"\
+	".\ce\Unbounded_Queue.h"\
+	".\ce\Unbounded_Queue.inl"\
+	".\ce\Unbounded_Set.cpp"\
+	".\ce\Unbounded_Set.h"\
+	".\ce\Unbounded_Set.inl"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\LifeCycleServiceC.cpp
+
+!IF  "$(CFG)" == "CosLifeCycle - Win32 (WCE MIPS) Release"
+
+DEP_CPP_LIFEC=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFEC=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\Naming\ace\config-all.h"\
+	".\tao\ClientInterceptorAdapter.h"\
+	".\tao\ClientRequestInfo.h"\
+	".\tao\corba.h"\
+	".\tao\Invocation.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE MIPS) Debug"
+
+DEP_CPP_LIFEC=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFEC=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\Naming\ace\config-all.h"\
+	".\tao\ClientInterceptorAdapter.h"\
+	".\tao\ClientRequestInfo.h"\
+	".\tao\corba.h"\
+	".\tao\Invocation.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH4) Release"
+
+DEP_CPP_LIFEC=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFEC=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\Naming\ace\config-all.h"\
+	".\tao\ClientInterceptorAdapter.h"\
+	".\tao\ClientRequestInfo.h"\
+	".\tao\corba.h"\
+	".\tao\Invocation.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH4) Debug"
+
+DEP_CPP_LIFEC=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFEC=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\Naming\ace\config-all.h"\
+	".\tao\ClientInterceptorAdapter.h"\
+	".\tao\ClientRequestInfo.h"\
+	".\tao\corba.h"\
+	".\tao\Invocation.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH3) Release"
+
+DEP_CPP_LIFEC=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFEC=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\Naming\ace\config-all.h"\
+	".\tao\ClientInterceptorAdapter.h"\
+	".\tao\ClientRequestInfo.h"\
+	".\tao\corba.h"\
+	".\tao\Invocation.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH3) Debug"
+
+DEP_CPP_LIFEC=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFEC=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\Naming\ace\config-all.h"\
+	".\tao\ClientInterceptorAdapter.h"\
+	".\tao\ClientRequestInfo.h"\
+	".\tao\corba.h"\
+	".\tao\Invocation.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE ARM) Release"
+
+DEP_CPP_LIFEC=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFEC=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	"..\tao\Adapter.h"\
+	"..\tao\Adapter.i"\
+	"..\tao\Cleanup_Func_Registry.h"\
+	"..\tao\Cleanup_Func_Registry.inl"\
+	"..\tao\ClientInterceptorAdapter.inl"\
+	"..\tao\ClientRequestInfo.h"\
+	"..\tao\ClientRequestInfo.inl"\
+	"..\tao\CurrentC.h"\
+	"..\tao\DomainC.i"\
+	"..\tao\DynamicC.h"\
+	"..\tao\DynamicC.i"\
+	"..\tao\Encodable.h"\
+	"..\tao\Environment.h"\
+	"..\tao\Exception.h"\
+	"..\tao\Fault_Tolerance_Service.h"\
+	"..\tao\GIOP_Message_Version.h"\
+	"..\tao\Interceptor_List.h"\
+	"..\tao\Interceptor_List.inl"\
+	"..\tao\Invocation.i"\
+	"..\tao\Invocation_Endpoint_Selectors.h"\
+	"..\tao\IOPC.h"\
+	"..\tao\IOPC.i"\
+	"..\tao\LF_Event.inl"\
+	"..\tao\LocalObject.i"\
+	"..\tao\MessagingC.h"\
+	"..\tao\MessagingC.i"\
+	"..\tao\object.h"\
+	"..\tao\Object_Ref_Table.h"\
+	"..\tao\OctetSeqC.h"\
+	"..\tao\OctetSeqC.i"\
+	"..\tao\operation_details.h"\
+	"..\tao\operation_details.i"\
+	"..\tao\orb.h"\
+	"..\tao\ORB_Core.i"\
+	"..\tao\params.h"\
+	"..\tao\Parser_Registry.h"\
+	"..\tao\PICurrent.h"\
+	"..\tao\PICurrent.inl"\
+	"..\tao\Policy_Manager.h"\
+	"..\tao\PolicyC.h"\
+	"..\tao\PolicyFactory_Registry.h"\
+	"..\tao\PollableC.h"\
+	"..\tao\PollableC.i"\
+	"..\tao\PortableInterceptorC.i"\
+	"..\tao\Profile.i"\
+	"..\tao\Protocols_Hooks.h"\
+	"..\tao\Remote_Object_Proxy_Impl.h"\
+	"..\tao\Resource_Factory.h"\
+	"..\tao\sequence.h"\
+	"..\tao\Service_Callbacks.h"\
+	"..\tao\Service_Context.h"\
+	"..\tao\Services.h"\
+	"..\tao\SmartProxies\Smart_Proxies.inl"\
+	"..\tao\SmartProxies\smartproxies_export.h"\
+	"..\tao\StringSeqC.i"\
+	"..\tao\stub.h"\
+	"..\tao\Synch_Reply_Dispatcher.h"\
+	"..\tao\Tagged_Components.h"\
+	"..\tao\TAO_Export.h"\
+	"..\tao\TAOC.h"\
+	"..\tao\TAOC.i"\
+	"..\tao\target_specification.h"\
+	"..\tao\target_specification.i"\
+	"..\tao\TimeBaseC.h"\
+	"..\tao\TimeBaseC.i"\
+	"..\tao\ValueBase.h"\
+	"..\tao\ValueFactory.h"\
+	".\ao\any.h"\
+	".\ao\Any.i"\
+	".\ao\BoundsC.h"\
+	".\ao\BoundsC.i"\
+	".\ao\cdr.h"\
+	".\ao\CDR.i"\
+	".\ao\ClientInterceptorAdapter.h"\
+	".\ao\CONV_FRAMEC.h"\
+	".\ao\CONV_FRAMEC.i"\
+	".\ao\corba.h"\
+	".\ao\CORBA_String.h"\
+	".\ao\CORBA_String.inl"\
+	".\ao\corbafwd.h"\
+	".\ao\corbafwd.i"\
+	".\ao\CurrentC.i"\
+	".\ao\debug.h"\
+	".\ao\DomainC.h"\
+	".\ao\Environment.i"\
+	".\ao\Exception.i"\
+	".\ao\Fault_Tolerance_Service.i"\
+	".\ao\GIOP_Message_Version.inl"\
+	".\ao\Invocation.h"\
+	".\ao\Invocation_Endpoint_Selectors.i"\
+	".\ao\LF_Event.h"\
+	".\ao\LocalObject.h"\
+	".\ao\Managed_Types.h"\
+	".\ao\Managed_Types.i"\
+	".\ao\MProfile.h"\
+	".\ao\MProfile.i"\
+	".\ao\nvlist.h"\
+	".\ao\NVList.i"\
+	".\ao\Object.i"\
+	".\ao\Object_KeyC.h"\
+	".\ao\Object_KeyC.i"\
+	".\ao\Object_Proxy_Broker.h"\
+	".\ao\Object_Proxy_Impl.h"\
+	".\ao\ObjectIDList.h"\
+	".\ao\ObjectIDList.i"\
+	".\ao\ORB.i"\
+	".\ao\orb_core.h"\
+	".\ao\orbconf.h"\
+	".\ao\params.i"\
+	".\ao\Parser_Registry.i"\
+	".\ao\Pluggable.h"\
+	".\ao\Pluggable.i"\
+	".\ao\Policy_Manager.i"\
+	".\ao\Policy_Set.h"\
+	".\ao\Policy_Set.i"\
+	".\ao\PolicyC.i"\
+	".\ao\PortableInterceptor.h"\
+	".\ao\PortableInterceptorC.h"\
+	".\ao\Principal.h"\
+	".\ao\Principal.i"\
+	".\ao\Profile.h"\
+	".\ao\Protocol_Factory.h"\
+	".\ao\Reply_Dispatcher.h"\
+	".\ao\Reply_Dispatcher.i"\
+	".\ao\RequestInfo_Util.h"\
+	".\ao\Sequence.i"\
+	".\ao\Sequence_T.cpp"\
+	".\ao\Sequence_T.h"\
+	".\ao\Sequence_T.i"\
+	".\ao\Service_Callbacks.i"\
+	".\ao\Service_Context.inl"\
+	".\ao\Services.i"\
+	".\AO\SmartProxies\Smart_Proxies.h"\
+	".\ao\StringSeqC.h"\
+	".\ao\Stub.i"\
+	".\ao\Tagged_Components.i"\
+	".\ao\TAO_Singleton.cpp"\
+	".\ao\TAO_Singleton.h"\
+	".\ao\TAO_Singleton.inl"\
+	".\ao\TAO_Singleton_Manager.h"\
+	".\ao\TAO_Singleton_Manager.inl"\
+	".\ao\try_macros.h"\
+	".\ao\typecode.h"\
+	".\ao\Typecode.i"\
+	".\ao\ValueBase.i"\
+	".\ao\ValueFactory.i"\
+	".\ao\varbase.h"\
+	".\ao\WrongTransactionC.h"\
+	".\ce\ACE.h"\
+	".\ce\ACE.i"\
+	".\ce\ACE_export.h"\
+	".\ce\ace_wchar.h"\
+	".\ce\ace_wchar.inl"\
+	".\ce\Array_Base.cpp"\
+	".\ce\Array_Base.h"\
+	".\ce\Array_Base.inl"\
+	".\ce\Atomic_Op.i"\
+	".\ce\Base_Thread_Adapter.h"\
+	".\ce\Base_Thread_Adapter.inl"\
+	".\ce\Basic_Types.h"\
+	".\ce\Basic_Types.i"\
+	".\ce\CDR_Base.h"\
+	".\ce\CDR_Base.inl"\
+	".\ce\CDR_Stream.h"\
+	".\ce\CDR_Stream.i"\
+	".\ce\config-all.h"\
+	".\ce\config-cygwin32-common.h"\
+	".\ce\config-cygwin32.h"\
+	".\ce\config-g++-common.h"\
+	".\ce\config-ghs-common.h"\
+	".\ce\config-win32-borland.h"\
+	".\ce\config-win32-common.h"\
+	".\ce\config-win32-ghs.h"\
+	".\ce\config-win32-mingw.h"\
+	".\ce\config-win32-msvc-5.h"\
+	".\ce\config-win32-msvc-6.h"\
+	".\ce\config-win32-msvc-7.h"\
+	".\ce\config-win32-msvc.h"\
+	".\ce\config-win32-visualage.h"\
+	".\ce\config-win32.h"\
+	".\ce\config-WinCE.h"\
+	".\ce\config.h"\
+	".\ce\Containers.h"\
+	".\ce\Containers.i"\
+	".\ce\Containers_T.cpp"\
+	".\ce\Containers_T.h"\
+	".\ce\Containers_T.i"\
+	".\ce\CORBA_macros.h"\
+	".\ce\Event_Handler.h"\
+	".\ce\Event_Handler.i"\
+	".\ce\File_Lock.h"\
+	".\ce\File_Lock.inl"\
+	".\ce\Flag_Manip.h"\
+	".\ce\Flag_Manip.i"\
+	".\ce\Free_List.cpp"\
+	".\ce\Free_List.h"\
+	".\ce\Free_List.i"\
+	".\ce\Functor.h"\
+	".\ce\Functor.i"\
+	".\ce\Functor_T.cpp"\
+	".\ce\Functor_T.h"\
+	".\ce\Functor_T.i"\
+	".\ce\Handle_Ops.h"\
+	".\ce\Handle_Ops.i"\
+	".\ce\Handle_Set.h"\
+	".\ce\Handle_Set.i"\
+	".\ce\Hash_Map_Manager.h"\
+	".\ce\Hash_Map_Manager_T.cpp"\
+	".\ce\Hash_Map_Manager_T.h"\
+	".\ce\Hash_Map_Manager_T.i"\
+	".\ce\Init_ACE.h"\
+	".\ce\Init_ACE.i"\
+	".\ce\iosfwd.h"\
+	".\ce\Lib_Find.h"\
+	".\ce\Lib_Find.i"\
+	".\ce\Log_Msg.h"\
+	".\ce\Log_Msg_Callback.h"\
+	".\ce\Log_Priority.h"\
+	".\ce\Log_Record.h"\
+	".\ce\Log_Record.i"\
+	".\ce\Malloc.h"\
+	".\ce\Malloc.i"\
+	".\ce\Malloc_Allocator.h"\
+	".\ce\Malloc_Allocator.i"\
+	".\ce\Malloc_Base.h"\
+	".\ce\Malloc_T.cpp"\
+	".\ce\Malloc_T.h"\
+	".\ce\Malloc_T.i"\
+	".\ce\Managed_Object.cpp"\
+	".\ce\Managed_Object.h"\
+	".\ce\Managed_Object.i"\
+	".\ce\Map_Manager.cpp"\
+	".\ce\Map_Manager.h"\
+	".\ce\Map_Manager.i"\
+	".\ce\Mem_Map.h"\
+	".\ce\Mem_Map.i"\
+	".\ce\Memory_Pool.h"\
+	".\ce\Memory_Pool.i"\
+	".\ce\Message_Block.h"\
+	".\ce\Message_Block.i"\
+	".\ce\Message_Block_T.cpp"\
+	".\ce\Message_Block_T.h"\
+	".\ce\Message_Block_T.i"\
+	".\ce\Min_Max.h"\
+	".\ce\Node.cpp"\
+	".\ce\Node.h"\
+	".\ce\Object_Manager.h"\
+	".\ce\Object_Manager.i"\
+	".\ce\OS.h"\
+	".\ce\OS.i"\
+	".\ce\OS_Dirent.h"\
+	".\ce\OS_Dirent.inl"\
+	".\ce\OS_Errno.h"\
+	".\ce\OS_Errno.inl"\
+	".\ce\OS_Export.h"\
+	".\ce\OS_Log_Msg_Attributes.h"\
+	".\ce\OS_Log_Msg_Attributes.inl"\
+	".\ce\OS_Memory.h"\
+	".\ce\OS_Memory.inl"\
+	".\ce\OS_String.h"\
+	".\ce\OS_String.inl"\
+	".\ce\OS_TLI.h"\
+	".\ce\OS_TLI.inl"\
+	".\ce\post.h"\
+	".\ce\pre.h"\
+	".\ce\Process_Mutex.h"\
+	".\ce\Process_Mutex.inl"\
+	".\ce\Process_Semaphore.h"\
+	".\ce\Process_Semaphore.inl"\
+	".\ce\Reactor.h"\
+	".\ce\Reactor.i"\
+	".\ce\Reactor_Impl.h"\
+	".\ce\RW_Process_Mutex.h"\
+	".\ce\RW_Process_Mutex.inl"\
+	".\ce\Service_Config.h"\
+	".\ce\Service_Config.i"\
+	".\ce\Service_Object.h"\
+	".\ce\Service_Object.i"\
+	".\ce\Shared_Object.h"\
+	".\ce\Shared_Object.i"\
+	".\ce\Signal.h"\
+	".\ce\Signal.i"\
+	".\ce\Singleton.cpp"\
+	".\ce\Singleton.h"\
+	".\ce\Singleton.i"\
+	".\ce\Sock_Connect.h"\
+	".\ce\Sock_Connect.i"\
+	".\ce\SString.h"\
+	".\ce\SString.i"\
+	".\ce\streams.h"\
+	".\ce\SV_Semaphore_Complex.h"\
+	".\ce\SV_Semaphore_Complex.i"\
+	".\ce\SV_Semaphore_Simple.h"\
+	".\ce\SV_Semaphore_Simple.i"\
+	".\ce\Svc_Conf_Tokens.h"\
+	".\ce\svc_export.h"\
+	".\ce\Synch.h"\
+	".\ce\Synch.i"\
+	".\ce\Synch_T.cpp"\
+	".\ce\Synch_T.h"\
+	".\ce\Synch_T.i"\
+	".\ce\Test_and_Set.cpp"\
+	".\ce\Test_and_Set.h"\
+	".\ce\Test_and_Set.i"\
+	".\ce\Thread.h"\
+	".\ce\Thread.i"\
+	".\ce\Thread_Adapter.h"\
+	".\ce\Thread_Adapter.inl"\
+	".\ce\Thread_Control.h"\
+	".\ce\Thread_Control.inl"\
+	".\ce\Thread_Exit.h"\
+	".\ce\Thread_Hook.h"\
+	".\ce\Thread_Manager.h"\
+	".\ce\Thread_Manager.i"\
+	".\ce\Timer_Queue.h"\
+	".\ce\Timer_Queue_T.cpp"\
+	".\ce\Timer_Queue_T.h"\
+	".\ce\Timer_Queue_T.i"\
+	".\ce\Trace.h"\
+	".\ce\Unbounded_Queue.cpp"\
+	".\ce\Unbounded_Queue.h"\
+	".\ce\Unbounded_Queue.inl"\
+	".\ce\Unbounded_Set.cpp"\
+	".\ce\Unbounded_Set.h"\
+	".\ce\Unbounded_Set.inl"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE ARM) Debug"
+
+DEP_CPP_LIFEC=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFEC=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	"..\tao\Adapter.h"\
+	"..\tao\Adapter.i"\
+	"..\tao\Cleanup_Func_Registry.h"\
+	"..\tao\Cleanup_Func_Registry.inl"\
+	"..\tao\ClientInterceptorAdapter.inl"\
+	"..\tao\ClientRequestInfo.h"\
+	"..\tao\ClientRequestInfo.inl"\
+	"..\tao\CurrentC.h"\
+	"..\tao\DomainC.i"\
+	"..\tao\DynamicC.h"\
+	"..\tao\DynamicC.i"\
+	"..\tao\Encodable.h"\
+	"..\tao\Environment.h"\
+	"..\tao\Exception.h"\
+	"..\tao\Fault_Tolerance_Service.h"\
+	"..\tao\GIOP_Message_Version.h"\
+	"..\tao\Interceptor_List.h"\
+	"..\tao\Interceptor_List.inl"\
+	"..\tao\Invocation.i"\
+	"..\tao\Invocation_Endpoint_Selectors.h"\
+	"..\tao\IOPC.h"\
+	"..\tao\IOPC.i"\
+	"..\tao\LF_Event.inl"\
+	"..\tao\LocalObject.i"\
+	"..\tao\MessagingC.h"\
+	"..\tao\MessagingC.i"\
+	"..\tao\object.h"\
+	"..\tao\Object_Ref_Table.h"\
+	"..\tao\OctetSeqC.h"\
+	"..\tao\OctetSeqC.i"\
+	"..\tao\operation_details.h"\
+	"..\tao\operation_details.i"\
+	"..\tao\orb.h"\
+	"..\tao\ORB_Core.i"\
+	"..\tao\params.h"\
+	"..\tao\Parser_Registry.h"\
+	"..\tao\PICurrent.h"\
+	"..\tao\PICurrent.inl"\
+	"..\tao\Policy_Manager.h"\
+	"..\tao\PolicyC.h"\
+	"..\tao\PolicyFactory_Registry.h"\
+	"..\tao\PollableC.h"\
+	"..\tao\PollableC.i"\
+	"..\tao\PortableInterceptorC.i"\
+	"..\tao\Profile.i"\
+	"..\tao\Protocols_Hooks.h"\
+	"..\tao\Remote_Object_Proxy_Impl.h"\
+	"..\tao\Resource_Factory.h"\
+	"..\tao\sequence.h"\
+	"..\tao\Service_Callbacks.h"\
+	"..\tao\Service_Context.h"\
+	"..\tao\Services.h"\
+	"..\tao\SmartProxies\Smart_Proxies.inl"\
+	"..\tao\SmartProxies\smartproxies_export.h"\
+	"..\tao\StringSeqC.i"\
+	"..\tao\stub.h"\
+	"..\tao\Synch_Reply_Dispatcher.h"\
+	"..\tao\Tagged_Components.h"\
+	"..\tao\TAO_Export.h"\
+	"..\tao\TAOC.h"\
+	"..\tao\TAOC.i"\
+	"..\tao\target_specification.h"\
+	"..\tao\target_specification.i"\
+	"..\tao\TimeBaseC.h"\
+	"..\tao\TimeBaseC.i"\
+	"..\tao\ValueBase.h"\
+	"..\tao\ValueFactory.h"\
+	".\ao\any.h"\
+	".\ao\Any.i"\
+	".\ao\BoundsC.h"\
+	".\ao\BoundsC.i"\
+	".\ao\cdr.h"\
+	".\ao\CDR.i"\
+	".\ao\ClientInterceptorAdapter.h"\
+	".\ao\CONV_FRAMEC.h"\
+	".\ao\CONV_FRAMEC.i"\
+	".\ao\corba.h"\
+	".\ao\CORBA_String.h"\
+	".\ao\CORBA_String.inl"\
+	".\ao\corbafwd.h"\
+	".\ao\corbafwd.i"\
+	".\ao\CurrentC.i"\
+	".\ao\debug.h"\
+	".\ao\DomainC.h"\
+	".\ao\Environment.i"\
+	".\ao\Exception.i"\
+	".\ao\Fault_Tolerance_Service.i"\
+	".\ao\GIOP_Message_Version.inl"\
+	".\ao\Invocation.h"\
+	".\ao\Invocation_Endpoint_Selectors.i"\
+	".\ao\LF_Event.h"\
+	".\ao\LocalObject.h"\
+	".\ao\Managed_Types.h"\
+	".\ao\Managed_Types.i"\
+	".\ao\MProfile.h"\
+	".\ao\MProfile.i"\
+	".\ao\nvlist.h"\
+	".\ao\NVList.i"\
+	".\ao\Object.i"\
+	".\ao\Object_KeyC.h"\
+	".\ao\Object_KeyC.i"\
+	".\ao\Object_Proxy_Broker.h"\
+	".\ao\Object_Proxy_Impl.h"\
+	".\ao\ObjectIDList.h"\
+	".\ao\ObjectIDList.i"\
+	".\ao\ORB.i"\
+	".\ao\orb_core.h"\
+	".\ao\orbconf.h"\
+	".\ao\params.i"\
+	".\ao\Parser_Registry.i"\
+	".\ao\Pluggable.h"\
+	".\ao\Pluggable.i"\
+	".\ao\Policy_Manager.i"\
+	".\ao\Policy_Set.h"\
+	".\ao\Policy_Set.i"\
+	".\ao\PolicyC.i"\
+	".\ao\PortableInterceptor.h"\
+	".\ao\PortableInterceptorC.h"\
+	".\ao\Principal.h"\
+	".\ao\Principal.i"\
+	".\ao\Profile.h"\
+	".\ao\Protocol_Factory.h"\
+	".\ao\Reply_Dispatcher.h"\
+	".\ao\Reply_Dispatcher.i"\
+	".\ao\RequestInfo_Util.h"\
+	".\ao\Sequence.i"\
+	".\ao\Sequence_T.cpp"\
+	".\ao\Sequence_T.h"\
+	".\ao\Sequence_T.i"\
+	".\ao\Service_Callbacks.i"\
+	".\ao\Service_Context.inl"\
+	".\ao\Services.i"\
+	".\AO\SmartProxies\Smart_Proxies.h"\
+	".\ao\StringSeqC.h"\
+	".\ao\Stub.i"\
+	".\ao\Tagged_Components.i"\
+	".\ao\TAO_Singleton.cpp"\
+	".\ao\TAO_Singleton.h"\
+	".\ao\TAO_Singleton.inl"\
+	".\ao\TAO_Singleton_Manager.h"\
+	".\ao\TAO_Singleton_Manager.inl"\
+	".\ao\try_macros.h"\
+	".\ao\typecode.h"\
+	".\ao\Typecode.i"\
+	".\ao\ValueBase.i"\
+	".\ao\ValueFactory.i"\
+	".\ao\varbase.h"\
+	".\ao\WrongTransactionC.h"\
+	".\ce\ACE.h"\
+	".\ce\ACE.i"\
+	".\ce\ACE_export.h"\
+	".\ce\ace_wchar.h"\
+	".\ce\ace_wchar.inl"\
+	".\ce\Array_Base.cpp"\
+	".\ce\Array_Base.h"\
+	".\ce\Array_Base.inl"\
+	".\ce\Atomic_Op.i"\
+	".\ce\Base_Thread_Adapter.h"\
+	".\ce\Base_Thread_Adapter.inl"\
+	".\ce\Basic_Types.h"\
+	".\ce\Basic_Types.i"\
+	".\ce\CDR_Base.h"\
+	".\ce\CDR_Base.inl"\
+	".\ce\CDR_Stream.h"\
+	".\ce\CDR_Stream.i"\
+	".\ce\config-all.h"\
+	".\ce\config-cygwin32-common.h"\
+	".\ce\config-cygwin32.h"\
+	".\ce\config-g++-common.h"\
+	".\ce\config-ghs-common.h"\
+	".\ce\config-win32-borland.h"\
+	".\ce\config-win32-common.h"\
+	".\ce\config-win32-ghs.h"\
+	".\ce\config-win32-mingw.h"\
+	".\ce\config-win32-msvc-5.h"\
+	".\ce\config-win32-msvc-6.h"\
+	".\ce\config-win32-msvc-7.h"\
+	".\ce\config-win32-msvc.h"\
+	".\ce\config-win32-visualage.h"\
+	".\ce\config-win32.h"\
+	".\ce\config-WinCE.h"\
+	".\ce\config.h"\
+	".\ce\Containers.h"\
+	".\ce\Containers.i"\
+	".\ce\Containers_T.cpp"\
+	".\ce\Containers_T.h"\
+	".\ce\Containers_T.i"\
+	".\ce\CORBA_macros.h"\
+	".\ce\Event_Handler.h"\
+	".\ce\Event_Handler.i"\
+	".\ce\File_Lock.h"\
+	".\ce\File_Lock.inl"\
+	".\ce\Flag_Manip.h"\
+	".\ce\Flag_Manip.i"\
+	".\ce\Free_List.cpp"\
+	".\ce\Free_List.h"\
+	".\ce\Free_List.i"\
+	".\ce\Functor.h"\
+	".\ce\Functor.i"\
+	".\ce\Functor_T.cpp"\
+	".\ce\Functor_T.h"\
+	".\ce\Functor_T.i"\
+	".\ce\Handle_Ops.h"\
+	".\ce\Handle_Ops.i"\
+	".\ce\Handle_Set.h"\
+	".\ce\Handle_Set.i"\
+	".\ce\Hash_Map_Manager.h"\
+	".\ce\Hash_Map_Manager_T.cpp"\
+	".\ce\Hash_Map_Manager_T.h"\
+	".\ce\Hash_Map_Manager_T.i"\
+	".\ce\Init_ACE.h"\
+	".\ce\Init_ACE.i"\
+	".\ce\iosfwd.h"\
+	".\ce\Lib_Find.h"\
+	".\ce\Lib_Find.i"\
+	".\ce\Log_Msg.h"\
+	".\ce\Log_Msg_Callback.h"\
+	".\ce\Log_Priority.h"\
+	".\ce\Log_Record.h"\
+	".\ce\Log_Record.i"\
+	".\ce\Malloc.h"\
+	".\ce\Malloc.i"\
+	".\ce\Malloc_Allocator.h"\
+	".\ce\Malloc_Allocator.i"\
+	".\ce\Malloc_Base.h"\
+	".\ce\Malloc_T.cpp"\
+	".\ce\Malloc_T.h"\
+	".\ce\Malloc_T.i"\
+	".\ce\Managed_Object.cpp"\
+	".\ce\Managed_Object.h"\
+	".\ce\Managed_Object.i"\
+	".\ce\Map_Manager.cpp"\
+	".\ce\Map_Manager.h"\
+	".\ce\Map_Manager.i"\
+	".\ce\Mem_Map.h"\
+	".\ce\Mem_Map.i"\
+	".\ce\Memory_Pool.h"\
+	".\ce\Memory_Pool.i"\
+	".\ce\Message_Block.h"\
+	".\ce\Message_Block.i"\
+	".\ce\Message_Block_T.cpp"\
+	".\ce\Message_Block_T.h"\
+	".\ce\Message_Block_T.i"\
+	".\ce\Min_Max.h"\
+	".\ce\Node.cpp"\
+	".\ce\Node.h"\
+	".\ce\Object_Manager.h"\
+	".\ce\Object_Manager.i"\
+	".\ce\OS.h"\
+	".\ce\OS.i"\
+	".\ce\OS_Dirent.h"\
+	".\ce\OS_Dirent.inl"\
+	".\ce\OS_Errno.h"\
+	".\ce\OS_Errno.inl"\
+	".\ce\OS_Export.h"\
+	".\ce\OS_Log_Msg_Attributes.h"\
+	".\ce\OS_Log_Msg_Attributes.inl"\
+	".\ce\OS_Memory.h"\
+	".\ce\OS_Memory.inl"\
+	".\ce\OS_String.h"\
+	".\ce\OS_String.inl"\
+	".\ce\OS_TLI.h"\
+	".\ce\OS_TLI.inl"\
+	".\ce\post.h"\
+	".\ce\pre.h"\
+	".\ce\Process_Mutex.h"\
+	".\ce\Process_Mutex.inl"\
+	".\ce\Process_Semaphore.h"\
+	".\ce\Process_Semaphore.inl"\
+	".\ce\Reactor.h"\
+	".\ce\Reactor.i"\
+	".\ce\Reactor_Impl.h"\
+	".\ce\RW_Process_Mutex.h"\
+	".\ce\RW_Process_Mutex.inl"\
+	".\ce\Service_Config.h"\
+	".\ce\Service_Config.i"\
+	".\ce\Service_Object.h"\
+	".\ce\Service_Object.i"\
+	".\ce\Shared_Object.h"\
+	".\ce\Shared_Object.i"\
+	".\ce\Signal.h"\
+	".\ce\Signal.i"\
+	".\ce\Singleton.cpp"\
+	".\ce\Singleton.h"\
+	".\ce\Singleton.i"\
+	".\ce\Sock_Connect.h"\
+	".\ce\Sock_Connect.i"\
+	".\ce\SString.h"\
+	".\ce\SString.i"\
+	".\ce\streams.h"\
+	".\ce\SV_Semaphore_Complex.h"\
+	".\ce\SV_Semaphore_Complex.i"\
+	".\ce\SV_Semaphore_Simple.h"\
+	".\ce\SV_Semaphore_Simple.i"\
+	".\ce\Svc_Conf_Tokens.h"\
+	".\ce\svc_export.h"\
+	".\ce\Synch.h"\
+	".\ce\Synch.i"\
+	".\ce\Synch_T.cpp"\
+	".\ce\Synch_T.h"\
+	".\ce\Synch_T.i"\
+	".\ce\Test_and_Set.cpp"\
+	".\ce\Test_and_Set.h"\
+	".\ce\Test_and_Set.i"\
+	".\ce\Thread.h"\
+	".\ce\Thread.i"\
+	".\ce\Thread_Adapter.h"\
+	".\ce\Thread_Adapter.inl"\
+	".\ce\Thread_Control.h"\
+	".\ce\Thread_Control.inl"\
+	".\ce\Thread_Exit.h"\
+	".\ce\Thread_Hook.h"\
+	".\ce\Thread_Manager.h"\
+	".\ce\Thread_Manager.i"\
+	".\ce\Timer_Queue.h"\
+	".\ce\Timer_Queue_T.cpp"\
+	".\ce\Timer_Queue_T.h"\
+	".\ce\Timer_Queue_T.i"\
+	".\ce\Trace.h"\
+	".\ce\Unbounded_Queue.cpp"\
+	".\ce\Unbounded_Queue.h"\
+	".\ce\Unbounded_Queue.inl"\
+	".\ce\Unbounded_Set.cpp"\
+	".\ce\Unbounded_Set.h"\
+	".\ce\Unbounded_Set.inl"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86em) Release"
+
+DEP_CPP_LIFEC=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFEC=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\Naming\ace\config-all.h"\
+	".\tao\ClientInterceptorAdapter.h"\
+	".\tao\ClientRequestInfo.h"\
+	".\tao\corba.h"\
+	".\tao\Invocation.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86em) Debug"
+
+DEP_CPP_LIFEC=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFEC=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\Naming\ace\config-all.h"\
+	".\tao\ClientInterceptorAdapter.h"\
+	".\tao\ClientRequestInfo.h"\
+	".\tao\corba.h"\
+	".\tao\Invocation.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86) Debug"
+
+DEP_CPP_LIFEC=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFEC=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	"..\tao\Adapter.h"\
+	"..\tao\Adapter.i"\
+	"..\tao\Cleanup_Func_Registry.h"\
+	"..\tao\Cleanup_Func_Registry.inl"\
+	"..\tao\ClientInterceptorAdapter.inl"\
+	"..\tao\ClientRequestInfo.h"\
+	"..\tao\ClientRequestInfo.inl"\
+	"..\tao\CurrentC.h"\
+	"..\tao\DomainC.i"\
+	"..\tao\DynamicC.h"\
+	"..\tao\DynamicC.i"\
+	"..\tao\Encodable.h"\
+	"..\tao\Environment.h"\
+	"..\tao\Exception.h"\
+	"..\tao\Fault_Tolerance_Service.h"\
+	"..\tao\GIOP_Message_Version.h"\
+	"..\tao\Interceptor_List.h"\
+	"..\tao\Interceptor_List.inl"\
+	"..\tao\Invocation.i"\
+	"..\tao\Invocation_Endpoint_Selectors.h"\
+	"..\tao\IOPC.h"\
+	"..\tao\IOPC.i"\
+	"..\tao\LF_Event.inl"\
+	"..\tao\LocalObject.i"\
+	"..\tao\MessagingC.h"\
+	"..\tao\MessagingC.i"\
+	"..\tao\object.h"\
+	"..\tao\Object_Ref_Table.h"\
+	"..\tao\OctetSeqC.h"\
+	"..\tao\OctetSeqC.i"\
+	"..\tao\operation_details.h"\
+	"..\tao\operation_details.i"\
+	"..\tao\orb.h"\
+	"..\tao\ORB_Core.i"\
+	"..\tao\params.h"\
+	"..\tao\Parser_Registry.h"\
+	"..\tao\PICurrent.h"\
+	"..\tao\PICurrent.inl"\
+	"..\tao\Policy_Manager.h"\
+	"..\tao\PolicyC.h"\
+	"..\tao\PolicyFactory_Registry.h"\
+	"..\tao\PollableC.h"\
+	"..\tao\PollableC.i"\
+	"..\tao\PortableInterceptorC.i"\
+	"..\tao\Profile.i"\
+	"..\tao\Protocols_Hooks.h"\
+	"..\tao\Remote_Object_Proxy_Impl.h"\
+	"..\tao\Resource_Factory.h"\
+	"..\tao\sequence.h"\
+	"..\tao\Service_Callbacks.h"\
+	"..\tao\Service_Context.h"\
+	"..\tao\Services.h"\
+	"..\tao\SmartProxies\Smart_Proxies.inl"\
+	"..\tao\SmartProxies\smartproxies_export.h"\
+	"..\tao\StringSeqC.i"\
+	"..\tao\stub.h"\
+	"..\tao\Synch_Reply_Dispatcher.h"\
+	"..\tao\Tagged_Components.h"\
+	"..\tao\TAO_Export.h"\
+	"..\tao\TAOC.h"\
+	"..\tao\TAOC.i"\
+	"..\tao\target_specification.h"\
+	"..\tao\target_specification.i"\
+	"..\tao\TimeBaseC.h"\
+	"..\tao\TimeBaseC.i"\
+	"..\tao\ValueBase.h"\
+	"..\tao\ValueFactory.h"\
+	".\ao\any.h"\
+	".\ao\Any.i"\
+	".\ao\BoundsC.h"\
+	".\ao\BoundsC.i"\
+	".\ao\cdr.h"\
+	".\ao\CDR.i"\
+	".\ao\ClientInterceptorAdapter.h"\
+	".\ao\CONV_FRAMEC.h"\
+	".\ao\CONV_FRAMEC.i"\
+	".\ao\corba.h"\
+	".\ao\CORBA_String.h"\
+	".\ao\CORBA_String.inl"\
+	".\ao\corbafwd.h"\
+	".\ao\corbafwd.i"\
+	".\ao\CurrentC.i"\
+	".\ao\debug.h"\
+	".\ao\DomainC.h"\
+	".\ao\Environment.i"\
+	".\ao\Exception.i"\
+	".\ao\Fault_Tolerance_Service.i"\
+	".\ao\GIOP_Message_Version.inl"\
+	".\ao\Invocation.h"\
+	".\ao\Invocation_Endpoint_Selectors.i"\
+	".\ao\LF_Event.h"\
+	".\ao\LocalObject.h"\
+	".\ao\Managed_Types.h"\
+	".\ao\Managed_Types.i"\
+	".\ao\MProfile.h"\
+	".\ao\MProfile.i"\
+	".\ao\nvlist.h"\
+	".\ao\NVList.i"\
+	".\ao\Object.i"\
+	".\ao\Object_KeyC.h"\
+	".\ao\Object_KeyC.i"\
+	".\ao\Object_Proxy_Broker.h"\
+	".\ao\Object_Proxy_Impl.h"\
+	".\ao\ObjectIDList.h"\
+	".\ao\ObjectIDList.i"\
+	".\ao\ORB.i"\
+	".\ao\orb_core.h"\
+	".\ao\orbconf.h"\
+	".\ao\params.i"\
+	".\ao\Parser_Registry.i"\
+	".\ao\Pluggable.h"\
+	".\ao\Pluggable.i"\
+	".\ao\Policy_Manager.i"\
+	".\ao\Policy_Set.h"\
+	".\ao\Policy_Set.i"\
+	".\ao\PolicyC.i"\
+	".\ao\PortableInterceptor.h"\
+	".\ao\PortableInterceptorC.h"\
+	".\ao\Principal.h"\
+	".\ao\Principal.i"\
+	".\ao\Profile.h"\
+	".\ao\Protocol_Factory.h"\
+	".\ao\Reply_Dispatcher.h"\
+	".\ao\Reply_Dispatcher.i"\
+	".\ao\RequestInfo_Util.h"\
+	".\ao\Sequence.i"\
+	".\ao\Sequence_T.cpp"\
+	".\ao\Sequence_T.h"\
+	".\ao\Sequence_T.i"\
+	".\ao\Service_Callbacks.i"\
+	".\ao\Service_Context.inl"\
+	".\ao\Services.i"\
+	".\AO\SmartProxies\Smart_Proxies.h"\
+	".\ao\StringSeqC.h"\
+	".\ao\Stub.i"\
+	".\ao\Tagged_Components.i"\
+	".\ao\TAO_Singleton.cpp"\
+	".\ao\TAO_Singleton.h"\
+	".\ao\TAO_Singleton.inl"\
+	".\ao\TAO_Singleton_Manager.h"\
+	".\ao\TAO_Singleton_Manager.inl"\
+	".\ao\try_macros.h"\
+	".\ao\typecode.h"\
+	".\ao\Typecode.i"\
+	".\ao\ValueBase.i"\
+	".\ao\ValueFactory.i"\
+	".\ao\varbase.h"\
+	".\ao\WrongTransactionC.h"\
+	".\ce\ACE.h"\
+	".\ce\ACE.i"\
+	".\ce\ACE_export.h"\
+	".\ce\ace_wchar.h"\
+	".\ce\ace_wchar.inl"\
+	".\ce\Array_Base.cpp"\
+	".\ce\Array_Base.h"\
+	".\ce\Array_Base.inl"\
+	".\ce\Atomic_Op.i"\
+	".\ce\Base_Thread_Adapter.h"\
+	".\ce\Base_Thread_Adapter.inl"\
+	".\ce\Basic_Types.h"\
+	".\ce\Basic_Types.i"\
+	".\ce\CDR_Base.h"\
+	".\ce\CDR_Base.inl"\
+	".\ce\CDR_Stream.h"\
+	".\ce\CDR_Stream.i"\
+	".\ce\config-all.h"\
+	".\ce\config-cygwin32-common.h"\
+	".\ce\config-cygwin32.h"\
+	".\ce\config-g++-common.h"\
+	".\ce\config-ghs-common.h"\
+	".\ce\config-win32-borland.h"\
+	".\ce\config-win32-common.h"\
+	".\ce\config-win32-ghs.h"\
+	".\ce\config-win32-mingw.h"\
+	".\ce\config-win32-msvc-5.h"\
+	".\ce\config-win32-msvc-6.h"\
+	".\ce\config-win32-msvc-7.h"\
+	".\ce\config-win32-msvc.h"\
+	".\ce\config-win32-visualage.h"\
+	".\ce\config-win32.h"\
+	".\ce\config-WinCE.h"\
+	".\ce\config.h"\
+	".\ce\Containers.h"\
+	".\ce\Containers.i"\
+	".\ce\Containers_T.cpp"\
+	".\ce\Containers_T.h"\
+	".\ce\Containers_T.i"\
+	".\ce\CORBA_macros.h"\
+	".\ce\Event_Handler.h"\
+	".\ce\Event_Handler.i"\
+	".\ce\File_Lock.h"\
+	".\ce\File_Lock.inl"\
+	".\ce\Flag_Manip.h"\
+	".\ce\Flag_Manip.i"\
+	".\ce\Free_List.cpp"\
+	".\ce\Free_List.h"\
+	".\ce\Free_List.i"\
+	".\ce\Functor.h"\
+	".\ce\Functor.i"\
+	".\ce\Functor_T.cpp"\
+	".\ce\Functor_T.h"\
+	".\ce\Functor_T.i"\
+	".\ce\Handle_Ops.h"\
+	".\ce\Handle_Ops.i"\
+	".\ce\Handle_Set.h"\
+	".\ce\Handle_Set.i"\
+	".\ce\Hash_Map_Manager.h"\
+	".\ce\Hash_Map_Manager_T.cpp"\
+	".\ce\Hash_Map_Manager_T.h"\
+	".\ce\Hash_Map_Manager_T.i"\
+	".\ce\Init_ACE.h"\
+	".\ce\Init_ACE.i"\
+	".\ce\iosfwd.h"\
+	".\ce\Lib_Find.h"\
+	".\ce\Lib_Find.i"\
+	".\ce\Log_Msg.h"\
+	".\ce\Log_Msg_Callback.h"\
+	".\ce\Log_Priority.h"\
+	".\ce\Log_Record.h"\
+	".\ce\Log_Record.i"\
+	".\ce\Malloc.h"\
+	".\ce\Malloc.i"\
+	".\ce\Malloc_Allocator.h"\
+	".\ce\Malloc_Allocator.i"\
+	".\ce\Malloc_Base.h"\
+	".\ce\Malloc_T.cpp"\
+	".\ce\Malloc_T.h"\
+	".\ce\Malloc_T.i"\
+	".\ce\Managed_Object.cpp"\
+	".\ce\Managed_Object.h"\
+	".\ce\Managed_Object.i"\
+	".\ce\Map_Manager.cpp"\
+	".\ce\Map_Manager.h"\
+	".\ce\Map_Manager.i"\
+	".\ce\Mem_Map.h"\
+	".\ce\Mem_Map.i"\
+	".\ce\Memory_Pool.h"\
+	".\ce\Memory_Pool.i"\
+	".\ce\Message_Block.h"\
+	".\ce\Message_Block.i"\
+	".\ce\Message_Block_T.cpp"\
+	".\ce\Message_Block_T.h"\
+	".\ce\Message_Block_T.i"\
+	".\ce\Min_Max.h"\
+	".\ce\Node.cpp"\
+	".\ce\Node.h"\
+	".\ce\Object_Manager.h"\
+	".\ce\Object_Manager.i"\
+	".\ce\OS.h"\
+	".\ce\OS.i"\
+	".\ce\OS_Dirent.h"\
+	".\ce\OS_Dirent.inl"\
+	".\ce\OS_Errno.h"\
+	".\ce\OS_Errno.inl"\
+	".\ce\OS_Export.h"\
+	".\ce\OS_Log_Msg_Attributes.h"\
+	".\ce\OS_Log_Msg_Attributes.inl"\
+	".\ce\OS_Memory.h"\
+	".\ce\OS_Memory.inl"\
+	".\ce\OS_String.h"\
+	".\ce\OS_String.inl"\
+	".\ce\OS_TLI.h"\
+	".\ce\OS_TLI.inl"\
+	".\ce\post.h"\
+	".\ce\pre.h"\
+	".\ce\Process_Mutex.h"\
+	".\ce\Process_Mutex.inl"\
+	".\ce\Process_Semaphore.h"\
+	".\ce\Process_Semaphore.inl"\
+	".\ce\Reactor.h"\
+	".\ce\Reactor.i"\
+	".\ce\Reactor_Impl.h"\
+	".\ce\RW_Process_Mutex.h"\
+	".\ce\RW_Process_Mutex.inl"\
+	".\ce\Service_Config.h"\
+	".\ce\Service_Config.i"\
+	".\ce\Service_Object.h"\
+	".\ce\Service_Object.i"\
+	".\ce\Shared_Object.h"\
+	".\ce\Shared_Object.i"\
+	".\ce\Signal.h"\
+	".\ce\Signal.i"\
+	".\ce\Singleton.cpp"\
+	".\ce\Singleton.h"\
+	".\ce\Singleton.i"\
+	".\ce\Sock_Connect.h"\
+	".\ce\Sock_Connect.i"\
+	".\ce\SString.h"\
+	".\ce\SString.i"\
+	".\ce\streams.h"\
+	".\ce\SV_Semaphore_Complex.h"\
+	".\ce\SV_Semaphore_Complex.i"\
+	".\ce\SV_Semaphore_Simple.h"\
+	".\ce\SV_Semaphore_Simple.i"\
+	".\ce\Svc_Conf_Tokens.h"\
+	".\ce\svc_export.h"\
+	".\ce\Synch.h"\
+	".\ce\Synch.i"\
+	".\ce\Synch_T.cpp"\
+	".\ce\Synch_T.h"\
+	".\ce\Synch_T.i"\
+	".\ce\Test_and_Set.cpp"\
+	".\ce\Test_and_Set.h"\
+	".\ce\Test_and_Set.i"\
+	".\ce\Thread.h"\
+	".\ce\Thread.i"\
+	".\ce\Thread_Adapter.h"\
+	".\ce\Thread_Adapter.inl"\
+	".\ce\Thread_Control.h"\
+	".\ce\Thread_Control.inl"\
+	".\ce\Thread_Exit.h"\
+	".\ce\Thread_Hook.h"\
+	".\ce\Thread_Manager.h"\
+	".\ce\Thread_Manager.i"\
+	".\ce\Timer_Queue.h"\
+	".\ce\Timer_Queue_T.cpp"\
+	".\ce\Timer_Queue_T.h"\
+	".\ce\Timer_Queue_T.i"\
+	".\ce\Trace.h"\
+	".\ce\Unbounded_Queue.cpp"\
+	".\ce\Unbounded_Queue.h"\
+	".\ce\Unbounded_Queue.inl"\
+	".\ce\Unbounded_Set.cpp"\
+	".\ce\Unbounded_Set.h"\
+	".\ce\Unbounded_Set.inl"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\LifeCycleServiceS.cpp
+
+!IF  "$(CFG)" == "CosLifeCycle - Win32 (WCE MIPS) Release"
+
+DEP_CPP_LIFECY=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFECY=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\Dynamic_Service.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\LifeCycleServiceS.h"\
+	".\LifeCycleServiceS.i"\
+	".\LifeCycleServiceS_T.cpp"\
+	".\LifeCycleServiceS_T.h"\
+	".\LifeCycleServiceS_T.i"\
+	".\Naming\ace\config-all.h"\
+	".\tao\corba.h"\
+	".\tao\IFR_Client_Adapter.h"\
+	".\tao\ORB_Core.h"\
+	".\tao\PICurrent.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\PortableServer\Collocated_Object.h"\
+	".\tao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\tao\PortableServer\Object_Adapter.h"\
+	".\tao\PortableServer\Operation_Table.h"\
+	".\tao\PortableServer\PortableServer.h"\
+	".\tao\PortableServer\Servant_Base.h"\
+	".\tao\PortableServer\ServerInterceptorAdapter.h"\
+	".\tao\PortableServer\ServerRequestInfo.h"\
+	".\tao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	".\tao\TAO_Server_Request.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE MIPS) Debug"
+
+DEP_CPP_LIFECY=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFECY=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\Dynamic_Service.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\LifeCycleServiceS.h"\
+	".\LifeCycleServiceS.i"\
+	".\LifeCycleServiceS_T.cpp"\
+	".\LifeCycleServiceS_T.h"\
+	".\LifeCycleServiceS_T.i"\
+	".\Naming\ace\config-all.h"\
+	".\tao\corba.h"\
+	".\tao\IFR_Client_Adapter.h"\
+	".\tao\ORB_Core.h"\
+	".\tao\PICurrent.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\PortableServer\Collocated_Object.h"\
+	".\tao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\tao\PortableServer\Object_Adapter.h"\
+	".\tao\PortableServer\Operation_Table.h"\
+	".\tao\PortableServer\PortableServer.h"\
+	".\tao\PortableServer\Servant_Base.h"\
+	".\tao\PortableServer\ServerInterceptorAdapter.h"\
+	".\tao\PortableServer\ServerRequestInfo.h"\
+	".\tao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	".\tao\TAO_Server_Request.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH4) Release"
+
+DEP_CPP_LIFECY=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFECY=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\Dynamic_Service.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\LifeCycleServiceS.h"\
+	".\LifeCycleServiceS.i"\
+	".\LifeCycleServiceS_T.cpp"\
+	".\LifeCycleServiceS_T.h"\
+	".\LifeCycleServiceS_T.i"\
+	".\Naming\ace\config-all.h"\
+	".\tao\corba.h"\
+	".\tao\IFR_Client_Adapter.h"\
+	".\tao\ORB_Core.h"\
+	".\tao\PICurrent.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\PortableServer\Collocated_Object.h"\
+	".\tao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\tao\PortableServer\Object_Adapter.h"\
+	".\tao\PortableServer\Operation_Table.h"\
+	".\tao\PortableServer\PortableServer.h"\
+	".\tao\PortableServer\Servant_Base.h"\
+	".\tao\PortableServer\ServerInterceptorAdapter.h"\
+	".\tao\PortableServer\ServerRequestInfo.h"\
+	".\tao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	".\tao\TAO_Server_Request.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH4) Debug"
+
+DEP_CPP_LIFECY=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFECY=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\Dynamic_Service.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\LifeCycleServiceS.h"\
+	".\LifeCycleServiceS.i"\
+	".\LifeCycleServiceS_T.cpp"\
+	".\LifeCycleServiceS_T.h"\
+	".\LifeCycleServiceS_T.i"\
+	".\Naming\ace\config-all.h"\
+	".\tao\corba.h"\
+	".\tao\IFR_Client_Adapter.h"\
+	".\tao\ORB_Core.h"\
+	".\tao\PICurrent.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\PortableServer\Collocated_Object.h"\
+	".\tao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\tao\PortableServer\Object_Adapter.h"\
+	".\tao\PortableServer\Operation_Table.h"\
+	".\tao\PortableServer\PortableServer.h"\
+	".\tao\PortableServer\Servant_Base.h"\
+	".\tao\PortableServer\ServerInterceptorAdapter.h"\
+	".\tao\PortableServer\ServerRequestInfo.h"\
+	".\tao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	".\tao\TAO_Server_Request.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH3) Release"
+
+DEP_CPP_LIFECY=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFECY=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\Dynamic_Service.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\LifeCycleServiceS.h"\
+	".\LifeCycleServiceS.i"\
+	".\LifeCycleServiceS_T.cpp"\
+	".\LifeCycleServiceS_T.h"\
+	".\LifeCycleServiceS_T.i"\
+	".\Naming\ace\config-all.h"\
+	".\tao\corba.h"\
+	".\tao\IFR_Client_Adapter.h"\
+	".\tao\ORB_Core.h"\
+	".\tao\PICurrent.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\PortableServer\Collocated_Object.h"\
+	".\tao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\tao\PortableServer\Object_Adapter.h"\
+	".\tao\PortableServer\Operation_Table.h"\
+	".\tao\PortableServer\PortableServer.h"\
+	".\tao\PortableServer\Servant_Base.h"\
+	".\tao\PortableServer\ServerInterceptorAdapter.h"\
+	".\tao\PortableServer\ServerRequestInfo.h"\
+	".\tao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	".\tao\TAO_Server_Request.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH3) Debug"
+
+DEP_CPP_LIFECY=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFECY=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\Dynamic_Service.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\LifeCycleServiceS.h"\
+	".\LifeCycleServiceS.i"\
+	".\LifeCycleServiceS_T.cpp"\
+	".\LifeCycleServiceS_T.h"\
+	".\LifeCycleServiceS_T.i"\
+	".\Naming\ace\config-all.h"\
+	".\tao\corba.h"\
+	".\tao\IFR_Client_Adapter.h"\
+	".\tao\ORB_Core.h"\
+	".\tao\PICurrent.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\PortableServer\Collocated_Object.h"\
+	".\tao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\tao\PortableServer\Object_Adapter.h"\
+	".\tao\PortableServer\Operation_Table.h"\
+	".\tao\PortableServer\PortableServer.h"\
+	".\tao\PortableServer\Servant_Base.h"\
+	".\tao\PortableServer\ServerInterceptorAdapter.h"\
+	".\tao\PortableServer\ServerRequestInfo.h"\
+	".\tao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	".\tao\TAO_Server_Request.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE ARM) Release"
+
+DEP_CPP_LIFECY=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFECY=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	"..\tao\Adapter.h"\
+	"..\tao\Adapter.i"\
+	"..\tao\any.h"\
+	"..\tao\cdr.h"\
+	"..\tao\Cleanup_Func_Registry.h"\
+	"..\tao\Cleanup_Func_Registry.inl"\
+	"..\tao\corbafwd.h"\
+	"..\tao\DomainC.i"\
+	"..\tao\DynamicC.h"\
+	"..\tao\DynamicC.i"\
+	"..\tao\Encodable.h"\
+	"..\tao\Exception.h"\
+	"..\tao\Fault_Tolerance_Service.h"\
+	"..\tao\GIOP_Message_Version.h"\
+	"..\tao\GIOPC.i"\
+	"..\tao\Interceptor_List.inl"\
+	"..\tao\IOPC.h"\
+	"..\tao\IOPC.i"\
+	"..\tao\LocalObject.h"\
+	"..\tao\LocalObject.i"\
+	"..\tao\MessagingC.h"\
+	"..\tao\MessagingC.i"\
+	"..\tao\Object_Ref_Table.h"\
+	"..\tao\OctetSeqC.i"\
+	"..\tao\ORB_Core.i"\
+	"..\tao\params.h"\
+	"..\tao\Parser_Registry.h"\
+	"..\tao\PICurrent.h"\
+	"..\tao\PICurrent.inl"\
+	"..\tao\Policy_Manager.h"\
+	"..\tao\PolicyFactory_Registry.h"\
+	"..\tao\PollableC.h"\
+	"..\tao\PollableC.i"\
+	"..\tao\PortableInterceptorC.i"\
+	"..\tao\PortableServer\Active_Object_Map.h"\
+	"..\tao\PortableServer\Active_Object_Map.i"\
+	"..\tao\PortableServer\Collocated_Object.i"\
+	"..\tao\PortableServer\Default_Policy_Validator.h"\
+	"..\tao\PortableServer\Key_Adapters.h"\
+	"..\tao\PortableServer\Key_Adapters.i"\
+	"..\tao\PortableServer\Object_Adapter.h"\
+	"..\tao\PortableServer\Object_Adapter.i"\
+	"..\tao\PortableServer\poa_macros.h"\
+	"..\tao\PortableServer\POA_Policies.h"\
+	"..\tao\PortableServer\POA_Policies.i"\
+	"..\tao\PortableServer\POA_Policy_Set.h"\
+	"..\tao\PortableServer\POA_Policy_Set.i"\
+	"..\tao\PortableServer\Policy_Validator.h"\
+	"..\tao\PortableServer\portableserver_export.h"\
+	"..\tao\PortableServer\PortableServerC.h"\
+	"..\tao\PortableServer\PortableServerC.i"\
+	"..\tao\PortableServer\Servant_Base.h"\
+	"..\tao\PortableServer\Servant_Base.i"\
+	"..\tao\PortableServer\ServerInterceptorAdapter.inl"\
+	"..\tao\PortableServer\ServerRequestInfo.inl"\
+	"..\tao\Profile.i"\
+	"..\tao\Protocols_Hooks.h"\
+	"..\tao\Remote_Object_Proxy_Impl.h"\
+	"..\tao\Resource_Factory.h"\
+	"..\tao\Service_Callbacks.h"\
+	"..\tao\SmartProxies\Smart_Proxies.inl"\
+	"..\tao\SmartProxies\smartproxies_export.h"\
+	"..\tao\StringSeqC.i"\
+	"..\tao\Tagged_Components.h"\
+	"..\tao\Tagged_Profile.h"\
+	"..\tao\TAO_Export.h"\
+	"..\tao\TAO_Server_Request.i"\
+	"..\tao\TAO_Singleton.h"\
+	"..\tao\TimeBaseC.h"\
+	"..\tao\TimeBaseC.i"\
+	"..\tao\ValueBase.h"\
+	"..\tao\ValueFactory.h"\
+	".\ao\Abstract_Servant_Base.h"\
+	".\ao\Any.i"\
+	".\ao\BoundsC.h"\
+	".\ao\BoundsC.i"\
+	".\ao\CDR.i"\
+	".\ao\CONV_FRAMEC.h"\
+	".\ao\CONV_FRAMEC.i"\
+	".\ao\corba.h"\
+	".\ao\CORBA_String.h"\
+	".\ao\CORBA_String.inl"\
+	".\ao\corbafwd.i"\
+	".\ao\CurrentC.h"\
+	".\ao\CurrentC.i"\
+	".\ao\debug.h"\
+	".\ao\DomainC.h"\
+	".\ao\Environment.h"\
+	".\ao\Environment.i"\
+	".\ao\Exception.i"\
+	".\ao\Fault_Tolerance_Service.i"\
+	".\ao\GIOP_Message_Version.inl"\
+	".\ao\GIOPC.h"\
+	".\ao\IFR_Client_Adapter.h"\
+	".\ao\Interceptor_List.h"\
+	".\ao\Managed_Types.h"\
+	".\ao\Managed_Types.i"\
+	".\ao\MProfile.h"\
+	".\ao\MProfile.i"\
+	".\ao\nvlist.h"\
+	".\ao\NVList.i"\
+	".\ao\object.h"\
+	".\ao\Object.i"\
+	".\ao\Object_KeyC.h"\
+	".\ao\Object_KeyC.i"\
+	".\ao\Object_Proxy_Broker.h"\
+	".\ao\Object_Proxy_Impl.h"\
+	".\ao\ObjectIDList.h"\
+	".\ao\ObjectIDList.i"\
+	".\ao\OctetSeqC.h"\
+	".\ao\orb.h"\
+	".\ao\ORB.i"\
+	".\ao\orb_core.h"\
+	".\ao\orbconf.h"\
+	".\ao\params.i"\
+	".\ao\Parser_Registry.i"\
+	".\ao\Pluggable.h"\
+	".\ao\Pluggable.i"\
+	".\ao\Policy_Manager.i"\
+	".\ao\Policy_Set.h"\
+	".\ao\Policy_Set.i"\
+	".\ao\PolicyC.h"\
+	".\ao\PolicyC.i"\
+	".\ao\PortableInterceptor.h"\
+	".\ao\PortableInterceptorC.h"\
+	".\ao\PortableServer\Collocated_Object.h"\
+	".\ao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\ao\PortableServer\Operation_Table.h"\
+	".\ao\PortableServer\PortableServer.h"\
+	".\ao\PortableServer\ServerInterceptorAdapter.h"\
+	".\ao\PortableServer\ServerRequestInfo.h"\
+	".\ao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\ao\Principal.h"\
+	".\ao\Principal.i"\
+	".\ao\Profile.h"\
+	".\ao\Protocol_Factory.h"\
+	".\ao\RequestInfo_Util.h"\
+	".\ao\sequence.h"\
+	".\ao\Sequence.i"\
+	".\ao\Sequence_T.cpp"\
+	".\ao\Sequence_T.h"\
+	".\ao\Sequence_T.i"\
+	".\ao\Server_Strategy_Factory.h"\
+	".\ao\Service_Callbacks.i"\
+	".\ao\Service_Context.h"\
+	".\ao\Service_Context.inl"\
+	".\ao\Services.h"\
+	".\ao\Services.i"\
+	".\AO\SmartProxies\Smart_Proxies.h"\
+	".\ao\StringSeqC.h"\
+	".\ao\stub.h"\
+	".\ao\Stub.i"\
+	".\ao\Tagged_Components.i"\
+	".\ao\Tagged_Profile.i"\
+	".\ao\TAO_Server_Request.h"\
+	".\ao\TAO_Singleton.cpp"\
+	".\ao\TAO_Singleton.inl"\
+	".\ao\TAO_Singleton_Manager.h"\
+	".\ao\TAO_Singleton_Manager.inl"\
+	".\ao\try_macros.h"\
+	".\ao\typecode.h"\
+	".\ao\Typecode.i"\
+	".\ao\ValueBase.i"\
+	".\ao\ValueFactory.i"\
+	".\ao\varbase.h"\
+	".\ao\WrongTransactionC.h"\
+	".\ce\ACE.h"\
+	".\ce\ACE.i"\
+	".\ce\ACE_export.h"\
+	".\ce\ace_wchar.h"\
+	".\ce\ace_wchar.inl"\
+	".\ce\Active_Map_Manager.h"\
+	".\ce\Active_Map_Manager.i"\
+	".\ce\Active_Map_Manager_T.cpp"\
+	".\ce\Active_Map_Manager_T.h"\
+	".\ce\Active_Map_Manager_T.i"\
+	".\ce\Array_Base.cpp"\
+	".\ce\Array_Base.h"\
+	".\ce\Array_Base.inl"\
+	".\ce\Atomic_Op.i"\
+	".\ce\Base_Thread_Adapter.h"\
+	".\ce\Base_Thread_Adapter.inl"\
+	".\ce\Basic_Types.h"\
+	".\ce\Basic_Types.i"\
+	".\ce\CDR_Base.h"\
+	".\ce\CDR_Base.inl"\
+	".\ce\CDR_Stream.h"\
+	".\ce\CDR_Stream.i"\
+	".\ce\config-all.h"\
+	".\ce\config-cygwin32-common.h"\
+	".\ce\config-cygwin32.h"\
+	".\ce\config-g++-common.h"\
+	".\ce\config-ghs-common.h"\
+	".\ce\config-win32-borland.h"\
+	".\ce\config-win32-common.h"\
+	".\ce\config-win32-ghs.h"\
+	".\ce\config-win32-mingw.h"\
+	".\ce\config-win32-msvc-5.h"\
+	".\ce\config-win32-msvc-6.h"\
+	".\ce\config-win32-msvc-7.h"\
+	".\ce\config-win32-msvc.h"\
+	".\ce\config-win32-visualage.h"\
+	".\ce\config-win32.h"\
+	".\ce\config-WinCE.h"\
+	".\ce\config.h"\
+	".\ce\Containers.h"\
+	".\ce\Containers.i"\
+	".\ce\Containers_T.cpp"\
+	".\ce\Containers_T.h"\
+	".\ce\Containers_T.i"\
+	".\ce\CORBA_macros.h"\
+	".\ce\Dynamic_Service.cpp"\
+	".\ce\Dynamic_Service.h"\
+	".\ce\Dynamic_Service.i"\
+	".\ce\Dynamic_Service_Base.h"\
+	".\ce\Event_Handler.h"\
+	".\ce\Event_Handler.i"\
+	".\ce\File_Lock.h"\
+	".\ce\File_Lock.inl"\
+	".\ce\Flag_Manip.h"\
+	".\ce\Flag_Manip.i"\
+	".\ce\Free_List.cpp"\
+	".\ce\Free_List.h"\
+	".\ce\Free_List.i"\
+	".\ce\Functor.h"\
+	".\ce\Functor.i"\
+	".\ce\Functor_T.cpp"\
+	".\ce\Functor_T.h"\
+	".\ce\Functor_T.i"\
+	".\ce\Handle_Ops.h"\
+	".\ce\Handle_Ops.i"\
+	".\ce\Handle_Set.h"\
+	".\ce\Handle_Set.i"\
+	".\ce\Hash_Map_Manager.h"\
+	".\ce\Hash_Map_Manager_T.cpp"\
+	".\ce\Hash_Map_Manager_T.h"\
+	".\ce\Hash_Map_Manager_T.i"\
+	".\ce\Init_ACE.h"\
+	".\ce\Init_ACE.i"\
+	".\ce\iosfwd.h"\
+	".\ce\Lib_Find.h"\
+	".\ce\Lib_Find.i"\
+	".\ce\Log_Msg.h"\
+	".\ce\Log_Msg_Callback.h"\
+	".\ce\Log_Priority.h"\
+	".\ce\Log_Record.h"\
+	".\ce\Log_Record.i"\
+	".\ce\Malloc.h"\
+	".\ce\Malloc.i"\
+	".\ce\Malloc_Allocator.h"\
+	".\ce\Malloc_Allocator.i"\
+	".\ce\Malloc_Base.h"\
+	".\ce\Malloc_T.cpp"\
+	".\ce\Malloc_T.h"\
+	".\ce\Malloc_T.i"\
+	".\ce\Managed_Object.cpp"\
+	".\ce\Managed_Object.h"\
+	".\ce\Managed_Object.i"\
+	".\ce\Map.h"\
+	".\ce\Map_Manager.cpp"\
+	".\ce\Map_Manager.h"\
+	".\ce\Map_Manager.i"\
+	".\ce\Map_T.cpp"\
+	".\ce\Map_T.h"\
+	".\ce\Map_T.i"\
+	".\ce\Mem_Map.h"\
+	".\ce\Mem_Map.i"\
+	".\ce\Memory_Pool.h"\
+	".\ce\Memory_Pool.i"\
+	".\ce\Message_Block.h"\
+	".\ce\Message_Block.i"\
+	".\ce\Message_Block_T.cpp"\
+	".\ce\Message_Block_T.h"\
+	".\ce\Message_Block_T.i"\
+	".\ce\Min_Max.h"\
+	".\ce\Node.cpp"\
+	".\ce\Node.h"\
+	".\ce\Object_Manager.h"\
+	".\ce\Object_Manager.i"\
+	".\ce\OS.h"\
+	".\ce\OS.i"\
+	".\ce\OS_Dirent.h"\
+	".\ce\OS_Dirent.inl"\
+	".\ce\OS_Errno.h"\
+	".\ce\OS_Errno.inl"\
+	".\ce\OS_Export.h"\
+	".\ce\OS_Log_Msg_Attributes.h"\
+	".\ce\OS_Log_Msg_Attributes.inl"\
+	".\ce\OS_Memory.h"\
+	".\ce\OS_Memory.inl"\
+	".\ce\OS_String.h"\
+	".\ce\OS_String.inl"\
+	".\ce\OS_TLI.h"\
+	".\ce\OS_TLI.inl"\
+	".\ce\Pair.h"\
+	".\ce\Pair_T.cpp"\
+	".\ce\Pair_T.h"\
+	".\ce\Pair_T.i"\
+	".\ce\post.h"\
+	".\ce\pre.h"\
+	".\ce\Process_Mutex.h"\
+	".\ce\Process_Mutex.inl"\
+	".\ce\Process_Semaphore.h"\
+	".\ce\Process_Semaphore.inl"\
+	".\ce\Reactor.h"\
+	".\ce\Reactor.i"\
+	".\ce\Reactor_Impl.h"\
+	".\ce\RW_Process_Mutex.h"\
+	".\ce\RW_Process_Mutex.inl"\
+	".\ce\Service_Config.h"\
+	".\ce\Service_Config.i"\
+	".\ce\Service_Object.h"\
+	".\ce\Service_Object.i"\
+	".\ce\Shared_Object.h"\
+	".\ce\Shared_Object.i"\
+	".\ce\Signal.h"\
+	".\ce\Signal.i"\
+	".\ce\Singleton.cpp"\
+	".\ce\Singleton.h"\
+	".\ce\Singleton.i"\
+	".\ce\Sock_Connect.h"\
+	".\ce\Sock_Connect.i"\
+	".\ce\SString.h"\
+	".\ce\SString.i"\
+	".\ce\streams.h"\
+	".\ce\SV_Semaphore_Complex.h"\
+	".\ce\SV_Semaphore_Complex.i"\
+	".\ce\SV_Semaphore_Simple.h"\
+	".\ce\SV_Semaphore_Simple.i"\
+	".\ce\Svc_Conf_Tokens.h"\
+	".\ce\svc_export.h"\
+	".\ce\Synch.h"\
+	".\ce\Synch.i"\
+	".\ce\Synch_T.cpp"\
+	".\ce\Synch_T.h"\
+	".\ce\Synch_T.i"\
+	".\ce\Test_and_Set.cpp"\
+	".\ce\Test_and_Set.h"\
+	".\ce\Test_and_Set.i"\
+	".\ce\Thread.h"\
+	".\ce\Thread.i"\
+	".\ce\Thread_Adapter.h"\
+	".\ce\Thread_Adapter.inl"\
+	".\ce\Thread_Control.h"\
+	".\ce\Thread_Control.inl"\
+	".\ce\Thread_Exit.h"\
+	".\ce\Thread_Hook.h"\
+	".\ce\Thread_Manager.h"\
+	".\ce\Thread_Manager.i"\
+	".\ce\Timer_Queue.h"\
+	".\ce\Timer_Queue_T.cpp"\
+	".\ce\Timer_Queue_T.h"\
+	".\ce\Timer_Queue_T.i"\
+	".\ce\Trace.h"\
+	".\ce\Unbounded_Queue.cpp"\
+	".\ce\Unbounded_Queue.h"\
+	".\ce\Unbounded_Queue.inl"\
+	".\ce\Unbounded_Set.cpp"\
+	".\ce\Unbounded_Set.h"\
+	".\ce\Unbounded_Set.inl"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\LifeCycleServiceS.h"\
+	".\LifeCycleServiceS.i"\
+	".\LifeCycleServiceS_T.cpp"\
+	".\LifeCycleServiceS_T.h"\
+	".\LifeCycleServiceS_T.i"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE ARM) Debug"
+
+DEP_CPP_LIFECY=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFECY=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	"..\tao\Adapter.h"\
+	"..\tao\Adapter.i"\
+	"..\tao\any.h"\
+	"..\tao\cdr.h"\
+	"..\tao\Cleanup_Func_Registry.h"\
+	"..\tao\Cleanup_Func_Registry.inl"\
+	"..\tao\corbafwd.h"\
+	"..\tao\DomainC.i"\
+	"..\tao\DynamicC.h"\
+	"..\tao\DynamicC.i"\
+	"..\tao\Encodable.h"\
+	"..\tao\Exception.h"\
+	"..\tao\Fault_Tolerance_Service.h"\
+	"..\tao\GIOP_Message_Version.h"\
+	"..\tao\GIOPC.i"\
+	"..\tao\Interceptor_List.inl"\
+	"..\tao\IOPC.h"\
+	"..\tao\IOPC.i"\
+	"..\tao\LocalObject.h"\
+	"..\tao\LocalObject.i"\
+	"..\tao\MessagingC.h"\
+	"..\tao\MessagingC.i"\
+	"..\tao\Object_Ref_Table.h"\
+	"..\tao\OctetSeqC.i"\
+	"..\tao\ORB_Core.i"\
+	"..\tao\params.h"\
+	"..\tao\Parser_Registry.h"\
+	"..\tao\PICurrent.h"\
+	"..\tao\PICurrent.inl"\
+	"..\tao\Policy_Manager.h"\
+	"..\tao\PolicyFactory_Registry.h"\
+	"..\tao\PollableC.h"\
+	"..\tao\PollableC.i"\
+	"..\tao\PortableInterceptorC.i"\
+	"..\tao\PortableServer\Active_Object_Map.h"\
+	"..\tao\PortableServer\Active_Object_Map.i"\
+	"..\tao\PortableServer\Collocated_Object.i"\
+	"..\tao\PortableServer\Default_Policy_Validator.h"\
+	"..\tao\PortableServer\Key_Adapters.h"\
+	"..\tao\PortableServer\Key_Adapters.i"\
+	"..\tao\PortableServer\Object_Adapter.h"\
+	"..\tao\PortableServer\Object_Adapter.i"\
+	"..\tao\PortableServer\poa_macros.h"\
+	"..\tao\PortableServer\POA_Policies.h"\
+	"..\tao\PortableServer\POA_Policies.i"\
+	"..\tao\PortableServer\POA_Policy_Set.h"\
+	"..\tao\PortableServer\POA_Policy_Set.i"\
+	"..\tao\PortableServer\Policy_Validator.h"\
+	"..\tao\PortableServer\portableserver_export.h"\
+	"..\tao\PortableServer\PortableServerC.h"\
+	"..\tao\PortableServer\PortableServerC.i"\
+	"..\tao\PortableServer\Servant_Base.h"\
+	"..\tao\PortableServer\Servant_Base.i"\
+	"..\tao\PortableServer\ServerInterceptorAdapter.inl"\
+	"..\tao\PortableServer\ServerRequestInfo.inl"\
+	"..\tao\Profile.i"\
+	"..\tao\Protocols_Hooks.h"\
+	"..\tao\Remote_Object_Proxy_Impl.h"\
+	"..\tao\Resource_Factory.h"\
+	"..\tao\Service_Callbacks.h"\
+	"..\tao\SmartProxies\Smart_Proxies.inl"\
+	"..\tao\SmartProxies\smartproxies_export.h"\
+	"..\tao\StringSeqC.i"\
+	"..\tao\Tagged_Components.h"\
+	"..\tao\Tagged_Profile.h"\
+	"..\tao\TAO_Export.h"\
+	"..\tao\TAO_Server_Request.i"\
+	"..\tao\TAO_Singleton.h"\
+	"..\tao\TimeBaseC.h"\
+	"..\tao\TimeBaseC.i"\
+	"..\tao\ValueBase.h"\
+	"..\tao\ValueFactory.h"\
+	".\ao\Abstract_Servant_Base.h"\
+	".\ao\Any.i"\
+	".\ao\BoundsC.h"\
+	".\ao\BoundsC.i"\
+	".\ao\CDR.i"\
+	".\ao\CONV_FRAMEC.h"\
+	".\ao\CONV_FRAMEC.i"\
+	".\ao\corba.h"\
+	".\ao\CORBA_String.h"\
+	".\ao\CORBA_String.inl"\
+	".\ao\corbafwd.i"\
+	".\ao\CurrentC.h"\
+	".\ao\CurrentC.i"\
+	".\ao\debug.h"\
+	".\ao\DomainC.h"\
+	".\ao\Environment.h"\
+	".\ao\Environment.i"\
+	".\ao\Exception.i"\
+	".\ao\Fault_Tolerance_Service.i"\
+	".\ao\GIOP_Message_Version.inl"\
+	".\ao\GIOPC.h"\
+	".\ao\IFR_Client_Adapter.h"\
+	".\ao\Interceptor_List.h"\
+	".\ao\Managed_Types.h"\
+	".\ao\Managed_Types.i"\
+	".\ao\MProfile.h"\
+	".\ao\MProfile.i"\
+	".\ao\nvlist.h"\
+	".\ao\NVList.i"\
+	".\ao\object.h"\
+	".\ao\Object.i"\
+	".\ao\Object_KeyC.h"\
+	".\ao\Object_KeyC.i"\
+	".\ao\Object_Proxy_Broker.h"\
+	".\ao\Object_Proxy_Impl.h"\
+	".\ao\ObjectIDList.h"\
+	".\ao\ObjectIDList.i"\
+	".\ao\OctetSeqC.h"\
+	".\ao\orb.h"\
+	".\ao\ORB.i"\
+	".\ao\orb_core.h"\
+	".\ao\orbconf.h"\
+	".\ao\params.i"\
+	".\ao\Parser_Registry.i"\
+	".\ao\Pluggable.h"\
+	".\ao\Pluggable.i"\
+	".\ao\Policy_Manager.i"\
+	".\ao\Policy_Set.h"\
+	".\ao\Policy_Set.i"\
+	".\ao\PolicyC.h"\
+	".\ao\PolicyC.i"\
+	".\ao\PortableInterceptor.h"\
+	".\ao\PortableInterceptorC.h"\
+	".\ao\PortableServer\Collocated_Object.h"\
+	".\ao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\ao\PortableServer\Operation_Table.h"\
+	".\ao\PortableServer\PortableServer.h"\
+	".\ao\PortableServer\ServerInterceptorAdapter.h"\
+	".\ao\PortableServer\ServerRequestInfo.h"\
+	".\ao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\ao\Principal.h"\
+	".\ao\Principal.i"\
+	".\ao\Profile.h"\
+	".\ao\Protocol_Factory.h"\
+	".\ao\RequestInfo_Util.h"\
+	".\ao\sequence.h"\
+	".\ao\Sequence.i"\
+	".\ao\Sequence_T.cpp"\
+	".\ao\Sequence_T.h"\
+	".\ao\Sequence_T.i"\
+	".\ao\Server_Strategy_Factory.h"\
+	".\ao\Service_Callbacks.i"\
+	".\ao\Service_Context.h"\
+	".\ao\Service_Context.inl"\
+	".\ao\Services.h"\
+	".\ao\Services.i"\
+	".\AO\SmartProxies\Smart_Proxies.h"\
+	".\ao\StringSeqC.h"\
+	".\ao\stub.h"\
+	".\ao\Stub.i"\
+	".\ao\Tagged_Components.i"\
+	".\ao\Tagged_Profile.i"\
+	".\ao\TAO_Server_Request.h"\
+	".\ao\TAO_Singleton.cpp"\
+	".\ao\TAO_Singleton.inl"\
+	".\ao\TAO_Singleton_Manager.h"\
+	".\ao\TAO_Singleton_Manager.inl"\
+	".\ao\try_macros.h"\
+	".\ao\typecode.h"\
+	".\ao\Typecode.i"\
+	".\ao\ValueBase.i"\
+	".\ao\ValueFactory.i"\
+	".\ao\varbase.h"\
+	".\ao\WrongTransactionC.h"\
+	".\ce\ACE.h"\
+	".\ce\ACE.i"\
+	".\ce\ACE_export.h"\
+	".\ce\ace_wchar.h"\
+	".\ce\ace_wchar.inl"\
+	".\ce\Active_Map_Manager.h"\
+	".\ce\Active_Map_Manager.i"\
+	".\ce\Active_Map_Manager_T.cpp"\
+	".\ce\Active_Map_Manager_T.h"\
+	".\ce\Active_Map_Manager_T.i"\
+	".\ce\Array_Base.cpp"\
+	".\ce\Array_Base.h"\
+	".\ce\Array_Base.inl"\
+	".\ce\Atomic_Op.i"\
+	".\ce\Base_Thread_Adapter.h"\
+	".\ce\Base_Thread_Adapter.inl"\
+	".\ce\Basic_Types.h"\
+	".\ce\Basic_Types.i"\
+	".\ce\CDR_Base.h"\
+	".\ce\CDR_Base.inl"\
+	".\ce\CDR_Stream.h"\
+	".\ce\CDR_Stream.i"\
+	".\ce\config-all.h"\
+	".\ce\config-cygwin32-common.h"\
+	".\ce\config-cygwin32.h"\
+	".\ce\config-g++-common.h"\
+	".\ce\config-ghs-common.h"\
+	".\ce\config-win32-borland.h"\
+	".\ce\config-win32-common.h"\
+	".\ce\config-win32-ghs.h"\
+	".\ce\config-win32-mingw.h"\
+	".\ce\config-win32-msvc-5.h"\
+	".\ce\config-win32-msvc-6.h"\
+	".\ce\config-win32-msvc-7.h"\
+	".\ce\config-win32-msvc.h"\
+	".\ce\config-win32-visualage.h"\
+	".\ce\config-win32.h"\
+	".\ce\config-WinCE.h"\
+	".\ce\config.h"\
+	".\ce\Containers.h"\
+	".\ce\Containers.i"\
+	".\ce\Containers_T.cpp"\
+	".\ce\Containers_T.h"\
+	".\ce\Containers_T.i"\
+	".\ce\CORBA_macros.h"\
+	".\ce\Dynamic_Service.cpp"\
+	".\ce\Dynamic_Service.h"\
+	".\ce\Dynamic_Service.i"\
+	".\ce\Dynamic_Service_Base.h"\
+	".\ce\Event_Handler.h"\
+	".\ce\Event_Handler.i"\
+	".\ce\File_Lock.h"\
+	".\ce\File_Lock.inl"\
+	".\ce\Flag_Manip.h"\
+	".\ce\Flag_Manip.i"\
+	".\ce\Free_List.cpp"\
+	".\ce\Free_List.h"\
+	".\ce\Free_List.i"\
+	".\ce\Functor.h"\
+	".\ce\Functor.i"\
+	".\ce\Functor_T.cpp"\
+	".\ce\Functor_T.h"\
+	".\ce\Functor_T.i"\
+	".\ce\Handle_Ops.h"\
+	".\ce\Handle_Ops.i"\
+	".\ce\Handle_Set.h"\
+	".\ce\Handle_Set.i"\
+	".\ce\Hash_Map_Manager.h"\
+	".\ce\Hash_Map_Manager_T.cpp"\
+	".\ce\Hash_Map_Manager_T.h"\
+	".\ce\Hash_Map_Manager_T.i"\
+	".\ce\Init_ACE.h"\
+	".\ce\Init_ACE.i"\
+	".\ce\iosfwd.h"\
+	".\ce\Lib_Find.h"\
+	".\ce\Lib_Find.i"\
+	".\ce\Log_Msg.h"\
+	".\ce\Log_Msg_Callback.h"\
+	".\ce\Log_Priority.h"\
+	".\ce\Log_Record.h"\
+	".\ce\Log_Record.i"\
+	".\ce\Malloc.h"\
+	".\ce\Malloc.i"\
+	".\ce\Malloc_Allocator.h"\
+	".\ce\Malloc_Allocator.i"\
+	".\ce\Malloc_Base.h"\
+	".\ce\Malloc_T.cpp"\
+	".\ce\Malloc_T.h"\
+	".\ce\Malloc_T.i"\
+	".\ce\Managed_Object.cpp"\
+	".\ce\Managed_Object.h"\
+	".\ce\Managed_Object.i"\
+	".\ce\Map.h"\
+	".\ce\Map_Manager.cpp"\
+	".\ce\Map_Manager.h"\
+	".\ce\Map_Manager.i"\
+	".\ce\Map_T.cpp"\
+	".\ce\Map_T.h"\
+	".\ce\Map_T.i"\
+	".\ce\Mem_Map.h"\
+	".\ce\Mem_Map.i"\
+	".\ce\Memory_Pool.h"\
+	".\ce\Memory_Pool.i"\
+	".\ce\Message_Block.h"\
+	".\ce\Message_Block.i"\
+	".\ce\Message_Block_T.cpp"\
+	".\ce\Message_Block_T.h"\
+	".\ce\Message_Block_T.i"\
+	".\ce\Min_Max.h"\
+	".\ce\Node.cpp"\
+	".\ce\Node.h"\
+	".\ce\Object_Manager.h"\
+	".\ce\Object_Manager.i"\
+	".\ce\OS.h"\
+	".\ce\OS.i"\
+	".\ce\OS_Dirent.h"\
+	".\ce\OS_Dirent.inl"\
+	".\ce\OS_Errno.h"\
+	".\ce\OS_Errno.inl"\
+	".\ce\OS_Export.h"\
+	".\ce\OS_Log_Msg_Attributes.h"\
+	".\ce\OS_Log_Msg_Attributes.inl"\
+	".\ce\OS_Memory.h"\
+	".\ce\OS_Memory.inl"\
+	".\ce\OS_String.h"\
+	".\ce\OS_String.inl"\
+	".\ce\OS_TLI.h"\
+	".\ce\OS_TLI.inl"\
+	".\ce\Pair.h"\
+	".\ce\Pair_T.cpp"\
+	".\ce\Pair_T.h"\
+	".\ce\Pair_T.i"\
+	".\ce\post.h"\
+	".\ce\pre.h"\
+	".\ce\Process_Mutex.h"\
+	".\ce\Process_Mutex.inl"\
+	".\ce\Process_Semaphore.h"\
+	".\ce\Process_Semaphore.inl"\
+	".\ce\Reactor.h"\
+	".\ce\Reactor.i"\
+	".\ce\Reactor_Impl.h"\
+	".\ce\RW_Process_Mutex.h"\
+	".\ce\RW_Process_Mutex.inl"\
+	".\ce\Service_Config.h"\
+	".\ce\Service_Config.i"\
+	".\ce\Service_Object.h"\
+	".\ce\Service_Object.i"\
+	".\ce\Shared_Object.h"\
+	".\ce\Shared_Object.i"\
+	".\ce\Signal.h"\
+	".\ce\Signal.i"\
+	".\ce\Singleton.cpp"\
+	".\ce\Singleton.h"\
+	".\ce\Singleton.i"\
+	".\ce\Sock_Connect.h"\
+	".\ce\Sock_Connect.i"\
+	".\ce\SString.h"\
+	".\ce\SString.i"\
+	".\ce\streams.h"\
+	".\ce\SV_Semaphore_Complex.h"\
+	".\ce\SV_Semaphore_Complex.i"\
+	".\ce\SV_Semaphore_Simple.h"\
+	".\ce\SV_Semaphore_Simple.i"\
+	".\ce\Svc_Conf_Tokens.h"\
+	".\ce\svc_export.h"\
+	".\ce\Synch.h"\
+	".\ce\Synch.i"\
+	".\ce\Synch_T.cpp"\
+	".\ce\Synch_T.h"\
+	".\ce\Synch_T.i"\
+	".\ce\Test_and_Set.cpp"\
+	".\ce\Test_and_Set.h"\
+	".\ce\Test_and_Set.i"\
+	".\ce\Thread.h"\
+	".\ce\Thread.i"\
+	".\ce\Thread_Adapter.h"\
+	".\ce\Thread_Adapter.inl"\
+	".\ce\Thread_Control.h"\
+	".\ce\Thread_Control.inl"\
+	".\ce\Thread_Exit.h"\
+	".\ce\Thread_Hook.h"\
+	".\ce\Thread_Manager.h"\
+	".\ce\Thread_Manager.i"\
+	".\ce\Timer_Queue.h"\
+	".\ce\Timer_Queue_T.cpp"\
+	".\ce\Timer_Queue_T.h"\
+	".\ce\Timer_Queue_T.i"\
+	".\ce\Trace.h"\
+	".\ce\Unbounded_Queue.cpp"\
+	".\ce\Unbounded_Queue.h"\
+	".\ce\Unbounded_Queue.inl"\
+	".\ce\Unbounded_Set.cpp"\
+	".\ce\Unbounded_Set.h"\
+	".\ce\Unbounded_Set.inl"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\LifeCycleServiceS.h"\
+	".\LifeCycleServiceS.i"\
+	".\LifeCycleServiceS_T.cpp"\
+	".\LifeCycleServiceS_T.h"\
+	".\LifeCycleServiceS_T.i"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86em) Release"
+
+DEP_CPP_LIFECY=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFECY=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\Dynamic_Service.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\LifeCycleServiceS.h"\
+	".\LifeCycleServiceS.i"\
+	".\LifeCycleServiceS_T.cpp"\
+	".\LifeCycleServiceS_T.h"\
+	".\LifeCycleServiceS_T.i"\
+	".\Naming\ace\config-all.h"\
+	".\tao\corba.h"\
+	".\tao\IFR_Client_Adapter.h"\
+	".\tao\ORB_Core.h"\
+	".\tao\PICurrent.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\PortableServer\Collocated_Object.h"\
+	".\tao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\tao\PortableServer\Object_Adapter.h"\
+	".\tao\PortableServer\Operation_Table.h"\
+	".\tao\PortableServer\PortableServer.h"\
+	".\tao\PortableServer\Servant_Base.h"\
+	".\tao\PortableServer\ServerInterceptorAdapter.h"\
+	".\tao\PortableServer\ServerRequestInfo.h"\
+	".\tao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	".\tao\TAO_Server_Request.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86em) Debug"
+
+DEP_CPP_LIFECY=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFECY=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	".\ace\Dynamic_Service.h"\
+	".\ace\post.h"\
+	".\ace\pre.h"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\LifeCycle\ace\config-all.h"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\LifeCycleServiceS.h"\
+	".\LifeCycleServiceS.i"\
+	".\LifeCycleServiceS_T.cpp"\
+	".\LifeCycleServiceS_T.h"\
+	".\LifeCycleServiceS_T.i"\
+	".\Naming\ace\config-all.h"\
+	".\tao\corba.h"\
+	".\tao\IFR_Client_Adapter.h"\
+	".\tao\ORB_Core.h"\
+	".\tao\PICurrent.h"\
+	".\tao\PortableInterceptor.h"\
+	".\tao\PortableServer\Collocated_Object.h"\
+	".\tao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\tao\PortableServer\Object_Adapter.h"\
+	".\tao\PortableServer\Operation_Table.h"\
+	".\tao\PortableServer\PortableServer.h"\
+	".\tao\PortableServer\Servant_Base.h"\
+	".\tao\PortableServer\ServerInterceptorAdapter.h"\
+	".\tao\PortableServer\ServerRequestInfo.h"\
+	".\tao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\tao\RequestInfo_Util.h"\
+	".\tao\Stub.h"\
+	".\tao\TAO_Server_Request.h"\
+	
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86) Debug"
+
+DEP_CPP_LIFECY=\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
+	".\LifeCycle\lifecycle_export.h"\
+	
+NODEP_CPP_LIFECY=\
+	"..\..\..\..\..\..\Naming\naming_export.h"\
+	"..\tao\Adapter.h"\
+	"..\tao\Adapter.i"\
+	"..\tao\any.h"\
+	"..\tao\cdr.h"\
+	"..\tao\Cleanup_Func_Registry.h"\
+	"..\tao\Cleanup_Func_Registry.inl"\
+	"..\tao\corbafwd.h"\
+	"..\tao\DomainC.i"\
+	"..\tao\DynamicC.h"\
+	"..\tao\DynamicC.i"\
+	"..\tao\Encodable.h"\
+	"..\tao\Exception.h"\
+	"..\tao\Fault_Tolerance_Service.h"\
+	"..\tao\GIOP_Message_Version.h"\
+	"..\tao\GIOPC.i"\
+	"..\tao\Interceptor_List.inl"\
+	"..\tao\IOPC.h"\
+	"..\tao\IOPC.i"\
+	"..\tao\LocalObject.h"\
+	"..\tao\LocalObject.i"\
+	"..\tao\MessagingC.h"\
+	"..\tao\MessagingC.i"\
+	"..\tao\Object_Ref_Table.h"\
+	"..\tao\OctetSeqC.i"\
+	"..\tao\ORB_Core.i"\
+	"..\tao\params.h"\
+	"..\tao\Parser_Registry.h"\
+	"..\tao\PICurrent.h"\
+	"..\tao\PICurrent.inl"\
+	"..\tao\Policy_Manager.h"\
+	"..\tao\PolicyFactory_Registry.h"\
+	"..\tao\PollableC.h"\
+	"..\tao\PollableC.i"\
+	"..\tao\PortableInterceptorC.i"\
+	"..\tao\PortableServer\Active_Object_Map.h"\
+	"..\tao\PortableServer\Active_Object_Map.i"\
+	"..\tao\PortableServer\Collocated_Object.i"\
+	"..\tao\PortableServer\Default_Policy_Validator.h"\
+	"..\tao\PortableServer\Key_Adapters.h"\
+	"..\tao\PortableServer\Key_Adapters.i"\
+	"..\tao\PortableServer\Object_Adapter.h"\
+	"..\tao\PortableServer\Object_Adapter.i"\
+	"..\tao\PortableServer\poa_macros.h"\
+	"..\tao\PortableServer\POA_Policies.h"\
+	"..\tao\PortableServer\POA_Policies.i"\
+	"..\tao\PortableServer\POA_Policy_Set.h"\
+	"..\tao\PortableServer\POA_Policy_Set.i"\
+	"..\tao\PortableServer\Policy_Validator.h"\
+	"..\tao\PortableServer\portableserver_export.h"\
+	"..\tao\PortableServer\PortableServerC.h"\
+	"..\tao\PortableServer\PortableServerC.i"\
+	"..\tao\PortableServer\Servant_Base.h"\
+	"..\tao\PortableServer\Servant_Base.i"\
+	"..\tao\PortableServer\ServerInterceptorAdapter.inl"\
+	"..\tao\PortableServer\ServerRequestInfo.inl"\
+	"..\tao\Profile.i"\
+	"..\tao\Protocols_Hooks.h"\
+	"..\tao\Remote_Object_Proxy_Impl.h"\
+	"..\tao\Resource_Factory.h"\
+	"..\tao\Service_Callbacks.h"\
+	"..\tao\SmartProxies\Smart_Proxies.inl"\
+	"..\tao\SmartProxies\smartproxies_export.h"\
+	"..\tao\StringSeqC.i"\
+	"..\tao\Tagged_Components.h"\
+	"..\tao\Tagged_Profile.h"\
+	"..\tao\TAO_Export.h"\
+	"..\tao\TAO_Server_Request.i"\
+	"..\tao\TAO_Singleton.h"\
+	"..\tao\TimeBaseC.h"\
+	"..\tao\TimeBaseC.i"\
+	"..\tao\ValueBase.h"\
+	"..\tao\ValueFactory.h"\
+	".\ao\Abstract_Servant_Base.h"\
+	".\ao\Any.i"\
+	".\ao\BoundsC.h"\
+	".\ao\BoundsC.i"\
+	".\ao\CDR.i"\
+	".\ao\CONV_FRAMEC.h"\
+	".\ao\CONV_FRAMEC.i"\
+	".\ao\corba.h"\
+	".\ao\CORBA_String.h"\
+	".\ao\CORBA_String.inl"\
+	".\ao\corbafwd.i"\
+	".\ao\CurrentC.h"\
+	".\ao\CurrentC.i"\
+	".\ao\debug.h"\
+	".\ao\DomainC.h"\
+	".\ao\Environment.h"\
+	".\ao\Environment.i"\
+	".\ao\Exception.i"\
+	".\ao\Fault_Tolerance_Service.i"\
+	".\ao\GIOP_Message_Version.inl"\
+	".\ao\GIOPC.h"\
+	".\ao\IFR_Client_Adapter.h"\
+	".\ao\Interceptor_List.h"\
+	".\ao\Managed_Types.h"\
+	".\ao\Managed_Types.i"\
+	".\ao\MProfile.h"\
+	".\ao\MProfile.i"\
+	".\ao\nvlist.h"\
+	".\ao\NVList.i"\
+	".\ao\object.h"\
+	".\ao\Object.i"\
+	".\ao\Object_KeyC.h"\
+	".\ao\Object_KeyC.i"\
+	".\ao\Object_Proxy_Broker.h"\
+	".\ao\Object_Proxy_Impl.h"\
+	".\ao\ObjectIDList.h"\
+	".\ao\ObjectIDList.i"\
+	".\ao\OctetSeqC.h"\
+	".\ao\orb.h"\
+	".\ao\ORB.i"\
+	".\ao\orb_core.h"\
+	".\ao\orbconf.h"\
+	".\ao\params.i"\
+	".\ao\Parser_Registry.i"\
+	".\ao\Pluggable.h"\
+	".\ao\Pluggable.i"\
+	".\ao\Policy_Manager.i"\
+	".\ao\Policy_Set.h"\
+	".\ao\Policy_Set.i"\
+	".\ao\PolicyC.h"\
+	".\ao\PolicyC.i"\
+	".\ao\PortableInterceptor.h"\
+	".\ao\PortableInterceptorC.h"\
+	".\ao\PortableServer\Collocated_Object.h"\
+	".\ao\PortableServer\Direct_Object_Proxy_Impl.h"\
+	".\ao\PortableServer\Operation_Table.h"\
+	".\ao\PortableServer\PortableServer.h"\
+	".\ao\PortableServer\ServerInterceptorAdapter.h"\
+	".\ao\PortableServer\ServerRequestInfo.h"\
+	".\ao\PortableServer\ThruPOA_Object_Proxy_Impl.h"\
+	".\ao\Principal.h"\
+	".\ao\Principal.i"\
+	".\ao\Profile.h"\
+	".\ao\Protocol_Factory.h"\
+	".\ao\RequestInfo_Util.h"\
+	".\ao\sequence.h"\
+	".\ao\Sequence.i"\
+	".\ao\Sequence_T.cpp"\
+	".\ao\Sequence_T.h"\
+	".\ao\Sequence_T.i"\
+	".\ao\Server_Strategy_Factory.h"\
+	".\ao\Service_Callbacks.i"\
+	".\ao\Service_Context.h"\
+	".\ao\Service_Context.inl"\
+	".\ao\Services.h"\
+	".\ao\Services.i"\
+	".\AO\SmartProxies\Smart_Proxies.h"\
+	".\ao\StringSeqC.h"\
+	".\ao\stub.h"\
+	".\ao\Stub.i"\
+	".\ao\Tagged_Components.i"\
+	".\ao\Tagged_Profile.i"\
+	".\ao\TAO_Server_Request.h"\
+	".\ao\TAO_Singleton.cpp"\
+	".\ao\TAO_Singleton.inl"\
+	".\ao\TAO_Singleton_Manager.h"\
+	".\ao\TAO_Singleton_Manager.inl"\
+	".\ao\try_macros.h"\
+	".\ao\typecode.h"\
+	".\ao\Typecode.i"\
+	".\ao\ValueBase.i"\
+	".\ao\ValueFactory.i"\
+	".\ao\varbase.h"\
+	".\ao\WrongTransactionC.h"\
+	".\ce\ACE.h"\
+	".\ce\ACE.i"\
+	".\ce\ACE_export.h"\
+	".\ce\ace_wchar.h"\
+	".\ce\ace_wchar.inl"\
+	".\ce\Active_Map_Manager.h"\
+	".\ce\Active_Map_Manager.i"\
+	".\ce\Active_Map_Manager_T.cpp"\
+	".\ce\Active_Map_Manager_T.h"\
+	".\ce\Active_Map_Manager_T.i"\
+	".\ce\Array_Base.cpp"\
+	".\ce\Array_Base.h"\
+	".\ce\Array_Base.inl"\
+	".\ce\Atomic_Op.i"\
+	".\ce\Base_Thread_Adapter.h"\
+	".\ce\Base_Thread_Adapter.inl"\
+	".\ce\Basic_Types.h"\
+	".\ce\Basic_Types.i"\
+	".\ce\CDR_Base.h"\
+	".\ce\CDR_Base.inl"\
+	".\ce\CDR_Stream.h"\
+	".\ce\CDR_Stream.i"\
+	".\ce\config-all.h"\
+	".\ce\config-cygwin32-common.h"\
+	".\ce\config-cygwin32.h"\
+	".\ce\config-g++-common.h"\
+	".\ce\config-ghs-common.h"\
+	".\ce\config-win32-borland.h"\
+	".\ce\config-win32-common.h"\
+	".\ce\config-win32-ghs.h"\
+	".\ce\config-win32-mingw.h"\
+	".\ce\config-win32-msvc-5.h"\
+	".\ce\config-win32-msvc-6.h"\
+	".\ce\config-win32-msvc-7.h"\
+	".\ce\config-win32-msvc.h"\
+	".\ce\config-win32-visualage.h"\
+	".\ce\config-win32.h"\
+	".\ce\config-WinCE.h"\
+	".\ce\config.h"\
+	".\ce\Containers.h"\
+	".\ce\Containers.i"\
+	".\ce\Containers_T.cpp"\
+	".\ce\Containers_T.h"\
+	".\ce\Containers_T.i"\
+	".\ce\CORBA_macros.h"\
+	".\ce\Dynamic_Service.cpp"\
+	".\ce\Dynamic_Service.h"\
+	".\ce\Dynamic_Service.i"\
+	".\ce\Dynamic_Service_Base.h"\
+	".\ce\Event_Handler.h"\
+	".\ce\Event_Handler.i"\
+	".\ce\File_Lock.h"\
+	".\ce\File_Lock.inl"\
+	".\ce\Flag_Manip.h"\
+	".\ce\Flag_Manip.i"\
+	".\ce\Free_List.cpp"\
+	".\ce\Free_List.h"\
+	".\ce\Free_List.i"\
+	".\ce\Functor.h"\
+	".\ce\Functor.i"\
+	".\ce\Functor_T.cpp"\
+	".\ce\Functor_T.h"\
+	".\ce\Functor_T.i"\
+	".\ce\Handle_Ops.h"\
+	".\ce\Handle_Ops.i"\
+	".\ce\Handle_Set.h"\
+	".\ce\Handle_Set.i"\
+	".\ce\Hash_Map_Manager.h"\
+	".\ce\Hash_Map_Manager_T.cpp"\
+	".\ce\Hash_Map_Manager_T.h"\
+	".\ce\Hash_Map_Manager_T.i"\
+	".\ce\Init_ACE.h"\
+	".\ce\Init_ACE.i"\
+	".\ce\iosfwd.h"\
+	".\ce\Lib_Find.h"\
+	".\ce\Lib_Find.i"\
+	".\ce\Log_Msg.h"\
+	".\ce\Log_Msg_Callback.h"\
+	".\ce\Log_Priority.h"\
+	".\ce\Log_Record.h"\
+	".\ce\Log_Record.i"\
+	".\ce\Malloc.h"\
+	".\ce\Malloc.i"\
+	".\ce\Malloc_Allocator.h"\
+	".\ce\Malloc_Allocator.i"\
+	".\ce\Malloc_Base.h"\
+	".\ce\Malloc_T.cpp"\
+	".\ce\Malloc_T.h"\
+	".\ce\Malloc_T.i"\
+	".\ce\Managed_Object.cpp"\
+	".\ce\Managed_Object.h"\
+	".\ce\Managed_Object.i"\
+	".\ce\Map.h"\
+	".\ce\Map_Manager.cpp"\
+	".\ce\Map_Manager.h"\
+	".\ce\Map_Manager.i"\
+	".\ce\Map_T.cpp"\
+	".\ce\Map_T.h"\
+	".\ce\Map_T.i"\
+	".\ce\Mem_Map.h"\
+	".\ce\Mem_Map.i"\
+	".\ce\Memory_Pool.h"\
+	".\ce\Memory_Pool.i"\
+	".\ce\Message_Block.h"\
+	".\ce\Message_Block.i"\
+	".\ce\Message_Block_T.cpp"\
+	".\ce\Message_Block_T.h"\
+	".\ce\Message_Block_T.i"\
+	".\ce\Min_Max.h"\
+	".\ce\Node.cpp"\
+	".\ce\Node.h"\
+	".\ce\Object_Manager.h"\
+	".\ce\Object_Manager.i"\
+	".\ce\OS.h"\
+	".\ce\OS.i"\
+	".\ce\OS_Dirent.h"\
+	".\ce\OS_Dirent.inl"\
+	".\ce\OS_Errno.h"\
+	".\ce\OS_Errno.inl"\
+	".\ce\OS_Export.h"\
+	".\ce\OS_Log_Msg_Attributes.h"\
+	".\ce\OS_Log_Msg_Attributes.inl"\
+	".\ce\OS_Memory.h"\
+	".\ce\OS_Memory.inl"\
+	".\ce\OS_String.h"\
+	".\ce\OS_String.inl"\
+	".\ce\OS_TLI.h"\
+	".\ce\OS_TLI.inl"\
+	".\ce\Pair.h"\
+	".\ce\Pair_T.cpp"\
+	".\ce\Pair_T.h"\
+	".\ce\Pair_T.i"\
+	".\ce\post.h"\
+	".\ce\pre.h"\
+	".\ce\Process_Mutex.h"\
+	".\ce\Process_Mutex.inl"\
+	".\ce\Process_Semaphore.h"\
+	".\ce\Process_Semaphore.inl"\
+	".\ce\Reactor.h"\
+	".\ce\Reactor.i"\
+	".\ce\Reactor_Impl.h"\
+	".\ce\RW_Process_Mutex.h"\
+	".\ce\RW_Process_Mutex.inl"\
+	".\ce\Service_Config.h"\
+	".\ce\Service_Config.i"\
+	".\ce\Service_Object.h"\
+	".\ce\Service_Object.i"\
+	".\ce\Shared_Object.h"\
+	".\ce\Shared_Object.i"\
+	".\ce\Signal.h"\
+	".\ce\Signal.i"\
+	".\ce\Singleton.cpp"\
+	".\ce\Singleton.h"\
+	".\ce\Singleton.i"\
+	".\ce\Sock_Connect.h"\
+	".\ce\Sock_Connect.i"\
+	".\ce\SString.h"\
+	".\ce\SString.i"\
+	".\ce\streams.h"\
+	".\ce\SV_Semaphore_Complex.h"\
+	".\ce\SV_Semaphore_Complex.i"\
+	".\ce\SV_Semaphore_Simple.h"\
+	".\ce\SV_Semaphore_Simple.i"\
+	".\ce\Svc_Conf_Tokens.h"\
+	".\ce\svc_export.h"\
+	".\ce\Synch.h"\
+	".\ce\Synch.i"\
+	".\ce\Synch_T.cpp"\
+	".\ce\Synch_T.h"\
+	".\ce\Synch_T.i"\
+	".\ce\Test_and_Set.cpp"\
+	".\ce\Test_and_Set.h"\
+	".\ce\Test_and_Set.i"\
+	".\ce\Thread.h"\
+	".\ce\Thread.i"\
+	".\ce\Thread_Adapter.h"\
+	".\ce\Thread_Adapter.inl"\
+	".\ce\Thread_Control.h"\
+	".\ce\Thread_Control.inl"\
+	".\ce\Thread_Exit.h"\
+	".\ce\Thread_Hook.h"\
+	".\ce\Thread_Manager.h"\
+	".\ce\Thread_Manager.i"\
+	".\ce\Timer_Queue.h"\
+	".\ce\Timer_Queue_T.cpp"\
+	".\ce\Timer_Queue_T.h"\
+	".\ce\Timer_Queue_T.i"\
+	".\ce\Trace.h"\
+	".\ce\Unbounded_Queue.cpp"\
+	".\ce\Unbounded_Queue.h"\
+	".\ce\Unbounded_Queue.inl"\
+	".\ce\Unbounded_Set.cpp"\
+	".\ce\Unbounded_Set.h"\
+	".\ce\Unbounded_Set.inl"\
+	".\CosLifeCycleC.h"\
+	".\CosLifeCycleC.i"\
+	".\CosLifeCycleS.h"\
+	".\CosLifeCycleS.i"\
+	".\CosLifeCycleS_T.cpp"\
+	".\CosLifeCycleS_T.h"\
+	".\CosLifeCycleS_T.i"\
+	".\LifeCycleServiceC.h"\
+	".\LifeCycleServiceC.i"\
+	".\LifeCycleServiceS.h"\
+	".\LifeCycleServiceS.i"\
+	".\LifeCycleServiceS_T.cpp"\
+	".\LifeCycleServiceS_T.h"\
+	".\LifeCycleServiceS_T.i"\
+	
+
+!ENDIF 
+
+# End Source File
+# End Group
+# Begin Group "Header Files"
+
+# PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\CosLifeCycleC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosLifeCycleS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosLifeCycleS_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LifeCycleServiceC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LifeCycleServiceS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LifeCycleServiceS_T.h
+# End Source File
+# End Group
+# Begin Group "Resource Files"
+
+# PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
+# End Group
+# Begin Group "Inline Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\CosLifeCycleC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosLifeCycleS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosLifeCycleS_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\LifeCycleServiceC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\LifeCycleServiceS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\LifeCycleServiceS_T.i
+# End Source File
+# End Group
+# Begin Group "IDL Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\CosLifeCycle.idl
+
+!IF  "$(CFG)" == "CosLifeCycle - Win32 (WCE MIPS) Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\CosLifeCycle.idl
+InputName=CosLifeCycle
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE MIPS) Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\CosLifeCycle.idl
+InputName=CosLifeCycle
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH4) Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\CosLifeCycle.idl
+InputName=CosLifeCycle
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH4) Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\CosLifeCycle.idl
+InputName=CosLifeCycle
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH3) Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\CosLifeCycle.idl
+InputName=CosLifeCycle
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH3) Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\CosLifeCycle.idl
+InputName=CosLifeCycle
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE ARM) Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\CosLifeCycle.idl
+InputName=CosLifeCycle
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE ARM) Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\CosLifeCycle.idl
+InputName=CosLifeCycle
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86em) Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\CosLifeCycle.idl
+InputName=CosLifeCycle
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86em) Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\CosLifeCycle.idl
+InputName=CosLifeCycle
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86) Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\CosLifeCycle.idl
+InputName=CosLifeCycle
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\LifeCycleService.idl
+
+!IF  "$(CFG)" == "CosLifeCycle - Win32 (WCE MIPS) Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\LifeCycleService.idl
+InputName=LifeCycleService
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE MIPS) Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\LifeCycleService.idl
+InputName=LifeCycleService
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH4) Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\LifeCycleService.idl
+InputName=LifeCycleService
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH4) Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\LifeCycleService.idl
+InputName=LifeCycleService
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH3) Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\LifeCycleService.idl
+InputName=LifeCycleService
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE SH3) Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\LifeCycleService.idl
+InputName=LifeCycleService
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE ARM) Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\LifeCycleService.idl
+InputName=LifeCycleService
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE ARM) Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\LifeCycleService.idl
+InputName=LifeCycleService
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86em) Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\LifeCycleService.idl
+InputName=LifeCycleService
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86em) Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\LifeCycleService.idl
+InputName=LifeCycleService
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosLifeCycle - Win32 (WCE x86) Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\LifeCycleService.idl
+InputName=LifeCycleService
+
+BuildCmds= \
+	$(TAO_IDL_ROOT)\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=LifeCycle\lifecycle_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# End Group
+# Begin Group "Template Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\CosLifeCycleS_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\LifeCycleServiceS_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# End Group
+# End Target
+# End Project

@@ -1,0 +1,63 @@
+$Id$
+
+Summary
+-------
+
+This directory contains an implmentation for a "simple" component
+server.
+
+Running
+-------
+
+To run the component server, invoke it from command line as foloowing:
+
+  Simple_Component_Server -i <config_file> -o <home_finder_ior_output_file>
+
+The <config_file> currently contains information the component server
+needs to install component implementations.  The detail format of the
+file will be explained at the end of this file.  This configuration
+mechanism should eventually be replaced by the standard component
+deployment interfaces so component are installed and instantiated
+through a set of interfaces.
+
+The <home_finder_ior_output_file> points to the file name where the
+component server will output a IOR (for the HomeFinder interfaces)
+hosted on the component server.  Currently, Simple_Component_Server
+always instantiates a HomeRegistrar service within the server process.
+
+
+Server Configuration:
+---------------------
+There is currently not much to configure for the component server.
+
+
+Config file format:
+-------------------
+
+We are temporarily using a config file to read in the list of
+components that are to be installed into the component server.  Each
+line of the configuration file contains a set of information for
+installing one component home (the component home manages the life
+cycle for managed comopnent instances.)  These info. are delimited by
+the vertical bar '|' characters.  Here is an example for the
+"HelloHome" component home in
+$(CIAO_ROOT)/examples/handcrafted/Hello/.
+
+hello_executors|createHelloHome_Impl|hello_servants|createHelloHome_Servant|IDL:omg.org/HelloHome:1.0|IDL:omg.org/HelloWorld:1.0|HelloHome
+
+Here's a breakdown of what each field contains:
+
+0 -> Name of the DLL containing component and component home executors
+1 -> Entry point (factory method) for the previous DLL
+2 -> Name of the DLL containing component and component home servant
+     glue code.
+3 -> Entry point (factory method) for the previous DLL
+4 -> Repo ID for the component home interface
+5 -> Repo ID for the managed component interface
+6 -> Canonical name for the installed component home.
+
+Todos
+-----
+
+Improve the command line processing routine.  Currently, we do not
+process the ORB command line options correctly.

@@ -1,0 +1,83 @@
+// $Id$
+
+// ============================================================================
+//
+// = FILENAME
+//    CosEventChannelFactory.idl
+//
+// = AUTHOR
+//    Pradeep Gore <pradeep@cs.wustl.edu>
+//
+// ============================================================================
+
+#ifndef TAO_COSEVENTCHANNELFACTORY_IDL
+#define TAO_COSEVENTCHANNELFACTORY_IDL
+
+#include "orbsvcs/CosEventChannelAdmin.idl"
+
+module CosEventChannelFactory
+{
+  // = TITLE
+  //   Module that describes the Channel Factory.
+  //
+  exception DuplicateChannel
+  {
+    // = TITLE
+    //    This exception is raised to indicate that a specified
+    //    channel already exists.
+  };
+
+  exception NoSuchChannel
+  {
+    // = TITLE
+    //   This exception is raised to indicate that a specified
+    //   channel does not exist.
+  };
+
+  exception BindFailed
+  {
+    // = TITLE
+    //    This exception is raised to indicate that the EventChannel
+    //    could not be registered with the naming service.
+  };
+
+  interface ChannelFactory
+  {
+    // = TITLE
+    //   Interface definition of the ChannelFactory.
+    //
+    // = DESCRIPTION
+    //   The ChannelFactory is used to create,destroy and
+    //   locate CosEventChannels.
+
+    CosEventChannelAdmin::EventChannel create (
+      in string channel_id,
+      in boolean store_in_naming_service) raises (DuplicateChannel, BindFailed);
+    // Creates a CosEventChannel given a channel id.
+    // The DuplicateChannel exception is raised if the channel
+    // already exists.
+    // BindFailed is raised if we failed to register the newly created channel
+    // with the naming service.
+
+    void destroy (
+       in string channel_id,
+       in boolean unbind_from_naming_service) raises (NoSuchChannel);
+    // Destroys the channel specified by the channel id.
+    // If the channel does not exist then the NoSuchChannel exception
+    // is raised.
+
+    CosEventChannelAdmin::EventChannel find (
+       in string channel_id) raises (NoSuchChannel);
+    // Finds an EventChannel given the channel id.
+    // If the channel does not exist then the NoSuchChannel exception
+    // is raised.
+
+    string find_channel_id (
+       in CosEventChannelAdmin::EventChannel channel) raises (NoSuchChannel);
+   // Returns a channel id given a reference to it.
+   // If the channel does not exist then the NoSuchChannel exception
+   // is raised.
+  };
+};
+
+#endif /* TAO_COSEVENTCHANNELFACTORY_IDL */

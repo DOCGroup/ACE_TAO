@@ -1,0 +1,30 @@
+#
+# Makefile for building the TAO orbsvcs tests
+# $Id$
+#
+
+DIRS = \
+        AVStreams \
+        Bug_1393_Regression \
+        Concurrency \
+        CosEvent \
+	FaultTolerance \
+	Event \
+	EC_Throughput \
+	EC_Multiple \
+	EC_Mcast \
+	EC_MT_Mcast \
+	EC_Custom_Marshal \
+        ior_corbaname \
+        IOR_MCast \
+	LoadBalancing \
+        Miop \
+        Notify \
+	Property \
+        Security \
+        Simple_Naming \
+        Time \
+	Trading \
+	Log
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,0 +1,2 @@
+project(RTCORBA RTMutex Server): rt_server {
+}

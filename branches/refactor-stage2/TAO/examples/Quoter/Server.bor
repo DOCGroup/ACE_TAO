@@ -1,0 +1,48 @@
+
+#
+# Makefile for building the Quoter example
+#
+
+NAME = server
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -I$(ACE_ROOT)/TAO/orbsvcs/orbsvcs -Ge 1
+
+OBJFILES = \
+        $(OBJDIR)\QuoterC.obj \
+        $(OBJDIR)\QuoterS.obj \
+        $(OBJDIR)\Quoter_i.obj \
+        $(OBJDIR)\server.obj
+
+CFLAGS = \
+        $(ACE_CFLAGS) \
+        $(TAO_CFLAGS) \
+        $(TAO_PORTABLESERVER_CFLAGS) \
+        $(TAO_NAMING_CFLAGS) \
+        $(TAO_LIFECYCLE_CFLAGS) \
+        $(TAO_IORTABLE_CFLAGS) \
+        -I$(ACE_ROOT)/TAO/orbsvcs/orbsvcs
+
+LIBFILES = \
+        $(ACE_LIB) \
+        $(TAO_LIB) \
+        $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_NAMING_LIB) \
+        $(TAO_LIFECYCLE_LIB) \
+        $(TAO_IORTABLE_LIB)
+
+IDLFILES = \
+        $(IDLDIR)\Quoter.idl
+
+CPPDIR = .
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\QuoterC.cpp $(IDLDIR)\QuoterS.cpp: $(IDLDIR)\Quoter.idl
+	$(TAO_IDL) $**
+
