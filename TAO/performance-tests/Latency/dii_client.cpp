@@ -55,6 +55,8 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 class DII_Client
 {
   // = TITLE
@@ -97,6 +99,8 @@ private:
   CORBA::Request_ptr *req_array_;
   // Holder for <burst> request pointers
 };
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 int
 main (int argc, char *argv[])
@@ -146,6 +150,8 @@ main (int argc, char *argv[])
                             1);
         }
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
       DII_Client client;
       client.set (server.in ());
       client.svc ();
@@ -158,6 +164,8 @@ main (int argc, char *argv[])
 
       client.prep_stats ("Deferred req prep", gsf);
       client.other_stats (gsf);
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
       if (do_shutdown)
         {
@@ -177,6 +185,8 @@ main (int argc, char *argv[])
 }
 
 // ****************************************************************
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 DII_Client::DII_Client (void)
 {
@@ -312,3 +322,6 @@ DII_Client::other_stats (ACE_UINT32 gsf)
               latency,
               throughput));
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
