@@ -1,3 +1,15 @@
+Wed Jun 30 06:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+          Removed usage of inst_close, inst_auto and inst_none. These control
+          how templates are used, but this setup caused a crash in the HP
+          assigner. I have check this on the aCC mailing list and it seems that
+          these options are obsolete and shouldn't be used, the compiler is
+          already capable at handling templates for a long time. I have
+          done a test run with the HP aCC compiler without these options
+          and then the crash in the assigner is gone and we don't got any
+          other errors, so removed these options
+
 Tue Jun 29 19:30:31 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Dev_Poll_Reactor.h (mask_ops, mask_ops_i):
