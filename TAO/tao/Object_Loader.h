@@ -27,7 +27,7 @@ namespace CORBA
 
   class ORB;
   typedef ORB *ORB_ptr;
-};
+}
 
 /**
  * @class TAO_Object_Loader

@@ -43,7 +43,7 @@ namespace TAO
     static CORBA::Boolean tao_marshal (T *,
                                        TAO_OutputCDR &);
   };
-};
+}
 
 /**
  * @class TAO_Objref_Var_T

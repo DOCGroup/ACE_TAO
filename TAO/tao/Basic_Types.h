@@ -79,7 +79,7 @@ namespace CORBA
   typedef TypeCode *TypeCode_ptr;
 
   class Any;
-};
+}
 
 class TAO_InputCDR;
 class TAO_OutputCDR;

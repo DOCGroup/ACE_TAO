@@ -63,7 +63,7 @@ namespace TAO
                                         ACE_OutputCDR::from_boolean>
   {
   };
-};
+}
 
 #include /**/"ace/post.h"
 

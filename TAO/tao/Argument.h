@@ -26,7 +26,7 @@
 namespace Dynamic
 {
   struct Parameter;
-};
+}
 
 namespace CORBA
 {

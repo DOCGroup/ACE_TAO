@@ -59,13 +59,13 @@ namespace TAO
     TAO_ASYNCHRONOUS_CALLBACK_INVOCATION,
     /// Asynchronous twoway with poller model for collecting the
     /// replies.
-    /// @NOTE: This is not supported in TAO now
+    /// @note This is not supported in TAO now
     TAO_ASYNCHRONOUS_POLLER_INVOCATION,
     /// Types of DII
     TAO_DII_INVOCATION,
     TAO_DII_DEFERRED_INVOCATION
   };
-};
+}
 
 #include /**/ "ace/post.h"
-#endif /*TAO_INVOCATION_BASE_H*/
+#endif /* TAO_INVOCATION_UTILS_H */

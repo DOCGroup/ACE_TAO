@@ -29,7 +29,7 @@ namespace PortableInterceptor
   typedef Interceptor *Interceptor_ptr;
   class IORInterceptor;
   typedef IORInterceptor *IORInterceptor_ptr;
-};
+}
 
 class TAO_IORInterceptor_List;
 

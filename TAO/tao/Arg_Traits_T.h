@@ -41,7 +41,7 @@ namespace TAO
   class SArg_Traits
   {
   };
-};
+}
 
 #include /**/ "ace/post.h"
 

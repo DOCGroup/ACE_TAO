@@ -46,12 +46,12 @@ namespace CORBA
   typedef Object *Object_ptr;
   typedef TAO_Pseudo_Var_T<Object> Object_var;
   typedef TAO_Pseudo_Out_T<Object, Object_var> Object_out;
-};
+}
 
 namespace TAO
 {
   class Argument;
-};
+}
 
 typedef void (*TAO_Skeleton)(
     TAO_ServerRequest &,
@@ -151,8 +151,9 @@ protected:
                                             void *derived_this
                                             ACE_ENV_ARG_DECL) = 0;
 
+  /*
   /// Register a CORBA IDL operation name.
-  /*virtual int _bind (const char *opname,
+  virtual int _bind (const char *opname,
                      const TAO_Skeleton skel_ptr) = 0;
   */
   /// Get this interface's repository id (TAO specific).

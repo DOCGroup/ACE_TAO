@@ -150,7 +150,7 @@ namespace TAO
 
     typedef Object_Tag                                    idl_tag;
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 #include "tao/Object_Argument_T.inl"
