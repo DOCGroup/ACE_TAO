@@ -1,15 +1,22 @@
+Wed Aug 18 21:48:52 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: added Toshio Hori <lttoshi@etl.go.jp>
+          suggestions (in a new section) on building just what's
+          needed for TAO, and his tips for reducing disk space
+          usage on Unix platforms.
+
 Wed Aug 18 21:32:56 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* docs/usage-bugzilla.html:
+        * docs/usage-bugzilla.html:
 
-	  Added a simple document explaining basic usage of our
-	  installation of bugzilla.
+          Added a simple document explaining basic usage of our
+          installation of bugzilla.
 
-	* ACE-INSTALL.html: 
-	* PROBLEM-REPORT-FORM:
+        * ACE-INSTALL.html:
+        * PROBLEM-REPORT-FORM:
 
-	  Updated with information about the bugzilla usage
-	  documentation.
+          Updated with information about the bugzilla usage
+          documentation.
 
 Wed Aug 18 20:28:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
