@@ -150,7 +150,7 @@ static void UICreate()
 /******************************************************************************/
 
   n = 0;
-  XtSetArg(args[n], XmNtitle, "Virtual VCR"); n++;
+  XtSetArg(args[n], XmNtitle, "TAO Mpeg Player"); n++;
   XtSetArg(args[n], XmNdeleteResponse, XmDO_NOTHING);n++;
   XtSetArg(args[n], XmNkeyboardFocusPolicy, XmPOINTER); n++;
   XtSetArg(args[n], XmNwidth, MINX); n++;
@@ -158,13 +158,13 @@ static void UICreate()
   XtSetArg(args[n], XmNheight, MINY); n++;
   XtSetArg(args[n], XmNminHeight, MINY); n++;
 
-  shell = XtAppCreateShell("Virtual VCR", "virtual_vcr",
+  shell = XtAppCreateShell("TAO Mpeg Player", "virtual_vcr",
 				topLevelShellWidgetClass, display, args, n);
 
 /*****************************************************************************/
 
   n = 0;
-  XtSetArg(args[n], XmNtitle, "Virtual VCR"); n++;
+  XtSetArg(args[n], XmNtitle, "TAO Mpeg Player"); n++;
 
   mainwindow = XmCreateForm(shell, "MainForm", args, n);
   XtManageChild(mainwindow);
