@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/GIOPC.h"
-
+#include "ace/SString.h"
 
 /**
  * @class TAO_Tagged_Profile
@@ -64,8 +64,15 @@ public:
   /// get the tagged_profile
   IOP::TaggedProfile &tagged_profile (void);
 
-  /// get the addressing info
-  GIOP::IORAddressingInfo &addressing_info (void);
+  /// Get/Set the profile index, that needs to be used in the
+  /// sequnce of TaggedProfiles contained  IOP::IOR that is
+  /// receivedfrom the client.
+  CORBA::ULong profile_index (void);
+  void profile_index (CORBA::ULong ind);
+
+  /// Accessor to the type_id contained in the IOP::IOR received from
+  /// the client.
+  ACE_CString &type_id (void);
 
   /// Extract the object key from the TaggedProfile and store it in
   /// <object_key_>
@@ -81,12 +88,35 @@ private:
   /// The Tagged profile. This class would have the Tagged Profile
   IOP::TaggedProfile profile_;
 
-  /// The addressing info
-  GIOP::IORAddressingInfo addr_info_;
+  /*
+   * The GIOP::IORAddressingInfo is defined as follows
+   *   struct IORAddressingInfo
+   *     {
+   *       unsigned long selected_profile_index;
+   *       IOP::IOR ior;
+   *     };
+   *
+   * and the IOP::IOR is defined to be
+   *   struct IOR
+   *      {
+   *        string type_id;
+   *        sequence<TaggedProfile>   profiles;
+   *      };
+   * The mapping for the type_id of type string is TAO_String_Manager
+   * which does lot of bad things like allocation on construction and
+   * a deallocation on destruction. This is bad along the critical
+   * path. So we will store this nested structure ripped open with the
+   * profile_index and the type_id with the TaggedProfile that is
+   * pointed to.
+   */
 
-  // The above two declarations are not used in TAO as on date. It is
-  // here so that we can use this anyday. The object_key extracted
-  // from these would still be available in <object_key_>.
+  /// The profile index incase we receive a GIOP::IORAddressingInfo
+  /// information
+  CORBA::ULong profile_index_;
+
+  /// The type_id in the IOP::IOR incase we receive the
+  /// GIOP::IORAddressingInfo information.
+  ACE_CString type_id_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -1,3 +1,19 @@
+Wed Feb 28 14:23:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Tagged_Profile.h:
+	* tao/Tagged_Profile.i:
+	* tao/TAgged_Profile.cpp: This class held an instance of
+	  GIOP::IORAddressingInfo which in turn held an instance of
+	  TAO_String_Manager. This was a source of allocation and
+	  deallocation for every call along the critical path. We now rip
+	  open the GIOP::IORAddressingInfo structure and store the
+	  information that is just required like the <type_id> and the
+	  <IOP::TaggedProfile>. 
+
+	* tao/GIOP_Message_Generator_Parser.cpp: Added code to do a lazy
+	  evaluation of GIOP::IORAddressingInfo structure that we may
+	  receive. These changes should fix the bugzilla bug #798.
+
 Wed Feb 28 14:17:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Makefile: Added AMI_Timeouts to the list of directories.  
