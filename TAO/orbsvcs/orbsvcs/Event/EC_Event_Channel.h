@@ -42,9 +42,9 @@ class TAO_RTEvent_Export TAO_EC_Event_Channel :
 public:
   /**
    * constructor
-   * If <own_factory> is not 0 it assumes ownership of the factory.
-   * If the factory is <nil> it uses the Service_Configurator to load
-   * the Factory, if not found it uses TAO_EC_Default_Resource_Factory
+   * If @a own_factory is not 0 it assumes ownership of the factory.
+   * If the @a factory is nil it uses the Service_Configurator to load
+   * the Factory, if not found it uses TAO_EC_Default_Factory
    */
   TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attributes,
                         TAO_EC_Factory* factory = 0,
