@@ -1,3 +1,9 @@
+Tue Jul 22 18:57:59 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\TAO_Tests.dsw: 
+
+	  Restored DOS style end-of-line markers.
+
 Tue Jul 22 18:05:09 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\Connection_Failure\Connection_Failure.mpc: 
