@@ -1,3 +1,9 @@
+Wed Dec 17 09:52:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/TMCast/LinkListener.hpp:
+
+	  Fixed errors in VC71 builds.
+
 Wed Dec 17 15:21:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * performance_tests/Misc/Makefile:

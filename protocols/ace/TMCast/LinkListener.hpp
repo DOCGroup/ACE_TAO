@@ -93,7 +93,7 @@ namespace TMCast
     }
 
 
-    static void*
+    static ACE_THR_FUNC_RETURN
     thread_thunk (void* arg)
     {
       LinkListener* obj = reinterpret_cast<LinkListener*> (arg);
@@ -158,7 +158,7 @@ namespace TMCast
   private:
     typedef ACE_Guard<ACE_Thread_Mutex> AutoLock;
 
-    ACE_thread_t thread_;
+    ACE_hthread_t thread_;
     ACE_SOCK_Dgram_Mcast& sock_;
     MessageQueue& out_;
     MessageQueue  control_;
