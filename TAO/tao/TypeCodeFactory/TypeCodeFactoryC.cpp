@@ -19,7 +19,8 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "TypeCodeFactory_Loader.h"
+# include "TypeCodeFactory_Loader.h"
+# include "tao/Sequence_T.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"
