@@ -1,3 +1,14 @@
+Fri Dec 27 07:49:28 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/config-macosx.h: Remove temporary hacks for buggy
+          gcc 3.1 compiler.  Thanks to John Zorko for reminding me about
+	  this. 
+
+	* examples/Service_Configurator/IPC-tests/server/Makefile:
+	* examples/Service_Configurator/Misc/Makefile:
+	* examples/Timer_Queue/Makefile:
+	  Add ACELIBS to ACE_SHLIBS to fix MacOS X linking problem.
+
 Thu Dec 26 17:11:54 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/make_release: Fixed the following problems in the release

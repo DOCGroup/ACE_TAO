@@ -12,6 +12,8 @@ BIN   	= server_test
 LIB   	= libServer.a
 SHLIB 	= libServer.$(SOEXT)
 
+ACE_SHLIBS += $(ACELIB)
+
 FILES	= Handle_L_Dgram \
 	  Handle_L_CODgram \
 	  Handle_L_FIFO \
