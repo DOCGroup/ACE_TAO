@@ -1,0 +1,17 @@
+//
+// $Id$
+//
+
+module Test
+{
+  typedef sequence<octet> Payload;
+
+  interface Sender {
+    /// Receive a big payload
+    boolean get_data (in unsigned long size,
+                      out Payload the_payload);
+
+    /// Return the number of messages received so far
+    long get_event_count ();
+  };
+};
