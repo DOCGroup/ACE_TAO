@@ -1,5 +1,9 @@
 Thu Mar 29 16:16:07 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* ace/Token.cpp (renew): A conditional expression used an && rather
+	  and ||, which was causing problems with ACE_Token.  Thanks to
+ 	  Carsten Madsen <com@navicon.dk> for reporting this.
+
 	* ace/Message_Queue_T.cpp: If any of the various ACE_Message_Queue_Ex
 	  enqueue*() methods fail then make sure to release the message
  	  blocks!  Thanks to Boris Kolpackov <bosk@ipmce.ru> for reporting
