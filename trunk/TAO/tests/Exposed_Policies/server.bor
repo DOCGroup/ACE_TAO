@@ -15,12 +15,19 @@ OBJFILES = \
         $(OBJDIR)\Policy_Verifier.obj \
         $(OBJDIR)\RT_Properties.obj
 
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS)
+CFLAGS = \
+        $(ACE_CFLAGS) \
+        $(TAO_CFLAGS) \
+        $(TAO_PORTABLESERVER_CFLAGS) \
+        $(TAO_RTCORBA_CFLAGS) \
+        $(TAO_RTPORTABLESERVER_CFLAGS)
 
 LIBFILES = \
         $(ACE_LIB) \
         $(TAO_LIB) \
-        $(TAO_PORTABLESERVER_LIB)
+        $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_RTPORTABLESERVER_LIB) \
+        $(TAO_RTCORBA_LIB)
 
 IDLFILES = \
         $(IDLDIR)\Counter.idl
