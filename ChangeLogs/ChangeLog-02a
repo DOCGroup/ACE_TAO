@@ -1,3 +1,8 @@
+Wed Aug  8 12:31:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/MEM_Stream_Test.cpp: Changed a ACE_DEBUG statment with an
+	  LM_WARNING  to an LM_DEBUG. 
+
 Wed Aug 08 11:59:45 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h: Do not redefine ACE_IOV_MAX if it has already been
