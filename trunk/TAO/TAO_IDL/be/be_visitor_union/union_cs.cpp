@@ -198,7 +198,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
                              "codegen for access failed\n"), -1);
         }
 
-      *os << be_uidt_nl << "}" << be_uidt_nl;
+      *os << be_uidt_nl << "}" << be_nl;
       *os << "return 0; // default" << be_uidt_nl
           << "}\n\n";
 

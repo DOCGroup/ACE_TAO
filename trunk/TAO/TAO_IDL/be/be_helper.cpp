@@ -135,6 +135,12 @@ int
 TAO_OutStream::decr_indent (unsigned short flag)
 {
   indent_level_--;
+  // Just in case somebody gets "unindent happy".
+  if (this->indent_level_ < 0)
+    {
+      // ACE_DEBUG ((LM_DEBUG, "negative indentation?\n"));
+      this->indent_level_ = 0;
+    }
   if (flag)
     return this->indent ();
   else
