@@ -22,7 +22,7 @@
 #include "ace/Containers.h"
 #include "ID_Generator.h"
 
-class ACE_URL_Record
+class ACE_SVC_Export ACE_URL_Record
   // = TITLE
   //     A URL Record.
   //
@@ -63,7 +63,7 @@ private:
   // Offer (and its properties).
 };
 
-class ACE_Export ACE_URL_Local_Locator
+class ACE_SVC_Export ACE_URL_Local_Locator
   // = TITLE
   //     A simple URL repository to store URL offer locally.
   //
@@ -97,7 +97,7 @@ class ACE_Export ACE_URL_Local_Locator
   // Query a specific offer.
 
   virtual int modify_offer (const ACE_WString &offer_id,
-			    const char *url = 0,
+			    const ACE_WString *url = 0,
 			    const ACE_URL_Property_Seq *del = 0,
 			    const ACE_URL_Property_Seq *modify = 0);
   // Modify a previously registered offer.

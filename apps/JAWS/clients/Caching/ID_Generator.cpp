@@ -3,8 +3,8 @@
 #if !defined (ACE_ID_GENERATOR_C)
 #define ACE_ID_GENERATOR_C
 
-#define ACE_BUILD_DLL
 #include "ID_Generator.h"
+#include "ace/Object_Manager.h"
 
 time_t ACE_ID_Generator::last_time_ = 0;
 
