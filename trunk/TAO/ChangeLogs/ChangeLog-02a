@@ -1,3 +1,25 @@
+Tue Nov 21 15:04:31 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* performance-tests/Latency/server.cpp : 
+	* performance-tests/Latency/client.cpp : 
+	  Included tao/Strategies/advanced_resource.h.
+
+	* performance-tests/Latency/Makefile: 
+	  Updated to link TAO_Strategies.
+	
+	* performance-tests/Latency/server.conf : 
+	* performance-tests/Latency/client.conf :
+	* performance-tests/Latency/st_client.conf :
+	* performance-tests/Latency/st_server.conf :
+	* performance-tests/Latency/client-mt-exclusive.conf : 
+	* performance-tests/Latency/client-st-muxed.conf : 
+	  Updated to load the correct, i.e. the advanced resource 
+	  factory.
+	
+	* tao/Strategies/advanced_resource.cpp : 
+	  Changed the default in input_cdr_buffer_allocator to
+	  TAO_ALLOCATOR_THREAD_LOCK instead of TAO_ALLOCATOR_NULL_LOCK.
+	  
 Tue Nov 21 12:06:09 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/Benchmark/interceptors.h:	  
