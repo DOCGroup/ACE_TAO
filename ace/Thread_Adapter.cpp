@@ -59,8 +59,25 @@ ACE_Thread_Adapter::invoke (void)
   // pointer directly (it's stored in thread-specific storage), so
   // it's ok to dereference it here and only store it as a
   // reference.
+
+  // Except if it is null, then the thr_mgr() method crashes.
+  // -jxh
+
   if (this->thr_mgr () != 0)
     {
+      ACE_Thread_Exit *exit_hook_instance = ACE_Thread_Exit::instance ();
+      if (exit_hook_instance == 0)
+        {
+          // Using a ACE_Thread_Exit that was created off the
+          // stack gives NT problems.  So, instead, we wait
+          // half a second and then try again.
+
+          ACE_OS::sleep (ACE_Time_Value (0, 500000));
+          exit_hook_instance = ACE_Thread_Exit::instance ();
+
+          // ACE_ASSERT (exit_hook_instance);
+        }
+
       ACE_Thread_Exit &exit_hook = *ACE_Thread_Exit::instance ();
       // Keep track of the <Thread_Manager> that's associated with this
       // <exit_hook>.

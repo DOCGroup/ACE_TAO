@@ -1,3 +1,14 @@
+Mon Oct  2 18:49:06 PDT 2000 James Hu <jxh@entera.com>
+
+	* ace/Thread_Adapter.cpp:
+
+	  If the TSS instance of the ACE_Thread_Exit class fails to
+	  create, the application will crash.  The new code will detect
+	  the failure, wait half a second, and try again.  This
+	  solution, while cheesy, corrects a problem Entera
+	  encountered, and avoids the problems my previous attempt
+	  caused with ACE.
+
 Mon Oct  2 13:38:44 2000  Ossama Othman  <ossama@uci.edu>
 
 	* examples/QOS/QoS_Signal_Handler.cpp:
