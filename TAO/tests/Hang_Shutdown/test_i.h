@@ -27,7 +27,7 @@ namespace TAO
       virtual void send_stuff (const char* str,
                                CORBA::Boolean flag
                                ACE_ENV_ARG_DECL_NOT_USED)
-        ACE_THROW ((CORBA::SystemException))
+        ACE_THROW_SPEC ((CORBA::SystemException))
       {
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) - [%C]\n", str));
