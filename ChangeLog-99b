@@ -140,7 +140,7 @@ Wed Mar 24 15:31:27 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
           Changed the implementation of the High Resolution Timer on
           Win32 to use QueryPerformanceCounter instead of assembly code.
-          The docs also say that this is MP-safe.  Thanks to Gregory
+          The docs also say that this is MP-safe.  Thanks to Gregory D.
           Fee <gdf2@cec.wustl.edu> for suggesting this.
 
         * Profile_Timer.cpp:
