@@ -11,6 +11,7 @@
 #define _TAO_IDL_TESTC_H_
 
 #include "tao/corba.h"
+#include "Request_Info.h" // Shoudl be in tao
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 #include "ace/streams.h"
@@ -242,9 +243,31 @@ private:
   void operator= (const Visual &);
 };
 
+#if (TAO_HAS_INTERCEPTORS == 1)
+// Is this in the right place?
+class ClientRequest_Info_normal : public ClientRequest_Info
+{
+public:
+   ClientRequest_Info_normal (char * operation,
+                              IOP::ServiceContextList &service_context_list,               
+                              CORBA::Object * target,
+                              CORBA::Long &arg, // argument to <normal>
+                              CORBA::Environment &ACE_TRY_ENV =
+                              TAO_default_environment ());
 
+  virtual Dynamic::ParameterList * arguments (CORBA::Environment &ACE_TRY_ENV =
+                                              TAO_default_environment ());
+
+private:
+  CORBA::Long &arg_; 
+  // An argument which might have to be put into the ParameterList and returned dynamically
+  
+  // Theres just the System Exception, do i put that too in the exception list?
+
+  // What about Request Context?
+};
+#endif /* TAO_HAS_INTERCEPTORS */
 #endif /* end #if !defined */
-
 TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Visual;
 
 
