@@ -1891,7 +1891,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << derived->full_skel_name ()
                           << "_ptr) obj;" << be_nl;
                       *os << ancestor->full_skel_name ()
-                          << "::_get_" << d->local_name ()
+                          << "::_set_" << d->local_name ()
                           << "_skel (" << be_idt << be_idt_nl
                           << "req," << be_nl
                           << "(" << ancestor->full_skel_name ()
