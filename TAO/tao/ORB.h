@@ -410,11 +410,13 @@ public:
   // @@EXC@@ Add the ACE_THROW_SPEC for these two functions
 
   CORBA_Object_ptr resolve_initial_references (const CORBA::String name,
-                                               CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
-
+                                               CORBA_Environment &TAO_IN_ENV =	
+                                                 CORBA::default_environment ());
+						         
   CORBA_Object_ptr resolve_initial_references (const CORBA::String name,
                                                ACE_Time_Value *timeout,
-                                               CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                                               CORBA_Environment &TAO_IN_ENV = 	
+                                                 CORBA::default_environment ());
   // This method acts as a mini-bootstrapping Naming Service, which is
   // provided by the ORB for certain well-known object references.
   // TAO supports the "NameService", "TradingService", "RootPOA", and
@@ -429,7 +431,8 @@ public:
   // <resolve_initial_references> specification.
 
   // Unimplemented function - throws CORBA::NO_IMPLEMENT.
-  CORBA_ORB_ObjectIdList_ptr list_initial_services (void);
+  CORBA_ORB_ObjectIdList_ptr list_initial_services (CORBA_Environment &TAO_IN_ENV = 	
+                                                      CORBA::default_environment ());
 
   // = TAO-specific extensions to the CORBA specification.
 
