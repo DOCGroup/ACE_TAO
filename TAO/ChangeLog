@@ -1,3 +1,381 @@
+Wed Feb 19 12:52:06 2003  Heather Drury  <oci@cs.wustl.edu>
+
+        * TAO version 1.3.1 released.
+
+Mon Feb 17 15:37:47 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/RTCORBA/Persistent_IOR/client.bor: Linked the client with
+	  RTCORBA library to get the static constructors in so that they
+	  can do its job. 
+
+Mon Feb 17 15:26:32 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/RTCORBA/MT_Client_Protocol_Priority/client.conf: This file
+	  missed the previous checkin somehow. Adding this file to the
+	  repo. 
+
+Mon Feb 17 09:09:54 2003  Heather Drury  <drury_h@ociweb.com>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.cpp: Fixed compile error
+          that was happening because the base class signature for 
+          establish_components() did not match the derived class method
+          signature.
+
+Sat Feb 15 10:14:08 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * examples/RTCORBA/Activity/Activity.h: Fixed compile errors in
+          builds where exceptions have been turned off.
+
+Fri Feb 14 21:12:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_module.cpp:
+
+          Changed a misapplied static_cast to const_cast.
+
+Fri Feb 14 18:27:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/include/ast_module.h:
+
+          Fixes for an error in IDL_Test, where recent changes to the
+          IDL compiler induced an error in typeprefix handling, and
+          a bug reported by Will Christhof <Will.Christhof@krones.de>
+          in #pragma prefix handling.
+
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Cosmetic fix.
+
+        * tests/IDL_Test/main.cpp:
+
+          Changed error reporting and handling to allow multiple
+          errors to be reported in one run, and to allow the ORB
+          and POA to clean up at exit whether there have been errors
+          or not.
+
+Fri Feb 14 14:37:55 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_predefined_type.cpp (compute_repoID):
+
+          Fixed function to catch a reference to CORBA::Object
+          in an IDL file. The repository ID must be handled as
+          a special case, since this node type is not looked up
+          in the AST.
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+          Fixed incorrect typecode generation for members of type
+          CORBA::Object. Thanks to Ferran Boladeres Salvadó <bds@iis.fhg.de>
+          for sending in the example code that uncovered the bug.
+
+Fri Feb 14 18:39:01 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+          If you do:
+          ACE_DEBUG((LM_DEBUG, "%p" ));
+          to print errno, then that is wrong and will crash.
+
+          You need to do:
+          ACE_DEBUG((LM_DEBUG, "%p", "somestring ));
+          I've changed things to be consistent:
+          ACE_DEBUG((LM_DEBUG, "errno: %d %m", errno));
+
+Fri Feb 14 09:12:12 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.conf: New file
+          with the scheduling policy information for the client.
+
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.conf: Added the
+          scheduling policy information for the server.
+
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl: Sript now
+          use the above configuration files when running the test.
+
+        * tests/RTCORBA/MT_Client_Protocol_Priority/svc.conf: Removed from
+          the repository.
+
+Fri Feb 14 08:35:14 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * examples/RTCORBA/Activity/Activity.cpp: Fixed compile errors in
+          builds where exceptions have turned off. Thanks to Pradeep Gore
+          for sending the patches.
+
+Fri Feb 14 12:02:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/catior/Makefile.bor:
+          Fixed this BCB makefile
+
+Thu Feb 13 19:30:55 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * tests/RTCORBA/Persistent_IOR/Makefile: Linked the client with
+          RTCORBA library.
+
+Thu Feb 13 15:15:29 2003  Priyanka Gontla  <pgontla@ociweb.com>
+
+        * tao/MCAST_Parser.cpp (multicast_query):
+          Modified the diagnostic message that Craig added with the
+          changelog entry
+
+          Wed Feb 12 00:45:04 UTC 2003  Craig Rodrigues <crodrigu@bbn.com>
+
+          to reflect the actual service name instead of being NameService
+          always. Added a service_name check to print out the NameService
+          related debugging message if it is indeed NameService.
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+          A change which I did a while ago seemed to be missing. Nanbor
+          applied the relevant fixes for Windows. Removing the ifdefs
+          around the same code so that even for non-windows, the whole
+          hostname including the domain is used.
+
+
+Thu Feb 13 17:45:35 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * utils/catior/Makefile: Do not build if RTCORBA is turned off.
+
+Thu Feb 13 17:41:37 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/svc.conf: Added the
+          scheduling policy to the configuration file.
+
+Thu Feb 13 16:35:24 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * tests/Exposed_Policies/svc.conf: Configuration file for
+          scheduling policy.
+
+Thu Feb 13 13:32:50 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * utils/catior/catior.dsp: Fixed the debug and release configurations.
+
+Thu Feb 13 14:21:43 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * utils/catior/catior.cpp: Fixed warnings and errors on various
+          platforms.
+
+Thu Feb 13 12:43:27 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+        * examples/RTCORBA/Activity/Periodic_Task.h:
+        * examples/RTCORBA/Activity/Thread_Task.cpp:
+        * examples/RTCORBA/Activity/Thread_Task.h:
+          Added missing code to convert CORBA priority to native priority
+          when activating the thread task.
+
+          Made the following changes to get the example running in the
+          autobuilds:
+        * examples/RTCORBA/Activity/run_test.pl:
+          This runs a simple test of the activity example. This test is
+          meant to be run in non-root mode.
+        * examples/RTCORBA/Activity/Activity.cpp:
+        * examples/RTCORBA/Activity/Activity.h:
+          - Added code to obtain the Priority Mapping Manager.
+          - Added a "-Started_Flag <file_name> " option. When an activity instance
+          completes its setup, it generates a file to signal the perl
+          script that it has finished initialization.
+        * examples/RTCORBA/Activity/README:
+          Added a new section on the new command-line option.
+        * examples/RTCORBA/Activity/server.conf:
+        * examples/RTCORBA/Activity/client.conf:
+          These conf files are read by run_test.pl to make a sanity check
+          on the activity program.
+
+Thu Feb 13 10:30:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_module.cpp:
+
+          Fixed an error in comparing the prefixes of a module and a previous
+          opening of that module. The error appears only when the previous
+          module opening is in an included IDL file, and the IDL compiler
+          is executed from a subdirectory of the one where the IDL files
+          are located. Thanks to Will Christof <Will.Christof@krones.de>
+          for reporting the bug and for providing the example IDL files and
+          build conditions. This closes [BUGID:1442].
+
+Wed Feb 12 14:58:46 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * tao/IIOP_Transport.cpp: Methods tear_listen_point_list () and
+          get_listen_point () accessed the connection_handler without any
+          protection and violated the protocol that was set in pre-1.2
+          timeframe.
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Same changes as
+          above. This code needs refactoring.
+
+        * tao/Transport.h: Cosmetic fix.
+
+Wed Feb 12 12:32:57 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * tests/RTCORBA/Client_Protocol/svc.conf:
+        * tests/RTCORBA/Server_Protocol/server_iiop.conf:
+        * tests/RTCORBA/Server_Protocol/server_reverse.conf:
+        * tests/RTCORBA/Server_Protocol/server_reverse_nt.conf:
+        * tests/RTCORBA/Server_Protocol/server_shmiop.conf:
+        * tests/RTCORBA/Server_Protocol/server_uiop.conf:  Added
+          scheduling policy information to the above configuration
+          files. This should fix the problems that shows up in our daily
+          builds.
+
+Wed Feb 12 12:14:13 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * utils/catior/catior.cpp: Fixed a warning in g++ builds.
+
+Wed Feb 12 00:45:04 UTC 2003  Craig Rodrigues <crodrigu@bbn.com>
+
+        * tao/MCAST_Paser.cpp: Add improved diagnostic message when
+          locating NameService via multicast fails.
+
+Wed Feb 12 00:19:58 UTC 2003  Craig Rodrigues <crodrigu@bbn.com>
+
+        * tao/RTCORBA/Linear_Priority_Mapping.cpp (to_CORBA):
+          Unconditionally display error message upon priority mapping failure.
+        * tao/RTCORBA/RT_Protocol_Hooks.cpp: Display errno value and message
+          if setting the native thread priority fails.
+        * tao/RTCORBA/RT_ORBInitiializer.h:
+          Create a new class member variable sched_policy_flags_.
+          The value of sched_policy_flags_ is a bitmask value that can be one of
+          THR_SCHED_RR, THR_SCHED_FIFO, THR_SCHED_DEFAULT, etc.
+          sched_policy_flags_ value is stored in the
+          TAO_ORB_Core TAO_ORB_Parameters structure.
+          In TAO_Thread_Lane::create_dynamic_threads(), the sched_policy_flags_
+          is passed to the ACE_Task_Base::activate() call for creating new
+          threads for a RTCORBA thread pool.
+
+          sched_policy_ is an integer value that can be one of
+          ACE_SCHED_RR, ACE_SCHED_FIFO, ACE_SCHED_OTHER, etc.  This value
+          can be passed directly to the newly modified ACE_OS::thr_setpriority()
+          call.  For POSIX pthreads, this value maps directly to the
+          policy parameter of the pthread_setschedparam() call.
+          ACE_SCHED_* values can also be passed directly to ACE_Sched_Params
+          for determining the minimum and maximum priority value for a particular
+          policy.
+
+        * tao/RTCORBA/RT_ORBInitiializer.cpp:
+          Change all assignments of sched_policy_ variable to use
+          ACE_SCHED_* values and not THR_SCHED_* values.
+          In the TAO_RT_ORBInitializer constructor, set sched_policy_flags_
+          to the appropriate THR_SCHED_* values depending on what ACE_SCHED_*
+          value is specified.
+
+          In TAO_RT_ORBInitializer::pre_init(), pass sched_policy_flags_
+          to orb_core()->orb_params()->sched_policy(), since this value
+          will be later used in the activate() call in
+          TAO_Thread_Lane::create_dynamic_threads().
+
+          At the end of TAO_RT_ORBInitializer::pre_init(), set the policy
+          of the ACE_Thread::self() to the policy specified by -ORBSchedPolicy, and
+          set the priority of ACE_Thread::self() to the lowest priority
+          of the specified policy.  If this is not done, then errors will
+          occur on Linux, because the default policy in ACE_OS::thr_setprio()
+          is 0 (which maps to SCHED_OTHER), which will cause strange errors
+          when the scheduling policy is set to something else, like SCHED_RR.
+
+          Since the return value of ACE_OS::thr_getprio() can be invalid for
+          a given policy, ie. 0 is valid for SCHED_OTHER, but invalid for
+          SCHED_RR, I then decided to set the priority to the minimum
+          priority of the policy/scheduling class.
+
+          In addition, in RTPortableServer's
+          TAO_RT_Servant_Dispatcher::post_invoke() function, the priority
+          of the thread will be reset to what it was before the invocation.
+          This means that on platforms which use pthread_setschedparam(),
+          the initial priority and policy of the thread need to be
+          set to acceptable initial values, otherwise CORBA::DATA_CONVERSION
+          errors will be thrown in this TAO_RT_Servant_Dispatcher::post_invoke().
+
+Tue Feb 11 13:58:23 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * orbsvcs/vc7_orbsvcs.mwc: Added this temporary file that
+          specifies nightly VC7 build targets under orbsvcs.
+
+        * tao/tao.mpc: Added LF_Invocation_Event.cpp and LF_CH_Event.cpp.
+
+Tue Feb 11 12:48:12 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        * utils/catior/catior.cpp:
+        * utils/catior/Makefile:
+          Modified catior to better print Priority Model Policy.
+          Required changes to Makefile to now link wiht RTCORBA which
+          should be ok since RT CORBA is built by default. Did not
+          wish to have two versions of catior pgm, or some conditional
+          compiles.
+
+Tue Feb 11 07:11:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DLL_ORB/client.bor:
+        * tests/DLL_ORB/server.bor:
+          Fixed errors in these BCB makefiles.
+
+Mon Feb 10 17:12:30 2003  Otis Nyandoro <o.nyandoro@ee.wits.ac.za>
+
+        * tests/RTCORBA/check_supported_priorities.cpp: Changed the
+          function to take in a ORB pointer. The function now queries the
+          ORB to get the scheduling policy in place before checking the
+          priority levels. Using SCHED_OTHER as it was done before doesnt
+          work well on Linux and it was broken.
+
+        * tests/RTCORBA/Banded_Connections/client.cpp:
+        * tests/RTCORBA/Banded_Connections/server.cpp:
+        * tests/RTCORBA/Client_Propagated/client.cpp:
+        * tests/RTCORBA/Client_Propagated/server.cpp:
+        * tests/RTCORBA/Collocation/Collocation.cpp:
+        * tests/RTCORBA/Destroy_Thread_Pool/Destroy_Thread_Pool.cpp:
+        * tests/RTCORBA/Explicit_Binding/client.cpp:
+        * tests/RTCORBA/Explicit_Binding/server.cpp:
+        * tests/RTCORBA/Linear_Priority/client.cpp:
+        * tests/RTCORBA/Linear_Priority/server.cpp:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.cpp:
+        * tests/RTCORBA/ORB_init/ORB_init.cpp:
+        * tests/RTCORBA/Persistent_IOR/client.cpp:
+        * tests/RTCORBA/Persistent_IOR/server.cpp:
+        * tests/RTCORBA/Policy_Combinations/client.cpp:
+        * tests/RTCORBA/Policy_Combinations/server.cpp:
+        * tests/RTCORBA/Private_Connection/client.cpp:
+        * tests/RTCORBA/Private_Connection/server.cpp:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/server.cpp:
+        * tests/RTCORBA/RTMutex/server.cpp:
+        * tests/RTCORBA/Server_Declared/client.cpp:
+        * tests/RTCORBA/Server_Declared/server.cpp:
+        * tests/RTCORBA/Server_Protocol/client.cpp:
+        * tests/RTCORBA/Server_Protocol/server.cpp:
+        * tests/RTCORBA/Thread_Pool/client.cpp:
+        * tests/RTCORBA/Thread_Pool/server.cpp: We now do a check on
+          supported priorities after the ORB is initialized.
+
+        * tests/RTCORBA/Banded_Connections/svc.conf:
+        * tests/RTCORBA/Explicit_Binding/svc.conf:
+        * tests/RTCORBA/Linear_Priority/svc.conf:
+        * tests/RTCORBA/Policy_Combinations/svc.conf: Added scheduling
+          policy to all the configurations.
+
+        * tests/RTCORBA/Client_Propagated/svc.conf:
+        * tests/RTCORBA/Collocation/svc.conf:
+        * tests/RTCORBA/Destroy_Thread_Pool/svc.conf:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/svc.conf:
+        * tests/RTCORBA/ORB_init/svc.conf:
+        * tests/RTCORBA/Persistent_IOR/svc.conf:
+        * tests/RTCORBA/Policies/svc.conf:
+        * tests/RTCORBA/Private_Connection/svc.conf:
+        * tests/RTCORBA/RTMutex/svc.conf:
+        * tests/RTCORBA/Server_Declared/svc.conf:
+        * tests/RTCORBA/Server_Protocol/svc.conf:
+        * tests/RTCORBA/Thread_Pool/svc.conf: New files added with
+          scheduling information. This is not perfect for all cases, but a
+          good starting point for the bug reports that showed up about
+          RTCORBA on Linux.
+
+          We need to relook into stressing these tests after 1.3.1 using
+          multiple scheduling policies. We have very less time to within
+          the short timeframe available.
+
+Mon Feb 10 19:28:43 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Makefile.bor:
+          Added AMH_Oneway directory
+
 Fri Feb  7 14:04:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
@@ -8,56 +386,56 @@ Fri Feb  7 14:04:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           read the number of operations or attributes the parent
           has. If an interface has no operations, the operations
           ACE_Configuration subsection will not have been created,
-          likewise for attributes. Thanks to Matej Sekoranja 
+          likewise for attributes. Thanks to Matej Sekoranja
           <matej.sekoranja@ijs.si> for pointing out the potential bug.
 
 Thu Feb  6 16:47:02 2003  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* tests/AMH_Oneway
-	* tests/AMH_Oneway/AMH_Oneway.dsw
-	* tests/AMH_Oneway/Makefile
-	* tests/AMH_Oneway/Makefile.bor
-	* tests/AMH_Oneway/Test.idl
-	* tests/AMH_Oneway/client.bor
-	* tests/AMH_Oneway/client.cpp
-	* tests/AMH_Oneway/client.dsp
-	* tests/AMH_Oneway/run_test.pl
-	* tests/AMH_Oneway/server.bor
-	* tests/AMH_Oneway/server.cpp
-	* tests/AMH_Oneway/server.dsp
-	* tao/PortableServer/AMH_Response_Handler.cpp:
+        * tests/AMH_Oneway
+        * tests/AMH_Oneway/AMH_Oneway.dsw
+        * tests/AMH_Oneway/Makefile
+        * tests/AMH_Oneway/Makefile.bor
+        * tests/AMH_Oneway/Test.idl
+        * tests/AMH_Oneway/client.bor
+        * tests/AMH_Oneway/client.cpp
+        * tests/AMH_Oneway/client.dsp
+        * tests/AMH_Oneway/run_test.pl
+        * tests/AMH_Oneway/server.bor
+        * tests/AMH_Oneway/server.cpp
+        * tests/AMH_Oneway/server.dsp
+        * tao/PortableServer/AMH_Response_Handler.cpp:
 
-	  Test to test Oneways and AMH. Client make 10 calls. Servers
-	  counts the calls. Before thr fix, the server hung and this
-	  generated an error mesg when the perl script (run_test.pl) ran.
-	
+          Test to test Oneways and AMH. Client make 10 calls. Servers
+          counts the calls. Before thr fix, the server hung and this
+          generated an error mesg when the perl script (run_test.pl) ran.
+
 Thu Feb 06 18:35:05 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/orbsvcs/Notify/Proxy_T.h:
- 	* orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h:
- 	* orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.h:
- 	* orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h:
- 	* orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Proxy_T.h:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h:
 
-	  Added the patch from Bruce MacDonald <brucemac@netcomuk.co.uk> to get
-	  Notification compiling on VC7/.NET 
-	
+          Added the patch from Bruce MacDonald <brucemac@netcomuk.co.uk> to get
+          Notification compiling on VC7/.NET
+
 Wed Feb  5 12:10:08 2003  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* tao/PortableServer/AMH_Response_Handler.cpp:
+        * tao/PortableServer/AMH_Response_Handler.cpp:
 
-	  Added fix so that oneways work with AMH. Because of semantics of
-	  oneways, the client doesn't expect any reply. The RH doesn't
-	  know this and thinking that a RH is being destroyed before being
-	  sent, it tries to send a exception to the client. This hangs the
-	  server. The current fix handles oneways separately and doesn't
-	  try and be 'intelligent' in the RH destruction process (and
-	  doesn't try and send an exception to the cleint). Thanks to
-	  Andrey Nechypurenko@mchp <Andrey.Nechypurenko@mchp.siemens.de>
-	  for reporting a problem that led to uncovering of this
-	  problem. Thanks to Balachandran Natarajan
-	  <bala@isis-server.isis.vanderbilt.edu> for the suggestion to
-	  retrieve the state from Server_Request to differentiate oneways.
+          Added fix so that oneways work with AMH. Because of semantics of
+          oneways, the client doesn't expect any reply. The RH doesn't
+          know this and thinking that a RH is being destroyed before being
+          sent, it tries to send a exception to the client. This hangs the
+          server. The current fix handles oneways separately and doesn't
+          try and be 'intelligent' in the RH destruction process (and
+          doesn't try and send an exception to the cleint). Thanks to
+          Andrey Nechypurenko@mchp <Andrey.Nechypurenko@mchp.siemens.de>
+          for reporting a problem that led to uncovering of this
+          problem. Thanks to Balachandran Natarajan
+          <bala@isis-server.isis.vanderbilt.edu> for the suggestion to
+          retrieve the state from Server_Request to differentiate oneways.
 
 Wed Feb  5 13:34:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -70,26 +448,26 @@ Wed Feb  5 13:34:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           CORBA::FullInterfaceDescription, contains fields for both
           attributes and operations, it doesn't seem necessary to include
           the _get_* and _set_* operations in the operation list. It also
-          seems that this behavior will make the TAO IFR more 
+          seems that this behavior will make the TAO IFR more
           iteroperable with IFRs from other ORB vendors. Thanks to
           Matej Sekoranja <matej.sekoranja@ijs.si> for pointing this out.
 
 Wed Feb  5 10:02:10 2003  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp (loads):
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp (loads):
 
-	  Removed "ACE_OS::" scope modifier from fscanf() call.  fscanf()
-	  doesn't exist in that scope.  Fixes compile-time problems
-	  revealed by some compilers.  Thanks to Matthias Blankenhaus
-	  <matthias@ingrian.com> for reporting the problem.
+          Removed "ACE_OS::" scope modifier from fscanf() call.  fscanf()
+          doesn't exist in that scope.  Fixes compile-time problems
+          revealed by some compilers.  Thanks to Matthias Blankenhaus
+          <matthias@ingrian.com> for reporting the problem.
 
 Wed Feb  5 10:59:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_enum/enum_cs.cpp:
 
-	  Added a missing check for typecode support before generating
-	  the typecode for an enum. Thanks to Mario Hofmann
-	  <Mario.Hofmann@SystemaGmbH.de> for reporting the bug.
+          Added a missing check for typecode support before generating
+          the typecode for an enum. Thanks to Mario Hofmann
+          <Mario.Hofmann@SystemaGmbH.de> for reporting the bug.
 
 Wed Feb  5 09:44:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -113,11 +491,11 @@ Tue Feb  4 13:23:51 2003  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Sun Feb 02 21:01:12 2003  Frank Hunleth  <frank@hunleth.com>
 
-	* orbsvcs/tests/Miop/McastHello/run_test.pl: Fixed a race condition
-	  in the test script that could sometime cause the client to send
-	  its requests before the second server starts.  This occurs under
-	  WinXP when using the Microsoft Loopback Adapter.  Thanks to
-	  Wolfgang Schroeder <cpp_kurs@arcor.de> for the configuration.
+        * orbsvcs/tests/Miop/McastHello/run_test.pl: Fixed a race condition
+          in the test script that could sometime cause the client to send
+          its requests before the second server starts.  This occurs under
+          WinXP when using the Microsoft Loopback Adapter.  Thanks to
+          Wolfgang Schroeder <cpp_kurs@arcor.de> for the configuration.
 
 Sun Feb  2 13:05:12 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -128,38 +506,38 @@ Sun Feb  2 13:05:12 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Feb  1 09:03:55 2003  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp (loads):
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp (loads):
 
-	  Added missing completion status argument to CORBA:NO_IMPLEMENT
-	  constructor call.  Fixes compile-time problems for some
-	  compilers (e.g. egcs 1.1.2).  Thanks to Matthias Blankenhaus
-	  <matthias@ingrian.com> for reporting the problem.
+          Added missing completion status argument to CORBA:NO_IMPLEMENT
+          constructor call.  Fixes compile-time problems for some
+          compilers (e.g. egcs 1.1.2).  Thanks to Matthias Blankenhaus
+          <matthias@ingrian.com> for reporting the problem.
 
 Fri Jan 31 17:07:20 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	Fix for crash in Notify due to race condition in the Worker Task
+        Fix for crash in Notify due to race condition in the Worker Task
         shutdown. This crash showed up on the SunOS_Forte build.
 
-	* orbsvcs/orbsvcs/Notify/Worker_Task.h:
-	  The is a Refcountable object now.
+        * orbsvcs/orbsvcs/Notify/Worker_Task.h:
+          The is a Refcountable object now.
 
-	* orbsvcs/orbsvcs/Notify/Reactive_Task.cpp:
-	* orbsvcs/orbsvcs/Notify/Reactive_Task.h:
-	  Modifications for Refcounting support.
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.h:
+          Modifications for Refcounting support.
 
-	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
-	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
-	  Instead of relying on the thread count, the <close> method
-	  decrements the count on the Task Object.
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+          Instead of relying on the thread count, the <close> method
+          decrements the count on the Task Object.
 
-	* orbsvcs/orbsvcs/Notify/Object.cpp:
-	  Apply refcounting to Task objects.
+        * orbsvcs/orbsvcs/Notify/Object.cpp:
+          Apply refcounting to Task objects.
 
 Fri Jan 31 14:25:07 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp: Fixed a
-	  unused warning in the daily builds. Thanks to Heather Drury for
-	  letting me know.
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp: Fixed a
+          unused warning in the daily builds. Thanks to Heather Drury for
+          letting me know.
 
 Fri Jan 31 07:47:32 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -176,28 +554,28 @@ Fri Jan 31 07:47:32 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jan 30 17:30:04 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/IIOP_Connection_Handler.h: Added a new protected constructor
-	  that can be used by the derived classes. This constructor just
-	  initializes itself and its base classes without initializing the
-	  transport. This is needed since the derived classes may want to
-	  initialize its own version of the transport.
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.h: Added a new protected constructor
+          that can be used by the derived classes. This constructor just
+          initializes itself and its base classes without initializing the
+          transport. This is needed since the derived classes may want to
+          initialize its own version of the transport.
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp: Use the
-	  new constructor to initialize the base class.
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp: Use the
+          new constructor to initialize the base class.
 
-	  This fixes [BUG 1421]. Thanks to Jon Reis and Wayne Erchak for
-	  reporting the problem.
+          This fixes [BUG 1421]. Thanks to Jon Reis and Wayne Erchak for
+          reporting the problem.
 
 Thu Jan 30 10:40:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_visitor_context.h:
 
-	  If there is a system macro defined called 'interface', which
-	  there is on some versions of MingW, redefine
-	  it around the declaration of class be_visitor_context, which
-	  contains a method by that name. Thanks to Johnny Willemsem
-	  <jwillemsem@remedy.nl> for sending in the patch.
+          If there is a system macro defined called 'interface', which
+          there is on some versions of MingW, redefine
+          it around the declaration of class be_visitor_context, which
+          contains a method by that name. Thanks to Johnny Willemsem
+          <jwillemsem@remedy.nl> for sending in the patch.
 
 Thu Jan 30 07:03:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -210,34 +588,34 @@ Thu Jan 30 07:03:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Jan 29 12:43:06 2003  Frank Hunleth  <frank@hunleth.com>
 
-	* tao/ORB_Core.{cpp,h}:  Encapsulated all static members of
-	  TAO_ORB_Core into a TAO_ORB_Core_Static_Resources singleton.  By
-	  accessing all of these variables through the singleton, this
-	  alleviates the constructor call ordering problem inwhich
-	  constructors in other compliation units (a.k.a some TAO shared
-	  libraries) are called before those in TAO_ORB_Core and modify
-	  the TAO_ORB_Core static variables before they are constructed.
-	  This caused segfaults when it happened, and seemed to affect
-	  OpenBSD the most.
+        * tao/ORB_Core.{cpp,h}:  Encapsulated all static members of
+          TAO_ORB_Core into a TAO_ORB_Core_Static_Resources singleton.  By
+          accessing all of these variables through the singleton, this
+          alleviates the constructor call ordering problem inwhich
+          constructors in other compliation units (a.k.a some TAO shared
+          libraries) are called before those in TAO_ORB_Core and modify
+          the TAO_ORB_Core static variables before they are constructed.
+          This caused segfaults when it happened, and seemed to affect
+          OpenBSD the most.
 
-	  Note that this change is selfcontained and does not affect any
-	  other classes.
+          Note that this change is selfcontained and does not affect any
+          other classes.
 
 Wed Jan 29 12:15:31 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tests/Bug_1361_Regression/run_test.pl: Reduced the number of
-	  iterations  that this test runs. Removed -ORBdebuglevel from teh
-	  scripts. This was used for debugging purposes long back.
+        * tests/Bug_1361_Regression/run_test.pl: Reduced the number of
+          iterations  that this test runs. Removed -ORBdebuglevel from teh
+          scripts. This was used for debugging purposes long back.
 
-	* tests/Bug_1361_Regression/Server_Thread_Pool.cpp: Removed a
-	  debug statement where we print exceptions. This is expected in
-	  this test.
+        * tests/Bug_1361_Regression/Server_Thread_Pool.cpp: Removed a
+          debug statement where we print exceptions. This is expected in
+          this test.
 
 Tue Jan 28 15:59:45 2003  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* docs/Options.html:
-	  Added documentation on support to ORBListenEndpoints, ORBId and
-	  ORBServerId  ORB options.
+        * docs/Options.html:
+          Added documentation on support to ORBListenEndpoints, ORBId and
+          ORBServerId  ORB options.
 
 Tue Jan 28 16:07:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -256,125 +634,125 @@ Tue Jan 28 16:07:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Jan 28 14:27:01 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/orbsvcs/Notify/Properties.cpp:
-	  In case no conf. file is specified, the EC will default to
-	  reactive concurrency.  This fixes the problem of the Notify
-	  crashing without any conf. file. Thanks to Dennis Sporcic
-	  <dennis@hsa.com.au> and Frederic Langlet
-	  <Frederic.Langlet@alcatel.com> for reporting this problem.
+        * orbsvcs/orbsvcs/Notify/Properties.cpp:
+          In case no conf. file is specified, the EC will default to
+          reactive concurrency.  This fixes the problem of the Notify
+          crashing without any conf. file. Thanks to Dennis Sporcic
+          <dennis@hsa.com.au> and Frederic Langlet
+          <Frederic.Langlet@alcatel.com> for reporting this problem.
 
 Mon Jan 27 23:01:43 2003  Frank Hunleth  <frank@hunleth.com>
 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:  Fixed code
-	  that was supposed to fake out a good error return when the call
-	  to send() fails.  This fixes an exception break on WinXP when
-	  the network cable is unplugged and a program makes a MIOP
-	  request.  The justification behide ignoring the error is
-	  explained further in the code, but basically, it takes advantage
-	  of the fact that MIOP is unreliable by specification, and hopes
-	  that the source of the error will be corrected.  Thanks to
-	  Antonio Leonforte <a.leonforte@mclink.it> for pointing out the
-	  exception break.
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:  Fixed code
+          that was supposed to fake out a good error return when the call
+          to send() fails.  This fixes an exception break on WinXP when
+          the network cable is unplugged and a program makes a MIOP
+          request.  The justification behide ignoring the error is
+          explained further in the code, but basically, it takes advantage
+          of the fact that MIOP is unreliable by specification, and hopes
+          that the source of the error will be corrected.  Thanks to
+          Antonio Leonforte <a.leonforte@mclink.it> for pointing out the
+          exception break.
 
 Mon Jan 27 19:16:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	Made the following changes to fix the race related crashes of
-	Notify seen in orbsvcs/tests/Notify/performance-tests/RedGreen -
+        Made the following changes to fix the race related crashes of
+        Notify seen in orbsvcs/tests/Notify/performance-tests/RedGreen -
 
-	* orbsvcsy/orbsvcs/Notify/Builder.cpp:
-	  Added a refcount on each parent object per child object.
-	  This way the parent is always alive when the child is destroyed.
-	  When the child is destroyed, the parent count is decremented.
-	  The ensures a bottom-up destruction of the Notify object tree.
+        * orbsvcsy/orbsvcs/Notify/Builder.cpp:
+          Added a refcount on each parent object per child object.
+          This way the parent is always alive when the child is destroyed.
+          When the child is destroyed, the parent count is decremented.
+          The ensures a bottom-up destruction of the Notify object tree.
 
-	* orbsvcs/orbsvcs/Notify/Object.cpp:
-	* orbsvcs/orbsvcs/Notify/Object.h:
-	  Made the TAO_NS_Object class a TAO_NS_Refcountable. Moved the
-	  <has_shutdown> method to this class from TAO_NS_Object_T.
-	  The <shutdown> method sets the <shutdown_> flag atomically.
-	  It returns 1 if this object has been shutdown already. All
-	  derived classes should consult the TAO_NS_Object::shutdown
-	  method's return value to determine if the shutdown should
-	  proceed in case of multiple calls to shutdown.
+        * orbsvcs/orbsvcs/Notify/Object.cpp:
+        * orbsvcs/orbsvcs/Notify/Object.h:
+          Made the TAO_NS_Object class a TAO_NS_Refcountable. Moved the
+          <has_shutdown> method to this class from TAO_NS_Object_T.
+          The <shutdown> method sets the <shutdown_> flag atomically.
+          It returns 1 if this object has been shutdown already. All
+          derived classes should consult the TAO_NS_Object::shutdown
+          method's return value to determine if the shutdown should
+          proceed in case of multiple calls to shutdown.
 
-	* orbsvcs/orbsvcs/Notify/Object_T.cpp:
-	* orbsvcs/orbsvcs/Notify/Object_T.h:
-	  Decrement the count on this Objects parent in the destructor.
-	  Changed the signature of destroy similar to <shutdown> to avoid
-	  multiple destoy's.
+        * orbsvcs/orbsvcs/Notify/Object_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Object_T.h:
+          Decrement the count on this Objects parent in the destructor.
+          Changed the signature of destroy similar to <shutdown> to avoid
+          multiple destoy's.
 
-	* orbsvcs/orbsvcs/Notify/Container_T.cpp:
-	* orbsvcs/orbsvcs/Notify/Container_T.h:
-	  The <collection_> owned by the Container is destroyed in the
-	  <shutdown> method now. The releases the reference count on child
-	  objects.
+        * orbsvcs/orbsvcs/Notify/Container_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Container_T.h:
+          The <collection_> owned by the Container is destroyed in the
+          <shutdown> method now. The releases the reference count on child
+          objects.
 
-	* orbsvcs/orbsvcs/Notify/EventChannel.cpp:
-	* orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
-	  The <destroy> method checks the return value of base destroy
-	  method before proceeding.
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+          The <destroy> method checks the return value of base destroy
+          method before proceeding.
 
-	* orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.cpp:
-	* orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.h:
-	* orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.inl:
-	  Made the Event_Map_Entry a refcounted object.
-	  The <usage_count_> member is incremented when the <find> method
-	  returns a suitable entry.
-	  The caller is responsible for decrementing the count when it no
-	  longer needs the entry.
+        * orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.h:
+        * orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.inl:
+          Made the Event_Map_Entry a refcounted object.
+          The <usage_count_> member is incremented when the <find> method
+          returns a suitable entry.
+          The caller is responsible for decrementing the count when it no
+          longer needs the entry.
 
-	* orbsvcs/orbsvcs/Notify/Event_Map_T.cpp:
-	* orbsvcs/orbsvcs/Notify/Event_Map_T.h:
-	* orbsvcs/orbsvcs/Notify/Event_Map_T.inl:
-	  <find> method now returns the entry (from which the collection
-	  can be obtained).
-	  The <remove> method decrements the count on the entry instead of
-	  deleteting it.
+        * orbsvcs/orbsvcs/Notify/Event_Map_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Event_Map_T.h:
+        * orbsvcs/orbsvcs/Notify/Event_Map_T.inl:
+          <find> method now returns the entry (from which the collection
+          can be obtained).
+          The <remove> method decrements the count on the entry instead of
+          deleteting it.
 
-	* orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
-	  Obtains the correct map entry and uses the collection in that
-	  entry. The map is released when it is done using it.
-	  Note that the map pointer is guaranteed to be valid because the
-	  Lookup object holds a reference count to the proxy that holds a
-	  count on its parent and so on up to the EventChannel. The
-	  EventChannel only destroys the Event_manager in its destructor.
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+          Obtains the correct map entry and uses the collection in that
+          entry. The map is released when it is done using it.
+          Note that the map pointer is guaranteed to be valid because the
+          Lookup object holds a reference count to the proxy that holds a
+          count on its parent and so on up to the EventChannel. The
+          EventChannel only destroys the Event_manager in its destructor.
 
-	* orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Service.h:
-	  Added a fake <_decr_refcnt> to satisfy the template requirements
-	  from TAO_NS_Object_T. This will be rectified in future revisions.
+        * orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Service.h:
+          Added a fake <_decr_refcnt> to satisfy the template requirements
+          from TAO_NS_Object_T. This will be rectified in future revisions.
 
-	* orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
-	* orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
-	* orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
-	* orbsvcs/orbsvcs/Notify/ProxySupplier.h:
-	  Modified the <shutdown> implementation to follow the checks as
-	  described above.
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.h:
+          Modified the <shutdown> implementation to follow the checks as
+          described above.
 
-	* orbsvcs/orbsvcs/Notify/Timer.h:
-	* orbsvcs/orbsvcs/Notify/Timer_Reactor.cpp:
-	* orbsvcs/orbsvcs/Notify/Timer_Reactor.h:
-	  Made the Timer a refcounted object.
+        * orbsvcs/orbsvcs/Notify/Timer.h:
+        * orbsvcs/orbsvcs/Notify/Timer_Reactor.cpp:
+        * orbsvcs/orbsvcs/Notify/Timer_Reactor.h:
+          Made the Timer a refcounted object.
 
-	* orbsvcs/orbsvcs/Notify/Timer_Queue.cpp:
-	* orbsvcs/orbsvcs/Notify/Timer_Queue.h:
-	  Added an <impl> method to obtain the timer implementation.
+        * orbsvcs/orbsvcs/Notify/Timer_Queue.cpp:
+        * orbsvcs/orbsvcs/Notify/Timer_Queue.h:
+          Added an <impl> method to obtain the timer implementation.
 
-	* orbsvcs/orbsvcs/Notify/Worker_Task.h:
-	  Removed the <init> method which is not required here.
+        * orbsvcs/orbsvcs/Notify/Worker_Task.h:
+          Removed the <init> method which is not required here.
 
-	* orbsvcs/orbsvcs/Notify/Reactive_Task.cpp:
-	* orbsvcs/orbsvcs/Notify/Reactive_Task.h:
-	  Added an <init> method in which the Reactor based timer is
-	  allocated.
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.h:
+          Added an <init> method in which the Reactor based timer is
+          allocated.
 
-	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
-	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
-	  The Timer Queue is allocated in the <init> method.
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+          The Timer Queue is allocated in the <init> method.
 
-	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
-	  Because the timer is now refcounted, we must release it on
-	  shutdown.
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+          Because the timer is now refcounted, we must release it on
+          shutdown.
 
 Mon Jan 27 17:36:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -388,9 +766,9 @@ Mon Jan 27 17:36:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Jan 27 16:47:31 2003  Frank Hunleth  <frank@hunleth.com>
 
-	* orbsvcs/tests/Miop/McastHello/run_test.pl: Fixed incorrect
-	  reference to $SV in error handling code.  Thanks to Craig
-	  Rodrigues for pointing this out.
+        * orbsvcs/tests/Miop/McastHello/run_test.pl: Fixed incorrect
+          reference to $SV in error handling code.  Thanks to Craig
+          Rodrigues for pointing this out.
 
 Mon Jan 27 09:48:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -403,90 +781,90 @@ Mon Jan 27 09:48:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jan 26 17:29:34 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/Leader_Follower.cpp (wait_for_event): Set LFS_TIMEOUT on the
-	  LF_Event only if the follower timesout. The follower could
-	  return with a -1 from wait () even if errors other than timeout
-	  occurs, like connection closure and such.
+        * tao/Leader_Follower.cpp (wait_for_event): Set LFS_TIMEOUT on the
+          LF_Event only if the follower timesout. The follower could
+          return with a -1 from wait () even if errors other than timeout
+          occurs, like connection closure and such.
 
-	* tao/LF_CH_Event.cpp: Added a comment
+        * tao/LF_CH_Event.cpp: Added a comment
 
 Sun Jan 26 17:23:22 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
- 	* tao/Notify_Handler.cpp (TAO_Notify_Handler):
-	* tao/Notify_Handler.h:
+        * tao/Notify_Handler.cpp (TAO_Notify_Handler):
+        * tao/Notify_Handler.h:
 
-	  - Added a new constructor and a create_handler () method which
-	    takes in a transport and the ACE_HANDLE that this handler would
-	    be used for.
+          - Added a new constructor and a create_handler () method which
+            takes in a transport and the ACE_HANDLE that this handler would
+            be used for.
 
-	  - Deprecating the old create_handler () and the constructor.
-	    They have been left there for backward compatibility.
+          - Deprecating the old create_handler () and the constructor.
+            They have been left there for backward compatibility.
 
-	  The above changes were made to get around a problem that Yakov
-	  Becker and Johnny Willemsen observed in one of their
-	  applications. We havent been able to reproduce the problem here
-	  at all. The gist of the problem is
+          The above changes were made to get around a problem that Yakov
+          Becker and Johnny Willemsen observed in one of their
+          applications. We havent been able to reproduce the problem here
+          at all. The gist of the problem is
 
-	   - A server thread after buffering lots of incoming messages
-	     starts processing one of the messages. Keeping the handle
-	     suspended it wakes up another thread in the Reactor.
+           - A server thread after buffering lots of incoming messages
+             starts processing one of the messages. Keeping the handle
+             suspended it wakes up another thread in the Reactor.
 
-	   - The first thread after processing the request tries to write
-	     a reply only to find the socket closed. It starts the
-	     cleanup and disassociates the transport and the handler. So
-	     far so good.
+           - The first thread after processing the request tries to write
+             a reply only to find the socket closed. It starts the
+             cleanup and disassociates the transport and the handler. So
+             far so good.
 
-	   - The second thread that is woken up now tries to get to the
-	     handler and then to the transport to process the queued
-	     messages. But the transport is already disassociated from the
-	     handler and the assert fails.
+           - The second thread that is woken up now tries to get to the
+             handler and then to the transport to process the queued
+             messages. But the transport is already disassociated from the
+             handler and the assert fails.
 
-	   We address this problem by using the transport as the mechanism
-	   to process messages instead of the handler. The above changes
-	   were made to accomodate the change in philosophy.
+           We address this problem by using the transport as the mechanism
+           to process messages instead of the handler. The above changes
+           were made to accomodate the change in philosophy.
 
-	 * tao/Transport.cpp: Used the new method to create the
-	   Notify_Handler.
+         * tao/Transport.cpp: Used the new method to create the
+           Notify_Handler.
 
 Sat Jan 25 18:10:10 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* orbsvcs/tests/Security/MT_IIOP_SSL/Makefile: Fixed dependencies.
-	* orbsvcs/tests/Security/MT_IIOP_SSL/test_i.cpp: Cosmetic fixes.
-	* orbsvcs/tests/Security/Makefile: Added the new file to the DIRS
-	  section.
+        * orbsvcs/tests/Security/MT_IIOP_SSL/Makefile: Fixed dependencies.
+        * orbsvcs/tests/Security/MT_IIOP_SSL/test_i.cpp: Cosmetic fixes.
+        * orbsvcs/tests/Security/Makefile: Added the new file to the DIRS
+          section.
 
 Sat Jan 25 17:55:10 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* orbsvcs/tests/Security/MT_IIOP_SSL/client.dsp:
-	* orbsvcs/tests/Security/MT_IIOP_SSL/server.dsp: Added necessary
-	  libraries for linking.
+        * orbsvcs/tests/Security/MT_IIOP_SSL/client.dsp:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/server.dsp: Added necessary
+          libraries for linking.
 
 Sat Jan 25 18:55:47 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* orbsvcs/tests/Security/MT_IIOP_SSL/test_i.h: Fixed a compilation error.
+        * orbsvcs/tests/Security/MT_IIOP_SSL/test_i.h: Fixed a compilation error.
 
 Sat Jan 25 18:50:32 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/Transport_Cache_Manager.cpp (close_i): Avoid totally
-	  unaesthetic temporaries  in the for loop.
+        * tao/Transport_Cache_Manager.cpp (close_i): Avoid totally
+          unaesthetic temporaries  in the for loop.
 
 Sat Jan 25 18:30:27 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* orbsvcs/tests/Security/MT_IIOP_SSL: A multi-threaded stress test
-	  for IIOP_SSL which basically provides a insecure path for
-	  communication incase an SSL connection cannot be setup. This
-	  will also serve as a stress test for BUG 1421.
+        * orbsvcs/tests/Security/MT_IIOP_SSL: A multi-threaded stress test
+          for IIOP_SSL which basically provides a insecure path for
+          communication incase an SSL connection cannot be setup. This
+          will also serve as a stress test for BUG 1421.
 
 Sat Jan 25 18:06:51 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/Transport_Cache_Manager.h:
-	* tao/Transport_Cache_Manager.inl: Added an accessor for the hash
-	  map used inside the Cache_Manager. Useful for writing regression
-	  tests as we will demonstrate shortly in a test.
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.inl: Added an accessor for the hash
+          map used inside the Cache_Manager. Useful for writing regression
+          tests as we will demonstrate shortly in a test.
 
 Fri Jan 24 11:42:57 2003  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
 
-	* orbsvcs/tests/Security/Crash_Test/run_test.pl: fixed yet another
+        * orbsvcs/tests/Security/Crash_Test/run_test.pl: fixed yet another
           possible race conditions.
 
 Fri Jan 24 10:59:49 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -504,9 +882,9 @@ Fri Jan 24 09:04:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_interface_header.cpp:
 
-	  Fixed a bug in error-checking the inheritance of abstract
-	  interfaces. Thanks to Michael Soden <soden@ikv.de> for
-	  reporting the IDL compiler's incorrect error message.
+          Fixed a bug in error-checking the inheritance of abstract
+          interfaces. Thanks to Michael Soden <soden@ikv.de> for
+          reporting the IDL compiler's incorrect error message.
 
 Fri Jan 24 08:23:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 

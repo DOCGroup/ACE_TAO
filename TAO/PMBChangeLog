@@ -1,5 +1,8 @@
 Tue Mar 18 14:57:07 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
+	* VERSION:
+	* ChangeLog:
+	* tao/Version.h:
 	* tao/IIOP_Transport.cpp:
 	* tao/MCAST_Parser.cpp:
 	* tao/RTCORBA/Linerar_Priority_Mapping.cpp:
@@ -7,7 +10,7 @@ Tue Mar 18 14:57:07 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 	* tao/RTCORBA/RT_ORBInitializer.h:
 	* tao/RTCORBA/RT_ORB_Loader.cpp:
 	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
-
+	
 	  Merged in changes from TAO 1.3.1.  The actual tag for the merge
 	  was pmb_branch_mainline_mergeout_1.  The command was
 
