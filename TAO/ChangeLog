@@ -9,13 +9,14 @@ Mon Feb 24 08:44:39 2003  Ossama Othman  <ossama@uci.edu>
 	  from ever being visible.  A preprocessor check for
 	  "TAO_HAS_INTERCEPTORS == 1" was being performed before any
 	  headers that defined "TAO_HAS_INTERCEPTORS" were included
-	  meaning that condition always evaluated to false.
+	  meaning that condition always evaluated to false.  This also
+	  fixes "unresolved symbol" errors that have appeared in some
+	  builds.
 
 	* tao/DynamicInterface/DII_ClientRequestInfo.cpp:
 
 	  Fixed syntax errors that were exposed by the code actually being
-	  made visible.  The above change also fixes "unresolved symbol"
-	  errors that have appeared in some builds.
+	  made visible.
 
 Mon Feb 24 15:35:23 2003  Edward Scott  <eas@prismtechnologies.com>
 
