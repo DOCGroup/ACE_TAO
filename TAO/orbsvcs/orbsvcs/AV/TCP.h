@@ -15,7 +15,7 @@
 //
 // ============================================================================
 
-#if !defined TAO_AV_TCP_H
+#ifndef TAO_AV_TCP_H
 #define TAO_AV_TCP_H
 
 #include "ace/OS.h"
