@@ -19,6 +19,7 @@
 #if defined (ACE_HAS_SSL)
 
 #include "SSL_Context.h"
+#include "sslconf.h"
 
 #if !defined(__ACE_INLINE__)
 #include "SSL_Context.i"
@@ -29,14 +30,6 @@
 
 #include <openssl/x509.h>
 #include <openssl/err.h>
-
-#define ACE_DEFAULT_CERTIFICATE_FILE "certificate.pem"
-#define ACE_DEFAULT_KEY_FILE "key.pem"
-
-#define ACE_DEFAULT_SSL_CERT_FILE "/etc/ssl/cert.pem"
-#define ACE_DEFAULT_SSL_CERT_DIR "/etc/ssl/certs"
-#define ACE_SSL_CERT_FILE_ENV "SSL_CERT_FILE"
-#define ACE_SSL_CERT_DIR_ENV  "SSL_CERT_DIR"
 
 int ACE_SSL_Context::library_init_count_ = 0;
 
@@ -148,7 +141,7 @@ ACE_SSL_Context::set_mode (int mode)
   const char *cert_dir = ACE_OS::getenv (ACE_SSL_CERT_DIR_ENV);
   if (cert_dir == 0)
     cert_dir = ACE_DEFAULT_SSL_CERT_DIR;
-  
+
   ::SSL_CTX_load_verify_locations (this->context_,
                                    cert_file,
                                    cert_dir);
