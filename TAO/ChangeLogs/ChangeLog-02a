@@ -1,3 +1,12 @@
+Mon Aug 14 11:03:08 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tests/Exposed_Policies/server.cpp:
+	* tests/Exposed_Policies/client.cpp:
+	  Extended test code to test all the client exposed policies.
+	
+	* tao/Profile.cpp (policies): 
+	  Removed some commented code.
+
 Mon Aug 14 10:23:01 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/Stub.cpp (exposed_client_protocol): 
