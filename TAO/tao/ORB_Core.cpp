@@ -2242,6 +2242,21 @@ TAO_ORB_Core::output_cdr_msgblock_allocator (void)
 }
 
 
+ACE_Allocator*
+TAO_ORB_Core::transport_message_buffer_allocator (void)
+{
+  if (this->orb_resources_.transport_message_buffer_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->orb_resources_.transport_message_buffer_allocator_ == 0)
+        this->orb_resources_.transport_message_buffer_allocator_ =
+          this->resource_factory ()->input_cdr_dblock_allocator ();
+    }
+  return this->orb_resources_.transport_message_buffer_allocator_;
+}
+
+
 ACE_Data_Block*
 TAO_ORB_Core::create_input_cdr_data_block (size_t size)
 {

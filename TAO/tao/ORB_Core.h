@@ -125,12 +125,13 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_ORB_Core_TSS_Resources&))
 
 public:
-  /**
-   * @todo
-   * The rest of the resources are not currently in use, just a plan
-   * for the future...
-   */
 
+  /*
+   * @@todo: All these allocators should be on a per-lane basis. Need
+   * to move it to the lanes. It makes no sense to leave it in the TSS
+   * resources class -- Bala
+   *
+   */
   /// The allocators for the output CDR streams.
   //@{
   ACE_Allocator *output_cdr_dblock_allocator_;
@@ -145,6 +146,16 @@ public:
   ACE_Allocator *input_cdr_msgblock_allocator_;
   //@}
 
+  /// The allocators for the buffering messages in the transport.
+  //@{
+  ACE_Allocator *transport_message_buffer_allocator_;
+  //@}
+
+  /**
+   * @todo
+   * The rest of the resources are not currently in use, just a plan
+   * for the future...
+   */
   /// Counter for how (nested) calls this thread has made to run the
   /// event loop.
   int event_loop_thread_;
@@ -456,6 +467,11 @@ public:
   /// This allocator is always global and has no locks. It is intended
   /// for allocating the buffers used in *incoming* CDR streams.
   ACE_Allocator *input_cdr_msgblock_allocator (void);
+
+  /// This allocator is always global and has no locks. It is intended
+  /// for allocating the buffers used to queue messages in
+  /// transports.
+  ACE_Allocator *transport_message_buffer_allocator (void);
 
 #if 0
   /// @@todo: All these need to go. They were added in the first place
