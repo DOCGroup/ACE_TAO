@@ -1,4 +1,4 @@
-#define ACE_BUILD_DLL
+#define ACE_BUILD_SVC_DLL
 
 #include "ace/Get_Opt.h"
 #include "Options.h"
