@@ -39,6 +39,7 @@ DIRS = \
         LongUpcalls \
 	MProfile \
         MProfile_Forwarding \
+        MT_BiDir \
 	MT_Client \
 	MT_Server \
 	MT_Timeout \
