@@ -136,7 +136,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
       RtecEventChannelAdmin::EventChannel_var ec =
         RtecEventChannelAdmin::EventChannel::_narrow (obj.in ()
-                                                      ACE_ENV_ARG_DECL);
+                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (ec.in (), "EC") == -1)
         return 1;
