@@ -560,14 +560,17 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           << "CORBA::Boolean _tao_collocated," << be_nl
           << "TAO_Abstract_ServantBase *servant," << be_nl
           << "TAO_ORB_Core *oc" << be_uidt_nl
-                << ")"
-                << be_nl;
-      *os << ": ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant, oc)," << be_idt_nl
-          << "the"<< this->base_proxy_broker_name () << "_ (0)" << be_uidt_nl;
+          << ")" << be_nl
+          << ": ";
 
-      if (this->has_mixed_parentage_)
+      if (this->has_mixed_parentage_ && ! this->is_abstract ())
         {
-          *os << be_idt;
+          *os << "ACE_NESTED_CLASS (CORBA, AbstractBase) (" 
+              << be_idt << be_idt << be_idt_nl
+              << "objref," << be_nl
+              << "_tao_collocated," << be_nl
+              << "servant" << be_uidt_nl
+              << ")" << be_uidt;
 
           int status =
             this->traverse_inheritance_graph (
@@ -582,15 +585,43 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
                           "be_interface::gen_stub_ctor - "
                           "inheritance graph traversal failed\n"));
             }
+        }
 
-          *os << "," << be_nl
-              << "ACE_NESTED_CLASS (CORBA, AbstractBase) (objref, _tao_collocated, servant)"
-              << be_uidt << be_uidt;
+      if (this->pd_n_inherits > 0)
+        {
+          *os << "," << be_nl;
         }
       else
         {
-          *os << be_uidt;
+          *os << be_idt;
         }
+
+      if (is_abstract_)
+        {
+          if (this->pd_n_inherits == 0)
+            {
+              *os << "ACE_NESTED_CLASS (CORBA, AbstractBase) ("
+                  << be_idt << be_idt_nl
+                  << "objref," << be_nl
+                  << "_tao_collocated," << be_nl
+                  << "servant" << be_uidt_nl
+                  << ")" << be_uidt;
+            }
+        }
+      else
+        {
+          *os << "ACE_NESTED_CLASS (CORBA, Object) ("
+              << be_idt << be_idt_nl
+              << "objref," << be_nl
+              << "_tao_collocated," << be_nl
+              << "servant," << be_nl
+              << "oc" << be_uidt_nl
+              << ")" << be_uidt;
+        }
+
+      *os << "," << be_nl
+          << "the"<< this->base_proxy_broker_name () << "_ (0)" 
+          << be_uidt << be_uidt;
 
       *os << be_nl << "{" << be_idt_nl
           << "this->" << this->flat_name ()
@@ -2359,25 +2390,27 @@ be_interface::gen_abstract_init_helper (be_interface *node,
       return 0;
     }
 
-  *os << ",";
+  *os << "," << be_nl;
 
   if (base->is_nested ())
     {
       UTL_Scope *parent_scope = base->defined_in ();
       AST_Decl *parent_decl = ScopeAsDecl (parent_scope);
 
-      *os << be_nl
-          << "ACE_NESTED_CLASS ("
+      *os << "ACE_NESTED_CLASS ("
           << parent_decl->name () << ", "
-          << base->local_name ()
-          << ") (objref, _tao_collocated, servant)";
+          << base->local_name ()<< ") (" << be_idt << be_idt_nl;
     }
   else
     {
-      *os << be_nl
-          << base->name ()
-          << " (objref, _tao_collocated, servant)";
+      *os << base->name () << " (" << be_idt << be_idt_nl;
     }
+
+  *os << "objref," << be_nl
+      << "_tao_collocated," << be_nl
+      << "servant" << be_uidt_nl
+      << ")" << be_uidt;
+
 
   return 0;
 }

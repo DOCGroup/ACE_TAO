@@ -39,7 +39,8 @@ namespace TAO
    *
    *
    */
-  class TAO_Valuetype_Export AbstractBase_Invocation_Adapter : public Invocation_Adapter
+  class TAO_Valuetype_Export AbstractBase_Invocation_Adapter 
+    : public Invocation_Adapter
   {
   public:
     AbstractBase_Invocation_Adapter (

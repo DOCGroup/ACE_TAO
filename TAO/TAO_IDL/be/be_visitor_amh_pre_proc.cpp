@@ -24,6 +24,7 @@
 #include "be_predefined_type.h"
 #include "be_argument.h"
 #include "utl_identifier.h"
+#include "global_extern.h"
 #include "ace/Log_Msg.h"
 
 ACE_RCSID (be,
@@ -620,6 +621,13 @@ be_visitor_amh_pre_proc::visit_scope (be_scope *node)
 be_valuetype *
 be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
 {
+  // AMH exception holders require both of these.
+  ACE_SET_BITS (idl_global->decls_seen_info_,
+                idl_global->decls_seen_masks.valuetype_seen_);
+
+  ACE_SET_BITS (idl_global->decls_seen_info_,
+                idl_global->decls_seen_masks.valuefactory_seen_);
+
   const int inherit_count = 0;
   AST_Interface **p_intf = 0;
 

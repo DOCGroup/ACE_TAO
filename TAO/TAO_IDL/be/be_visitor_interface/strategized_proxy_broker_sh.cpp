@@ -24,7 +24,6 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (
     be_interface *node
   )
 {
-
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl
@@ -71,11 +70,11 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (
       << "TAO::Collocation_Strategy strategy" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_nl
-      << "ACE_THROW_SPEC ((CORBA::Exception));" << be_uidt;
+      << "ACE_THROW_SPEC ((CORBA::Exception));";
 
   *os << be_uidt_nl << be_nl
-      << "static" << be_nl
-      << node->strategized_proxy_broker_name () << " *" << be_nl
+      << "static " << node->strategized_proxy_broker_name () 
+      << " *" << be_nl
       << "the" << node->strategized_proxy_broker_name ()
       << " (void);" << be_uidt_nl;
 

@@ -1390,6 +1390,16 @@ TAO_CodeGen::gen_stub_src_includes (void)
                                   "tao/Stub.h");
       this->gen_standard_include (this->client_stubs_, 
                                   "tao/Invocation_Adapter.h");
+
+      // Any abstract interface present will probably have an operation.
+      if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                           idl_global->decls_seen_masks.abstract_iface_seen_))
+        {
+          this->gen_standard_include (
+              this->client_stubs_,
+              "tao/Valuetype/AbstractBase_Invocation_Adapter.h"
+            );
+        }
     }
 
   if (be_global->ami_call_back () == I_TRUE)
@@ -1444,9 +1454,11 @@ TAO_CodeGen::gen_stub_src_includes (void)
 
   if (be_global->gen_amh_classes () == I_TRUE)
     {
+      *this->client_stubs_ << be_nl;
+
       // Necessary for the AIX compiler.
       this->gen_standard_include (this->client_stubs_,
-                                  "\nace/Auto_Ptr.h");
+                                  "ace/Auto_Ptr.h");
     }
 }
 

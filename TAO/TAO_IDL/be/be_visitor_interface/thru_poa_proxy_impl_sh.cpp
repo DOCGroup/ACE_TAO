@@ -38,14 +38,15 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (
 
   // Generate Class Declaration.
   *os << "class " << be_global->skel_export_macro ()
-      << " " << node->thru_poa_proxy_impl_name () << be_idt_nl;
+      << " " << node->thru_poa_proxy_impl_name ();
+
+  idl_bool first_concrete = I_TRUE;
 
   if (node->n_inherits () > 0)
     {
       AST_Interface *parent = 0;
 
-      *os << ": ";
-      for (int i = 0; i < node->n_inherits (); i++)
+      for (int i = 0; i < node->n_inherits (); ++i)
         {
           parent = node->inherits ()[i];
 
@@ -57,35 +58,21 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (
           be_interface *inherited =
             be_interface::narrow_from_decl (parent);
 
-          *os << "public virtual ";
-          *os << "::" <<  inherited->full_thru_poa_proxy_impl_name ();
+          if (first_concrete)
+            {
+              *os << be_nl << "  : " << be_idt << be_idt;
+            }
+          else
+            {
+	            *os << "," << be_nl;
+            }
 
-	  if (i < (node->n_inherits () - 1))
-	    {
-	      *os << ",";
-	    }
+          first_concrete = I_FALSE;
 
-	  *os << be_nl;
+          *os << "public virtual ::" 
+              << inherited->full_thru_poa_proxy_impl_name ();
         }
     }
-
-#if 0
-  if (node->node_type () == AST_Decl::NT_component)
-    {
-      AST_Component *base =
-        AST_Component::narrow_from_decl (node)->base_component ();
-
-      if (base != 0)
-        {
-          be_interface *inherited =
-            be_interface::narrow_from_decl (base);
-
-          *os << "," << be_nl
-              << "public virtual "
-              << "::" << inherited->full_thru_poa_proxy_impl_name ();
-        }
-    }
-#endif /*if 0*/
 
   *os << be_uidt << be_uidt_nl;
 

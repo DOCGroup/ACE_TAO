@@ -47,7 +47,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__;
 
   // All template specializations must be generated before the instantiations
   // in the operators.
@@ -111,7 +111,8 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
           << "}";
     }
 
-  *os << "// Copying insertion." << be_nl
+  *os << be_nl << be_nl
+      << "// Copying insertion." << be_nl
       << "void" << be_nl
       << "operator<<= (" << be_idt << be_idt_nl
       << "CORBA::Any &_tao_any," << be_nl

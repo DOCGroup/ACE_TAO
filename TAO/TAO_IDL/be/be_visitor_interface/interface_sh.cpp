@@ -39,224 +39,226 @@ int
 be_visitor_interface_sh::visit_interface (be_interface *node)
 {
   if (node->srv_hdr_gen () 
-      || node->imported () 
-      || node->is_abstract ())
+      || node->imported ())
     {
       return 0;
     }
 
-  // If this node is a AMH-RH node, then generate code for it
-  if (node->is_local ())
+  // For abstract interfaces, we just generated the collocation stuff
+  // (see below).
+  if (! node->is_abstract ())
     {
-      if (this->is_amh_rh_node (node))
-        {
-          // Create amh_rh_visitors.
-          be_visitor_amh_rh_interface_sh amh_rh_intf (this->ctx_);
-          amh_rh_intf.visit_interface (node);
-        }
+    // If this node is a AMH-RH node, then generate code for it
+    if (node->is_local ())
+      {
+        if (this->is_amh_rh_node (node))
+          {
+            // Create amh_rh_visitors.
+            be_visitor_amh_rh_interface_sh amh_rh_intf (this->ctx_);
+            amh_rh_intf.visit_interface (node);
+          }
 
-      return 0;
-    }
+        return 0;
+      }
 
-  if (this->generate_amh_classes (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_sh::"
-                         "visit_interface - "
-                         "codegen for AMH classes failed\n"),
-                        -1);
-    }
+    if (this->generate_amh_classes (node) == -1)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "be_visitor_interface_sh::"
+                           "visit_interface - "
+                           "codegen for AMH classes failed\n"),
+                          -1);
+      }
 
-  TAO_OutStream *os  = this->ctx_->stream ();
-  ACE_CString class_name;
+    TAO_OutStream *os  = this->ctx_->stream ();
+    ACE_CString class_name;
 
-  // We shall have a POA_ prefix only if we are at the topmost level.
-  if (!node->is_nested ())
-    {
-      // We are outermost.
-      class_name += "POA_";
-      class_name += node->local_name ();
-    }
-  else
-    {
-      class_name +=  node->local_name ();
-    }
+    // We shall have a POA_ prefix only if we are at the topmost level.
+    if (!node->is_nested ())
+      {
+        // We are outermost.
+        class_name += "POA_";
+        class_name += node->local_name ();
+      }
+    else
+      {
+        class_name +=  node->local_name ();
+      }
 
-  *os << be_nl << be_nl
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+    *os << be_nl << be_nl
+        << "// TAO_IDL - Generated from" << be_nl
+        << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  // Generate the skeleton class name.
-  *os << "class " << class_name.c_str () << ";" << be_nl;
+    // Generate the skeleton class name.
+    *os << "class " << class_name.c_str () << ";" << be_nl;
 
-  // Generate the _ptr declaration.
-  *os << "typedef " << class_name.c_str () << " *" << class_name.c_str ()
-      << "_ptr;" << be_nl << be_nl;
+    // Generate the _ptr declaration.
+    *os << "typedef " << class_name.c_str () << " *" << class_name.c_str ()
+        << "_ptr;" << be_nl << be_nl;
 
-  // Forward class declarations.
-  if (be_global->gen_thru_poa_collocation ())
-    {
-      *os << "class " << node->thru_poa_proxy_impl_name () << ";" << be_nl;
-    }
+    // Forward class declarations.
+    if (be_global->gen_thru_poa_collocation ())
+      {
+        *os << "class " << node->thru_poa_proxy_impl_name () << ";" << be_nl;
+      }
 
-  if (be_global->gen_direct_collocation ())
-    {
-      *os << "class " << node->direct_proxy_impl_name () << ";" << be_nl;
-    }
+    if (be_global->gen_direct_collocation ())
+      {
+        *os << "class " << node->direct_proxy_impl_name () << ";" << be_nl;
+      }
 
-  if (be_global->gen_thru_poa_collocation ()
-      || be_global->gen_direct_collocation ())
-    {
-      *os << "class " << node->strategized_proxy_broker_name ()
-          << ";" << be_nl;
-    }
+    if (be_global->gen_thru_poa_collocation ()
+        || be_global->gen_direct_collocation ())
+      {
+        *os << "class " << node->strategized_proxy_broker_name ()
+            << ";" << be_nl;
+      }
 
-  *os << be_nl;
+    *os << be_nl;
 
-  // Now generate the class definition.
-  *os << "class " << be_global->skel_export_macro ()
-      << " " << class_name.c_str () << be_idt_nl << ": " << be_idt;
+    // Now generate the class definition.
+    *os << "class " << be_global->skel_export_macro ()
+        << " " << class_name.c_str () << be_idt_nl << ": " << be_idt;
 
-  long n_parents = node->n_inherits ();
-  AST_Interface *parent = 0;
-  int has_concrete_parent = 0;
+    long n_parents = node->n_inherits ();
+    AST_Interface *parent = 0;
+    int has_concrete_parent = 0;
 
-  for (int i = 0; i < n_parents; ++i)
-    {
-      parent = node->inherits ()[i];
+    for (int i = 0; i < n_parents; ++i)
+      {
+        parent = node->inherits ()[i];
       
-      if (parent->is_abstract ())
-        {
-          continue;
-        }
+        if (parent->is_abstract ())
+          {
+            continue;
+          }
 
-      if (has_concrete_parent == 1)
-        {
-          *os << "," << be_nl;
-        }
+        if (has_concrete_parent == 1)
+          {
+            *os << "," << be_nl;
+          }
 
-      *os << "public virtual " << "POA_"
-          << parent->name ();
+        *os << "public virtual " << "POA_"
+            << parent->name ();
 
-      has_concrete_parent = 1;
-    }
+        has_concrete_parent = 1;
+      }
 
-  if (has_concrete_parent == 0)
-    {
-      // We don't inherit from another user defined object, hence our
-      // base class is the ServantBase class.
-      *os << "public virtual PortableServer::ServantBase";
-    }
+    if (has_concrete_parent == 0)
+      {
+        // We don't inherit from another user defined object, hence our
+        // base class is the ServantBase class.
+        *os << "public virtual PortableServer::ServantBase";
+      }
 
-  *os << be_uidt << be_uidt_nl
-      << "{" << be_nl
-      << "protected:" << be_idt_nl;
+    *os << be_uidt << be_uidt_nl
+        << "{" << be_nl
+        << "protected:" << be_idt_nl;
 
-  // Default constructor.
-  *os << class_name.c_str () << " (void);" << be_uidt_nl << be_nl
-      << "public:" << be_idt_nl;
+    // Default constructor.
+    *os << class_name.c_str () << " (void);" << be_uidt_nl << be_nl
+        << "public:" << be_idt_nl;
 
-  // Some useful typedefs.
-  *os << "// Useful for template programming." << be_nl
-      << "typedef ::" << node->name () << " _stub_type;" << be_nl
-      << "typedef ::" << node->name () << "_ptr _stub_ptr_type;" << be_nl
-      << "typedef ::" << node->name () << "_var _stub_var_type;" 
-      << be_nl << be_nl;
+    // Some useful typedefs.
+    *os << "// Useful for template programming." << be_nl
+        << "typedef ::" << node->name () << " _stub_type;" << be_nl
+        << "typedef ::" << node->name () << "_ptr _stub_ptr_type;" << be_nl
+        << "typedef ::" << node->name () << "_var _stub_var_type;" 
+        << be_nl << be_nl;
 
-  // Copy constructor and destructor.
-  *os << class_name.c_str () << " (const " 
-      << class_name.c_str () << "& rhs);" << be_nl
-      << "virtual ~" << class_name.c_str () << " (void);" << be_nl << be_nl;
+    // Copy constructor and destructor.
+    *os << class_name.c_str () << " (const " 
+        << class_name.c_str () << "& rhs);" << be_nl
+        << "virtual ~" << class_name.c_str () << " (void);" << be_nl << be_nl;
 
-  // _is_a
-  *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
-      << "const char* logical_type_id" << be_nl
-      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+    // _is_a
+    *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
+        << "const char* logical_type_id" << be_nl
+        << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+        << ");" << be_uidt_nl << be_nl;
 
-  // _downcast
-  *os << "virtual void* _downcast (" << be_idt << be_idt_nl
-      << "const char* logical_type_id" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+    // _downcast
+    *os << "virtual void* _downcast (" << be_idt << be_idt_nl
+        << "const char* logical_type_id" << be_uidt_nl
+        << ");" << be_uidt_nl << be_nl;
 
-  // Add a skeleton for our _is_a method.
-  *os << "static void _is_a_skel (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &req," << be_nl
-      << "void *servant," << be_nl
-      << "void *servant_upcall" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+    // Add a skeleton for our _is_a method.
+    *os << "static void _is_a_skel (" << be_idt << be_idt_nl
+        << "TAO_ServerRequest &req," << be_nl
+        << "void *servant," << be_nl
+        << "void *servant_upcall" << be_nl
+        << "ACE_ENV_ARG_DECL" << be_uidt_nl
+        << ");" << be_uidt_nl << be_nl;
 
-  // Add a skeleton for our _non_existent method.
-  *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &req," << be_nl
-      << "void *servant," << be_nl
-      << "void *servant_upcall" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+    // Add a skeleton for our _non_existent method.
+    *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
+        << "TAO_ServerRequest &req," << be_nl
+        << "void *servant," << be_nl
+        << "void *servant_upcall" << be_nl
+        << "ACE_ENV_ARG_DECL" << be_uidt_nl
+        << ");" << be_uidt_nl << be_nl;
 
-  // Add a skeleton for our _interface method.
-  *os << "static void _interface_skel (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &req," << be_nl
-      << "void *servant," << be_nl
-      << "void *servant_upcall" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+    // Add a skeleton for our _interface method.
+    *os << "static void _interface_skel (" << be_idt << be_idt_nl
+        << "TAO_ServerRequest &req," << be_nl
+        << "void *servant," << be_nl
+        << "void *servant_upcall" << be_nl
+        << "ACE_ENV_ARG_DECL" << be_uidt_nl
+        << ");" << be_uidt_nl << be_nl;
 
-  // Add a skeleton for our _component method.
-  *os << "static void _component_skel (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &req," << be_nl
-      << "void *obj," << be_nl
-      << "void *servant_upcall" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+    // Add a skeleton for our _component method.
+    *os << "static void _component_skel (" << be_idt << be_idt_nl
+        << "TAO_ServerRequest &req," << be_nl
+        << "void *obj," << be_nl
+        << "void *servant_upcall" << be_nl
+        << "ACE_ENV_ARG_DECL" << be_uidt_nl
+        << ");" << be_uidt_nl << be_nl;
 
-  // Add the dispatch method.
-  *os << "virtual void _dispatch (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &req," << be_nl
-      << "void *_servant_upcall" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+    // Add the dispatch method.
+    *os << "virtual void _dispatch (" << be_idt << be_idt_nl
+        << "TAO_ServerRequest &req," << be_nl
+        << "void *_servant_upcall" << be_nl
+        << "ACE_ENV_ARG_DECL" << be_uidt_nl
+        << ");" << be_uidt_nl << be_nl;
 
-  this->this_method (node);
+    this->this_method (node);
 
-  // The _interface_repository_id method.
-  *os << be_nl
-      << "virtual const char* _interface_repository_id "
-      << "(void) const;";
+    // The _interface_repository_id method.
+    *os << be_nl
+        << "virtual const char* _interface_repository_id "
+        << "(void) const;";
 
-  // Generate code for elements in the scope (e.g., operations).
-  if (this->visit_scope (node) ==  -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_sh::"
-                         "visit_interface - "
-                         "codegen for scope failed\n"),
-                        -1);
-    }
+    // Generate code for elements in the scope (e.g., operations).
+    if (this->visit_scope (node) ==  -1)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "be_visitor_interface_sh::"
+                           "visit_interface - "
+                           "codegen for scope failed\n"),
+                          -1);
+      }
 
-  // Generate skeletons for operations of our base classes. These
-  // skeletons just cast the pointer to the appropriate type
-  // before invoking the call.
-  int status = 
-    node->traverse_inheritance_graph (
-              be_interface::gen_skel_helper, 
-              os
-            );
+    // Generate skeletons for operations of our base classes. These
+    // skeletons just cast the pointer to the appropriate type
+    // before invoking the call.
+    int status = 
+      node->traverse_inheritance_graph (
+                be_interface::gen_skel_helper, 
+                os
+              );
 
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_sh::"
-                         "visit_interface - "
-                         "inheritance graph traversal failed\n"),
-                        -1);
-    }
+    if (status == -1)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "be_visitor_interface_sh::"
+                           "visit_interface - "
+                           "inheritance graph traversal failed\n"),
+                          -1);
+      }
 
-  *os << be_uidt_nl << "};";
+    *os << be_uidt_nl << "};";
+  } // if ! node->is_abstract ()
 
-  // Generate the embedded RequestInfo classes per operation.
-  // This is to be used by interceptors.
   be_visitor_context ctx (*this->ctx_);
 
   if (be_global->gen_thru_poa_collocation ()
