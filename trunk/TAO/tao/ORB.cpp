@@ -539,7 +539,8 @@ CORBA_ORB::resolve_name_service (ACE_Time_Value *timeout)
           this->name_service_ =
             this->multicast_to_service (TAO_SERVICEID_NAMESERVICE,
                                         port,
-                                        timeout);
+                                        timeout,
+                                        TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS);
         }
     }
 
@@ -601,7 +602,8 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout)
           this->trading_service_ =
             this->multicast_to_service (TAO_SERVICEID_TRADINGSERVICE,
                                         port,
-                                        timeout);
+                                        timeout,
+                                        TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS);
         }
     }
 
@@ -609,10 +611,12 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout)
   return CORBA_Object::_duplicate (return_value);
 }
 
-char *
-CORBA_ORB::multicast_query (TAO_Service_ID service_id,
+int
+CORBA_ORB::multicast_query (char *buf,
+                            TAO_Service_ID service_id,
                             u_short port,
-                            ACE_Time_Value *timeout)
+                            ACE_Time_Value *timeout,
+                            u_short attempts)
 {
   // This is the code that implements the multicast
   // Naming Service locator.
@@ -627,7 +631,7 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
   if (multicast.subscribe (multicast_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to perform IIOP multicast!\n"),
-                      0);
+                      -1);
 
   // Prepare connection for the reply.
   ACE_INET_Addr response_addr;
@@ -639,7 +643,7 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
       multicast.close ();
       ACE_ERROR_RETURN ((LM_ERROR,
                          "IIOP Multicast open failed.\n"),
-                        0);
+                        -1);
     }
 
   if (response.get_local_addr (response_addr) == -1)
@@ -648,7 +652,7 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
       response.close ();
       ACE_ERROR_RETURN ((LM_ERROR,
                          "IIOP get_local_addr failed.\n"),
-                        0);
+                        -1);
     }
 
   // @@ Vishal, please update this code and the server-side code in
@@ -667,67 +671,74 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
   mcast_info[0] = ACE_HTONS (response_addr.get_port_number ());
   mcast_info[1] = ACE_HTONS (service_id);
 
-  // Send multicast info to the server.
-  ssize_t n_bytes = multicast.send (mcast_info,
-                                    sizeof (mcast_info));
-  // Close multicast socket now to recycle HANDLE.
-  multicast.close ();
-
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "sent multicast request."));
-
-  // Check for errors.
-  if (n_bytes == -1)
-    {
-      response.close ();
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Error sending IIOP Multicast!\n"),
-                        0);
-    }
-
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "%s; Sent multicast.  Reply port is %u."
-                "# of bytes sent is %d.\n",
-                __FILE__,
-                response_addr.get_port_number (),
-                n_bytes));
-
+  ssize_t n_bytes;
+  // Set how long we wait for a reply
   // Wait for response until TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT.
   ACE_Time_Value tv (timeout == 0
                      ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
                      : *timeout);
 
-  // Receive response message.
-
-  // @@ Fred, why on earth are we allocating this memory dynamically?
-  // It's a fixed size, so it should be passed in by the caller...  Or
-  // better yet, this method should just return the Object Reference,
-  // rather than having the caller do that...
-  char *buf = new char[ACE_MAX_DGRAM_SIZE + 1]; // add char for '\0'
-
-  n_bytes = response.recv (buf,
-                           ACE_MAX_DGRAM_SIZE,
-                           remote_addr,
-                           0,
-                           &tv);
-  // Close endpoint for response.
-  int retval = response.close ();
-
-  // Check for errors.
-  if (n_bytes == -1 || retval == -1)
+  // Now try to "attempts" to get the reply
+  for (int i =0;i<attempts;i++)
     {
-      // @@ Fred, this delete can be removed when you get rid of
-      // dynamic memory allocation.
-      delete [] buf;
+
+      // Send multicast info to the server.
+      n_bytes = multicast.send (mcast_info,
+                                sizeof (mcast_info));
+
+      // Check for errors.
+      if (n_bytes == -1)
+        {
+          multicast.close ();
+          response.close ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error sending IIOP Multicast!\n"),
+                            -1);
+        }
+
       if (TAO_debug_level > 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error reading IIOP multicast response!\n"
-                           "Errno: %d \n",
-                           errno),
-                          0);
-    }
+        ACE_DEBUG ((LM_DEBUG,
+                    "%s; Sent multicast.  Reply port is %u."
+                    "# of bytes sent is %d.\n",
+                    __FILE__,
+                    response_addr.get_port_number (),
+                    n_bytes));
+    
+      // Receive response message.
+      n_bytes = response.recv (buf,
+                               ACE_MAX_DGRAM_SIZE,
+                               remote_addr,
+                               0,
+                               &tv);
+
+      // Check for errors.
+      if (n_bytes == -1)
+        {
+          if (TAO_debug_level > 0)
+            {
+              multicast.close ();
+              response.close ();
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Error reading IIOP multicast response!\n"
+                                 "Errno: %d \n",
+                                 errno),
+                                 -1);
+            }
+        }
+
+      if (n_bytes > 0)
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                       "Reply to multicast received on attempt number %d\n",
+                       i));
+          break;
+        }
+  } // attempt for loop
+
+  // Close endpoint for response.
+  multicast.close ();
+  response.close ();
 
   // Null terminate message.
   buf[n_bytes] = 0;
@@ -737,7 +748,7 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
                 "%s; Service resolved to ior: '%s'\n",
                 __FILE__,
                 buf));
-  return buf;
+  return 0;
 }
 
 // @@ This will have to be sanitized of transport specific calls
@@ -751,19 +762,23 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
 CORBA_Object_ptr
 CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
                                  u_short port,
-                                 ACE_Time_Value *timeout)
+                                 ACE_Time_Value *timeout,
+                                 u_short attempts)
 {
+
+  char buf[ACE_MAX_DGRAM_SIZE + 1]; // add char for '\0'
+  int result = 0;
   CORBA::Environment env;
   // Use UDP multicast to locate the  service.
   CORBA_Object_ptr return_value = CORBA_Object::_nil ();
 
-  char *buf = this->multicast_query (service_id,
-                                     port,
-                                     timeout);
-  // @@ Fred, there's a memory leak here since buf was allocated
-  // dynamically and doesn't appear to be freed up.  It's a better
-  // idea to return an object reference here...
-  if (buf)
+  result = this->multicast_query (buf,
+                                  service_id,
+                                  port,
+                                  timeout,
+                                  attempts);
+
+  if (result == 0)
     {
       // Convert ior to an object reference.
       CORBA_Object_ptr objectified_ior =

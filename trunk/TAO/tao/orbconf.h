@@ -97,6 +97,12 @@
 # endif /* TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE */
 #endif /* ! TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE */
 
+// The default number of times the ORB will attempt to get a reply
+// from a service using multicast.
+#if !defined (TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS)
+#define TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS 2
+#endif /* TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS */
+
 // The default UDP multicast port number for locating the TAO Naming
 // Service.
 #if !defined (TAO_DEFAULT_NAME_SERVER_REQUEST_PORT)
