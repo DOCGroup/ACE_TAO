@@ -154,7 +154,7 @@ FTP_Client_Callback::handle_end_stream (void)
 
 void
 FTP_Client_Callback::get_timeout (ACE_Time_Value *&tv,
-                                  void *&arg)
+                                  void *&)
 {
   ACE_Time_Value *timeout;
   ACE_NEW (timeout,
@@ -163,7 +163,7 @@ FTP_Client_Callback::get_timeout (ACE_Time_Value *&tv,
 }
 
 int
-FTP_Client_Callback::handle_timeout (void *arg)
+FTP_Client_Callback::handle_timeout (void *)
 {
   ACE_Message_Block mb (BUFSIZ);
   ACE_DEBUG ((LM_DEBUG,"FTP_Client_Callback::get_frame"));
@@ -211,7 +211,7 @@ FTP_Client_Producer::FTP_Client_Producer (void)
 }
   
 int
-FTP_Client_Producer::set_protocol_object (const char *flowname,
+FTP_Client_Producer::set_protocol_object (const char *,
                                           TAO_AV_Protocol_Object *object)
 {
   this->callback_->set_protocol_object (object);
@@ -219,15 +219,17 @@ FTP_Client_Producer::set_protocol_object (const char *flowname,
 }
 
 int
-FTP_Client_Producer::get_callback (const char *flowname,
+FTP_Client_Producer::get_callback (const char *,
                                    TAO_AV_Callback *&callback)
 {
    ACE_NEW_RETURN (this->callback_,
                    FTP_Client_Callback,
                    -1);
    callback = this->callback_;
+   return 0;
 }
 
+int
 Client::parse_args (int argc,
                     char **argv)
 {
@@ -518,10 +520,12 @@ main (int argc,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton <Client,ACE_Null_Mutex>;
-template class TAO_AV_Endpoint_Reactive_Strategy_A<FTP_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
-template class TAO_AV_Endpoint_Reactive_Strategy<FTP_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
+template class TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl>;
+template class TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl>;
+template class TAO_FDev<FTP_Client_Producer, TAO_FlowConsumer>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton <Client,ACE_Null_Mutex>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<FTP_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> 
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<FTP_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> 
+#pragma instantiate TAO_FDev<FTP_Client_Producer, TAO_FlowConsumer>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

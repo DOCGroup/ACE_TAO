@@ -16,7 +16,7 @@ FTP_Client_Callback::handle_destroy (void)
 
 void
 FTP_Client_Callback::get_timeout (ACE_Time_Value *&tv,
-                                  void *&arg)
+                                  void *&)
 {
   ACE_Time_Value *timeout;
   ACE_NEW (timeout,
@@ -26,7 +26,7 @@ FTP_Client_Callback::get_timeout (ACE_Time_Value *&tv,
 
 //@@coryan: Interpretation for the return value like ACE_Event_Handler's handle_timeout method.
 int
-FTP_Client_Callback::handle_timeout (void *arg)
+FTP_Client_Callback::handle_timeout (void *)
 {
   //@@coryan: Use a preallocated buffer for benchmarks.
   //Memory map the file.
@@ -78,7 +78,7 @@ FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint (TAO_ORB_Manager *orb_manag
 }
 
 int
-FTP_Client_StreamEndPoint::get_callback (const char */*flowname*/,
+FTP_Client_StreamEndPoint::get_callback (const char *,
                                          TAO_AV_Callback *&callback)
 {
   ACE_NEW_RETURN (this->callback_,
@@ -89,7 +89,7 @@ FTP_Client_StreamEndPoint::get_callback (const char */*flowname*/,
 }
 
 int
-FTP_Client_StreamEndPoint::set_protocol_object (const char *flowname,
+FTP_Client_StreamEndPoint::set_protocol_object (const char *,
                                                 TAO_AV_Protocol_Object *object)
 {
   this->callback_->set_protocol_object (object);
