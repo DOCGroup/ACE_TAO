@@ -1,6 +1,6 @@
 //==================================================================
 /**
- *  @file  CPD_Handler.h
+ *  @file  CompPkgDesc_Handler.h
  *
  *  $Id$
  *
@@ -8,8 +8,8 @@
  */
 //=====================================================================
 
-#ifndef CPD_HANDLER_H
-#define CPD_HANDLER_H
+#ifndef COMPPKGDESC_HANDLER_H
+#define COMPPKGDESC_HANDLER_H
 #include /**/ "ace/pre.h"
 
 #include "DeploymentC.h"
@@ -49,7 +49,7 @@ namespace CIAO
   {
 
     /**
-     * @class CPD_Handler
+     * @class CompPkgDesc_Handler
      *
      * @brief Handler class for <ComponentPackageDescription> type 
      *
@@ -61,27 +61,27 @@ namespace CIAO
      * element is returned.
      */
 
-    class CPD_Handler
+    class CompPkgDesc_Handler
     {
     public:
 
       /// constructor
-      CPD_Handler (DOMDocument* doc, unsigned long filter_);
+      CompPkgDesc_Handler (DOMDocument* doc, unsigned long filter_);
 
       /// constructor
-      CPD_Handler (DOMNodeIterator* iter, bool release = false);
+      CompPkgDesc_Handler (DOMNodeIterator* iter, bool release = false);
 
       /// destructor
-      ~CPD_Handler();
+      ~CompPkgDesc_Handler();
 
       /// Process the component package description
-      void process_ComponentPackageDescription (::Deployment::ComponentPackageDescription &cpd);
+      void process_ComponentPackageDescription (::Deployment::ComponentPackageDescription &comppkgdesc);
 
       /// Process the label attribute
-      void process_label (const XMLCh* label, ::Deployment::ComponentPackageDescription &cpd);
+      void process_label (const XMLCh* label, ::Deployment::ComponentPackageDescription &comppkgdesc);
 
       /// Process the UUID attribute
-      void process_UUID (const XMLCh* UUID, ::Deployment::ComponentPackageDescription &cpd);
+      void process_UUID (const XMLCh* UUID, ::Deployment::ComponentPackageDescription &comppkgdesc);
 
     private:
 
@@ -103,4 +103,4 @@ namespace CIAO
 
 #include /**/ "ace/post.h"
 
-#endif /* CPD_HANDLER_H */
+#endif /* COMPPKGDESC_HANDLER_H */
