@@ -16,6 +16,9 @@ Wed Dec 30 23:04:44 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  modifying it and making the concept used in the example much
 	  clearer.
 
+	* examples/POA/On_Demand_Loading/server.cpp: Removed unnecessary
+	  TAO_TRY macros.
+	 
 Wed Dec 30 22:52:16 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Makefile: on ghs/VxWorks, removed -g suppression for
