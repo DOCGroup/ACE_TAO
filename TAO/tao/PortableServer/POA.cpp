@@ -3383,8 +3383,13 @@ TAO_POA_Policies::TAO_POA_Policies (TAO_ORB_Core &orb_core,
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  RTCORBA::PriorityModelPolicy_var priority_model =
+  CORBA::Policy_var policy =
     orb_core.priority_model ();
+
+  RTCORBA::PriorityModelPolicy_var priority_model =
+    RTCORBA::PriorityModelPolicy::_narrow (policy.in (),
+                                           ACE_TRY_ENV);
+  ACE_CHECK;
 
   if (!CORBA::is_nil (priority_model.in ()))
     {
@@ -3400,13 +3405,21 @@ TAO_POA_Policies::TAO_POA_Policies (TAO_ORB_Core &orb_core,
       ACE_CHECK;
     }
 
-  TAO_ServerProtocolPolicy *server_protocol =
+  CORBA::Policy_var protocol =
     orb_core.server_protocol ();
+
+  RTCORBA::ServerProtocolPolicy_var server_protocol_ptr =
+    RTCORBA::ServerProtocolPolicy::_narrow (protocol.in (),
+                                            ACE_TRY_ENV);
+  ACE_CHECK;
+
+  TAO_ServerProtocolPolicy *server_protocol =
+    ACE_static_cast (TAO_ServerProtocolPolicy *,
+                     server_protocol_ptr.in ());
 
   if (server_protocol != 0)
     {
       this->server_protocol (server_protocol);
-      server_protocol->_remove_ref ();
     }
 
 #else
@@ -3852,8 +3865,8 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
   if (!CORBA::is_nil (priority_bands.in ()))
     {
       TAO_PriorityBandedConnectionPolicy *priority_bands_i =
-        ACE_dynamic_cast (TAO_PriorityBandedConnectionPolicy *,
-                          priority_bands.in ());
+        ACE_static_cast (TAO_PriorityBandedConnectionPolicy *,
+                         priority_bands.in ());
 
       this->priority_bands (priority_bands_i);
 
@@ -3877,8 +3890,8 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
   if (!CORBA::is_nil (server_protocol.in ()))
     {
       TAO_ServerProtocolPolicy *server_protocol_i =
-        ACE_dynamic_cast (TAO_ServerProtocolPolicy *,
-                          server_protocol.in ());
+        ACE_static_cast (TAO_ServerProtocolPolicy *,
+                         server_protocol.in ());
 
       this->server_protocol (server_protocol_i);
 

@@ -23,6 +23,7 @@
 #if (TAO_HAS_RT_CORBA == 1)
 
 #include "tao/RTCORBAS.h"
+#include "tao/RTCORBAC.h"
 #include "tao/LocalObject.h"
 
 #include "ace/SString.h"
@@ -306,6 +307,9 @@ public:
                         TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  static int hook (TAO_ORB_Core *orb_core,
+                   RTCORBA::ProtocolProperties_var &properties,
+                   const char *protocol_type);
 private:
 
   /// Attribute.
@@ -354,6 +358,10 @@ public:
   virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
                                   TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  static int hook (TAO_ORB_Core *orb_core,
+                   RTCORBA::ProtocolProperties_var &properties,
+                   const char* protocol_type);
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                         TAO_default_environment ())

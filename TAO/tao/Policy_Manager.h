@@ -121,12 +121,12 @@ public:
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  TAO_PriorityModelPolicy *priority_model (void) const;
-  TAO_ThreadpoolPolicy *threadpool (void) const;
-  TAO_PrivateConnectionPolicy *private_connection (void) const;
-  TAO_PriorityBandedConnectionPolicy *priority_banded_connection (void) const;
-  TAO_ServerProtocolPolicy *server_protocol (void) const;
-  TAO_ClientProtocolPolicy *client_protocol (void) const;
+  CORBA::Policy *priority_model (void) const;
+  CORBA::Policy *threadpool (void) const;
+  CORBA::Policy *private_connection (void) const;
+  CORBA::Policy *priority_banded_connection (void) const;
+  CORBA::Policy *server_protocol (void) const;
+  CORBA::Policy *client_protocol (void) const;
 
   // = Speedy policy setters.  Take ownership of the argument policy
   // objects - no copying.
@@ -167,12 +167,12 @@ private:
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  TAO_PriorityModelPolicy *priority_model_;
-  TAO_ThreadpoolPolicy *threadpool_;
-  TAO_PrivateConnectionPolicy *private_connection_;
-  TAO_PriorityBandedConnectionPolicy *priority_banded_connection_;
-  TAO_ServerProtocolPolicy *server_protocol_;
-  TAO_ClientProtocolPolicy *client_protocol_;
+  CORBA::Policy *priority_model_;
+  CORBA::Policy *threadpool_;
+  CORBA::Policy *private_connection_;
+  CORBA::Policy *priority_banded_connection_;
+  CORBA::Policy *server_protocol_;
+  CORBA::Policy *client_protocol_;
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
@@ -234,12 +234,12 @@ public:
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  TAO_PriorityModelPolicy *priority_model (void);
-  TAO_ThreadpoolPolicy *threadpool (void);
-  TAO_PrivateConnectionPolicy *private_connection (void);
-  TAO_PriorityBandedConnectionPolicy *priority_banded_connection (void);
-  TAO_ServerProtocolPolicy *server_protocol (void);
-  TAO_ClientProtocolPolicy *client_protocol (void);
+  CORBA::Policy *priority_model (void);
+  CORBA::Policy *threadpool (void);
+  CORBA::Policy *private_connection (void);
+  CORBA::Policy *priority_banded_connection (void);
+  CORBA::Policy *server_protocol (void);
+  CORBA::Policy *client_protocol (void);
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
@@ -292,9 +292,9 @@ public:
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  TAO_PrivateConnectionPolicy *private_connection (void) const;
-  TAO_PriorityBandedConnectionPolicy *priority_banded_connection (void) const;
-  TAO_ClientProtocolPolicy *client_protocol (void) const;
+  CORBA::Policy *private_connection (void) const;
+  CORBA::Policy *priority_banded_connection (void) const;
+  CORBA::Policy *client_protocol (void) const;
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
@@ -356,9 +356,9 @@ public:
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  TAO_PrivateConnectionPolicy *private_connection (void) const;
-  TAO_PriorityBandedConnectionPolicy *priority_banded_connection (void) const;
-  TAO_ClientProtocolPolicy *client_protocol (void) const;
+  CORBA::Policy *private_connection (void) const;
+  CORBA::Policy *priority_banded_connection (void) const;
+  CORBA::Policy *client_protocol (void) const;
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 

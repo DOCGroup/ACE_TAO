@@ -142,18 +142,21 @@ public:
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  /// Returns the RTCORBA::PriorityModelPolicy exported
+  /// Returns the CORBA::Policy (which will be narrowed to be 
+  /// used as RTCORBA::PriorityModelPolicy) exported
   /// in object's IOR.
-  TAO_PriorityModelPolicy *exposed_priority_model (void);
-
-  /// Returns the RTCORBA::PriorityBandedConnectionPolicy exported
+  CORBA::Policy *exposed_priority_model (void);
+  
+  /// Returns the CORBA::Policy (which will be narrowed and used
+  /// as RTCORBA::PriorityBandedConnectionPolicy) exported
   /// in object's IOR.
-  TAO_PriorityBandedConnectionPolicy *exposed_priority_banded_connection (void);
-
-  /// Returns the RTCORBA::ClientProtocolPolicy exported
+  CORBA::Policy *exposed_priority_banded_connection (void);
+  
+  /// Returns the CORBA::Policy (which will be narrowed and used
+  /// as RTCORBA::ClientProtocolPolicy) exported
   /// in object's IOR.
-  TAO_ClientProtocolPolicy *exposed_client_protocol (void);
-
+  CORBA::Policy *exposed_client_protocol (void);
+  
 # endif /*TAO_HAS_RT_CORBA == 1*/
 
   // = Methods for obtaining effective overrides.
@@ -183,12 +186,11 @@ public:
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  TAO_PrivateConnectionPolicy *private_connection (void);
+  CORBA::Policy *private_connection (void);
 
-  TAO_PriorityBandedConnectionPolicy *
-  priority_banded_connection (void);
+  CORBA::Policy *priority_banded_connection (void);
 
-  TAO_ClientProtocolPolicy *client_protocol (void);
+  CORBA::Policy *client_protocol (void);
 
   // = Methods for obtaining effective policies.
   //
@@ -197,11 +199,11 @@ public:
   //   override for a given policy type, and then reconciling it with
   //   the policy value exported in the Object's IOR.
 
-  TAO_PriorityBandedConnectionPolicy *
+  CORBA::Policy *
   effective_priority_banded_connection (CORBA::Environment
                                         &ACE_TRY_ENV =
                                         TAO_default_environment ());
-  TAO_ClientProtocolPolicy *
+  CORBA::Policy *
   effective_client_protocol (CORBA::Environment &ACE_TRY_ENV =
                              TAO_default_environment ());
 
@@ -222,7 +224,7 @@ public:
    * equivalent).
    */
   CORBA::ULong hash (CORBA::ULong maximum,
-          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+                     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   /// Implement the is_equivalent() method for the CORBA::Object
   CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj);
@@ -380,11 +382,11 @@ private:
   // parse the MProfile's policy list each time we
   // are asked about a given policy.
 
-  TAO_PriorityModelPolicy *priority_model_policy_;
+  CORBA::Policy *priority_model_policy_;
 
-  TAO_PriorityBandedConnectionPolicy *priority_banded_connection_policy_;
+  CORBA::Policy *priority_banded_connection_policy_;
 
-  TAO_ClientProtocolPolicy *client_protocol_policy_;
+  CORBA::Policy *client_protocol_policy_;
 
   CORBA::Boolean are_policies_parsed_;
 
