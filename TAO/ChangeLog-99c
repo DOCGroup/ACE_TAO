@@ -1,7 +1,8 @@
 Wed Jul 28 00:06:32 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Added a bunch of updated Makefile.bor files for BCB4.  Thanks to
-	  Christopher Kohlhoff <chris@kohlhoff.com> for contributing this.
+	  Christopher Kohlhoff <chris@kohlhoff.com> and Mike Gingell
+ 	  <mgingell@istar.ca> for contributing these.
   
 Tue Jul 27 21:11:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
