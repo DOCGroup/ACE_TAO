@@ -1,18 +1,24 @@
+Fri Apr 20 18:21:41 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/CDR_Stream.i (align_write_ptr):
+          Don't use grow_and_adjust() here because it forces an
+          allocation, using simply adjust() is better.
+
 Fri Apr 20 19:37:53 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/TP_Reactor.cpp: Added a workaround for compiling ACE on 
-	  Linux for the OS/390 OS.  Thanks to James Dorsey
- 	  <James.Dorsey@acxiom.com> for reporting this.
+        * ace/TP_Reactor.cpp: Added a workaround for compiling ACE on
+          Linux for the OS/390 OS.  Thanks to James Dorsey
+          <James.Dorsey@acxiom.com> for reporting this.
 
 Fri Apr 20 00:57:24 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Containers_T.cpp (operator=): Added a missing assignment to
-	  this->size_ = s.size_.  Thanks to Juan Jose Comellas
- 	  <jcomellas@novamens.com> for reporting this.
+        * ace/Containers_T.cpp (operator=): Added a missing assignment to
+          this->size_ = s.size_.  Thanks to Juan Jose Comellas
+          <jcomellas@novamens.com> for reporting this.
 
-	* ace/SOCK_Dgram: One of the send() methods was lacking a "const"
-	  in front of the ACE_Addr &.  This has been fixed.  Thanks to
- 	  Victor Poznyak <VictorP@Webley.COM> for reporting this.
+        * ace/SOCK_Dgram: One of the send() methods was lacking a "const"
+          in front of the ACE_Addr &.  This has been fixed.  Thanks to
+          Victor Poznyak <VictorP@Webley.COM> for reporting this.
 
 Thu Apr 19 16:18:33 2001  Steve Huston  <shuston@riverace.com>
 
@@ -21,9 +27,9 @@ Thu Apr 19 16:18:33 2001  Steve Huston  <shuston@riverace.com>
 
 Thu Apr 19 11:08:15 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ACE-INSTALL.html: Point out that ACE supports Solaris 8.
-	  Thanks to Logan Modahala <lmodahal@cisco.com> for motivating
- 	  this.
+        * ACE-INSTALL.html: Point out that ACE supports Solaris 8.
+          Thanks to Logan Modahala <lmodahal@cisco.com> for motivating
+          this.
 
 Wed Apr 18 13:57:40 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -37,23 +43,23 @@ Wed Apr 18 13:57:40 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Apr 18 11:33:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst: Added the BiDirectional tests to the
-	  nightly builds. There is no reason why it did not go in so far. 
+        * bin/auto_run_tests.lst: Added the BiDirectional tests to the
+          nightly builds. There is no reason why it did not go in so far.
 
 Wed Apr 18 10:25:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst: Changed the name of the -config option
-	  for SUNCC5.1.  Removed the dot and replaced it with a '_'.
+        * bin/auto_run_tests.lst: Changed the name of the -config option
+          for SUNCC5.1.  Removed the dot and replaced it with a '_'.
 
 Wed Apr 18 05:23:53 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* tests/Config_Test.cpp: Fixed several warnings related to 
-	  not using ACE_TEXT for wide-strings.  Thanks to Bala for
-	  reporting this.
+        * tests/Config_Test.cpp: Fixed several warnings related to
+          not using ACE_TEXT for wide-strings.  Thanks to Bala for
+          reporting this.
 
 Wed Apr 18 02:08:16 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Synch/proc_sema.dsp:  Fixed release build settings.
+        * examples/Synch/proc_sema.dsp:  Fixed release build settings.
 
 Tue Apr 17 12:33:49 2001  Steve Huston  <shuston@riverace.com>
 
@@ -63,9 +69,9 @@ Tue Apr 17 12:33:49 2001  Steve Huston  <shuston@riverace.com>
 
 Tue Apr 17 06:15:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Added the UDP Pluggable Protocol test to the list of executed tests.
+          Added the UDP Pluggable Protocol test to the list of executed tests.
 
 Mon Apr 16 20:42:46 2001  Carlos O'Ryan  <coryan@uci.edu>
 
