@@ -1,56 +1,62 @@
+Tue May 15 14:16:39 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/IIOP_Connection_Handler.h:
+          Fixed comments.
+
 Tue May 15 15:48:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tao/Reactor_Registry.h:
-	* tao/Reactor_Registry.cpp:
+        * tao/Reactor_Registry.h:
+        * tao/Reactor_Registry.cpp:
 
-	  Added a member variable holding the leader follower strategy,
-	  and a method for accessing it. The leader follower strategy
-	  gets created by the resource factory, which is obtained from the
-	  ORB core.
+          Added a member variable holding the leader follower strategy,
+          and a method for accessing it. The leader follower strategy
+          gets created by the resource factory, which is obtained from the
+          ORB core.
 
-	* tao/ORB_core.h:
-		
-	  Added a accessor method to the leader follower strategy,
-	  it fetches it via the reactor registry.
+        * tao/ORB_core.h:
 
-	* tao/ORB_core.h:
-	* tao/ORB_core.cpp:
+          Added a accessor method to the leader follower strategy,
+          it fetches it via the reactor registry.
 
-	  Implemented the accessor method the leader follower strategy
-	  and changed the usage of the leader follower helper class 
-	  to use the leader follower strategy in the method <run>.
+        * tao/ORB_core.h:
+        * tao/ORB_core.cpp:
 
-	* tao/Leader_Follower.h:
-	* tao/Leader_Follower.i:
-	* tao/Leader_Follower.cpp:
+          Implemented the accessor method the leader follower strategy
+          and changed the usage of the leader follower helper class
+          to use the leader follower strategy in the method <run>.
 
-	  Added the leader follower strategies, consisting of a base
-	  class <TAO_LF_Strategy> and two concrete strategies 
-	  <TAO_Null_LF_Strategy>, doing nothing, and <TAO_Complete_LF_Strategy>,
-	  behaving as the normal.
+        * tao/Leader_Follower.h:
+        * tao/Leader_Follower.i:
+        * tao/Leader_Follower.cpp:
 
-	  Also, changed the implementation of <TAO_LF_Event_Loop_Thread_Helper>
-	  to use the new strategy.
+          Added the leader follower strategies, consisting of a base
+          class <TAO_LF_Strategy> and two concrete strategies
+          <TAO_Null_LF_Strategy>, doing nothing, and <TAO_Complete_LF_Strategy>,
+          behaving as the normal.
 
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Lite.cpp:
+          Also, changed the implementation of <TAO_LF_Event_Loop_Thread_Helper>
+          to use the new strategy.
 
-	  Changed the call on <set_upcall_thread> to go via the strategy
-	  in <process_request_message>.
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Lite.cpp:
 
-	* tao/default_resource.h:
-	* tao/default_resource.cpp:
+          Changed the call on <set_upcall_thread> to go via the strategy
+          in <process_request_message>.
 
-	  Added a factory method <create_lf_strategy> which instantiates
-	  the <TAO_Complete_LF_strategy>.
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
 
-	* tao/Strategies/advanced_resource.h:
-	* tao/Strategies/advanced_resource.cpp:
+          Added a factory method <create_lf_strategy> which instantiates
+          the <TAO_Complete_LF_strategy>.
 
-	  Added a factory method <create_lf_strategy> which instantiates
-	  the <TAO_Complete_LF_Strategy> for the <select_mt> and <tp> reactor.
-	
-	  For the <select_st> reactor it instantiates the <TAO_Null_LF_Strategy>.
+        * tao/Strategies/advanced_resource.h:
+        * tao/Strategies/advanced_resource.cpp:
+
+          Added a factory method <create_lf_strategy> which instantiates
+          the <TAO_Complete_LF_Strategy> for the <select_mt> and <tp> reactor.
+
+          For the <select_st> reactor it instantiates the <TAO_Null_LF_Strategy>.
 
 Tue May 15 15:42:11 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -85,16 +91,16 @@ Tue May 15 13:26:36 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue May 15 09:38:57 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IIOP_Acceptor.cpp (dotted_decimal_address):
+        * tao/IIOP_Acceptor.cpp (dotted_decimal_address):
 
-	  If the IP address in the INET_Addr is the INADDR_ANY address,
-	  then force the actual IP address to be used by initializing a
-	  new INET_Addr with the hostname from the original one.  If that
-	  fails then something is seriously wrong with the systems
-	  networking setup.  This fixes a problem on systems where network
-	  interface probing fails and the "-ORBDottedDecimalAddresses 1"
-	  ORB option is used.  Thanks to Albert Wijnja
-	  <Albert.Wijnja@meco.nl> for reporting the problem.
+          If the IP address in the INET_Addr is the INADDR_ANY address,
+          then force the actual IP address to be used by initializing a
+          new INET_Addr with the hostname from the original one.  If that
+          fails then something is seriously wrong with the systems
+          networking setup.  This fixes a problem on systems where network
+          interface probing fails and the "-ORBDottedDecimalAddresses 1"
+          ORB option is used.  Thanks to Albert Wijnja
+          <Albert.Wijnja@meco.nl> for reporting the problem.
 
 Tue Apr 15 10:45:16 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
 

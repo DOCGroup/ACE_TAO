@@ -111,7 +111,7 @@ public:
   /// Return the underlying handle
   virtual ACE_HANDLE fetch_handle (void);
 
-  /// Documented in ACE_Event_Handler
+  /// Use peer() to drain the outgoing message queue
   virtual int handle_output (ACE_HANDLE);
 
   /// Add ourselves to Cache.
