@@ -1,3 +1,8 @@
+Wed Sep 22 19:30:49 1999  Randall Sharo <rasb@eci.esys.com>
+
+        * ace/OS.i (sema_wait): on VxWorks, update tv to return
+          the wait time. [Bug 339]
+
 Wed Sep 22 16:59:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-win32-common.h: Added definition of
