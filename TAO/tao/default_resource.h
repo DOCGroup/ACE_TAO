@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Config.h"
+#include "tao/CONV_FRAMEC.h"
 
 class TAO_Object_Adapter;
 class TAO_IOR_Parser;
@@ -92,6 +93,13 @@ public:
     TAO_ALLOCATOR_THREAD_LOCK
   };
 
+  // Translator type
+  enum TRANSLATOR_TYPE
+  {
+    CHAR_TRANSLATOR,
+    WCHAR_TRANSLATOR
+  };
+
   /// Modify and get the source for the CDR allocators
   int cdr_allocator_source (void);
 
@@ -114,6 +122,15 @@ public:
   virtual ACE_Allocator* output_cdr_msgblock_allocator (void);
   virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
 
+  virtual TAO_Codeset_Manager *get_codeset_manager ();
+
+// Get the translators for Char/Wchar Codesets
+  virtual TAO_Codeset_Translator_Factory  *get_char_translator (CONV_FRAME::CodeSetId ncs,
+                                                                CONV_FRAME::CodeSetId theTcs);
+
+  virtual TAO_Codeset_Translator_Factory *get_wchar_translator (CONV_FRAME::CodeSetId theNcs,
+                                                                CONV_FRAME::CodeSetId theTcs);
+
   virtual int init_protocol_factories (void);
 
   virtual int cache_maximum (void) const;
@@ -127,6 +144,9 @@ public:
 
   virtual void disable_factory (void);
 
+  CONV_FRAME::CodeSetId get_ncs_char (void);
+
+  CONV_FRAME::CodeSetId get_ncs_wchar (void);
   //@}
 
 protected:
@@ -221,6 +241,29 @@ private:
 
   /// Type of flushing strategy configured
   int flushing_strategy_type_;
+
+  /// NCS for character and wide character
+  CONV_FRAME::CodeSetId ncs_c_;
+
+  CONV_FRAME::CodeSetId ncs_w_;
+
+  /// List of Character codeset factories
+  TAO_CodesetFactorySet  charcodeset_factories_;
+
+  /// List of Character codeset factories
+  TAO_CodesetFactorySet wcharcodeset_factories_;
+
+  TAO_Codeset_Manager *codeset_manager_;
+
+  // Function to initialize a list of char or wchar codeset factories
+  virtual int init_codeset_factories_i (TAO_CodesetFactorySet& );
+  void get_codeset_ids_i (CONV_FRAME::CodeSetId,
+                          TAO_CodesetFactorySet&,
+                          CONV_FRAME::CodeSetComponent *);
+  TAO_Codeset_Translator_Factory * get_translator_i (TAO_CodesetFactorySet&,
+                                                     CONV_FRAME::CodeSetId ,
+                                                     CONV_FRAME::CodeSetId);
+
 };
 
 #if defined (__ACE_INLINE__)

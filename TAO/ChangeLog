@@ -1,3 +1,69 @@
+Tue Mar  4 13:44:06 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO/TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO/TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+
+        Wrap the marshal / unmarshal code to check for errors and call the
+        appropriate static function to raise the related exception.
+
+        * TAO/tao/Any.cpp:
+        * TAO/tao/Any.h:
+        * TAO/tao/CDR.cpp:
+        * TAO/tao/CDR.h:
+        * TAO/tao/CDR.i:
+        * TAO/tao/GIOP_Message_Base.cpp:
+        * TAO/tao/GIOP_Message_Generator_Parser_10.cpp:
+        * TAO/tao/GIOP_Message_Generator_Parser_12.cpp:
+        * TAO/tao/GIOP_Message_Lite.cpp:
+        * TAO/tao/IIOP_Acceptor.cpp:
+        * TAO/tao/IIOP_Profile.cpp:
+        * TAO/tao/IIOP_Transport.cpp:
+        * TAO/tao/Invocation.cpp:
+        * TAO/tao/Invocation.h:
+        * TAO/tao/Invocation.i:
+        * TAO/tao/Makefile.tao:
+        * TAO/tao/ORB.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/Resource_Factory.cpp:
+        * tao/Resource_Factory.h:
+        * tao/TAO_Server_Request.cpp:
+        * tao/Transport.cpp:
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/default_resource.cpp:
+        * tao/default_resource.h:
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Acceptor.cpp:
+        * tao/Strategies/UIOP_Profile.cpp:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * utils/catior/catior.cpp:
+
+        These files modified to support the codeset negotiation feature. This
+        feature replaces the ACE_Char_Codeset_Translators owned by the ORB with
+        A codset manager framework and dynamically loadable translators.
+
+        The functionality conforms with CORBA 3.0 section 13.10.
+
+        * TAO/tao/Codeset_Manager.cpp:
+        * TAO/tao/Codeset_Manager.h:
+        * TAO/tao/Codeset_Translator_Factory.cpp:
+        * TAO/tao/Codeset_Translator_Factory.h:
+        * TAO/tao/Codeset_Translator_Factory_T.cpp:
+        * TAO/tao/Codeset_Translator_Factory_T.h:
+
+        New files added to to support the codeset framework
+
+        * TAO/tests/CodeSets:
+
+        A new test, including a sample translator library.
+
 Tue Mar  4 08:57:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_global.cpp:
@@ -5,43 +71,44 @@ Tue Mar  4 08:57:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           Misunderstood the error message that led to the checkin
           below, actually had to retain the 'const' qualifier.
 
+
 Mon Mar  3 22:38:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_global.cpp:
 
-	  Changed char* arg argument to retain the const qualifier.
+          Changed char* arg argument to retain the const qualifier.
 
 Mon Mar  3 17:23:55 2003  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/tests/Bug_1395_Regression/Test_i.cpp:
+        * orbsvcs/tests/Bug_1395_Regression/Test_i.cpp:
 
-	  Fixed existing and added missing emulated exception support.
+          Fixed existing and added missing emulated exception support.
 
 Mon Mar  3 14:36:53 2003  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Exception.h:
-	* tao/Exception.cpp:
+        * tao/Exception.h:
+        * tao/Exception.cpp:
 
-	  Uninlined SystemException subclass constructors.  There was no
-	  real advantage to inlining them.  Inlining them only served to
-	  increase footprint.
+          Uninlined SystemException subclass constructors.  There was no
+          real advantage to inlining them.  Inlining them only served to
+          increase footprint.
 
-	  (operator<<=, operator>>=):
+          (operator<<=, operator>>=):
 
-	  Placed the definitions of these Any insertion and extraction
-	  operators in the CORBA namespace.  Fixes "unresolved symbol"
-	  link-time errors when using these operators.
+          Placed the definitions of these Any insertion and extraction
+          operators in the CORBA namespace.  Fixes "unresolved symbol"
+          link-time errors when using these operators.
 
-	  (_info, _tao_get_omg_exception_description):
+          (_info, _tao_get_omg_exception_description):
 
-	  Improved const-correctness.  Variables that are really constants
-	  are now marked as such.
+          Improved const-correctness.  Variables that are really constants
+          are now marked as such.
 
-	  (make_standard_typecode):
+          (make_standard_typecode):
 
-	  Improved exception-safety.  Manage memory using a
-	  CORBA::String_var instead of the raw
-	  CORBA::string_{alloc,release} functions.
+          Improved exception-safety.  Manage memory using a
+          CORBA::String_var instead of the raw
+          CORBA::string_{alloc,release} functions.
 
 Mon Mar  3 15:42:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -68,11 +135,11 @@ Mon Mar  3 15:12:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Mar  3 11:43:01 2003  Ossama Othman  <ossama@uci.edu>
 
-	* tao/DynamicAny/DynStruct_i.cpp (current_member_kind):
+        * tao/DynamicAny/DynStruct_i.cpp (current_member_kind):
 
-	  Corrected return value in emulated exception case.
-	  "CORBA::tk_null", not "0".  Fixes build problems related to
-	  invalid conversions from "int" to "CORBA::TCKind".
+          Corrected return value in emulated exception case.
+          "CORBA::tk_null", not "0".  Fixes build problems related to
+          invalid conversions from "int" to "CORBA::TCKind".
 
 Mon Mar  3 13:27:01 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -97,179 +164,179 @@ Mon Mar  3 13:02:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sun  Mar 2 15:10:02 3003 Pradeep Gore <pradeep@oomworks.com>
 
-	* orbsvcs/orbsvcs/Notify/Admin.h:
-	  Removed extra ";" on line 85 that is foxing the BCB compiler.
-	  Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for spotting this.
+        * orbsvcs/orbsvcs/Notify/Admin.h:
+          Removed extra ";" on line 85 that is foxing the BCB compiler.
+          Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for spotting this.
 
 Sun Mar  2 10:04:54 2003  Ossama Othman  <ossama@uci.edu>
 
-	* tao/DynamicAny/DynStruct_i.cpp (current_member_kind):
-	  (get_members_as_dyn_any):
+        * tao/DynamicAny/DynStruct_i.cpp (current_member_kind):
+          (get_members_as_dyn_any):
 
-	  Fixed emulated exception macro usage.  "ACE_CHECK_RETURN", not
-	  "ACE_CHECK".
+          Fixed emulated exception macro usage.  "ACE_CHECK_RETURN", not
+          "ACE_CHECK".
 
-	* tests/DynAny_Test/test_dynstruct.cpp (run_test):
-	* tests/DynAny_Test/test_dynunion.cpp (run_test):
+        * tests/DynAny_Test/test_dynstruct.cpp (run_test):
+        * tests/DynAny_Test/test_dynunion.cpp (run_test):
 
-	  Fixed emulated exception macro usage.  "ACE_TRY_{CHECK_}EX", not
-	  "ACE_TRY{_CHECK}".
+          Fixed emulated exception macro usage.  "ACE_TRY_{CHECK_}EX", not
+          "ACE_TRY{_CHECK}".
 
-	  Added missing "ACE_TRY_CHECK" after inner ACE_TRY_EX block's
-	  ACE_ENDTRY.
+          Added missing "ACE_TRY_CHECK" after inner ACE_TRY_EX block's
+          ACE_ENDTRY.
 
 Sun Mar  2 09:23:18 2003  Ossama Othman  <ossama@uci.edu>
 
-	* tests/DynAny_Test/test_dynstruct.cpp (run_test):
-	* tests/DynAny_Test/test_dynunion.cpp (run_test):
+        * tests/DynAny_Test/test_dynstruct.cpp (run_test):
+        * tests/DynAny_Test/test_dynunion.cpp (run_test):
 
-	  "CORBA_" -> "CORBA::".
+          "CORBA_" -> "CORBA::".
 
 Sat Mar  1 13:47:14 CST 2003 Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/orbsvcs/Notify/Builder.cpp:
-	  Commented out unused parameter.
+        * orbsvcs/orbsvcs/Notify/Builder.cpp:
+          Commented out unused parameter.
 
-	* orbsvcs/orbsvcs/Notify/Container_T.inl:
-	* orbsvcs/orbsvcs/Notify/Seq_Worker_T.cpp:
-	  Added missing ACE_TYPENAME keyword.
+        * orbsvcs/orbsvcs/Notify/Container_T.inl:
+        * orbsvcs/orbsvcs/Notify/Seq_Worker_T.cpp:
+          Added missing ACE_TYPENAME keyword.
 
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
-	  Replaced Service name to "TAO_Notify_Service"
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
+          Replaced Service name to "TAO_Notify_Service"
 
 Sat Mar  1 10:27:55 2003  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/IFR_Service/ifr_adding_visitor_exception.h
-	  (ifr_adding_visitor_exception):
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.h
+          (ifr_adding_visitor_exception):
 
-	  Fixed typo.  "CORBAL" -> "CORBA".
+          Fixed typo.  "CORBAL" -> "CORBA".
 
 Sat Mar  1 09:30:47 2003  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/tests/Security/MT_IIOP_SSL/Server_Worker.h:
-	* orbsvcs/tests/Security/MT_SSLIOP/Server_Worker.h:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/Server_Worker.h:
+        * orbsvcs/tests/Security/MT_SSLIOP/Server_Worker.h:
 
-	  "CORBA_" -> "CORBA::".
+          "CORBA_" -> "CORBA::".
 
 Sat Mar  1 04:15:39 2003  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/IFR_Service/be_global.cpp:
-	* orbsvcs/IFR_Service/be_global.h:
-	* orbsvcs/IFR_Service/be_produce.cpp:
-	* orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
-	* orbsvcs/IFR_Service/ifr_adding_visitor.h:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_exception.h:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_operation.h:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_structure.h:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_union.h:
-	* orbsvcs/IFR_Service/ifr_removing_visitor.cpp:
-	* orbsvcs/IFR_Service/ifr_visitor_macro.h:
-	* orbsvcs/examples/ORT/Gateway_ObjRef_Factory.h:
+        * orbsvcs/IFR_Service/be_global.cpp:
+        * orbsvcs/IFR_Service/be_global.h:
+        * orbsvcs/IFR_Service/be_produce.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.h:
+        * orbsvcs/IFR_Service/ifr_removing_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_visitor_macro.h:
+        * orbsvcs/examples/ORT/Gateway_ObjRef_Factory.h:
 
-	  "CORBA_" -> "CORBA::".
+          "CORBA_" -> "CORBA::".
 
-	* tests/RTCORBA/Server_Protocol/server.cpp
-	  (check_default_server_protocol):
+        * tests/RTCORBA/Server_Protocol/server.cpp
+          (check_default_server_protocol):
 
-	  Added missing CORBA::Environment argument.  Fixes a compile-time
-	  error.
+          Added missing CORBA::Environment argument.  Fixes a compile-time
+          error.
 
 Sat Mar  1 03:41:30 2003  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/IFRService/AbstractInterfaceDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/AliasDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/AliasDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/ArrayDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ArrayDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/AttributeDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/AttributeDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ComponentDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/ComponentRepository_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h:
-	* orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ConstantDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/ConsumesDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ConsumesDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/Contained_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/Contained_i.h:
-	* orbsvcs/orbsvcs/IFRService/Container_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/Container_i.h:
-	* orbsvcs/orbsvcs/IFRService/EmitsDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/EmitsDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/EnumDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/EnumDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/EventDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/EventDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/ExceptionDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ExceptionDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/FactoryDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/FactoryDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/FinderDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/FinderDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/HomeDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
-	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
-	* orbsvcs/orbsvcs/IFRService/IFR_macro.h:
-	* orbsvcs/orbsvcs/IFRService/IRObject_i.h:
-	* orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/InterfaceDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/ModuleDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ModuleDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/OperationDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/PrimaryKeyDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/PrimaryKeyDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/ProvidesDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ProvidesDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/PublishesDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/PublishesDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/Repository_i.h:
-	* orbsvcs/orbsvcs/IFRService/SequenceDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/SequenceDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/Servant_Factory.cpp:
-	* orbsvcs/orbsvcs/IFRService/StructDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/StructDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/TypedefDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/TypedefDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/UnionDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/UsesDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/UsesDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/ValueBoxDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ValueBoxDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ValueDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/AbstractInterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/AliasDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/AliasDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ArrayDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ArrayDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/AttributeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/AttributeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentRepository_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h:
+        * orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ConstantDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ConsumesDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ConsumesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/Contained_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Contained_i.h:
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.h:
+        * orbsvcs/orbsvcs/IFRService/EmitsDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/EmitsDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/EnumDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/EnumDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/EventDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/EventDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExceptionDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExceptionDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/FactoryDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/FactoryDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/FinderDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/FinderDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_macro.h:
+        * orbsvcs/orbsvcs/IFRService/IRObject_i.h:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ModuleDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ModuleDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/PrimaryKeyDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/PrimaryKeyDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ProvidesDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ProvidesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/PublishesDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/PublishesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.h:
+        * orbsvcs/orbsvcs/IFRService/SequenceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/SequenceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/Servant_Factory.cpp:
+        * orbsvcs/orbsvcs/IFRService/StructDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/StructDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/TypedefDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/TypedefDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/UsesDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/UsesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ValueBoxDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueBoxDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.h:
 
-	  "CORBA_" -> "CORBA::".
+          "CORBA_" -> "CORBA::".
 
 Fri Feb 28 18:17:28 CST 2003 <pradeep@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Makefile.CosNotification:
-	* orbsvcs/orbsvcs/Notify/Makefile:
-	  Updated.
+        * orbsvcs/orbsvcs/Notify/Makefile.CosNotification:
+        * orbsvcs/orbsvcs/Notify/Makefile:
+          Updated.
 
 Fri Feb 28 14:20:57 2003  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Environment.h:
+        * tao/Environment.h:
 
-	  Removed another TAO_ORB_Core friend declaration that may be
-	  responsible for namespace related build problems on Solaris.
+          Removed another TAO_ORB_Core friend declaration that may be
+          responsible for namespace related build problems on Solaris.
 
 Thu  Feb 27, 2003  15:14:58  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
-	  Updated.
+        * orbsvcs/orbsvcs/CosNotification_Static.dsp:
+          Updated.
 
 Thu Feb 27 11:27:24 2003  Chad Elliott  <elliott_c@ociweb.com>
 

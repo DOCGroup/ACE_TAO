@@ -124,6 +124,8 @@ project : acelib, taoversion, core {
       DynamicC.cpp
       OctetSeqC.cpp
       StringSeqC.cpp
+      Codeset_Manager.cpp
+      Codeset_Translator_Factory.cpp
       ORB_Core.cpp
       ORB_Core_Auto_Ptr.cpp
       Collocation_Resolver.cpp

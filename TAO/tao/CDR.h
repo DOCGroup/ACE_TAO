@@ -49,6 +49,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/CORBA_macros.h"
 #include "ace/CDR_Stream.h"
 
 class TAO_ORB_Core;
@@ -93,9 +94,7 @@ public:
                  ACE_CDR::Octet major_version =
                    TAO_DEF_GIOP_MAJOR,
                  ACE_CDR::Octet minor_version =
-                   TAO_DEF_GIOP_MINOR,
-                 ACE_Char_Codeset_Translator *char_translator = 0,
-                 ACE_WChar_Codeset_Translator *wchar_translator = 0);
+                   TAO_DEF_GIOP_MINOR);
 
   /// Build a CDR stream with an initial buffer, it will *not* remove
   /// <data>, since it did not allocated it.
@@ -109,9 +108,7 @@ public:
                  ACE_CDR::Octet major_version =
                    TAO_DEF_GIOP_MAJOR,
                  ACE_CDR::Octet minor_version =
-                   TAO_DEF_GIOP_MINOR,
-                 ACE_Char_Codeset_Translator *char_translator = 0,
-                 ACE_WChar_Codeset_Translator *wchar_translator = 0);
+                   TAO_DEF_GIOP_MINOR);
 
   /// Build a CDR stream with an initial Message_Block chain, it will *not*
   /// remove <data>, since it did not allocate it.
@@ -121,9 +118,7 @@ public:
                  ACE_CDR::Octet major_version =
                    TAO_DEF_GIOP_MAJOR,
                  ACE_CDR::Octet minor_version =
-                   TAO_DEF_GIOP_MINOR,
-                 ACE_Char_Codeset_Translator *char_translator = 0,
-                 ACE_WChar_Codeset_Translator *wchar_translator = 0);
+                   TAO_DEF_GIOP_MINOR);
 
   /// Destructor.
   ~TAO_OutputCDR (void);
@@ -132,6 +127,8 @@ public:
   // strings and wstrings?
 
   // = TAO specific methods.
+  static void throw_stub_exception (int error_num ACE_ENV_ARG_DECL);
+  static void throw_skel_exception (int error_num ACE_ENV_ARG_DECL);
 
 private:
   /// disallow copying...
@@ -260,8 +257,10 @@ public:
   /// Accessor
   TAO_ORB_Core *orb_core (void) const;
 
-private:
-  void init_translators (void);
+
+  // = TAO specific methods.
+  static void throw_stub_exception (int error_num ACE_ENV_ARG_DECL);
+  static void throw_skel_exception (int error_num ACE_ENV_ARG_DECL);
 
 private:
   /// The ORB_Core, required to extract object references.

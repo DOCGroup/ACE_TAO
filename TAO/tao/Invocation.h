@@ -35,9 +35,9 @@
 #include "Messaging_SyncScopeC.h"
 #include "operation_details.h"
 #include "target_specification.h"
+#include "Transport.h"
 
 struct TAO_Exception_Data;
-class TAO_Transport;
 class TAO_Stub;
 class TAO_Transport_Descriptor_Interface;
 class TAO_Endpoint;

@@ -10,6 +10,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/Protocols_Hooks.h"
+#include "tao/Codeset_Manager.h"
 
 #include "ace/Auto_Ptr.h"
 
@@ -111,12 +112,8 @@ TAO_DIOP_Acceptor::create_new_profile (const TAO_ObjectKey &object_key,
 
       pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
 
-      CONV_FRAME::CodeSetComponentInfo code_set_info;
-      code_set_info.ForCharData.native_code_set  =
-        TAO_DEFAULT_CHAR_CODESET_ID;
-      code_set_info.ForWcharData.native_code_set =
-        TAO_DEFAULT_WCHAR_CODESET_ID;
-      pfile->tagged_components ().set_code_sets (code_set_info);
+      this->orb_core_->codeset_manager()->
+        set_codeset(pfile->tagged_components());
     }
 
   return 0;
@@ -168,13 +165,8 @@ TAO_DIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
           && (this->version_.major >= 1 && this->version_.minor >= 1))
         {
           iiop_profile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
-
-          CONV_FRAME::CodeSetComponentInfo code_set_info;
-          code_set_info.ForCharData.native_code_set  =
-            TAO_DEFAULT_CHAR_CODESET_ID;
-          code_set_info.ForWcharData.native_code_set =
-            TAO_DEFAULT_WCHAR_CODESET_ID;
-          iiop_profile->tagged_components ().set_code_sets (code_set_info);
+          this->orb_core_->codeset_manager()->
+            set_codeset(iiop_profile->tagged_components());
         }
 
       index = 1;

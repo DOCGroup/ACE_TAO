@@ -9,6 +9,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/AbstractBase.h"
 #include "tao/debug.h"
+#include "tao/Codeset_Translator_Factory.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Any.i"
@@ -77,7 +78,9 @@ CORBA::Any::Any (void)
     any_owns_data_ (0),
     contains_local_ (0),
     value_ (0),
-    destructor_ (0)
+    destructor_ (0),
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
 }
 
@@ -88,7 +91,9 @@ CORBA::Any::Any (CORBA::TypeCode_ptr tc)
     any_owns_data_ (0),
     contains_local_ (0),
     value_ (0),
-    destructor_ (0)
+    destructor_ (0),
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
 }
 
@@ -102,7 +107,9 @@ CORBA::Any::Any (CORBA::TypeCode_ptr type,
     any_owns_data_ (0),
     contains_local_ (0),
     value_ (0),
-    destructor_ (0)
+    destructor_ (0),
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
   ACE_NEW (this->cdr_,
            ACE_Message_Block);
@@ -116,7 +123,10 @@ CORBA::Any::Any (const CORBA::Any &src)
     any_owns_data_ (0),
     contains_local_ (src.contains_local_),
     value_ (0),
-    destructor_ (0)
+    destructor_ (0),
+    char_translator_ (0),
+    wchar_translator_ (0)
+
 {
   if (!CORBA::is_nil (src.type_.in ()))
     {
@@ -138,6 +148,9 @@ CORBA::Any::Any (const CORBA::Any &src)
       ACE_CDR::consolidate (this->cdr_,
                             src.cdr_);
     }
+
+  this->char_translator_ = src.char_translator_;
+  this->wchar_translator_ = src.wchar_translator_;
 
   // No need to copy src's value_.  We can always get that from cdr.
 }
@@ -208,7 +221,9 @@ CORBA::Any::~Any (void)
 void
 CORBA::Any::_tao_replace (CORBA::TypeCode_ptr tc,
                           int byte_order,
-                          const ACE_Message_Block *mb)
+                          const ACE_Message_Block *mb,
+                          TAO_Codeset_Translator_Factory *ctrans,
+                          TAO_Codeset_Translator_Factory *wtrans)
 {
   // Decrement the refcount on the Message_Block we hold, it does not
   // matter if we own the data or not, because we always own the
@@ -229,6 +244,10 @@ CORBA::Any::_tao_replace (CORBA::TypeCode_ptr tc,
                         mb);
   // We can save the decode operation if there's no need to extract
   // the object.
+
+  // assign the char and wchar translator factories
+  this->char_translator_ = ctrans;
+  this->wchar_translator_ = wtrans;
 }
 
 void
@@ -357,10 +376,25 @@ CORBA::Any::_tao_decode (TAO_InputCDR &cdr
                   begin,
                   size);
 
+  // get character translator, if necessary.
+  TAO_Codeset_Translator_Factory *ctrans = 0;
+  if (cdr.char_translator() != 0)
+    ctrans = cdr.orb_core()->resource_factory()->
+      get_char_translator(cdr.char_translator()->ncs(),
+                          cdr.char_translator()->tcs());
+
+  TAO_Codeset_Translator_Factory *wtrans = 0;
+  if (cdr.wchar_translator() != 0)
+    wtrans = cdr.orb_core()->resource_factory()->
+      get_wchar_translator(cdr.wchar_translator()->ncs(),
+                           cdr.wchar_translator()->tcs());
+
   // Stick it into the Any. It gets duplicated there.
   this->_tao_replace (this->type_.in (),
                       cdr.byte_order (),
-                      &mb);
+                      &mb,
+                      ctrans,
+                      wtrans);
 }
 
 // Insertion operators.
@@ -1175,6 +1209,10 @@ CORBA::Any::operator>>= (const char *&s) const
 
       TAO_InputCDR stream (this->cdr_,
                            this->byte_order_);
+
+      if (this->char_translator_)
+        this->char_translator_->assign(&stream);
+
       CORBA::String_var tmp;
 
       if (!stream.read_string (tmp.out ()))
@@ -1241,6 +1279,10 @@ CORBA::Any::operator>>= (const CORBA::WChar *&s) const
 
       TAO_InputCDR stream (this->cdr_,
                            this->byte_order_);
+
+      if (this->wchar_translator_)
+        this->wchar_translator_->assign(&stream);
+
       CORBA::WString_var tmp;
 
       if (!stream.read_wstring (tmp.out ()))
@@ -1418,6 +1460,8 @@ CORBA::Any::operator>>= (to_char c) const
 
       TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_,
                            this->byte_order_);
+      if (this->char_translator_)
+        this->char_translator_->assign (&stream);
 
       return stream.read_char (c.ref_);
     }
@@ -1452,6 +1496,8 @@ CORBA::Any::operator>>= (to_wchar wc) const
 
       TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_,
                            this->byte_order_);
+      if (this->wchar_translator_)
+        this->wchar_translator_->assign (&stream);
 
       return stream.read_wchar (wc.ref_);
     }
@@ -1511,6 +1557,9 @@ CORBA::Any::operator>>= (to_string s) const
 
       TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_,
                            this->byte_order_);
+      if (this->char_translator_)
+        this->char_translator_->assign (&stream);
+
       CORBA::String_var tmp;
 
       if (!stream.read_string (tmp.out ()))
@@ -1584,6 +1633,10 @@ CORBA::Any::operator>>= (to_wstring ws) const
 
       TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_,
                            this->byte_order_);
+
+      if (this->char_translator_)
+        this->char_translator_->assign (&stream);
+
       CORBA::WString_var tmp;
 
       if (!stream.read_wstring (tmp.out ()))
@@ -1905,10 +1958,25 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &x)
       mb.wr_ptr (offset + size);
       ACE_OS::memcpy (mb.rd_ptr (), begin, size);
 
+      // get character translator, if necessary.
+      TAO_Codeset_Translator_Factory *ctrans = 0;
+      if (cdr.char_translator() != 0)
+        ctrans = cdr.orb_core()->resource_factory()->
+          get_char_translator(cdr.char_translator()->ncs(),
+                              cdr.char_translator()->tcs());
+
+      TAO_Codeset_Translator_Factory *wtrans = 0;
+      if (cdr.wchar_translator() != 0)
+        wtrans = cdr.orb_core()->resource_factory()->
+          get_wchar_translator(cdr.wchar_translator()->ncs(),
+                               cdr.wchar_translator()->tcs());
+
       // Stick it into the Any. It gets duplicated there.
       x._tao_replace (tc.in (),
                       cdr.byte_order (),
-                      &mb);
+                      &mb,
+                      ctrans,
+                      wtrans);
     }
   ACE_CATCH (CORBA::Exception, ex)
     {

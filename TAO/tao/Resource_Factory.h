@@ -25,6 +25,7 @@
 
 #include "tao/TAO_Export.h"
 #include "ace/Unbounded_Set.h"
+#include "CONV_FRAMEC.h"
 #include "ace/SString.h"
 
 class TAO_Protocol_Factory;
@@ -35,7 +36,10 @@ class TAO_Flushing_Strategy;
 class TAO_Connection_Purging_Strategy;
 class TAO_LF_Strategy;
 
+class TAO_Codeset_Manager;
 class ACE_Lock;
+
+class TAO_Codeset_Translator_Factory;
 
 // ****************************************************************
 
@@ -76,6 +80,47 @@ private:
   int factory_owner_;
 };
 
+// ****************************************************************
+
+class TAO_Export TAO_Codeset_Item
+{
+public:
+  /// creator method, the codeset name can only be set when the
+  /// object is created.
+  TAO_Codeset_Item (const ACE_CString &name);
+
+  /// destructor that deallocates the factory object if the
+  /// CodeSet_Item retains ownership.
+  ~TAO_Codeset_Item (void);
+
+  /// return a reference to the character representation of the codeset
+  /// factories name.
+  const ACE_CString &codeset_name (void);
+
+  /// return a pointer to the codeset factory.
+  TAO_Codeset_Translator_Factory *factory (void);
+
+  /// set the factory pointer's value.
+  void factory (TAO_Codeset_Translator_Factory *factory, int owner = 0);
+
+private:
+  // Prohibited
+  ACE_UNIMPLEMENTED_FUNC (TAO_Codeset_Item (const TAO_Codeset_Item&))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Codeset_Item&))
+
+private:
+  /// protocol factory name.
+  ACE_CString name_;
+
+  /// pointer to factory object.
+  TAO_Codeset_Translator_Factory *factory_;
+
+  /// whether we own (and therefore have to delete) the factory object.
+  int factory_owner_;
+};
+
+// typedefs for containers containing the list of loaded protocol
+
 // typedefs for containers containing the list of loaded protocol
 // factories.
 typedef ACE_Unbounded_Set<TAO_Protocol_Item*>
@@ -83,6 +128,16 @@ typedef ACE_Unbounded_Set<TAO_Protocol_Item*>
 
 typedef ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>
         TAO_ProtocolFactorySetItor;
+
+// Added by Mahesh
+// typedefs for containers containing the list of codesets
+// factories for character and wide character.
+typedef ACE_Unbounded_Set<TAO_Codeset_Item*> 
+        TAO_CodesetFactorySet;
+
+// Iterators
+typedef ACE_Unbounded_Set_Iterator<TAO_Codeset_Item*> 
+        TAO_CodesetFactorySetItor;
 
 // ****************************************************************
 
@@ -162,6 +217,15 @@ public:
    * Returns a container holding the list of loaded protocols.
    */
   virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
+
+  virtual TAO_Codeset_Manager *get_codeset_manager(void);
+
+  // Get the translators for Char/Wchar Codesets
+  virtual TAO_Codeset_Translator_Factory  *get_char_translator  (CONV_FRAME::CodeSetId theNcs,
+                                                                 CONV_FRAME::CodeSetId theTcs);
+
+  virtual TAO_Codeset_Translator_Factory *get_wchar_translator (CONV_FRAME::CodeSetId theNcs,
+                                                                CONV_FRAME::CodeSetId theTcs);
 
   /**
    * this method will loop through the protocol list and

@@ -243,6 +243,7 @@ TAO_SHMIOP_Transport::send_request (TAO_Stub *stub,
                           max_wait_time) == -1)
 
     return -1;
+  this->first_request_sent();
 
   return this->idle_after_send ();
 }
