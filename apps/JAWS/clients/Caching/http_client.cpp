@@ -17,8 +17,9 @@
 //
 // ============================================================================
 
-#include "http_handler.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/os_include/os_ctype.h"
+#include "http_handler.h"
 
 ACE_RCSID(Caching, http_client, "$Id$")
 
