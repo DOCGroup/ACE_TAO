@@ -100,8 +100,6 @@ TAO_Stub::~TAO_Stub (void)
           // reset the hint in case it points to non-existent
           // connection handler.
           TAO_Endpoint* ep = this->profile_in_use_->endpoint ();
-          if (ep)
-            ep->reset_hint ();
         }
 
       // decrease reference count on profile

@@ -17,61 +17,62 @@ ACE_RCSID(Strategies, SHMIOP_Endpoint, "$Id$")
 
 TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_MEM_Addr &addr,
                                           int use_dotted_decimal_addresses)
-  : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE),
-    host_ (),
-    port_ (0),
-    object_addr_ (addr.get_remote_addr ()),
-    object_addr_set_ (0),
-    next_ (0)
+  : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE)
+    , host_ ()
+    , port_ (0)
+    , object_addr_ (addr.get_remote_addr ())
+    , object_addr_set_ (0)
+    , next_ (0)
 {
   this->set (addr.get_remote_addr (), use_dotted_decimal_addresses);
 }
 
 TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_INET_Addr &addr,
                                           int use_dotted_decimal_addresses)
-  : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE),
-    host_ (),
-    port_ (0),
-    object_addr_ (addr),
-    object_addr_set_ (0),
-    next_ (0)
+  : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE)
+    , host_ ()
+    , port_ (0)
+    , object_addr_ (addr)
+    , object_addr_set_ (0)
+    , next_ (0)
 {
   this->set (addr, use_dotted_decimal_addresses);
 }
 
 TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
                                           CORBA::UShort port,
-                                          const ACE_INET_Addr &addr)
-  : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE),
-    host_ (),
-    port_ (port),
-    object_addr_ (addr),
-    object_addr_set_ (0),
-    next_ (0)
+                                          const ACE_INET_Addr &addr,
+                                          CORBA::Short priority)
+  : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE, priority)
+    , host_ ()
+    , port_ (port)
+    , object_addr_ (addr)
+    , object_addr_set_ (0)
+    , next_ (0)
 {
   if (host != 0)
     this->host_ = host;
 }
 
 TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (void)
-  : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE),
-    host_ (),
-    port_ (0),
-    object_addr_ (),
-    object_addr_set_ (0),
-    next_ (0)
+  : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE)
+    , host_ ()
+    , port_ (0)
+    , object_addr_ ()
+    , object_addr_set_ (0)
+    , next_ (0)
 {
 }
 
 TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
                                           CORBA::UShort port,
                                           CORBA::Short priority)
-  : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE),
-    host_ (),
-    port_ (port),
-    object_addr_ (),
-    object_addr_set_ (0),
-    next_ (0)
+  : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE)
+    , host_ ()
+    , port_ (port)
+    , object_addr_ ()
+    , object_addr_set_ (0)
+    , next_ (0)
 {
   if (host != 0)
     this->host_ = host;
@@ -85,7 +86,7 @@ TAO_SHMIOP_Endpoint::~TAO_SHMIOP_Endpoint (void)
 
 int
 TAO_SHMIOP_Endpoint::set (const ACE_INET_Addr &addr,
-                        int use_dotted_decimal_addresses)
+                          int use_dotted_decimal_addresses)
 {
   char tmp_host[MAXHOSTNAMELEN + 1];
 
@@ -140,13 +141,6 @@ TAO_SHMIOP_Endpoint::host (const char *h)
   return this->host_.in ();
 }
 
-void
-TAO_SHMIOP_Endpoint::reset_hint (void)
-{
-  //  if (this->hint_)
-  //this->hint_->cleanup_hint ((void **) &this->hint_);
-}
-
 TAO_Endpoint *
 TAO_SHMIOP_Endpoint::next (void)
 {
@@ -160,7 +154,8 @@ TAO_SHMIOP_Endpoint::duplicate (void)
   ACE_NEW_RETURN (endpoint,
                   TAO_SHMIOP_Endpoint (this->host_.in (),
                                        this->port_,
-                                       this->object_addr_),
+                                       this->object_addr_,
+                                       this->priority ()),
                   0);
 
   return endpoint;
@@ -192,4 +187,51 @@ TAO_SHMIOP_Endpoint::hash (void)
     + this->port_;
 }
 
+const ACE_INET_Addr &
+TAO_SHMIOP_Endpoint::object_addr (void) const
+{
+  // The object_addr_ is initialized here, rather than at IOR decode
+  // time for several reasons:
+  //   1. A request on the object may never be invoked.
+  //   2. The DNS setup may have changed dynamically.
+  //   ...etc..
+
+  // Double checked locking optimization.
+  if (!this->object_addr_set_)
+    {
+      // We need to modify the object_addr_ in this method.  Do so
+      // using a  non-const copy of the <this> pointer.
+      TAO_SHMIOP_Endpoint *endpoint =
+        ACE_const_cast (TAO_SHMIOP_Endpoint *,
+                        this);
+
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                        guard,
+                        endpoint->addr_lookup_lock_,
+                        this->object_addr_ );
+
+      if (!this->object_addr_set_)
+        {
+          if (endpoint->object_addr_.set (this->port_,
+                                          this->host_.in ()) == -1)
+            {
+              // If this call fails, it most likely due a hostname
+              // lookup failure caused by a DNS misconfiguration.  If
+              // a request is made to the object at the given host and
+              // port, then a CORBA::TRANSIENT() exception should be
+              // thrown.
+
+              // Invalidate the ACE_INET_Addr.  This is used as a flag
+              // to denote that ACE_INET_Addr initialization failed.
+              endpoint->object_addr_.set_type (-1);
+            }
+          else
+            {
+              endpoint->object_addr_set_ = 1;
+            }
+        }
+    }
+
+  return this->object_addr_;
+}
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
