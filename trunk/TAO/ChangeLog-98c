@@ -1,3 +1,11 @@
+Tue Aug 18 17:54:16 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init): Fixed incorrect
+ 	  assignment.
+
+	* tests/Cubit/TAO/IDL_Cubit/server.cpp (main): Added print
+ 	  statements for initialization errors.
+
 Tue Aug 18 16:54:24 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.2.4 released.
