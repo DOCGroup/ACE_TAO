@@ -1,3 +1,23 @@
+Thu Aug  7  1:51:27 2003  <Ossama Othman <ossama@dre.vanderbilt.edu>>
+
+	* orbsvcs/orbsvcs/CSI.idl:
+	* orbsvcs/orbsvcs/CSIIOP.idl:
+	* orbsvcs/orbsvcs/GSSUP.idl:
+	* orbsvcs/orbsvcs/CSIv2/CSI_Utils.cpp:
+	* orbsvcs/orbsvcs/CSIv2/CSI_Utils.h:
+	* orbsvcs/orbsvcs/CSIv2/CSS_ORBInitializer.cpp:
+	* orbsvcs/orbsvcs/CSIv2/CSS_ORBInitializer.h:
+	* orbsvcs/orbsvcs/CSIv2/CSS_RequestInterceptor.cpp:
+	* orbsvcs/orbsvcs/CSIv2/CSS_RequestInterceptor.h:
+	* orbsvcs/orbsvcs/CSIv2/TSS_IORInterceptor.cpp:
+	* orbsvcs/orbsvcs/CSIv2/TSS_IORInterceptor.h:
+	* orbsvcs/orbsvcs/CSIv2/TSS_ORBInitializer.cpp:
+	* orbsvcs/orbsvcs/CSIv2/TSS_ORBInitializer.h:
+	* orbsvcs/orbsvcs/CSIv2/TSS_RequestInterceptor.cpp:
+	* orbsvcs/orbsvcs/CSIv2/TSS_RequestInterceptor.h:
+
+	  New core CSIv2 implementation for TAO.
+
 Thu Aug  7 12:06:13 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Object.h:
