@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_ARRAY_BASE_H
 #define ACE_ARRAY_BASE_H
@@ -185,7 +184,7 @@ public:
 
 private:
   /// Pointer to the current item in the iteration.
-  u_int current_;
+  size_t current_;
 
   /// Pointer to the Array we're iterating over.
   ACE_Array_Base<T> &array_;

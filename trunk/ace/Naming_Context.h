@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_NAMING_CONTEXT_H
 #define ACE_NAMING_CONTEXT_H
 #include "ace/pre.h"

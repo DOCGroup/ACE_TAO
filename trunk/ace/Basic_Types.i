@@ -235,7 +235,7 @@ ACE_U_LongLong::operator+= (const ACE_UINT32 n)
 #define ACE_HIGHBIT (~(~0UL >> 1))
 
 ACE_INLINE ACE_UINT32
-ACE_U_LongLong::ul_shift (ACE_UINT32 a, ACE_UINT32 c_in, ACE_UINT32 *c_out)
+ACE_U_LongLong::ul_shift (ACE_UINT32 a, ACE_UINT32 c_in, ACE_UINT32 *c_out) const
 {
   const ACE_UINT32 b = (a << 1) | c_in;
   *c_out = (*c_out << 1) + ((a & ACE_HIGHBIT) > 0);
@@ -244,8 +244,9 @@ ACE_U_LongLong::ul_shift (ACE_UINT32 a, ACE_UINT32 c_in, ACE_UINT32 *c_out)
 }
 
 ACE_INLINE ACE_U_LongLong
-ACE_U_LongLong::ull_shift (ACE_U_LongLong a, ACE_UINT32 c_in,
-                           ACE_UINT32 *c_out)
+ACE_U_LongLong::ull_shift (ACE_U_LongLong a, 
+                           ACE_UINT32 c_in,
+                           ACE_UINT32 *c_out) const
 {
   ACE_U_LongLong b;
 
@@ -258,7 +259,7 @@ ACE_U_LongLong::ull_shift (ACE_U_LongLong a, ACE_UINT32 c_in,
 }
 
 ACE_INLINE ACE_U_LongLong
-ACE_U_LongLong::ull_add (ACE_U_LongLong a, ACE_U_LongLong b, ACE_UINT32 *carry)
+ACE_U_LongLong::ull_add (ACE_U_LongLong a, ACE_U_LongLong b, ACE_UINT32 *carry) const
 {
   ACE_U_LongLong r (0, 0);
   ACE_UINT32 c1, c2, c3, c4;
@@ -283,7 +284,7 @@ ACE_U_LongLong::ull_add (ACE_U_LongLong a, ACE_U_LongLong b, ACE_UINT32 *carry)
 }
 
 ACE_INLINE ACE_U_LongLong
-ACE_U_LongLong::ull_mult (ACE_U_LongLong a, ACE_UINT32 b, ACE_UINT32 *carry)
+ACE_U_LongLong::ull_mult (ACE_U_LongLong a, ACE_UINT32 b, ACE_UINT32 *carry) const
 {
   register ACE_UINT32 mask = ACE_HIGHBIT;
   const ACE_U_LongLong zero (0, 0);
@@ -308,7 +309,7 @@ ACE_U_LongLong::ull_mult (ACE_U_LongLong a, ACE_UINT32 b, ACE_UINT32 *carry)
 }
 
 ACE_INLINE ACE_U_LongLong
-ACE_U_LongLong::operator* (const ACE_UINT32 n)
+ACE_U_LongLong::operator* (const ACE_UINT32 n) const
 {
   ACE_UINT32 carry;  // will throw the carry away
 
@@ -429,7 +430,7 @@ ACE_U_LongLong::operator& (const ACE_INT32 n) const
 }
 
 ACE_INLINE ACE_U_LongLong
-ACE_U_LongLong::operator* (const ACE_INT32 n)
+ACE_U_LongLong::operator* (const ACE_INT32 n) const
 {
   return operator* ((ACE_UINT32) n);
 }

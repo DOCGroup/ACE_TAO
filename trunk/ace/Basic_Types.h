@@ -310,7 +310,7 @@ typedef ACE_UINT16 ACE_USHORT16;
     ACE_U_LongLong operator+ (const ACE_UINT32) const;
     ACE_U_LongLong operator- (const ACE_U_LongLong &) const;
     ACE_U_LongLong operator- (const ACE_UINT32) const;
-    ACE_U_LongLong operator* (const ACE_UINT32);
+    ACE_U_LongLong operator* (const ACE_UINT32) const;
     ACE_U_LongLong &operator*= (const ACE_UINT32);
 
     ACE_U_LongLong operator<< (const u_int) const;
@@ -346,7 +346,7 @@ typedef ACE_UINT16 ACE_USHORT16;
     // The following operators convert their arguments to
     // ACE_UINT32.  So, there may be information loss if they are
     // used.
-    ACE_U_LongLong operator* (const ACE_INT32);
+    ACE_U_LongLong operator* (const ACE_INT32) const;
     ACE_U_LongLong &operator*= (const ACE_INT32);
     ACE_UINT32 operator/ (const ACE_INT32) const;
 #   if ACE_SIZEOF_INT == 4
@@ -411,13 +411,18 @@ typedef ACE_UINT16 ACE_USHORT16;
     // only used here; the .i and .cpp files use the accessors.
 
     /// These functions are used to implement multiplication.
-    ACE_UINT32 ul_shift (ACE_UINT32 a, ACE_UINT32 c_in, ACE_UINT32 *c_out);
-    ACE_U_LongLong ull_shift (ACE_U_LongLong a, ACE_UINT32 c_in,
-                              ACE_UINT32 *c_out);
-    ACE_U_LongLong ull_add (ACE_U_LongLong a, ACE_U_LongLong b,
-                            ACE_UINT32 *carry);
-    ACE_U_LongLong ull_mult (ACE_U_LongLong a, ACE_UINT32 b,
-                             ACE_UINT32 *carry);
+    ACE_UINT32 ul_shift (ACE_UINT32 a,
+                         ACE_UINT32 c_in,
+                         ACE_UINT32 *c_out) const;
+    ACE_U_LongLong ull_shift (ACE_U_LongLong a,
+                              ACE_UINT32 c_in,
+                              ACE_UINT32 *c_out) const;
+    ACE_U_LongLong ull_add (ACE_U_LongLong a,
+                            ACE_U_LongLong b,
+                            ACE_UINT32 *carry) const;
+    ACE_U_LongLong ull_mult (ACE_U_LongLong a,
+                             ACE_UINT32 b,
+                             ACE_UINT32 *carry) const;
   };
 
   typedef ACE_U_LongLong ACE_UINT64;
