@@ -17,10 +17,10 @@
     <EVENT name="WORKER_ACTIVATED" id="7" />
   </FAMILY>
   <FAMILY name="WORKER_GROUP" id="3">
-    <EVENT name="ONEWAY_CALL_DONE" id="0" />
-    <EVENT name="ONEWAY_CALL_STOP" id="1" />
-    <EVENT name="END_SCHED_SEGMENT" id="2" />
-    <EVENT name="BEGIN_SCHED_SEGMENT" id="3" />
+    <EVENT name="ONE_WAY_CALL_START" id="0" />
+    <EVENT name="ONE_WAY_CALL_DONE" id="1" />
+    <EVENT name="BEGIN_SCHED_SEGMENT" id="2" />
+    <EVENT name="END_SCHED_SEGMENT" id="3" />
     <EVENT name="WORKER_STARTED" id="4" />
   </FAMILY>
 </NAMESPACE>
