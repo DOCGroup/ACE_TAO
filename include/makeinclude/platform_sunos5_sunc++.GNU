@@ -167,16 +167,8 @@ ifeq ($(templates),)
   ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
     templates = explicit
   else
-    ifeq (C++ 5.3,$(findstring C++ 5.3,$(CC_VERSION)))
-      # Set this to automatic if automatic template instantiation works for you.
-      templates = explicit
-    endif
+    templates = automatic
   endif
-endif
-
-# If templates is not set by the rules above, we default to implicit
-ifeq ($(templates),)
-  templates = implicit
 endif
 
 # Turn on the proper flags for explicit template instantiation.

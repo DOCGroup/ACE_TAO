@@ -244,9 +244,16 @@ sub Spawn ()
         my $pocket_device_opts = $ENV{"ACE_PCE_DEVICE"};
         $cmdline = "cmd /C start /B /WAIT $self->{WINCE_CTL} $pocket_device_opts -m NAME=start_test.cmd;WAIT=401000; -e"
     }
+    elsif (defined $ENV{'ACE_TEST_WINDOW'}) {
+      $executable = $ENV{'ACE_TEST_WINDOW'};
+      $cmdline = $self->Executable () . ' ' . $self->CommandLine();
+    }
     else {
         $executable = $self->Executable ();
         $cmdline = $self->CommandLine ();
+    }
+    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+      print "$executable $cmdline\n";
     }
     Win32::Process::Create ($self->{PROCESS},
                             $executable,
@@ -311,7 +318,7 @@ sub Kill ()
 {
     my $self = shift;
 
-    if ($self->{RUNNING}) {
+    if ($self->{RUNNING}  && !defined $ENV{'ACE_TEST_WINDOW'}) {
         Win32::Process::Kill ($self->{PROCESS}, -1);
     }
 
