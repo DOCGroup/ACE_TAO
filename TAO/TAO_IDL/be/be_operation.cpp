@@ -52,6 +52,9 @@ be_operation::gen_client_header (void)
   be_type *bt;       // type node
   be_state *s;       // state based code gen object
 
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (nl);
+
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   cg->push (TAO_CodeGen::TAO_OPERATION_CH); // we are now generating an operation
@@ -334,6 +337,12 @@ be_operation::gen_server_header (void)
   be_argument *bd;   // argument node
   be_state *s;       // state based code generator object
 
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (nl);
+  ACE_UNUSED_ARG (si);
+  ACE_UNUSED_ARG (d);
+  ACE_UNUSED_ARG (bd);
+
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   cg->push (TAO_CodeGen::TAO_OPERATION_SH); // we are now generating an operation
@@ -395,7 +404,7 @@ be_operation::gen_server_skeletons (void)
   be_type *rt;       // type node for the return type
   UTL_ScopeActiveIterator *si; // scope iterator
   AST_Decl *d;       // temp node
-  be_argument *bd;   // argument node
+  be_argument *bd = 0;   // argument node
   be_state *s;       // state based code gen object
   be_predefined_type *bpd=0; // predefined return type
   be_interface *intf; // enclosing interface node

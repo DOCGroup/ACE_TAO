@@ -24,15 +24,15 @@ static const int CHUNK = 100;
 /* BE global Data */
 TAO_CodeGen::TAO_CodeGen (void)
   : client_header_ (0),
-    server_header_ (0),
     client_stubs_ (0),
-    server_skeletons_ (0),
     client_inline_ (0),
+    server_header_ (0),
+    server_skeletons_ (0),
     server_inline_ (0),
     curr_os_ (0),
     state_ (new TAO_CodeGen::CG_STATE [CHUNK]),
-    size_ (CHUNK),
-    top_ (0)
+    top_ (0),
+    size_ (CHUNK)
 {
   // set the current code generation state
   this->state_ [this->top_++] = TAO_CodeGen::TAO_INITIAL;
@@ -106,7 +106,7 @@ TAO_CodeGen::upcase (const char *str)
 
   ACE_OS::memset (upcase_str, '\0', MAXNAMELEN);
   // convert letters in str to upcase
-  for (int i=0; i < ACE_OS::strlen (str); i++)
+  for (unsigned int i=0; i < ACE_OS::strlen (str); i++)
     {
       if (isalpha (str [i]))
         {
