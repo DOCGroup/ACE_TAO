@@ -2891,7 +2891,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
 {
   // ACE_TRACE ("ACE_OS::sema_post");
 # if defined (ACE_HAS_POSIX_SEM)
-  ACE_OSCALL_RETURN (::sem_post (s->sema_));
+  ACE_OSCALL_RETURN (::sem_post (s->sema_), int, -1);
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_post (s), ace_result_), int, -1);
@@ -2976,7 +2976,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
   // ACE_TRACE ("ACE_OS::sema_trywait");
 # if defined (ACE_HAS_POSIX_SEM)
   // POSIX semaphores set errno to EAGAIN if trywait fails
-  ACE_OSCALL_RETURN (::sem_trywait (s->sema_));
+  ACE_OSCALL_RETURN (::sem_trywait (s->sema_), int, -1);
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   // STHREADS semaphores set errno to EBUSY if trywait fails.
@@ -3081,7 +3081,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
 {
   // ACE_TRACE ("ACE_OS::sema_wait");
 # if defined (ACE_HAS_POSIX_SEM)
-  ACE_OSCALL_RETURN (::sem_wait (s->sema_));
+  ACE_OSCALL_RETURN (::sem_wait (s->sema_), int, -1);
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_wait (s), ace_result_), int, -1);
