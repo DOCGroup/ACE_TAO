@@ -1,3 +1,10 @@
+Wed Apr 19 15:47:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/TAO_Internal.cpp:
+	  Reverting yesterday's change to this file. It wasn't
+	  the right thing to do. Thanks to Bala for pointing
+	  out the problem.
+
 Wed Apr 19 14:46:13 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Transport.cpp (messaging_init): 
