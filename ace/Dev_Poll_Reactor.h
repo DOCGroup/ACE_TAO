@@ -36,6 +36,10 @@
 #include "ace/Pipe.h"
 #include "ace/Lock_Adapter_T.h"
 
+#if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
+# include "ace/Unbounded_Queue.h"
+#endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
+
 // Forward declarations
 class ACE_Sig_Handler;
 class ACE_Dev_Poll_Reactor;
