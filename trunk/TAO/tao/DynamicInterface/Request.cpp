@@ -1,6 +1,11 @@
 // $Id$
 
 #include "Request.h"
+
+ACE_RCSID(DynamicInterface, Request, "$Id$")
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
 #include "ExceptionList.h"
 #include "DII_Invocation.h"
 #include "tao/Object.h"
@@ -9,9 +14,7 @@
 # include "Request.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(DynamicInterface, Request, "$Id$")
-
-// Reference counting for DII Request object
+// Reference counting for DII Request object.
 
 CORBA::ULong
 CORBA_Request::_incr_refcnt (void)
@@ -426,3 +429,4 @@ template class TAO_Pseudo_Object_Manager<CORBA_Request,CORBA_Request_var>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#endif /* TAO_HAS_MINIMUM_CORBA */

@@ -1,12 +1,15 @@
 // $Id$
 
 #include "Dynamic_Implementation.h"
+
+ACE_RCSID(DynamicInterface, Dynamic_Implementation, "$Id$")
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
 #include "Server_Request.h"
 #include "tao/ORB_Core.h"
 #include "tao/PortableServer/POA.h"
 #include "tao/PortableServer/Collocated_Object.h"
-
-ACE_RCSID(DynamicInterface, Dynamic_Implementation, "$Id$")
 
 CORBA::Object_ptr
 TAO_DynamicImplementation::_this (CORBA::Environment &ACE_TRY_ENV)
@@ -135,3 +138,4 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
    CORBA::release (dsi_request);
 }
 
+#endif /* TAO_HAS_MINIMUM_CORBA */

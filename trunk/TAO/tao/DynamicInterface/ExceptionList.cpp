@@ -1,14 +1,17 @@
 // $Id$
 
 #include "ExceptionList.h"
+
+ACE_RCSID(DynamicInterface, ExceptionList, "$Id$")
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
 #include "tao/Typecode.h"
 #include "tao/Environment.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ExceptionList.inl"
 #endif /* __ACE_INLINE__ */
-
-ACE_RCSID(DynamicInterface, ExceptionList, "$Id$")
 
 CORBA_ExceptionList::CORBA_ExceptionList (CORBA::ULong len,
                                           CORBA::TypeCode_ptr *tc_list)
@@ -117,3 +120,4 @@ template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#endif /* TAO_HAS_MINIMUM_CORBA */

@@ -4,6 +4,8 @@
 
 ACE_RCSID(DynamicInterface, Context, "$Id$")
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
 #include "tao/Typecode.h"
 #include "tao/Environment.h"
 #include "tao/NVList.h"
@@ -210,4 +212,6 @@ CORBA_ContextList::_decr_refcnt (void)
       delete this;
     }
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
