@@ -1,7 +1,7 @@
 Mon Dec 16 12:56:43 1996  David L. Levine  <levine@cs.wustl.edu>
 
-	* ace/OS.i: removed spurious "*/" after an #endif.  Thanks to Harry
-	  Gunnarsson for pointing this out.
+	* ace/OS.i: removed spurious "*/" after an #endif.  Thanks to
+	  Harry Gunnarsson <hg@carmenta.se> for reporting this.
 
 	* ace/Svc_Conf_l.cpp: #ifdef'ed out ace_yyunput () and
 	  ace_yy_{push,pop,top}_state () because they're not used,
@@ -17,11 +17,12 @@ Mon Dec 16 12:56:43 1996  David L. Levine  <levine@cs.wustl.edu>
 	  appear to be necessary, and not all platforms have a libm.
 
 	* netsvcs/lib/Makefile: removed /pkg/gnu/lib dependencies.  Thanks
-	  to Per Andersson for pointing this out.
+	  to Per Andersson <Per.Andersson@hfera.ericsson.se> for pointing
+	  this out.
 
 	* netsvcs/servers/svc.conf: changed _make_ACE_Logger() to
 	  _make_ACE_Logging_Strategy() svc.conf.  Thanks to Per Andersson
-	  for pointing this out.
+	  <Per.Andersson@hfera.ericsson.se> for reporting this.
 
 Sun Dec 15 13:01:17 1996  David L. Levine  <levine@cs.wustl.edu>
 
@@ -1981,7 +1982,7 @@ Wed Nov 13 01:22:16 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           gcc compiler bugs.  The fix is to replace the static thread
           manager with the ACE_Service_Config::thr_mgr() singleton.
           Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
-          pointing this out.
+          reporting this.
 
 Tue Nov 12 19:43:12 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
