@@ -1705,6 +1705,14 @@ TAO_TypeCodes::fini (void)
   CORBA::release (CORBA::_tc_NamedValue);
 
   CORBA::release (CORBA::_tc_WrongTransaction);
+
+  CORBA::release (CORBA::_tc_AnySeq);
+
+  CORBA::release (CORBA::_tc_NameValuePair);
+
+  CORBA::release (CORBA::_tc_NameValuePairSeq);
+
+  CORBA::release (CORBA::_tc_FieldName);
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   CORBA::release (CORBA_ORB::_tc_ObjectId);
