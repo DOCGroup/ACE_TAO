@@ -1,3 +1,14 @@
+Mon Jan 28 11:38:22 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_operation/amh_sh.h:
+	* TAO_IDL/be_include/be_visitor_operation/amh_ss.h:
+	  Another iteration in the AMH support.  This time we make sure
+	  that only IN and INOUT arguments are generated in the AMH
+	  skeletons, but I believe that INOUT arguments are not generated
+	  correctly.
+
 Mon Jan 28 11:17:40 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:

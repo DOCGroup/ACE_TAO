@@ -29,9 +29,9 @@ public:
   virtual int visit_attribute (be_attribute *node);
 
 private:
-  void generate_shared_prolog (be_decl *node,
-                               TAO_OutStream *os,
-                               const char *skel_prefix);
+  void generate_shared_prologue (be_decl *node,
+                                 TAO_OutStream *os,
+                                 const char *skel_prefix);
 };
 
 #endif /* AMH_OPERATION_SS_H */
