@@ -6759,7 +6759,6 @@ Fri Feb 28 02:22:33 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           related, i.e., one service has to be started before another.
           Thanks to Karlheinz for this suggestion.
 
-
 Fri Feb 28 12:13:09 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: fixed definition of ACE_TIMER_SKEW.  Thanks
