@@ -14,6 +14,8 @@ ACE_RT_Info::ACE_RT_Info (const char* entry_point_,
 			  RtecScheduler::Quantum_t quantum_,
 			  CORBA::Long threads_)
 {
+  // @@ Chris, please make sure you always use the base/member
+  // initialization section to initialize fields in a class.
   this->entry_point = entry_point_;
   this->worst_case_execution_time = worst_time_;
   this->typical_execution_time = typical_time_;
