@@ -54,7 +54,7 @@ Test_DynAny::run_test (void)
                  "testing: constructor(Any)/insert/get\n"));
 
       CORBA_Any in1 (CORBA::_tc_double);
-      CORBA_DynAny_ptr fa1 = this->orb_->create_dyn_any (in1,
+      CORBA_DynAny_var fa1 = this->orb_->create_dyn_any (in1,
                                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
       fa1->insert_double (data.m_double1, 
@@ -72,7 +72,7 @@ Test_DynAny::run_test (void)
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
       d_out = data.m_double2;
-      CORBA_DynAny_ptr ftc1 = 
+      CORBA_DynAny_var ftc1 = 
         this->orb_->create_basic_dyn_any (CORBA::_tc_double,
                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -81,12 +81,9 @@ Test_DynAny::run_test (void)
       ftc1->from_any (in_any1, 
                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::Any* out_any1 = ftc1->to_any (ACE_TRY_ENV);
+      CORBA::Any_var out_any1 = ftc1->to_any (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *out_any1 >>= d_out;
-
-      // value in DynAny_i created with NEW
-      delete out_any1;
+      out_any1 >>= d_out;
 
       if (d_out == data.m_double1)
         ACE_DEBUG ((LM_DEBUG,
@@ -96,10 +93,8 @@ Test_DynAny::run_test (void)
 
       fa1->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::release (fa1);
       ftc1->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::release (ftc1);
 
       ACE_DEBUG ((LM_DEBUG,
                  "\t*=*=*=*= %s =*=*=*=*\n",
@@ -109,14 +104,14 @@ Test_DynAny::run_test (void)
                  "testing: constructor(Any)/insert/get\n"));
 
       CORBA_Any in (CORBA::_tc_TypeCode);
-      CORBA_DynAny_ptr fa2 = 
+      CORBA_DynAny_var fa2 = 
         this->orb_->create_dyn_any (in,
                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
       fa2->insert_typecode (data.m_typecode1, 
                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::TypeCode_ptr tc_out = fa2->get_typecode (ACE_TRY_ENV);
+      CORBA::TypeCode_var tc_out = fa2->get_typecode (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (tc_out->equal (data.m_typecode1,
                          ACE_TRY_ENV))
@@ -130,8 +125,7 @@ Test_DynAny::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
-      tc_out = data.m_typecode2;
-      CORBA_DynAny_ptr ftc2 = 
+      CORBA_DynAny_var ftc2 = 
         this->orb_->create_basic_dyn_any (CORBA::_tc_TypeCode,
                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -140,14 +134,12 @@ Test_DynAny::run_test (void)
       ftc2->from_any (in_any2, 
                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::Any* out_any2 = ftc2->to_any (ACE_TRY_ENV);
+      CORBA::Any_var out_any2 = ftc2->to_any (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *out_any2 >>= tc_out;
+      CORBA::TypeCode_ptr out_tc;
+      out_any2 >>= out_tc;
 
-      // value in DynAny_i created with NEW
-      delete out_any2;
-
-      if (tc_out->equal(data.m_typecode1,
+      if (out_tc->equal(data.m_typecode1,
                         ACE_TRY_ENV))
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
@@ -158,11 +150,8 @@ Test_DynAny::run_test (void)
 
       fa2->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::release (fa2);
       ftc2->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::release (ftc2);
-      CORBA::release (tc_out);
     }
   ACE_CATCHANY
     {

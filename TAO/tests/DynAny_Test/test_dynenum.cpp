@@ -51,10 +51,10 @@ Test_DynEnum::run_test (void)
 
       CORBA_Any in_any1;
       in_any1 <<= te;
-      CORBA_DynAny_ptr dp1 = this->orb_->create_dyn_any (in_any1,
+      CORBA_DynAny_var dp1 = this->orb_->create_dyn_any (in_any1,
                                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA_DynEnum_ptr de1 = CORBA_DynEnum::_narrow (dp1,
+      CORBA_DynEnum_var de1 = CORBA_DynEnum::_narrow (dp1,
                                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
       de1->value_as_ulong (2,
@@ -86,7 +86,7 @@ Test_DynEnum::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
-      CORBA_DynEnum_ptr de2 = 
+      CORBA_DynEnum_var de2 = 
         this->orb_->create_dyn_enum (DynAnyTests::_tc_test_enum,
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -95,25 +95,19 @@ Test_DynEnum::run_test (void)
       de2->from_any (in_any2,
                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA_Any* out_any1 = de2->to_any (ACE_TRY_ENV);
+      CORBA_Any_var out_any1 = de2->to_any (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *out_any1 >>= te;
+      out_any1.in () >>= te;
       if (te == DynAnyTests::TE_THIRD)
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
       else 
         ++this->error_count_;
 
-      // Created with NEW
-      delete out_any1;
-
       de1->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::release (de1);
       de2->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::release (de2);
-      CORBA::release (dp1);
     }
   ACE_CATCHANY
     {
