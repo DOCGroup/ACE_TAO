@@ -6,9 +6,9 @@
 //     Program to test the property services.
 //
 // = DESCRIPTION
-//     - Instantiates TAO_PropertySet
-//     - Uses the fns implemented
-//     - Shows the results
+//     Here all the objects are at one address space. See the
+//     client.cpp and server.cpp to see property calls on remote
+//     objects. 
 //
 // = AUTHOR
 //     Alexander Babu Arulanthu <alex@cs.wustl.edu>
