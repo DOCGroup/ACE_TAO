@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/orbsvcs/bin/Logger
+//    TAO/orbsvcs/tests/Logger
 //
 // = FILENAME
 //    svr.cpp
@@ -11,7 +11,7 @@
 // = DESCRIPTION 
 //    This program is an implementation of a simple logger service.  
 //    Whatever is sent to it through its interface is displayed on stdout.
-//    It uses the Logger_Factory server to create a number of logger objects.  
+//    It uses the Logger_Factory server to create logger objects.  
 //
 // = AUTHORS
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
@@ -19,9 +19,9 @@
 // ============================================================================
 
 #include <iostream.h>
-#include "loggerC.h"
+#include "loggerS.h"
 #include "logger_i.h"
-#include "ior_multicast.h"
+#include "CosNamingC.h"
 
 int
 main (int argc, char ** argv)
@@ -64,28 +64,39 @@ main (int argc, char ** argv)
       return 1;
     }
   
-  ACE_OS::puts ((char *) str);
-  ACE_OS::fflush (stdout);
-  dmsg1 ("listening as object '%s'", str);
-
-  // Use IP multicast to advertise the service
-#if defined (ACE_HAS_IP_MULTICAST)
-  // get reactor instance from TAO
-  ACE_Reactor *reactor = TAO_ORB_Core_instance()->reactor();
+  ACE_DEBUG ((LM_DEBUG, "listening as object '%s'\n", str)); 
+	     
+  CORBA::Object_ptr  obj_ptr = 
+    orb_ptr->resolve_initial_references ("NameService");
   
-  // Instantiate a server which will receive requests for an ior
-  IOR_Multicast ior_multicast (str,
-			       DEFAULT_LOGGER_SERVER_REQUEST_PORT, 
-			       DEFAULT_LOGGER_SERVER_MULTICAST_ADDR,
-			       DEFAULT_LOGGER_SERVER_REPLY_PORT); 
+  if (CORBA::is_nil (obj_ptr) == CORBA::B_TRUE)
+    ACE_ERROR_RETURN ((LM_ERROR, "resolve_initial_references"), 1);
 
-  // register event handler for the ior multicast.
-  if (reactor->register_handler (&ior_multicast,
-				 ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n%a", "register_handler", 1));
-    
-  ACE_DEBUG ((LM_DEBUG, "The multicast server setup is done.\n"));
-#endif /* ACE_HAS_IP_MULTICAST */
+  // resolve the naming service
+  CosNaming::NamingContext_ptr naming_service = 
+    CosNaming::NamingContext::_narrow (obj_ptr, env);
+
+  if (CORBA::is_nil (naming_service) == CORBA::B_TRUE)
+    ACE_ERROR_RETURN ((LM_ERROR, "_narrow"), 1);
+
+  // The name of the logger factory in the naming service.
+  CosNaming::Name n(1);
+  n.length (1);
+  n[0].id = CORBA::string_dup ("logger_factory");
+  
+  // bind the logger factory to a name using the naming service.
+  naming_service->bind (n, f, env);
+  
+  // check for errors!
+  if (env.exception () != 0)
+    {
+      env.print_exception ("name_service->bind()");
+      return 1;
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, "Success using the naming service!! to bind the logger factory!"));
+    }
 
   // Handle requests for this object until we're killed, or one of the
   // methods asks us to exit.
