@@ -34,6 +34,8 @@
 #include "ace/Activation_Queue.h"
 #include "ace/Auto_Ptr.h"
 
+ACE_RCSID(Threads, future2, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> ATOMIC_INT;

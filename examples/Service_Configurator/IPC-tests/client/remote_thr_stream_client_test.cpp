@@ -1,13 +1,13 @@
-/* Test program for the INET ACE_TLI-SAPs... */
 // $Id$
 
+// Test program for the INET ACE_TLI-SAPs...
 
 #include "ace/Mem_Map.h"
 #include "ace/TLI_Connector.h"
 #include "ace/INET_Addr.h"
-
-
 #include "ace/Get_Opt.h"
+
+ACE_RCSID(client, remote_thr_stream_client_test, "$Id$")
 
 #if defined (ACE_HAS_TLI)
 

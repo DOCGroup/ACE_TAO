@@ -1,12 +1,13 @@
-/* Send a file through ACE_SPIPE communication channel by
 // $Id$
 
-   break it (the file) into pieces. */
+// Send a file through ACE_SPIPE communication channel by
+// breaking it (the file) into pieces.
 
 #include "ace/Mem_Map.h"
 #include "ace/SPIPE_Connector.h"
-
 #include "ace/Get_Opt.h"
+
+ACE_RCSID(client, local_spipe_client_test, "$Id$")
 
 #if defined (ACE_HAS_STREAM_PIPES)
 

@@ -4,6 +4,8 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Synch.h"
 
+ACE_RCSID(Threads, thread_specific, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 #include "thread_specific.h"

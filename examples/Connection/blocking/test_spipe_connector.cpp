@@ -4,6 +4,8 @@
 
 #include "SPIPE-connector.h"
 
+ACE_RCSID(blocking, test_spipe_connector, "$Id$")
+
 int 
 main (int argc, char *argv[])                       
 {                                                       

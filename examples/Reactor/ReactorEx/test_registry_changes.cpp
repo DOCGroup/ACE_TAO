@@ -21,6 +21,8 @@
 #include "ace/Reactor.h"
 #include "ace/Registry.h"
 
+ACE_RCSID(ReactorEx, test_registry_changes, "$Id$")
+
 static int stop_test = 0;
 static HKEY context_to_monitor = HKEY_CURRENT_USER;
 static LPCTSTR temp_context_name = __TEXT ("ACE temporary context");

@@ -3,6 +3,8 @@
 #include "Options.h"
 #include "Supplier_Router.h"
 
+ACE_RCSID(UPIPE_Event_Server, Supplier_Router, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 typedef Acceptor_Factory<Supplier_Handler, SUPPLIER_KEY> SUPPLIER_FACTORY;

@@ -22,6 +22,8 @@
 #include "ace/Synch.h"
 #include "ace/Task.h"
 
+ACE_RCSID(Proactor, test_multiple_loops, "$Id$")
+
 class Timeout_Handler : public ACE_Handler, public ACE_Event_Handler
   // = TITLE
   //     Generic timeout handler.

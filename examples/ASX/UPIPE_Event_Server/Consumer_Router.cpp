@@ -1,7 +1,9 @@
-#include "Consumer_Router.h"
 // $Id$
 
+#include "Consumer_Router.h"
 #include "Options.h"
+
+ACE_RCSID(UPIPE_Event_Server, Consumer_Router, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

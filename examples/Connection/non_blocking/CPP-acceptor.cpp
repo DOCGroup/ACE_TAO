@@ -1,10 +1,13 @@
-#if !defined (CPP_ACCEPTOR_C)
 // $Id$
+
+#if !defined (CPP_ACCEPTOR_C)
 
 #define CPP_ACCEPTOR_C
 
 #include "ace/Service_Config.h"
 #include "CPP-acceptor.h"
+
+ACE_RCSID(non_blocking, CPP_acceptor, "$Id$")
 
 #define PR_ST_1 ACE_PEER_STREAM_1
 #define PR_ST_2 ACE_PEER_STREAM_2

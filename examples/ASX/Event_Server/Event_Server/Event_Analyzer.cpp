@@ -3,6 +3,8 @@
 #include "Options.h"
 #include "Event_Analyzer.h"
 
+ACE_RCSID(Event_Server, Event_Analyzer, "$Id$")
+
 int
 Event_Analyzer::open (void *)
 {

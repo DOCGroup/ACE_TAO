@@ -1,7 +1,8 @@
-
 // $Id$
 
 #include "ace/Shared_Memory_SV.h"
+
+ACE_RCSID(Shared_Memory, test_SV, "$Id$")
 
 #define SHMSZ 27
 #define SHM_KEY 5678

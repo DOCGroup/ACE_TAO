@@ -1,8 +1,11 @@
-// Test out the ACE Token class.
 // $Id$
+
+// Test out the ACE Token class.
 
 #include "ace/Token.h"
 #include "ace/Task.h"
+
+ACE_RCSID(Threads, token, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

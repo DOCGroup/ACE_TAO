@@ -1,8 +1,9 @@
-
 // $Id$
 
 #include "ace/TLI_Acceptor.h"                             
 #include "ace/INET_Addr.h"                                       
+
+ACE_RCSID(TLI_SAP, CPP_server, "$Id$")
 
 #if defined (ACE_HAS_TLI)
 /* ACE_TLI Server */

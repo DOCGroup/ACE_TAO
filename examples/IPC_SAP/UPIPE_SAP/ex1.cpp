@@ -1,14 +1,15 @@
-// Example for using ACE_UPIPE_SAP and ACE_Thread for intra-process
 // $Id$
 
+// Example for using ACE_UPIPE_SAP and ACE_Thread for intra-process
 // communication.
 //
 // Author : Gerhard Lenzer and Douglas C. Schmidt
 
-
 #include "ace/Stream.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
+
+ACE_RCSID(UPIPE_SAP, ex1, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

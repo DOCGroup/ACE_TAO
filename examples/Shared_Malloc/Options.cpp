@@ -1,8 +1,9 @@
-#include "ace/Get_Opt.h"
 // $Id$
 
-
+#include "ace/Get_Opt.h"
 #include "Options.h"
+
+ACE_RCSID(Shared_Malloc, Options, "$Id$")
 
 // Static Singleton instance.
 Options *Options::instance_ = 0;

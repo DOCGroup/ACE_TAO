@@ -3,6 +3,8 @@
 #include "Consumer_Router.h"
 #include "Options.h"
 
+ACE_RCSID(Event_Server, Consumer_Router, "$Id$")
+
 Consumer_Router::Consumer_Router (Peer_Router_Context *prc)
   : Peer_Router (prc)
 {

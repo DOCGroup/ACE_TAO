@@ -4,6 +4,8 @@
 
 #include "SPIPE-acceptor.h"
 
+ACE_RCSID(blocking, test_spipe_acceptor, "$Id$")
+
 int 
 main (int argc, char *argv[])
 {                                                                

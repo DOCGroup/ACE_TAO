@@ -1,7 +1,9 @@
-#include "ace/SV_Shared_Memory.h"
 // $Id$
 
+#include "ace/SV_Shared_Memory.h"
 #include "SV_Shared_Memory_Test.h"
+
+ACE_RCSID(SV_Shared_Memory, SV_Shared_Memory_Test, "$Id$")
 
 static void
 client (void)

@@ -9,6 +9,8 @@
 #include "ace/Service_Config.h"
 #include "ace/IOStream.h"
 
+ACE_RCSID(server, iostream_server, "$Id$")
+
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 // Declare a new type which will case an ACE_SOCK_Stream to behave

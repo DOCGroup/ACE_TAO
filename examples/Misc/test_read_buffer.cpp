@@ -3,6 +3,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Read_Buffer.h"
 
+ACE_RCSID(Misc, test_read_buffer, "$Id$")
+
 int 
 main (int argc, char *argv[])
 {

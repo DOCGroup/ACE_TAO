@@ -1,7 +1,8 @@
-
 // $Id$
 
 #include "Test.hh"
+
+ACE_RCSID(CORBA, client, "$Id$")
 
 int
 main (int argc, char *argv[])

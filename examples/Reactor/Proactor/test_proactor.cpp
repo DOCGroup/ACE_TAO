@@ -30,6 +30,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
 
+ACE_RCSID(Proactor, test_proactor, "$Id$")
+
 static char *host = 0;
 static u_short port = ACE_DEFAULT_SERVER_PORT;
 static char *file = "test_proactor.cpp";

@@ -1,7 +1,8 @@
-#include "ace/Profile_Timer.h"
 // $Id$
 
+#include "ace/Profile_Timer.h"
 
+ACE_RCSID(Misc, test_profile_timer, "$Id$")
 
 static const int DEFAULT_ITERATIONS = 100000000;
 

@@ -1,10 +1,13 @@
 // $Id$
+
 // Tests out the UNIX domain IPC-SAP abstraction. 
 
 #include "ace/LSOCK_CODgram.h"
 #include "ace/LSOCK_Dgram.h"
 #include "ace/UNIX_Addr.h"
 #include "ace/Get_Opt.h"
+
+ACE_RCSID(client, local_dgram_client_test, "$Id$")
 
 #if defined (ACE_HAS_MSG) && !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 // Name of the program.

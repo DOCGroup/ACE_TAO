@@ -2,6 +2,8 @@
 
 #include "ace/Containers.h"
 
+ACE_RCSID(Misc, test_set, "$Id$")
+
 int
 main (int, char *[])
 {

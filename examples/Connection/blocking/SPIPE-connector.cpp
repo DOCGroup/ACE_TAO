@@ -1,5 +1,6 @@
-#if !defined (SPIPE_CONNECTOR_C)
 // $Id$
+
+#if !defined (SPIPE_CONNECTOR_C)
 
 #define SPIPE_CONNECTOR_C
 
@@ -8,6 +9,8 @@
 #include "ace/Proactor.h"
 #include "ace/Get_Opt.h"
 #include "SPIPE-connector.h"
+
+ACE_RCSID(blocking, SPIPE_connector, "$Id$")
 
 Peer_Handler::Peer_Handler (int iterations)
   : iterations_ (iterations)

@@ -9,6 +9,8 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Service_Config.h"
 
+ACE_RCSID(Message_Queue, priority_buffer, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 // Global thread manager.

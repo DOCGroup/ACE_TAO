@@ -5,6 +5,8 @@
 
 #include "ace/Mem_Map.h"
 
+ACE_RCSID(file_reverse, file_reverse, "$Id$")
+
 static void
 putline (const char *s)
 {

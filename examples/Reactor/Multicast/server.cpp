@@ -11,6 +11,8 @@
 #include "ace/Reactor.h"
 #include "Log_Wrapper.h"
 
+ACE_RCSID(Multicast, server, "$Id$")
+
 #if defined (ACE_HAS_IP_MULTICAST)
 class Server_Events : public ACE_Event_Handler
 {

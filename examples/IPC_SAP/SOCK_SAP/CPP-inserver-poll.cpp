@@ -9,6 +9,8 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/INET_Addr.h"
 
+ACE_RCSID(SOCK_SAP, CPP_inserver_poll, "$Id$")
+
 #if defined (ACE_HAS_POLL)
 
 // Should we be verbose?

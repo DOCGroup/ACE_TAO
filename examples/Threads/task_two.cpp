@@ -9,6 +9,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Synch.h"
 
+ACE_RCSID(Threads, task_two, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> ATOMIC_INT;

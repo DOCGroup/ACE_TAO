@@ -23,6 +23,8 @@
 #include "ace/Auto_Ptr.h"
 #include "Driver.h"
 
+ACE_RCSID(Timer_Queue, Driver, "$Id$")
+
 // constructor
 
 template <class RECEIVER, class ACTION>

@@ -1,6 +1,6 @@
-// Example for using ACE_UPIPE_SAP and ACE_Thread for intra-process
 // $Id$
 
+// Example for using ACE_UPIPE_SAP and ACE_Thread for intra-process
 // communication.  This example uses char buffers as input/output
 // interface to the ACE_UPIPE_Stream
 //
@@ -11,6 +11,8 @@
 #include "ace/UPIPE_Connector.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "auto_builtin_ptr.h"
+
+ACE_RCSID(UPIPE_SAP, ex3, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
