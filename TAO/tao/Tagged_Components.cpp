@@ -12,7 +12,6 @@ ACE_RCSID (tao,
            Tagged_Components,
            "$Id$")
 
-
 void
 TAO_Tagged_Components::set_orb_type (CORBA::ULong orb_type)
 {

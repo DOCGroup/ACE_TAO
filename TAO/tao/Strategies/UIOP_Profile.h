@@ -29,7 +29,6 @@
 
 #include "strategies_export.h"
 #include "tao/Profile.h"
-#include "tao/Object_KeyC.h"
 #include "UIOP_Connection_Handler.h"
 #include "UIOP_Endpoint.h"
 
@@ -140,9 +139,6 @@ public:
   virtual CORBA::ULong hash (CORBA::ULong max
                              ACE_ENV_ARG_DECL);
 
-  /// Please see the Profile.h for the documentation of this method
-  virtual IOP::TaggedProfile &create_tagged_profile (void);
-
 private:
 
   /// Create an encapsulation of the struct ProfileBody in <cdr>
@@ -176,12 +172,6 @@ private:
 
   /// Number of endpoints in the list headed by <endpoint_>.
   size_t count_;
-
-  /// Object_key associated with this profile.
-  TAO_ObjectKey object_key_;
-
-  /// Our tagged profile info
-  IOP::TaggedProfile tagged_profile_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -1,0 +1,161 @@
+Sat Feb 22 22:30:25 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* Merged with the main trunk.
+
+Thu Feb 20 12:48:16 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/Connector.cpp: Added a const to regulate the size of the map
+	  that is being used inside this class. A size of 1024 seems too
+	  excessive for runtime memory.
+
+Thu Feb 20 12:29:17 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Profile.h:
+	* tao/Profile.cpp:
+	* tao/Profile.i: Moved the ObjectKey from the inherited classes
+	  to the base class. Added a new protected constructor which can
+	  be used by the inherited classes to initialize the ObjectKey
+	  properly. Also added a new method set_tagged_components () which
+	  is a helper method useful for creating Tagged_Components of an
+	  IOR from a CDR stream. Uninlined the constructor, destructor and
+	  the methods for refcounted memory management.
+
+	* tao/IIOP_Profile.h:
+	* tao/IIOP_Profile.cpp:
+	* tao/Strategies/DIOP_Profile.h:
+	* tao/Strategies/DIOP_Profile.cpp:
+	* tao/Strategies/UIOP_Profile.h:
+	* tao/Strategies/UIOP_Profile.cpp:
+	* tao/Strategies/SHMIOP_Profile.h:
+	* tao/Strategies/SHMIOP_Profile.cpp: Removed the ObjectKey from
+	  the following classes since it has now been moved to the base
+	  class. 
+	  
+	  Used the protected constructor in the base class while base
+	  member initializations.  
+
+	  Call the set_tagged_componets () to place a list of
+	  IIOPEndpoints in the Tagged_Components contained in the profile.
+	
+Thu Feb 20 12:10:13 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Tagged_Components.h:
+	* tao/Tagged_Components.cpp:
+	* tao/Tagged_Components.i (TAO_Tagged_Components): Reverted the
+	  change "Wed Feb 12 15:40:46 2003  Balachandran Natarajan
+	  <bala@isis-server.isis.vanderbilt.edu>" since it was counter
+	  productive. 
+
+	* tao/ClientRequestInfo_i.cpp: Reverted the changes made to
+	  accomodatethe above change.
+
+Thu Feb 13 17:53:44 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/IIOP_Endpoint.h (TAO_IIOP_Endpoint): 
+	* tao/IIOP_Profile.h:
+	* tao/Strategies/DIOP_Endpoint.h:
+	* tao/Strategies/SHMIOP_Endpoint.h: Cosmetic changes like removing
+	  ORB.h  inclusion etc.
+
+Wed Feb 12 18:15:24 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* Merged in changes from the main trunk.
+
+Wed Feb 12 15:40:46 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Tagged_Components.h:
+	* tao/Tagged_Components.cpp:
+	* tao/Tagged_Components.i (TAO_Tagged_Components): Create
+	  IOP::MultipleComponentProfile lazily, instead of creating
+	  actively on the stack and increase the runtime footprint. If we
+	  do this we only pay when TAO gets something that TAO doesnt
+	  understand. This changed forced us to change the signature of
+	  the components (). Instead of returning a reference we now
+	  return a pointer to the underlying
+	  IOP::MultipleComponentProfile. 
+
+Thu Feb  6 17:51:06 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Tagged_Components.cpp: Removed some vague print statements. 
+	* tao/Strategies/SHMIOP_Connector.cpp: Fixed some debug
+	  statements. 
+
+Thu Feb  6 16:37:32 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Stub.cpp (ior_info_): 
+	* tao/Invocation.cpp:
+	* tao/ClientRequestInfo_i.cpp: Added error checks to the last
+	  checkins. 
+
+Sun Jan 26 23:50:17 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Profile.cpp:
+	* tao/Profile.h:
+ 	* tao/Profile.i: Added a new method create_tagged_profile
+	  (). Infact, this method existed in the derived classes returning
+	  a reference to the underlying IOP::TaggedProfile. Since the
+	  method existed in all the derived classes and was doing similar
+	  things it has now been moved to the base class with a slight
+	  signature change. This now returns a pointer to the underlying
+	  IOP:TaggedProfile. The signatuer change has been needed because
+	  of the change mentioned below.
+
+	  We will henceforth hold a pointer to the IOP::TaggedProfile
+	  instead of an instance in the Profile classes. We will create an
+	  instance when needed, (heard of lazy evaluation?). This change
+	  is forced on us due to the runtime memory consumed by
+	  IOR's. Holding a pointer instead of the actual object instance
+	  gets us approximately 24 bytes per IOR on Linux on a 32 bit
+	  processor. 
+
+	* tao/IIOP_Profile.h:
+	* tao/IIOP_Profile.cpp: 
+	* tao/Strategies/UIOP_Profile.cpp:
+	* tao/Strategies/UIOP_Profile.h:
+	* tao/Strategies/SHMIOP_Profile.cpp:
+	* tao/Strategies/SHMIOP_Profile.h:
+	* tao/Strategies/DIOP_Profile.cpp:
+	* tao/Strategies/DIOP_Profile.h: Removed create_tagged_profile ()
+	  and the instance of IOP::TaggedProfile.
+	  
+	* tao/Invocation.cpp:
+	* tao/Stub.cpp:
+	* tao/ClientRequestInfo_i.cpp: Changes forced on us due to the
+	  signature change above.
+	
+Sun Jan 26 21:41:26 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* Mering with the main trunk and moving to a new branch. 
+
+Sun Jan 26 21:16:14 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* docs/Options.html: documented the new option.
+
+Mon Jan 20 09:00:55 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	The aim of this checkin is to provide an option to configure the
+	size of the dispatcher table in the Muxed_Transport_Strategy. 
+	
+	* tao/Client_Strategy_Factory.cpp: 
+	* tao/Client_Strategy_Factory.h: Added a new virtual method to
+	  fetch the dispatcher table size
+
+	* tao/default_client.cpp:
+	* tao/default_client.h: Concrete implementation for the new
+	  virtual method. The default value for the dispatcher table size
+	  is set to TAO_RD_TABLE_SIZE which is defined in orbconf.h. The
+	  table size can also be changed at runtime using a -ORB option
+	  which is explained below. 
+
+	  We now have an option called -ORBReplyDispatcherTableSize which
+	  will parse and set a user provided value as the dispatcher table 
+	  size. This gives extra flexibility to the user.
+	  
+	* tao/orbconf.h: Added TAO_RD_TABLE_SIZE and set the value to be
+	  16.
+	
+	* tao/Muxed_TMS.cpp:
+	* tao/Muxed_TMS.h: All the above changes were motivated to reduce
+	  the size of the hash table that this class creates increasing
+	  the run-time footprint. The default value of 1024 was probably
+	  an over kill for this class. 
