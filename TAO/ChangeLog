@@ -1,3 +1,13 @@
+Wed Mar 30 10:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* TAO_IDL/be_include/be_visitor_typecode/alias_typecode.h:
+	* TAO_IDL/be_include/be_visitor_typecode/enum_typecode.h:
+	* TAO_IDL/be_include/be_visitor_typecode/objref_typecode.h:
+	* TAO_IDL/be_include/be_visitor_typecode/struct_typecode.h:
+	* TAO_IDL/be_include/be_visitor_typecode/union_typecode.h:
+	* TAO_IDL/be_include/be_visitor_typecode/value_typecode.h:
+	  Fixed fuzz errors
+
 Wed Mar 30 08:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Domain/*S*.{h,cpp,inl}:
