@@ -1,3 +1,16 @@
+Thu Feb  3 20:55:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+	  Added code generation to initialize the union's
+	  discriminant in the default constructor. This ensures
+	  that, if an uninitialized union is inserted into an
+	  Any, whether by itself or contained in some constructed
+	  type, the Any destructor's call to deep_free() will
+	  execute properly. The discriminator must be set to the
+	  first case label value of the first member declared in
+	  the union. Thanks to Christopher Kohlhoff <chris@kohlhoff.com>
+	  for sending in the example that uncovered this bug.
+
 Thu Feb  3 17:47:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DomainC.cpp:
