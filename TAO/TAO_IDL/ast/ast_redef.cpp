@@ -98,6 +98,7 @@ can_be_redefined (AST_Decl *d)
     case AST_Decl::NT_attr:
     case AST_Decl::NT_op:
     case AST_Decl::NT_pre_defined:
+    case AST_Decl::NT_factory:
     default:
       return I_FALSE;
     }

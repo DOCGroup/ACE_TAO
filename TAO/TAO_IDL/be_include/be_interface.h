@@ -63,7 +63,6 @@ public:
                 long nih,
                 AST_Interface **ih_flat,
                 long nih_flat,
-                UTL_StrList *p,
                 idl_bool local,
                 idl_bool abstract);
   // Constructor that sets its scoped name <n>, a list of inherited interfaces

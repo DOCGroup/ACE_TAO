@@ -404,7 +404,7 @@ be_visitor_valuetype_field_cs::visit_valuetype (be_valuetype *node)
       << "* val)// set" << be_nl
       << "{\n";
   os->incr_indent ();
-  *os << "if (val) val->_add_ref ();" << be_nl
+  *os << "CORBA::add_ref (val);" << be_nl
       << "this->"
       << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
       << " = val;" << be_uidt_nl;
@@ -455,28 +455,28 @@ be_visitor_valuetype_field_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
   // set method
   os->indent (); // start from current indentation
   *os << "// accessor to set the member" << be_nl
-      << this->pre_op() << "void" << be_nl;
-      this->op_name(bu,os);
+      << this->pre_op () << "void" << be_nl;
+      this->op_name (bu, os);
       *os << "::" << ub->local_name () << " (" << bt->name ()
       << "* val)// set" << be_nl
       << "{\n";
   os->incr_indent ();
-  *os << "if (val) val->_add_ref ();" << be_nl
+  *os << "CORBA::add_ref (val);" << be_nl
       << "this->"
-      << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
+      << bu->field_pd_prefix () << ub->local_name () << bu->field_pd_postfix()
       << " = val;" << be_uidt_nl;
   *os << "}" << be_nl;
 
   // get method
   *os << "// retrieve the member" << be_nl
-      << this->pre_op() << bt->name () << "* " << be_nl;
-      this->op_name(bu,os);
+      << this->pre_op () << bt->name () << "* " << be_nl;
+      this->op_name (bu, os);
       *os << "::" << ub->local_name () << " () const"
       << be_nl
       << "{\n";
   os->incr_indent ();
   *os << "return this->"
-      << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
+      << bu->field_pd_prefix () << ub->local_name () << bu->field_pd_postfix()
       << ".ptr ();\n";
   os->decr_indent ();
   *os << "}\n\n";

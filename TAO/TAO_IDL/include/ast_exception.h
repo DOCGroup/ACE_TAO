@@ -82,7 +82,6 @@ public:
   AST_Exception (void);
 
   AST_Exception (UTL_ScopedName *n,
-                 UTL_StrList *p,
                  idl_bool local,
                  idl_bool abstract);
 

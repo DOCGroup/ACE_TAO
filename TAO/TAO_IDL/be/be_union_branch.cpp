@@ -31,19 +31,15 @@ be_union_branch::be_union_branch (void)
 
 be_union_branch::be_union_branch (UTL_LabelList *ll,
                                   AST_Type *ft,
-                                  UTL_ScopedName *n,
-                                  UTL_StrList *p)
+                                  UTL_ScopedName *n)
   : AST_UnionBranch (ll, 
                      ft, 
-                     n, 
-                     p),
+                     n),
     AST_Field (AST_Decl::NT_union_branch, 
                ft, 
-               n, 
-               p),
+               n),
     AST_Decl (AST_Decl::NT_union_branch, 
-              n, 
-              p),
+              n),
     COMMON_Base (ft->is_local (), 
                  ft->is_abstract ())
 {

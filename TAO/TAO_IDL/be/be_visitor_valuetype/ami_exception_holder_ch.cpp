@@ -76,24 +76,6 @@ be_visitor_valuetype_ami_exception_holder_ch::visit_valuetype (be_valuetype *nod
 
   *os << be_uidt_nl
       << "};" << be_nl << be_nl;
-
-  // Create code for the valuetype factory
-
-  *os << "class " << node->local_name () << "_factory" << be_idt_nl
-      << ": public "
-      << node->full_name () << "_init" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "friend class " << node->local_name () << ";" << be_uidt_nl
-      << "public:" << be_idt_nl
-      << "// create (...) would go here" << be_nl
-      << be_uidt_nl << "private:" << be_idt_nl;
-
-  *os << "virtual ~" << node->local_name () << "_factory ();" << be_nl << be_nl;
-
-  *os << "TAO_OBV_CREATE_RETURN_TYPE (" << node->local_name ()
-      << ")  create_for_unmarshal ();" << be_nl << be_uidt_nl
-      << "};" << be_uidt_nl;
-
   return 0;
 }
 

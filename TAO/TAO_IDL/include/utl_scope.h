@@ -157,6 +157,8 @@ public:
 
   virtual AST_Native *add_native (AST_Native *n);
 
+  virtual AST_Factory *add_factory (AST_Factory *f);
+
   // Call back end add_XXX functions for this scope.
   virtual AST_Decl *call_add (void);
 
@@ -197,6 +199,10 @@ public:
   // be_generator::create_module().
   void add_to_scope (AST_Decl *e,
                      AST_Decl *ex = 0);
+
+  // Accessors for the has_prefix_ member.
+  idl_bool has_prefix (void);
+  void has_prefix (idl_bool val);
 
   // Cleanup function.
   virtual void destroy (void);
@@ -275,6 +281,9 @@ private:
   long pd_name_referenced_allocated;  // How many allocated?
   long pd_name_referenced_used;       // How many used?
 
+  // Have we seen a #pragma prefix declaration in this scope?
+  idl_bool has_prefix_;
+
   // Friend class UTL_ScopeActiveIterator defines active iterator for
   // UTL_Scope. Definition follows below.
   friend class  UTL_ScopeActiveIterator;
@@ -327,6 +336,8 @@ private:
   virtual AST_Array *fe_add_array (AST_Array *a);
 
   virtual AST_Native *fe_add_native (AST_Native *n);
+
+  virtual AST_Factory *fe_add_factory (AST_Factory *f);
 };
 
 // Active iterator for a UTL_Scope node

@@ -43,6 +43,12 @@ be_visitor_module::~be_visitor_module (void)
 // visit the Module node and its scope
 int be_visitor_module::visit_module (be_module *node)
 {
+  if (node->nmembers () == 0)
+    {
+      idl_global->err ()->error1 (UTL_Error::EIDL_EMPTY_MODULE,
+                                  node);
+    }
+
   // all we have to do is to visit the scope
   if (this->visit_scope (node) == -1)
     {
@@ -50,6 +56,7 @@ int be_visitor_module::visit_module (be_module *node)
                          "(%N:%l) be_visitor_module::visit_module - "
                          "codegen for scope failed\n"), -1);
     }
+
   return 0;
 }
 
@@ -473,8 +480,6 @@ be_visitor_module::visit_interface_fwd (be_interface_fwd *node)
   return 0;
 }
 
-#ifdef IDL_HAS_VALUETYPE
-
 // visit an valuetype
 int
 be_visitor_module::visit_valuetype (be_valuetype *node)
@@ -583,7 +588,7 @@ be_visitor_module::visit_valuetype (be_valuetype *node)
   return 0;
 }
 
-// visit an valuetype_fwd
+// visit a valuetype_fwd
 int
 be_visitor_module::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
@@ -604,21 +609,21 @@ be_visitor_module::visit_valuetype_fwd (be_valuetype_fwd *node)
     case TAO_CodeGen::TAO_MODULE_CI:
       ctx.state (TAO_CodeGen::TAO_VALUETYPE_FWD_CI);
       break;
+    case TAO_CodeGen::TAO_MODULE_CDR_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_FWD_CDR_OP_CH);
+      break;
     case TAO_CodeGen::TAO_MODULE_CDR_OP_CI:
       ctx.state (TAO_CodeGen::TAO_VALUETYPE_FWD_CDR_OP_CI);
       break;
     case TAO_CodeGen::TAO_MODULE_CDR_OP_CS:
-      ctx.state (TAO_CodeGen::TAO_VALUETYPE_FWD_CDR_OP_CS);
-      break;
     case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
     case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
-    case TAO_CodeGen::TAO_MODULE_CDR_OP_CH:
     case TAO_CodeGen::TAO_MODULE_CS:
     case TAO_CodeGen::TAO_MODULE_SH:
     case TAO_CodeGen::TAO_MODULE_SI:
     case TAO_CodeGen::TAO_MODULE_SS:
-    case TAO_CodeGen::TAO_MODULE_IS:
     case TAO_CodeGen::TAO_MODULE_IH:
+    case TAO_CodeGen::TAO_MODULE_IS:
       return 0; // nothing to be done
     default:
       {
@@ -652,8 +657,6 @@ be_visitor_module::visit_valuetype_fwd (be_valuetype_fwd *node)
   delete visitor;
   return 0;
 }
-
-#endif /* IDL_HAS_VALUETYPE */
 
 // visit an structure
 int

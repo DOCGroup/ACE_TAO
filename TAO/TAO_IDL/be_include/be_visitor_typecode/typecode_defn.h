@@ -23,9 +23,13 @@
 #ifndef _BE_VISITOR_TYPECODE_TYPECODE_DEFN_H_
 #define _BE_VISITOR_TYPECODE_TYPECODE_DEFN_H_
 
+#include "ace/CDR_Base.h"
+#include "ace/Containers_T.h"
 #include "be_visitor_scope.h"
 
 const int TAO_BE_VISITOR_TYPECODE_DEFN_MAX_STACK_SIZE = 1024;
+
+class AST_Structure;
 
 class be_visitor_typecode_defn : public be_visitor_scope
 {

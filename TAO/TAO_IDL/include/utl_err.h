@@ -120,6 +120,7 @@ public:
     EIDL_NONVOID_ONEWAY,        // Non-void return type in oneway operation
     EIDL_NOT_A_TYPE,            // Not a type
     EIDL_UNDERSCORE,            // More than one leading underscore
+    EIDL_EMPTY_MODULE,          // Empty modules not allowed in IDL.
     EIDL_BACK_END,              // Back end error
     EIDL_OK                     // No error
   };

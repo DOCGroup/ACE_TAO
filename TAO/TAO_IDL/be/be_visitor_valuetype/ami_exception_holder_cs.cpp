@@ -70,30 +70,6 @@ be_visitor_valuetype_ami_exception_holder_cs::visit_valuetype (be_valuetype *nod
                          "codegen for scope failed\n"), -1);
     }
 
-
-  // Create the code for the valuetype factory
-  os->indent ();
-
-  if (node->is_nested () &&
-      node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
-    *os << "OBV_";
-
-  *os << node->full_name () << "_factory::~" << node->local_name () << "_factory ()"
-      << "{ }" << be_nl << be_nl;
-
-  *os << "TAO_OBV_CREATE_RETURN_TYPE (" << node->local_name () << ")" << be_nl;
-
-  if (node->is_nested () &&
-      node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
-    *os << "OBV_";
-
-  *os << node->full_name () << "_factory::create_for_unmarshal ()" << be_nl
-      << "{" << be_idt_nl
-      << "//return 0;" << be_nl
-      << "return new " << node->compute_local_name ("_tao_", "") << ";" << be_uidt_nl
-      << "}" << be_nl
-      << "\n";
-
   return 0;
 }
 
@@ -104,6 +80,7 @@ be_visitor_valuetype_ami_exception_holder_cs::visit_operation (be_operation *nod
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_RAISE_OPERATION_CS);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
+
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -122,6 +99,7 @@ be_visitor_valuetype_ami_exception_holder_cs::visit_operation (be_operation *nod
                          "codegen for argument list failed\n"),
                         -1);
     }
+
   delete visitor;
 
   return 0;

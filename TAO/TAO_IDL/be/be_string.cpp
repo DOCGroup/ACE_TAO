@@ -36,7 +36,6 @@ be_string::be_string (AST_Expression *v)
     AST_Decl (AST_Decl::NT_string,
               new UTL_ScopedName (new Identifier ("string"),
                                   0),
-              0,
               I_TRUE)
 {
   // Always the case.
@@ -54,7 +53,6 @@ be_string::be_string (AST_Expression *v,
                                       0)
                 : new UTL_ScopedName (new Identifier ("wstring"),
                                       0),
-              0,
               I_TRUE)
 {
   // Always the case.

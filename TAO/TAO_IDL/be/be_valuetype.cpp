@@ -23,8 +23,6 @@
 #include "idl_extern.h"
 #include "be.h"
 
-#ifdef IDL_HAS_VALUETYPE
-
 ACE_RCSID(be, be_valuetype, "$Id$")
 
 // Default constructor.
@@ -52,14 +50,12 @@ be_valuetype::be_valuetype (void)
 be_valuetype::be_valuetype (UTL_ScopedName *n,
                             AST_Interface **ih,
                             long nih,
-                            UTL_StrList *p,
                             idl_bool set_abstract)
   : be_interface (n, 
                   ih, 
                   nih, 
                   0, 
                   0, 
-                  p, 
                   0, 
                   set_abstract),
     AST_Interface (n, 
@@ -67,12 +63,10 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                    nih, 
                    0, 
                    0, 
-                   p, 
                    0, 
                    set_abstract),
     AST_Decl (AST_Decl::NT_interface,  // It's like an interface.
-              n, 
-              p),
+              n),
     UTL_Scope (AST_Decl::NT_interface),
     COMMON_Base (0, 
                  set_abstract),
@@ -103,11 +97,9 @@ be_valuetype::~be_valuetype (void)
 }
 
 void
-be_valuetype::redefine (AST_Interface *from,
-                        UTL_StrList *p)
+be_valuetype::redefine (AST_Interface *from)
 {
-  this->AST_Interface::redefine (from, 
-                                 p);
+  this->AST_Interface::redefine (from);
 
   this->is_abstract_ = from->is_abstract_valuetype ();
 }
@@ -128,7 +120,6 @@ be_valuetype::compute_fullobvskelname (void)
                                 this->full_obv_skel_name_);
 }
 
-
 // Retrieve the fully scoped skeleton name.
 const char*
 be_valuetype::full_obv_skel_name (void)
@@ -140,8 +131,6 @@ be_valuetype::full_obv_skel_name (void)
 
   return this->full_obv_skel_name_;
 }
-
-
 
 // Generate the var definition.
 int
@@ -232,7 +221,7 @@ int
 be_valuetype::gen_var_impl (char *,
                             char *)
 {
-  TAO_OutStream *ci = 0;
+  TAO_OutStream *cs = 0;
   TAO_NL be_nl;
 
   // To hold the full and local _var names.
@@ -255,183 +244,178 @@ be_valuetype::gen_var_impl (char *,
                    "%s_var",
                    this->local_name ());
 
-  ci = tao_cg->client_inline ();
+  cs = tao_cg->client_inline ();
 
   // Generate the var implementation in the inline file
   // Depending upon the data type, there are some differences which we account
   // for over here.
 
-  ci->indent (); // start with whatever was our current indent level
+  cs->indent (); // start with whatever was our current indent level
 
-  *ci << "// *************************************************************"
+  *cs << "// *************************************************************"
       << be_nl;
-  *ci << "// Inline operations for class " << fname << be_nl;
-  *ci << "// *************************************************************\n\n";
+  *cs << "// Inline operations for class " << fname << be_nl;
+  *cs << "// *************************************************************\n\n";
 
   // Default constructor.
-  *ci << "ACE_INLINE" << be_nl;
-  *ci << fname << "::" << lname <<
+  *cs << "ACE_INLINE" << be_nl;
+  *cs << fname << "::" << lname <<
     " (void) // default constructor" << be_nl;
-  *ci << "  " << ": ptr_ (0)" << be_nl;
-  *ci << "{}\n\n";
+  *cs << "  " << ": ptr_ (0)" << be_nl;
+  *cs << "{}\n\n";
 
   // Constructor from a pointer.
-  ci->indent ();
-  *ci << "ACE_INLINE" << be_nl;
-  *ci << fname << "::" << lname << " (" 
+  cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
+  *cs << fname << "::" << lname << " (" 
       << this->local_name () << "* p)" << be_nl;
-  *ci << "  : ptr_ (p)" << be_nl;
-  *ci << "{}\n\n";
+  *cs << "  : ptr_ (p)" << be_nl;
+  *cs << "{}\n\n";
 
   // Constructor from a const pointer.
   // TAO extension - it appears that there are problems with at least g++
   // which reclaims amguity between T(T*) and T(const T_var &)
-  ci->indent ();
-  *ci << "ACE_INLINE" << be_nl;
-  *ci << fname << "::" << lname << " (const "
+  cs->indent ();
+  *cs << fname << "::" << lname << " (const "
       << this->local_name () << "* p)" << be_nl;
-  *ci << "  : ptr_ (ACE_const_cast(" 
+  *cs << "  : ptr_ (ACE_const_cast(" 
       << this->local_name () << "*, p))" << be_nl;
-  *ci << "{}\n\n";
+  *cs << "{}\n\n";
 
   // The additional ptr () member function. This member function must be
   // defined before the remaining member functions including the copy
   // constructor because this inline function is used elsewhere. Hence to make
   // inlining of this function possible, we must define it before its use.
-  ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "* " << be_nl;
-  *ci << fname << "::ptr (void) const" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  cs->indent ();
+  *cs << this->name () << "* " << be_nl;
+  *cs << fname << "::ptr (void) const" << be_nl;
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "return this->ptr_;\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
 
   // Copy constructor.
-  ci->indent ();
-  *ci << "ACE_INLINE" << be_nl;
-  *ci << fname << "::" << lname << " (const " << lname <<
+  cs->indent ();
+  *cs << fname << "::" << lname << " (const " << lname <<
     " &p) // copy constructor" << be_nl;
-  *ci << "{" << be_idt_nl
+  *cs << "{" << be_idt_nl
       <<    "CORBA::add_ref (p.ptr ());" << be_nl
       <<    "this->ptr_ = p.ptr ();" << be_uidt_nl
       << "}\n\n";
 
   // Destructor.
-  ci->indent ();
-  *ci << "ACE_INLINE" << be_nl;
-  *ci << fname << "::~" << lname << " (void) // destructor" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "CORBA::remove_ref (this->ptr_);\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  cs->indent ();
+  *cs << fname << "::~" << lname << " (void) // destructor" << be_nl;
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "CORBA::remove_ref (this->ptr_);\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
 
   // Assignment operator.
-  ci->indent ();
-  *ci << "ACE_INLINE " << fname << " &" << be_nl;
-  *ci << fname << "::operator= (" << this->local_name () 
+  cs->indent ();
+  *cs << fname << " &" << be_nl;
+  *cs << fname << "::operator= (" << this->local_name () 
       << "* p)" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "CORBA::remove_ref (this->ptr_);" << be_nl;
-  *ci << "this->ptr_ = p;" << be_nl;
-  *ci << "return *this;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "CORBA::remove_ref (this->ptr_);" << be_nl;
+  *cs << "this->ptr_ = p;" << be_nl;
+  *cs << "return *this;\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
 
   // Assignment operator from _var.
-  ci->indent ();
-  *ci << "ACE_INLINE " << fname << " &" << be_nl;
-  *ci << fname << "::operator= (const " << lname 
+  cs->indent ();
+  *cs << fname << " &" << be_nl;
+  *cs << fname << "::operator= (const " << lname 
       << " &p)" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "if (this != &p)" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "CORBA::remove_ref (this->ptr_);" << be_nl
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "if (this != &p)" << be_nl;
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "CORBA::remove_ref (this->ptr_);" << be_nl
       << this->local_name() << "* tmp = p.ptr ();" << be_nl
       << "CORBA::add_ref (tmp);" << be_nl
       << "this->ptr_ = tmp;\n";
-  ci->decr_indent ();
-  *ci << "}" << be_nl;
-  *ci << "return *this;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  cs->decr_indent ();
+  *cs << "}" << be_nl;
+  *cs << "return *this;\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
 
   // Other extra methods - cast operator ().
-  ci->indent ();
-  *ci << "ACE_INLINE " << be_nl;
-  *ci << fname << "::operator const " << this->name ()
+  cs->indent ();
+  *cs << fname << "::operator const " << this->name ()
       << "* () const // cast" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "return this->ptr_;\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
 
-  ci->indent ();
-  *ci << "ACE_INLINE " << be_nl;
-  *ci << fname << "::operator " << this->name ()
+  cs->indent ();
+  *cs << fname << "::operator " << this->name ()
       << "* () // cast " << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "return this->ptr_;\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
 
   // operator->
-  ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "* " << be_nl;
-  *ci << fname << "::operator-> (void) const" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  cs->indent ();
+  *cs << this->name () << "* " << be_nl;
+  *cs << fname << "::operator-> (void) const" << be_nl;
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "return this->ptr_;\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
 
   // in, inout, out, and _retn.
-  ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "*" << be_nl;
-  *ci << fname << "::in (void) const" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  cs->indent ();
+  *cs << this->name () << "*" << be_nl;
+  *cs << fname << "::in (void) const" << be_nl;
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "return this->ptr_;\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
 
-  ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "* &" << be_nl;
-  *ci << fname << "::inout (void)" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  cs->indent ();
+  *cs << this->name () << "* &" << be_nl;
+  *cs << fname << "::inout (void)" << be_nl;
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "return this->ptr_;\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
 
-  ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "* &" << be_nl;
-  *ci << fname << "::out (void)" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "CORBA::remove_ref (this->ptr_);" << be_nl;
-  *ci << "this->ptr_ = 0;" << be_nl;
-  *ci << "return this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  cs->indent ();
+  *cs << this->name () << "* &" << be_nl;
+  *cs << fname << "::out (void)" << be_nl;
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "CORBA::remove_ref (this->ptr_);" << be_nl;
+  *cs << "this->ptr_ = 0;" << be_nl;
+  *cs << "return this->ptr_;\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
 
-  ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "* " << be_nl;
-  *ci << fname << "::_retn (void)" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "// yield ownership of managed obj reference" << be_nl;
-  *ci << this->local_name () << "* tmp = this->ptr_;" << be_nl;
-  *ci << "this->ptr_ = 0;" << be_nl;
-  *ci << "return tmp;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  cs->indent ();
+  *cs << this->name () << "* " << be_nl;
+  *cs << fname << "::_retn (void)" << be_nl;
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "// yield ownership of managed obj reference" << be_nl;
+  *cs << this->local_name () << "* tmp = this->ptr_;" << be_nl;
+  *cs << "this->ptr_ = 0;" << be_nl;
+  *cs << "return tmp;\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
 
   return 0;
 }
@@ -504,7 +488,7 @@ int
 be_valuetype::gen_out_impl (char *, 
                             char *)
 {
-  TAO_OutStream *ci = 0;
+  TAO_OutStream *cs = 0;
   TAO_NL be_nl;
 
   // To hold the full and local _out names.
@@ -527,121 +511,202 @@ be_valuetype::gen_out_impl (char *,
                    "%s_out",
                    this->local_name ());
 
-  ci = tao_cg->client_inline ();
+  cs = tao_cg->client_inline ();
 
   // Generate the var implementation in the inline file
   // Depending upon the data type, there are some differences which we account
   // for over here.
 
   // Start with whatever was our current indent level.
-  ci->indent ();
+  cs->indent ();
 
-  *ci << "// *************************************************************"
+  *cs << "// *************************************************************"
       << be_nl;
-  *ci << "// Inline operations for class " << fname << be_nl;
-  *ci << "// *************************************************************\n\n";
+  *cs << "// Inline operations for class " << fname << be_nl;
+  *cs << "// *************************************************************\n\n";
 
   // Constructor from a pointer.
-  ci->indent ();
-  *ci << "ACE_INLINE" << be_nl;
-  *ci << fname << "::" << lname << " (" << this->local_name ()
+  cs->indent ();
+  *cs << fname << "::" << lname << " (" << this->local_name ()
       << "* &p)" << be_nl;
-  *ci << "  : ptr_ (p)" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "this->ptr_ = 0;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *cs << "  : ptr_ (p)" << be_nl;
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "this->ptr_ = 0;\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
 
   // Constructor from _var &.
-  ci->indent ();
-  *ci << "ACE_INLINE" << be_nl;
-  *ci << fname << "::" << lname << " (" << this->local_name () 
+  cs->indent ();
+  *cs << fname << "::" << lname << " (" << this->local_name () 
       << "_var &p) // constructor from _var" << be_nl;
-  *ci << "  : ptr_ (p.out ())" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "CORBA::remove_ref (this->ptr_);" << be_nl;
-  *ci << "this->ptr_ = 0;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *cs << "  : ptr_ (p.out ())" << be_nl;
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "CORBA::remove_ref (this->ptr_);" << be_nl;
+  *cs << "this->ptr_ = 0;\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
 
   // Copy constructor.
-  ci->indent ();
-  *ci << "ACE_INLINE" << be_nl;
-  *ci << fname << "::" << lname << " (const " << lname 
+  cs->indent ();
+  *cs << fname << "::" << lname << " (const " << lname 
       << " &p) // copy constructor" << be_nl;
-  *ci << "  : ptr_ (ACE_const_cast (" << lname << "&,p).ptr_)" << be_nl;
-  *ci << "{}\n\n";
+  *cs << "  : ptr_ (ACE_const_cast (" << lname << "&,p).ptr_)" << be_nl;
+  *cs << "{}\n\n";
 
   // Assignment operator from _out &.
-  ci->indent ();
-  *ci << "ACE_INLINE " << fname << " &" << be_nl;
-  *ci << fname << "::operator= (const " << lname <<
+  cs->indent ();
+  *cs << fname << " &" << be_nl;
+  *cs << fname << "::operator= (const " << lname <<
     " &p)" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "this->ptr_ = ACE_const_cast (" << lname << "&,p).ptr_;" << be_nl;
-  *ci << "return *this;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "this->ptr_ = ACE_const_cast (" << lname << "&,p).ptr_;" << be_nl;
+  *cs << "return *this;\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
 
   // Assignment operator from _var.
-  ci->indent ();
-  *ci << "ACE_INLINE " << fname << " &" << be_nl;
-  *ci << fname << "::operator= (const " << this->local_name () 
+  cs->indent ();
+  *cs << fname << " &" << be_nl;
+  *cs << fname << "::operator= (const " << this->local_name () 
       << "_var &p)" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << this->local_name () << "* tmp = p.ptr ();" << be_nl
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << this->local_name () << "* tmp = p.ptr ();" << be_nl
       << "CORBA::add_ref (tmp);" << be_nl
       << "this->ptr_ = tmp;" << be_nl;
-  *ci << "return *this;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *cs << "return *this;\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
 
   // Assignment operator from *.
-  ci->indent ();
-  *ci << "ACE_INLINE " << fname << " &" << be_nl;
-  *ci << fname << "::operator= (" << this->local_name () 
+  cs->indent ();
+  *cs << fname << " &" << be_nl;
+  *cs << fname << "::operator= (" << this->local_name () 
       << "* p)" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "this->ptr_ = p;" << be_nl;
-  *ci << "return *this;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "this->ptr_ = p;" << be_nl;
+  *cs << "return *this;\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
 
   // Other extra methods - cast operator ().
-  ci->indent ();
-  *ci << "ACE_INLINE " << be_nl;
-  *ci << fname << "::operator " << this->name () 
+  cs->indent ();
+  *cs << fname << "::operator " << this->name () 
       << "* &() // cast" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "return this->ptr_;\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
 
   // ptr function.
-  ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "* &" << be_nl;
-  *ci << fname << "::ptr (void) // ptr" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  cs->indent ();
+  *cs << this->name () << "* &" << be_nl;
+  *cs << fname << "::ptr (void) // ptr" << be_nl;
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "return this->ptr_;\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
 
   // operator->
-  ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "* " << be_nl;
-  *ci << fname << "::operator-> (void)" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  cs->indent ();
+  *cs << this->name () << "* " << be_nl;
+  *cs << fname << "::operator-> (void)" << be_nl;
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "return this->ptr_;\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
+
+  return 0;
+}
+
+int 
+be_valuetype::gen_helper_header (char* ,
+                                 char* )
+{
+  TAO_OutStream *os = 0;
+
+  os = tao_cg->client_header ();
+
+  *os << "//@@ Boris: begin experimental" << be_nl
+      << "TAO_NAMESPACE CORBA" << be_nl
+      << "{"
+      << be_idt_nl
+      << "void add_ref (" << this->full_name () << " *);" << be_nl
+      << "void remove_ref (" << this->full_name () << " *);"
+      <<  be_uidt_nl
+      << "}" << be_nl
+      << "TAO_NAMESPACE_CLOSE" << be_nl
+      << "//@@ Boris: end experimental" << be_nl << be_nl;
+
+  return 0;
+}
+
+int 
+be_valuetype::gen_helper_inline (char* ,
+                                 char* )
+{
+  TAO_OutStream *os = 0;
+
+  os = tao_cg->client_inline ();
+
+  *os << "//@@ Boris: begin experimental" << be_nl
+      << "TAO_NAMESPACE CORBA" << be_nl
+      << "{"
+      << be_idt_nl
+      << "void add_ref (" << this->full_name () << " *);" << be_nl
+      << "void remove_ref (" << this->full_name () << " *);"
+      <<  be_uidt_nl
+      << "}" << be_nl
+      << "TAO_NAMESPACE_CLOSE" << be_nl
+      << "//@@ Boris: end experimental" << be_nl << be_nl;
+
+  return 0;
+}
+ 
+
+int 
+be_valuetype::gen_helper_stubs (char* ,
+                                char* )
+{
+  TAO_OutStream *os = 0;
+
+  os = tao_cg->client_stubs ();
+
+  *os << "//@@ Boris: begin experimental" << be_nl
+    // add_ref
+      << "void" << be_nl
+      << "CORBA::add_ref (" << this->full_name () << " * vt)" << be_nl
+      << "{" 
+      << be_idt_nl
+      << "if (vt != 0)" << be_nl
+      << "{" 
+      << be_idt_nl
+      << "vt->_add_ref ();" 
+      << be_uidt_nl
+      << "}" 
+      << be_uidt_nl
+      << "}" << be_nl << be_nl
+  // remove_ref
+      << "void" << be_nl
+      << "CORBA::remove_ref (" << this->full_name () << " * vt)" << be_nl
+      << "{" 
+      << be_idt_nl
+      << "if (vt != 0)" << be_nl
+      << "{" 
+      << be_idt_nl
+      << "vt->_remove_ref ();" 
+      << be_uidt_nl
+      << "}" 
+      << be_uidt_nl
+      << "}" << be_nl << be_nl
+      << "//@@ Boris: end experimental" << be_nl;
 
   return 0;
 }
@@ -690,4 +755,3 @@ IMPL_NARROW_METHODS1 (be_valuetype, be_interface)
 IMPL_NARROW_FROM_DECL (be_valuetype)
 IMPL_NARROW_FROM_SCOPE (be_valuetype)
 
-#endif /* IDL_HAS_VALUETYPE */

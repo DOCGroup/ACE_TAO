@@ -44,7 +44,6 @@ be_visitor_valuetype::visit_valuetype (be_valuetype *)
   return -1;
 }
 
-
 // visit the scope of the valuetype node
 // (in public/private field order)
 int
@@ -201,7 +200,6 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
                          AST_Operation::OP_noflags,
                          node->name (),
                          0,
-                         0,
                          0);
   op->set_name ((UTL_IdList *) node->name ()->copy ());
   if (!op || this->visit_operation (op) == -1)
@@ -219,22 +217,19 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
 
   // the set method.
   // the return type  is "void"
-  be_predefined_type *rt = new be_predefined_type (AST_PredefinedType::PT_void,
-                                                   new UTL_ScopedName
-                                                   (new Identifier
-                                                    ("void"), 0),
-                                                   0);
+  be_predefined_type *rt = 
+    new be_predefined_type (AST_PredefinedType::PT_void,
+                            new UTL_ScopedName (new Identifier ("void"), 
+                                                0));
   // argument type is the same as the attribute type
   be_argument *arg = new be_argument (AST_Argument::dir_IN,
                                       node->field_type (),
-                                      node->name (),
-                                      0);
+                                      node->name ());
   arg->set_name ((UTL_IdList *) node->name ()->copy ());
   // create the operation
   op = new be_operation (rt,
                          AST_Operation::OP_noflags,
                          node->name (),
-                         0,
                          0,
                          0);
   op->set_name ((UTL_IdList *) node->name ()->copy ());
@@ -419,12 +414,11 @@ be_visitor_valuetype::visit_operation (be_operation *)
 int
 be_visitor_valuetype::visit_exception (be_exception *)
 {
-  cerr << "! be_visitor_valuetype::visit_exception() --- not allowed\n";
  ACE_ASSERT (0);
  return 0;
 }
 
-// visit an structure
+// visit a structure
 int
 be_visitor_valuetype::visit_structure (be_structure *node)
 {
@@ -857,5 +851,251 @@ be_visitor_valuetype::gen_init_impl (be_valuetype *node)
       << be_uidt_nl << "}\n\n";
 
 
+  return 0;
+}
+
+be_visitor_valuetype::FactoryStyle
+be_visitor_valuetype::determine_factory_style (be_valuetype* node)
+{
+  FactoryStyle factory_style = FS_UNKNOWN;
+
+  if (node == 0)
+    {
+      return factory_style;
+    }
+
+  // Check whether we have at least one operation or not
+  idl_bool have_operation = be_visitor_valuetype::have_operation(node);
+
+
+  idl_bool have_factory = 0;
+  
+  // Try only our own scope
+  if (node->nmembers () > 0)
+    {
+      // initialize an iterator to iterate thru our scope
+      UTL_ScopeActiveIterator si (node,
+                                  UTL_Scope::IK_decls);
+
+      // Continue until each element is visited.
+      for (; !si.is_done (); si.next())
+        {
+          AST_Decl *d = si.item ();
+      
+          if (!d)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_valuetype_init::"
+                                 "determine_factory_style"
+                                 "bad node in this scope\n"), 
+                                factory_style);
+
+            }
+
+          AST_Decl::NodeType node_type = d->node_type();
+
+          if (node_type == AST_Decl::NT_factory)
+            {
+              have_factory = 1;
+              break;
+            }
+
+        } // end of for loop
+    } // end of if
+
+  if(!have_operation && !have_factory)
+    {
+      factory_style = FS_CONCRETE_FACTORY;
+    }
+  else if(have_operation && !have_factory)
+    {
+      factory_style = FS_NO_FACTORY;
+    }
+  else
+    {
+      factory_style = FS_ABSTRACT_FACTORY;
+    }
+
+  return factory_style;
+}
+
+idl_bool 
+be_visitor_valuetype::have_operation(be_valuetype* node)
+{
+  // Check whatever scope we get for operations/attributes
+  
+  if (node == 0)
+    {
+      return 0;
+    }
+
+  idl_bool have_operation = 0;
+
+  // Operations are either operations or attributes of:
+  // -its own
+  // -derived (abstract VT | VT | abstract iface | iface)
+  //
+  
+  // First try our own scope
+  if (node->nmembers () > 0)
+    {
+      // Initialize an iterator to iterate thru our scope
+      UTL_ScopeActiveIterator si (node,
+                                  UTL_Scope::IK_decls);
+
+      // Continue until each element is checked.
+      for (; !si.is_done (); si.next())
+        {
+          AST_Decl *d = si.item ();
+      
+            if (!d)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_valuetype_init::"
+                                 "has_operation"
+                                 "bad node in this scope\n"), 
+                                0);
+
+            }
+
+          AST_Decl::NodeType node_type = d->node_type();
+
+          if(node_type == AST_Decl::NT_op)
+            {
+              have_operation = 1;
+              continue;
+            }
+
+          if(node_type == AST_Decl::NT_attr)
+            {
+              have_operation = 1;
+              continue;
+            }
+
+          if(node_type == AST_Decl::NT_factory)
+            {
+              continue;
+            }
+
+          if(node_type == AST_Decl::NT_field)
+            {
+              continue;
+            }
+      
+        } // end of for loop
+    } // end of if
+
+  //Now traverse inheritance tree.
+  int i;  // loop index
+
+  AST_Interface *iface =
+    AST_Interface::narrow_from_scope (node);
+
+  for (i = 0; i < iface->n_inherits (); ++i)
+    {
+      AST_Interface *inherited =
+        AST_Interface::narrow_from_decl (iface->inherits ()[i]);
+
+      if (!inherited || !inherited->is_valuetype())
+        {
+          continue;
+        }
+
+      be_valuetype *vt = be_valuetype::narrow_from_decl(node->inherits ()[i]);
+
+      if (vt != 0)
+        {
+          have_operation = have_operation ||
+            be_visitor_valuetype::have_operation(vt);
+
+          if(have_operation)
+            {
+              break;
+            }
+        }
+    }  // end of for loop
+
+  return have_operation;
+}
+
+idl_bool
+be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
+{
+  // VT needs RefCounter if it has concrete factory and
+  // none of its base VT has ref_counter
+
+  if (determine_factory_style(node) != FS_CONCRETE_FACTORY)
+    {
+      return 0;
+    }
+
+  // now go thru our base VTs and see if one has already
+
+  int i;  // loop index
+
+  for (i = 0; i < node->n_inherits (); ++i)
+    {
+      AST_Interface *inherited =
+        AST_Interface::narrow_from_decl (node->inherits ()[i]);
+
+      if (!inherited || !inherited->is_valuetype())
+        {
+          continue;
+        }
+
+      be_valuetype *vt = be_valuetype::narrow_from_decl(node->inherits ()[i]);
+
+      if (vt != 0)
+        {
+          if (obv_have_ref_counter (vt))
+            {
+              return 0;
+            }
+        }
+    }  // end of for loop
+  
+  return 1;
+}
+
+idl_bool 
+be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
+{
+
+  // just try to find a VT with concrete factory in inheritance tree
+  if(node == 0)
+    {
+      return 0;
+    }
+
+  if (determine_factory_style(node) == FS_CONCRETE_FACTORY)
+    {
+      return 1;
+    }
+
+  // now go thru our base VTs
+
+  int i;  // loop index
+
+  for (i = 0; i < node->n_inherits (); ++i)
+    {
+      AST_Interface *inherited =
+        AST_Interface::narrow_from_decl (node->inherits ()[i]);
+
+      if (!inherited || !inherited->is_valuetype())
+        {
+          continue;
+        }
+
+      be_valuetype *vt = be_valuetype::narrow_from_decl (node->inherits ()[i]);
+
+      if (vt != 0)
+        {
+          if (obv_have_ref_counter (vt))
+            {
+              return 1;
+            }
+        }
+    }  // end of for loop
+  
   return 0;
 }

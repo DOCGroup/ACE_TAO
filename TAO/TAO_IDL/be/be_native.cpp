@@ -27,13 +27,10 @@ be_native::be_native (void)
 {
 }
 
-be_native::be_native (UTL_ScopedName *n,
-                      UTL_StrList *p)
-  : AST_Native (n, 
-                p),
+be_native::be_native (UTL_ScopedName *n)
+  : AST_Native (n),
     AST_Decl (AST_Decl::NT_native, 
-              n, 
-              p)
+              n)
 {
 }
 

@@ -27,7 +27,6 @@
 #include "ast_interface_fwd.h"
 
 class AST_Interface;
-class UTL_StrList;
 class be_visitor;
 
 class be_interface_fwd : public virtual AST_InterfaceFwd,
@@ -43,8 +42,7 @@ public:
   // Default constructor.
 
   be_interface_fwd (AST_Interface *dummy, 
-                    UTL_ScopedName *n, 
-                    UTL_StrList *p);
+                    UTL_ScopedName *n);
   // Constructor.
 
   virtual ~be_interface_fwd (void);

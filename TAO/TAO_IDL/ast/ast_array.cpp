@@ -91,7 +91,6 @@ AST_Array::AST_Array (UTL_ScopedName *n,
                       idl_bool abstract)
   : AST_Decl (AST_Decl::NT_array,
               n,
-              0,
               I_TRUE),
     COMMON_Base (local,
                  abstract),

@@ -49,6 +49,7 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
   if (node->cli_inline_gen () || node->imported ())
     return 0;
 
+  //@@ What is that?
   // need to access it in visit_field ()
   if (node->opt_accessor ())
     this->opt_accessor_ = 1;
@@ -74,28 +75,6 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
       <<     "return \"" << node->repoID () << "\";" << be_uidt_nl
       <<  "}\n\n";
 
-  // generate the ifdefined macro for  the _var type
-  os->gen_ifdef_macro (node->flat_name (), "_var");
-  if (node->gen_var_impl () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_ci::"
-                         "visit_valuetype - "
-                         "codegen for _var failed\n"), -1);
-    }
-  os->gen_endif ();
-
-  // generate the ifdefined macro for  the _out type
-  os->gen_ifdef_macro (node->flat_name (), "_out");
-  if (node->gen_out_impl () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_ci::"
-                         "visit_valuetype - "
-                         "codegen for _out failed\n"), -1);
-    }
-  os->gen_endif ();
-
   // generate inline methods for elements of our scope
   if (this->visit_scope (node) == -1)
     {
@@ -104,6 +83,31 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
                          "visit_valuetype - "
                          "codegen for scope failed\n"), -1);
     }
+
+  // Generate the _init -related code.
+  be_visitor_context ctx (*this->ctx_);
+  ctx.state (TAO_CodeGen::TAO_VALUETYPE_INIT_CI);
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_ci::"
+                         "visit_valuetype - "
+                         "NULL visitor.\n"
+                         ),  -1);
+    }
+  
+  if (visitor->visit_valuetype(node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_ci::"
+                         "visit_valuetype - "
+                         "failed to generate _init construct.\n"
+                         ),  -1);
+    }
+
+  delete visitor;
 
   return 0;
 }
@@ -119,6 +123,7 @@ be_visitor_valuetype_ci::visit_field (be_field *node)
         new be_visitor_valuetype_field_cs (ctx);
       visitor->in_obv_space_ = 0;
       visitor->setenclosings ("ACE_INLINE ");
+
       if (visitor->visit_field (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -127,7 +132,9 @@ be_visitor_valuetype_ci::visit_field (be_field *node)
                              "visit_field failed\n"
                              ), -1);
         }
+
       delete visitor;
     }
+
   return 0;
 }

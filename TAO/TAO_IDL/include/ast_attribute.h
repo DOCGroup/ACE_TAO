@@ -81,7 +81,6 @@ public:
   AST_Attribute (idl_bool readonly,
                  AST_Type *ft,
                  UTL_ScopedName *n,
-                 UTL_StrList *p,
                  idl_bool local,
                  idl_bool abstract);
 

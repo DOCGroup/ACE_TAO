@@ -34,22 +34,18 @@ be_union::be_union (void)
 
 be_union::be_union (AST_ConcreteType *dt,
                     UTL_ScopedName *n,
-                    UTL_StrList *p,
                     idl_bool local,
                     idl_bool abstract)
   : AST_Union (dt, 
                n, 
-               p, 
                local, 
                abstract),
     AST_Structure (AST_Decl::NT_union, 
                    n, 
-                   p, 
                    local, 
                    abstract),
     AST_Decl (AST_Decl::NT_union, 
-              n, 
-              p),
+              n),
     UTL_Scope (AST_Decl::NT_union),
     COMMON_Base (local, 
                  abstract)

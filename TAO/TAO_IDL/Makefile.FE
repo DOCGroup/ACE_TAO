@@ -27,6 +27,7 @@ FILES = fe/fe_declarator \
         fe/fe_extern \
 	fe/fe_global \
         fe/fe_interface_header \
+        fe/fe_tmplinst \
         fe/y.tab \
         fe/lex.yy \
         ast/ast_array \
@@ -40,6 +41,7 @@ FILES = fe/fe_declarator \
         ast/ast_enum_val \
         ast/ast_exception \
         ast/ast_expression \
+        ast/ast_factory \
         ast/ast_field \
         ast/ast_interface \
         ast/ast_interface_fwd \

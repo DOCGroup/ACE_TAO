@@ -16,8 +16,7 @@ public:
   AST_Native (void);
   // Default constructor.
 
-  AST_Native (UTL_ScopedName *n,
-              UTL_StrList *p);
+  AST_Native (UTL_ScopedName *n);
   // Constructor that initializes the scoped name.
 
   virtual ~AST_Native (void);

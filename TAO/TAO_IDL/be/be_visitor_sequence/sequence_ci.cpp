@@ -114,6 +114,7 @@ be_visitor_sequence_ci::instantiate_sequence (be_sequence *node)
     {
     case be_sequence::MNG_PSEUDO:
     case be_sequence::MNG_OBJREF:
+    case be_sequence::MNG_VALUE:
       if (node->unbounded ())
         {
           this->gen_unbounded_obj_sequence (node);

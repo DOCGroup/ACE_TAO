@@ -27,7 +27,6 @@
 #include "be_operation_strategy.h"
 
 class AST_Type;
-class UTL_StrList;
 class be_visitor;
 
 class be_attribute : public virtual AST_Attribute,
@@ -40,7 +39,6 @@ public:
   be_attribute (idl_bool ro,
                 AST_Type *ft,
                 UTL_ScopedName *n,
-                UTL_StrList *p,
                 idl_bool local,
                 idl_bool abstract);
   // Constructor.

@@ -90,7 +90,6 @@ public:
                  long nih,
                  AST_Interface **ih_flat,
                  long nih_flat,
-                 UTL_StrList *p,
                  idl_bool local,
                  idl_bool abstract);
 
@@ -98,11 +97,9 @@ public:
 
   // Data Accessors.
   static void fwd_redefinition_helper (AST_Interface *&i,
-                                       UTL_Scope *s,
-                                       UTL_StrList *p);
+                                       UTL_Scope *s);
 
-  virtual void redefine (AST_Interface *from,
-                         UTL_StrList *p);
+  virtual void redefine (AST_Interface *from);
 
   AST_Interface **inherits (void);
 
@@ -128,7 +125,7 @@ public:
   // Is this interface defined? This predicate returns FALSE when an
   // interface was forward declared but not defined yet, and TRUE in
   // all other cases.
-  idl_bool is_defined (void)
+  virtual idl_bool is_defined (void)
   {
     return (pd_n_inherits < 0) ? I_FALSE : I_TRUE;
   }
@@ -204,6 +201,8 @@ private:
   virtual AST_Typedef *fe_add_typedef (AST_Typedef *t);
 
   virtual AST_Native *fe_add_native (AST_Native *n);
+
+  virtual AST_Factory *fe_add_factory (AST_Factory *f);
 };
 
 #endif           // _AST_INTERFACE_AST_INTERFACE_HH

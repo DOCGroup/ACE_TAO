@@ -113,6 +113,7 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
     && prim && prim->pt () == AST_PredefinedType::PT_pseudo
     && ACE_OS::strcmp (prim->local_name ()->get_string (),
                        "Object") != 0;
+  int is_valuetype = 0;
 
   // operator[]
   if (is_pseudo_object)
@@ -121,6 +122,19 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
     }
   else
     {
+      be_interface *bf = be_interface::narrow_from_decl (pt);
+      if (bf != 0)
+        is_valuetype = bf->is_valuetype ();
+      else
+        {
+          be_interface_fwd *bff = be_interface_fwd::narrow_from_decl (pt);
+          if (bff != 0)
+            is_valuetype = bff->is_valuetype ();
+        }
+
+      if (is_valuetype)
+        *os << "TAO_Valuetype_Manager<";
+      else
       *os << "TAO_Object_Manager<";
     }
 
@@ -171,7 +185,7 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
       << "CORBA::ULong ol" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
-  if (!is_pseudo_object)
+  if (! (is_pseudo_object || is_valuetype))
     {
       // Pseudo objects do not require these methods.
       *os << "virtual void _downcast (" << be_idt << be_idt_nl

@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
+#include "ace/Containers_T.h"
 
 // idl_global.hh
 //
@@ -267,11 +268,7 @@ public:
   virtual void             set_local_escapes (const char *);// Set it
 
   virtual UTL_Indenter     *indent (void);              // Get indenter
-  virtual void             set_indent (UTL_Indenter *);
-                                                        // Set it
-
-  virtual UTL_StrList      *pragmas (void);             // Get pragmas
-  virtual void             set_pragmas (UTL_StrList *); // Set it
+  virtual void             set_indent (UTL_Indenter *); // Set it
 
   virtual idl_bool         read_from_stdin (void);      // Reading from stdin?
   virtual void             set_read_from_stdin (idl_bool); // Set it
@@ -369,7 +366,13 @@ public:
   ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> &
   idl_keywords (void);
   // Accessor for the IDL keyword container.
+
+  ACE_Unbounded_Stack<char *> & pragma_prefixes (void);
+  // Accessor for the pragma prefix container.
  
+  UTL_ScopedName *string_to_scoped_name (char *s);;
+  // Parses a string with double colons.
+
 private:
   // Data
   UTL_ScopeStack             *pd_scopes;             // Store scopes stack
@@ -390,7 +393,6 @@ private:
   const char                 *pd_be;                 // BE name to use
   char                       *pd_local_escapes;      // Trapdoor argument
   UTL_Indenter               *pd_indent;             // Indent object
-  UTL_StrList                *pd_pragmas;            // List of pragmas
                                                      // as its being built
   idl_bool                   pd_read_from_stdin;     // Reading from stdin?
   UTL_String                 **pd_include_file_names;// Array of file names.
@@ -439,6 +441,12 @@ private:
 
   ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> idl_keywords_;
   // Container for all the IDL keywords so local names can be checked.
+
+  ACE_Unbounded_Stack<char *> pragma_prefixes_;
+  // Container for all the #pragma prefix declarations.
+
+  long last_seen_index_;
+  // The index (not zero-based!) of the last seen included file.
 };
 
 

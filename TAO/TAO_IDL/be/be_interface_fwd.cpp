@@ -32,14 +32,11 @@ be_interface_fwd::be_interface_fwd (void)
 }
 
 be_interface_fwd::be_interface_fwd (AST_Interface *dummy,
-                                    UTL_ScopedName *n, 
-                                    UTL_StrList *p)
+                                    UTL_ScopedName *n)
   : AST_InterfaceFwd (dummy, 
-                      n, 
-                      p),
+                      n),
     AST_Decl (AST_Decl::NT_interface_fwd, 
-              n, 
-              p)
+              n)
 {
   // Always the case.
   this->size_type (be_decl::VARIABLE); 

@@ -27,7 +27,6 @@
 #include "ast_constant.h"
 #include "ast_expression.h"
 
-class UTL_StrList;
 class be_visitor;
 
 class be_constant : public virtual AST_Constant, 
@@ -39,8 +38,7 @@ public:
 
   be_constant (AST_Expression::ExprType et,
                AST_Expression *v,
-               UTL_ScopedName *n,
-               UTL_StrList *p);
+               UTL_ScopedName *n);
   // Constructor.
 
   const char *exprtype_to_string (void);

@@ -30,12 +30,10 @@ be_structure::be_structure (void)
 }
 
 be_structure::be_structure (UTL_ScopedName *n,
-                            UTL_StrList *p,
                             idl_bool local,
                             idl_bool abstract)
   : AST_Decl (AST_Decl::NT_struct, 
-              n, 
-              p),
+              n),
     UTL_Scope (AST_Decl::NT_struct),
     COMMON_Base (local, 
                  abstract)

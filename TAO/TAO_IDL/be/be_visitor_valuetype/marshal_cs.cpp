@@ -45,8 +45,8 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
-  os->indent ();
-  *os << "ACE_INLINE CORBA::Boolean" << be_nl;
+
+  *os << "CORBA::Boolean" << be_nl;
   this->class_name (node, os);
   *os << "::_tao_marshal_state (TAO_OutputCDR &strm)" << be_nl
       << "{" << be_idt_nl;
@@ -87,8 +87,8 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
 
   // set the substate as generating code for the input operator
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
-  os->indent ();
-  *os << "ACE_INLINE CORBA::Boolean" << be_nl;
+
+  *os << "CORBA::Boolean" << be_nl;
   this->class_name (node, os);
   *os << "::_tao_unmarshal_state (TAO_InputCDR &strm)" << be_nl
       << "{" << be_idt_nl;
@@ -133,10 +133,15 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
 // retrieve the fully scoped skeleton name
 void
 be_visitor_valuetype_marshal_cs::class_name (be_valuetype *node,
-                                          TAO_OutStream *os)
+                                             TAO_OutStream *os)
 {
   if (node->opt_accessor ())
-    *os << node->name ();
+    {
+      be_decl *scope = be_scope::narrow_from_scope (node->defined_in ())->decl ();
+      *os << "ACE_NESTED_CLASS ("
+          << scope->name () << ","
+          << node->local_name () << ")";
+    }
   else
     *os << node->full_obv_skel_name ();
 }

@@ -49,11 +49,9 @@ be_decl::be_decl (void)
 
 // Constructor
 be_decl::be_decl (AST_Decl::NodeType type,
-                  UTL_ScopedName *n,
-                  UTL_StrList *pragmas)
+                  UTL_ScopedName *n)
   : AST_Decl (type, 
-              n, 
-              pragmas),
+              n),
     cli_hdr_gen_ (I_FALSE),
     cli_stub_gen_ (I_FALSE),
     cli_inline_gen_ (I_FALSE),
@@ -583,6 +581,8 @@ be_decl::scope (void)
         return be_enum::narrow_from_decl (d);
      case AST_Decl::NT_op:
         return be_operation::narrow_from_decl (d);
+     case AST_Decl::NT_factory:
+        return be_factory::narrow_from_decl (d);
      case AST_Decl::NT_sequence:
         return be_sequence::narrow_from_decl (d);
      default:

@@ -77,8 +77,7 @@ public:
   // Constructor(s) and destructor.
   AST_Root (void);
 
-  AST_Root (UTL_ScopedName *n,
-            UTL_StrList *p);
+  AST_Root (UTL_ScopedName *n);
 
   virtual ~AST_Root (void);
 

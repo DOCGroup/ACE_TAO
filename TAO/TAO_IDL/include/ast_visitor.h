@@ -30,11 +30,10 @@ class AST_Module;
 class AST_Interface;
 class AST_InterfaceFwd;
 
-#if defined (IDL_HAS_VALUETYPE)
 // These classes don't exist now, but they may someday.
 //  class AST_Valuetype;
 //  class AST_ValuetypeFwd;
-#endif /* IDL_HAS_VALUETYPE */
+class AST_Factory;
 
 class AST_Structure;
 class AST_Exception;
@@ -103,6 +102,9 @@ public:
 
   virtual int visit_valuetype_fwd (AST_InterfaceFwd *node) = 0;
   // Visit valuetype_fwd
+
+  virtual int visit_factory (AST_Factory *node) = 0;
+  // Visit a OBV factory construct.
 
   virtual int visit_structure (AST_Structure *node) = 0;
   // Visit a structure.

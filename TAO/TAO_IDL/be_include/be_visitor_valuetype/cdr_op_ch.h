@@ -9,7 +9,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    cdr_op_ci.h
+//    valuetype_cdr_op_ch.h
 //
 // = DESCRIPTION
 //    Concrete visitor for valuetypes.
@@ -43,7 +43,6 @@ public:
 
   virtual int visit_valuetype (be_valuetype *node);
   // visit valuetype
-
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_CDR_OP_CH_H_ */

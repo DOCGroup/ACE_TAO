@@ -45,7 +45,6 @@ be_sequence::be_sequence (AST_Expression *v,
                   abstract),
     AST_Decl (AST_Decl::NT_sequence,
               0,
-              0,
               I_TRUE),
     COMMON_Base (t->is_local () || local, 
                  abstract),
@@ -220,8 +219,27 @@ be_sequence::managed_type (void)
         {
         case AST_Decl::NT_interface:
         case AST_Decl::NT_interface_fwd:
+          {
+            int is_valuetype = 0;
+            be_interface *bf = be_interface::narrow_from_decl (prim_type);
+            if (bf != 0)
+              is_valuetype = bf->is_valuetype ();
+            else
+              {
+                be_interface_fwd *bff = be_interface_fwd::narrow_from_decl (prim_type);
+                if (bff != 0)
+                  is_valuetype = bff->is_valuetype ();
+              }
+            if (is_valuetype)
+              {
+                this->mt_ = be_sequence::MNG_VALUE;
+              }
+            else
+              {
           this->mt_ = be_sequence::MNG_OBJREF;
+              }
           break;
+          }
         case AST_Decl::NT_string:
           this->mt_ = be_sequence::MNG_STRING;
           break;
@@ -336,6 +354,21 @@ be_sequence::instance_name ()
         {
           ACE_OS::sprintf (namebuf,
                            "_TAO_Bounded_Object_Sequence_%s_%lu",
+                           this->flat_name (),
+                           this->max_size ()->ev ()->u.ulval);
+        }
+      break;
+    case be_sequence::MNG_VALUE:
+      if (this->unbounded ())
+        {
+          ACE_OS::sprintf (namebuf,
+                           "_TAO_Unbounded_Valuetype_Sequence_%s",
+                           this->flat_name ());
+        }
+      else
+        {
+          ACE_OS::sprintf (namebuf,
+                           "_TAO_Bounded_Valuetype_Sequence_%s_%lu",
                            this->flat_name (),
                            this->max_size ()->ev ()->u.ulval);
         }

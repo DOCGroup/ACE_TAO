@@ -73,7 +73,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   be_operation *op = new be_operation (node->field_type (),
                                        AST_Operation::OP_noflags,
                                        node->name (),
-                                       0,
                                        node->is_local (),
                                        node->is_abstract ());
   op->set_name ((UTL_IdList *) node->name ()->copy ());
@@ -218,22 +217,19 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   // Create the set method.
 
   // the return type  is "void"
-  be_predefined_type *rt = new be_predefined_type (AST_PredefinedType::PT_void,
-                                                   new UTL_ScopedName
-                                                   (new Identifier
-                                                    ("void"), 0),
-                                                   0);
+  be_predefined_type *rt = 
+    new be_predefined_type (AST_PredefinedType::PT_void,
+                            new UTL_ScopedName (new Identifier ("void"), 
+                                                0));
   // argument type is the same as the attribute type
   be_argument *arg = new be_argument (AST_Argument::dir_IN,
                                       node->field_type (),
-                                      node->name (),
-                                      0);
+                                      node->name ());
   arg->set_name ((UTL_IdList *) node->name ()->copy ());
   // create the operation
   op = new be_operation (rt,
                          AST_Operation::OP_noflags,
                          node->name (),
-                         0,
                          node->is_local (),
                          node->is_abstract ());
   op->set_name ((UTL_IdList *) node->name ()->copy ());

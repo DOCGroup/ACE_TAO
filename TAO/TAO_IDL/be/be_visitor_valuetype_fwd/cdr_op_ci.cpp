@@ -37,9 +37,6 @@ be_visitor_valuetype_fwd_cdr_op_ci::
 be_visitor_valuetype_fwd_cdr_op_ci (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_fwd_cdr_op_ci::"
-                             "must be implemented\n"), -1);
 }
 
 be_visitor_valuetype_fwd_cdr_op_ci::
@@ -48,27 +45,52 @@ be_visitor_valuetype_fwd_cdr_op_ci::
 }
 
 int
-be_visitor_valuetype_fwd_cdr_op_ci::
-visit_valuetype_fwd (be_valuetype_fwd *node)
+be_visitor_valuetype_fwd_cdr_op_ci::visit_valuetype_fwd (
+    be_valuetype_fwd *node
+  )
 {
-  if (node->cli_inline_cdr_op_gen () || node->imported ())
-    return 0;
+  AST_Interface *fd = node->full_definition ();
+  be_valuetype *bfd = be_valuetype::narrow_from_decl (fd);
 
+  // Check if it's imported vt or CDR ops already generated.
+  if (node->cli_inline_cdr_op_gen () || node->imported ())
+    {
+      return 0;
+    }
+
+  // Is we are defined leater then let the real VT to generate
+  // all this stuff.
+  if (bfd->is_defined ())
+    {
+      return 0;
+    }
+
+  // Generate helper functions declaration.
+  if (bfd->gen_helper_inline () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_cdr_op_ch::"
+                         "visit_valuetype - "
+                         "codegen for helper functions failed\n"), -1); 
+    }
+  
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // generate the CDR << and >> operator declarations
-  os->indent ();
-  *os << "ACE_INLINE CORBA::Boolean" << be_nl
-      << "operator<< (" << be_idt << be_idt_nl
-      << "TAO_OutputCDR &," << be_nl
-      << "const " << node->name () << "_ptr" << be_uidt_nl
-      << ");" << be_uidt_nl;
-  *os << "ACE_INLINE CORBA::Boolean" << be_nl
-      << "operator>> (" << be_idt << be_idt_nl
-      << "TAO_InputCDR &," << be_nl
-      << node->name () << "_ptr &" << be_uidt_nl
-      << ");" << be_uidt << "\n";
+  // generate the CDR << and >> operator declarations (prototypes)
 
-  node->cli_inline_cdr_op_gen (1);
+  //@@ Boris: Can I move this to be_valuetype? (as with _var, _out, etc?)
+    
+  //This is just declaration so no ACE_INLINE
+  *os << be_global->stub_export_macro () 
+      << "CORBA::Boolean operator<< (TAO_OutputCDR &, const " 
+      << node->full_name () << " *);" << be_nl;
+
+  *os << be_global->stub_export_macro () 
+      << "CORBA::Boolean operator>> (TAO_InputCDR &, "
+      << node->full_name () << " *&);" << be_nl;
+
+  // Done with this.
+  node->cli_inline_cdr_op_gen (I_TRUE);
+
   return 0;
 }

@@ -25,7 +25,6 @@
 #include "be_type.h"
 #include "ast_typedef.h"
 
-class UTL_StrList;
 class be_visitor;
 
 class be_typedef : public virtual AST_Typedef,
@@ -37,7 +36,6 @@ public:
 
   be_typedef (AST_Type *bt,
               UTL_ScopedName *n,
-              UTL_StrList *p,
               idl_bool l,
               idl_bool a);
   // Constructor.

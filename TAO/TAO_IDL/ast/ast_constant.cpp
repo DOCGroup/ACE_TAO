@@ -137,29 +137,25 @@ AST_Constant::AST_Constant (void)
 
 // Used in constructing AST_EnumVal nodes.
 AST_Constant::AST_Constant (AST_Expression::ExprType t,
-                                              AST_Decl::NodeType nt,
-                                              AST_Expression *v,
-                                              UTL_ScopedName *n,
-                                              UTL_StrList *p)
-  : AST_Decl (nt,
-              n,
-              p),
-          pd_constant_value (idl_global->gen ()->create_expr (v, t)),
-          pd_et (t),
+			                      AST_Decl::NodeType nt,
+			                      AST_Expression *v,
+			                      UTL_ScopedName *n)
+  : AST_Decl (nt, 
+              n),
+	  pd_constant_value (idl_global->gen ()->create_expr (v, t)),
+	  pd_et (t),
     ifr_added_ (0)
 {
 }
 
 // Used when constructing AST_Constant nodes.
 AST_Constant::AST_Constant (AST_Expression::ExprType t,
-                                              AST_Expression *v,
-                                              UTL_ScopedName *n,
-                                              UTL_StrList *p)
-  : AST_Decl (AST_Decl::NT_const,
-              n,
-              p),
-          pd_constant_value (idl_global->gen ()->create_expr (v, t)),
-          pd_et (t),
+			                      AST_Expression *v,
+			                      UTL_ScopedName *n)
+  : AST_Decl (AST_Decl::NT_const, 
+              n),
+	  pd_constant_value (idl_global->gen ()->create_expr (v, t)),
+	  pd_et (t),
     ifr_added_ (0)
 {
 }

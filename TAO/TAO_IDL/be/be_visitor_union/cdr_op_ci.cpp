@@ -206,30 +206,37 @@ int
 be_visitor_union_cdr_op_ci::pre_process (be_decl *bd)
 {
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_SCOPE)
-    return 0;
+    {
+      return 0;
+    }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
   be_union_branch* b =
     be_union_branch::narrow_from_decl (bd);
 
-  for (unsigned long i = 0;
-       i < b->label_list_length ();
-       ++i)
+  for (unsigned long i = 0; i < b->label_list_length (); ++i)
     {
       // check if we are printing the default case
       if (b->label (i)->label_kind () == AST_UnionLabel::UL_default)
-        *os << "default:";
+        {
+          *os << "default:";
+        }
       else
         {
           *os << "case ";
           b->gen_label_value (os, i);
           *os << ":";
         }
+
       if (i == (b->label_list_length () - 1))
-        *os << be_idt_nl;
+        {
+          *os << be_idt_nl;
+        }
       else
-        *os << be_nl;
+        {
+          *os << be_nl;
+        }
     }
 
   *os << "{" << be_idt_nl;
@@ -237,10 +244,12 @@ be_visitor_union_cdr_op_ci::pre_process (be_decl *bd)
 }
 
 int
-be_visitor_union_cdr_op_ci::post_process (be_decl *)
+be_visitor_union_cdr_op_ci::post_process (be_decl *bd)
 {
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_SCOPE)
-    return 0;
+    {
+      return 0;
+    }
 
   TAO_OutStream *os = this->ctx_->stream ();
 

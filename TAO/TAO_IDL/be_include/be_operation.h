@@ -28,7 +28,6 @@
 #include "be_operation_strategy.h"
 
 class AST_Type;
-class UTL_StrList;
 class be_visitor;
 class be_argument;
 
@@ -43,7 +42,6 @@ public:
   be_operation (AST_Type *rt,
                 AST_Operation::Flags fl,
                 UTL_ScopedName *n,
-                UTL_StrList *p,
                 idl_bool local,
                 idl_bool abstract);
   // Constructor

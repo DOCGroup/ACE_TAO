@@ -78,7 +78,7 @@ ACE_RCSID(ast, ast_sequence, "$Id$")
 // Constructor(s) and destructor.
 AST_Sequence::AST_Sequence (void)
  : pd_max_size (0),
-         pd_base_type (0)
+   pd_base_type (0)
 {
 }
 
@@ -89,7 +89,6 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
  : AST_Decl(AST_Decl::NT_sequence,
             new UTL_ScopedName (new Identifier ("sequence"),
                                 0),
-            0,
             I_TRUE),
    COMMON_Base (bt->is_local () || local,
                 abstract),

@@ -1,6 +1,6 @@
---- y.tab.cpp.orig	Mon Nov 12 18:53:41 2001
-+++ y.tab.cpp	Mon Nov 12 18:53:41 2001
-@@ -941,7 +941,7 @@
+--- y.tab.cpp	Tue Dec 19 09:31:07 2000
++++ y.tab.cpp.mod	Tue Dec 19 09:28:09 2000
+@@ -960,7 +960,7 @@
  #ifdef TAO_YYMAXDEPTH
  #define TAO_YYSTACKSIZE TAO_YYMAXDEPTH
  #else
@@ -27,7 +27,7 @@
      if (tao_yychar < 0)
      {
          if ((tao_yychar = tao_yylex()) < 0) tao_yychar = 0;
-@@ -1201,11 +1201,10 @@
+@@ -1220,11 +1220,10 @@
      goto tao_yynewerror;
  #endif
  
