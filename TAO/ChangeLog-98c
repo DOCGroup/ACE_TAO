@@ -1,3 +1,15 @@
+Tue Jul 14 15:56:46 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams:
+		Removed files Machine_Properties.{h,cpp} and
+		Property_Exporter.{h,cpp} as they are moved to
+		orbsvcs/tests/AVStreams/mpeg/source/server.
+		
+		Removed server.{h,cpp} and client.{h,cpp} as they are
+		outdated.
+
+		Removed Makefile for the above files.
+	
 Tue Jul 14 15:28:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_field/field_ch.cpp: 
