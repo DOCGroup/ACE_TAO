@@ -4134,51 +4134,71 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
 
   TAO_Stub *data = 0;
 
-  // If POA has RTCORBA::SERVER_DECLARED priority model,
-  // each object can potentially have a different priority.
-  // To preserve correctness with multithreading applications, a
-  // separate filter must be used for each object.  Here we allocate a
-  // filter of the stack, if necessary.
-  if (this->policies ().priority_model ()
-      == TAO_POA_Policies::SERVER_DECLARED
-      && this->policies ().server_priority () != priority)
-    {
+  // If the POA has RTCORBA::SERVER_DECLARED priority model
+  // then regardless of the fact that there are or that there
+  // are not bands then we need to pass only one endpoint that
+  // is either the one associated to the bands to which the 
+  // server belongs, or the one associated to the server priority.
+  //
+  // If the POA has  RTCORBA::CLIENT_EXPOSED, than all endpoints 
+  // should be passed.
 
 #if (TAO_HAS_RT_CORBA == 1)
-
+ 
+  if (this->policies ().priority_model ()
+      == TAO_POA_Policies::SERVER_DECLARED)
+    {
       if (this->policies ().priority_bands () != 0)
         {
-          TAO_Priority_Acceptor_Filter
+          TAO_Bands_Acceptor_Filter
             filter (this->policies ().server_protocol ()->protocols_rep (),
-                    priority);
+                    this->policies ().priority_bands ()->priority_bands_rep());
 
           data = this->orb_core_.create_stub_object (key,
                                                      type_id,
                                                      client_exposed_policies._retn (),
                                                      &filter,
                                                      ACE_TRY_ENV);
+	  ACE_CHECK_RETURN (0);
         }
-
       else
-        {
-          data = this->orb_core_.create_stub_object (key,
-                                                     type_id,
-                                                     client_exposed_policies._retn (),
-                                                     this->acceptor_filter_,
-                                                     ACE_TRY_ENV);
-          ACE_CHECK_RETURN (0);
-        }
-#endif /* TAO_HAS_RT_CORBA == 1 */
+	{
+	  RTCORBA::Priority object_priority = 
+	    this->policies ().server_priority () > priority ? this->policies ().server_priority () : priority;
+	  TAO_Priority_Acceptor_Filter filter (this->policies ().server_protocol ()->protocols_rep (),
+					       object_priority);
+	  
+	  data = this->orb_core_.create_stub_object (key,
+						     type_id,
+						     client_exposed_policies._retn (),
+						     &filter,
+						     ACE_TRY_ENV);
+	  ACE_CHECK_RETURN (0);
+	}
     }
-  else
+  else if (this->policies ().priority_model ()
+	   == TAO_POA_Policies::CLIENT_PROPAGATED)
     {
+      TAO_Server_Protocol_Acceptor_Filter filter ((this->policies ().server_protocol ()->protocols_rep ()));
       data = this->orb_core_.create_stub_object (key,
-                                                 type_id,
-                                                 client_exposed_policies._retn (),
-                                                 this->acceptor_filter_,
-                                                 ACE_TRY_ENV);
+						 type_id,
+						 client_exposed_policies._retn (),
+						 &filter,
+						 ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
     }
+  
+#else
+  TAO_Server_Protocol_Acceptor_Filter filter ((this->policies ().server_protocol ()->protocols_rep ()));
+  data = this->orb_core_.create_stub_object (key,
+					     type_id,
+					     client_exposed_policies._retn (),
+					     &filter,
+					     ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  
+#endif /* TAO_HAS_RT_CORBA */
+
 
   return data;
 }
