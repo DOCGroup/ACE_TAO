@@ -1,3 +1,9 @@
+Thu Dec 20 15:04:52 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/SSL/SSL_SOCK_Acceptor.h: Improved documentation. Changed
+          "protocol_family" argument defaults from PF_INET to PF_UNSPEC
+          to work correctly with IPv6 support.
+
 Thu Dec 20 13:53:48 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/SSL/SSL_SOCK_Acceptor.cpp:
