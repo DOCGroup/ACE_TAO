@@ -547,11 +547,21 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         // objects.  Valid arguments are: "yes" and "no".  Default is
         // yes.
         {
+          int yes_implies_global = 0;
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
               char *opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "YES") == 0 ||
+              if (ACE_OS::strcasecmp (opt, "YES") == 0)
+                {
+                  yes_implies_global = 1;
+                  ACE_DEBUG ((LM_DEBUG,
+                              "Warning: using '-ORBCollocation YES' is obsolete "
+                              "and implies '-ORBCollocation global'"
+                              "  Please use '-ORBCollocation global' instead.\n"));
+                }
+
+              if (yes_implies_global ||
                   ACE_OS::strcasecmp (opt, "global") == 0)
                 {
                   this->opt_for_collocation_ = 1;
