@@ -1,3 +1,12 @@
+Wed Dec  1 14:00:00 UTC 2004  Simon Massey  <sma@prismtech.com>
+
+        * TAO/orbsvcs/orbsvcs/IFRService/AliasDef_i.cpp
+        * TAO/orbsvcs/orbsvcs/IFRService/StructDef_i.cpp
+        * TAO/orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp
+
+          Fixed bugzilla 1996 - IFR - Derefferencing NULL pointer
+	                        when compound object has been deleted
+
 Wed Dec  1 07:18:37 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/FT_App/FT_Client.cpp:
