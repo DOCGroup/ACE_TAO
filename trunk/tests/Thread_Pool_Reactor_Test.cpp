@@ -46,8 +46,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/TP_Reactor.h"
 
-typedef ACE_Strategy_Acceptor <Acceptor_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
-
 ACE_RCSID(tests, Atomic_Op_Test, "$Id$")
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
@@ -58,6 +56,7 @@ USELIB("..\ace\aced.lib");
 #if defined (ACE_HAS_THREADS)
 
 #include "tests/Thread_Pool_Reactor_Test.h"
+typedef ACE_Strategy_Acceptor <Acceptor_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
 
 static ASYS_TCHAR *rendezvous = ASYS_TEXT ("localhost:10010");
 static size_t svr_thrno = ACE_MAX_THREADS;
