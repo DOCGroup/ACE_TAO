@@ -454,7 +454,7 @@ ACE_Object_Node::symbol (ACE_Service_Object_Exterminator *)
   if (this->open_handle () != 0)
     {
       ASYS_TCHAR *object_name = ACE_const_cast (ASYS_TCHAR *, this->object_name_);
-      
+
       this->symbol_ = (void *)
         ACE_OS::dlsym ((ACE_SHLIB_HANDLE) this->handle (),
                        ASYS_WIDE_STRING (object_name));
@@ -626,11 +626,11 @@ ACE_Static_Function_Node::ACE_Static_Function_Node (const char *func_name)
 }
 
 void *
-ACE_Static_Function_Node::symbol (ACE_Service_Object_Exterminator *)
+ACE_Static_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
 {
   ACE_TRACE ("ACE_Static_Function_Node::symbol");
 
-  void *(*func) (void) = 0;
+  void *(*func)(ACE_Service_Object_Exterminator *);
   this->symbol_ = 0;
 
   // Locate the factory function <function_name> in the statically
@@ -647,7 +647,7 @@ ACE_Static_Function_Node::symbol (ACE_Service_Object_Exterminator *)
       ACE_Static_Svc_Descriptor *ssd = *ssdp;
       if (ACE_OS::strcmp (ssd->name_,
                           ASYS_WIDE_STRING (function_name)) == 0)
-        func = (void *(*)(void)) ssd->alloc_;
+        func = (void *(*)(ACE_Service_Object_Exterminator*)) ssd->alloc_;
     }
 
   if (func == 0)
@@ -666,7 +666,7 @@ ACE_Static_Function_Node::symbol (ACE_Service_Object_Exterminator *)
     }
 
   // Invoke the factory function and record it's return value.
-  this->symbol_ = (*func) ();
+  this->symbol_ = (*func) (gobbler);
 
   if (this->symbol_ == 0)
     {
