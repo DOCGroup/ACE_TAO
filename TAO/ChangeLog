@@ -1,9 +1,17 @@
+Sat Sep 18 19:32:55 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbavcs/orbsvcs/DsLogAdmin.idl:
+
+	  Changed to include "tao/TimeBase.pidl" instead of "TimeBase.idl"
+	  to avoid adding an otherwise unnecessary dependency on svc_utils
+	  project.
+
 Sat Sep 18 17:16:23 2004  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
         * orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
           Added explicit static template member instantiations.
-        
+
 Fri Sep 17 19:33:42 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/CosEvent.mpc:
