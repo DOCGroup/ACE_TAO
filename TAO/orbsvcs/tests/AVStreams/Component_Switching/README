@@ -5,7 +5,7 @@ Description
 
 This directory contains a three stage AV test with the ability to
 aynschronously start the processes in any order and to be able to
-switch distributers. It also supports multiple receivers for a sender.
+switch distributers and senders. It also supports multiple receivers for a sender.
 The stages are:
 
 a. Sender

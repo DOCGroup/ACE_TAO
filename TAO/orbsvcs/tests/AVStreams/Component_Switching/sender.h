@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage
+//    TAO/orbsvcs/tests/AVStreams/Component_Switching
 //
 // = FILENAME
 //    sender.h
@@ -23,6 +23,31 @@
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 
+class Sender_Callback : public TAO_AV_Callback
+{
+  // = TITLE
+  //    Defines a class for the sender application callback.
+  //
+  // = DESCRIPTION
+  //    This class overides the methods of the TAO_AV_Callback so the 
+  //    AVStreams can make upcalls to the application.
+
+public:
+  
+  int handle_destroy (void);
+  /// Called when the sender has finished reading the file and wants
+  /// to close down the connection. Also called when the distributer
+  /// tears down the connection when it switches to a new sender.
+
+  ACE_CString &flowname (void);
+  void flowname (const ACE_CString &flowname);
+  /// Accessor methods for the flowname of the callback
+  
+private:
+  ACE_CString flowname_;
+  /// Flowname of the callback.
+};
+
 class Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
   // = TITLE
@@ -30,21 +55,21 @@ class Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
 public:
   int get_callback (const char *flowname,
                     TAO_AV_Callback *&callback);
-  // Create the application callback and return its handle to
-  // AVStreams for further application callbacks.
+  /// Create the application callback and return its handle to
+  /// AVStreams for further application callbacks.
 
   int set_protocol_object (const char *flowname,
                            TAO_AV_Protocol_Object *object);
-  // Set protocol object corresponding to the transport protocol
-  // chosen.
+  /// Set protocol object corresponding to the transport protocol
+  /// chosen.
 
   CORBA::Boolean handle_preconnect (AVStreams::flowSpec &flowspec);
-  // Perform application specific actions before accepting new
-  // connections.
+  /// Perform application specific actions before accepting new
+  /// connections.
 
 protected:
-  TAO_AV_Callback callback_;
-  // Application callback.
+  Sender_Callback callback_;
+  /// Application callback.
 };
 
 typedef TAO_AV_Endpoint_Reactive_Strategy_A
@@ -55,7 +80,7 @@ typedef TAO_AV_Endpoint_Reactive_Strategy_A
 
 class Sender
 {
-  // = TITLE
+  /// = TITLE
   //    Sender Application.
   //
   // = DESCRIPTION
@@ -63,47 +88,53 @@ class Sender
   //    receiver.
 public:
   Sender (void);
-  // Constructor
+  /// Constructor
 
   int init (int argc,
             char **argv,
             CORBA::Environment&);
-  // Method to initialize the various data components.
+  /// Method to initialize the various data components.
 
   int pace_data (CORBA::Environment &);
-  // Method to pace and send data from a file.
+  /// Method to pace and send data from a file.
 
   Connection_Manager &connection_manager (void);
-  // Accessor to the connection manager.
+  /// Accessor to the connection manager.
 
 private:
   int parse_args (int argc, char **argv);
-  // Method to parse the command line arguments.
+  /// Method to parse the command line arguments.
 
   SENDER_ENDPOINT_STRATEGY endpoint_strategy_;
-  // The endpoint strategy used by the sender.
+  /// The endpoint strategy used by the sender.
 
   TAO_MMDevice *sender_mmdevice_;
-  // The sender MMDevice.
+  /// The sender MMDevice.
 
   int frame_count_;
-  // Number of frames sent.
+  /// Number of frames sent.
 
   ACE_CString filename_;
-  // File from which data is read.
+  /// File from which data is read.
 
   FILE *input_file_;
-  // File handle of the file read from.
+  /// File handle of the file read from.
 
   int frame_rate_;
-  // Rate at which the data will be sent.
+  /// Rate at which the data will be sent.
 
   ACE_Message_Block mb_;
-  // Message block into which data is read from a file and then sent.
+  /// Message block into which data is read from a file and then sent.
 
   ACE_CString sender_name_;
-  // Name of this sender.
+  /// Name of this sender.
 
-  // Connection manager.
+  /// Connection manager.
   Connection_Manager connection_manager_;
 };
+
+
+
+
+
+
