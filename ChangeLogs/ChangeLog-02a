@@ -1,3 +1,8 @@
+Wed Jan 16 11:24:52 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* THANKS: 
+	  Updated to add Gerhard Voss <Gerhard_Voss@t-online.de>.
+
 Wed Jan 16 06:19:01 2002  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
 
 	* ace/OS.i: Replaced "set" with "sset" in sigtimedwait() and sigwait()
