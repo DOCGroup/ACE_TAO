@@ -1,3 +1,9 @@
+Mon Apr 28 07:54:04 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_Stream.h (ACE_MEM_Stream): Also mentioned that the
+	  message size limit can be tweaked from MEM_Connector.  Thanks to
+	  Tongzhe Cui <tonycui@yahoo.com> for the suggestion.
+
 Mon Apr 28 09:21:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32-common.h:
