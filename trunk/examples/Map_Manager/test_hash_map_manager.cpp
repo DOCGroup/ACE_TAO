@@ -13,7 +13,8 @@ int
 main (int argc, char *argv[])
 {
   if (argc != 4)
-    cerr << "usage: " << argv[0] << " tablesize file1 file2\n";
+    ACE_ERROR_RETURN ((LM_ERROR, "usage: %s tablesize file1 file2\n",
+                       argv[0]), -1);
   else
     {
       int total = ACE_OS::atoi (argv[1]);
