@@ -128,8 +128,7 @@ public:
   friend class ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>;
   // Iterator is a friend
 
-  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> 
-          INHERITED;
+  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> INHERITED;
   // Type inherited from 
 
   // = Initialization and termination methods.
