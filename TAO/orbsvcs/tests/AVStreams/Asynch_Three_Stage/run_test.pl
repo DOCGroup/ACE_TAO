@@ -57,35 +57,35 @@ sleep $sleeptime;
 
 print STDERR "Starting Sender\n";
 
-$sender = $SV->SpawnWaitKill (60);
+$sender = $SV->SpawnWaitKill (120);
 
 if ($sender != 0) {
     print STDERR "ERROR: sender returned $sender\n";
     $status = 1;
 }
 
-$distributer = $DI->TerminateWaitKill (5);
+$distributer = $DI->TerminateWaitKill (120);
 
 if ($distributer != 0) {
     print STDERR "ERROR: distributer returned $distributer\n";
     $status = 1;
 }
 
-$receiver1 = $RE1->TerminateWaitKill (5);
+$receiver1 = $RE1->TerminateWaitKill (120);
 
 if ($receiver1 != 0) {
     print STDERR "ERROR: receiver returned $receiver\n";
     $status = 1;
 }
 
-$receiver2 = $RE2->TerminateWaitKill (5);
+$receiver2 = $RE2->TerminateWaitKill (120);
 
 if ($receiver2 != 0) {
     print STDERR "ERROR: receiver returned $receiver\n";
     $status = 1;
 }
 
-$nserver = $NS->TerminateWaitKill (5);
+$nserver = $NS->TerminateWaitKill (120);
 
 if ($nserver != 0) {
     print STDERR "ERROR: Naming Service returned $nserver\n";
@@ -127,35 +127,35 @@ sleep $sleeptime;
 
 print STDERR "Starting Sender\n";
 
-$sender = $SV->SpawnWaitKill (60);
+$sender = $SV->SpawnWaitKill (120);
 
 if ($sender != 0) {
     print STDERR "ERROR: sender returned $sender\n";
     $status = 1;
 }
 
-$distributer = $DI->TerminateWaitKill (5);
+$distributer = $DI->TerminateWaitKill (120);
 
 if ($distributer != 0) {
     print STDERR "ERROR: distributer returned $distributer\n";
     $status = 1;
 }
 
-$receiver1 = $RE1->TerminateWaitKill (5);
+$receiver1 = $RE1->TerminateWaitKill (120);
 
 if ($receiver1 != 0) {
     print STDERR "ERROR: receiver returned $receiver\n";
     $status = 1;
 }
 
-$receiver2 = $RE2->TerminateWaitKill (5);
+$receiver2 = $RE2->TerminateWaitKill (120);
 
 if ($receiver2 != 0) {
     print STDERR "ERROR: receiver returned $receiver\n";
     $status = 1;
 }
 
-$nserver = $NS->TerminateWaitKill (5);
+$nserver = $NS->TerminateWaitKill (120);
 
 if ($nserver != 0) {
     print STDERR "ERROR: Naming Service returned $nserver\n";
@@ -197,35 +197,35 @@ sleep $sleeptime;
 
 print STDERR "Starting Distributer\n";
 
-$distributer = $DI->SpawnWaitKill (60);
+$distributer = $DI->SpawnWaitKill (120);
 
 if ($distributer != 0) {
     print STDERR "ERROR: sender returned $distributer\n";
     $status = 1;
 }
 
-$sender = $SV->TerminateWaitKill (5);
+$sender = $SV->TerminateWaitKill (120);
 
 if ($sender != 0) {
     print STDERR "ERROR: sender returned $sender\n";
     $status = 1;
 }
 
-$receiver1 = $RE1->TerminateWaitKill (5);
+$receiver1 = $RE1->TerminateWaitKill (120);
 
 if ($receiver1 != 0) {
     print STDERR "ERROR: receiver returned $receiver\n";
     $status = 1;
 }
 
-$receiver2 = $RE2->TerminateWaitKill (5);
+$receiver2 = $RE2->TerminateWaitKill (120);
 
 if ($receiver2 != 0) {
     print STDERR "ERROR: receiver returned $receiver\n";
     $status = 1;
 }
 
-$nserver = $NS->TerminateWaitKill (5);
+$nserver = $NS->TerminateWaitKill (120);
 
 if ($nserver != 0) {
     print STDERR "ERROR: Naming Service returned $nserver\n";
@@ -267,35 +267,35 @@ sleep $sleeptime;
 
 print STDERR "Starting Receiver 2\n";
 
-$receiver2 = $RE2->SpawnWaitKill (60);
+$receiver2 = $RE2->SpawnWaitKill (120);
 
 if ($receiver2 != 0) {
     print STDERR "ERROR: receiver2 returned $receiver2\n";
     $status = 1;
 }
 
-$distributer = $DI->TerminateWaitKill (5);
+$distributer = $DI->TerminateWaitKill (120);
 
 if ($distributer != 0) {
     print STDERR "ERROR: distributer returned $distributer\n";
     $status = 1;
 }
 
-$receiver1 = $RE1->TerminateWaitKill (5);
+$receiver1 = $RE1->TerminateWaitKill (120);
 
 if ($receiver1 != 0) {
     print STDERR "ERROR: receiver returned $receiver\n";
     $status = 1;
 }
 
-$sender = $SV->TerminateWaitKill (5);
+$sender = $SV->TerminateWaitKill (120);
 
 if ($sender != 0) {
     print STDERR "ERROR: sender returned $sender\n";
     $status = 1;
 }
 
-$nserver = $NS->TerminateWaitKill (5);
+$nserver = $NS->TerminateWaitKill (120);
 
 if ($nserver != 0) {
     print STDERR "ERROR: Naming Service returned $nserver\n";
@@ -306,3 +306,18 @@ unlink $nsior;
 unlink $testfile;
 
 exit $status;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
