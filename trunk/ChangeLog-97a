@@ -1,5 +1,9 @@
 Wed Jun 04 12:21:41 1997    <irfan@TWOSTEP>
 
+	* tests: Made the following config files consistent:
+ 	  UNIXclerk.conf UNIXtokens.conf Win32clerk.conf Win32server.conf
+ 	  Win32tokens.conf
+
 	* ace/OS.h: Made sure that some #defines were guarded for
  	  redefinition specially for the Bristol (that provides Win32 API
  	  on AIX) headers. Thanks to Rich Christy (rchristy@cccis.com) for
