@@ -8,20 +8,23 @@
 #define _DYNAMIC_IDL_
 
 #ifndef CORBA3
-#define local  
+#define local
 #endif
 
-#include "orb.idl" 
+#include "orb.idl"
 // necessary toget CORBA::TypeCode generated
+
+// @@ Kirthika, why are many types that should be under CORBA module
+//    are now in Dynamic module?
 
 module Dynamic {
 
 // For now, jsut commented this out unutil it is implemented.
-  
- enum ParameterMode 
+
+ enum ParameterMode
   {
-    PARAM_IN, 
-    PARAM_OUT, 
+    PARAM_IN,
+    PARAM_OUT,
     PARAM_INOUT
   };
   struct Parameter {
@@ -44,4 +47,3 @@ module Dynamic {
 
 };
 #endif // _DYNAMIC_IDL_
-
