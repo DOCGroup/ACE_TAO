@@ -85,13 +85,23 @@ namespace CIAO
         }
       else if (value.longlong_p ())
         {
+#if defined (_MSC_VER) && _MSC_VER == 1200
           toconfig <<= 
             CORBA::LongLong (static_cast <ACE_INT64 &> (value.longlong ()));
+#else
+		  toconfig <<=	
+            CORBA::LongLong (static_cast <long long &> (value.longlong ()));
+#endif /*defined (_MSC_VER) && _MSC_VER == 1200 */
         }
       else if (value.ulonglong_p ())
         {
+#if defined (_MSC_VER) && _MSC_VER == 1200
           toconfig <<=
             CORBA::ULongLong (static_cast <ACE_UINT64 &> (value.ulonglong ()));
+#else
+		  toconfig <<=
+            CORBA::ULongLong (static_cast <unsigned long long &> (value.ulonglong ()));
+#endif /* defined (_MSC_VER) && _MSC_VER == 1200 */
         }
     }
 
