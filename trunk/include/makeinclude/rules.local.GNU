@@ -107,23 +107,23 @@ $(VSHDIR)%.$(SOEXT): $(VSHDIR)%.$(OBJEXT)
 endif
 
 ifeq ($(OS),"Windows_NT")
-$(VDIR).creation_stamp: $(VDIR)
-	@if not exist $@ mkdir $@
+$(VDIR).creation_stamp:
+	@if not exist $(VDIR) mkdir $(VDIR)
 	@echo > $@
 else
-$(VDIR).creation_stamp: $(VDIR)
-	@-test -d $@ || mkdir $@ || /bin/true
+$(VDIR).creation_stamp:
+	@-test -d $(VDIR) || mkdir $(VDIR) $(ACE_NUL_STDERR)
 	@touch $@
 endif
 
 ifneq ($(VDIR),$(VSHDIR))
   ifeq ($(OS),"Windows_NT")
-$(VSHDIR).creation_stamp: $(VSHDIR)
-	@if not exist $@ mkdir $@
+$(VSHDIR).creation_stamp:
+	@if not exist $(VSHDIR) mkdir $(VSHDIR)
 	@echo > $@
   else
-$(VSHDIR).creation_stamp: $(VSHDIR)
-	@-test -d $@ || mkdir $@ || /bin/true
+$(VSHDIR).creation_stamp:
+	@-test -d $(VSHDIR) || mkdir $(VSHDIR) $(ACE_NUL_STDERR)
 	@touch $@
   endif
 endif
@@ -296,7 +296,7 @@ $(OBJDIRS):
 	@if not exist $@ mkdir $@
 else
 $(OBJDIRS):
-	@test -d $@ || mkdir $@ || /bin/true
+	@test -d $@ || mkdir $@ $(ACE_NUL_STDERR)
 endif
 
 #---------------------------------------------------------------------------
