@@ -1817,10 +1817,9 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                                             flow_spec,
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
-      ACE_DEBUG ((LM_DEBUG,
-		  "%N:%l The return value is %d\n",
-		  retv));
+
+      if (TAO_debug_level > 0)
+         ACE_DEBUG ((LM_DEBUG, "%N:%l request_connection returned %d\n", retv));
 
       if (retv == 0)
         return retv;
@@ -2125,7 +2124,7 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
                           TAO_Forward_FlowSpec_Entry,
                           0);
 
-	  if(TAO_debug_level > 0);
+	  if(TAO_debug_level > 0)
 	     ACE_DEBUG(( LM_DEBUG, "%N:%l Parsing flow spec: %s\n", flow_spec[i].in() ));
 
           if (entry->parse (flow_spec[i]) == -1)
