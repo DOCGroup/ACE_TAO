@@ -1,3 +1,8 @@
+Tue Oct 14 05:50:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Reactor_Notification_Queue_Test.cpp:
+          Fixed compile error in MSVC6 WChar build
+
 Mon Oct 13 17:52:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Reactor_Notification_Queue_Test.cpp: Fixed a warning in
@@ -6,7 +11,7 @@ Mon Oct 13 17:52:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Tue Oct 14 05:27:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Reactor_Notification_Queue_Test.dsp: Added this time for
-	  real. 
+	  real.
 
 Mon Oct 13 15:25:41 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
