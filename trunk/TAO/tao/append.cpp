@@ -345,9 +345,6 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode_ptr default_tc = 0;
   CORBA::Boolean discrim_matched = CORBA::B_FALSE;
 
-  TAO_Base_Union *base_union = (TAO_Base_Union *)src;
-  void *member_val;
-
   // get the discriminator type
   discrim_tc = tc->discriminator_type (env);
 
@@ -462,7 +459,6 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr  tc,
                                     default_tc = member_tc;
                                   if (discrim_matched)
                                     {
-                                      member_val = base_union->_access (0);
                                       // marshal according to the matched typecode
                                       return dest->append (member_tc, src,
                                                            env);
@@ -483,7 +479,6 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr  tc,
                       // we are here only if there was no match
                       if (default_tc)
                         {
-                          member_val = base_union->_access (0);
                           return dest->append (default_tc, src, env);
                         }
                       else

@@ -1,13 +1,29 @@
+Thu Jun 25 08:44:03 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+	  The generated _access method was missing a return statement for
+	  the default case. Thanks to David Levine for pinpointing this.
+
+	* TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+	  For the TIE classes, we had forgotten to generate the "set"
+	  attribute operation (for attributes that are not readonly). Again
+	  thanks to David Levine for pinpointing this.
+
+	* tao/IIOP_Object.i: A newline was missing at the end of the file
+	which resulted in a huge number of compile errors from SunCC. This
+	is now fixed.
+
+
 Thu Jun 25 06:57:43 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/union_ch.cpp: 
+	* TAO_IDL/be/be_visitor_union/union_ch.cpp:
 	  Added a new virtual overridden method that returns a pointer to
 	  the discriminant.
 
 	  In addition, we now name the underlying private union as u_.
 
-	* TAO_IDL/be/be_visitor_union/union_ci.cpp: 
-	  
+	* TAO_IDL/be/be_visitor_union/union_ci.cpp:
+
 	  In the default constructor, we were setting the entire class
 	  object to 0 which was making the virtual pointers 0. We now only
 	  initialize the union and the discriminant.
@@ -15,8 +31,8 @@ Thu Jun 25 06:57:43 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	  Added the implementation of the virtual overridden _discriminant
 	  method. Also, the _reset method was moved here from the
 	  union_cs.cpp file.
-	
-	* TAO_IDL/be/be_visitor_union/union_cs.cpp: 
+
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
  	  Moved the _reset method to the union_ci.cpp file
 
 	* TAO_IDL/be/be_visitor_union_branch/{public_access_cs,
@@ -29,33 +45,33 @@ Thu Jun 25 06:57:43 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	Added a pure virtual method returning pointer to void. This will
 	be overridden by subclasses and a pointer to the discriminant will
-	be returned. 
+	be returned.
 
 	* tao/{encode, decode}.cpp (TAO_Marshal_Union::{encode, decode}):
 
 	We now use the _discriminant () method on the union class to
 	access the discriminant. This is much safer than simply casting
 	it.
-	
+
 Wed Jun 24 21:41:21 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tao/GIOP.cpp: Added a lock to 
+	* tao/GIOP.cpp: Added a lock to
 
-	* tao/Connect.cpp: Added a lock to the access of the 
+	* tao/Connect.cpp: Added a lock to the access of the
 	  forwarding profile. Some overhead might be due to that,
 	  but we don't want to sacrifice stability.
 
-	* tao/IIOP_Object.{h,icpp}: Added thread safe access functions 
+	* tao/IIOP_Object.{h,icpp}: Added thread safe access functions
           for the forwarding profile.
 
 Wed Jun 24 18:13:21 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
-	* orbsvcs/orbsvcs/Event/Task_Manager.h: 
-	* orbsvcs/orbsvcs/Event/Task_Manager.cpp: 
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+	* orbsvcs/orbsvcs/Event/Task_Manager.h:
+	* orbsvcs/orbsvcs/Event/Task_Manager.cpp:
 	  The multiple EC is not shutting dows cleanly, apparently it is a
  	  synchronization problem between the two processes. These changes
  	  try to minimize the problem by making shutdown() (and activate)
