@@ -18,10 +18,12 @@
 
 ACE_RCSID(Naming, CosNaming_i, "$Id$")
 
-TAO_NamingContext::TAO_NamingContext (size_t default_hash_table_size,
-				    int root)
+TAO_NamingContext::TAO_NamingContext (PortableServer::POA_ptr poa,
+				      size_t default_hash_table_size,
+				      int root)
   : lock_ (0),
-    root_ (root)
+    root_ (root),
+    poa_ (PortableServer::POA::_duplicate (poa))
 {
   // Deal with faults.
   if (context_.open (default_hash_table_size) == -1)
@@ -46,6 +48,13 @@ TAO_NamingContext::init (void)
 TAO_NamingContext::~TAO_NamingContext (void)
 {
   delete this->lock_;
+}
+
+// Return the Default POA of this Servant
+PortableServer::POA_ptr
+TAO_NamingContext::_default_POA (CORBA::Environment &/*env*/)
+{
+  return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 CosNaming::NamingContext_ptr
@@ -460,7 +469,7 @@ TAO_NamingContext::new_context (CORBA::Environment &_env)
     CosNaming::NamingContext::_nil ();
 
   ACE_NEW_THROW_RETURN (c,
-			TAO_NamingContext,
+			TAO_NamingContext (poa_.in ()),
 			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
 			result);
   if (c->init () == -1)
@@ -685,7 +694,7 @@ TAO_NamingContext::list_helper (TAO_BindingIterator* &bind_iter,
   TAO_TRY
     {
       ACE_NEW_TRY_THROW (bind_iter,
-			 TAO_BindingIterator (hash_iter, this->lock_),
+			 TAO_BindingIterator (hash_iter, this->poa_.in (), this->lock_),
 			 CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
     }
   TAO_CATCHANY
@@ -697,15 +706,25 @@ TAO_NamingContext::list_helper (TAO_BindingIterator* &bind_iter,
 }
 
 TAO_BindingIterator::TAO_BindingIterator (TAO_NamingContext::HASH_MAP::ITERATOR *hash_iter,
-                                        ACE_Lock *lock)
+					  PortableServer::POA_ptr poa,
+					  ACE_Lock *lock)
   : hash_iter_ (hash_iter),
-    lock_ (lock)
+    lock_ (lock),
+    poa_ (PortableServer::POA::_duplicate (poa))
+
 {
 }
 
 TAO_BindingIterator::~TAO_BindingIterator (void)
 {
   delete hash_iter_;
+}
+
+// Return the Default POA of this Servant
+PortableServer::POA_ptr
+TAO_BindingIterator::_default_POA (CORBA::Environment &/*env*/)
+{
+  return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 CORBA::Boolean
