@@ -3,8 +3,9 @@
 
 // The following configuration file is designed to work for Chorus
 // platforms using one of these compilers:
-// * GNU g++
-// * GreenHills
+//   * GNU g++
+//   * GreenHills
+// It uses the Chorus POSIX threads interface. 
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
