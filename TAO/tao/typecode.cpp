@@ -814,7 +814,7 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
 
   for (CORBA::ULong i=0; i < my_count; i++)
     {
-      // first check if labels are same
+      // First check if labels are same.
 
       // check if member names are same
       const char *my_member_name = this->member_name (i, env);
