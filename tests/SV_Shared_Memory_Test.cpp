@@ -86,6 +86,14 @@ child (char *shm)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P) child synch.release"), 1);
   return 0;
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple>;
+template class ACE_Guard<ACE_SV_Semaphore_Simple>;
+template class ACE_Write_Guard<ACE_SV_Semaphore_Simple>;
+template class ACE_Read_Guard<ACE_SV_Semaphore_Simple>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
 #endif /* ACE_HAS_SYSV_IPC */
 
 int
@@ -115,10 +123,3 @@ main (int, char *[])
   ACE_END_TEST;
   return 0;
 }
-
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple>;
-template class ACE_Guard<ACE_SV_Semaphore_Simple>;
-template class ACE_Write_Guard<ACE_SV_Semaphore_Simple>;
-template class ACE_Read_Guard<ACE_SV_Semaphore_Simple>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
