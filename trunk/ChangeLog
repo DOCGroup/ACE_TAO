@@ -1,3 +1,12 @@
+Thu Feb 26 11:15:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: In declaration of
+	  ACE_Output_Handler, add "using ACE_Service_Handler::open;" before
+	  declaring the override of it. Helps to disambiguate which open()
+	  we mean, ACE_Task::open(), or ACE_Service_Handler::open(). Sun
+	  Forte 8 complained about this ambiguity. Thanks to Johnny Willemsen
+	  for reporting this and working on a fix.
+
 Wed Feb 25 13:11:47 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/OS_NS_unistd.inl: Added support for ACE_OS::fsync(). 
