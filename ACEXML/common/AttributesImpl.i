@@ -39,11 +39,11 @@ ACEXML_Attribute::ACEXML_Attribute (const ACEXML_Char *uri,
 ACEXML_INLINE
 ACEXML_Attribute::~ACEXML_Attribute (void)
 {
-  delete this->uri_;
-  delete this->localName_;
-  delete this->qName_;
-  delete this->type_;
-  delete this->value_;
+  delete[] this->uri_;
+  delete[] this->localName_;
+  delete[] this->qName_;
+  delete[] this->type_;
+  delete[] this->value_;
 }
 
 ACEXML_INLINE const ACEXML_Char *
