@@ -1,8 +1,6 @@
 Tue Dec 30 15:16:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * *.mpb:
-          Added $ID tag to quash fuzz errors.
-
         * bin/MakeProjectCreator/templates/*.mpt:
           Added $ID tag to quash fuzz errors.
 
@@ -106,7 +104,7 @@ Sun Dec 28 15:09:34 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           sure names don't grow too long.
 
           Set FULL_PATH_NAMES=YES and STRIP_FROM_PATH=$(ACE_ROOT) to avoid
-          duplicate flenames on the file list page.  If this works out, we
+          duplicate filenames on the file list page.  If this works out, we
           may change some of the others also.
 
 Sun Dec 28 11:38:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -281,7 +279,7 @@ Thu Dec 25 18:03:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ftorbutils.mpb:
 
-          Removed the dependancy on CosNaming.
+          Removed the dependency on CosNaming.
 
 Wed Dec 24 17:10:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -484,7 +482,7 @@ Mon Dec 22 17:46:12 2003  Steve Huston  <shuston@riverace.com>
           ACE_LACKS_POSIX_PROTOTYPES.
 
         * ace/OS_TLI.h: Rearranged the places and situations that TLI or XTI
-          headers are included. These wre confused over the years as platforms
+          headers are included. These were confused over the years as platforms
           were ported to, and the TLI API evolved to XTI. The way this now
           works mirrors the way modern platforms work. XTI is the newer and
           current API. If XTI is available, ACE_HAS_XTI should be set. If
@@ -552,7 +550,7 @@ Mon Dec 22 10:31:41 2003  Chad Elliott  <elliott_c@ociweb.com>
         * bin/MakeProjectCreator/README:
 
           Added information about disallowing duplicate projects within a
-          single workspace regardless of the project type.  It is nolonger
+          single workspace regardless of the project type.  It is no longer
           specific to the VC6 type.
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
@@ -719,7 +717,7 @@ Fri Dec 19 07:19:37 2003  Chad Elliott  <elliott_c@ociweb.com>
           Added a workspace/project name modifier (-name_modifier) which can
           be used to modify workspace and project names using a pattern
           replacement.  The parameter passed to -name_modifier will have any
-          instances of the asterisk character repaced with the actual
+          instances of the asterisk character replaced with the actual
           workspace or project name.
 
           Also, deprecated the -static_only option and modified -static to
@@ -964,7 +962,7 @@ Mon Dec 15 18:51:15 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
         * bin/MakeProjectCreator/templates/gnu.mpd:
           Added setting of CLEANUP_INSTALL, this has the result that an exe
           that is installed into a different directory is also removed when
-          doing a clean. Thanks to Don and Chad for validing this.
+          doing a clean. Thanks to Don and Chad for validating this.
 
 Mon Dec 15 11:09:45 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
@@ -1103,7 +1101,7 @@ Wed Dec 10 18:20:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           doxygen deprecated page
 
         * ace/Thread.h:
-          Moved comment above method instead of between argumens.
+          Moved comment above method instead of between augments.
 
 Wed Dec 10 13:16:03 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
@@ -1413,7 +1411,7 @@ Sat Dec  6 09:28:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           A bunch of tests depend on dynamic libraries being
           available. They have been prevented from running in the static
-          builds. I am sending a seperate mail to the authors to fix
+          builds. I am sending a separate mail to the authors to fix
           this.
 
 Sat Dec  6 12:55:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -1421,8 +1419,8 @@ Sat Dec  6 12:55:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
         * examples/Reactor/WFMO_Reactor/APC.dsp:
         * examples/Reactor/WFMO_Reactor/APCTest.dsp:
         * examples/Reactor/WFMO_Reactor/WFMO_Reactor.dsw:
-          The APC.dsp file was a normal test file, but it sould be a
-          binary file, to preven all kinds of problems by adding and
+          The APC.dsp file was a normal test file, but it should be a
+          binary file, to prevent all kinds of problems by adding and
           removing a file with the same name, just removed APC.dsp and
           added APCTest.dsp as binary. Also updated the corresponding dsw
           file. This should fix an error in the msvc6 debug build when
@@ -1511,18 +1509,18 @@ Thu Dec  4 16:31:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 Thu Dec  4 14:30:44 2003  Kobi Cohen-Arazi  <kcarazi@finjan.com>
 
         * ace/Task_Ex_T.i (reply, put_next):
-        Thses 2 funcitons releted to ACE_Stream Framework,
+        These 2 functions related to ACE_Stream Framework,
         doesn't work with new ACE_Task_Ex (yet)
 
 Wed Dec  3 23:37:59 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
         * ace/Task_Ex_T.h:
         Add remark about the idea of merging ACE_Task and ACE_Task_Ex.
-        Add remark about sibling alwasy returning 0
+        Add remark about sibling always returning 0
 
         * ace/Task_Ex_T.cpp (ACE_Task_Ex::sibling):
         ACE_Task_Ex::sibling cannot call mod_->sibling(this) because it
-        is not typed as ACE_Task<>. Return 0 alwasy when calling sibling.
+        is not typed as ACE_Task<>. Return 0 always when calling sibling.
         TODO: That can be fixed if ACE_Task and ACE_Task_Ex can be merged so
         ACE_Task_Ex can have the Module ability - aka the Stream model.
         See ACE_Task_Ex.h for more info on that.
@@ -1585,7 +1583,7 @@ Wed Dec  3 09:48:55 2003  Chad Elliott  <elliott_c@ociweb.com>
 Wed Dec  3 11:06:12 UTC 2003  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.h:
-          Changed definition thr_setprio to fix link errors in MSVC6 relese
+          Changed definition thr_setprio to fix link errors in MSVC6 release
           build.
 
 Wed Dec  3 11:39:45 2003  Kobi Cohen-Arazi  <kcarazi@finjan.com>
@@ -1692,10 +1690,10 @@ Sat Nov 29 15:25:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           and included it in config-all.h.  Since some of the files
           included by config-all.h in turn include config-all.h, we
           ended up with a circular include problem on some platforms.  The
-          new file eliminates the problem by seperating the includes from
+          new file eliminates the problem by separating the includes from
           the definitions.
 
-        * qce/ACE_export.h:
+        * ace/ACE_export.h:
         * ace/os_include/os_stdarg.h:
         * ace/os_include/os_stddef.h:
         * ace/os_include/os_stdio.h:
@@ -2124,7 +2122,7 @@ Mon Nov 24 18:30:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Nov 24 17:29:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
-        * inlcude/makeinclude/rules.local.GNU:
+        * include/makeinclude/rules.local.GNU:
           Added a $(TAO_IDL_DEP) target that emits an error if the
           $(TAO_IDL_DEP) doesn't exist.  Thanks to Carlos for
           motivating this and suggesting the use of /bin/false to force
@@ -2156,14 +2154,14 @@ Mon Nov 24 05:26:14 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           static libraries when static_libs is defined.  Also, test for
           whether or not the CLEANUP targets in this case are empty, not
           b
-          just for existience, since they always exist by this time.
+          just for existence, since they always exist by this time.
 
 Mon Nov 24 02:38:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/all_in_one.GNU:
         * include/makeinclude/wrapper_macros.GNU:
         * include/makeinclude/rules.local.GNU:
-          Removed the multiple assignements to BUILD from
+          Removed the multiple assignments to BUILD from
           wrapper_macros.GNU and all_in_one.GNU and replaced them with a
           single assignment to VBUILD in rules.local.GNU.  VBUILD always
           includes the following targets: IDL_SRC, VLIBS, VBIN, then
@@ -2188,7 +2186,7 @@ Mon Nov 24 02:38:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Modified the BIN target to command to use the specific objects
           from the dependency list instead of $^ which takes all the
           dependencies, even those added elsewhere--make is evil in this
-          respect.  Since objects could be listed mulitple times, sort is
+          respect.  Since objects could be listed multiple times, sort is
           used to remove duplicates. Added dependency rules making VBIN
           dependent on VLIBS and IDL_SRC.  Issue warning if this file is
           included and BIN or BIN_UNCHECKED wasn't defined.
@@ -2200,7 +2198,7 @@ Mon Nov 24 02:38:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Makefiles.  Set the SUFFIXES to nothing so that implicit rule
           matching based on suffixes is turn off--we only want our
           explicit rules to fire.  Removed the IDL_SRC dependency rule
-          added below since it was redundent and already handled in
+          added below since it was redundant and already handled in
           rules.tao.GNU.
 
         * include/makeinclude/wrapper_macros.GNU:
@@ -2316,7 +2314,7 @@ Thu Nov 20 18:11:32 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 Fri Nov 21 13:26:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * *Makefile*:
-          Udpated dependencies for all Makefiles normally built.
+          Updated dependencies for all Makefiles normally built.
 
         * include/makeinclude/macros.GNU:
         * include/makeinclude/rules.common.GNU:
@@ -2332,7 +2330,7 @@ Fri Nov 21 07:24:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Moved the declaration of $config_list to before the if(!getopt
           line, since it's used there if the if is satisfied.  Removed the
           ":" after a in the getopt argument list, since -a does not take
-          a manditory argument (which is what ":" means).  This has
+          a mandatory argument (which is what ":" means).  This has
           prevented any tests from running in the ACE only autobuilds.
           since September.
 
@@ -2352,7 +2350,7 @@ Fri Nov 21 02:57:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           directories like $(ACE_ROOT)tests or
           $(TAO_ROOT)/orbsvcs/orbsvcs.  These objects are cleaned up even
           if a particular feature is not enabled, e.g., rmcast, ssl,
-          Other, etc., and is not dependant on bin/ace_components or the
+          Other, etc., and is not dependent on bin/ace_components or the
           files it maintains.  So, for normal development, prefer clean
           over realclean.
 
@@ -2406,7 +2404,7 @@ Fri Nov 21 02:57:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           $(TAO)/rules_tao.GNU wouldn't work correctly due to backward
           compatibility issues.  Anyway, it depends on $(IDL_FILES) and
           will force idl_stubs to be run if any of the idl files change.
-          Unfortuately, we can't yet generate dependencies for idl files,
+          Unfortunately, we can't yet generate dependencies for idl files,
           but perhaps that won't be hard to add in the future.
 
         component_check.GNU:  Including this file is similar to calling a
@@ -2466,7 +2464,7 @@ Fri Nov 21 02:57:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * include/makeinclude/rules.bin.GNU:
           Assign CLEANUP_BIN to PSRC so that it gets passed to depend and
           dependencies are generated even if the component isn't enabled
-          or not explicitely included in VOBJS which is derived from SRC.
+          or not explicitly included in VOBJS which is derived from SRC.
 
         * include/makeinclude/rules.lib.GNU:
           Modified the versioning variables and created CLEANUP_INSTALL so
@@ -2482,7 +2480,7 @@ Fri Nov 21 02:57:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           fewer rm calls and only call them if there's something to do.
           Also, only cleanup the library or bin that was created,
           including a specific version number if available.  These use the
-          special CLEANUP_* variables so they aren't dependant on whether
+          special CLEANUP_* variables so they aren't dependent on whether
           or not a feature or component is enabled.
 
         * include/makeinclude/wrapper_macros.GNU:
@@ -2923,7 +2921,7 @@ Fri Nov 14 15:17:30 2003  Chris Cleeland  <cleeland_c@ociweb.com>
           but those changes got lost during an IPv6 refactoring after the
           release of DOC 1.2.1.  This should close [RT 3183].
 
-        * tests/INET_Addr_Test.cpp: Added a test for the argumented
+        * tests/INET_Addr_Test.cpp: Added a test for the augmented
           version of get_host_addr.
 
 Fri Nov 14 15:55:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
@@ -2977,7 +2975,7 @@ Thu Nov 13 19:56:53 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Added #include OS_NS_string.h.
 
         Thanks to Olli Savia <ops@iki.fi> for the following fixes need to
-        complile ACE on LynxOS.
+        compile ACE on LynxOS.
 
         * ace/Base_Thread_Adapter.cpp:
           Added #include OS_NS_Thread.h if ACE_HAS_TSS_EMULATION is defined.
@@ -3102,7 +3100,7 @@ Thu Nov 13 04:26:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           highlight the syntax.
 
         * include/makeinclude/rules.local.GNU:
-          Added explicit shared library with version extention to the
+          Added explicit shared library with version extension to the
           deinstall.local target so that it will get cleaned up even if it
           is only defined as SHLIB_UNCHECKED.
 
@@ -3245,7 +3243,7 @@ Wed Nov 12 07:40:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * netsvcs/Makefile:
           Removed ace_components test from around the DIRS variable.  You
-          should always decend into the directories and give them the
+          should always descend into the directories and give them the
           opportunity to clean themselves up.
 
         * netsvcs/clients/Naming/Client/Makefile:
@@ -3285,7 +3283,7 @@ Tue Nov 11 17:25:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           Reverting the change "Mon Nov 10 22:30:14 2003  Kobi Cohen-Arazi
           <kobi@mivzak.com>". The change is so benign that the problem is
-          elsewhere. Thic change just triggered something else. Reverting
+          elsewhere. This change just triggered something else. Reverting
           this since our daily builds can run properly.
 
 Tue Nov 11 12:20:14 2003  Chad Elliott  <elliott_c@ociweb.com>
@@ -3709,7 +3707,7 @@ Sun Nov  9 04:08:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           readable.  Fixed synch check to only pick up Synch.h and
           Synch_T.h.
 
-        * */Makfile*:
+        * */Makefile*:
           Updated dependencies.
 
         * ACEXML/apps/svcconf/Makefile.ACEXML_XML_Svc_Conf_Parser:
@@ -3906,7 +3904,7 @@ Sat Nov  8 20:54:53 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
           check_for_synch_include: Checks to see if ace/Synch.h or
           ace/Synch_T.h have been included.  These files are maintained
-          for backward compitibility but should not be included within
+          for backward compatibility but should not be included within
           ACE+TAO since they are expensive and often unneeded--include
           the specific synch file instead, e.g., ace/Null_Mutex.h.
 
@@ -4269,7 +4267,7 @@ Wed Nov  5 19:02:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           The above problem now been fixed by doing an additional size
           increment on the cloned datablock. We have also added a small
-          optimzation. We don't always clone the data block. We do it only
+          optimization. We don't always clone the data block. We do it only
           if the size of the source buffer is larger than the size of the
           destination buffer. This should lead to a small increase in
           performance since we are avoiding an allocation along the
@@ -4478,7 +4476,7 @@ Wed Nov  5 14:53:19 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Removed some "/**/" comments from normal #include statements so
           these includes can be picked up by doxygen.  This is a doxygen
           "feature" that excludes includes from documentation that have an
-          unknown charater.
+          unknown character.
 
         * ace/Synch.cpp:
         * ace/Thread_Mutex.cpp:
@@ -5488,7 +5486,7 @@ Sat Nov  1 05:40:21 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           ACE_OS_Object_Manager_Manager classes here.
 
         * ace/config-all.h:
-          MOved ACE_OS_TRACE macro here.
+          Moved ACE_OS_TRACE macro here.
 
         * ace/config-vxworks5.x.h:
           Added ACE_LACKS_ARPA_INET_H.
@@ -6255,7 +6253,7 @@ Sat Nov  1 05:40:21 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * websvcs/lib/URL_Addr.cpp:
         * websvcs/lib/URL_Addr.i
           Removed OS.h and refactored #includes due to above subsetting;
-          changed occurances of ACE_OS_String and ACE_OS_Dirent to
+          changed occurrences of ACE_OS_String and ACE_OS_Dirent to
           ACE_OS; changes u_long, etc., to unsigned long to reduce
           dependencies; reordered includes in *.cpp's to come after the
           inline file include, reducing the difference between inlined and
@@ -6355,7 +6353,7 @@ Thu Oct 30 09:33:15 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/make.mpd:
 
-          Allow the GENFLAGS value to be overriden by MPC when the makefiles
+          Allow the GENFLAGS value to be overridden by MPC when the makefiles
           are being generated.
 
 Thu Oct 30 14:24:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -6538,7 +6536,7 @@ Mon Oct 20 16:38:12 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * ace/RW_Thread_Mutex.cpp:
         * ace/Thread_Semaphore.cpp:
           Added #include of the associated headers that were missing.
-          This will be needed once these files are compiled seperately via
+          This will be needed once these files are compiled separately via
           MPC.  Thanks to Barry Benowitz <b.benowitz@telesciences.com> for
           motivating this.
 
@@ -6974,7 +6972,7 @@ Wed Oct 08 21:43:30 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
         * bin/MakeProjectCreator/config/ftserverorb.mpb
         * bin/MakeProjectCreator/config/ftorbutils.mpb
 
-          Modified or Added for the seperation of FT framework.
+          Modified or Added for the separation of FT framework.
 
 Wed Oct  8 14:17:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -7412,7 +7410,7 @@ Mon Sep 15 06:42:28 2003  Chad Elliott  <elliott_c@ociweb.com>
         * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
 
           Added a check in the dependency sorter for an undefined dependency
-          value (this only happended with the vc7 and vc71 types).
+          value (this only happened with the vc7 and vc71 types).
 
 Fri Sep 12 13:31:50 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -7720,7 +7718,7 @@ Tue Sep  2 07:02:19 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:
 
-          Updated the documenation on the defaulting behaviour of MPC.
+          Updated the documentation on the defaulting behavior of MPC.
 
 Sat Aug 30 12:10:00 2003 Justin Michel <michel_j@ociweb.com>
 
@@ -7936,7 +7934,7 @@ Tue Aug 26 11:10:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           Changed the logic of the checks for return value in
           insertion and extraction of bounded (w)strings. If the
           bound_ member value of the helper construct was 0, the
-          operator could incorrectly return 0 after a successfull
+          operator could incorrectly return 0 after a successful
           read or write. Thanks to Tufan Oruk <toruk@usa.net> and
           Johnny Willemsen <jwillemsen@remedy.nl> for independently
           reporting problems that are consequences of this bug.
@@ -8351,7 +8349,7 @@ Fri Aug 15 15:29:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * apps/JAWS2/JAWS/Parse_Headers.cpp:
           Modified the ACCESSOR macro to only concatenate the x, or member
           variable, token.  This resolves a problem with the gcc 3.3
-          proprocessor.  Thanks to Tim Hawes <thawes@althusius.net> for
+          preprocessor.  Thanks to Tim Hawes <thawes@althusius.net> for
           reporting the problem and Carlos O'Ryan for supplying the fix.
 
         * THANKS:
@@ -8366,7 +8364,7 @@ Fri Aug 15 09:07:09 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 Fri Aug 15 01:49:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * Kokyu/Makefile.Kokyu:
-          Moved the assigment to ACE_SHLIBS to a point prior to including
+          Moved the assignment to ACE_SHLIBS to a point prior to including
           wrapper_macros.GNU, because the code the modifies the link
           library names to work with Kylix is located in
           wrapper_macros.GNU, and must come after the assignment.
@@ -8477,7 +8475,7 @@ Wed Aug 13 15:47:13 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 Mon Aug 11 19:19:24 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * ace/Global_Macros.h: Updated the documentation to point to
-          the C++NPv2 and POSA2 books.  Thansk to Valery Salamakha
+          the C++NPv2 and POSA2 books.  Thanks to Valery Salamakha
           <ccapstan@bigpond.net.au> for motivating this change!
 
 Mon Aug 11 08:39:06 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
@@ -8788,7 +8786,7 @@ Thu Aug  7 00:12:50 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           required by recent subsetting.
 
         * ace/Process_Mutex.cpp:
-          Removed explicite template instantiation of
+          Removed explicit template instantiation of
           ACE_GUARD<ACE_Process_Mutex> that doesn't appear to be needed
           within ACE and highlighted by recent subsetting.
 
@@ -8874,7 +8872,7 @@ Tue Aug  5 17:25:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Dev_Poll_Reactor.{cpp,h}:
           Added #includes of Reverse_Lock_T.h, Recursive_Thread_Mutex.h,
-          NUll_Mutex.h, and Lock_Adapter_T.h needed due to recent subsetting.
+          Null_Mutex.h, and Lock_Adapter_T.h needed due to recent subsetting.
 
         * ace/Dump_T.cpp:
           Added #include of Global_Macros.h.
@@ -9086,7 +9084,7 @@ Mon Aug  4 03:26:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * ace/Synch.{h,cpp,i}:
         * ace/Synch_T.{h,cpp,i}:
           Moved all the code out of Synch* and into new files, roughly one
-          per class as part of the footprint and compile time reduciton
+          per class as part of the footprint and compile time reduction
           effort.
 
         * ace/TSS_T.h:
@@ -9325,7 +9323,7 @@ Thu Jul 31 16:14:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Added a verbatim tag that ifdef's out the entire Makefile on
           non-Windows systems.  This code can probably be factored out
           into a platform specific template that Windows only project
-          inherite. Also, this will probably prevent these project from
+          inherit. Also, this will probably prevent these project from
           being built with Cygwin and MinGW, since the only test for the
           MAKE variable, not a Windows specific variable.
 
@@ -9423,7 +9421,7 @@ Wed Jul 30 19:21:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Made the generated code match what's in Global_Macros.h:
 
         * ace/Select_Reactor.h:
-          When ACE_MT_SAFE=0, ifdef away the unused template specilization
+          When ACE_MT_SAFE=0, ifdef away the unused template specialization
           of ACE_Guard<ACE_Select_Reactor_Token_T<ACE_Noop_Token>>.
 
 Wed Jul 30 17:00:03 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
@@ -9552,7 +9550,7 @@ Mon Jul 28 13:01:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * ace/UUID.h:
         * ace/UUID.cpp: The implementations are now placed in a namespace
           ACE_Utils. Since we can now use namespaces, adding them to a
-          namspace made more sense.
+          namespace made more sense.
 
         * ace/UUID.i: File UUID.i is now renamed to be UUID.inl
 
@@ -9925,10 +9923,10 @@ Fri Jul 25 08:53:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * bin/performance_stats.sh: Changed the path to mogrify. On
           flamenco.dre it is installed in /usr/local instead of
           /usr/bin/X11. This would break the stats pages at UCI. The pages
-          at UCI havent been updated in a long while. Hence shouldnt be a
+          at UCI haven't been updated in a long while. Hence shouldn't be a
           big deal.
 
-          With this change the thumbnails shold be fine at dre pages.
+          With this change the thumbnails should be fine at dre pages.
 
 Fri Jul 25 11:10:21 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -9978,7 +9976,7 @@ Thu Jul 24 14:00:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * ace/DEV_IO.h (recv_n):
         * ace/DEV_IO.i: The semantics of recv_n () is now changed to have
           a timeout and a byte transferred variable. The interface now has
-          the semantics asscoiated with ACE_OS::recv_n () and ACE::recv_n
+          the semantics associated with ACE_OS::recv_n () and ACE::recv_n
           () calls. Thanks to Tom Phan <tom.phan@telhub.com>.
 
 Thu Jul 24 15:01:59 UTC 2003  Don Hinton  <dhinton@dresystems.com>
@@ -10036,7 +10034,7 @@ Wed Jul 23 12:43:48 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
           (UUID_node):
 
           Use UUID_node::NODE_ID_SIZE instead of the hardcoded constant
-          "6".  Improves code maintanability.
+          "6".  Improves code maintainability.
 
           (ACE_UUID):
 
@@ -10058,7 +10056,7 @@ Wed Jul 23 18:03:21 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           the method ACE::log2().
 
         * ace/ace/String_Base.cpp:
-          Remove #include "ace/streams.h" and let the cpp's that acutally
+          Remove #include "ace/streams.h" and let the cpp's that actually
           use it include it themselves.  This helps reduce both footprint
           and compile-times.  Thanks to Bala Natarajan
           <bala@dre.vanderbilt.edu> for motivating this change.
@@ -10391,7 +10389,7 @@ Wed Jul 16 12:15:34 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           It was used to include ace/iosfwd.h instead of ace/streams.h,
           but files should only include one they need instead of always
           including ace/streams.h, which includes <iostream> if available
-          and unnecesarily increases compile times.  Thanks to Carlos O'Ryan
+          and unnecessarily increases compile times.  Thanks to Carlos O'Ryan
           <coryan@atdesk.com> motivating this.
 
         * ace/OS.h:
@@ -10854,8 +10852,8 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
           - cancel_type() and cancel_timer(): Split cancellation() into
           two methods.  cancel_timer() is called when a timer is
-          cancelled.  cancel_type() is called when a handler is
-          cancelled. Also added <dont_call> parameter to these method.
+          canceled.  cancel_type() is called when a handler is
+          canceled. Also added <dont_call> parameter to these method.
           cancel_timer() will be used for reference counting and
           cancel_type() will be used for calling handle_close().
 
@@ -10874,8 +10872,8 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
           Locking is not necessary anymore.
 
           - cancel(): This method will call cancel_timer() once for each
-          timer cancelled and cancel_type() once for each handler
-          cancelled.
+          timer canceled and cancel_type() once for each handler
+          canceled.
 
           - cancel_i(): The <skip_close> check will be performed in the
           upcall functor.
@@ -12380,7 +12378,7 @@ Wed Jun 18 15:59:18 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           os_signal.h, os_stdio.h, os_stdlib.h, os_stropts.h, os_unistd.h,
           arpa/os_inet.h, sys/select.h, and sys/os_socket.h to the VxWorks
           section.  All the includes in OS.h will be reorganized once the
-          builds stabalize.
+          builds stabilize.
 
 Wed Jun 18 10:54:18 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -13103,7 +13101,7 @@ Tue Jun 17 15:21:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
             Moved rlimit typedef here.
 
           * ace/os_include/sys/sem.h:
-            Moved struct sembuf declartion here.
+            Moved struct sembuf declaration here.
 
           * ace/os_include/sys/stat.h:
             Moved ACE_LACKS_MODE_MASK, e.g., S_IRWXG, definitions
