@@ -274,6 +274,7 @@ Object_Group_i::resolve_with_id (const char * id,
 
 Load_Balancer::Member_ID_List *
 Object_Group_i::members (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Load_Balancer::Member_ID_List * list;
 
@@ -302,6 +303,7 @@ Object_Group_i::members (CORBA::Environment &ACE_TRY_ENV)
 
 void
 Object_Group_i::destroy (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deregister with POA.
   PortableServer::POA_var poa =
