@@ -93,7 +93,7 @@ class ACE_Export ACE_Service_Config
   // = DESCRIPTION
   //     The <ACE_Service_Config> uses the Monostate pattern.  Therefore,
   //     you can only have one of these instantiated per-process.
-  // 
+  //
   //     NOTE: the signal_handler_ static member is allocated by the
   //     <ACE_Object_Manager>.  The <ACE_Service_Config> constructor
   //     uses signal_handler_.  Therefore, if the program has any
@@ -141,19 +141,22 @@ public:
   // constructor just handles simple initializations).  It parses
   // arguments passed in from the command-line.  The arguments that
   // are valid in a call to this method include:
-  // 
+  //
   // '-b' - Option to indicate that we should be a daemon
   // '-d' - Turn on debugging mode
   // '-f' - Option to read in the list of svc.conf file names
   // '-k' - Option to read a wide string where in the logger output can
   //        be written
-  // '-y' - Turn on the flag for a repository of statically
-  //        linked services (by default, these are not configured).
-  // '-n' - Need not have a repository of statically linked services
+  // '-y' - Option to require the use of statically linked service.
+  //        A static service repostory will be constructed if the flag
+  //        is used.  Use this flag to overwrite the default
+  //        <ignore_static_svcs> flag at run-time.
+  // '-n' - We don't use any statically linked service.  Skip the  static
+  //        service repository construction.
   // '-S' - Option to read in the list of services on the command-line
   //        Please observe the difference between options '-f' that looks
   //        for a list of files and here a list of services.
-  // 
+  //
   // Returns number of errors that occurred on failure and 0
   // otherwise.
 
