@@ -130,7 +130,16 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR& cdr)
         {
           // It is true ssl profile, i.e., not just IIOP, so must have
           // ssl endpoints encoded.
-          return this->decode_endpoints ();
+#if (TAO_HAS_RT_CORBA == 1)
+          // This protection is here not for correctness but for efficiency.
+          // Currently there are > 1 endpoint per profile only with RTCORBA.
+
+          if (this->decode_endpoints () == -1)
+            return -1;
+
+#endif  /* TAO_HAS_RT_CORBA == 1 */
+
+          return 1;
         }
       else
         {
@@ -278,12 +287,13 @@ TAO_SSLIOP_Profile::decode_endpoints (void)
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
       if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-        return 0;
+        return -1;
       in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
 
       // Extract endpoints sequence.
       TAO_SSLEndpointSequence endpoints;
-      in_cdr >> endpoints;
+      if ((in_cdr >> endpoints) == 0)
+        return -1;
 
       // Use information extracted from the tagged component to
       // populate the profile.  Begin from the end of the sequence to
@@ -316,7 +326,7 @@ TAO_SSLIOP_Profile::decode_endpoints (void)
           iiop_endp = iiop_endp->next_;
         }
 
-      return 1;
+      return 0;
     }
 
   // Since this method is only called if we are expecting
