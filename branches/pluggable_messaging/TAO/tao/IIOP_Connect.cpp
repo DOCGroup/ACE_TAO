@@ -104,7 +104,7 @@ TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (TAO_ORB_
   else
     {
       ACE_NEW (this->acceptor_factory_,
-               TAO_GIOP_Message_Acceptors);
+               TAO_GIOP_Message_Acceptors (orb_core));
     }
         
   // OK, Here is a small twist. By now the all the objecs cached in

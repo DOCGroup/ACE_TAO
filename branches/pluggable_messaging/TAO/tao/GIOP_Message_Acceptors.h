@@ -34,7 +34,8 @@ class TAO_Export TAO_GIOP_Message_Acceptors:
   
 public:
 
-  TAO_GIOP_Message_Acceptors (void);
+  TAO_GIOP_Message_Acceptors (TAO_ORB_Core *orb_core);
+  // Ctor
 
   int process_connector_messages (TAO_Transport *transport,
                                   TAO_ORB_Core *orb_core,
@@ -50,8 +51,7 @@ private:
   
   int process_connector_request (TAO_Transport *transport,
                                  TAO_ORB_Core* orb_core,
-                                 TAO_InputCDR &input,
-                                 TAO_OutputCDR &output);
+                                 TAO_InputCDR &input);
   // A request was received on the server side. <transport> is the
   // source of the message (and thus where the  replies should be
   // sent). <orb_core> is the ORB that received the message <input>
@@ -62,8 +62,7 @@ private:
 
   int process_connector_locate (TAO_Transport *transport,
                                 TAO_ORB_Core* orb_core,
-                                TAO_InputCDR &input,
-                                TAO_OutputCDR &output);
+                                TAO_InputCDR &input);
   // A LocateRequest was received on the server side. <transport> is
   // the source of the message (and thus where the replies should be
   // sent). <orb_core> is the ORB that received the message <input>
@@ -105,6 +104,11 @@ private:
   TAO_GIOP_Message_Accept_Impl implementations_;
   
 
+  TAO_OutputCDR output_;
+  // The output CDR stream
+  
+  char repbuf_[ACE_CDR::DEFAULT_BUFSIZE];
+  // A buffer that we will use to initialise the CDR stream
 
   ////////////////////////////////////////////////////
   // Inherited methods. Should not be here in the first place? 

@@ -109,7 +109,7 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_
   else
     {
       ACE_NEW (this->acceptor_factory_,
-               TAO_GIOP_Message_Acceptors);
+               TAO_GIOP_Message_Acceptors (orb_core));
     }
   // OK, Here is a small twist. By now the all the objects cached in
   // this class would have been constructed. But we would like to make

@@ -8,6 +8,7 @@
 # include "tao/GIOP_Message_Acceptors.i"
 #endif /* __ACE_INLINE__ */
 
+
 int 
 TAO_GIOP_Message_Acceptors::
   process_connector_messages (TAO_Transport *transport, 
@@ -15,23 +16,7 @@ TAO_GIOP_Message_Acceptors::
                               TAO_InputCDR &input,
                               CORBA::Octet message_type)
 {
-  char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
-
-#if defined(ACE_HAS_PURIFY)
-  (void) ACE_OS::memset (repbuf,
-                         '\0',
-                         sizeof repbuf);
-#endif /* ACE_HAS_PURIFY */
- 
-  TAO_OutputCDR output (repbuf,
-                        sizeof repbuf,
-                        TAO_ENCAP_BYTE_ORDER,
-                        orb_core->output_cdr_buffer_allocator (),
-                        orb_core->output_cdr_dblock_allocator (),
-                        orb_core->orb_params ()->cdr_memcpy_tradeoff (),
-                        orb_core->to_iso8859 (),
-                        orb_core->to_unicode ());
-
+  this->output_.reset ();
   switch (message_type)
     {
     case TAO_GIOP_REQUEST:
@@ -40,14 +25,12 @@ TAO_GIOP_Message_Acceptors::
       // stream
       this->process_connector_request (transport,
                                        orb_core,
-                                       input,
-                                       output);
+                                       input);
       break;
     case TAO_GIOP_LOCATEREQUEST:
       this->process_connector_locate (transport,
                                       orb_core,
-                                      input,
-                                      output);
+                                      input);
       break;
     case TAO_GIOP_MESSAGERROR:
     case TAO_GIOP_REPLY:
@@ -68,8 +51,7 @@ int
 TAO_GIOP_Message_Acceptors::
   process_connector_request (TAO_Transport *transport, 
                              TAO_ORB_Core* orb_core,
-                             TAO_InputCDR &input,
-                             TAO_OutputCDR &output)
+                             TAO_InputCDR &input)
 {
   // Get the revision info
   TAO_GIOP_Version version (this->major_version (),
@@ -79,7 +61,7 @@ TAO_GIOP_Message_Acceptors::
   // and <sync_with_server> as appropriate.
   TAO_GIOP_ServerRequest request (this,
                                   input,
-                                  output,
+                                  this->output_,
                                   orb_core,
                                   version);
   
@@ -171,14 +153,14 @@ TAO_GIOP_Message_Acceptors::
     {
       // Make the GIOP header and Reply header
       this->make_reply (request_id,
-                        output);
+                        this->output_);
       
-      output.write_ulong (TAO_GIOP_LOCATION_FORWARD);
+      this->output_.write_ulong (TAO_GIOP_LOCATION_FORWARD);
 
       CORBA::Object_ptr object_ptr =
         forward_request.forward_reference.in();
 
-      output << object_ptr;
+      this->output_ << object_ptr;
 
       // Flag for code below catch blocks.
       location_forward = 1;
@@ -279,8 +261,8 @@ TAO_GIOP_Message_Acceptors::
   if ((response_required && !sync_with_server)
       || (sync_with_server && location_forward))
     {
-      result = this->send_message (transport,
-                                   output);
+      result = this->send_message (transport, 
+                                   this->output_);
                                    
       if (result == -1)
         {
@@ -302,8 +284,7 @@ int
 TAO_GIOP_Message_Acceptors::
   process_connector_locate (TAO_Transport *transport,
                             TAO_ORB_Core* orb_core,
-                            TAO_InputCDR &input,
-                            TAO_OutputCDR &output)
+                            TAO_InputCDR &input)
 {
   // Get the revision info
   TAO_GIOP_Version version (this->major_version (),
@@ -478,7 +459,7 @@ TAO_GIOP_Message_Acceptors::
 
 
   return this->make_locate_reply (transport,
-                                  output,
+                                  this->output_,
                                   locate_request,
                                   status_info);
 }
