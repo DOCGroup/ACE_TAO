@@ -34,7 +34,7 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
                                 PortableServer::POA_ptr poa,
                                 const char * /* operation */,
                                 PortableServer::ServantLocator::Cookie &cookie,
-                                CORBA::Environment &env)
+                                CORBA::Environment &ACE_TRY_ENV)
 {
   // Convert ObjectID to String.
 
@@ -55,10 +55,12 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
     }
   else
     {
-      CORBA::Exception *exception =
-        new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO);
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
+      //
+      //CORBA::Exception *exception =
+      //  new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO);
+      //env.exception (exception);
+      //return 0;
     }
 }
 
