@@ -1,3 +1,9 @@
+Wed Jan  9 12:24:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process.cpp (spawn): Don't attempt ACE_OS::setpgid if
+          ACE_LACKS_SETPGID is defined. Thanks to Victor Terber
+          <vterber@csksoftware.de> for reporting this.
+
 Wed Jan 09 11:19:07 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h: Updated the comment for ACE_CE_Bridge to indicate that
