@@ -1,3 +1,13 @@
+Thu Oct 18 19:52:44 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+	* ace/SString.h: clarify example in comments to ACE_Tokenize
+           so that constant strings are not passed in its constructor.
+
+	* examples/OS/Process/process.cpp: do not pass constant strings
+	   to ACE_Tokenize constructor.  Thanks to 
+	   Werner Buchert <w.buchert@medat.de> and 
+	   Don Hinton <dhinton@swan.fr>.
+
 Wed Oct 17 23:56:45 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Proactor_Test.cpp:
