@@ -59,7 +59,7 @@ ACEXML_SAXPrint_Handler::endElement (const ACEXML_Char *,
 }
 
 void
-ACEXML_SAXPrint_Handler::endPrefixMapping (const ACEXML_Char *prefix
+ACEXML_SAXPrint_Handler::endPrefixMapping (const ACEXML_Char *
                                            ACEXML_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
@@ -151,8 +151,8 @@ ACEXML_SAXPrint_Handler::startElement (const ACEXML_Char *,
 }
 
 void
-ACEXML_SAXPrint_Handler::startPrefixMapping (const ACEXML_Char * prefix,
-                                             const ACEXML_Char * uri ACEXML_ENV_ARG_DECL_NOT_USED)
+ACEXML_SAXPrint_Handler::startPrefixMapping (const ACEXML_Char * ,
+                                             const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
 //   ACE_DEBUG ((LM_DEBUG,
