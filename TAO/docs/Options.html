@@ -461,6 +461,38 @@ since domain names are the standard address notation for IORs.</td>
         option instead. </font> </td>
       </tr>
       <tr>
+        <td><code>-ORBPreferredInterfaces</code>
+        <em>"targetNetwork:localNetwork,.."</em></td> 
+        <td><a name="-ORBPreferredInterfaces"></a> This option allows
+        clients running on a multihomed host to pick a local
+        network/interface to communicate with a remote target. This
+        option looks for fully qualified interface names (either the
+        IP address or the DNS names) in the <em>targetNetwork</em> and
+        <em>localNetwork</em> parts. Multiple preferred tuples (a
+        tuple refers to a <em> target-to-local</em> network combo) can
+        be provided in the option using a comma seperated list. The
+        option doesn't yet support using jsut the network part of the 
+        qualified name. 
+        </tr>
+      <tr>
+        <td><code>-ORBEnforcePreferredInterfaces</code>
+        <em>Yes/No</em></td> 
+        <td><a name="-ORBEnforcePreferredInterfaces"></a> This option
+        specifies whether -ORBPreferredInterfaces option needs to be
+        enforced. The option is supposed to help with the following
+        usecase. It is possible that under some situations the
+        preferred local network may not have a route to the target
+        host/interface. The ORB can do one of the following. The ORB
+        coudl either choose a default local interface to send the
+        message or raise an exception to the application that
+        preferred interfaces are not usable. The option helps the ORB
+        decide on the course of action. If
+        <em> -ORBEnforcePreferredInterfaces</em> is set to true,
+        unusable preferred interfaces will make the ORB raise an
+        exception to the application. The defaul value for this option
+        is <em> no </em>.
+        </tr>
+      <tr>
         <td><code>-ORBListenEndpoints</code> <em>endpoint</em></td>
         <td><a name="-ORBListenEndpoints"></a> This option was
         introduced with the CORBA <a
