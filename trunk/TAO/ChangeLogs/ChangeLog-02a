@@ -1,3 +1,10 @@
+Sun Jan 27 14:35:32 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Pluggable.cpp (make_mprofile):
+
+	  Fixed support for parsing URL style IORs with multiple addrs in
+	  them.  [Bug 1130]
+
 Sun Jan 27 13:22:11 2002  Ossama Othman  <ossama@uci.edu>
 
 	* performance-tests/README:
