@@ -1459,16 +1459,12 @@ CORBA_ORB::string_to_object (const char *str,
                                       ACE_TRY_ENV);
   else
     {
-      // @@ Fred&Ossama: Is there anyway to initialize the mprofile in
-      //    such a way that it does not allocate memory?
-      //    The connector registry could count how many profiles are
-      //    there (if any) and then allocate all the memory in one
-      //    call, saving precious microseconds in an area of the code
-      //    that is invoked only once ;-)
-
       TAO_MProfile mprofile (0);
       // It is safe to declare this on the stack since the contents of
-      // mprofile get copied.
+      // mprofile get copied.  No memory is allocated for profile storage
+      // here.  The Connector Registry will determine the exact number 
+      // of profiles and tell the MProfile object to allocate enough memory 
+      // to hold them all.
 
       if (this->orb_core_->connector_registry ()->make_mprofile (str,
                                                                  mprofile,
@@ -1659,6 +1655,7 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
   // @@EXC@@ We should receive the <env> from the command line.
   // @@ Fred: why do we need an environment for the
   //    Profile::_key() method?
+  // @@ No good reason, I will fix.
 
   CORBA::Environment ACE_TRY_ENV;
 
