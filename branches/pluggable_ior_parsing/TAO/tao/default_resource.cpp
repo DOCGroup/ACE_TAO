@@ -439,12 +439,9 @@ TAO_Default_Resource_Factory::get_parser_names (const char **&names,
         }
     }
 
-  if (tmp != 0)
-    {
-      this->parser_names_[index] = "CORBALOC_Parser";
-      index++;
-    }
-
+  this->parser_names_[index] = "CORBALOC_Parser";
+  index++;
+  
   // CORBANAME_Parser
   tmp =
     ACE_Dynamic_Service<TAO_IOR_Parser>::instance ("CORBANAME_Parser");
@@ -463,13 +460,11 @@ TAO_Default_Resource_Factory::get_parser_names (const char **&names,
         }
     }
 
-  if (tmp != 0)
-    {
-      this->parser_names_[index] = "CORBANAME_Parser";
-      index++;
-    }
+  this->parser_names_[index] = "CORBANAME_Parser";
+  index++;
+  
   names = this->parser_names_;
- 
+
   //  number_of_names = this->parser_names_count_;
   number_of_names = index;
 
