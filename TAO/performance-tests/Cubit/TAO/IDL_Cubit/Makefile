@@ -36,7 +36,6 @@ CUBIT_SVR_OBJS = cubitC.o \
 		 RTI_IO.o \
 		 tmplinst.o
 CUBIT_CLT_OBJS = cubitC.o \
-		 cubitS.o \
 		 Cubit_Client.o \
 		 client.o \
 		 RTI_IO.o \

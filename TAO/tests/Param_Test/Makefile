@@ -25,7 +25,6 @@ SVR_FILES =	param_testCli	\
 		tmplinst
 
 CLI_FILES =	param_testCli	\
-		param_testSer	\
 		driver		\
 		client		\
 		options		\
