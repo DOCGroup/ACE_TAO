@@ -1,3 +1,9 @@
+Thu Jan 29 10:10:26 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* THANKS:
+
+	  Added Hans-Peter Bock <Hans-Peter.Bock@isw.uni-stuttgart.de>.
+
 Wed Jan 28 13:21:00 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/ace.mpc:
@@ -12,7 +18,7 @@ Wed Jan 28 13:21:00 2004  Chad Elliott  <elliott_c@ociweb.com>
         * bin/MakeProjectCreator/config/acedefaults.mpb:
         * bin/MakeProjectCreator/config/qt.mpb:
 
-          Inherit from the ace_qt base project as part of the reorganization 
+          Inherit from the ace_qt base project as part of the reorganization
           of qt and qt_moc.
 
         * bin/MakeProjectCreator/modules/Creator.pm:
