@@ -18,15 +18,18 @@
 // ============================================================================
 
 #include "be_global.h"
+#include "be_codegen.h"
+#include "be_generator.h"
 #include "utl_string.h"
 #include "global_extern.h"
+#include "idl_defines.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (be,
            be_global,
            "$Id$")
-
+           
 TAO_IDL_BE_Export BE_GlobalData *be_global = 0;
 
 BE_GlobalData::BE_GlobalData (void)
@@ -969,3 +972,866 @@ BE_GlobalData::gen_anyop_files (idl_bool val)
 {
   this->gen_anyop_files_ = val;
 }
+
+ACE_CString
+BE_GlobalData::spawn_options (void)
+{
+  return idl_global->idl_flags ();
+}
+
+void
+BE_GlobalData::parse_args (long &i, char **av)
+{
+  switch (av[i][1])
+    {
+      // = Various 'h'eader_file_name_endings.
+      case 'h':
+
+        // <-hc Client's header file name ending>
+        //      Default is "C.h".
+        // <-hs Server's header file name ending>
+        //       Default is "S.h".
+        // <-hT Server's template hdr file name ending>
+        //       Default is "S_T.h".
+        // <-hI Server's implementation header file name ending>
+        //       Default is "I.h".
+
+        if (av[i][2] == 'c')
+          {
+            // Client stub's header file ending.
+            // @@ No error handling done here.
+            idl_global->append_idl_flag (av[i + 1]);
+            be_global->client_hdr_ending (av[i + 1]);
+            i++;
+          }
+        else if (av[i][2] == 's')
+          {
+            // Server skeleton's header file.
+            idl_global->append_idl_flag (av[i + 1]);
+            be_global->server_hdr_ending (av[i + 1]);
+            i++;
+          }
+        else if (av[i][2] == 'T')
+          {
+            // Server Template header ending.
+            idl_global->append_idl_flag (av[i + 1]);
+            be_global->server_template_hdr_ending (av[i + 1]);
+            i++;
+          }
+        else if (av[i][2] == 'I')
+          {
+            // Server Template header ending.
+            idl_global->append_idl_flag (av[i + 1]);
+            be_global->implementation_hdr_ending (av[i + 1]);
+            i++;
+          }
+        else
+          {
+            // I expect 'c' or 's' or 'T' after this.
+            ACE_ERROR ((
+                LM_ERROR,
+                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                av[i]
+              ));
+
+            ACE_OS::exit (99);
+          }
+        break;
+      // = Various 'c'lient side stub file_name_endings.
+      case 'c':
+        // <-cs Client stub's file name ending>
+        //      Default is "C.cpp".
+        // <-ci Client inline file name ending>
+        //      Default is "C.inl".
+
+        if (av[i][2] == 's')
+          {
+            idl_global->append_idl_flag (av[i + 1]);
+            be_global->client_stub_ending (av[i + 1]);
+            i++;
+          }
+
+        else if (av[i][2] == 'i')
+          {
+            idl_global->append_idl_flag (av[i + 1]);
+            be_global->client_inline_ending (av[i + 1]);
+            i++;
+          }
+
+        else
+          {
+            // I expect 's' or 'i' after 'c'.
+            ACE_ERROR ((
+                LM_ERROR,
+                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                av[i]
+              ));
+
+            ACE_OS::exit (99);
+          }
+        break;
+      // = Various 's'erver side skeleton file name endings.
+      case 's':
+        // <-ss Server's skeleton file name ending>
+        //      Default is "S.cpp".
+        // <-sT Server's template skeleton file name ending>
+        //      Default is "S_T.cpp".
+        // <-si Server's inline file name ending>
+        //      Default is "S.inl".
+        // <-st Server's template inline file name ending>
+        //      Default is "S_T.inl".
+        // <-sI Server's implementation skeleton file name ending>
+        //      Default is "I.cpp".
+
+        if (av[i][2] == 's')
+          {
+            idl_global->append_idl_flag (av[i + 1]);
+            be_global->server_skeleton_ending (av[i + 1]);
+            i++;
+          }
+        else if (av[i][2] == 'T')
+          {
+            idl_global->append_idl_flag (av[i + 1]);
+            be_global->server_template_skeleton_ending (av[i + 1]);
+            i++;
+          }
+        else if (av[i][2] == 'i')
+          {
+            idl_global->append_idl_flag (av[i + 1]);
+            be_global->server_inline_ending (av[i + 1]);
+            i++;
+          }
+        else if (av[i][2] == 't')
+          {
+            idl_global->append_idl_flag (av[i + 1]);
+            be_global->server_template_inline_ending (av[i + 1]);
+            i++;
+          }
+
+        else if (av[i][2] == 'I')
+          {
+            idl_global->append_idl_flag (av[i + 1]);
+            be_global->implementation_skel_ending (av[i + 1]);
+            i++;
+          }
+
+        else
+          {
+            // I expect 's' or 'T' or 'i' or 't' after 's'.
+            ACE_ERROR ((
+                LM_ERROR,
+                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                av[i]
+              ));
+
+            ACE_OS::exit (99);
+          }
+        break;
+
+        // Operation lookup strategy.
+        // <perfect_hash>, <dynamic_hash> or <binary_search>
+        // Default is perfect.
+      case 'H':
+        idl_global->append_idl_flag (av[i + 1]);
+
+        if (av[i+1] == 0 || av[i+1][0] == '-')
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("no selection for -H option\n")));
+            ACE_OS::exit (99);
+          }
+        else if (ACE_OS::strcmp (av[i+1], "dynamic_hash") == 0)
+          {
+            be_global->lookup_strategy (
+                BE_GlobalData::TAO_DYNAMIC_HASH
+              );
+          }
+        else if (ACE_OS::strcmp (av[i + 1], "perfect_hash") == 0)
+          {
+            be_global->lookup_strategy (
+                BE_GlobalData::TAO_PERFECT_HASH
+              );
+          }
+        else if (ACE_OS::strcmp (av[i + 1], "binary_search") == 0)
+          {
+            be_global->lookup_strategy (
+                BE_GlobalData::TAO_BINARY_SEARCH
+              );
+          }
+        else if (ACE_OS::strcmp (av[i + 1], "linear_search") == 0)
+          {
+            be_global->lookup_strategy (
+                BE_GlobalData::TAO_LINEAR_SEARCH
+              );
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("%s: unknown operation lookup <%s>\n"),
+                        av[0],
+                        av[i + 1]));
+            ACE_OS::exit (99);
+          }
+
+        i++;
+        break;
+      // Switching between ""s and <>s when we generate
+      // #include statements for the standard files (e.g. tao/corba.h)
+      case 'i':
+        if (av[i][2] == 'c')
+          {
+            be_global->changing_standard_include_files (1);
+          }
+        else if (av[i][2] == 'n')
+          {
+            be_global->changing_standard_include_files (0);
+          }
+        else
+          {
+            ACE_ERROR ((
+                LM_ERROR,
+                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                av[i]
+              ));
+
+            ACE_OS::exit (99);
+          }
+        break;
+      // Path for the perfect hash generator(gperf) program. Default
+      // is $ACE_ROOT/bin/gperf.
+      case 'g':
+        if (av[i][2] == '\0')
+          {
+            idl_global->append_idl_flag (av[i + 1]);
+            ACE_CString tmp (av[i + 1], 0, 0);
+#if defined (ACE_WIN32)
+            // WIN32's CreateProcess needs the full executable name
+            // when the gperf path is modified, but not for the default
+            // path given above. Other platforms don't need the
+            // executable name at all.
+            tmp += "\\gperf.exe";
+#endif
+            idl_global->gperf_path (tmp.fast_rep ());
+            i++;
+          }
+        else
+          {
+            ACE_ERROR ((
+                LM_ERROR,
+                ACE_TEXT ("IDL: I don't understand")
+                ACE_TEXT (" the '%s' option\n"),
+                av[i]
+              ));
+
+            ACE_OS::exit (99);
+          }
+        break;
+      // Directory where all the IDL-Compiler-Generated files are to
+      // be kept. Default is the current directory from which the
+      // <tao_idl> is called.
+      case 'o':
+        if (av[i][2] == '\0')
+          {
+            idl_global->append_idl_flag (av[i + 1]);
+            be_global->output_dir (av [i + 1]);
+            i++;
+          }
+        else
+          {
+            ACE_ERROR ((
+                LM_ERROR,
+                ACE_TEXT ("IDL: I don't understand")
+                ACE_TEXT (" the '%s' option\n"),
+                av[i]
+              ));
+
+            ACE_OS::exit (99);
+          }
+        break;
+      case 'G':
+        // Enable generation of ...
+        if (av[i][2] == 'C')
+          {
+            // AMI with Call back.
+            be_global->ami_call_back (I_TRUE);
+          }
+        else if (av[i][2] == 'H')
+          {
+            // AMH classes.
+            be_global->gen_amh_classes (I_TRUE);
+          }
+        else if (av[i][2] == 'A')
+          {
+            // TAO-team-only, undocumented option to generate
+            // Any operators into a separate set of files.
+            be_global->gen_anyop_files (I_TRUE);
+          }
+        else if (av[i][2] == 'e')
+          {
+            idl_global->append_idl_flag (av[i+1]);
+            int option = ACE_OS::atoi (av[i+1]);
+
+            // exception support
+            be_global->exception_support (option == 0
+                                          || option == 2);
+
+            // use of raw 'throw'
+            be_global->use_raw_throw (option == 2);
+
+            i++;
+          }
+        else if (av[i][2] == 's')
+          {
+            if (av[i][3] == 'p')
+              {
+                // smart proxies
+                be_global->gen_smart_proxies (I_TRUE);
+              }
+            else
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: I don't understand ")
+                    ACE_TEXT ("the '%s' option\n"),
+                    av[i]
+                  ));
+
+                ACE_OS::exit (99);
+              }
+
+            break;
+          }
+        else if (av[i][2] == 'u')
+          {
+            if (av[i][3] == 'c')
+              {
+                // inline constants
+                be_global->gen_inline_constants (I_FALSE);
+              }
+            else
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: I don't understand ")
+                    ACE_TEXT ("the '%s' option\n"),
+                    av[i]
+                  ));
+
+                ACE_OS::exit (99);
+              }
+
+            break;
+          }
+        else if (av[i][2] == 't')
+          {
+            // optimized typecode support
+            be_global->opt_tc (1);
+          }
+        else if (av[i][2] == 'p')
+          {
+            // generating Thru_POA collocated stubs.
+            be_global->gen_thru_poa_collocation (1);
+          }
+        else if (av[i][2] == 'd')
+          {
+            // generating Direct collocated stubs.
+            be_global->gen_direct_collocation (1);
+          }
+        else if (av[i][2] == 'v')
+          {
+            // enable OBV (Valuetype) support.
+            idl_global->obv_support (1);
+          }
+        else if (av[i][2] == 'I')
+          {
+            size_t options = ACE_OS::strlen(av[i]) - 3;
+            size_t j;
+            size_t k = i;
+            // generate implementation files.
+            be_global->gen_impl_files (1);
+
+            for (j = 0; j < options; ++j)
+              {
+                if (av[k][j + 3] == 's')
+                  {
+                    idl_global->append_idl_flag (av[i + 1]);
+                    be_global->implementation_skel_ending (av[i + 1]);
+                    i++;
+                  }
+                else if (av[k][j + 3] == 'h')
+                  {
+                    idl_global->append_idl_flag (av[i + 1]);
+                    be_global->implementation_hdr_ending (av[i + 1]);
+                    i++;
+                  }
+                else if (av[k][j + 3] == 'b')
+                  {
+                    idl_global->append_idl_flag (av[i + 1]);
+                    be_global->impl_class_prefix (av[i + 1]);
+                    i++;
+                  }
+                else if (av[k][j + 3] == 'e')
+                  {
+                    idl_global->append_idl_flag (av[i + 1]);
+                    be_global->impl_class_suffix (av[i + 1]);
+                    i++;
+                  }
+                else if (av[k][j + 3] == 'c')
+                  {
+                    be_global->gen_copy_ctor (1);
+                  }
+                else if (av[k][j + 3] == 'a')
+                  {
+                    be_global->gen_assign_op (1);
+                  }
+                else if (av[k][j + 3] == 'd')
+                  {
+                    be_global->gen_impl_debug_info (1);
+                  }
+                else if (isalpha (av[k][j + 3] ))
+                  {
+                    ACE_ERROR ((
+                        LM_ERROR,
+                        ACE_TEXT ("IDL: I don't understand")
+                        ACE_TEXT (" the '%s' option\n"),
+                        av[i]
+                      ));
+
+                    idl_global->set_compile_flags (
+                        idl_global->compile_flags ()
+                        | IDL_CF_ONLY_USAGE
+                      );
+                  }
+              }
+          }
+        else if (av[i][2] == 'T')
+          {
+            be_global->gen_tmplinst (I_TRUE);
+          }
+        else
+          {
+            ACE_ERROR ((
+                LM_ERROR,
+                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                av[i]
+              ));
+
+            ACE_OS::exit (99);
+          }
+        break;
+      case 'S':
+        // suppress generation of ...
+        if (av[i][2] == 'a')
+          {
+            // suppress Any support
+            be_global->any_support (0);
+          }
+        else if (av[i][2] == 't')
+          {
+            // suppress typecode support
+            // Anys must be suppressed as well
+            be_global->tc_support (0);
+            be_global->any_support (0);
+          }
+        else if (av[i][2] == 'p')
+          {
+            // suppress generating Thru_POA collocated stubs
+            be_global->gen_thru_poa_collocation (0);
+          }
+        else if (av[i][2] == 'd')
+          {
+            // suppress generating Direct collocated stubs
+            be_global->gen_direct_collocation (0);
+          }
+        else if (av[i][2] == 'c')
+          {
+            // suppress generating tie classes and files
+            be_global->gen_tie_classes (0);
+          }
+        else if (av[i][2] == 'v')
+          {
+            // disable OBV (Valuetype) support
+            idl_global->obv_support (0);
+          }
+        else
+          {
+            ACE_ERROR ((
+                LM_ERROR,
+                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                av[i]
+              ));
+
+            ACE_OS::exit (99);
+          }
+        break;
+      default:
+        ACE_ERROR ((
+            LM_ERROR,
+            ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+            av[i]
+          ));
+
+        idl_global->set_compile_flags (idl_global->compile_flags ()
+                                       | IDL_CF_ONLY_USAGE);
+        break;
+    }
+}
+
+// Prepare an argument for a BE
+void
+BE_GlobalData::prep_be_arg (char *s)
+{
+  const char arg_macro[] = "export_macro=";
+  const char arg_include[] = "export_include=";
+  const char skel_arg_macro[] = "skel_export_macro=";
+  const char skel_arg_include[] = "skel_export_include=";
+  const char stub_arg_macro[] = "stub_export_macro=";
+  const char stub_arg_include[] = "stub_export_include=";
+  const char arg_pch_include[] = "pch_include=";
+  const char arg_pre_include[] = "pre_include=";
+  const char arg_post_include[] = "post_include=";
+  const char obv_opt_accessor[] = "obv_opt_accessor";
+
+  char* last = 0;
+
+  for (char* arg = ACE_OS::strtok_r (s, ",", &last);
+       arg != 0;
+       arg = ACE_OS::strtok_r (0, ",", &last))
+    {
+      if (ACE_OS::strstr (arg, arg_macro) == arg)
+        {
+          char* val = arg + sizeof (arg_macro) - 1;
+          be_global->skel_export_macro (val);
+          be_global->stub_export_macro (val);
+        }
+      else if (ACE_OS::strstr (arg, arg_include) == arg)
+        {
+          char* val = arg + sizeof (arg_include) - 1;
+          be_global->stub_export_include (val);
+        }
+      else if (ACE_OS::strstr (arg, skel_arg_macro) == arg)
+        {
+          char* val = arg + sizeof (skel_arg_macro) - 1;
+          be_global->skel_export_macro (val);
+        }
+      else if (ACE_OS::strstr (arg, skel_arg_include) == arg)
+        {
+          char* val = arg + sizeof (skel_arg_include) - 1;
+          be_global->skel_export_include (val);
+        }
+      else if (ACE_OS::strstr (arg, stub_arg_macro) == arg)
+        {
+          char* val = arg + sizeof (stub_arg_macro) - 1;
+          be_global->stub_export_macro (val);
+        }
+      else if (ACE_OS::strstr (arg, stub_arg_include) == arg)
+        {
+          char* val = arg + sizeof (stub_arg_include) - 1;
+          be_global->stub_export_include (val);
+        }
+      else if (ACE_OS::strstr (arg, arg_pch_include) == arg)
+        {
+          char* val = arg + sizeof (arg_pch_include) - 1;
+          be_global->pch_include (val);
+        }
+      else if (ACE_OS::strstr (arg, arg_pre_include) == arg)
+        {
+          char* val = arg + sizeof (arg_pre_include) - 1;
+          be_global->pre_include (val);
+        }
+      else if (ACE_OS::strstr (arg, arg_post_include) == arg)
+        {
+          char* val = arg + sizeof (arg_post_include) - 1;
+          be_global->post_include (val);
+        }
+      else if (ACE_OS::strstr (arg, obv_opt_accessor) == arg)
+        {
+          be_global->obv_opt_accessor (1);
+        }
+      else
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%s%s%s%s"),
+                      idl_global->prog_name (),
+                      ACE_TEXT (": invalid or unknown argument <"),
+                      arg,
+                      ACE_TEXT ("> to back end\n")));
+        }
+    }
+}
+
+void
+BE_GlobalData::arg_post_proc (void)
+{
+  // Let us try to use Perfect Hashing Operation Lookup Strategy. Let
+  // us check whether things are fine with GPERF.
+#if defined (ACE_HAS_GPERF)
+  // If Perfect Hashing or Binary Search or Linear Search strategies
+  // have been selected, let us make sure that it exists and will
+  // work.
+  if ((be_global->lookup_strategy () == BE_GlobalData::TAO_PERFECT_HASH) ||
+      (be_global->lookup_strategy () == BE_GlobalData::TAO_BINARY_SEARCH) ||
+      (be_global->lookup_strategy () == BE_GlobalData::TAO_LINEAR_SEARCH))
+    {
+      // Testing whether GPERF works or no.
+      int return_value = idl_global->check_gperf ();
+      if (return_value == -1)
+        {
+          // If gperf_path is an absolute path, try to call this
+          // again with
+          ACE_DEBUG ((
+              LM_DEBUG,
+              ACE_TEXT ("TAO_IDL: warning, GPERF could not be executed\n")
+              ACE_TEXT ("Perfect Hashing or Binary/Linear Search cannot be")
+              ACE_TEXT (" done without GPERF\n")
+              ACE_TEXT ("Now, using Dynamic Hashing..\n")
+              ACE_TEXT ("To use Perfect Hashing or Binary/Linear")
+              ACE_TEXT (" Search strategy\n")
+              ACE_TEXT ("\t-Build gperf at $ACE_ROOT/apps/gperf/src\n")
+              ACE_TEXT ("\t-Set the environment variable $ACE_ROOT")
+              ACE_TEXT (" appropriately or add $ACE_ROOT/bin to the PATH\n")
+              ACE_TEXT ("\t-Refer to Operation Lookup section in the TAO IDL")
+              ACE_TEXT (" User Guide ($TAO_ROOT/docs/compiler.html)")
+              ACE_TEXT (" for more details\n")
+            ));
+
+          // Switching over to Dynamic Hashing.
+          be_global->lookup_strategy (BE_GlobalData::TAO_DYNAMIC_HASH);
+        }
+    }
+#else /* Not ACE_HAS_GPERF */
+  // If GPERF is not there, we cannot use PERFECT_HASH strategy. Let
+  // us go for DYNAMIC_HASH.
+  if ((be_global->lookup_strategy () == BE_GlobalData::TAO_PERFECT_HASH) ||
+      (be_global->lookup_strategy () == BE_GlobalData::TAO_BINARY_SEARCH) ||
+      (be_global->lookup_strategy () == BE_GlobalData::TAO_LINEAR_SEARCH))
+    {
+      be_global->lookup_strategy (BE_GlobalData::TAO_DYNAMIC_HASH);
+    }
+#endif /* ACE_HAS_GPERF */
+
+  // make sure that we are not suppressing TypeCode generation and asking for
+  // optimized typecode support at the same time
+  if (!be_global->tc_support () && be_global->opt_tc ())
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Bad Combination -St and -Gt \n")));
+
+      ACE_OS::exit (99);
+    }
+}
+
+void
+BE_GlobalData::usage (void) const
+{
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -ci\t\t\tClient inline file name ending. Default is C.inl\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -cs\t\t\tClient stub's file name ending.")
+      ACE_TEXT (" Default is C.cpp\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -GC \t\t\tGenerate the AMI classes\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -GH \t\t\tGenerate the AMH classes\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gd \t\t\tGenerate the code for direct collocation. Default ")
+      ACE_TEXT ("is thru-POA collocation\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Ge [0|1]\t\tDisable/Enable generation of")
+      ACE_TEXT (" CORBA::Environment arguments (disabled by default")
+      ACE_TEXT (" if ACE_HAS_EXCEPTIONS)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Ge 2\t\t\tUse raw throw instead of ACE_THROW macro")
+      ACE_TEXT (" (disabled by default\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -GI[h|s|b|e|c]\t\tGenerate Implemenation Files \n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT ("  \t\t\th - Implementation header file name ending.")
+      ACE_TEXT (" Default is I.h \n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT ("  \t\t\ts - Implementation skeleton file name ending.")
+      ACE_TEXT (" Default is I.cpp\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT ("  \t\t\tb - Prefix to the implementation class names.")
+      ACE_TEXT (" Default is 'no prefix' \n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT ("  \t\t\te - Suffix to the implementation class names.")
+      ACE_TEXT (" Default is _i\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT ("  \t\t\td - Generate debug (source file/line#) information.")
+      ACE_TEXT (" (off by default)\n")
+     ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gp \t\t\tGenerate the code for thru-POA collocation")
+      ACE_TEXT (" (default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gsp\t\t\tGenerate the code for Smart Proxies\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gt\t\t\tenable optimized TypeCode support")
+      ACE_TEXT (" (unopt by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT ("    \t\t\tNo effect if TypeCode generation is suppressed\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -GT\t\t\tgenerate explicit template instantiations")
+      ACE_TEXT (" (off by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -GA\t\t\tgenerate Any operator and type code bodies in *A.cpp")
+      ACE_TEXT (" (generated in *C.cpp by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Guc\t\t\tgenerate uninlined constant if declared ")
+      ACE_TEXT ("in a module")
+      ACE_TEXT (" (inlined by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -hc\t\t\tClient's header file name ending.")
+      ACE_TEXT (" Default is C.h\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -hs\t\t\tServer's header file name ending.")
+      ACE_TEXT (" Default is S.h\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -hT\t\t\tServer's template hdr file name ending.")
+      ACE_TEXT (" Default is S_T.h\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -H perfect_hash\tTo force perfect hashed operation")
+      ACE_TEXT (" lookup strategy (default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -H dynamic_hash\tTo force dynamic hashed operation")
+      ACE_TEXT (" lookup strategy. Default is perfect hashing\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -H linear_search\tTo force linear search operation")
+      ACE_TEXT (" lookup strategy\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -H binary_search\tTo force binary search operation")
+      ACE_TEXT (" lookup strategy\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -in \t\t\tTo generate <>s for standard #include'd")
+      ACE_TEXT (" files (non-changing files)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -ic \t\t\tTo generate \"\"s for standard #include'd")
+      ACE_TEXT (" files (changing files)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -o <output_dir>\tOutput directory for the generated files.")
+      ACE_TEXT (" Default is current directory\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -si\t\t\tServer's inline file name ending.")
+      ACE_TEXT (" Default is S.inl\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -ss\t\t\tServer's skeleton file name ending.")
+      ACE_TEXT (" Default is S.cpp\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -st\t\t\tServer's template inline file name ending.")
+      ACE_TEXT (" Default S_T.inl\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -sT\t\t\tServer's template skeleton file name ending.")
+      ACE_TEXT (" Default is S_T.cpp\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Sa\t\t\tsuppress Any support")
+      ACE_TEXT (" (support enabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -St\t\t\tsuppress TypeCode support")
+      ACE_TEXT (" (support enabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Sc\t\t\tsuppress tie class (and file)")
+      ACE_TEXT (" generation (enabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Sp\t\t\tsuppress generating Thru POA collocated")
+      ACE_TEXT (" stubs (enabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Sd\t\t\tsuppress generating Direct collocated")
+      ACE_TEXT (" stubs (disable by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Sv\t\t\tdisable OBV (Valuetype) support")
+      ACE_TEXT (" (enabled by default)\n")
+    ));
+}
+
+AST_Generator *
+BE_GlobalData::generator_init (void)
+{
+  tao_cg = TAO_CODEGEN::instance ();
+
+  AST_Generator *gen = 0;
+  ACE_NEW_RETURN (gen,
+                  be_generator,
+                  0);
+                 
+  return gen;
+}
+

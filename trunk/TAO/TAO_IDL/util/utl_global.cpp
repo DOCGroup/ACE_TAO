@@ -77,6 +77,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_string.h"
 #include "nr_extern.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/Process.h"
 
 ACE_RCSID (util,
            utl_global,
@@ -150,7 +152,6 @@ IDL_GlobalData::IDL_GlobalData (void)
     pd_prog_name (0),
     pd_cpp_location (0),
     pd_compile_flags (0),
-    pd_be (0),
     pd_local_escapes (0),
     pd_indent (0),
     pd_include_file_names (0),
@@ -491,19 +492,6 @@ void
 IDL_GlobalData::set_compile_flags (long cf)
 {
   this->pd_compile_flags = cf;
-}
-
-// Get or set BE to be used
-const char *
-IDL_GlobalData::be (void)
-{
-  return this->pd_be;
-}
-
-void
-IDL_GlobalData::set_be (const char *nbe)
-{
-  this->pd_be = nbe;
 }
 
 // Get or set local escapes string. This provides additional mechanism
@@ -1386,3 +1374,112 @@ IDL_GlobalData::create_uses_multiple_stuff (
 
   (void) c->fe_add_typedef (connections);
 }
+
+// Return 0 on success, -1 failure. The <errno> corresponding to the
+// error that caused the GPERF execution is also set.
+int
+IDL_GlobalData::check_gperf (void)
+{
+  // If absolute path is not specified yet, let us call just
+  // "gperf". Hopefully PATH is set up correctly to locate the gperf.
+  if (idl_global->gperf_path () == 0)
+    {
+      // If ACE_GPERF is defined then use that gperf program instead of "gperf."
+#if defined (ACE_GPERF)
+      idl_global->gperf_path (ACE_GPERF);
+#else
+      idl_global->gperf_path ("gperf");
+#endif /* ACE_GPERF */
+    }
+
+  // If we have absolute path for the <gperf> rather than just the
+  // executable name <gperf>, make sure the file exists
+  // firsts. Otherwise just call <gperf>. Probably PATH is set
+  // correctly to take care of this.
+
+  // If ACE_GPERF is defined then use that gperf program instead of "gperf."
+#if defined (ACE_GPERF)
+  if (ACE_OS::strcmp (idl_global->gperf_path (), ACE_GPERF) != 0)
+#else
+  if (ACE_OS::strcmp (idl_global->gperf_path (), "gperf") != 0)
+#endif /* ACE_GPERF */
+    {
+      // It is absolute path. Check the existance, permissions and
+      // the modes.
+      if (ACE_OS::access (idl_global->gperf_path (),
+                          F_OK | X_OK) == -1)
+        {
+          // Problem with the file. No point in having the absolute
+          // path. Swith to "gperf".
+          // If ACE_GPERF is defined then use that gperf program
+          //instead of "gperf."
+#if defined (ACE_GPERF)
+          idl_global->gperf_path (ACE_GPERF);
+#else
+          idl_global->gperf_path ("gperf");
+#endif /* ACE_GPERF */
+        }
+    }
+
+  // Just call gperf in silent mode. It will come and immly exit.
+
+  // Using ACE_Process.
+  ACE_Process process;
+  ACE_Process_Options process_options;
+
+  // Set the command line for the gperf program.
+  process_options.command_line ("%s"
+                                " "
+                                "-V",
+                                idl_global->gperf_path ());
+
+  // Spawn a process for gperf.
+  if (process.spawn (process_options) == -1)
+    {
+      return -1;
+    }
+
+#if defined (ACE_WIN32)
+  // No wait or anything in Win32.
+  return 0;
+#endif /* ACE_WIN32 */
+
+  // Wait for gperf to complete.
+  ACE_exitcode wait_status = 0;
+  if (process.wait (&wait_status) == -1)
+    {
+      return -1;
+    }
+  else
+    {
+      // Wait is sucessful, we will check the exit code from the
+      // spawned process.
+      if (WIFEXITED (wait_status))
+        {
+          // Normal exit.
+
+          // Check the exit value of the spawned process. ACE_Process
+          // exits with <errno> as exit code, if it is not able to
+          // exec gperf program, so get the exit code now and set that
+          // to <errno> again, so that it can be used to print error
+          // messages.
+          errno = WEXITSTATUS (wait_status);
+          if (errno)
+            {
+              // <exec> has failed.
+              return -1;
+            }
+          else
+            {
+              // Everything was alright.
+              return 0;
+            }
+        }
+      else
+        {
+          // Not a normal exit. No <errno> might be set.
+          return -1;
+        }
+    }
+}
+

@@ -72,4 +72,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 extern TAO_IDL_BE_Export BE_GlobalData *be_global;
 
+extern TAO_IDL_BE_Export int BE_init (int &, char*[]);
+extern TAO_IDL_BE_Export void BE_post_init (void);
+extern TAO_IDL_BE_Export void BE_version (void);
+extern TAO_IDL_BE_Export void BE_produce (void);
+extern TAO_IDL_BE_Export void BE_abort (void);
+
 #endif           // _BE_EXTERN_BE_EXTERN_HH

@@ -77,6 +77,8 @@ ACE_RCSID (fe,
            fe_init,
            "$Id$")
 
+const size_t LOCAL_ESCAPES_BUFFER_SIZE = 1024;
+
 // Populate the global scope with all predefined entities.
 void
 fe_populate_global_scope (AST_Module *m)
@@ -591,9 +593,56 @@ fe_populate_idl_keywords (void)
     }
 }
 
-// FE initialization: create global scope and populate it.
+// FE initialization
 void
 FE_init (void)
+{
+  // Initialize FE global data object.
+  ACE_NEW (idl_global,
+           IDL_GlobalData);
+
+  // Initialize some of its data.
+  idl_global->set_root (0);
+  idl_global->set_gen (0);
+  idl_global->set_err (FE_new_UTL_Error ());
+  idl_global->set_err_count (0);
+  idl_global->set_indent (FE_new_UTL_Indenter ());
+  idl_global->set_filename (0);
+  idl_global->set_main_filename (0);
+  idl_global->set_real_filename (0);
+  idl_global->set_stripped_filename (0);
+  idl_global->set_import (I_TRUE);
+  idl_global->set_in_main_file (I_FALSE);
+  idl_global->set_lineno (-1);
+  idl_global->set_prog_name (0);
+
+#if defined (TAO_IDL_PREPROCESSOR)
+  idl_global->set_cpp_location (TAO_IDL_PREPROCESSOR);
+#elif defined (ACE_CC_PREPROCESSOR)
+  idl_global->set_cpp_location (ACE_CC_PREPROCESSOR);
+#else
+  // Just default to cc
+  idl_global->set_cpp_location ("cc");
+#endif /* TAO_IDL_PREPROCESSOR */
+
+  char local_escapes[LOCAL_ESCAPES_BUFFER_SIZE];
+  ACE_OS::memset (&local_escapes,
+                  0,
+                  LOCAL_ESCAPES_BUFFER_SIZE);
+
+  idl_global->set_local_escapes (local_escapes);
+  idl_global->set_compile_flags (0);
+  idl_global->set_include_file_names (0);
+  idl_global->set_n_include_file_names (0);
+  idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+  idl_global->preserve_cpp_keywords (I_FALSE);
+
+  // Put an empty prefix on the stack for the global scope.
+  idl_global->pragma_prefixes ().push (ACE::strnew (""));
+}
+
+void
+FE_populate (void)
 {
   AST_Root *r;
 
@@ -602,7 +651,7 @@ FE_init (void)
     {
       ACE_ERROR ((
           LM_ERROR,
-          ACE_TEXT ("IDL: BE did not initialize idl_global->gen(), exiting\n")
+          ACE_TEXT ("IDL: idl_global->gen() not initialized, exiting\n")
         ));
 
       ACE_OS::exit (99);
@@ -636,3 +685,4 @@ FE_init (void)
   // Populate the IDL keyword container, for checking local identifiers.
   fe_populate_idl_keywords ();
 }
+

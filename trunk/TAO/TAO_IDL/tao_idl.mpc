@@ -24,14 +24,13 @@ project(TAO_IDL_EXE) : aceexe, core, tao_output, crosscompile {
   }
 
   Source_Files {
-    tao_idl.cpp
     driver/drv_args.cpp
     driver/drv_preproc.cpp
+    tao_idl.cpp
   }
 
   Header_Files {
     include/drv_extern.h
-    include/drv_private.h
   }
 }
 
