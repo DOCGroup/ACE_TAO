@@ -55,6 +55,9 @@ ACE_Message_Queue_Vx::ACE_Message_Queue_Vx (size_t max_messages,
 ACE_Message_Queue_Vx::~ACE_Message_Queue_Vx (void)
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::~ACE_Message_Queue_Vx");
+
+  if (this->tail_ != 0  &&  this->close () == -1)
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("close")));
 }
 
 // Don't bother locking since if someone calls this function more than
@@ -98,10 +101,12 @@ int
 ACE_Message_Queue_Vx::deactivate_i (void)
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::deactivate_i");
+
   int current_status =
     this->deactivated_ ? WAS_INACTIVE : WAS_ACTIVE;
 
   this->deactivated_ = 1;
+
   return current_status;
 }
 
