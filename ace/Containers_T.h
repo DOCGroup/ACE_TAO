@@ -247,7 +247,7 @@ class ACE_Unbounded_Stack
   // = DESCRIPTION
   //     This implementation of an unbounded Stack uses a linked list.
   //     If you use the <insert> or <remove> methods you should keep
-  //     in mind that duplicate entries aren't allow.  In general,
+  //     in mind that duplicate entries aren't allowed.  In general,
   //     therefore, you should avoid the use of these methods since
   //     they aren't really part of the ADT stack.
 public:
