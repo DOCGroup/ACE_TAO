@@ -1,3 +1,8 @@
+Thu Mar 12 17:49:45 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be_visitor_typedef.cpp: For typedefs of pseudo object
+	types, we had forgottten to generate a typedef to the _ptr type.
+
 Thu Mar 12 17:21:32 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/sequence_T.cpp: Fixed a couple of weird bugs were freebuf
