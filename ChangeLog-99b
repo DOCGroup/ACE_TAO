@@ -4,6 +4,10 @@ Sun Mar 21 09:44:30 1999  David L. Levine  <levine@cs.wustl.edu>
           creation during static construction if ACE_HAS_PURIFY
           is enabled, because it notices the memory-in-use.
 
+        * examples/Naming/Makefile: changed SRC to PSRC.
+          Use ace_components instead of the current ACE_COMPONENTS
+          setting to determine what should be built.
+
 Sat Mar 20 19:10:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/Connector.h:
