@@ -1,5 +1,8 @@
 Sat Jul  3 10:54:00 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
-  
+
+	* tests/AMI/simple-client.cpp: Removed the iteration part from the
+	  test. Let us keep it really simple.
+
 	* TAO_IDL/be/be_visitor_factory.cpp
 	* TAO_IDL/be/be_visitor_interface/ami_handler_stub_cs.cpp
 	* TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp
