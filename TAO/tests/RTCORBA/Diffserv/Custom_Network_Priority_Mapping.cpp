@@ -96,18 +96,19 @@ TAO_Custom_Network_Priority_Mapping::corba_priority (RTCORBA::Priority corba_pri
 }
 
 CORBA::Boolean
-TAO_Custom_Network_Priority_Mapping::to_network (RTCORBA::Priority,
-                                                 RTCORBA::NetworkPriority &network_priority)
+TAO_Custom_Network_Priority_Mapping::to_network (
+  RTCORBA::Priority,
+  RTCORBA::NetworkPriority &network_priority)
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO_Custom_Network_Priority_Mapping::to_network corba_priority %d\n",
                 this->corba_priority_));
 
-  int total_slots = sizeof (dscp) / sizeof (int);
+  const int total_slots = sizeof (dscp) / sizeof (int);
 
   int array_slot =
-    ((this->corba_priority_ - RTCORBA::minPriority) / double (RTCORBA::maxPriority - RTCORBA::minPriority)) * total_slots;
+    static_cast<int> (((this->corba_priority_ - RTCORBA::minPriority) / double (RTCORBA::maxPriority - RTCORBA::minPriority)) * total_slots);
 
   if (array_slot == total_slots)
     array_slot -= 1;
