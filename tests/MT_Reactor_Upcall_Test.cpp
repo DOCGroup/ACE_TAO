@@ -20,6 +20,7 @@
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/WFMO_Reactor.h"
