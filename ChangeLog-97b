@@ -1,3 +1,8 @@
+Sat Sep 06 09:07:02 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* performance-tests/Misc/Makefile: moved $(BIN) files from FILES
+	  to SRC so that they don't get put into libPerf.
+
 Sat Sep  6 02:36:31 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* tests/test_config.h (set_output): Added openning flag ios::trunc
