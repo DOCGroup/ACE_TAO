@@ -15,7 +15,7 @@ CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_IORTABLE_CFLAGS) \
 
 CPPDIR = .
 
-INCDIR_NAME = tao/IORTable
+INCDIR_NAME = tao\IORTable
 INCLUDES = \
 	*.h *.i \
 	 IORTable.pidl

@@ -20,7 +20,7 @@ CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_IFR_CLIENT_CFLAGS) \
 
 CPPDIR = .
 
-INCDIR_NAME = tao/IFR_Client
+INCDIR_NAME = tao\IFR_Client
 INCLUDES = \
 	*.h *.i
 
