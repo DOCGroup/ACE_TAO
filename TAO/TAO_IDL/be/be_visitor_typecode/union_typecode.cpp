@@ -113,7 +113,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
           branch->gen_label_value (&os, 0);
 
           os << ", ";
-          
+
           be_type * const type =
             be_type::narrow_from_decl ((*member_ptr)->field_type ());
 
