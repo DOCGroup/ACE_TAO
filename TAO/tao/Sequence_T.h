@@ -269,13 +269,13 @@ public:
   ~TAO_Object_Manager (void);
   // Destructor, only releases the object if <release_> is true.
 
-  TAO_Object_Manager &operator= (const TAO_Object_Manager<T> &rhs);
+  TAO_Object_Manager<T> &operator= (const TAO_Object_Manager<T> &rhs);
   // Assignment from another managed type, only release if
   // <this->release_> is true.
   // @@ TODO what happens if rhs.release_ is true an this->relase_ is
   // false?
 
-  TAO_Object_Manager &operator= (T *);
+  TAO_Object_Manager<T> &operator= (T *);
   // Assignment from T *.
 
   operator const T *() const;
@@ -367,7 +367,7 @@ public:
   // The destructor releases all object reference memebrs and frees
   // all string members.
 
-  TAO_Unbounded_Object_Sequence &operator= (const TAO_Unbounded_Object_Sequence <T> &);
+  TAO_Unbounded_Object_Sequence<T> &operator= (const TAO_Unbounded_Object_Sequence <T> &);
   // The assignment operator first releases all object reference
   // members and frees all string members, and then performs a
   // deepcopy to create a new structure.
