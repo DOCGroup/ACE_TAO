@@ -1,3 +1,13 @@
+Thu Jul 15 16:20:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Service_Manager.cpp (init): Check to see the acceptor handle
+	  is ACE_INVALID_HANDLE before the actual initialization to
+	  prevent this service from being initialized twice.
+	  (fini): Must call remove_handler with
+	  ACE_Event_Handler::DONT_CALL since the service manager won't be
+	  around when the reactor is being destroyed.  Thanks to Gheorghe
+	  Aprotosoaie <gaprotosoaie@paragonms.com> for reporting this.
+
 Thu Jul 15 16:26:28 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (spa): use ACE_NEEDS_HUGE_THREAD_STACKSIZE
