@@ -1,3 +1,10 @@
+1998-12-11  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Message_Queue.{h,cpp} (enqueue): Made sure all bytes in a message
+	  block chain are accounted for.
+	  (enqueue_tail,dequeue_head): Added two more methods into
+	  ACE_Message_Queue_Base.  They are the prefered methods to use.
+
 Fri Dec 11 15:09:43 1998  Ossama Othman  <ossama@debian.org>
 
 	* tests/Time_Value_Test.cpp: define ACE_DISABLE_AUTOCONF_LONGLONG
