@@ -92,27 +92,23 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
-SOURCE=.\any.cpp
+SOURCE=.\Any.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\arg_shifter.cpp
+SOURCE=.\Arg_Shifter.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\cdr.cpp
+SOURCE=.\CDR.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\client_factory.cpp
+SOURCE=.\Client_Strategy_Factory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\connect.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\corbacom.cpp
+SOURCE=.\Connect.cpp
 # End Source File
 # Begin Source File
 
@@ -144,55 +140,55 @@ SOURCE=.\encode.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\except.cpp
+SOURCE=.\Exception.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\giop.cpp
+SOURCE=.\GIOP.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\iiopobj.cpp
+SOURCE=.\IIOP_Interpreter.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\iioporb.cpp
+SOURCE=.\IIOP_Object.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\interp.cpp
+SOURCE=.\IIOP_ORB.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\marshal.cpp
+SOURCE=.\Marshal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\nvlist.cpp
+SOURCE=.\NVList.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\object.cpp
+SOURCE=.\Object.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\objkeyC.cpp
+SOURCE=.\Object_KeyC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\objtable.cpp
+SOURCE=.\Object_Table.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\optable.cpp
+SOURCE=.\Operation_Table.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\orb_core.cpp
+SOURCE=.\ORB.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\orbobj.cpp
+SOURCE=.\ORB_Core.cpp
 # End Source File
 # Begin Source File
 
@@ -200,55 +196,59 @@ SOURCE=.\params.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\poa.cpp
+SOURCE=.\POA.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\poaC.cpp
+SOURCE=.\POAC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\poaS.cpp
+SOURCE=.\POAS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\principa.cpp
+SOURCE=.\Principal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\request.cpp
+SOURCE=.\Request.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\sequence.cpp
+SOURCE=.\Sequence.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\servant_base.cpp
+SOURCE=.\Servant_Base.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\server_factory.cpp
+SOURCE=.\Server_Request.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\svrrqst.cpp
+SOURCE=.\Server_Strategy_Factory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\tao_internals.cpp
+SOURCE=.\TAO.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\tao_util.cpp
+SOURCE=.\TAO_Internal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\tc_const.cpp
+SOURCE=.\Timeprobe.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\typecode.cpp
+SOURCE=.\Typecode.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Typecode_Constants.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -272,7 +272,7 @@ SOURCE=.\cdr.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\client_factory.h
+SOURCE=.\Client_Strategy_Factory.h
 # End Source File
 # Begin Source File
 
@@ -281,10 +281,6 @@ SOURCE=.\connect.h
 # Begin Source File
 
 SOURCE=.\corba.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\corbacom.h
 # End Source File
 # Begin Source File
 
@@ -300,7 +296,7 @@ SOURCE=.\default_server.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\except.h
+SOURCE=.\Exception.h
 # End Source File
 # Begin Source File
 
@@ -308,15 +304,19 @@ SOURCE=.\giop.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\iiopobj.h
+SOURCE=.\IIOP_Interpreter.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\iioporb.h
+SOURCE=.\IIOP_Object.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\managed_types.h
+SOURCE=.\IIOP_ORB.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\compat\initguid.h
 # End Source File
 # Begin Source File
 
@@ -328,19 +328,23 @@ SOURCE=.\nvlist.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\compat\objbase.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\object.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\objkeyC.h
+SOURCE=.\Object_KeyC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\objtable.h
+SOURCE=.\Object_Table.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\optable.h
+SOURCE=.\Operation_Table.h
 # End Source File
 # Begin Source File
 
@@ -352,11 +356,11 @@ SOURCE=.\orb_core.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\orbconf.h
+SOURCE=.\ORB_Strategies_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\orbobj.h
+SOURCE=.\orbconf.h
 # End Source File
 # Begin Source File
 
@@ -365,6 +369,10 @@ SOURCE=.\params.h
 # Begin Source File
 
 SOURCE=.\poa.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\poa_macros.h
 # End Source File
 # Begin Source File
 
@@ -380,7 +388,7 @@ SOURCE=.\poaS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\principa.h
+SOURCE=.\Principal.h
 # End Source File
 # Begin Source File
 
@@ -392,11 +400,19 @@ SOURCE=.\sequence.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Sequence_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\servant_base.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\server_factory.h
+SOURCE=.\Server_Request.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Server_Strategy_Factory.h
 # End Source File
 # Begin Source File
 
@@ -408,11 +424,15 @@ SOURCE=.\stub.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\svrrqst.h
+SOURCE=.\TAO.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\tao_internals.h
+SOURCE=.\TAO_Internal.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Timeprobe.h
 # End Source File
 # Begin Source File
 
@@ -436,15 +456,7 @@ SOURCE=.\cdr.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\client_factory.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\connect.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\corbacom.i
 # End Source File
 # Begin Source File
 
@@ -456,19 +468,19 @@ SOURCE=.\default_server.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Exception.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\giop.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\iiopobj.i
+SOURCE=.\IIOP_Object.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\iioporb.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\managed_types.i
+SOURCE=.\IIOP_ORB.i
 # End Source File
 # Begin Source File
 
@@ -476,11 +488,19 @@ SOURCE=.\marshal.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\NVList.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\object.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\objkeyC.i
+SOURCE=.\Object_KeyC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ORB.i
 # End Source File
 # Begin Source File
 
@@ -488,15 +508,11 @@ SOURCE=.\orb_core.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\orbobj.i
+SOURCE=.\ORB_Strategies_T.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\params.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\poa.i
 # End Source File
 # Begin Source File
 
@@ -508,11 +524,19 @@ SOURCE=.\poaS.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Request.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\sequence.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\server_factory.i
+SOURCE=.\Sequence_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Server_Request.i
 # End Source File
 # Begin Source File
 
@@ -520,11 +544,11 @@ SOURCE=.\stub.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\svrrqst.i
+SOURCE=.\TAO_Internal.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\tao_internals.i
+SOURCE=.\Timeprobe.i
 # End Source File
 # Begin Source File
 
