@@ -1,3 +1,66 @@
+Tue Sep 14 15:02:24 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/ciao/Context_Impl_Base.cpp:
+        * DAnCE/ciao/Context_Impl_Base.h:
+        * DAnCE/ciao/Context_Impl_T.cpp:
+        * DAnCE/ciao/Context_Impl_T.h:
+        * DAnCE/ciao/Home_Servant_Impl_Base.cpp:
+        * DAnCE/ciao/Home_Servant_Impl_Base.h:
+        * DAnCE/ciao/Home_Servant_Impl_T.cpp:
+        * DAnCE/ciao/Home_Servant_Impl_T.h:
+        * ciao/Context_Impl_Base.cpp:
+        * ciao/Context_Impl_Base.h:
+        * ciao/Context_Impl_T.cpp:
+        * ciao/Context_Impl_T.h:
+        * ciao/Home_Servant_Impl_Base.cpp:
+        * ciao/Home_Servant_Impl_Base.h:
+        * ciao/Home_Servant_Impl_T.cpp:
+        * ciao/Home_Servant_Impl_T.h:
+
+          New files, duplicated in CIAO/ciao and
+          CIAO/DAnCE/ciao, containing base classes 
+          for the CIDL-compiler-generated context
+          and home servant classes. A template class
+          sits in the hierarchy between the generated
+          class and its skeleton base class (in the
+          case of the home servant) or its executor
+          base (in the case of the context). The
+          template class also inherits from a 
+          non-template class which is used to hold
+          members and operations not using any template
+          parameters.
+
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        * DAnCE/ciao/CCM_Core.mpc:
+        * DAnCE/ciao/Servant_Impl_Base.cpp:
+        * DAnCE/ciao/Servant_Impl_Base.h:
+        * DAnCE/ciao/Servant_Impl_T.cpp:
+        * DAnCE/ciao/Servant_Impl_T.h:
+        * ciao/CCM_Core.mpc:
+        * ciao/Servant_Impl_Base.cpp:
+        * ciao/Servant_Impl_Base.h:
+        * ciao/Servant_Impl_T.cpp:
+        * ciao/Servant_Impl_T.h:
+
+	  Modified existing files to correspond with the
+          new files described above and:
+
+	  - Added implementations for the component servant
+            operations provide_facet(), get_named_facets(),
+	    get_consumer() and get_named_consumers().
+
+	  - Added inheritance of CCMObject to the non-template
+	    base class, to enable operations in the template
+ 	    base class, which used no template parameters but
+ 	    which were there only to be in the inheritance
+	    hierarchy from skeleton to generated servant, to
+	    be moved to the non-template base class, and
+	    thus not be reinstantiated with every new type.
+
+	  - Moved operations from generated code to one of
+	    the two base classes.
+
 Mon Sep 13 13:18:33 2004  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * RepositoryManager/Update_Plan.h

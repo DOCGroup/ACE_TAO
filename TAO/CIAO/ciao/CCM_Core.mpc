@@ -72,7 +72,6 @@ project (CIAO_Server) : orbsvcslib, portableserver, valuetype, ifr_client, secur
   IDL_Files {
     CCM_Deployment.idl
     CIAO_Servers.idl
-//    HomeRegistrar.idl
   }
 
   Source_Files {
@@ -84,6 +83,8 @@ project (CIAO_Server) : orbsvcslib, portableserver, valuetype, ifr_client, secur
     ComponentServer_Impl.cpp
     Container_Base.cpp
     Container_Impl.cpp
+    Context_Impl_Base.cpp
+    Home_Servant_Impl_Base.cpp
     Servant_Impl_Base.cpp
     Servant_Activator.cpp
     Port_Activator.cpp
@@ -98,6 +99,8 @@ project (CIAO_Server) : orbsvcslib, portableserver, valuetype, ifr_client, secur
   }
   
   Template_Files {
+    Context_Impl_T.cpp
+    Home_Servant_Impl_T.cpp
     Object_Set_T.cpp
     Servant_Impl_T.cpp
     Servant_Activator_T.cpp
