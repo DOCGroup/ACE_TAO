@@ -50,7 +50,7 @@ public:
   // The hash map has already been preallocated for us.  We just need
   // to set our data members take ownership of it.
 
-  ~TAO_Persistent_Bindings_Map (void);
+  virtual ~TAO_Persistent_Bindings_Map (void);
   // Destructor.  Does not deallocate the hash map: if an instance of
   // this class goes out of scope, its hash_map remains in persistent storage.
 
