@@ -18,9 +18,6 @@
 
 ACE_RCSID(tests, RMCast_Membership_Test, "$Id$")
 
-const size_t message_size = 8 * 1024;
-const int total_message_count = 40;
-
 // ****************************************************************
 
 //! Simple proxy for the ACE_RMCast_Membership test harness

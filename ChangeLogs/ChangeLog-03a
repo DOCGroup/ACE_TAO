@@ -1,3 +1,11 @@
+Wed Nov  8 16:11:11 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/RMCast/RMCast_Membership_Test.cpp:
+          Remove unused variables
+
+        * bin/make_pretty.pl:
+          Add regular expression to detect more linker errors.
+
 Wed Nov  8 14:10:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/IPC_SAP/FIFO_SAP/FIFO-Msg-server.cpp:
