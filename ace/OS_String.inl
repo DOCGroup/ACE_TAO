@@ -454,9 +454,9 @@ ACE_OS_String::strncasecmp (const char *s, const char *t, size_t len)
 # if defined (ACE_LACKS_STRCASECMP)
   const char *scan1 = s;
   const char *scan2 = t;
-  ssize_t count = ssize_t (len);
+  size_t count = 0;
 
-  while (--count >= 0
+  while (count++ < len
          && *scan1 != 0
          && ACE_OS_String::to_lower (*scan1) == ACE_OS_String::to_lower (*scan2))
     {
@@ -464,7 +464,7 @@ ACE_OS_String::strncasecmp (const char *s, const char *t, size_t len)
       ++scan2;
     }
 
-  if (count < 0)
+  if (count > len)
     return 0;
 
   // The following case analysis is necessary so that characters which
@@ -494,9 +494,9 @@ ACE_OS_String::strncasecmp (const wchar_t *s, const wchar_t *t, size_t len)
 # if !defined (ACE_WIN32)
   const wchar_t *scan1 = s;
   const wchar_t *scan2 = t;
-  ssize_t count = ssize_t (n);
+  size_t count = 0;
 
-  while (--count >= 0
+  while (count++ > len
          && *scan1 != 0
          && ACE_OS_String::to_lower (*scan1) == ACE_OS_String::to_lower (*scan2))
     {
@@ -504,7 +504,7 @@ ACE_OS_String::strncasecmp (const wchar_t *s, const wchar_t *t, size_t len)
       ++scan2;
     }
 
-  if (count < 0)
+  if (count > len)
     return 0;
 
   // The following case analysis is necessary so that characters which
