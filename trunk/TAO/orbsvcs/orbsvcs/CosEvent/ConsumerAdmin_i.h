@@ -33,24 +33,26 @@ class ConsumerAdmin_i : public POA_CosEventChannelAdmin::ConsumerAdmin
   //
 public:
   // = Initialization and termination methods.
-  ConsumerAdmin_i (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
-                   RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin);
+  ConsumerAdmin_i (void);
 
   ~ConsumerAdmin_i ();
 
+  int init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
+            RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin);
+
   virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
     obtain_push_supplier(CORBA::Environment &TAO_TRY_ENV);
-  // returns a new ProxyPushSupplier_ptr.
+  // Returns a new ProxyPushSupplier_ptr.
 
   virtual CosEventChannelAdmin::ProxyPullSupplier_ptr
     obtain_pull_supplier(CORBA::Environment &TAO_TRY_ENV);
-  // returns a new ProxyPullSupplier_ptr.
+  // Returns a new ProxyPullSupplier_ptr.
 
 private:
-  const RtecEventChannelAdmin::ConsumerQOS &qos_;
+  RtecEventChannelAdmin::ConsumerQOS qos_;
   // The ConsumerQOS specified by the user of this class.
 
-  RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin_;
+  RtecEventChannelAdmin::ConsumerAdmin_var rtec_consumeradmin_;
   // The RtecEventChannelAdmin::ConsumerAdmin specified by the user of this class.
 };
 

@@ -22,6 +22,8 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/CosEventChannelAdminS.h"
 
+class PushSupplierWrapper;
+
 class ProxyPushConsumer_i : public
 POA_CosEventChannelAdmin::ProxyPushConsumer
 {
@@ -48,11 +50,19 @@ public:
                                      CORBA::Environment &TAO_TRY_ENV);
   // Connects a push supplier.
 private:
+
+  int connected (void);
+  // Returns 0 if a push_supplier is already connected to this ProxyPushConsumer,
+  // otherwise it returns a 1.
+
   const RtecEventChannelAdmin::SupplierQOS &qos_;
   // The SupplierQOS specified by the user of this class.
 
   RtecEventChannelAdmin::ProxyPushConsumer_ptr ppc_;
   // The Rtec ProxyPushConsumer specified by the user of this class.
+
+  PushSupplierWrapper *wrapper_;
+  // The Rtec PushSupplier wrapper used by the Rtec proxyPushConsumer.
 };
 
 #endif // _PROXYPUSHCONSUMER_H

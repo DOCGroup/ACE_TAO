@@ -2,17 +2,27 @@
 //
 #include "CosEvent/SupplierAdmin_i.h"
 
-SupplierAdmin_i::SupplierAdmin_i(const RtecEventChannelAdmin::SupplierQOS &qos,
-                                 RtecEventChannelAdmin::SupplierAdmin_ptr
-                                 rtec_supplieradmin)
-  :qos_ (qos),
-   rtec_supplieradmin_(RtecEventChannelAdmin::SupplierAdmin::_duplicate (rtec_supplieradmin))
+SupplierAdmin_i::SupplierAdmin_i (void)
+  :qos_ (),
+   rtec_supplieradmin_ ()
 {
+  // No-Op.
 }
 
 SupplierAdmin_i::~SupplierAdmin_i ()
 {
-  CORBA::release (this->rtec_supplieradmin_);
+  // No-Op.
+}
+
+int
+SupplierAdmin_i::init (const RtecEventChannelAdmin::SupplierQOS &supplierqos,
+                     RtecEventChannelAdmin::SupplierAdmin_ptr rtec_supplieradmin)
+{
+  this->qos_ = supplierqos;
+  this->rtec_supplieradmin_ =
+    RtecEventChannelAdmin::SupplierAdmin::_duplicate (rtec_supplieradmin);
+
+  return 0;
 }
 
 CosEventChannelAdmin::ProxyPushConsumer_ptr
@@ -34,5 +44,5 @@ CosEventChannelAdmin::ProxyPullConsumer_ptr
 SupplierAdmin_i::obtain_pull_consumer (CORBA::Environment &TAO_TRY_ENV)
 {
   // TODO: implement this.
-  return 0;
+  return CosEventChannelAdmin::ProxyPullConsumer::_nil ();
 }

@@ -35,18 +35,17 @@ class EventChannel_i : public POA_CosEventChannelAdmin::EventChannel
   //
 public:
   // = Initialization and termination methods.
-  EventChannel_i (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
-                  const RtecEventChannelAdmin::SupplierQOS &supplierqos,
-                  RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin,
-                  RtecEventChannelAdmin::SupplierAdmin_ptr rtec_supplieradmin);
+  EventChannel_i (void);
   // Initializes the data members.
 
   ~EventChannel_i ();
-  // deactivates the EventChannel.
 
-  int init (CORBA::Environment &TAO_TRY_ENV);
-  // activates the ConsumerAdmin and SupplierAdmin servants.
-  // returns -1 on error, 0 on success.
+  int init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
+            const RtecEventChannelAdmin::SupplierQOS &supplierqos,
+            RtecEventChannelAdmin::EventChannel_ptr rtec,
+            CORBA::Environment &TAO_TRY_ENV);
+  // Activates the ConsumerAdmin and SupplierAdmin servants.
+  // Returns -1 on error, 0 on success.
 
   virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (CORBA::Environment &TAO_TRY_ENV);
   // The for_consumers method will return the same ConsumerAdmin_ptr everytime its called.
@@ -55,13 +54,18 @@ public:
   // The for_suppliers method will return the same SupplierAdmin_ptr everytime its called.
 
   virtual void destroy (CORBA::Environment &TAO_TRY_ENV);
-  // destroys this object.
+  // Destroys this object.
 
+  void shutdown (CORBA::Environment &TAO_TRY_ENV);
+  // destroys the object and deletes it also.
 private:
   ConsumerAdmin_i consumer_admin_;
-  SupplierAdmin_i supplier_admin_;
+  // ConsumerAdmin servant object.
 
-  CosEventChannelAdmin::ConsumerAdmin_ptr consumeradmin_ ;
+  SupplierAdmin_i supplier_admin_;
+  // SupplierAdmin servant object.
+
+  CosEventChannelAdmin::ConsumerAdmin_ptr consumeradmin_;
   CosEventChannelAdmin::SupplierAdmin_ptr supplieradmin_;
 };
 
