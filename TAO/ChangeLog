@@ -1,7 +1,18 @@
+Tue Jun 22 14:10:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/ORB.cpp:
+        * tao/TAO_Server_Request.cpp:
+        * tao/Transport.cpp:
+          Replaced all checks for ACE_HAS_PURIFY with ACE_HAS_MEMORY_PROFILER,
+          this is also set for valgrind and reduces the number of errors we
+          get from valgrind
+
 Tue Jun 22 08:40:02 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/be_global.cpp (prep_be_arg):
-        
+
           Fixed unused arg warning.
 
 Tue Jun 22 08:04:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
