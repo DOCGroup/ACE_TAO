@@ -256,8 +256,7 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
 
   // Fortunately, AST_Field::Direction and IR_ParameterMode 
   // are ordered identically.
-  this->params_[this->index_].mode = ACE_static_cast (IR_ParameterMode,
-                                                      node->direction ());
+  this->params_[this->index_].mode = (IR_ParameterMode) node->direction ();
 
   // IfR method create_operation does not use this - it just needs
   // to be non-null for marshaling.
