@@ -28,7 +28,7 @@
 #include "tao/IORTable/IORTable.h"
 
 // Include Name Service header
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 
 #include "ace/SString.h"
 #include "ace/Read_Buffer.h"
