@@ -2,12 +2,12 @@
 #
 # $Id$
 #
-# Parse the build.txt files from an autobuild that was generated with the 
+# Parse the build.txt files from an autobuild that was generated with the
 # g++_metric.sh script, e.g., with CXX=g++_metric.sh which outputs
-# compile times on a per object basis, and use the data to generate time 
+# compile times on a per object basis, and use the data to generate time
 # series graphs with gnuplot.
 #
-# For use with an autobuild, place a line something like this in the xml file, 
+# For use with an autobuild, place a line something like this in the xml file,
 # after the log file is closed, but before it's moved.
 #
 #  <command name="shell"  options="$ACE_ROOT/bin/generate_compile_stats.sh <path>/build.txt <destination>" />
@@ -33,7 +33,7 @@ parse_time ()
   local PT_MINUTE=""
   local PT_SECOND=""
   local PT_TIMEZONE=""
-  
+
   read -a line
   for token in "${line[@]}"; do
     #echo "$INDEX = $token"
@@ -59,7 +59,7 @@ parse_time ()
           PT_SECOND="${token##*:}" ;;
       4 ) PT_TIMEZONE="$token" ;;
       5 ) PT_YEAR="$token" ;;
-    esac 
+    esac
     let INDEX=$INDEX+1
   done
   if [ "$1" = "debug" ]; then
@@ -74,7 +74,7 @@ parse_time ()
   echo "$PT_YEAR/$PT_MONTH/$PT_DAY-$PT_HOUR:$PT_MINUTE"
 }
 
-# grab date from line with following format: 
+# grab date from line with following format:
 #################### End [Fri Apr 11 00:18:31 2003 UTC]
 # and return it in this format: Fri Apr 11 00:18:31 UTC 2003 which is
 # what parse_time() expects
@@ -103,7 +103,7 @@ strip_date ()
 parse ()
 {
   echo "parse()"
-  # set input file and destination (required) 
+  # set input file and destination (required)
   if [ $# -gt 1 ]; then
     INFILE=$1
     DEST=$2
@@ -151,7 +151,7 @@ gen_chart ()
   local high=$4
 
   gnuplot <<EOF
-    #set grid
+    set data style lp l
     set time "$DATE"
     set xdata time
     set timefmt "%Y/%m/%d-%H:%M"
@@ -162,29 +162,37 @@ gen_chart ()
     set terminal png small color
     set yrange [$low:$high]
     set output ".metrics/images/${object}.png"
-    set title "${object//___//}" 
-    plot '.metrics/data/${object}.txt' using 1:2 notitle w l
+    set title "${object//___//}"
+    plot '.metrics/data/${object}.txt' using 1:2 notitle w points, '.metrics/data/${object}.txt' using 1:2 notitle w l lt 3 lw 4
     exit
 EOF
 
   # copy the data and images to $DEST
   /bin/cp .metrics/images/${object}.png $DEST/images/${object}.png
+  # don't do thumbnails, yet...
+  #/bin/cp .metrics/images/${object}.png .metrics/images/thumbnails/${object}.png
+  #/usr/bin/X11/mogrify -geometry '25%' .metrics/images/thumbnails/${object}.png
+  #/bin/cp .metrics/images/thumbnails/${object}.mgk $DEST/images/thumbnails/${object}.png
   /usr/bin/tac .metrics/data/${object}.txt > $DEST/data/${object}.txt
   /usr/bin/tail -5 .metrics/data/${object}.txt > $DEST/data/LAST_${object}.txt
+
 }
 
 # Make sure hidden directory tree exists, and create it if it doesn't
 create_dirs ()
 {
-  echo "create_dirs()"
-  if ! [ -d ".metrics" ]; then
-    mkdir .metrics
+  echo "create_dirs() '$1'"
+  if ! [ -d "${1}" ]; then
+    mkdir ${1}
   fi
-  if ! [ -d ".metrics/data" ]; then
-    mkdir .metrics/data
+  if ! [ -d "${1}data" ]; then
+    mkdir ${1}data
   fi
-  if ! [ -d ".metrics/images" ]; then
-    mkdir .metrics/images
+  if ! [ -d "${1}images" ]; then
+    mkdir ${1}images
+  fi
+  if ! [ -d "${1}images/thumbnails" ]; then
+    mkdir ${1}images/thumbnails
   fi
 }
 
@@ -202,7 +210,7 @@ process_file ()
 
     # get path
     CURRENT_PATH=${target%/*}
-    
+
     # strip off the hidden directory if needbe
     CURRENT_PATH=${CURRENT_PATH%/.*}
 
@@ -212,7 +220,7 @@ process_file ()
     # strip path off of target
     CURRENT_OBJECT=${CURRENT_PATH}___${target##*/}
     #echo "target = $target, object = $CURRENT_OBJECT,  path = $CURRENT_PATH"
-    
+
     let "CURRENT_TIME=($time/1000)+$FUDGE_FACTOR"
     echo $DATE $CURRENT_TIME >> .metrics/data/${CURRENT_OBJECT}.txt
 
@@ -264,7 +272,7 @@ composite_list ()
       elif [ "$i" = "${i#-}" -a "$i" = "${i#/}" -a "$i" != "${i%.o}" ]; then
         OBJ_LIST="$OBJ_LIST ${DIR}${i##*/}"
         FOUND_OBJ=1
-      fi 
+      fi
     done # for
     if [ $FOUND_OBJ -eq 1 ]; then
       echo "$BASE_OBJ : $OBJ_LIST"
@@ -310,13 +318,13 @@ process_composite_objects ()
     echo "$DATE $TOTAL_TIME" >> ${lpath}${outfile}.txt
     let TOTAL_TIME=0
   done # while
-  
+
 }
 
 create_images ()
 {
   echo "create_images()"
- 
+
   local DEST=$1
   local LOW=0
   local HIGH=10000
@@ -338,7 +346,7 @@ create_images ()
       object="${object%.txt}"
       gen_chart "${object##*/}" "$DEST" "$LOW" "$HIGH" >/dev/null 2>&1
     fi
-  done  
+  done
 
 }
 
@@ -348,8 +356,17 @@ create_index_page ()
 
   echo "<html>"
   echo "<head><title>$TITLE</title></head>"
+  echo '<style><!--'
+  echo 'body,td,a,p,.h{font-family:arial,sans-serif;}'
+  echo '.h{font-size: 20px;}'
+  echo '.q{text-decoration:none; color:#0000cc;}'
+  echo '//-->'
+  echo '</style>'
   echo '<body text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">'
   echo "<br><center><h1>$TITLE</h1></center><br><hr>"
+  echo '<p>One of the goals of the PCES-TENA project is to decrease compile times.
+           In order to track our progress, metrics are gathered nightly on all
+           objects in the ACE+TAO distribution and displayed here.'
   echo '<ul>'
   echo '<li><a href="ace.html">ACE</a>'
   echo '<li><a href="tao.html">TAO</a>'
@@ -378,6 +395,7 @@ create_page ()
   echo "<br><hr><br>"
   echo "<center><h2>Detail</h2></center>"
 
+  # todo: make this a table and add more detail to each object.
   echo "<ul>"
   while read i; do
     if [ -e ".metrics/${i}.html" ]; then
@@ -388,10 +406,10 @@ create_page ()
       # since you'll only have images if it's a composite, strip off the
       # path for the name
       echo "<li><a href=\"images/$i.png\">${i##*___}</a>"
-    fi    
+    fi
   done # for
   echo '</ul>'
-  
+
   # footer
   echo '</body></html>'
 
@@ -408,10 +426,10 @@ sort_list ()
   for i in $@; do
     echo "$i" >> .metrics/tmp_list
     #echo $i
-  done 
+  done
 
   # sort eats underscores, soo...
-  sed "s/___/000/" .metrics/tmp_list | sort | sed "s/000/___/"
+  sed "s/___/000/g" .metrics/tmp_list | sort | sed "s/000/___/g"
 }
 
 create_html ()
@@ -427,7 +445,7 @@ create_html ()
     #echo "$base"
     # create individual page for app/lib
     #echo "creating $base.html with $files"
-    
+
     sort_list $files | create_page $base > .metrics/$base.html
     cp .metrics/$base.html $DEST/$base.html
     if [ "$base" != "${base#TAO}" ]; then
@@ -441,7 +459,7 @@ create_html ()
   # create main page
   create_index_page > .metrics/index.html
   cp .metrics/index.html $DEST/index.html
-  
+
   sort_list $ACE_OBJS | create_page "ACE" > .metrics/ace.html
   cp .metrics/ace.html $DEST/ace.html
 
@@ -458,7 +476,8 @@ DATE=""
 FUDGE_FACTOR=0
 
 parse $@
-create_dirs
+create_dirs ".metrics/"
+create_dirs "$DEST/"
 
 DATE=`tail -n 1 $INFILE | strip_date | parse_time`
 echo "date = $DATE"
@@ -468,7 +487,7 @@ grep "compile time:" $INFILE | grep "\.o" | cut -d' ' -f3,4 | process_file
 
 create_composite_list $INFILE
 
-cat .metrics/composites.txt | process_composite_objects 
+cat .metrics/composites.txt | process_composite_objects
 
 ls .metrics/data/*.txt | create_images $DEST
 
