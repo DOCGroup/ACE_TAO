@@ -71,7 +71,7 @@ main (int argc, char *argv[])
         data_input[i] = i % 9;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Sending octet sequence of length %u\n",
+                  "Sending  octet sequence of length:\t%u\n",
                   data_input.length()));
 
       txObject->send (data_input, ACE_TRY_ENV);
@@ -83,7 +83,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Received octet sequence of length %u\n",
+                  "Received octet sequence of length:\t%u\n",
                   data_output->length()));
 
       txObject->shutdown (ACE_TRY_ENV);

@@ -26,7 +26,7 @@ TX_Object_i::send (const DataSeq & data,
   this->data_ = data;
 
   ACE_DEBUG ((LM_DEBUG,
-              "Received octet sequence of length: %u\n",
+              "Received octet sequence of length:\t%u\n",
               data.length ()));
 }
 
@@ -43,7 +43,7 @@ TX_Object_i::recv (DataSeq_out data,
   (*data) = this->data_;
 
   ACE_DEBUG ((LM_DEBUG,
-              "Sending octet sequence of length: %u\n",
+              "Sending  octet sequence of length:\t%u\n",
               data->length ()));
 }
 
