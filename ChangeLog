@@ -1,3 +1,10 @@
+Sun Jan  2 12:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Thread_Manager.cpp:
+          VxWorks deliver also a pthread implementation. This can be used by
+          defined ACE_HAS_PTHREADS, but when this is set, we don't need to use
+          some special VxWorks code.
+
 Sun Jan  2 11:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdlib.cpp:
