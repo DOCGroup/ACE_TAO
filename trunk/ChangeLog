@@ -1,69 +1,75 @@
+Mon Dec  8 09:14:39 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Driver.pm:
+
+          Remove trailing slashes and duplicate slashes from relative paths.
+
 Sun Dec  7 20:23:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/auto_run_tests.pl:
+        * bin/auto_run_tests.pl:
 
-	  Fixed a problem with this checkin "Fri Nov 21 07:24:07 UTC 2003
-	  Don Hinton  <dhinton@dresystems.com>". The config_list
-	  declaration should be within the loop, else the list will be
-	  permanent. This lead to our ACE tests being run thrice, TAO ORB
-	  tests twice and other tests once. That change was bogus. All
-	  that was required was to remove ":" in the optlist.  Finding
-	  this out only took 3 hours after getting mislead to search
-	  through all the perl scripts for autobuild :(!
+          Fixed a problem with this checkin "Fri Nov 21 07:24:07 UTC 2003
+          Don Hinton  <dhinton@dresystems.com>". The config_list
+          declaration should be within the loop, else the list will be
+          permanent. This lead to our ACE tests being run thrice, TAO ORB
+          tests twice and other tests once. That change was bogus. All
+          that was required was to remove ":" in the optlist.  Finding
+          this out only took 3 hours after getting mislead to search
+          through all the perl scripts for autobuild :(!
 
 Sat Dec  6 19:36:19 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/os_include/sys/os_stat.h: Added #include "ace/Time_Value.h"
-	  in the ACE_HAS_WINCE section because the WinCE version of struct
-	  stat uses ACE_Time_Value for time fields.
+        * ace/os_include/sys/os_stat.h: Added #include "ace/Time_Value.h"
+          in the ACE_HAS_WINCE section because the WinCE version of struct
+          stat uses ACE_Time_Value for time fields.
 
-	* ace/config-WinCE.h: Added ACE_LACKS_FCNTL_H. eVC doesn't supply this,
-	  at least thru version 4.1.
+        * ace/config-WinCE.h: Added ACE_LACKS_FCNTL_H. eVC doesn't supply this,
+          at least thru version 4.1.
 
-	* ace/iosfwd.h: Disable most of this file if ACE_LACKS_IOSTREAM_TOTALLY
-	  is set.
+        * ace/iosfwd.h: Disable most of this file if ACE_LACKS_IOSTREAM_TOTALLY
+          is set.
 
-	* ace/QtReactor.h:
-	* ace/os_include/os_errno.h: Added /**/ to #include statements to
-	  keep eVC from complaining about files not being there.
+        * ace/QtReactor.h:
+        * ace/os_include/os_errno.h: Added /**/ to #include statements to
+          keep eVC from complaining about files not being there.
 
 Sat Dec  6 19:27:26 2003  Steve Huston  <shuston@riverace.com>
 
-	* tests/aix_hack_for_main.cpp: New file that is here to be
-	  compiled first, along with Main.cpp, before any real test.
-	  This simply gets Main.o ready for all the other tests.
-	  This gets things back to where each test need only compile
-	  one source file, and the AIX C++ hack to delete the tempinc
-	  directory works again.
+        * tests/aix_hack_for_main.cpp: New file that is here to be
+          compiled first, along with Main.cpp, before any real test.
+          This simply gets Main.o ready for all the other tests.
+          This gets things back to where each test need only compile
+          one source file, and the AIX C++ hack to delete the tempinc
+          directory works again.
 
-	* tests/Makefile.tests: Add aix_hack_for_main to the front of the
-	  BIN set of tests. It must be first in order for this hack to work.
+        * tests/Makefile.tests: Add aix_hack_for_main to the front of the
+          BIN set of tests. It must be first in order for this hack to work.
 
 Sat Dec  6 09:28:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/tao_other_tests.lst:
+        * bin/tao_other_tests.lst:
 
-	  A bunch of tests depend on dynamic libraries being
-	  available. They have been prevented from running in the static
-	  builds. I am sending a seperate mail to the authors to fix
-	  this. 
+          A bunch of tests depend on dynamic libraries being
+          available. They have been prevented from running in the static
+          builds. I am sending a seperate mail to the authors to fix
+          this.
 
 Sat Dec  6 12:55:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/Reactor/WFMO_Reactor/APC.dsp:
-	* examples/Reactor/WFMO_Reactor/APCTest.dsp:
-	* examples/Reactor/WFMO_Reactor/WFMO_Reactor.dsw:
-	  The APC.dsp file was a normal test file, but it sould be a
-	  binary file, to preven all kinds of problems by adding and
-	  removing a file with the same name, just removed APC.dsp and
-	  added APCTest.dsp as binary. Also updated the corresponding dsw
-	  file. This should fix an error in the msvc6 debug build when
-	  cygwin cvs is used. 
+        * examples/Reactor/WFMO_Reactor/APC.dsp:
+        * examples/Reactor/WFMO_Reactor/APCTest.dsp:
+        * examples/Reactor/WFMO_Reactor/WFMO_Reactor.dsw:
+          The APC.dsp file was a normal test file, but it sould be a
+          binary file, to preven all kinds of problems by adding and
+          removing a file with the same name, just removed APC.dsp and
+          added APCTest.dsp as binary. Also updated the corresponding dsw
+          file. This should fix an error in the msvc6 debug build when
+          cygwin cvs is used.
 
 Fri Dec  5 21:48:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/CORBA_macros.h:
-	  Fixed a typo in the documentation. Thanks to Thomas Lockhart for
+        * ace/CORBA_macros.h:
+          Fixed a typo in the documentation. Thanks to Thomas Lockhart for
           pointing it out.
 
 Fri Dec  5 10:20:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -78,26 +84,26 @@ Fri Dec  5 07:28:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Dec  4 17:13:29 2003  Steve Huston  <shuston@riverace.com>
 
-	* configure.ac: Removed extraneous set of [] for AS_IF test
-	  ace_has_tli_funcs = yes. Allows complete testing for all TLI/XTI-
-	  related features. Fixes some HP-UX problems.
-	  Wrapped ACE_HAS_BROKEN_T_ERROR check in
-	  ACE_CONVERT_WARNINGS_TO_ERRORS to work right on HP-UX.
+        * configure.ac: Removed extraneous set of [] for AS_IF test
+          ace_has_tli_funcs = yes. Allows complete testing for all TLI/XTI-
+          related features. Fixes some HP-UX problems.
+          Wrapped ACE_HAS_BROKEN_T_ERROR check in
+          ACE_CONVERT_WARNINGS_TO_ERRORS to work right on HP-UX.
 
-	* m4/compiler.m4: Added a conditional set around CFLAGS on HP-UX,
-	  trying to silence a sh diagnostic at configure time. Didn't work...
-	  Added +p to WERROR for HP aC++. Allows "future error" warnings
-	  to be noted as errors. Now can properly detect non-const 5th
-	  arg to select().
+        * m4/compiler.m4: Added a conditional set around CFLAGS on HP-UX,
+          trying to silence a sh diagnostic at configure time. Didn't work...
+          Added +p to WERROR for HP aC++. Allows "future error" warnings
+          to be noted as errors. Now can properly detect non-const 5th
+          arg to select().
 
-	* m4/tls.m4: Moved AM_CONDITIONAL(BUILD_SSL) outside of the test
-	  $ac_cv_openssl_libs. This makes sure BUILD_SSL gets set properly
-	  whether or not with-ssl is set.
+        * m4/tls.m4: Moved AM_CONDITIONAL(BUILD_SSL) outside of the test
+          $ac_cv_openssl_libs. This makes sure BUILD_SSL gets set properly
+          whether or not with-ssl is set.
 
-	* ace/OS_NS_Thread.cpp (rwlock_init): Added
-	  !defined (ACE_HAS_PTHREADS_UNIX98_EXT) to the cases where the .cpp
-	  version of rwlock_init() is defined (as opposed to the version in
-	  OS_NS_Thread.inl). This matches an earlier change to OS_NS_Thread.h:
+        * ace/OS_NS_Thread.cpp (rwlock_init): Added
+          !defined (ACE_HAS_PTHREADS_UNIX98_EXT) to the cases where the .cpp
+          version of rwlock_init() is defined (as opposed to the version in
+          OS_NS_Thread.inl). This matches an earlier change to OS_NS_Thread.h:
           Thu Nov 20 17:30:18 2003  Steve Huston  <shuston@riverace.com>
 
 Thu Dec  4 13:56:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
