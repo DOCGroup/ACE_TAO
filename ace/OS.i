@@ -844,7 +844,7 @@ ACE_OS::pipe (ACE_HANDLE fds[])
 }
 
 ACE_INLINE int
-ACE_OS::rand_r (ACE_RANDR_TYPE seed)
+ACE_OS::rand_r (ACE_RANDR_TYPE& seed)
 {
   ACE_UNUSED_ARG (seed);
 
