@@ -1,6 +1,12 @@
+Tue Jun 27 08:30:21 2000  Steve Huston  <shuston@riverace.com>
+
+        * netsvcs/servers/main.cpp: Add "ace/" to #include Logging_Strategy.h
+          to find it in it's new home.
+
 Tue Jun 27 08:24:49 2000  Steve Huston  <shuston@riverace.com>
 
-        * ace/Makefile: Updated dependencies.
+        * ace/Makefile:
+        * netsvcs/lib/Makefile: Updated dependencies.
 
 Mon Jun 26 18:26:47 2000  Ossama Othman  <ossama@uci.edu>
 
