@@ -64,8 +64,20 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 
   // last argument - is always CORBA::Environment
   os->indent ();
-  *os << "CORBA::Environment &_tao_environment\n";
-  os->decr_indent ();
+  *os << "CORBA::Environment &_tao_environment";
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
+      *os << " = " << be_idt_nl
+	  << "CORBA::Environment::default_environment ()"
+	  << be_uidt << be_uidt_nl;
+      break;
+    default:
+      break;
+    }
   *os << " )";
   switch (this->ctx_->state ())
     {

@@ -44,7 +44,7 @@ public:
   CORBA::ExceptionList_ptr exceptions (void);
   // Return the exceptions resulting from this request.
 
-  CORBA::Environment *env (void);
+  CORBA_Environment *env (void);
   // Return the <Environment> for this request.
 
   void invoke (void);
@@ -96,7 +96,7 @@ private:
   CORBA::Flags flags_;
   // invocation flags
 
-  CORBA::Environment env_;
+  CORBA_Environment env_;
   // holds exceptions
 
   CORBA::ExceptionList exceptions_;

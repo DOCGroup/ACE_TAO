@@ -139,11 +139,12 @@ class TAO_OuputCDR;
 // enum values defined in nvlist.hh, bitwise ORed.
 typedef u_int CORBA_Flags;
 
-typedef void (*TAO_Skeleton)(CORBA_ServerRequest &,
-                             //                      CORBA_Object_ptr,
-                             void *,
-                             void *,
-                             CORBA_Environment &);
+typedef void (*TAO_Skeleton)(
+    CORBA_ServerRequest &,
+    void *,
+    void *,
+    CORBA_Environment &_env
+  );
 
 // NOTE: stub APIs are nonportable, and must be explicitly #included
 // by code emitted from an IDL compiler.
@@ -154,6 +155,10 @@ typedef void (*TAO_Skeleton)(CORBA_ServerRequest &,
 
 // Alignment macros
 #include "tao/Align.h"
+
+// This class is used even in the ORB definition. Its header file only
+// uses the forward declarations.
+#include "tao/Environment.h"
 
 // CORBA class.
 #include "tao/ORB.h"
@@ -236,7 +241,7 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 // The first "do" scope is for the env.
 // The second "do" scope is for the TAO_CHECK_ENV continues.
 #define TAO_TRY \
-CORBA::Environment TAO_TRY_ENV; \
+CORBA_Environment TAO_TRY_ENV; \
 try {
 #define TAO_CATCH(TYPE,VAR) \
 } catch (TYPE & VAR) {
@@ -273,7 +278,7 @@ try {
 // I would like to experiment with this idea in the future....
 #if 0
 #define TAO_TRY_VAR(X) \
-do { CORBA::Environment &TAO_TRY_ENV = X; \
+do { CORBA_Environment &_env = CORBA_Environment::default_environment ()= X; \
 int TAO_TRY_FLAG = 1; \
 TAO_TRY_LABEL: \
 if (TAO_TRY_FLAG) \
@@ -283,7 +288,7 @@ do {
 // The first "do" scope is for the env.
 // The second "do" scope is for the TAO_CHECK_ENV continues.
 #define TAO_TRY \
-do { CORBA::Environment TAO_TRY_ENV; \
+do { CORBA_Environment TAO_TRY_ENV; \
 int TAO_TRY_FLAG = 1; \
 TAO_TRY_LABEL: \
 if (TAO_TRY_FLAG) \

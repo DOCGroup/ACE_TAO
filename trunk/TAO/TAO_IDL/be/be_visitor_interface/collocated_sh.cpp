@@ -106,8 +106,10 @@ int be_visitor_interface_collocated_sh::visit_interface (be_interface *node)
 
   *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
       << "const char *logical_type_id," << be_nl
-      << "CORBA::Environment &_tao_environment" << be_uidt_nl
-      << ");\n" << be_uidt;
+      << "CORBA::Environment &_tao_environment = " << be_idt_nl
+      << "CORBA::Environment::default_environment ()"
+      << be_uidt << be_uidt_nl
+      << ");" << be_uidt << "\n";
 
   if (this->visit_scope (node) == -1)
     {

@@ -38,12 +38,6 @@ CORBA_SystemException::completion (CORBA::CompletionStatus c)
 }
 
 ACE_INLINE
-CORBA::Exception_ptr CORBA_Environment::exception (void) const
-{
-  return this->exception_;
-}
-
-ACE_INLINE
 CORBA_ExceptionList::CORBA_ExceptionList (void)
 {
 }

@@ -271,19 +271,19 @@ public:
   // extract an object reference
 
   // the following are unsafe operations
-  // ORBOS/90-01-11, pg 672: For C++ mapping using the CORBA::Environment
+  // ORBOS/90-01-11, pg 672: For C++ mapping using the CORBA_Environment
   // parameter, two forms of the replace method are provided.
 
   void replace (CORBA::TypeCode_ptr type,
                 const void *value,
                 CORBA::Boolean any_owns_data,
-                CORBA::Environment &env);
+                CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Replace the current typecode and data with the specified one -
   // unsafe.
 
   void replace (CORBA::TypeCode_ptr type,
                 const void *value,
-                CORBA::Environment &env);
+                CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Replace the current typecode and data with the specified one -
   // unsafe. This uses a default value for the "any_owns_data" parameter
 

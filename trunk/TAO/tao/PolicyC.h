@@ -85,20 +85,20 @@ class TAO_Export  CORBA_Policy : public virtual ACE_CORBA_1 (Object)
 public:
   // the static operations
   static CORBA_Policy_ptr _duplicate (CORBA_Policy_ptr obj);
-  static CORBA_Policy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
+  static CORBA_Policy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &_env = CORBA_Environment::default_environment ());
   static CORBA_Policy_ptr _nil (void);
 
   virtual CORBA::PolicyType policy_type (
-                                         CORBA::Environment &_tao_environment
+                                         CORBA_Environment &_env = CORBA_Environment::default_environment ()
                                          );
   virtual CORBA_Policy_ptr copy (
-                                 CORBA::Environment &_tao_environment
+                                 CORBA_Environment &_env = CORBA_Environment::default_environment ()
                                  );
   virtual void destroy (
-                        CORBA::Environment &_tao_environment
+                        CORBA_Environment &_env = CORBA_Environment::default_environment ()
                         );
   virtual CORBA::Boolean _is_a (const CORBA::Char *type_id,
-                                CORBA::Environment &env
+                                CORBA_Environment &_env = CORBA_Environment::default_environment ()
                                 );
   virtual const char* _interface_repository_id (void) const;
 protected:

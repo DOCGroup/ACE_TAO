@@ -1,3 +1,71 @@
+Fri Aug 21 19:22:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_visitor_interface/collocated_sh.cpp: 
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp: 
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp: 
+	* TAO_IDL/be/be_visitor_interface/tie_sh.cpp: 
+	* TAO_IDL/be/be_visitor_operation/arglist.cpp: 
+	* TAO_IDL/be/be_visitor_operation/operation_sh.cpp: 
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp: 
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp: 
+	  The IDL compiler generates all the method definitions with a
+	  default value for the CORBA::Environment argument.
+
+	* tao/Makefile: 
+	* tao/ORB_Core.h: 
+	* tao/ORB_Core.i: 
+	* tao/ORB_Core.cpp: 
+	* tao/Environment.h: 
+	* tao/Environment.i: 
+	* tao/Environment.cpp: 
+	* tao/Exception.h: 
+	* tao/Exception.i: 
+	* tao/Exception.cpp: 
+	  The ORB provides a default for the CORBA_Environment, this
+	  default is stored in TSS storage. Creating a new
+	  CORBA_Environment pushes that default and replaces it with the
+	  new variable; the old default is restores when the variable is
+	  destroyed.
+	  The CORBA_Environment class was moved to its own file to avoid
+	  cyclic dependencies with the ORB_Core.
+
+	* tao/Any.h: 
+	* tao/CDR.h: 
+	* tao/Connect.h: 
+	* tao/CurrentC.h: 
+	* tao/Forwarding_Servant.h: 
+	* tao/GIOP.h: 
+	* tao/IIOP_Interpreter.h: 
+	* tao/IIOP_ORB.h: 
+	* tao/IIOP_Object.h: 
+	* tao/Invocation.h: 
+	* tao/Marshal.h: 
+	* tao/NVList.h: 
+	* tao/ORB.h: 
+	* tao/Object.h: 
+	* tao/POA.h: 
+	* tao/POAC.h: 
+	* tao/POAS.h: 
+	* tao/POA_CORBA.h: 
+	* tao/PolicyC.h: 
+	* tao/Request.h: 
+	* tao/Sequence.h: 
+	* tao/Sequence_T.h: 
+	* tao/Servant_Base.h: 
+	* tao/Server_Request.h: 
+	* tao/Stub.h: 
+	* tao/TAO.h: 
+	* tao/Typecode.h: 
+	* tao/corba.h: 
+	* tao/poa_T.h: 
+	* tao/varout.h: 
+	  All methods taking a CORBA_Environment as the last argument
+	  provide a default value for it.
+
+	* The new files in $TAO_ROOT/tao required the regeneration of the
+	  dependencies for all the Makefiles.
+
 Fri Aug 21 19:06:21 1998  Carlos O'Ryan <coryan@CHA-CHA>
 
 	* tests/Param_Test/client.dsp:
@@ -236,7 +304,7 @@ Thu Aug 20 08:29:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
           classes was imported from another file and the number of
           arguments was non-zero.  Thanks to Christa Schwanninger
           <christa.schwanninger@mchp.siemens.de>, for patiently convincing
-          me that this was a problem.
+          me that this problem was real.
 
 Wed Aug 19 21:03:38 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 

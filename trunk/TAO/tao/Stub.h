@@ -197,7 +197,7 @@ class TAO_Export STUB_Object
   //   The stub and DII interpreter APIs are member functions of this
   //   type.
 public:
-  virtual void do_static_call (CORBA::Environment &env,
+  virtual void do_static_call (CORBA_Environment &env,
                                const TAO_Call_Data *info,
                                void** args) = 0;
   // The "stub interpreter" method parameters are:
@@ -223,7 +223,7 @@ public:
                                 CORBA::NamedValue_ptr result,
                                 CORBA::Flags flags,
                                 CORBA::ExceptionList &exceptions,
-                                CORBA::Environment &env) = 0;
+                                CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
   // Dynamic invocations use a more costly "varargs" calling
   // convention; it's got the same input data as the (static)
   // stub-oriented one, but the data is represented somewhat
@@ -246,7 +246,7 @@ public:
   // All objref representations carry around a type ID.
 
   virtual CORBA::ULong hash (CORBA::ULong maximum,
-                             CORBA::Environment &env) = 0;
+                             CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
   // All objref representations know how to hash themselves and
   // compare themselves for equivalence to others.  It's easily
   // possible to have two objrefs that are distinct copies of data
@@ -254,7 +254,7 @@ public:
   // equivalent).
 
   virtual CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj,
-                                        CORBA::Environment &env) = 0;
+                                        CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
   // check for equivalence
 
   STUB_Object (CORBA::String p = 0);
@@ -269,7 +269,7 @@ public:
   // only supports one protocol -- the problem won't show up.
   // "Multiprotocol ORBs" will need to solve that problem though.  ]
 
-  virtual TAO_ObjectKey *key (CORBA::Environment &env) = 0;
+  virtual TAO_ObjectKey *key (CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
   // Return the object key as an out parameter.  Caller should release
   // return value when finished with it.
 

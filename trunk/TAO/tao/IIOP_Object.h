@@ -142,7 +142,7 @@ class TAO_Export IIOP_Object : public STUB_Object
   //   interpreter that let  static stubs be very small.  It's
   //   specific to objrefs with IIOP::Profile.
 public:
-  virtual void do_static_call (CORBA::Environment &env,
+  virtual void do_static_call (CORBA_Environment &env,
 			       const TAO_Call_Data *info,
 			       void** args);
   // SII-based "Stub interpreter" for static stubs.  IDL compiler just
@@ -155,7 +155,7 @@ public:
 				CORBA::NamedValue_ptr result,
 				CORBA::Flags flags,
 				CORBA::ExceptionList &exceptions,
-				CORBA::Environment &env);
+				CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // DII-based invocation analogue of the <do_static_call> above.
   // Differs in how the vararg calling convention is implemented --
   // DII doesn't use the normal call stack with its implicit typing,
@@ -164,11 +164,11 @@ public:
   // = Support for tables keyed by objrefs.
 
   CORBA::ULong hash (CORBA::ULong maximum,
-                     CORBA::Environment &env);
+                     CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Compute a hash value for the object.
 
   CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj,
-                                CORBA::Environment &env);
+                                CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // XXX All objref representations should know how to marshal
   // themselves.  That will involve ensuring that the IOR that gets
   // marshaled talks a specific protocol, otherwise the target of a
@@ -203,7 +203,7 @@ public:
   virtual CORBA::ULong _incr_refcnt (void);
   virtual CORBA::ULong _decr_refcnt (void);
 
-  virtual TAO_ObjectKey *key (CORBA::Environment &env);
+  virtual TAO_ObjectKey *key (CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Return the object key as an out parameter.  Caller should release
   // return value when finished with it.
 
@@ -236,7 +236,7 @@ public:
   // Reset the <handler_>.  Usually used on errors.
 
 protected:
-  void put_params (CORBA::Environment &env,
+  void put_params (CORBA_Environment &env,
 		   const TAO_Call_Data *info,
 		   TAO_GIOP_Invocation &call,
 		   void** args);
@@ -245,7 +245,7 @@ protected:
 
   void put_params (TAO_GIOP_Invocation &call,
 		   CORBA::NVList_ptr args,
-		   CORBA::Environment &env);
+		   CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Helper method to factor out common code in dynamic oneway
   // vs. twoway invocations.
 

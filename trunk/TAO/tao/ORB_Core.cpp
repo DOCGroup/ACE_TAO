@@ -64,7 +64,9 @@ TAO_ORB_Core::TAO_ORB_Core (void)
 #if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
     arl_same_port_connect_ (CORBA::B_FALSE),
 #endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
-    preconnections_ (0)
+    preconnections_ (0),
+    default_environment_ (0),
+    tss_environment_ (this)
 {
 }
 

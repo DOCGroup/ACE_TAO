@@ -114,7 +114,11 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "void _is_owner (CORBA::Boolean b);" << be_nl
       << "// set the ownership" << be_nl << be_nl
       << "// overridden ServantBase operations" << be_nl
-      << "PortableServer::POA_ptr _default_POA (CORBA::Environment &env);\n";
+      << "PortableServer::POA_ptr _default_POA (" << be_idt << be_idt_nl
+      << "CORBA::Environment &env = " << be_idt_nl
+      << "CORBA::Environment::default_environment ()"
+      << be_uidt << be_uidt_nl
+      << ");" << be_uidt << "\n";
 
   if (node->traverse_inheritance_graph (be_visitor_interface_tie_sh::method_helper, os) == -1)
     {

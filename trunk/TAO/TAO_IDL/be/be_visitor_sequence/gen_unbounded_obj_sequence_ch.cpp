@@ -254,7 +254,9 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
       *os << "virtual void _downcast (" << be_idt << be_idt_nl
 	  << "void* target," << be_nl
 	  << "CORBA_Object *src," << be_nl
-	  << "CORBA_Environment &env" << be_uidt_nl
+	  << "CORBA_Environment &_env = "  << be_idt_nl
+	  << "CORBA::Environment::default_environment ()"
+	  << be_uidt << be_uidt_nl
 	  << ")" << be_uidt_nl
 	  << "{" << be_idt_nl;
       pt->accept (visitor);
@@ -263,7 +265,7 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
       *os << "**, target);" << be_nl
 	  << "*tmp = ";
       pt->accept (visitor);
-      *os << "::_narrow (src, env);" << be_uidt_nl
+      *os << "::_narrow (src, _env);" << be_uidt_nl
 	  << "}\n" << be_nl;
       
       *os << "virtual CORBA_Object* _upcast (void *src) const" <<  be_nl
@@ -275,7 +277,7 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
 	  << "return *tmp;" << be_uidt_nl
 	  << "}" << be_nl;
     }
-  *os << "};\n";
+  *os << "};" << be_uidt_nl << "\n";
 
   os->gen_endif (); // endif macro
 

@@ -77,7 +77,7 @@ class TAO_Export TAO_ORB_Core
   friend CORBA::ORB_ptr CORBA::ORB_init (int &,
                                          char * const*,
                                          const char *,
-                                         CORBA::Environment &);
+                                         CORBA_Environment &_env = CORBA_Environment::default_environment ());
 public:
   // = Initialization and termination methods.
   TAO_ORB_Core (void);
@@ -223,6 +223,25 @@ public:
   // This allocator is always TSS and has no locks. It is intended for
   // allocating the buffers used in *outgoing* CDR streams.
 
+  CORBA_Environment *default_environment (void) const;
+  void default_environment (CORBA_Environment*);
+  // The thread has a default environment to simplify porting between
+  // platforms that support native C++ exceptions and those that
+  // don't. This is a TSS resource (always), but with a twist: if the
+  // user creates a new environment the old one is "pushed" (actually
+  // the new one remembers it), eventually the new environment
+  // destructor pops itself from the stack and we recover the old
+  // environment.
+  // This means that if the user create a new environment and somebody
+  // calls a function using the default one the exception will still
+  // be received in the environment created by the user.
+  // The only drawback is that environments life time must nest
+  // properly, this shouldn't be a problem because environments are
+  // usually created on the stack, but, the spec allows their creation
+  // on the heap and/or as class members; we need to investigate the
+  // tradeoffs and take a decision.
+  // 
+
 private:
   int init (int& argc, char ** argv);
   // Initialize the guts of the ORB Core.  It is intended that this be
@@ -326,6 +345,13 @@ private:
   
   TSS_ALLOCATOR cdr_buffer_allocator_;
   // The Allocator for the CDR buffers.
+
+  CORBA_Environment* default_environment_;
+  // The default environment for the thread.
+
+  CORBA_Environment tss_environment_;
+  // If the user (or library) provides no environment the ORB_Core
+  // still holds one.
 };
 
 class TAO_Default_Reactor : public ACE_Reactor

@@ -1505,26 +1505,43 @@ be_interface::gen_skel_helper (be_interface *derived,
               if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
                 {
                   // generate the static method corresponding to this method
-                  *os << "static void " << d->local_name () <<
-                    "_skel (CORBA::ServerRequest &req, void *obj,"
-                      << " void *context, CORBA::Environment &env);\n\n";
+                  *os << "static void " << d->local_name ()
+		      << "_skel (" << be_idt << be_idt_nl
+		      << "CORBA::ServerRequest &req, " << be_nl
+		      << "void *obj," << be_nl
+                      << "void *context," << be_nl
+		      << "CORBA::Environment &env =" << be_idt_nl
+		      << "CORBA::Environment::default_environment ()"
+		      << be_uidt << be_uidt_nl
+		      << ");" << be_uidt << "\n\n";
                 }
               else
                 { // generate code in the inline file
                   // generate the static method corresponding to this method
-                  *os << "ACE_INLINE void " << derived->full_skel_name () <<
-                    "::" << d->local_name () <<
-                    "_skel (CORBA::ServerRequest &req, " <<
-                    "void *obj, void *context, CORBA::Environment &env)" << nl;
-                  *os << "{\n";
-                  os->incr_indent ();
-                  *os << ancestor->full_skel_name () << "_ptr impl = (" <<
-                    derived->full_skel_name () << "_ptr) obj;" << nl;
-                  *os << ancestor->full_skel_name () << "::" << d->local_name
-                    () << "_skel (req, (" << ancestor->full_skel_name () <<
-                    "_ptr) impl, context, env);\n";
-                  os->decr_indent ();
-                  *os << "}\n";
+                  *os << "ACE_INLINE void "
+		      << derived->full_skel_name () << "::"
+		      << d->local_name ()
+		      << "_skel (" << be_idt << be_idt_nl
+		      << "CORBA::ServerRequest &req," << be_nl
+		      << "void *obj," << be_nl
+		      << "void *context," << be_nl
+		      << "CORBA::Environment &env" << be_uidt_nl
+		      << ")" << be_uidt_nl
+		      << "{" << be_idt_nl;
+		  *os << ancestor->full_skel_name ()
+		      << "_ptr impl = ("
+		      << derived->full_skel_name ()
+		      << "_ptr) obj;" << be_nl;
+                  *os << ancestor->full_skel_name ()
+		      << "::" << d->local_name ()
+		      << "_skel (" << be_idt << be_idt_nl
+		      << "req," << be_nl
+		      << "(" << ancestor->full_skel_name ()
+		      << "_ptr) impl," << be_nl
+		      << "context," << be_nl
+		      << " env" << be_uidt_nl
+		      << ");" << be_uidt << be_uidt_nl
+		      << "}\n";
                 }
             }
           else if (d->node_type () == AST_Decl::NT_attr)
@@ -1539,26 +1556,43 @@ be_interface::gen_skel_helper (be_interface *derived,
               if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
                 {
                   // generate the static method corresponding to this method
-                  *os << "static void _get_" << d->local_name () <<
-                    "_skel (CORBA::ServerRequest &req, void *obj,"
-                      << " void *context, CORBA::Environment &env);\n\n";
+                  *os << "static void _get_" << d->local_name ()
+		      << "_skel (" << be_idt << be_idt_nl
+		      << "CORBA::ServerRequest &req," << be_nl
+		      << "void *obj," << be_nl
+                      << "void *context," << be_nl
+		      << "CORBA::Environment &env =" << be_idt_nl
+		      << "CORBA::Environment::default_environment ()"
+		      << be_uidt << be_uidt_nl
+		      << ");" << be_uidt << "\n\n";
                 }
               else
                 { // generate code in the inline file
                   // generate the static method corresponding to this method
-                  *os << "ACE_INLINE void " << derived->full_skel_name () <<
-                    "::_get_" << d->local_name () <<
-                    "_skel (CORBA::ServerRequest &req, " <<
-                    "void *obj, void *context, CORBA::Environment &env)" << nl;
-                  *os << "{\n";
-                  os->incr_indent ();
-                  *os << ancestor->full_skel_name () << "_ptr impl = (" <<
-                    derived->full_skel_name () << "_ptr) obj;" << nl;
-                  *os << ancestor->full_skel_name () << "::_get_" << d->local_name
-                    () << "_skel (req, (" << ancestor->full_skel_name () <<
-                    "_ptr) impl, context, env);\n";
-                  os->decr_indent ();
-                  *os << "}\n";
+                  *os << "ACE_INLINE void "
+		      << derived->full_skel_name () << "::_get_"
+		      << d->local_name ()
+		      << "_skel (" << be_idt << be_idt_nl
+		      << "CORBA::ServerRequest &req," << be_nl
+		      << "void *obj," << be_nl
+		      << "void *context," << be_nl
+		      << "CORBA::Environment &env" << be_uidt_nl
+		      << ")" << be_uidt_nl
+		      << "{" << be_idt_nl
+		      << ancestor->full_skel_name ()
+		      << "_ptr impl = ("
+		      << derived->full_skel_name ()
+		      << "_ptr) obj;" << nl;
+                  *os << ancestor->full_skel_name ()
+		      << "::_get_" << d->local_name ()
+		      << "_skel (" << be_idt << be_idt_nl
+		      << "req," << be_nl
+		      << "(" << ancestor->full_skel_name ()
+		      << "_ptr) impl," << be_nl
+		      << "context," << be_nl
+		      << "env" << be_uidt_nl
+		      << ");" << be_uidt << be_uidt_nl
+		      << "}\n";
                 }
 
               if (!attr->readonly ())
@@ -1567,29 +1601,46 @@ be_interface::gen_skel_helper (be_interface *derived,
                   os->indent (); // start from current indentation level
                   if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
                     {
-                      // generate the static method corresponding to this method
-                      *os << "static void _set_" << d->local_name () <<
-                        "_skel (CORBA::ServerRequest &req, void *obj,"
-                          << " void *context, CORBA::Environment &env);\n\n";
+                      // generate the static method corresponding to
+		      // this method
+                      *os << "static void _set_" << d->local_name ()
+			  << "_skel (" << be_idt << be_idt_nl
+			  << "CORBA::ServerRequest &req," << be_nl
+			  << "void *obj," << be_nl
+                          << "void *context," << be_nl
+			  << "CORBA::Environment &env = " << be_idt_nl
+			  << "CORBA::Environment::default_environment ()"
+			  << be_uidt << be_uidt_nl
+			  << ");" << be_uidt << "\n\n";
                     }
                   else
                     { // generate code in the inline file
-                      // generate the static method corresponding to this method
-                      *os << "ACE_INLINE void " << derived->full_skel_name ()
-                          << "::_set_" << d->local_name () <<
-                        "_skel (CORBA::ServerRequest &req, " <<
-                        "void *obj, void *context, CORBA::Environment &env)" <<
-                        nl;
-                      *os << "{\n";
-                      os->incr_indent ();
-                      *os << ancestor->full_skel_name () << "_ptr impl = (" <<
-                        derived->full_skel_name () << "_ptr) obj;" << nl;
-                      *os << ancestor->full_skel_name () << "::_get_" <<
-                        d->local_name () << "_skel (req, (" <<
-                        ancestor->full_skel_name () <<
-                        "_ptr) impl, context, env);\n";
-                      os->decr_indent ();
-                      *os << "}\n";
+                      // generate the static method corresponding to
+		      // this method
+                      *os << "ACE_INLINE void "
+			  << derived->full_skel_name ()
+                          << "::_set_" << d->local_name ()
+			  << "_skel (" << be_idt << be_idt_nl
+			  << "CORBA::ServerRequest &req," << be_nl
+			  << "void *obj," << be_nl
+			  << "void *context," << be_nl
+			  << "CORBA::Environment &env" << be_uidt_nl
+			  << ")" << be_uidt_nl
+			  << "{" << be_idt_nl
+			  << ancestor->full_skel_name ()
+			  << "_ptr impl = ("
+			  << derived->full_skel_name ()
+			  << "_ptr) obj;" << be_nl;
+                      *os << ancestor->full_skel_name ()
+			  << "::_get_" << d->local_name ()
+			  << "_skel (" << be_idt << be_idt_nl
+			  << "req," << be_nl
+			  << "(" << ancestor->full_skel_name ()
+			  << "_ptr) impl," << be_nl
+			  << "context," << be_nl
+			  << "env" << be_uidt_nl
+			  << ");" << be_uidt << be_uidt_nl
+			  << "}\n";
                     }
 
                 }
