@@ -368,7 +368,8 @@ TAO_find (const SEQ& sequence, const OPERAND_TYPE element)
 
   for (int i = 0; i < length; i++)
     {
-      if (ACE_static_cast (const OPERAND_TYPE, sequence[i]) == element)
+      OPERAND_TYPE sequence_element = sequence[i];
+      if (sequence_element == element)
 	{	  
 	  return_value = CORBA::B_TRUE;
 	  break;
