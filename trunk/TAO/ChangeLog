@@ -1,3 +1,9 @@
+Wed Jun  4 13:44:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp: Fixed compilation
+	  errors on VxWorks. Thanks to Rob Andzik for providing the
+	  patches. 
+
 Wed Jun  4 12:40:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/orb.idl: Removed the definition of OctetSeq from the CORBA
