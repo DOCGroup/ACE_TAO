@@ -8,15 +8,15 @@
 
 // The following #defines are hacks to get around things
 // that seem to be missing or different in MVS land
-#define MAXPATHLEN 1024          /* sys/param.h not on MVS */
-#define NSIG 44                  /* missing from Signal.h */
-#define MAXHOSTNAMELEN 256       /* missing form netdb.h */
-#define howmany __howmany        /* MVS uses different names than most others */
+#define MAXPATHLEN 1024         /* sys/param.h not on MVS */
+#define NSIG 44                 /* missing from Signal.h */
+#define MAXHOSTNAMELEN 256      /* missing form netdb.h */
+#define howmany __howmany       /* MVS uses different names than most others */
 #define fd_mask __fd_mask
 #define MAXNAMLEN  __DIR_NAME_MAX
 #define ERRMAX __sys_nerr
-#if defined (log)                /* log is a macro in math.h */
-# undef log                      /* conflicts with log function in ACE */
+#if defined (log)               /* log is a macro in math.h */
+# undef log                     /* conflicts with log function in ACE */
 #endif /* log */
 
 // Optimize ACE_Handle_Set for select().
@@ -26,10 +26,10 @@
 // for a description of the following ACE_ macros
 
 #if __COMPILER_VER__ >= 0x21020000   /* OS/390 r2 or higher */
-  #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
-  #define ACE_HAS_UCONTEXT_T
+# define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
+# define ACE_HAS_UCONTEXT_T
 #else
-  #define ACE_LACKS_UCONTEXT_H
+# define ACE_LACKS_UCONTEXT_H
 #endif /* __COMPILER_VER__ >= 0x21020000 */
 #define ACE_HAS_BROKEN_CTIME
 #define ACE_HAS_UALARM
@@ -76,10 +76,8 @@
 #define ACE_HAS_VOIDPTR_SOCKOPT
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 #define ACE_HAS_YIELD_VOID_PTR
-// If ACE doesn't compile due to the lack of these methods, please
-// send email to schmidt@cs.wustl.edu reporting this. 
-// #define ACE_LACKS_CONDATTR_PSHARED
-// #define ACE_LACKS_MUTEXATTR_PSHARED
+#define ACE_LACKS_CONDATTR_PSHARED
+#define ACE_LACKS_MUTEXATTR_PSHARED
 #define ACE_LACKS_IOSTREAM_FX
 #define ACE_LACKS_KEYDELETE
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
