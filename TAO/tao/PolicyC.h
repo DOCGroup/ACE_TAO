@@ -522,15 +522,20 @@ private:
 
 TAO_Export void operator<<= (CORBA::Any &,
                              const CORBA::PolicyError &);
-TAO_Export void operator<<= (CORBA::Any &, CORBA::PolicyError*);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             CORBA::PolicyError*);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA::PolicyError *&);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       const CORBA::PolicyError *&);
 TAO_Export void operator<<= (CORBA::Any &,
                              const CORBA::InvalidPolicies &);
 TAO_Export void operator<<= (CORBA::Any &,
                              CORBA::InvalidPolicies*);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA::InvalidPolicies *&);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       const CORBA::InvalidPolicies *&);
 
 // Any operators for interface CORBA::Policy
 TAO_Export void operator<<= (CORBA::Any &,
@@ -543,12 +548,16 @@ TAO_Export void operator<<= (CORBA::Any &,
                              CORBA::PolicyList*);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA::PolicyList *&);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       const CORBA::PolicyList *&);
 TAO_Export void operator<<= (CORBA::Any &,
                              const CORBA::PolicyTypeSeq &);
 TAO_Export void operator<<= (CORBA::Any &,
                              CORBA::PolicyTypeSeq*);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA::PolicyTypeSeq *&);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       const CORBA::PolicyTypeSeq *&);
 TAO_Export void operator<<= (CORBA::Any &,
                              CORBA::SetOverrideType);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
