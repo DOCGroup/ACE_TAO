@@ -1,3 +1,7 @@
+Wed Jun 24 02:23:38 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.1.33 released.
+
 Tue Jun 23 17:30:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/Scheduling_Service/Makefile: 
