@@ -3,24 +3,6 @@
 
 // SString.i
 
-ACE_INLINE u_long
-ACE_CString::hash (void) const
-{
-  return ACE::hash_pjw (this->rep_);
-}
-
-ACE_INLINE u_long
-ACE_SString::hash (void) const
-{
-  return ACE::hash_pjw (this->rep_);
-}
-
-ACE_INLINE u_long
-ACE_WString::hash (void) const
-{
-  return ACE::hash_pjw (this->rep_);
-}
-
 // Return the <index'th> character in the string.
 
 ACE_INLINE char 
