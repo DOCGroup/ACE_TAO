@@ -1,3 +1,8 @@
+Fri Oct 09 23:48:40 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Server_Request.cpp (set_exception and set_result): Used the
+ 	  Any copy constructor to copy the user provided any.
+
 Fri Oct  9 17:13:32 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp: Used the host and

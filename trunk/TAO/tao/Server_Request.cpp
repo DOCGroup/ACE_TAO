@@ -288,11 +288,7 @@ IIOP_ServerRequest::set_result (const CORBA::Any &value,
     env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
   else
     {
-      this->retval_ = new CORBA::Any;
-      // @@ TODO Does this work in all the cases? Shouldn't we use
-      // operator= or something similar?
-      CORBA::TypeCode_var type = value.type ();
-      this->retval_->replace (type.in (), value.value (), 1, env);
+      this->retval_ = new CORBA::Any (value);
     }
 }
 
@@ -319,11 +315,7 @@ IIOP_ServerRequest::set_exception (const CORBA::Any &value,
     // Normal exception
     else
      {
-       this->exception_ = new CORBA::Any;
-       // @@ TODO Does this work in all the cases? Shouldn't we use
-       // operator= or something similar?
-       CORBA::TypeCode_var type = value.type ();
-       this->exception_->replace (type.in (), value.value (), 1, env);
+       this->exception_ = new CORBA::Any (value);
 
        // @@ This cast is not safe, but we haven't implemented the >>=
        // and <<= operators for base exceptions (yet).

@@ -61,12 +61,15 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   this->base_addr_ = addr;
   this->handle_ = handle;
 
-  long file_len = ACE_OS::filesize (this->handle_);
+  long result = ACE_OS::filesize (this->handle_);
 
-  if (file_len == -1)
+  if (result == -1)
     return -1;
 
-  if (this->length_ < ACE_static_cast (size_t, file_len))
+  // At this point we know <result> is not negative...
+  size_t file_len = ACE_static_cast (size_t, result);
+
+  if (this->length_ < file_len)
     {
       // If the length of the mapped region is less than the length of
       // the file then we force a complete new remapping by setting
@@ -75,21 +78,20 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
       this->close_filemapping_handle ();
     }
 
-  // At this point we know <file_len> is not negative...
-  this->length_ = ACE_static_cast (size_t, file_len);
-
-  if (len_request == -1)
-    len_request = 0;
-
   // Check to see if we need to extend the backing store
   int extend_backing_store = 0;
-  if (this->length_ < ACE_static_cast (size_t, len_request))
-    extend_backing_store = 1;
-
-  if (len_request > 0)
+  if (len_request != -1)
     {
-      // Set the correct length
+      if (file_len < ACE_static_cast (size_t, len_request))
+        extend_backing_store = 1;
+
+      // Set length to len_request
       this->length_ = len_request;
+    }
+  else
+    {
+      // Set length to file_request
+      this->length_ = file_len;
     }
 
   if (extend_backing_store)
