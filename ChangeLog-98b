@@ -1,3 +1,7 @@
+Wed Dec 09 22:59:38 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE version 4.6.7 released.
+
 Wed Dec 09 18:03:58 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * examples/Reactor/WFMO_Reactor/test_network_events.cpp (main):
