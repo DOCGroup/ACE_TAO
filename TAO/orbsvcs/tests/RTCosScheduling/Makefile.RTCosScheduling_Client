@@ -45,10 +45,10 @@ $(TEMPINCDIR):
 endif
 
 CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq ($(rt_corba),1)
-BIN    = $(BIN_UNCHECKED)
-else
-  all: require_warning
+ifeq (RTCosScheduling, $(findstring RTCosScheduling, $(CURRENT_COMPONENTS)))
+  ifeq ($(rt_corba),1)
+    BIN    = $(BIN_UNCHECKED)
+  endif
 endif
 
 OBJS   = $(addsuffix .o, $(notdir $(FILES)))
