@@ -630,11 +630,9 @@ static long	idl_atoi(char *, long);
 static void	idl_parse_line_and_file(char *);
 static void	idl_store_pragma(char *);
 
-
-
+#if 0
 // HPUX has yytext typed to unsigned char *. We make sure here that
-// we'll always use char *
-// static char* __yytext = (char*) yytext;
+// we'll always use char * static char* __yytext = (char*) yytext;
 // NOTE: This will not work under flex(1) were yytext is not a fixed
 // buffer, but a dynamically allocated one. This function should do
 // the trick for us.
@@ -642,6 +640,7 @@ inline char *__yytext()
 {
   return (char *) yytext;
 }
+#endif /* 0 */
 
 
 /* Macros after this point can all be overridden by user definitions in
@@ -736,7 +735,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-# line 103 "idl.ll"
+# line 102 "idl.ll"
 
 
 
@@ -821,192 +820,192 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_USER_ACTION
-# line 105 "idl.ll"
+# line 104 "idl.ll"
 return IDL_ANY;
 	YY_BREAK
 case 2:
 YY_USER_ACTION
-# line 106 "idl.ll"
+# line 105 "idl.ll"
 return IDL_MODULE;
 	YY_BREAK
 case 3:
 YY_USER_ACTION
-# line 107 "idl.ll"
+# line 106 "idl.ll"
 return IDL_RAISES;
 	YY_BREAK
 case 4:
 YY_USER_ACTION
-# line 108 "idl.ll"
+# line 107 "idl.ll"
 return IDL_READONLY;
 	YY_BREAK
 case 5:
 YY_USER_ACTION
-# line 109 "idl.ll"
+# line 108 "idl.ll"
 return IDL_ATTRIBUTE;
 	YY_BREAK
 case 6:
 YY_USER_ACTION
-# line 110 "idl.ll"
+# line 109 "idl.ll"
 return IDL_EXCEPTION;
 	YY_BREAK
 case 7:
 YY_USER_ACTION
-# line 111 "idl.ll"
+# line 110 "idl.ll"
 return IDL_CONTEXT;
 	YY_BREAK
 case 8:
 YY_USER_ACTION
-# line 112 "idl.ll"
+# line 111 "idl.ll"
 return IDL_INTERFACE;
 	YY_BREAK
 case 9:
 YY_USER_ACTION
-# line 113 "idl.ll"
+# line 112 "idl.ll"
 return IDL_CONST;
 	YY_BREAK
 case 10:
 YY_USER_ACTION
-# line 114 "idl.ll"
+# line 113 "idl.ll"
 return IDL_TYPEDEF;
 	YY_BREAK
 case 11:
 YY_USER_ACTION
-# line 115 "idl.ll"
+# line 114 "idl.ll"
 return IDL_STRUCT;
 	YY_BREAK
 case 12:
 YY_USER_ACTION
-# line 116 "idl.ll"
+# line 115 "idl.ll"
 return IDL_ENUM;
 	YY_BREAK
 case 13:
 YY_USER_ACTION
-# line 117 "idl.ll"
+# line 116 "idl.ll"
 return IDL_STRING;
 	YY_BREAK
 case 14:
 YY_USER_ACTION
-# line 118 "idl.ll"
+# line 117 "idl.ll"
 return IDL_WSTRING;
 	YY_BREAK
 case 15:
 YY_USER_ACTION
-# line 119 "idl.ll"
+# line 118 "idl.ll"
 return IDL_SEQUENCE;
 	YY_BREAK
 case 16:
 YY_USER_ACTION
-# line 120 "idl.ll"
+# line 119 "idl.ll"
 return IDL_UNION;
 	YY_BREAK
 case 17:
 YY_USER_ACTION
-# line 121 "idl.ll"
+# line 120 "idl.ll"
 return IDL_SWITCH;
 	YY_BREAK
 case 18:
 YY_USER_ACTION
-# line 122 "idl.ll"
+# line 121 "idl.ll"
 return IDL_CASE;
 	YY_BREAK
 case 19:
 YY_USER_ACTION
-# line 123 "idl.ll"
+# line 122 "idl.ll"
 return IDL_DEFAULT;
 	YY_BREAK
 case 20:
 YY_USER_ACTION
-# line 124 "idl.ll"
+# line 123 "idl.ll"
 return IDL_FLOAT;
 	YY_BREAK
 case 21:
 YY_USER_ACTION
-# line 125 "idl.ll"
+# line 124 "idl.ll"
 return IDL_DOUBLE;
 	YY_BREAK
 case 22:
 YY_USER_ACTION
-# line 126 "idl.ll"
+# line 125 "idl.ll"
 return IDL_LONG;
 	YY_BREAK
 case 23:
 YY_USER_ACTION
-# line 127 "idl.ll"
+# line 126 "idl.ll"
 return IDL_SHORT;
 	YY_BREAK
 case 24:
 YY_USER_ACTION
-# line 128 "idl.ll"
+# line 127 "idl.ll"
 return IDL_UNSIGNED;
 	YY_BREAK
 case 25:
 YY_USER_ACTION
-# line 129 "idl.ll"
+# line 128 "idl.ll"
 return IDL_CHAR;
 	YY_BREAK
 case 26:
 YY_USER_ACTION
-# line 130 "idl.ll"
+# line 129 "idl.ll"
 return IDL_WCHAR;
 	YY_BREAK
 case 27:
 YY_USER_ACTION
-# line 131 "idl.ll"
+# line 130 "idl.ll"
 return IDL_BOOLEAN;
 	YY_BREAK
 case 28:
 YY_USER_ACTION
-# line 132 "idl.ll"
+# line 131 "idl.ll"
 return IDL_OCTET;
 	YY_BREAK
 case 29:
 YY_USER_ACTION
-# line 133 "idl.ll"
+# line 132 "idl.ll"
 return IDL_VOID;
 	YY_BREAK
 case 30:
 YY_USER_ACTION
-# line 135 "idl.ll"
+# line 134 "idl.ll"
 return IDL_TRUETOK;
 	YY_BREAK
 case 31:
 YY_USER_ACTION
-# line 136 "idl.ll"
+# line 135 "idl.ll"
 return IDL_FALSETOK;
 	YY_BREAK
 case 32:
 YY_USER_ACTION
-# line 138 "idl.ll"
+# line 137 "idl.ll"
 return IDL_INOUT;
 	YY_BREAK
 case 33:
 YY_USER_ACTION
-# line 139 "idl.ll"
+# line 138 "idl.ll"
 return IDL_IN;
 	YY_BREAK
 case 34:
 YY_USER_ACTION
-# line 140 "idl.ll"
+# line 139 "idl.ll"
 return IDL_OUT;
 	YY_BREAK
 case 35:
 YY_USER_ACTION
-# line 141 "idl.ll"
+# line 140 "idl.ll"
 return IDL_ONEWAY;
 	YY_BREAK
 case 36:
 YY_USER_ACTION
-# line 143 "idl.ll"
+# line 142 "idl.ll"
 return IDL_LEFT_SHIFT;
 	YY_BREAK
 case 37:
 YY_USER_ACTION
-# line 144 "idl.ll"
+# line 143 "idl.ll"
 return IDL_RIGHT_SHIFT;
 	YY_BREAK
 case 38:
 YY_USER_ACTION
-# line 145 "idl.ll"
+# line 144 "idl.ll"
 {
 		  yylval.strval = "::";
 		  return IDL_SCOPE_DELIMITOR;
@@ -1014,60 +1013,60 @@ YY_USER_ACTION
 	YY_BREAK
 case 39:
 YY_USER_ACTION
-# line 150 "idl.ll"
+# line 149 "idl.ll"
 {
-    char *z = (char *) malloc(strlen(__yytext ()) + 1);
-    strcpy(z, __yytext ());
+    char *z = (char *) malloc(strlen(yytext) + 1);
+    strcpy(z, yytext);
     yylval.strval = z;
     return IDENTIFIER;
 }
 	YY_BREAK
 case 40:
 YY_USER_ACTION
-# line 157 "idl.ll"
+# line 156 "idl.ll"
 {
-                  yylval.dval = idl_atof(__yytext ());
+                  yylval.dval = idl_atof(yytext);
                   return IDL_FLOATING_PT_LITERAL;
                 }
 	YY_BREAK
 case 41:
 YY_USER_ACTION
-# line 161 "idl.ll"
+# line 160 "idl.ll"
 {
-                  yylval.dval = idl_atof(__yytext ());
+                  yylval.dval = idl_atof(yytext);
                   return IDL_FLOATING_PT_LITERAL;
                 }
 	YY_BREAK
 case 42:
 YY_USER_ACTION
-# line 166 "idl.ll"
+# line 165 "idl.ll"
 {
-		  yylval.ival = idl_atoi(__yytext (), 10);
+		  yylval.ival = idl_atoi(yytext, 10);
 		  return IDL_INTEGER_LITERAL;
 	        }
 	YY_BREAK
 case 43:
 YY_USER_ACTION
-# line 170 "idl.ll"
+# line 169 "idl.ll"
 {
-		  yylval.ival = idl_atoi(__yytext (), 16);
+		  yylval.ival = idl_atoi(yytext, 16);
 		  return IDL_INTEGER_LITERAL;
 	        }
 	YY_BREAK
 case 44:
 YY_USER_ACTION
-# line 174 "idl.ll"
+# line 173 "idl.ll"
 {
-		  yylval.ival = idl_atoi(__yytext (), 8);
+		  yylval.ival = idl_atoi(yytext, 8);
 		  return IDL_INTEGER_LITERAL;
 	      	}
 	YY_BREAK
 case 45:
 YY_USER_ACTION
-# line 179 "idl.ll"
+# line 178 "idl.ll"
 {
 		  /* Skip the quotes */
-		  char *tmp = __yytext ();
+		  char *tmp = yytext;
 		  tmp[strlen(tmp)-1] = '\0';
 		  yylval.sval = new String(tmp + 1);
 		  return IDL_STRING_LITERAL;
@@ -1075,61 +1074,61 @@ YY_USER_ACTION
 	YY_BREAK
 case 46:
 YY_USER_ACTION
-# line 186 "idl.ll"
+# line 185 "idl.ll"
 {
-		  yylval.cval = __yytext() [1];
+		  yylval.cval = yytext() [1];
 		  return IDL_CHARACTER_LITERAL;
 	      	}
 	YY_BREAK
 case 47:
 YY_USER_ACTION
-# line 190 "idl.ll"
+# line 189 "idl.ll"
 {
 		  // octal character constant
-		  yylval.cval = idl_escape_reader(__yytext () + 1);
+		  yylval.cval = idl_escape_reader(yytext + 1);
 		  return IDL_CHARACTER_LITERAL;
 		}
 	YY_BREAK
 case 48:
 YY_USER_ACTION
-# line 195 "idl.ll"
+# line 194 "idl.ll"
 {
-		  yylval.cval = idl_escape_reader(__yytext () + 1);
+		  yylval.cval = idl_escape_reader(yytext + 1);
 		  return IDL_CHARACTER_LITERAL;
 		}
 	YY_BREAK
 case 49:
 YY_USER_ACTION
-# line 199 "idl.ll"
+# line 198 "idl.ll"
 {/* remember pragma */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
-		  idl_store_pragma(__yytext ());
+		  idl_store_pragma(yytext);
 		}
 	YY_BREAK
 case 50:
 YY_USER_ACTION
-# line 203 "idl.ll"
+# line 202 "idl.ll"
 {
-		  idl_parse_line_and_file(__yytext ());
+		  idl_parse_line_and_file(yytext);
 		}
 	YY_BREAK
 case 51:
 YY_USER_ACTION
-# line 206 "idl.ll"
+# line 205 "idl.ll"
 {
-		  idl_parse_line_and_file(__yytext ());
+		  idl_parse_line_and_file(yytext);
 		}
 	YY_BREAK
 case 52:
 YY_USER_ACTION
-# line 209 "idl.ll"
+# line 208 "idl.ll"
 {
-		  idl_parse_line_and_file(__yytext ());
+		  idl_parse_line_and_file(yytext);
 	        }
 	YY_BREAK
 case 53:
 YY_USER_ACTION
-# line 212 "idl.ll"
+# line 211 "idl.ll"
 {
 		  /* ignore cpp ident */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
@@ -1137,7 +1136,7 @@ YY_USER_ACTION
 	YY_BREAK
 case 54:
 YY_USER_ACTION
-# line 216 "idl.ll"
+# line 215 "idl.ll"
 {
 		  /* ignore comments */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
@@ -1145,7 +1144,7 @@ YY_USER_ACTION
 	YY_BREAK
 case 55:
 YY_USER_ACTION
-# line 220 "idl.ll"
+# line 219 "idl.ll"
 {
 		  for(;;) {
 		    char c = yyinput();
@@ -1163,24 +1162,24 @@ YY_USER_ACTION
 	YY_BREAK
 case 56:
 YY_USER_ACTION
-# line 234 "idl.ll"
+# line 233 "idl.ll"
 ;
 	YY_BREAK
 case 57:
 YY_USER_ACTION
-# line 235 "idl.ll"
+# line 234 "idl.ll"
 {
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
 	YY_BREAK
 case 58:
 YY_USER_ACTION
-# line 238 "idl.ll"
-return __yytext () [0];
+# line 237 "idl.ll"
+return yytext [0];
 	YY_BREAK
 case 59:
 YY_USER_ACTION
-# line 240 "idl.ll"
+# line 239 "idl.ll"
 ECHO;
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
@@ -1889,7 +1888,7 @@ void *ptr;
 	{
 	free( ptr );
 	}
-# line 240 "idl.ll"
+# line 239 "idl.ll"
 
 	/* subroutines */
 
