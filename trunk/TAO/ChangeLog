@@ -1,3 +1,10 @@
+Wed Apr  9 14:34:52 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1482_Regression/client.bor:
+        * tests/Bug_1482_Regression/server.bor:
+          Added -GC to the IDL compiler options, added Messaging to the
+          server makefile.
+
 Wed Apr  9 11:01:12 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1482_Regression/client.bor:
