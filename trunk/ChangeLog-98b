@@ -6836,12 +6836,15 @@ Sat Aug 22 00:27:06 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
         * ace/Service_Config.cpp (fini_svcs): New method calls
           ACE_Service_Repository::instance ()->fini ().
 
-        * ace/Object_Manager.cpp (~ACE_Object_Manager): Added a call to
-          close and possibly delete all service instances in the Service
-          Repository by calling ACE_Service_Config::fini_svcs ().  This
-          call is made *before* the singletons are destroyed since the
-          service instances maybe accessing these singletons in the fini()
-          and destructor methods.
+        * ace/Object_Manager.cpp (~ACE_Object_Manager): Added a call
+          to close and possibly delete all service instances in the
+          Service Repository by calling ACE_Service_Config::fini_svcs.
+          This call is made *before* the library singletons (such as
+          the Reactor, Proactor, Thread_Manager, and Allocator) are
+          destroyed since the service instances maybe accessing these
+          singletons in the fini() and destructor methods.  Note that
+          user singletons are destroyed before the services are
+          fini'ed or closed.
 
         * ace/Service_Config.cpp (fini_svcs): Disable log messages when
           appropriate.
