@@ -24,9 +24,9 @@
 ACE_RCSID(tao, request_info, "$Id$")
 
 TAO_ClientRequest_Info::TAO_ClientRequest_Info (const char * operation,
-                                        IOP::ServiceContextList &service_context_list ,               
-                                        CORBA::Object * target,
-                                        CORBA::Environment &)
+                                                IOP::ServiceContextList &service_context_list ,               
+                                                CORBA::Object * target,
+                                                CORBA::Environment &)
   : operation_ (operation), 
     service_context_list_ (service_context_list),
     target_ (CORBA_Object::_duplicate (target))
@@ -53,6 +53,9 @@ TAO_ClientRequest_Info::effective_profile (CORBA::Environment &)
   return 0;
 }
 
+// Use at own risk. There is no way currently of extracting an
+// exception from an Any. This method is in place just to be compliant 
+// with the spec.
 CORBA::Any *  
 TAO_ClientRequest_Info::received_exception (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -61,6 +64,15 @@ TAO_ClientRequest_Info::received_exception (CORBA::Environment &)
   // then the UNKNOWN exception needs to be thrown with minor code TBD_U.
   this->any_exception_ <<= *this->caught_exception_;
   return &this->any_exception_;
+}
+
+// = TAO specific method done since there currently is no simple way
+// to extract exceptions from an Any 
+CORBA::Exception *  
+TAO_ClientRequest_Info::_received_exception (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->caught_exception_;
 }
   
 char *  
@@ -232,25 +244,8 @@ TAO_ClientRequest_Info::request_id (CORBA::ULong request_id)
   this->request_id_ = request_id;
 }
 
-//****************************************************************               
+//**************************************************************** 
 
-/* 
-TAO_ServerRequest_Info::TAO_ServerRequest_Info(CORBA::ULong request_id,
-                                       char * operation, 
-                                       Dynamic::ParameterList * arguments,
-                                       Dynamic::ExceptionList * exceptions,
-                                       Dynamic::ContextList * contexts,
-                                       Dynamic::RequestContext * operation_context,
-                                       CORBA::Object_ptr forward_reference,
-                                       PortableInterceptor::OctetSeq *object_id,
-                                       PortableInterceptor::OctetSeq *adapter_id,
-                                       CORBA::Environment &)
-  : Request_Info (request_id, operation, arguments, exceptions, contexts, operation_context, forward_reference),
-    object_id_ (object_id),
-    adapter_id_ (adapter_id)
-{
-}
-*/
 TAO_ServerRequest_Info::TAO_ServerRequest_Info (const char * operation,
                                         IOP::ServiceContextList &service_context_list ,               
                                         CORBA::Environment &)
@@ -373,14 +368,27 @@ TAO_ServerRequest_Info::get_reply_service_context (IOP::ServiceId id,
   return 0;
 }
 
-CORBA::Any * 
-TAO_ServerRequest_Info::sending_exception (CORBA::Environment &ACE_TRY_ENV)
+
+// Use at own risk. There is no way currently of extracting an
+// exception from an Any. This method is in place just to be compliant 
+// with the spec.
+CORBA::Any *  
+TAO_ServerRequest_Info::sending_exception (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The spec says that if it is a user exception which cant be inserted
   // then the UNKNOWN exception needs to be thrown with minor code TBD_U.
   this->any_exception_ <<= *this->caught_exception_;
   return &this->any_exception_;
+}
+
+// = TAO specific method done since there currently is no simple way
+// to extract exceptions from an Any 
+CORBA::Exception *  
+TAO_ServerRequest_Info::_sending_exception (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->caught_exception_;
 }
   
 PortableInterceptor::OctetSeq * 
