@@ -333,9 +333,12 @@ public:
   typedef long double LongDouble;
 #  else
 #    define NONNATIVE_LONGDOUBLE
-  struct LongDouble
+  struct TAO_Export LongDouble
   {
     char ld[16];
+    int operator== (LongDouble &rhs);
+    int operator!= (LongDouble &rhs);
+    // @@ also need other comparison operators.
   };
 #  endif /* ACE_SIZEOF_LONG_DOUBLE != 16 */
 
