@@ -28,27 +28,6 @@
     </P>
 
     <OL>
-      <LI><P><B>EC:</B> Automate EC multicast group usage. This probably
-	  requires some kind of server that mantains the relation
-	  between event type/source and the mcast groups.
-	  <BR>[STATUS] Carlos is working on this.
-	  <BR>[STATUS] An advanced example that uses multiple mcast
-	  groups per process was developed; this example would be used
-	  to test the required features for general mcast support.
-	  <BR>[STATUS] The example is able to automatically join and
-	  leave multicast groups, as the consumer set on a local EC
-	  changes.
-	  The test has been constructed to minimize resources, it only
-	  uses one socket for outgoing multicast messages;
-	  currently it uses only one socket for each local group of
-	  multicast UDP addresses sharing the same port;
-	  eventually more sockets may be needed,
-	  as sockets have limits on the number of multicast groups
-	  they can join.
-	</P>
-      </LI>
-
-
       <LI><P>Add compiled marshalling
 	  <BR>[STATUS] Andy is working on this.
 	</P>
@@ -297,6 +276,27 @@ class Foo {
 	throw specs.
 	</P>
       </LI>
+
+      <LI><P><B>EC:</B> Automate EC multicast group usage. This probably
+	  requires some kind of server that mantains the relation
+	  between event type/source and the mcast groups.
+	  <BR>[STATUS] Carlos is working on this.
+	  <BR>[STATUS] An advanced example that uses multiple mcast
+	  groups per process was developed; this example would be used
+	  to test the required features for general mcast support.
+	  <BR>[STATUS] The example is able to automatically join and
+	  leave multicast groups, as the consumer set on a local EC
+	  changes.
+	  The test has been constructed to minimize resources, it only
+	  uses one socket for outgoing multicast messages;
+	  currently it uses only one socket for each local group of
+	  multicast UDP addresses sharing the same port;
+	  eventually more sockets may be needed,
+	  as sockets have limits on the number of multicast groups
+	  they can join.
+	</P>
+      </LI>
+
 
       <LI>Add support for multiple Profiles in the ORB (completing the
 	IIOP 1.0 support)
@@ -609,19 +609,29 @@ class Foo {
 	</P>
       </LI>
 
-      <LI><B>EC:</B> If a Supplier disconnects while it has consumers
-	registered for it's Supplier_ID, the consumers are not
-	connected again even if the supplier reconnects.
-      <P></LI>
-
-      <LI>The <CODE>_duplicate()</CODE> and <CODE>_narrow()</CODE>
-	functions can throw exceptions, yet our mapping does not
-	contain an <CODE>CORBA::Environment</CODE> argument.
-	A similar problem ocurs with
-	<CODE>ORB::resolve_initial_references</CODE>, the ORB can
-	throw the <CODE>InvalidName</CODE> exception.
+      <LI><P><B>EC:</B>
+	  If a Supplier disconnects while it has consumers
+	  registered for it's Supplier_ID, the consumers are not
+	  connected again even if the supplier reconnects.
+	</P>
       </LI>
 
+      <LI><P>The <CODE>_duplicate()</CODE> and <CODE>_narrow()</CODE>
+	  functions can throw exceptions, yet our mapping does not
+	  contain an <CODE>CORBA::Environment</CODE> argument.
+	  A similar problem ocurs with
+	  <CODE>ORB::resolve_initial_references</CODE>, the ORB can
+	  throw the <CODE>InvalidName</CODE> exception.
+	</P>
+      </LI>
+
+      <LI><P>Apparently the implementation for the leader-follower
+	  model on the client side has bug:
+	  it will add the current thread to the follower list every
+	  time it returns from waiting in the condition variable,
+	  assuming that it was signaled and removed every time.
+	</P>
+      </LI>
 
   <!-- Things below this point are "big" tasks" that -->
   <!-- could require major work -->
@@ -764,6 +774,18 @@ class Foo {
       <H3>Completed Tasks</H3>
 
     <OL>
+      <LI><P>Sometimes the ORB picks up the wrong name on multi-homed
+	  hosts,
+	  the <CODE>ACE_INET_Addr</CODE> class uses
+	  <CODE>gethostbyaddr_r</CODE> to convert from the address into
+	  a hostname, but it only uses the first alias.
+	  <BR>[DONE] The current implementation tries to use the
+	  alias that more closely matches the address of the given
+	  host.
+	</P>
+      </LI>
+
+
       <LI><P>Many of the test programs in the
 	  <CODE>$TAO_ROOT/tests</CODE> hierarchy are actually sample
 	  programs or performance tests.

@@ -262,76 +262,9 @@ public:
 
 // ************************************************************
 
-// Since this class is *defined* in the cpp file, the INLINE
-// definitions must also be in the cpp file.   The should go here
-// before any use of these methods.
-
-ACE_INLINE int
-ACE_ES_Priority_Timer::schedule_timer (RtecScheduler::handle_t rt_info,
-                                       const ACE_ES_Timer_ACT *act,
-                                       RtecScheduler::OS_Priority preemption_priority,
-                                       const RtecScheduler::Time &delta,
-                                       const RtecScheduler::Time &interval)
-{
-  if (rt_info != 0)
-    {
-      // Add the timer to the task's dependency list.
-      RtecScheduler::handle_t timer_rtinfo =
-        this->task_manager_->GetReactorTask (preemption_priority)->rt_info ();
-
-      TAO_TRY
-        {
-          ACE_Scheduler_Factory::server()->add_dependency
-            (rt_info, timer_rtinfo, 1, RtecScheduler::ONE_WAY_CALL, TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-        }
-      TAO_CATCHANY
-        {
-          ACE_ERROR ((LM_ERROR, "add dependency failed"));
-        }
-      TAO_ENDTRY;
-    }
-
-  // @@ We're losing resolution here.
-  ACE_Time_Value tv_delta;
-  ORBSVCS_Time::TimeT_to_Time_Value (tv_delta, delta);
-
-  ACE_Time_Value tv_interval;
-  ORBSVCS_Time::TimeT_to_Time_Value (tv_interval, interval);
-
-  return this->task_manager_->GetReactorTask (preemption_priority)->
-    get_reactor ().schedule_timer (this,
-                                   (void *) act,
-                                   tv_delta, tv_interval);
-}
-
-ACE_INLINE int
-ACE_ES_Priority_Timer::cancel_timer (RtecScheduler::OS_Priority preemption_priority,
-                                     int id, ACE_ES_Timer_ACT *&act)
-{
-  const void *vp;
-
-  int result = this->task_manager_->
-    GetReactorTask (preemption_priority)->
-    get_reactor ().cancel_timer (id, &vp);
-
-  if (result == 0)
-    {
-      ACE_ERROR ((LM_ERROR, "ACE_ES_Priority_Timer::cancel_timer: "
-                  "Tried to cancel nonexistent timer.\n"));
-      act = 0;
-    }
-  else
-    act = (ACE_ES_Timer_ACT *) vp;
-
-  return result;
-}
-
-// ************************************************************
-
-ACE_ES_Event_Container::ACE_ES_Event_Container (void) :
-  //  ACE_ES_Event (),
-  ref_count_ (1)
+ACE_ES_Event_Container::ACE_ES_Event_Container (void)
+  : //  ACE_ES_Event (),
+    ref_count_ (1)
 {
 }
 
@@ -384,6 +317,18 @@ void
 ACE_ES_Event_Container::operator delete (void *mem)
 {
   ACE_ES_Memory_Pools::delete_Event_Container (mem);
+}
+
+void
+dump_event (const RtecEventComm::Event &event)
+{
+  ACE_DEBUG ((LM_DEBUG, "source_ = %d "
+              "type_ = %d "
+              "time_ = %u.\n",
+              (void*)event.header.source,
+              event.header.type,
+              // The divide-by-1 is for ACE_U_LongLong support.
+              ORBSVCS_Time::to_hrtime (event.header.creation_time) / 1));
 }
 
 void
@@ -590,8 +535,8 @@ ACE_EventChannel::ACE_EventChannel (CORBA::Boolean activate_threads,
   consumer_module_ =
     this->module_factory_->create_consumer_module (this);
 
-  this->task_manager_ =
-    this->module_factory_->create_task_manager (this);
+  this->timer_module_ =
+    this->module_factory_->create_timer_module (this);
 
   this->dispatching_module_ =
     this->module_factory_->create_dispatching_module(this);
@@ -602,8 +547,6 @@ ACE_EventChannel::ACE_EventChannel (CORBA::Boolean activate_threads,
     this->module_factory_->create_subscription_module (this);
   this->supplier_module_ =
     this->module_factory_->create_supplier_module (this);
-  this->timer_ =
-    this->module_factory_->create_timer_module (this);
 
   consumer_module_->open (dispatching_module_);
   dispatching_module_->open (consumer_module_, correlation_module_);
@@ -631,16 +574,16 @@ ACE_EventChannel::~ACE_EventChannel (void)
     }
   TAO_ENDTRY;
 
+  this->cleanup_observers ();
+
+  this->timer_module_->shutdown ();
   this->dispatching_module_->shutdown ();
-  this->task_manager_->shutdown ();
 
-
-  this->module_factory_->destroy_timer_module (this->timer_);
+  this->module_factory_->destroy_timer_module (this->timer_module_);
   this->module_factory_->destroy_supplier_module (this->supplier_module_);
   this->module_factory_->destroy_subscription_module (this->subscription_module_);
   this->module_factory_->destroy_correlation_module (this->correlation_module_);
   this->module_factory_->destroy_dispatching_module(this->dispatching_module_);
-  this->module_factory_->destroy_task_manager (this->task_manager_);
   this->module_factory_->destroy_consumer_module (this->consumer_module_);
 
   if (this->own_factory_)
@@ -677,11 +620,11 @@ ACE_EventChannel::destroy (CORBA::Environment &)
     TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
   // Set a 100ns timer.
-  if (this->timer ()->schedule_timer (0, // no rt-info
-                                      act,
-                                      ACE_Scheduler_MIN_PREEMPTION_PRIORITY,
-                                      100, // 10 usec delta
-                                      0) == -1) // no interval
+  if (this->timer_module ()->schedule_timer (0, // no rt-info
+					     act,
+					     ACE_Scheduler_MIN_PREEMPTION_PRIORITY,
+					     100, // 10 usec delta
+					     0) == -1) // no interval
     {
       ACE_ERROR ((LM_ERROR, "%p queue_request failed.\n", "ACE_ES_Consumer_Module"));
       delete sc;
@@ -694,7 +637,7 @@ void
 ACE_EventChannel::activate (void)
 {
   this->dispatching_module_->activate (THREADS_PER_DISPATCH_QUEUE);
-  this->task_manager_->activate ();
+  this->timer_module_->activate ();
 }
 
 void
@@ -702,9 +645,8 @@ ACE_EventChannel::shutdown (void)
 {
   this->cleanup_observers ();
 
-  this->task_manager_->shutdown ();
+  this->timer_module_->shutdown ();
   this->dispatching_module_->shutdown ();
-
 }
 
 void
@@ -1288,7 +1230,8 @@ ACE_ES_Consumer_Module::disconnecting (ACE_Push_Consumer_Proxy *consumer,
     TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
   // Create a wrapper around the dispatch request.
-  Flush_Queue_ACT *act = new Flush_Queue_ACT (sc, channel_->dispatching_module_);
+  Flush_Queue_ACT *act =
+    new Flush_Queue_ACT (sc, channel_->dispatching_module_);
   if (act == 0)
     TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
@@ -1297,12 +1240,11 @@ ACE_ES_Consumer_Module::disconnecting (ACE_Push_Consumer_Proxy *consumer,
   // Set a 100ns timer.
   TimeBase::TimeT ns100;
   ORBSVCS_Time::hrtime_to_TimeT (ns100, 100);
-  if (channel_->timer ()->schedule_timer (0, // no rt_info
-                                          act,
-                                          // ::Preemption_Priority (consumer->qos ().rt_info_),
-                                          ACE_Scheduler_MIN_PREEMPTION_PRIORITY,
-                                          ns100,
-                                          ORBSVCS_Time::zero) == -1)
+  if (this->channel_->schedule_timer (0, // no rt_info
+				      act,
+				      ACE_Scheduler_MIN_PREEMPTION_PRIORITY,
+				      ns100,
+				      ORBSVCS_Time::zero) == -1)
     {
       ACE_ERROR ((LM_ERROR, "%p queue_request failed.\n", "ACE_ES_Consumer_Module"));
       delete sc;
@@ -1540,10 +1482,11 @@ ACE_ES_Correlation_Module::schedule_timeout (ACE_ES_Consumer_Rep_Timeout *consum
   // interval.low, interval.high));
 
   // Register the timer.
-  int id = channel_->timer ()->schedule_timer (consumer->dependency ()->rt_info,
-                                               consumer,
-                                               consumer->preemption_priority (),
-                                               delay, interval);
+  int id =
+    this->channel_->schedule_timer (consumer->dependency ()->rt_info,
+				    consumer,
+				    consumer->preemption_priority (),
+				    delay, interval);
 
   // Store the timer id for canceling.
   consumer->timer_id (id);
@@ -1561,9 +1504,9 @@ ACE_ES_Correlation_Module::cancel_timeout (ACE_ES_Consumer_Rep_Timeout *consumer
 {
   // Cancel the timer from the Priority Timer.
   ACE_ES_Timer_ACT *act;
-  channel_->timer ()->cancel_timer (consumer->preemption_priority (),
-                                    consumer->timer_id (),
-                                    act);
+  this->channel_->cancel_timer (consumer->preemption_priority (),
+				consumer->timer_id (),
+				act);
 
   ACE_ASSERT (consumer == act);
 
@@ -1592,10 +1535,11 @@ ACE_ES_Correlation_Module::reschedule_timeout (ACE_ES_Consumer_Rep_Timeout *cons
       consumer->preemption_priority (::IntervalToPriority (interval));
 
       // Register the timer.
-      int id = channel_->timer ()->schedule_timer (0, // Do not pass an RT_Info.
-                                                   consumer,
-                                                   consumer->preemption_priority (),
-                                                   delay, interval);
+      int id =
+	this->channel_->schedule_timer (0, // Do not pass an RT_Info.
+					consumer,
+					consumer->preemption_priority (),
+					delay, interval);
 
       // Store the timer id for canceling.
       consumer->timer_id (id);
@@ -3333,50 +3277,13 @@ ACE_ES_Supplier_Module::fill_qos (RtecEventChannelAdmin::SupplierQOS& s_qos)
 
 // ************************************************************
 
-ACE_ES_Priority_Timer::ACE_ES_Priority_Timer (ACE_Task_Manager* tm)
-  : task_manager_ (tm)
+TAO_EC_Timeout_Handler::TAO_EC_Timeout_Handler (void)
 {
 }
 
 int
-ACE_ES_Priority_Timer::connected (RtecScheduler::handle_t rt_info)
-{
-  RtecScheduler::OS_Priority thread_priority;
-  RtecScheduler::Preemption_Subpriority subpriority;
-  RtecScheduler::Preemption_Priority preemption_priority;
-
-  TAO_TRY
-    {
-      ACE_TIMEPROBE (TAO_EVENT_CHANNEL_CONNECTED_PRIORITY_REQUESTED);
-      ACE_Scheduler_Factory::server ()->priority
-        (rt_info, thread_priority,
-         subpriority, preemption_priority, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      ACE_TIMEPROBE (TAO_EVENT_CHANNEL_CONNECTED_PRIORITY_OBTAINED);
-#if 0
-      ACE_ERROR_RETURN ((LM_ERROR, "%p RtecScheduler::Scheduler::priority failed.\n",
-                         "ACE_ES_Priority_Timer::connected"), -1);
-#endif /* 0 */
-    }
-  TAO_CATCHANY
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p RtecScheduler::Scheduler::priority failed.\n",
-                         "ACE_ES_Priority_Timer::connected"), -1);
-    }
-  TAO_ENDTRY;
-
-  // Just make sure the ORB allocates resources for this priority.
-  if (this->task_manager_->GetReactorTask (preemption_priority) == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
-                       "ACE_ES_Priority_Timer::connected"), -1);
-
-  return 0;
-}
-
-int
-ACE_ES_Priority_Timer::handle_timeout (const ACE_Time_Value &,
-                                       const void *vp)
+TAO_EC_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
+					const void *vp)
 {
   ACE_ES_Timer_ACT *act = (ACE_ES_Timer_ACT *) vp;
 
@@ -3423,31 +3330,6 @@ ACE_ES_Consumer_Name (const RtecEventChannelAdmin::ConsumerQOS &qos)
   TAO_ENDTRY;
   return "no-name";
 }
-
-// ************************************************************
-
-void
-dump_event (const RtecEventComm::Event &event)
-{
-  ACE_DEBUG ((LM_DEBUG, "source_ = %d "
-              "type_ = %d "
-              "time_ = %u.\n",
-              (void*)event.header.source,
-              event.header.type,
-              // The divide-by-1 is for ACE_U_LongLong support.
-              ORBSVCS_Time::to_hrtime (event.header.creation_time) / 1));
-}
-
-// ************************************************************
-
-#if defined(ACE_ES_LACKS_ORB)
-void
-dump_sequence (const ACE_CORBA_Sequence<ACE_ES_Event> &seq)
-{
-  for (CORBA::ULong index=0; index < seq.length (); index++)
-    ::dump_event (seq[index]);
-}
-#endif /* ACE_ES_LACKS_ORB */
 
 // ************************************************************
 
