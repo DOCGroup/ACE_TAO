@@ -23,6 +23,7 @@
 #include "ace/Time_Value.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Message_Block.h"
+#include "ace/Sched_Params.h"
 
 #include "kokyu_export.h"
 
@@ -110,11 +111,12 @@ namespace Kokyu
   class Dispatcher_Impl;
   class DSRT_Dispatcher_Impl;
 
-  enum DSRT_Sched_t {SCHED_MIF};
+  enum DSRT_Sched_t {SCHED_MIF, SCHED_EDF};
 
   struct DSRT_ConfigInfo
   {
-    DSRT_Sched_t scheduler_type_;
+    ACE_Sched_Params::Policy sched_policy_;
+    int sched_scope_;
   };
 
   typedef int guid_t;

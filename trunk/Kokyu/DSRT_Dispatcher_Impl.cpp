@@ -4,6 +4,7 @@
 #include "ace/Arg_Shifter.h"
 
 #include "DSRT_Dispatcher_Impl.h"
+#include "DSRT_Schedulers.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "DSRT_Dispatcher_Impl.i"
@@ -16,49 +17,6 @@ ACE_RCSID(Kokyu, Dispatcher_Impl, "$Id$")
 namespace Kokyu
 {
 
-static Priority_t schedule_MIF (Importance_t imp)
-{
-  Priority_t min =
-    ACE_Sched_Params::priority_min (ACE_SCHED_FIFO, ACE_SCOPE_THREAD);
-
-  Priority_t max =
-    ACE_Sched_Params::priority_max (ACE_SCHED_FIFO, ACE_SCOPE_THREAD);
-
-  switch (imp)
-    {
-    case VERY_LOW_IMPORTANCE:
-      return min;
-      break;
-
-    case LOW_IMPORTANCE:
-      return ACE_Sched_Params::next_priority
-        (ACE_SCHED_FIFO, min, ACE_SCOPE_THREAD);
-      break;
-
-    case MEDIUM_IMPORTANCE:
-      return ACE_Sched_Params::next_priority
-        (ACE_SCHED_FIFO,
-         ACE_Sched_Params::next_priority
-         (ACE_SCHED_FIFO, min, ACE_SCOPE_THREAD),
-         ACE_SCOPE_THREAD);
-      break;
-
-    case HIGH_IMPORTANCE:
-      return ACE_Sched_Params::previous_priority
-        (ACE_SCHED_FIFO, max, ACE_SCOPE_THREAD);
-      break;
-
-    case VERY_HIGH_IMPORTANCE:
-      return max;
-      break;
-
-    default:
-      break;
-    }
-
-  return 0;
-}
-
 int
 DSRT_Dispatcher_Impl::init_svcs (void)
 {
@@ -66,9 +24,33 @@ DSRT_Dispatcher_Impl::init_svcs (void)
     insert (&ace_svc_desc_DSRT_Dispatcher_Impl);
 }
 
+DSRT_Scheduler_Impl*
+DSRT_Dispatcher_Impl::create_scheduler (DSRT_Sched_t sched_type,
+                                        ACE_Sched_Params::Policy sched_policy,
+                                        int sched_scope)
+{
+  DSRT_Scheduler_Impl* impl;
+
+  switch (sched_type)
+    {
+    case SCHED_MIF:
+      ACE_NEW_RETURN (impl, MIF_Scheduler_Impl (sched_policy, sched_scope), 0);
+      break;
+
+    default:
+      break;
+    }
+
+  return impl;
+}
+
 int
 DSRT_Dispatcher_Impl::init (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Sched_Params::Policy sched_policy = ACE_SCHED_FIFO;
+  int sched_scope = ACE_SCOPE_THREAD;
+  DSRT_Sched_t sched_type = SCHED_MIF;
+
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   ACE_DEBUG ((LM_DEBUG, "svc::init called\n"));
@@ -86,7 +68,15 @@ DSRT_Dispatcher_Impl::init (int argc, ACE_TCHAR* argv[])
               const ACE_TCHAR* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("MIF")) == 0)
                 {
-                  this->sched_type_ = SCHED_MIF;
+                  sched_type = SCHED_MIF;
+                }
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("EDF")) == 0)
+                {
+                  sched_type = SCHED_EDF;
+                  if (arg_shifter.is_parameter_next ())
+                    {
+                      //const ACE_TCHAR* opt = arg_shifter.get_current ();
+                    }
                 }
               else
                 {
@@ -98,14 +88,61 @@ DSRT_Dispatcher_Impl::init (int argc, ACE_TCHAR* argv[])
               arg_shifter.consume_arg ();
             }
         }
-
-      else
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-sched_policy")) == 0)
         {
-          arg_shifter.ignore_arg ();
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next ())
+            {
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("FIFO")) == 0)
+                {
+                  sched_policy = ACE_SCHED_FIFO;
+                }
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("OTHER")) == 0)
+                {
+                  sched_policy = ACE_SCHED_OTHER;
+                }
+              else
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_LIB_TEXT("-sched_type ")
+                              ACE_LIB_TEXT("unsupported sched type <%s>\n"),
+                              opt));
+                }
+              arg_shifter.consume_arg ();
+            }
+        }
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-sched_scope")) == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next ())
+            {
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("THREAD")) == 0)
+                {
+                  sched_scope = ACE_SCOPE_THREAD;
+                }
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("PROCESS")) == 0)
+                {
+                  sched_scope = ACE_SCOPE_PROCESS;
+                }
+              else
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_LIB_TEXT("-sched_scope ")
+                              ACE_LIB_TEXT("unsupported sched scope <%s>\n"),
+                              opt));
+                }
+              arg_shifter.consume_arg ();
+            }
         }
     }
-  return 0;
 
+  this->scheduler_impl_ = create_scheduler (sched_type, sched_policy, sched_scope);
+
+  return 0;
 }
 
 int
@@ -156,14 +193,10 @@ DSRT_Dispatcher_Impl::schedule_i (guid_t guid,
                   const QoSDescriptor& qos_info)
 {
   ACE_UNUSED_ARG (guid);
-  switch (this->sched_type_)
-    {
-    case SCHED_MIF:
-      ACE_DEBUG ((LM_DEBUG, "(%t) request for MIF schedule\n"));
-      Priority_t prio = schedule_MIF (qos_info.importance_);
-      ACE_OS::thr_setprio (ACE_OS::thr_self (), prio);
-      break;
-    }
+
+  Priority_t prio = this->scheduler_impl_->schedule (guid, qos_info);
+  ACE_OS::thr_setprio (ACE_OS::thr_self (), prio);
+
   return 0;
 }
 

@@ -92,7 +92,7 @@ create_DSRT_dispatcher (const DSRT_ConfigInfo& config_info)
   DSRT_Dispatcher* disp;
   ACE_NEW_RETURN (disp, DSRT_Dispatcher, (DSRT_Dispatcher*)0);
   disp->implementation (tmp);
-  //  tmp->init (config_info);
+  tmp->init (config_info);
   return disp;
 }
 
