@@ -10,21 +10,23 @@ TAO_EC_Dispatching_Task (ACE_Thread_Manager* thr_manager)
 // ****************************************************************
 
 ACE_INLINE
-TAO_EC_Dispatch_Command::TAO_EC_Dispatch_Command (void)
-  :  ACE_Message_Block ()
+TAO_EC_Dispatch_Command::TAO_EC_Dispatch_Command (ACE_Allocator *mb_allocator)
+  :  ACE_Message_Block (mb_allocator)
 {
 }
 
 ACE_INLINE
-TAO_EC_Dispatch_Command::TAO_EC_Dispatch_Command (ACE_Data_Block* data_block)
-  :  ACE_Message_Block (data_block)
+TAO_EC_Dispatch_Command::TAO_EC_Dispatch_Command (ACE_Data_Block *data_block,
+                                                  ACE_Allocator *mb_allocator)
+  :  ACE_Message_Block (data_block, mb_allocator)
 {
 }
 
 // ****************************************************************
 
 ACE_INLINE
-TAO_EC_Shutdown_Command::TAO_EC_Shutdown_Command (void)
+TAO_EC_Shutdown_Command::TAO_EC_Shutdown_Command (ACE_Allocator *mb_allocator)
+  :  TAO_EC_Dispatch_Command (mb_allocator)
 {
 }
 
@@ -33,8 +35,9 @@ TAO_EC_Shutdown_Command::TAO_EC_Shutdown_Command (void)
 ACE_INLINE
 TAO_EC_Push_Command::TAO_EC_Push_Command (TAO_EC_ProxyPushSupplier* proxy,
                                           RtecEventComm::EventSet& event,
-                                          ACE_Data_Block* data_block)
-  :  TAO_EC_Dispatch_Command (data_block),
+                                          ACE_Data_Block* data_block,
+                                          ACE_Allocator *mb_allocator)
+  :  TAO_EC_Dispatch_Command (data_block, mb_allocator),
      proxy_ (proxy)
 {
   //

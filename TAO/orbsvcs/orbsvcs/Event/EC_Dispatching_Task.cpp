@@ -52,6 +52,25 @@ TAO_EC_Dispatching_Task::svc (void)
   return 0;
 }
 
+void
+TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
+                               RtecEventComm::EventSet& event,
+                               CORBA::Environment &ACE_TRY_ENV)
+{
+  void* buf = this->allocator_->malloc (sizeof (TAO_EC_Push_Command));
+
+  if (buf == 0)
+    ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                 CORBA::COMPLETED_NO));
+
+  ACE_Message_Block *mb =
+    new (mb) TAO_EC_Push_Command (proxy,
+                                  event,
+                                  this->data_block_.duplicate (),
+                                  this->allocator_);
+  this->putq (mb);
+}
+
 // ****************************************************************
 
 TAO_EC_Dispatch_Command::~TAO_EC_Dispatch_Command (void)

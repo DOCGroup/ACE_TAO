@@ -62,6 +62,24 @@ TAO_EC_Conjunction_Filter::all_received (void) const
   return 0;
 }
 
+TAO_EC_Filter::ChildrenIterator
+TAO_EC_Conjunction_Filter::begin (void) const
+{
+  return this->children_;
+}
+
+TAO_EC_Filter::ChildrenIterator
+TAO_EC_Conjunction_Filter::end (void) const
+{
+  return this->children_ + this->n_;
+}
+
+int
+TAO_EC_Conjunction_Filter::size (void) const
+{
+  return this->n_;
+}
+
 int
 TAO_EC_Conjunction_Filter::filter (const RtecEventComm::EventSet& event,
                                    TAO_EC_QOS_Info& qos_info,
@@ -178,5 +196,14 @@ TAO_EC_Conjunction_Filter::can_match (
       if ((*i)->can_match (header) != 0)
         return 1;
     }
+  return 0;
+}
+
+int
+TAO_EC_Conjunction_Filter::add_dependencies (
+      const RtecEventComm::EventHeader&,
+      const TAO_EC_QOS_Info&,
+      CORBA::Environment &)
+{
   return 0;
 }

@@ -72,6 +72,18 @@ public:
   // matches two event headers.
   // @@ TODO: strategize this...
 
+  typedef TAO_EC_Filter* value_type;
+  typedef TAO_EC_Filter* const const_value_type;
+  typedef const_value_type* ChildrenIterator;
+
+  virtual ChildrenIterator begin (void) const;
+  virtual ChildrenIterator end (void) const;
+  virtual int size (void) const;
+  // STL-like iterators
+  // Filters follow the Composite pattern. All filters expose the same
+  // interface as if they all had children, but for simple filters the
+  // iterators return an empty range.
+
   virtual int filter (const RtecEventComm::EventSet& event,
                       TAO_EC_QOS_Info& qos_info,
                       CORBA::Environment& env) = 0;
@@ -105,6 +117,29 @@ public:
   // Returns 0 if an event with that header could never be accepted.
   // This can used by the suppliers to filter out consumers that
   // couldn't possibly be interested in their events.
+  // The rt_info and
+
+  virtual int add_dependencies (const RtecEventComm::EventHeader& header,
+                                const TAO_EC_QOS_Info& qos_info,
+                                CORBA::Environment &ACE_TRY_ENV) = 0;
+  // This is used for computing the scheduling dependencies:
+  //
+  // Leaf filters check if the header could be matched, similar to the
+  // can_match() method; if it does they return 1, and 0 otherwise.
+  // Intermediate nodes always return 0.
+  //
+  // This is used to build precise dependencies between the suppliers
+  // and the leaf of the filters that accept that event.  Notice that
+  // only the nodes doing scheduling recurse through the list, so in
+  // configurations that do no require scheduling the recursion stops
+  // fairly soon.
+
+  virtual void get_qos_info (TAO_EC_QOS_Info& qos_info,
+                             CORBA::Environment &ACE_TRY_ENV);
+  // Obtain the QOS information for this filter, the default
+  // implementation returns an invalid QOS.  Only the filters that
+  // support scheduling information implement this method.
+  // Returns 0 on success and -1 on failure
 
 private:
   TAO_EC_Filter* parent_;
@@ -150,6 +185,9 @@ public:
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
   virtual int can_match (const RtecEventComm::EventHeader& header) const;
+  virtual int add_dependencies (const RtecEventComm::EventHeader& header,
+                                const TAO_EC_QOS_Info &qos_info,
+                                CORBA::Environment &ACE_TRY_ENV);
 };
 
 // ****************************************************************

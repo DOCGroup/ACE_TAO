@@ -7,6 +7,7 @@ TAO_EC_Default_Factory::TAO_EC_Default_Factory (void)
      supplier_filtering_ (0),
      timeout_ (0),
      observer_ (0),
+     scheduling_ (0),
      supplier_set_ (0),
      consumer_lock_ (0),
      supplier_lock_ (0),

@@ -54,6 +54,16 @@ TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attr,
     this->factory_->create_timeout_generator (this);
   this->observer_strategy_ =
     this->factory_->create_observer_strategy (this);
+
+  this->scheduler_ =
+    RtecScheduler::Scheduler::_duplicate (attr.scheduler);
+
+  this->scheduling_strategy_ =
+    this->factory_->create_scheduling_strategy (this);
+
+  this->consumer_admin_->busy_hwm (attr.consumer_admin_busy_hwm);
+  this->consumer_admin_->max_write_delay (attr.consumer_admin_max_write_delay);
+
 }
 
 TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)

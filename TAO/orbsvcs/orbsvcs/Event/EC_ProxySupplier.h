@@ -141,6 +141,9 @@ public:
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
   virtual int can_match (const RtecEventComm::EventHeader &header) const;
+  virtual int add_dependencies (const RtecEventComm::EventHeader& header,
+                                const TAO_EC_QOS_Info &qos_info,
+                                CORBA::Environment &ACE_TRY_ENV);
 
   // = The Servant methods
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);

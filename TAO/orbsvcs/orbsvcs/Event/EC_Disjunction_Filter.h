@@ -52,8 +52,12 @@ public:
   virtual ~TAO_EC_Disjunction_Filter (void);
   // Destructor
 
+
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
+  virtual ChildrenIterator begin (void) const;
+  virtual ChildrenIterator end (void) const;
+  virtual int size (void) const;
   virtual int filter (const RtecEventComm::EventSet& event,
                       TAO_EC_QOS_Info& qos_info,
                       CORBA::Environment& env);
@@ -69,13 +73,9 @@ public:
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
   virtual int can_match (const RtecEventComm::EventHeader& header) const;
-
-  typedef TAO_EC_Filter* value_type;
-  typedef TAO_EC_Filter* const const_value_type;
-  typedef const_value_type* ChildrenIterator;
-  ChildrenIterator begin (void) const;
-  ChildrenIterator end (void) const;
-  // STL-like iterators...
+  virtual int add_dependencies (const RtecEventComm::EventHeader& header,
+                                const TAO_EC_QOS_Info &qos_info,
+                                CORBA::Environment &ACE_TRY_ENV);
 
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_Disjunction_Filter

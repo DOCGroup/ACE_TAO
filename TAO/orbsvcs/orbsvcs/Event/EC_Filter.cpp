@@ -18,6 +18,32 @@ TAO_EC_Filter::adopt_child (TAO_EC_Filter* child)
   child->parent_ = this;
 }
 
+TAO_EC_Filter::ChildrenIterator
+TAO_EC_Filter::begin (void) const
+{
+  return 0;
+}
+
+TAO_EC_Filter::ChildrenIterator
+TAO_EC_Filter::end (void) const
+{
+  return 0;
+}
+
+int
+TAO_EC_Filter::size (void) const
+{
+  return 0;
+}
+
+void
+TAO_EC_Filter::get_qos_info (TAO_EC_QOS_Info&,
+                             CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
 // ****************************************************************
 
 int
@@ -79,6 +105,16 @@ TAO_EC_Null_Filter::can_match (const RtecEventComm::EventHeader&) const
   // @@ This method should be correctly so we can implement null
   // filtering at the consumers but real filtering on the suppliers.
   return 1;
+}
+
+int
+TAO_EC_Null_Filter::add_dependencies (
+      const RtecEventComm::EventHeader &,
+      const TAO_EC_QOS_Info &,
+      CORBA::Environment &)
+
+{
+  return 0;
 }
 
 // ****************************************************************

@@ -1,3 +1,124 @@
+Fri May 14 09:30:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Integrated scheduling back into the EC, this is still
+	  experimental.
+
+	* orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.h:
+	* orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.i:
+	* orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Null_Scheduling.h:
+	* orbsvcs/orbsvcs/Event/EC_Null_Scheduling.i:
+	* orbsvcs/orbsvcs/Event/EC_Null_Scheduling.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.h:
+	* orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.i:
+	* orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.cpp:
+	  The scheduling strategy parametrize the aspects of the EC that
+	  relate to the Scheduler.  When using the Null_Scheduling the EC
+	  does not update dependencies in the Scheduler, making that a
+	  suitable choice for run-time execution (once the dependencies
+	  have been computed in configuration runs) and for systems that
+	  do not require scheduling.
+	  The Priority_Scheduling strategy does update the dependencies in
+	  the scheduler.
+	  Notice that many real-time properties of the EC do *not* depend
+	  on this, for example, locks are bounded to minimize priority
+	  inversion in any case.  Thus application that require real-time
+	  behavior but no scheduling can use the EC too.
+
+	* orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
+	* orbsvcs/orbsvcs/Event/EC_QOS_Info.i:
+	  Add fields to carry RT_Info and Preemption priority
+	  information.
+
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+	  Use the scheduling strategy to update the dependencies.
+
+	* orbsvcs/orbsvcs/Event/EC_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+	  Added new methods to the factory to obtain the scheduling
+	  strategy.
+
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+	  The event channel receives an scheduler and an scheduling
+	  strategy from the attributes and the factory respectively.
+	  The scheduler may be a nil object reference in it is not used.
+
+	* orbsvcs/orbsvcs/Event/EC_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
+	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.h:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.i:
+	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.i:
+	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Type_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp:
+	  In some cases the Filter_Builder may need to make CORBA calls
+	  and thus requires an CORBA::Environment.
+	  Added new operation to add dependencies between leaves of the
+	  filter tree and RT_Infos.  This operation is a noop if no
+	  scheduling is enabled, and in fact it is not even invoked.
+
+	* orbsvcs/orbsvcs/Event/EC_Sched_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Sched_Filter.i:
+	* orbsvcs/orbsvcs/Event/EC_Sched_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.h:
+	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.i:
+	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp:
+	  Added new type of filter, it decorates a regular filter to
+	  inform the scheduling service of the dependencies between the
+	  filter elements and finally between suppliers and consumers.
+
+	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
+	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.i:
+	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+	  Allocates the message blocks from a per-queue thread, also use a
+	  per-thread data block to minimize memory allocations.
+
+	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.h:
+	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.i:
+	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+	  Use the TAO_EC_QOS_Info and the scheduling service to determine
+	  on which queue we should dispatch the event.
+
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	  Update the filtering aspects of this class.
+
+	* orbsvcs/tests/Event/Basic/Makefile:
+	* orbsvcs/tests/Event/Basic/Schedule.h:
+	* orbsvcs/tests/Event/Basic/Schedule.cpp:
+	* orbsvcs/tests/Event/Basic/sched.conf:
+	* orbsvcs/tests/Event/Basic/Reconnect.cpp:
+	* orbsvcs/tests/Event/lib/Driver.h:
+	* orbsvcs/tests/Event/lib/Driver.cpp:
+	  Added new test that creates an scheduler and uses the scheduling
+	  strategies.
+
+	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
+	  Loop over consumers and then over events, not vice-versa. That
+	  improves throughput by reducing the locking overhead.
+
+	* orbsvcs/orbsvcs/Makefile:
+	  Added the new files, updated dependencies
+
+	* orbsvcs/Event_Service/Makefile:
+	  Added depedencies
+
 Fri May 14 07:18:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Concurrency/Makefile,lex.CC_command.cpp,
