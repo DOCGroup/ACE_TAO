@@ -13,16 +13,18 @@ CFG=Time_Service_Clerk - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Time_Service_Clerk.mak" CFG="Time_Service_Clerk - Win32 Debug"
+!MESSAGE NMAKE /f "Time_Service_Clerk.mak"\
+ CFG="Time_Service_Clerk - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Time_Service_Clerk - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Time_Service_Clerk - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Time_Service_Clerk - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Time_Service_Clerk - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -76,7 +78,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib taod.lib orbsvcsd.lib /nologo /subsystem:console /pdb:"Time_Service_Clerk.pdb" /debug /machine:I386 /out:"clerk.exe" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\orbsvcs" /libpath:"..\..\..\ace"
+# ADD LINK32 aced.lib taod.lib orbsvcsd.lib /nologo /subsystem:console /debug /machine:I386 /out:"clerk.exe" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\orbsvcs" /libpath:"..\..\..\ace"
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
@@ -90,11 +92,11 @@ LINK32=link.exe
 # PROP Default_Filter "cpp"
 # Begin Source File
 
-SOURCE=.\clerk.cpp
+SOURCE=.\Clerk_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Clerk_i.cpp
+SOURCE=.\Time_Service_Clerk.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"

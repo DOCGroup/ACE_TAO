@@ -13,16 +13,18 @@ CFG=Time_Service_Server - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Time_Service_Server.mak" CFG="Time_Service_Server - Win32 Debug"
+!MESSAGE NMAKE /f "Time_Service_Server.mak"\
+ CFG="Time_Service_Server - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Time_Service_Server - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Time_Service_Server - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Time_Service_Server - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Time_Service_Server - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -91,11 +93,11 @@ SOURCE=.\IR_Helper.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\server.cpp
+SOURCE=.\Server_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Server_i.cpp
+SOURCE=.\Time_Service_Server.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
