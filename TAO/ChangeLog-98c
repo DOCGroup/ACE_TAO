@@ -1,3 +1,18 @@
+Tue Jul 21 12:02:41 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp : 
+		Added code so that the client can accept -ORB arguments on
+		the command line. The main thread blocks on a condition
+		variable until the high priority thread does the argument 
+		parsing and changes the global Task_State . The main
+		thread then creates the low priority threads.
+	
+	* tests/Cubit/TAO/MT_Cubit/client.cpp
+	(do_priority_inversion_test): 	
+		Added code for the main thread to block on a condition
+	variable after activating the high priority thread until the high
+	priority thread wakes it up. 
+	
 Tue Jul 21 10:00:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* tao/Connect.cpp: Improved the location forwarding, now we check
