@@ -1,13 +1,17 @@
+Wed May 13 21:48:08 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Quoter/Makefile: define TAO_ROOT if it's not defined.
+
 Wed May 13 18:18:56 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.1.20 released.
 
 Wed May 13 16:12:38 1998 Michael Kircher   <mk1@cs.wustl.edu>
 
-        * tests/Quoter/Makefile: changed the compiling options for 
-	  the IDL compiler
+        * tests/Quoter/Makefile: changed the compiling options for
+          the IDL compiler
 
-	* tests/Quoter/Quoter.idl: changed the include path
+        * tests/Quoter/Quoter.idl: changed the include path
 
 Wed May 13 06:58:38 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -122,7 +126,7 @@ Tue May 12 16:53:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * orbsvcs/orbsvcs/Sched/Config_Scheduler.h:
           Added missing forward declaration for ACE_Scheduler.
 
-	
+
 Tue May 12 16:48:46 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
         * tao/corba.h:
