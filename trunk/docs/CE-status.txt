@@ -239,9 +239,12 @@
            ???
     [N] MM_Shared_Memory_Test
            ???
-    [X] MT_SOCK_Test
-           [EM] Runs successfully
+    [X] MT_SOCK_Test 
+        This one takes some time.....zzzzz.....
+           [EM] Runs successfully 
            [SH] Runs if client threads reduced to 5.
+                (And I reverted my change back, so it won't runs on our 
+                 HP 360LX.)
     [X] Map_Manager_Test
            [EM] Runs successfully
            [SH] Runs successfully
