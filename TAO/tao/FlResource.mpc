@@ -1,7 +1,7 @@
 //  -*- MPC -*- now wouldn't this be cool...
 // $Id$
 
-project(TAO_FlResource) : acelib, taolib, taoversion, core, tao_output, taodefaults, ace_flreactor {
+project(TAO_FlResource) : acelib, taolib, core, tao_output, taodefaults, ace_flreactor {
 
   sharedname   = TAO_FlResource
   dynamicflags += TAO_FLRESOURCE_BUILD_DLL

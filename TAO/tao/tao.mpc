@@ -1,5 +1,5 @@
 //$Id$
-project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_core {
+project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
   sharedname   = TAO
   dynamicflags = TAO_BUILD_DLL
 
