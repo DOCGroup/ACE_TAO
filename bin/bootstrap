@@ -73,28 +73,29 @@ if test -d m4; then
 #  echo "Creating a NEWS file"
 #  cp VERSION NEWS
 
-  # Generate an `aclocal.m4' file from all existing m4 macro files
-  # including those in the `m4' directory.
-  echo "Running aclocal"
-  aclocal -I m4
+#   # Generate an `aclocal.m4' file from all existing m4 macro files
+#   # including those in the `m4' directory.
+#   echo "Running aclocal"
+#   aclocal -I m4
 
-  # Make sure libtool support files are available.
-  echo "Running libtoolize"
-  libtoolize --automake
+#   # Make sure libtool support files are available.
+#   echo "Running libtoolize"
+#   libtoolize --automake
 
-  # Generate a `config.h.in' configuration header template from `acconfig.h'.
-  echo "Running autoheader"
-  autoheader -I m4
+#   # Generate a `config.h.in' configuration header template from `acconfig.h'.
+#   echo "Running autoheader"
+#   autoheader -I m4
 
-  # Generate the `configure' script from the `configure.in'.
-  echo "Running autoconf"
-  autoconf
+#   # Generate the `configure' script from the `configure.in'.
+#   echo "Running autoconf"
+#   autoconf
 
-  # Invoke `automake' after `autoheader' so that all configuration
-  # headers are generate a priori.
-  echo "Running automake"
-  automake --add-missing
+#   # Invoke `automake' after `autoheader' so that all configuration
+#   # headers are generate a priori.
+#   echo "Running automake"
+#   automake --add-missing
 
+    autoreconf -I m4 --install --symlink --verbose
 
 #   # Generate the man pages.
 #   # Only generate man pages if bootstrapping a release.

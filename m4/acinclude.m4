@@ -1,12 +1,12 @@
 dnl -------------------------------------------------------------------------
 dnl       $Id$
-dnl 
+dnl
 dnl       ACE M4 include file which contains general M4 macros
 dnl       to be used by the ACE configure script.
 dnl
 dnl       The macros in this file were designed for ACE but should be
 dnl       general enough for general use.
-dnl 
+dnl
 dnl -------------------------------------------------------------------------
 
 dnl  Copyright (C) 1998, 1999, 2000, 2002  Ossama Othman
@@ -15,7 +15,7 @@ dnl  All Rights Reserved
 dnl
 dnl This library is free software; you can redistribute it and/or
 dnl modify it under the current ACE distribution terms.
-dnl 
+dnl
 dnl This library is distributed in the hope that it will be useful,
 dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
 dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
@@ -347,7 +347,7 @@ EOF
     fi
 
     if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
-       $EGREP "ACE_REAL_FUNCTION" | 
+       $EGREP "ACE_REAL_FUNCTION" |
        (eval "$AWK '{print \[$]2}' > conftest.awk 2>&1"); then
          rm -f conftest.$ac_ext
          ace_real_function=`cat conftest.awk`
@@ -439,7 +439,7 @@ dnl enum.  If it is an enum, determine the enum type.
        sed -e 's/^.*setrlimit.*(.*enum//' -e 's/[^ ]*,.*$//'`
 changequote([, ])dnl
 
-     ace_setrlimit_enum="enum $ace_setrlimit_enum" 
+     ace_setrlimit_enum="enum $ace_setrlimit_enum"
 
      AC_MSG_RESULT([$ace_setrlimit_enum])
 
@@ -482,7 +482,7 @@ dnl enum.  If it is an enum, determine the enum type.
        sed -e 's/^.*getrusage.*(.*enum//' -e 's/[^ ]*,.*$//'`
 changequote([, ])dnl
 
-     ace_rusage_who="enum $ace_rusage_who" 
+     ace_rusage_who="enum $ace_rusage_who"
 
      AC_MSG_RESULT([$ace_rusage_who])
 
@@ -786,4 +786,3 @@ dnl if test $ac_cv_sys_restartable_syscalls = yes; then
 dnl   AC_DEFINE([HAVE_RESTARTABLE_SYSCALLS])
 dnl fi
 dnl ])
-

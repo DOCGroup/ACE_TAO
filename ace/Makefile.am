@@ -186,15 +186,47 @@ lib_LTLIBRARIES = \
   $(LIBACE_OTHER)
 
 libACE_OS_la_SOURCES = \
+  ARGV.cpp \
+  Argv_Type_Converter.cpp \
   Basic_Types.cpp \
   Time_Value.cpp \
-  OS.cpp \
-  OS_Dirent.cpp \
-  OS_Errno.cpp \
-  OS_Memory.cpp \
+  Cleanup.cpp \
+  Object_Manager_Base.cpp \
+  OS_NS_arpa_inet.cpp \
+  OS_NS_ctype.cpp \
+  OS_NS_dirent.cpp \
+  OS_NS_dlfcn.cpp \
+  OS_NS_errno.cpp \
+  OS_NS_fcntl.cpp \
+  OS_NS_math.cpp \
+  OS_NS_netdb.cpp \
+  OS_NS_poll.cpp \
+  OS_NS_pwd.cpp \
+  OS_NS_regex.cpp \
+  OS_NS_signal.cpp \
+  OS_NS_stdio.cpp \
+  OS_NS_stdlib.cpp \
+  OS_NS_string.cpp \
+  OS_NS_strings.cpp \
+  OS_NS_stropts.cpp \
+  OS_NS_sys_mman.cpp \
+  OS_NS_sys_msg.cpp \
+  OS_NS_sys_resource.cpp \
+  OS_NS_sys_select.cpp \
+  OS_NS_sys_shm.cpp \
+  OS_NS_sys_socket.cpp \
+  OS_NS_sys_stat.cpp \
+  OS_NS_sys_time.cpp \
+  OS_NS_sys_uio.cpp \
+  OS_NS_sys_utsname.cpp \
+  OS_NS_sys_wait.cpp \
+  OS_NS_Thread.cpp \
+  OS_NS_time.cpp \
+  OS_NS_unistd.cpp \
+  OS_NS_wchar.cpp \
   OS_QoS.cpp \
-  OS_String.cpp \
   OS_TLI.cpp \
+  OS_Errno.cpp \
   Base_Thread_Adapter.cpp \
   OS_Thread_Adapter.cpp \
   OS_Log_Msg_Attributes.cpp \
@@ -207,12 +239,11 @@ libACE_Utils_la_SOURCES = \
   ACE.cpp \
   Active_Map_Manager.cpp \
   Arg_Shifter.cpp \
-  ARGV.cpp \
-  Argv_Type_Converter.cpp \
   Capabilities.cpp \
+  Containers.cpp \
   Configuration.cpp \
   Configuration_Import_Export.cpp \
-  Containers.cpp \
+  Date_Time.cpp \
   Dirent.cpp \
   Dirent_Selector.cpp \
   Dynamic.cpp \
@@ -237,6 +268,7 @@ libACE_Utils_la_SOURCES = \
   String_Base_Const.cpp \
   SString.cpp \
   Stats.cpp \
+  Container_Instantiations.cpp \
   Sample_History.cpp
 
 libACE_Logging_la_SOURCES = \
@@ -256,15 +288,29 @@ libACE_Threads_la_SOURCES = \
   Atomic_Op.cpp \
   Process.cpp \
   Process_Manager.cpp \
-  Synch.cpp \
+  TSS_Adapter.cpp \
+  Auto_Event.cpp \
+  Manual_Event.cpp \
+  Barrier.cpp \
+  Condition_Thread_Mutex.cpp \
+  Condition_Recursive_Thread_Mutex.cpp \
+  Event.cpp \
+  Lock.cpp \
+  Mutex.cpp \
+  RW_Mutex.cpp \
+  RW_Thread_Mutex.cpp \
+  Recursive_Thread_Mutex.cpp \
+  Semaphore.cpp \
+  Thread_Mutex.cpp \
+  Thread_Semaphore.cpp \
   Synch_Options.cpp \
   Process_Semaphore.cpp \
   Process_Mutex.cpp \
   RW_Process_Mutex.cpp \
   File_Lock.cpp \
   Thread.cpp \
-  Thread_Adapter.cpp \
   Thread_Manager.cpp \
+  Thread_Adapter.cpp \
   Thread_Exit.cpp \
   Thread_Control.cpp \
   Token.cpp
@@ -274,6 +320,7 @@ libACE_Demux_la_SOURCES = \
   FlReactor.cpp \
   Msg_WFMO_Reactor.cpp \
   POSIX_Proactor.cpp \
+  POSIX_CB_Proactor.cpp \
   WIN32_Proactor.cpp \
   Priority_Reactor.cpp \
   Proactor.cpp \

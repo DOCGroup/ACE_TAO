@@ -27,8 +27,6 @@ AC_DEFUN([ACE_PREP_CONFIG_HEADER],
 [
 dnl Text to be placed at the top of the `ace/config.h' header.
 AH_TOP([
-// -*- C++ -*-
-
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
@@ -42,6 +40,11 @@ AH_BOTTOM([
 
 
 #endif  /* ACE_CONFIG_H */
+
+
+// Local Variables:
+// mode:C++
+// End:
 ])
 
 
