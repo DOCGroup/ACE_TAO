@@ -28,6 +28,7 @@ Common options:\n\
 -d ##   set debug level \n\
 -f X    format for rate: k,K = kilo{bit,byte}; m,M = mega; g,G = giga\n\
 -L ##   Output file name for the data type used\n\n\
+-o ior_filename\
 ";
 
 CORBA::Long trans = 0;            // we are the receiver
@@ -74,6 +75,7 @@ main (int argc, char **argv)
   char              *oa_name = "RootPOA"; // name of our OA
   char              *orb_name = "internet"; // name of our ORB
   CORBA::String      str; // for stringified representation of the object reference
+  FILE *ior_file = 0;
 
   ACE_UNUSED_ARG (key);
 
@@ -133,7 +135,7 @@ main (int argc, char **argv)
     }
 
   // for parsing the arguments
-  ACE_Get_Opt get_opt (argc, argv, "l:vd:f:L:");
+  ACE_Get_Opt get_opt (argc, argv, "l:vd:f:L:o:");
 
   TAO_debug_level = 0;
   for (; (c = get_opt ()) != EOF;)
@@ -153,6 +155,10 @@ main (int argc, char **argv)
         case 'f':
           // output format i.e., Mbps, Kbps, etc
           fmt = *get_opt.optarg;
+          break;
+        case 'o':
+          ior_file = ACE_OS::fopen (get_opt.optarg,"w");
+          ACE_DEBUG ((LM_DEBUG,"ior_file is %s\n",get_opt.optarg));
           break;
         }
     }
@@ -203,6 +209,12 @@ main (int argc, char **argv)
         }
 
       ACE_DEBUG ((LM_DEBUG, "stringified obj reference = %s\n", str));
+      if (ior_file != 0)
+        {
+          // write ior to a file
+          ACE_OS::fprintf (ior_file,"%s",str);
+          ACE_OS::fclose (ior_file);
+        }
     }
 
 #if defined (ACE_HAS_QUANTIFY)
