@@ -1,3 +1,8 @@
+Fri Oct 29 12:04:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Typecode.h:
+	  Added missing 'const' to signature of equivalent().
+
 Fri Oct 29 10:11:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * rules.tao.GNU: disable IDL_EXT and IDL_EXT2 on WIN32 host,
