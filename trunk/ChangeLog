@@ -1,3 +1,9 @@
+Tue Sep 28 14:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-dmc.h:
+          When ACE_LACKS_STRUCT_DIR is defined, undef it, it must not be
+          set with the DMC compiler
+
 Tue Sep 28 14:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_win32_dmc.GNU:
