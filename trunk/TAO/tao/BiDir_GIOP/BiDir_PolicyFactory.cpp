@@ -24,6 +24,11 @@ TAO_BiDir_PolicyFactory::create_policy (
 
       // Extract the value from the any
       value >>= val;
+      if ((value >>= val) == 0)
+        {
+          ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+                            CORBA::Policy::_nil ());
+        }
 
       ACE_NEW_THROW_EX (policy,
                         TAO_BidirectionalPolicy (val),
