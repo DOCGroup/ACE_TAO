@@ -1,3 +1,9 @@
+Fri May  3 06:41:10 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Token.h:
+
+          Remove parameter name to avoid a warning from g++.
+
 Thu May 02 15:54:48 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Select_Reactor_T.cpp (work_pending):
@@ -325,6 +331,14 @@ Tue Apr 30 14:54:02 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Added $TAO_ROOT/tests/Connection_Timeout
 	  to the daily build list.
+
+Tue Apr 30 14:42:06 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Synch.h:
+        * ace/Synch.i:
+
+          Change the Null wait condition wait() method to take a const
+          ACE_Time_Value* like the Mutex wait condtion.
 
 Mon Apr 29 20:28:49 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
