@@ -27,57 +27,42 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
                                     const TAO_GIOP_Version &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
-    rendezvous_point_ (0),
     version_ (version),
     object_key_ (object_key),
     object_addr_ (addr),
     hint_ (0),
     orb_core_ (orb_core)
 {
-  this->set (addr);
 }
 
-TAO_UIOP_Profile::TAO_UIOP_Profile (const char *rendezvous_point,
+TAO_UIOP_Profile::TAO_UIOP_Profile (const char *,
                                     const TAO_ObjectKey &object_key,
                                     const ACE_UNIX_Addr &addr,
                                     const TAO_GIOP_Version &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
-    rendezvous_point_ (0),
     version_ (version),
     object_key_ (object_key),
     object_addr_ (addr),
     hint_ (0),
     orb_core_ (orb_core)
 {
-  if (rendezvous_point)
-    {
-      ACE_NEW (this->rendezvous_point_,
-               char[ACE_OS::strlen (rendezvous_point) + 1]);
-      ACE_OS::strcpy (this->rendezvous_point_, rendezvous_point);
-    }
 }
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_UIOP_Profile &pfile)
   : TAO_Profile (pfile.tag ()),
-    rendezvous_point_(0),
-    version_(pfile.version_),
-    object_key_(pfile.object_key_),
-    object_addr_(pfile.object_addr_),
-    hint_(0),
+    version_ (pfile.version_),
+    object_key_ (pfile.object_key_),
+    object_addr_ (pfile.object_addr_),
+    hint_ (pfile.hint_),
     orb_core_ (pfile.orb_core_)
 {
-  ACE_NEW (this->rendezvous_point_,
-           char[ACE_OS::strlen (pfile.rendezvous_point_) + 1]);
-  ACE_OS::strcpy (this->rendezvous_point_, pfile.rendezvous_point_);
-  hint_ = pfile.hint_;
 }
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
                                     TAO_ORB_Core *orb_core,
                                     CORBA::Environment &ACE_TRY_ENV)
   : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
-    rendezvous_point_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     object_key_ (),
     object_addr_ (),
@@ -90,7 +75,6 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
-    rendezvous_point_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     object_key_ (),
     object_addr_ (),
@@ -99,26 +83,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (TAO_ORB_Core *orb_core)
 {
 }
 
-int
-TAO_UIOP_Profile::set (const ACE_UNIX_Addr& addr)
-{
-  char temp_rendezvous_point[MAXPATHLEN + 1];
-
-  addr.addr_to_string (temp_rendezvous_point, sizeof (temp_rendezvous_point));
-
-  ACE_NEW_RETURN (this->rendezvous_point_,
-                  char[ACE_OS::strlen (temp_rendezvous_point) + 1],
-                  -1);
-
-  ACE_OS::strcpy (this->rendezvous_point_, temp_rendezvous_point);
-
-  return 0;
-}
-
 TAO_UIOP_Profile::~TAO_UIOP_Profile (void)
 {
-  delete [] this->rendezvous_point_;
-  this->rendezvous_point_ = 0;
 }
 
 int
@@ -164,20 +130,18 @@ TAO_UIOP_Profile::parse_string (const char *string,
       // No rendezvous point specified
     }
 
-  if (this->rendezvous_point_)
-    {
-      delete [] this->rendezvous_point_;
-      this->rendezvous_point_ = 0;
-    }
+  char *rendezvous = 0;
 
-  ACE_NEW_RETURN (this->rendezvous_point_,
+  ACE_NEW_RETURN (rendezvous,
                   char[1 + cp - start],
                   -1);
 
-  ACE_OS::strncpy (this->rendezvous_point_, start, cp - start);
-  this->rendezvous_point_[cp - start] = '\0';
+  ACE_OS::strncpy (rendezvous, start, cp - start);
+  rendezvous[cp - start] = '\0';
 
-  this->object_addr_.set (this->rendezvous_point_);
+  (void) this->rendezvous_point (rendezvous);
+
+  delete [] rendezvous;
 
   start = ++cp;  // increment past the object key separator
 
@@ -198,9 +162,10 @@ TAO_UIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 
   ACE_ASSERT (op->object_key_.length () < UINT_MAX);
 
-  return this->object_key_ == op->object_key_
-    && ACE_OS::strcmp (this->rendezvous_point_, op->rendezvous_point_) == 0
-    && this->version_ == op->version_;
+  return this->object_key_ == op->object_key_ &&
+    ACE_OS::strcmp (this->rendezvous_point (),
+                    op->rendezvous_point ()) == 0 &&
+    this->version_ == op->version_;
 }
 
 CORBA::ULong
@@ -215,7 +180,7 @@ TAO_UIOP_Profile::hash (CORBA::ULong max,
   // costly hash.
 
   hashval = this->object_key_.length () *
-    ACE_OS::atoi (this->rendezvous_point_);  // FIXME:  Is this valid?
+    ACE_OS::atoi (this->rendezvous_point ());  // @@ Is this valid?
   hashval += this->version_.minor;
 
   if (this->object_key_.length () >= 4)
@@ -230,32 +195,37 @@ TAO_UIOP_Profile::hash (CORBA::ULong max,
 int
 TAO_UIOP_Profile::addr_to_string (char *buffer, size_t length)
 {
-  if (length < (ACE_OS::strlen (rendezvous_point_) + 1))
+  if (length < (ACE_OS::strlen (this->rendezvous_point ()) + 1))
     return -1;
 
-  ACE_OS::strcpy (buffer, this->rendezvous_point_);
+  ACE_OS::strcpy (buffer, this->rendezvous_point ());
 
   return 0;
 }
 
 const char *
-TAO_UIOP_Profile::rendezvous_point (const char *r)
+TAO_UIOP_Profile::rendezvous_point (const char *rendezvous)
 {
-  if (this->rendezvous_point_)
+  if (!rendezvous || !*rendezvous)
+    return 0;
+
+  this->object_addr_.set (rendezvous);
+
+  size_t length = ACE_OS::strlen (this->rendezvous_point ());
+
+  // Check if rendezvous point was truncated by ACE_UNIX_Addr since
+  // most UNIX domain socket rendezvous points can only be less than
+  // 108 characters long.
+  if (length < ACE_OS::strlen (rendezvous))
     {
-      delete [] this->rendezvous_point_;
-      this->rendezvous_point_ = 0;
+      ACE_DEBUG ((LM_WARNING,
+                  "TAO (%P|%t) UIOP rendezvous point was truncated to <%s>\n"
+                  "since it was longer than %d characters long.\n",
+                  this->rendezvous_point (),
+                  length));
     }
 
-  if (r)
-    {
-      ACE_NEW_RETURN (this->rendezvous_point_,
-                      char[ACE_OS::strlen (r) + 1],
-                      0);
-      ACE_OS::strcpy (this->rendezvous_point_, r);
-    }
-
-  return this->rendezvous_point_;
+  return this->rendezvous_point ();
 }
 
 void
@@ -277,20 +247,6 @@ TAO_UIOP_Profile::operator= (const TAO_UIOP_Profile &src)
 
   this->object_addr_.set (src.object_addr_);
 
-  if (this->rendezvous_point_)
-    {
-      delete [] this->rendezvous_point_;
-      this->rendezvous_point_ = 0;
-    }
-
-  if (src.rendezvous_point_)
-    {
-      ACE_NEW_RETURN (this->rendezvous_point_,
-                      char[ACE_OS::strlen (src.rendezvous_point_) + 1],
-                      *this);
-      ACE_OS::strcpy (this->rendezvous_point_, src.rendezvous_point_);
-    }
-
   return *this;
 }
 
@@ -307,7 +263,7 @@ TAO_UIOP_Profile::to_string (CORBA::Environment &)
                   1 /* decimal point */ +
                   1 /* minor version */ +
                   1 /* `@' character */ +
-                  ACE_OS::strlen (this->rendezvous_point_) +
+                  ACE_OS::strlen (this->rendezvous_point ()) +
                   1 /* object key separator */ +
                   ACE_OS::strlen (key) +
                   1 /* zero terminator */);
@@ -321,7 +277,7 @@ TAO_UIOP_Profile::to_string (CORBA::Environment &)
                    ::prefix_,
                    digits [this->version_.major],
                    digits [this->version_.minor],
-                   this->rendezvous_point_,
+                   this->rendezvous_point (),
                    this->object_key_delimiter,
                    key.in ());
   return buf;
@@ -359,20 +315,22 @@ TAO_UIOP_Profile::decode (TAO_InputCDR& cdr)
     return -1;
   }
 
-  if (this->rendezvous_point_)
-    {
-      delete [] this->rendezvous_point_;
-      this->rendezvous_point_ = 0;
-    }
+  char *rendezvous = 0;
 
   // Get rendezvous_point
-  if (cdr.read_string (this->rendezvous_point_) == 0)
+  if (cdr.read_string (rendezvous) == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "error decoding UIOP rendezvous_point"));
       return -1;
     }
 
-  this->object_addr_.set (this->rendezvous_point_);
+  // We could use this->rendezvous_point(rendezvous) to set and check the
+  // rendezvous point.  However, it is safe to assume that it is valid 
+  // since it should only have been encoded if it was valid.
+  this->object_addr_.set (rendezvous);
+
+  // Clean up
+  delete [] rendezvous;
 
   // ... and object key.
 
@@ -393,10 +351,6 @@ TAO_UIOP_Profile::decode (TAO_InputCDR& cdr)
                   cdr.length (),
                   encap_len));
     }
-
-//   ACE_DEBUG ((LM_DEBUG,
-//               "UIOP_Profile --- r point: <%s>\n",
-//               this->rendezvous_point_));
 
   if (cdr.good_bit ())
     return 1;
@@ -430,7 +384,7 @@ TAO_UIOP_Profile::encode (TAO_OutputCDR &stream) const
   encap.write_octet (this->version_.minor);
 
   // STRING rendezvous_pointname from profile
-  encap.write_string (this->rendezvous_point_);
+  encap.write_string (this->rendezvous_point ());
 
   // OCTET SEQUENCE for object key
   encap << this->object_key_;

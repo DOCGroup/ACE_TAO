@@ -29,9 +29,9 @@ TAO_UIOP_Profile::object_addr (void) const
 }
 
 ACE_INLINE const char *
-TAO_UIOP_Profile::rendezvous_point (void)
+TAO_UIOP_Profile::rendezvous_point (void) const
 {
-  return this->rendezvous_point_;
+  return this->object_addr_.get_path_name ();
 }
 
 ACE_INLINE const TAO_GIOP_Version &
