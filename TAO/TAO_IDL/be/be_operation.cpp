@@ -88,9 +88,9 @@ be_operation::gen_client_header (void)
 
   // XXXASG
   // additional argument in the form of CORBA::Environment since TAO does not
-  // yet support Exceptions. However, we can have an option to the "tao" IDL
-  // compiler to ask it to generate code for exceptions. This will be handled
-  // in a later release.
+  // yet support C++ style Exceptions. However, we can have an option to the
+  // "tao" IDL compiler to ask it to generate code for exceptions. This will be
+  // handled in a later release.
   *ch << "CORBA::Environment &env);\n";
   cg->pop (); // restore previous state
 
@@ -200,6 +200,8 @@ be_operation::gen_client_stubs (void)
 
   // insert the address of the paramdata table
   *cs << this->flatname () << "_paramdata, ";
+
+  // XXXASG - Exception list goes here (if it exists) - TODO
   *cs << "0, 0};\n\n"; 
 
   // now generate the actual stub
@@ -379,6 +381,11 @@ be_operation::gen_server_header (void)
   return 0;
 }
 
+// Generate code for the operation skeleton that makes the upcall.
+// Special Note: We deviate a bit from our policy of handing over code
+// generation for elements in our scope to the be_scope class. For this method,
+// it is best to simulate that behavior here as it involves a lot of
+// complexity. 
 int
 be_operation::gen_server_skeletons (void)
 {
@@ -423,6 +430,12 @@ be_operation::gen_server_skeletons (void)
   // return type. We do not need one if the return type is void
 
   rt = be_type::narrow_from_decl (this->return_type ());
+  if (!rt)
+    {
+      ACE_ERROR ((LM_ERROR, 
+                  "be_operation::gen_server_skeletons - bad return type\n"));
+      return -1;
+    }
   if (rt->node_type () == AST_Decl::NT_pre_defined)
     {
       bpd = be_predefined_type::narrow_from_decl (rt);
@@ -433,12 +446,22 @@ be_operation::gen_server_skeletons (void)
       *ss << "CORBA::Any *result;" << nl;
       // emit the return type
       if (s->gen_code (rt, this) == -1)
-        return -1;
-      *ss << " value;" << nl;
+        {
+          ACE_ERROR ((LM_ERROR, 
+           "be_operation::gen_server_skeletons - codegen failed for return type\n"));
+          return -1;
+        }
+      *ss << " retval;" << nl;
     }
 
   // if we have any arguments, get each one of them and allocate an Any and
-  // NamedValue for each 
+  // NamedValue for each. In addition, define a variable.
+  cg->push (TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS);
+  s = cg->make_state ();
+  if (!s)
+    {
+      return -1;
+    }
   if (this->nmembers () > 0)
     {
       // if there are elements in this scope
@@ -457,18 +480,31 @@ be_operation::gen_server_skeletons (void)
                 {
                   bd = be_argument::narrow_from_decl (d);
                   bt = be_type::narrow_from_decl (bd->field_type ());
+                  
+                  // first define a variable (its type followed by the name)
+                  if (s->gen_code (bt, bd) == -1)
+                    {
+                      return -1;
+                    }
+#if 0
+                  *ss << bd->local_name () << ";" << nl;
+                  // now define a NamedValue_ptr
                   *ss << "CORBA::NamedValue_ptr nv_" << bd->local_name () <<
                     ";" << nl;
                   *ss << "CORBA::Any \t any_" << bd->local_name () << " (" <<
                     bt->tc_name () << ");" << nl;
+#endif
                 } // end if argument node
             } // end if ! imported
           si->next ();
         } // end of while
       delete si; // free the iterator object
     } // end of arg list
-  *ss << "\n";
 
+  *ss << "\n";
+  cg->pop ();
+
+  // declare an NVList and create one
   ss->indent ();
   *ss << "// create an NV list and populate it with typecodes" << nl;
   *ss << "req.orb ()->create_list (0, nvlist); // initialize a list" << nl;
@@ -521,11 +557,11 @@ be_operation::gen_server_skeletons (void)
   *ss << "req.params (nvlist, env);" << nl;
   *ss << "if (env.exception ()) return;" << nl;
 
-  // allocate storage for out parameters and make the upcall
+  // make the upcall
   *ss << "impl = (" << intf->name () << "_ptr) obj->get_subclass ();" << nl;
   if (!bpd || (bpd->pt () != AST_PredefinedType::PT_void))
     {
-      *ss << "value = impl->" << this->local_name () << "(";
+      *ss << "retval = impl->" << this->local_name () << "(";
     }
   else
     {
@@ -533,6 +569,7 @@ be_operation::gen_server_skeletons (void)
       *ss << "impl->" << this->local_name () << "(";
     }
 
+  // emit code for passing arguments to the upcall
   if (this->nmembers () > 0)
     {
       // if there are elements in this scope
@@ -549,30 +586,30 @@ be_operation::gen_server_skeletons (void)
               // only if this is an argument node
               if (d->node_type () == AST_Decl::NT_argument)
                 {
-                  bd = be_argument::narrow_from_decl (d);
-                  bt = be_type::narrow_from_decl (bd->field_type ());
-                  // this has to be based on parameter passing rules - TODO
-                  *ss << "*(" << bt->name () << " *)nv_" << bd->local_name () <<
-                    "->value ()->value (), ";
-                  // XXXASG - this may not be always correct - TODO
+                  *ss << bd->local_name () << ", ";
                 } // end if argument node
             } // end if ! imported
           si->next ();
         } // end of while
       delete si; // free the iterator object
     } // end of arg list
-  *ss << " env);" << nl;
+  *ss << "env);" << nl;
+
   // if there is any return type, send it via the ServerRequest
   if (!bpd || (bpd->pt () != AST_PredefinedType::PT_void))
     {
       // not a void type
-      *ss << "result = new CORBA::Any (" << rt->tc_name () << ", value, CORBA::B_TRUE);" << nl;
-      *ss << "req.result (result, env);" << nl;
+      cg->push (TAO_CodeGen::TAO_OPERATION_RESULT_SS);
+      s = cg->make_state ();
+      if (!s || (s->gen_code (rt, this) == -1))
+        return -1;
+      cg->pop ();
     }
   *ss << "\n";
   ss->decr_indent ();
   *ss << "}\n\n";
 
+  cg->pop ();
   return 0;
 }
 

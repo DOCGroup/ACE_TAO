@@ -825,6 +825,7 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
       os = cg->server_header ();
       break;
     case TAO_CodeGen::TAO_OPERATION_SS:
+    case TAO_CodeGen::TAO_OPERATION_RESULT_SS:
       os = cg->server_skeletons ();
       break;
     }
@@ -842,53 +843,143 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
   switch (type->node_type ())
     {
     case AST_Decl::NT_interface: // type is an obj reference
+    case AST_Decl::NT_interface_fwd: // type is an obj reference
       {
-        *os << bt->name () << "_ptr ";
+        if (cg->state () == TAO_CodeGen::TAO_OPERATION_RESULT_SS)
+          {
+            *os << "result = new CORBA::Any (" << bt->tc_name () << 
+              ", retval, 1); // ORB owns" << nl; 
+            *os << "req.result (result, env);" << nl;
+          }
+        else
+          {
+            *os << bt->name () << "_ptr ";
+          }
       }
       break;
     case AST_Decl::NT_pre_defined: // type is predefined type
       {
         be_predefined_type *bpd = be_predefined_type::narrow_from_decl (bt);
 
-        *os << bt->name ();
-        // check if the type is an any
-        if (bpd->pt () == AST_PredefinedType::PT_any)
+        if (cg->state () == TAO_CodeGen::TAO_OPERATION_RESULT_SS)
           {
-            // if it is an any, return a pointer to it
-            *os << " *";
+            if ((bpd->pt () != AST_PredefinedType::PT_any) &&
+                (bpd->pt () != AST_PredefinedType::PT_pseudo))
+              {
+                // for this case, pass the address of retval to the Any
+                *os << "result = new CORBA::Any (" << bt->tc_name () << 
+                  ", &retval, 1); // ORB owns" << nl; 
+              }
+            else
+              {
+                *os << "result = new CORBA::Any (" << bt->tc_name () << 
+                  ", retval, 1); // ORB owns" << nl; 
+              }
+            *os << "req.result (result, env);" << nl;
           }
-        else if (bpd->pt () == AST_PredefinedType::PT_pseudo)
+        else
           {
-            // pseudo object, return a pointer
-            *os << "_ptr";
+            *os << bt->name ();
+            // check if the type is an any
+            if (bpd->pt () == AST_PredefinedType::PT_any)
+              {
+                // if it is an any, return a pointer to it
+                *os << " *";
+              }
+            else if (bpd->pt () == AST_PredefinedType::PT_pseudo)
+              {
+                // pseudo object, return a pointer
+                *os << "_ptr";
+              }
           }
       }
       break;
     case AST_Decl::NT_string: // type is a string
       {
-        *os << "char *";
+        if (cg->state () == TAO_CodeGen::TAO_OPERATION_RESULT_SS)
+          {
+            *os << "result = new CORBA::Any (" << bt->tc_name () << 
+              ", retval, 1); // ORB owns" << nl; 
+            *os << "req.result (result, env);" << nl;
+          }
+        else
+          {
+            *os << "char *";
+          }
       }
       break;
       // these are all anonymous types
     case AST_Decl::NT_array: // type is an array
-      // return a pointer to slice
-      *os << bt->name () << "_slice *";
+      {
+        if (cg->state () == TAO_CodeGen::TAO_OPERATION_RESULT_SS)
+          {
+            *os << "result = new CORBA::Any (" << bt->tc_name () << 
+              ", retval, 1); // ORB owns" << nl; 
+            *os << "req.result (result, env);" << nl;
+          }
+        else
+          {
+            // return a pointer to slice
+            *os << bt->name () << "_slice *";
+          }
+      }
       break;
     case AST_Decl::NT_sequence: // type is a sequence
       // return type is a pointer to sequence
-      *os << bt->name () << " *";
+      {
+        if (cg->state () == TAO_CodeGen::TAO_OPERATION_RESULT_SS)
+          {
+            *os << "result = new CORBA::Any (" << bt->tc_name () << 
+              ", retval, 1); // ORB owns" << nl; 
+            *os << "req.result (result, env);" << nl;
+          }
+        else
+          {
+            *os << bt->name () << " *";
+          }
+      }
       break;
     case AST_Decl::NT_enum: // type is an enum
-      *os << bt->name ();
+      {
+        if (cg->state () == TAO_CodeGen::TAO_OPERATION_RESULT_SS)
+          {
+            // pass address of retval to Any
+            *os << "result = new CORBA::Any (" << bt->tc_name () << 
+              ", &retval, 1); // ORB owns" << nl; 
+            *os << "req.result (result, env);" << nl;
+          }
+        else
+          {
+            *os << bt->name ();
+          }
+      }
       break;
     case AST_Decl::NT_struct: // type is a struct
     case AST_Decl::NT_union: // type is a union
       {
-        *os << bt->name ();
-        // check if we are fixed size or variable sized. Depending on that we
-        // return a pointer or the aggregate itself
-        if (type->size_type () == be_decl::VARIABLE)
-          *os << " *";
+        if (cg->state () == TAO_CodeGen::TAO_OPERATION_RESULT_SS)
+          {
+            if (type->size_type () == be_decl::VARIABLE)
+              {
+                *os << "result = new CORBA::Any (" << bt->tc_name () << 
+                  ", retval, 1); // ORB owns" << nl; 
+              }
+            else
+              {
+                // fixed size. so pass address to the Any
+                *os << "result = new CORBA::Any (" << bt->tc_name () << 
+                  ", &retval, 1); // ORB owns" << nl; 
+              }
+            *os << "req.result (result, env);" << nl;
+          }
+        else
+          {
+            *os << bt->name ();
+            // check if we are fixed size or variable sized. Depending on that we
+            // return a pointer or the aggregate itself
+            if (type->size_type () == be_decl::VARIABLE)
+              *os << " *";
+          }
       }
       break;
     case AST_Decl::NT_except: // type is an exception
@@ -939,6 +1030,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
       os = cg->server_header ();
       break;
     case TAO_CodeGen::TAO_ARGUMENT_SS:
+    case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
       os = cg->server_skeletons ();
       break;
     }
@@ -956,17 +1048,66 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
   switch (type->node_type ())
     {
     case AST_Decl::NT_interface: // type is an obj reference
+    case AST_Decl::NT_interface_fwd: // type is an obj reference
       {
         switch (arg->direction ())
           {
           case AST_Argument::dir_IN:
-            *os << bt->name () << "_ptr ";
+            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+              {
+                *os << bt->name () << "_ptr ";
+                // declare a variable
+                *os << arg->local_name () << ";" << nl;
+                // now define a NamedValue_ptr
+                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                  ";" << nl;
+                // declare an Any
+                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  bt->tc_name () << ", " << arg->local_name () << 
+                  "); // ORB does not own" << nl;
+              }
+            else
+              {
+                *os << bt->name () << "_ptr ";
+              }
             break;
           case AST_Argument::dir_INOUT:
-            *os << bt->name () << "_ptr &";
+            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+              {
+                *os << bt->name () << "_ptr ";
+                // declare a variable
+                *os << arg->local_name () << ";" << nl;
+                // now define a NamedValue_ptr
+                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                  ";" << nl;
+                // declare an Any
+                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  bt->tc_name () << ", " << arg->local_name () << 
+                  ", 1); // ORB owns" << nl;
+              }
+            else
+              {
+                *os << bt->name () << "_ptr &";
+              }
             break;
           case AST_Argument::dir_OUT:
-            *os << bt->name () << "_ptr &";
+            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+              {
+                // declare a variable
+                *os << bt->name () << "_ptr ";
+                *os << arg->local_name () << ";" << nl;
+                // now define a NamedValue_ptr
+                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                  ";" << nl;
+                // declare an Any
+                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  bt->tc_name () << ", " << arg->local_name () << 
+                  ", 1); // ORB owns" << nl;
+              } 
+            else 
+              {
+                *os << bt->name () << "_out ";
+              }
             break;
           }
       }
@@ -981,28 +1122,124 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
             switch (arg->direction ())
               {
               case AST_Argument::dir_IN:
-                *os << "const " << bt->name () << " &";
+                if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+                  {
+                    *os << bt->name () << " ";
+                    // declare a variable
+                    *os << arg->local_name () << ";" << nl;
+                    // now define a NamedValue_ptr
+                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                      ";" << nl;
+                    // declare an Any
+                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      bt->tc_name () << ", &" << arg->local_name () << 
+                      "); // ORB does not own" << nl;
+                  }
+                else
+                  {
+                    *os << "const " << bt->name () << " &";
+                  }
                 break;
               case AST_Argument::dir_INOUT:
-                *os << bt->name () << " &";
+                if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+                  {
+                    // declare a variable
+                    *os << bt->name () << " ";
+                    *os << arg->local_name () << ";" << nl;
+                    // now define a NamedValue_ptr
+                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                      ";" << nl;
+                    // declare an Any
+                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      bt->tc_name () << ", &" << arg->local_name () << 
+                      ", 1); // ORB owns" << nl;
+                  }
+                else
+                  {
+                    *os << bt->name () << " &";
+                  }
                 break;
               case AST_Argument::dir_OUT:
-                *os << bt->name () << "_out ";
+                if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+                  {
+                    // declare a variable
+                    *os << bt->name () << " *";
+                    *os << arg->local_name () << ";" << nl;
+                    // now define a NamedValue_ptr
+                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                      ";" << nl;
+                    // declare an Any
+                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      bt->tc_name () << ", " << arg->local_name () << 
+                      ", 1); // ORB owns" << nl;
+                  } 
+                else 
+                  {
+                    *os << bt->name () << "_out ";
+                  }
                 break;
-              }
+              } // end of inner switch
           }
         else if (bpd->pt () == AST_PredefinedType::PT_pseudo)
           {
             switch (arg->direction ())
               {
               case AST_Argument::dir_IN:
-                *os << bt->name () << "_ptr ";
+                if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+                  {
+                    // declare a variable
+                    *os << bt->name () << "_ptr ";
+                    *os << arg->local_name () << ";" << nl;
+                    // now define a NamedValue_ptr
+                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                      ";" << nl;
+                    // declare an Any
+                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      bt->tc_name () << ", " << arg->local_name () << 
+                      "); // ORB does not own" << nl;
+                  }
+                else
+                  {
+                    *os << bt->name () << "_ptr ";
+                  }
                 break;
               case AST_Argument::dir_INOUT:
-                *os << bt->name () << "_ptr &";
+                if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+                  {
+                    // declare a variable
+                    *os << bt->name () << "_ptr ";
+                    *os << arg->local_name () << ";" << nl;
+                    // now define a NamedValue_ptr
+                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                      ";" << nl;
+                    // declare an Any
+                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      bt->tc_name () << ", " << arg->local_name () << 
+                      ", 1); // ORB owns" << nl;
+                  }
+                else
+                  {
+                    *os << bt->name () << "_ptr &";
+                  }
                 break;
               case AST_Argument::dir_OUT:
-                *os << bt->name () << "_ptr &";
+                if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+                  {
+                    // declare a variable
+                    *os << bt->name () << "_ptr ";
+                    *os << arg->local_name () << ";" << nl;
+                    // now define a NamedValue_ptr
+                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                      ";" << nl;
+                    // declare an Any
+                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      bt->tc_name () << ", " << arg->local_name () << 
+                      ", 1); // ORB owns" << nl;
+                  } 
+                else 
+                  {
+                    *os << bt->name () << "_out ";
+                  }
                 break;
               }
           }
@@ -1011,30 +1248,126 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
             switch (arg->direction ())
               {
               case AST_Argument::dir_IN:
-                *os << bt->name ();
+                if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+                  {
+                    // declare a variable
+                    *os << bt->name () << " " << arg->local_name () << ";" <<
+                      nl; 
+                    // now define a NamedValue_ptr
+                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                      ";" << nl;
+                    // declare an Any
+                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      bt->tc_name () << ", &" << arg->local_name () << 
+                      "); // ORB does not own" << nl;
+                  }
+                else
+                  {
+                    *os << bt->name ();
+                  }
                 break;
               case AST_Argument::dir_INOUT:
-                *os << bt->name () << " &";
+                if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+                  {
+                    // declare a variable
+                    *os << bt->name () << " " << arg->local_name () << ";" <<
+                      nl; 
+                    // now define a NamedValue_ptr
+                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                      ";" << nl;
+                    // declare an Any
+                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      bt->tc_name () << ", &" << arg->local_name () << 
+                      "); // ORB does not own" << nl;
+                  }
+                else
+                  {
+                    *os << bt->name () << " &";
+                  }
                 break;
               case AST_Argument::dir_OUT:
-                *os << bt->name () << "_out";
+                if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+                  {
+                    // declare a variable
+                    *os << bt->name () << " " << arg->local_name () << ";" <<
+                      nl; 
+                    // now define a NamedValue_ptr
+                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                      ";" << nl;
+                    // declare an Any
+                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      bt->tc_name () << ", &" << arg->local_name () << 
+                      ", 1); // ORB owns" << nl;
+                  } 
+                else 
+                  {
+                    *os << bt->name () << "_out";
+                  }
                 break;
-              }
-          }
-      }
+              } // end of inner switch
+          } // end of else
+      } // end of case
       break;
     case AST_Decl::NT_string: // type is a string
       {
         switch (arg->direction ())
           {
           case AST_Argument::dir_IN:
-            *os << "const char *";
+            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+              {
+                    // declare a variable
+                *os << "char *" << arg->local_name () << ";" <<
+                  nl; 
+                    // now define a NamedValue_ptr
+                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                  ";" << nl;
+                    // declare an Any
+                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  bt->tc_name () << ", " << arg->local_name () << 
+                  "); // ORB does not own" << nl;
+              }
+            else
+              {
+                *os << "const char *";
+              }
             break;
           case AST_Argument::dir_INOUT:
-            *os << "char *&";
+            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+              {
+                    // declare a variable
+                *os << "char *" << arg->local_name () << ";" <<
+                  nl; 
+                    // now define a NamedValue_ptr
+                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                  ";" << nl;
+                    // declare an Any
+                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  bt->tc_name () << ", " << arg->local_name () << 
+                  "); // ORB does not own" << nl;
+              }
+            else
+              {
+                *os << "char *&";
+              }
             break;
           case AST_Argument::dir_OUT:
-            *os << bt->name () << "_out ";
+            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+              {
+                // declare a variable
+                *os << "char *" << arg->local_name () << ";" <<
+                  nl; 
+                    // now define a NamedValue_ptr
+                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                  ";" << nl;
+                    // declare an Any
+                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  bt->tc_name () << ", " << arg->local_name () << 
+                  ", 1); // ORB owns" << nl;
+              } 
+            else 
+              {
+                *os << bt->name () << "_out";
+              }
             break;
           }
       }
@@ -1043,13 +1376,70 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
       switch (arg->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << "const " << bt->name ();
+          if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            {
+              // declare a variable
+              *os << bt->name () << " " << arg->local_name ()
+                  << ";" << nl; 
+              // now define a NamedValue_ptr
+              *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                ";" << nl;
+              // declare an Any
+              *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                bt->tc_name () << ", " << arg->local_name () << 
+                "); // ORB does not own" << nl;
+            }
+          else
+            {
+              *os << "const " << bt->name ();
+            }
           break;
         case AST_Argument::dir_INOUT:
-          *os << bt->name ();
+          if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            {
+                    // declare a variable
+              *os << bt->name ();
+              if (bt->size_type () == be_decl::VARIABLE)
+                {
+                  *os << "_slice *";
+                }
+              *os << " " << arg->local_name () << ";" << nl; 
+                    // now define a NamedValue_ptr
+              *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                ";" << nl;
+                    // declare an Any
+              *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                bt->tc_name () << ", " << arg->local_name () << 
+                "); // ORB does not own" << nl;
+            }
+          else
+            {
+              *os << bt->name ();
+              if (bt->size_type () == be_decl::VARIABLE)
+                {
+                  *os << "_slice *";
+                }
+            }
           break;
         case AST_Argument::dir_OUT:
-          *os << bt->name () << "_out";
+          if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            {
+                    // declare a variable
+              *os << bt->name () << "_slice *" << arg->local_name () << ";" <<
+                nl; 
+                    // now define a NamedValue_ptr
+              *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                ";" << nl;
+                    // declare an Any
+              *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                bt->tc_name () << ", " << arg->local_name () << 
+                ", 1); // ORB owns" << nl;
+            } 
+          else 
+            {
+              *os << bt->name () << "_out";
+              break;
+            }
           break;
         }
       break;
@@ -1059,13 +1449,78 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
       switch (arg->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << "const " << bt->name () << " &";
+          if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            {
+              // declare a variable
+              *os << bt->name () << " " << arg->local_name () <<
+                ";" << nl; 
+              // now define a NamedValue_ptr
+              *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                ";" << nl;
+              // declare an Any
+              *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                bt->tc_name () << ", &" << arg->local_name () << 
+                "); // ORB does not own" << nl;
+            }
+          else
+            {
+              *os << "const " << bt->name () << " &";
+            }
           break;
         case AST_Argument::dir_INOUT:
-          *os << bt->name () << " &";
+          if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            {
+              // declare a variable
+              *os << bt->name () << " " << arg->local_name () <<
+                ";" << nl; 
+              // now define a NamedValue_ptr
+              *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                ";" << nl;
+              // declare an Any
+              *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                bt->tc_name () << ", &" << arg->local_name () << 
+                "); // ORB does not own" << nl;
+            }
+          else
+            {
+              *os << bt->name () << " &";
+            }
           break;
         case AST_Argument::dir_OUT:
-          *os << bt->name () << "_out";
+          if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            {
+              if (bt->size_type () == be_decl::VARIABLE)
+                {
+                  // declare a variable
+                  *os << bt->name () << " *" << arg->local_name () << ";" <<
+                    nl; 
+                  // now define a NamedValue_ptr
+                  *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                    ";" << nl;
+                  // declare an Any
+                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                    bt->tc_name () << ", " << arg->local_name () << 
+                    ", 1); // ORB owns" << nl;
+                }
+              else
+                {
+                  // declare a variable
+                  *os << bt->name () << " " << arg->local_name () << ";" <<
+                    nl; 
+                  // now define a NamedValue_ptr
+                  *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                    ";" << nl;
+                  // declare an Any
+                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                    bt->tc_name () << ", &" << arg->local_name () << 
+                    ", 1); // ORB owns" << nl;
+                }
+            } 
+          else 
+            {
+              *os << bt->name () << "_out";
+              break;
+            }
           break;
         }
       break;
@@ -1073,13 +1528,61 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
         switch (arg->direction ())
           {
           case AST_Argument::dir_IN:
-            *os << bt->name ();
+            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+              {
+                    // declare a variable
+                *os << bt->name () << " " << arg->local_name () << ";" <<
+                  nl; 
+                    // now define a NamedValue_ptr
+                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                  ";" << nl;
+                    // declare an Any
+                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  bt->tc_name () << ", &" << arg->local_name () << 
+                  "); // ORB does not own" << nl;
+              }
+            else
+              {
+                *os << bt->name ();
+              }
             break;
           case AST_Argument::dir_INOUT:
-            *os << bt->name () << " &";
+            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+              {
+                    // declare a variable
+                *os << bt->name () << " " << arg->local_name () << ";" <<
+                  nl; 
+                    // now define a NamedValue_ptr
+                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                  ";" << nl;
+                    // declare an Any
+                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  bt->tc_name () << ", &" << arg->local_name () << 
+                  "); // ORB does not own" << nl;
+              }
+            else
+              {
+                *os << bt->name () << " &";
+              }
             break;
           case AST_Argument::dir_OUT:
-            *os << bt->name () << "_out";
+            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+              {
+                    // declare a variable
+                *os << bt->name () << " " << arg->local_name () << ";" <<
+                  nl; 
+                    // now define a NamedValue_ptr
+                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                  ";" << nl;
+                    // declare an Any
+                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  bt->tc_name () << ", &" << arg->local_name () << 
+                  "); // ORB does not own" << nl;
+              }
+            else
+              {
+                *os << bt->name () << "_out";
+              }
             break;
           }
       break;
@@ -1168,13 +1671,14 @@ be_state_typedef::gen_code (be_type *bt, be_decl *d, be_type *type)
               os->indent (); // start from current indentation
               if (bt->node_type () == AST_Decl::NT_typedef)
                 {
-                  *os << "typedef " << bt->name () << " " << d->local_name () << nl;
+                  *os << "typedef " << bt->name () << " " << d->local_name ()
+                      << ";" << nl;
                   *os << "typedef " << bt->name () << "_var " << d->local_name
                     () << "_var;\n\n"; 
                 }
               else
                 {
-                  *os << "typedef CORBA::String " << d->local_name () << nl;
+                  *os << "typedef CORBA::String " << d->local_name () << ";" << nl;
                   *os << "typedef CORBA::String_var " << d->local_name
                     () << "_var;\n\n"; 
                 }
@@ -1437,3 +1941,4 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
     } // end of switch
   return 0;
 }
+

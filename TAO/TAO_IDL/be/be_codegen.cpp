@@ -1,3 +1,20 @@
+/* -*- c++ -*- */
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+// 
+// = FILENAME
+//    be_codegen.h
+//
+// = DESCRIPTION
+//   
+//   Code generation
+// = AUTHOR
+//    Aniruddha Gokhale
+// 
+// ============================================================================
+
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
@@ -56,11 +73,13 @@ TAO_CodeGen::make_state (void)
     case TAO_OPERATION_CS:
     case TAO_OPERATION_SH:
     case TAO_OPERATION_SS:
+    case TAO_OPERATION_RESULT_SS:
       return TAO_BE_STATE_OPERATION::instance ();
     case TAO_ARGUMENT_CH:
     case TAO_ARGUMENT_CS:
     case TAO_ARGUMENT_SH:
     case TAO_ARGUMENT_SS:
+    case TAO_ARGUMENT_VARDECL_SS:
       return TAO_BE_STATE_ARGUMENT::instance ();
     case TAO_TYPEDEF_CH:
     case TAO_TYPEDEF_CS:
@@ -76,6 +95,28 @@ TAO_CodeGen::make_state (void)
       return TAO_BE_STATE_SEQUENCE::instance ();
     }
   return 0;
+}
+
+const char *
+TAO_CodeGen::upcase (const char *str)
+{
+  static char upcase_str [MAXNAMELEN];
+
+  ACE_OS::memset (upcase_str, '\0', MAXNAMELEN);
+  // convert letters in str to upcase
+  for (int i=0; i < ACE_OS::strlen (str); i++)
+    {
+      if (isalpha (str [i]))
+        {
+          upcase_str[i] = ::toupper (str [i]);
+        }
+      else
+        {
+          // copy it as it is
+          upcase_str[i] = str[i];
+        }
+    }
+  return upcase_str;
 }
 
 // set the client header stream
