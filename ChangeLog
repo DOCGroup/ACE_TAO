@@ -1,3 +1,7 @@
+Fri Aug 23 13:04:34 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Service_Config.cpp: Some minor cosmetic changes.
+
 Fri Aug 23 07:16:13 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/vc6dsp.mpd:

@@ -387,7 +387,8 @@ ACE_Service_Config::get_xml_svc_conf (ACE_DLL &xmldll)
 
   // Cast the void* to long first.
   long tmp = ACE_reinterpret_cast (long, foo);
-  ACE_XML_Svc_Conf::Factory factory = ACE_reinterpret_cast (ACE_XML_Svc_Conf::Factory, tmp);
+  ACE_XML_Svc_Conf::Factory factory =
+    ACE_reinterpret_cast (ACE_XML_Svc_Conf::Factory, tmp);
   if (factory == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Unable to resolve factory: %p\n"),
@@ -434,7 +435,8 @@ ACE_Service_Config::process_file (const ACE_TCHAR file[])
 #else
   ACE_DLL dll;
 
-  auto_ptr<ACE_XML_Svc_Conf> xml_svc_conf (ACE_Service_Config::get_xml_svc_conf (dll));
+  auto_ptr<ACE_XML_Svc_Conf>
+    xml_svc_conf (ACE_Service_Config::get_xml_svc_conf (dll));
 
   if (xml_svc_conf.get () == 0)
     return -1;
@@ -464,7 +466,8 @@ ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
 #else
   ACE_DLL dll;
 
-  auto_ptr<ACE_XML_Svc_Conf> xml_svc_conf (ACE_Service_Config::get_xml_svc_conf (dll));
+  auto_ptr<ACE_XML_Svc_Conf>
+    xml_svc_conf (ACE_Service_Config::get_xml_svc_conf (dll));
 
   if (xml_svc_conf.get () == 0)
     return -1;
