@@ -1,0 +1,32 @@
+// $Id$
+//
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/NestedUpcall/Triangle_Test
+//
+// = FILENAME
+//    Triangle_Test.idl
+//
+// = DESCRIPTION
+//    An example of how nested upcalls work/fail?
+//
+// = AUTHORS
+//    Michael Kircher
+//
+// ============================================================================
+
+
+
+interface Object_A {
+
+  long foo (in long time);
+
+};
+
+interface MT_Object;
+
+interface MT_Object 
+{
+  long yadda (in long hop_count, in MT_Object partner);
+};
