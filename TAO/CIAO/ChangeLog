@@ -17,6 +17,11 @@ Tue Mar 11 14:55:50 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  generate_component_mpc script provides more accurate hints on
 	  how to create export files.
 
+
+	  Renamed and reorganized all files in the following
+	  multi-component example according to the guideline I set in
+	  docs/new_component.html.
+
 	* examples/handcrafted/Display/Display.mpc:
 	* examples/handcrafted/Display/HUD_skel_export.h:
 	* examples/handcrafted/Display/HUD_stub_export.h:
