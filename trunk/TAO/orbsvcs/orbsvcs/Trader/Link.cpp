@@ -104,7 +104,7 @@ TAO_Link<TRADER,MAP_LOCK_TYPE>::remove_link (const char *name,
     TAO_THROW (CosTrading::Link::UnknownLinkName (name));
 
   // Erase the link state from the map.
-  this->links_.unbind (links_iter);
+  this->links_.unbind (link_name);
 }
 
 template <class TRADER, class MAP_LOCK_TYPE> CosTrading::Link::LinkInfo * 
@@ -114,11 +114,6 @@ TAO_Link<TRADER,MAP_LOCK_TYPE>::describe_link (const char *name,
 		  CosTrading::Link::IllegalLinkName, 
 		  CosTrading::Link::UnknownLinkName))
 {
-  TAO_READ_GUARD_RETURN (MAP_LOCK_TYPE, 
-			 ace_mon, 
-			 this->links_.lock (),
-			 (CosTrading::Link::LinkInfo*) 0);
-
   // Ensure the link name is valid.
   if (! TAO_Trader_Base::is_valid_identifier_name (name))
     TAO_THROW_RETURN (CosTrading::Link::IllegalLinkName (name), 0);
@@ -130,7 +125,7 @@ TAO_Link<TRADER,MAP_LOCK_TYPE>::describe_link (const char *name,
     TAO_THROW_RETURN (CosTrading::Link::UnknownLinkName (name), 0);
 
   // return the link infor for this link name.
-  return *(link_entry->int_id_);
+  return &(link_entry->int_id_);
 }
 
 template <class TRADER, class MAP_LOCK_TYPE> CosTrading::LinkNameSeq* 
@@ -138,7 +133,7 @@ TAO_Link<TRADER,MAP_LOCK_TYPE>::list_links (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   // Allocate space for the link names.
-  CORBA::ULong size = this->links_.size (), i = 0;
+  CORBA::ULong size = this->links_.current_size (), i = 0;
   CosTrading::LinkName* link_seq =
     CosTrading::LinkNameSeq::allocbuf (size);
 
@@ -146,7 +141,7 @@ TAO_Link<TRADER,MAP_LOCK_TYPE>::list_links (CORBA::Environment& _env)
   for (LINKS::iterator links_iter (this->links_);
        ! links_iter.done ();
        links_iter++)
-    link_seq[i++] = CORBA::string_dup ((*links_iter).int_id_.in ());
+    link_seq[i++] = CORBA::string_dup ((*links_iter).ext_id_.in ());
 
   // Return a sequence of the buf names.
   return new CosTrading::LinkNameSeq (i, i, link_seq, CORBA::B_TRUE);
