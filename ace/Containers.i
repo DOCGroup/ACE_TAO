@@ -140,8 +140,8 @@ ACE_Unbounded_Stack<T>::is_full (void) const
   return 0; // ???
 }
 
-template <class TYPE> ACE_INLINE size_t
-ACE_Unbounded_Queue<TYPE>::size (void) const
+template <class T> ACE_INLINE size_t
+ACE_Unbounded_Queue<T>::size (void) const
 {
   return this->cur_size_;
 }
