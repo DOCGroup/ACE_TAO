@@ -1,6 +1,6 @@
 --- orig/PolicyC.h	Tue Apr  3 14:08:51 2001
-+++ patched/PolicyC.h	Tue Apr  3 14:58:15 2001
-@@ -23,13 +23,18 @@
++++ patched/PolicyC.h	Thu Apr  5 14:50:12 2001
+@@ -23,13 +23,19 @@
  #define _TAO_IDL_ORIG_POLICYC_H_
  
  #include "ace/pre.h"
@@ -14,13 +14,14 @@
  #include "TAO_Export.h"
 +#include "Encodable.h"
 +#include "Exception.h"
++#include "Environment.h"
 +#include "Sequence.h"
 +#include "CDR.h"
 +#include "Remote_Object_Proxy_Impl.h"
  
  #if defined (TAO_EXPORT_MACRO)
  #undef TAO_EXPORT_MACRO
-@@ -54,29 +59,6 @@
+@@ -54,29 +60,6 @@
  #pragma option push -w-rvl -w-rch -w-ccc -w-inl
  #endif /* __BORLANDC__ */
  
@@ -50,7 +51,7 @@
  #if !defined (_CORBA_POLICYERROR_CH_)
  #define _CORBA_POLICYERROR_CH_
  
-@@ -340,6 +322,7 @@
+@@ -340,6 +323,7 @@
  class _TAO_CORBA_Policy_Remote_Proxy_Broker;
  
  class TAO_Export CORBA_Policy : public virtual CORBA_Object
@@ -58,7 +59,7 @@
  {
  public:
  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-@@ -399,6 +382,9 @@
+@@ -399,6 +383,9 @@
    
    virtual const char* _interface_repository_id (void) const;
  
@@ -68,7 +69,7 @@
  private:
    _TAO_CORBA_Policy_Proxy_Broker *the_TAO_CORBA_Policy_Proxy_Broker_;
    
-@@ -1023,119 +1009,6 @@
+@@ -1023,119 +1010,6 @@
  #endif /* end #if !defined */
  
  
@@ -188,7 +189,7 @@
  #if !defined (_CORBA_POLICYCURRENT___PTR_CH_)
  #define _CORBA_POLICYCURRENT___PTR_CH_
  
-@@ -1338,7 +1211,7 @@
+@@ -1338,7 +1212,7 @@
  
  
  #if defined (__ACE_INLINE__)

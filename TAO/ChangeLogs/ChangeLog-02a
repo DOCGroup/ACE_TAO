@@ -1,3 +1,8 @@
+Thu Apr  5 14:49:17 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/diffs/PolicyC.h.diff:
+          Fixed the patch file to incorporate Bala's change.
+
 Thu Apr  5 14:05:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/MT_Timeout/run_test.pl:
