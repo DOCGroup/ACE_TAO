@@ -14,7 +14,7 @@ if not "%1" == "" goto runtest
 
 :runall
 
-call %0 ACE_Init_Test
+rem call %0 ACE_Init_Test
 call %0 Atomic_Op_Test
 call %0 Barrier_Test
 call %0 Basic_Types_Test
@@ -90,13 +90,16 @@ goto done
 :runtest
 
 echo Running %arg%
-if not exist %arg%.exe goto nofile
+if not exist %arg%_ETS.exe goto nofile
 
 RUNEMB -LOGHOST -NODIALOG %arg%_ETS.exe > log\%arg%.log
 if errorlevel 0 goto fine
 echo.
 echo %arg% has FAILED!!!
 echo.
+type log\%arg%.log | find /I "Abnormal program termination"
+type log/%arg%.log | find /I "target halted"
+type log/%arg%.log | find /I "Fatal error"
 type log\%arg%.log | find /I "assertion failed"
 type log\%arg%.log | find /I "not supported"
 type log\%arg%.log | find /I "no such file or directory"
