@@ -23,7 +23,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_DLL dll;
 
-  const ACE_TCHAR * dll_name = ACE_TEXT ("NOT_A_DLL.so");
+  const ACE_TCHAR * dll_name = ACE_TEXT ("NOT_A_DLL") ACE_DLL_SUFFIX;
 
   // Normally applications should check the return value, but if they
   // ignore it...
