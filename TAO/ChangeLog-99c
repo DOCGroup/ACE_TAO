@@ -1,3 +1,26 @@
+Thu Dec 30 23:50:15 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/orbconf.h (MINIMUM_POA_MAPS): New compile time
+	  variable. This variable can be used to remove some extra maps
+	  used in the POA which are not commonly used by the user, e.g.,
+	  linear maps.  MINIMUM_POA_MAPS support is disabled by default if
+	  TAO is not configured for minimum CORBA.  If TAO is configured
+	  for minimum CORBA, then MINIMUM_POA_MAPS will be enabled by
+	  default.
+
+	  The follow maps are removed when MINIMUM_POA_MAPS is enabled:
+
+	  - tao/Active_Object_Map: user_id_linear_map and
+	    servant_linear_map.
+
+	  - tao/Object_Adapter: transient_poa_hash_map,
+	    transient_poa_linear_map, and persistent_poa_name_linear_map.
+
+	* tao/POA.cpp: Policy creation and copy methods were changed to
+	  use the ServantBase_var class instead of the auto_ptrs.  This
+	  should reduce the size somewhat since ServantBase_var is not a
+	  template.
+
 Thu Dec 30 16:10:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_structure.cpp:
@@ -7,7 +30,7 @@ Thu Dec 30 16:10:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
 	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
 	  A bug reported by J. Scott Evans <evans@cpi.com>
-	  pointed out that the TAO IDL compiler was not 
+	  pointed out that the TAO IDL compiler was not
 	  generating different code for the _var class of
 	  a struct, depending on whether the struct was
 	  fixed-size or variable-size (according to H & V
