@@ -1,3 +1,11 @@
+Wed Apr 30 10:45:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+
+          Fixed logic mistake that was skipping generation of explicit
+          template instantiations for the base classes of bounded
+          sequences whose elements are a basic IDL type.
+
 Wed Apr 30 16:44:12 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
