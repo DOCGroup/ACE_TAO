@@ -1,3 +1,23 @@
+Tue Sep 2 18:00:00 2003 Justin Michel <michel_j@ociweb.com>
+
+        * ace/UUID.cpp:
+        * ace/UUID.h:
+        * ace/UUID.i:
+
+          Removed implementations of copy constructors and assignment
+        operators, and made them private. These were not correct, and
+        would cause an infinite loop if ever called. I also had to 
+        comment out several other broken operators that were using the
+        copy constructors or assignment operators. In general, someone
+        should take a close look at these classes, and either fix all the
+        many problems, or remove apparently unnecessary features entirely.
+
+        * test/tests.mpc:
+
+          Added support for the UUID test. This test really doesn't test
+        very much right now, as it still passed even though I had removed
+        most of the functionality from the uuid classes. 
+    
 Tue Sep  2 17:25:24 UTC 2003 Trevor Fields <fields_t@ociweb.com>
 
         * examples/Web_Crawler/Command_Processor.h
