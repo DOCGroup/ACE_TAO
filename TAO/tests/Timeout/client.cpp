@@ -46,7 +46,8 @@ parse_args (int argc, char *argv[])
 }
 
 void
-send_echo (Simple_Server_ptr server,
+send_echo (CORBA::ORB_ptr orb,
+           Simple_Server_ptr server,
            CORBA::Long t,
            CORBA::Environment &ACE_TRY_ENV)
 {
@@ -59,13 +60,13 @@ send_echo (Simple_Server_ptr server,
   ACE_CATCH (CORBA::TIMEOUT, timeout)
     {
       // Trap this exception and continue...
-      ACE_DEBUG ((LM_DEBUG,
-                  "==> Trapped a TIMEOUT exception (expected)\n"));
+      // ACE_DEBUG ((LM_DEBUG,
+      //             "==> Trapped a TIMEOUT exception (expected)\n"));
 
       // Sleep so the server can send the reply...
       ACE_Time_Value tv (max_timeout / 1000,
                          (max_timeout % 1000) * 1000);
-      ACE_OS::sleep (tv);
+      orb->run (tv);
     }
   ACE_ENDTRY;
 }
@@ -146,14 +147,17 @@ int main (int argc, char* argv[])
       policy_list[0]->destroy (ACE_TRY_ENV);
       policy_list[0] = CORBA::Policy::_nil ();
 
+      ACE_DEBUG ((LM_DEBUG,
+                  "client (%P) testing from %d to %d milliseconds\n",
+                  min_timeout, max_timeout));
       for (CORBA::Long t = min_timeout; t != max_timeout; ++t)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "\n================================\n"
-                      "Trying with timeout = %d\n", t));
+          //ACE_DEBUG ((LM_DEBUG,
+          //            "\n================================\n"
+          //            "Trying with timeout = %d\n", t));
 
-          ACE_DEBUG ((LM_DEBUG,
-                      "Cleanup ORB/Thread/Object policies\n"));
+          // ACE_DEBUG ((LM_DEBUG,
+          //            "Cleanup ORB/Thread/Object policies\n"));
 
           policy_list.length (0);
           policy_manager->set_policy_overrides (policy_list,
@@ -165,11 +169,11 @@ int main (int argc, char* argv[])
                                                 ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          send_echo (server.in (), t, ACE_TRY_ENV);
+          send_echo (orb.in (), server.in (), t, ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          ACE_DEBUG ((LM_DEBUG,
-                      "client(%P) Set the ORB policies\n"));
+          // ACE_DEBUG ((LM_DEBUG,
+          //             "client(%P) Set the ORB policies\n"));
 
           policy_list.length (1);
           policy_list[0] =
@@ -183,14 +187,14 @@ int main (int argc, char* argv[])
                                                 ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          send_echo (server.in (), t, ACE_TRY_ENV);
+          send_echo (orb.in (), server.in (), t, ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           policy_list[0]->destroy (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          ACE_DEBUG ((LM_DEBUG,
-                      "client(%P) Set the thread policies\n"));
+          // ACE_DEBUG ((LM_DEBUG,
+          //             "client(%P) Set the thread policies\n"));
 
           policy_list.length (1);
           policy_list[0] =
@@ -204,20 +208,21 @@ int main (int argc, char* argv[])
                                                 ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          send_echo (server.in (), t, ACE_TRY_ENV);
+          send_echo (orb.in (), server.in (), t, ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           policy_list[0]->destroy (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          ACE_DEBUG ((LM_DEBUG,
-                      "client(%P) Use the object policies\n"));
-          send_echo (timeout_server.in (), t, ACE_TRY_ENV);
+          // ACE_DEBUG ((LM_DEBUG,
+          //            "client(%P) Use the object policies\n"));
+          send_echo (orb.in (), timeout_server.in (), t, ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "\n\n\nclient(%P) Test completed, resynch with server\n"));
+      // ACE_DEBUG ((LM_DEBUG,
+      //             "\n\n\nclient(%P) Test completed, "
+      //             "resynch with server\n"));
       policy_list.length (0);
       policy_manager->set_policy_overrides (policy_list,
                                             CORBA::SET_OVERRIDE,
@@ -228,7 +233,7 @@ int main (int argc, char* argv[])
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      send_echo (server.in (), 0, ACE_TRY_ENV);
+      send_echo (orb.in (), server.in (), 0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       server->shutdown (ACE_TRY_ENV);

@@ -24,6 +24,11 @@ TAO_Transport_Mux_Strategy::bind_dispatcher (CORBA::ULong,
   return rd->leader_follower_condition_variable (this->transport_);
 }
 
+void
+TAO_Transport_Mux_Strategy::unbind_dispatcher (CORBA::ULong)
+{
+}
+
 // *********************************************************************
 
 TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_Transport *transport)
@@ -70,6 +75,15 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
 
   return TAO_Transport_Mux_Strategy::bind_dispatcher (request_id,
                                                       rd);
+}
+
+void
+TAO_Exclusive_TMS::unbind_dispatcher (CORBA::ULong request_id)
+{
+  if (this->request_id_ != request_id)
+    return;
+  this->request_id_ = 0xdeadbeef; // @@ What is a good value???
+  this->rd_ = 0;
 }
 
 int
@@ -212,6 +226,13 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
 
   return TAO_Transport_Mux_Strategy::bind_dispatcher (request_id,
                                                       rd);
+}
+
+void
+TAO_Muxed_TMS::unbind_dispatcher (CORBA::ULong request_id)
+{
+  TAO_Reply_Dispatcher *rd = 0;
+  (void) this->dispatcher_table_.unbind (request_id, rd);
 }
 
 int
