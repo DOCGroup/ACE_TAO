@@ -36,10 +36,9 @@
 class TAO_POA;
 
 /**
- * @class TAO_ObjectReferenceTemplate_Adapter
+ * @class TAO_ObjectReferenceTemplate_Adapter_Impl
  *
- * @brief Implementation of the PortableInterceptor::ObjectReferenceTemplate
- *        interface.
+ * @brief Implementation of the TAO_ObjectReferenceTemplate_Adapter
  */
 class TAO_ORT_Export TAO_ObjectReferenceTemplate_Adapter_Impl
   : public TAO_ObjectReferenceTemplate_Adapter

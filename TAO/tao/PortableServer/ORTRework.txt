@@ -1,3 +1,11 @@
+Wed Aug 18 13:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.h:
+          Removed some unneeded friends but had to make invoke_key_to_object
+          public because we now need it from the ORT library, friend doesn't
+          work anymore because it moved to a default servant we don't know
+          anything about in this library, any other ideas?
+
 Wed Aug 18 12:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IORInterceptor/IORInterceptor.pidl:

@@ -3,8 +3,9 @@
 #include "tao/PortableServer/ObjectReferenceTemplate_Adapter.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID(tao, ObjectReferenceTemplate_Adapter, "$Id$")
-
+ACE_RCSID(PortableServer,
+          ObjectReferenceTemplate_Adapter,
+          "$Id$")
 
 TAO_ObjectReferenceTemplate_Adapter::~TAO_ObjectReferenceTemplate_Adapter (void)
 {

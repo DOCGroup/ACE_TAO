@@ -160,7 +160,6 @@ public:
   friend class TAO_POA_Current_Impl;
   friend class TAO_POA_Manager;
   friend class TAO_RT_Collocation_Resolver;
-  friend class TAO_ObjectReferenceTemplate_Adapter_Factory;
 
   typedef ACE_CString String;
 
@@ -555,6 +554,8 @@ public:
 
   static const char *objectreferencetemplate_adapter_factory_name (void);
 
+  CORBA::Object_ptr invoke_key_to_object (ACE_ENV_SINGLE_ARG_DECL);
+
 protected:
 
   /// Template method for creating new POA's of this type.
@@ -667,11 +668,6 @@ protected:
   //@}
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-// @johnny hacke
-public:
-  CORBA::Object_ptr invoke_key_to_object (ACE_ENV_SINGLE_ARG_DECL);
-
-protected:
   /// Wrapper for the ORB's key_to_object that will alter the object pointer
   /// if the ImplRepo is used.
   CORBA::Object_ptr key_to_object (const TAO::ObjectKey &key,

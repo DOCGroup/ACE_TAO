@@ -4,11 +4,9 @@
 #include "tao/CORBA_String.h"
 #include "tao/ORB_Constants.h"
 
-
 ACE_RCSID (ORT,
            ObjectReferenceTemplate_i,
            "$Id$")
-
 
 #if !defined (__ACE_INLINE__)
 # include "ObjectReferenceTemplate_i.inl"
