@@ -241,14 +241,24 @@ files in the correct place.</P>
       and build both client and server. <P>
 </OL>
 
-<H4><A NAME="taoace">TAOACE.dsw</A></H4>
+<H4><A NAME="taoace">TAOACE.dsw and other collection dsw files</A></H4>
 
 <P>TAOACE.dsw is a Visual C++ 5.0/6.0 workspace that loads the projects
-ACE, TAO, TAO_IDL (the compiler), orbsvcs, gperf and the Naming Service.
-The dependencies are set up to correctly between the projects so for
-example, ACE will be built automatically when TAO is built.  An easy
-way to compile everything is to just compile the debug or release
-version of the Naming Service.</P>
+ACE, TAO, TAO_IDL (the compiler), gperf, the Naming Service executable, and
+the orbsvcs libraries needed by the Naming Service. </P>
+
+<P>TAOACE.dsw does not compile all the libraries and services though.  For
+this you'll also need to load <CODE>orbsvcs\orbsvcs\orbsvcs.dsw</CODE> and 
+<CODE>orbsvcs\services.dsw</CODE>.  Like TAOACE, these workspaces have
+dependencies set up between their processes, so they get compiled in the
+right order (but you still need to make sure that you compile TAOACE before
+orbsvcs, and orbsvcs before services).</P>
+
+<P>The difference between orbsvcs and services is that orbsvcs.dsw produces 
+the libraries for use of the services within executables, whereas 
+services.dsw creates separate executables for some of the services. With
+orbsvcs you get the ability to have colocated services, and with services
+you get stand-alone services.</P>
 
 <H4>Borland C++ Builder</H4> <P>
 
