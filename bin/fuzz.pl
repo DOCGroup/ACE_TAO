@@ -113,7 +113,7 @@ sub store_file ($)
     elsif ($name =~ /ChangeLog/i && -f $name) {
         push @files_changelog, ($name);
     }
-    elsif ($name =~ /Makefile/i) {
+    elsif ($name =~ /\/Makefile.*.[^~]$/) {
         push @files_makefile, ($name);
     }
     elsif ($name =~ /\.(mpc|mwc|mpb|mpt)/i) {

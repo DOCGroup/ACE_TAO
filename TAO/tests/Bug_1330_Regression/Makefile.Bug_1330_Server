@@ -2,7 +2,6 @@
 #       GNU Makefile
 #----------------------------------------------------------------------------
 MAKEFILE        = Makefile.Bug_1330_Server
-DEPENDENCY_FILE = .depend.Makefile.Bug_1330_Server
 BIN_UNCHECKED   = server
 
 ifndef TAO_ROOT

@@ -2,7 +2,6 @@
 #       GNU Makefile
 #----------------------------------------------------------------------------
 MAKEFILE        = Makefile.Bug_1330_Client
-DEPENDENCY_FILE = .depend.Makefile.Bug_1330_Client
 BIN_UNCHECKED   = client
 
 ifndef TAO_ROOT
