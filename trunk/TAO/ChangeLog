@@ -1,3 +1,12 @@
+Fri Jun 20 14:50:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tao/RTCORBA/RTCORBA.h:
+        * tao/RTCORBA/RT_Endpoint_Selector_Factory.h:
+        * tao/RTCORBA/RT_ORB_Loader.h:
+          Adjusted location of ifdef so that it's after orbconf.h
+          which is where ACE_HAS_CORBA_MESSAGING gets set if you user
+          doesn't specify it explicitely.
+
 Fri Jun 20 11:26:14 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Default_ProxySupplier.cpp:
