@@ -10,7 +10,7 @@
 //    Repository_i.h
 //
 // = DESCRIPTION
-//    IR_Repository servant class.
+//    Repository servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
@@ -34,7 +34,7 @@
 #endif /* _MSC_VER */
 
 #include "IFR_macro.h"
-#include "TCF_Loader.h"
+#include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
 
 class IFR_Servant_Factory;
 
@@ -57,7 +57,7 @@ public:
   virtual ~TAO_Repository_i (void);
   // Destructor.
 
-  virtual IR_DefinitionKind def_kind (
+  virtual CORBA::DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
@@ -71,14 +71,14 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // May not be called on a repository - raises BAD_INV_ORDER.
 
-  virtual IR_Contained_ptr lookup_id (
+  virtual CORBA_Contained_ptr lookup_id (
       const char *search_id,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_Contained_ptr lookup_id_i (
+  CORBA_Contained_ptr lookup_id_i (
       const char *search_id,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
@@ -99,8 +99,8 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_PrimitiveDef_ptr get_primitive (
-      IR_PrimitiveKind kind,
+  virtual CORBA::PrimitiveDef_ptr get_primitive (
+      CORBA::PrimitiveKind kind,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
@@ -108,67 +108,67 @@ public:
   // No locking necessary because the database is not
   // accessed.
 
-  virtual IR_StringDef_ptr create_string (
+  virtual CORBA_StringDef_ptr create_string (
       CORBA::ULong bound,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_StringDef_ptr create_string_i (
+  CORBA_StringDef_ptr create_string_i (
       CORBA::ULong bound,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_WstringDef_ptr create_wstring (
+  virtual CORBA_WstringDef_ptr create_wstring (
       CORBA::ULong bound,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_WstringDef_ptr create_wstring_i (
+  CORBA_WstringDef_ptr create_wstring_i (
       CORBA::ULong bound,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_SequenceDef_ptr create_sequence (
+  virtual CORBA_SequenceDef_ptr create_sequence (
       CORBA::ULong bound,
-      IR_IDLType_ptr element_type,
+      CORBA_IDLType_ptr element_type,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC (( CORBA::SystemException));
 
-  IR_SequenceDef_ptr create_sequence_i (
+  CORBA_SequenceDef_ptr create_sequence_i (
       CORBA::ULong bound,
-      IR_IDLType_ptr element_type,
+      CORBA_IDLType_ptr element_type,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC (( CORBA::SystemException));
 
-  virtual IR_ArrayDef_ptr create_array (
+  virtual CORBA_ArrayDef_ptr create_array (
       CORBA::ULong length,
-      IR_IDLType_ptr element_type,
+      CORBA_IDLType_ptr element_type,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_ArrayDef_ptr create_array_i (
+  CORBA_ArrayDef_ptr create_array_i (
       CORBA::ULong length,
-      IR_IDLType_ptr element_type,
+      CORBA_IDLType_ptr element_type,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR_FixedDef_ptr create_fixed (
+  virtual CORBA_FixedDef_ptr create_fixed (
       CORBA::UShort digits,
       CORBA::Short scale,
       CORBA::Environment &ACE_TRY_ENV =
@@ -176,7 +176,7 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR_FixedDef_ptr create_fixed_i (
+  CORBA_FixedDef_ptr create_fixed_i (
       CORBA::UShort digits,
       CORBA::Short scale,
       CORBA::Environment &ACE_TRY_ENV =
@@ -196,8 +196,8 @@ public:
   CORBA::TypeCodeFactory_ptr tc_factory (void) const;
   // Accessor for the Typecode factory.
 
-  IR_Repository_ptr repo_objref (void) const;
-  void repo_objref (IR_Repository_ptr objref);
+  CORBA_Repository_ptr repo_objref (void) const;
+  void repo_objref (CORBA_Repository_ptr objref);
   // Accessor/mutator for our object reference.
 
   ACE_Configuration_Section_Key root_key (void) const;
@@ -252,7 +252,7 @@ protected:
   CORBA::TypeCodeFactory_var tc_factory_;
   // Our Typecode factory.
 
-  IR_Repository_ptr repo_objref_;
+  CORBA_Repository_ptr repo_objref_;
   // The object reference of this servant.
 
   ACE_Configuration_Section_Key root_key_;
@@ -287,14 +287,14 @@ protected:
 
 private:
   static const char *TAO_IFR_primitive_kinds[];
-  // Set of strings corresponding to the IR_PrimitiveKind
+  // Set of strings corresponding to the CORBA_PrimitiveKind
   // enum values.
 
-  const char *pkind_to_string (IR_PrimitiveKind pkind) const;
+  const char *pkind_to_string (CORBA::PrimitiveKind pkind) const;
   // Convert the enum value to the equivalent string.
 
   u_int num_pkinds (void) const;
-  // Return the number of entries in the IR_PrimitiveKind enum.
+  // Return the number of entries in the CORBA_PrimitiveKind enum.
 
 };
 

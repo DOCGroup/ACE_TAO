@@ -22,11 +22,11 @@ TAO_ComponentDef_i::~TAO_ComponentDef_i (void)
 {
 }
 
-IR_DefinitionKind
+CORBA::DefinitionKind
 TAO_ComponentDef_i::def_kind (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return dk_Component;
+  return CORBA::dk_Component;
 }
 
 void 
@@ -45,7 +45,7 @@ TAO_ComponentDef_i::destroy_i (CORBA::Environment & /* ACE_TRY_ENV */)
   // TODO
 }
 
-IR_Contained::Description *
+CORBA_Contained::Description *
 TAO_ComponentDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -54,7 +54,7 @@ TAO_ComponentDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
   return this->describe_i (ACE_TRY_ENV);
 }
 
-IR_Contained::Description *
+CORBA_Contained::Description *
 TAO_ComponentDef_i::describe_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -79,7 +79,7 @@ TAO_ComponentDef_i::type_i (CORBA::Environment & /* ACE_TRY_ENV */)
   return 0;
 }
 
-IR_InterfaceDefSeq *
+CORBA_InterfaceDefSeq *
 TAO_ComponentDef_i::supported_interfaces (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -88,7 +88,7 @@ TAO_ComponentDef_i::supported_interfaces (CORBA::Environment &ACE_TRY_ENV)
   return this->supported_interfaces_i (ACE_TRY_ENV);
 }
 
-IR_InterfaceDefSeq *
+CORBA_InterfaceDefSeq *
 TAO_ComponentDef_i::supported_interfaces_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -98,7 +98,7 @@ TAO_ComponentDef_i::supported_interfaces_i (CORBA::Environment & /* ACE_TRY_ENV 
 
 void 
 TAO_ComponentDef_i::supported_interfaces (
-    const IR_InterfaceDefSeq &supported_interfaces,
+    const CORBA_InterfaceDefSeq &supported_interfaces,
     CORBA::Environment &ACE_TRY_ENV
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -111,7 +111,7 @@ TAO_ComponentDef_i::supported_interfaces (
 
 void 
 TAO_ComponentDef_i::supported_interfaces_i (
-    const IR_InterfaceDefSeq & /* supported_interfaces */,
+    const CORBA_InterfaceDefSeq & /* supported_interfaces */,
     CORBA::Environment & /* ACE_TRY_ENV */
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -119,16 +119,16 @@ TAO_ComponentDef_i::supported_interfaces_i (
   // TODO
 }
 
-IR_ComponentDef_ptr 
+IR::ComponentDef_ptr 
 TAO_ComponentDef_i::base_component (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (IR_ComponentDef::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (CORBA_ComponentDef::_nil ());
 
   return this->base_component_i (ACE_TRY_ENV);
 }
 
-IR_ComponentDef_ptr 
+IR::ComponentDef_ptr 
 TAO_ComponentDef_i::base_component_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -136,7 +136,7 @@ TAO_ComponentDef_i::base_component_i (CORBA::Environment & /* ACE_TRY_ENV */)
   return 0;
 }
 
-IR_ProvidesDefSeq *
+IR::ProvidesDefSeq *
 TAO_ComponentDef_i::provides_interfaces (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -145,7 +145,7 @@ TAO_ComponentDef_i::provides_interfaces (CORBA::Environment &ACE_TRY_ENV)
   return this->provides_interfaces_i (ACE_TRY_ENV);
 }
 
-IR_ProvidesDefSeq *
+IR::ProvidesDefSeq *
 TAO_ComponentDef_i::provides_interfaces_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -153,7 +153,7 @@ TAO_ComponentDef_i::provides_interfaces_i (CORBA::Environment & /* ACE_TRY_ENV *
   return 0;
 }
 
-IR_UsesDefSeq *
+IR::UsesDefSeq *
 TAO_ComponentDef_i::uses_interfaces (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -162,7 +162,7 @@ TAO_ComponentDef_i::uses_interfaces (CORBA::Environment &ACE_TRY_ENV)
   return this->uses_interfaces_i (ACE_TRY_ENV);
 }
 
-IR_UsesDefSeq *
+IR::UsesDefSeq *
 TAO_ComponentDef_i::uses_interfaces_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -170,7 +170,7 @@ TAO_ComponentDef_i::uses_interfaces_i (CORBA::Environment & /* ACE_TRY_ENV */)
   return 0;
 }
 
-IR_EmitsDefSeq *
+IR::EmitsDefSeq *
 TAO_ComponentDef_i::emits_events (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -179,7 +179,7 @@ TAO_ComponentDef_i::emits_events (CORBA::Environment &ACE_TRY_ENV)
   return this->emits_events_i (ACE_TRY_ENV);
 }
 
-IR_EmitsDefSeq *
+IR::EmitsDefSeq *
 TAO_ComponentDef_i::emits_events_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -187,7 +187,7 @@ TAO_ComponentDef_i::emits_events_i (CORBA::Environment & /* ACE_TRY_ENV */)
   return 0;
 }
 
-IR_PublishesDefSeq *
+IR::PublishesDefSeq *
 TAO_ComponentDef_i::publishes_events (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -196,7 +196,7 @@ TAO_ComponentDef_i::publishes_events (CORBA::Environment &ACE_TRY_ENV)
   return this->publishes_events_i (ACE_TRY_ENV);
 }
 
-IR_PublishesDefSeq *
+IR::PublishesDefSeq *
 TAO_ComponentDef_i::publishes_events_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -204,7 +204,7 @@ TAO_ComponentDef_i::publishes_events_i (CORBA::Environment & /* ACE_TRY_ENV */)
   return 0;
 }
 
-IR_ConsumesDefSeq *
+IR::ConsumesDefSeq *
 TAO_ComponentDef_i::consumes_events (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -213,7 +213,7 @@ TAO_ComponentDef_i::consumes_events (CORBA::Environment &ACE_TRY_ENV)
   return this->consumes_events_i (ACE_TRY_ENV);
 }
 
-IR_ConsumesDefSeq *
+IR::ConsumesDefSeq *
 TAO_ComponentDef_i::consumes_events_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -229,17 +229,17 @@ TAO_ComponentDef_i::is_basic (CORBA::Environment & /* ACE_TRY_ENV */)
   return 0;
 }
 
-IR_ProvidesDef_ptr 
+IR::ProvidesDef_ptr 
 TAO_ComponentDef_i::create_provides (
     const char *id,
     const char *name,
     const char *version,
-    IR_InterfaceDef_ptr interface_type,
+    CORBA_InterfaceDef_ptr interface_type,
     CORBA::Environment &ACE_TRY_ENV
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD_RETURN (IR_ProvidesDef::_nil ());
+  TAO_IFR_WRITE_GUARD_RETURN (CORBA_ProvidesDef::_nil ());
 
   return this->create_provides_i (id,
                                   name,
@@ -248,12 +248,12 @@ TAO_ComponentDef_i::create_provides (
                                   ACE_TRY_ENV);
 }
 
-IR_ProvidesDef_ptr 
+IR::ProvidesDef_ptr 
 TAO_ComponentDef_i::create_provides_i (
     const char * /* id */,
     const char * /* name */,
     const char * /* version */,
-    IR_InterfaceDef_ptr  /* interface_type */,
+    CORBA_InterfaceDef_ptr  /* interface_type */,
     CORBA::Environment & /* ACE_TRY_ENV */
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -262,16 +262,16 @@ TAO_ComponentDef_i::create_provides_i (
   return 0;
 }
 
-IR_UsesDef_ptr 
+IR::UsesDef_ptr 
 TAO_ComponentDef_i::create_uses (const char *id,
                                  const char *name,
                                  const char *version,
-                                 IR_InterfaceDef_ptr interface_type,
+                                 CORBA_InterfaceDef_ptr interface_type,
                                  CORBA::Boolean is_multiple,
                                  CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD_RETURN (IR_UsesDef::_nil ());
+  TAO_IFR_WRITE_GUARD_RETURN (CORBA_UsesDef::_nil ());
 
   return this->create_uses_i (id,
                               name,
@@ -281,11 +281,11 @@ TAO_ComponentDef_i::create_uses (const char *id,
                               ACE_TRY_ENV);
 }
 
-IR_UsesDef_ptr 
+IR::UsesDef_ptr 
 TAO_ComponentDef_i::create_uses_i (const char * /* id */,
                                    const char * /* name */,
                                    const char * /* version */,
-                                   IR_InterfaceDef_ptr  /* interface_type */,
+                                   CORBA_InterfaceDef_ptr  /* interface_type */,
                                    CORBA::Boolean /* is_multiple */,
                                    CORBA::Environment & /* ACE_TRY_ENV */ )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -294,15 +294,15 @@ TAO_ComponentDef_i::create_uses_i (const char * /* id */,
   return 0;
 }
 
-IR_EmitsDef_ptr 
+IR::EmitsDef_ptr 
 TAO_ComponentDef_i::create_emits (const char *id,
                                   const char *name,
                                   const char *version,
-                                  IR_ValueDef_ptr value,
+                                  CORBA_ValueDef_ptr value,
                                   CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD_RETURN (IR_EmitsDef::_nil ());
+  TAO_IFR_WRITE_GUARD_RETURN (CORBA_EmitsDef::_nil ());
 
   return this->create_emits_i (id,
                                name,
@@ -311,11 +311,11 @@ TAO_ComponentDef_i::create_emits (const char *id,
                                 ACE_TRY_ENV);
 }
 
-IR_EmitsDef_ptr 
+IR::EmitsDef_ptr 
 TAO_ComponentDef_i::create_emits_i (const char * /* id */,
                                     const char * /* name */,
                                     const char * /* version */,
-                                    IR_ValueDef_ptr  /* value */,
+                                    CORBA_ValueDef_ptr  /* value */,
                                     CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -323,15 +323,15 @@ TAO_ComponentDef_i::create_emits_i (const char * /* id */,
   return 0;
 }
 
-IR_PublishesDef_ptr 
+IR::PublishesDef_ptr 
 TAO_ComponentDef_i::create_publishes (const char *id,
                                       const char *name,
                                       const char *version,
-                                      IR_ValueDef_ptr value,
+                                      CORBA_ValueDef_ptr value,
                                       CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD_RETURN (IR_PublishesDef::_nil ());
+  TAO_IFR_WRITE_GUARD_RETURN (CORBA_PublishesDef::_nil ());
 
   return this->create_publishes_i (id,
                                    name,
@@ -340,11 +340,11 @@ TAO_ComponentDef_i::create_publishes (const char *id,
                                    ACE_TRY_ENV);
 }
 
-IR_PublishesDef_ptr 
+IR::PublishesDef_ptr 
 TAO_ComponentDef_i::create_publishes_i (const char * /* id */,
                                         const char * /* name */,
                                         const char * /* version */,
-                                        IR_ValueDef_ptr  /* value */,
+                                        CORBA_ValueDef_ptr  /* value */,
                                         CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -352,15 +352,15 @@ TAO_ComponentDef_i::create_publishes_i (const char * /* id */,
   return 0;
 }
 
-IR_ConsumesDef_ptr 
+IR::ConsumesDef_ptr 
 TAO_ComponentDef_i::create_consumes (const char *id,
                                      const char *name,
                                      const char *version,
-                                     IR_ValueDef_ptr value,
+                                     CORBA_ValueDef_ptr value,
                                      CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD_RETURN (IR_ConsumesDef::_nil ());
+  TAO_IFR_WRITE_GUARD_RETURN (CORBA_ConsumesDef::_nil ());
 
   return this->create_consumes_i (id,
                                   name,
@@ -369,11 +369,11 @@ TAO_ComponentDef_i::create_consumes (const char *id,
                                   ACE_TRY_ENV);
 }
 
-IR_ConsumesDef_ptr 
+IR::ConsumesDef_ptr 
 TAO_ComponentDef_i::create_consumes_i (const char * /* id */,
                                        const char * /* name */,
                                        const char * /* version */,
-                                       IR_ValueDef_ptr  /* value */,
+                                       CORBA_ValueDef_ptr  /* value */,
                                        CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {

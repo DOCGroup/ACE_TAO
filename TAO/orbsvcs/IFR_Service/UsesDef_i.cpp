@@ -17,11 +17,11 @@ TAO_UsesDef_i::~TAO_UsesDef_i (void)
 {
 }
 
-IR_DefinitionKind
+CORBA::DefinitionKind
 TAO_UsesDef_i::def_kind (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return dk_Uses;
+  return CORBA::dk_Uses;
 }
 
 void 
@@ -40,7 +40,7 @@ TAO_UsesDef_i::destroy_i (CORBA::Environment & /* ACE_TRY_ENV */)
   // TODO
 }
 
-IR_Contained::Description *
+CORBA_Contained::Description *
 TAO_UsesDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -49,7 +49,7 @@ TAO_UsesDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
   return this->describe_i (ACE_TRY_ENV);
 }
 
-IR_Contained::Description *
+CORBA_Contained::Description *
 TAO_UsesDef_i::describe_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -57,16 +57,16 @@ TAO_UsesDef_i::describe_i (CORBA::Environment & /* ACE_TRY_ENV */)
   return 0;
 }
 
-IR_InterfaceDef_ptr 
+CORBA_InterfaceDef_ptr 
 TAO_UsesDef_i::interface_type (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (IR_InterfaceDef::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (CORBA_InterfaceDef::_nil ());
 
   return this->interface_type_i (ACE_TRY_ENV);
 }
 
-IR_InterfaceDef_ptr 
+CORBA_InterfaceDef_ptr 
 TAO_UsesDef_i::interface_type_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {

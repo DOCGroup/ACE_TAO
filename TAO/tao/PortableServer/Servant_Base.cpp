@@ -11,6 +11,9 @@
 #include "tao/Stub.h"
 #include "tao/Environment.h"
 #include "tao/TAO_Server_Request.h"
+#include "tao/IFR_Client_Adapter.h"
+
+#include "ace/Dynamic_Service.h"
 
 ACE_RCSID(tao, Servant_Base, "$Id$")
 
@@ -90,6 +93,25 @@ CORBA::Boolean
 TAO_ServantBase::_non_existent (CORBA::Environment &)
 {
   return 0;
+}
+
+CORBA_InterfaceDef_ptr
+TAO_ServantBase::_get_interface (CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_IFR_Client_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
+        TAO_ORB_Core::ifr_client_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTF_REPOS (),
+                        0);
+    }
+
+  return adapter->get_interface (TAO_ORB_Core_instance ()->orb (),
+                                 this->_interface_repository_id (),
+                                 ACE_TRY_ENV);
 }
 
 int

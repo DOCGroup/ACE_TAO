@@ -52,7 +52,7 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
                   continue;
                 }
 
-              IR_Contained_var top_level = 
+              CORBA_Contained_var top_level = 
                 be_global->repository ()->lookup_id (d->repoID (),
                                                      ACE_TRY_ENV);
               ACE_TRY_CHECK;

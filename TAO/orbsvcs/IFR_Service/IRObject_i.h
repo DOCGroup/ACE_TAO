@@ -10,7 +10,7 @@
 //    IRObject_i.h
 //
 // = DESCRIPTION
-//    CORBA::IRObject servant class.
+//    IRObject servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
@@ -20,7 +20,7 @@
 #ifndef TAO_IROBJECT_I_H
 #define TAO_IROBJECT_I_H
 
-#include "InterfaceS.h"
+#include "IFR_BaseS.h"
 #include "ace/Configuration.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -36,7 +36,7 @@
 
 class TAO_Repository_i;
 
-class TAO_IRObject_i : public POA_CORBA_IRObject
+class TAO_IRObject_i : public POA_CORBA::IRObject
 {
   // = TITLE
   //    TAO_IRObject_i
@@ -52,7 +52,7 @@ public:
   virtual ~TAO_IRObject_i (void);
   // Destructor.
 
-  virtual IR_DefinitionKind def_kind (
+  virtual CORBA::DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )

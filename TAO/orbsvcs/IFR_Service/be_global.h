@@ -23,7 +23,7 @@
 #include "TAO_IFR_BE_Export.h"
 #include "idl_bool.h"
 #include "tao/ORB.h"
-#include "tao/IFR_Client/InterfaceC.h"
+#include "tao/IFR_Client/IFR_BasicC.h"
 #include "ace/Containers.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -57,11 +57,11 @@ public:
 
   void orb (CORBA::ORB_ptr orb);
 
-  IR_Repository_ptr repository (void) const;
+  CORBA_Repository_ptr repository (void) const;
 
-  void repository (IR_Repository_ptr repo);
+  void repository (CORBA_Repository_ptr repo);
 
-  ACE_Unbounded_Stack<IR_Container_ptr> &ifr_scopes (void);
+  ACE_Unbounded_Stack<CORBA_Container_ptr> &ifr_scopes (void);
 
   const char *filename (void);
 
@@ -78,10 +78,10 @@ private:
   CORBA::ORB_var orb_;
   // Reference to our ORB.
 
-  IR_Repository_var repository_;
+  CORBA_Repository_var repository_;
   // Reference to the interface repository.
 
-  ACE_Unbounded_Stack<IR_Container_ptr> ifr_scopes_;
+  ACE_Unbounded_Stack<CORBA_Container_ptr> ifr_scopes_;
   // IR object scope stack.
 
   char *filename_;

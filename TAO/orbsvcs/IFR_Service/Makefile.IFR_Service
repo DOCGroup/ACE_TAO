@@ -34,10 +34,13 @@ PROG_SRCS = \
 	FixedDef_i.cpp \
 	HomeDef_i.cpp \
 	IDLType_i.cpp \
+	IFR_BaseS.cpp \
+	IFR_BasicS.cpp \
+	IFR_ComponentsS.cpp \
+	IFR_ExtendedS.cpp \
 	IFR_Server.cpp \
 	IFR_Service.cpp \
 	InterfaceDef_i.cpp \
-	InterfaceS.cpp \
 	IRObject_i.cpp \
 	ModuleDef_i.cpp \
 	NativeDef_i.cpp \
@@ -83,10 +86,13 @@ IFR_SVR_OBJS = \
 	FixedDef_i.o \
 	HomeDef_i.o \
 	IDLType_i.o \
+	IFR_BaseS.o \
+	IFR_BasicS.o \
+	IFR_ComponentsS.o \
+	IFR_ExtendedS.o \
 	IFR_Server.o \
 	IFR_Service.o \
 	InterfaceDef_i.o \
-	InterfaceS.o \
 	IRObject_i.o \
 	ModuleDef_i.o \
 	NativeDef_i.o \

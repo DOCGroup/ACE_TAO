@@ -19,11 +19,11 @@ TAO_NativeDef_i::~TAO_NativeDef_i (void)
 {
 }
 
-IR_DefinitionKind
+CORBA::DefinitionKind
 TAO_NativeDef_i::def_kind (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return dk_Native;
+  return CORBA::dk_Native;
 }
 
 CORBA::TypeCode_ptr 

@@ -20,11 +20,11 @@ TAO_FactoryDef_i::~TAO_FactoryDef_i (void)
 {
 }
 
-IR_DefinitionKind
+CORBA::DefinitionKind
 TAO_FactoryDef_i::def_kind (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return dk_Factory;
+  return CORBA::dk_Factory;
 }
 
 void 
@@ -43,7 +43,7 @@ TAO_FactoryDef_i::destroy_i (CORBA::Environment & /* ACE_TRY_ENV */)
   // TODO
 }
 
-IR_Contained::Description *
+CORBA_Contained::Description *
 TAO_FactoryDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -52,7 +52,7 @@ TAO_FactoryDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
   return this->describe_i (ACE_TRY_ENV);
 }
 
-IR_Contained::Description *
+CORBA_Contained::Description *
 TAO_FactoryDef_i::describe_i (CORBA::Environment & /* ACE_TRY_ENV */ )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {

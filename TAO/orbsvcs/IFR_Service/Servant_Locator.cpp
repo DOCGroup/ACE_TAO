@@ -2,6 +2,7 @@
 
 #include "Servant_Locator.h"
 #include "Servant_Factory.h"
+#include "Repository_i.h"
 
 ACE_RCSID(IFR_Service, Servant_Locator, "$Id$")
 

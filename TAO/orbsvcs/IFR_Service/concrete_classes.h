@@ -48,5 +48,7 @@
 #include "ValueDef_i.h"
 #include "ExceptionDef_i.h"
 #include "ModuleDef_i.h"
+#include "AbstractInterfaceDef_i.h"
+#include "LocalInterfaceDef_i.h"
 
 #endif /* CONCRETE_CLASSES_H */

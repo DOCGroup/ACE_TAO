@@ -17,11 +17,11 @@ TAO_StringDef_i::~TAO_StringDef_i (void)
 {
 }
 
-IR_DefinitionKind
+CORBA::DefinitionKind
 TAO_StringDef_i::def_kind (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return dk_String;
+  return CORBA::dk_String;
 }
 
 void 

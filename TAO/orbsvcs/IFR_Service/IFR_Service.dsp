@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TypeCodeFactory_DLL.lib TAO_Svc_Utils.lib TAO_IFR_Client.lib TAO_IORTable.lib TAO_PortableServer.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\orbsvcs" /libpath:"..\..\tao\IFR_Client" /libpath:"..\..\tao\IORTable" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_TypeCodeFactory.lib TAO_Svc_Utils.lib TAO_IFR_Client.lib TAO_IORTable.lib TAO_PortableServer.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\orbsvcs" /libpath:"..\..\tao\TypeCodeFactory" /libpath:"..\..\tao\IFR_Client" /libpath:"..\..\tao\IORTable" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "IFR_Service - Win32 Debug"
 
@@ -76,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TypeCodeFactory_DLLd.lib TAO_Svc_Utilsd.lib TAO_IFR_Clientd.lib TAO_IORTabled.lib TAO_PortableServerd.lib TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao\IFR_Client" /libpath:"..\..\tao\IORTable" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_TypeCodeFactoryd.lib TAO_Svc_Utilsd.lib TAO_IFR_Clientd.lib TAO_IORTabled.lib TAO_PortableServerd.lib TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao\TypeCodeFactory" /libpath:"..\..\tao\IFR_Client" /libpath:"..\..\tao\IORTable" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ENDIF 
 
@@ -87,6 +87,10 @@ LINK32=link.exe
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+# Begin Source File
+
+SOURCE=.\AbstractInterfaceDef_i.cpp
+# End Source File
 # Begin Source File
 
 SOURCE=.\AliasDef_i.cpp
@@ -161,6 +165,22 @@ SOURCE=.\IDLType_i.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IFR_BaseS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_BasicS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_ComponentsS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_ExtendedS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\IFR_Server.cpp
 # End Source File
 # Begin Source File
@@ -173,11 +193,11 @@ SOURCE=.\InterfaceDef_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\InterfaceS.cpp
+SOURCE=.\IRObject_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IRObject_i.cpp
+SOURCE=.\LocalInterfaceDef_i.cpp
 # End Source File
 # Begin Source File
 
@@ -273,6 +293,10 @@ SOURCE=.\WstringDef_i.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\AbstractInterfaceDef_i.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\AliasDef_i.h
 # End Source File
 # Begin Source File
@@ -349,6 +373,38 @@ SOURCE=.\IDLType_i.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IFR_BaseS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_BaseS_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_BasicS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_BasicS_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_ComponentsS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_ComponentsS_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_ExtendedS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_ExtendedS_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IFR_macro.h
 # End Source File
 # Begin Source File
@@ -361,15 +417,11 @@ SOURCE=.\InterfaceDef_i.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\InterfaceS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceS_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\IRObject_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LocalInterfaceDef_i.h
 # End Source File
 # Begin Source File
 
@@ -461,11 +513,35 @@ SOURCE=.\WstringDef_i.h
 # PROP Default_Filter "i"
 # Begin Source File
 
-SOURCE=.\InterfaceS.i
+SOURCE=.\IFR_BaseS.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\InterfaceS_T.i
+SOURCE=.\IFR_BaseS_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_BasicS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_BasicS_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_ComponentsS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_ComponentsS_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_ExtendedS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_ExtendedS_T.i
 # End Source File
 # End Group
 # End Target

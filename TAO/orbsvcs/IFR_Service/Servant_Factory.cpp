@@ -2,6 +2,7 @@
 
 #include "Servant_Factory.h"
 #include "concrete_classes.h"
+#include "IFR_ComponentsS.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID(IFR_Service, Servant_Factory, "$Id$")
@@ -22,9 +23,9 @@ IFR_Servant_Factory::create_idltype (
                                              "def_kind",
                                              def_kind);
 
-  switch (ACE_static_cast (IR_DefinitionKind, def_kind))
+  switch (ACE_static_cast (CORBA::DefinitionKind, def_kind))
   {
-    case dk_Interface:
+    case CORBA::dk_Interface:
     {
       TAO_InterfaceDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -35,7 +36,29 @@ IFR_Servant_Factory::create_idltype (
 
       return impl;
     }
-    case dk_Alias:
+    case CORBA::dk_AbstractInterface:
+    {
+      TAO_AbstractInterfaceDef_i *impl = 0;
+      ACE_NEW_THROW_EX (impl,
+                        TAO_AbstractInterfaceDef_i (this->repo_,
+                                                    servant_key),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (0);
+
+      return impl;
+    }
+    case CORBA::dk_LocalInterface:
+    {
+      TAO_LocalInterfaceDef_i *impl = 0;
+      ACE_NEW_THROW_EX (impl,
+                        TAO_LocalInterfaceDef_i (this->repo_,
+                                                 servant_key),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (0);
+
+      return impl;
+    }
+    case CORBA::dk_Alias:
     {
       TAO_AliasDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -46,7 +69,7 @@ IFR_Servant_Factory::create_idltype (
 
       return impl;
     }
-    case dk_Struct:
+    case CORBA::dk_Struct:
     {
       TAO_StructDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -57,7 +80,7 @@ IFR_Servant_Factory::create_idltype (
 
       return impl;
     }
-    case dk_Union:
+    case CORBA::dk_Union:
     {
       TAO_UnionDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -68,7 +91,7 @@ IFR_Servant_Factory::create_idltype (
 
       return impl;
     }
-    case dk_Enum:
+    case CORBA::dk_Enum:
     {
       TAO_EnumDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -79,7 +102,7 @@ IFR_Servant_Factory::create_idltype (
 
       return impl;
     }
-    case dk_Primitive:
+    case CORBA::dk_Primitive:
     {
       TAO_PrimitiveDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -90,7 +113,7 @@ IFR_Servant_Factory::create_idltype (
 
       return impl;
     }
-    case dk_String:
+    case CORBA::dk_String:
     {
       TAO_StringDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -101,7 +124,7 @@ IFR_Servant_Factory::create_idltype (
 
       return impl;
     }
-    case dk_Sequence:
+    case CORBA::dk_Sequence:
     {
       TAO_SequenceDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -112,7 +135,7 @@ IFR_Servant_Factory::create_idltype (
 
       return impl;
     }
-    case dk_Array:
+    case CORBA::dk_Array:
     {
       TAO_ArrayDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -123,7 +146,7 @@ IFR_Servant_Factory::create_idltype (
 
       return impl;
     }
-    case dk_Wstring:
+    case CORBA::dk_Wstring:
     {
       TAO_WstringDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -134,7 +157,7 @@ IFR_Servant_Factory::create_idltype (
 
       return impl;
     }
-    case dk_Fixed:
+    case CORBA::dk_Fixed:
     {
       TAO_FixedDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -145,7 +168,7 @@ IFR_Servant_Factory::create_idltype (
 
       return impl;
     }
-    case dk_Value:
+    case CORBA::dk_Value:
     {
       TAO_ValueDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -156,7 +179,7 @@ IFR_Servant_Factory::create_idltype (
 
       return impl;
     }
-    case dk_ValueBox:
+    case CORBA::dk_ValueBox:
     {
       TAO_ValueBoxDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -167,7 +190,7 @@ IFR_Servant_Factory::create_idltype (
 
       return impl;
     }
-    case dk_Native:
+    case CORBA::dk_Native:
     {
       TAO_NativeDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -178,7 +201,7 @@ IFR_Servant_Factory::create_idltype (
 
       return impl;
     }
-    case dk_Component:
+    case CORBA::dk_Component:
     {
       TAO_ComponentDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -189,7 +212,7 @@ IFR_Servant_Factory::create_idltype (
 
       return impl;
     }
-    case dk_Home:
+    case CORBA::dk_Home:
     {
       TAO_HomeDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -216,9 +239,9 @@ IFR_Servant_Factory::create_contained (
                                              "def_kind",
                                              def_kind);
 
-  switch (ACE_static_cast (IR_DefinitionKind, def_kind))
+  switch (ACE_static_cast (CORBA::DefinitionKind, def_kind))
   {
-    case dk_Interface:
+    case CORBA::dk_Interface:
     {
       TAO_InterfaceDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -229,7 +252,29 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_Alias:
+    case CORBA::dk_AbstractInterface:
+    {
+      TAO_AbstractInterfaceDef_i *impl = 0;
+      ACE_NEW_THROW_EX (impl,
+                        TAO_AbstractInterfaceDef_i (this->repo_,
+                                                    servant_key),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (0);
+
+      return impl;
+    }
+    case CORBA::dk_LocalInterface:
+    {
+      TAO_LocalInterfaceDef_i *impl = 0;
+      ACE_NEW_THROW_EX (impl,
+                        TAO_LocalInterfaceDef_i (this->repo_,
+                                                 servant_key),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (0);
+
+      return impl;
+    }
+    case CORBA::dk_Alias:
     {
       TAO_AliasDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -240,7 +285,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_Struct:
+    case CORBA::dk_Struct:
     {
       TAO_StructDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -251,7 +296,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_Union:
+    case CORBA::dk_Union:
     {
       TAO_UnionDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -262,7 +307,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_Enum:
+    case CORBA::dk_Enum:
     {
       TAO_EnumDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -273,7 +318,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_Module:
+    case CORBA::dk_Module:
     {
       TAO_ModuleDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -284,7 +329,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_Exception:
+    case CORBA::dk_Exception:
     {
       TAO_ExceptionDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -295,7 +340,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_Constant:
+    case CORBA::dk_Constant:
     {
       TAO_ConstantDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -306,7 +351,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_ValueMember:
+    case CORBA::dk_ValueMember:
     {
       TAO_ValueMemberDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -317,7 +362,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_Uses:
+    case CORBA::dk_Uses:
     {
       TAO_UsesDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -328,7 +373,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_Provides:
+    case CORBA::dk_Provides:
     {
       TAO_ProvidesDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -339,7 +384,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_PrimaryKey:
+    case CORBA::dk_PrimaryKey:
     {
       TAO_PrimaryKeyDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -350,7 +395,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_Emits:
+    case CORBA::dk_Emits:
     {
       TAO_EmitsDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -361,7 +406,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_Publishes:
+    case CORBA::dk_Publishes:
     {
       TAO_PublishesDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -372,7 +417,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_Consumes:
+    case CORBA::dk_Consumes:
     {
       TAO_ConsumesDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -383,7 +428,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_Attribute:
+    case CORBA::dk_Attribute:
     {
       TAO_AttributeDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -394,7 +439,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_Operation:
+    case CORBA::dk_Operation:
     {
       TAO_OperationDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -405,7 +450,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_Value:
+    case CORBA::dk_Value:
     {
       TAO_ValueDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -416,7 +461,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_ValueBox:
+    case CORBA::dk_ValueBox:
     {
       TAO_ValueBoxDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -427,7 +472,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_Native:
+    case CORBA::dk_Native:
     {
       TAO_NativeDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -438,7 +483,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_Component:
+    case CORBA::dk_Component:
     {
       TAO_ComponentDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -449,7 +494,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case dk_Home:
+    case CORBA::dk_Home:
     {
       TAO_HomeDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -476,9 +521,9 @@ IFR_Servant_Factory::create_container (
                                              "def_kind",
                                              def_kind);
 
-  switch (ACE_static_cast (IR_DefinitionKind, def_kind))
+  switch (ACE_static_cast (CORBA::DefinitionKind, def_kind))
   {
-    case dk_Interface:
+    case CORBA::dk_Interface:
     {
       TAO_InterfaceDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -489,7 +534,29 @@ IFR_Servant_Factory::create_container (
 
       return impl;
     }
-    case dk_Struct:
+    case CORBA::dk_AbstractInterface:
+    {
+      TAO_AbstractInterfaceDef_i *impl = 0;
+      ACE_NEW_THROW_EX (impl,
+                        TAO_AbstractInterfaceDef_i (this->repo_,
+                                                    servant_key),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (0);
+
+      return impl;
+    }
+    case CORBA::dk_LocalInterface:
+    {
+      TAO_LocalInterfaceDef_i *impl = 0;
+      ACE_NEW_THROW_EX (impl,
+                        TAO_LocalInterfaceDef_i (this->repo_,
+                                                 servant_key),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (0);
+
+      return impl;
+    }
+    case CORBA::dk_Struct:
     {
       TAO_StructDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -500,7 +567,7 @@ IFR_Servant_Factory::create_container (
 
       return impl;
     }
-    case dk_Union:
+    case CORBA::dk_Union:
     {
       TAO_UnionDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -511,7 +578,7 @@ IFR_Servant_Factory::create_container (
 
       return impl;
     }
-    case dk_Module:
+    case CORBA::dk_Module:
     {
       TAO_ModuleDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -522,7 +589,7 @@ IFR_Servant_Factory::create_container (
 
       return impl;
     }
-    case dk_Exception:
+    case CORBA::dk_Exception:
     {
       TAO_ExceptionDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -533,7 +600,7 @@ IFR_Servant_Factory::create_container (
 
       return impl;
     }
-    case dk_Value:
+    case CORBA::dk_Value:
     {
       TAO_ValueDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -544,7 +611,7 @@ IFR_Servant_Factory::create_container (
 
       return impl;
     }
-    case dk_Component:
+    case CORBA::dk_Component:
     {
       TAO_ComponentDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -555,7 +622,7 @@ IFR_Servant_Factory::create_container (
 
       return impl;
     }
-    case dk_Home:
+    case CORBA::dk_Home:
     {
       TAO_HomeDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -583,9 +650,9 @@ IFR_Servant_Factory::create_tie (
                                              "def_kind",
                                              def_kind);
 
-  switch (ACE_static_cast (IR_DefinitionKind, def_kind))
+  switch (ACE_static_cast (CORBA::DefinitionKind, def_kind))
   {
-    case dk_Attribute:
+    case CORBA::dk_Attribute:
     {
       TAO_AttributeDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -596,18 +663,18 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_AttributeDef_i> safety (impl);
 
-      POA_IR::AttributeDef_tie<TAO_AttributeDef_i> *impl_tie = 0;
+      POA_CORBA::AttributeDef_tie<TAO_AttributeDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::AttributeDef_tie<TAO_AttributeDef_i> (impl,
-                                                                      poa,
-                                                                      1),
+                        POA_CORBA::AttributeDef_tie<TAO_AttributeDef_i> (impl,
+                                                                         poa,
+                                                                         1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_Constant:
+    case CORBA::dk_Constant:
     {
       TAO_ConstantDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -618,18 +685,18 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_ConstantDef_i> safety (impl);
 
-      POA_IR::ConstantDef_tie<TAO_ConstantDef_i> *impl_tie = 0;
+      POA_CORBA::ConstantDef_tie<TAO_ConstantDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::ConstantDef_tie<TAO_ConstantDef_i> (impl,
-                                                                    poa,
-                                                                    1),
+                        POA_CORBA::ConstantDef_tie<TAO_ConstantDef_i> (impl,
+                                                                       poa,
+                                                                       1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_Exception:
+    case CORBA::dk_Exception:
     {
       TAO_ExceptionDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -640,18 +707,18 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_ExceptionDef_i> safety (impl);
 
-      POA_IR::ExceptionDef_tie<TAO_ExceptionDef_i> *impl_tie = 0;
+      POA_CORBA::ExceptionDef_tie<TAO_ExceptionDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::ExceptionDef_tie<TAO_ExceptionDef_i> (impl,
-                                                                      poa,
-                                                                      1),
+                        POA_CORBA::ExceptionDef_tie<TAO_ExceptionDef_i> (impl,
+                                                                         poa,
+                                                                         1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_Interface:
+    case CORBA::dk_Interface:
     {
       TAO_InterfaceDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -662,18 +729,66 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_InterfaceDef_i> safety (impl);
 
-      POA_IR::InterfaceDef_tie<TAO_InterfaceDef_i> *impl_tie = 0;
+      POA_CORBA::InterfaceDef_tie<TAO_InterfaceDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::InterfaceDef_tie<TAO_InterfaceDef_i> (impl,
-                                                                      poa,
-                                                                      1),
+                        POA_CORBA::InterfaceDef_tie<TAO_InterfaceDef_i> (impl,
+                                                                         poa,
+                                                                         1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_Module:
+    case CORBA::dk_AbstractInterface:
+    {
+      TAO_AbstractInterfaceDef_i *impl = 0;
+      ACE_NEW_THROW_EX (impl,
+                        TAO_AbstractInterfaceDef_i (this->repo_,
+                                                    servant_key),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (0);
+
+      auto_ptr<TAO_AbstractInterfaceDef_i> safety (impl);
+
+      POA_CORBA::AbstractInterfaceDef_tie<TAO_AbstractInterfaceDef_i> *impl_tie = 0;
+      ACE_NEW_THROW_EX (
+          impl_tie,
+          POA_CORBA::AbstractInterfaceDef_tie<TAO_AbstractInterfaceDef_i> (impl,
+                                                                           poa,
+                                                                           1),
+          CORBA::NO_MEMORY ()
+        );
+      ACE_CHECK_RETURN (0);
+
+      safety.release ();
+      return impl_tie;
+    }
+    case CORBA::dk_LocalInterface:
+    {
+      TAO_LocalInterfaceDef_i *impl = 0;
+      ACE_NEW_THROW_EX (impl,
+                        TAO_LocalInterfaceDef_i (this->repo_,
+                                                 servant_key),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (0);
+
+      auto_ptr<TAO_LocalInterfaceDef_i> safety (impl);
+
+      POA_CORBA::LocalInterfaceDef_tie<TAO_LocalInterfaceDef_i> *impl_tie = 0;
+      ACE_NEW_THROW_EX (
+          impl_tie,
+          POA_CORBA::LocalInterfaceDef_tie<TAO_LocalInterfaceDef_i> (impl,
+                                                                     poa,
+                                                                     1),
+          CORBA::NO_MEMORY ()
+        );
+      ACE_CHECK_RETURN (0);
+
+      safety.release ();
+      return impl_tie;
+    }
+    case CORBA::dk_Module:
     {
       TAO_ModuleDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -684,18 +799,18 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_ModuleDef_i> safety (impl);
 
-      POA_IR::ModuleDef_tie<TAO_ModuleDef_i> *impl_tie = 0;
+      POA_CORBA::ModuleDef_tie<TAO_ModuleDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::ModuleDef_tie<TAO_ModuleDef_i> (impl,
-                                                                poa,
-                                                                1),
+                        POA_CORBA::ModuleDef_tie<TAO_ModuleDef_i> (impl,
+                                                                   poa,
+                                                                   1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_Operation:
+    case CORBA::dk_Operation:
     {
       TAO_OperationDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -706,18 +821,18 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_OperationDef_i> safety (impl);
 
-      POA_IR::OperationDef_tie<TAO_OperationDef_i> *impl_tie = 0;
+      POA_CORBA::OperationDef_tie<TAO_OperationDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::OperationDef_tie<TAO_OperationDef_i> (impl,
-                                                                      poa,
-                                                                      1),
+                        POA_CORBA::OperationDef_tie<TAO_OperationDef_i> (impl,
+                                                                         poa,
+                                                                         1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_Alias:
+    case CORBA::dk_Alias:
     {
       TAO_AliasDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -728,18 +843,18 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_AliasDef_i> safety (impl);
 
-      POA_IR::AliasDef_tie<TAO_AliasDef_i> *impl_tie = 0;
+      POA_CORBA::AliasDef_tie<TAO_AliasDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::AliasDef_tie<TAO_AliasDef_i> (impl,
-                                                              poa,
-                                                              1),
+                        POA_CORBA::AliasDef_tie<TAO_AliasDef_i> (impl,
+                                                                 poa,
+                                                                 1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_Struct:
+    case CORBA::dk_Struct:
     {
       TAO_StructDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -750,18 +865,18 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_StructDef_i> safety (impl);
 
-      POA_IR::StructDef_tie<TAO_StructDef_i> *impl_tie = 0;
+      POA_CORBA::StructDef_tie<TAO_StructDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::StructDef_tie<TAO_StructDef_i> (impl,
-                                                                poa,
-                                                                1),
+                        POA_CORBA::StructDef_tie<TAO_StructDef_i> (impl,
+                                                                   poa,
+                                                                   1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_Union:
+    case CORBA::dk_Union:
     {
       TAO_UnionDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -772,18 +887,18 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_UnionDef_i> safety (impl);
 
-      POA_IR::UnionDef_tie<TAO_UnionDef_i> *impl_tie = 0;
+      POA_CORBA::UnionDef_tie<TAO_UnionDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::UnionDef_tie<TAO_UnionDef_i> (impl,
-                                                              poa,
-                                                              1),
+                        POA_CORBA::UnionDef_tie<TAO_UnionDef_i> (impl,
+                                                                 poa,
+                                                                 1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_Enum:
+    case CORBA::dk_Enum:
     {
       TAO_EnumDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -794,18 +909,18 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_EnumDef_i> safety (impl);
 
-      POA_IR::EnumDef_tie<TAO_EnumDef_i> *impl_tie = 0;
+      POA_CORBA::EnumDef_tie<TAO_EnumDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::EnumDef_tie<TAO_EnumDef_i> (impl,
-                                                            poa,
-                                                            1),
+                        POA_CORBA::EnumDef_tie<TAO_EnumDef_i> (impl,
+                                                               poa,
+                                                               1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_Primitive:
+    case CORBA::dk_Primitive:
     {
       TAO_PrimitiveDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -816,18 +931,18 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_PrimitiveDef_i> safety (impl);
 
-      POA_IR::PrimitiveDef_tie<TAO_PrimitiveDef_i> *impl_tie = 0;
+      POA_CORBA::PrimitiveDef_tie<TAO_PrimitiveDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::PrimitiveDef_tie<TAO_PrimitiveDef_i> (impl,
-                                                                      poa,
-                                                                      1),
+                        POA_CORBA::PrimitiveDef_tie<TAO_PrimitiveDef_i> (impl,
+                                                                         poa,
+                                                                         1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_String:
+    case CORBA::dk_String:
     {
       TAO_StringDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -838,18 +953,18 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_StringDef_i> safety (impl);
 
-      POA_IR::StringDef_tie<TAO_StringDef_i> *impl_tie = 0;
+      POA_CORBA::StringDef_tie<TAO_StringDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::StringDef_tie<TAO_StringDef_i> (impl,
-                                                                poa,
-                                                                1),
+                        POA_CORBA::StringDef_tie<TAO_StringDef_i> (impl,
+                                                                   poa,
+                                                                   1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_Sequence:
+    case CORBA::dk_Sequence:
     {
       TAO_SequenceDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -860,18 +975,18 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_SequenceDef_i> safety (impl);
 
-      POA_IR::SequenceDef_tie<TAO_SequenceDef_i> *impl_tie = 0;
+      POA_CORBA::SequenceDef_tie<TAO_SequenceDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::SequenceDef_tie<TAO_SequenceDef_i> (impl,
-                                                                    poa,
-                                                                    1),
+                        POA_CORBA::SequenceDef_tie<TAO_SequenceDef_i> (impl,
+                                                                       poa,
+                                                                       1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_Array:
+    case CORBA::dk_Array:
     {
       TAO_ArrayDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -882,18 +997,18 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_ArrayDef_i> safety (impl);
 
-      POA_IR::ArrayDef_tie<TAO_ArrayDef_i> *impl_tie = 0;
+      POA_CORBA::ArrayDef_tie<TAO_ArrayDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::ArrayDef_tie<TAO_ArrayDef_i> (impl,
-                                                              poa,
-                                                              1),
+                        POA_CORBA::ArrayDef_tie<TAO_ArrayDef_i> (impl,
+                                                                 poa,
+                                                                 1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_Wstring:
+    case CORBA::dk_Wstring:
     {
       TAO_WstringDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -904,18 +1019,18 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_WstringDef_i> safety (impl);
 
-      POA_IR::WstringDef_tie<TAO_WstringDef_i> *impl_tie = 0;
+      POA_CORBA::WstringDef_tie<TAO_WstringDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::WstringDef_tie<TAO_WstringDef_i> (impl,
-                                                                  poa,
-                                                                  1),
+                        POA_CORBA::WstringDef_tie<TAO_WstringDef_i> (impl,
+                                                                     poa,
+                                                                     1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_Fixed:
+    case CORBA::dk_Fixed:
     {
       TAO_FixedDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -926,18 +1041,18 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_FixedDef_i> safety (impl);
 
-      POA_IR::FixedDef_tie<TAO_FixedDef_i> *impl_tie = 0;
+      POA_CORBA::FixedDef_tie<TAO_FixedDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::FixedDef_tie<TAO_FixedDef_i> (impl,
-                                                              poa,
-                                                              1),
+                        POA_CORBA::FixedDef_tie<TAO_FixedDef_i> (impl,
+                                                                 poa,
+                                                                 1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_Value:
+    case CORBA::dk_Value:
     {
       TAO_ValueDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -948,18 +1063,18 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_ValueDef_i> safety (impl);
 
-      POA_IR::ValueDef_tie<TAO_ValueDef_i> *impl_tie = 0;
+      POA_CORBA::ValueDef_tie<TAO_ValueDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::ValueDef_tie<TAO_ValueDef_i> (impl,
-                                                              poa,
-                                                              1),
+                        POA_CORBA::ValueDef_tie<TAO_ValueDef_i> (impl,
+                                                                 poa,
+                                                                 1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_ValueBox:
+    case CORBA::dk_ValueBox:
     {
       TAO_ValueBoxDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -970,18 +1085,18 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_ValueBoxDef_i> safety (impl);
 
-      POA_IR::ValueBoxDef_tie<TAO_ValueBoxDef_i> *impl_tie = 0;
+      POA_CORBA::ValueBoxDef_tie<TAO_ValueBoxDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::ValueBoxDef_tie<TAO_ValueBoxDef_i> (impl,
-                                                                    poa,
-                                                                    1),
+                        POA_CORBA::ValueBoxDef_tie<TAO_ValueBoxDef_i> (impl,
+                                                                       poa,
+                                                                       1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_ValueMember:
+    case CORBA::dk_ValueMember:
     {
       TAO_ValueMemberDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -992,18 +1107,20 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_ValueMemberDef_i> safety (impl);
 
-      POA_IR::ValueMemberDef_tie<TAO_ValueMemberDef_i> *impl_tie = 0;
-      ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::ValueMemberDef_tie<TAO_ValueMemberDef_i> (impl,
-                                                                          poa,
-                                                                          1),
-                        CORBA::NO_MEMORY ());
+      POA_CORBA::ValueMemberDef_tie<TAO_ValueMemberDef_i> *impl_tie = 0;
+      ACE_NEW_THROW_EX (
+          impl_tie,
+          POA_CORBA::ValueMemberDef_tie<TAO_ValueMemberDef_i> (impl,
+                                                               poa,
+                                                               1),
+          CORBA::NO_MEMORY ()
+        );
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_Native:
+    case CORBA::dk_Native:
     {
       TAO_NativeDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1014,18 +1131,18 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_NativeDef_i> safety (impl);
 
-      POA_IR::NativeDef_tie<TAO_NativeDef_i> *impl_tie = 0;
+      POA_CORBA::NativeDef_tie<TAO_NativeDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_IR::NativeDef_tie<TAO_NativeDef_i> (impl,
-                                                                poa,
-                                                                1),
+                        POA_CORBA::NativeDef_tie<TAO_NativeDef_i> (impl,
+                                                                   poa,
+                                                                   1),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
       safety.release ();
       return impl_tie;
     }
-    case dk_Component:
+    case CORBA::dk_Component:
     {
       TAO_ComponentDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1047,7 +1164,7 @@ IFR_Servant_Factory::create_tie (
       safety.release ();
       return impl_tie;
     }
-    case dk_Home:
+    case CORBA::dk_Home:
     {
       TAO_HomeDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1069,7 +1186,7 @@ IFR_Servant_Factory::create_tie (
       safety.release ();
       return impl_tie;
     }
-    case dk_Factory:
+    case CORBA::dk_Factory:
     {
       TAO_FactoryDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1091,7 +1208,7 @@ IFR_Servant_Factory::create_tie (
       safety.release ();
       return impl_tie;
     }
-    case dk_Finder:
+    case CORBA::dk_Finder:
     {
       TAO_FinderDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1113,7 +1230,7 @@ IFR_Servant_Factory::create_tie (
       safety.release ();
       return impl_tie;
     }
-    case dk_PrimaryKey:
+    case CORBA::dk_PrimaryKey:
     {
       TAO_PrimaryKeyDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1135,7 +1252,7 @@ IFR_Servant_Factory::create_tie (
       safety.release ();
       return impl_tie;
     }
-    case dk_Emits:
+    case CORBA::dk_Emits:
     {
       TAO_EmitsDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1157,7 +1274,7 @@ IFR_Servant_Factory::create_tie (
       safety.release ();
       return impl_tie;
     }
-    case dk_Publishes:
+    case CORBA::dk_Publishes:
     {
       TAO_PublishesDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1179,7 +1296,7 @@ IFR_Servant_Factory::create_tie (
       safety.release ();
       return impl_tie;
     }
-    case dk_Consumes:
+    case CORBA::dk_Consumes:
     {
       TAO_ConsumesDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1201,7 +1318,7 @@ IFR_Servant_Factory::create_tie (
       safety.release ();
       return impl_tie;
     }
-    case dk_Provides:
+    case CORBA::dk_Provides:
     {
       TAO_ProvidesDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1223,7 +1340,7 @@ IFR_Servant_Factory::create_tie (
       safety.release ();
       return impl_tie;
     }
-    case dk_Uses:
+    case CORBA::dk_Uses:
     {
       TAO_UsesDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1251,7 +1368,7 @@ IFR_Servant_Factory::create_tie (
 }
 
 CORBA::Object_ptr 
-IFR_Servant_Factory::create_objref (IR_DefinitionKind def_kind,
+IFR_Servant_Factory::create_objref (CORBA::DefinitionKind def_kind,
                                     const char *obj_id,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
@@ -1263,97 +1380,103 @@ IFR_Servant_Factory::create_objref (IR_DefinitionKind def_kind,
 
   switch (def_kind)
   {
-    case dk_Attribute:
+    case CORBA::dk_Attribute:
       repo_id += "AttributeDef:";
       break;
-    case dk_Constant:
+    case CORBA::dk_Constant:
       repo_id += "ConstantDef:";
       break;
-    case dk_Exception:
+    case CORBA::dk_Exception:
       repo_id += "ExceptionDef:";
       break;
-    case dk_Interface:
+    case CORBA::dk_Interface:
       repo_id += "InterfaceDef:";
       break;
-    case dk_Module:
+    case CORBA::dk_AbstractInterface:
+      repo_id += "AbstractInterfaceDef:";
+      break;
+    case CORBA::dk_LocalInterface:
+      repo_id += "LocalInterfaceDef:";
+      break;
+    case CORBA::dk_Module:
       repo_id += "ModuleDef:";
       break;
-    case dk_Operation:
+    case CORBA::dk_Operation:
       repo_id += "OperationDef:";
       break;
-    case dk_Typedef:
+    case CORBA::dk_Typedef:
       repo_id += "TypedefDef:";
       break;
-    case dk_Alias:
+    case CORBA::dk_Alias:
       repo_id += "AliasDef:";
       break;
-    case dk_Struct:
+    case CORBA::dk_Struct:
       repo_id += "StructDef:";
       break;
-    case dk_Union:
+    case CORBA::dk_Union:
       repo_id += "UnionDef:";
       break;
-    case dk_Enum:
+    case CORBA::dk_Enum:
       repo_id += "EnumDef:";
       break;
-    case dk_Primitive:
+    case CORBA::dk_Primitive:
       repo_id += "PrimitiveDef:";
       break;
-    case dk_String:
+    case CORBA::dk_String:
       repo_id += "StringDef:";
       break;
-    case dk_Sequence:
+    case CORBA::dk_Sequence:
       repo_id += "SequenceDef:";
       break;
-    case dk_Array:
+    case CORBA::dk_Array:
       repo_id += "ArrayDef:";
       break;
-    case dk_Wstring:
+    case CORBA::dk_Wstring:
       repo_id += "WstringDef:";
       break;
-    case dk_Fixed:
+    case CORBA::dk_Fixed:
       repo_id += "FixedDef:";
       break;
-    case dk_Value:
+    case CORBA::dk_Value:
       repo_id += "ValueDef:";
       break;
-    case dk_ValueBox:
+    case CORBA::dk_ValueBox:
       repo_id += "ValueBoxDef:";
       break;
-    case dk_ValueMember:
+    case CORBA::dk_ValueMember:
       repo_id += "ValueMemberDef:";
       break;
-    case dk_Native:
+    case CORBA::dk_Native:
       repo_id += "NativeDef:";
       break;
-    case dk_Component:
+    case CORBA::dk_Component:
       repo_id += "ComponentDef:";
       break;
-    case dk_Home:
+    case CORBA::dk_Home:
       repo_id += "HomeDef:";
       break;
-    case dk_Factory:
+    case CORBA::dk_Factory:
       repo_id += "FactoryDef:";
       break;
-    case dk_Finder:
+    case CORBA::dk_Finder:
       repo_id += "FinderDef:";
       break;
-    case dk_PrimaryKey:
+    case CORBA::dk_PrimaryKey:
       repo_id += "PrimaryKeyDef:";
       break;
-    case dk_Emits:
+    case CORBA::dk_Emits:
       repo_id += "EmitsDef:";
       break;
-    case dk_Publishes:
+    case CORBA::dk_Publishes:
       repo_id += "PublishesDef:";
       break;
-    case dk_Consumes:
+    case CORBA::dk_Consumes:
       repo_id += "ConsumesDef:";
       break;
-    case dk_Provides:
+    case CORBA::dk_Provides:
       repo_id += "ProvidesDef:";
       break;
-    case dk_Uses:
+    case CORBA::dk_Uses:
       repo_id += "UsesDef:";
       break;
     default:
