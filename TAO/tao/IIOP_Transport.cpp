@@ -300,7 +300,8 @@ TAO_IIOP_Transport::send_request_header (TAO_Operation_Details &opdetails,
                                          TAO_OutputCDR &msg)
 {
   // Check whether we have a Bi Dir IIOP policy set
-  if (this->orb_core ()->bidir_giop_policy ())
+  if (this->orb_core ()->bidir_giop_policy () &&
+      this->messaging_object_->is_ready_for_bidirectional ())
     {
 
     }

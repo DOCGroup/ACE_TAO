@@ -97,6 +97,9 @@ public:
   virtual CORBA::Octet major_version (void) = 0;
   virtual CORBA::Octet minor_version (void) = 0;
 
+  /// Is the messaging object ready for processing BiDirectional
+  /// request/response?
+  virtual int is_ready_for_bidirectional (void);
 
 protected:
 

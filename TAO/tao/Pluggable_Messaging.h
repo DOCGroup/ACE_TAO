@@ -112,7 +112,7 @@ public:
   // Do any initialisations that may be needed.
 
   virtual void reset (int reset_flag = 1) = 0;
-  // Reset teh messaging object
+  // Reset the messaging object
 
   virtual int process_request_message (TAO_Transport *transport,
                                        TAO_ORB_Core *orb_core) = 0;
@@ -129,6 +129,10 @@ public:
       TAO_Pluggable_Reply_Params &params,
       CORBA::Exception &x) = 0;
   // Generate a reply message with the exception <ex>.
+
+  virtual int is_ready_for_bidirectional (void) = 0;
+  // Is the messaging object ready for processing BiDirectional
+  // request/response?
 };
 
 #if defined (__ACE_INLINE__)

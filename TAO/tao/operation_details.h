@@ -15,12 +15,17 @@
 #ifndef	TAO_OPERATION_DETAILS_H
 #define	TAO_OPERATION_DETAILS_H
 #include "ace/pre.h"
-
 #include "tao/corbafwd.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+
 #include "tao/IOPC.h"
 #include "tao/target_specification.h"
 
-// @@ Bala: Why	is this	not part of the	RequestHeader?!
+
 class TAO_Export TAO_Operation_Details
 {
   // = TITLE

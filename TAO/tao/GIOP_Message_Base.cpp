@@ -1335,3 +1335,12 @@ TAO_GIOP_Message_Base::generate_locate_reply_header (
 {
   return 0;
 }
+
+
+int
+TAO_GIOP_Message_Base::is_ready_for_bidirectional (void)
+{
+  // We dont really know.. So ask the enerator and parser objects that
+  // we know.
+  return this->generator_parser_->is_ready_for_bidirectional ();
+}

@@ -477,6 +477,13 @@ TAO_GIOP_Message_Generator_Parser_12::minor_version (void)
   return (CORBA::Octet) 2;
 }
 
+int
+TAO_GIOP_Message_Generator_Parser_12::is_ready_for_bidirectional (void)
+{
+  // We do support bidirectional
+  return 1;
+}
+
 
 
 int
