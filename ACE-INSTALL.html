@@ -1142,14 +1142,6 @@ A few additional Windows Notes, from Paul von Behren:<p>
       see <A href="http://www.activestate.com/software/default.htm">
       http://www.activestate.com/software/default.htm</A> for Windows
       perl.<p>
-  <li>There's a incompatibility between the NT command shell and ACE make's
-      directory-spanning logic in
-      <code>ACE_ROOT\include\makeinclude\rules.nested.GNU</code>
-      (the error message says something about "dir unexpected").
-      <a href="mailto:Dave_Steele@Mitel.COM">Dave Steele</a> reports
-      that it does not happen when using bash.  He notes:  the problem is
-      with the implementation of the "for" command in the NT command shell
-      - it expects variables in the form "%i" rather than "dir".<p>
   <li>But make does work in "leaf" directories (those with no
       subdirectories).  You can make the <code>ACE_ROOT\ace directory</code>
       creating the library libACE.a.  If perl is available, make also works
