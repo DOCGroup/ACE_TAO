@@ -1,3 +1,12 @@
+Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Map_T.i (create_key): Added a new method to the maps.  This
+	  method allows the user to create a key without binding to the
+	  map.  For the linear and hash maps, this call simply forwards to
+	  the key generators.  This method is not supported by the active
+	  map since the key encodes the slot position which cannot come
+	  without occupying a slot in the map.
+
 Fri May 25 08:37:37 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/Message_Block.cpp:

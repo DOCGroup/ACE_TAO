@@ -259,20 +259,20 @@ class ACE_Map
 public:
 
   // = Traits.
-  typedef KEY 
+  typedef KEY
           key_type;
-  typedef VALUE 
+  typedef VALUE
           mapped_type;
-  typedef ACE_Reference_Pair<const KEY, VALUE> 
+  typedef ACE_Reference_Pair<const KEY, VALUE>
           value_type;
-  typedef ACE_Iterator<value_type> 
+  typedef ACE_Iterator<value_type>
           iterator;
-  typedef ACE_Reverse_Iterator<value_type> 
+  typedef ACE_Reverse_Iterator<value_type>
           reverse_iterator;
-  typedef ACE_Iterator_Impl<value_type> 
-          iterator_implementation; 
-  typedef ACE_Reverse_Iterator_Impl<value_type> 
-          reverse_iterator_implementation; 
+  typedef ACE_Iterator_Impl<value_type>
+          iterator_implementation;
+  typedef ACE_Reverse_Iterator_Impl<value_type>
+          reverse_iterator_implementation;
 
   /// Close down and release dynamically allocated resources.
   virtual ~ACE_Map (void);
@@ -301,6 +301,16 @@ public:
    */
   virtual int bind_modify_key (const VALUE &value,
                                KEY &key) = 0;
+
+  /**
+   * Produce a key and return it through <key> which is an "out"
+   * parameter.  For maps that do not naturally produce keys, the map
+   * adapters will use the <KEY_GENERATOR> class to produce a key.
+   * However, the users are responsible for not jeopardizing this key
+   * production scheme by using user specified keys with keys produced
+   * by the key generator.
+   */
+  virtual int create_key (KEY &key) = 0;
 
   /**
    * Add <value> to the map, and the corresponding key produced by the
@@ -441,7 +451,7 @@ class ACE_Map_Impl_Iterator_Adapter : public ACE_Iterator_Impl<T>
 public:
 
   // = Traits.
-  typedef IMPLEMENTATION 
+  typedef IMPLEMENTATION
           implementation;
 
   /// Constructor.
@@ -538,7 +548,7 @@ public:
   typedef ACE_Map_Impl_Reverse_Iterator_Adapter<ACE_TYPENAME ACE_Map<KEY, VALUE>::value_type, REVERSE_ITERATOR, ENTRY>
           reverse_iterator_impl;
 
-  typedef IMPLEMENTATION 
+  typedef IMPLEMENTATION
           implementation;
 
   // = Initialization and termination methods.
@@ -577,6 +587,16 @@ public:
    */
   virtual int bind_modify_key (const VALUE &value,
                                KEY &key);
+
+  /**
+   * Produce a key and return it through <key> which is an "out"
+   * parameter.  For maps that do not naturally produce keys, the map
+   * adapters will use the <KEY_GENERATOR> class to produce a key.
+   * However, the users are responsible for not jeopardizing this key
+   * production scheme by using user specified keys with keys produced
+   * by the key generator.
+   */
+  virtual int create_key (KEY &key);
 
   /**
    * Add <value> to the map, and the corresponding key produced by the
@@ -712,7 +732,7 @@ class ACE_Active_Map_Manager_Iterator_Adapter : public ACE_Iterator_Impl<T>
 public:
 
   // = Traits.
-  typedef ACE_TYPENAME ACE_Active_Map_Manager<VALUE>::iterator 
+  typedef ACE_TYPENAME ACE_Active_Map_Manager<VALUE>::iterator
           implementation;
 
   /// Constructor.
@@ -758,7 +778,7 @@ class ACE_Active_Map_Manager_Reverse_Iterator_Adapter : public ACE_Reverse_Itera
 public:
 
   // = Traits.
-  typedef ACE_TYPENAME ACE_Active_Map_Manager<VALUE>::reverse_iterator 
+  typedef ACE_TYPENAME ACE_Active_Map_Manager<VALUE>::reverse_iterator
           implementation;
 
   /// Constructor.
@@ -804,13 +824,13 @@ class ACE_Active_Map_Manager_Adapter : public ACE_Map<KEY, VALUE>
 public:
 
   // = Traits.
-  typedef ACE_Pair<KEY, VALUE> 
+  typedef ACE_Pair<KEY, VALUE>
           expanded_value;
-  typedef ACE_Active_Map_Manager_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, expanded_value> 
+  typedef ACE_Active_Map_Manager_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, expanded_value>
           iterator_impl;
-  typedef ACE_Active_Map_Manager_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, expanded_value> 
+  typedef ACE_Active_Map_Manager_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, expanded_value>
           reverse_iterator_impl;
-  typedef ACE_Active_Map_Manager<expanded_value> 
+  typedef ACE_Active_Map_Manager<expanded_value>
           implementation;
 
   // = Initialization and termination methods.
@@ -849,6 +869,16 @@ public:
    */
   virtual int bind_modify_key (const VALUE &value,
                                KEY &key);
+
+  /**
+   * Produce a key and return it through <key> which is an "out"
+   * parameter.  For maps that do not naturally produce keys, the map
+   * adapters will use the <KEY_GENERATOR> class to produce a key.
+   * However, the users are responsible for not jeopardizing this key
+   * production scheme by using user specified keys with keys produced
+   * by the key generator.
+   */
+  virtual int create_key (KEY &key);
 
   /**
    * Add <value> to the map, and the corresponding key produced by the
@@ -998,7 +1028,7 @@ class ACE_Hash_Map_Manager_Ex_Iterator_Adapter : public ACE_Iterator_Impl<T>
 public:
 
   // = Traits.
-  typedef ACE_TYPENAME ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::iterator 
+  typedef ACE_TYPENAME ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::iterator
           implementation;
 
   /// Constructor.
@@ -1044,7 +1074,7 @@ class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter : public ACE_Reverse_Iter
 public:
 
   // = Traits.
-  typedef ACE_TYPENAME ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::reverse_iterator 
+  typedef ACE_TYPENAME ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::reverse_iterator
           implementation;
 
   /// Constructor.
@@ -1090,11 +1120,11 @@ class ACE_Hash_Map_Manager_Ex_Adapter : public ACE_Map<KEY, VALUE>
 public:
 
   // = Traits.
-  typedef ACE_Hash_Map_Manager_Ex_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE, HASH_KEY, COMPARE_KEYS> 
+  typedef ACE_Hash_Map_Manager_Ex_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE, HASH_KEY, COMPARE_KEYS>
           iterator_impl;
-  typedef ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE, HASH_KEY, COMPARE_KEYS> 
+  typedef ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE, HASH_KEY, COMPARE_KEYS>
           reverse_iterator_impl;
-  typedef ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> 
+  typedef ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>
           implementation;
 
   // = Initialization and termination methods.
@@ -1133,6 +1163,16 @@ public:
    */
   virtual int bind_modify_key (const VALUE &value,
                                KEY &key);
+
+  /**
+   * Produce a key and return it through <key> which is an "out"
+   * parameter.  For maps that do not naturally produce keys, the map
+   * adapters will use the <KEY_GENERATOR> class to produce a key.
+   * However, the users are responsible for not jeopardizing this key
+   * production scheme by using user specified keys with keys produced
+   * by the key generator.
+   */
+  virtual int create_key (KEY &key);
 
   /**
    * Add <value> to the map, and the corresponding key produced by the
@@ -1274,7 +1314,7 @@ class ACE_Map_Manager_Iterator_Adapter : public ACE_Iterator_Impl<T>
 public:
 
   // = Traits.
-  typedef ACE_TYPENAME ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::iterator 
+  typedef ACE_TYPENAME ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::iterator
           implementation;
 
   /// Constructor.
@@ -1320,7 +1360,7 @@ class ACE_Map_Manager_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Imp
 public:
 
   // = Traits.
-  typedef ACE_TYPENAME ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::reverse_iterator 
+  typedef ACE_TYPENAME ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::reverse_iterator
           implementation;
 
   /// Constructor.
@@ -1366,11 +1406,11 @@ class ACE_Map_Manager_Adapter : public ACE_Map<KEY, VALUE>
 public:
 
   // = Traits.
-  typedef ACE_Map_Manager_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE> 
+  typedef ACE_Map_Manager_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE>
           iterator_impl;
-  typedef ACE_Map_Manager_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE> 
+  typedef ACE_Map_Manager_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE>
           reverse_iterator_impl;
-  typedef ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex> 
+  typedef ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>
           implementation;
 
   // = Initialization and termination methods.
@@ -1409,6 +1449,16 @@ public:
    */
   virtual int bind_modify_key (const VALUE &value,
                                KEY &key);
+
+  /**
+   * Produce a key and return it through <key> which is an "out"
+   * parameter.  For maps that do not naturally produce keys, the map
+   * adapters will use the <KEY_GENERATOR> class to produce a key.
+   * However, the users are responsible for not jeopardizing this key
+   * production scheme by using user specified keys with keys produced
+   * by the key generator.
+   */
+  virtual int create_key (KEY &key);
 
   /**
    * Add <value> to the map, and the corresponding key produced by the

@@ -34,9 +34,28 @@ print_poa (PortableServer::POA_ptr poa,
     poa->the_name (ACE_TRY_ENV);
   ACE_CHECK;
 
+  CORBA::OctetSeq_var poa_id =
+    poa->id (ACE_TRY_ENV);
+  ACE_CHECK;
+
   ACE_DEBUG ((LM_DEBUG,
-              "%s\n",
+              "POA name = %s\n",
               poa_name.in ()));
+
+  ACE_DEBUG ((LM_DEBUG,
+              "POA id = "));
+
+  for (CORBA::ULong i = 0;
+       i != poa_id->length ();
+       ++i)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%o",
+                  poa_id[i]));
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              "\n"));
 
   PortableServer::POAList_var children =
     poa->the_children (ACE_TRY_ENV);

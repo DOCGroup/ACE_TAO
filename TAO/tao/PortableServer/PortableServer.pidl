@@ -280,6 +280,8 @@ module PortableServer {
                                     raises (ObjectNotActive, WrongPolicy);
         Object id_to_reference(     in ObjectId             oid)
                                         raises (ObjectNotActive, WrongPolicy);
+
+        readonly attribute CORBA::OctetSeq id;
     };
 
     // Current interface

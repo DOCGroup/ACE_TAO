@@ -245,6 +245,8 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
   delete this->endpoint_selector_factory_;
 
+  delete this->stub_factory_;
+
   delete this->transport_sync_strategy_;
 }
 

@@ -249,6 +249,10 @@ public:
   TAO_Id_Hint_Strategy *id_hint_strategy_;
   // Id hint strategy.
 
+  int using_active_maps_;
+  // Flag to see if we are using active maps in this active object
+  // map.
+
   static size_t system_id_size_;
   // Size of the system id produced by the map.
 };
