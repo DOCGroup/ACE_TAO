@@ -5,7 +5,7 @@
 
 ACE_RCSID(Naming, test_writers, "$Id$")
 
-int main (int, char *[])
+int main (int, ACE_TCHAR *[])
 {
   int i;
 
@@ -18,35 +18,35 @@ int main (int, char *[])
   ACE_Name_Options *name_options =
     ns_ptr->name_options ();
 
-  const char *m_argv[] = 
+  const ACE_TCHAR *m_argv[] =
   {
-    "MyName",
-    "-cNODE_LOCAL",
+    ACE_TEXT("MyName"),
+    ACE_TEXT("-cNODE_LOCAL"),
     NULL
   };
 
-  int m_argc = sizeof (m_argv) / sizeof (char *) -1;
+  int m_argc = sizeof (m_argv) / sizeof (ACE_TCHAR *) -1;
 
   name_options->parse_args (m_argc,
-                            (char **) m_argv);
+                            (ACE_TCHAR **) m_argv);
   i = ns_ptr->open (ACE_Naming_Context::NODE_LOCAL);
   ACE_DEBUG ((LM_DEBUG,
               "(%P) opened with %d\n",
               i));
-  if (i != 0) 
+  if (i != 0)
     return -1;
   else
     {
       char key[128];
       char val[32];
       char type[2];
-      
+
       type[0] = '-';
       type[1] = '\0';
-      
+
       int i = 0;
 
-      for (int l = 1; l <= 1000 ; l++) 
+      for (int l = 1; l <= 1000 ; l++)
         {
           ACE_OS::sprintf (key,
                            "K_%05d_%05d",
@@ -57,17 +57,17 @@ int main (int, char *[])
                            l);
           i = ns_ptr->bind (key,
                             val,
-                            type);  
+                            type);
           ACE_DEBUG ((LM_DEBUG,
                       "%d: bind of %s: %d\n",
                       ACE_OS::getpid (),
                       key,
                       i));
 
-          if (i != 0) 
+          if (i != 0)
             return -1;
 
         }
-    }      
+    }
   return 0;
 }
