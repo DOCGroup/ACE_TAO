@@ -1,3 +1,43 @@
+Tue Mar 16 09:40:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL be/be_interface.cpp:
+        * TAO_IDL be/be_visitor_interface/amh_rh_sh.cpp:
+        * TAO_IDL be/be_visitor_interface/amh_rh_ss.cpp:
+        * TAO_IDL be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDL be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+        * TAO_IDL be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL be/be_visitor_valuetype/valuetype_init_cs.cpp:
+        * TAO_IDL be_include/be_decl.h:
+        * TAO_IDL be_include/be_interface.h:
+        
+          - Added code generation that redeclares operations that a local
+            interface has inherited from a non-local one as pure virtual.
+            Thanks to Gautam Thaker <gthaker@atl.lmco.com> for reporting
+            the problem.
+            
+          - Added '::' prefix to the generation of some fully scoped
+            names in code generation for AMH-related classes, helping
+            some compilers that get confused when a namespace name is
+            repeated at some more deeply nested level.
+            
+          - Fixed indentation in code generation of collocation classes
+            in the skeleton header file.
+            
+        * tests/IDL_Test/IDL_Test.mpc:
+        
+          Added source files (and thus indirectly the IDL files that
+          generate them) to the project file. Also removed the source file
+          namespace_check.cpp, which was originally added as a workaround
+          for platforms that did not support namespaces.
+          
+        * tests/IDL_Test/namespace_check.cpp:
+        
+          Removed this file from the repository, since it is a legacy from
+          the time when ACE+TAO supported compilers that did not support
+          namespaces.
+
 Thu Jan 06 15:20:39 2000  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/TAO.dsp:

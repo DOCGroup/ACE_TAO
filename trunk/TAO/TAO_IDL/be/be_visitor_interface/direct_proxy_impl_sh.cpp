@@ -60,7 +60,8 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
 
           if (first_concrete)
             {
-              *os << be_nl << "  : " << be_idt << be_idt;
+              *os << be_nl 
+                  << "  : " << be_idt << be_idt;
             }
           else
             {
@@ -72,11 +73,12 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
           *os << "public virtual ::" 
               << inherited->full_direct_proxy_impl_name ();
         }
+
+      *os << be_uidt << be_uidt;
     }
 
-  *os << be_uidt << be_uidt_nl;
-
-  *os << "{" << be_nl << "public:" << be_idt_nl;
+  *os << be_nl
+      << "{" << be_nl << "public:" << be_idt_nl;
 
   // Ctor
   *os << node->direct_proxy_impl_name () << " (void);" << be_nl << be_nl;
@@ -110,7 +112,7 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
                         -1);
     }
 
-  *os << be_uidt << be_uidt_nl
+  *os << be_uidt_nl
       << "};" << be_nl << be_nl
       << "//" << be_nl
       << "//                Direct  Proxy Impl. Declaration" << be_nl
