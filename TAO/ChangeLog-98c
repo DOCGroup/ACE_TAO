@@ -1,5 +1,6 @@
-Thu Mar 19 18:42:20 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Thu Mar 19 21:40:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* tao/server_factory.cpp (create_servant_lock):
 	* tao/default_server.{h,cpp} (create_servant_lock): Added new
 	  method which creates a servant lock according to various
 	  strategies used.
