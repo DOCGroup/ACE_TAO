@@ -45,8 +45,10 @@ public:
                                         const TimeBase::TimeT& relative_expiry);
   // Constructor.
 
+#if !defined (ACE_WIN32) // @@ TODO: Temporary Fix
   TAO_RelativeRoundtripTimeoutPolicy_i (const TAO_RelativeRoundtripTimeoutPolicy_i &rhs);
   // Copy constructor.
+#endif /* ACE_WIN32 */
 
   static CORBA::Policy_ptr create (
       PortableServer::POA_ptr poa,
@@ -104,8 +106,10 @@ public:
                          PortableServer::POA_ptr poa);
   // Constructor.
 
+#if !defined (ACE_WIN32) // @@ TODO: Temporary Fix
   TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs);
   // Copy constructor.
+#endif /* ACE_WIN32 */
 
   static CORBA::Policy_ptr create (PortableServer::POA_ptr poa,
                                    const CORBA::Any& val,
