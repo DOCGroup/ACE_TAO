@@ -2,80 +2,32 @@
 
 //============================================================
 /**
- * @file EC_exec.h
+ * @file Producer_exec.h
  *
- * Header file for the actualy EC and ECHome component
+ * Header file for the actualy Producer and ProducerHome component
  * implementation.
  *
- * @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
+ * @author Gan Deng <gan.deng@vanderbilt.edu>
  */
 //============================================================
 
-#ifndef EC_EXEC_H
-#define EC_EXEC_H
+#ifndef PRODUCER_EXEC_H
+#define PRODUCER_EXEC_H
 
-#include "ECEIC.h"
+#include "SenderEC.h"
+#include "Sender_exec_export.h"
+
 #include "tao/LocalObject.h"
-#include "ace/Thread_Manager.h"
-#include "ace/Task.h"
 
-namespace MyImpl
-{
-  // Forward decl.
-  class EC_exec_i;
+namespace Producer_Impl
 
   /**
-   * @brief Active pulse generater
-   */
-  class timeout_Handler : public ACE_Task_Base
-  {
-  public:
-    // Default constructor
-    timeout_Handler (EC_exec_i *cb);
-    ~timeout_Handler ();
-
-    int open (void);
-
-    int close (void);
-
-    int start (CORBA::Long hertz);
-
-    int stop (void);
-
-    int active (void);
-
-    // Handle the timeout.
-    virtual int handle_timeout (const ACE_Time_Value &tv,
-                                const void *arg);
-
-    // Called when <Time_Handler> is removed.
-    virtual int handle_close (ACE_HANDLE handle,
-                              ACE_Reactor_Mask close_mask);
-
-    virtual int svc (void);
-
-  private:
-    /// Tracking whether we are actively generating pulse or not.
-    long active_;
-
-    /// Flag to indicate completion of this active object.
-    int done_;
-
-    /// The timer id we are waiting.
-    int tid_;
-
-    EC_exec_i *pulse_callback_;
-
-    ACE_Thread_Manager thr_mgr_;
-  };
-
-  /**
-   * @class EC_exec_i
+   * @class Producer_exec_i
    *
-   * EC executor implementation class.
+   * Producer executor implementation class.
    */
-  class EC_EXEC_Export EC_exec_i :
-    public virtual BasicSP::EC_Exec,
+  class PRODUCER_EXEC_Export Producer_exec_i :
+    public virtual EC_Benchmark::Producer_Exec,
     public virtual TAO_Local_RefCounted_Object
   {
   public:

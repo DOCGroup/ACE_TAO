@@ -31,8 +31,8 @@
 
 #include "ciao/Container_Base.h"
 #include "ciao/Servant_Impl_T.h"
-#include "tao/LocalObject.h"
-#include "tao/PortableServer/Key_Adapters.h"
+#include "ciao/Context_Impl_T.h"
+#include "ciao/Home_Servant_Impl_T.h"
 #include "ace/Active_Map_Manager_T.h"
 
 #include "../BasicSPS.h"
@@ -79,13 +79,27 @@ namespace BMClosedED_Impl
 
   namespace CIAO_GLUE_BasicSP
   {
+    class BMClosedED_Servant;
+
     class BMCLOSEDED_SVNT_Export BMClosedED_Context
-    : public virtual ::BasicSP::CCM_BMClosedED_Context,
-    public virtual TAO_Local_RefCounted_Object
+      : public virtual CIAO::Context_Impl<
+          ::BasicSP::CCM_BMClosedED_Context,
+          BMClosedED_Servant,
+          ::BasicSP::BMClosedED,
+          ::BasicSP::BMClosedED_var
+        >
     {
       public:
       // We will allow the servant glue code we generate to access our state.
       friend class BMClosedED_Servant;
+
+      /// Hack for VC6.
+      typedef CIAO::Context_Impl<
+          ::BasicSP::CCM_BMClosedED_Context,
+          BMClosedED_Servant,
+          ::BasicSP::BMClosedED,
+          ::BasicSP::BMClosedED_var
+        > ctx_svnt_base;
 
       BMClosedED_Context (
       ::Components::CCMHome_ptr home,
@@ -93,54 +107,6 @@ namespace BMClosedED_Impl
       BMClosedED_Servant *sv);
 
       virtual ~BMClosedED_Context (void);
-
-      // Operations from ::Components::CCMContext.
-
-      virtual ::Components::Principal_ptr
-      get_caller_principal (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-      virtual ::Components::CCMHome_ptr
-      get_CCM_home (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-      virtual CORBA::Boolean
-      get_rollback_only (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::IllegalState));
-
-      virtual ::Components::Transaction::UserTransaction_ptr
-      get_user_transaction (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::IllegalState));
-
-      virtual CORBA::Boolean
-      is_caller_in_role (
-      const char *role
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-      virtual void
-      set_rollback_only (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::IllegalState));
-
-      // Operations from ::Components::SessionContext interface.
-
-      virtual CORBA::Object_ptr
-      get_CCM_object (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::IllegalState));
 
       // Operations for BMClosedED receptacles and event sources,
       // defined in ::BasicSP::CCM_BMClosedED_Context.
@@ -157,9 +123,6 @@ namespace BMClosedED_Impl
       ACE_THROW_SPEC ((CORBA::SystemException));
 
       // CIAO-specific.
-
-      ::CIAO::Session_Container *
-      _ciao_the_Container (void) const;
 
       static BMClosedED_Context *
       _narrow (
@@ -209,12 +172,6 @@ namespace BMClosedED_Impl
       ACE_Active_Map_Manager<
       ::BasicSP::DataAvailableConsumer_var>
       ciao_publishes_out_avail_map_;
-
-      ::Components::CCMHome_var home_;
-      ::CIAO::Session_Container *container_;
-
-      BMClosedED_Servant *servant_;
-      ::BasicSP::BMClosedED_var component_;
     };
   }
 
@@ -226,17 +183,16 @@ namespace BMClosedED_Impl
           ::BasicSP::CCM_BMClosedED,
           ::BasicSP::CCM_BMClosedED_var,
           BMClosedED_Context
-        >,
-        public virtual PortableServer::RefCountServantBase
+        >
     {
       public:
-      /// Hack for VC6 the most sucky compiler
+      /// Hack for VC6.
       typedef CIAO::Servant_Impl<
           POA_BasicSP::BMClosedED,
           ::BasicSP::CCM_BMClosedED,
           ::BasicSP::CCM_BMClosedED_var,
           BMClosedED_Context
-        > our_base;
+        > comp_svnt_base;
 
       BMClosedED_Servant (
       ::BasicSP::CCM_BMClosedED_ptr executor,
@@ -343,24 +299,6 @@ namespace BMClosedED_Impl
 
       // Component attribute operations.
 
-      // Operations for Navigation interface.
-
-      virtual CORBA::Object_ptr
-      provide_facet (
-      const char *name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::InvalidName));
-
-      virtual ::Components::FacetDescriptions *
-      get_named_facets (
-      const ::Components::NameList & /* names */
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::InvalidName));
-
       // Operations for Receptacles interface.
 
       virtual ::Components::Cookie *
@@ -387,36 +325,7 @@ namespace BMClosedED_Impl
       ::Components::CookieRequired,
       ::Components::NoConnection));
 
-      virtual ::Components::ConnectionDescriptions *
-      get_connections (
-      const char *name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::InvalidName));
-
-      virtual ::Components::ReceptacleDescriptions *
-      get_all_receptacles (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-      virtual ::Components::ReceptacleDescriptions *
-      get_named_receptacles (
-      const ::Components::NameList & /* names */
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::InvalidName));
-
       // Operations for Events interface.
-
-      virtual ::Components::EventConsumerBase_ptr
-      get_consumer (
-      const char *sink_name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::InvalidName));
 
       virtual ::Components::Cookie *
       subscribe (
@@ -450,80 +359,6 @@ namespace BMClosedED_Impl
       ::Components::AlreadyConnected,
       ::Components::InvalidConnection));
 
-      virtual ::Components::EventConsumerBase_ptr
-      disconnect_consumer (
-      const char *source_name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::InvalidName,
-      ::Components::NoConnection));
-
-      virtual ::Components::ConsumerDescriptions *
-      get_named_consumers (
-      const ::Components::NameList & /* names */
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::InvalidName));
-
-      virtual ::Components::EmitterDescriptions *
-      get_all_emitters (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-      virtual ::Components::EmitterDescriptions *
-      get_named_emitters(
-      const ::Components::NameList & /* names */
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::InvalidName));
-
-      virtual ::Components::PublisherDescriptions *
-      get_all_publishers (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-      virtual ::Components::PublisherDescriptions *
-      get_named_publishers (
-      const ::Components::NameList & /* names */
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::InvalidName));
-
-      // Operations for CCMObject interface.
-
-      virtual void
-      component_UUID (
-      const char * new_component_UUID
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-      virtual CIAO::CONNECTION_ID
-      component_UUID (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-      virtual CORBA::IRObject_ptr
-      get_component_def (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-      virtual void
-      configuration_complete (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::InvalidConfiguration));
-
-      virtual void
-      remove (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::RemoveFailure));
-
       // CIAO specific operations on the servant 
       CORBA::Object_ptr
       get_facet_executor (const char *name
@@ -555,21 +390,40 @@ namespace BMClosedED_Impl
       get_consumer_in_avail_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-
-      ACE_CString component_UUID_;
     };
   }
 
   namespace CIAO_GLUE_BasicSP
   {
     class BMCLOSEDED_SVNT_Export BMClosedEDHome_Servant
-    : public virtual POA_BasicSP::BMClosedEDHome,
-    public virtual PortableServer::RefCountServantBase
+      : public virtual CIAO::Home_Servant_Impl<
+          POA_BasicSP::BMClosedEDHome,
+          ::BasicSP::CCM_BMClosedEDHome,
+          ::BasicSP::CCM_BMClosedEDHome_var,
+          ::BasicSP::BMClosedED,
+          ::BasicSP::BMClosedED_var,
+          ::BasicSP::CCM_BMClosedED,
+          ::BasicSP::CCM_BMClosedED_var,
+          BMClosedED_Servant
+        >
     {
       public:
+      /// Hack for VC6.
+      typedef CIAO::Home_Servant_Impl<
+          POA_BasicSP::BMClosedEDHome,
+          ::BasicSP::CCM_BMClosedEDHome,
+          ::BasicSP::CCM_BMClosedEDHome_var,
+          ::BasicSP::BMClosedED,
+          ::BasicSP::BMClosedED_var,
+          ::BasicSP::CCM_BMClosedED,
+          ::BasicSP::CCM_BMClosedED_var,
+          BMClosedED_Servant
+        > home_svnt_base;
+
       BMClosedEDHome_Servant (
       ::BasicSP::CCM_BMClosedEDHome_ptr exe,
       ::CIAO::Session_Container *c);
+
       virtual ~BMClosedEDHome_Servant (void);
 
       // Home operations.
@@ -577,76 +431,6 @@ namespace BMClosedED_Impl
       // Home factory and finder operations.
 
       // Attribute operations.
-
-      // Operations for keyless home interface.
-
-      virtual ::Components::CCMObject_ptr
-      create_component (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CreateFailure));
-
-      // Operations for implicit home interface.
-
-      virtual ::BasicSP::BMClosedED_ptr
-      create (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CreateFailure));
-
-      // Operations for CCMHome interface.
-
-      virtual ::CORBA::IRObject_ptr
-      get_component_def (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-      virtual ::CORBA::IRObject_ptr
-      get_home_def (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-      virtual void
-      remove_component (
-      ::Components::CCMObject_ptr comp
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::RemoveFailure));
-
-      // Supported operations.
-
-      protected:
-      // CIAO-specific operations.
-
-      ::BasicSP::BMClosedED_ptr
-      _ciao_activate_component (
-      ::BasicSP::CCM_BMClosedED_ptr exe
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-      void
-      _ciao_passivate_component (
-      ::BasicSP::BMClosedED_ptr comp
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-      protected:
-      ::BasicSP::CCM_BMClosedEDHome_var
-      executor_;
-
-      ::CIAO::Session_Container *
-      container_;
-
-      ACE_Hash_Map_Manager_Ex<
-      PortableServer::ObjectId,
-      BMClosedED_Servant *,
-      TAO_ObjectId_Hash,
-      ACE_Equal_To<PortableServer::ObjectId>,
-      ACE_SYNCH_MUTEX>
-      component_map_;
     };
 
     extern "C" BMCLOSEDED_SVNT_Export ::PortableServer::Servant

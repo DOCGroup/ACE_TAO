@@ -17,6 +17,15 @@
 module EC_Benchmark
 {
   /**
+   * @interface Producer component
+   */
+  interface trigger
+    {
+      void start ();
+      void stop ();
+    };
+
+  /**
    * @eventtype Events that represent timeouts
    */
   eventtype TimeOut {};

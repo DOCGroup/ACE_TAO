@@ -91,110 +91,13 @@ namespace BMClosedED_Impl
     ::Components::CCMHome_ptr home,
     ::CIAO::Session_Container *c,
     BMClosedED_Servant *sv)
-    : home_ (::Components::CCMHome::_duplicate (home)),
-    container_ (c),
-    servant_ (sv)
+      : Context_Impl_Base (home, c),
+        ctx_svnt_base (home, c, sv)
     {
     }
 
     BMClosedED_Context::~BMClosedED_Context (void)
     {
-    }
-
-    // Operations from ::Components::CCMContext.
-
-    ::Components::Principal_ptr
-    BMClosedED_Context::get_caller_principal (
-    ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-    {
-      ACE_THROW_RETURN (
-      ::CORBA::NO_IMPLEMENT (),
-      ::Components::Principal::_nil ());
-    }
-
-    ::Components::CCMHome_ptr
-    BMClosedED_Context::get_CCM_home (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-    {
-      return ::Components::CCMHome::_duplicate (this->home_.in ());
-    }
-
-    CORBA::Boolean
-    BMClosedED_Context::get_rollback_only (
-    ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::IllegalState))
-    {
-      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
-    }
-
-    ::Components::Transaction::UserTransaction_ptr
-    BMClosedED_Context::get_user_transaction (
-    ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::IllegalState))
-    {
-      ACE_THROW_RETURN (
-      ::CORBA::NO_IMPLEMENT (),
-      ::Components::Transaction::UserTransaction::_nil ());
-    }
-
-    CORBA::Boolean
-    BMClosedED_Context::is_caller_in_role (
-    const char * /* role */
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-    {
-      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
-    }
-
-    void
-    BMClosedED_Context::set_rollback_only (
-    ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::IllegalState))
-    {
-      ACE_THROW (CORBA::NO_IMPLEMENT ());
-    }
-
-    // Operations from ::Components::SessionContextinterface.
-
-    CORBA::Object_ptr
-    BMClosedED_Context::get_CCM_object (
-    ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::IllegalState))
-    {
-      if (CORBA::is_nil (this->component_.in ()))
-      {
-        CORBA::Object_var obj =
-        this->container_->get_objref (
-        this->servant_
-        ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-        this->component_ =
-        ::BasicSP::BMClosedED::_narrow (
-        obj.in ()
-        ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-        if (CORBA::is_nil (this->component_.in ()))
-        {
-          ACE_THROW_RETURN (
-          ::CORBA::INTERNAL (),
-          ::CORBA::Object::_nil ());
-        }
-      }
-
-      return ::BasicSP::BMClosedED::_duplicate (
-      this->component_.in ());
     }
 
     // Operations for BMClosedED receptacles and event sources,
@@ -255,15 +158,6 @@ namespace BMClosedED_Impl
     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
     {
-      ACE_CString my_uuid = this->servant_->component_UUID (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-      my_uuid += "_out_avail_publisher";
-
-      this->container_->push_event (ev,
-                                    my_uuid.c_str ()
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-      /*
       ACE_Active_Map_Manager< 
       ::BasicSP::DataAvailableConsumer_var>::iterator end =
       this->ciao_publishes_out_avail_map_.end ();
@@ -288,7 +182,6 @@ namespace BMClosedED_Impl
         ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
       }
-      */
     }
 
     ::Components::Cookie *
@@ -345,12 +238,6 @@ namespace BMClosedED_Impl
 
     // CIAO-specific.
 
-    ::CIAO::Session_Container *
-    BMClosedED_Context::_ciao_the_Container (void) const
-    {
-      return this->container_;
-    }
-
     BMClosedED_Context *
     BMClosedED_Context::_narrow (
     ::Components::SessionContext_ptr p
@@ -366,7 +253,8 @@ namespace BMClosedED_Impl
     ::BasicSP::CCM_BMClosedED_ptr exe,
     ::Components::CCMHome_ptr h,
     ::CIAO::Session_Container *c)
-      : our_base (exe, c)
+      : Servant_Impl_Base (c),
+        comp_svnt_base (exe, c)
     {
       this->context_ = new BMClosedED_Context (h, c, this);
 
@@ -460,22 +348,24 @@ namespace BMClosedED_Impl
         return ret;
       }
 
-      CIAO::Port_Activator_T< CIAO_GLUE_BasicSP::ReadData_Servant,
-      ::BasicSP::CCM_ReadData,
-       ::Components::CCMContext,
-      BMClosedED_Servant > *tmp = 0;
+      CIAO::Port_Activator_T<
+          CIAO_GLUE_BasicSP::ReadData_Servant,
+          ::BasicSP::CCM_ReadData,
+          ::Components::CCMContext,
+          BMClosedED_Servant
+        > *tmp = 0;
 
-      typedef  CIAO::Port_Activator_T<
-      CIAO_GLUE_BasicSP::ReadData_Servant,
-      ::BasicSP::CCM_ReadData,
-       ::Components::CCMContext,
-      BMClosedED_Servant >
-       MACRO_MADNESS_TYPEDEF;
-
+      typedef CIAO::Port_Activator_T<
+          CIAO_GLUE_BasicSP::ReadData_Servant,
+          ::BasicSP::CCM_ReadData,
+          ::Components::CCMContext,
+          BMClosedED_Servant
+        >
+      MACRO_MADNESS_TYPEDEF;
 
       ACE_NEW_THROW_EX ( 
-        tmp,
-        MACRO_MADNESS_TYPEDEF (
+      tmp,
+      MACRO_MADNESS_TYPEDEF (
       "BasicSP_BMClosedED_dataout",
       "dataout",
       CIAO::Port_Activator::Facet,
@@ -484,12 +374,13 @@ namespace BMClosedED_Impl
       this),
       CORBA::NO_MEMORY ());
 
-
       CIAO::Servant_Activator *sa = 
       this->container_->ports_servant_activator ();
 
       if (!sa->register_port_activator (tmp))
-      return 0;
+      {
+        return 0;
+      }
 
       ::CORBA::Object_var obj =
       this->container_->generate_reference (
@@ -504,63 +395,6 @@ namespace BMClosedED_Impl
       obj.in ());
 
       return obj._retn ();
-    }
-
-    // Operations for Navigation interface.
-
-    CORBA::Object_ptr
-    BMClosedED_Servant::provide_facet (
-    const char *name
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::InvalidName))
-    {
-      if (name == 0)
-      {
-        ACE_THROW_RETURN (
-        ::CORBA::BAD_PARAM (),
-        ::CORBA::Object::_nil ());
-      }
-
-      if (ACE_OS::strcmp (name, "dataout") == 0)
-      {
-        return this->provide_dataout (ACE_ENV_SINGLE_ARG_PARAMETER);
-      }
-
-      ACE_THROW_RETURN (
-      ::Components::InvalidName (),
-      ::CORBA::Object::_nil ());
-    }
-
-    ::Components::FacetDescriptions *
-    BMClosedED_Servant::get_named_facets (
-    const ::Components::NameList & /* names */
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::InvalidName))
-    {
-      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
-    }
-
-    ::Components::EmitterDescriptions *
-    BMClosedED_Servant::get_all_emitters (
-    ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-    {
-      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
-    }
-
-    ::Components::EmitterDescriptions *
-    BMClosedED_Servant::get_named_emitters (
-    const ::Components::NameList & /* names */
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::InvalidName))
-    {
-      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
     }
 
     ::Components::Cookie *
@@ -712,7 +546,9 @@ namespace BMClosedED_Impl
       this->container_->ports_servant_activator ();
 
       if (!sa->register_port_activator (tmp))
-      return 0;
+      {
+        return 0;
+      }
 
       ::CORBA::Object_var obj =
       this->container_->generate_reference (
@@ -812,36 +648,6 @@ namespace BMClosedED_Impl
       ACE_UNUSED_ARG (ck);
     }
 
-    ::Components::ConnectionDescriptions *
-    BMClosedED_Servant::get_connections (
-    const char * /* name */
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::InvalidName))
-    {
-      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
-    }
-
-    ::Components::ReceptacleDescriptions *
-    BMClosedED_Servant::get_all_receptacles (
-    ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-    {
-      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
-    }
-
-    ::Components::ReceptacleDescriptions *
-    BMClosedED_Servant::get_named_receptacles (
-    const ::Components::NameList & /* names */
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::InvalidName))
-    {
-      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
-    }
-
     void
     BMClosedED_Servant::connect_datain (
     ::BasicSP::ReadData_ptr c
@@ -876,31 +682,6 @@ namespace BMClosedED_Impl
       ACE_ENV_SINGLE_ARG_PARAMETER);
     }
 
-    ::Components::EventConsumerBase_ptr
-    BMClosedED_Servant::get_consumer (
-    const char *sink_name
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::InvalidName))
-    {
-      if (sink_name == 0)
-      {
-        ACE_THROW_RETURN (
-        ::Components::InvalidName (),
-        ::Components::EventConsumerBase::_nil ());
-      }
-
-      if (ACE_OS::strcmp (sink_name, "in_avail") == 0)
-      {
-        return this->get_consumer_in_avail (ACE_ENV_SINGLE_ARG_PARAMETER);
-      }
-
-      ACE_THROW_RETURN (
-      ::Components::InvalidName (),
-      ::Components::EventConsumerBase::_nil ());
-    }
-
     void
     BMClosedED_Servant::connect_consumer (
     const char * emitter_name,
@@ -919,29 +700,6 @@ namespace BMClosedED_Impl
 
       ACE_UNUSED_ARG (consumer);
       ACE_THROW (::Components::InvalidName ());
-    }
-
-    ::Components::EventConsumerBase_ptr
-    BMClosedED_Servant::disconnect_consumer (
-    const char * /* source_name */
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::InvalidName,
-    ::Components::NoConnection))
-    {
-      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
-    }
-
-    ::Components::ConsumerDescriptions *
-    BMClosedED_Servant::get_named_consumers (
-    const ::Components::NameList & /* names */
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::InvalidName))
-    {
-      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
     }
 
     ::Components::Cookie *
@@ -1016,74 +774,6 @@ namespace BMClosedED_Impl
       ::Components::EventConsumerBase::_nil ());
     }
 
-    ::Components::PublisherDescriptions *
-    BMClosedED_Servant::get_all_publishers (
-    ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-    {
-      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
-    }
-
-    ::Components::PublisherDescriptions *
-    BMClosedED_Servant::get_named_publishers (
-    const ::Components::NameList & /* names */
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::InvalidName))
-    {
-      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
-    }
-
-    // Operations for CCMObject interface.
-
-    void
-    BMClosedED_Servant::component_UUID (
-    const char * new_component_UUID
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-    {
-      this->component_UUID_ = new_component_UUID;
-    }
-
-    CIAO::CONNECTION_ID
-    BMClosedED_Servant::component_UUID (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-    {
-      return CORBA::string_dup (this->component_UUID_.c_str ());
-    }
-
-    CORBA::IRObject_ptr
-    BMClosedED_Servant::get_component_def (
-    ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-    {
-      ACE_THROW_RETURN (
-      ::CORBA::NO_IMPLEMENT (),
-      ::CORBA::IRObject::_nil ());
-    }
-
-    void
-    BMClosedED_Servant::configuration_complete (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::InvalidConfiguration))
-    {
-      // CIAO to-do
-    }
-
-    void
-    BMClosedED_Servant::remove (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::RemoveFailure))
-    {
-      // CIAO to-do
-    }
-
     CORBA::Object_ptr
     BMClosedED_Servant::get_facet_executor (const char *name
     ACE_ENV_ARG_DECL)
@@ -1135,8 +825,8 @@ namespace BMClosedED_Impl
     BMClosedEDHome_Servant::BMClosedEDHome_Servant (
     ::BasicSP::CCM_BMClosedEDHome_ptr exe,
     ::CIAO::Session_Container *c)
-    : executor_ (::BasicSP::CCM_BMClosedEDHome::_duplicate (exe)),
-    container_ (c)
+      : CIAO::Home_Servant_Impl_Base (c),
+        home_svnt_base (exe, c)
     {
     }
 
@@ -1151,173 +841,6 @@ namespace BMClosedED_Impl
     // Home factory and finder operations.
 
     // Home attribute operations.
-
-    // Operations for keyless home interface.
-
-    ::Components::CCMObject_ptr
-    BMClosedEDHome_Servant::create_component (
-    ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CreateFailure))
-    {
-      return this->create (ACE_ENV_SINGLE_ARG_PARAMETER);
-    }
-
-    // Operations for implicit home interface.
-
-    ::BasicSP::BMClosedED_ptr
-    BMClosedEDHome_Servant::create (
-    ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CreateFailure))
-    {
-      if (this->executor_.in () == 0)
-      {
-        ACE_THROW_RETURN (
-        ::CORBA::INTERNAL (),
-        ::BasicSP::BMClosedED::_nil ());
-      }
-
-      ::Components::EnterpriseComponent_var _ciao_ec =
-      this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (::BasicSP::BMClosedED::_nil ());
-
-      ::BasicSP::CCM_BMClosedED_var _ciao_comp =
-      ::BasicSP::CCM_BMClosedED::_narrow (
-      _ciao_ec.in ()
-      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (::BasicSP::BMClosedED::_nil ());
-
-      return this->_ciao_activate_component (
-      _ciao_comp.in ()
-      ACE_ENV_ARG_PARAMETER);
-    }
-
-    // Operations for CCMHome interface.
-
-    ::CORBA::IRObject_ptr
-    BMClosedEDHome_Servant::get_component_def (
-    ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-    {
-      ACE_THROW_RETURN (
-      ::CORBA::NO_IMPLEMENT (),
-      ::CORBA::IRObject::_nil ());
-    }
-
-    ::CORBA::IRObject_ptr
-    BMClosedEDHome_Servant::get_home_def (
-    ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-    {
-      ACE_THROW_RETURN (
-      ::CORBA::NO_IMPLEMENT (),
-      ::CORBA::IRObject::_nil ());
-    }
-
-    void
-    BMClosedEDHome_Servant::remove_component (
-    ::Components::CCMObject_ptr comp
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::RemoveFailure))
-    {
-      ::BasicSP::BMClosedED_var _ciao_comp =
-      ::BasicSP::BMClosedED::_narrow (
-      comp
-      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      if (CORBA::is_nil (_ciao_comp.in ()))
-      {
-        ACE_THROW (CORBA::INTERNAL ());
-      }
-
-      _ciao_comp->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-
-      this->_ciao_passivate_component (
-      _ciao_comp.in ()
-      ACE_ENV_ARG_PARAMETER);
-    }
-
-    // CIAO-specific operations.
-
-    ::BasicSP::BMClosedED_ptr
-    BMClosedEDHome_Servant::_ciao_activate_component (
-    ::BasicSP::CCM_BMClosedED_ptr exe
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-    {
-      ::CORBA::Object_var hobj =
-      this->container_->get_objref (
-      this
-      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (::BasicSP::BMClosedED::_nil ());
-
-      ::Components::CCMHome_var home =
-      ::Components::CCMHome::_narrow (
-      hobj.in ()
-      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (::BasicSP::BMClosedED::_nil ());
-
-      BMClosedED_Servant *svt =
-      new BMClosedED_Servant (
-      exe,
-      home.in (),
-      this->container_);
-
-      PortableServer::ServantBase_var safe (svt);
-      PortableServer::ObjectId_var oid;
-
-      CORBA::Object_var objref =
-      this->container_->install_component (
-      svt,
-      oid.out ()
-      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (::BasicSP::BMClosedED::_nil ());
-
-      ::BasicSP::BMClosedED_var ho =
-      ::BasicSP::BMClosedED::_narrow (
-      objref.in ()
-      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (::BasicSP::BMClosedED::_nil ());
-
-      if (this->component_map_.bind (oid.in (), svt) == 0)
-      {
-        safe._retn ();
-      }
-
-      return ho._retn ();
-    }
-
-    void
-    BMClosedEDHome_Servant::_ciao_passivate_component (
-    ::BasicSP::BMClosedED_ptr comp
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-    {
-      PortableServer::ObjectId_var oid;
-
-      this->container_->uninstall_component (
-      comp,
-      oid.out ()
-      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      BMClosedED_Servant *servant = 0;
-
-      if (this->component_map_.unbind (oid.in (), servant) == 0)
-      {
-        PortableServer::ServantBase_var safe (servant);
-
-        servant->_ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
-      }
-    }
   }
 
   extern "C" BMCLOSEDED_SVNT_Export ::PortableServer::Servant

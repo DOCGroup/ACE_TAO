@@ -40,65 +40,85 @@ CIAO::NodeApplication_Impl::finishLaunch (
           //to narrow here.
           switch (providedReference[i].kind)
             {
-            case Deployment::SimplexReceptacle:
-              comp->connect (providedReference[i].portName.in (),
-                             providedReference[i].endpoint.in ()
-                             ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-              break;
+              case Deployment::SimplexReceptacle:
+                comp->connect (providedReference[i].portName.in (),
+                              providedReference[i].endpoint.in ()
+                              ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+                break;
 
-            case Deployment::MultiplexReceptacle:
-              comp->connect (providedReference[i].portName.in (),
-                             providedReference[i].endpoint.in ()
-                             ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-              break;
+              case Deployment::MultiplexReceptacle:
+                comp->connect (providedReference[i].portName.in (),
+                              providedReference[i].endpoint.in ()
+                              ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+                break;
 
-			// @@ (GD) A place holder where the Event Channel connections
-		    //         should be set up.
-            case Deployment::EventEmitter:
-              consumer = Components::EventConsumerBase::
-                _narrow (providedReference[i].endpoint.in ()
-                         ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+	          // @@ (GD) A place holder where the Event Channel connections
+	          //         should be set up.
+              case Deployment::EventEmitter:
+                consumer = Components::EventConsumerBase::
+                  _narrow (providedReference[i].endpoint.in ()
+                          ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
 
-              if (CORBA::is_nil (consumer.in ()))
-                {
-                  ACE_THROW (Deployment::InvalidConnection ());
-                }
+                if (CORBA::is_nil (consumer.in ()))
+                  {
+                    ACE_THROW (Deployment::InvalidConnection ());
+                  }
 
-              comp->connect_consumer(providedReference[i].portName.in (),
-                                     consumer.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-              break;
+                comp->connect_consumer(providedReference[i].portName.in (),
+                                      consumer.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+                break;
 
-            case Deployment::EventPublisher:
-              consumer = Components::EventConsumerBase::
-                _narrow (providedReference[i].endpoint.in ()
-                         ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              case Deployment::EventPublisher:
+                consumer = Components::EventConsumerBase::
+                  _narrow (providedReference[i].endpoint.in ()
+                          ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
 
-              if (CORBA::is_nil (consumer.in ()))
-				      {              
-				        ACE_THROW (Deployment::InvalidConnection ());
-				      }
+                if (CORBA::is_nil (consumer.in ()))
+				        {              
+				          ACE_THROW (Deployment::InvalidConnection ());
+				        }
 
-              comp->subscribe (providedReference[i].portName.in (),
-                               consumer.in ()
-                               ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-              break;
+                comp->subscribe (providedReference[i].portName.in (),
+                                consumer.in ()
+                                ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+                break;
 
-			    case Deployment::rtecEventEmitter:
-          case Deployment::rtecEventPublisher:
+			        case Deployment::rtecEventEmitter:
+              case Deployment::rtecEventPublisher:
+                ACE_DEBUG ((LM_DEBUG, "Building real-time event channel connection.\n"));
+                this->build_event_connection (providedReference[i], 
+                                              CIAO::RTEC
+                                              ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+			          break;
 
-					  ACE_DEBUG ((LM_DEBUG, "case CIAO::Assembly_Connection::PUBLISHER_CONSUMER:!!!!\n"));
-			      this->build_rtec_connection (providedReference[i]);
-			      break;
+			        case Deployment::ecEventEmitter:
+              case Deployment::ecEventPublisher:
+                ACE_DEBUG ((LM_DEBUG, "Building CoS event channel connection.\n"));
+                this->build_event_connection (providedReference[i], 
+                                              CIAO::EC
+                                              ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+			          break;
 
-          default:
-            ACE_TRY_THROW (Deployment::InvalidConnection ());
+              case Deployment::nsEventEmitter:
+              case Deployment::nsEventPublisher:
+                ACE_DEBUG ((LM_DEBUG, "Building notification channel connection.\n"));
+                this->build_event_connection (providedReference[i], 
+                                              CIAO::NOTIFY
+                                              ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+			          break;
+
+              default:
+                ACE_TRY_THROW (Deployment::InvalidConnection ());
             }
         }
       if (start)
@@ -552,11 +572,13 @@ parse_config_values (const ::Deployment::Properties & properties,
 */
 
 void 
-CIAO::NodeApplication_Impl::build_rtec_connection (const Deployment::Connection & connection
-                                                   ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+CIAO::NodeApplication_Impl::build_event_connection (const Deployment::Connection & connection,
+                                                    CIAO::EventServiceType type
+                                                    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((Deployment::InvalidConnection,
+                   CORBA::SystemException))
 {
-	  ACE_DEBUG ((LM_DEBUG, "CIAO::NodeApplication_Impl::build_rtec_connection ()!!!\n"));
+	  ACE_DEBUG ((LM_DEBUG, "CIAO::NodeApplication_Impl::build_connection ()!!!\n"));
 
     // Get the consumer port object reference and put into "consumer"
     Components::EventConsumerBase_var consumer = 
@@ -600,9 +622,6 @@ CIAO::NodeApplication_Impl::build_rtec_connection (const Deployment::Connection 
         ACE_DEBUG ((LM_DEBUG, "Nil event_service\n"));
         ACE_THROW (Deployment::InvalidConnection ());
       }
-
-    // Set the event service type.
-    CIAO::EventServiceType type = CIAO::RTEC;    
     
     // supplier ID
     ACE_CString sid = source_objref->component_UUID (ACE_ENV_SINGLE_ARG_DECL);
@@ -660,23 +679,5 @@ CIAO::NodeApplication_Impl::build_rtec_connection (const Deployment::Connection 
     consumer_config->destroy (ACE_ENV_SINGLE_ARG_DECL);
     ACE_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "CIAO::NodeApplication_Impl::build_rtec_connection () completed!!!!\n"));
-}
-
-void 
-CIAO::NodeApplication_Impl::build_ec_connection (const Deployment::Connection & connection
-                                                 ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((Deployment::InvalidConnection,
-                    CORBA::SystemException))
-{
-
-}
-
-void 
-CIAO::NodeApplication_Impl::build_ns_connection (const Deployment::Connection & connection
-                                                 ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((Deployment::InvalidConnection,
-                    CORBA::SystemException))
-{
-
+    ACE_DEBUG ((LM_DEBUG, "CIAO::NodeApplication_Impl::build_connection () completed!!!!\n"));
 }
