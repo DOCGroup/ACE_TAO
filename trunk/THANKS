@@ -815,7 +815,7 @@ Samuel Stickland <sps196@hotmail.com>
 Bryan Van de Ven <bryanv@arlut.utexas.edu>
 Greg Siebers <gsiebers@vignette.com>
 Rob Gabbot <rgabbot@sandia.gov>
-Paul Carreiro <pcarreir@bbn.com>
+Paul Carreiro <pcarreir@genuity.com>
 Jovan Kilibarda <jovank@realtimeint.com>
 Derek Dominish <Derek.Dominish@Australia.Boeing.com>
 Devesh Kothari <dkothari@atdsprint.com>
@@ -957,6 +957,7 @@ Nick Pratt <npratt@microstrategy.com>
 Xiaojun Wu <depender@yahoo.com>
 George Lafortune <lafortg@res.raytheon.com>
 Aoxiang Xu <axu@cim.mcgill.ca>
+Dima Skvortsov <dskvortsov@mediasite.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
