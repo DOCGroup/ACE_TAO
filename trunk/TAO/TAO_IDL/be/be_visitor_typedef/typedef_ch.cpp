@@ -176,8 +176,14 @@ be_visitor_typedef_ch::visit_array (be_array *node)
       bt = node;
     }
 
-  // Is our base type an array node. If so, generate code for that array node.
-  if (bt->node_type () == AST_Decl::NT_array)
+  // Is our base type an array node? If so, generate code for that array node.
+  // In the first layer of typedef for an array, cli_hdr_gen() causes us to
+  // skip all the code reached from the first branch. Then the ELSE branch is
+  // skipped and we fail to generate any typedefs for that node. Adding the
+  // check for cli_hdr_gen() to the IF statement keeps it in. Subsequent
+  // layers of typedef, if any, assign the context alias to bt, so we go
+  // straight to the ELSE branch.
+  if (bt->node_type () == AST_Decl::NT_array && bt->cli_hdr_gen () == 0)
     {
       // Let the base class visitor handle this case.
       if (this->be_visitor_typedef::visit_array (node) == -1)
@@ -186,7 +192,8 @@ be_visitor_typedef_ch::visit_array (be_array *node)
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_array - "
                              "base class visitor failed \n"
-                             ),  -1);
+                             ),
+                            -1);
         }
     }
   else
