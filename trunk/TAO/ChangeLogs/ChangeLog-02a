@@ -1,3 +1,16 @@
+Thu Apr 13 08:58:45 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/tests/CosEvent/Basic/Disconnect.dsp:
+	* orbsvcs/tests/CosEvent/Basic/MT_Disconnect.dsp:
+	* orbsvcs/tests/CosEvent/Basic/Pull_Push_Event.dsp:
+	* orbsvcs/tests/CosEvent/Basic/Push_Event.dsp:
+	* orbsvcs/tests/CosEvent/Basic/Shutdown.dsp:
+	* orbsvcs/tests/CosEvent/lib/CECTest.dsp:
+	* orbsvcs/tests/EC_Custom_Marshal/ECCM_Consumer.dsp:
+	* orbsvcs/tests/EC_Custom_Marshal/ECCM_Supplier.dsp:
+	  Last night builds caught a number of problems with these project
+	  files.  They should be fixed now.
+
 Wed Apr 12 16:35:56 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/orbconf.h: CORBA Messaging is required for AMI.  Enforced
