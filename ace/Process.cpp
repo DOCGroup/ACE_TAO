@@ -198,6 +198,66 @@ ACE_Process::spawn (ACE_Process_Options &options)
     }
 
   return this->child_id_;
+#elif defined(ACE_OPENVMS)
+  if (ACE_BIT_ENABLED (options.creation_flags (),
+                       ACE_Process_Options::NO_EXEC))
+    ACE_NOTSUP_RETURN (ACE_INVALID_PID);
+
+  int saved_stdin = ACE_STDIN;
+  int saved_stdout = ACE_STDOUT;
+  int saved_stderr = ACE_STDERR;
+  // Save STD file descriptors and redirect
+  if (options.get_stdin () != ACE_INVALID_HANDLE) {
+    if ((saved_stdin = ACE_OS::dup (ACE_STDIN)) == -1 && errno != EBADF)
+      ACE_OS::exit (errno);
+    if (ACE_OS::dup2 (options.get_stdin (), ACE_STDIN) == -1)
+      ACE_OS::exit (errno);
+  }
+  if (options.get_stdout () != ACE_INVALID_HANDLE) {
+    if ((saved_stdout = ACE_OS::dup (ACE_STDOUT)) == -1 && errno != EBADF)
+      ACE_OS::exit (errno);
+    if (ACE_OS::dup2 (options.get_stdout (), ACE_STDOUT) == -1)
+      ACE_OS::exit (errno);
+  }
+  if (options.get_stderr () != ACE_INVALID_HANDLE) {
+    if ((saved_stderr = ACE_OS::dup (ACE_STDERR)) == -1 && errno != EBADF)
+      ACE_OS::exit (errno);
+    if (ACE_OS::dup2 (options.get_stderr (), ACE_STDERR) == -1)
+      ACE_OS::exit (errno);
+  }
+
+  if (options.working_directory () != 0)
+    ACE_NOTSUP_RETURN (ACE_INVALID_PID);
+
+  this->child_id_ = vfork();
+  if (this->child_id_ == 0) {
+      ACE_OS::execvp (options.process_name (),
+                options.command_line_argv ());
+      // something went wrong
+      this->child_id_ = ACE_INVALID_PID;
+  }
+  
+  // restore STD file descriptors (if necessary)
+  if (options.get_stdin () != ACE_INVALID_HANDLE) {
+    if (saved_stdin == -1)
+      ACE_OS::close (ACE_STDIN);
+    else
+      ACE_OS::dup2 (saved_stdin, ACE_STDIN);
+  }
+  if (options.get_stdout () != ACE_INVALID_HANDLE) {
+    if (saved_stdout == -1)
+      ACE_OS::close (ACE_STDOUT);
+    else
+      ACE_OS::dup2 (saved_stdout, ACE_STDOUT);
+  }
+  if (options.get_stderr () != ACE_INVALID_HANDLE) {
+    if (saved_stderr == -1)
+      ACE_OS::close (ACE_STDERR);
+    else
+      ACE_OS::dup2 (saved_stderr, ACE_STDERR);
+  }
+
+  return this->child_id_;
 #else /* ACE_WIN32 */
   // Fork the new process.
   this->child_id_ = ACE::fork (options.process_name (),
