@@ -21,8 +21,8 @@ Options specific to -r:\n\
 ";
 
 #if !defined (__cplusplus)
-typedef void (*SIG_TYP)(); 
-#endif 
+typedef void (*SIG_TYP)();
+#endif
 
 #ifdef SVR4
 void
@@ -60,7 +60,7 @@ int sockbufsize = 0;		/* socket buffer size to use */
 int new_line=0;                /* This is a special flag */
 int write_to_file=1;            /* indecates writing to file (default)*/
 char fmt = 'K';			/* output format:k=kilobits,K=kilobytes,
-				 *  m = megabits, M = megabytes, 
+				 *  m = megabits, M = megabytes,
 				 *  g = gigabits, G = gigabytes */
 int touchdata = 0;		/* access data after reading */
 
@@ -75,11 +75,11 @@ double cput, realt;		/* user, real time (seconds) */
 unsigned long	dt;
 
 /* declare struct variables for various message types */
-ttcp_sequence::ShortSeq		*sseq;	
-ttcp_sequence::LongSeq		*lseq;	
-ttcp_sequence::OctetSeq		*oseq;	
-ttcp_sequence::DoubleSeq	*dseq;	
-ttcp_sequence::CharSeq		*cseq;	
+ttcp_sequence::ShortSeq		*sseq;
+ttcp_sequence::LongSeq		*lseq;
+ttcp_sequence::OctetSeq		*oseq;
+ttcp_sequence::DoubleSeq	*dseq;
+ttcp_sequence::CharSeq		*cseq;
 ttcp_sequence::StructSeq	*Sseq;
 ttcp_sequence::CompositeSeq	*Cseq;
 
@@ -88,15 +88,15 @@ unsigned short isDone = 0;
 int
 main (int argc, char *argv[])
 {
-    
+
     unsigned long addr_tmp;
     int c;
     unsigned short done = 0;
 
-    
+
     if (argc < 2)
       goto usage;
-    
+
     // Now process the options other than Orbix specific options
     while (!done && ((c = getopt (argc, argv, "dvb:f:l:L:O")) != -1))
       {
@@ -133,7 +133,7 @@ main (int argc, char *argv[])
 		goto usage;
 	    }
       }
-    
+
     ttcp_sequence_i *my_ttcp;
     //
     // Receiver
@@ -150,9 +150,9 @@ main (int argc, char *argv[])
 
 #else
 	    my_ttcp = new ttcp_sequence_i;
-#endif	
+#endif
 
-#if defined (USE_QUANTIFY)
+#if defined (ACE_HAS_QUANTIFY)
     quantify_clear_data();
     quantify_start_recording_data();
 #endif
@@ -174,8 +174,3 @@ usage:
     fprintf (stderr, Usage);
     return(1);
 }
-
-
-
-
-

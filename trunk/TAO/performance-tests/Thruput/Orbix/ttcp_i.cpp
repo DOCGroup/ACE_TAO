@@ -15,7 +15,7 @@ SD_Ready (int io_descriptor)
         perror ("setsockopt: rcvbuf"), exit (1);
   }
 }
- 
+
 /* the ttcp_i class implementation */
 ttcp_sequence_i::ttcp_sequence_i()
 {
@@ -23,7 +23,7 @@ ttcp_sequence_i::ttcp_sequence_i()
   numCalls = 0;
   // register a callback so we can manipulate the descriptor
   // being used by orbix.
- 
+
   if (CORBA::Orbix.registerIOCallback (OrbixIOCallback(SD_Ready),
         FD_OPEN_CALLBACK) != 0)
     perror ("can't register callback"), exit (1);
@@ -37,16 +37,16 @@ ttcp_sequence_i::start_timer (CORBA::Environment &IT_env)
     ::prep_timer ();
 }
 
-void 
+void
 ttcp_sequence_i::stop_timer (CORBA::Environment &IT_env)
 {
   (void) ::read_timer (stats, sizeof (stats));
-	::nbytes = this->nbytes_;
-	::PrintStats();
-	// reset
-	this->nbytes_ = 0;
-	numCalls = 0;
-#if defined (USE_QUANTIFY)
+        ::nbytes = this->nbytes_;
+        ::PrintStats();
+        // reset
+        this->nbytes_ = 0;
+        numCalls = 0;
+#if defined (ACE_HAS_QUANTIFY)
     quantify_stop_recording_data();
     exit(0);
 #endif
@@ -100,16 +100,3 @@ ttcp_sequence_i::sendCompositeSeq(const ttcp_sequence::CompositeSeq& ttcp_seq, C
     numCalls++;
     this->nbytes_ += ttcp_seq.length()*sizeof(CompositeStruct) ;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
