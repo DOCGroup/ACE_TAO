@@ -213,7 +213,7 @@ ECT_Consumer_Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr 
                                     this->event_b_,
                                     channel,
                                     _env);
-      if (_env.exception () != 0) return;
+      TAO_CHECK_ENV_RETURN_VOID (_env);
     }
 }
 
@@ -236,7 +236,7 @@ ECT_Consumer_Driver::disconnect_consumers (CORBA::Environment &_env)
   for (int i = 0; i < this->n_consumers_; ++i)
     {
       this->consumers_[i]->disconnect (_env);
-      if (_env.exception () != 0) return;
+      TAO_CHECK_ENV_RETURN_VOID (_env);
     }
 }
 

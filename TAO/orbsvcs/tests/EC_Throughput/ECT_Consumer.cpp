@@ -35,7 +35,7 @@ Test_Consumer::connect (const char* name,
 
   RtecScheduler::handle_t rt_info =
     server->create (name, _env);
-  if (_env.exception () != 0) return;
+  TAO_CHECK_ENV_RETURN_VOID (_env);
 
   // The worst case execution time is far less than 2
   // milliseconds, but that is a safe estimate....
@@ -51,7 +51,7 @@ Test_Consumer::connect (const char* name,
                0,
                RtecScheduler::OPERATION,
                _env);
-  if (_env.exception () != 0) return;
+  TAO_CHECK_ENV_RETURN_VOID (_env);
 
   ACE_ConsumerQOS_Factory qos;
   qos.start_disjunction_group ();
@@ -62,19 +62,19 @@ Test_Consumer::connect (const char* name,
   // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     ec->for_consumers (_env);
-  if (_env.exception () != 0) return;
+  TAO_CHECK_ENV_RETURN_VOID (_env);
 
   this->supplier_proxy_ =
     consumer_admin->obtain_push_supplier (_env);
-  if (_env.exception () != 0) return;
+  TAO_CHECK_ENV_RETURN_VOID (_env);
 
   RtecEventComm::PushConsumer_var objref = this->_this (_env);
-  if (_env.exception () != 0) return;
+  TAO_CHECK_ENV_RETURN_VOID (_env);
 
   this->supplier_proxy_->connect_push_consumer (objref.in (),
                                                 qos.get_ConsumerQOS (),
                                                 _env);
-  if (_env.exception () != 0) return;
+  TAO_CHECK_ENV_RETURN_VOID (_env);
 }
 
 void
@@ -84,7 +84,7 @@ Test_Consumer::disconnect (CORBA::Environment &_env)
     return;
 
   this->supplier_proxy_->disconnect_push_supplier (_env);
-  if (_env.exception () != 0) return;
+  TAO_CHECK_ENV_RETURN_VOID (_env);
 
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
