@@ -166,6 +166,7 @@ sub check_log ($$)
             print STDERR "Error: Cannot open log file $log\n";
         } 
         else {
+            my $print_log = 0;
             my $starting_matched = 0;
             my $ending_matched = 0;
             
@@ -182,9 +183,11 @@ sub check_log ($$)
                 
                 if (/LM\_ERROR\@(.*)$/) {
                     print STDERR "Error: ($log): $1\n";
+                    $print_log = 1;
                 } 
                 if (/LM\_WARNING\@(.*)$/) {
                     print STDERR "Warning: ($log): $1\n";
+                    $print_log = 1;
                 }
             }
 
@@ -192,10 +195,25 @@ sub check_log ($$)
 
             if ($starting_matched == 0) {
                 print STDERR "Error ($log): no line with 'starting'\n";
+                $print_log = 1;
             }
             
             if ($ending_matched == 0) {
                 print STDERR "Error ($log): no line with 'Ending'\n";
+                $print_log = 1;
+            }
+
+            if ($print_log == 1) {
+                print STDERR "======= Begin Log File \n";
+                if (open (LOG, "<".$log) == 0) {
+                    print STDERR "Error: Cannot open log file $log\n";
+                } 
+                else {
+                    my @log = <LOG>;
+                    print STDERR @log;
+                    close (LOG);
+                }
+                print STDERR "======= End Log File \n";
             }
         }
     }
