@@ -9,10 +9,8 @@ Thu May 20 22:56:01 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	 Removed IIOP from their names.
 	* tao/Pluggable.cpp: 
 	* tao/Pluggable.h: 
-
 	* tao/IIOP_Transport.cpp: 
 	* tao/Invocation.h: 
-
 	* tao/GIOP.h: 
 	* tao/GIOP.cpp: Fixed <dump_msg> call to be able print any
 	<message_type> string correctly. Also defined a static const
