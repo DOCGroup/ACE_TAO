@@ -14,6 +14,6 @@ module CosPersistentState {
           {
           };
 
-        typedef sequence<octet> TypeId;
+        typedef sequence<octet> _TypeId;
         typedef string Pid;
 };
