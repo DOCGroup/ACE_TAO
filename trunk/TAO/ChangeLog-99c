@@ -1,3 +1,14 @@
+Wed Feb 10 17:17:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_decl.cpp: 
+	  I had to zero out the buffer to generate identical Typecodes on
+	  all platforms, including the padding bytes (which are now
+	  zeros). Thanks to Jim Crossley <JCrossley@mobsec.com> for
+	  chasing down the problems with this code and for suggesting that 
+	  we test it out by comparing the output of different IDL
+	  compilers; this showed that the padding bytes were not
+	  initialized.
+
 Wed Feb 10 16:36:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/Request.{i,cpp}:
