@@ -31,7 +31,8 @@ ACE_Service_Type::ACE_Service_Type (const ASYS_TCHAR *n,
 #endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
     type_ (t),
     handle_ (h),
-    active_ (active)
+    active_ (active),
+    fini_already_called_ (0)
 {
   ACE_TRACE ("ACE_Service_Type::ACE_Service_Type");
   this->name (n);
@@ -40,13 +41,25 @@ ACE_Service_Type::ACE_Service_Type (const ASYS_TCHAR *n,
 ACE_Service_Type::~ACE_Service_Type (void)
 {
   ACE_TRACE ("ACE_Service_Type::~ACE_Service_Type");
-  this->type_->fini ();
+
+  if (!fini_already_called_)
+    this->type_->fini ();
+
   if (this->handle_ != 0)
     ACE_OS::dlclose ((ACE_SHLIB_HANDLE) this->handle_);
+
   delete [] (ASYS_TCHAR *) this->name_;
+
 #if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
   delete [] (char *) this->chname_;
 #endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
+}
+
+void
+ACE_Service_Type::fini (void)
+{
+  this->type_->fini ();
+  this->fini_already_called_ = 1;
 }
 
 void
