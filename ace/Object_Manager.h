@@ -182,11 +182,13 @@ class ACE_Export ACE_Object_Manager : public ACE_Object_Manager_Base
 public:
   virtual int init (void);
   // Explicitly initialize (construct the singleton instance of) the
-  // ACE_Object_Manager.
+  // ACE_Object_Manager.  Returns 0 on success, -1 on failure, and 1
+  // if it had already been called.
 
   virtual int fini (void);
   // Explicitly destroy the singleton instance of the
-  // ACE_Object_Manager.
+  // ACE_Object_Manager.  Returns 0 on success, -1 on failure, and 1
+  // if it had already been called.
 
   static int starting_up (void);
   // Returns 1 before the ACE_Object_Manager has been constructed.
