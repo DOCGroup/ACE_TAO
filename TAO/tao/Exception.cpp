@@ -114,6 +114,8 @@ CORBA::Exception::_is_a (const char* repository_id) const
                                 "IDL:omg.org/CORBA/Exception:1.0") == 0;
 }
 
+
+
 void
 CORBA::Exception::_tao_print_exception (const char *user_provided_info,
                                         FILE *) const
@@ -259,12 +261,14 @@ CORBA::SystemException::operator= (const CORBA::SystemException &src)
   return *this;
 }
 
+
 int
 CORBA::SystemException::_is_a (const char* interface_id) const
 {
-  return ACE_OS_String::strcmp (interface_id,
-                                "IDL:omg.org/CORBA/SystemException:1.0") == 0
-    || this->Exception::_is_a (interface_id);
+  return ((ACE_OS_String::strcmp (interface_id, this->_rep_id ()) == 0) ||
+          (ACE_OS_String::strcmp (interface_id,
+                                  "IDL:omg.org/CORBA/SystemException:1.0") == 0)
+          || this->Exception::_is_a (interface_id));
 }
 
 CORBA::SystemException*
@@ -1052,14 +1056,32 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
 // it works that way in most systems.
 
 #define TAO_TC_BUF_LEN 256
+//  static CORBA::Long tc_buf_CORBA_ ## name[TAO_TC_BUF_LEN / sizeof (CORBA::Long)];
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-  static CORBA::Long tc_buf_CORBA_ ## name[TAO_TC_BUF_LEN / sizeof (CORBA::Long)]; \
   CORBA::TypeCode_ptr CORBA::_tc_ ## name = 0;
 
   STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
-#undef TAO_TC_BUF_LEN
+
+  CORBA::TypeCode_ptr type_code_array [] = {
+#define TAO_SYSTEM_EXCEPTION(name) \
+                                            CORBA::_tc_ ## name,
+      STANDARD_EXCEPTION_LIST
+#undef  TAO_SYSTEM_EXCEPTION
+      CORBA::_tc_null};
+
+// Since we add an extra element subtract 1
+static CORBA::ULong array_sz =
+    (sizeof (type_code_array) / sizeof (CORBA::TypeCode_ptr)) - 1;
+
+static char *repo_id_array [] = {
+#define TAO_SYSTEM_EXCEPTION(name) \
+                  "IDL:omg.org/CORBA/" #name ":1.0",
+      STANDARD_EXCEPTION_LIST
+#undef  TAO_SYSTEM_EXCEPTION
+      0
+  };
 
 void
 TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_DECL)
@@ -1075,15 +1097,27 @@ TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW (TAO_Exceptions::global_allocator_,
            ACE_New_Allocator);
 
+  char *name_array [] = {
 #define TAO_SYSTEM_EXCEPTION(name) \
-  TAO_Exceptions::make_standard_typecode (CORBA::_tc_ ## name, \
-                                          #name, \
-                                          (char*) tc_buf_CORBA_ ## name, \
-                                          sizeof (tc_buf_CORBA_ ## name) \
-                                          ACE_ENV_ARG_PARAMETER); \
-  ACE_CHECK;
-  STANDARD_EXCEPTION_LIST
+                        # name,
+      STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
+      0
+  };
+
+  for (CORBA::ULong i = 0;
+       i < array_sz;
+       ++i)
+    {
+      CORBA::Long tc_buf_CORBA_tc [TAO_TC_BUF_LEN/sizeof(CORBA::Long)];
+
+      TAO_Exceptions::make_standard_typecode (type_code_array[i],
+                                              name_array[i],
+                                              (char*) tc_buf_CORBA_tc,
+                                              sizeof tc_buf_CORBA_tc
+                                              ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 
   TAO_Exceptions::make_unknown_user_typecode (CORBA::_tc_UnknownUserException
                                               ACE_ENV_ARG_PARAMETER);
@@ -1091,18 +1125,30 @@ TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_DECL)
   TAO_Exceptions::initialized_ = 1;
 }
 
+#undef TAO_TC_BUF_LEN
+
+
 CORBA::SystemException *
 TAO_Exceptions::create_system_exception (const char *id
                                          ACE_ENV_ARG_DECL_NOT_USED)
 {
+  typedef CORBA::SystemException* (*funcp)(void);
+
+    funcp excp_array [] = {
 #define TAO_SYSTEM_EXCEPTION(name) \
-  { \
-    const char* xid = "IDL:omg.org/CORBA/" #name ":1.0"; \
-    if (ACE_OS_String::strcmp (id, xid) == 0) \
-      return new CORBA::name; \
-  }
-  STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
+      &CORBA::name::_tao_create,
+      STANDARD_EXCEPTION_LIST
+#undef  TAO_SYSTEM_EXCEPTION
+      0
+    };
+
+  for (CORBA::ULong i = 0;
+       i < array_sz;
+       ++i)
+    {
+      if (ACE_OS_String::strcmp (id, repo_id_array[i]) == 0)
+        return (*(excp_array[i])) ();
+    }
 
   return 0;
 }
@@ -1110,11 +1156,13 @@ TAO_Exceptions::create_system_exception (const char *id
 void
 TAO_Exceptions::fini (void)
 {
-#define TAO_SYSTEM_EXCEPTION(name) \
-  CORBA::release (CORBA::_tc_ ## name); \
-  CORBA::_tc_ ## name = 0;
-  STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
+  for (CORBA::ULong i = 0;
+       i < array_sz;
+       ++i)
+    {
+      CORBA::release (type_code_array[i]);
+      type_code_array[i] = 0;
+    }
 
   CORBA::release (CORBA::_tc_UnknownUserException);
   CORBA::_tc_UnknownUserException = 0;
@@ -1122,19 +1170,6 @@ TAO_Exceptions::fini (void)
   delete TAO_Exceptions::global_allocator_;
   TAO_Exceptions::global_allocator_ = 0;
 }
-
-#define TAO_SYSTEM_EXCEPTION(name) \
-int \
-CORBA::name ::_is_a (const char* interface_id) const \
-{ \
-  return ((ACE_OS_String::strcmp ( \
-               interface_id, \
-               "IDL:omg.org/CORBA/" #name ":1.0") == 0) \
-          || this->SystemException::_is_a (interface_id)); \
-}
-
-STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::name * \
@@ -1206,6 +1241,18 @@ CORBA::name ::_tao_duplicate (void) const \
 { \
   CORBA::Exception *result; \
   ACE_NEW_RETURN (result, CORBA::name (*this), 0); \
+  return result; \
+}
+
+STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
+#define TAO_SYSTEM_EXCEPTION(name) \
+CORBA::SystemException * \
+CORBA::name ::_tao_create (void) \
+{ \
+  CORBA::SystemException *result; \
+  ACE_NEW_RETURN (result, CORBA::name (), 0); \
   return result; \
 }
 
@@ -1304,23 +1351,13 @@ STANDARD_EXCEPTION_LIST
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#define TAO_SYSTEM_EXCEPTION(name) \
-template class TAO::Any_Dual_Impl_T<CORBA::name >;
-
-STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
+template class TAO::Any_Dual_Impl_T<CORBA::SystemException>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#define TAO_SYSTEM_EXCEPTION(name) \
-#pragma instantiate TAO::Any_Dual_Impl_T<CORBA::name >
-
-STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
+#pragma instantiate TAO::Any_Dual_Impl_T<CORBA::SystemException>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#undef STANDARD_EXCEPTION_LIST
 
 #if defined (TAO_DONT_CATCH_DOT_DOT_DOT)
 TAO_DONT_CATCH::TAO_DONT_CATCH (void)
