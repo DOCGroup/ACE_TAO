@@ -47,7 +47,12 @@ main (int argc, char *argv[])
         CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      ACE_Scheduler_Factory::use_config (naming_context.in ());
+      const char *name = 0;
+      if (argc > 1)
+	{
+	  name = argv[1];
+	}
+      ACE_Scheduler_Factory::use_config (naming_context.in (), name);
 
       RtecScheduler::RT_Info_Set_var infos;
       RtecScheduler::Config_Info_Set_var configs;

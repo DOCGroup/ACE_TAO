@@ -204,7 +204,8 @@ writev_n (ACE_HANDLE h, ACE_IO_Vector *iov, int iovcnt)
 
 CORBA::Boolean
 TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
-                        TAO_OutputCDR &stream)
+                        TAO_OutputCDR &stream,
+			TAO_ORB_Core* orb_core)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_SEND_REQUEST_START);
 
@@ -223,17 +224,27 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
   // this particular environment and that isn't handled by the
   // networking infrastructure (e.g. IPSEC).
 
-  CORBA::ULong bodylen = buflen - TAO_GIOP_HEADER_LEN;
+  size_t offset = 8;
+  size_t header_len = TAO_GIOP_HEADER_LEN;
+  if (orb_core->orb_params ()->use_IIOP_lite_protocol ())
+    {
+      offset = 0;
+      header_len = 5;
+    }
+
+  CORBA::ULong bodylen = buflen - header_len;
+  
+
 #if !defined (TAO_ENABLE_SWAP_ON_WRITE)
-  *ACE_reinterpret_cast(CORBA::ULong*,buf + 8) = bodylen;
+  *ACE_reinterpret_cast(CORBA::ULong*,buf + offset) = bodylen;
 #else
   if (!stream->do_byte_swap ())
     {
-      *ACE_reinterpret_cast(CORBA::ULong*, buf + 8) = bodylen;
+      *ACE_reinterpret_cast(CORBA::ULong*, buf + offset) = bodylen;
     }
   else
     {
-      CDR::swap_4 (ACE_reinterpret_cast(char*,&bodylen), buf + 8);
+      CDR::swap_4 (ACE_reinterpret_cast(char*,&bodylen), buf + offset);
     }
 #endif
 
@@ -438,7 +449,8 @@ TAO_GIOP::read_buffer (TAO_SOCK_Stream &peer,
 
 TAO_GIOP::Message_Type
 TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
-                        TAO_InputCDR &msg)
+                        TAO_InputCDR &msg,
+			TAO_ORB_Core* orb_core)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_RECV_REQUEST_START);
 
@@ -458,16 +470,20 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
 
   CDR::mb_align (&msg.start_);
 
-  if (CDR::grow (&msg.start_, TAO_GIOP_HEADER_LEN) == -1)
+  size_t header_len = TAO_GIOP_HEADER_LEN;
+  if (orb_core->orb_params ()->use_IIOP_lite_protocol ())
+    header_len = 5;
+
+  if (CDR::grow (&msg.start_, header_len) == -1)
     return TAO_GIOP::MessageError;
 
   char *header = msg.start_.rd_ptr ();
   ssize_t len = TAO_GIOP::read_buffer (connection,
                                        header,
-                                       TAO_GIOP_HEADER_LEN);
+                                       header_len);
   // Read the header into the buffer.
 
-  if (len != TAO_GIOP_HEADER_LEN)
+  if (len != header_len)
     {
       switch (len)
         {
@@ -490,7 +506,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
         default:
           ACE_DEBUG ((LM_ERROR,
                       "(%P|%t) GIOP::recv_request header read failed, only %d of %d bytes\n",
-                      len, TAO_GIOP_HEADER_LEN));
+                      len, header_len));
           break;
           /* NOTREACHED */
         }
@@ -504,37 +520,12 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
 
   // First make sure it's a GIOP message of any version.
 
-  if (!(header [0] == 'G'
-        && header [1] == 'I'
-        && header [2] == 'O'
-        && header [3] == 'P'))
-    {
-      ACE_DEBUG ((LM_DEBUG, "bad header, magic word\n"));
-      return TAO_GIOP::MessageError;
-    }
-
-  // Then make sure the major version is ours, and the minor version
-  // is one that we understand.
-
-  if (!(header [4] == TAO_GIOP_MessageHeader::MY_MAJOR
-        && header [5] <= TAO_GIOP_MessageHeader::MY_MINOR))
-    {
-      ACE_DEBUG ((LM_DEBUG, "bad header, version\n"));
-      return TAO_GIOP::MessageError;
-    }
-
-  // Get the message type out and adjust the buffer's records to record
-  // that we've read everything except the length.
-
-  retval = (TAO_GIOP::Message_Type) header[7];
-
-  msg.do_byte_swap_ = (header [6] != TAO_ENCAP_BYTE_ORDER);
-
-  // Make sure byteswapping is done if needed, and then read the
-  // message size (appropriately byteswapped).
-
-  msg.start_.rd_ptr (8);
-  msg.read_ulong (message_size);
+  if (TAO_GIOP::parse_header (msg,
+			      msg.do_byte_swap_,
+			      retval,
+			      message_size,
+			      orb_core) == -1)
+    return TAO_GIOP::MessageError;
 
   // Make sure we have the full length in memory, growing the buffer
   // if needed.
@@ -544,15 +535,15 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
 
   assert (message_size <= UINT_MAX);
 
-  if (CDR::grow (&msg.start_, TAO_GIOP_HEADER_LEN + message_size) == -1)
+  if (CDR::grow (&msg.start_, header_len + message_size) == -1)
     return TAO_GIOP::MessageError;
 
   // Growing the buffer may have reset the rd_ptr(), but we want to
   // leave it just after the GIOP header (that was parsed already);
   CDR::mb_align (&msg.start_);
-  msg.start_.wr_ptr (TAO_GIOP_HEADER_LEN);
+  msg.start_.wr_ptr (header_len);
   msg.start_.wr_ptr (message_size);
-  msg.start_.rd_ptr (TAO_GIOP_HEADER_LEN);
+  msg.start_.rd_ptr (header_len);
 
   char* payload = msg.start_.rd_ptr ();
 
@@ -592,9 +583,93 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
 
   TAO_GIOP::dump_msg ("recv",
                       ACE_reinterpret_cast (u_char *, header),
-                      message_size + TAO_GIOP_HEADER_LEN);
+                      message_size + header_len);
   return retval;
 }
+
+int
+TAO_GIOP::parse_header_std (TAO_InputCDR &cdr,
+			    int& do_byte_swap,
+			    TAO_GIOP::Message_Type& message_type,
+			    CORBA::ULong& message_size)
+{
+  char *header = cdr.start_.rd_ptr ();
+  
+  if (!(header [0] == 'G'
+        && header [1] == 'I'
+        && header [2] == 'O'
+        && header [3] == 'P'))
+    {
+      ACE_DEBUG ((LM_DEBUG, "bad header, magic word\n"));
+      return -1;
+    }
+
+  // Then make sure the major version is ours, and the minor version
+  // is one that we understand.
+
+  if (!(header [4] == TAO_GIOP_MessageHeader::MY_MAJOR
+        && header [5] <= TAO_GIOP_MessageHeader::MY_MINOR))
+    {
+      ACE_DEBUG ((LM_DEBUG, "bad header, version\n"));
+      return TAO_GIOP::MessageError;
+    }
+
+  // Get the message type out and adjust the buffer's records to record
+  // that we've read everything except the length.
+
+  message_type = (TAO_GIOP::Message_Type) header[7];
+
+  do_byte_swap = (header [6] != TAO_ENCAP_BYTE_ORDER);
+
+  // Make sure byteswapping is done if needed, and then read the
+  // message size (appropriately byteswapped).
+
+  cdr.start_.rd_ptr (8);
+  cdr.read_ulong (message_size);
+
+  return 0;
+}
+
+int
+TAO_GIOP::parse_header_lite (TAO_InputCDR &cdr,
+			     int& do_byte_swap,
+			     TAO_GIOP::Message_Type& message_type,
+			     CORBA::ULong& message_size)
+{
+  do_byte_swap = 0;
+
+  char *header = cdr.start_.rd_ptr ();
+  
+  // Get the message type out and adjust the buffer's records to
+  // record that we've read everything except the length.
+  message_type = (TAO_GIOP::Message_Type) header[4];
+
+  cdr.read_ulong (message_size);
+
+  cdr.start_.rd_ptr (1);
+
+  return 0;
+}
+
+int
+TAO_GIOP::parse_header (TAO_InputCDR &cdr,
+			int& do_byte_swap,
+			TAO_GIOP::Message_Type& message_type,
+			CORBA::ULong& message_size,
+			TAO_ORB_Core* orb_core)
+{
+  if (orb_core->orb_params ()->use_IIOP_lite_protocol ())
+    return TAO_GIOP::parse_header_lite (cdr,
+					do_byte_swap,
+					message_type,
+					message_size);
+  else
+    return TAO_GIOP::parse_header_std (cdr,
+				       do_byte_swap,
+				       message_type,
+				       message_size);
+}
+
 
 void
 TAO_GIOP::make_error (TAO_OutputCDR &msg, ...)
@@ -620,25 +695,14 @@ TAO_GIOP_LocateRequestHeader::init (TAO_InputCDR &msg,
 }
 
 CORBA::Boolean
-TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
-                         TAO_OutputCDR &msg)
+TAO_GIOP::start_message_std (TAO_GIOP::Message_Type type,
+			     TAO_OutputCDR &msg)
 {
   msg.reset ();
 
   // if (msg.size () < TAO_GIOP_HEADER_LEN)
   // return CORBA::B_FALSE;
 
-#if 0
-  msg.write_octet ('G');
-  msg.write_octet ('I');
-  msg.write_octet ('O');
-  msg.write_octet ('P');
-
-  msg.write_octet (TAO_GIOP_MessageHeader::MY_MAJOR);
-  msg.write_octet (TAO_GIOP_MessageHeader::MY_MINOR);
-
-  msg.write_octet (TAO_ENCAP_BYTE_ORDER);
-#else
   static CORBA::Octet header[] = {
     'G', 'I', 'O', 'P',
     TAO_GIOP_MessageHeader::MY_MAJOR,
@@ -647,7 +711,6 @@ TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
   };
   static int header_size = sizeof(header)/sizeof(header[0]);
   msg.write_octet_array (header, header_size);
-#endif
   msg.write_octet (type);
 
   // Write a dummy <size> later it is set to the right value...
@@ -656,6 +719,33 @@ TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
   msg.write_ulong (size);
 
   return CORBA::B_TRUE;
+}
+
+CORBA::Boolean
+TAO_GIOP::start_message_lite (TAO_GIOP::Message_Type type,
+			      TAO_OutputCDR &msg)
+{
+  msg.reset ();
+
+  // Write a dummy <size> later it is set to the right value...
+  // @@ TODO Maybe we should store the OutputCDR status in
+  CORBA::ULong size = 0;
+  msg.write_ulong (size);
+
+  msg.write_octet (type);
+
+  return CORBA::B_TRUE;
+}
+
+CORBA::Boolean
+TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
+			 TAO_OutputCDR &msg,
+			 TAO_ORB_Core* orb_core)
+{
+  if (orb_core->orb_params ()->use_IIOP_lite_protocol ())
+    return TAO_GIOP::start_message_lite (type, msg);
+  else
+    return TAO_GIOP::start_message_std (type, msg);
 }
 
 const char * 

@@ -184,8 +184,7 @@ public:
   // = Initialization and termination methods.
   IIOP_ServerRequest (TAO_InputCDR &input,
                       TAO_OutputCDR &output,
-		      CORBA::ORB_ptr the_orb,
-		      TAO_POA *the_poa,
+		      TAO_ORB_Core *orb_core,
                       CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Constructor
   IIOP_ServerRequest (CORBA::ULong &request_id,
@@ -193,8 +192,7 @@ public:
                       TAO_opaque &object_key,
                       char* operation,
                       TAO_OutputCDR &output,
-                      CORBA::ORB_ptr the_orb,
-                      TAO_POA *the_poa,
+                      TAO_ORB_Core *orb_core,
                       CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
   virtual ~IIOP_ServerRequest (void);
@@ -283,11 +281,19 @@ public:
   // get the exception type
 
 private:
-#if !defined (TAO_COPY_OPNAME)
+   void parse_header (CORBA::Environment &env);
+  // Parse the request header and store the result on this object.
+
+  void parse_header_std (CORBA::Environment &env);
+  // Parse the standard IIOP request header and store the result on
+  // this object.
+
+  void parse_header_lite (CORBA::Environment &env);
+  // Parse the lightweight version of the IIOP request header and
+  // store the result on this object.
+
+private:
   char* operation_;
-#else
-  CORBA::String_var operation_;
-#endif
   // Operation name.
 
   CORBA::Object_var forward_location_;
@@ -314,11 +320,9 @@ private:
   CORBA::ULong exception_type_;
   // exception type (will be NO_EXCEPTION in the majority of the cases)
 
-  CORBA::ORB_ptr orb_;
-  // The ORB with which this server request is associated.
-
-  TAO_POA *poa_;
-  // The object adapter with which this server request is associated.
+  TAO_ORB_Core* orb_core_;
+  // A pointer to the ORB Core for the context where the request was
+  // created.
 
   TAO_GIOP_ServiceContextList service_info_;
   // The service context for the request (CORBA Reference?)

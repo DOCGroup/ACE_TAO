@@ -112,6 +112,11 @@ public:
   // octet sequence is small enough and there is room in the current
   // message block it is more efficient just to copy the buffer.
 
+  int use_IIOP_lite_protocol (void) const;
+  void use_IIOP_lite_protocol (int);
+  // The ORB will use a modified version of IIOP that minimizes the
+  // header size. By default we use the standard IIOP protocol.
+
 private:
   ACE_INET_Addr addr_;
   // host + port number we are listening on
@@ -146,6 +151,9 @@ private:
   int cdr_memcpy_tradeoff_;
   // Control the strategy for copying vs. appeding octet sequences in
   // CDR streams.
+
+  int use_IIOP_lite_protocol_;
+  // For selecting a liteweight IIOP protocol.
 };
 
 typedef enum

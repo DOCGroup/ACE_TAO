@@ -38,7 +38,7 @@ class TAO_Client_Connection_Handler : public TAO_SVC_HANDLER
   //      <TAO_CONNECTOR>.
 public:
   // = Intialization method.
-  TAO_Client_Connection_Handler (ACE_Thread_Manager * = 0);
+  TAO_Client_Connection_Handler (ACE_Thread_Manager *t = 0);
 
   ~TAO_Client_Connection_Handler ();
 
@@ -81,6 +81,8 @@ private:
   // wait on reponse if the leader-follower model is active
 };
 
+// ****************************************************************
+
 class TAO_ORB_Core;
 
 class TAO_Server_Connection_Handler : public TAO_SVC_HANDLER
@@ -89,7 +91,8 @@ class TAO_Server_Connection_Handler : public TAO_SVC_HANDLER
   //   Handles requests on a single connection in a server.
 
 public:
-  TAO_Server_Connection_Handler (ACE_Thread_Manager * = 0);
+  TAO_Server_Connection_Handler (ACE_Thread_Manager* t = 0);
+  TAO_Server_Connection_Handler (TAO_ORB_Core *orb_core);
   // Constructor.
 
   virtual int open (void *);
@@ -111,9 +114,6 @@ public:
   virtual int svc (void);
   // Only used when the handler is turned into an active object by
   // calling <activate>.  This serves as the event loop in such cases.
-
-  TAO_OA_Parameters *params (void);
-  void params (TAO_OA_Parameters *p);
 
   // = Template Methods Called by <handle_input>
 
@@ -158,10 +158,8 @@ protected:
                             ACE_Reactor_Mask);
   // Perform appropriate closing of the connection.
 
-  TAO_ORB_Core *parent_;
-
-  TAO_OA_Parameters *params_;
-  // Pointer to the object adapter parameters.
+  TAO_ORB_Core *orb_core_;
+  // Cache the ORB Core to minimize 
 };
 
 #if defined (__ACE_INLINE__)

@@ -744,16 +744,6 @@ Cubit_Client::run (int testing_collocation)
 
   // Show the results one type at a time.
 
-  // ONEWAY
-  this->call_count_ = 0;
-  this->error_count_ = 0;
-  timer.start ();
-  for (i = 0; i < this->loop_count_; i++)
-    this->cube_oneway (i);
-  timer.stop ();
-  timer.elapsed_time (elapsed_time);
-  this->print_stats ("cube_oneway", elapsed_time);
-
   // VOID
   this->call_count_ = 0;
   this->error_count_ = 0;
@@ -879,6 +869,16 @@ Cubit_Client::run (int testing_collocation)
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube_rti_data", elapsed_time);
 #endif /* 0 */
+
+  // ONEWAY
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_oneway (i);
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  this->print_stats ("cube_oneway", elapsed_time);
 
   if (testing_collocation)
     {

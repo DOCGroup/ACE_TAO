@@ -63,13 +63,13 @@ IIOP_ServerRequest::ctx (void)
 ACE_INLINE CORBA::ORB_ptr
 IIOP_ServerRequest::orb (void)
 {
-  return orb_;
+  return this->orb_core_->orb ();
 }
 
 ACE_INLINE TAO_POA *
 IIOP_ServerRequest::oa (void)
 {
-  return poa_;
+  return this->orb_core_->root_poa ();
 }
 
 ACE_INLINE CORBA::Boolean
