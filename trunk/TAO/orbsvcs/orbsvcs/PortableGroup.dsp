@@ -410,6 +410,10 @@ SOURCE=.\miopC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\PortableGroup\miopconf.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\PortableGroup\POA_Hooks.h
 # End Source File
 # Begin Source File
