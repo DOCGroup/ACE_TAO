@@ -33,7 +33,7 @@ public:
   // = The Test methods.
   void test_method (CORBA::Long id,
                     CORBA::Environment&)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException));

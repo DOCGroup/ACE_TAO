@@ -1,3 +1,14 @@
+Mon May 21 15:39:51 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* tests/Native_Exceptions/test_i.{h,cpp}:
+	* tests/DSI_Gateway/test_i.{h,cpp}:
+	* tests/Timed_Buffered_Oneways/test_i.{h,cpp}:
+	* tests/Portable_Interceptors/Dynamic/test_i.{h,cpp}:
+	* tests/Endpoint_Per_Priority/test_i.{h,cpp}:
+	* tests/Forwarding/test_i.{h,cpp}:
+
+	Fixed compilation errors in Forte Update 1.
+
 Sun May 20 12:30:52 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* performance-tests/Callback/Server_i.{h,cpp}:

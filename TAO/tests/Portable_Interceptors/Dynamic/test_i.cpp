@@ -46,7 +46,7 @@ Visual_i::system (CORBA::Environment &ACE_TRY_ENV)
 
 void
 Visual_i::shutdown (CORBA::Environment&)
-    ACE_THROW_SPEC (())
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();
 }

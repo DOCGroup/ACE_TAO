@@ -32,10 +32,10 @@ public:
 
   // = The Simple_Server methods.
   CORBA::Boolean test_is_a (const char * type, CORBA::Environment&)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (CORBA::Environment&)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;
