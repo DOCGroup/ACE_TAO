@@ -72,14 +72,30 @@ endif
 
 
 .obj/Context.o .obj/Context.so .shobj/Context.o .shobj/Context.so: Context.cpp Context.h \
-  $(ACE_ROOT)/ace/pre.h \
-  dynamicinterface_export.h \
+  $(ACE_ROOT)/ace/pre.h dynamicinterface_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/os_include/os_limits.h \
+  $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
+  $(ACE_ROOT)/ace/os_include/os_stdint.h \
+  $(ACE_ROOT)/ace/os_include/os_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
@@ -90,6 +106,7 @@ endif
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/corbafwd.i \
@@ -102,21 +119,50 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/os_include/os_dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_strings.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
+  $(ACE_ROOT)/ace/os_include/os_netdb.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/os_include/os_assert.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_tcp.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_shm.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_termios.h \
+  $(ACE_ROOT)/ace/os_include/os_aio.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_un.h \
+  $(ACE_ROOT)/ace/os_include/os_poll.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_msg.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -136,11 +182,11 @@ endif
   $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
   $(ACE_ROOT)/ace/Atomic_Op.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
-  $(ACE_ROOT)/ace/Exception_Macros.h \
-  Context.inl \
+  $(ACE_ROOT)/ace/Exception_Macros.h Context.inl \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -153,7 +199,6 @@ endif
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
@@ -194,6 +239,7 @@ endif
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/XML_Svc_Conf.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -202,16 +248,13 @@ endif
   $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Timer_Queue_T.h \
-  $(ACE_ROOT)/ace/Test_and_Set.h \
-  $(ACE_ROOT)/ace/Test_and_Set.i \
-  $(ACE_ROOT)/ace/Test_and_Set.cpp \
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(TAO_ROOT)/tao/Exception.h \
-  $(ACE_ROOT)/ace/iosfwd.h \
   $(TAO_ROOT)/tao/Exception.i \
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/NVList.h \
@@ -270,6 +313,23 @@ endif
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/os_include/os_limits.h \
+  $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
+  $(ACE_ROOT)/ace/os_include/os_stdint.h \
+  $(ACE_ROOT)/ace/os_include/os_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
@@ -280,6 +340,7 @@ endif
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/corbafwd.i \
@@ -289,6 +350,9 @@ endif
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_strings.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
@@ -297,15 +361,7 @@ endif
   $(ACE_ROOT)/ace/Message_Block_T.i \
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_TLI.h \
-  $(ACE_ROOT)/ace/OS_TLI.inl \
-  $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
@@ -324,11 +380,51 @@ endif
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/Sequence.h \
   $(TAO_ROOT)/tao/Managed_Types.h \
   $(TAO_ROOT)/tao/Managed_Types.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/os_include/os_dirent.h \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
+  $(ACE_ROOT)/ace/os_include/os_netdb.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/os_include/os_assert.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_tcp.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_shm.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_termios.h \
+  $(ACE_ROOT)/ace/os_include/os_aio.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_un.h \
+  $(ACE_ROOT)/ace/os_include/os_poll.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_msg.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/os_include/os_syslog.h \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(TAO_ROOT)/tao/Sequence.i \
@@ -338,6 +434,7 @@ endif
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -350,7 +447,6 @@ endif
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
@@ -393,6 +489,11 @@ endif
   $(ACE_ROOT)/ace/Malloc_T.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.i \
+  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
   $(ACE_ROOT)/ace/Event_Handler.i \
   $(ACE_ROOT)/ace/Signal.h \
   $(ACE_ROOT)/ace/Signal.i \
@@ -406,6 +507,7 @@ endif
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/XML_Svc_Conf.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -414,16 +516,13 @@ endif
   $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Timer_Queue_T.h \
-  $(ACE_ROOT)/ace/Test_and_Set.h \
-  $(ACE_ROOT)/ace/Test_and_Set.i \
-  $(ACE_ROOT)/ace/Test_and_Set.cpp \
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(TAO_ROOT)/tao/Exception.h \
-  $(ACE_ROOT)/ace/iosfwd.h \
   $(TAO_ROOT)/tao/Exception.i \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.h \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
@@ -431,12 +530,6 @@ endif
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Environment.h \
   $(TAO_ROOT)/tao/Environment.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -484,10 +577,6 @@ endif
   $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
   $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
   $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
-  $(TAO_ROOT)/tao/Synch_Refcountable.h \
-  $(ACE_ROOT)/ace/Refcountable.h \
-  $(ACE_ROOT)/ace/Refcountable.inl \
-  $(TAO_ROOT)/tao/Synch_Refcountable.inl \
   $(TAO_ROOT)/tao/Transport.inl \
   $(TAO_ROOT)/tao/Invocation.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.h \
@@ -502,13 +591,7 @@ endif
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/DLL.h \
-  $(ACE_ROOT)/ace/Service_Object.i \
-  Context.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.i \
-  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op.i \
+  $(ACE_ROOT)/ace/Service_Object.i Context.h \
   Context.inl ExceptionList.h ExceptionList.inl \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/ServicesC.h \
@@ -526,9 +609,8 @@ endif
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/tao/NVList.h \
-  $(TAO_ROOT)/tao/NVList.i \
-  Request.inl DII_Invocation.inl \
-  $(TAO_ROOT)/tao/Stub.h \
+  $(TAO_ROOT)/tao/NVList.i Request.inl \
+  DII_Invocation.inl $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
@@ -579,6 +661,10 @@ endif
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
@@ -616,6 +702,23 @@ endif
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/os_limits.h \
+  $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
+  $(ACE_ROOT)/ace/os_include/os_stdint.h \
+  $(ACE_ROOT)/ace/os_include/os_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Global_Macros.h \
@@ -630,6 +733,7 @@ endif
   $(ACE_ROOT)/ace/CDR_Base.inl \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/corbafwd.i \
@@ -648,22 +752,51 @@ endif
   $(TAO_ROOT)/tao/Cache_Entries.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/Flag_Manip.h \
+  $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/os_include/os_dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_strings.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/os_include/os_netdb.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/os_include/os_assert.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_tcp.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_shm.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_termios.h \
+  $(ACE_ROOT)/ace/os_include/os_aio.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_un.h \
+  $(ACE_ROOT)/ace/os_include/os_poll.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_msg.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Flag_Manip.h \
-  $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -673,7 +806,6 @@ endif
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
@@ -721,6 +853,11 @@ endif
   $(ACE_ROOT)/ace/Malloc_T.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.i \
+  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
   $(ACE_ROOT)/ace/Event_Handler.i \
   $(ACE_ROOT)/ace/Signal.h \
   $(ACE_ROOT)/ace/Signal.i \
@@ -734,6 +871,7 @@ endif
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/XML_Svc_Conf.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -742,11 +880,9 @@ endif
   $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Timer_Queue_T.h \
-  $(ACE_ROOT)/ace/Test_and_Set.h \
-  $(ACE_ROOT)/ace/Test_and_Set.i \
-  $(ACE_ROOT)/ace/Test_and_Set.cpp \
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -756,6 +892,12 @@ endif
   $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/Sequence.h \
   $(TAO_ROOT)/tao/Managed_Types.h \
   $(TAO_ROOT)/tao/Managed_Types.i \
@@ -775,12 +917,6 @@ endif
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Environment.h \
   $(TAO_ROOT)/tao/Environment.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -792,10 +928,6 @@ endif
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
   $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
-  $(TAO_ROOT)/tao/Synch_Refcountable.h \
-  $(ACE_ROOT)/ace/Refcountable.h \
-  $(ACE_ROOT)/ace/Refcountable.inl \
-  $(TAO_ROOT)/tao/Synch_Refcountable.inl \
   $(TAO_ROOT)/tao/Transport.inl \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
@@ -806,13 +938,7 @@ endif
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/DLL.h \
-  $(ACE_ROOT)/ace/Service_Object.i \
-  Context.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.i \
-  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op.i \
+  $(ACE_ROOT)/ace/Service_Object.i Context.h \
   Context.inl ExceptionList.h ExceptionList.inl \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/ServicesC.h \
@@ -848,8 +974,7 @@ endif
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/tao/NVList.h \
-  $(TAO_ROOT)/tao/NVList.i \
-  Request.inl \
+  $(TAO_ROOT)/tao/NVList.i Request.inl \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
   $(TAO_ROOT)/tao/Policy_Set.h \
@@ -907,6 +1032,10 @@ endif
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
@@ -932,8 +1061,7 @@ endif
   $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/DII_ClientRequestInfo.o .obj/DII_ClientRequestInfo.so .shobj/DII_ClientRequestInfo.o .shobj/DII_ClientRequestInfo.so: DII_ClientRequestInfo.cpp \
-  DII_ClientRequestInfo.h \
-  $(ACE_ROOT)/ace/pre.h \
+  DII_ClientRequestInfo.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -941,6 +1069,23 @@ endif
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/os_include/os_limits.h \
+  $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
+  $(ACE_ROOT)/ace/os_include/os_stdint.h \
+  $(ACE_ROOT)/ace/os_include/os_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
@@ -951,12 +1096,19 @@ endif
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/corbafwd.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/Sequence.h \
   $(TAO_ROOT)/tao/Managed_Types.h \
   $(TAO_ROOT)/tao/Managed_Types.i \
@@ -966,15 +1118,44 @@ endif
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/os_include/os_dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_strings.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/os_include/os_netdb.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/os_include/os_assert.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_tcp.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_shm.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_termios.h \
+  $(ACE_ROOT)/ace/os_include/os_aio.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_un.h \
+  $(ACE_ROOT)/ace/os_include/os_poll.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_msg.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
@@ -992,6 +1173,7 @@ endif
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -1004,7 +1186,6 @@ endif
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
@@ -1048,6 +1229,11 @@ endif
   $(ACE_ROOT)/ace/Malloc_T.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.i \
+  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
   $(ACE_ROOT)/ace/Event_Handler.i \
   $(ACE_ROOT)/ace/Signal.h \
   $(ACE_ROOT)/ace/Signal.i \
@@ -1061,6 +1247,7 @@ endif
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/XML_Svc_Conf.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -1069,16 +1256,13 @@ endif
   $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Timer_Queue_T.h \
-  $(ACE_ROOT)/ace/Test_and_Set.h \
-  $(ACE_ROOT)/ace/Test_and_Set.i \
-  $(ACE_ROOT)/ace/Test_and_Set.cpp \
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(TAO_ROOT)/tao/Exception.h \
-  $(ACE_ROOT)/ace/iosfwd.h \
   $(TAO_ROOT)/tao/Exception.i \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.h \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
@@ -1086,12 +1270,6 @@ endif
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Environment.h \
   $(TAO_ROOT)/tao/Environment.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
@@ -1159,11 +1337,6 @@ endif
   $(ACE_ROOT)/ace/Service_Object.i \
   dynamicinterface_export.h \
   Context.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.i \
-  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op.i \
   Context.inl \
   ExceptionList.h \
   ExceptionList.inl \
@@ -1190,6 +1363,23 @@ endif
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/os_include/os_limits.h \
+  $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
+  $(ACE_ROOT)/ace/os_include/os_stdint.h \
+  $(ACE_ROOT)/ace/os_include/os_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
@@ -1200,6 +1390,7 @@ endif
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/corbafwd.i \
@@ -1207,20 +1398,69 @@ endif
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/os_include/os_dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_strings.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/os_include/os_netdb.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/os_include/os_assert.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_tcp.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_shm.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_termios.h \
+  $(ACE_ROOT)/ace/os_include/os_aio.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_un.h \
+  $(ACE_ROOT)/ace/os_include/os_poll.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_msg.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.i \
+  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
   $(ACE_ROOT)/ace/Event_Handler.i \
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/Service_Object.i \
@@ -1234,10 +1474,6 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
@@ -1262,17 +1498,6 @@ endif
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Malloc_Allocator.h \
   $(ACE_ROOT)/ace/Malloc_Allocator.i \
   $(ACE_ROOT)/ace/Free_List.h \
@@ -1293,6 +1518,7 @@ endif
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/XML_Svc_Conf.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -1301,29 +1527,26 @@ endif
   $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Timer_Queue_T.h \
-  $(ACE_ROOT)/ace/Test_and_Set.h \
-  $(ACE_ROOT)/ace/Test_and_Set.i \
-  $(ACE_ROOT)/ace/Test_and_Set.cpp \
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h \
-  Request.h Context.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h Request.h Context.h \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.h \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.i \
-  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op.i \
   Context.inl ExceptionList.h ExceptionList.inl \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
-  $(ACE_ROOT)/ace/iosfwd.h \
   $(TAO_ROOT)/tao/Exception.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/Sequence.h \
   $(TAO_ROOT)/tao/Managed_Types.h \
   $(TAO_ROOT)/tao/Managed_Types.i \
@@ -1348,12 +1571,6 @@ endif
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Environment.h \
   $(TAO_ROOT)/tao/Environment.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -1396,8 +1613,8 @@ endif
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/tao/NVList.h \
-  $(TAO_ROOT)/tao/NVList.i \
-  Request.inl Server_Request.h \
+  $(TAO_ROOT)/tao/NVList.i Request.inl \
+  Server_Request.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.h \
   $(TAO_ROOT)/tao/Tagged_Profile.h \
   $(TAO_ROOT)/tao/IOPC.h \
@@ -1459,10 +1676,6 @@ endif
   $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
   $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
   $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
-  $(TAO_ROOT)/tao/Synch_Refcountable.h \
-  $(ACE_ROOT)/ace/Refcountable.h \
-  $(ACE_ROOT)/ace/Refcountable.inl \
-  $(TAO_ROOT)/tao/Synch_Refcountable.inl \
   $(TAO_ROOT)/tao/Transport.inl \
   $(TAO_ROOT)/tao/Invocation.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
@@ -1500,6 +1713,10 @@ endif
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -1523,8 +1740,7 @@ endif
   $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/Dynamic_Implementation.o .obj/Dynamic_Implementation.so .shobj/Dynamic_Implementation.o .shobj/Dynamic_Implementation.so: Dynamic_Implementation.cpp \
-  Dynamic_Implementation.h \
-  $(ACE_ROOT)/ace/pre.h \
+  Dynamic_Implementation.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -1537,6 +1753,23 @@ endif
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/os_include/os_limits.h \
+  $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
+  $(ACE_ROOT)/ace/os_include/os_stdint.h \
+  $(ACE_ROOT)/ace/os_include/os_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
@@ -1547,6 +1780,7 @@ endif
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/corbafwd.i \
@@ -1558,15 +1792,44 @@ endif
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/os_include/os_dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_strings.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/os_include/os_netdb.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/os_include/os_assert.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_tcp.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_shm.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_termios.h \
+  $(ACE_ROOT)/ace/os_include/os_aio.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_un.h \
+  $(ACE_ROOT)/ace/os_include/os_poll.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_msg.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
@@ -1584,6 +1847,7 @@ endif
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -1596,7 +1860,6 @@ endif
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
@@ -1640,6 +1903,11 @@ endif
   $(ACE_ROOT)/ace/Malloc_T.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.i \
+  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
   $(ACE_ROOT)/ace/Event_Handler.i \
   $(ACE_ROOT)/ace/Signal.h \
   $(ACE_ROOT)/ace/Signal.i \
@@ -1653,6 +1921,7 @@ endif
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/XML_Svc_Conf.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -1661,16 +1930,13 @@ endif
   $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Timer_Queue_T.h \
-  $(ACE_ROOT)/ace/Test_and_Set.h \
-  $(ACE_ROOT)/ace/Test_and_Set.i \
-  $(ACE_ROOT)/ace/Test_and_Set.cpp \
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(TAO_ROOT)/tao/Exception.h \
-  $(ACE_ROOT)/ace/iosfwd.h \
   $(TAO_ROOT)/tao/Exception.i \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.h \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
@@ -1725,11 +1991,6 @@ endif
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.i \
-  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
   dynamicinterface_export.h Server_Request.h Dynamic_Adapter_Impl.h \
   $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -1737,8 +1998,8 @@ endif
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/DLL.h \
-  $(ACE_ROOT)/ace/Service_Object.i \
-  Context.h Context.inl \
+  $(ACE_ROOT)/ace/Service_Object.i Context.h \
+  Context.inl \
   $(TAO_ROOT)/tao/TAO_Server_Request.h \
   $(TAO_ROOT)/tao/Tagged_Profile.h \
   $(TAO_ROOT)/tao/IOPC.h \
@@ -1768,8 +2029,7 @@ endif
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/PICurrent.inl \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
-  Server_Request.inl \
-  $(TAO_ROOT)/tao/ORB_Core.h \
+  Server_Request.inl $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
@@ -1813,6 +2073,10 @@ endif
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -1888,14 +2152,30 @@ endif
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/ExceptionList.o .obj/ExceptionList.so .shobj/ExceptionList.o .shobj/ExceptionList.so: ExceptionList.cpp ExceptionList.h \
-  $(ACE_ROOT)/ace/pre.h \
-  dynamicinterface_export.h \
+  $(ACE_ROOT)/ace/pre.h dynamicinterface_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/os_include/os_limits.h \
+  $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
+  $(ACE_ROOT)/ace/os_include/os_stdint.h \
+  $(ACE_ROOT)/ace/os_include/os_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
@@ -1906,6 +2186,7 @@ endif
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/corbafwd.i \
@@ -1918,21 +2199,50 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/os_include/os_dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_strings.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
+  $(ACE_ROOT)/ace/os_include/os_netdb.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/os_include/os_assert.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_tcp.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_shm.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_termios.h \
+  $(ACE_ROOT)/ace/os_include/os_aio.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_un.h \
+  $(ACE_ROOT)/ace/os_include/os_poll.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_msg.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -1953,10 +2263,10 @@ endif
   $(ACE_ROOT)/ace/Atomic_Op.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
-  ExceptionList.inl \
-  $(TAO_ROOT)/tao/Typecode.h \
+  ExceptionList.inl $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -1969,7 +2279,6 @@ endif
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
@@ -2010,6 +2319,7 @@ endif
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/XML_Svc_Conf.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -2018,16 +2328,13 @@ endif
   $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Timer_Queue_T.h \
-  $(ACE_ROOT)/ace/Test_and_Set.h \
-  $(ACE_ROOT)/ace/Test_and_Set.i \
-  $(ACE_ROOT)/ace/Test_and_Set.cpp \
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(TAO_ROOT)/tao/Exception.h \
-  $(ACE_ROOT)/ace/iosfwd.h \
   $(TAO_ROOT)/tao/Exception.i \
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Environment.h \
@@ -2040,11 +2347,27 @@ endif
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/os_limits.h \
+  $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
+  $(ACE_ROOT)/ace/os_include/os_stdint.h \
+  $(ACE_ROOT)/ace/os_include/os_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  Dynamic_Adapter_Impl.h \
+  $(ACE_ROOT)/ace/OS_Export.h Dynamic_Adapter_Impl.h \
   $(TAO_ROOT)/tao/Dynamic_Adapter.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2053,6 +2376,7 @@ endif
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/corbafwd.i \
@@ -2060,20 +2384,69 @@ endif
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/os_include/os_dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_strings.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/os_include/os_netdb.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/os_include/os_assert.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_tcp.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_shm.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_termios.h \
+  $(ACE_ROOT)/ace/os_include/os_aio.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_un.h \
+  $(ACE_ROOT)/ace/os_include/os_poll.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_msg.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.i \
+  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
   $(ACE_ROOT)/ace/Event_Handler.i \
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/Service_Object.i \
@@ -2087,10 +2460,6 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
@@ -2115,17 +2484,6 @@ endif
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Malloc_Allocator.h \
   $(ACE_ROOT)/ace/Malloc_Allocator.i \
   $(ACE_ROOT)/ace/Free_List.h \
@@ -2146,6 +2504,7 @@ endif
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/XML_Svc_Conf.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -2154,29 +2513,26 @@ endif
   $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Timer_Queue_T.h \
-  $(ACE_ROOT)/ace/Test_and_Set.h \
-  $(ACE_ROOT)/ace/Test_and_Set.i \
-  $(ACE_ROOT)/ace/Test_and_Set.cpp \
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h \
-  Context.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h Context.h \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.h \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.i \
-  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op.i \
   Context.inl ExceptionList.h ExceptionList.inl \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
-  $(ACE_ROOT)/ace/iosfwd.h \
   $(TAO_ROOT)/tao/Exception.i \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/Sequence.h \
   $(TAO_ROOT)/tao/Managed_Types.h \
   $(TAO_ROOT)/tao/Managed_Types.i \
@@ -2201,12 +2557,6 @@ endif
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Environment.h \
   $(TAO_ROOT)/tao/Environment.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -2249,9 +2599,8 @@ endif
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/tao/NVList.h \
-  $(TAO_ROOT)/tao/NVList.i \
-  Request.inl DII_Invocation.h \
-  $(TAO_ROOT)/tao/Invocation.h \
+  $(TAO_ROOT)/tao/NVList.i Request.inl \
+  DII_Invocation.h $(TAO_ROOT)/tao/Invocation.h \
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
@@ -2290,10 +2639,6 @@ endif
   $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
   $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
   $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
-  $(TAO_ROOT)/tao/Synch_Refcountable.h \
-  $(ACE_ROOT)/ace/Refcountable.h \
-  $(ACE_ROOT)/ace/Refcountable.inl \
-  $(TAO_ROOT)/tao/Synch_Refcountable.inl \
   $(TAO_ROOT)/tao/Transport.inl \
   $(TAO_ROOT)/tao/Invocation.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.h \
@@ -2362,6 +2707,10 @@ endif
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -2393,6 +2742,23 @@ endif
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/os_include/os_limits.h \
+  $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
+  $(ACE_ROOT)/ace/os_include/os_stdint.h \
+  $(ACE_ROOT)/ace/os_include/os_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
@@ -2403,6 +2769,7 @@ endif
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/corbafwd.i \
@@ -2412,20 +2779,69 @@ endif
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/os_include/os_dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_strings.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/OS_TLI.h \
   $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/os_include/os_netdb.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/os_include/os_assert.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_tcp.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_shm.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_termios.h \
+  $(ACE_ROOT)/ace/os_include/os_aio.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_un.h \
+  $(ACE_ROOT)/ace/os_include/os_poll.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_msg.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.i \
+  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
   $(ACE_ROOT)/ace/Event_Handler.i \
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/Service_Object.i \
@@ -2439,10 +2855,6 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
@@ -2467,17 +2879,6 @@ endif
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Malloc_Allocator.h \
   $(ACE_ROOT)/ace/Malloc_Allocator.i \
   $(ACE_ROOT)/ace/Free_List.h \
@@ -2498,6 +2899,7 @@ endif
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/XML_Svc_Conf.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -2506,28 +2908,26 @@ endif
   $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Timer_Queue_T.h \
-  $(ACE_ROOT)/ace/Test_and_Set.h \
-  $(ACE_ROOT)/ace/Test_and_Set.i \
-  $(ACE_ROOT)/ace/Test_and_Set.cpp \
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h \
-  Context.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h Context.h \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.h \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.i \
-  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op.i \
   Context.inl \
   $(TAO_ROOT)/tao/TAO_Server_Request.h \
   $(TAO_ROOT)/tao/Tagged_Profile.h \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/Sequence.h \
   $(TAO_ROOT)/tao/Managed_Types.h \
   $(TAO_ROOT)/tao/Managed_Types.i \
@@ -2550,17 +2950,10 @@ endif
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(TAO_ROOT)/tao/Exception.h \
-  $(ACE_ROOT)/ace/iosfwd.h \
   $(TAO_ROOT)/tao/Exception.i \
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Environment.h \
   $(TAO_ROOT)/tao/Environment.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -2623,15 +3016,13 @@ endif
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/PICurrent.inl \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
-  Server_Request.inl \
-  $(TAO_ROOT)/tao/NVList.h \
+  Server_Request.inl $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/GIOP_Utils.h \
   $(TAO_ROOT)/tao/GIOP_Utils.i
 
 .obj/Unknown_User_Exception.o .obj/Unknown_User_Exception.so .shobj/Unknown_User_Exception.o .shobj/Unknown_User_Exception.so: Unknown_User_Exception.cpp \
-  Unknown_User_Exception.h \
-  $(ACE_ROOT)/ace/pre.h \
+  Unknown_User_Exception.h $(ACE_ROOT)/ace/pre.h \
   dynamicinterface_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2640,6 +3031,23 @@ endif
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/os_include/os_limits.h \
+  $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
+  $(ACE_ROOT)/ace/os_include/os_stdint.h \
+  $(ACE_ROOT)/ace/os_include/os_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
@@ -2650,6 +3058,7 @@ endif
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/corbafwd.i \
@@ -2662,6 +3071,9 @@ endif
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/OS_String.h \
   $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_strings.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
@@ -2670,15 +3082,7 @@ endif
   $(ACE_ROOT)/ace/Message_Block_T.i \
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_TLI.h \
-  $(ACE_ROOT)/ace/OS_TLI.inl \
-  $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -2687,6 +3091,39 @@ endif
   $(TAO_ROOT)/tao/Managed_Types.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/os_include/os_dirent.h \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
+  $(ACE_ROOT)/ace/os_include/os_netdb.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+  $(ACE_ROOT)/ace/os_include/os_assert.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_tcp.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_shm.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_termios.h \
+  $(ACE_ROOT)/ace/os_include/os_aio.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_un.h \
+  $(ACE_ROOT)/ace/os_include/os_poll.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_msg.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/os_include/os_syslog.h \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(TAO_ROOT)/tao/Sequence.i \
@@ -2696,6 +3133,7 @@ endif
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -2708,7 +3146,6 @@ endif
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
@@ -2751,6 +3188,11 @@ endif
   $(ACE_ROOT)/ace/Malloc_T.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.i \
+  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
   $(ACE_ROOT)/ace/Event_Handler.i \
   $(ACE_ROOT)/ace/Signal.h \
   $(ACE_ROOT)/ace/Signal.i \
@@ -2764,6 +3206,7 @@ endif
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/XML_Svc_Conf.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -2772,11 +3215,9 @@ endif
   $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Timer_Queue_T.h \
-  $(ACE_ROOT)/ace/Test_and_Set.h \
-  $(ACE_ROOT)/ace/Test_and_Set.i \
-  $(ACE_ROOT)/ace/Test_and_Set.cpp \
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
