@@ -1,3 +1,9 @@
+Mon May 15 21:00:31 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/CDR_Stream.i:
+	  The swap_8 operator was not working when debugging was
+	  disabled.
+
 Mon May 15 16:06:01 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* ace/CORBA_macros.h: 

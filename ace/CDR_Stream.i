@@ -100,12 +100,12 @@ ACE_INLINE void
 ACE_CDR::swap_8 (const char* orig, char* target)
 {
 #if defined(ACE_HAS_PENTIUM) && defined(__GNUG__)
+  ACE_CDR::swap_4 (orig, target);
+  ACE_CDR::swap_4 (orig + 4, target + 4);
   register unsigned int i =
-    *ACE_reinterpret_cast(const unsigned int*, orig);
+    *ACE_reinterpret_cast(const unsigned int*, target);
   register unsigned int j =
-    *ACE_reinterpret_cast(const unsigned int*, (orig + 4));
-  asm ("bswap %1" : "=r" (i) : "0r" (i));
-  asm ("bswap %1" : "=r" (j) : "0r" (j));
+    *ACE_reinterpret_cast(const unsigned int*, target + 4);
   *ACE_reinterpret_cast(unsigned int*, target + 4) = i;
   *ACE_reinterpret_cast(unsigned int*, target) = j;
 #elif defined(ACE_HAS_PENTIUM) \
