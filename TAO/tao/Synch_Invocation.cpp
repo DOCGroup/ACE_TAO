@@ -549,8 +549,7 @@ namespace TAO
              this->details_.request_service_context ().service_info (),
              this->resolver_.profile ()
              ACE_ENV_ARG_PARAMETER);
-
-         ACE_CHECK;
+         ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
          if (s == TAO_INVOKE_RESTART)
            return s;
