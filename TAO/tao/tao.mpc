@@ -385,6 +385,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     DoubleSeqS.h
     Dynamic_Adapter.h
     DynamicC.h
+    DynamicS.h
     Dynamic_ParameterC.h
     Encodable.h
     Endpoint.h

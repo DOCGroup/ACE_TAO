@@ -462,6 +462,7 @@ nobase_include_HEADERS = \
   DoubleSeqS.h \
   Dynamic.pidl \
   DynamicC.h \
+  DynamicS.h \
   DynamicC.inl \
   Dynamic_Adapter.h \
   Dynamic_Parameter.pidl \
