@@ -114,10 +114,10 @@ class ACE_Connector : public ACE_Service_Object
 public:
 
   // Useful STL-style traits.
-  typedef SVC_HANDLER::addr_type    addr_type;
-  typedef ACE_PEER_CONNECTOR        connector_type;
-  typedef SVC_HANDLER               handler_type;
-  typedef SVC_HANDLER::stream_type  stream_type;
+  typedef ACE_TYPENAME SVC_HANDLER::addr_type    addr_type;
+  typedef ACE_PEER_CONNECTOR                     connector_type;
+  typedef SVC_HANDLER                            handler_type;
+  typedef ACE_TYPENAME SVC_HANDLER::stream_type  stream_type;
 
 
   // typedef ACE_TYPENAME ACE_PEER_CONNECTOR_ADDR PEER_ADDR;
