@@ -5,6 +5,9 @@ Fri Mar 19 22:50:19 1999  David L. Levine  <levine@cs.wustl.edu>
           Thanks to Henric Jungheim <junghelh@pe-nelson.com> for
           suggesting this.
 
+        * tests/Makefile: removed SRC, because it caused link problems
+          on DU 4.0.
+
 Fri Mar 19 18:56:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * Fixed several makefiles that did not have a SRC or LSRC variable
