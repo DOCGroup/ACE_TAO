@@ -51,6 +51,9 @@ Fri Apr 03 09:16:24 1998  David L. Levine  <levine@cs.wustl.edu>
           cast to a local pointer variable in a const member function be
           const.  Wrong.
 
+        * ace/Basic_Types.i (operator/ and %): fixed comments: former
+          instead of latter.
+
 Thu Apr 02 16:23:12 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/WFMO_Reactor.i (dump): Also changed the method from HANDLE
