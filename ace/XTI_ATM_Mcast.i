@@ -14,8 +14,8 @@ ACE_XTI_ATM_Mcast::ACE_XTI_ATM_Mcast (ACE_TLI_Stream &new_stream,
                   const char device[],
                   struct t_info *info,
                   int rw_flag,
-                  netbuf *udata,
-                  netbuf *opt)
+                  struct netbuf *udata,
+                  struct netbuf *opt)
 {
   ACE_TRACE ("ACE_XTI_ATM_Mcast::ACE_XTI_ATM_Mcast");
   if (this->connect (new_stream, remote_sap, timeout, local_sap, reuse_addr,
@@ -43,8 +43,8 @@ ACE_XTI_ATM_Mcast::connect (ACE_TLI_Stream &new_stream,
              const char device[],
              struct t_info *info,
              int rw_flag,
-             netbuf *udata,
-             netbuf *opt)
+             struct netbuf *udata,
+             struct netbuf *opt)
 {
   ACE_TRACE ("ACE_XTI_ATM_Mcast::connect");
   return ACE_TLI_Connector::connect(new_stream,

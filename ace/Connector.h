@@ -129,7 +129,7 @@ public:
           ACE_TYPENAME_ACE_PEER_CONNECTOR_PEER_ADDR;
 
   /**
-   * Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
+   * Initialize a connector.  @a flags indicates how <SVC_HANDLER>'s
    * should be initialized prior to being activated.  Right now, the
    * only flag that is processed is <ACE_NONBLOCK>, which enabled
    * non-blocking I/O on the <SVC_HANDLER> when it is opened.
@@ -138,7 +138,7 @@ public:
                  int flags = 0);
 
   /**
-   * Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
+   * Initialize a connector.  @a flags indicates how <SVC_HANDLER>'s
    * should be initialized prior to being activated.  Right now, the
    * only flag that is processed is <ACE_NONBLOCK>, which enabled
    * non-blocking I/O on the <SVC_HANDLER> when it is opened.
@@ -337,7 +337,7 @@ protected:
 
   /// Cleanup the <handler_map_> and returns the appropriate
   /// ACE_Svc_Tuple (which is 0 if there is no associated tuple).
-  int cleanup_AST (ACE_HANDLE, AST *&);
+  int cleanup_AST (ACE_HANDLE handle, AST *&ast);
 
   /// Implementation the <connect> methods.
   virtual int connect_i (SVC_HANDLER *&svc_handler,

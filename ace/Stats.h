@@ -235,7 +235,7 @@ public:
   /// Store one sample
   void sample (ACE_UINT64 throughput, ACE_UINT64 latency);
 
-  /// Update the values to reflect the stats in @param throughput
+  /// Update the values to reflect the stats in @a throughput
   void accumulate (const ACE_Throughput_Stats &throughput);
 
   /// Print down the stats
