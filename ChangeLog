@@ -1,3 +1,9 @@
+Sun Dec 21 08:40:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/Synch-Benchmarks/Synch_Lib/Banechmark_Base.cpp:
+	  
+	  Fixed an annoying warning about redefinition.
+
 Sun Dec 21 13:55:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Test_Output.dsp:
