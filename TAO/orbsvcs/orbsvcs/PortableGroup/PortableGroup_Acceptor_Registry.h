@@ -32,6 +32,11 @@
 
 class TAO_Profile;
 
+namespace CORBA
+{
+  class Environment;
+}
+
 /**
  * @class TAO_PortableGroup_Acceptor_Registry
  *

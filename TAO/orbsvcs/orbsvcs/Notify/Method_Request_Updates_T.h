@@ -22,6 +22,11 @@
 
 #include "ace/CORBA_macros.h"
 
+namespace CORBA
+{
+  class Environment;
+}
+
 /**
  * @class TAO_Notify_Method_Request_Updates_T
  *
