@@ -1,3 +1,9 @@
+Fri Dec 15 08:14:51 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/LoadBalancing/Makefile:
+          Fixed rules to automatically generate IDL stubs, before this,
+          the usual 'make idl_stubs ; make depend' idiom would not work.
+
 Thu Dec 14 21:49:40 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/LoadBalancing/Makefile:
