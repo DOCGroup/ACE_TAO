@@ -1,3 +1,49 @@
+Wed Dec  6 14:32:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Asynch_Invocation.cpp
+	* tao/Asynch_Invocation.h
+	* tao/Asynch_Invocation.i
+	* tao/Asynch_Reply_Dispatcher.cpp
+	* tao/Asynch_Reply_Dispatcher.h
+	* tao/Asynch_Reply_Dispatcher.i
+	* tao/Dynamic_Adapter.cpp
+	* tao/Dynamic_Adapter.h
+	* tao/NVList.cpp
+	* tao/NVList.h
+	* tao/Object.cpp
+	* tao/Object.h
+	* tao/corbafwd.h
+	* tao/DynamicInterface/Context.cpp
+	* tao/DynamicInterface/Context.h
+	* tao/DynamicInterface/DII_Invocation.cpp
+	* tao/DynamicInterface/DII_Invocation.h
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp
+	* tao/DynamicInterface/DII_Reply_Dispatcher.h
+	* tao/DynamicInterface/Dynamic_Adapter_Impl.cpp
+	* tao/DynamicInterface/Dynamic_Adapter_Impl.h
+	* tao/DynamicInterface/Dynamic_Implementation.cpp
+	* tao/DynamicInterface/Dynamic_Implementation.h
+	* tao/DynamicInterface/ExceptionList.cpp
+	* tao/DynamicInterface/ExceptionList.h
+	* tao/DynamicInterface/Request.cpp
+	* tao/DynamicInterface/Request.h
+	* tao/DynamicInterface/Server_Request.cpp
+	* tao/DynamicInterface/Server_Request.h
+
+	  Removed #if (TAO_HAS_MINIMUM_CORBA == 0)
+	  guards from code pertaining to DII or DSI in these files.
+
+	* tao/RT_ORBInitializer.h
+
+	  Added #if TAO_HAS_RT_CORBA == 1 guard to this file 
+	  to correspond with a similar guard in the .cpp file.
+
+	* tao/Messaging_Policy_i.cpp
+
+	  Added #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+	  guard to this file to correspond with a similar guard in 
+	  the .h file.
+
 Wed Dec  6 14:13:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynamicAny/DynEnum_i.cpp:
