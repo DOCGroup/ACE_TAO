@@ -91,10 +91,20 @@ TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
                   TAO_SHMIOP_CONNECT_CONCURRENCY_STRATEGY (orb_core),
                   -1);
 
-  return this->base_connector_.open (this->orb_core ()->reactor (),
-                                     connect_creation_strategy,
-                                     &this->connect_strategy_,
-                                     concurrency_strategy);
+  if (this->base_connector_.open (this->orb_core ()->reactor (),
+                                  connect_creation_strategy,
+                                  &this->connect_strategy_,
+                                  concurrency_strategy) == -1)
+    return -1;
+  // We can take advantage of the multithreaded shared-memory transport
+  // if the client will block on read (i.e., will not allow callback.)
+  else if (orb_core->client_factory ()->allow_callback () == 0)
+
+    {
+      this->base_connector_.connector ().preferred_strategy (ACE_MEM_IO::MT);
+      this->connect_strategy_.connector ().preferred_strategy (ACE_MEM_IO::MT);
+    }
+  return 0;
 }
 
 int

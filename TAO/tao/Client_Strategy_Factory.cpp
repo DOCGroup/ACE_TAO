@@ -30,6 +30,12 @@ TAO_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *)
   return 0;
 }
 
+int
+TAO_Client_Strategy_Factory::allow_callback (void)
+{
+  return 0;
+}
+
 ACE_Lock *
 TAO_Client_Strategy_Factory::create_ft_service_retention_id_lock (void)
 {
