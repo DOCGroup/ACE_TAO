@@ -1,3 +1,16 @@
+Thu Jan 20 19:07:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* bin/ACE-casts-convert:
+
+	  Enhanced to support conversion of ACE_*_cast_[1-5]_{ptr,ref}
+	  macro calls to their standard C++ counterparts.
+
+
+	* ace/Map_T.inl:
+
+	  Converting remaining deprecated ACE cast macro calls using the
+	  enhanced ACE-casts-convert script described above.
+
 Thu Jan 20 18:18:00 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ACEXML/apps/svcconf/Svcconf_Handler.cpp:
