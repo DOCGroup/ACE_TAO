@@ -89,6 +89,7 @@ THREADS_FILES = \
   Thread_Control \
   Token
 DEMUX_FILES = \
+  Dev_Poll_Reactor \
   Event_Handler \
   FlReactor \
   Msg_WFMO_Reactor \
@@ -722,22 +723,20 @@ endif # GHS
  OS_Memory.h \
  OS_Memory.inl \
  Log_Msg.h \
- Log_Record.h \
+ Global_Macros.h \
+ Default_Constants.h \
+ Log_Priority.h \
+ OS_Log_Msg_Attributes.h \
+ streams.h \
+ OS_Log_Msg_Attributes.inl \
  OS.h \
  OS_TLI.h \
  OS_TLI.inl \
  Time_Value.h \
  Time_Value.inl \
- Default_Constants.h \
- Global_Macros.h \
  Min_Max.h \
- streams.h \
  Trace.h \
- OS.i \
- Log_Priority.h \
- Log_Record.i \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl
+ OS.i
 
 .obj/OS_Memory.o .obj/OS_Memory.so .shobj/OS_Memory.o .shobj/OS_Memory.so: OS_Memory.cpp \
  OS_Memory.h \
@@ -1042,9 +1041,7 @@ endif # GHS
  OS.i \
  Handle_Set.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -1118,9 +1115,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -1231,9 +1226,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Map_Manager.i \
  Map_Manager.cpp \
  Malloc.h \
@@ -1371,9 +1364,7 @@ endif # GHS
  Unbounded_Queue.cpp \
  Malloc_Base.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  ARGV.i
@@ -1395,7 +1386,9 @@ endif # GHS
  OS_Export.h \
  Basic_Types.h \
  Basic_Types.i \
- OS_String.inl
+ OS_String.inl \
+ OS_Errno.h \
+ OS_Errno.inl
 
 .obj/Capabilities.o .obj/Capabilities.so .shobj/Capabilities.o .shobj/Capabilities.so: Capabilities.cpp \
  Map_Manager.h \
@@ -1457,9 +1450,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Map_Manager.i \
  Map_Manager.cpp \
  Malloc.h \
@@ -1587,9 +1578,7 @@ endif # GHS
  Unbounded_Set.inl \
  Unbounded_Set.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Unbounded_Queue.h \
@@ -1652,9 +1641,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -1789,9 +1776,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -1889,27 +1874,13 @@ endif # GHS
  OS_Dirent.inl \
  Dirent.i \
  Log_Msg.h \
- Log_Record.h \
- OS.h \
- OS_String.h \
+ Global_Macros.h \
+ Default_Constants.h \
+ Log_Priority.h \
  Basic_Types.h \
  Basic_Types.i \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Time_Value.h \
- Time_Value.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
+ streams.h \
  OS_Log_Msg_Attributes.inl
 
 .obj/Dirent_Selector.o .obj/Dirent_Selector.so .shobj/Dirent_Selector.o .shobj/Dirent_Selector.so: Dirent_Selector.cpp \
@@ -2008,9 +1979,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Singleton.h \
  Singleton.i \
  Singleton.cpp \
@@ -2116,9 +2085,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Framework_Component.inl \
  Framework_Component_T.h \
  Framework_Component_T.inl \
@@ -2234,9 +2201,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -2346,9 +2311,7 @@ endif # GHS
  Functor_T.i \
  Functor_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Hash_Map_Manager_T.i \
@@ -2644,9 +2607,7 @@ endif # GHS
  OS.i \
  Lib_Find.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -2698,9 +2659,7 @@ endif # GHS
  ACE.i \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -2827,9 +2786,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Map_Manager.h \
  Map_Manager.i \
  Map_Manager.cpp \
@@ -3015,9 +2972,7 @@ endif # GHS
  Sock_Connect.i \
  ACE.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -3121,9 +3076,7 @@ endif # GHS
  Unbounded_Queue.cpp \
  Malloc_Base.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Basic_Stats.h \
@@ -3150,12 +3103,17 @@ endif # GHS
  Basic_Stats.h \
  Basic_Stats.inl \
  Log_Msg.h \
- Log_Record.h \
- OS.h \
- OS_Dirent.h \
+ Global_Macros.h \
  OS_Export.h \
+ Default_Constants.h \
+ Log_Priority.h \
  OS_Errno.h \
  OS_Errno.inl \
+ OS_Log_Msg_Attributes.h \
+ streams.h \
+ OS_Log_Msg_Attributes.inl \
+ OS.h \
+ OS_Dirent.h \
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
@@ -3165,16 +3123,9 @@ endif # GHS
  OS_TLI.inl \
  Time_Value.h \
  Time_Value.inl \
- Default_Constants.h \
- Global_Macros.h \
  Min_Max.h \
- streams.h \
  Trace.h \
- OS.i \
- Log_Priority.h \
- Log_Record.i \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl
+ OS.i
 
 .obj/Filecache.o .obj/Filecache.so .shobj/Filecache.o .shobj/Filecache.so: Filecache.cpp \
  Filecache.h \
@@ -3238,9 +3189,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Hash_Map_Manager.h \
  Hash_Map_Manager_T.h \
  Functor.h \
@@ -3372,9 +3321,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Dump.h \
  Dump_T.h \
  Dump_T.cpp \
@@ -3444,9 +3391,7 @@ endif # GHS
  Synch_T.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Unbounded_Queue.h \
  Node.h \
  Node.cpp \
@@ -3494,7 +3439,9 @@ endif # GHS
  SOCK_Stream.i \
  SOCK_Connector.i \
  Log_Msg_NT_Event_Log.h \
- Log_Msg_UNIX_Syslog.h
+ Log_Msg_UNIX_Syslog.h \
+ Log_Record.h \
+ Log_Record.i
 
 .obj/Log_Msg_Callback.o .obj/Log_Msg_Callback.so .shobj/Log_Msg_Callback.o .shobj/Log_Msg_Callback.so: Log_Msg_Callback.cpp \
  Log_Msg_Callback.h \
@@ -3644,13 +3591,13 @@ endif # GHS
  Sock_Connect.i \
  ACE.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Log_Msg_UNIX_Syslog.h \
- Log_Msg_Backend.h
+ Log_Msg_Backend.h \
+ Log_Record.h \
+ Log_Record.i
 
 .obj/Log_Record.o .obj/Log_Record.so .shobj/Log_Record.o .shobj/Log_Record.so: Log_Record.cpp \
  Log_Record.h \
@@ -3758,9 +3705,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -3849,15 +3794,19 @@ endif # GHS
  Global_Macros.h \
  OS_Export.h \
  Log_Msg.h \
- Log_Record.h \
- OS.h \
- OS_Dirent.h \
- OS_Errno.h \
- OS_Errno.inl \
- OS_Dirent.inl \
- OS_String.h \
+ Default_Constants.h \
+ Log_Priority.h \
  Basic_Types.h \
  Basic_Types.i \
+ OS_Errno.h \
+ OS_Errno.inl \
+ OS_Log_Msg_Attributes.h \
+ streams.h \
+ OS_Log_Msg_Attributes.inl \
+ OS.h \
+ OS_Dirent.h \
+ OS_Dirent.inl \
+ OS_String.h \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
@@ -3865,14 +3814,8 @@ endif # GHS
  OS_TLI.inl \
  Time_Value.h \
  Time_Value.inl \
- Default_Constants.h \
  Min_Max.h \
- streams.h \
- OS.i \
- Log_Priority.h \
- Log_Record.i \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl
+ OS.i
 
 .obj/Activation_Queue.o .obj/Activation_Queue.so .shobj/Activation_Queue.o .shobj/Activation_Queue.so: Activation_Queue.cpp \
  Activation_Queue.h \
@@ -3934,9 +3877,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Message_Queue.h \
  Message_Block.h \
  Malloc.h \
@@ -4037,9 +3978,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -4149,9 +4088,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Process.h \
  Handle_Set.h \
  Handle_Set.i \
@@ -4270,9 +4207,7 @@ endif # GHS
  Synch_T.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ Log_Priority.h
 
 .obj/Synch_Options.o .obj/Synch_Options.so .shobj/Synch_Options.o .shobj/Synch_Options.so: Synch_Options.cpp \
  Synch_Options.h \
@@ -4382,9 +4317,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  SV_Semaphore_Complex.h \
  SV_Semaphore_Simple.h \
  SV_Semaphore_Simple.i \
@@ -4456,9 +4389,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ Log_Priority.h
 
 .obj/RW_Process_Mutex.o .obj/RW_Process_Mutex.so .shobj/RW_Process_Mutex.o .shobj/RW_Process_Mutex.so: RW_Process_Mutex.cpp \
  RW_Process_Mutex.h \
@@ -4498,9 +4429,7 @@ endif # GHS
  File_Lock.inl \
  RW_Process_Mutex.inl \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  ACE.h \
@@ -4552,9 +4481,7 @@ endif # GHS
  OS.i \
  File_Lock.inl \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -4671,9 +4598,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Thread_Manager.h \
  Unbounded_Queue.h \
  Node.h \
@@ -4773,9 +4698,7 @@ endif # GHS
  Synch_T.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Unbounded_Queue.h \
  Node.h \
  Node.cpp \
@@ -4872,9 +4795,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Managed_Object.h \
  Object_Manager.h \
  Object_Manager.i \
@@ -4943,9 +4864,7 @@ endif # GHS
  Synch_T.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Unbounded_Queue.h \
  Node.h \
  Node.cpp \
@@ -5036,10 +4955,101 @@ endif # GHS
  Synch_T.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Token.i
+
+.obj/Dev_Poll_Reactor.o .obj/Dev_Poll_Reactor.so .shobj/Dev_Poll_Reactor.o .shobj/Dev_Poll_Reactor.so: Dev_Poll_Reactor.cpp \
+ Dev_Poll_Reactor.h \
+ pre.h \
+ Reactor_Impl.h \
+ Timer_Queue.h \
+ Synch.h \
+ ACE.h \
+ OS.h \
+ config-all.h \
+ config.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ace_wchar.h \
+ ace_wchar.inl \
+ OS_Dirent.h \
+ OS_Export.h \
+ OS_Errno.h \
+ OS_Errno.inl \
+ OS_Dirent.inl \
+ OS_String.h \
+ Basic_Types.h \
+ ACE_export.h \
+ Basic_Types.i \
+ OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
+ Time_Value.h \
+ Time_Value.inl \
+ Default_Constants.h \
+ Global_Macros.h \
+ Min_Max.h \
+ streams.h \
+ Trace.h \
+ OS.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
+ Synch.i \
+ Synch_T.h \
+ Synch_T.i \
+ Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ OS_Log_Msg_Attributes.h \
+ OS_Log_Msg_Attributes.inl \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
+ Thread.i \
+ Synch_T.cpp \
+ Log_Msg.h \
+ Log_Priority.h \
+ Timer_Queue_T.h \
+ Free_List.h \
+ Free_List.i \
+ Free_List.cpp \
+ Test_and_Set.h \
+ Event_Handler.h \
+ Event_Handler.i \
+ Test_and_Set.i \
+ Test_and_Set.cpp \
+ Timer_Queue_T.i \
+ Timer_Queue_T.cpp \
+ Signal.h \
+ Signal.i \
+ Pipe.h \
+ Pipe.i \
+ Dev_Poll_Reactor.inl \
+ Handle_Set.h \
+ Handle_Set.i \
+ Reactor.h \
+ Reactor.i \
+ Timer_Heap.h \
+ Timer_Heap_T.h \
+ Unbounded_Set.h \
+ Node.h \
+ Node.cpp \
+ Unbounded_Set.inl \
+ Unbounded_Set.cpp \
+ Malloc_Base.h \
+ Timer_Heap_T.cpp
 
 .obj/Event_Handler.o .obj/Event_Handler.so .shobj/Event_Handler.o .shobj/Event_Handler.so: Event_Handler.cpp \
  Event_Handler.h \
@@ -5091,9 +5101,7 @@ endif # GHS
  Message_Block.h \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -5261,9 +5269,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Timer_Queue_T.h \
  Free_List.h \
  Free_List.i \
@@ -5420,9 +5426,7 @@ endif # GHS
  Trace.h \
  OS.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Select_Reactor.h \
@@ -5510,6 +5514,7 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ ACE_export.h \
  OS.h \
  OS_Dirent.h \
  OS_Export.h \
@@ -5518,7 +5523,6 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  Basic_Types.h \
- ACE_export.h \
  Basic_Types.i \
  OS_String.inl \
  OS_Memory.h \
@@ -5563,9 +5567,7 @@ endif # GHS
  Synch_T.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Unbounded_Queue.h \
  Node.h \
  Node.cpp \
@@ -5761,9 +5763,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Timer_Queue_T.h \
  Free_List.h \
  Free_List.i \
@@ -5908,9 +5908,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Event_Handler.h \
  Event_Handler.i \
  Signal.i \
@@ -6007,9 +6005,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Event_Handler.h \
  Event_Handler.i \
  Signal.i \
@@ -6135,9 +6131,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Event_Handler.h \
  Event_Handler.i \
  Signal.i \
@@ -6286,9 +6280,7 @@ endif # GHS
  Synch_T.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Unbounded_Queue.h \
  Node.h \
  Node.cpp \
@@ -6470,9 +6462,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Timer_Queue_T.h \
  Free_List.h \
  Free_List.i \
@@ -6615,16 +6605,21 @@ endif # GHS
  ace_wchar.inl \
  Addr.i \
  Log_Msg.h \
- Log_Record.h \
- OS.h \
- OS_Dirent.h \
+ Global_Macros.h \
  OS_Export.h \
- OS_Errno.h \
- OS_Errno.inl \
- OS_Dirent.inl \
- OS_String.h \
+ Default_Constants.h \
+ Log_Priority.h \
  Basic_Types.h \
  Basic_Types.i \
+ OS_Errno.h \
+ OS_Errno.inl \
+ OS_Log_Msg_Attributes.h \
+ streams.h \
+ OS_Log_Msg_Attributes.inl \
+ OS.h \
+ OS_Dirent.h \
+ OS_Dirent.inl \
+ OS_String.h \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
@@ -6632,16 +6627,9 @@ endif # GHS
  OS_TLI.inl \
  Time_Value.h \
  Time_Value.inl \
- Default_Constants.h \
- Global_Macros.h \
  Min_Max.h \
- streams.h \
  Trace.h \
- OS.i \
- Log_Priority.h \
- Log_Record.i \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl
+ OS.i
 
 .obj/INET_Addr.o .obj/INET_Addr.so .shobj/INET_Addr.o .shobj/INET_Addr.so: INET_Addr.cpp \
  INET_Addr.h \
@@ -6693,9 +6681,7 @@ endif # GHS
  Addr.i \
  INET_Addr.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -6737,9 +6723,7 @@ endif # GHS
  Flag_Manip.i \
  IPC_SAP.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -6797,9 +6781,7 @@ endif # GHS
  SOCK.i \
  LSOCK.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -6865,9 +6847,7 @@ endif # GHS
  SOCK_Acceptor.i \
  UNIX_Addr.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  UNIX_Addr.i \
@@ -6938,9 +6918,7 @@ endif # GHS
  SOCK_CODgram.i \
  LSOCK_CODgram.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -7007,9 +6985,7 @@ endif # GHS
  LSOCK_Stream.h \
  UNIX_Addr.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  UNIX_Addr.i \
@@ -7078,9 +7054,7 @@ endif # GHS
  LSOCK.i \
  LSOCK_Dgram.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -7144,9 +7118,7 @@ endif # GHS
  SOCK_Stream.i \
  UNIX_Addr.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  UNIX_Addr.i \
@@ -7206,9 +7178,7 @@ endif # GHS
  IPC_SAP.i \
  SOCK.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -7272,9 +7242,7 @@ endif # GHS
  SOCK_Stream.i \
  SOCK_Acceptor.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  OS_QoS.h \
@@ -7348,9 +7316,7 @@ endif # GHS
  INET_Addr.i \
  SOCK_CODgram.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -7404,9 +7370,7 @@ endif # GHS
  Addr.i \
  INET_Addr.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Handle_Set.h \
@@ -7520,9 +7484,7 @@ endif # GHS
  SOCK_Stream.i \
  SOCK_Connector.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  OS_QoS.h
@@ -7598,9 +7560,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ Log_Priority.h
 
 .obj/SOCK_Dgram_Bcast.o .obj/SOCK_Dgram_Bcast.so .shobj/SOCK_Dgram_Bcast.o .shobj/SOCK_Dgram_Bcast.so: SOCK_Dgram_Bcast.cpp \
  SOCK_Dgram_Bcast.h \
@@ -7660,9 +7620,7 @@ endif # GHS
  SOCK_Dgram.i \
  SOCK_Dgram_Bcast.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -7981,9 +7939,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -8086,9 +8042,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -8195,9 +8149,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -8306,9 +8258,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -8405,9 +8355,7 @@ endif # GHS
  ACE.i \
  FIFO.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -8463,9 +8411,7 @@ endif # GHS
  FIFO.i \
  FIFO_Recv.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -8523,9 +8469,7 @@ endif # GHS
  FIFO_Recv.i \
  FIFO_Recv_Msg.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -8581,9 +8525,7 @@ endif # GHS
  FIFO.i \
  FIFO_Send.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -8641,9 +8583,7 @@ endif # GHS
  FIFO_Send.i \
  FIFO_Send_Msg.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -8704,9 +8644,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -8811,9 +8749,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -8921,9 +8857,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -9032,9 +8966,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -9119,9 +9051,7 @@ endif # GHS
  Flag_Manip.i \
  IO_SAP.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -9245,9 +9175,7 @@ endif # GHS
  SOCK_Connector.h \
  SOCK_Connector.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -9310,9 +9238,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Signal.h \
  Event_Handler.h \
  Event_Handler.i \
@@ -9397,9 +9323,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -9504,9 +9428,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -9614,9 +9536,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -9725,9 +9645,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -9836,9 +9754,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -9983,9 +9899,7 @@ endif # GHS
  SV_Message.i \
  SV_Message_Queue.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -10039,9 +9953,7 @@ endif # GHS
  SV_Semaphore_Simple.i \
  SV_Semaphore_Complex.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -10093,9 +10005,7 @@ endif # GHS
  ACE.i \
  SV_Semaphore_Simple.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -10147,9 +10057,7 @@ endif # GHS
  ACE.i \
  SV_Shared_Memory.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -10193,9 +10101,7 @@ endif # GHS
  Addr.h \
  Addr.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -10254,9 +10160,7 @@ endif # GHS
  ACE.i \
  INET_Addr.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -10317,9 +10221,7 @@ endif # GHS
  ACE.i \
  INET_Addr.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -10435,9 +10337,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -10505,16 +10405,22 @@ endif # GHS
  ACE_export.h \
  Addr.i \
  Log_Msg.h \
- Log_Record.h \
- OS.h \
- OS_Dirent.h \
+ Global_Macros.h \
  OS_Export.h \
- OS_Errno.h \
- OS_Errno.inl \
- OS_Dirent.inl \
- OS_String.h \
+ Default_Constants.h \
+ Log_Priority.h \
  Basic_Types.h \
  Basic_Types.i \
+ OS_Errno.h \
+ OS_Errno.inl \
+ OS_Log_Msg_Attributes.h \
+ streams.h \
+ OS_Log_Msg_Attributes.inl \
+ ACE.h \
+ OS.h \
+ OS_Dirent.h \
+ OS_Dirent.inl \
+ OS_String.h \
  OS_String.inl \
  OS_Memory.h \
  OS_Memory.inl \
@@ -10522,17 +10428,9 @@ endif # GHS
  OS_TLI.inl \
  Time_Value.h \
  Time_Value.inl \
- Default_Constants.h \
- Global_Macros.h \
  Min_Max.h \
- streams.h \
  Trace.h \
  OS.i \
- Log_Priority.h \
- Log_Record.i \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- ACE.h \
  Flag_Manip.h \
  Flag_Manip.i \
  Handle_Ops.h \
@@ -10598,9 +10496,7 @@ endif # GHS
  Message_Block.h \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -10765,9 +10661,7 @@ endif # GHS
  Message_Block.h \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -10930,9 +10824,7 @@ endif # GHS
  Message_Block.h \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -11107,9 +10999,7 @@ endif # GHS
  PI_Malloc.h \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -11232,9 +11122,7 @@ endif # GHS
  INET_Addr.i \
  MEM_Addr.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -11304,9 +11192,7 @@ endif # GHS
  PI_Malloc.h \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -11432,9 +11318,7 @@ endif # GHS
  PI_Malloc.h \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -11551,9 +11435,7 @@ endif # GHS
  ACE.i \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -11668,9 +11550,7 @@ endif # GHS
  PI_Malloc.h \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -11755,30 +11635,14 @@ endif # GHS
  Basic_Types.i \
  Basic_Stats.inl \
  Log_Msg.h \
- Log_Record.h \
- OS.h \
- OS_Dirent.h \
+ Global_Macros.h \
  OS_Export.h \
+ Default_Constants.h \
+ Log_Priority.h \
  OS_Errno.h \
  OS_Errno.inl \
- OS_Dirent.inl \
- OS_String.h \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Time_Value.h \
- Time_Value.inl \
- Default_Constants.h \
- Global_Macros.h \
- Min_Max.h \
- streams.h \
- Trace.h \
- OS.i \
- Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
+ streams.h \
  OS_Log_Msg_Attributes.inl
 
 .obj/High_Res_Timer.o .obj/High_Res_Timer.so .shobj/High_Res_Timer.o .shobj/High_Res_Timer.so: High_Res_Timer.cpp \
@@ -11836,9 +11700,7 @@ endif # GHS
  Unbounded_Queue.cpp \
  Malloc_Base.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Basic_Stats.h \
@@ -11911,9 +11773,7 @@ endif # GHS
  High_Res_Timer.i \
  Profile_Timer.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -11981,9 +11841,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
@@ -12063,9 +11921,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -12207,9 +12063,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Free_List.i \
  Free_List.cpp \
  Test_and_Set.h \
@@ -12298,9 +12152,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Free_List.i \
  Free_List.cpp \
  Test_and_Set.h \
@@ -12383,9 +12235,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Free_List.i \
  Free_List.cpp \
  Test_and_Set.h \
@@ -12445,9 +12295,7 @@ endif # GHS
  Unbounded_Set.inl \
  Unbounded_Set.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Unbounded_Queue.h \
@@ -12556,9 +12404,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Free_List.i \
  Free_List.cpp \
  Test_and_Set.h \
@@ -12608,9 +12454,7 @@ endif # GHS
  Trace.h \
  OS.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  ACE.h \
@@ -12694,9 +12538,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Signal.i \
  Unbounded_Queue.h \
  Node.h \
@@ -12820,9 +12662,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Signal.i \
  Unbounded_Queue.h \
  Node.h \
@@ -12974,9 +12814,7 @@ endif # GHS
  Sock_Connect.i \
  ACE.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -13156,9 +12994,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -13321,9 +13157,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Service_Types.i
 
 .obj/Service_Repository.o .obj/Service_Repository.so .shobj/Service_Repository.o .shobj/Service_Repository.so: Service_Repository.cpp \
@@ -13393,9 +13227,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Service_Types.i \
  Service_Repository.i \
  Object_Manager.h \
@@ -13470,9 +13302,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Service_Types.i \
  Stream_Modules.h \
  Task.h \
@@ -13600,9 +13430,7 @@ endif # GHS
  Sock_Connect.i \
  ACE.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -13831,9 +13659,7 @@ endif # GHS
  Sock_Connect.i \
  ACE.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -13968,9 +13794,7 @@ endif # GHS
  Unbounded_Queue.cpp \
  Malloc_Base.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  ARGV.i \
@@ -14146,9 +13970,7 @@ endif # GHS
  Sock_Connect.i \
  ACE.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -14279,9 +14101,7 @@ endif # GHS
  ACE.i \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -14378,9 +14198,7 @@ endif # GHS
  ACE.i \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -14498,9 +14316,7 @@ endif # GHS
  ACE.i \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -14622,9 +14438,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Timer_Queue_T.h \
  Free_List.h \
  Free_List.i \
@@ -14706,9 +14520,7 @@ endif # GHS
  Synch_T.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Unbounded_Queue.h \
  Node.h \
  Node.cpp \
@@ -14838,9 +14650,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Map_Manager.i \
  Map_Manager.cpp \
  Malloc.h \
@@ -14959,9 +14769,7 @@ endif # GHS
  Sock_Connect.i \
  ACE.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -15056,9 +14864,7 @@ endif # GHS
  ACE.i \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -15163,9 +14969,7 @@ endif # GHS
  ACE.i \
  Malloc_Base.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc_Allocator.i \
@@ -15233,9 +15037,7 @@ endif # GHS
  Sock_Connect.i \
  ACE.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -15325,9 +15127,7 @@ endif # GHS
  ACE.i \
  Mem_Map.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
@@ -15394,9 +15194,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Signal.i \
  Mem_Map.h \
  Mem_Map.i \
@@ -15475,9 +15273,7 @@ endif # GHS
  Sock_Connect.i \
  ACE.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -15570,9 +15366,7 @@ endif # GHS
  Sock_Connect.i \
  ACE.i \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -15665,9 +15459,7 @@ endif # GHS
  ACE.i \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -15985,9 +15777,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -16057,9 +15847,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Map_Manager.i \
  Map_Manager.cpp \
  Malloc.h \
@@ -16185,9 +15973,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Map_Manager.h \
  Map_Manager.i \
  Map_Manager.cpp \
@@ -16318,9 +16104,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Map_Manager.h \
  Map_Manager.i \
  Map_Manager.cpp \
@@ -16465,9 +16249,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -16659,9 +16441,7 @@ endif # GHS
  Thread.i \
  Synch_T.cpp \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  Signal.i \
  Unbounded_Queue.h \
  Node.h \
@@ -16771,9 +16551,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -16872,9 +16650,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -17013,9 +16789,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
@@ -17218,9 +16992,7 @@ endif # GHS
  String_Base.cpp \
  Malloc.h \
  Log_Msg.h \
- Log_Record.h \
  Log_Priority.h \
- Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Malloc.i \
