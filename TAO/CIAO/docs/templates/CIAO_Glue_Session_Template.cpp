@@ -275,6 +275,54 @@ CORBA::Object_ptr
 // Component Servant Glue code implementation
 //////////////////////////////////////////////////////////////////
 
+[ciao module name]::[component name]_Servant::[component name]_Servant (CCM_[component name]_ptr exe,
+                                                                        ::Components::CCMHome_ptr h,
+                                                                        ::CIAO::Session_Container *c)
+  : executor_ (CCM_[component name]::_duplicate (exe)),
+    container_ (c)
+{
+  this->context_ = new [ciao module name]::[component name]_Context (h, c, this);
+
+  ACE_TRY_NEW_ENV
+    {
+      Components::SessionComponent_var scom =
+        Components::SessionComponent::_narrow (exe
+                                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (! CORBA::is_nil (scom.in ()))
+        scom->set_session_context (this->context_
+                                   ACE_ENV_ARG_PARAMETER);
+    }
+  ACE_CATCHANY
+    {
+      // @@ Ignore any exceptions?  What happens if
+      // set_session_context throws an CCMException?
+    }
+  ACE_ENDTRY;
+}
+
+[ciao module name]::[component name]_Servant::~[component name]_Servant (void)
+{
+  ACE_TRY_NEW_ENV
+    {
+      Components::SessionComponent_var scom =
+        Components::SessionComponent::_narrow (this->executor_.in ()
+                                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (! CORBA::is_nil (scom.in ()))
+        scom->ccm_remove (ACE_ENV_SINGLE_ARG_PARAMETER);
+    }
+  ACE_CATCHANY
+    {
+      // @@ Ignore any exceptions?  What happens if
+      // set_session_context throws an CCMException?
+    }
+  ACE_ENDTRY;
+  this->context_->_remove_ref ();
+}
+
 // Operations for provides interfaces.
 ##foreach [facet name] with [facet type] in (list of all provided interfaces) generate:
 
@@ -992,24 +1040,30 @@ CORBA::Object_ptr
   ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 }
 
-[component name]_ptr
-[ciao module name]::[component name]_Servant::_ciao_activate_component (ACE_ENV_SINGLE_ARG_DECL)
+void
+[ciao module name]::[component name]_Servant::_ciao_activate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::Object_var obj
-    = this->container_->install_servant (this
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ::Components::SessionComponent_var temp =
+      ::Components::SessionComponent::_narrow (this->executor_.in ()
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  [component name]_var ho
-    = [component name]::_narrow (obj
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  if (! CORBA::is_nil (temp.in ()))
+    temp->ccm_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
 
-  // @@ Call ccm_activate here.
+void
+[ciao module name]::[component name]_Servant::_ciao_passivate (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ::Components::SessionComponent_var temp =
+      ::Components::SessionComponent::_narrow (this->executor_.in ()
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  return ho._retn ();
-
+  if (! CORBA::is_nil (temp.in ()))
+    temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -1017,31 +1071,70 @@ CORBA::Object_ptr
 //////////////////////////////////////////////////////////////////
 
 [component name]_ptr
-[ciao module name]::[home name]_Servant::_ciao_create_helper (::Components::EnterpriseComponent_ptr com
-                                                              ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CreateFailure))
+[ciao module name]::[home name]_Servant::_ciao_activate_component (CCM_[component name]_ptr exe
+                                                                   ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CCM_[component name]_var hw = CCM_[component name]::_narrow (com
-                                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  // Acquiring the home reference and pass it to the component servant
   CORBA::Object_var hobj
     = this->container_->get_objref (this
                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  [home name]_var home
-    = [home name]::_narrow (hobj.in ()
-                            ACE_ENV_ARG_PARAMETER);
+  ::Components::CCMHome_var home
+      = ::Components::CCMHome::_narrow (hobj.in ()
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   [ciao module name]::[component name]_Servant *svt =
-    new [ciao module name]::[component name]_Servant (hw.in (),
+    new [ciao module name]::[component name]_Servant (exe,
                                                       home.in (),
                                                       this->container_);
-  return svt->_ciao_activate_component (ACE_ENV_ARG_PARAMETER);
+  PortableServer::ServantBase_var safe (svt);
+  PortableServer::ObjectId_var oid;
+
+  CORBA::Object_var objref
+    = this->container_->install_component (svt,
+                                           oid.out ()
+                                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  svt->_ciao_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  [component name]_var ho
+    = [component name]::_narrow (objref.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (this->component_map_.bind (oid.in (), svt) == 0)
+    {
+      // @@ what should happen if bind fail?
+      safe._retn ();
+    }
+  return ho._retn ();
+}
+
+void
+[ciao module name]::[home name]_Servant::_ciao_passivate_component ([component name]_ptr comp
+                                                                    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  PortableServer::ObjectId_var oid;
+
+  this->container_->uninstall_component (comp,
+                                         oid.out ()
+                                         ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  [ciao module name]::[component name]_Servant *servant = 0;
+  if (this->component_map_.unbind (oid.in (), servant) == 0)
+    {
+      PortableServer::ServantBase_var safe (servant);
+      servant->_ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+  // What happen if unbind failed?
+
 }
 
 // Operations for Implicit Home interface
@@ -1053,12 +1146,17 @@ CORBA::Object_ptr
   if (this->executor_.in () == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  Components::EnterpriseComponent_var com =
+  Components::EnterpriseComponent_var _ciao_ec =
     this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return this->_ciao_create_helper (com
-                             ACE_ENV_ARG_PARAMETER);
+  CCM_[component name]_var _ciao_comp
+    = CCM_[component name]::_narrow (_ciao_ec.in ()
+                                     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return this->_ciao_activate_component (_ciao_comp.in ()
+                                         ACE_ENV_ARG_PARAMETER);
 }
 
 // Operations for CCMHome interface
@@ -1068,15 +1166,23 @@ void
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
-  if (CORBA::is_nil (comp))
+  [component name]_var _ciao_comp
+    = [component name]::_narrow (comp
+                                 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (CORBA::is_nil (_ciao_comp.in ()))
     ACE_THROW (CORBA::INTERNAL ()); // What is the right exception to throw here?
 
-  comp->remove (ACE_ENV_ARG_PARAMETER);
+  // @@ It seems to me that we need to make sure this is a component
+  // generated by this home before calling remove on this component.
+  _ciao_comp->remove (ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
 
   // Removing the object reference?  get the servant from the POA with
   // the objref, and call remove() on the component, deactivate the
   // component, and then remove-ref the servant?
-  this->container_->uninstall (comp
-                               ACE_ENV_ARG_PARAMETER);
+  this->_ciao_passivate_component (_ciao_comp.in ()
+                                   ACE_ENV_ARG_PARAMETER);
 }

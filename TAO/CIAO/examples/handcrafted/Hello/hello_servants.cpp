@@ -123,10 +123,8 @@ CIAO_HelloWorld_Servant::CIAO_HelloWorld_Servant (CCM_HelloWorld_ptr exe,
       ACE_TRY_CHECK;
 
       if (! CORBA::is_nil (temp.in ()))
-        {
-          temp->set_session_context (this->context_.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-        }
+        temp->set_session_context (this->context_.in ()
+                                   ACE_ENV_ARG_PARAMETER);
     }
   ACE_CATCHANY
     {
@@ -535,7 +533,7 @@ CIAO_HelloWorld_Servant::_ciao_activate (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CIAO_HelloWorld_Servant::_ciao_deactivate (ACE_ENV_SINGLE_ARG_DECL)
+CIAO_HelloWorld_Servant::_ciao_passivate (ACE_ENV_SINGLE_ARG_DECL)
 {
   Components::SessionComponent_var temp =
     Components::SessionComponent::_narrow (this->executor_.in ()
@@ -613,8 +611,8 @@ CIAO_HelloHome_Servant::_ciao_activate_component (CCM_HelloWorld_ptr exe
 }
 
 void
-CIAO_HelloHome_Servant::_ciao_deactivate_component (HelloWorld_ptr comp
-                                                    ACE_ENV_SINGLE_ARG_DECL)
+CIAO_HelloHome_Servant::_ciao_passivate_component (HelloWorld_ptr comp
+                                                   ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var oid;
@@ -628,7 +626,7 @@ CIAO_HelloHome_Servant::_ciao_deactivate_component (HelloWorld_ptr comp
   if (this->component_map_.unbind (oid.in (), servant) == 0)
     {
       PortableServer::ServantBase_var safe (servant);
-      servant->_ciao_deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      servant->_ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
   // What happen if unbind failed?
@@ -690,11 +688,11 @@ CIAO_HelloHome_Servant::remove_component (Components::CCMObject_ptr comp
   ACE_CHECK;
 
   // Removing the object reference?  get the servant from the POA with
-  // the objref, and call remove() on the component, deactivate the
+  // the objref, and call remove() on the component, passivate the
   // component, and then remove-ref the servant?
 
-  this->_ciao_deactivate_component (hw.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+  this->_ciao_passivate_component (hw.in ()
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 

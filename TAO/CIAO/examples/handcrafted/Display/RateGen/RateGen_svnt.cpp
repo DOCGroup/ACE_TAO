@@ -45,7 +45,7 @@ CIAO_GLUE_HUDisplay::RateGen_Context::push_Pulse (HUDisplay::tick_ptr ev
 }
 
 // Operations for publishes interfaces.
-ACE_INLINE ::Components::Cookie_ptr
+::Components::Cookie_ptr
 CIAO_GLUE_HUDisplay::RateGen_Context::subscribe_Pulse (HUDisplay::tickConsumer_ptr c
                                                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -62,7 +62,7 @@ CIAO_GLUE_HUDisplay::RateGen_Context::subscribe_Pulse (HUDisplay::tickConsumer_p
   return retv._retn ();
 }
 
-ACE_INLINE HUDisplay::tickConsumer_ptr
+HUDisplay::tickConsumer_ptr
 CIAO_GLUE_HUDisplay::RateGen_Context::unsubscribe_Pulse (::Components::Cookie_ptr ck
                                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -111,6 +111,54 @@ CIAO_GLUE_HUDisplay::RateGen_Context::get_CCM_object (ACE_ENV_SINGLE_ARG_DECL)
 //////////////////////////////////////////////////////////////////
 // Component Servant Glue code implementation
 //////////////////////////////////////////////////////////////////
+
+CIAO_GLUE_HUDisplay::RateGen_Servant::RateGen_Servant (HUDisplay::CCM_RateGen_ptr exe,
+                                                       ::Components::CCMHome_ptr h,
+                                                       ::CIAO::Session_Container *c)
+  : executor_ (HUDisplay::CCM_RateGen::_duplicate (exe)),
+    container_ (c)
+{
+  this->context_ = new CIAO_GLUE_HUDisplay::RateGen_Context (h, c, this);
+
+  ACE_TRY_NEW_ENV
+    {
+      Components::SessionComponent_var scom =
+        Components::SessionComponent::_narrow (exe
+                                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (! CORBA::is_nil (scom.in ()))
+        scom->set_session_context (this->context_
+                                   ACE_ENV_ARG_PARAMETER);
+    }
+  ACE_CATCHANY
+    {
+      // @@ Ignore any exceptions?  What happens if
+      // set_session_context throws an CCMException?
+    }
+  ACE_ENDTRY;
+}
+
+CIAO_GLUE_HUDisplay::RateGen_Servant::~RateGen_Servant (void)
+{
+  ACE_TRY_NEW_ENV;
+  {
+    Components::SessionComponent_var temp =
+      Components::SessionComponent::_narrow (this->executor_.in ()
+                                             ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    if (! CORBA::is_nil (temp.in ()))
+      temp->ccm_remove (ACE_ENV_SINGLE_ARG_PARAMETER);
+  }
+  ACE_CATCHANY
+    {
+      // @@ Ignore any exceptions?  What happens if
+      // set_session_context throws an CCMException?
+    }
+  ACE_ENDTRY;
+  this->context_->_remove_ref ();
+}
 
 // Operations for provides interfaces.
 
@@ -509,21 +557,28 @@ CIAO_GLUE_HUDisplay::RateGen_Servant::_get_component (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 }
 
-HUDisplay::RateGen_ptr
-CIAO_GLUE_HUDisplay::RateGen_Servant::_ciao_activate_component (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+void
+CIAO_GLUE_HUDisplay::RateGen_Servant::_ciao_activate (ACE_ENV_SINGLE_ARG_DECL)
 {
-  CORBA::Object_var obj
-    = this->container_->install_servant (this
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  Components::SessionComponent_var temp =
+    Components::SessionComponent::_narrow (this->executor_.in ()
+                                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  HUDisplay::RateGen_var ho = HUDisplay::RateGen::_narrow (obj
-                                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  if (! CORBA::is_nil (temp.in ()))
+    temp->ccm_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
 
-  return ho._retn ();
+void
+CIAO_GLUE_HUDisplay::RateGen_Servant::_ciao_passivate (ACE_ENV_SINGLE_ARG_DECL)
+{
+  Components::SessionComponent_var temp =
+    Components::SessionComponent::_narrow (this->executor_.in ()
+                                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
+  if (! CORBA::is_nil (temp.in ()))
+    temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -531,29 +586,68 @@ CIAO_GLUE_HUDisplay::RateGen_Servant::_ciao_activate_component (ACE_ENV_SINGLE_A
 //////////////////////////////////////////////////////////////////
 
 HUDisplay::RateGen_ptr
-CIAO_GLUE_HUDisplay::RateGenHome_Servant::_ciao_create_helper (::Components::EnterpriseComponent_ptr com
-                                                               ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CreateFailure))
+CIAO_GLUE_HUDisplay::RateGenHome_Servant::_ciao_activate_component (HUDisplay::CCM_RateGen_ptr exe
+                                                                    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  HUDisplay::CCM_RateGen_var hw = HUDisplay::CCM_RateGen::_narrow (com
-                                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  // Acquiring the home reference and pass it to the component servant
   CORBA::Object_var hobj= this->container_->get_objref (this
                                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  HUDisplay::RateGenHome_var home = HUDisplay::RateGenHome::_narrow (hobj.in ()
-                                                                     ACE_ENV_ARG_PARAMETER);
+  ::Components::CCMHome_var home = ::Components::CCMHome::_narrow (hobj.in ()
+                                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CIAO_GLUE_HUDisplay::RateGen_Servant *svt =
-    new CIAO_GLUE_HUDisplay::RateGen_Servant (hw.in (),
+    new CIAO_GLUE_HUDisplay::RateGen_Servant (exe,
                                               home.in (),
                                               this->container_);
-  return svt->_ciao_activate_component (ACE_ENV_ARG_PARAMETER);
+  PortableServer::ServantBase_var safe (svt);
+  PortableServer::ObjectId_var oid;
+
+  CORBA::Object_var objref
+    = this->container_->install_component (svt,
+                                           oid.out ()
+                                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  svt->_ciao_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  HUDisplay::RateGen_var ho
+    = HUDisplay::RateGen::_narrow (objref.in ()
+                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (this->component_map_.bind (oid.in (), svt) == 0)
+    {
+      // @@ what should happen if bind fail?
+      safe._retn ();
+    }
+  return ho._retn ();
+}
+
+void
+CIAO_GLUE_HUDisplay::RateGenHome_Servant::_ciao_passivate_component (HUDisplay::RateGen_ptr comp
+                                                                     ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  PortableServer::ObjectId_var oid;
+
+  this->container_->uninstall_component (comp,
+                                         oid.out ()
+                                         ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  CIAO_GLUE_HUDisplay::RateGen_Servant *servant = 0;
+  if (this->component_map_.unbind (oid.in (), servant) == 0)
+    {
+      PortableServer::ServantBase_var safe (servant);
+      servant->_ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+  // What happen if unbind failed?
+
 }
 
 // Operations for Implicit Home interface
@@ -565,12 +659,17 @@ CIAO_GLUE_HUDisplay::RateGenHome_Servant::create (ACE_ENV_SINGLE_ARG_DECL)
   if (this->executor_.in () == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  Components::EnterpriseComponent_var com =
+  Components::EnterpriseComponent_var _ciao_ec =
     this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return this->_ciao_create_helper (com
-                                    ACE_ENV_ARG_PARAMETER);
+  HUDisplay::CCM_RateGen_var _ciao_comp
+    = HUDisplay::CCM_RateGen::_narrow (_ciao_ec.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return this->_ciao_activate_component (_ciao_comp.in ()
+                                         ACE_ENV_ARG_PARAMETER);
 }
 
 // Operations for CCMHome interface
@@ -580,15 +679,23 @@ CIAO_GLUE_HUDisplay::RateGenHome_Servant::remove_component (Components::CCMObjec
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
-  if (CORBA::is_nil (comp))
+  HUDisplay::RateGen_var _ciao_comp
+    = HUDisplay::RateGen::_narrow (comp
+                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (CORBA::is_nil (_ciao_comp.in ()))
     ACE_THROW (CORBA::INTERNAL ()); // What is the right exception to throw here?
 
-  comp->remove (ACE_ENV_ARG_PARAMETER);
+  // @@ It seems to me that we need to make sure this is a component
+  // generated by this home before calling remove on this component.
+  _ciao_comp->remove (ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
 
   // Removing the object reference?  get the servant from the POA with
   // the objref, and call remove() on the component, deactivate the
   // component, and then remove-ref the servant?
-  this->container_->uninstall (comp
-                               ACE_ENV_ARG_PARAMETER);
+  this->_ciao_passivate_component (_ciao_comp.in ()
+                                   ACE_ENV_ARG_PARAMETER);
 }

@@ -2,7 +2,7 @@
 
 // ===========================================================
 //
-// @file CIAO_Glue_Session_Template.h
+// @file GPS_svnt.h
 //
 //    This is a pseudo-meta generic servant implementations template
 //    for CIAO's CIDL compiler.  It demonstrates how a servant
@@ -25,17 +25,12 @@
                                 // that component implementations use
 #include "ciao/Container_Base.h" //Source in the container interface definitions
 #include "tao/LocalObject.h"
+#include "tao/PortableServer/Key_Adapters.h"
 #include "ace/Active_Map_Manager_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-/// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-/// @@@ Notice that all component and interface names need to be
-/// fully qualified as we are creating a new namespace for the CIAO's
-/// container glue code.
-/// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 namespace CIAO_GLUE_HUDisplay
 {
@@ -370,10 +365,13 @@ namespace CIAO_GLUE_HUDisplay
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // CIAO specific operations.
-
     // Activate the object in the container_
-    HUDisplay::GPS_ptr
-    _ciao_activate_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    void
+    _ciao_activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    void
+    _ciao_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:
@@ -444,16 +442,27 @@ namespace CIAO_GLUE_HUDisplay
   protected:
     // Helper method for factory operations.
     HUDisplay::GPS_ptr
-    _ciao_create_helper (::Components::EnterpriseComponent_ptr c
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CreateFailure));
+     _ciao_activate_component (HUDisplay::CCM_GPS_ptr exe
+                               ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+       ACE_THROW_SPEC ((CORBA::SystemException));
+
+    void
+    _ciao_passivate_component (HUDisplay::GPS_ptr comp
+                               ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     // My Executor.
     HUDisplay::CCM_GPSHome_var executor_;
 
     // My Container
     CIAO::Session_Container *container_;
+
+    // Components this home manages.
+    ACE_Hash_Map_Manager_Ex <PortableServer::ObjectId,
+                             GPS_Servant*,
+                             TAO_ObjectId_Hash,
+                             ACE_Equal_To<PortableServer::ObjectId>,
+                             ACE_SYNCH_MUTEX> component_map_;
   };
 
   extern "C" GPS_SVNT_Export ::PortableServer::Servant
