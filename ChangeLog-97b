@@ -1,3 +1,44 @@
+Tue Oct 21 12:58:30 1997    <nw1@CHA-CHA>
+
+	* ace/OS.h (ACE_SINGLETON_DECLARATION):
+	  (ACE_SINGLETON_INSTANTIATION):
+	  (ACE_SVC_SINGLETON_DECLARATION):
+	  (ACE_SVC_SINGLETON_INSTANTIATION): Added these new macros.  Each
+	  of them takes one argument which is the ACE_Singleton class.
+	  All these craps are needed because MSVCs very kindly instantiate
+	  the template codes for you.  This ends up producing two
+	  ACE_Singleton objects, one in DLL and one in user program.  What
+	  these macros do is to supress the template code instantiation in
+	  user program and force compilers to instantiate these codes in
+	  DLL.  On other platforms, these macros simply expand to empty
+	  strings.   Here is a simple use case.  Say we have a class
+	  called <foobar> which we want to make it a singleton using
+	  ACE_Singleton template in our own DLL.  In file <foobar.h>, add
+	  a line like this,
+
+	     ACE_SVC_SINGLETON_DECLARATION (ACE_Singleton<foobar>);
+
+	  and it will be expanded to suitabe code to export the class or
+	  supress another template instantiation outside DLL depending on
+	  whether ACE_BUILD_SVC_DLL is defined or not.  In file
+	  <foobar.cpp>, add a line,
+
+	     ACE_SVC_SINGLETON_INSTANTIATION (ACE_Singleton<foobar>);
+
+	  at the end of the file to instantiate the template object in
+	  DLL.  Notice that there is a bug in MSVC 4.2 and you'll have to
+	  write up a DEF file to export the template interface
+	  explicitly.  
+
+	  These macros should be integrated with the case when
+ 	  ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION but because of the VC
+ 	  4.2's bug, it will cause too much trouble to export all these
+ 	  symbols for external access.  Therefore, I'll leave them as they
+ 	  are now.
+
+	  BTW, these is no templatized singleton object within ACE that
+	  needs to be exported at this moment.
+
 Tue Oct 21 02:49:15 1997  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 	* TAO/tests/Thruput_test/server.cpp (main): Changed BOA_init()
