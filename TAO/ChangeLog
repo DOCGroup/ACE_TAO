@@ -1,3 +1,11 @@
+Fri Aug 23 10:34:36 2002  Ossama Othman  <ossama@uci.edu>
+
+	* examples/POA/Generic_Servant/client.cpp (main):
+
+	  Removed unused variable.
+
+	  Fixed emulated exception macro usage.
+
 Fri Aug 23 09:45:05 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tao/PortableServer/AMH_Response_Handler.cpp

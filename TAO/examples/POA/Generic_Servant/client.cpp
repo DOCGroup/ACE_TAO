@@ -150,7 +150,6 @@ main (int argc, char **argv)
       // We start an ACE_Profile_Timer here...
       timer.start ();
 
-      CORBA::Long result = 0;
       int i = 0;
 
       for (i = 0; i < iterations; i++)
@@ -158,18 +157,18 @@ main (int argc, char **argv)
           if (oneway && timed_method)
             {
               test->timed_oneway_method (timeout
-                                         ACE_ENV_SINGLE_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           else if (oneway)
             {
-              test->oneway_method (ACE_ENV_ARG_PARAMETER);
+              test->oneway_method (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           else if (!oneway && timed_method)
             {
               test->timed_method (timeout
-                                  ACE_ENV_SINGLE_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           else
@@ -194,7 +193,7 @@ main (int argc, char **argv)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Error!");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error!");
       return -1;
     }
   ACE_ENDTRY;
