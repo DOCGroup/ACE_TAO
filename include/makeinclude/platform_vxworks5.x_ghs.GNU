@@ -58,7 +58,7 @@ ifeq ($(CPU),86)
   endif # GHS
   LIBS += $(GHS)/libedgnoe.a
 else
-ifeq ($(CPU,ppc))
+ifeq ($(CPU),ppc)
   ifndef GHS
     GHS = /appl/newgreen/vx$(CPU)603
   endif # GHS
