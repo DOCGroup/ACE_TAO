@@ -118,9 +118,10 @@ ACE_Hash_Purgable_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOC
                                                                                                  u_long &loc)
 {
   // The entry is filled in depending upon the ext_id searched in the map.
-  int result = ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::shared_find (ext_id,
-                                                                                                       entry,
-                                                                                                       loc);
+  int result =
+    ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::shared_find (ext_id,
+                                                                                            entry,
+                                                                                            loc);
   if (result == -1)
     return -1;
  
@@ -153,9 +154,15 @@ ACE_Hash_Purgable_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOC
   // The iterator moves thru the map searching for the entry with the
   // lowest purge_tag. Such an entry is stored and later removing by
   // unbinding it from the map.
+#if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+  for (typename ACE_Hash_Map_Manager_Ex <EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ITERATOR iter (*this);
+       iter.next (entry) !=0;
+       iter.advance ())
+#else
   for (ITERATOR iter (*this);
        iter.next (entry) !=0;
        iter.advance ())
+#endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
     {
       purgable_entry = ACE_dynamic_cast (PURGABLE_ENTRY *,
                                          entry);
@@ -170,13 +177,9 @@ ACE_Hash_Purgable_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOC
   
   // The entry is removed from the map only if it is non-NULL.
   if (purgable_entry_to_remove != 0) 
-    {
-      return this->unbind_i (purgable_entry_to_remove);
-    }
+    return this->unbind_i (purgable_entry_to_remove);
   else
-    {
-      return 0;
-    }
+    return 0;
 }
 
 #endif /* ACE_HASH_PURGABLE_MAP_MANAGER_T_CPP */
