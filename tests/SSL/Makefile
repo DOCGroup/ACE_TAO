@@ -9,7 +9,9 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-BIN =   Thread_Pool_Reactor_SSL_Test
+BIN =   \
+        aix_hack_for_main \
+        Thread_Pool_Reactor_SSL_Test
 
 PSRC=$(addsuffix .cpp,$(BIN))
 LDLIBS = -lACE_SSL -lssl -lcrypto -lTest_Output
