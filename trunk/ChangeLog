@@ -1,3 +1,32 @@
+Mon Aug 23 18:22:25 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/config-dgux-4.11-epc.h
+	* ace/config-dgux-4.x-ghs.h
+	* ace/config-freebsd.h
+	* ace/config-lynxos.h
+	* ace/config-m88k.h
+	* ace/config-macosx-panther.h
+	* ace/config-macosx.h
+	* ace/config-openbsd.h
+	* ace/config-sunos4-g++.h
+	* ace/config-sunos4-lucid3.2.h
+	* ace/config-sunos4-sun3.x.h
+	* ace/config-sunos4-sun4.1.4.h
+	* ace/config-sunos4-sun4.x.h
+	* ace/config-sunos5.4-centerline-2.x.h
+	* ace/config-sunos5.4-g++.h
+	* ace/config-sunos5.4-sunc++-4.x.h
+	* ace/config-sunos5.5.h
+	* ace/config-tandem.h
+	* ace/config-unixware-2.01-g++.h
+	* ace/config-unixware-2.1.2-g++.h
+	* ace/config-unixware-7.1.0.h
+	* ace/config-unixware-7.1.0.udk.h
+	* ace/os_include/os_stropts.h
+
+          Changed name of feature test macro ACE_HAS_SOCKIO_H to
+          ACE_HAS_SYS_SOCKIO_H.
+
 Mon Aug 23 17:41:40 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/config_h.m4:

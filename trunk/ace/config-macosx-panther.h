@@ -122,7 +122,7 @@
 #define ACE_HAS_STRERROR
 
 // Compiler/platform provides the sockio.h file.
-#define ACE_HAS_SOCKIO_H
+#define ACE_HAS_SYS_SOCKIO_H
 
 // Defines the page size of the system.
 #define ACE_HAS_GETPAGESIZE
