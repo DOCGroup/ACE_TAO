@@ -19,6 +19,7 @@
 
 #include "ace/Signal.h"
 #include "ace/Timer_Heap.h"
+#include "ace/Timer_Queue_Adapters.h"
 
 class Timer_Handler : public ACE_Event_Handler
   // = TITLE
