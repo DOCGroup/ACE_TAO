@@ -57,6 +57,27 @@ CORBA::Boolean
 CORBA_Object::_is_a (const CORBA::Char *type_id,
                      CORBA::Environment &ACE_TRY_ENV)
 {
+  // NOTE: if istub->type_id is nonzero and we have local knowledge of
+  // it, we can answer this question without a costly remote call.
+  //
+  // That "local knowledge" could come from stubs or skeletons linked
+  // into this process in the best case, or a "near" repository in a
+  // slightly worse case.  Or in a trivial case, if the ID being asked
+  // about is the ID we have recorded, we don't need to ask about the
+  // inheritance relationships at all!
+  //
+  // In real systems having local knowledge will be common, though as
+  // the systems built atop ORBs become richer it'll also become
+  // common to have the "real type ID" not be directly understood
+  // because it's more deeply derived than any locally known types.
+  //
+  // XXX if type_id is that of CORBA_Object, "yes, we comply" :-)
+
+  if (this->_stubobj ()->type_id.in () != 0
+      && ACE_OS::strcmp (type_id,
+                         this->_stubobj ()->type_id.in ()) == 0)
+    return 1;
+
   // If the object is collocated then try locally....
   if (this->is_collocated_)
     {
@@ -79,26 +100,6 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
       if (this->servant_ != 0)
         return this->servant_->_is_a (type_id, ACE_TRY_ENV);
     }
-  // NOTE: if istub->type_id is nonzero and we have local knowledge of
-  // it, we can answer this question without a costly remote call.
-  //
-  // That "local knowledge" could come from stubs or skeletons linked
-  // into this process in the best case, or a "near" repository in a
-  // slightly worse case.  Or in a trivial case, if the ID being asked
-  // about is the ID we have recorded, we don't need to ask about the
-  // inheritance relationships at all!
-  //
-  // In real systems having local knowledge will be common, though as
-  // the systems built atop ORBs become richer it'll also become
-  // common to have the "real type ID" not be directly understood
-  // because it's more deeply derived than any locally known types.
-  //
-  // XXX if type_id is that of CORBA_Object, "yes, we comply" :-)
-
-  if (this->_stubobj ()->type_id.in () != 0
-      && ACE_OS::strcmp (type_id,
-                         this->_stubobj ()->type_id.in ()) == 0)
-    return 1;
 
   CORBA::Boolean _tao_retval = 0;
 

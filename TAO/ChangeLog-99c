@@ -1,3 +1,13 @@
+Thu Oct 21 10:54:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Object.cpp (_is_a): Moved the local type_id checking up
+	  before the checking using the collocated object.  The original
+	  order was working when we only had directly collocation
+	  strategy.  We should always try to use the type_id in the stub
+	  first no matter what kind of collocation strategy we use, IMO.
+	  Thanks to Samuel <samuel@realestate.com.au> and Alok Gupta
+	  <alokg@ssind.stpn.soft.net> for reporting this.
+
 Thu Oct 21 09:20:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/GIOP_Server_Request.cpp:
@@ -28,7 +38,7 @@ Wed Oct 20 10:05:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tests/AMI/simple_client.cpp,
 	  tests/AMI/client.cpp:
-	  Fixed missing ACE_THROW_SPEC declarations, thanks to 
+	  Fixed missing ACE_THROW_SPEC declarations, thanks to
 	  Thomas Groth <groth.th@stn-atlas.de> for reporting this.
 
 Wed Oct 20 09:21:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
@@ -38,7 +48,7 @@ Wed Oct 20 09:21:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/NVList.cpp:
 	* tao/GIOP_Server_Request.cpp:
 	  Using a ServiceContext we can insert padding to ensure that the
-	  payload of the message is preserved in DSI gateways. This let us 
+	  payload of the message is preserved in DSI gateways. This let us
 	  further reduce the number of data copies and memory
 	  allocations.
 
@@ -59,10 +69,10 @@ Wed Oct 20 08:45:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 Wed Oct 20 00:28:45 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* TAO_IDL/be/be_codegen.cpp (start_client_header): 
+	* TAO_IDL/be/be_codegen.cpp (start_client_header):
 	  When compiling IDL with the -in option the include of
  	  ace/streams.h was still using "" instead of <>, which caused
- 	  issues with make dependency generators.  Thanks to Chris 
+ 	  issues with make dependency generators.  Thanks to Chris
 	  Kohlhoff <chris@kohlhoff.com> for this fix.
 
 Tue Oct 19 19:15:06 1999  Marina Spivak  <marina@cs.wustl.edu>
