@@ -36,7 +36,8 @@ ifndef TAO_ORBSVCS
                 Concurrency \
 		Trader \
 		Log \
-		AV
+		AV \
+		FaultTolerance
 
   ifeq ($(minimum_corba),0)
 
@@ -159,6 +160,9 @@ ifneq (,$(findstring  SSLIOP, $(TAO_ORBSVCS)))
     MKLIST += Makefile.Security
   endif
   MKLIST += Makefile.SSLIOP
+endif
+ifneq (,$(findstring  FaultTolerance, $(TAO_ORBSVCS)))
+  MKLIST += Makefile.FaultTolerance
 endif
 
 #----------------------------------------------------------------------------
