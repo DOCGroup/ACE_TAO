@@ -7,9 +7,6 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
-// The OS bind() call will select the port if it's 0.
-#define ACE_HAS_WILDCARD_BIND
-
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 

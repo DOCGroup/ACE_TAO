@@ -187,7 +187,4 @@
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
 
-// The OS bind() call will select the port if it's 0.
-#define ACE_HAS_WILDCARD_BIND
-
 #endif /* ACE_CONFIG_H */

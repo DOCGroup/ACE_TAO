@@ -1714,7 +1714,7 @@ ACE_Thread_Adapter::invoke (void)
   void *arg = this->arg_;
 
   // Delete ourselves since we don't need <this> anymore.
-  delete (void *) this;
+  delete this;
 
   void *status = 0;
 
