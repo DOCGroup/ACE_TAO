@@ -197,7 +197,7 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol,
 	TAO_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
 			  return_value);
       else
-	value >>= to_boolean (return_value);
+        value >>= CORBA::Any::to_boolean (return_value);
 
       if (def_value == CORBA::B_FALSE &&
 	  pol != EXACT_TYPE_MATCH)
@@ -307,7 +307,7 @@ TAO_Policies::link_follow_rule (const char* link_name,
   CosTrading::Link_var link
     (this->trader_.trading_components ().link_if ());
 
-  if (link != CosTrading::Link::_nil ())
+  if (link.in() != CosTrading::Link::_nil ())
     {
       CosTrading::Link::LinkInfo_var
 	link_info (link->describe_link (link_name, _env));
