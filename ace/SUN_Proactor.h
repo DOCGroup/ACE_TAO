@@ -81,11 +81,18 @@ protected:
   // completion is dispatched, non-zero (-1) on errors and errno is
   // set accordingly.
 
-  virtual int handle_events (unsigned long milli_seconds);
+  virtual int handle_events (u_long milli_seconds);
   // Dispatch a single set of events.  If <milli_seconds> elapses
   // before any events occur, return 0. Return 1 if a completion is
   // dispatched. Return -1 on errors.
  
+  virtual int handle_events (void);
+  // Block indefinitely until at least one event is dispatched.
+  // Dispatch a single set of events.  If <wait_time> elapses before
+  // any events occur, return 0.  Return 1 on success i.e., when a
+  // completion is dispatched, non-zero (-1) on errors and errno is
+  // set accordingly.
+
   virtual int start_aio (ACE_POSIX_Asynch_Result *result, int op);
   // From ACE_POSIX_AIOCB_Proactor.
 
