@@ -486,6 +486,7 @@ TAO_GIOP_Message_Reactive_Handler::read_ulong (const char *ptr)
                                     msg_size);
 
   CORBA::ULong x;
+
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
   if (!(this->message_state_.byte_order != ACE_CDR_BYTE_ORDER))
     {
