@@ -1055,7 +1055,12 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers (void)
       if (this->header_ != 0)
         {
           this->transmit_buffers_.Head = this->header_->rd_ptr ();
+#if defined(ACE_WIN64)
+          this->transmit_buffers_.HeadLength =
+            ACE_static_cast (DWORD, this->header_bytes_);
+#else
           this->transmit_buffers_.HeadLength = this->header_bytes_;
+#endif /* ACE_WIN64 */
         }
       else
         {
@@ -1067,7 +1072,12 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers (void)
       if (this->trailer_ != 0)
         {
           this->transmit_buffers_.Tail = this->trailer_->rd_ptr ();
+#if defined(ACE_WIN64)
+          this->transmit_buffers_.TailLength =
+            ACE_static_cast (DWORD, this->trailer_bytes_);
+#else
           this->transmit_buffers_.TailLength = this->trailer_bytes_;
+#endif /* ACE_WIN64 */
         }
       else
         {

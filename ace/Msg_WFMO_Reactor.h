@@ -96,11 +96,11 @@ public:
 
 protected:
   /// Wait for timer and I/O events to occur.
-  virtual int wait_for_multiple_events (int timeout,
-                                        int alertable);
+  virtual DWORD wait_for_multiple_events (int timeout,
+                                          int alertable);
 
   /// Check for activity on remaining handles.
-  virtual DWORD poll_remaining_handles (size_t index);
+  virtual DWORD poll_remaining_handles (DWORD index);
 
   /// Dispatches window messages.
   virtual int dispatch_window_messages (void);

@@ -315,7 +315,7 @@ ACE_Thread_Manager::register_as_terminated (ACE_Thread_Descriptor *td)
   return 0;
 }
 
-ACE_INLINE int
+ACE_INLINE size_t
 ACE_Thread_Manager::count_threads (void) const
 {
   return this->thr_list_.size ();

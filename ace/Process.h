@@ -305,7 +305,7 @@ protected:
 #if !defined (ACE_HAS_WINCE)
   /// Add <assignment> to environment_buf_ and adjust
   /// environment_argv_.  <len> is the strlen of <assignment>.
-  int setenv_i (ACE_TCHAR *assignment, int len);
+  int setenv_i (ACE_TCHAR *assignment, size_t len);
 
   /// Whether the child process inherits the current process
   /// environment.
@@ -362,7 +362,7 @@ protected:
 
   /// Pointer into environment_buf_.  This should point to the next
   /// free spot.
-  int environment_buf_index_;
+  size_t environment_buf_index_;
 
   /// Pointer to environment_argv_.
   int environment_argv_index_;
@@ -371,7 +371,7 @@ protected:
   ACE_TCHAR *environment_buf_;
 
   /// Size of the environment buffer. Configurable
-  int environment_buf_len_;
+  size_t environment_buf_len_;
 
   /// Pointers into environment_buf_.
   ACE_TCHAR **environment_argv_;

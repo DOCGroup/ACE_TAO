@@ -971,7 +971,7 @@ template <class T, size_t ACE_SIZE> int
 ACE_Fixed_Set<T, ACE_SIZE>::insert (const T &item)
 {
   ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::insert");
-  int first_free = -1;   // Keep track of first free slot.
+  ssize_t first_free = -1;   // Keep track of first free slot.
   size_t i;
 
   for (i = 0; i < this->cur_size_; i++)

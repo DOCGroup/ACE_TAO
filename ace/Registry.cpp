@@ -632,8 +632,8 @@ ACE_Registry::make_string (const Name &const_name)
 ACE_Registry::Name
 ACE_Registry::make_name (const ACE_TString &string)
 {
-  int new_position = 0;
-  int last_position = 0;
+  ssize_t new_position = 0;
+  ssize_t last_position = 0;
   Name name;
 
   // Rememeber: NPOS is -1
@@ -649,7 +649,8 @@ ACE_Registry::make_name (const ACE_TString &string)
           component.id_ = string.substr (last_position,
                                          new_position - last_position);
           // Skip past the seperator
-          new_position += ACE_OS::strlen (ACE_Registry::STRING_SEPARATOR);
+          new_position +=
+            ACE_OS_String::strlen (ACE_Registry::STRING_SEPARATOR);
         }
       else
         {

@@ -426,7 +426,7 @@ class ACE_Export ACE_Message_Queue_NT : public ACE_Message_Queue_Base
 {
 public:
   // = Initialization and termination methods.
-  ACE_Message_Queue_NT (size_t max_threads = ACE_Message_Queue_Base::DEFAULT_HWM);
+  ACE_Message_Queue_NT (DWORD max_threads = ACE_Message_Queue_Base::DEFAULT_HWM);
 
   /**
    * Initialize the Message Queue by creating a new NT I/O completion
@@ -434,7 +434,7 @@ public:
    * released by the MQ that are allowed to run concurrently.  Return
    * 0 when succeeds, -1 otherwise.
    */
-  virtual int open (size_t max_threads = ACE_Message_Queue_Base::DEFAULT_HWM);
+  virtual int open (DWORD max_threads = ACE_Message_Queue_Base::DEFAULT_HWM);
 
   /// Close down the underlying I/O completion port.  You need to
   /// re-open the MQ after this function is executed.
@@ -510,7 +510,7 @@ public:
   virtual void message_length (size_t new_length);
 
   /// Get the max concurrent thread number.
-  virtual size_t max_threads (void);
+  virtual DWORD max_threads (void);
 
   // = Activation control methods.
 
@@ -565,10 +565,10 @@ private:
   // = Internal states.
 
   /// Maximum threads that can be released (and run) concurrently.
-  size_t max_cthrs_;
+  DWORD max_cthrs_;
 
   /// Current number of threads waiting to dequeue messages.
-  size_t cur_thrs_;
+  DWORD cur_thrs_;
 
   /// Current number of bytes in queue.
   size_t cur_bytes_;

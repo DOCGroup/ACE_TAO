@@ -2882,7 +2882,7 @@ typedef DWORD ACE_exitcode;
 struct iovec
 {
   /// byte count to read/write
-  size_t iov_len;
+  u_long iov_len;
   /// data to be read/written
   char *iov_base;
 
@@ -5354,7 +5354,7 @@ public:
 # endif /* ACE_HAS_WCHAR */
   static int sema_post (ACE_sema_t *s);
   static int sema_post (ACE_sema_t *s,
-                        size_t release_count);
+                        u_int release_count);
   static int sema_trywait (ACE_sema_t *s);
   static int sema_wait (ACE_sema_t *s);
   static int sema_wait (ACE_sema_t *s,

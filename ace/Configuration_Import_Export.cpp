@@ -102,10 +102,10 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           else if (ACE_OS::strncmp (end, ACE_LIB_TEXT ("hex:"), 4) == 0)
             {
               // binary type
-              u_int string_length = ACE_OS::strlen (end + 4);
+              size_t string_length = ACE_OS::strlen (end + 4);
               // divide by 3 to get the actual buffer length
-              u_int length = string_length / 3;
-              u_int remaining = length;
+              size_t length = string_length / 3;
+              size_t remaining = length;
               u_char* data = 0;
               ACE_NEW_RETURN (data,
                               u_char[length],
@@ -209,7 +209,7 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
       ACE_TCHAR int_value[32];
       ACE_TCHAR bin_value[3];
       void* binary_data;
-      u_int binary_length;
+      size_t binary_length;
       ACE_TString string_value;
       while (!config_.enumerate_values (section, index, name, type))
         {
@@ -489,7 +489,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
       ACE_TCHAR int_value[32];
       ACE_TCHAR bin_value[3];
       void* binary_data;
-      u_int binary_length;
+      size_t binary_length;
       ACE_TString string_value;
       while (!config_.enumerate_values (section, index, name, type))
         {

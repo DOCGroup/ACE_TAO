@@ -295,7 +295,7 @@ ACE_SOCK_Dgram_Bcast::send (const void *buf,
 
 ssize_t
 ACE_SOCK_Dgram_Bcast::send (const iovec iov[],
-                            size_t n,
+                            int n,
                             u_short /* port_number */,
                             int flags) const
 {
@@ -323,7 +323,7 @@ ACE_SOCK_Dgram_Bcast::send (const iovec iov[],
 
 ssize_t
 ACE_SOCK_Dgram_Bcast::send (const iovec iov[],
-                            size_t n,
+                            int n,
                             const ACE_Addr &addr,
                             int flags) const
 {

@@ -414,11 +414,11 @@ ACE_OS_String::strtok_r_emulation (char *s, const char *tokens, char **lasts)
     *lasts = s;
   if (*s == 0)                  // We have reached the end
     return 0;
-  int l_org = ACE_OS_String::strlen (s);
+  size_t l_org = ACE_OS_String::strlen (s);
   s = ::strtok (s, tokens);
   if (s == 0)
     return 0;
-  int l_sub = ACE_OS_String::strlen (s);
+  size_t l_sub = ACE_OS_String::strlen (s);
   if (s + l_sub < *lasts + l_org)
     *lasts = s + l_sub + 1;
   else

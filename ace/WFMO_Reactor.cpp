@@ -1614,8 +1614,8 @@ ACE_WFMO_Reactor::event_handling (ACE_Time_Value *max_wait_time,
       int timeout = this->calculate_timeout (max_wait_time);
 
       // Wait for event to happen
-      int wait_status = this->wait_for_multiple_events (timeout,
-                                                        alertable);
+      DWORD wait_status = this->wait_for_multiple_events (timeout,
+                                                          alertable);
 
       // Upcall
       result = this->safe_dispatch (wait_status);
@@ -1701,25 +1701,24 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
   return 1;
 }
 
-int
+DWORD
 ACE_WFMO_Reactor::wait_for_multiple_events (int timeout,
                                             int alertable)
 {
   // Wait for any of handles_ to be active, or until timeout expires.
   // If <alertable> is enabled allow asynchronous completion of
   // ReadFile and WriteFile operations.
-  DWORD handle_count = ACE_static_cast (DWORD,
-                                        this->handler_rep_.max_handlep1 ());
+
 #if defined (ACE_HAS_PHARLAP) || defined (ACE_HAS_WINCE)
   // PharLap doesn't do async I/O and doesn't implement
   // WaitForMultipleObjectsEx, so use WaitForMultipleObjects.
   ACE_UNUSED_ARG (alertable);
-  return ::WaitForMultipleObjects (handle_count,
+  return ::WaitForMultipleObjects (this->handler_rep_.max_handlep1 (),
                                    this->handler_rep_.handles (),
                                    FALSE,
                                    timeout);
 #else
-  return ::WaitForMultipleObjectsEx (handle_count,
+  return ::WaitForMultipleObjectsEx (this->handler_rep_.max_handlep1 (),
                                      this->handler_rep_.handles (),
                                      FALSE,
                                      timeout,
@@ -1728,7 +1727,7 @@ ACE_WFMO_Reactor::wait_for_multiple_events (int timeout,
 }
 
 DWORD
-ACE_WFMO_Reactor::poll_remaining_handles (size_t slot)
+ACE_WFMO_Reactor::poll_remaining_handles (DWORD slot)
 {
   return ::WaitForMultipleObjects (this->handler_rep_.max_handlep1 () - slot,
                                    this->handler_rep_.handles () + slot,
@@ -1766,14 +1765,14 @@ ACE_WFMO_Reactor::expire_timers (void)
 }
 
 int
-ACE_WFMO_Reactor::dispatch (int wait_status)
+ACE_WFMO_Reactor::dispatch (DWORD wait_status)
 {
   int handlers_dispatched = 0;
 
   // Expire timers
   handlers_dispatched += this->expire_timers ();
 
-  switch ((DWORD)wait_status)
+  switch (wait_status)
     {
     case WAIT_FAILED: // Failure.
       ACE_OS::set_errno_to_last_error ();
@@ -1799,18 +1798,18 @@ ACE_WFMO_Reactor::dispatch (int wait_status)
 // <handles_[max_handlep1_]>, polling through our handle set looking
 // for active handles.
 int
-ACE_WFMO_Reactor::dispatch_handles (size_t wait_status)
+ACE_WFMO_Reactor::dispatch_handles (DWORD wait_status)
 {
   // dispatch_slot is the absolute slot.  Only += is used to
   // increment it.
-  size_t dispatch_slot = 0;
+  DWORD dispatch_slot = 0;
 
   // Cache this value, this is the absolute value.
-  size_t max_handlep1 = this->handler_rep_.max_handlep1 ();
+  DWORD max_handlep1 = this->handler_rep_.max_handlep1 ();
 
   // nCount starts off at <max_handlep1>, this is a transient count of
   // handles last waited on.
-  size_t nCount = max_handlep1;
+  DWORD nCount = max_handlep1;
 
   for (int number_of_handlers_dispatched = 1;
        ;
@@ -1861,8 +1860,8 @@ ACE_WFMO_Reactor::dispatch_handles (size_t wait_status)
 }
 
 int
-ACE_WFMO_Reactor::dispatch_handler (size_t slot,
-                                    size_t max_handlep1)
+ACE_WFMO_Reactor::dispatch_handler (DWORD slot,
+                                    DWORD max_handlep1)
 {
   // Check if there are window messages that need to be dispatched
   if (slot == max_handlep1)
@@ -1891,7 +1890,7 @@ ACE_WFMO_Reactor::dispatch_handler (size_t slot,
 }
 
 int
-ACE_WFMO_Reactor::simple_dispatch_handler (int slot,
+ACE_WFMO_Reactor::simple_dispatch_handler (DWORD slot,
                                            ACE_HANDLE event_handle)
 {
   // This dispatch is used for non-I/O entires
@@ -1912,7 +1911,7 @@ ACE_WFMO_Reactor::simple_dispatch_handler (int slot,
 }
 
 int
-ACE_WFMO_Reactor::complex_dispatch_handler (int slot,
+ACE_WFMO_Reactor::complex_dispatch_handler (DWORD slot,
                                             ACE_HANDLE event_handle)
 {
   // This dispatch is used for I/O entires.

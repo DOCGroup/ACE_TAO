@@ -76,7 +76,7 @@ public:
 
   // = Segment-related info.
   void *get_segment_ptr (void) const;
-  int  get_segment_size (void) const;
+  size_t get_segment_size (void) const;
 
   /// Return the ID of the shared memory segment (i.e., an ACE_HANDLE).
   ACE_HANDLE get_id (void) const;
@@ -98,13 +98,13 @@ protected:
   ACE_HANDLE internal_id_;
 
   /// Size of the mapped segment.
-  int size_;
+  size_t size_;
 
   /// Pointer to the beginning of the segment.
   void *segment_ptr_;
 
   /// Round up to an appropriate page size.
-  int round_up (size_t len);
+  size_t round_up (size_t len);
 };
 
 #if defined (__ACE_INLINE__)

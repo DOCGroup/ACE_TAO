@@ -365,7 +365,7 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                     {
                       void* thisData = 0;
                       void* rhsData = 0;
-                      u_int thisLength, rhsLength;
+                      size_t thisLength, rhsLength;
                       if (nonconst_this->get_binary_value (thisSection,
                                                            valueName.c_str (),
                                                            thisData,
@@ -391,8 +391,8 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                           unsigned char* thisCharData = (unsigned char*)thisData;
                           unsigned char* rhsCharData = (unsigned char*)rhsData;
                           // yes, then check each element
-                          for (u_int count = 0;
- (rc) && (count < thisLength);
+                          for (size_t count = 0;
+                               (rc) && (count < thisLength);
                                count++)
                             {
                               rc = (* (thisCharData + count) == * (rhsCharData + count));
@@ -730,12 +730,14 @@ ACE_Configuration_Win32Registry::set_string_value (const ACE_Configuration_Secti
   if (load_key (key, base_key))
     return -1;
 
+  DWORD len = ACE_static_cast (DWORD, value.length () + 1);
+  len *= sizeof (ACE_TCHAR);
   if (ACE_TEXT_RegSetValueEx (base_key,
                               name,
                               0,
                               REG_SZ,
                               (BYTE *) value.fast_rep (),
-                              (value.length () + 1) * sizeof (ACE_TCHAR))
+                              len)
       != ERROR_SUCCESS)
     return -1;
 
@@ -769,7 +771,7 @@ int
 ACE_Configuration_Win32Registry::set_binary_value (const ACE_Configuration_Section_Key& key,
                                                    const ACE_TCHAR* name,
                                                    const void* data,
-                                                   u_int length)
+                                                   size_t length)
 {
   if (validate_name (name))
     return -1;
@@ -783,7 +785,8 @@ ACE_Configuration_Win32Registry::set_binary_value (const ACE_Configuration_Secti
                               0,
                               REG_BINARY,
                               (BYTE *) data,
-                              length) != ERROR_SUCCESS)
+                              ACE_static_cast (DWORD, length))
+      != ERROR_SUCCESS)
     return -1;
 
   return 0;
@@ -874,7 +877,7 @@ int
 ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Section_Key &key,
                                                    const ACE_TCHAR *name,
                                                    void *&data,
-                                                   u_int &length)
+                                                   size_t &length)
 {
   if (validate_name (name))
     return -1;
@@ -1893,7 +1896,7 @@ int
 ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& key,
                                           const ACE_TCHAR* name,
                                           const void* data,
-                                          u_int length)
+                                          size_t length)
 {
   ACE_ASSERT (this->allocator_);
   if (validate_name (name))
@@ -2066,7 +2069,7 @@ int
 ACE_Configuration_Heap::get_binary_value (const ACE_Configuration_Section_Key& key,
                                           const ACE_TCHAR* name,
                                           void*& data,
-                                          u_int& length)
+                                          size_t& length)
 {
   ACE_ASSERT (this->allocator_);
   if (validate_name (name))

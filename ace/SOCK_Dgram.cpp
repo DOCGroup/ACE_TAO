@@ -234,7 +234,7 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
 
 ssize_t
 ACE_SOCK_Dgram::send (const iovec iov[],
-                      size_t n,
+                      int n,
                       const ACE_Addr &addr,
                       int flags) const
 {
@@ -269,7 +269,7 @@ ACE_SOCK_Dgram::send (const iovec iov[],
 
 ssize_t
 ACE_SOCK_Dgram::recv (iovec iov[],
-                      size_t n,
+                      int n,
                       ACE_Addr &addr,
                       int flags) const
 {
@@ -307,14 +307,14 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 
 ssize_t
 ACE_SOCK_Dgram::send (const iovec iov[],
-                      size_t n,
+                      int n,
                       const ACE_Addr &addr,
                       int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram::send");
 
   size_t length = 0;
-  size_t i;
+  int i;
 
   // Determine the total length of all the buffers in <iov>.
   for (i = 0; i < n; i++)
@@ -357,14 +357,14 @@ ACE_SOCK_Dgram::send (const iovec iov[],
 
 ssize_t
 ACE_SOCK_Dgram::recv (iovec iov[],
-                      size_t n,
+                      int n,
                       ACE_Addr &addr,
                       int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram::recv");
 
   ssize_t length = 0;
-  size_t i;
+  int i;
 
   for (i = 0; i < n; i++)
 #if ! (defined(__BORLANDC__) && (__BORLANDC__ >= 0x0530))

@@ -22,7 +22,9 @@ ACE_INLINE int
 ACE_Shared_Memory_SV::get_segment_size (void) const
 {
   ACE_TRACE ("ACE_Shared_Memory_SV::get_segment_size");
-  return this->shared_memory_.get_segment_size ();
+  // This cast is ok since the 'open' method for this class allows only
+  // an 'int' size. Therefore, this case should not lose information.
+  return ACE_static_cast (int, this->shared_memory_.get_segment_size ());
 }
 
 // Removes the shared memory segment.

@@ -205,6 +205,9 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::ACE_Timer_Hash_T (size_t tabl
     table_size_ (table_size),
     table_functor_ (this),
     earliest_position_ (0)
+#if defined (ACE_WIN64)
+  , pointer_base_ (0)
+#endif /* ACE_WIN64 */
 {
   ACE_TRACE ("ACE_Timer_Hash_T::ACE_Timer_Hash_T");
 
@@ -236,6 +239,9 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::ACE_Timer_Hash_T (FUNCTOR *up
     table_size_ (ACE_DEFAULT_TIMER_HASH_TABLE_SIZE),
     table_functor_ (this),
     earliest_position_ (0)
+#if defined (ACE_WIN64)
+  , pointer_base_ (0)
+#endif /* ACE_WIN64 */
 {
   ACE_TRACE ("ACE_Timer_Hash_T::ACE_Timer_Hash_T");
 
@@ -320,7 +326,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::reschedule (ACE_Timer_Node_T<
   ACE_TRACE ("ACE_Timer_Hash_T::reschedule");
 
   size_t position =
-    expired->get_timer_value ().usec () % this->table_size_;
+    expired->get_timer_value ().sec () % this->table_size_;
 
   Hash_Token *h = ACE_reinterpret_cast (Hash_Token *,
                                         ACE_const_cast (void *,
@@ -350,7 +356,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::schedule (const TYPE &type,
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   size_t position =
-    future_time.usec () % this->table_size_;
+    future_time.sec () % this->table_size_;
 
   Hash_Token *h;
 
@@ -372,8 +378,22 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::schedule (const TYPE &type,
 
   ++this->size_;
 
-  return ACE_reinterpret_cast (long,
-                               h);
+#if defined (ACE_WIN64)
+  // This is a Win64 hack, necessary because of the original (bad) decision
+  // to use a pointer as the timer ID. This class doesn't follow the usual
+  // timer expiration rules (see comments in header file) and is probably
+  // not used much. The dynamic allocation of Hash_Tokens without
+  // recording them anywhere is a large problem for Win64 since the
+  // size of a pointer is 64 bits, but a long is 32. Since this class
+  // is not much used, I'm hacking this, at least for now. If it becomes
+  // an issue, I'll look at it again then.
+  ptrdiff_t hi = ACE_reinterpret_cast (ptrdiff_t, h);
+  if (this->pointer_base_ == 0)
+    this->pointer_base_ = hi & 0xffffffff00000000;
+  return ACE_reinterpret_cast (long, hi & 0xffffffff);
+#else
+  return ACE_reinterpret_cast (long, h);
+#endif
 }
 
 // Locate and update the inteval on the timer_id
@@ -390,8 +410,15 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::reset_interval (long timer_id
   if (timer_id == -1)
     return -1;
 
+
+#if defined (ACE_WIN64)
+  unsigned long timer_offset = ACE_static_cast (unsigned long, timer_id);
+  Hash_Token *h = ACE_reinterpret_cast (Hash_Token *,
+                                        (this->pointer_base_ + timer_offset));
+#else
   Hash_Token *h = ACE_reinterpret_cast (Hash_Token *,
                                         timer_id);
+#endif /* ACE_WIN64 */
 
   return this->table_[h->pos_]->reset_interval (h->orig_id_,
                                                 interval);
@@ -413,8 +440,14 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (long timer_id,
   if (timer_id == -1)
     return 0;
 
+#if defined (ACE_WIN64)
+  unsigned long timer_offset = ACE_static_cast (unsigned long, timer_id);
+  Hash_Token *h = ACE_reinterpret_cast (Hash_Token *,
+                                        (this->pointer_base_ + timer_offset));
+#else
   Hash_Token *h = ACE_reinterpret_cast (Hash_Token *,
                                         timer_id);
+#endif /* ACE_WIN64 */
 
   int result = this->table_[h->pos_]->cancel (h->orig_id_,
                                               act,
@@ -490,7 +523,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (const TYPE &type,
                                           type);
   this->find_new_earliest ();
 
-  return pos;
+  return ACE_static_cast (int, pos);
 }
 
 // Removes the earliest node and finds the new earliest position

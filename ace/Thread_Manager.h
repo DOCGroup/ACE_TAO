@@ -796,9 +796,9 @@ public:
    * found, 0 is returned, otherwise correct number of retrieved
    * values are returned.
    */
-  int task_list (int grp_id,
-                 ACE_Task_Base *task_list[],
-                 size_t n);
+  ssize_t task_list (int grp_id,
+                     ACE_Task_Base *task_list[],
+                     size_t n);
 
   /**
    * Returns in <thread_list> a list of up to <n> thread ids in an
@@ -807,9 +807,9 @@ public:
    * requested values are found, 0 is returned, otherwise correct
    * number of retrieved values are returned.
    */
-  int thread_list (ACE_Task_Base *task,
-                   ACE_thread_t thread_list[],
-                   size_t n);
+  ssize_t thread_list (ACE_Task_Base *task,
+                       ACE_thread_t thread_list[],
+                       size_t n);
 
   /**
    * Returns in <hthread_list> a list of up to <n> thread handles in
@@ -818,9 +818,9 @@ public:
    * requested values are found, 0 is returned, otherwise correct
    * number of retrieved values are returned.
    */
-  int hthread_list (ACE_Task_Base *task,
-                    ACE_hthread_t hthread_list[],
-                    size_t n);
+  ssize_t hthread_list (ACE_Task_Base *task,
+                        ACE_hthread_t hthread_list[],
+                        size_t n);
 
   /**
    * Returns in <thread_list> a list of up to <n> thread ids in a
@@ -829,18 +829,18 @@ public:
    * requested values are found, 0 is returned, otherwise correct
    * number of retrieved values are returned.
    */
-  int thread_grp_list (int grp_id,
-                       ACE_thread_t thread_list[],
-                       size_t n);
+  ssize_t thread_grp_list (int grp_id,
+                           ACE_thread_t thread_list[],
+                           size_t n);
 
   /**
    * Returns in <hthread_list> a list of up to <n> thread handles in
    * a group <grp_id>.  The caller must allocate memory for
    * <hthread_list>.
    */
-  int hthread_grp_list (int grp_id,
-                        ACE_hthread_t hthread_list[],
-                        size_t n);
+  ssize_t hthread_grp_list (int grp_id,
+                            ACE_hthread_t hthread_list[],
+                            size_t n);
 
   /**
    * Returns in <task_list> a list of up to <n> <ACE_Tasks>.  The
@@ -849,8 +849,8 @@ public:
    * returned, otherwise correct number of retrieved values are
    * returned.
    */
-  int task_all_list (ACE_Task_Base *task_list[],
-                     size_t n);
+  ssize_t task_all_list (ACE_Task_Base *task_list[],
+                         size_t n);
 
   /**
    * Returns in <thread_list> a list of up to <n> thread ids.  The
@@ -859,8 +859,8 @@ public:
    * returned, otherwise correct number of retrieved values are
    * returned.
    */
-  int thread_all_list (ACE_thread_t thread_list[],
-                       size_t n);
+  ssize_t thread_all_list (ACE_thread_t thread_list[],
+                           size_t n);
 
   /// Set group ids for a particular task.
   int set_grp (ACE_Task_Base *task, int grp_id);
@@ -870,7 +870,7 @@ public:
 
   /// Return a count of the current number of threads active in the
   /// <Thread_Manager>.
-  int count_threads (void) const;
+  size_t count_threads (void) const;
 
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   /**
@@ -950,7 +950,7 @@ protected:
    * <task>.
    */
   ACE_Thread_Descriptor *find_task (ACE_Task_Base *task,
-                                    int slot = -1);
+                                    size_t slot = 0);
 
   /// Insert a thread in the table (checks for duplicates).
   int insert_thr (ACE_thread_t t_id,
