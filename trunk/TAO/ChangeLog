@@ -1,3 +1,12 @@
+Wed Jul 24 07:42:47 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Allocate the UTL_ScopeActiveIterator object on the heap instead of
+          the stack.  This worked for most compilers (but it shouldn't
+          have) except for KCC on Solaris.  Thanks to Tim Bradley
+          (bradley_t@ociweb.com) for finding this and providing a fix.
+
 Tue Jul 23 16:10:08 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
