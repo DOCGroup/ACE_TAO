@@ -1,18 +1,24 @@
+Sun Nov 01 17:24:56 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-win32-borland.h,config-win32-common.h,README:
+          removed ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER because
+          it's no longer used.  Thanks to Ossama for reporting this.
+
 Sun Nov 01 08:54:08 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.2 released.
 
 Sat Oct 31 18:12:36 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Hash_Map_Manager_Test.cpp (run_test): updated the test to
- 	  validate that the trybind() operation works correctly.  Thanks
- 	  to Bill Fulton <fultonb@pcnet1.ascs.aro.allied.com> for this
- 	  fix.
+        * tests/Hash_Map_Manager_Test.cpp (run_test): updated the test to
+          validate that the trybind() operation works correctly.  Thanks
+          to Bill Fulton <fultonb@pcnet1.ascs.aro.allied.com> for this
+          fix.
 
-	* ace/Hash_Map_Manager.cpp: trybind() was doing the "Wrong
- 	  Thing"[TM] by overwritting the INT_ID even if the entry was
- 	  already in the map!  It's fixed now...  Thanks to Bill Fulton
- 	  <fultonb@pcnet1.ascs.aro.allied.com> for reporting this.
+        * ace/Hash_Map_Manager.cpp: trybind() was doing the "Wrong
+          Thing"[TM] by overwritting the INT_ID even if the entry was
+          already in the map!  It's fixed now...  Thanks to Bill Fulton
+          <fultonb@pcnet1.ascs.aro.allied.com> for reporting this.
 
 Sat Oct 31 17:15:42 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -20,9 +26,9 @@ Sat Oct 31 17:15:42 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 1998-10-31  Nagarajan Surendran  <naga@polka.cs.wustl.edu>
 
-	* ace/Select_Reactor_T.cpp (dispatch): Added signal_occurred at
-	  the right return to indicate that a handle_signal () has been
-	  dispatched. 
+        * ace/Select_Reactor_T.cpp (dispatch): Added signal_occurred at
+          the right return to indicate that a handle_signal () has been
+          dispatched.
 
 Fri Oct 30 20:31:27 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
