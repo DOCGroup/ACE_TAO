@@ -19,8 +19,8 @@
 //    Modifications by Aniruddha Gokhale
 // ============================================================================
 
-ACE_RCSID (be_visitor_sequence, 
-           gen_unbounded_obj_sequence_cs, 
+ACE_RCSID (be_visitor_sequence,
+           gen_unbounded_obj_sequence_cs,
            "$Id$")
 
 int
@@ -293,7 +293,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
   be_predefined_type *prim = be_predefined_type::narrow_from_decl (pt);
 
   if (pt->node_type () != AST_Decl::NT_valuetype
-      && (pt->node_type () != AST_Decl::NT_pre_defined) 
+      && (pt->node_type () != AST_Decl::NT_pre_defined)
       || (prim &&
           prim->pt () == AST_PredefinedType::PT_object))
     {
@@ -301,7 +301,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       *os << "void " << be_nl
           << full_class_name << "::_downcast (" << be_idt << be_idt_nl
                 << "void* target," << be_nl
-                << "CORBA_Object *src" << be_nl
+                << "CORBA::Object *src" << be_nl
                 << "ACE_ENV_ARG_DECL" << be_uidt_nl
                 << ")" << be_uidt_nl
                 << "{" << be_idt_nl;
@@ -331,7 +331,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
           << "ACE_CHECK;" << be_uidt_nl
                 << "}\n" << be_nl;
 
-      *os << "CORBA_Object*" << be_nl
+      *os << "CORBA::Object*" << be_nl
           << full_class_name << "::_upcast (void *src) const" <<  be_nl
           << "{" << be_idt_nl;
 

@@ -1,3 +1,14 @@
+Thu Feb 20 13:57:36 2003  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be/be_visitor_component/component_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+
+	  Zapped remaining uses of "CORBA_Object", and replaced them with
+	  the correct "CORBA::Object".
+
 Thu Feb 20 13:25:37 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Domain/DomainS.cpp:
@@ -7,7 +18,7 @@ Thu Feb 20 13:25:37 2003  Ossama Othman  <ossama@uci.edu>
 
 Thu Feb 20 13:05:36 2003  Ossama Othman  <ossama@uci.edu>
 
-	* tao/DynamicInterface/Context.cpp:
+	* tao/DynamicInterface/Context.cpp:4
 	* tao/DynamicInterface/Context.h:
 	* tao/DynamicInterface/Context.inl:
 	* tao/DynamicInterface/DII_ClientRequestInfo.cpp:
