@@ -1,3 +1,16 @@
+Fri May 18 19:49:04 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Security/SecurityLevel1/run_test.pl:
+
+	  Removed "-ORBDebugLevel 4" from the client and server command
+	  line options.  It caused an absurd amount of useless output for
+	  this test.
+
+	* orbsvcs/tests/Security/Makefile (DIRS):
+
+	  Added `SecurityLevel1' directory to the list of directories to
+	  build.
+
 Fri May 18 16:30:57 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/FILE_Parser.cpp (parse_string):
