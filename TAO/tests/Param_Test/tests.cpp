@@ -3238,7 +3238,7 @@ int
 Test_AnySeq::run_sii_test (Param_Test_ptr objref,
                            CORBA::Environment &env)
 {
-  Param_Test::AnySeq_var out (this->out_.out ());
+  Param_Test::AnySeq_out out (this->out_.out ());
   this->ret_ = objref->test_anyseq (this->in_.in (),
                                     this->inout_.inout (),
                                     out,

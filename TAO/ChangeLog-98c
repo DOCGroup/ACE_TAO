@@ -1,3 +1,9 @@
+Sun Jun 21 08:39:38 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tests/Param_Test/tests.cpp: Removed a bunch of warnings related
+	to creation of a temporary when a var or ptr type is passed as an
+	out parameter.
+
 Sat Jun 20 14:22:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Scheduler_Factory.cpp: wrapped
