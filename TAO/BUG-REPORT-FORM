@@ -18,10 +18,17 @@ Subject: [area]: [synopsis]
 
     HOST MACHINE and OPERATING SYSTEM:
     TARGET MACHINE and OPERATING SYSTEM, if different from HOST:
-    COMPILER NAME AND VERSION:
+    COMPILER NAME AND VERSION (AND PATCHLEVEL):
 
     AREA/CLASS/EXAMPLE AFFECTED:
-[what example failed?  What module failed to compile?]
+[What example failed?  What module failed to compile?]
+
+    DOES THE PROBLEM AFFECT:
+        COMPILATION?
+        LINKING?
+        EXECUTION?
+        OTHER (please specify)?
+[Please indicate whether ACE/TAO, your application, or both are affected.]
 
     SYNOPSIS:
 [Brief description of the problem]
