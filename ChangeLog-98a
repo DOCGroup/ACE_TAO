@@ -1,9 +1,8 @@
-Fri May 01 17:52:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* ace/ACE_Library.mak:
-	* ace/ace_{dll,lib}.dsp: Added Arg_Shifter.cpp into project.
-
 Fri May  1 13:52:32 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Addr: Made the destructor for ACE_Addr virtual so that
+ 	  subclasses can be deleted correctly.  Thanks to Wei Chiang
+ 	  <chiang@horizon.ntc.nokia.com> for reporting this.
 
 	* ace: Added Arg_Shifter from TAO and renamed it to
  	  ACE_Arg_Shifter.
@@ -28,6 +27,11 @@ Fri May  1 13:52:32 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  "ACE_Message_Block" to "Message_Block" so it wouldn't be as
  	  confusing.  Thanks to Ganapathi <guns@fs.IConNet.NET> for this
  	  suggestion.
+
+Fri May 01 17:52:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ACE_Library.mak:
+	* ace/ace_{dll,lib}.dsp: Added Arg_Shifter.cpp into project.
 
 Fri May 01 14:09:21 1998  Steve Huston  <shuston@riverace.com>
 
