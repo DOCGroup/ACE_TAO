@@ -35,7 +35,7 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-const ASYS_TCHAR usage[] = "usage: Message_Queue_Test <number of messages>\n";
+const ASYS_TCHAR usage[] = ASYS_TEXT ("usage: Message_Queue_Test <number of messages>\n");
 
 typedef ACE_Message_Queue<ACE_NULL_SYNCH> QUEUE;
 typedef ACE_Message_Queue_Iterator<ACE_NULL_SYNCH> ITERATOR;
@@ -43,7 +43,7 @@ typedef ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH> REVERSE_ITERATOR;
 
 const int MAX_MESSAGES = 10000;
 const int MAX_MESSAGE_SIZE = 32;
-const ASYS_TCHAR test_message[] = "ACE_Message_Queue Test Message";
+const char test_message[] = "ACE_Message_Queue Test Message";
 
 int messages = MAX_MESSAGES;
 
@@ -158,8 +158,8 @@ static
 int
 single_thread_performance_test (int queue_type = 0)
 {
-  const ASYS_TCHAR test_message[] = "ACE_Message_Queue Test Message";
-  const ASYS_TCHAR *message = "ACE_Message_Queue<ACE_NULL_SYNCH>, single thread";
+  const char test_message[] = "ACE_Message_Queue Test Message";
+  const ASYS_TCHAR *message = ASYS_TEXT ("ACE_Message_Queue<ACE_NULL_SYNCH>, single thread");
   int i;
 
   // Create a message queue.
@@ -218,17 +218,19 @@ single_thread_performance_test (int queue_type = 0)
   for (i = 0; i < messages; ++i)
     {
       if (msgq->enqueue_tail (send_block[i]) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "enqueue"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("enqueue")), -1);
 
       if (msgq->dequeue_head (receive_block_p[i]) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "dequeue_head"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("dequeue_head")), -1);
     }
 
   timer->stop ();
 
   ACE_Time_Value tv;
   timer->elapsed_time (tv);
-  ACE_DEBUG ((LM_INFO, "%s: %u messages took %u msec (%f msec/message)\n",
+  ACE_DEBUG ((LM_INFO, ASYS_TEXT ("%s: %u messages took %u msec (%f msec/message)\n"),
               message,
               messages,
               tv.msec (),
@@ -282,11 +284,13 @@ receiver (void *arg)
     if (queue_wrapper->synch_queue_)
       { // Do not remove the brace!!!!
         if (queue_wrapper->sq_->dequeue_head (receive_block_p[i]) == -1)
-          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "dequeue_head"), 0);
+          ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
+                             ASYS_TEXT ("dequeue_head")), 0);
       } // Do not remove the brace!!!!
     else
       if (queue_wrapper->q_->dequeue_head (receive_block_p[i]) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "dequeue_head"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("dequeue_head")), 0);
 
   timer->stop ();
 
@@ -313,12 +317,14 @@ sender (void *arg)
       { // Do not remove the brace!!!!
         if (queue_wrapper->sq_->
               enqueue_tail (queue_wrapper->send_block_[i]) == -1)
-          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "enqueue"), 0);
+          ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
+                             ASYS_TEXT ("enqueue")), 0);
       } // Do not remove the brace!!!!
     else
       if (queue_wrapper->q_->
             enqueue_tail (queue_wrapper->send_block_[i]) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "enqueue"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("enqueue")), 0);
 
   return 0;
 }
@@ -328,7 +334,7 @@ int
 performance_test (int queue_type = 0)
 {
   Queue_Wrapper queue_wrapper;
-  const ASYS_TCHAR *message = "ACE_Message_Queue<ACE_SYNCH>";
+  const ASYS_TCHAR *message = ASYS_TEXT ("ACE_Message_Queue<ACE_SYNCH>");
   int i;
 
   // Create the messages.  Allocate off the heap in case messages
@@ -365,21 +371,23 @@ performance_test (int queue_type = 0)
                                               &queue_wrapper,
                                               THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n", "spawning sender thread"),
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("spawning sender thread")),
                       -1);
 
   if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) receiver,
                                               &queue_wrapper,
                                               THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n", "spawning receiver thread"),
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("spawning receiver thread")),
                       -1);
 
   ACE_Thread_Manager::instance ()->wait ();
   ACE_Time_Value tv;
   timer->elapsed_time (tv);
-  ACE_DEBUG ((LM_INFO, "%s: %u messages took %u msec (%f msec/message)\n",
-              message,
+  ACE_DEBUG ((LM_INFO, ASYS_TEXT ("%s: %u messages took %u msec (%f msec/message)\n"),
+              ASYS_WIDE_STRING (message),
               messages,
               tv.msec (),
               (double) tv.msec () / messages));
@@ -414,8 +422,8 @@ main (int argc, ASYS_TCHAR *argv[])
   int status = 0;
 
   if (argc == 2)
-    if (! ACE_OS::strcmp (argv[1], "-?"))
-      ACE_OS::printf (usage);
+    if (! ACE_OS::strcmp (argv[1], ASYS_TEXT ("-?")))
+      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%s/n"), usage));
     else
       messages = ACE_OS::atoi (argv[1]);
 
@@ -448,7 +456,7 @@ main (int argc, ASYS_TCHAR *argv[])
 #endif /* ACE_HAS_THREADS */
 
   if (status != 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "test failed"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("test failed")));
 
   delete timer;
   timer = 0;
