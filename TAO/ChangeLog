@@ -1,3 +1,11 @@
+Wed Dec  8 08:00:35 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+	  Added #include "ace/OS_NS_stdio.h" and "ace/OS_NS_unistd.h" to
+	  bring declarations into scope for noinline builds.
+
 Wed Dec  8 15:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CONV_FRAMEC.{h,cpp,i,inl}:
