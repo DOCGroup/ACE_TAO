@@ -1,5 +1,9 @@
 Sun Aug 30 00:14:29 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* ace/Service_Object.cpp (fini): Make sure to check the
+ 	  <fini_already_called_> flag before proceeding. Also
+ 	  ~ACE_Service_Type() now calls this->fini().
+	
 	* ace/Svc_Handler: 
 	* ace/Dynamic: 
 
