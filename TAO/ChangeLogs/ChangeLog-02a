@@ -1,3 +1,17 @@
+Tue Sep 11 21:43:38 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/DynamicAny/DynAny_i.cpp:
+
+          Strange bug that seems to happen only on Win32, where when
+          a DynAny containing a string is copied from another, its type 
+          code member gets the bound copied correctly, but its member
+          any's type code does not. It crops up only in the equal()
+          method where the strings are extracted from the member anys
+          and compared. The CORBA::Any::to_string struct is left out
+          of the extraction from the lhs any. There is no danger of
+          type mismatch, since the type codes (which do retain bound
+          information) have already been compared for equivalence.
+
 Tue Sep 11 18:07:46 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/Fill_ACE_QoS.h: 
