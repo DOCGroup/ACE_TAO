@@ -1,3 +1,7 @@
+Sun Jan  4 13:41:41 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
+
+	* svr.cpp: Fixed prev_priority to previous_priority
+
 Sun Jan 04 07:47:52 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.52, released Sun Jan 04 07:47:52 1998.
