@@ -1,24 +1,24 @@
 Mon May  3 18:04:32 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* examples/Reactor/Proactor/test_aiocb_ace.cpp: Added this
-	file. If this test is sucessful, ACE_POSIX_AIOCB_PROACTOR could be
-	defined for a platform.
+        * examples/Reactor/Proactor/test_aiocb_ace.cpp: Added this
+        file. If this test is sucessful, ACE_POSIX_AIOCB_PROACTOR could be
+        defined for a platform.
 
 Mon May 03 09:35:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.cpp: fixed bug in ACE_RB_Tree::RB_delete_fixup in which
-	  a null pointer was dereferenced while trying to determine the color
-	  of the node that was being pointed to.  Per the RB Tree discussion
-	  in Cormen Lieserson and Rivest's "Introduction to Algorithms", after
-	  which this implementation is modeled, a nil node is implicity 
-	  treated as having been colored BLACK.  Thanks to Long Hoang
-          <LHoang@hwdcsaws.cahwnet.gov> for reporting the problem and 
-	  providing a test program that showed the bug.
-	
+          a null pointer was dereferenced while trying to determine the color
+          of the node that was being pointed to.  Per the RB Tree discussion
+          in Cormen Lieserson and Rivest's "Introduction to Algorithms", after
+          which this implementation is modeled, a nil node is implicity
+          treated as having been colored BLACK.  Thanks to Long Hoang
+          <LHoang@hwdcsaws.cahwnet.gov> for reporting the problem and
+          providing a test program that showed the bug.
+
 Mon May 03 15:53:15 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU,
-          ACE-INSTALL.html:
+          tests/run_tests.vxworks,ACE-INSTALL.html:
           added support for shared lib builds.  Thanks to
           Ramiro Penataro Blanco <penataro@ll.iac.es> and
           James D. Rucker <jdrucker@huey.jpl.nasa.gov> for
