@@ -121,7 +121,10 @@ public:
   // insert a double
 
   void operator<<= (const CORBA_Any&);
-  // insert an Any
+  // insert an Any, copying
+
+  void operator<<= (CORBA_Any_ptr);
+  // insert an Any, non-copying
 
   void operator<<= (const char*);
   // insert unbounded strings
