@@ -55,7 +55,7 @@ main (int, char *[])
   ACE_DEBUG ((LM_DEBUG, "%n uses platform's native sigset*() functions.\n\n")) ;
 #endif
 
-  sigset_t x = 0 ;		// examined sigset
+  sigset_t x ;			// examined sigset
   int sigset [NSIG] ;		// a comparison sigset
 
   // Two test signal numbers.  I choose these low value signals to
@@ -68,16 +68,18 @@ main (int, char *[])
   ACE_OS::sigfillset (&x) ;
 
   // fill the comparison set
-  for (int i = 0 ; i < NSIG ; i++)
+  for (int i = 0 ; i < NSIG ; i++) {
     sigset [i] = 1 ;
+  }
   siglistset (x, sigset) ;
 
   // testing sigemptyset
   ACE_OS::sigemptyset (&x) ;
 
   // empty the comparison set
-  for (int i = 0 ; i < NSIG ; i++)
+  for (i = 0 ; i < NSIG ; i++) {
     sigset [i] = 0 ;
+  }
   siglistset (x, sigset) ;
 
   // add the first signal into set
