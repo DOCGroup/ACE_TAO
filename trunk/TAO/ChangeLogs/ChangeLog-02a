@@ -1,3 +1,8 @@
+Tue Dec 25 19:35:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Thread_Pool/Makefile:
+	* tests/Strategies/makefile: Updated some more dependencies.
+
 Tue Dec 25 15:39:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.av:
@@ -91,8 +96,6 @@ Tue Dec 25 11:27:34 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 	strategy.  Not used currently, but this is placeholder code that
 	may be needed later.
 
-
->>>>>>> 1.4593
 Tue Dec 25 12:23:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* Update all dependencies.
