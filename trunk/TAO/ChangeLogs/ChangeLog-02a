@@ -1,3 +1,9 @@
+Thu Jun 27 22:04:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Used the
+	  input cdr allocators in place of the old message block
+	  allocators. 
+
 Thu Jun 27 15:41:53 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ClientInterceptorAdapter.h (len_):

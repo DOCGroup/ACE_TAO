@@ -23,10 +23,10 @@ TAO_DII_Deferred_Reply_Dispatcher::TAO_DII_Deferred_Reply_Dispatcher (
     db_ (sizeof buf_,
          ACE_Message_Block::MB_DATA,
          this->buf_,
-         orb_core->message_block_buffer_allocator (),
+         orb_core->input_cdr_buffer_allocator (),
          orb_core->locking_strategy (),
          ACE_Message_Block::DONT_DELETE,
-         orb_core->message_block_dblock_allocator ()),
+         orb_core->input_cdr_dblock_allocator ()),
     reply_cdr_ (&db_,
                 ACE_Message_Block::DONT_DELETE,
                 TAO_ENCAP_BYTE_ORDER,
@@ -34,7 +34,6 @@ TAO_DII_Deferred_Reply_Dispatcher::TAO_DII_Deferred_Reply_Dispatcher (
                 TAO_DEF_GIOP_MINOR,
                 orb_core),
     req_ (req)
-
 {
 }
 
