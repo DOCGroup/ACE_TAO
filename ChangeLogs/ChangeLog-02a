@@ -1,3 +1,9 @@
+Wed May  3 18:07:16 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Malloc_T (memory_pool): Found another bug with SunC++ 5.0...
+	  Moved the ACE_Allocator_Adapter::protect() into the Malloc_T.cpp
+	  file.
+  
 Wed May  3 17:16:12 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Log_Msg.h (log_priority_enabled):
