@@ -46,7 +46,6 @@ be_visitor_valuetype_marshal_ch::~be_visitor_valuetype_marshal_ch (void)
 int
 be_visitor_valuetype_marshal_ch::visit_valuetype (be_valuetype *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
   // proceed if the number of members in our scope is greater than 0
   if (node->nmembers () > 0)
     {

@@ -132,37 +132,37 @@ be_visitor_valuetype_field_ci::visit_array (be_array *node)
 }
 
 int
-be_visitor_valuetype_field_ci::visit_enum (be_enum *node)
+be_visitor_valuetype_field_ci::visit_enum (be_enum *)
 {
   return 0;
 }
 
 int
-be_visitor_valuetype_field_ci::visit_interface (be_interface *node)
+be_visitor_valuetype_field_ci::visit_interface (be_interface *)
 {
   return 0;
 }
 
 int
-be_visitor_valuetype_field_ci::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_valuetype_field_ci::visit_interface_fwd (be_interface_fwd *)
 {
   return 0;
 }
 
 int
-be_visitor_valuetype_field_ci::visit_valuetype (be_valuetype *node)
+be_visitor_valuetype_field_ci::visit_valuetype (be_valuetype *)
 {
  return 0;
 }
 
 int
-be_visitor_valuetype_field_ci::visit_valuetype_fwd (be_valuetype_fwd *node)
+be_visitor_valuetype_field_ci::visit_valuetype_fwd (be_valuetype_fwd *)
 {
   return 0;
 }
 
 int
-be_visitor_valuetype_field_ci::visit_predefined_type (be_predefined_type *node)
+be_visitor_valuetype_field_ci::visit_predefined_type (be_predefined_type *)
 {
   return 0;
 }
@@ -226,7 +226,7 @@ be_visitor_valuetype_field_ci::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_valuetype_field_ci::visit_string (be_string *node)
+be_visitor_valuetype_field_ci::visit_string (be_string *)
 {
   return 0;
 }
@@ -290,7 +290,7 @@ be_visitor_valuetype_field_ci::visit_structure (be_structure *node)
 }
 
 int
-be_visitor_valuetype_field_ci::visit_typedef (be_typedef *node)
+be_visitor_valuetype_field_ci::visit_typedef (be_typedef *)
 {
   return 0;
 }
