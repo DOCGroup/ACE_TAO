@@ -1,12 +1,13 @@
 Wed Oct 30 00:30:00 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
-	* Registry: Add a Name Service implementation to ACE based on
+	* Registry: Added a Name Service implementation to ACE based on
  	  Win32 Registry. The ACE_Registry interface is inspired by the
  	  interface specified in the CORBA Naming Service Specification.
   	  The implementation is done through Win32 Reg*() functions.
   	  Other than providing an OO wrapper for the Win32 Reg*()
  	  functions, ACE_Registry provides an abstraction for iteration
- 	  over the elements of the Registry.
+ 	  over the elements of the Registry. This only works on Win32
+ 	  platforms.
 
 
 	* ace/Local_Name_Space_T.cpp: Moved SEH out of methods of
