@@ -122,7 +122,9 @@ Video_Control_State::init_video (const Video_Control::INITvideoPara &init_para,
       VIDEO_SINGLETON::instance ()->SendPicture (&frame);
     }
     else if (VIDEO_SINGLETON::instance ()->video_format == VIDEO_MPEG1) {
-      VIDEO_SINGLETON::instance ()->SendPacket (1, 0, 0, 0);
+      VIDEO_SINGLETON::instance ()->SendPacket (1, 0, 0, 0, 1); //
+      // make the first_time flag = 1, so that the packet gets sent
+      // correctly using UDP
     }
     else {
       fprintf (stderr, "VS: VIDEO_SINGLETON::instance ()->video_format %d not supported.\n",
