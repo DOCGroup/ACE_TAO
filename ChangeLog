@@ -1,3 +1,11 @@
+Thu Jun  5 14:03:54 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          Modified the code to increase performance.  These changes decrease
+          generation time for the ACE_wrappers tree by up to 20%.
+
 Thu Jun  5 11:07:04 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
