@@ -1242,7 +1242,7 @@ ACE_OS::rename (const ACE_TCHAR *old_name,
   if (MoveFile (old_name, new_name) != 0)
     ACE_FAIL_RETURN (-1);
   return 0;
-# elif defined (ACE_WIN32) && defined (ACE_HAS_WINNT4)
+# elif defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 == 1)
   // NT4 (and up) provides a way to rename/move a file with similar semantics
   // to what's usually done on UNIX - if there's an existing file with
   // <new_name> it is removed before the file is renamed/moved. The
