@@ -82,15 +82,15 @@ TAO_RT_CORBA_Priority_Normalizer::normalize (CORBA::Short corba_priority,
   return 1;
 }
 
-TAO_RT_ORB::TAO_RT_ORB (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
+TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core)
+  : orb_core_ (orb_core),
     mutex_mgr_ (),
-    tp_manager_ (orb)
+    tp_manager_ (orb_core)
 {
   TAO_RT_CORBA_Priority_Normalizer *corba_priority_normalizer = 0;
   ACE_NEW (corba_priority_normalizer,
-           TAO_RT_CORBA_Priority_Normalizer (orb->orb_core ()));
-  orb->orb_core ()->corba_priority_normalizer (corba_priority_normalizer);
+           TAO_RT_CORBA_Priority_Normalizer (this->orb_core_));
+  this->orb_core_->corba_priority_normalizer (corba_priority_normalizer);
 }
 
 TAO_RT_ORB::~TAO_RT_ORB (void)

@@ -1299,11 +1299,6 @@ CORBA_ORB::resolve_initial_references (const char *name,
   else if (ACE_OS::strcmp (name, TAO_OBJID_TYPECODEFACTORY) == 0)
     return this->orb_core ()->resolve_typecodefactory (ACE_TRY_ENV);
 
-  else if (ACE_OS::strcmp (name, TAO_OBJID_RTORB) == 0)
-    return this->orb_core ()->resolve_rt_orb (ACE_TRY_ENV);
-
-  else if (ACE_OS::strcmp (name, TAO_OBJID_RTCURRENT) == 0)
-    return this->orb_core ()->resolve_rt_current (ACE_TRY_ENV);
 
   // -----------------------------------------------------------------
 

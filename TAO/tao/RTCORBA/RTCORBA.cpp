@@ -15,7 +15,6 @@ int
 TAO_RTCORBA_Initializer::init (void)
 {
   ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_TAO_RT_ORB_Loader);
-  ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_TAO_RT_Current_Loader);
   ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_TAO_RT_Protocols_Hooks);
   return 0;
 }
