@@ -1,3 +1,26 @@
+Mon Nov 18 14:50:31 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be/be_global.cpp:
+
+          Added storage and accessors for the AST node
+          Components::CCMObject, which is looked up and stored
+          if there is at least one component in the IDL file.
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_component/component_sh.cpp:
+
+          Added the operations of Components::CCMObject to the operation
+          table and *_skel method generation for component equivalent 
+          interfaces. Thanks to Nanbor <nanbor@cse.wustl.edu> for uncovering
+          this bug.
+
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+
+          Added base component equivalent interface (if any) to the generated
+          inheritance list for component equivalent interfaces.
+
 Mon Nov 18 12:11:53 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/CosNotification_Static.dsp:
