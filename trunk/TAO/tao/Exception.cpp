@@ -1111,7 +1111,7 @@ static CORBA_SystemException* _tao_allocator_##name (void) \
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
-static CORBA_SystemException *
+static CORBA::Boolean
 tao_insert_in_extractor_system_exception (
         const CORBA::Any &any,
         CORBA::SystemException *&tmp,
@@ -1133,7 +1133,7 @@ tao_insert_in_extractor_system_exception (
       if (any.any_owns_data ())
         {
           tmp = (CORBA_SystemException *)any.value ();
-          return 0; //@@ was 1
+          return 1;
         }
       else
         {
@@ -1156,7 +1156,7 @@ tao_insert_in_extractor_system_exception (
               tmp,
               destructor
             );
-          return 0; // @@ Was 1 .. to be changed.
+          return 1; 
         }
     }
   ACE_CATCHANY

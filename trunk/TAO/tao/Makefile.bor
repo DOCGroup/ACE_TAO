@@ -89,6 +89,13 @@ OBJFILES = \
 	$(OBJDIR)\Object_Proxy_Impl.obj \
 	$(OBJDIR)\operation_details.obj \
 	$(OBJDIR)\ORB.obj \
+	$(OBJDIR)\operation_details.obj \
+	$(OBJDIR)\PortableInterceptor.obj \
+	$(OBJDIR)\PortableInterceptorC.obj \
+	$(OBJDIR)\DynamicC.obj \
+	$(OBJDIR)\OctetSeqC.obj \
+	$(OBJDIR)\StringSeq.obj \
+	$(OBJDIR)\Smart_Proxies.obj \
 	$(OBJDIR)\ORB_Core.obj \
 	$(OBJDIR)\ORB_Table.obj \
 	$(OBJDIR)\params.obj \
