@@ -10,7 +10,7 @@
 typedef sequence<octet> EventPayload;
 struct RtecEventData
 {
-#if !defined (TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE)
+#ifndef TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE
   long pad1;
   // This two objects ensure that the encapsulated stream below is
   // properly aligned; this makes the decoding of the payload more
@@ -27,7 +27,7 @@ struct RtecEventData
   EventPayload payload;
 #endif /* TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE */
 
-#if !defined (TAO_LACKS_EVENT_CHANNEL_ANY)
+#ifndef TAO_LACKS_EVENT_CHANNEL_ANY
   any any_value;
 #endif /* TAO_LACKS_EVENT_CHANNEL_ANY */
 };
