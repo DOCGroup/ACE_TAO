@@ -1,3 +1,11 @@
+Wed Jun 16 06:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TLI.h:
+        * ace/TLI_Acceptor.cpp:
+        * ace/TLI_Connector.cpp:
+        * ace/TLI_Stream.cpp:
+          Added missing includes
+
 Tue Jun 15 22:11:09 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/IOStream/client/iostream_client.cpp:
