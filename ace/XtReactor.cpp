@@ -32,8 +32,8 @@ ACE_XtReactor::ACE_XtReactor (XtAppContext context,
   // notification handler in the constructor of the XtReactor.
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  this->notify_handler_.close ();
-  this->notify_handler_.open (this, 0);
+  this->notify_handler_->close ();
+  this->notify_handler_->open (this, 0);
 #endif /* ACE_MT_SAFE */
 }
 
