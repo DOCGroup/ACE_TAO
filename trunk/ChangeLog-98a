@@ -14,6 +14,14 @@ Mon Dec 29 18:53:35 1997  James C Hu  <jxh@cs.wustl.edu>
 	* ace/Filecache.cpp: Required modifications to accomodate the
 	  ACE_Filecache_Flag parameter.
 
+Mon Dec 29 15:37:24 1997  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* ace/OS.i (event_timedwait): Added codes to guard against
+	  negative wait time since we are passing an absolute time value
+	  here, we may way past the target time when it gets called.
+	  Thanks to Norbert Rapp <NRapp@nexus-informatics.de> for pointing
+	  this.
+
 Mon Dec 29 13:57:43 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/XtReactor.cpp:
