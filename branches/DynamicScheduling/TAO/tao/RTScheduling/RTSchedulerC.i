@@ -557,32 +557,3 @@ RTScheduling::Current::NameList_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
-// TAO_IDL - Generated from
-// C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/cdr_op_ci.cpp:71
-
-ACE_INLINE
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const CORBA::THREAD_CANCELLED &_tao_aggregate
-  )
-{
-  // First marshal the repository ID.
-  if (strm << _tao_aggregate._rep_id ())
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-ACE_INLINE
-CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    CORBA::THREAD_CANCELLED&
-  )
-{
-  return 1;
-}
-
