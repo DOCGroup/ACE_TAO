@@ -1,20 +1,29 @@
+Tue Dec 28 09:31:03 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile,orbsvcs/Trading/Makefile,
+          orbsvcs/tests/Trading/Makefile:
+          updated dependencies.  Maybe that will fix the Trading
+          Service test failure on some platforms:  it's due to
+          a missing symbol in the shared lib.  The test ran fine
+          for me on charanga.
+
 Mon Dec 27 23:38:39 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/TAO_Static.dsp:  Added missing ImpoRepo* files.  Thanks to
-	  Mogens Hansen <mogens_h@dk-online.dk> for reporting this.
+        * tao/TAO_Static.dsp:  Added missing ImpoRepo* files.  Thanks to
+          Mogens Hansen <mogens_h@dk-online.dk> for reporting this.
 
 Mon Dec 27 19:09:09 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/compiler.html: Updated the documentation for the compiler
-	  flag '-Y'. Thanks to Erik Johannes <ejohannes@oresis.com> for
-	  reporting this discrepancy.
+        * docs/compiler.html: Updated the documentation for the compiler
+          flag '-Y'. Thanks to Erik Johannes <ejohannes@oresis.com> for
+          reporting this discrepancy.
 
 Mon Dec 27 17:36:29 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Makefile: The Timeout test requires CORBA messaging.
+        * tests/Makefile: The Timeout test requires CORBA messaging.
 
-	* tao/Stub.cpp: We only need template instantiations for
-	  auto_ptr<TAO_Policy_Manager_Impl> when we have corba messaging.
+        * tao/Stub.cpp: We only need template instantiations for
+          auto_ptr<TAO_Policy_Manager_Impl> when we have corba messaging.
 
 Mon Dec 27 15:55:06 1999  David L. Levine  <levine@cs.wustl.edu>
 
