@@ -91,8 +91,8 @@ public:
   UTL_String (void);
   // default constructor
 
-  UTL_String (char *str);
-  // construct from a char *
+  UTL_String (const char *str);
+  // construct from a const char *
 
   UTL_String (unsigned long maxlen);
   // constructor with an initial string length

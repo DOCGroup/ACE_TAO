@@ -80,7 +80,7 @@ Identifier::Identifier ()
 {
 }
 
-Identifier::Identifier (char *s, long, long, long)
+Identifier::Identifier (const char *s, long, long, long)
   : pv_string (ACE_OS::strdup (s))
 {
 }

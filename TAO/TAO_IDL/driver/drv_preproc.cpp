@@ -82,14 +82,14 @@ ACE_RCSID(driver, drv_preproc, "$Id$")
 #undef  MAX_ARGLIST
 #define MAX_ARGLIST     128
 
-static  char    *arglist[MAX_ARGLIST];
+static  const char *arglist[MAX_ARGLIST];
 static  long    argcount = 0;
 
 /*
  * Push the new CPP location if we got a -Yp argument
  */
 void
-DRV_cpp_new_location(char *new_loc)
+DRV_cpp_new_location(const char *new_loc)
 {
   arglist[0] = new_loc;
 }
@@ -98,7 +98,7 @@ DRV_cpp_new_location(char *new_loc)
  * Push an argument into the arglist
  */
 void
-DRV_cpp_putarg(char *str)
+DRV_cpp_putarg(const char *str)
 {
   if (argcount >= MAX_ARGLIST) {
     cerr << idl_global->prog_name()
@@ -114,11 +114,11 @@ DRV_cpp_putarg(char *str)
  * Initialize the cpp argument list
  */
 void
-DRV_cpp_init()
+DRV_cpp_init (void)
 {
   // @@ There are two "one time" memory leaks in this function.
   //    They will not blow off the program but should be fixed at some point.
-  char *cpp_loc;
+  const char *cpp_loc;
 
   // DRV_cpp_putarg("\\cygnus\\H-i386-cygwin32\\bin\\echo");
   ACE_Env_Value<char*> cpp_path ("CPP_LOCATION", (char *) 0);
@@ -323,10 +323,10 @@ DRV_pre_proc(char *myfile)
 
   if (strcmp(myfile, "standard input") == 0)
     {
-      idl_global->set_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
-      idl_global->set_main_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
-      idl_global->set_stripped_filename((*DRV_FE_new_UTL_String)(DRV_stripped_name(tmp_ifile)));
-      idl_global->set_real_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
+      idl_global->set_filename(tmp_ifile);
+      idl_global->set_main_filename(tmp_ifile);
+      idl_global->set_stripped_filename(DRV_stripped_name(tmp_ifile));
+      idl_global->set_real_filename(tmp_ifile);
       DRV_copy_input(stdin, tmp_ifile, "standard input");
       idl_global->set_read_from_stdin(I_TRUE);
     }
@@ -336,10 +336,10 @@ DRV_pre_proc(char *myfile)
       DRV_copy_input(fd, tmp_ifile, myfile);
       fclose(fd);
       idl_global->set_read_from_stdin(I_FALSE);
-      idl_global->set_filename((*DRV_FE_new_UTL_String)(myfile));
-      idl_global->set_main_filename((*DRV_FE_new_UTL_String)(myfile));
-      idl_global->set_stripped_filename((*DRV_FE_new_UTL_String)(DRV_stripped_name(myfile)));
-      idl_global->set_real_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
+      idl_global->set_filename(myfile);
+      idl_global->set_main_filename(myfile);
+      idl_global->set_stripped_filename(DRV_stripped_name(myfile));
+      idl_global->set_real_filename(tmp_ifile);
     }
 
   // We use ACE instead of the (low level) fork facilities, this also
@@ -461,7 +461,7 @@ DRV_check_for_include (const char* buf)
     return;
 
   // Check whether this word is `include` or no.
-  char* include_str = "include";
+  const char* include_str = "include";
   for (size_t ii = 0; ii < strlen ("include") && *r != '\0' && *r != ' ' && *r != '\t'; r++, ii++)
     // Return if it doesn't match.
     if (include_str [ii] != *r)

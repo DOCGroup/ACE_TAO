@@ -86,7 +86,7 @@ ACE_RCSID(ast, ast_argument, "$Id$")
 /*
  * Convert an enum Direction value to a char *
  */
-static char *
+static const char *
 direction_to_string(AST_Argument::Direction d)
 {
   switch (d) {

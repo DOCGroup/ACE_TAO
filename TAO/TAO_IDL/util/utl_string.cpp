@@ -83,7 +83,7 @@ UTL_String::UTL_String (void)
 {
 }
 
-UTL_String::UTL_String (char *str)
+UTL_String::UTL_String (const char *str)
 {
   if (str == NULL) 
     {

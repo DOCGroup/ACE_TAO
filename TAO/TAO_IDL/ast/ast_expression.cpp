@@ -1821,7 +1821,7 @@ AST_Expression::compare(AST_Expression *vc)
  * Dump this binary AST_Expression node to the ostream o
  */
 static void
-dump_binary_expr(ostream &o, char *s, AST_Expression *n1, AST_Expression *n2)
+dump_binary_expr(ostream &o, const char *s, AST_Expression *n1, AST_Expression *n2)
 {
   if (n1 != NULL) n1->dump(o);
   o << " " << s << " ";
@@ -1832,7 +1832,7 @@ dump_binary_expr(ostream &o, char *s, AST_Expression *n1, AST_Expression *n2)
  * Dump this unary AST_Expression node to the ostream o
  */
 static void
-dump_unary_expr(ostream &o, char *s, AST_Expression *e)
+dump_unary_expr(ostream &o, const char *s, AST_Expression *e)
 {
   o << s;
   e->dump(o);
