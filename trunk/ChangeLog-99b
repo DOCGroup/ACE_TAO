@@ -1,17 +1,22 @@
+Wed Jun 16 14:40:01 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h fixed ACE_Object_Manager_Base comments, and removed
+          spurious public:.  Untabified.
+
 Wed Jun 16 14:27:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/ACE.h:
-	* ace/ACE.cpp:
-	  Added new ACE::crc32 function that takes a buffer instead of a
-	  string.
+        * ace/ACE.h:
+        * ace/ACE.cpp:
+          Added new ACE::crc32 function that takes a buffer instead of a
+          string.
 
 Wed Jun 16 14:19:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/SOCK_{Acceptor,Connector}.h: Updated the documentation to
- 	  explain the "asymmetry" between the ACE_SOCK_Acceptor (which
- 	  inherits from ACE_SOCK) and the ACE_SOCK_Connector (which does
- 	  not).  Thanks to Narayanan Vidya <CVN065@lmpsil02.comm.mot.com>
- 	  for motivating this.
+        * ace/SOCK_{Acceptor,Connector}.h: Updated the documentation to
+          explain the "asymmetry" between the ACE_SOCK_Acceptor (which
+          inherits from ACE_SOCK) and the ACE_SOCK_Connector (which does
+          not).  Thanks to Narayanan Vidya <CVN065@lmpsil02.comm.mot.com>
+          for motivating this.
 
 Wed Jun 16 13:15:22 1999  Steve Huston  <shuston@riverace.com>
 
@@ -20,8 +25,8 @@ Wed Jun 16 13:15:22 1999  Steve Huston  <shuston@riverace.com>
 
 Wed Jun 16 12:00:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/SOCK_Dgram_Mcast.cpp:
-	  Changed a -1 to ACE_INVALID_HANDLE.
+        * ace/SOCK_Dgram_Mcast.cpp:
+          Changed a -1 to ACE_INVALID_HANDLE.
 
 Wed Jun 16 07:40:05 1999  David L. Levine  <levine@cs.wustl.edu>
 
