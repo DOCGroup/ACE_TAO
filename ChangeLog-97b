@@ -2,7 +2,7 @@ Mon Oct 13 16:27:46 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* tests/Priority_Reactor_Test.h: 
 	* tests/Priority_Reactor_Test.cpp: 
-	  Fixed wrong header file, thanks to Irfan 
+	  Fixed wrong header file, thanks to Irfan (irfan@cs.wustl.edu)
 
 Mon Oct 13 15:39:12 1997  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
