@@ -1,3 +1,10 @@
+Tue Sep 21 09:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/QtReactor.cpp:
+          Fixed incorrect ACE_TRACE usage, thanks to Vincent Newsum
+          <Newsum at fel dot tno dot nl> for reporting this, this fixes
+          BUG 1939. We should setup a daily build with Qt soon.
+
 Mon Sep 20 18:07:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/run_test.pl:
