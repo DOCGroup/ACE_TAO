@@ -195,7 +195,7 @@ ACE_Service_Config::init_svc_conf_file_queue (void)
                       -1);
 
       // Load the default "svc.conf" entry here.
-      if (ACE_Service_Config::svc_queue_->enqueue_tail
+      if (ACE_Service_Config::svc_conf_file_queue_->enqueue_tail
           (ACE_CString (ACE_DEFAULT_SVC_CONF)) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ASYS_TEXT ("%p\n"),
