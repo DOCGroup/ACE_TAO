@@ -66,7 +66,7 @@ int copy_octet_smi(SmiVALUE& smi, int size, const char *src, int& valid_flag)
     delete [] smi.value.string.ptr;
 
   ACE_NEW_RETURN(smi.value.string.ptr, SmiBYTE[size], 1);
-  ACE_OS::memcpy( smi.value.string.ptr, src, (size_t) size);
+  ACE_OS::memcpy( smi.value.string.ptr, src, size);
   smi.value.string.len = size;
   valid_flag = TRUE;
   return 0;
