@@ -241,7 +241,20 @@ int Thread_Pool::svc(void)
 			 */
 			if( handler->handle_input(ACE_INVALID_HANDLE) == -1 )
 			{
-			  return(-1);	// Error, return now
+			  /*
+			     Tell the handler that it's time to go home.  The "normal" method for shutting
+				 down a handler whose handler failed is to invoke handle_close().  This will
+				 take care of cleaning it up for us.
+				 Notice how we use the handler's get_handle() method to populate it's "handle"
+				 parameter.  Convenient isn't it?
+			   */
+			  handler->handle_close(handler->get_handle(),0);
+
+			  /*
+			     Also notice that we don't exit the svc() method here!  The first time I did
+				 this, I was exiting.  After a few clients disconnect you have an empty
+				 thread pool.  Hard to do any more work after that...
+			   */
 			}
 		}
 		else
