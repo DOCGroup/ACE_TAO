@@ -1,3 +1,24 @@
+Sat Dec  4 16:53:18 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* tests/.cvsignore (Module):
+	Added linux executables to prevent cvs warnings
+
+Sat Dec  4 16:02:30 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* ace/qt_reactor.mpb (Module):
+	This base project is no necessary now.
+
+Sat Dec  4 15:51:01 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* bin/MakeProjectCreator/config/ace_qtreactor.mpb (Module):
+	* ace/ace_qtreactor.mpc (Module):
+	Removed depracated qt_moc project.
+
+Sat Dec  4 15:49:03 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* ACE-INSTALL.html (Module):
+	Added paragraph on building ACE_QtLibrary.
+
 Sat Dec  4 14:28:54 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * bin/MakeProjectCreator/config/global.features (Module):

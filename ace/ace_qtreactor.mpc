@@ -1,7 +1,7 @@
 //  -*- MPC -*- now wouldn't this be cool...
 // ace_qtreactor.mpc,v
 
-project(ACE_QtReactor) : acedefaults, aceversion, core, acelib, ace_qt, qt_moc {
+project(ACE_QtReactor) : acedefaults, aceversion, core, acelib, ace_qt {
   libout       = $(ACE_ROOT)/lib
   sharedname   = ACE_QtReactor
   dynamicflags = ACE_BUILD_DLL ACE_OS_BUILD_DLL

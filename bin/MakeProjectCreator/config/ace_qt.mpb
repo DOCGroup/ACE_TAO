@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-feature(qt): qt {
+project: qt {
   macros += ACE_HAS_QT
 
   // Depends on configration from include/makeinclude/platform_*.GNU
