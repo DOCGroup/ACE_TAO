@@ -1,3 +1,15 @@
+Fri Oct 10 21:42:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/AMI/client.cpp: Removed code that
+	  depended on the old interceptor's way of doing things. We need
+	  to find another to add this test.
+
+	* tests/Portable_Interceptors/ForwardRequest/Client_Request_Interceptor.cpp: 
+	  Fixed a bug that was not caught by the old interceptor code. 
+
+	* tests/Portable_Interceptors/ForwardRequest/client.cpp: Cosmetic
+	  fix. 
+
 Fri Oct 10 21:35:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Invocation_Adapter.cpp:

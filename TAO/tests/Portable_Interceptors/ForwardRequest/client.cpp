@@ -154,8 +154,9 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
 
-  ACE_DEBUG ((LM_INFO,
-              "PortableInterceptor::ForwardRequest test passed.\n"));
+  if (status != -1)
+    ACE_DEBUG ((LM_INFO,
+                "PortableInterceptor::ForwardRequest test passed.\n"));
 
   return status;
 }
