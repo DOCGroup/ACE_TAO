@@ -28,7 +28,7 @@
 #include "ace/SString.h"
 #include "SchedEntry.h"
 
-class ACE_Scheduler
+class TAO_ORBSVCS_Export ACE_Scheduler
   // = TITLE
   //    Thread scheduler interface.
   //

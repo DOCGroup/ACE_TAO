@@ -46,7 +46,7 @@ class Dispatch_Proxy_Iterator;
 
 
 // Wrapper for the RT_Info, which aggregates all its dispatches
-class Task_Entry
+class TAO_ORBSVCS_Export Task_Entry
 {
 public:
 
@@ -199,7 +199,7 @@ private:
 };
 
 
-class Task_Entry_Link
+class TAO_ORBSVCS_Export Task_Entry_Link
 {
 public:
 
@@ -248,7 +248,7 @@ private:
 };
 
 
-class Dispatch_Entry
+class TAO_ORBSVCS_Export Dispatch_Entry
 {
 // = TITLE
 //	  Dispatch Entry
@@ -348,7 +348,7 @@ private:
 
 };
 
-class Dispatch_Entry_Link
+class TAO_ORBSVCS_Export Dispatch_Entry_Link
 // = TITLE
 //	  Dispatch Entry Link
 //
@@ -391,7 +391,7 @@ private:
   Dispatch_Entry &dispatch_entry_;
 };
 
-class Dispatch_Proxy_Iterator
+class TAO_ORBSVCS_Export Dispatch_Proxy_Iterator
 // = TITLE
 //   This class implements an iterator abstraction over a virtual
 //   frame size and number of calls, using an actual ordered 
@@ -486,7 +486,7 @@ private:
 
 
 
-class TimeLine_Entry
+class TAO_ORBSVCS_Export TimeLine_Entry
 {
 public:
 
@@ -538,7 +538,7 @@ private:
 
 };
 
-class TimeLine_Entry_Link
+class TAO_ORBSVCS_Export TimeLine_Entry_Link
 {
 public:
 

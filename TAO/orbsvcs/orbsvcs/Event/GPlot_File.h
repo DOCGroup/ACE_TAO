@@ -16,7 +16,7 @@
 #include "ace/Map_Manager.h"
 #include "ace/Synch.h"
 
-class ACE_GPlot_File
+class TAO_ORBSVCS_Export ACE_GPlot_File
 // = TITLE
 //    Reads and writes files in GPlot format.
 //
