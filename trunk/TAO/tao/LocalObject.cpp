@@ -139,13 +139,17 @@ CORBA::LocalObject::_request (const char *
 CORBA::Object_ptr
 CORBA::LocalObject::_get_component (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
+                                         CORBA::COMPLETED_NO),
+                    0);
 }
 
 CORBA::InterfaceDef_ptr
 CORBA::LocalObject::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
+                                         CORBA::COMPLETED_NO),
+                    0);
 }
 
 CORBA::ImplementationDef_ptr
@@ -162,7 +166,9 @@ CORBA::Policy_ptr
 CORBA::LocalObject::_get_policy (CORBA::PolicyType
                                  ACE_ENV_ARG_DECL)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
+                                         CORBA::COMPLETED_NO),
+                    0);
 }
 
 CORBA::Policy_ptr
@@ -177,21 +183,27 @@ CORBA::LocalObject::_set_policy_overrides (const CORBA::PolicyList &,
                                            CORBA::SetOverrideType
                                            ACE_ENV_ARG_DECL)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
+                                         CORBA::COMPLETED_NO),
+                    0);
 }
 
 CORBA::PolicyList *
 CORBA::LocalObject::_get_policy_overrides (const CORBA::PolicyTypeSeq &
                                            ACE_ENV_ARG_DECL)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
+                                         CORBA::COMPLETED_NO),
+                    0);
 }
 
 CORBA::Boolean
 CORBA::LocalObject::_validate_connection (CORBA::PolicyList_out
                                           ACE_ENV_ARG_DECL)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
+                                         CORBA::COMPLETED_NO),
+                    0);
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
