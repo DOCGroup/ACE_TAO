@@ -169,8 +169,6 @@ public:
       ACE_SIG_HANDLER_LOCK,
       ACE_SINGLETON_NULL_LOCK,
       ACE_SINGLETON_RECURSIVE_THREAD_LOCK,
-      ACE_SINGLETON_RW_THREAD_LOCK,
-      ACE_SINGLETON_THREAD_LOCK,
       ACE_SVC_HANDLER_LOCK,
       ACE_THREAD_EXIT_LOCK,
       ACE_TOKEN_MANAGER_CREATION_LOCK,
@@ -228,20 +226,25 @@ public:
   // ACE_Singleton _only_.  The arguments are ignored; they are
   // only used for overload resolution.
 
-  static ACE_Null_Mutex *get_singleton_lock (ACE_Null_Mutex *);
-  // Accesses a null lock to be used for construction of ACE_Singletons.
+  static int get_singleton_lock (ACE_Null_Mutex *&);
+  // Accesses a null lock to be used for construction of
+  // ACE_Singletons.  Returns 0, and the lock in the argument, on
+  // success; returns -1 on failure.
 
-  static ACE_Thread_Mutex *get_singleton_lock (ACE_Thread_Mutex *);
+  static int get_singleton_lock (ACE_Thread_Mutex *&);
   // Accesses a non-recursve lock to be used for construction of
-  // ACE_Singletons.
+  // ACE_Singletons.  Returns 0, and the lock in the argument, on
+  // success; returns -1 on failure.
 
-  static ACE_Recursive_Thread_Mutex *get_singleton_lock
-    (ACE_Recursive_Thread_Mutex *);
-  // Accesses a recursive lock to be used for construction of ACE_Singletons.
+  static int get_singleton_lock (ACE_Recursive_Thread_Mutex *&);
+  // Accesses a recursive lock to be used for construction of
+  // ACE_Singletons.  Returns 0, and the lock in the argument, on
+  // success; returns -1 on failure.
 
-  static ACE_RW_Thread_Mutex *get_singleton_lock (ACE_RW_Thread_Mutex *);
+  static int get_singleton_lock (ACE_RW_Thread_Mutex *&);
   // Accesses a readers/writers lock to be used for construction of
-  // ACE_Singletons.
+  // ACE_Singletons.  Returns 0, and the lock in the argument, on
+  // success; returns -1 on failure.
 
 private:
 
@@ -267,7 +270,7 @@ public:
   // For internal use only by ACE_Managed_Objects.
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Thread_Mutex *lock_;
+  ACE_Recursive_Thread_Mutex *lock_;
   // Lock that is used to guard internal structures.  Just a pointer
   // is declared here in order to minimize the headers that this one
   // includes.
