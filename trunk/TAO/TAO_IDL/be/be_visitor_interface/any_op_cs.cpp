@@ -127,16 +127,10 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
   *os << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \\"
       << be_idt_nl
       << "  defined (ACE_HAS_GNU_REPO)" << be_idt_nl
-      << "template class TAO_Object_Field_T<"
-      << node->full_name () << ","
-      << node->full_name () << "_var>;" << be_uidt_nl
       << "template class TAO_Object_Manager<"
       << node->full_name () << ","
       << node->full_name () << "_var>;" << be_uidt_nl
       << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
-      << "#  pragma instantiate TAO_Object_Field_T<"
-      << node->full_name () << ","
-      << node->full_name () << "_var>" << be_uidt_nl
       << "#  pragma instantiate TAO_Object_Manager<"
       << node->full_name () << ","
       << node->full_name () << "_var>" << be_uidt_nl

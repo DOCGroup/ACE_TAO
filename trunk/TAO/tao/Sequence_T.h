@@ -222,8 +222,6 @@ template<class T,class T_var> class TAO_Unbounded_Pseudo_Sequence;
 template<class T, class T_var, size_t MAX> class TAO_Bounded_Object_Sequence;
 template<size_t MAX> class TAO_Bounded_String_Sequence;
 
-template<class T,class T_var> class TAO_Object_Field_T;
-
 // *************************************************************
 
 template<class T, class T_var>
@@ -283,11 +281,6 @@ public:
   // <this->release_> is true.
   // @@ TODO what happens if rhs.release_ is true an this->relase_ is
   // false?
-
-  TAO_Object_Manager<T,T_var> &operator= (const TAO_Object_Field_T<T,T_var> &rhs);
-  // Assignment from another var-like type, only release if
-  // <this->release_> is true and only duplicate if this->release_ is
-  // true.
 
   TAO_Object_Manager<T,T_var> &operator= (T *);
   // Assignment from T *.
@@ -761,7 +754,7 @@ public:
   //
   // If the <orphan> argument to <get_buffer> is FALSE, the sequence
   // maintains ownership of the underlying buffer.  Elements in the
-  // returned buffer may be directly replaced by the caller.  
+  // returned buffer may be directly replaced by the caller.
   //
   // If the <orphan> argument to <get_buffer> is TRUE, the sequence
   // yields ownership of the buffer to the caller.  If <orphan> is
@@ -851,7 +844,7 @@ public:
   //
   // If the <orphan> argument to <get_buffer> is FALSE, the sequence
   // maintains ownership of the underlying buffer.  Elements in the
-  // returned buffer may be directly replaced by the caller.  
+  // returned buffer may be directly replaced by the caller.
   //
   // If the <orphan> argument to <get_buffer> is TRUE, the sequence
   // yields ownership of the buffer to the caller.  If <orphan> is

@@ -550,9 +550,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  POAC.i \
  Key_Adapters.i \
@@ -624,9 +621,6 @@ realclean:
  Server_Request.i \
  LocalObject.h \
  LocalObject.i \
- Marshal.h \
- Marshal.i \
- singletons.h \
  Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -847,9 +841,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  POAC.i \
  Key_Adapters.i
@@ -1002,9 +993,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  POAC.i \
  Key_Adapters.i \
@@ -1075,9 +1063,6 @@ realclean:
  Server_Request.i \
  LocalObject.h \
  LocalObject.i \
- Marshal.h \
- Marshal.i \
- singletons.h \
  Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -1256,9 +1241,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  POAC.i \
  POAS.h \
@@ -1376,9 +1358,6 @@ realclean:
  Server_Request.i \
  LocalObject.h \
  LocalObject.i \
- Marshal.h \
- Marshal.i \
- singletons.h \
  Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -1550,9 +1529,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  POAC.i \
  Servant_Base.h \
@@ -1756,9 +1732,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  POAC.i \
  Servant_Base.h \
@@ -1874,9 +1847,6 @@ realclean:
  Server_Request.i \
  LocalObject.h \
  LocalObject.i \
- Marshal.h \
- Marshal.i \
- singletons.h \
  Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -2093,9 +2063,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  POAC.i \
  Key_Adapters.i \
@@ -2206,9 +2173,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  POAC.i \
  Servant_Base.i \
@@ -2361,9 +2325,6 @@ realclean:
  Server_Request.i \
  LocalObject.h \
  LocalObject.i \
- Marshal.h \
- Marshal.i \
- singletons.h \
  Stub.h \
  MProfile.h \
  Profile.h \
@@ -2502,9 +2463,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  POAC.i \
  Servant_Base.i \
@@ -2677,13 +2635,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  CDR.h \
@@ -2735,9 +2690,6 @@ realclean:
  LocalObject.i \
  Typecode.h \
  Typecode.i \
- Marshal.h \
- Marshal.i \
- singletons.h \
  POA.h \
  Object_Adapter.h \
  Key_Adapters.h \
@@ -2971,13 +2923,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  CDR.h \
@@ -3029,9 +2978,6 @@ realclean:
  LocalObject.i \
  Typecode.h \
  Typecode.i \
- Marshal.h \
- Marshal.i \
- singletons.h \
  POA.h \
  Object_Adapter.h \
  Key_Adapters.h \
@@ -3278,11 +3224,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -3306,6 +3247,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -3475,11 +3418,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  CONV_FRAMEC.h \
  CONV_FRAMEC.i \
@@ -3606,13 +3544,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -3830,11 +3765,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -3861,6 +3791,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  IORC.i \
@@ -4042,11 +3974,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -4195,11 +4122,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -4267,6 +4189,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -4480,11 +4404,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -4552,6 +4471,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -4723,11 +4644,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  CONV_FRAMEC.h \
  CONV_FRAMEC.i \
@@ -4772,6 +4688,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -4938,9 +4856,6 @@ realclean:
  Server_Request.i \
  LocalObject.h \
  LocalObject.i \
- Marshal.h \
- Marshal.i \
- singletons.h \
  Stub.h \
  MProfile.h \
  MProfile.i \
@@ -5101,11 +5016,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -5174,6 +5084,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -5417,11 +5329,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -5486,6 +5393,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -5669,11 +5578,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -5740,6 +5644,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -5976,11 +5882,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -6009,6 +5910,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -6224,11 +6127,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -6302,6 +6200,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -6516,11 +6416,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -6594,6 +6489,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -6764,11 +6661,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  CONV_FRAMEC.h \
  CONV_FRAMEC.i \
@@ -6891,6 +6783,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  IORC.i \
@@ -6985,9 +6879,6 @@ realclean:
  Server_Request.i \
  LocalObject.h \
  LocalObject.i \
- Marshal.h \
- Marshal.i \
- singletons.h \
  Stub.h \
  MProfile.h \
  MProfile.i \
@@ -7150,11 +7041,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -7234,6 +7120,8 @@ realclean:
  TAOC.h \
  PolicyC.h \
  CurrentC.h \
+ Object.h \
+ Object.i \
  CurrentC.i \
  Environment.h \
  Environment.i \
@@ -7434,11 +7322,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -7554,6 +7437,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -7731,11 +7616,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -7808,6 +7688,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -8004,11 +7886,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -8077,6 +7954,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -8294,11 +8173,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -8374,6 +8248,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -8545,11 +8421,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  CONV_FRAMEC.h \
  CONV_FRAMEC.i \
@@ -8588,6 +8459,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -8768,9 +8641,6 @@ realclean:
  Server_Request.i \
  LocalObject.h \
  LocalObject.i \
- Marshal.h \
- Marshal.i \
- singletons.h \
  Stub.h \
  MProfile.h \
  MProfile.i \
@@ -8933,11 +8803,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -9014,6 +8879,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -9267,11 +9134,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -9336,6 +9198,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -9519,11 +9383,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -9598,6 +9457,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -9841,11 +9702,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -9872,6 +9728,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -10025,9 +9883,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  Exception.h \
  Exception.i \
  IORC.i \
@@ -10268,9 +10123,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  Exception.h \
  Exception.i \
  IORC.i \
@@ -10379,9 +10231,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  Exception.h \
  Exception.i \
  IORC.i \
@@ -10591,13 +10440,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -10800,13 +10646,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -11016,11 +10859,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -11040,6 +10878,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -11265,11 +11105,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -11419,11 +11254,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -11528,17 +11358,14 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Principal.i \
  Any.h \
  CDR.h \
  CDR.i \
  Environment.h \
  Environment.i \
+ Object.h \
+ Object.i \
  Any.i \
  ORB.h \
  IOR_LookupTable.h \
@@ -11685,17 +11512,14 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Principal.i \
  Any.h \
  CDR.h \
  CDR.i \
  Environment.h \
  Environment.i \
+ Object.h \
+ Object.i \
  Any.i \
  ORB.h \
  IOR_LookupTable.h \
@@ -11747,8 +11571,7 @@ realclean:
  InterceptorC.i \
  Interceptor.i \
  ORB.i \
- Marshal.i \
- singletons.h
+ Marshal.i
 
 .obj/skip.o .obj/skip.so .shobj/skip.o .shobj/skip.so: skip.cpp \
  Marshal.h \
@@ -11842,17 +11665,14 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Principal.i \
  Any.h \
  CDR.h \
  CDR.i \
  Environment.h \
  Environment.i \
+ Object.h \
+ Object.i \
  Any.i \
  ORB.h \
  IOR_LookupTable.h \
@@ -12024,13 +11844,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -12175,13 +11992,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -12306,9 +12120,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  Principal.i \
  ORB.h \
  IOR_LookupTable.h \
@@ -12407,7 +12218,6 @@ realclean:
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- singletons.h \
  debug.h
 
 .obj/CurrentC.o .obj/CurrentC.so .shobj/CurrentC.o .shobj/CurrentC.so: CurrentC.cpp \
@@ -12549,9 +12359,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -12730,9 +12537,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  DynAnyC.h \
  Any.h \
@@ -13057,13 +12861,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  CDR.h \
@@ -13279,9 +13080,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  POAC.i \
  Key_Adapters.i \
@@ -13551,9 +13349,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  POAC.i \
  Key_Adapters.i \
@@ -13767,11 +13562,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  ObjectIDList.i \
  Typecode.h \
  Exception.h \
@@ -13808,6 +13598,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -13951,13 +13743,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -14128,9 +13917,6 @@ realclean:
  Server_Request.i \
  LocalObject.h \
  LocalObject.i \
- Marshal.h \
- Marshal.i \
- singletons.h \
  Operation_Table.h \
  Client_Strategy_Factory.h \
  Invocation.h \
@@ -14357,9 +14143,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  Stub.h \
  Pluggable.h \
@@ -14599,9 +14382,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -14767,9 +14547,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  Any.h \
  Any.i \
@@ -15008,9 +14785,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  Any.h \
  Any.i \
@@ -15359,11 +15133,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Principal.i \
  CDR.h \
  CDR.i
@@ -15453,12 +15222,7 @@ realclean:
  Sequence.i \
  Sequence_T.h \
  Sequence_T.i \
- Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp
+ Sequence_T.cpp
 
 .obj/Server_Request.o .obj/Server_Request.so .shobj/Server_Request.o .shobj/Server_Request.so: Server_Request.cpp \
  Server_Request.h \
@@ -15550,14 +15314,11 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  Object_KeyC.h \
  Object_KeyC.i \
+ Object.h \
+ Object.i \
  Server_Request.i \
  POAC.h \
  PolicyC.h \
@@ -15760,11 +15521,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  CONV_FRAMEC.h \
  CONV_FRAMEC.i \
@@ -15962,11 +15718,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -15989,6 +15740,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -16195,11 +15948,7 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  Principal.i \
- singletons.h \
  Marshal.h \
  ORB.h \
  IOR_LookupTable.h \
@@ -16373,13 +16122,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -16657,13 +16403,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -16810,13 +16553,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -16886,8 +16626,7 @@ realclean:
  $(ACE_ROOT)/ace/Map_Manager.cpp \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- singletons.h
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/Client_Strategy_Factory.o .obj/Client_Strategy_Factory.so .shobj/Client_Strategy_Factory.o .shobj/Client_Strategy_Factory.so: Client_Strategy_Factory.cpp \
  Client_Strategy_Factory.h \
@@ -17142,11 +16881,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Object_KeyC.i \
  Typecode.h \
  Exception.h \
@@ -17274,13 +17008,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -17512,11 +17243,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  operation_details.i
 
@@ -17611,12 +17337,9 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
+ IOPC.i \
  Object.h \
  Object.i \
- varout.i \
- varout.cpp \
- IOPC.i \
  Environment.h \
  Environment.i \
  InterceptorC.i \
@@ -17711,12 +17434,9 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
+ IOPC.i \
  Object.h \
  Object.i \
- varout.i \
- varout.cpp \
- IOPC.i \
  Environment.h \
  Environment.i \
  InterceptorC.i
@@ -17927,13 +17647,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -18173,13 +17890,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -18340,9 +18054,6 @@ realclean:
  Server_Request.i \
  LocalObject.h \
  LocalObject.i \
- Marshal.h \
- Marshal.i \
- singletons.h \
  Operation_Table.h \
  Invocation.h \
  Reply_Dispatcher.h \
@@ -18495,13 +18206,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -18780,13 +18488,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -18987,13 +18692,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -19316,11 +19018,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -19337,6 +19034,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -19598,11 +19297,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -19615,6 +19309,8 @@ realclean:
  TAOC.h \
  PolicyC.h \
  CurrentC.h \
+ Object.h \
+ Object.i \
  CurrentC.i \
  Environment.h \
  Environment.i \
@@ -19827,11 +19523,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -19966,13 +19657,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -20127,11 +19815,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  ObjectIDList.i \
  Exception.h \
  Exception.i \
@@ -20238,9 +19921,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  POAC.i \
  ORB.h \
@@ -20423,11 +20103,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Typecode.h \
  Exception.h \
  Exception.i \
@@ -20443,6 +20118,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -20583,11 +20260,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  Pluggable_Messaging_Utils.i \
  Pluggable_Messaging.i \
@@ -20627,6 +20299,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -20812,13 +20486,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -21007,15 +20678,12 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  Any.h \
  Environment.h \
  Environment.i \
+ Object.h \
+ Object.i \
  Any.i \
  Typecode.h \
  Exception.h \
@@ -21112,11 +20780,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  IOPS_T.h \
  IOPS_T.i \
@@ -21223,9 +20886,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  DynAnyC.h \
  Any.h \
@@ -21466,9 +21126,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  DynAnyC.h \
  Any.h \
@@ -21623,15 +21280,12 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  CONV_FRAMEC.i \
  Any.h \
  Environment.h \
  Environment.i \
+ Object.h \
+ Object.i \
  Any.i \
  Typecode.h \
  Exception.h \
@@ -21728,11 +21382,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  CONV_FRAMEC.i \
  CONV_FRAMES_T.h \
  CONV_FRAMES_T.i \
@@ -21829,11 +21478,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  CONV_FRAMEC.h \
  CONV_FRAMEC.i \
@@ -21929,11 +21573,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  Object_KeyC.h \
  Object_KeyC.i \
@@ -21941,6 +21580,8 @@ realclean:
  Environment.h \
  Environment.i \
  Any.h \
+ Object.h \
+ Object.i \
  Any.i \
  Typecode.h \
  Exception.h \
@@ -22060,7 +21701,8 @@ realclean:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- varout.h \
+ PolicyC.h \
+ CurrentC.h \
  Object.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -22124,17 +21766,6 @@ realclean:
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
  Object.i \
- varout.i \
- varout.cpp \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- PolicyC.h \
- CurrentC.h \
  CurrentC.i \
  CDR.h \
  CDR.i \
@@ -22142,6 +21773,13 @@ realclean:
  Environment.i \
  Exception.h \
  Exception.i \
+ Sequence.h \
+ Managed_Types.h \
+ Managed_Types.i \
+ Sequence.i \
+ Sequence_T.h \
+ Sequence_T.i \
+ Sequence_T.cpp \
  PolicyC.i \
  TimeBaseC.h \
  Any.h \
@@ -22190,7 +21828,8 @@ realclean:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- varout.h \
+ PolicyC.h \
+ CurrentC.h \
  Object.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -22254,17 +21893,6 @@ realclean:
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
  Object.i \
- varout.i \
- varout.cpp \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- PolicyC.h \
- CurrentC.h \
  CurrentC.i \
  CDR.h \
  CDR.i \
@@ -22272,6 +21900,13 @@ realclean:
  Environment.i \
  Exception.h \
  Exception.i \
+ Sequence.h \
+ Managed_Types.h \
+ Managed_Types.i \
+ Sequence.i \
+ Sequence_T.h \
+ Sequence_T.i \
+ Sequence_T.cpp \
  PolicyC.i \
  TimeBaseC.h \
  Any.h \
@@ -22534,9 +22169,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
  IORS.h \
@@ -22677,13 +22309,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -22851,17 +22480,14 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  CDR.h \
  CDR.i \
  Any.h \
  Environment.h \
  Environment.i \
+ Object.h \
+ Object.i \
  Any.i \
  Typecode.h \
  Exception.h \
@@ -22995,9 +22621,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
  IORS.h \
@@ -23138,9 +22761,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  IOPC.h \
  IOPC.i \
@@ -23389,9 +23009,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  DynAnyC.h \
  DynAnyC.i \
@@ -23635,9 +23252,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  DynAnyC.h \
  Any.h \
@@ -23873,9 +23487,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  DynAnyC.h \
  DynAnyC.i \
@@ -23927,7 +23538,8 @@ realclean:
  $(ACE_ROOT)/ace/Log_Record.i \
  TAOS.h \
  TAOC.h \
- varout.h \
+ PolicyC.h \
+ CurrentC.h \
  Object.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -23991,17 +23603,6 @@ realclean:
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
  Object.i \
- varout.i \
- varout.cpp \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- PolicyC.h \
- CurrentC.h \
  CurrentC.i \
  CDR.h \
  CDR.i \
@@ -24009,6 +23610,13 @@ realclean:
  Environment.i \
  Exception.h \
  Exception.i \
+ Sequence.h \
+ Managed_Types.h \
+ Managed_Types.i \
+ Sequence.i \
+ Sequence_T.h \
+ Sequence_T.i \
+ Sequence_T.cpp \
  PolicyC.i \
  TimeBaseC.h \
  Any.h \
@@ -24058,7 +23666,8 @@ realclean:
  $(ACE_ROOT)/ace/Log_Record.i \
  TAOS.h \
  TAOC.h \
- varout.h \
+ PolicyC.h \
+ CurrentC.h \
  Object.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -24122,17 +23731,6 @@ realclean:
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
  Object.i \
- varout.i \
- varout.cpp \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- PolicyC.h \
- CurrentC.h \
  CurrentC.i \
  CDR.h \
  CDR.i \
@@ -24140,6 +23738,13 @@ realclean:
  Environment.i \
  Exception.h \
  Exception.i \
+ Sequence.h \
+ Managed_Types.h \
+ Managed_Types.i \
+ Sequence.i \
+ Sequence_T.h \
+ Sequence_T.i \
+ Sequence_T.cpp \
  PolicyC.i \
  TimeBaseC.h \
  Any.h \
@@ -24657,9 +24262,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  Typecode.h \
  Typecode.i \
  IOPC.h \
@@ -24844,13 +24446,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -25041,9 +24640,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  Exception.h \
  Exception.i \
  DynAnyC.i \
@@ -25236,9 +24832,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  Exception.h \
  Exception.i \
  DynAnyC.i \
@@ -25360,9 +24953,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  DynAnyC.h \
  Any.h \
@@ -25492,9 +25082,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  DynAnyC.h \
  Any.h \
@@ -25661,9 +25248,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  DynAnyC.h \
  Any.h \
@@ -25784,9 +25368,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  DynAnyC.h \
  Any.h \
@@ -25953,9 +25534,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  DynAnyC.h \
  Any.h \
@@ -26122,9 +25700,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  PolicyC.i \
  DynAnyC.h \
  Any.h \
@@ -26312,13 +25887,10 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -26431,12 +26003,9 @@ realclean:
  Object.h \
  Object.i \
  Any.i \
- varout.h \
- varout.i \
- varout.cpp \
- Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
+ Sequence.h \
  Sequence.i \
  Sequence_T.h \
  Sequence_T.i \
@@ -26676,11 +26245,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  Pluggable_Messaging_Utils.i \
  Pluggable_Messaging.i \
@@ -26829,11 +26393,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  Pluggable_Messaging_Utils.i
 
@@ -26930,11 +26489,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  Pluggable_Messaging_Utils.i \
  Pluggable_Messaging.i \
@@ -26943,6 +26497,8 @@ realclean:
  operation_details.h \
  operation_details.i \
  GIOP_Utils.h \
+ Object.h \
+ Object.i \
  GIOP_Utils.i \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -27093,11 +26649,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  Pluggable_Messaging_Utils.i \
  Pluggable_Messaging.i \
@@ -27107,6 +26658,8 @@ realclean:
  Any.h \
  Environment.h \
  Environment.i \
+ Object.h \
+ Object.i \
  Any.i \
  debug.h \
  Principal.h \
@@ -27226,11 +26779,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  Pluggable_Messaging_Utils.i \
  Pluggable_Messaging.i \
@@ -27278,6 +26826,8 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
+ Object.h \
+ Object.i \
  IORS.h \
  IORC.h \
  Environment.h \
@@ -27399,9 +26949,6 @@ realclean:
  Server_Request.i \
  LocalObject.h \
  LocalObject.i \
- Marshal.h \
- Marshal.i \
- singletons.h \
  Stub.h \
  MProfile.h \
  Profile.h \
@@ -27531,11 +27078,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  Object_KeyC.h \
  Object_KeyC.i \
@@ -27545,6 +27087,8 @@ realclean:
  debug.h \
  GIOP_Server_Request.h \
  Server_Request.h \
+ Object.h \
+ Object.i \
  Server_Request.i \
  ORB.h \
  Exception.h \
@@ -27709,14 +27253,11 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  Pluggable_Messaging_Utils.i \
  Pluggable_Messaging.i \
+ Object.h \
+ Object.i \
  GIOP_Utils.i \
  ORB_Core.h \
  ORB.h \
@@ -27912,11 +27453,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  Object_KeyC.h \
  Object_KeyC.i \
@@ -28011,11 +27547,6 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  Object_KeyC.i \
  IOPC.h \
  CDR.h \
@@ -28114,14 +27645,11 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  Object_KeyC.h \
  Object_KeyC.i \
+ Object.h \
+ Object.i \
  Server_Request.i \
  ORB.h \
  Exception.h \
@@ -28341,14 +27869,11 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  Pluggable_Messaging_Utils.i \
  Pluggable_Messaging.i \
+ Object.h \
+ Object.i \
  GIOP_Utils.i \
  GIOP_Message_State.h \
  GIOP_Message_State.i \
@@ -28512,9 +28037,6 @@ realclean:
  Server_Request.i \
  LocalObject.h \
  LocalObject.i \
- Marshal.h \
- Marshal.i \
- singletons.h \
  Stub.h \
  MProfile.h \
  Profile.h \
@@ -28645,16 +28167,13 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
  IOPC.i \
  Pluggable_Messaging_Utils.i \
  Pluggable_Messaging.i \
  GIOP_Message_State.i \
  GIOP_Utils.h \
+ Object.h \
+ Object.i \
  GIOP_Utils.i \
  ORB_Core.h \
  ORB.h \

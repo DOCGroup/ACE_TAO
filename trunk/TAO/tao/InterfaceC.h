@@ -17,7 +17,6 @@
 #include "tao/ifrfwd.h"
 #include "tao/Any.h"
 #include "tao/Object.h"
-#include "tao/varout.h"
 #include "tao/Managed_Types.h"
 #include "tao/Sequence.h"
 #include "tao/Typecode.h"
@@ -3130,7 +3129,7 @@ struct TAO_Export IR_StructMember
 
   TAO_String_Manager name;
   CORBA::TypeCode_var type;
-  TAO_Object_Field_T<IR_IDLType, IR_IDLType_var> type_def;
+  IR_IDLType_var type_def;
 };
 
 class TAO_Export IR_StructMember_var
@@ -3490,7 +3489,7 @@ struct TAO_Export IR_UnionMember
   TAO_String_Manager name;
   CORBA::Any label;
   CORBA::TypeCode_var type;
-  TAO_Object_Field_T<IR_IDLType, IR_IDLType_var> type_def;
+  IR_IDLType_var type_def;
 };
 
 class TAO_Export IR_UnionMember_var
@@ -3812,7 +3811,7 @@ public:
 
     static void _tao_any_destructor (void*);
 
-    TAO_Object_Field_T<IR_Contained, IR_Contained_var> contained_object;
+    IR_Contained_var contained_object;
     IR::DefinitionKind kind;
     CORBA::Any value;
   };
@@ -8304,7 +8303,7 @@ struct TAO_Export IR_ParameterDescription
 
   TAO_String_Manager name;
   CORBA::TypeCode_var type;
-  TAO_Object_Field_T<IR_IDLType, IR_IDLType_var> type_def;
+  IR_IDLType_var type_def;
   IR::ParameterMode mode;
 };
 
@@ -9649,7 +9648,7 @@ struct TAO_Export IR_ValueMember
   TAO_String_Manager defined_in;
   TAO_String_Manager version;
   CORBA::TypeCode_var type;
-  TAO_Object_Field_T<IR_IDLType, IR_IDLType_var> type_def;
+  IR_IDLType_var type_def;
   CORBA::Visibility access;
 };
 
@@ -10849,7 +10848,7 @@ struct TAO_Export IR_ProvidesDescription
   TAO_String_Manager id;
   TAO_String_Manager defined_in;
   TAO_String_Manager version;
-  TAO_Object_Field_T<IR_InterfaceDef, IR_InterfaceDef_var> interface_type;
+  IR_InterfaceDef_var interface_type;
 };
 
 class TAO_Export IR_ProvidesDescription_var
@@ -11050,7 +11049,7 @@ struct TAO_Export IR_UsesDescription
   TAO_String_Manager id;
   TAO_String_Manager defined_in;
   TAO_String_Manager version;
-  TAO_Object_Field_T<IR_InterfaceDef, IR_InterfaceDef_var> interface_type;
+  IR_InterfaceDef_var interface_type;
   CORBA::Boolean is_multiple;
 };
 
@@ -11495,7 +11494,7 @@ struct TAO_Export IR_EventDescription
   TAO_String_Manager id;
   TAO_String_Manager defined_in;
   TAO_String_Manager version;
-  TAO_Object_Field_T<IR_ValueDef, IR_ValueDef_var> value;
+  IR_ValueDef_var value;
 };
 
 class TAO_Export IR_EventDescription_var
@@ -12461,7 +12460,7 @@ struct TAO_Export IR_PrimaryKeyDescription
   TAO_String_Manager id;
   TAO_String_Manager defined_in;
   TAO_String_Manager version;
-  TAO_Object_Field_T<IR_ValueDef, IR_ValueDef_var> primary_key;
+  IR_ValueDef_var primary_key;
 };
 
 class TAO_Export IR_PrimaryKeyDescription_var
@@ -13016,7 +13015,7 @@ struct TAO_Export IR_HomeDescription
   TAO_String_Manager version;
   TAO_String_Manager base_home;
   TAO_String_Manager managed_component;
-  TAO_Object_Field_T<IR_PrimaryKeyDef, IR_PrimaryKeyDef_var> primary_key_def;
+  IR_PrimaryKeyDef_var primary_key_def;
   IR_FactoryDefSeq factories;
   IR_FinderDefSeq finders;
   IR_OpDescriptionSeq operations;

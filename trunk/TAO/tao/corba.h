@@ -48,8 +48,6 @@
 #include "tao/Context.h"
 #include "tao/Typecode.h"
 
-#include "tao/varout.h"
-#include "tao/singletons.h"
 #include "tao/CDR.h"
 
 #include "tao/PolicyC.h"
