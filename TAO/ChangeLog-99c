@@ -1,3 +1,8 @@
+Wed Apr 28 15:21:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/TAO.cpp (deactivate_under_child_poa and deactivate): Changed
+	  object_id to object_id.in ().
+
 Wed Apr 28 16:21:02 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/DII_Cubit/Makefile:
