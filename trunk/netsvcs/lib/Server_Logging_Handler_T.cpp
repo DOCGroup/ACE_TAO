@@ -5,7 +5,7 @@
 
 #define ACE_BUILD_SVC_DLL
 
-#include <string.h>
+#include "ace/OS.h"
 #include "ace/Get_Opt.h"
 #include "Server_Logging_Handler_T.h"
 
