@@ -155,7 +155,7 @@ ACE::ldfind (const char filename[],
   char searchfilename[MAXPATHLEN];
 
   // Create a copy of filename to work with.
-  if (ACE_OS::strlen (filename) + 1 > (sizeof tempcopy / sizeof char))
+  if (ACE_OS::strlen (filename) + 1 > (sizeof tempcopy / sizeof (char)))
     {
       errno = ENOMEM;
       return -1;
@@ -207,7 +207,7 @@ ACE::ldfind (const char filename[],
   // Make sure we've got enough space in searchfilename.
   if (ACE_OS::strlen (searchfilename) + 
       ACE_OS::strlen (ACE_DLL_PREFIX) + 
-      got_suffix ? 0 : ACE_OS::strlen (ACE_DLL_SUFFIX) >= (sizeof searchfilename / sizeof char)) 
+      got_suffix ? 0 : ACE_OS::strlen (ACE_DLL_SUFFIX) >= (sizeof searchfilename / sizeof (char)))
     {
       errno = ENOMEM;
       return -1;
