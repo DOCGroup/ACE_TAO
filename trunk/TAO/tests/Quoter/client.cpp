@@ -372,7 +372,7 @@ Quoter_Client::init (int argc, char **argv)
 
       ACE_DEBUG ((LM_DEBUG, "Quoter Created\n"));
     
-      if (CORBA::is_nil (this->quoter_var_))
+      if (CORBA::is_nil (this->quoter_var_.in()))
       {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "null quoter objref returned by factory\n"),
