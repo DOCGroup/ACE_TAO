@@ -1,3 +1,8 @@
+Wed Jun 21 14:40:15 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/OS.i:
+	  Removed unused arg warnings in ACE_OS::rename()
+
 Wed Jun 21 13:41:27 2000  Steve Huston  <shuston@riverace.com>
 
         * tests/OS_Test.cpp: New test for OS things. All it tests now is
