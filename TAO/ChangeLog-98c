@@ -1,9 +1,18 @@
+1998-06-12  Torben Worm  <tworm@cumbia.cs.wustl.edu>
+
+	* orbsvcs/Concurrency/CC_LockSet.{h,cpp}
+	  Added locks to avoid race conditions.
+	  Corrected errors regarding the semantics of the service
+	  One issue is still outstanding: The use of a semaphore to
+	  lock the threads which do not preserve the ordering of the
+	  locking.
+
 Fri Jun 12 11:48:00 1998  Michael Kircher <mk1@cs.wustl.edu>
 
         * tao/POAC.cpp: The TAO_IDL compiler generates platform
 	  dependent code for typecodes right now. POA.idl is !not!
 	  recompiled on a compilation, because it has been customized.
-	  This means, that a ifdef is needed to cover for the 
+	  This means, that a ifdef is needed to cover for the
 	  platform dependence.
 
 Fri Jun 12 09:43:14 1998  David L. Levine  <levine@cs.wustl.edu>
