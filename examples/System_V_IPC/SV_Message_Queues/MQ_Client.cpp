@@ -8,6 +8,7 @@
 
 #include "ace/Malloc.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(SV_Message_Queues, MQ_Client, "$Id$")
 
