@@ -36,7 +36,8 @@ class ACE_Reactor_Impl;
 class ACE_Export ACE_Reactor_Notify : public ACE_Event_Handler
 {
   // = TITLE
-  //     Unblock an <ACE_Reactor_Impl> from its event loop.
+  //     Abstract class for unblocking an <ACE_Reactor_Impl> from its
+  //     event loop.
 public:
   // = Initialization and termination methods.
   virtual int open (ACE_Reactor_Impl *,
@@ -74,7 +75,8 @@ public:
                     int restart = 0,
                     ACE_Sig_Handler * = 0,
                     ACE_Timer_Queue * = 0,
-                    int disable_notify_pipe = 0) = 0;
+                    int disable_notify_pipe = 0,
+                    ACE_Reactor_Notify * = 0) = 0;
   // Initialization.
 
   virtual int current_info (ACE_HANDLE, size_t & /* size */) = 0;
