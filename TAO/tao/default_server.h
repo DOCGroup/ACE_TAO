@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //     TAO
-// 
+//
 // = FILENAME
 //     default_server.h
 //
@@ -53,6 +53,20 @@ public:
   // <ACE_Lock_Adapter\<ACE_Thread_Mutex\>>; a setting of <null>
   // returns an <ACE_Lock_Adapter\<ACE_NULL_Mutex\>>.
 
+  virtual ACE_Lock *create_servant_lock (void);
+  // Creates and returns a lock for servants based on the setting of
+  // POA, and concurrency strategy as follows:
+  // 1. If concurrency policy is reactive and POA is TSS
+  //    then return ACE_Null_Mutex via ACE_Lock_Adapter.
+  //
+  // 2. If concurrency policy is non-reactive then
+  //    return ACE_Thread_Mutex ...
+  //
+  // 3. If the POA is global then, return
+  //    ACE_Null_Mutex iff ORB_init count == 1,
+  //    else if ORB_init count > 1 return
+  //    ACE_Thread_Mutex.
+
   // = Service Configurator hooks.
   virtual int init (int argc, char *argv[]);
   // Initialize the ORB when it's linked dynamically.
@@ -69,16 +83,16 @@ public:
   //   where <{which}> is one of <thread> or <null> (default <thread>)
   // <-ORBpoamgrlock> <{which}>
   //   where <{which}> is one of <thread> or <null> (default <thread>)
-  
+
 private:
   void tokenize (char *flag_string);
 
   u_long thread_flags_;
   // Default thread flags passed to thr_create().
-  
+
   u_long object_table_size_;
   // Default size of object lookup table.
-  
+
   TAO_Demux_Strategy object_lookup_strategy_;
   // The type of lookup/demultiplexing strategy being used
 
@@ -90,7 +104,7 @@ private:
 
   Lock_Type poa_lock_type_;
   // The type of lock to be returned by <create_poa_lock()>.
-  
+
   Lock_Type poa_mgr_lock_type_;
   // The type of lock to be returned by <create_poa_mgr_lock()>.
 
@@ -102,7 +116,7 @@ private:
   ACE_Thread_Strategy<TAO_Server_Connection_Handler> threaded_strategy_;
   // The threaded strategy used for passively establishing
   // connections.
-  
+
   CONCURRENCY_STRATEGY *concurrency_strategy_;
   // concrete concurrency strategy.
 
