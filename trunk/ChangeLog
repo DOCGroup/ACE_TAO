@@ -1,3 +1,12 @@
+Fri Jun 20 13:32:21 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* include/makeinclude/platform_linux.GNU (PLATFORM_SSL_CPPFLAGS):
+
+	  Some Linux OpenSSL installations compile in Kerberos support.
+	  Add the Kerberos include path to preprocessor include path.
+	  Fixes build problems on Red Hat 9 installations.  Note that this
+	  is an interim fix.
+
 Fri Jun 20 10:07:39 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/qt_moc.mpb:
