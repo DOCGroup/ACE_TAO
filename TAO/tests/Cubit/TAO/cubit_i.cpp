@@ -83,7 +83,7 @@ Cubit_i::Cubit_cube_union (Cubit_oneof       &values,
 void Cubit_i::Cubit_please_exit (CORBA::Environment &env)
 {
   dmsg ("I've been asked to shut down...");
-  TAO_ORB_CORE_instance()->root_poa ()->please_shutdown (env);
+  TAO_ORB_Core_instance()->root_poa ()->please_shutdown (env);
   // end_reactor_event_loop() no longer?
   dexc (env, "please_exit, please_shutdown");
 }
