@@ -66,10 +66,13 @@ protected:
   /// Apply the polices and create child POA.
   void create_i (PortableServer::POA_ptr parent_poa, const char* poa_name, CORBA::PolicyList &policy_list ACE_ENV_ARG_DECL);
 
+  /// Generate a unique id for each POA created.
+  ACE_CString get_unique_id (void);
+
   /// POA
   PortableServer::POA_var poa_;
 
-  /// ID Factory
+  /// ID Factory for objects.
   TAO_NS_ID_Factory id_factory_;
 
   /// Convert id to ObjectID

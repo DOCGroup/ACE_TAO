@@ -12,82 +12,110 @@ ACE_RCSID(RT_Notify, TAO_NS_StructuredEvent, "$Id$")
 #include "../Consumer.h"
 #include "tao/debug.h"
 
-TAO_NS_StructuredEvent::TAO_NS_StructuredEvent (const CosNotification::StructuredEvent &notification)
-  : notification_ (notification), type_ (notification.header.fixed_header.event_type)
+TAO_NS_StructuredEvent_No_Copy::TAO_NS_StructuredEvent_No_Copy (const CosNotification::StructuredEvent &notification)
+  : notification_ (&notification), type_ (notification.header.fixed_header.event_type)
 {
-  TAO_NS_PropertySeq qos;
+  const CosNotification::PropertySeq& prop_seq = notification.header.variable_header;
 
-  if (qos.init (this->notification_.header.variable_header) != -1)
-  {
-    this->priority_.set (qos);
-    this->timeout_.set (qos);
-  }
+  for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
+    {
+      if (ACE_OS::strcmp (prop_seq[i].name.in (), CosNotification::Priority) == 0)
+        this->priority_.set (prop_seq[i].value);
+      else if (ACE_OS::strcmp (prop_seq[i].name.in (), CosNotification::Timeout) == 0)
+        this->timeout_.set (prop_seq[i].value);
+    }
 }
 
 const TAO_NS_EventType&
-TAO_NS_StructuredEvent::type (void) const
+TAO_NS_StructuredEvent_No_Copy::type (void) const
 {
   return this->type_;
 }
 
-TAO_NS_StructuredEvent::~TAO_NS_StructuredEvent ()
+TAO_NS_StructuredEvent_No_Copy::~TAO_NS_StructuredEvent_No_Copy ()
 {
 }
 
+TAO_NS_Event*
+TAO_NS_StructuredEvent_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL) const
+{
+  TAO_NS_Event* copy;
+
+  ACE_NEW_THROW_EX (copy,
+                    TAO_NS_StructuredEvent (*this->notification_),
+                    CORBA::NO_MEMORY ());
+
+  return copy;
+}
+
 CORBA::Boolean
-TAO_NS_StructuredEvent::do_match (CosNotifyFilter::Filter_ptr filter ACE_ENV_ARG_DECL)
+TAO_NS_StructuredEvent_No_Copy::do_match (CosNotifyFilter::Filter_ptr filter ACE_ENV_ARG_DECL) const
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
                 "TAO_Notify_StructuredEvent::do_match ()\n"));
 
-  return filter->match_structured (this->notification_ ACE_ENV_ARG_PARAMETER);
+  return filter->match_structured (*this->notification_ ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_NS_StructuredEvent::convert (CosNotification::StructuredEvent& notification)
+TAO_NS_StructuredEvent_No_Copy::convert (CosNotification::StructuredEvent& notification) const
 {
-  notification = this->notification_;
+  notification = *this->notification_;
 }
 
 void
-TAO_NS_StructuredEvent::push (TAO_NS_Consumer* consumer ACE_ENV_ARG_DECL) const
+TAO_NS_StructuredEvent_No_Copy::push (TAO_NS_Consumer* consumer ACE_ENV_ARG_DECL) const
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
                           "TAO_Notify_StructuredEvent::do_push ("
                           "CosNotifyComm::StructuredPushConsumer_ptr)\n"));
 
-  consumer->push (notification_ ACE_ENV_ARG_PARAMETER);
+  consumer->push (*this->notification_ ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_NS_StructuredEvent::push (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL)
+TAO_NS_StructuredEvent_No_Copy::push (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const
 {
-  forwarder->forward_structured (notification_ ACE_ENV_ARG_PARAMETER);
-}
-void
-TAO_NS_StructuredEvent::push_no_filtering (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL)
-{
-  forwarder->forward_structured_no_filtering (notification_ ACE_ENV_ARG_PARAMETER);
+  forwarder->forward_structured (*this->notification_ ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_NS_StructuredEvent::push (Event_Forwarder::ProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL)
+TAO_NS_StructuredEvent_No_Copy::push_no_filtering (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const
+{
+  forwarder->forward_structured_no_filtering (*this->notification_ ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_StructuredEvent_No_Copy::push (Event_Forwarder::ProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const
 {
   CORBA::Any any;
 
-  TAO_NS_Event::translate (this->notification_, any);
+  TAO_NS_Event::translate (*this->notification_, any);
 
   forwarder->forward_any (any ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_NS_StructuredEvent::push_no_filtering (Event_Forwarder::ProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL)
+TAO_NS_StructuredEvent_No_Copy::push_no_filtering (Event_Forwarder::ProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const
 {
   CORBA::Any any;
 
-  TAO_NS_Event::translate (this->notification_, any);
+  TAO_NS_Event::translate (*this->notification_, any);
 
   forwarder->forward_any_no_filtering (any ACE_ENV_ARG_PARAMETER);
+}
+
+/*****************************************************************************************************/
+
+TAO_NS_StructuredEvent::TAO_NS_StructuredEvent (const CosNotification::StructuredEvent& notification)
+  : TAO_NS_StructuredEvent_No_Copy (notification)
+    , notification_copy (notification)
+{
+  this->notification_ = &notification_copy;
+}
+
+TAO_NS_StructuredEvent::~TAO_NS_StructuredEvent ()
+{
 }

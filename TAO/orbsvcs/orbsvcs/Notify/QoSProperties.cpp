@@ -11,13 +11,13 @@ ACE_RCSID(Notify, TAO_NS_QoSProperties, "$Id$")
 #include "Property.h"
 
 TAO_NS_QoSProperties::TAO_NS_QoSProperties (void)
-  :priority_ (CosNotification::Priority),
-   timeout_ (CosNotification::Timeout),
-   stop_time_supported_ (CosNotification::StopTimeSupported),
-   maximum_batch_size_ (CosNotification::MaximumBatchSize),
-   pacing_interval_ (CosNotification::PacingInterval),
-   thread_pool_ (NotifyExt::ThreadPool),
-   thread_pool_lane_ (NotifyExt::ThreadPoolLanes)
+  : priority_ (CosNotification::Priority)
+    , timeout_ (CosNotification::Timeout)
+    , stop_time_supported_ (CosNotification::StopTimeSupported)
+    , maximum_batch_size_ (CosNotification::MaximumBatchSize)
+    , pacing_interval_ (CosNotification::PacingInterval)
+    , thread_pool_ (NotifyExt::ThreadPool)
+    , thread_pool_lane_ (NotifyExt::ThreadPoolLanes)
 {
   unsupported_[0] = CosNotification::EventReliability;
   unsupported_[1] = CosNotification::ConnectionReliability;
@@ -65,14 +65,14 @@ TAO_NS_QoSProperties::init (const CosNotification::PropertySeq& prop_seq, CosNot
 
   if (prop_seq.length () > 0)
   {
-	// Now, init the supported properties
-	this->priority_.set (*this);
-	this->timeout_.set (*this);
-	this->stop_time_supported_.set (*this);
-	this->maximum_batch_size_.set (*this);
-	this->pacing_interval_.set (*this);
-	this->thread_pool_.set (*this);
-	this->thread_pool_lane_.set (*this);
+        // Now, init the supported properties
+        this->priority_.set (*this);
+        this->timeout_.set (*this);
+        this->stop_time_supported_.set (*this);
+        this->maximum_batch_size_.set (*this);
+        this->pacing_interval_.set (*this);
+        this->thread_pool_.set (*this);
+        this->thread_pool_lane_.set (*this);
   }
 
   return err_index == -1 ? 0 : 1;
@@ -81,11 +81,11 @@ TAO_NS_QoSProperties::init (const CosNotification::PropertySeq& prop_seq, CosNot
 int
 TAO_NS_QoSProperties::copy (TAO_NS_QoSProperties& qos_properties)
 {
-  qos_properties.priority_ = this->priority_;
-  qos_properties.timeout_ = this->timeout_;
-  qos_properties.stop_time_supported_ = this->stop_time_supported_;
-  qos_properties.maximum_batch_size_ = this->maximum_batch_size_;
-  qos_properties.pacing_interval_ = this->pacing_interval_;
+  qos_properties.priority_ = this->priority_.value ();
+  qos_properties.timeout_ = this->timeout_.value ();
+  qos_properties.stop_time_supported_ = this->stop_time_supported_.value ();
+  qos_properties.maximum_batch_size_ = this->maximum_batch_size_.value ();
+  qos_properties.pacing_interval_ = this->pacing_interval_.value ();
 
   PROPERTY_MAP::ITERATOR iter (this->property_map_);
   PROPERTY_MAP::ENTRY *entry;

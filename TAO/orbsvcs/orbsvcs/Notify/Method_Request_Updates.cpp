@@ -13,7 +13,7 @@ ACE_RCSID(Notify, TAO_NS_Method_Request_Updates, "$Id$")
 #include "Peer.h"
 
 TAO_NS_Method_Request_Updates::TAO_NS_Method_Request_Updates (const TAO_NS_EventTypeSeq& added, const TAO_NS_EventTypeSeq& removed, TAO_NS_Proxy* proxy)
-  :added_ (added), removed_ (removed), proxy_ (proxy), refcountable_guard_ (*proxy)
+  : TAO_NS_Method_Request_Updates_Base (added, removed, proxy)
 {
 }
 
@@ -21,35 +21,68 @@ TAO_NS_Method_Request_Updates::~TAO_NS_Method_Request_Updates ()
 {
 }
 
-TAO_NS_Method_Request*
-TAO_NS_Method_Request_Updates::copy (void)
-{
-  /// @@use factory
-  return new TAO_NS_Method_Request_Updates (this->added_, this->removed_, this->proxy_);
-}
-
 int
 TAO_NS_Method_Request_Updates::execute (ACE_ENV_SINGLE_ARG_DECL)
 {
-  if (this->proxy_->has_shutdown ())
-    return 0; // If we were shutdown while waiting in the queue, return with no action.
-
-  ACE_TRY
-    {
-      TAO_NS_Peer* peer = this->proxy_->peer();
-
-      if (peer != 0)
-        {
-          peer->dispatch_updates (this->added_, this->removed_ ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-    }
-  ACE_CATCHANY
-    {
-      if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_NS_Method_Request_Updates::execute error sending updates\n ");
-    }
-  ACE_ENDTRY;
-
-  return 0;
+  return this->execute_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+/********************************************************************************************************/
+
+TAO_NS_Method_Request_Updates_No_Copy::TAO_NS_Method_Request_Updates_No_Copy (const TAO_NS_EventTypeSeq& added
+                                                                              , const TAO_NS_EventTypeSeq& removed, TAO_NS_Proxy* proxy)
+  : TAO_NS_Method_Request_Updates_No_Copy_Base (added, removed, proxy)
+{
+}
+
+TAO_NS_Method_Request_Updates_No_Copy::~TAO_NS_Method_Request_Updates_No_Copy ()
+{
+}
+
+TAO_NS_Method_Request*
+TAO_NS_Method_Request_Updates_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL)
+{
+  TAO_NS_Method_Request* request;
+
+  ACE_NEW_THROW_EX (request,
+                    TAO_NS_Method_Request_Updates (this->added_, this->removed_, this->proxy_),
+                    CORBA::INTERNAL ());
+
+  return request;
+}
+
+int
+TAO_NS_Method_Request_Updates_No_Copy::execute (ACE_ENV_SINGLE_ARG_DECL)
+{
+  return this->execute_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class TAO_NS_Method_Request_Updates_T<const TAO_NS_EventTypeSeq
+, TAO_NS_Proxy_Guard
+, const TAO_NS_EventTypeSeq&
+, TAO_NS_Proxy*
+>;
+
+template class TAO_NS_Method_Request_Updates_T<const TAO_NS_EventTypeSeq&
+, TAO_NS_Proxy*
+, const TAO_NS_EventTypeSeq&
+, TAO_NS_Proxy*
+>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_NS_Method_Request_Updates_T<const TAO_NS_EventTypeSeq
+, TAO_NS_Proxy_Guard
+, const TAO_NS_EventTypeSeq&
+, TAO_NS_Proxy*
+>
+
+#pragma instantiate TAO_NS_Method_Request_Updates_T<const TAO_NS_EventTypeSeq&
+, TAO_NS_Proxy*
+, const TAO_NS_EventTypeSeq&
+, TAO_NS_Proxy*
+>
+
+#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

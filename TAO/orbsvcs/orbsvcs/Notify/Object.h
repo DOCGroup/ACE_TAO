@@ -101,6 +101,9 @@ public:
   /// shutdown. Returns 1 ifif the shutdown was already run once before.
   virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
+  /// Accessor for the Event Manager
+  TAO_NS_Event_Manager* event_manager (void);
+
 protected:
   /// Init this object with data from <rhs>.
   void init (TAO_NS_Object* parent);

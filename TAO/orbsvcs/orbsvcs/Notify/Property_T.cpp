@@ -16,23 +16,24 @@ ACE_RCSID(Notify, TAO_NS_Property_T, "$Id$")
 /*******************************************************************************/
 
 template <class TYPE>
-TAO_NS_PropertyBase_T<TYPE>::TAO_NS_PropertyBase_T (const ACE_CString& name)
+TAO_NS_PropertyBase_T<TYPE>::TAO_NS_PropertyBase_T (const char* name)
   :name_ (name), valid_(0)
 {
 }
 
 template <class TYPE>
-TAO_NS_PropertyBase_T<TYPE>::TAO_NS_PropertyBase_T (const ACE_CString& name, const TYPE& initial)
+TAO_NS_PropertyBase_T<TYPE>::TAO_NS_PropertyBase_T (const char* name, const TYPE& initial)
   :name_ (name), value_ (initial), valid_ (1)
 {
 }
 
 template <class TYPE>
 TAO_NS_PropertyBase_T<TYPE>::TAO_NS_PropertyBase_T (const TAO_NS_PropertyBase_T &rhs)
+:name_ (rhs.name_),
+ value_ (rhs.value_),
+ valid_ (rhs.valid_)
 {
-  this->name_ = rhs.name_;
-  this->value_ = rhs.value_;
-  this->valid_ = rhs.valid_;
+
 }
 
 template <class TYPE>
@@ -52,13 +53,13 @@ TAO_NS_PropertyBase_T<TYPE>::get (CosNotification::PropertySeq& prop_seq)
 /*******************************************************************************/
 
 template <class TYPE>
-TAO_NS_Property_T<TYPE>::TAO_NS_Property_T (const ACE_CString& name)
+TAO_NS_Property_T<TYPE>::TAO_NS_Property_T (const char* name)
   :TAO_NS_PropertyBase_T <TYPE> (name)
 {
 }
 
 template <class TYPE>
-TAO_NS_Property_T<TYPE>::TAO_NS_Property_T (const ACE_CString& name, const TYPE& initial)
+TAO_NS_Property_T<TYPE>::TAO_NS_Property_T (const char* name, const TYPE& initial)
   :TAO_NS_PropertyBase_T <TYPE> (name, initial)
 {
 }
@@ -68,29 +69,38 @@ TAO_NS_Property_T<TYPE>::set (const TAO_NS_PropertySeq& property_seq)
 {
   CosNotification::PropertyValue value;
 
-  if (property_seq.find (this->name_, value) == -1)
+  if (property_seq.find (this->name_, value) == 0 && (value >>= this->value_))
     {
-      this->valid_ = 0;
-      return -1;
+      this->valid_ = 1;
+      return 0;
     }
 
-  value >>= this->value_;
+  this->valid_ = 0;
+  return -1;
+}
 
-  this->valid_ = 1;
+template <class TYPE> int
+TAO_NS_Property_T<TYPE>::set(const CosNotification::PropertyValue &value)
+{
+  if (value >>= this->value_)
+  {
+    this->valid_ = 1;
+    return 0;
+  }
 
-  return 0;
+  return -1;
 }
 
 /*******************************************************************************/
 
 template <class TYPE>
-TAO_NS_StructProperty_T<TYPE>::TAO_NS_StructProperty_T (const ACE_CString& name)
+TAO_NS_StructProperty_T<TYPE>::TAO_NS_StructProperty_T (const char* name)
   :name_ (name), valid_(0)
 {
 }
 
 template <class TYPE>
-TAO_NS_StructProperty_T<TYPE>::TAO_NS_StructProperty_T (const ACE_CString& name, const TYPE& initial)
+TAO_NS_StructProperty_T<TYPE>::TAO_NS_StructProperty_T (const char* name, const TYPE& initial)
   :name_ (name), value_ (initial), valid_ (1)
 {
 }
@@ -103,15 +113,15 @@ TAO_NS_StructProperty_T<TYPE>::set (const TAO_NS_PropertySeq& property_seq)
   if (property_seq.find (this->name_, value) == 0)
     {
       TYPE* extract_type = 0;
-      
+
       if ((value >>= extract_type)  && extract_type != 0) // make sure we get something valid.
-	{
-	  this->value_ = *extract_type; // copy
-	  this->valid_ = 1;
-	  return 0;
-	}
+        {
+          this->value_ = *extract_type; // copy
+          this->valid_ = 1;
+          return 0;
+        }
     }
-  
+
   this->valid_ = 0;
   return -1;
 }
