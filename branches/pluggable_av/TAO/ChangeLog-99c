@@ -1,3 +1,18 @@
+Thu Jul 15 22:43:51 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	* orbsvcs/orbsvcs/AV/MCast.cpp:
+	* orbsvcs/orbsvcs/AV/MCast.h:
+	* orbsvcs/orbsvcs/AV/Nil.cpp:
+	* orbsvcs/orbsvcs/AV/Nil.h
+	* orbsvcs/orbsvcs/AV/Policy.cpp:
+	* orbsvcs/orbsvcs/AV/Policy.h:
+	* orbsvcs/orbsvcs/AV/RTP.cpp:
+	* orbsvcs/orbsvcs/AV/RTP.h:
+	* orbsvcs/orbsvcs/AV/Transport.cpp:
+	* orbsvcs/orbsvcs/AV/sfp.cpp:
+	* orbsvcs/orbsvcs/AV/sfp.h: Fixed warnings in EGCS
+
 Wed Jul 14 20:29:06 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
