@@ -5,7 +5,7 @@ Tue Sep 03 18:34:51 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 
 Tue Sep 03 19:26:44 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\ORB.cpp (_create_policy): Added proprietary
+	* tao/ORB.cpp (_create_policy): Added proprietary
 	  extenstion for the creation of policies to the ORB interface.
 	  This function is similar to ORB::create_policy() except that it
 	  creates an empty policy, usually to be filled in later by
@@ -13,26 +13,26 @@ Tue Sep 03 19:26:44 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	  Also, corrected the throw spec for ORB::create_policy().
 
-	* tao\PolicyFactory_Registry.cpp (_create_policy): Added new method
+	* tao/PolicyFactory_Registry.cpp (_create_policy): Added new method
 	  to TAO_PolicyFactory_Registry as described above.
 
-	* tao\PortableInterceptorC.cpp (_create_policy): Added proprietary
+	* tao/PortableInterceptorC.cpp (_create_policy): Added proprietary
 	  extenstion to PortableInterceptor::PolicyFactory as described
 	  above.  This method is virtual but not pure virtual.  Default
 	  implementation throws PolicyError exception.
 
-	* tao\Profile.cpp (policies): Changed the call to
+	* tao/Profile.cpp (policies): Changed the call to
 	  ORB::create_policy() to ORB::_create_policy().  Passing in
 	  "dummy" Anys to create empty RTCORBA policies is no longer
 	  valid.
 
-	* tao\RTCORBA\RT_PolicyFactory.cpp (_create_policy): Added code to
+	* tao/RTCORBA/RT_PolicyFactory.cpp (_create_policy): Added code to
 	  create empty PRIORITY_MODEL_POLICY_TYPE,
 	  PRIORITY_BANDED_CONNECTION_POLICY_TYPE, and
 	  CLIENT_PROTOCOL_POLICY_TYPE policies.  They will be filled in
 	  later by the demarshaling code.
 
-	* tests\RTCORBA\Policies\Policies.dsp: Corrected project name from
+	* tests/RTCORBA/Policies/Policies.dsp: Corrected project name from
 	  "POA Policies" to "Policies".
 
 Tue Sep  3 18:18:16 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
