@@ -717,11 +717,7 @@ namespace TAO
                           "TAO (%P|%t) - Synch_Oneway_Invocation::"
                           "remote_oneway, queueing message\n"));
 
-            // (1) Try decoupling messaging_object from this
-            // class. Yes this means removing calls that get the
-            // stream. They should be pushed within the transport
-
-            if (transport->queue_message (cdr) != 0)
+            if (transport->format_queue_message (cdr) != 0)
               s = TAO_INVOKE_FAILURE;
           }
 

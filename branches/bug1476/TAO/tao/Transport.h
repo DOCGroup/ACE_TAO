@@ -643,8 +643,8 @@ protected:
   int queue_message_i (const ACE_Message_Block *message_block);
 
 public:
-  /// Queue a message for @a stream
-  int queue_message (TAO_OutputCDR &stream);
+  /// Format and queue a message for @a stream
+  int format_queue_message (TAO_OutputCDR &stream);
 
   /// Send a message block chain,
   int send_message_block_chain (const ACE_Message_Block *message_block,

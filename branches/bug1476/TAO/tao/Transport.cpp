@@ -348,7 +348,7 @@ TAO_Transport::handle_output (void)
 }
 
 int
-TAO_Transport::queue_message (TAO_OutputCDR &stream)
+TAO_Transport::format_queue_message (TAO_OutputCDR &stream)
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
 
