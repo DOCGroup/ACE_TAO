@@ -648,69 +648,72 @@ AST_Interface::dump(ostream &o)
 }
 
 void
-AST_Interface::fwd_redefinition_helper (AST_Interface *&i, UTL_Scope *s,
-                                                           UTL_StrList *p)
+AST_Interface::fwd_redefinition_helper (AST_Interface *&i, 
+                                        UTL_Scope *s,
+                                        UTL_StrList *p)
 {
-  AST_Decl        *d = NULL;
-  AST_Interface   *fd = NULL;
+  AST_Decl *d = NULL;
+  AST_Interface *fd = NULL;
 
-  if (i != NULL &&
-      (d = s->lookup_by_name(i->name(), I_FALSE)) != NULL) {
-    /*
-     * See if we're defining a forward declared interface.
-     */
-    if (d->node_type() == AST_Decl::NT_interface) {
-      /*
-       * Narrow to an interface
-       */
-      fd = AST_Interface::narrow_from_decl(d);
-      /*
-       * Successful?
-       */
-      if (fd == NULL) {
-        /*
-         * Should we give an error here? ... no, look in fe_add_interface
-         */
-      }
-      /*
-       * If it is a forward declared interface..
-       */
-      else if (!fd->is_defined()) {
-        /*
-         * Check if redefining in same scope
-         */
-        if (fd->defined_in() != s) {
-          idl_global->err()
-             ->error3(UTL_Error::EIDL_SCOPE_CONFLICT,
-                      i,
-                      fd,
-                      ScopeAsDecl(s));
-        }
-        /*
-         * All OK, do the redefinition
-         */
-        else {
-#         ifdef IDL_HAS_VALUETYPE
-          /* only redefinition of the same kind */
-          if ((i->is_valuetype() != fd->is_valuetype()) ||
-              (i->is_abstract_valuetype() != fd->is_abstract_valuetype()) ||
-              (i->is_abstract_interface() != fd->is_abstract_interface()))
-          {
-             idl_global->err()->error2(UTL_Error::EIDL_REDEF, i, fd);
-             return;
-          }
-#         endif /* IDL_HAS_VALUETYPE */
+  if (i != NULL && (d = s->lookup_by_name (i->name (), 
+                                           I_FALSE)) 
+      != NULL) 
+    {
+      // See if we're defining a forward declared interface.
+      if (d->node_type () == AST_Decl::NT_interface) 
+        {
+          // Narrow to an interface
+          fd = AST_Interface::narrow_from_decl (d);
 
-          fd->redefine (i, p);
-          /*
-           * Use full definition node
-           */
-          delete i;
-          i = fd;
+          // Successful?
+          if (fd == NULL) 
+            {
+              // Should we give an error here? ... no, look in fe_add_interface
+            }
+
+          // If it is a forward declared interface..
+          else if (!fd->is_defined ()) 
+            {
+              // Check if redefining in same scope. If a module is reopened,
+              // a new pointer in created, and the first term below will be true.
+              // In that case, the scoped names must be compared.
+              if (fd->defined_in () != s 
+                  && !AST_Interface::compare_names (fd, 
+                                                    i)) 
+                {
+                  idl_global->err ()->error2 (UTL_Error::EIDL_SCOPE_CONFLICT,
+                                              i,
+                                              fd);
+                }
+
+              // All OK, do the redefinition
+              else 
+                {
+#                 ifdef IDL_HAS_VALUETYPE
+
+                  // only redefinition of the same kind
+                  if ((i->is_valuetype () != fd->is_valuetype ()) 
+                      || (i->is_abstract_valuetype () != fd->is_abstract_valuetype ()) 
+                      || (i->is_abstract_interface () != fd->is_abstract_interface ()))
+                    {
+                      idl_global->err ()->error2 (UTL_Error::EIDL_REDEF, 
+                                                  i, 
+                                                  fd);
+                      return;
+                    }
+
+#                 endif /* IDL_HAS_VALUETYPE */
+
+                  fd->redefine (i, 
+                                p);
+
+                  // Use full definition node
+                  delete i;
+                  i = fd;
+                }
+            }
         }
-      }
     }
-  }
 }
 
 
@@ -755,6 +758,52 @@ void
 AST_Interface::set_n_inherits(long i)
 {
   pd_n_inherits = i;
+}
+
+// Get the scoped names and, if they are the same 
+// length, iterate over them, comparing each term.
+idl_bool
+AST_Interface::compare_names (AST_Interface *that,
+                              AST_Interface *other)
+{
+  UTL_ScopedName *that_name = that->name ();
+  UTL_ScopedName *other_name = other->name ();
+
+  long that_length = that_name->length ();
+
+  if (that_length != other_name->length ())
+    {
+      return I_FALSE;
+    }
+
+  Identifier *that_id = 0;
+  Identifier *other_id = 0;
+
+  UTL_IdListActiveIterator *that_iter = 
+    new UTL_IdListActiveIterator (that_name);
+  UTL_IdListActiveIterator *other_iter = 
+    new UTL_IdListActiveIterator (other_name);
+
+  for (int i = 0; i < that_length; i++)
+    {
+      that_id = that_iter->item ();
+      other_id = other_iter->item ();
+
+      if (ACE_OS::strcmp (that_id->get_string (),
+                          other_id->get_string ()))
+        {
+          delete that_iter;
+          delete other_iter;
+          return I_FALSE;
+        }
+
+      that_iter->next ();
+      other_iter->next ();
+    }
+
+  delete that_iter;
+  delete other_iter;
+  return I_TRUE;
 }
 
 /*
