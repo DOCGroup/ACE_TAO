@@ -142,8 +142,9 @@ TAO_Portable_Group_Map::dispatch (PortableGroup::TagGroupTaggedComponent* group_
 u_long
 TAO_GroupId_Hash::operator () (const PortableGroup::TagGroupTaggedComponent *id) const
 {
-  u_long hash = ACE::hash_pjw ((const char *) id->group_domain_id,
-                               ACE_OS::strlen ((const char *) id->group_domain_id));
+  u_long hash =
+    ACE::hash_pjw ((const char *) id->group_domain_id,
+                   ACE_OS::strlen ((const char *) id->group_domain_id));
 
   // Truncate the object_group_id in half for the has.
   hash += (u_long) id->object_group_id;
@@ -154,36 +155,30 @@ TAO_GroupId_Hash::operator () (const PortableGroup::TagGroupTaggedComponent *id)
 }
 
 int
-TAO_GroupId_Equal_To::operator () (const PortableGroup::TagGroupTaggedComponent *lhs,
-                                   const PortableGroup::TagGroupTaggedComponent *rhs) const
+TAO_GroupId_Equal_To::operator () (
+  const PortableGroup::TagGroupTaggedComponent *lhs,
+  const PortableGroup::TagGroupTaggedComponent *rhs) const
 {
-  return (ACE_OS::strcmp (lhs->group_domain_id, rhs->group_domain_id) == 0) &&
-         (lhs->object_group_id == rhs->object_group_id) &&
-         (lhs->object_group_ref_version == rhs->object_group_ref_version);
+  return
+    (ACE_OS::strcmp (lhs->group_domain_id, rhs->group_domain_id) == 0) &&
+    (lhs->object_group_id == rhs->object_group_id) &&
+    (lhs->object_group_ref_version == rhs->object_group_ref_version);
 }
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Hash_Map_Entry<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *>;
-//template class ACE_Hash_Map_Manager<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, ACE_Hash<PortableGroup::TagGroupTaggedComponent *>, ACE_Equal_To<PortableGroup::TagGroupTaggedComponent *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Hash_Map_Entry<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *>
-#pragma instantiate ACE_Hash_Map_Manager<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, ACE_Hash<PortableGroup::TagGroupTaggedComponent *>, ACE_Equal_To<PortableGroup::TagGroupTaggedComponent *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>
 
