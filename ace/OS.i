@@ -4761,7 +4761,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                    out_buffer,
                                    bytes_returned,
                                    (WSAOVERLAPPED *) overlapped,
-                                   (LPWSAOVERLAPPED_COMPLETION_ROUTINE) func),
+                                   func),
                        int,
                        SOCKET_ERROR);
 #else
