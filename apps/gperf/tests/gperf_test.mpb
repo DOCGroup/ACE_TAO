@@ -1,4 +1,5 @@
 project: aceexe {
+  after += gperf
   Define_Custom(GPERF) {
     command          = $(ACE_ROOT)/bin/gperf
     libpath         += $(ACE_ROOT)/lib

@@ -1,3 +1,10 @@
+Fri Oct  3 09:37:59 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * apps/gperf/tests/gperf_test.mpb:
+
+          Added 'gperf' to the after setting to make sure that gperf gets
+          built before the tests.
+
 Thu Oct  2 13:49:22 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:
