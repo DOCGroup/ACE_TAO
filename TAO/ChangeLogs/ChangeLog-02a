@@ -1,3 +1,10 @@
+Mon Oct 30 21:37:22 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/PortableServer/Makefile:
+        * tao/PortableServer/Makefile.bor:
+          Remove Forwarding_Servant from the list of files, updated
+          dependencies.
+
 Mon Oct 30 18:51:02 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.cpp:
