@@ -1835,10 +1835,6 @@ struct sembuf
 void herror (const char *str);
 # endif /* ACE_HAS_H_ERRNO */
 
-# if defined (ACE_LACKS_UALARM_PROTOTYPE)
-extern "C" u_int ualarm (u_int usecs, u_int interval);
-# endif /* ACE_LACKS_UALARM_PROTOTYPE */
-
 # if defined (ACE_LACKS_MSGBUF_T)
 struct msgbuf {};
 # endif /* ACE_LACKS_MSGBUF_T */
@@ -2918,6 +2914,45 @@ static const ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000U;
 #   undef sigemptyset
 #   undef sigfillset
 # endif /* linux && __OPTIMIZE__ */
+
+// Prototypes should come after ace/Basic_Types.h since some types may
+// be used in the prototypes.
+
+#if defined (ACE_LACKS_GETPGID_PROTOTYPE) && \
+    !defined (_XOPEN_SOURCE) && !defined (_XOPEN_SOURCE_EXTENDED)
+extern "C" pid_t getpgid (pid_t pid);
+#endif  /* ACE_LACKS_GETPGID_PROTOTYPE &&
+           !_XOPEN_SOURCE && !_XOPEN_SOURCE_EXTENDED */
+
+#if defined (ACE_LACKS_STRPTIME_PROTOTYPE) && !defined (_XOPEN_SOURCE)
+extern "C" char *strptime (const char *s, const char *fmt, struct tm *tp);
+#endif  /* ACE_LACKS_STRPTIME_PROTOTYPE */
+
+#if defined (ACE_LACKS_STRTOK_R_PROTOTYPE) && !defined (_POSIX_SOURCE)
+extern "C" char *strtok_r (char *s, const char *delim, char **save_ptr);
+#endif  /* ACE_LACKS_STRTOK_R_PROTOTYPE */
+
+#if defined (ACE_LACKS_LSEEK64_PROTOTYPE) && !defined (_LARGEFILE64_SOURCE)
+extern "C" ACE_LOFF_T lseek64 (int fd, ACE_LOFF_T offset, int whence);
+#endif
+
+#if defined (ACE_LACKS_PREAD_PROTOTYPE) && (_XOPEN_SOURCE - 0) != 500
+// _XOPEN_SOURCE == 500    Single Unix conformance
+extern "C" ssize_t pread (int fd,
+                          void *buf,
+                          size_t nbytes,
+                          off_t offset);
+
+extern "C" ssize_t pwrite (int fd,
+                           const void *buf,
+                           size_t n,
+                           off_t offset); 
+#endif  /* ACE_LACKS_PREAD_PROTOTYPE && (_XOPEN_SOURCE - 0) != 500 */
+
+# if defined (ACE_LACKS_UALARM_PROTOTYPE)
+extern "C" u_int ualarm (u_int usecs, u_int interval);
+# endif /* ACE_LACKS_UALARM_PROTOTYPE */
+
 
 # if defined (ACE_HAS_BROKEN_SENDMSG)
 typedef struct msghdr ACE_SENDMSG_TYPE;
