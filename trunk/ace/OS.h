@@ -2385,14 +2385,22 @@ typedef short ACE_pri_t;
       typedef unsigned long long ACE_hrtime_t;
     #endif /* __GNUC__ */
   #else
-    // Provide our own unsigned long long.  This is intended to be
-    // use with ACE_High_Res_Timer, so the division operator assumes
-    // that the quotient fits into a u_long.
     class ACE_U_LongLong
     {
+      // = TITLE
+      //     Unsigned long long for platforms that don't have one.
+      //
+      // = DESCRIPTION
+      //     Provide our own unsigned long long.  This is intended to be
+      //     use with ACE_High_Res_Timer, so the division operator assumes
+      //     that the quotient fits into a u_long.
+      //     Please note that the constructor takes (optionally) two values.
+      //     The high one contributes 0x100000000 times its value.  So,
+      //     for example, (0, 2) is _not_ 20000000000, but instead
+      //     0x200000000.  To emphasize this, the default values are expressed
+      //     in hex, and dump () outputs the value in hex.
     public:
-      ACE_U_LongLong () : hi_ (0), lo_ (0) {}
-      ACE_U_LongLong (u_long lo, u_long hi = 0);
+      ACE_U_LongLong (u_long lo = 0x0, u_long hi = 0x0);
       ACE_U_LongLong (const ACE_U_LongLong &);
       ACE_U_LongLong &operator= (const ACE_U_LongLong &);
       ~ACE_U_LongLong () {}
@@ -2411,6 +2419,7 @@ typedef short ACE_pri_t;
       ACE_U_LongLong &operator-= (const ACE_U_LongLong &);
 
       void dump (FILE * = stdout) const;
+      // Outputs the value to the FILE, in hex.
 
       u_long hi () const { return hi_; }
       u_long lo () const { return lo_; }
@@ -2423,10 +2432,6 @@ typedef short ACE_pri_t;
     private:
       u_long hi_;
       u_long lo_;
-
-      // Only store 0 thru 999999999 in lo_ word, to allow arithmetic
-      // operations to work correctly.
-      void normalize ();
     };
 
     typedef ACE_U_LongLong ACE_hrtime_t;
@@ -3209,8 +3214,8 @@ public:
 
   // = A set of wrappers for semaphores.
   static int sema_destroy (ACE_sema_t *s);
-  static sem_t *sema_open (const char *name, int oflag, 
-			   u_long mode, u_int value);
+  static ACE_sema_t *sema_open (const char *name, int oflag, 
+			        u_long mode, u_int value);
   static int sema_init (ACE_sema_t *s, u_int count, int type = USYNC_THREAD,
                         LPCTSTR name = 0, void *arg = 0,
                         int max = 0x7fffffff);
