@@ -137,7 +137,7 @@ public:
   // and returned with each entry pointing to the start of
   // null-terminated string.  Returns { 0 } if nothing has been set.
 
-  char **env_argv (void);
+  char * const *env_argv (void);
   // argv-style array of environment settings.
 
   // = Accessors for the standard handles.
