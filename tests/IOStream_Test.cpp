@@ -1,3 +1,22 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+// 
+// = FILENAME
+//    IOStream_Test.cpp
+//
+// = DESCRIPTION
+//    This is a simple test of the IOStream class that illustrates
+//    how to use iostream operations on almost arbitrary I/O classes.
+//
+// = AUTHOR
+//    James CE Johnson <jcej@lads.com>
+// 
+// ============================================================================
+
 
 #include "ace/Thread.h"
 #include "ace/Acceptor.h"
@@ -5,6 +24,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/INET_Addr.h"
 #include "ace/IOStream.h"
+#include "test_config.h"
 
 typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;
 
@@ -136,6 +156,8 @@ ostream & operator<<(ostream & stream, qchar * buf)
  */
 static void *client_thread(void * _thr_mgr)
 {
+	ACE_NEW_THREAD;
+
 	ACE_Thread_Manager * thr_mgr = (ACE_Thread_Manager *)_thr_mgr;
 	ACE_Thread_Control thread_control (thr_mgr);
 
@@ -145,13 +167,13 @@ static void *client_thread(void * _thr_mgr)
 
 	if( connector.connect(server,addr) < 0 )
 	{
-		cerr << "Failed to connect to server thread" << endl;
+		ACE_DEBUG ((LM_ERROR, "Failed to connect to server thread"));
 		return (void *) -1;
 	}
 
 	// Send a string to the server which it can interpret as a qchar[]
 	char * str = "\"This is a test     string.\"";
-	cerr << "Client Sending:  (" << str << ")" << endl;
+	ACE_DEBUG ((LM_DEBUG, "Client Sending:  (%s)\n", str));
 	server << str << endl;
 
 	// Allow the server to get the string and echo it to the user.
@@ -164,7 +186,7 @@ static void *client_thread(void * _thr_mgr)
 	// all of the spaces sent by the client.
 	//
 	str = "\"THIS IS A     TEST STRING.\"";
-	cerr << "Client Sending:  (" << str << ")" << endl;
+	ACE_DEBUG ((LM_DEBUG, "Client Sending:  (%s)\n", str));
 	server << str << endl;
 
 	// Again, give the server time to display the happenings to the user.
@@ -180,13 +202,7 @@ static void *client_thread(void * _thr_mgr)
 	double d;
 	server >> i >> f1 >> l >> f2 >> d;
 
-	cerr << "Client Received: ";
-	cerr << "int " << i << " ";
-	cerr << "float " << f1 << " ";
-	cerr << "long " << l << " ";
-	cerr << "float " << f2 << " ";
-	cerr << "double " << d << " ";
-	cerr << endl;
+	ACE_DEBUG ((LM_DEBUG, "Client Received: int %d float %f long %d float %f double %f \n", i, f1, (int) l, f2, d));
 
 	// Reset the precision to limit ourselves
 	// to two significant digits.
@@ -217,7 +233,7 @@ void server_test(ACE_SOCK_IOStream & client)
 	qchar qbuf[1024];
 	ACE_OS::memset(qbuf,0,sizeof(qbuf));
 	client >> qbuf;
-	cerr << "Server Received: (" << qbuf << ")" << endl;
+	ACE_DEBUG ((LM_DEBUG, "Server Received:  (%s)\n", qbuf));
 
 	// Give the client time to announce the next test to the user
 	ACE_OS::sleep(2);
@@ -228,14 +244,13 @@ void server_test(ACE_SOCK_IOStream & client)
 	//
 	char buf[1024];
 	ACE_OS::memset(buf,0,sizeof(buf));
-	cerr << "Server Received: (";
+	ACE_DEBUG ((LM_DEBUG, "Server Received: ("));
 	while( buf[strlen(buf)-1] != '"' )
 	{
 		client >> buf;
-		cerr << buf << " ";
+		ACE_DEBUG ((LM_DEBUG, "%s ", buf));
 	}
-	cerr << ")" << endl;
-
+	ACE_DEBUG ((LM_DEBUG, ")\n"));
 
 	// Send some non-textual data to the client.
 	// We use a single character to separate the fields
@@ -244,7 +259,7 @@ void server_test(ACE_SOCK_IOStream & client)
 	// gets filled or when we flush it with an explicit
 	// client.sync() command or the implicit <<endl.
 	//
-	cerr   << "Server Sending:  1 .12342134 666555444 23.45 -46.5e9 " << endl;
+	ACE_DEBUG ((LM_DEBUG, "Server Sending:  1 .12342134 666555444 23.45 -46.5e9 \n"));
 	client << 1 << " ";
 	client << .12342134 << " ";
 	client << 666555444 << " ";
@@ -263,19 +278,15 @@ void server_test(ACE_SOCK_IOStream & client)
 	double d;
 	client >> i >> f1 >> l >> f2 >> d;
 
-	cerr << "Server Received: ";
-	cerr << "int " << i << " ";
-	cerr << "float " << f1 << " ";
-	cerr << "long " << l << " ";
-	cerr << "float " << f2 << " ";
-	cerr << "double " << d << " ";
-	cerr << endl;
+	ACE_DEBUG ((LM_DEBUG, "Server Received: int %d float %g long %d float %g double %g \n", i, f1, (int) l, f2, d));
 
 	return;
 }
 
 main( int argc, char *argv[] )
 {
+	ACE_START_TEST ("IOStream_Test");
+
 	if( argc > 1 )
 		PORT = ACE_OS::atoi(argv[1]);
 
@@ -289,7 +300,7 @@ main( int argc, char *argv[] )
 
 	if( acceptor.accept(connection) < 0 )
 	{
-		cerr << "failed to accept new connection" <<endl;
+		ACE_DEBUG ((LM_ERROR, "Failed to accept new connection"));
 	}
 
 	server_test(connection);
@@ -300,5 +311,6 @@ main( int argc, char *argv[] )
 	connection.close();
 	acceptor.close();
 
-	exit(0);
+	ACE_END_TEST;
+	return 0;
 }
