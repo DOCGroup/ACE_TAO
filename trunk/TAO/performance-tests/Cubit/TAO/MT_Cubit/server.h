@@ -14,6 +14,13 @@
 // ============================================================================
 
 // ACE includes.
+
+#if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
+#define TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS { "-ORBconcurrency", "thread-per-connection", \
+                                                   "-ORBdemuxstrategy", "dynamic", \
+                                                   "-ORBtablesize", "128" }
+#endif
+
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/ARGV.h"

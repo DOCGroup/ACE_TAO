@@ -59,7 +59,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 # Local modifications to variables imported by includes above.
-#CPPFLAGS += -DACE_NLOGGING
+CPPFLAGS += -DDEBUG
 
 #CXX := purify $(CXX)
 

@@ -259,6 +259,12 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
                 "activate failed",
                 priority));
 
+  ACE_DEBUG ((LM_DEBUG,"(%t) Waiting for argument parsing\n"));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, ts->ready_mtx_,-1));
+  while (!ts->ready_)
+    ts->ready_cnd_.wait ();
+  ACE_DEBUG ((LM_DEBUG,"(%t) Argument parsing waiting done\n"));
+
   u_int number_of_low_priority_client = 0;
   u_int number_of_priorities = 0;
   u_int grain = 0;
@@ -409,7 +415,6 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
     {
       util_thread.close ();
     }
-
   // Wait for all the client threads to be initialized before going
   // any further.
   ts->barrier_->wait ();

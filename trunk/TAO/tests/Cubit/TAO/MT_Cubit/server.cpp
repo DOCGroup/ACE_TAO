@@ -151,6 +151,10 @@ Cubit_Task::initialize_orb (void)
         this->root_poa_->the_POAManager (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      if (CORBA::is_nil (this->poa_manager_.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) Root poa manager is nil\n"),
+                          -1);
       CORBA::PolicyList policies (2);
       policies.length (2);
 
@@ -682,21 +686,28 @@ start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_barrier, Ta
     FILE *ior_f = 0;
 
     if (ior_file != 0)
-      ior_f = ACE_OS::fopen (ior_file, "w+");
+      {
+        ACE_DEBUG ((LM_DEBUG,"(%P|%t) Opening file:%s\n",ior_file));
+        ior_f = ACE_OS::fopen (ior_file, "w");
+      }
 
     for (i = 0; i < num_of_objs; ++i)
       {
         if (ior_f != 0)
           {
+            ACE_DEBUG ((LM_DEBUG,"(%P|%t) ior_file is open :%s",ior_file));
             ACE_OS::fprintf (ior_f, "%s\n", cubits[i]);
+            ACE_OS::printf ("cubits[%d] ior = %s\n",
+                            i,
+                            cubits[i]);
           }
-        ACE_OS::printf ("cubits[%d] ior = %s\n",
-                        i,
-                        cubits[i]);
       }
 
     if (ior_f != 0)
-      ACE_OS::fclose (ior_f);
+      {
+        ACE_DEBUG ((LM_DEBUG,"(%P|%t) Closing ior file\n"));
+        ACE_OS::fclose (ior_f);
+      }
   }
   return 0;
 
