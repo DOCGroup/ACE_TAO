@@ -1,3 +1,68 @@
+Thu Jul  1 19:42:26 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (parse_args):
+
+	  Added check for invalid number of iterations (<=0).
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp: 
+
+	  Added all initializable Cubit_Server members to the
+	  Cubit_Server constructor member initializer list.  This fixes a
+	  segmentation fault that occurs in the ~Cubit_Server destructor
+	  when deleting an uninitialized factory_impl_ member.
+
+	* tao/Exception.cpp (_tao_print_system_exception):
+	* tao/corbafwd.h:
+
+	  Added some minor codes for the CORBA::INV_OBJREF() system
+	  exception to aid in pin-pointing object reference related
+	  exceptions.
+
+	* tao/Exception.h:
+
+	  Added some documentation that explains what each CORBA system
+	  exception implies.
+
+	* tao/{IIOP,UIOP}_Profile.cpp (parse_string):
+	* tao/{IIOP,UIOP}_Connector.cpp (make_profile):
+	* tao/Connector_Registry.cpp (make_mprofile):
+	* tao/Pluggable.cpp (make_mprofile):
+
+	  Exception handling fixes.  Exception handling code was working
+	  but it was based on old code that needed updating.  Corrected
+	  exceptions that get thrown.  CORBA::string_to_object() is
+	  supposed to throw an INV_OBJREF system exception.  The methods
+	  that were fixed all get called when CORBA::string_to_object() is 
+	  called.
+
+	* tao/IIOP_Profile.{h,i,cpp}:
+	* tao/UIOP_Profile.cpp:
+
+	  Updated to use CORBA::String_var to fix potential exception
+	  safety problems.
+
+	* tao/UIOP_Connect.cpp:
+
+	  Cosmetic updates.
+
+	* tao/Acceptor_Registry.i:
+
+	  Added a comment to force C++ mode in Emacs.
+
+	* tao/Makefile:
+
+	  Updated dependencies.
+
+	* rules.tao.GNU:
+
+	  Enabled uninitialized variable warnings for EGCS.  There no
+	  longer appears to be a need to keep this warning disabled since
+	  recent versions of EGCS appear to be better behaved.
+
+	* tao/decode.cpp (decode): 
+
+	  Fixed "uninitialized variable" warning.
+
 Thu Jul  1 21:43:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/idl.ll:
@@ -73,6 +138,7 @@ Thu Jul  1 19:46:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Fixed order of libraries so the test would compile with static
 	  libraries.
 
+>>>>>>> 1.1996
 Thu Jul  1 12:37:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/decode.cpp:
