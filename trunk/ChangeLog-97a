@@ -1,10 +1,13 @@
 Tue Jun 17 15:11:09 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-sunos5.5-sunc++-4.x.h,
-	  include/makeinclude/platform_sunos5_sunc++.GNU: enabled exception
-	  handling, because the patched Sun C++ 4.2 seems to work properly
-	  with it.  See comment in ace/config-sunos5.5-sunc++-4.x.h for the
-	  patch number.
+	  include/makeinclude/platform_sunos5_sunc++.GNU: support enabling of
+	  exception handling via "exceptions=1" make flag.  Exception handling
+	  does seem to work with Sun C++ 4.2, even on MP machines, if patch
+	      104631-02 "C++ 4.2: Jumbo Patch for C++ 4.2 on Solaris SPARC"
+	  is applied.  Please beware that enabling of exception handling can
+	  adversely affect peformance, even if the program doesn't use it.
+	  So, we haven't enabled it by default.
 
 Tue Jun 17 15:31:01 1997  Steve Huston  <shuston@riverace.com>
 
