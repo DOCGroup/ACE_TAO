@@ -19,6 +19,8 @@
 #include "ace/Synch_T.h"
 #include "ace/Containers.h"
 
+#include "ace/streams.h"
+
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #include "ace/Object_Manager.h"
 

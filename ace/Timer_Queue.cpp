@@ -5,7 +5,6 @@
 
 #define ACE_BUILD_DLL
 
-#include "ace/config.h"
 #include "ace/Containers.h"
 #include "ace/Timer_Queue.h"
 

@@ -3,8 +3,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Log_Record.h"
-
-#include "ace/stdcpp.h"
+#include "ace/streams.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Record)
 

@@ -1674,7 +1674,21 @@ typedef int ACE_hthread_t;
 typedef u_int ACE_thread_key_t;
 #endif /* ACE_HAS_THREADS */
 
-#include "ace/stdcpp.h"
+// Standard C Library includes
+# include /**/ <assert.h>
+# include /**/ <limits.h>
+// NOTE: stdarg.h must be #included before stdio.h on LynxOS.
+# include /**/ <stdarg.h>
+# include /**/ <stdio.h>
+# include /**/ <new.h>
+# include /**/ <ctype.h>
+# include /**/ <signal.h>
+# include /**/ <string.h>
+# include /**/ <errno.h>
+# include /**/ <stdlib.h>
+
+// Forward declaration for streams
+#include "ace/iosfwd.h"
 
 #include /**/ <fcntl.h>
 
