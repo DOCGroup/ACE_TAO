@@ -199,8 +199,8 @@ TAO_RTScheduler_Manager_out::operator-> (void)
 
 ///////////////////////////////////////////////////////////////////////////
 ACE_INLINE
-TAO_RTScheduler_Manager::TAO_RTScheduler_Manager (RTScheduling::Scheduler_ptr rtscheduler)
-  : rtscheduler_ (rtscheduler)
+TAO_RTScheduler_Manager::TAO_RTScheduler_Manager (PortableInterceptor::ORBInitInfo_ptr info)
+  : info_ (PortableInterceptor::ORBInitInfo::_duplicate (info))
 {
 }
 
@@ -211,9 +211,15 @@ TAO_RTScheduler_Manager::rtscheduler (void)
 }
 
 ACE_INLINE void
-TAO_RTScheduler_Manager::rtscheduler (RTScheduling::Scheduler_ptr rtscheduler)
+TAO_RTScheduler_Manager::rtscheduler (RTScheduling::Scheduler_ptr rtscheduler
+				      ACE_ENV_ARG_PARAMETER)
 {
- rtscheduler_ = rtscheduler;
+ rtscheduler_ = RTScheduling::Scheduler::_duplicate (rtscheduler);
+ this->info_->register_initial_reference ("RTScheduler",
+                                          rtscheduler
+			   		  ACE_ENV_ARG_PARAMETER);	
+ ACE_CHECK;						
+
 }
 
 
