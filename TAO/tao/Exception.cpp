@@ -280,10 +280,7 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
       || stream.encode (CORBA::_tc_TypeCode,
 			&CORBA::_tc_any, 0,
 			env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    {
-      env.exception (new CORBA_INITIALIZE (CORBA::COMPLETED_NO));
-      return;
-    }
+    TAO_THROW_ENV (CORBA_INITIALIZE (CORBA::COMPLETED_NO), env);
 
   tcp = new CORBA::TypeCode (CORBA::tk_except,
                              stream.length (),
@@ -346,10 +343,8 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                        env) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || stream.encode (CORBA::_tc_TypeCode,
                        &TC_completion_status, 0,
-                       env) != CORBA::TypeCode::TRAVERSE_CONTINUE) {
-    env.exception (new CORBA_INITIALIZE (CORBA::COMPLETED_NO));
-    return;
-  }
+                       env) != CORBA::TypeCode::TRAVERSE_CONTINUE) 
+    TAO_THROW_ENV (CORBA_INITIALIZE (CORBA::COMPLETED_NO), env);
 
   // OK, we stuffed the buffer we were given (or grew a bigger one;
   // hope to avoid that during initialization).  Now build and return
@@ -598,10 +593,7 @@ CORBA_ExceptionList::item (CORBA::ULong index,
   CORBA::TypeCode_ptr *tc;
   env.clear ();
   if (this->tc_list_.get (tc, index) == -1)
-    {
-      env.exception (new CORBA::TypeCode::Bounds);
-      return 0;
-    }
+    TAO_THROW_ENV (CORBA::TypeCode::Bounds (), env);
   else
     {
       return CORBA::TypeCode::_duplicate (*tc);
