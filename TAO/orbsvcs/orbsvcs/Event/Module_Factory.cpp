@@ -4,7 +4,6 @@
 
 #include "orbsvcs/Event/Dispatching_Modules.h"
 #include "orbsvcs/Event/Task_Manager.h"
-#include "orbsvcs/Event/Priority_Timer.h"
 #include "orbsvcs/Event/Event_Channel.h"
 #include "orbsvcs/Event/Module_Factory.h"
 
