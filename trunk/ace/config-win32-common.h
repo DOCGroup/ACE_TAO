@@ -267,15 +267,18 @@
         #endif /* _UNICODE */
 #endif /* UNICODE */
 
+// If __ACE_INLINE__ is defined to be 0, we will undefine it
+#if defined (__ACE_INLINE__) && (__ACE_INLINE__ == 0)
+	#undef __ACE_INLINE__
+#endif /* __ACE_INLINE__ */
+
 #ifdef _DEBUG
 	#include /**/ <crtdbg.h>
 #else
+        // If we are making a release, and the user has not specified
+        // inline directives, we will default to inline
 	#if ! defined (__ACE_INLINE__)
 		#define __ACE_INLINE__
-	#else /* __ACE_INLINE__ */
-		#if (__ACE_INLINE__ == 0)
-			#undef __ACE_INLINE__
-		#endif
 	#endif /* __ACE_INLINE__ */
 #endif
 
