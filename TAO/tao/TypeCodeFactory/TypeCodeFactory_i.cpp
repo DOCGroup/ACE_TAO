@@ -65,7 +65,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  
+
   if (name == 0 || !this->valid_name (name))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
@@ -174,7 +174,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
       if (!valid_member)
         {
-          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (2,
+          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 2,
                                                  CORBA::COMPLETED_NO),
                             CORBA::TypeCode::_nil ());
         }
@@ -1228,7 +1228,7 @@ TAO_TypeCodeFactory_i::valid_name (const char *name)
     {
       return 1;
     }
-    
+
   if (!isalpha (*name))
     {
       return 0;
