@@ -64,14 +64,20 @@ IOR_Multicast::handle_input (ACE_HANDLE)
 			 sizeof(CORBA::Short)), -1);
     }
 
-  this->remote_addr_.set_port_number (*(CORBA::Short *)this->buf_);
+  // convert port number received to network byte order.
+  CORBA::Short reply_port_number = ntohs (*(CORBA::Short *)this->buf_);
+
+  // set port number to reply.
+  this->remote_addr_.set_port_number (reply_port_number);
+  
+  // send the object reference for the naming service
   retcode = response_.send (this->ior_, 
 			    ACE_OS::strlen (this->ior_) + 1, 
 			    this->remote_addr_, 
 			    0);
 
   ACE_DEBUG ((LM_DEBUG, 
-	      "ior_ '%s' sent through port %d.\nretcode=%d\n", 
+	      "ior_ '%s' sent through port %u.\nretcode=%d\n", 
 	      this->ior_, 
 	      this->remote_addr_.get_port_number (), 
 	      retcode));

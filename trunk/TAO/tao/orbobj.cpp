@@ -407,8 +407,9 @@ CORBA_ORB::resolve_name_service (void)
           return CORBA_Object::_nil ();
         }
 
-      // Figure out what port to listen on for server replies.
-      CORBA::Short reply_port = response_addr.get_port_number ();
+      // Figure out what port to listen on for server replies, 
+      // and convert to network byte order.
+      CORBA::Short reply_port = htons (response_addr.get_port_number ());
 
       // Send multicast of one byte, enough to wake up server.
       ssize_t n_bytes = multicast.send ((char *) &reply_port,
@@ -454,7 +455,7 @@ CORBA_ORB::resolve_name_service (void)
 	this->name_service_ = CORBA_Object::_nil ();
 
       // Return ior.
-      return this->name_service_;
+      return CORBA_Object::_duplicate (this->name_service_);
     }
 }
 
