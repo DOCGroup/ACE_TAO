@@ -4,13 +4,12 @@
 #define COMPASS_TYPES_H
 
 #include "ace/pre.h"
-#include "ACEXML/common/Compass_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_String.h"
+#include "ACEXML/common/XML_Types.h"
 
 // *************** Packaging and Deployment ***************
 
@@ -29,13 +28,6 @@ namespace Deployment
 
   typedef ACEXML_String FeatureName;
 
-  struct ConfigValue
-  {
-    FeatureName name;
-    ACEXML_String value;
-  };
-  typedef vector<ConfigValue*> ConfigValues;
-
   struct UnknownImplId {};
   struct InvalidLocation {};
   struct InstallationFailure { FailureReason reason; };
@@ -44,6 +36,8 @@ namespace Deployment
 
   struct ImplEntryPointNotFound {};
 
-};
+}
+
+#include "ace/post.h"
 
 #endif /* COMPASS_TYPES_H */
