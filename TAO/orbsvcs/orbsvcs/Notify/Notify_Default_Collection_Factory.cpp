@@ -5,7 +5,6 @@
 #include "orbsvcs/ESF/ESF_Immediate_Changes.h"
 #include "orbsvcs/ESF/ESF_Proxy_List.h"
 #include "Notify_Event.h"
-#include "Notify_Listeners.h"
 #include "Notify_Factory.h"
 
 ACE_RCSID(Notify, Notify_Default_Collection_Factory, "$Id$")

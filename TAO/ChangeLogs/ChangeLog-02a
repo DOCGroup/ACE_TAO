@@ -1,3 +1,11 @@
+Sun Jul 30 16:13:37 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Collection.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.cpp: 
+	  
+	  Should fix the rest of the problems in vxworks compilation.
+
 Sun Jul 30 09:15:13 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp (get_stream_endpoint):
