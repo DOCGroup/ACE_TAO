@@ -1,3 +1,11 @@
+Fri Sep 17 08:27:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/ciao/Context_Impl_Base.cpp:
+	* ciao/Context_Impl_Base.cpp:
+
+	  Use false instead of FALSE. This should fix compile errors in
+	  debian full reactor builds.
+
 Fri Sep 17 13:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc:
