@@ -2,6 +2,7 @@
 
 #include "JAWS/Concurrency.h"
 #include "JAWS/Pipeline.h"
+#include "JAWS/Policy.h"
 #include "JAWS/Data_Block.h"
 
 JAWS_Concurrency_Base::JAWS_Concurrency_Base (void)
@@ -55,14 +56,6 @@ JAWS_Concurrency_Base::svc (void)
       while (result == 0);
     }
   return 0;
-}
-
-JAWS_Dispatch_Policy::JAWS_Dispatch_Policy (void)
-{
-}
-
-JAWS_Dispatch_Policy::~JAWS_Dispatch_Policy (void)
-{
 }
 
 JAWS_Dispatcher::JAWS_Dispatcher (void)

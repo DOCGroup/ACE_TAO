@@ -10,6 +10,8 @@
 
 #include "JAWS/IO.h"
 
+class JAWS_Dispatch_Policy;
+
 class JAWS_Concurrency_Base : public ACE_Task<ACE_MT_SYNCH>
   // = TITLE
   //     Base class for different concurrency models
@@ -25,21 +27,6 @@ public:
 
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
   virtual int svc (void);
-};
-
-class JAWS_Dispatch_Policy
-  // = TITLE
-  //     Policy mechanism for choosing different concurrency models.
-  //
-  // = DESCRIPTION
-  //     Given some (unspecified) state, decides what the concurrency
-  //     model should be.  (For now, we always return the same model.)
-{
-public:
-  JAWS_Dispatch_Policy (void);
-  virtual ~JAWS_Dispatch_Policy (void);
-  virtual JAWS_Concurrency_Base * concurrency (void) = 0;
-  virtual JAWS_IO * io (void) = 0;
 };
 
 class JAWS_Dispatcher

@@ -8,21 +8,19 @@ JAWS_IO_Handler_Factory::~JAWS_IO_Handler_Factory (void)
 {
 }
 
-JAWS_Synch_IO_Handler::JAWS_Synch_IO_Handler (JAWS_IO *io,
-                                              JAWS_IO_Handler_Factory *factory)
-  : state_ (0),
-    io_ (io),
-    pipeline_ (0),
+JAWS_Synch_IO_Handler::JAWS_Synch_IO_Handler (JAWS_IO_Handler_Factory *factory)
+  : mb_ (0),
+    task_ (0),
     factory_ (factory)
 {
-  this->io_->handler (this);
+  // this->io_->handler (this);
 }
 
 JAWS_Synch_IO_Handler::~JAWS_Synch_IO_Handler (void)
 {
-  if (this->state_)
-    this->state_->release ();
-  this->state_ = 0;
+  if (this->mb_)
+    this->mb_->release ();
+  this->mb_ = 0;
 }
 
 void
@@ -102,7 +100,7 @@ JAWS_Synch_IO_Handler::factory (void)
 void
 JAWS_Synch_IO_Handler::done (void)
 {
-  this->factory ()->destroy_io_handler (this, this->io_);
+  this->factory ()->destroy_io_handler (this);
 }
 
 JAWS_IO_Handler *
@@ -114,16 +112,14 @@ JAWS_Synch_IO_Handler_Factory::create_io_handler (void)
   io = new JAWS_Synch_IO;
   if (io == 0) return 0;
 
-  handler = new JAWS_Synch_IO_Handler (io, this);
-  if (handler == 0) destroy_io_handler (0, io);
+  handler = new JAWS_Synch_IO_Handler (this);
+  if (handler == 0) delete io;
 
   return handler;
 }
 
 void
-JAWS_Synch_IO_Handler_Factory::destroy_io_handler (JAWS_IO_Handler *handler,
-                                                   JAWS_IO *io)
+JAWS_Synch_IO_Handler_Factory::destroy_io_handler (JAWS_IO_Handler *handler)
 {
   delete handler;
-  delete io;
 }

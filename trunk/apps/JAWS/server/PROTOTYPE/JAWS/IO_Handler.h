@@ -30,7 +30,11 @@ class JAWS_Asynch_IO_Handler;
 class JAWS_IO_Handler_Factory;
 class JAWS_Synch_IO_Handler_Factory;
 class JAWS_Asynch_IO_Handler_Factory;
-class JAWS_Pipeline;
+class JAWS_Data_Block;
+
+template <class TYPE> class JAWS_Pipeline_Abstract_Handler;
+typedef JAWS_Pipeline_Abstract_Handler<JAWS_Data_Block>
+        JAWS_Pipeline_Handler;
 
 class JAWS_IO_Handler
   // = TITLE
@@ -111,7 +115,7 @@ public:
   virtual JAWS_IO_Handler *create_io_handler (void) = 0;
   // This creates a new HTTP_Handler
 
-  virtual void destroy_io_handler (JAWS_IO_Handler *handler, JAWS_IO *io) = 0;
+  virtual void destroy_io_handler (JAWS_IO_Handler *handler) = 0;
   // The HTTP handler will call this method from HTTP_Handler::done to
   // tell the factory to reap up the handler as it is now done with
   // the protocol
@@ -123,7 +127,7 @@ friend class JAWS_Synch_IO;
 friend class JAWS_Synch_IO_Handler_Factory;
 
 public:
-  JAWS_Synch_IO_Handler (JAWS_IO *io, JAWS_IO_Handler_Factory *factory);
+  JAWS_Synch_IO_Handler (JAWS_IO_Handler_Factory *factory);
   virtual ~JAWS_Synch_IO_Handler (void);
 
 protected:
@@ -145,13 +149,10 @@ protected:
   virtual void done (void);
 
 private:
-  ACE_Message_Block *state_;
+  ACE_Message_Block *mb_;
   // This maintains the state of the request.
 
-  JAWS_IO *io_;
-  // The reference to our IO interface (synch vs. asynch)
-
-  JAWS_Pipeline *pipeline_;
+  JAWS_Pipeline_Handler *task_;
   // This is a reference to the next stage of the pipeline when the IO
   // request completes.
 
@@ -164,7 +165,7 @@ public:
   JAWS_IO_Handler *create_io_handler (void);
   // This creates a new HTTP_Handler
 
-  void destroy_io_handler (JAWS_IO_Handler *handler, JAWS_IO *io);
+  void destroy_io_handler (JAWS_IO_Handler *handler);
   // The HTTP handler will call this method from HTTP_Handler::done to
   // tell the factory to reap up the handler as it is now done with
   // the protocol
@@ -215,7 +216,7 @@ public:
   JAWS_IO_Handler *create_io_handler (void);
   // This creates a new HTTP_Handler
 
-  void destroy_io_handler (JAWS_IO_Handler *handler, JAWS_IO *io);
+  void destroy_io_handler (JAWS_IO_Handler *handler);
   // The HTTP handler will call this method from HTTP_Handler::done to
   // tell the factory to reap up the handler as it is now done with
   // the protocol
