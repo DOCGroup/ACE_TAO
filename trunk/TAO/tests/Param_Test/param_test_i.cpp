@@ -384,6 +384,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   CORBA::Any *ret;
   CORBA::Short short_in;
   char *str_in;
+  Coffee_ptr coffee;
 
   a2 = a1;
   a3 = new CORBA::Any (a1);
@@ -403,6 +404,10 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   else if (a1 >>= str_in)
     {
       ACE_DEBUG ((LM_DEBUG, "Received unbounded string = %s\n", str_in));
+    }
+  else if (a1 >>= coffee)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Received Coffee object\n"));
     }
   else
     {

@@ -987,9 +987,12 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << node->name () << "_ptr _tao_elem) // copying" << be_nl
       << "{" << be_idt_nl
       << "CORBA::Environment _tao_env;" << be_nl
-      << "CORBA::Object_ptr _tao_obj = _tao_elem;" << be_nl
-      << "_tao_any.replace (" << node->tc_name () << ", &"
-      << "_tao_obj, 1, _tao_env);" << be_uidt_nl
+      << "CORBA::Object_ptr *_tao_obj_ptr;" << be_nl
+      << "ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);" << be_nl
+      << "*_tao_obj_ptr = " << node->name ()
+      << "::_duplicate (_tao_elem);" << be_nl
+      << "_tao_any.replace (" << node->tc_name () << ", "
+      << "_tao_obj_ptr, 1, _tao_env);" << be_uidt_nl
       << "}" << be_nl;
 
   *os << "void operator<<= (CORBA::Any &_tao_any, "
@@ -1009,21 +1012,24 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << ", _tao_env)) return 0; // not equal" << be_nl
       << "TAO_InputCDR stream ((ACE_Message_Block *)_tao_any.value ());"
       << be_nl
-      << "CORBA::Object_ptr _tao_obj;" << be_nl
+      << "CORBA::Object_ptr *_tao_obj_ptr;" << be_nl
+      << "ACE_NEW_RETURN (_tao_obj_ptr, CORBA::Object_ptr, 0);" << be_nl
       << "if (stream.decode (" << node->tc_name ()
-      << ", &_tao_obj, 0, _tao_env)" << be_nl
+      << ", _tao_obj_ptr, 0, _tao_env)" << be_nl
       << "  == CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
       << "{" << be_idt_nl
-      << "_tao_elem = " << node->name () << "::_narrow (_tao_obj, _tao_env);"
-      << be_nl
-      << "CORBA::release (_tao_obj);" << be_nl
-      << "_tao_obj = _tao_elem;" << be_nl
+      << "_tao_elem = " << node->name ()
+      << "::_narrow (*_tao_obj_ptr, _tao_env);" << be_nl
+      << "if (_tao_env.exception ()) return 0; // narrow failed" << be_nl
+      << "CORBA::release (*_tao_obj_ptr);" << be_nl
+      << "*_tao_obj_ptr = _tao_elem;" << be_nl
       << "((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), "
-      << "&_tao_obj, 1, _tao_env);"
+      << "_tao_obj_ptr, 1, _tao_env);"
       << be_nl
-      << "if (_tao_env.exception ()) return 0; // narrow failed" << be_uidt_nl
-      << "}" << be_nl
+      << "if (_tao_env.exception ()) return 0; // narrow failed" << be_nl
       << "return 1;" << be_uidt_nl
+      << "}" << be_nl
+      << "return 0; // failure" << be_uidt_nl
       << "}\n\n";
 
   os->indent ();

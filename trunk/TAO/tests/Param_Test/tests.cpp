@@ -1591,7 +1591,7 @@ static const CORBA::TypeCode_ptr any_table [] =
   // typecode with a simple parameter
   CORBA::_tc_string,
   // complex typecodes
-  _tc_Param_Test,
+  _tc_Coffee,
   Param_Test::_tc_StrSeq,
   Param_Test::_tc_StructSeq,
   Param_Test::_tc_Nested_Struct
@@ -1602,7 +1602,8 @@ Test_Any::init_parameters (Param_Test_ptr objref,
                            CORBA::Environment &env)
 {
   Generator *gen = GENERATOR::instance (); // value generator
-  CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 2);
+  //  CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 3);
+  CORBA::ULong index = 2;
 
   switch (index)
     {
@@ -1624,6 +1625,25 @@ Test_Any::init_parameters (Param_Test_ptr objref,
       }
       break;
     case 2:
+      {
+        TAO_TRY
+          {
+            // get access to a Coffee Object
+            Coffee_var cobj = objref->make_coffee (TAO_TRY_ENV);
+            TAO_CHECK_ENV;
+
+            // insert the coffee object into the Any
+            this->in_ <<= cobj.in ();
+            this->inout_ <<= cobj.in ();
+          }
+        TAO_CATCH (CORBA::SystemException, sysex)
+          {
+            ACE_UNUSED_ARG (sysex);
+            TAO_TRY_ENV.print_exception ("System Exception doing make_coffee");
+            return -1;
+          }
+        TAO_ENDTRY;
+      }
       break;
     case 3:
       break;
@@ -1639,7 +1659,8 @@ int
 Test_Any::reset_parameters (void)
 {
   Generator *gen = GENERATOR::instance (); // value generator
-  CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 2);
+  //  CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 2);
+  CORBA::ULong index = 2;
 
   switch (index)
     {
@@ -1659,6 +1680,9 @@ Test_Any::reset_parameters (void)
       }
       break;
     case 2:
+      {
+        this->inout_ = this->in_;
+      }
       break;
     case 3:
       break;
@@ -1696,9 +1720,9 @@ Test_Any::check_validity (void)
   CORBA::Environment env;
   CORBA::Short short_in, short_inout, short_out, short_ret;
   char *str_in, *str_inout, *str_out, *str_ret;
+  Coffee_ptr obj_in, obj_inout, obj_out, obj_ret;
 
-  if ((this->in_ >>= short_in) &&
-      (this->inout_ >>= short_inout) &&
+  if ((this->inout_ >>= short_inout) &&
       (this->out_.in () >>= short_out) &&
       (this->ret_.in () >>= short_ret))
     {
@@ -1730,6 +1754,14 @@ Test_Any::check_validity (void)
           ACE_DEBUG ((LM_DEBUG, "mismatch of string values\n"));
           return 0;
         }
+    }
+  else if ((this->in_ >>= obj_in) &&
+           (this->inout_ >>= obj_inout) &&
+           (this->out_.in () >>= obj_out) &&
+           (this->ret_.in () >>= obj_ret))
+    {
+      // all the >>= operators returned true so we are OK.
+      return 1;
     }
   else
     return 0;

@@ -49,6 +49,7 @@ include $(TAO_ROOT)/taoconfig.mk
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/Naming_Service
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
+.PRECIOUS: cubitC.cpp cubitS.cpp cubitC.h cubitS.h
 #$(IDL_SRC): cubit.idl
 #	$(TAO_ROOT)/TAO_IDL/tao_idl cubit.idl
 
