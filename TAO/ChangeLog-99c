@@ -1,3 +1,11 @@
+Thu May 13 22:46:05 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/OBV/Typed_Events/Event_Types_impl.h:
+          added "class" to a bunch of friend declarations.
+
+        * examples/OBV/Typed_Events/Makefile: updated
+          dependencies.
+
 Thu May 13 19:33:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/examples/CosEC/Factory/Makefile: don't built
