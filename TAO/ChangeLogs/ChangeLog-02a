@@ -1,3 +1,8 @@
+Mon Jul 17 10:50:30 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/PortableServerC.cpp: Fixed some link errors in Minimum CORBA
+	  builds. 
+
 Sun Jul 16 16:17:23 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/POA.cpp:  

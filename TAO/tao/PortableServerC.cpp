@@ -1064,7 +1064,27 @@ PortableServer::POAManager::_duplicate (POAManager_ptr obj)
   return obj;
 }
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+void *PortableServer::POAManager::_tao_QueryInterface (ptr_arith_t type)
+{
+  void *retv = 0;
+  if (type == ACE_reinterpret_cast
+    (ptr_arith_t,
+      &ACE_NESTED_CLASS (::PortableServer, POAManager)::_narrow))
+    retv = ACE_reinterpret_cast (void*, this);
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+    retv = ACE_reinterpret_cast (void *,
+      ACE_static_cast (CORBA::Object_ptr, this));
+    
+  if (retv)
+    this->_add_ref ();
+  return retv;
+}
+
+
+const char* PortableServer::POAManager::_interface_repository_id (void) const
+{
+  return "IDL:PortableServer/POAManager:1.0";
+}
 
 // default constructor
 PortableServer::POAManager::AdapterInactive::AdapterInactive (void)
@@ -1075,6 +1095,29 @@ PortableServer::POAManager::AdapterInactive::AdapterInactive (void)
 PortableServer::POAManager::AdapterInactive::~AdapterInactive (void)
 {
 }
+
+void PortableServer::POAManager::AdapterInactive::_raise ()
+{
+  TAO_RAISE(*this);
+}
+
+
+void PortableServer::POAManager::AdapterInactive::_tao_encode (
+    TAO_OutputCDR &,
+    CORBA::Environment &ACE_TRY_ENV) const
+{
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void PortableServer::POAManager::AdapterInactive::_tao_decode (
+    TAO_InputCDR &,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 // copy constructor
 PortableServer::POAManager::AdapterInactive::AdapterInactive (const ::PortableServer::POAManager::AdapterInactive &_tao_excp)
@@ -1102,27 +1145,6 @@ PortableServer::POAManager::AdapterInactive::_downcast (CORBA::Exception *exc)
 }
 
 
-void PortableServer::POAManager::AdapterInactive::_raise ()
-{
-  TAO_RAISE(*this);
-}
-
-
-void PortableServer::POAManager::AdapterInactive::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV) const
-{
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-
-void PortableServer::POAManager::AdapterInactive::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
 // TAO extension - the _alloc method
 CORBA::Exception *PortableServer::POAManager::AdapterInactive::_alloc (void)
 {
@@ -1130,28 +1152,6 @@ CORBA::Exception *PortableServer::POAManager::AdapterInactive::_alloc (void)
   ACE_NEW_RETURN (retval, ::PortableServer::POAManager::AdapterInactive, 0);
   return retval;
 }
-
-void *PortableServer::POAManager::_tao_QueryInterface (ptr_arith_t type)
-{
-  void *retv = 0;
-  if (type == ACE_reinterpret_cast
-    (ptr_arith_t,
-      &ACE_NESTED_CLASS (::PortableServer, POAManager)::_narrow))
-    retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
-    retv = ACE_reinterpret_cast (void *,
-      ACE_static_cast (CORBA::Object_ptr, this));
-    
-  if (retv)
-    this->_add_ref ();
-  return retv;
-}
-
-const char* PortableServer::POAManager::_interface_repository_id (void) const
-{
-  return "IDL:PortableServer/POAManager:1.0";
-}
-
 
 // default constructor
 PortableServer::AdapterActivator::AdapterActivator (void)
