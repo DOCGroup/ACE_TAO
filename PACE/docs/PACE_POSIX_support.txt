@@ -106,3 +106,12 @@ FILE                    linux   lynxos  sunos   win32
  getpwnam()                                     X
  getpwnam_r()                                   X
 .............................................................
+<sched.h>
+ sched_get_priority_max()                       X
+ sched_get_priority_min()                       X
+ sched_getparam()                               X
+ sched_rr_get_interval()                        X
+ sched_setparam()                               X
+ sched_getscheduler                             X
+ sched_yield()                                  X
+.............................................................

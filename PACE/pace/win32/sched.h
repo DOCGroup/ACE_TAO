@@ -16,7 +16,6 @@
 #ifndef PACE_SCHED_H_WIN32
 #define PACE_SCHED_H_WIN32
 
-#include <sched.h>
 #include "pace/time.h"
 
 #if defined (PACE_HAS_CPLUSPLUS)
@@ -26,7 +25,10 @@ extern "C" {
 #define PACE_SCHED_FIFO SCHED_FIFO
 #define PACE_SCHED_OTHER SCHED_RR
 
-typedef struct sched_param pace_sched_param;
+#ifndef PACE_SCHED_PARAM
+#define PACE_SCHED_PARAM
+  typedef struct sched_param { int a_; } pace_sched_param;
+#endif
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }
