@@ -1,3 +1,11 @@
+Fri Jan 24 09:04:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_interface_header.cpp:
+
+	  Fixed a bug in error-checking the inheritance of abstract
+	  interfaces. Thanks to Michael Soden <soden@ikv.de> for
+	  reporting the IDL compiler's incorrect error message.
+
 Fri Jan 24 08:23:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
