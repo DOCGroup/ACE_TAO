@@ -60,37 +60,51 @@ public:
   virtual ~TAO_EC_Factory (void);
   // destructor...
 
-  TAO_EC_Dispatching* create_dispatching (TAO_EC_Event_Channel*)  = 0;
-  void destroy_dispatching (TAO_EC_Dispatching*) = 0;
+  virtual TAO_EC_Dispatching*
+      create_dispatching (TAO_EC_Event_Channel*) = 0;
+  virtual void
+      destroy_dispatching (TAO_EC_Dispatching*)  = 0;
   // Create and destroy the dispatching module.
 
-  TAO_EC_Filter_Builder* create_filter_builder (TAO_EC_Event_Channel*)  = 0;
-  void destroy_filter_builder (TAO_EC_Filter_Builder*) = 0;
+  virtual TAO_EC_Filter_Builder*
+      create_filter_builder (TAO_EC_Event_Channel*)   = 0;
+  virtual void
+      destroy_filter_builder (TAO_EC_Filter_Builder*) = 0;
   // Create and destroy the filter builder.
 
-  TAO_EC_ConsumerAdmin* create_consumer_admin (TAO_EC_Event_Channel*)  = 0;
-  void destroy_consumer_admin (TAO_EC_ConsumerAdmin*) = 0;
+  virtual TAO_EC_ConsumerAdmin*
+      create_consumer_admin (TAO_EC_Event_Channel*)  = 0;
+  virtual void
+      destroy_consumer_admin (TAO_EC_ConsumerAdmin*) = 0;
   // Create and destroy the consumer admin implementation.
 
-  TAO_EC_SupplierAdmin* create_supplier_admin (TAO_EC_Event_Channel*)  = 0;
-  void destroy_supplier_admin (TAO_EC_SupplierAdmin*) = 0;
+  virtual TAO_EC_SupplierAdmin*
+      create_supplier_admin (TAO_EC_Event_Channel*)  = 0;
+  virtual void
+      destroy_supplier_admin (TAO_EC_SupplierAdmin*) = 0;
   // Create and destroy the supplier admin implementation.
 
-  TAO_EC_ProxyPushSupplier* create_proxy_push_supplier (TAO_EC_Event_Channel*) = 0;
-  void destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier*) = 0;
+  virtual TAO_EC_ProxyPushSupplier*
+      create_proxy_push_supplier (TAO_EC_Event_Channel*) = 0;
+  virtual void
+      destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier*) = 0;
   // Create and destroy a ProxyPushSupplier
 
-  TAO_EC_ProxyPushConsumer* create_proxy_push_consumer (TAO_EC_Event_Channel*) = 0;
-  void destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer*) = 0;
+  virtual TAO_EC_ProxyPushConsumer*
+      create_proxy_push_consumer (TAO_EC_Event_Channel*) = 0;
+  virtual void
+      destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer*) = 0;
   // Create and destroy a ProxyPushConsumer
 
-  TAO_EC_Timer_Module* create_timer_module (TAO_EC_Event_Channel*)  = 0;
-  void destroy_timer_module (TAO_EC_Timer_Module*) = 0;
+  virtual TAO_EC_Timer_Module*
+      create_timer_module (TAO_EC_Event_Channel*)  = 0;
+  virtual void
+      destroy_timer_module (TAO_EC_Timer_Module*) = 0;
   // Create and destroy the timer module.
 
-  virtual void PortableServer::POA_ptr
+  virtual PortableServer::POA_ptr
        consumer_poa (CORBA::Environment& env) = 0;
-  virtual void PortableServer::POA_ptr
+  virtual PortableServer::POA_ptr
        supplier_poa (CORBA::Environment& env) = 0;
   // The Event Channel uses this methods to control the activation of
   // the run-time servants.

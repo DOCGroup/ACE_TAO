@@ -27,9 +27,10 @@
 //
 // ============================================================================
 
-#ifndef TAO_EC_PROXYSUPPLIER_H
-#define TAO_EC_PROXYSUPPLIER_H
+#ifndef TAO_EC_SUPPLIERADMIN_H
+#define TAO_EC_SUPPLIERADMIN_H
 
+#include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/Event/EC_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -37,6 +38,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_EC_Event_Channel;
+class TAO_EC_ProxyPushSupplier;
+class TAO_EC_ProxyPushConsumer;
 
 class TAO_EC_SupplierAdmin : public POA_RtecEventChannelAdmin::SupplierAdmin
 {
@@ -63,7 +66,7 @@ public:
   virtual ~TAO_EC_SupplierAdmin (void);
   // destructor...
 
-  void set_default_poa (PortableServer::POA_ptr poa);
+  void set_default_POA (PortableServer::POA_ptr poa);
   // Set this servant's default POA
 
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
@@ -103,4 +106,4 @@ private:
 #include "EC_SupplierAdmin.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_EC_PROXYSUPPLIER_H */
+#endif /* TAO_EC_SUPPLIERADMIN_H */

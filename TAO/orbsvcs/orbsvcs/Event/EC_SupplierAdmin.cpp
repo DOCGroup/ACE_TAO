@@ -1,6 +1,7 @@
 // $Id$
 
 #include "EC_SupplierAdmin.h"
+#include "EC_ProxyConsumer.h"
 #include "EC_Event_Channel.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -70,17 +71,18 @@ TAO_EC_SupplierAdmin::disconnected (TAO_EC_ProxyPushConsumer *consumer,
 				    CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->all_consumers_.remove (consumer) != 0)
-    ACE_THROW (RtecEventChannelAdmin::SUBSCRIPTION_ERROR ());
+    ACE_THROW (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR ());
 }
 
-RtecEventChannelAdmin::ProxyPushSupplier_ptr
-TAO_EC_SupplierAdmin::obtain_push_supplier (CORBA::Environment &ACE_TRY_ENV)
+RtecEventChannelAdmin::ProxyPushConsumer_ptr
+TAO_EC_SupplierAdmin::obtain_push_consumer (CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_EC_ProxyPushSupplier* supplier = 
-    this->event_channel_->factory ()->create_proxy_push_consumer (this->event_channel_);
+  TAO_EC_ProxyPushConsumer* consumer = 
+    this->event_channel_->create_proxy_push_consumer ();
 
-  supplier->set_default_POA (
-        this->event_channel_->factory ()->consumer_POA ());
+  PortableServer::POA_var poa =
+    this->event_channel_->consumer_poa (ACE_TRY_ENV);
+  consumer->set_default_POA (poa.in ());
 
-  return supplier->_this (ACE_TRY_ENV);
+  return consumer->_this (ACE_TRY_ENV);
 }

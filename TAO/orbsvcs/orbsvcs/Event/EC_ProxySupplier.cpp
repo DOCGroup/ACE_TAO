@@ -1,6 +1,8 @@
 // $Id$
 
 #include "EC_ProxySupplier.h"
+#include "EC_Dispatching.h"
+#include "EC_Filter_Builder.h"
 #include "EC_Event_Channel.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -19,15 +21,27 @@ TAO_EC_ProxyPushSupplier::~TAO_EC_ProxyPushSupplier (void)
 }
 
 void
-TAO_EC_ProxyPushSupplier::set_default_poa (PortableServer::POA_ptr poa)
+TAO_EC_ProxyPushSupplier::set_default_POA (PortableServer::POA_ptr poa)
 {
-  this->default_POA_ = PortableServier::POA::_duplicate (poa);
+  this->default_POA_ = PortableServer::POA::_duplicate (poa);
 }
 
 PortableServer::POA_ptr
 TAO_EC_ProxyPushSupplier::_default_POA (CORBA::Environment&)
 {
-  return PortableServier::POA::_duplicate (this->default_POA_);
+  return PortableServer::POA::_duplicate (this->default_POA_);
+}
+
+void
+TAO_EC_ProxyPushSupplier::connected (TAO_EC_ProxyPushSupplier*,
+                                     CORBA::Environment &)
+{
+}
+
+void
+TAO_EC_ProxyPushSupplier::disconnected (TAO_EC_ProxyPushSupplier*,
+                                        CORBA::Environment &)
+{
 }
 
 void
@@ -36,18 +50,19 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
       const RtecEventChannelAdmin::ConsumerQOS& qos,
       CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->connected ())
+  if (this->is_connected ())
     ACE_THROW (RtecEventChannelAdmin::AlreadyConnected ());
 
   this->consumer_ =
     RtecEventComm::PushConsumer::_duplicate (push_consumer);
   this->qos_ = qos;
 
-  this->adopt_child (
-      this->event_channel_->filter_builder_->build (this->qos_));
+  this->child_ =
+    this->event_channel_->filter_builder ()->build (this->qos_);
+  this->adopt_child (this->child_);
 
-  // @@ Notify the event channel...
-  // this->event_channel_->connected (this);
+  // Notify the event channel...
+  this->event_channel_->connected (this, ACE_TRY_ENV);
 }
 
 void
@@ -94,10 +109,10 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
                                 const TAO_EC_QOS_Info& qos_info,
                                 CORBA::Environment& ACE_TRY_ENV)
 {
-  this->event_channel_->dispatching_module ()->push (this,
-                                                     event,
-                                                     qos_info,
-                                                     ACE_TRY_ENV);
+  this->event_channel_->dispatching ()->push (this,
+                                              event,
+                                              qos_info,
+                                              ACE_TRY_ENV);
   this->child_->clear ();
 }
 
@@ -114,7 +129,7 @@ TAO_EC_ProxyPushSupplier::max_event_size (void) const
 }
 
 void
-TAO_EC_ProxyPushSupplier::event_ids (RtecEventComm::EventHeaderSet& headerset)
+TAO_EC_ProxyPushSupplier::event_ids (TAO_EC_Filter::Headers& headerset)
 {
-  return this->child_->event_ids (headerset);
+  this->child_->event_ids (headerset);
 }

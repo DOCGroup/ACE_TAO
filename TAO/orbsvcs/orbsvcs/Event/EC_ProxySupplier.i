@@ -15,7 +15,7 @@ TAO_EC_ProxyPushSupplier::is_suspended (void) const
 ACE_INLINE RtecEventComm::PushConsumer_ptr
 TAO_EC_ProxyPushSupplier::consumer (void) const
 {
-  return RtecEventComm::PushConsumer:_duplicate (this->consumer_);
+  return RtecEventComm::PushConsumer::_duplicate (this->consumer_);
 }
 
 ACE_INLINE const RtecEventChannelAdmin::ConsumerQOS&
