@@ -1,3 +1,8 @@
+Wed Apr 14 11:26:20 2004  Steve Huston  <shuston@riverace.com>
+
+	* include/makeinclude/platform_aix_g++.GNU: If rtti=0, add
+	  -fno-rtti to CFLAGS. Previously, the rtti setting had no affect.
+
 Wed Apr 14 10:04:43 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/ifrservice.mpb:
