@@ -221,7 +221,18 @@ TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
   long upcalls =
     this->decr_pending_upcalls ();
 
-  ACE_ASSERT (upcalls >= 0);
+  if (upcalls < 0)
+    return 0;
+
+  if (this->get_handle () != ACE_INVALID_HANDLE)
+    {
+      // Just close the socket irrespective of what the upcall count
+      // is.
+      this->peer().close ();
+
+      // Set the handle to be INVALID_HANDLE
+      this->set_handle (ACE_INVALID_HANDLE);
+    }
 
   // Try to clean up things if the upcall count has reached 0
   if (upcalls == 0)
@@ -258,16 +269,13 @@ TAO_DIOP_Connection_Handler::handle_close_i (void)
     }
 
   // Close the handle..
-  if (this->get_handle () != ACE_INVALID_HANDLE)
-    {
-      // Remove the entry as it is invalid
-      this->transport ()->purge_entry ();
+  // Remove the entry as it is invalid
+  this->transport ()->purge_entry ();
 
-      // Signal the transport that we will no longer have
-      // a reference to it.  This will eventually call
-      // TAO_Transport::release ().
-      this->transport (0);
-    }
+  // Signal the transport that we will no longer have
+  // a reference to it.  This will eventually call
+  // TAO_Transport::release ().
+  this->transport (0);
 
   // Follow usual Reactor-style lifecycle semantics and commit
   // suicide.
