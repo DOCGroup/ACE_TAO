@@ -1,164 +1,169 @@
+1998-10-10  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
+
+        * orbsvcs/tests/Simple_Naming/client.cpp: Added parenthesis to
+        avoid warnings when compiling on NT.
+
 Sat Oct 10 00:51:52 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.23 released.
 
 Fri Oct 09 23:48:40 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Server_Request.cpp (set_exception and set_result): Used the
- 	  Any copy constructor to copy the user provided any.
+        * tao/Server_Request.cpp (set_exception and set_result): Used the
+          Any copy constructor to copy the user provided any.
 
 Fri Oct  9 17:13:32 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp: Used the host and
-  	  pid to get a unique names for the vdev and streamendpoint objects
-  	  to register with the Naming Service while using the Process
-  	  Endpoint strategy. This will avoid name clashes between the audio and
-  	  video process. 
-  
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp: Used the child's host
-   	  and pid to lookup for Vdev and streamendpoint for the process
-	  endpoint strategy.
-	
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Removed the code that used
-	  _out variable to pacify sun_CC warnings. Sun_CC doesn't complain
-  	  anymore.
-	
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp: Used the host and
+          pid to get a unique names for the vdev and streamendpoint objects
+          to register with the Naming Service while using the Process
+          Endpoint strategy. This will avoid name clashes between the audio and
+          video process.
+
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp: Used the child's host
+          and pid to lookup for Vdev and streamendpoint for the process
+          endpoint strategy.
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Removed the code that used
+          _out variable to pacify sun_CC warnings. Sun_CC doesn't complain
+          anymore.
+
 Fri Oct  9 16:44:14 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Receiver.idl: 
-	  Added this new interface for the Trader Agent to push the server
-	  mmdevice and the filenames to the mpeg client.
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Receiver.idl:
+          Added this new interface for the Trader Agent to push the server
+          mmdevice and the filenames to the mpeg client.
 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.{h,cpp}:
-	  Added code to implement the Receiver interface. 
-	  Fixed memory leaks. 
-	  Fixed the code so that it works for multiple movies i.e
-	  tears down the stream after every movie and starts a new
-	  connection. 
-	  Also made code robust by using suspend and resume
-	  handlers for the video client to wait for the initial frame from
-	  the server. 
-	  Added an option to specify the data host to bind for
-	  the data which can be used for specify an ATM interface.
-	  Fixed the problem of Play command not playing from where
-	  fastforward/rewind stopped.
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.{h,cpp}:
+          Added code to implement the Receiver interface.
+          Fixed memory leaks.
+          Fixed the code so that it works for multiple movies i.e
+          tears down the stream after every movie and starts a new
+          connection.
+          Also made code robust by using suspend and resume
+          handlers for the video client to wait for the initial frame from
+          the server.
+          Added an option to specify the data host to bind for
+          the data which can be used for specify an ATM interface.
+          Fixed the problem of Play command not playing from where
+          fastforward/rewind stopped.
 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ctr.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ctr.cpp:
 
-	  Removed some unnecessary and redundant code and moved them into
-	  classes in Command_Handler.cpp.
+          Removed some unnecessary and redundant code and moved them into
+          classes in Command_Handler.cpp.
 
-	* orbsvcs/tests/AVStreams/mpeg/source/client/vcr.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/client/vcr.cpp:
 
-	  Fixed the code so that it passes the command line arguments
-	  properly to the command_handler.
-	
+          Fixed the code so that it passes the command line arguments
+          properly to the command_handler.
+
 Fri Oct  9 16:27:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
-	  We measure and report the elapsed time for the test (in the case
-	  of the consumer the time since we receive the first event).
-	  We use this to measure throughput (in events per second).
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+          We measure and report the elapsed time for the test (in the case
+          of the consumer the time since we receive the first event).
+          We use this to measure throughput (in events per second).
 
-	* orbsvcs/orbsvcs/Event/Memory_Pools.h: 
-	* orbsvcs/orbsvcs/Event/Memory_Pools.cpp: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
-	  We do not overload operator new and operator delete anymore. The
-	  allocators we were using were problematic for this use case and
-	  we believe that a better speed up can be obtained by reducing
-	  the number of allocations.  Thanks to "Mark Hyett"
-	  <mhyett@std.saic.com>, "Mark L. Boriack"
-	  <mboriack@std.saic.com>, "J. Russell Noseworthy"
-	  <rnosewor@objectsciences.com> for helping us with this bug.
+        * orbsvcs/orbsvcs/Event/Memory_Pools.h:
+        * orbsvcs/orbsvcs/Event/Memory_Pools.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+          We do not overload operator new and operator delete anymore. The
+          allocators we were using were problematic for this use case and
+          we believe that a better speed up can be obtained by reducing
+          the number of allocations.  Thanks to "Mark Hyett"
+          <mhyett@std.saic.com>, "Mark L. Boriack"
+          <mboriack@std.saic.com>, "J. Russell Noseworthy"
+          <rnosewor@objectsciences.com> for helping us with this bug.
 
 Fri Oct 09 15:27:17 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (~App_Allocated): Free up the memory pool
-	  before deleting the allocators.
+        * tao/ORB_Core.cpp (~App_Allocated): Free up the memory pool
+          before deleting the allocators.
 
 Fri Oct  9 13:42:47 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
 
-	* performance-tests/Thruput/TAO/results/REMOTE/README: added this
-	  file so cvs won't erase these empty directories for storing
-	  results of the thruput test. Note: also added the empty
-	  directories ./results/REMOTE. 
+        * performance-tests/Thruput/TAO/results/REMOTE/README: added this
+          file so cvs won't erase these empty directories for storing
+          results of the thruput test. Note: also added the empty
+          directories ./results/REMOTE.
 
-	* performance-tests/Thruput/TAO/run_client: run_client now checks
-	  for the testname directory and if it doesn't exist, it will
-	  create a directory to put the results.
+        * performance-tests/Thruput/TAO/run_client: run_client now checks
+          for the testname directory and if it doesn't exist, it will
+          create a directory to put the results.
 
 Fri Oct 09 02:19:09 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/IIOP_Object.cpp (Profile): Added new constructor.
+        * tao/IIOP_Object.cpp (Profile): Added new constructor.
 
 Fri Oct  9 01:15:54 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* tao/Operation_Table.cpp: 
-	* tao/Operation_Table.h: 
-	* TAO_IDL/be/be_interface.cpp: 
+        * tao/Operation_Table.cpp:
+        * tao/Operation_Table.h:
+        * TAO_IDL/be/be_interface.cpp:
 
-	  Integrated Linear Search operation lookup strategy option to
- 	  TAO_IDL. We use again GPERF for generating lookup method for
- 	  this. Thanks to great work by Vishal (vishal@cs), GPERF has an
- 	  option to generate linear search code.
- 
+          Integrated Linear Search operation lookup strategy option to
+          TAO_IDL. We use again GPERF for generating lookup method for
+          this. Thanks to great work by Vishal (vishal@cs), GPERF has an
+          option to generate linear search code.
+
 Thu Oct  8 17:37:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB.h: 
-	* tao/Typecode.h: 
-	* tao/Typecode.cpp: 
-	* tao/Typecode_Constants.h: 
-	* tao/Typecode_Constants.cpp: 
-	  Moved the CORBA::TypeCode::_tc_Bounds and
-	  CORBA::TypeCode::_tc_Kind typecodes to their proper namespace.
+        * tao/ORB.h:
+        * tao/Typecode.h:
+        * tao/Typecode.cpp:
+        * tao/Typecode_Constants.h:
+        * tao/Typecode_Constants.cpp:
+          Moved the CORBA::TypeCode::_tc_Bounds and
+          CORBA::TypeCode::_tc_Kind typecodes to their proper namespace.
 
-	* docs/releasenotes/TODO.html: 
-	  Updated some tasks related to the last change.
+        * docs/releasenotes/TODO.html:
+          Updated some tasks related to the last change.
 
-	* tao/Connect.cpp: 
-	  If an exception is thrown while handling a oneway request we
-	  just ignore it, unless the debugging flags in the ORB are
-	  enabled, in that case we print an informative message and the
-	  exception.
+        * tao/Connect.cpp:
+          If an exception is thrown while handling a oneway request we
+          just ignore it, unless the debugging flags in the ORB are
+          enabled, in that case we print an informative message and the
+          exception.
 
-	* tao/ORB_Core.h: 
-	* tao/ORB_Core.cpp: 
-	  The App_Allocated class does not own the CDR allocators all the
-	  time, sometimes they are global and shared by all the
-	  App_Allocated objects.
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+          The App_Allocated class does not own the CDR allocators all the
+          time, sometimes they are global and shared by all the
+          App_Allocated objects.
 
 Thu Oct 08 16:14:04 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB_Core.{h,cpp} (~App_Allocated): Added a destructor for
-	  this class.  Some of its members are now allocated from the heap
-	  and they need to be deleted.
-	  
+        * tao/ORB_Core.{h,cpp} (~App_Allocated): Added a destructor for
+          this class.  Some of its members are now allocated from the heap
+          and they need to be deleted.
+
 Thu Oct  8 12:15:38 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
-	  The new test sends "bursts" of events, without any pause between
-	  each event. Multiple burst can be sent with small pauses in
-	  between.
-	  Shutdown works now, even if multiple suppliers and multiple
-	  consumers are beign used. The ECT_Consumer program only needs to
-	  know the number of suppliers beign used.
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+          The new test sends "bursts" of events, without any pause between
+          each event. Multiple burst can be sent with small pauses in
+          between.
+          Shutdown works now, even if multiple suppliers and multiple
+          consumers are beign used. The ECT_Consumer program only needs to
+          know the number of suppliers beign used.
 
 Thu Oct 08 09:50:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h: Added #progma
-	  to disable VC "inheritance via dominance" warnings.
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.h: Added #progma
+          to disable VC "inheritance via dominance" warnings.
 
-	* docs/releasenotes/orbcore.html (Miscellany): Fixed a dead link.
-	  Thanks to Mark Weel <weel@lucent.com> for reporting this.
+        * docs/releasenotes/orbcore.html (Miscellany): Fixed a dead link.
+          Thanks to Mark Weel <weel@lucent.com> for reporting this.
 
 Wed Oct 07 23:27:07 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -166,56 +171,56 @@ Wed Oct 07 23:27:07 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Oct  7 22:27:48 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
-	(delete_property): Fixed the double deletion case. Thanks to
-	"Ulf Jhrig" <jaehrig@desys.com> for reporting this.
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
+        (delete_property): Fixed the double deletion case. Thanks to
+        "Ulf Jhrig" <jaehrig@desys.com> for reporting this.
 
 Wed Oct  7 21:44:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/try_macros.h: 
-	  Some compilers (MSVC++ 5.0) will complain about throwing an
-	  exception and not returning a value.
+        * tao/try_macros.h:
+          Some compilers (MSVC++ 5.0) will complain about throwing an
+          exception and not returning a value.
 
-	* tao/Object_Table.cpp: 
-	  The find() method on the object table was asserting that the
-	  entry ought to be in use, in fact if the entry was free the
-	  object was not found and we just have to return -1.
+        * tao/Object_Table.cpp:
+          The find() method on the object table was asserting that the
+          entry ought to be in use, in fact if the entry was free the
+          object was not found and we just have to return -1.
 
 Wed Oct 07 14:49:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs[_static].dsp: Added property service
-	  files.  Thanks to Ulf Jaehrig <jaehrig@desys.com> for noticing
-	  this.
+        * orbsvcs/orbsvcs/orbsvcs[_static].dsp: Added property service
+          files.  Thanks to Ulf Jaehrig <jaehrig@desys.com> for noticing
+          this.
 
 Wed Oct 07 11:33:37 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POA.cpp (state): Fully qualified the enums of the
- 	  POA_Manager's Processing_State.  Thanks to John Morey
- 	  <jmorey@tbi.com> for helping with this.
+        * tao/POA.cpp (state): Fully qualified the enums of the
+          POA_Manager's Processing_State.  Thanks to John Morey
+          <jmorey@tbi.com> for helping with this.
 
 Wed Oct  7 10:53:45 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* examples/Callback_Quoter/Supplier_i.cpp: 
-	  Added missing template instantiations.
+        * examples/Callback_Quoter/Supplier_i.cpp:
+          Added missing template instantiations.
 
 Wed Oct  7 09:19:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/try_macros.h (TAO_RETHROW): Added a return to
- 	  TAO_THROW_ENV_RETURN.  Thanks to John Morey for reporting this.
+        * tao/try_macros.h (TAO_RETHROW): Added a return to
+          TAO_THROW_ENV_RETURN.  Thanks to John Morey for reporting this.
 
 Wed Oct  7 08:39:59 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* tao/try_macros.h:
+        * tao/try_macros.h:
 
-	  Added a backslash in a the TAO_TRY macro definition. Thanks to
-	  John Morey (jmorey@tbi.com) for sending the bug fix.
+          Added a backslash in a the TAO_TRY macro definition. Thanks to
+          John Morey (jmorey@tbi.com) for sending the bug fix.
 
 Wed Oct  7 08:29:51 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* doc/compiler.html:
+        * doc/compiler.html:
 
-	  Updated the documentation for the -Ge, -Gt options. Thanks to
-	  Tom Dobridge <dobridge@persimmon.com> for pointing this out.
+          Updated the documentation for the -Ge, -Gt options. Thanks to
+          Tom Dobridge <dobridge@persimmon.com> for pointing this out.
 
 Wed Oct 07 02:50:39 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -228,31 +233,31 @@ Wed Oct  7 000:13:19 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 Wed Oct 07 00:07:43 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Param_Test/server.cpp: 
-	* performance-tests/Thruput/TAO/server.cpp: 
-	* orbsvcs/tests/Simulator/DOVEMIB/svr.cpp: 
+        * tests/Param_Test/server.cpp:
+        * performance-tests/Thruput/TAO/server.cpp:
+        * orbsvcs/tests/Simulator/DOVEMIB/svr.cpp:
 
-	  Changed "RootPOA_is_BAD" to "child_poa".  It was sending
- 	  negative POA vibes ;-)
+          Changed "RootPOA_is_BAD" to "child_poa".  It was sending
+          negative POA vibes ;-)
 
 Tue Oct 06 22:49:27 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Connect.cpp (handle_close): Replaced this->shutdown() with
- 	  explicit removal from the reactor and explicit closing of the
- 	  socket.  this->shutdown() also doing too much since it was also
- 	  purging the recycling act from the recycler. We need the
- 	  recycling act to be available until all the reference to the
- 	  Svc_Handlers are removed and the Svc_Handler is destroyed since
- 	  we need the recycling act to check the hint.
+        * tao/Connect.cpp (handle_close): Replaced this->shutdown() with
+          explicit removal from the reactor and explicit closing of the
+          socket.  this->shutdown() also doing too much since it was also
+          purging the recycling act from the recycler. We need the
+          recycling act to be available until all the reference to the
+          Svc_Handlers are removed and the Svc_Handler is destroyed since
+          we need the recycling act to check the hint.
 
-	  Thanks to Mark L. Boriack <mboriack@std.saic.com> for helping in
- 	  tracking down this problem.
+          Thanks to Mark L. Boriack <mboriack@std.saic.com> for helping in
+          tracking down this problem.
 
 Tue Oct  6 22:12:30 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Simple/grid/Grid_i.cpp: Fixed bugs with exceptions.
-  	  Thanks to Tom Dobridge <dobridge@persimmon.com> for pointing
- 	  this out.
+        * examples/Simple/grid/Grid_i.cpp: Fixed bugs with exceptions.
+          Thanks to Tom Dobridge <dobridge@persimmon.com> for pointing
+          this out.
 
 Tue Oct  6 21:25:22 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -263,26 +268,26 @@ Tue Oct  6 21:25:22 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 Tue Oct  6 21:02:24 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
         * examples/Simple/bank/AccountManager_i.cpp (close): Changed
- 	  TAO_TRY_ENV to _env to avoid duplicate definition.  Thanks to
- 	  Tom Dobridge <dobridge@persimmon.com> for pointing this out.
+          TAO_TRY_ENV to _env to avoid duplicate definition.  Thanks to
+          Tom Dobridge <dobridge@persimmon.com> for pointing this out.
 
 Tue Oct  6 20:28:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/try_macros.h: The TAO_TRY macro generates a new do/while
- 	  block even for the native C++ exception case, this is more
- 	  consistent with the alternative mapping.  Thanks to Tom Dobridge
- 	  <dobridge@persimmon.com> for pointing this out.
+          block even for the native C++ exception case, this is more
+          consistent with the alternative mapping.  Thanks to Tom Dobridge
+          <dobridge@persimmon.com> for pointing this out.
 
         * examples/Callback_Quoter/MarketFeed_i.cpp: *
- 	  examples/Callback_Quoter/Client_i.cpp: Removed instantiations of
- 	  TAO_TRY_ENV because TAO_TRY does it for us.  Thanks to Tom
- 	  Dobridge <dobridge@persimmon.com> for pointing this out.
+          examples/Callback_Quoter/Client_i.cpp: Removed instantiations of
+          TAO_TRY_ENV because TAO_TRY does it for us.  Thanks to Tom
+          Dobridge <dobridge@persimmon.com> for pointing this out.
 
 Tue Oct  6 20:05:55 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
         * examples/Callback_Quoter/Supplier_i.cpp (unregister_callback):
- 	  removed a variable which was defined unnecessarily.  Thanks to
- 	  David Levine for reporting this.
+          removed a variable which was defined unnecessarily.  Thanks to
+          David Levine for reporting this.
 
 Tue Oct  6 17:16:46 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
