@@ -6,8 +6,6 @@
 #include "ace/Configuration.i"
 #endif /* __ACE_INLINE__ */
 
-static const int DEFBUFSIZE = 256;
-
 ACE_Section_Key_Internal::ACE_Section_Key_Internal (void)
   : ref_count_ (0)
 {
@@ -333,6 +331,8 @@ ACE_Configuration::root_section (void)
 
 #if defined (WIN32)
 
+static const int ACE_DEFAULT_BUFSIZE = 256;
+
 ACE_Section_Key_Win32::ACE_Section_Key_Win32 (HKEY hKey)
   : hKey_ (hKey)
 {
@@ -424,8 +424,8 @@ ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section
       if (load_key (section, sub_key))
         return -3;
 
-      TCHAR name_buffer[DEFBUFSIZE];
-      DWORD buffer_size = DEFBUFSIZE;
+      TCHAR name_buffer[ACE_DEFAULT_BUFSIZE];
+      DWORD buffer_size = ACE_DEFAULT_BUFSIZE;
       // Note we don't increment the index because the 
       // enumeration becomes invalid if we change the 
       // subkey, which we do when we delete it.  By leaving 
@@ -440,7 +440,7 @@ ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section
                              NULL) == ERROR_SUCCESS)
         {
           remove_section (section, name_buffer, 1);
-          buffer_size = DEFBUFSIZE;
+          buffer_size = ACE_DEFAULT_BUFSIZE;
         }
     }
 
@@ -460,8 +460,8 @@ ACE_Configuration_Win32Registry::enumerate_values (const ACE_Configuration_Secti
   if (load_key (key, base_key))
     return -1;
 
-  TCHAR name_buffer[DEFBUFSIZE];
-  DWORD buffer_size = DEFBUFSIZE;
+  TCHAR name_buffer[ACE_DEFAULT_BUFSIZE];
+  DWORD buffer_size = ACE_DEFAULT_BUFSIZE;
   DWORD value_type;
   if (::RegEnumValue (base_key, 
                       Index, 
@@ -502,8 +502,8 @@ ACE_Configuration_Win32Registry::enumerate_sections (const ACE_Configuration_Sec
   if (load_key (key, base_key))
     return -1;
 
-  TCHAR name_buffer[DEFBUFSIZE];
-  DWORD buffer_size = DEFBUFSIZE;
+  TCHAR name_buffer[ACE_DEFAULT_BUFSIZE];
+  DWORD buffer_size = ACE_DEFAULT_BUFSIZE;
   if (::RegEnumKeyEx (base_key, 
                       Index, 
                       name_buffer, 
@@ -601,8 +601,8 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
   if (load_key (key, base_key))
     return -1;
 
-  TCHAR buffer[DEFBUFSIZE];
-  DWORD length = DEFBUFSIZE;
+  TCHAR buffer[ACE_DEFAULT_BUFSIZE];
+  DWORD length = ACE_DEFAULT_BUFSIZE;
   DWORD type;
   if (::RegQueryValueEx (base_key, 
                          name, 
@@ -660,8 +660,8 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
   if (load_key (key, base_key))
     return -1;
 
-  unsigned char buffer[DEFBUFSIZE];
-  DWORD buffer_length = DEFBUFSIZE;
+  unsigned char buffer[ACE_DEFAULT_BUFSIZE];
+  DWORD buffer_length = ACE_DEFAULT_BUFSIZE;
   DWORD type;
   if (::RegQueryValueEx (base_key, 
                          name, 
