@@ -1,3 +1,12 @@
+Sat Apr 27 17:13:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Svc_Handler.cpp: Added a closing '}' for the method
+	  ACE_Buffered_Svc_Handler::dump () const. This should fix the
+	  compile errors with g++ that will start showing up shortly in
+	  the Scoreboard.
+
+	* ace/*makefile: Updated dependencies.
+
 Sat Apr 27 11:16:03 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
         Thanks to Boris Temkin <borist@allcharge.com> for motivating the 
@@ -12,7 +21,7 @@ Sat Apr 27 11:16:03 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
  	  without deactivating the queue.  Also refactored the close()
  	  method to use flush_i().
 
-Sat Apr 27 09:26:43 2002  Balachandran Natarajan  <bala@guajira.cs.wustl.edu>
+Sat Apr 27 09:26:43 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Asynch_IO.cpp:
 	* ace/Asynch_IO.h:
