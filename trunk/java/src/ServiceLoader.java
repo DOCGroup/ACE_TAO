@@ -63,6 +63,23 @@ public class ServiceLoader extends ClassLoader
   public Class loadClass (URL url, boolean resolve) throws ClassNotFoundException
   {
     Class newClass = null;
+
+    // Extract the name of the class from the URL
+
+    String className = url.getFile();
+
+    // Remove any directory information
+    int idx = className.lastIndexOf("/");
+    if (idx != -1)
+      className = className.substring(idx + 1);
+
+    // Get rid of the class suffix
+    idx = className.lastIndexOf(".class");
+    if (idx != -1)
+      className = className.substring(0, idx);
+
+    ACE.DEBUG("The name of the class about to load is " + className);
+
     // Try to load it the class by reading in the bytes.
     // Note that we are not catching ClassNotFoundException here
     // since our caller will catch it.
@@ -81,7 +98,7 @@ public class ServiceLoader extends ClassLoader
 	// Now read all the data into the buffer
 	i.readFully (buf);
 
-	newClass = defineClass (buf, 0, buf.length);
+	newClass = defineClass (className, buf, 0, buf.length);
 	//	    ACE.DEBUG ("Loaded class: "+ name);
 	    
 	// Check if we need to load other classes referred to by this class.
