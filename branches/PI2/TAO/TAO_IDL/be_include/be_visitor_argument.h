@@ -38,5 +38,6 @@
 #include "be_visitor_argument/paramlist.h"
 #include "be_visitor_argument/request_info_sh.h"
 #include "be_visitor_argument/request_info_ss.h"
+#include "be_visitor_argument/request_info_result.h"
 
 #endif /* _BE_VISITOR_ARGUMENT_H */

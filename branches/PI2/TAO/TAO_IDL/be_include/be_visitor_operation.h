@@ -64,6 +64,7 @@
 #include "be_visitor_operation/interceptors_arglist.h"
 #include "be_visitor_operation/interceptors_sh.h"
 #include "be_visitor_operation/interceptors_ss.h"
+#include "be_visitor_operation/interceptors_exceptlist.h"
 
 
 #endif // TAO_BE_VISITOR_OPERATION_H
