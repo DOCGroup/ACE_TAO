@@ -25,11 +25,11 @@
 
 namespace CIAO
 {
-
   /**
    * @class CosNotifyService
    *
-   * An implementation of EventServiceBase using the COS notification service.
+   * @brief An implementation of EventServiceBase to use the
+   * CosNotification service.
    */
   class CosNotifyService :
     public virtual EventServiceBase
@@ -41,32 +41,28 @@ namespace CIAO
                       PortableServer::POA_ptr poa,
                       CosNotifyChannelAdmin::EventChannel_ptr ec);
 
+    // @@ George, just a place holder for you to add documentation.
     virtual void connect_event_supplier (
         CIAO::Supplier_Config_ptr supplier_config
         ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException));
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void connect_event_consumer (
         CIAO::Consumer_Config_ptr consumer_config
         ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException));
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void disconnect_event_consumer (
         const char * connection_id
         ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        Components::InvalidName,
-        Components::InvalidConnection));
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::InvalidName,
+                       Components::InvalidConnection));
 
-    virtual void disconnect_event_supplier (
-        ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        Components::InvalidName,
-        Components::InvalidConnection));
+    virtual void disconnect_event_supplier (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::InvalidName,
+                       Components::InvalidConnection));
 
     virtual void push_event (
         Components::EventBase * ev
@@ -133,6 +129,7 @@ namespace CIAO
 
   public:
 
+    // @@ George, is it okay to have a default constructor?
     CosNotifyServiceSupplier_impl (void);
 
     CosNotifyServiceSupplier_impl (
@@ -154,8 +151,8 @@ namespace CIAO
   private:
 
     CORBA::ORB_var orb_;
-
   };
+
 
   /**
    * @class CosNotifyServiceConsumer_impl
@@ -201,7 +198,7 @@ namespace CIAO
 
   /**
    * @class CosNotify_Consumer_Config_impl
-   * 
+   *
    * Implementation of the CosNotify_Consumer_Config IDL interface that
    * configures the CosNotification service. An object of this type will be
    * returned from @c CIAO::Container::create_consumer_config () when @c NOTIFY
@@ -260,7 +257,7 @@ namespace CIAO
 
   /**
    * @class CosNotify_Supplier_Config_impl
-   * 
+   *
    * Implementation of the CosNotify_Supplier_Config IDL interface that
    * configures the CosNotification service. An object of this type will be
    * returned from @c CIAO::Container::create_supplier_config () when @c NOTIFY

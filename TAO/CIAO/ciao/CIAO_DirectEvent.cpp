@@ -17,9 +17,9 @@ namespace CIAO
 
   DirectEventService::DirectEventService (
     CORBA::ORB_ptr orb,
-    PortableServer::POA_ptr poa) :
-  orb_ (CORBA::ORB::_duplicate (orb)),
-  root_poa_ (PortableServer::POA::_duplicate (poa))
+    PortableServer::POA_ptr poa)
+    : orb_ (CORBA::ORB::_duplicate (orb))
+    , root_poa_ (PortableServer::POA::_duplicate (poa))
   {
   }
 
@@ -38,9 +38,6 @@ namespace CIAO
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-
-    // @@ George, Any reason not to use ACE_NEW_THROW_EX (). Exceptions
-    // comes free then.
     Components::EventConsumerBase_var consumer =
       consumer_config->consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
@@ -79,13 +76,16 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG, "CIAO::DirectEventService::push_event\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                "CIAO::DirectEventService::push_event\n"));
 
     size_t end = this->consumer_array_.size ();
 
     // Iterate through the array, pushing the event to each consumer.
-    for (size_t iter = 0; iter < end; ++iter)
+    for (size_t iter = 0; iter != end; ++iter)
       {
+        // @@ George, is this required? Since the push_event () is
+        // going to make a copy, why would this be required?
         ev->_add_ref ();
         this->consumer_array_[iter]->push_event (
           ev
@@ -101,7 +101,7 @@ namespace CIAO
 
   void
   Direct_Consumer_Config_impl::consumer_id (
-      const char * consumer_id 
+      const char * consumer_id
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException))
@@ -165,8 +165,8 @@ namespace CIAO
     return Components::EventConsumerBase::_duplicate (this->consumer_.in ());
   }
 
-  Direct_Supplier_Config_impl::Direct_Supplier_Config_impl () :
-    service_type_ (DIRECT)
+  Direct_Supplier_Config_impl::Direct_Supplier_Config_impl (void)
+    : service_type_ (DIRECT)
   {
   }
 

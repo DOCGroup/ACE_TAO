@@ -86,6 +86,7 @@ namespace CIAO
      *
      * List of consumers.
      */
+    /// @@ George, this is cool! Do you want to use a _var or _ptr?
     ACE_Array<Components::EventConsumerBase_ptr> consumer_array_;
 
   };
@@ -93,7 +94,7 @@ namespace CIAO
 
   /**
    * @class Direct_Consumer_Config_impl
-   * 
+   *
    * Implementation of the Direct_Consumer_Config IDL interface that
    * configures TAO's direct event mechanism. An object of this type will be
    * returned from @c CIAO::Container::create_consumer_config () when @c DIRECT
@@ -107,13 +108,15 @@ namespace CIAO
 
     Direct_Consumer_Config_impl ();
 
-    virtual void consumer_id (const char * consumer_id ACE_ENV_ARG_DECL)
+    virtual void consumer_id (const char * consumer_id
+                              ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual CONNECTION_ID consumer_id (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void supplier_id (const char * supplier_id ACE_ENV_ARG_DECL)
+    virtual void supplier_id (const char * supplier_id
+                              ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual CONNECTION_ID supplier_id (ACE_ENV_SINGLE_ARG_DECL)
@@ -125,6 +128,7 @@ namespace CIAO
     virtual Components::EventConsumerBase_ptr consumer (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    // @@ george, probably this should be const'ified?
     virtual EventServiceType service_type (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -142,7 +146,7 @@ namespace CIAO
 
   /**
    * @class Direct_Supplier_Config_impl
-   * 
+   *
    * Implementation of the Direct_Supplier_Config IDL interface that
    * configures TAO's direct event mechanism. An object of this type will be
    * returned from @c CIAO::Container::create_supplier_config () when @c DIRECT
