@@ -1,3 +1,12 @@
+Tue Sep  4 07:37:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/ACE.cpp: Fixed a bug with recv_n_i (). The problem was form
+	  returning the exact number of bytes from the for loop. If the
+	  loop had executed once and if we get 0 in the next recv_i ()
+	  call, then we should be returning the number of bytes read in
+	  the previous iteration and not 0. Thanks to Eyal Neuman for this
+	  fix. This closes bug 1015.
+
 Tue Sep  4 07:08:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/ACE.cpp: Fixed a unicode error in teh Win32 builds. Acted as

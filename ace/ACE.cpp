@@ -137,7 +137,7 @@ ACE::select (int width,
                                writefds ? writefds->fdset () : 0,
                                exceptfds ? exceptfds->fdset () : 0,
                                timeout);
-  if (result > 0) 
+  if (result > 0)
     {
       if (readfds)
         readfds->sync ((ACE_HANDLE) width);
@@ -159,7 +159,7 @@ ACE::select (int width,
                                0,
                                0,
                                timeout);
-  if (result > 0) 
+  if (result > 0)
     readfds.sync ((ACE_HANDLE) width);
   return result;
 }
@@ -965,8 +965,16 @@ ACE::recv_n_i (ACE_HANDLE handle,
                        len - bytes_transferred);
       // Check EOF.
       if (n == 0)
-        return 0;
+        {
+          // If the bytes received is greater than zero, ie. if you
+          // had received anything in the  first iteration, then just
+          // return the bytes transferred. Thanks to Eyal Neuman for
+          // pointing this out.
+          if (bytes_transferred > 0)
+            return bytes_transferred;
 
+          return 0;
+        }
       // Check for other errors.
       if (n == -1)
         {
@@ -2546,7 +2554,7 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
 #if defined (WIN32)
    // Emulate Unix.  Win32 does NOT support all the UNIX versions
    // below, so DO we need this ifdef.
-  static const ACE_TCHAR *day_of_week_name[] = 
+  static const ACE_TCHAR *day_of_week_name[] =
   {
     ACE_LIB_TEXT ("Sun"),
     ACE_LIB_TEXT ("Mon"),
@@ -2557,7 +2565,7 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
     ACE_LIB_TEXT ("Sat")
   };
 
-  static const ACE_TCHAR *month_name[] = 
+  static const ACE_TCHAR *month_name[] =
   {
     ACE_LIB_TEXT ("Jan"),
     ACE_LIB_TEXT ("Feb"),
@@ -2570,7 +2578,7 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
     ACE_LIB_TEXT ("Sep"),
     ACE_LIB_TEXT ("Oct"),
     ACE_LIB_TEXT ("Nov"),
-    ACE_LIB_TEXT ("Dec") 
+    ACE_LIB_TEXT ("Dec")
   };
 
   SYSTEMTIME local;
