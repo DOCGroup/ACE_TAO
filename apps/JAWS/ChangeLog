@@ -1,3 +1,7 @@
+Thu Aug 16 09:57:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* */Makefile: Updated dependencies.
+
 Mon Aug 13 14:04:44 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* Applied the following fixes courtesy of Blair Zajac
