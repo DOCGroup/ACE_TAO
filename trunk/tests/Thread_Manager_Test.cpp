@@ -33,8 +33,6 @@ USELIB("..\ace\aced.lib");
 
 #if defined (ACE_HAS_THREADS)
 
-#include "Thread_Manager_Test.h"
-
 #if defined (DIGITAL_UNIX)
 class ACE_Export ACE_Hash<ACE_hthread_t>
 {
