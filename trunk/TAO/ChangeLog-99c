@@ -3,6 +3,10 @@ Wed Feb 03 07:07:07 1999  David L. Levine  <levine@cs.wustl.edu>
         * tao/IIOP_Transport.h (send_request): commented out argument
           names to avoid g++ 2.7.2.3 warnings about unused arguments.
 
+        * docs/configurations.html: removed note about TAO_ORBSVCS
+          not being supported by orbsvcs/orbsvcs/tmplinst-orbsvcs.cpp.
+          Thanks to Carlos, it is now supported.
+
 Tue Feb 02 09:22:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB.cpp (create_stub_object): removed unused local
