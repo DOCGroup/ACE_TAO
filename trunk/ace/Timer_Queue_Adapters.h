@@ -125,7 +125,7 @@ private:
   TQ timer_queue_;
   // The underlying Timer_Queue.
 
-  ACE_SYNCH_CONDITION<ACE_SYNCH_MUTEX> condition_;
+  ACE_SYNCH_CONDITION condition_;
   // The dispatching thread sleeps on this condition while waiting to
   // dispatch the next timer; it is used to wake it up if there is a
   // change on the timer queue.
