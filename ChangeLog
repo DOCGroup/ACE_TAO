@@ -1,3 +1,9 @@
+Tue Apr 29 00:30:37 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * bin/generate_compile_stats.sh:
+          My changes below worked so well, that ls can no longer
+          handle all the objects, use find instead.
+
 Mon Apr 28 11:00:13 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* configure.ac:
