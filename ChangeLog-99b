@@ -1,3 +1,10 @@
+Mon Jul 19 22:11:13 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: cleaned up instructions for building
+          on NT for VxWorks target.  Thanks to Stephane Chatre
+          <schatre@oresis.com> for reporting that the instructions
+          were out of date.
+
 Mon Jul 19 21:38:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/run_tests.vxworks:
