@@ -36,12 +36,15 @@ Tue Nov  4 10:33:51 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 Tue Nov 04 09:48:51 1997  David L. Levine  <levine@cs.wustl.edu>
 
-        * tao/except.h (line 118): removed backslash at end of comment line.
-          Some compilers complain about that.
-
         * tao/orb_core.i: disabled the ACE_Hash_Addr<ACE_INET_Addr>::hash_i ()
           template specialization on g++/VxWorks because g++
           cygnus-2.7.2-960126 can't handle it.
+
+        * tao/except.h (line 118): removed backslash at end of comment line.
+          Some compilers complain about that.
+
+        * tao/except.cpp (CORBA_SystemException): reordered initializers to
+          match declaration order.
 
         * TAO_IDL/Makefile: don't build the IDL compiler on VxWorks.
 
