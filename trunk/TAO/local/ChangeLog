@@ -1,67 +1,72 @@
+Wed Dec 03 09:27:44 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* local/bin/Event_Service/Event_Channel.cpp: added
+          ACE_Atomic_Op<ACE_ES_MUTEX, int> template instantiation.
+
 Tue Dec  2 10:32:01 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* local/bin/Event_Service/Makefile: 
-	* local/bin/Event_Service/Dispatching_Modules.h: 
-	* local/bin/Event_Service/Event_Channel.cpp: 
-	* local/bin/Event_Service/Event_Channel.h: 
-	* local/bin/Event_Service/Event_Channel.i: 
-	* local/bin/Event_Service/RT_Task.cpp: 
-	* local/bin/Event_Service/RT_Task.h: 
+	* local/bin/Event_Service/Makefile:
+	* local/bin/Event_Service/Dispatching_Modules.h:
+	* local/bin/Event_Service/Event_Channel.cpp:
+	* local/bin/Event_Service/Event_Channel.h:
+	* local/bin/Event_Service/Event_Channel.i:
+	* local/bin/Event_Service/RT_Task.cpp:
+	* local/bin/Event_Service/RT_Task.h:
 	  The ACE_TIMEPROBE implementation was moved into the orbsvcs
 	  library.
 	  Added some more ACE_TIMEPROBE to the point were all the lifetime
 	  of an event seems to every message
-	  seems 
+	  seems
 	  Removed some forwarding info leftovers on the Event Channel
 	  implementation.
 
-	* local/tests/Latency.cpp: 
+	* local/tests/Latency.cpp:
 	  Added some ACE_TIMEPROBE calls to measure delays.
 	  Use the double field to timestamp the event, using a
 	  highrestimer (TOTAL HACK).
 
 Sun Nov 30 16:57:40 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* bin/Event_Service/Makefile: 
+	* bin/Event_Service/Makefile:
 	  Added the old probe=X flag to include/exclude ACE_TIMEPROBE code.
 
-	* bin/Event_Service/Event_Channel.i: 
-	* bin/Event_Service/Event_Channel.cpp: 
-	* bin/Event_Service/Dispatching_Modules.i: 
-	* bin/Event_Service/Dispatching_Modules.cpp: 
+	* bin/Event_Service/Event_Channel.i:
+	* bin/Event_Service/Event_Channel.cpp:
+	* bin/Event_Service/Dispatching_Modules.i:
+	* bin/Event_Service/Dispatching_Modules.cpp:
 	  Normalized ACE_TIMEPROBE messages, all start with two spaces,
 	  but the timeout, which starts a loop, IMHO is easier to read
 	  that way.
 
-	* bin/Scheduling_Service/dump_schedule.cpp: 
-	* bin/Event_Service/Event_Service.cpp: 
+	* bin/Scheduling_Service/dump_schedule.cpp:
+	* bin/Event_Service/Event_Service.cpp:
 	  g++ does not seems to cast _var types to _ptr parameters on its
 	  own, an explicit call to the ptr() method seems needed.
 
-	* tests/Latency.h: 
+	* tests/Latency.h:
 	  Removed virtual methods from Latency_Supplier, thanks to g++ for
 	  noticing that those were uneeded.
 
 Tue Nov 25 22:49:23 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* bin/Event_Service/Event_Service.cpp: 
-	* bin/Scheduling_Service/dump_schedule.cpp: 
-	* bin/Scheduling_Service/schedule_service.cpp: 
-	* tests/Latency.cpp: 
+	* bin/Event_Service/Event_Service.cpp:
+	* bin/Scheduling_Service/dump_schedule.cpp:
+	* bin/Scheduling_Service/schedule_service.cpp:
+	* tests/Latency.cpp:
 	  The Naming Service has been working for quite a bit now, we use
 	  it instead of the ad-hoc ORBcore flags.
 
-	* tests/Latency.cpp: 
+	* tests/Latency.cpp:
 	  Use the high resolution timer to measure round-trip delays, and
 	  keep most of the original code for it. But we are not using the
 	  time_ field on the events (yet); a global variable takes its
 	  place.
-	  
+
 
 Mon Nov 24 20:53:03 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* bin/Event_Service/Event_Channel.h: 
-	* bin/Event_Service/Event_Channel.cpp: 
+	* bin/Event_Service/Event_Channel.h:
+	* bin/Event_Service/Event_Channel.cpp:
 	  Removed the forward_event support, since this is MDA/Boeing
 	  propietary.
 
