@@ -342,7 +342,7 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_INET_Addr server_addr;
 
   // Bind acceptor to any port and then find out what the port was.
-  if (acceptor.open ((const ACE_INET_Addr &) ACE_Addr::sap_any) == -1
+  if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("(%t) %p\n"),
