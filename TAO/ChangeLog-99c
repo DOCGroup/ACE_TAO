@@ -1,3 +1,42 @@
+Wed Jul 28 19:01:09 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Makefile (ORB_CORE_FILES):
+
+	  ObjectIDList was incorrectly removed from the list of sources to 
+	  be built when building with minimum CORBA support.
+
+	* tao/TAO_Internal.cpp:
+	* tao/UIOP_Acceptor.cpp:
+	* tao/UIOP_Acceptor.h:
+	* tao/UIOP_Connect.cpp:
+	* tao/UIOP_Connect.h:
+	* tao/UIOP_Connect.i:
+	* tao/UIOP_Connector.cpp:
+	* tao/UIOP_Connector.h:
+	* tao/UIOP_Factory.cpp:
+	* tao/UIOP_Factory.h:
+	* tao/UIOP_Profile.cpp:
+	* tao/UIOP_Profile.h:
+	* tao/UIOP_Profile.i:
+	* tao/UIOP_Transport.cpp:
+	* tao/UIOP_Transport.h:
+	* tao/default_resource.cpp:
+
+	  By default, only compile support for UIOP when TAO_HAS_UIOP is
+	  defined.  This change will allow the user to explicitly compile
+	  in support for UIOP even if TAO_HAS_MINIMUM_CORBA is defined.
+
+	* tao/Object_Adapter.cpp:
+	* tao/POA.cpp:
+
+	  Fixed unused argument warnings that occurred when
+	  TAO_HAS_MINIMUM_CORBA was defined.
+
+	* tao/IORManipulation.cpp:
+
+	  Fixed warnings from gcc 2.95 that complained about choosing the
+	  best string conversion operator.
+
 Wed Jul 28 18:28:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Param_Test/ub_string.cpp:
@@ -15,7 +54,7 @@ Wed Jul 28 18:28:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Wed Jul 28 15:47:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/orbconf.h: Added new marco ACE_HAS_UIOP. If the user has not
+	* tao/orbconf.h: Added new macro TAO_HAS_UIOP. If the user has not
 	  already specified TAO_HAS_UIOP, and the platform supports UNIX
 	  domain sockets, and minimum CORBA is not defined, we turn on
 	  TAO_HAS_UIOP by default.  Note that even with minimum CORBA, the
@@ -24,13 +63,14 @@ Wed Jul 28 15:47:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Wed Jul 28 14:23:29 1999  Fred Kuhns <fredk@cs.wustl.edu>
 
-        * tao/IORManipulation: Fixed a problem with how TAO_Stub creator was 
-	  called.  It was originally TAO_Stub ((Stream_var)type_id, ...).
-  	  However, this resulted in both the stub object and the type_id
- 	  obj owning the same string.  The change is to first perform a
- 	  string_dup () then give the string to the stub object.  Thanks
- 	  to Aniruddha Gokhale <gokhale@research.bell-labs.com> for id'ing
- 	  the bug and providing a fix.
+	* tao/IORManipulation.cpp:
+	Fixed a problem with how TAO_Stub creator was called.  It was
+	originally TAO_Stub ((Stream_var)type_id, ...).  However, this
+	resulted in both the stub object and the type_id obj owning the
+	same string.  The change is to first perform a string_dup () then
+	give the string to the stub object.  Thanks to Aniruddha Gokhale
+	<gokhale@research.bell-labs.com> for id'ing the bug and providing
+	a fix.
 
 Wed Jul 28 13:53:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
