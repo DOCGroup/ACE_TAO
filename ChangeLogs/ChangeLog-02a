@@ -1,3 +1,8 @@
+Tue Jun 04 14:18:56 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/tests/HttpCharStream_Test.dsp:
+	* ACEXML/tests/Tests.dsw: Added a new test project.
+
 Tue Jun 04 13:45:39 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/common/Mem_Map_Stream.h: Fixed typedefs of template
