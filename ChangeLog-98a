@@ -1,3 +1,8 @@
+Thu Dec 25 16:18:03 1997    <irfan@PACHANGA>
+
+	* ace/SString.h (ACE_CString and ACE_WString): Added c_str() to
+ 	  make it similar to STL's string class.
+
 Wed Dec 24 19:59:15 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/IOStream_Test.cpp (client): changed stream error message
