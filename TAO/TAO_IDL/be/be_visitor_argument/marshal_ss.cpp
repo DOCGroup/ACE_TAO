@@ -619,7 +619,7 @@ int be_visitor_args_marshal_ss::visit_string (be_string *node)
                 }
 
               *os << arg->local_name () << ".out (), "
-                  << node->max_size ()->ev ()->u.ulval - 1
+                  << node->max_size ()->ev ()->u.ulval
                   << ")";
             }
           break;
@@ -662,7 +662,7 @@ int be_visitor_args_marshal_ss::visit_string (be_string *node)
                 }
 
               *os << arg->local_name () << ".in (), "
-                  << node->max_size ()->ev ()->u.ulval - 1 << ")";
+                  << node->max_size ()->ev ()->u.ulval << ")";
               break;
             }
         }
