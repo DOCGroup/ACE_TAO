@@ -95,11 +95,6 @@ be_visitor_traits::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
-  os->gen_ifdef_macro (node->flat_name (), "arg_traits");
-
   // Since the three blocks below generate specialized (i.e., non-template)
   // classes, we don't want to generate them unless it's necessary - thus
   // the logic surrounding each one.
@@ -108,6 +103,8 @@ be_visitor_traits::visit_interface (be_interface *node)
   // declarations.
   if (!node->imported () && !node->is_defined ())
     {
+      os->gen_ifdef_macro (node->flat_name (), "traits");
+
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
           << "struct " << be_global->stub_export_macro () << " Objref_Traits<"
@@ -126,12 +123,16 @@ be_visitor_traits::visit_interface (be_interface *node)
           << "TAO_OutputCDR & cdr" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
           << "};";
+
+      os->gen_endif ();
     }
 
   // This should be generated even for imported nodes. The ifdef guard prevents
   // multiple declarations.
   if (node->seen_in_operation ())
     {
+      os->gen_ifdef_macro (node->flat_name (), "arg_traits");
+
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
           << "class " << be_global->stub_export_macro () << " Arg_Traits<" 
@@ -144,13 +145,11 @@ be_visitor_traits::visit_interface (be_interface *node)
           << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_nl
           << "};";
+
+      os->gen_endif ();
     }
 
-  os->gen_endif ();
-
-  int status = this->visit_scope (node);
-
-  if (status != 0)
+  if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_traits::"
@@ -175,9 +174,7 @@ be_visitor_traits::visit_interface_fwd (be_interface_fwd *node)
 
   // The logic in visit_interface() should handle what gets generated
   // and what doesn't.
-  int status = this->visit_interface (fd);
-
-  if (status != 0)
+  if (this->visit_interface (fd) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_traits::"
@@ -199,15 +196,12 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
-  os->gen_ifdef_macro (node->flat_name (), "arg_traits");
-
   // I think we need to generate this only for non-defined forward
   // declarations.
   if (!node->imported () && !node->is_defined ())
     {
+      os->gen_ifdef_macro (node->flat_name (), "traits");
+
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
           << "struct " << be_global->stub_export_macro () << " Value_Traits<"
@@ -217,12 +211,16 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
           << "static void tao_remove_ref (" << node->name () << " *);" 
           << be_uidt_nl
           << "};";
+
+      os->gen_endif ();
     }
 
   // This should be generated even for imported nodes. The ifdef guard prevents
   // multiple declarations.
   if (node->seen_in_operation ())
     {
+      os->gen_ifdef_macro (node->flat_name (), "arg_traits");
+
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
           << "class " << be_global->stub_export_macro () << " Arg_Traits<" 
@@ -235,9 +233,9 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
           << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_nl
           << "};";
-    }
 
-  os->gen_endif ();
+      os->gen_endif ();
+    }
 
   int status = this->visit_scope (node);
 
@@ -306,7 +304,7 @@ be_visitor_traits::visit_sequence (be_sequence *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  os->gen_ifdef_macro (node->flat_name (), "arg_traits");
+  os->gen_ifdef_macro (node->flat_name (), "traits");
 
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
@@ -350,13 +348,10 @@ be_visitor_traits::visit_string (be_string *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
   os->gen_ifdef_macro (node->flat_name (), "arg_traits");
 
-  // A workaround since bounded (w)strings are all generated as typedefs
-  // of (w)char *.
+  // A workaround 'dummy' type, since bounded (w)strings are all 
+  // generated as typedefs of (w)char *.
   *os << be_nl << be_nl
       << "struct " << alias->local_name () << "_" << bound << " {};";
 
@@ -385,25 +380,7 @@ be_visitor_traits::visit_array (be_array *node)
       return 0;
     }
 
-  if (!node->seen_in_operation ())
-    {
-      // @@@ (JP) I don't think we have to generate the Array_Traits decl.
-      /*
-      if (node->imported ())
-        {
-          return 0;
-        }
-      */
-    }
-
   TAO_OutStream *os = this->ctx_->stream ();
-
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
-  os->gen_ifdef_macro (node->flat_name (), "arg_traits");
-
-  // @@@ (JP) I don't think we have to generate the Array_Traits decl.
 
   // This is used by the _var and _out classes, so it should always be
   // generated in the main file.
@@ -434,6 +411,8 @@ be_visitor_traits::visit_array (be_array *node)
   // multiple declarations.
   if (node->seen_in_operation ())
     {
+      os->gen_ifdef_macro (node->flat_name (), "arg_traits");
+
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
           << "class " << be_global->stub_export_macro () << " Arg_Traits<" 
@@ -455,9 +434,9 @@ be_visitor_traits::visit_array (be_array *node)
           << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_nl
           << "};";
-    }
 
-  os->gen_endif ();
+      os->gen_endif ();
+    }
 
   node->cli_traits_gen (I_TRUE);
   return 0;
@@ -542,9 +521,7 @@ be_visitor_traits::visit_structure (be_structure *node)
       os->gen_endif ();
     }
 
-  int status = this->visit_scope (node);
-
-  if (status != 0)
+  if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_traits::"

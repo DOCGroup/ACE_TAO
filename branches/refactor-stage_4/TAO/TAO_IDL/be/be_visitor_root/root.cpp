@@ -307,7 +307,7 @@ int be_visitor_root::visit_root (be_root *node)
     }
 
 
-  // Make one more pass over the entire tree and generate the CDR operators.
+  // Make another pass over the entire tree and generate the CDR operators.
   ctx = *this->ctx_;
   status = 0;
 
@@ -344,7 +344,7 @@ int be_visitor_root::visit_root (be_root *node)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_root::"
-                           "visit_constant - "
+                           "visit_root - "
                            "Bad context state\n"),
                           -1);
       }
@@ -357,6 +357,44 @@ int be_visitor_root::visit_root (be_root *node)
                          "visit_root - "
                          "failed to generate CDR operators\n"),
                         -1);
+    }
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_CS)
+    {
+      // Make two more passes over the AST to generate the explicit
+      // template instantiations, one for 'template class ...' and
+      // one for '#pragma instantiate ...'.
+
+      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__;
+
+      os->gen_ifdef_AHETI ();
+
+      be_visitor_tmplinst visitor (this->ctx_);
+
+      if (node->accept (&visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_root - "
+                             "explicit template instantiation failed\n"),
+                            -1);
+        }
+
+      os->gen_elif_AHETI ();
+
+      visitor.switch_mode ();
+
+      if (node->accept (&visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_root - "
+                             "explicit template instantiation failed\n"),
+                            -1);
+        }
+
+      os->gen_endif_AHETI ();
     }
 
   // Generate any final code such as #endifs and/or EOF newlines.

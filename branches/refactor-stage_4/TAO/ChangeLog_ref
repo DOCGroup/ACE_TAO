@@ -1,3 +1,30 @@
+Sat Jul 12 11:35:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_arg_tmplinst.cpp:
+        * TAO_IDL/be_include/be_visitor_arg_tmplinst.h:
+
+          New files, to generate explicit template instantiations
+          for individual argument helper classes.
+
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_BE_LIB.dsp:
+        * TAO_IDL/TAO_IDL_BE.bor:
+        * TAO_IDL/Makefile.BE:
+
+          Added new files to projects and makefiles.
+
+        * TAO_IDL/be/be_argument.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+
+          Changes related to the above new files and to explicit
+          template instantiation generation in general.
+
 Fri Jul 11 08:19:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/BD_String_Argument_T.inl:
