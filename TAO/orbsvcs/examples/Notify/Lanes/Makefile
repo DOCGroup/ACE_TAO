@@ -25,7 +25,7 @@ CONSUMER_OBJS = $(CSRC:.cpp=.o)
 SRC = $(SSRC) $(CSRC)
 
 
-RT_NOTIFY_LIBS = -lTAO_RT_Notification -lTAO_ETCL -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny $(TAO_SRVR_LIBS)
+RT_NOTIFY_LIBS = -lTAO_CosNotification -lTAO_RT_Notification -lTAO_ETCL -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny $(TAO_SRVR_LIBS)
 RT_TAO_SRVR_LIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
 TAO_IDLFLAGS += -Ge 1
