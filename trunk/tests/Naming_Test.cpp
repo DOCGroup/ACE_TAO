@@ -72,13 +72,13 @@ test_bind (ACE_Naming_Context &ns_context)
   // do the binds
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++) 
     {
-      sprintf (name, "%s%d", "name", array[i]);
+      ACE_OS::sprintf (name, "%s%d", "name", array[i]);
       ACE_WString w_name (name);
       
-      sprintf (value, "%s%d", "value", array[i]);
+      ACE_OS::sprintf (value, "%s%d", "value", array[i]);
       ACE_WString w_value (value);
       
-      sprintf (type, "%s%d", "type", array [i]);
+      ACE_OS::sprintf (type, "%s%d", "type", array [i]);
       ACE_ASSERT (ns_context.bind (w_name, w_value, type) != -1);
     }
 }
@@ -86,7 +86,7 @@ test_bind (ACE_Naming_Context &ns_context)
 static void
 test_find_failure (ACE_Naming_Context &ns_context)
 {
-  sprintf (name, "%s", "foo-bar");
+  ACE_OS::sprintf (name, "%s", "foo-bar");
   ACE_WString w_name (name);
   ACE_WString w_value;
   char *l_type = 0;
@@ -105,13 +105,13 @@ test_rebind (ACE_Naming_Context &ns_context)
   // do the rebinds
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++) 
     {
-      sprintf (name, "%s%d", "name", array[i]);
+      ACE_OS::sprintf (name, "%s%d", "name", array[i]);
       ACE_WString w_name (name);
 
-      sprintf (value, "%s%d", "value", -array[i]);
+      ACE_OS::sprintf (value, "%s%d", "value", -array[i]);
       ACE_WString w_value (value);
 
-      sprintf (type, "%s%d", "type", -array[i]);
+      ACE_OS::sprintf (type, "%s%d", "type", -array[i]);
       ACE_ASSERT (ns_context.rebind (w_name, w_value, type) != -1);
     }
 }
@@ -125,7 +125,7 @@ test_unbind (ACE_Naming_Context &ns_context)
   // do the unbinds
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++) 
     {
-      sprintf (name, "%s%d", "name", array[i]);
+      ACE_OS::sprintf (name, "%s%d", "name", array[i]);
       ACE_WString w_name (name);
       ACE_ASSERT (ns_context.unbind (w_name) != -1);
     }
@@ -145,16 +145,16 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
     {
       if (sign == 1)
 	{
-	  sprintf (temp_val, "%s%d", "value", array[i]);
-	  sprintf (temp_type, "%s%d", "type", array[i]);
+	  ACE_OS::sprintf (temp_val, "%s%d", "value", array[i]);
+	  ACE_OS::sprintf (temp_type, "%s%d", "type", array[i]);
 	}	  
       else
 	{
-	  sprintf (temp_val, "%s%d", "value", -array[i]);
-	  sprintf (temp_type, "%s%d", "type", -array[i]);
+	  ACE_OS::sprintf (temp_val, "%s%d", "value", -array[i]);
+	  ACE_OS::sprintf (temp_type, "%s%d", "type", -array[i]);
 	}
 
-      sprintf (name, "%s%d", "name", array[i]);
+      ACE_OS::sprintf (name, "%s%d", "name", array[i]);
 
       ACE_WString w_name (name);      
       ACE_WString w_value;

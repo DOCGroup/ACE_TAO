@@ -1,3 +1,11 @@
+Wed Mar 26 08:47:24 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/{ACE.cpp,Log_Msg.cppOS.cpp},
+	  tests/{Message_Queue_Test.cpp,Naming_Test.cpp}:
+	  Changed ::sprintf calls to ACE_OS::sprintf.  Thanks to
+	  Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
+	  reporting this.
+
 Tue Mar 25 22:54:49 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/OS.i: Added UNICODE support for ACE_OS::chdir().  Thanks to

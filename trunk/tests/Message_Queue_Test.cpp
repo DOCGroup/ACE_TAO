@@ -37,7 +37,7 @@ main (int, char *[])
     {
       char *buffer;
       ACE_NEW_RETURN (buffer, char[BUFSIZ], -1);
-      ::sprintf (buffer, "%d", i);
+      ACE_OS::sprintf (buffer, "%d", i);
 
       ACE_Message_Block *entry;
 

@@ -28,7 +28,7 @@
 #if defined (ACE_HAS_UNICODE)
 #define ACE_WSPRINTF(BUF,VALUE) ::wsprintf (BUF, "%S", VALUE)
 #else
-#define ACE_WSPRINTF(BUF,VALUE) ::sprintf (BUF, "%s", VALUE)
+#define ACE_WSPRINTF(BUF,VALUE) ACE_OS::sprintf (BUF, "%s", VALUE)
 #endif /* ACE_HAS_UNICODE */
 
 // IPC conduit between sender and client daemon.  This should be
@@ -774,7 +774,7 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
   sz += ACE_OS::sprintf (msg_buf + sz, "HEXDUMP %d bytes", size);
 
   if (len < size)
-    ::sprintf (msg_buf + sz, " (showing first %d bytes)", len);
+    ACE_OS::sprintf (msg_buf + sz, " (showing first %d bytes)", len);
 
   // Now print out the formatted buffer.
   this->log (log_priority, "%s\n%s", msg_buf, buf);

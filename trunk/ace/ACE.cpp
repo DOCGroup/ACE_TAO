@@ -251,19 +251,19 @@ ACE::ldfind (const char filename[],
 
 	  // First, try matching the filename *without* adding a
 	  // prefix.
-	  ::sprintf (pathname, "%s%s%s",
-		     searchpathname,
-		     searchfilename, 
-		     got_suffix ? "" : ACE_DLL_SUFFIX);
+	  ACE_OS::sprintf (pathname, "%s%s%s",
+                           searchpathname,
+                           searchfilename, 
+                           got_suffix ? "" : ACE_DLL_SUFFIX);
 	  if (ACE_OS::access (pathname, F_OK) == 0)
 	    return 0;
 
 	  // Second, try matching the filename *with* adding a prefix.
-	  ::sprintf (pathname, "%s%s%s%s", 
-		     searchpathname,
-		     ACE_DLL_PREFIX,
-		     searchfilename, 
-		     got_suffix ? "" : ACE_DLL_SUFFIX);
+	  ACE_OS::sprintf (pathname, "%s%s%s%s", 
+                           searchpathname,
+                           ACE_DLL_PREFIX,
+                           searchfilename, 
+                           got_suffix ? "" : ACE_DLL_SUFFIX);
 	  if (ACE_OS::access (pathname, F_OK) == 0)
 	    return 0;
 	}
@@ -550,11 +550,11 @@ ACE::format_hexdump (char *buffer, int size, char *obuf, int obuf_sz)
       for (j = 0 ; j < 16; j++) 
 	{
 	  c = buffer[(i << 4) + j];
-	  ::sprintf (obuf, "%02x ", c);
+	  ACE_OS::sprintf (obuf, "%02x ", c);
 	  obuf += 3;
 	  if (j == 7)
 	    {
-	      ::sprintf (obuf, " ");
+	      ACE_OS::sprintf (obuf, " ");
 	      obuf++;
 	    }
 	  textver[j] = (c < 0x20 || c > 0x7e) ? '.' : c;
@@ -562,7 +562,7 @@ ACE::format_hexdump (char *buffer, int size, char *obuf, int obuf_sz)
 
       textver[j] = 0;
 
-      ::sprintf (obuf, "  %s\n", textver);
+      ACE_OS::sprintf (obuf, "  %s\n", textver);
 
       while (*obuf != '\0') 
 	obuf++;
@@ -573,11 +573,11 @@ ACE::format_hexdump (char *buffer, int size, char *obuf, int obuf_sz)
       for (i = 0 ; i < size % 16; i++) 
 	{
 	  c = buffer[size - size % 16 + i];
-	  ::sprintf (obuf,"%02x ",c);
+	  ACE_OS::sprintf (obuf,"%02x ",c);
 	  obuf += 3;
 	  if (i == 7)
 	    {
-	      ::sprintf (obuf, " ");
+	      ACE_OS::sprintf (obuf, " ");
 	      obuf++;
 	    }
 	  textver[i] = (c < 0x20 || c > 0x7e) ? '.' : c;
@@ -585,13 +585,13 @@ ACE::format_hexdump (char *buffer, int size, char *obuf, int obuf_sz)
 
       for (i = size % 16; i < 16; i++) 
 	{
-	  ::sprintf (obuf, "   ");
+	  ACE_OS::sprintf (obuf, "   ");
 	  obuf += 3;
 	  textver[i] = ' ';
 	}	
 
       textver[i] = 0;
-      ::sprintf (obuf, "  %s\n", textver);
+      ACE_OS::sprintf (obuf, "  %s\n", textver);
     }
   return size;
 }
@@ -619,14 +619,14 @@ ACE::timestamp (char date_and_time[], int date_and_timelen)
   SYSTEMTIME local;
   ::GetLocalTime (&local);
 
-  ::sprintf (date_and_time, "%02d/%02d/%04d %02d.%02d.%02d.%06d",
-	     (int) local.wMonth, // new, also the %02d in sprintf
-	     (int) local.wDay,   // new, also the %02d in sprintf
-	     (int) local.wYear,  // new, also the %02d in sprintf
-	     (int) local.wHour,
-	     (int) local.wMinute,
-	     (int) local.wSecond,
-	     (int) local.wMilliseconds * 1000);
+  ACE_OS::sprintf (date_and_time, "%02d/%02d/%04d %02d.%02d.%02d.%06d",
+                   (int) local.wMonth, // new, also the %02d in sprintf
+                   (int) local.wDay,   // new, also the %02d in sprintf
+                   (int) local.wYear,  // new, also the %02d in sprintf
+                   (int) local.wHour,
+                   (int) local.wMinute,
+                   (int) local.wSecond,
+                   (int) local.wMilliseconds * 1000);
 #else  /* UNIX */
   char timebuf[26]; // This magic number is based on the ctime(3c) man page.
   ACE_Time_Value cur_time = ACE_OS::gettimeofday ();

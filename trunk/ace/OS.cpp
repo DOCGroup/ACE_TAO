@@ -421,10 +421,10 @@ ACE_OS::inet_ntoa (const struct in_addr addr)
   // the following storage is not thread-specific!
   static char buf[32];
   // assumes that addr is already in network byte order
-  ::sprintf (buf, "%d.%d.%d.%d", addr.s_addr / (256*256*256) & 255,
-	     addr.s_addr / (256*256) & 255,
-	     addr.s_addr / 256 & 255,
-	     addr.s_addr & 255);
+  ACE_OS::sprintf (buf, "%d.%d.%d.%d", addr.s_addr / (256*256*256) & 255,
+		   addr.s_addr / (256*256) & 255,
+		   addr.s_addr / 256 & 255,
+		   addr.s_addr & 255);
   return buf;
 }
 #endif /* VXWORKS */ 
@@ -2127,15 +2127,15 @@ ACE_OS::mktemp (char *s)
           // condition if multiple threads in a process use the same
           // template).  This appears to match the behavior of the
           // Solaris 2.5 mktemp().
-          ::sprintf (xxxxxx, "%05d%c", getpid (), unique_letter);
+          ACE_OS::sprintf (xxxxxx, "%05d%c", getpid (), unique_letter);
           while (::stat (s, &sb) >= 0)
             {
 	      if (++unique_letter <= 'z')
-		::sprintf (xxxxxx, "%05d%c", getpid (), unique_letter);
+		ACE_OS::sprintf (xxxxxx, "%05d%c", getpid (), unique_letter);
 	      else
 		{
 		  // maximum of 26 unique files per template, per process
-		  ::sprintf (xxxxxx, "%s", "");
+		  ACE_OS::sprintf (xxxxxx, "%s", "");
 		  return s;
 		}
             }
