@@ -15,7 +15,7 @@
 #include "ace/pre.h"
 
 #include "tao/orbconf.h"
-#include "tao/Messaging/MessagingC.h"
+#include "tao/Messaging/Messaging.h"
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
