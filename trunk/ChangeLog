@@ -1,3 +1,9 @@
+Wed Mar  9 09:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Added RMCast and TMCast libraries so that they are build first,
+          fixes problems in the msvc6 static build
+
 Tue Mar  8 17:01:34 2005  Steve Huston  <shuston@riverace.com>
 
 	* configure.ac: Correct the variable checked for whether or not to
