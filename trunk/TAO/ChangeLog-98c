@@ -1,13 +1,20 @@
 Mon Nov 09 14:12:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* orbsvcs/tests/Simple_Naming/client.cpp (init): 
+	* examples/Quoter/Quoter_i.cpp (copy): 
+	* tests/Param_Test/ub_objref_seq.cpp (check_validity): 
+	* tests/Param_Test/except.cpp (run_sii_test): 
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
+	  (create_initial_propertysetdef): 
+	  (create_constrained_propertysetdef): 
+	  (create_initial_propertyset): 
+	  (create_constrained_propertyset): Changed to use
+	  TAO_ENDTRY_RETURN.
+
 	* tao/try_macros.h (TAO_ENDTRY_RETURN): Added a new macro
 	  'TAO_ENDTRY_RETURN(X)' to avoid compilation errors when a return
 	  statement goes right after the TAO_ENDTRY macro.  Thanks to
 	  David for pointing this out.
-
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
-	  (create_constrained_propertyset): Changed to use
-	  TAO_ENDTRY_RETURN.
 
 Mon Nov  9 13:04:56 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
