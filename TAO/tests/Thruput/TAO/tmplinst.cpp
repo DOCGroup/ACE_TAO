@@ -10,14 +10,11 @@
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class TAO_Unbounded_Sequence<CORBA::Double>;
 template class TAO_Unbounded_Sequence<BinStruct>;
-template class TAO_Unbounded_Sequence<CORBA::Long>;
 template class TAO_Unbounded_Sequence<CORBA::Char>;
 template class TAO_Unbounded_Sequence<CORBA::Short>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::Double>
 #pragma instantiate TAO_Unbounded_Sequence<BinStruct>
-#pragma instantiate TAO_Unbounded_Sequence<CORBA::Long>
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::Char>
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::Short>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
