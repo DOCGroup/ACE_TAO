@@ -1,3 +1,17 @@
+Mon May 12 18:42:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/include/ast_expression.h:
+
+          Moved storage of an expression's typedef node out of 
+          AST_Expression::AST_ExprValue and into AST_Expression itself.
+          If the rhs of a constant literal is an arithmetic or logical
+          expression, the AST_ExprValue's creation is deferred, and the
+          typedef cannot be assigned at the point where it is looked up.
+          Thanks to Ossama Othman <ossama@doc.ece.uci.edu> for reporting
+          the bug and sending an example IDL file.
+
 Mon May 12 10:24:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IIOP_Profile.cpp  (parse_string_i): 
