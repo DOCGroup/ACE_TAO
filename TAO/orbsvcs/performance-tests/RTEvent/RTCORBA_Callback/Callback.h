@@ -7,7 +7,6 @@
 
 #ifndef CALLBACK_H
 #define CALLBACK_H
-#include "ace/pre.h"
 
 #include "TestS.h"
 #include "ace/Sample_History.h"
@@ -57,4 +56,4 @@ private:
   PortableServer::POA_var poa_;
 };
 
-#endif /* TAO_PERF_RTEC_CALLBACK_H */
+#endif /* CALLBACK_H */
