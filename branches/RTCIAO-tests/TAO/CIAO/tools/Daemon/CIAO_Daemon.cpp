@@ -74,6 +74,8 @@ parse_args (int argc, char *argv[])
                            "-o <ior_output_file>\n"
                            "-d <time (in second) to wait for component server>\n"
                            "-i <installation data filename>\n"
+                           "-c <default svc.conf file for starting ComponentServer>"
+                           "-m <svc.conf mapping data file>"
                            "-s <section name to use in installation data file>\n"
                            "\n",
                            argv [0]),
