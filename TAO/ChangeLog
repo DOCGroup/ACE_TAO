@@ -1,3 +1,10 @@
+Wed Jun 25 09:40:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/TAO_Static.dsp:
+	* tao/IORInterceptor/TAO_IORInterceptor_Static.dsp: Added missing
+	  files into the project. Thanks to Tommy Andreasen
+	  <Tommy.Andreasen@Radiometer.dk> for provind the patches. 
+
 Tue Jun 25 11:26:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/sciop_endpoints.i:
