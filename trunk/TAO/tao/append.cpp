@@ -614,12 +614,16 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
 
   // get element typecode
   tc2 = tc->content_type (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
       retval = dest->append (tc2, src, ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
     }
+
+  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+    return retval;
 
   // error exit
   if (TAO_debug_level > 0)

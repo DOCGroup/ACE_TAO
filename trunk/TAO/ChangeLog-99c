@@ -1,3 +1,9 @@
+Mon Jun 28 11:17:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/append.cpp:
+	  Fixed bugs in interpretive marshaling of arrays, it was raising
+	  an exception even when there was no error, my bad.
+
 Mon Jun 28 11:02:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Dynenum_i.cpp:
