@@ -1,3 +1,7 @@
+Tue Jul  2 11:37:49 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile* : Updated dependencies. 
+
 Mon Jul  1 23:29:15 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * */Makefile*:
