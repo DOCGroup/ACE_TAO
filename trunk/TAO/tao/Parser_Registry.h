@@ -52,7 +52,7 @@ public:
   /// Invoked by the ORB during startup.
   int open (TAO_ORB_Core *orb_core);
 
-  /// Find the parser that can parse <ior_string>
+  /// Find the parser that can parse @a ior_string
   /// The lookup is based on the prefix in the string
   TAO_IOR_Parser *match_parser (const char *ior_string);
 

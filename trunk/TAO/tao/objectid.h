@@ -87,7 +87,7 @@
 //    above list once the above services register their references
 //    dynamically.
 
-// Service IDs for the services that are located through Multicast.
+/// Service IDs for the services that are located through Multicast.
 enum TAO_MCAST_SERVICEID
 {
   NAMESERVICE,
@@ -96,7 +96,7 @@ enum TAO_MCAST_SERVICEID
   INTERFACEREPOSERVICE
 };
 
-// No. of services locatable through multicast.
+/// No. of services locatable through multicast.
 #define TAO_NO_OF_MCAST_SERVICES 4
 
 
