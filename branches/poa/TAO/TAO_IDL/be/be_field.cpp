@@ -199,6 +199,12 @@ be_field::compute_size_type (void)
   return 0;
 }
 
+int
+be_field::accept (be_visitor *visitor)
+{
+  return visitor->visit_field (this);
+}
+
 // Narrowing
 IMPL_NARROW_METHODS2 (be_field, AST_Field, be_decl)
 IMPL_NARROW_FROM_DECL (be_field)

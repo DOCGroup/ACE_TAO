@@ -740,6 +740,12 @@ be_operation::compute_size_type (void)
   return 0;
 }
 
+int
+be_operation::accept (be_visitor *visitor)
+{
+  return visitor->visit_operation (this);
+}
+
 // Narrowing
 IMPL_NARROW_METHODS3 (be_operation, AST_Operation, be_scope, be_decl)
 IMPL_NARROW_FROM_DECL (be_operation)

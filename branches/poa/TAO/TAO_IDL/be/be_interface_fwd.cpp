@@ -623,6 +623,12 @@ be_interface_fwd::tc_size (void)
   return 0;
 }
 
+// Visiting methods
+int be_interface_fwd::accept (be_visitor *visitor)
+{
+  return visitor->visit_interface_fwd (this);
+}
+
 // Narrowing
 IMPL_NARROW_METHODS2 (be_interface_fwd, AST_InterfaceFwd, be_type)
 IMPL_NARROW_FROM_DECL (be_interface_fwd)

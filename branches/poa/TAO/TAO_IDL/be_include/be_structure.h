@@ -82,6 +82,9 @@ public:
   virtual int member_count (void);
   // return the count of members
 
+  // Visiting
+  virtual int accept (be_visitor *visitor);
+
   // Narrowing
   DEF_NARROW_METHODS3 (be_structure, AST_Structure, be_scope, be_type);
   DEF_NARROW_FROM_DECL (be_structure);

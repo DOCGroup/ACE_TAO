@@ -682,6 +682,12 @@ be_attribute::gen_server_inline (void)
   return 0;
 }
 
+int
+be_attribute::accept (be_visitor *visitor)
+{
+  return visitor->visit_attribute (this);
+}
+
 // Narrowing
 IMPL_NARROW_METHODS2 (be_attribute, AST_Attribute, be_decl)
 IMPL_NARROW_FROM_DECL (be_attribute)

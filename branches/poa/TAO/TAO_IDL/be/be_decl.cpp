@@ -464,6 +464,12 @@ be_decl::scope (void)
    }
 }
 
+// Visiting methods
+int be_decl::accept (be_visitor *visitor)
+{
+  return visitor->visit_decl (this);
+}
+
 // narrowing methods
 IMPL_NARROW_METHODS1 (be_decl, AST_Decl)
 IMPL_NARROW_FROM_DECL (be_decl)

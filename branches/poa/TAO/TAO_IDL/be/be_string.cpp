@@ -157,6 +157,12 @@ be_string::tc_encap_len (void)
   return this->encap_len_;
 }
 
+// Visiting methods
+int be_string::accept (be_visitor *visitor)
+{
+  return visitor->visit_string (this);
+}
+
 // Narrowing
 IMPL_NARROW_METHODS2 (be_string, AST_String, be_type)
 IMPL_NARROW_FROM_DECL (be_string)

@@ -83,7 +83,11 @@ Identifier::Identifier (char *s, long, long, long)
 
 Identifier::~Identifier () 
 {
-  delete pv_string;
+  if (this->pv_string != 0)
+    {
+      // The string was allocated using strdup, which uses malloc.
+      ACE_OS::free (this->pv_string);
+    }
 }
 
 // Operations

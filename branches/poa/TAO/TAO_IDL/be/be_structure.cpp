@@ -882,6 +882,12 @@ be_structure::compute_size_type (void)
   return 0;
 }
 
+// Visiting methods
+int be_structure::accept (be_visitor *visitor)
+{
+  return visitor->visit_structure (this);
+}
+
 // Narrowing
 IMPL_NARROW_METHODS3 (be_structure, AST_Structure, be_scope, be_type)
 IMPL_NARROW_FROM_DECL (be_structure)

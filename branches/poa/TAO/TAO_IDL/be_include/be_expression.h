@@ -38,6 +38,10 @@ public:
   be_expression (String *s);
   be_expression (char c);
   be_expression (double d);
+
+  // Visiting
+  virtual int accept (be_visitor *visitor);
+
 };
 
 #endif

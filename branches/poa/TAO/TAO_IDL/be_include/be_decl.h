@@ -21,6 +21,7 @@
 #define TAO_BE_DECL_H
 
 class be_scope;
+class be_visitor;
 
 /*
  * BE_Decl
@@ -98,6 +99,9 @@ public:
 
   virtual be_scope *scope (void);
   // return the scope created by this node (if one exists)
+
+  // Visiting
+  virtual int accept (be_visitor* visitor);
 
   // Narrowing
   DEF_NARROW_METHODS1 (be_decl, AST_Decl);

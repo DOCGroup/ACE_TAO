@@ -2405,6 +2405,12 @@ be_sequence::decl (void)
   return this;
 }
 
+// Visiting methods
+int be_sequence::accept (be_visitor *visitor)
+{
+  return visitor->visit_sequence (this);
+}
+
 // Narrowing
 IMPL_NARROW_METHODS3 (be_sequence, AST_Sequence, be_scope, be_type)
 IMPL_NARROW_FROM_DECL (be_sequence)

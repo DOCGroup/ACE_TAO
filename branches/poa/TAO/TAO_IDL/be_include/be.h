@@ -117,4 +117,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "be_codegen.h"          // code generator
 #include        "be_factory.h"          // factory
 
+#include 	"be_visitor.h"
+
 #endif           // _BE_BE_HH

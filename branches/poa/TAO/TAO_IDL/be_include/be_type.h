@@ -77,6 +77,15 @@ public:
   virtual char *nested_type_name (be_decl *d, char *suffix = 0);
   // type name of a node used when generating declarations
 
+  virtual AST_Decl::NodeType base_node_type (void) const;
+  // Typedefs are tricky to handle, in many points their mapping
+  // depend on base type they are aliasing.  Since typedefs can be
+  // recursive simply using "base_type->node_type()" will not work, so
+  // the most "unaliased" type is needed.
+
+  // Visiting
+  virtual int accept (be_visitor* visitor);
+
   // Narrowing
   DEF_NARROW_METHODS2 (be_type, AST_Type, be_decl);
   DEF_NARROW_FROM_DECL (be_type);

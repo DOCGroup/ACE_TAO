@@ -318,6 +318,18 @@ be_typedef::compute_size_type (void)
   return 0;
 }
 
+AST_Decl::NodeType be_typedef::base_node_type (void) const
+{
+  be_type *base = be_type::narrow_from_decl (ACE_const_cast(be_typedef*, this)->base_type ());
+  return base->base_node_type ();
+}
+
+// Visiting methods
+int be_typedef::accept (be_visitor *visitor)
+{
+  return visitor->visit_typedef (this);
+}
+
 // Narrowing
 IMPL_NARROW_METHODS2 (be_typedef, AST_Typedef, be_type)
 IMPL_NARROW_FROM_DECL (be_typedef)

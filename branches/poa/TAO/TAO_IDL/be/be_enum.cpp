@@ -314,7 +314,13 @@ be_enum::tc_encap_len (void)
   return this->encap_len_;
 }
 
+// Visiting methods
+int be_enum::accept (be_visitor *visitor)
+{
+  return visitor->visit_enum (this);
+}
+
 // Narrowing
 IMPL_NARROW_METHODS3 (be_enum, AST_Enum, be_scope, be_type)
-  IMPL_NARROW_FROM_DECL (be_enum)
-  IMPL_NARROW_FROM_SCOPE (be_enum)
+IMPL_NARROW_FROM_DECL (be_enum)
+IMPL_NARROW_FROM_SCOPE (be_enum)

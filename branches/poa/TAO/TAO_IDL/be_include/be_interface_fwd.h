@@ -76,6 +76,9 @@ public:
   virtual long tc_size (void);
   // return typecode size
 
+  // Visiting
+  virtual int accept (be_visitor* visitor);
+
   // Narrowing
   DEF_NARROW_METHODS2 (be_interface_fwd, AST_InterfaceFwd, be_type);
   DEF_NARROW_FROM_DECL (be_interface_fwd);

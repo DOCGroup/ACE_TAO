@@ -69,6 +69,13 @@ public:
   virtual long tc_encap_len (void);
   // return length of encapsulation
 
+  virtual AST_Decl::NodeType base_node_type (void) const;
+  // Return the most "unaliased" type node for the base type (see
+  // be_type.h).
+
+  // Visiting
+  virtual int accept (be_visitor *visitor);
+
   // Narrowing
   DEF_NARROW_METHODS2 (be_typedef, AST_Typedef, be_type);
   DEF_NARROW_FROM_DECL (be_typedef);

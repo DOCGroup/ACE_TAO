@@ -1,3 +1,86 @@
+Mon Dec 29 13:18:49 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* TAO_IDL/be/Makefile: 
+	* TAO_IDL/be/be_visitor.cpp: 
+	* TAO_IDL/be/be_visitor_args.cpp: 
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	* TAO_IDL/be_include/be_visitor.h: 
+	* TAO_IDL/be_include/be_visitor_args.h: 
+	* TAO_IDL/be_include/be_visitor_interface.h: 
+	  Started implementation of the collocated class code generation,
+	  using the visitor pattern; hence the new be_visitor class and
+	  some examples of its use.
+
+	* TAO_IDL/be_include/be_type.h: 
+	* TAO_IDL/be_include/be_typedef.h: 
+	* TAO_IDL/be/be_type.cpp: 
+	* TAO_IDL/be/be_typedef.cpp: 
+	  Added method to obtain the node type for the most "unaliased"
+	  type though a typedef chain. This is needed in several points
+	  for code generation.
+
+	* TAO_IDL/be/be_interface.cpp: 
+	  Implemented the collocated class generation using visitors,
+	  ditto for (part of) the main class.
+
+	* TAO_IDL/util/utl_identifier.cpp: 
+	  Fixed memory deallocation problem. The string was copied using
+	  ACE_OS::strdup(), but deleted using operator delete[].
+
+	* TAO_IDL/be/be_argument.cpp: 
+	* TAO_IDL/be/be_array.cpp: 
+	* TAO_IDL/be/be_attribute.cpp: 
+	* TAO_IDL/be/be_constant.cpp: 
+	* TAO_IDL/be/be_decl.cpp: 
+	* TAO_IDL/be/be_enum.cpp: 
+	* TAO_IDL/be/be_enum_val.cpp: 
+	* TAO_IDL/be/be_exception.cpp: 
+	* TAO_IDL/be/be_expression.cpp: 
+	* TAO_IDL/be/be_field.cpp: 
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_interface_fwd.cpp: 
+	* TAO_IDL/be/be_module.cpp: 
+	* TAO_IDL/be/be_operation.cpp: 
+	* TAO_IDL/be/be_predefined_type.cpp: 
+	* TAO_IDL/be/be_root.cpp: 
+	* TAO_IDL/be/be_scope.cpp: 
+	* TAO_IDL/be/be_sequence.cpp: 
+	* TAO_IDL/be/be_string.cpp: 
+	* TAO_IDL/be/be_structure.cpp: 
+	* TAO_IDL/be/be_type.cpp: 
+	* TAO_IDL/be/be_typedef.cpp: 
+	* TAO_IDL/be/be_union.cpp: 
+	* TAO_IDL/be/be_union_branch.cpp: 
+	* TAO_IDL/be/be_union_label.cpp: 
+	* TAO_IDL/be_include/be.h: 
+	* TAO_IDL/be_include/be_argument.h: 
+	* TAO_IDL/be_include/be_array.h: 
+	* TAO_IDL/be_include/be_attribute.h: 
+	* TAO_IDL/be_include/be_constant.h: 
+	* TAO_IDL/be_include/be_decl.h: 
+	* TAO_IDL/be_include/be_enum.h: 
+	* TAO_IDL/be_include/be_enum_val.h: 
+	* TAO_IDL/be_include/be_exception.h: 
+	* TAO_IDL/be_include/be_expression.h: 
+	* TAO_IDL/be_include/be_field.h: 
+	* TAO_IDL/be_include/be_interface.h: 
+	* TAO_IDL/be_include/be_interface_fwd.h: 
+	* TAO_IDL/be_include/be_module.h: 
+	* TAO_IDL/be_include/be_operation.h: 
+	* TAO_IDL/be_include/be_predefined_type.h: 
+	* TAO_IDL/be_include/be_root.h: 
+	* TAO_IDL/be_include/be_scope.h: 
+	* TAO_IDL/be_include/be_sequence.h: 
+	* TAO_IDL/be_include/be_string.h: 
+	* TAO_IDL/be_include/be_structure.h: 
+	* TAO_IDL/be_include/be_type.h: 
+	* TAO_IDL/be_include/be_typedef.h: 
+	* TAO_IDL/be_include/be_union.h: 
+	* TAO_IDL/be_include/be_union_branch.h: 
+	* TAO_IDL/be_include/be_union_label.h: 
+	  Added the accept() method for the vistor pattern
+	  implementation.
+
 Mon Dec 29 11:37:47 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server/Makefile: Updated dependencies.
