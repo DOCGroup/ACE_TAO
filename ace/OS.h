@@ -2955,7 +2955,28 @@ struct ACE_Export ACE_Str_Buf : public strbuf
 
 // Signature for registering a cleanup function that is used by the
 // <ACE_Object_Manager> and the <ACE_Thread_Manager>.
+#if defined (ACE_HAS_SIG_C_FUNC)
+extern "C" {
+#endif /* ACE_HAS_SIG_C_FUNC */
 typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
+#if defined (ACE_HAS_SIG_C_FUNC)
+}
+#endif /* ACE_HAS_SIG_C_FUNC */
+
+class ACE_Cleanup
+  // = TITLE
+  //    Base class for objects that are cleaned by ACE_Object_Manager.
+{
+public:
+  virtual ~ACE_Cleanup ();
+  // Destructor.
+
+  virtual void cleanup (void *param = 0);
+  // Cleanup method that, by default, simply deletes itself.
+};
+
+// Adapter for cleanup, used by ACE_Object_Manager.
+extern "C" void ace_cleanup_destroyer (ACE_Cleanup *, void *param = 0);
 
 struct ACE_Cleanup_Info
   // = TITLE
