@@ -70,14 +70,17 @@ Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
       rt_info_ = server->create (my_name, TAO_TRY_ENV);
 
       server->set (rt_info_,
-                   ORBSVCS_Time::zero,
-                   ORBSVCS_Time::zero,
-                   ORBSVCS_Time::zero,
-                   0,
-                   RtecScheduler::VERY_LOW_IMPORTANCE,
-                   ORBSVCS_Time::zero,
-                   1,
-                   TAO_TRY_ENV);
+                       RtecScheduler::VERY_LOW_CRITICALITY,
+                       ORBSVCS_Time::zero,
+                       ORBSVCS_Time::zero,
+                       ORBSVCS_Time::zero,
+                       2500000,
+                       RtecScheduler::VERY_LOW_IMPORTANCE,
+                       ORBSVCS_Time::zero,
+                       1,
+                       RtecScheduler::OPERATION,
+                       TAO_TRY_ENV);
+
 
       // Create the event that we're registering for.
 
