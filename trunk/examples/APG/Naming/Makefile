@@ -20,8 +20,8 @@ MKLIST = Makefile.netlocal \
 ## up tempinc when needed for AIX Visual Age C++.
 %.mkfile: %
 	@echo $(MAKE) -f $< $(MKFILE_TARGET)
-	@$(MAKE) -f $< $(MKFILE_TARGET)
 	-@$(RM) -rf tempinc
+	@$(MAKE) -f $< $(MKFILE_TARGET)
 
 # This rule invokes make again with the list of .mkfile targets as a
 # parameter.  For example, if the all target is being made, make is invoked

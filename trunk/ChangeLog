@@ -1,3 +1,23 @@
+Thu Jan  8 11:23:41 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Naming/Name_Binding.h:
+	* examples/APG/Naming/Temperature_Grapher.cpp:
+	* examples/APG/Naming/Temperature_Monitor.cpp:
+	* examples/APG/Naming/Temperature_Monitor2.cpp: Add missing
+	  "ace/OS_NS_*" includes.
+
+	* examples/APG/Naming/Graphable_Element.h: Added 'const' to the when()
+	  and operator<() methods, as well as to operator<()'s parameters,
+	  to match less<> and make CBuilderX happy. Thanks to Johnny Willemsen
+	  for reporting this.
+
+	* examples/APG/Naming/Makefile: Moved the "RM tempinc" up before the
+	  sub-make to avoid inadvertant smashing of tempinc.
+
+	* examples/APG/Proactor/HA_Proactive_Status.cpp (validate_connection):
+	  Removed the parameter names in the ACE_WIN32 case to avoid "unused
+	  parameter" warnings.
+
 Thu Jan  8 11:05:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/OS_NS_sys_msg.inl:
