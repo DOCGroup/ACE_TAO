@@ -14,19 +14,19 @@ TAO_Offer_Importer::TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
 void
 TAO_Offer_Importer::perform_queries (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException,
-		   CosTrading::IllegalServiceType,
-		   CosTrading::UnknownServiceType,
-		   CosTrading::IllegalConstraint,
-		   CosTrading::Lookup::IllegalPreference,
-		   CosTrading::Lookup::IllegalPolicyName,
-		   CosTrading::Lookup::PolicyTypeMismatch,
-		   CosTrading::Lookup::InvalidPolicyValue,
-		   CosTrading::IllegalPropertyName,
-		   CosTrading::DuplicatePropertyName,
-		   CosTrading::DuplicatePolicyName))
+                   CosTrading::IllegalServiceType,
+                   CosTrading::UnknownServiceType,
+                   CosTrading::IllegalConstraint,
+                   CosTrading::Lookup::IllegalPreference,
+                   CosTrading::Lookup::IllegalPolicyName,
+                   CosTrading::Lookup::PolicyTypeMismatch,
+                   CosTrading::Lookup::InvalidPolicyValue,
+                   CosTrading::IllegalPropertyName,
+                   CosTrading::DuplicatePropertyName,
+                   CosTrading::DuplicatePolicyName))
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Importer::Federated Query.\n"));
-  
+
   TAO_Policy_Manager policies;
   policies.exact_type_match (CORBA::B_FALSE);
   policies.search_card (16*NUM_OFFERS);
@@ -40,15 +40,15 @@ TAO_Offer_Importer::perform_queries (CORBA::Environment& _env)
 
 void
 TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& _env)
-  TAO_THROW_SPEC ((CORBA::SystemException, 
-                   CosTrading::IllegalServiceType, 
-                   CosTrading::UnknownServiceType, 
-                   CosTrading::IllegalConstraint, 
-                   CosTrading::Lookup::IllegalPreference, 
-                   CosTrading::Lookup::IllegalPolicyName, 
-                   CosTrading::Lookup::PolicyTypeMismatch, 
-                   CosTrading::Lookup::InvalidPolicyValue, 
-                   CosTrading::IllegalPropertyName, 
+  TAO_THROW_SPEC ((CORBA::SystemException,
+                   CosTrading::IllegalServiceType,
+                   CosTrading::UnknownServiceType,
+                   CosTrading::IllegalConstraint,
+                   CosTrading::Lookup::IllegalPreference,
+                   CosTrading::Lookup::IllegalPolicyName,
+                   CosTrading::Lookup::PolicyTypeMismatch,
+                   CosTrading::Lookup::InvalidPolicyValue,
+                   CosTrading::IllegalPropertyName,
                    CosTrading::DuplicatePropertyName,
                    CosTrading::DuplicatePolicyName))
 {
@@ -73,7 +73,7 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& _env)
     }
   CosTrading::LinkNameSeq_var link_name_seq = link_if->list_links (_env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
-  
+
   if (link_name_seq->length () > 0)
     {
       if (this->verbose_)
@@ -81,11 +81,11 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& _env)
           ACE_DEBUG ((LM_DEBUG, "Getting link information for %s\n",
                       ACE_static_cast (const char*, link_name_seq[0])));
         }
-      
+
       CosTrading::Link::LinkInfo_var link_info =
         link_if->describe_link (link_name_seq[0], _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
-      
+
       CosTrading::Lookup_var lookup_if;
 #ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
       CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
@@ -93,8 +93,8 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& _env)
       TAO_CHECK_ENV_RETURN_VOID (_env);
       lookup_if = CosTrading::Lookup::_narrow (obj.in (), _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
-#else 
-      lookup_if = CosTrading::Lookup::_duplicate (link_info->target);
+#else
+      lookup_if = CosTrading::Lookup::_duplicate (link_info->target.in ());
 #endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
 
       CosTrading::Link_var link_if2 = lookup_if->link_if (_env);
@@ -118,15 +118,15 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& _env)
               CosTrading::LinkName* trader_name =
                 CosTrading::TraderName::allocbuf (2);
 
-	      ACE_DEBUG ((LM_DEBUG, "*** Query through %s to destination %s.\n",
-			  ACE_static_cast (const char*, link_name_seq[0]),
-			  ACE_static_cast (const char*, link_name_seq2[i])));
-              
+              ACE_DEBUG ((LM_DEBUG, "*** Query through %s to destination %s.\n",
+                          ACE_static_cast (const char*, link_name_seq[0]),
+                          ACE_static_cast (const char*, link_name_seq2[i])));
+
               trader_name[0] = CORBA::string_dup (link_name_seq[0]);
               trader_name[1] = CORBA::string_dup (link_name_seq2[i]);
               policies.starting_trader (new CosTrading::TraderName
                                         (2, 2, trader_name, CORBA::B_TRUE));
-              
+
               this->perform_queries_with_policies (policies, _env);
               TAO_CHECK_ENV_RETURN_VOID (_env);
             }
@@ -149,22 +149,22 @@ void
 TAO_Offer_Importer::
 perform_queries_with_policies (const TAO_Policy_Manager& policies,
                                CORBA::Environment& _env)
-  TAO_THROW_SPEC ((CORBA::SystemException, 
-                   CosTrading::IllegalServiceType, 
-                   CosTrading::UnknownServiceType, 
-                   CosTrading::IllegalConstraint, 
-                   CosTrading::Lookup::IllegalPreference, 
-                   CosTrading::Lookup::IllegalPolicyName, 
-                   CosTrading::Lookup::PolicyTypeMismatch, 
-                   CosTrading::Lookup::InvalidPolicyValue, 
-                   CosTrading::IllegalPropertyName, 
+  TAO_THROW_SPEC ((CORBA::SystemException,
+                   CosTrading::IllegalServiceType,
+                   CosTrading::UnknownServiceType,
+                   CosTrading::IllegalConstraint,
+                   CosTrading::Lookup::IllegalPreference,
+                   CosTrading::Lookup::IllegalPolicyName,
+                   CosTrading::Lookup::PolicyTypeMismatch,
+                   CosTrading::Lookup::InvalidPolicyValue,
+                   CosTrading::IllegalPropertyName,
                    CosTrading::DuplicatePropertyName,
                    CosTrading::DuplicatePolicyName))
 {
   TAO_TRY
     {
       CosTrading::Lookup::SpecifiedProps desired_props;
-      
+
       char* props[] =
       {
         (char*) TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME],
@@ -172,11 +172,11 @@ perform_queries_with_policies (const TAO_Policy_Manager& policies,
         (char*) TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::LOCATION],
         (char*) TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::HOST_NAME]
       };
-      
+
       CosTrading::PropertyNameSeq prop_name_seq (4, 4, props, CORBA::B_FALSE);
       //desired_props.prop_names (prop_name_seq);
       desired_props.all_ (CORBA::B_TRUE);
-      
+
       for (int i = 0; i < TT_Info::NUM_QUERIES; i++)
         {
           ACE_DEBUG ((LM_DEBUG, "\n"));
@@ -186,11 +186,11 @@ perform_queries_with_policies (const TAO_Policy_Manager& policies,
           CosTrading::OfferSeq_ptr offer_seq_ptr = 0;
           CosTrading::OfferIterator_ptr offer_iterator_ptr = 0;
           CosTrading::PolicyNameSeq_ptr limits_applied_ptr = 0;
-      
+
           CosTrading::OfferSeq_out offer_seq_out (offer_seq_ptr);
           CosTrading::OfferIterator_out offer_iterator_out (offer_iterator_ptr);
           CosTrading::PolicyNameSeq_out limits_applied_out (limits_applied_ptr);
-          
+
           this->lookup_->query (TT_Info::QUERIES[i][0],
                                 TT_Info::QUERIES[i][1],
                                 TT_Info::QUERIES[i][2],
@@ -202,22 +202,22 @@ perform_queries_with_policies (const TAO_Policy_Manager& policies,
                                 limits_applied_out,
                                 TAO_TRY_ENV);
           TAO_CHECK_ENV;
-          
+
           CosTrading::OfferSeq_var offer_seq (offer_seq_ptr);
           CosTrading::OfferIterator_var offer_iterator (offer_iterator_ptr);
           CosTrading::PolicyNameSeq_var limits_applied (limits_applied_ptr);
 
           if (this->verbose_)
             {
-              ACE_DEBUG ((LM_DEBUG, "*** Results:\n\n"));          
+              ACE_DEBUG ((LM_DEBUG, "*** Results:\n\n"));
               this->display_results (*offer_seq_ptr,
                                      offer_iterator_ptr,
                                      TAO_TRY_ENV);
               TAO_CHECK_ENV;
-              
+
               if (limits_applied_out->length () > 0)
                 ACE_DEBUG ((LM_DEBUG, "*** Limits Applied:\n\n"));
-              
+
               for (int length = limits_applied_out->length (), j = 0; j < length; j++)
                 {
                   const char *policy_name = (*limits_applied_ptr)[j];
@@ -232,13 +232,13 @@ perform_queries_with_policies (const TAO_Policy_Manager& policies,
       TAO_TRY_ENV.print_exception ("TAO_Offer_Importer::perform_queries");
       TAO_RETHROW;
     }
-  TAO_ENDTRY;      
+  TAO_ENDTRY;
 }
 
 void
 TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
-				     CosTrading::OfferIterator_ptr offer_iterator,
-				     CORBA::Environment& _env) const
+                                     CosTrading::OfferIterator_ptr offer_iterator,
+                                     CORBA::Environment& _env) const
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TRY
@@ -257,31 +257,31 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
 
           remote_output->confirm (TAO_TRY_ENV);
           TAO_CHECK_ENV;
-          
+
           TT_Info::dump_properties (offer_seq[i].properties);
           ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
         }
-      
+
       ACE_DEBUG ((LM_DEBUG, "  Offers in the iterator:\n"));
       ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
       if (! CORBA::is_nil (offer_iterator))
-	{
+        {
           length = offer_seq.length ();
-	  CORBA::Boolean any_left = CORBA::B_FALSE;
+          CORBA::Boolean any_left = CORBA::B_FALSE;
 
-	  do
-	    {
-	      CosTrading::OfferSeq_ptr iter_offers_ptr;
-	      CosTrading::OfferSeq_out iter_offers_out (iter_offers_ptr);
+          do
+            {
+              CosTrading::OfferSeq_ptr iter_offers_ptr;
+              CosTrading::OfferSeq_out iter_offers_out (iter_offers_ptr);
 
-	      any_left = offer_iterator->next_n (length,
-						 iter_offers_out,
-						 TAO_TRY_ENV);
-	      TAO_CHECK_ENV;
+              any_left = offer_iterator->next_n (length,
+                                                 iter_offers_out,
+                                                 TAO_TRY_ENV);
+              TAO_CHECK_ENV;
 
-	      CosTrading::OfferSeq_var iter_offers (iter_offers_ptr);
-	      for (length = iter_offers->length (), i = 0; i < length; i++)
-		{
+              CosTrading::OfferSeq_var iter_offers (iter_offers_ptr);
+              for (length = iter_offers->length (), i = 0; i < length; i++)
+                {
                   // Call back to the exported object.
                   TAO_Trader_Test::Remote_Output_var remote_output =
                     TAO_Trader_Test::Remote_Output::_narrow (offer_seq[i].reference.in (),
@@ -290,17 +290,17 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
 
                   remote_output->confirm (TAO_TRY_ENV);
                   TAO_CHECK_ENV;
-                  
-		  CosTrading::PropertySeq& props = iter_offers[i].properties;
-		  TT_Info::dump_properties (props);
-		  ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
-		}
-	      
-	    } while (any_left);
+
+                  CosTrading::PropertySeq& props = iter_offers[i].properties;
+                  TT_Info::dump_properties (props);
+                  ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
+                }
+
+            } while (any_left);
 
           offer_iterator->destroy (TAO_TRY_ENV);
           TAO_CHECK_ENV;
-	}
+        }
     }
   TAO_CATCHANY
     {
