@@ -1,21 +1,22 @@
 Tue Jun 15 16:43:46 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/POA/Forwarding/MyFooServant.h (MyFirstFooServant::forward):
-	  Added a *hack*!  We cannot ask the POA to forward us while the
-	  upcall is still in progress.  So we ask the Reactor to wake us
-	  up as soon as this upcall completes.  At that time
+	* examples/POA/Forwarding/MyFooServant.h
+ 	  (MyFirstFooServant::forward): Added a *hack* (but it's the only
+ 	  one in TAO so that's ok ;-))!  We cannot ask the POA to forward
+ 	  us while the upcall is still in progress.  So we ask the Reactor
+ 	  to wake us up as soon as this upcall completes.  At that time
 	  (in handle_input), we ask the POA to forward us.
 
 	  The politically correct way to handle this is to use a separate
-	  object (probably a separate interface, e.g., a forwarding
-	  agent) to do the forwarding.
+ 	  object (probably a separate interface, e.g., a forwarding agent)
+ 	  to do the forwarding.
 
 	  Also fixed some ACE_DEBUG usage errors.
 
 	* tao/Invocation.cpp (TAO_GIOP_Twoway_Invocation::start and
-	  TAO_GIOP_Locate_Request_Invocation::start): If there was a
-	  previous reply, cleanup its state first.  Thanks to Carlos for
-	  helping with this.
+ 	  TAO_GIOP_Locate_Request_Invocation::start): If there was a
+ 	  previous reply, cleanup its state first.  Thanks to Carlos for
+ 	  helping with this.
 
 Tue Jun 15 16:42:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
