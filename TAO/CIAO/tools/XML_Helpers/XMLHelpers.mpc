@@ -24,8 +24,8 @@ project(XML_Helpers): taolib_with_idl, rtcorba, portableserver, acexml, ciao_cli
   }
 }
 
-project(Helper_Test): rtcorba, taoserver, acexml{
-  libs += CIAO_XML_Helpers CIAO_Client  TAO_IFR_Client
+project(Helper_Test): rtcorba, portableserver, acexml, ciao_client , taoserver{
+  libs += CIAO_XML_Helpers 
   after += XML_Helpers
 
   IDL_Files {
