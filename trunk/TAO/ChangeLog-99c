@@ -1,3 +1,12 @@
+Mon Jul 12 21:44:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/deep_free.cpp:
+	  Added code in TAO_Marshal_Struct::deep_free() to keep the
+	  pointer aligned as it frees each member. Thanks to
+	  David Brock <dbrock@mail.arc.nasa.gov> and to
+	  John Morey <jmorey@tbi.com> for sending in examples
+	  that pointed out the need for this.
+
 Mon Jul 12 20:40:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB.cpp:
