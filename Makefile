@@ -86,7 +86,8 @@ RELEASE_LIB_FILES = \
 #### If creating the "official" ACE release:
 #### 1) Check that the workspace is up-to-date, and bail out if not.
 #### 2) Update the timestamp in the VERSION file.
-#### 3) Add a ChangeLog entry to the ChangeLog plain file.
+#### 3) Update ace/Version.h
+#### 4) Add a ChangeLog entry to the ChangeLog plain file.
 #### Detect if we are creating the "official" release by looking at the PWD.
 #### To disable this feature, add "TIMESTAMP=" to the make command line.
 #### NOTE: if the version number in the VERSION file contains three components,
@@ -118,8 +119,17 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
                  while (<>) { \
                    if ( ! $$message_printed++ ) { print "$$message\n"; } \
                    print; } ' $$CHANGELOG; \
-              cvs commit -m"$$ACE_VERSION" VERSION $$CHANGELOG; \
-              chmod 644 VERSION $$CHANGELOG) &&
+              echo $$ACE_VERSION | perl -ne ' \
+               ($$version = $$_) =~ s/ACE version ([\d\.]+).*\n/$$1/; \
+	         ($$major, $$minor, $$beta) = split /\./, $$version; \
+                 print "// \$$Id\$$\n" . \
+	               "// This is an automatically generated file.\n\n" . \
+                       "\#define ACE_MAJOR_VERSION ($${major}u)\n" . \
+                       "\#define ACE_MINOR_VERSION ($${minor}u)\n" . \
+                       "\#define ACE_BETA_VERSION ($${beta}u)\n";' > \
+                ace/Version.h; \
+              chmod 644 VERSION $$CHANGELOG ace/Version.h; \
+              echo cvs commit -m"$$ACE_VERSION" VERSION $$CHANGELOG ace/Version.h) &&
 else
   TIMESTAMP =
 endif
@@ -141,4 +151,3 @@ release:
 	 find $(RELEASE_LIB_FILES) $(FILTER) | cpio -o -H tar | gzip -9 > ACE-lib.tar.gz; \
 	 chmod a+r ACE.tar.gz ACE-lib.tar.gz; \
 	 mv ACE.tar.gz ACE-lib.tar.gz ./ACE_wrappers/)
-
