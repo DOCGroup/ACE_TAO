@@ -197,7 +197,8 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_ARGLIST_SS);
       break;
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS:
-      ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_SS);
+      //      ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_SS);
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS);
       break;
 
     default:
