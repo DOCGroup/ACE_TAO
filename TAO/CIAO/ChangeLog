@@ -6,7 +6,7 @@ Fri Oct 24 19:16:21 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 	* CIDLC/Makefile.alt:
 	* CIDLC/ServantSourceGenerator.cpp:
 	* CIDLC/TypeNameEmitter.cpp:
-	* CIDLC/TypeNameEmitter.hpp: Added some methods for
+	* CIDLC/TypeNameEmitter.hpp: Added some functions for
 	  typedef testing.
 
 	* CIDLC/SizeTypeCalculator.cpp:
