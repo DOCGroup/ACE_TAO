@@ -1,15 +1,12 @@
 /* -*- C++ -*- */
-
-
 //=============================================================================
 /**
- *  @file    ACE_Time_Request_Reply.h
+ *  @file    Time_Request_Reply.h
  *
  *  $Id$
  *
- *   Define the format used to exchange messages between the
- *   ACE_Time_Server and clerks.
- *
+ *  Define the format used to exchange messages between the
+ *  ACE_Time_Server and clerks.
  *
  *  @author  Prashant Jain
  */
