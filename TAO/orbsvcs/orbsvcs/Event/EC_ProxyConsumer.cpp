@@ -221,12 +221,12 @@ TAO_EC_ProxyPushConsumer::deactivate (CORBA::Environment &ACE_TRY_ENV)
     {
       PortableServer::POA_var poa =
         this->_default_POA (ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
       PortableServer::ObjectId_var id =
         poa->servant_to_id (this, ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
       poa->deactivate_object (id.in (), ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
