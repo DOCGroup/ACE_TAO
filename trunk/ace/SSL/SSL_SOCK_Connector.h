@@ -6,10 +6,10 @@
  *
  *  $Id$
  *
+ *  @author Ossama Othman <ossama@uci.edu>
+ *  @author Carlos O'Ryan <coryan@uci.edu>
  *  @author John Heitmann
  *  @author Chris Zimman
- *  @author Carlos O'Ryan <coryan@uci.edu>
- *  @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
 
@@ -28,11 +28,13 @@
 #include "SSL_SOCK_Stream.h"
 
 #include "ace/SOCK_Connector.h"
+#include "ace/Reactor.h"
 
 /**
  * @class ACE_SSL_SOCK_Connector
  *
- * @brief Defines a factory that creates new <ACE_Stream>s actively.
+ * @brief Defines a factory that creates new <ACE_SSL_SOCK_Stream>s
+ *        actively.
  *
  * The ACE_SSL_SOCK_Connector doesn't have a socket of its own,
  * i.e., it simply "borrows" the one from the ACE_SSL_SOCK_Stream
@@ -47,7 +49,8 @@ class ACE_SSL_Export ACE_SSL_SOCK_Connector
 public:
 
   /// Default constructor.
-  ACE_SSL_SOCK_Connector (void);
+  ACE_SSL_SOCK_Connector (ACE_Reactor *reactor =
+                            ACE_Reactor::instance ());
 
   /**
    * Actively connect and produce a <new_stream> if things go well.
@@ -72,7 +75,9 @@ public:
                           int flags = 0,
                           int perms = 0,
                           int protocol_family = PF_INET,
-                          int protocol = 0);
+                          int protocol = 0,
+                          ACE_Reactor *reactor =
+                            ACE_Reactor::instance ());
 
   /**
    * Actively connect and produce a <new_stream> if things go well.
@@ -101,7 +106,9 @@ public:
                           int reuse_addr = 0,
                           int perms = 0,
                           int protocol_family = PF_INET,
-                          int protocol = 0);
+                          int protocol = 0,
+                          ACE_Reactor *reactor =
+                            ACE_Reactor::instance ());
 
   /// Default dtor.
   ~ACE_SSL_SOCK_Connector (void);
@@ -163,8 +170,8 @@ public:
   /**
    * Try to complete a non-blocking connection.
    * If connection completion is successful then <new_stream> contains
-   * the connected ACE_SOCK_Stream.  If <remote_sap> is non-NULL then it
-   * will contain the address of the connected peer.
+   * the connected ACE_SSL_SOCK_Stream.  If <remote_sap> is non-NULL
+   * then it will contain the address of the connected peer.
    */
   int complete (ACE_SSL_SOCK_Stream &new_stream,
                 ACE_Addr *remote_sap = 0,
@@ -172,6 +179,14 @@ public:
 
   /// Resets any event associations on this handle
   int reset_new_handle (ACE_HANDLE handle);
+
+  /// Set the Reactor used when completing the SSL active
+  /// connection.
+  void reactor (ACE_Reactor *r);
+
+  /// Return the Reactor used when completing the SSL active
+  /// connection.
+  ACE_Reactor *reactor (void) const;
 
   /// Meta-type info
   //@{
@@ -187,16 +202,12 @@ public:
 
 protected:
 
-  int shared_connect_start(ACE_SSL_SOCK_Stream &new_stream,
-			   const ACE_Time_Value *timeout = 0,
-			   const ACE_Addr &local_sap = 0);
-
-  int shared_connect_finish(ACE_SSL_SOCK_Stream &new_stream,
-			    const ACE_Time_Value *timeout = 0,
-			    int result = 0);
-
-  /// Complete SSL active connection establishment.
+  /// Complete blocking SSL active connection.
   int ssl_connect (ACE_SSL_SOCK_Stream &new_stream);
+
+  /// Complete non-blocking SSL active connection.
+  int ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
+                   const ACE_Time_Value *timeout);
 
 private:
 
@@ -204,6 +215,9 @@ private:
   /// It is default contructed, and subsequently used by connect().
   ACE_SOCK_Connector connector_;
 
+  /// Pointer to the Reactor responsible for dispatching the event
+  /// handler responsible for completing the SSL active connection.
+  ACE_Reactor *reactor_;
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

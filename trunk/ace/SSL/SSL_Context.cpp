@@ -57,7 +57,7 @@ ACE_SSL_Context::ssl_library_init (void)
       ::SSL_library_init ();
       ::SSL_load_error_strings ();
       ::SSLeay_add_ssl_algorithms ();
-
+      ::ERR_load_crypto_strings ();
       // Seed the random number generator.  Note that the random
       // number generator can be seeded more than once to "stir" its
       // state.

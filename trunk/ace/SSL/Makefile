@@ -19,7 +19,9 @@ FILES = \
   SSL_SOCK \
   SSL_SOCK_Acceptor \
   SSL_SOCK_Connector \
-  SSL_SOCK_Stream
+  SSL_SOCK_Stream \
+  SSL_Accept_Handler \
+  SSL_Connect_Handler
 
 LSRC    = $(addsuffix .cpp,$(FILES))
 
