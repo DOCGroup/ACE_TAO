@@ -16,6 +16,7 @@
 
 #include "tao/Any.h"
 #include "tao/Sequence_T.h"
+#include "tao/varout.h"
 
 #if defined TAO_HAS_INTERFACE_REPOSITORY
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
