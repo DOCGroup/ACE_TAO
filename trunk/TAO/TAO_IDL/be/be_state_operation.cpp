@@ -278,6 +278,25 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
                 }
             }
             break;
+          case TAO_CodeGen::TAO_OPERATION_CH:
+            {
+              // to keep MSVC++ happy
+              if (bpd->pt () == AST_PredefinedType::PT_any)
+                {
+                  // if it is an any, return a pointer to it
+                  *os << bt->nested_type_name (bif, "*") << " ";
+                }
+              else if (bpd->pt () == AST_PredefinedType::PT_pseudo)
+                {
+                  // pseudo object, return a pointer
+                  *os << bt->nested_type_name (bif, "_ptr") << " ";
+                }
+              else
+                {
+                  *os << bt->nested_type_name (bif) << " ";
+                }
+            }
+            break;
           default:
             {
               *os << bt->name ();

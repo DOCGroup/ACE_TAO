@@ -7,6 +7,9 @@ Tue Dec 23 13:36:50 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	enclosing scope. Thanks to Chris Gill <cdgill@cs.wustl.edu> for
 	the bug report.
 
+	* TAO_IDL/be/be_state_operation.cpp: Similar problem as above for
+	return types of operations.  Bug reported by Chris Gill.
+
 	* TAO_IDL/be/be_exception.cpp: Whenever a _narrow fails, we were
 	trying to do a ACE_dynamic_cast to a 0. Instead, we now return a
 	0. Again thanks to Chris Gill <cdgill@cs.wustl.edu> for
