@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -84,13 +83,10 @@ public:
 
 private:
     int debug_;
-    // Wether to print debug messages or not.
+    // Whether to print debug messages or not.
 
     static ACE_Token_Manager *token_manager_;
     // pointer to singleton token manager.
-
-    static ACE_TOKEN_CONST::MUTEX creation_lock_;
-    // make sure that token_manager_ is created atomically (only once!)
 
     ACE_Tokens *token_waiting_for (const char *client_id);
     // return the token that the given client_id is waiting for, if any

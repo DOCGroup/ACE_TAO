@@ -12,8 +12,6 @@
 // singleton token manager
 ACE_Token_Manager *ACE_Token_Manager::token_manager_ = 0;
 
-ACE_TOKEN_CONST::MUTEX ACE_Token_Manager::creation_lock_;
-
 ACE_Token_Manager::ACE_Token_Manager ()
 {
   ACE_TRACE ("ACE_Token_Manager::ACE_Token_Manager");
@@ -45,11 +43,14 @@ ACE_Token_Manager::instance (void)
   // case.  Double-Check pattern rules.
   if (token_manager_ == 0)
     {
-      ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, ACE_Token_Manager::creation_lock_, 0);
+      ACE_TOKEN_CONST::MUTEX *lock =
+        ACE_Managed_Object<ACE_TOKEN_CONST::MUTEX>::get_preallocated_object
+          (ACE_Object_Manager::ACE_TOKEN_MANAGER_CREATION_LOCK);
+      ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, *lock, 0);
 
       if (token_manager_ == 0)
         {
-	  ACE_NEW_RETURN (token_manager_, ACE_Token_Manager, 0);
+          ACE_NEW_RETURN (token_manager_, ACE_Token_Manager, 0);
 
           // Register for destruction with ACE_Object_Manager.
           ACE_Object_Manager::at_exit (token_manager_);
@@ -61,7 +62,7 @@ ACE_Token_Manager::instance (void)
 
 void
 ACE_Token_Manager::get_token (ACE_Token_Proxy *proxy,
-			      const char *token_name)
+                              const char *token_name)
 {
   ACE_TRACE ("ACE_Token_Manager::get");
   // Hmm.  I think this makes sense.  We perform our own locking here
@@ -80,10 +81,10 @@ ACE_Token_Manager::get_token (ACE_Token_Proxy *proxy,
 
       // Put it in the collection.
       if (collection_.bind (name, proxy->token_) == -1)
-	{
-	  delete proxy->token_;
-	  proxy->token_ = 0;
-	}
+        {
+          delete proxy->token_;
+          proxy->token_ = 0;
+        }
     }
 
   if (proxy->token_ != 0)
@@ -100,7 +101,7 @@ ACE_Token_Manager::get_token (ACE_Token_Proxy *proxy,
 // 4. if CLIENT in ALL_OWNERS, return *DEADLOCK*.
 // 5. for each OWNER in ALL_OWNERS,
 // 6.    if OWNER is not waiting for a NEW_TOKEN, continue.
-// 7.	 else, if check_deadlock (NEW_TOKEN) == 1, return *DEADLOCK*
+// 7.    else, if check_deadlock (NEW_TOKEN) == 1, return *DEADLOCK*
 // 8. return 0.
 
 int
@@ -144,39 +145,39 @@ ACE_Token_Manager::check_deadlock (ACE_Tokens *token, ACE_Token_Proxy *proxy)
     case 1:
       // The caller is an owner, so we have a deadlock situation.
       if (debug_)
-	{
-	  ACE_DEBUG ((LM_DEBUG, "(%t) Deadlock detected.\n"));
-	  ACE_DEBUG ((LM_DEBUG, "%s owns %s and is waiting for %s.\n",
-		      proxy->client_id (),
-		      token->name (),
-		      proxy->token_->name ()));
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG, "(%t) Deadlock detected.\n"));
+          ACE_DEBUG ((LM_DEBUG, "%s owns %s and is waiting for %s.\n",
+                      proxy->client_id (),
+                      token->name (),
+                      proxy->token_->name ()));
+        }
 
       return 1;
     case 0:
     default:
       // Recurse on each owner.
       while (!owners.is_empty ())
-	{
-	  ACE_TPQ_Entry *e;
-	  owners.pop (e);
-	  // If the owner is waiting on another token, recurse.
-	  ACE_Tokens *twf = this->token_waiting_for (e->client_id ());
-	  if ((twf != 0) &&
-	      (this->check_deadlock (twf, proxy) == 1))
-	    {
-	      if (debug_)
-		{
-		  ACE_DEBUG ((LM_DEBUG,
-			      "%s owns %s and is waiting for %s.\n",
-			      e->client_id (),
-			      token->name (),
-			      twf->name ()));
-		}
-	      return 1;
-	    }
-	  // else, check the next owner.
-	}
+        {
+          ACE_TPQ_Entry *e;
+          owners.pop (e);
+          // If the owner is waiting on another token, recurse.
+          ACE_Tokens *twf = this->token_waiting_for (e->client_id ());
+          if ((twf != 0) &&
+              (this->check_deadlock (twf, proxy) == 1))
+            {
+              if (debug_)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "%s owns %s and is waiting for %s.\n",
+                              e->client_id (),
+                              token->name (),
+                              twf->name ()));
+                }
+              return 1;
+            }
+          // else, check the next owner.
+        }
 
       // We've checked all the owners and found no deadlock.
       return 0;
@@ -193,7 +194,7 @@ ACE_Token_Manager::token_waiting_for (const char *client_id)
        iterator.advance ())
     {
       if (temp->int_id_->is_waiting_for (client_id))
-	return temp->int_id_;
+        return temp->int_id_;
     }
 
   // nothing was found, return NULL.
@@ -220,25 +221,25 @@ ACE_Token_Manager::release_token (ACE_Tokens *&token)
       ACE_Tokens *temp;
 
       if (collection_.unbind (token_name, temp) == -1)
-	// we did not find one in the collection
-	{
-	  errno = ENOENT;
-	  ACE_ERROR ((LM_ERROR, "Token Manager could not release %s:%d\n",
-		      token->name (), token->type ()));
-	  // @@ bad
-	}
+        // we did not find one in the collection
+        {
+          errno = ENOENT;
+          ACE_ERROR ((LM_ERROR, "Token Manager could not release %s:%d\n",
+                      token->name (), token->type ()));
+          // @@ bad
+        }
       else
-	// we found it
-	{
-	  // sanity pointer comparison.  The token referenced by the
-	  // proxy better be the one we found in the list.
-	  ACE_ASSERT (token == temp);
-	  delete token;  // or delete temp
-	  // we set their token to zero.  if the calling proxy is
-	  // still going to be used, it had better check it's token
-	  // value before calling a method on it!
-	  token = 0;
-	}
+        // we found it
+        {
+          // sanity pointer comparison.  The token referenced by the
+          // proxy better be the one we found in the list.
+          ACE_ASSERT (token == temp);
+          delete token;  // or delete temp
+          // we set their token to zero.  if the calling proxy is
+          // still going to be used, it had better check it's token
+          // value before calling a method on it!
+          token = 0;
+        }
     }
   // else
   // someone is still interested in the token, so keep it around.
@@ -266,4 +267,3 @@ template class ACE_Map_Entry <ACE_Token_Name, ACE_Tokens *>;
 #pragma instantiate ACE_Map_Iterator<ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Entry <ACE_Token_Name, ACE_Tokens *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
