@@ -128,7 +128,7 @@ class ACE_Export ACE_Thread_Manager
 friend class ACE_Thread_Control;
 public:
 #if !defined (VXWORKS) && !defined (IRIX5)
-  typedef int (*ACE_THR_MEMBER_FUNC)(ACE_Thread_Descriptor *, int);
+  typedef int (ACE_Thread_Manager::*ACE_THR_MEMBER_FUNC)(ACE_Thread_Descriptor *, int);
 #endif /* !VXWORKS && !IRIX5 */
 
   // = Initialization and termination methods.
