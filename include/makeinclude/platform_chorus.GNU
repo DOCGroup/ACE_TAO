@@ -39,10 +39,6 @@ CCFLAGS         += $(CFLAGS) -fno-implicit-templates    \
                    -D_POSIX_THREADS                     \
                    -D_POSIX_THREAD_SAFE_FUNCTIONS
 
-ifeq ($(exceptions),1)
-  CCFLAGS += -fhandle-exceptions
-endif # exceptions
-
 #DCFLAGS         += -gstabs+
 INCLDIRS        += -I$(INC_DIR)/posix                   \
                    -I$(INC_DIR)/stdc                    \
@@ -52,21 +48,21 @@ INCLDIRS        += -I$(INC_DIR)/posix                   \
 DLD             =
 LD              = $(XDIR)/bin/ld
 LDFLAGS         += -r $(CLASSIXDIR)/lib/CC/libC.a $(CLASSIXDIR)/lib/classix/libcx.u.a
-MATHLIB		= -L$(CLASSIXDIR)/lib/libm -lm
+MATHLIB         = -L$(CLASSIXDIR)/lib/libm -lm
 
-LINK.cc.override	=	$(LD) -u _main -u _premain
+LINK.cc.override        =       $(LD) -u _main -u _premain
 LINK.cc=override
 
 CHORUSLINK=true
 
-#	$(CLASSIXDIR)/dtool/mkctors helloCxx_u.xp.o > helloCxx_u.ct.s
-#	$(CXX) -c helloCxx_u.ct.s
-#	$(RM) helloCxx_u.ct.s
-#	$(LD) $(LDOPTIONS) -e _start -o helloCxx_u \
-#	$(CLASSIXDIR)/lib/crt/crth.u.o $(CLASSIXDIR)/lib/crt/crt0.o $(CLASSIXDIR)/lib/crt/crti.o helloCxx_u.xp.o helloCxx_u.ct.o $(CLASSIXDIR)/lib/crt/crtn.o \
-#	-dn -T $(CLASSIXDIR)/src/act/slots/act_u.ld
-#	$(RM) helloCxx_u.xp.o
-#	$(RM) helloCxx_u.ct.o
+#       $(CLASSIXDIR)/dtool/mkctors helloCxx_u.xp.o > helloCxx_u.ct.s
+#       $(CXX) -c helloCxx_u.ct.s
+#       $(RM) helloCxx_u.ct.s
+#       $(LD) $(LDOPTIONS) -e _start -o helloCxx_u \
+#       $(CLASSIXDIR)/lib/crt/crth.u.o $(CLASSIXDIR)/lib/crt/crt0.o $(CLASSIXDIR)/lib/crt/crti.o helloCxx_u.xp.o helloCxx_u.ct.o $(CLASSIXDIR)/lib/crt/crtn.o \
+#       -dn -T $(CLASSIXDIR)/src/act/slots/act_u.ld
+#       $(RM) helloCxx_u.xp.o
+#       $(RM) helloCxx_u.ct.o
 
 
 OCFLAGS         += -O
