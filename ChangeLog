@@ -1,3 +1,96 @@
+Wed Junr 19 00:27:38 2003  Stephen Torri <storri@cs.wustl.edu>
+
+        * orbsvcs/tests/Metrics/Makefile:
+        * orbsvcs/tests/Metrics/Metrics_Local_Cache_Test.cpp:
+        * orbsvcs/tests/Metrics/Metrics_Local_Cache_Test.h:
+        * orbsvcs/tests/Metrics/Remote_Metrics_Logger.cpp:
+        * orbsvcs/tests/Metrics/Remote_Metrics_Logger.h:
+        * orbsvcs/tests/Metrics/Rate_Group_Info.cpp:
+        * orbsvcs/tests/Metrics/Rate_Group_Info.h:
+        * orbsvcs/tests/Metrics/Rate_Group_Info.i:
+        * orbsvcs/tests/Metrics/Makefile:
+        * tao/orbconf.h:
+
+          Added tests for libTAO_Metrics.
+
+        * orbsvcs/orbsvcs/Metrics/metrics_export.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager_T.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager_T.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager_T.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Logger.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Logger.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Utils.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Utils.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Utils.i:
+        * orbsvcs/orbsvcs/Metrics:
+        * orbsvcs/orbsvcs/Metrics.idl:
+        * orbsvcs/orbsvcs/Makefile.Metrics:
+        * orbsvcs/orbsvcs/Makefile:
+
+          Adding new TAO Metrics ORB service.
+
+        * tao/RTCORBA/Multi_Priority_Mapping.cpp:
+        * tao/RTCORBA/Multi_Priority_Mapping.h:
+        * tao/RTCORBA/Multi_Priority_Mapping.i:
+
+        * ace/Timeprobe.h:
+        * ace/Timeprobe.cpp:
+        * ace/Timeprobe_T.cpp:
+        * ace/Timeprobe_T.h:
+        
+          Advanced new timeprobe. New features are a 
+          ring buffer for elements kept in data structure.
+          This eliminates the ACE_ASSERT when an element
+          is attempted to be inserted into a full data
+          structure. Old data is overwritten until the
+          cache is read and cleared.
+
+          Timeprobes now include a second argument to
+          allow for an ACE_ALLOCATOR. This allocator allows
+          for the data structure that will contain the
+          ACE_Timeprobes to be done in the constructor. A
+          new function called 'increase_size' allows for
+          the data structure to increase the number of
+          measurements it can take. It does so by creating a
+          new structure with the new size and copying the
+          elements from the old structure.
+
+        * ace/Makefile.ace:
+        * ace/Metrics_Cache.cpp:
+        * ace/Metrics_Cache.h:
+        * ace/Metrics_Cache.i:
+        * ace/Metrics_Cache_T.cpp:
+        * ace/Metrics_Cache_T.h:
+        * ace/Metrics_Cache_T.i:
+        
+          Added new Metrics Cache.
+
+        * ACE/ace/OS.h:
+
+          Added two new macros called ACE_NEW_MALLOC_ARRAY_RETURN
+          and ACE_NEW_MALLOC_ARRAY. ACE_NEW_MALLOC_ARRAY_RETURN
+          returns an array of class pointers with their space
+          preallocated and each entry initialized. If there is 
+          an error the value contained in RET_VAL is returned.
+          ACE_NEW_MALLOC_ARRAY is the same but there is no
+          return of a value if there is an error.
+
+
 Wed Jun 18 21:27:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/exceptions.html: Added documentation for the
