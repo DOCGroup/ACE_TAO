@@ -25,6 +25,11 @@ JAWS_IO_Acceptor::open (const ACE_HANDLE &)
   return -1;
 }
 
+void
+JAWS_IO_Acceptor::close (void)
+{
+}
+
 int
 JAWS_IO_Acceptor::accept (ACE_SOCK_Stream &, ACE_Addr *, ACE_Time_Value *,
                           int, int) const
@@ -87,6 +92,19 @@ JAWS_IO_Synch_Acceptor::get_handle (void)
   return this->acceptor_.get_handle ();
 }
 
+
+
+JAWS_IO_Asynch_Acceptor::JAWS_IO_Asynch_Acceptor (void)
+  : acceptor_ (*(new ACE_Asynch_Acceptor<JAWS_Asynch_Handler>)),
+    acceptor_ptr_ (&acceptor_)
+{
+}
+
+JAWS_IO_Asynch_Acceptor::~JAWS_IO_Asynch_Acceptor (void)
+{
+  delete this->acceptor_ptr_;
+  this->acceptor_ptr_ = 0;
+}
 
 int
 JAWS_IO_Asynch_Acceptor::open (const ACE_INET_Addr &address, int backlog)
@@ -158,6 +176,15 @@ JAWS_IO_Asynch_Acceptor::get_handle (void)
 #endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS) */
 }
 
+
+void
+JAWS_IO_Asynch_Acceptor::close (void)
+{
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+  delete this->acceptor_ptr_;
+  this->acceptor_ptr_ = 0;
+#endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS) */
+}
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

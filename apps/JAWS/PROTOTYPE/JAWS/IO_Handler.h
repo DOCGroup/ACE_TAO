@@ -164,7 +164,7 @@ public:
   virtual void act (const void *act_ref);
   // Receives the ACT.
 
-  virtual ACE_HANDLE handle (void) const;
+  //virtual ACE_HANDLE handle (void) const;
 
 private:
   JAWS_IO_Handler *ioh_;
