@@ -4,7 +4,7 @@
 // The following configuration file is designed to work for VxWorks
 // 5.2/5.3 platforms using one of these compilers:
 // 1) The GNU/Cygnus g++ compiler that is shipped with Tornado 1.0.1.
-// 2) The GreenHills 1.8.8 (not 1.8.7!!!!) compiler.
+// 2) The GreenHills 1.8.8 (not 1.8.7!!!!) and 1.8.9 compilers.
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
@@ -56,6 +56,7 @@
 #   define ACE_HAS_PENTIUM
 # endif /* i386 */
 
+# define ACE_HAS_BROKEN_ENUMS /* Necessary with 1.8.9, harmless with 1.8.8. */
 # define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 # define ACE_HAS_WCHAR_TYPEDEFS_CHAR
 # define ACE_LACKS_LONGLONG_T
