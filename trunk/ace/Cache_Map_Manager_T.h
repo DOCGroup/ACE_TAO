@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_CACHE_MAP_MANAGER_T_H
 #define ACE_CACHE_MAP_MANAGER_T_H
 
@@ -22,6 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Global_Macros.h"
 #include "ace/Pair_T.h"
 
 // Forward declaration.
