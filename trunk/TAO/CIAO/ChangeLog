@@ -1,3 +1,12 @@
+Sun Mar 20 13:57:55 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/Config_Handlers/XercesString.cpp:
+        * DAnCE/Config_Handlers/XercesString.h:
+
+          Added these new files from the old config handlers
+          directory to the new config handlers directory
+          to fix missing includes.
+
 Sun Mar 20 13:54:17 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/Old_Config_Handlers/Process_Element_T.cpp:
