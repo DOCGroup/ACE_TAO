@@ -121,8 +121,8 @@ WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_SUNOS_S
 
 [SunOS_EGCS]
 TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_SUNOS_EGCS/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_SUNOS_EGCS
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/tango_SUNOS_EGCS/
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?tango_SUNOS_EGCS
 
 [Tru64_CXX]
 TYPE = TIMEONLY
