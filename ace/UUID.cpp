@@ -86,6 +86,7 @@ namespace ACE_Utils
         bool copy_constructor_not_supported = false;
         ACE_ASSERT(copy_constructor_not_supported);
         //*this = NIL_UUID;
+        ACE_UNUSED_ARG (copy_constructor_not_supported);
         return;
       }
 
