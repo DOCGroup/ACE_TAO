@@ -64,10 +64,7 @@ TAO_Default_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation *invocation,
 
   // If we get here, we completely failed to find an endpoint selector
   // that we know how to use, so throw an exception.
-  ACE_THROW (CORBA::TRANSIENT (
-                               CORBA_SystemException::_tao_minor_code (
-                                    TAO_INVOCATION_CONNECT_MINOR_CODE,
-                                    errno),
+  ACE_THROW (CORBA::TRANSIENT (TAO_OMG_VMCID | 2,
                                CORBA::COMPLETED_NO));
 }
 
@@ -78,10 +75,7 @@ TAO_Default_Endpoint_Selector::next (TAO_GIOP_Invocation *,
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("This method is DEPRECATED!\n")));
   // if (invocation->stub_->next_profile_retry () == 0)
-  //     ACE_THROW (CORBA::TRANSIENT (
-  //                                  CORBA_SystemException::_tao_minor_code (
-  //                                       TAO_INVOCATION_CONNECT_MINOR_CODE,
-  //                                       errno),
+  //     ACE_THROW (CORBA::TRANSIENT (TAO_OMG_VMCID | 2,
   //                                  CORBA::COMPLETED_NO));
 }
 

@@ -90,7 +90,8 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
     id_uniqueness_strategy_ (0),
     lifespan_strategy_ (0),
     id_assignment_strategy_ (0),
-    id_hint_strategy_ (0)
+    id_hint_strategy_ (0),
+    using_active_maps_ (0)
 {
   TAO_Active_Object_Map::set_system_id_size (creation_parameters);
 
@@ -166,6 +167,8 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
        || creation_parameters.allow_reactivation_of_system_ids_)
       && creation_parameters.use_active_hint_in_ids_)
     {
+      this->using_active_maps_ = 1;
+
       ACE_NEW_THROW_EX (id_hint_strategy,
                         TAO_Active_Hint_Strategy (creation_parameters.active_object_map_size_),
                         CORBA::NO_MEMORY ());
@@ -275,6 +278,9 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
 
         case TAO_ACTIVE_DEMUX:
         default:
+
+          this->using_active_maps_ = 1;
+
           ACE_NEW_THROW_EX (uim,
                             user_id_active_map (creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());

@@ -43,7 +43,7 @@ class TAO_Strategies_Export TAO_SHMIOP_Acceptor : public TAO_Acceptor
   //   TAO_SHMIOP_Acceptor
   //
   // = DESCRIPTION
-  //   The IIOP-specific bridge class for the concrete acceptor.
+  //   The SHMIOP-specific bridge class for the concrete acceptor.
   //
 public:
   TAO_SHMIOP_Acceptor (CORBA::Boolean flag = 0);
@@ -70,15 +70,8 @@ public:
                             const char *options = 0);
   virtual int close (void);
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
-                               TAO_MProfile &mprofile);
-
-  virtual int create_endpoint_for_mprofile (const TAO_ObjectKey &object_key,
-                                    TAO_MProfile &mprofile);
-  // Rather than creating a separate profile for each endpoint, this
-  // version of <create_mprofile> method adds all endpoints to a
-  // single SHMIOP profile, i.e., <mprofile> will not contain more than
-  // one SHMIOP_Profile, no matter how many acceptors there are.
-
+                               TAO_MProfile &mprofile,
+                               CORBA::Boolean share_profile);
 
   virtual int is_collocated (const TAO_Endpoint* endpoint);
   virtual CORBA::ULong endpoint_count (void);
@@ -101,7 +94,11 @@ private:
   int create_profile (const TAO_ObjectKey &object_key,
                       TAO_MProfile &mprofile);
   // Create a SHMIOP profile representing this acceptor.  Factors out
-  // common functionality of <create_mprofile> and <create_rt_mprofile>.
+  // common functionality of <create_mprofile> and <create_shared_mprofile>.
+
+  int create_shared_profile (const TAO_ObjectKey &object_key,
+                             TAO_MProfile &mprofile);
+  // Add the endpoints on this acceptor to a shared profile.
 
 protected:
   ACE_CString host_;

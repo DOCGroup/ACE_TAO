@@ -170,7 +170,7 @@ module PortableInterceptor {
 
     void register_initial_reference (in ObjectId id, in Object obj)
       raises (InvalidName);
-    CORBA::Object resolve_initial_references (in ObjectId id) raises (InvalidName);
+    Object resolve_initial_references (in ObjectId id) raises (InvalidName);
     void add_client_request_interceptor (
       in ClientRequestInterceptor interceptor)
       raises (DuplicateName);
