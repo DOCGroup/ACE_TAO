@@ -1,3 +1,9 @@
+Mon Apr 19 16:57:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/POA_Hooks.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+          Added include of tao/CDR.h
+
 Mon Apr 19 09:18:21 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/Logging_Service/Notify_Logging_Service/svc.conf:
