@@ -1,3 +1,9 @@
+Tue Aug 31 21:04:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp
+	  (get_control_callback,get_callback,set_protocol_object):  Fixed
+	  "*/ found outside of comment" warnings.
+
 Tue Aug 31 20:35:56 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/sfp:
@@ -6,7 +12,7 @@ Tue Aug 31 20:35:56 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Makefile:
 	  Updated the Makefile to include the new AV tests.
-		
+
 Tue Aug 31 18:07:35 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/:
@@ -28,8 +34,8 @@ Tue Aug 31 18:07:35 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/Transport.{h,cpp}:
 	  Provides generic transport related interaces.
-	
-	* orbsvcs/orbsvcs/AV/TCP.{h,cpp}: 
+
+	* orbsvcs/orbsvcs/AV/TCP.{h,cpp}:
    	  These files contain the TCP Null flow protocol layer and the TCP
 	  transport interfaces.
 
@@ -47,7 +53,7 @@ Tue Aug 31 18:07:35 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 	  tool developed at U Cal Berkeley).
 
 	* orbsvcs/orbsvcs/AV/Policy.{h,cpp}:
-	  Provides the Policy related classes for the pluggable protocols framework.		
+	  Provides the Policy related classes for the pluggable protocols framework.
 
 	* orbsvcs/orbsvcs/AV/Protocol_Factory.{h,cpp}:
 	  Provides the generice interfaces for flow protocol factories and
@@ -55,7 +61,7 @@ Tue Aug 31 18:07:35 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/Flows_T.{h,cpp}:
 	  FDev implementation classes.
-	
+
 	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.{h,cpp,i}:
 	  Moved the Flow Spec Entry classes from AVStreams_i.* files to
 	  these.
@@ -75,10 +81,10 @@ Tue Aug 31 18:07:35 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 	* orbsvcs/tests/AVStreams/Multicast:
 	  This directory provides a file transfer test using the
 	  point-to-multipoint binding in AV using light profile interfaces.
-	 
+
 	* orbsvcs/tests/AVStreams/Multicast_Full_Profile:
 	  Multicast file transfer test using the point-to-multipoint binding
-	  for full profile interfaces.		
+	  for full profile interfaces.
 
 Tue Aug 31 17:59:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -97,12 +103,12 @@ Tue Aug 31 17:59:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Tue Aug 31 14:23:55 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tao/UIOP_Connector.cpp:  Also rearranged the code so that it'll 
+	* tao/UIOP_Connector.cpp:  Also rearranged the code so that it'll
 	  compile properly.
 
 Tue Aug 31 14:17:44 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/IIOP_Connector.cpp: Rearranged the code so that it'll 
+	* tao/IIOP_Connector.cpp: Rearranged the code so that it'll
 	  compile properly.  Thanks to Bala for reporting this.
 
 Tue Aug 31 13:33:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
@@ -118,7 +124,7 @@ Tue Aug 31 00:16:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  instantiations from the BOTTOM of the *.cpp files to near the
  	  top.  Thanks to Robert Shewan <rshew@peri.com> for reporting
  	  this.
-	
+
 Tue Aug 31 9:25:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tao/TAO.dsp:
@@ -148,7 +154,7 @@ Tue Aug 31 8:15:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  tests/AMI/client.conf,
 	  tests/AMI/simple-client-exclusive.conf,
 	  tests/AMI/simple-client-muxed.conf,
-	  tests/AMI/client-global.conf,	  
+	  tests/AMI/client-global.conf,
 	  tests/AMI/test_i.i:
 	  Removed these files because they got replaced by new ones.
 
@@ -159,7 +165,7 @@ Tue Aug 31 8:15:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  tests/AMI/simple_client_muxed.conf,
 	  tests/AMI/AMI_Test_Client.dsp,
 	  tests/AMI/AMI_Test_Simple_Client.dsp,
-	  tests/AMI/AMI_Test_Server.dsp: 
+	  tests/AMI/AMI_Test_Server.dsp:
 	  Added these files for the new generation of AMI tests.
 
 	* tests/AMI/Makefile,
@@ -187,7 +193,7 @@ Mon Aug 30 23:24:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/default_resource.cpp:
 	  The TAO_Priority_Mapping class is trivial now, two derived
 	  classes implement simple priority mapping strategies.
-	  Linear_Priority_Mapping uses a linear map between the full range 
+	  Linear_Priority_Mapping uses a linear map between the full range
 	  of priorities in a scheduling class to the full range of
 	  CORBA priorities.
 	  Direct_Priority_Mapping uses a simpler mapping where a suitable
@@ -220,7 +226,7 @@ Mon Aug 30 17:10:30 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* TAO-INSTALL.html: Added a note on Connection Caching feature
 	  which contains the "-fsquangle" option info too.
-	
+
 Mon Aug 30 17:16:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_scope.cpp:
