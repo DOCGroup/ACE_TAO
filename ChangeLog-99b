@@ -1,3 +1,12 @@
+Mon Sep 27 16:05:35 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * tests/Object_Manager_Test.dsp:
+        * tests/run_tests.bat:
+        * tests/tests.dsw:
+        * tests/version_tests/Object_Manager_Test.dsp:
+        * tests/version_tests/version_tests.dsw:
+          Added Object_Manager_Test support on Win32 and MSVC.
+
 Mon Sep 27 15:23:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/OS.h:
