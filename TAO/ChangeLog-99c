@@ -1,3 +1,70 @@
+Thu Dec 16 14:53:23 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* docs/index.html:
+
+	  Updated with new location of pluggable protocols framework
+	  documentation.
+
+	* docs/pluggable_protocols/cross_ref_motif.png:
+	* docs/pluggable_protocols/img1.png:
+	* docs/pluggable_protocols/img2.png:
+	* docs/pluggable_protocols/img3.png:
+	* docs/pluggable_protocols/img4.png:
+	* docs/pluggable_protocols/img5.png:
+	* docs/pluggable_protocols/index.html:
+	* docs/pluggable_protocols/pluggable_protocols.css
+
+	  Added detailed pluggable protocol framework documentation.
+
+	* docs/pluggable.html:
+
+	  Merged this documentation into the new pluggable protocols
+	  documentation, and removed this file.
+
+	* tao/Profile.cpp:
+	* tao/Profile.h:
+	* tao/IIOP_Profile.h:
+	* tao/IIOP_Profile.i:
+	* tao/UIOP_Profile.h:
+	* tao/UIOP_Profile.i:
+	* tao/IIOP_Connector.cpp:
+	* tao/UIOP_Connector.cpp:
+
+	  Changed "get_object_key_delimiter" method name to
+	  "object_key_delimiter" to match coding style used for pluggable
+	  protocols framework.  Similarly, the "object_key_delimiter"
+	  static string variable was changed to "object_key_delimiter_."
+
+	  Made object_key_delimiter() method non-inline.  There is no
+	  point in inlining virtual methods.
+
+	  There is no point in returning a "const char" object key
+	  delimiter since it isn't possible to modify the original one
+	  (i.e. the returned value is not a reference or a pointer).  A
+	  "char" return value will do.
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (server_is_running):
+	* tao/POA.cpp (key_to_object, imr_notify_startup):
+
+	  Changed use of get_object_key_delimiter() to
+	  object_key_delimiter().
+
+	* tao/POA.cpp (destroy_i):
+
+	  Fixed warning about better conversion operator.
+
+	* tao/ImplRepoC.h:
+
+	  Moved inclusion of "ace/streams.h" after "tao/corbafwd.h."
+	  "ace/streams.h" is included only if
+	  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION is defined but since
+	  ace/streams.h was the first file included there was no way to
+	  tell if ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION was defined.
+
+	* tao/Makefile:
+
+	  Updated dependencies.
+
 Thu Dec 16 14:31:43 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ImplRepoC.h: Propagated the change 
