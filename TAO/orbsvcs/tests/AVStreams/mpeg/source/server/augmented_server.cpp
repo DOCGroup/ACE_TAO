@@ -117,7 +117,7 @@ create_B (AVStreams::StreamCtrl_ptr the_requester,
                AVStreams::notSupported,
                AVStreams::QoSRequestFailed,
                AVStreams::noSuchFlow
-            ))                       
+            ))
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Audio_MMDevice::create_B called \n"));
   AVStreams::StreamEndPoint_B_ptr stream_ptr;
@@ -313,7 +313,9 @@ AV_Server_Sig_Handler::remove_names (void)
   ACE_TRY_NEW_ENV
     {
       /*
-      CORBA::Object_var naming_obj = TAO_ORB_Core_instance ()->orb ()->resolve_initial_references ("NameService");
+      CORBA::Object_var naming_obj = TAO_ORB_Core_instance ()->orb ()->resolve_initial_references ("NameService", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to resolve the Name Service.\n"),
@@ -480,7 +482,9 @@ AV_Server::init (int argc,
 
   // Resolve the Naming service reference.
   /*
-  CORBA::Object_var naming_obj = orb->resolve_initial_references ("NameService");
+  CORBA::Object_var naming_obj = orb->resolve_initial_references ("NameService", ACE_TRY_ENV);
+  ACE_TRY_CHECK;
+
   if (CORBA::is_nil (naming_obj.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Unable to resolve the Name Service.\n"),
@@ -657,7 +661,8 @@ AV_Server::resolve_trader (CORBA::Environment& ACE_TRY_ENV)
       // Bootstrap to the Lookup interface.
       ACE_DEBUG ((LM_ERROR, "Bootstrap to the Lookup interface.\n"));
       CORBA::Object_var trading_obj =
-        this->orb_manager_.orb ()->resolve_initial_references ("TradingService");
+        this->orb_manager_.orb ()->resolve_initial_references ("TradingService", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (trading_obj.in ()))
         {

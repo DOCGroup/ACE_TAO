@@ -28,7 +28,9 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references("RootPOA", ACE_TRY_CONF);
+      ACE_TRY_CHECK;
+
       if (CORBA::is_nil(poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -41,12 +43,12 @@ main (int argc, char *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Store a pointer to the local run-time scheduler.
-      RtecScheduler::Scheduler_ptr runtime_scheduler = 
+      RtecScheduler::Scheduler_ptr runtime_scheduler =
       ACE_Scheduler_Factory::server ();
 
       // Some useful variables for retrieving values from the scheduler.
@@ -60,50 +62,50 @@ main (int argc, char *argv[])
         {
           // Make sure the correct handle is returned by the
           // run-time scheduler's create and lookup methods.
-          ACE_ASSERT (infos [i].handle == 
-                      runtime_scheduler->create (infos [i].entry_point, 
+          ACE_ASSERT (infos [i].handle ==
+                      runtime_scheduler->create (infos [i].entry_point,
                                                  ACE_TRY_ENV));
           ACE_TRY_CHECK;
 
-          ACE_ASSERT (infos [i].handle == 
-                      runtime_scheduler->lookup (infos [i].entry_point, 
+          ACE_ASSERT (infos [i].handle ==
+                      runtime_scheduler->lookup (infos [i].entry_point,
                                                  ACE_TRY_ENV));
           ACE_TRY_CHECK;
 
           // Make sure the values in the RT_Info returned by get are OK.
           delete rt_info;
-          rt_info = runtime_scheduler->get (infos [i].handle, 
+          rt_info = runtime_scheduler->get (infos [i].handle,
                                             ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           ACE_ASSERT (rt_info != 0);
           ACE_ASSERT (ACE_OS::strcmp (rt_info->entry_point,
                                       infos [i].entry_point) == 0);
-          ACE_ASSERT (rt_info->handle == 
+          ACE_ASSERT (rt_info->handle ==
             infos [i].handle);
-          ACE_ASSERT (rt_info->worst_case_execution_time == 
+          ACE_ASSERT (rt_info->worst_case_execution_time ==
             infos [i].worst_case_execution_time);
-          ACE_ASSERT (rt_info->typical_execution_time == 
+          ACE_ASSERT (rt_info->typical_execution_time ==
             infos [i].typical_execution_time);
-          ACE_ASSERT (rt_info->cached_execution_time == 
+          ACE_ASSERT (rt_info->cached_execution_time ==
             infos [i].cached_execution_time);
-          ACE_ASSERT (rt_info->period == 
+          ACE_ASSERT (rt_info->period ==
             infos [i].period);
-          ACE_ASSERT (rt_info->criticality == 
+          ACE_ASSERT (rt_info->criticality ==
             ACE_static_cast (RtecScheduler::Criticality_t, infos [i].criticality));
-          ACE_ASSERT (rt_info->importance == 
+          ACE_ASSERT (rt_info->importance ==
             ACE_static_cast (RtecScheduler::Importance_t, infos [i].importance));
-          ACE_ASSERT (rt_info->quantum == 
+          ACE_ASSERT (rt_info->quantum ==
             infos [i].quantum);
-          ACE_ASSERT (rt_info->threads == 
+          ACE_ASSERT (rt_info->threads ==
             infos [i].threads);
-          ACE_ASSERT (rt_info->priority == 
+          ACE_ASSERT (rt_info->priority ==
             infos [i].priority);
-          ACE_ASSERT (rt_info->preemption_subpriority == 
+          ACE_ASSERT (rt_info->preemption_subpriority ==
             infos [i].static_subpriority);
-          ACE_ASSERT (rt_info->preemption_priority == 
+          ACE_ASSERT (rt_info->preemption_priority ==
             infos [i].preemption_priority);
-          ACE_ASSERT (rt_info->info_type == 
+          ACE_ASSERT (rt_info->info_type ==
             ACE_static_cast (RtecScheduler::Info_Type_t, infos [i].info_type));
 
           // Make sure the values in the scheduler's internal RT_Info are OK.

@@ -51,9 +51,9 @@ FTP_Client_Callback::handle_timeout (void *)
                   //ACE_DECLARE_NEW_CORBA_ENV;
                   CLIENT::instance ()->streamctrl ()->stop (stop_spec,ACE_TRY_ENV);
                   ACE_TRY_CHECK;
-		  // CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
+                  // CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
                   //ACE_TRY_CHECK;
-		  ACE_DEBUG ((LM_DEBUG, "Just before Orb Shutdown\n"));
+                  ACE_DEBUG ((LM_DEBUG, "Just before Orb Shutdown\n"));
                   TAO_AV_CORE::instance ()->orb ()->shutdown (0);
                   ACE_TRY_CHECK;
                   return 0;
@@ -389,16 +389,17 @@ main (int argc,
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv);
 
-  CORBA::Object_var obj
-    = orb->resolve_initial_references ("RootPOA");
-
-  PortableServer::POA_var poa
-    = PortableServer::POA::_narrow (obj.in ());
-
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
+      CORBA::Object_var obj
+        = orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::POA_var poa
+        = PortableServer::POA::_narrow (obj.in ());
+
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in (),
                                       ACE_TRY_ENV);

@@ -60,6 +60,7 @@ Trader_Client::init (int argc, char** argv)
       CORBA::ORB_var orb = this->orb_manager_.orb ();
       CORBA::Object_var obj =
         orb->resolve_initial_references ("TradingService", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Narrow the lookup interface.
       //ACE_DEBUG ((LM_DEBUG, "Narrowing the lookup interface.\n"));

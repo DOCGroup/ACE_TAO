@@ -100,7 +100,8 @@ int main (int argc, char *argv[])
                                             argv);
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA");
+        = orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
@@ -234,36 +235,36 @@ Ping_Recv_Callback::receive_frame (ACE_Message_Block *frame,
                                    const ACE_Addr &)
 {
   this->count_++;
- 
+
   ACE_DEBUG ((LM_DEBUG,"Ping_Recv_Callback::receive_frame %d\n", this->count_));
 
   if (this->count_ < 10)
     {
       for (const ACE_Message_Block *i = frame;
-	   i != 0;
-	   i = i->cont ())
-	{
-	  ACE_hrtime_t stamp;
-	  
-	  if (i->length () < sizeof(stamp))
-	    return 0;
-	  
-	  ACE_OS::memcpy (&stamp, i->rd_ptr (), sizeof(stamp));
-	  
-	  ACE_hrtime_t now = ACE_OS::gethrtime ();
-	  if (recv_base == 0)
-	    {
-	      recv_base = now;
-	    }
-	  else
-	    {
+           i != 0;
+           i = i->cont ())
+        {
+          ACE_hrtime_t stamp;
+
+          if (i->length () < sizeof(stamp))
+            return 0;
+
+          ACE_OS::memcpy (&stamp, i->rd_ptr (), sizeof(stamp));
+
+          ACE_hrtime_t now = ACE_OS::gethrtime ();
+          if (recv_base == 0)
+            {
+              recv_base = now;
+            }
+          else
+            {
           recv_latency.sample (now - recv_base,
                                now - stamp);
-	    }
-	  
-	  if (respond == 1)
-	    pong_callback.send_response (stamp);
-	}
+            }
+
+          if (respond == 1)
+            pong_callback.send_response (stamp);
+        }
     }
   else
     TAO_AV_CORE::instance ()->orb ()->shutdown ();

@@ -317,7 +317,7 @@ Client::run (void)
       // Schedule a timer for the for the flow handler.
       //TAO_AV_CORE::instance ()->run ();
       ACE_Time_Value tv (10000,0);
-      
+
       TAO_AV_CORE::instance ()->orb ()->run (tv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -345,7 +345,8 @@ main (int argc,
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv);
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA");
+        = orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());

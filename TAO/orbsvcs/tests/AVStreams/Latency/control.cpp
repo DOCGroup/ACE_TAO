@@ -84,7 +84,8 @@ int main (int argc, char *argv[])
                                             argv);
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA");
+        = orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());

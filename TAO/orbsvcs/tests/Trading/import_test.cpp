@@ -23,8 +23,8 @@ main (int argc, char** argv)
       char* ior = parse_args.ior ();
       CORBA::Object_var trading_obj = (ior == 0) ?
         orb->resolve_initial_references ("TradingService") :
-        orb->string_to_object (ior);
-
+        orb->string_to_object (ior, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (trading_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
