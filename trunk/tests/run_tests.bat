@@ -11,6 +11,8 @@ IOStream_Test
 Map_Manager_Test
 Mem_Map_Test
 Message_Queue_Test
+Simple_Message_Block_Test
+Message_Block_Test
 MM_Shared_Memory_Test
 @echo The following test runs for about 1 minute
 Mutex_Test
