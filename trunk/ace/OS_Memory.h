@@ -28,10 +28,6 @@
 #include <stddef.h>
 #endif  // ACE_HAS_WINCE
 
-# if !defined (ACE_MALLOC_ALIGN)
-#   define ACE_MALLOC_ALIGN ((int) sizeof (long))
-# endif /* ACE_MALLOC_ALIGN */
-
 // Allow an installation to replace the lowest-level allocation
 // functions without changing the source of ACE.
 //

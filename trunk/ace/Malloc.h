@@ -59,26 +59,11 @@ typedef ACE_Atomic_Op<ACE_PROCESS_MUTEX, int> ACE_INT;
    }   // The size is in number of           |
    |   // Malloc_Header (including this one.)|
    +-----------------------------------------+
-   |long paddings_[ACE_MALLOC_PADDING_SIZE]; |
-   |   // Padding long array.  This purpose  |
+   |char paddings_[ACE_MALLOC_PADDING_SIZE]; |
+   |   // Padding array.  This purpose  |
    |   // of this padding array is to adjust |
    |   // the sizeof (Malloc_Header) to be   |
    |   // multiple of ACE_MALLOC_ALIGN.      |
-   |   // If you are sure that               |
-   |   //    sizeof (MALLOC_HEADER_PTR)      |
-   |   //  + sizeof (size_t) is a multiple   |
-   |   // of ACE_MALLOC_ALIGN, then you can  |
-   |   // #define ACE_MALLOC_PADDING_SIZE 0  |
-   |   // to complete remove this data member|
-   |   // from Malloc_Header.  Otherwise,    |
-   |   // ACE will try to figure out the     |
-   |   // correct value of this macro.       |
-   |   // However, the calculation does not  |
-   |   // always do the right thing and in   |
-   |   // some rare cases, you'll need to    |
-   |   // tweak this value by defining the   |
-   |   // macro (ACE_MALLOC_PADDING_SIZE)    |
-   |   // explicitly.                        |
    +-----------------------------------------+
 
 * Name_Node
@@ -137,7 +122,7 @@ typedef ACE_Atomic_Op<ACE_PROCESS_MUTEX, int> ACE_INT;
    |   //  ACE_HAS_MALLOC_STATS is not       |   |
    |   //  defined.                          |   |
    +-----------------------------------------+   |
-   |long align_[CONTROL_BLOCK_ALIGN_LONGS];  |   |
+   |char align_[CONTROL_BLOCK_ALIGN_BYTES];  |   |
    |   //                                    |   |
    +-----------------------------------------+   |
    |Malloc_Header base_;                     |<--+
@@ -223,24 +208,30 @@ struct ACE_Export ACE_Malloc_Stats
 // ACE_MALLOC_PADDING allows you to insure that allocated regions are
 // at least <ACE_MALLOC_PADDING> bytes long.  It is especially useful
 // when you want areas to be at least a page long, or 32K long, or
-// something like that.  It doesn't guarantee alignment to an address
-// multiple, like 8-byte data alignment, etc.  The allocated area's
-// padding to your selected size is done with an added array of long[]
-// and your compiler will decide how to align things in memory.
+// something like that.
 
 #define ACE_MALLOC_PADDING 1
 #endif /* ACE_MALLOC_PADDING */
 
+union ACE_max_align_info
+{
+  int (*i)();
+  void* p;
+  long l;
+  double d;
+};
+
 #if !defined (ACE_MALLOC_ALIGN)
 // Align the malloc header size to a multiple of a double.
-#define ACE_MALLOC_ALIGN (sizeof (double))
+#define ACE_MALLOC_ALIGN (sizeof (ACE_max_align_info))
 #endif /* ACE_MALLOC_ALIGN */
 
+#if !defined ACE_MALLOC_ROUNDUP
+#define ACE_MALLOC_ROUNDUP(X, Y) ((X) + ((Y) - 1) & ~((Y) - 1))
+#endif
+
 // ACE_MALLOC_HEADER_SIZE is the normalized malloc header size.
-#define ACE_MALLOC_HEADER_SIZE (ACE_MALLOC_PADDING % ACE_MALLOC_ALIGN == 0 \
-                                ? ACE_MALLOC_PADDING \
-                                : (((ACE_MALLOC_PADDING / ACE_MALLOC_ALIGN) + 1) \
-                                   * ACE_MALLOC_ALIGN))
+#define ACE_MALLOC_HEADER_SIZE ACE_MALLOC_ROUNDUP(ACE_MALLOC_PADDING, ACE_MALLOC_ALIGN)
 
 /**
  * @class ACE_Control_Block
@@ -282,16 +273,10 @@ public:
     /// Size of this header control block.
     size_t size_;
 
-#if defined (ACE_MALLOC_PADDING_SIZE) && (ACE_MALLOC_PADDING_SIZE == 0)
-    // No padding required.
-#else
 # if !defined (ACE_MALLOC_PADDING_SIZE)
-#   define ACE_MALLOC_PADDING_SIZE ((int) (ACE_MALLOC_HEADER_SIZE - \
-                                    (sizeof (ACE_Malloc_Header*) + sizeof (size_t)))\
-                                    / (int) sizeof (long))
+#   define ACE_MALLOC_PADDING_SIZE ACE_MALLOC_ROUNDUP (ACE_MALLOC_HEADER_SIZE + sizeof (ACE_Malloc_Header*) + sizeof (size_t), ACE_MALLOC_ALIGN) - (sizeof (ACE_Malloc_Header*) + sizeof (size_t))
 # endif /* !ACE_MALLOC_PADDING_SIZE */
-    long padding_[ACE_MALLOC_PADDING_SIZE < 1 ? 1 : ACE_MALLOC_PADDING_SIZE];
-#endif /* ACE_MALLOC_PADDING_SIZE && ACE_MALLOC_PADDING_SIZE == 0 */
+    char padding_[(ACE_MALLOC_PADDING_SIZE) ? ACE_MALLOC_PADDING_SIZE : ACE_MALLOC_ALIGN];
 
     /// Dump the state of the object.
     void dump (void) const;
@@ -383,20 +368,11 @@ public:
                                       + MAXNAMELEN))
 #endif /* ACE_HAS_MALLOC_STATS */
 
-// Notice the casting to int for <sizeof> otherwise unsigned int
-// arithmetic is used and some awful things may happen.
-#if defined (ACE_CONTROL_BLOCK_ALIGN_LONGS) && (ACE_CONTROL_BLOCK_ALIGN_LONGS == 0)
-  // No padding required in control block.
-#else
-# if !defined (ACE_CONTROL_BLOCK_ALIGN_LONGS)
-#   define ACE_CONTROL_BLOCK_ALIGN_LONGS \
-            ((ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN != 0 \
-              ? ACE_MALLOC_ALIGN - (ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN) \
-              : ACE_MALLOC_ALIGN) / int (sizeof (long)))
-# endif /* !ACE_CONTROL_BLOCK_ALIGN_LONGS */
-  /// Force alignment.
-  long align_[ACE_CONTROL_BLOCK_ALIGN_LONGS < 1 ? 1 : ACE_CONTROL_BLOCK_ALIGN_LONGS];
-#endif /* ACE_CONTROL_BLOCK_ALIGN_LONGS && ACE_CONTROL_BLOCK_ALIGN_LONGS == 0 */
+# if !defined (ACE_CONTROL_BLOCK_ALIGN_BYTES)
+#   define ACE_CONTROL_BLOCK_ALIGN_BYTES \
+        ACE_MALLOC_ROUNDUP (ACE_CONTROL_BLOCK_SIZE, ACE_MALLOC_ALIGN) - ACE_CONTROL_BLOCK_SIZE
+# endif /* !ACE_CONTROL_BLOCK_ALIGN_BYTES */
+  char align_[(ACE_CONTROL_BLOCK_ALIGN_BYTES) ? ACE_CONTROL_BLOCK_ALIGN_BYTES : ACE_MALLOC_ALIGN];
 
   /// Dummy node used to anchor the freelist.  This needs to come last...
   ACE_Malloc_Header base_;
