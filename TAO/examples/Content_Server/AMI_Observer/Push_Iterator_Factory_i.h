@@ -5,7 +5,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//     Content_Server
+//     AMI_Observer
 //
 // = FILENAME
 //     Push_Iterator_Factory_i.h
@@ -35,9 +35,22 @@ class Push_Iterator_Factory_i :
   virtual public POA_Web_Server::Iterator_Factory
 {
   // = TITLE
-  // Implement the Web_Server::Iterator_Factory interface.
+  //    Implement the Web_Server::Iterator_Factory interface.
+  //
+  // = DESCRIPTION
+  //    This class is used to register a client-side <Callback> object
+  //    with the Content Server, which is actually implemented by the
+  //    <Callback_Handler> class for each requested file.
+  //
+  //    The client invokes the register_callback() method in this
+  //    class.  That method then creates a <Callback_Handler> which
+  //    will push chunks of data asynchronously to the client-side
+  //    <Callback> object.  This allows the Content Server to
+  //    concurrently service multiple file requests without the need
+  //    to explicitly use threads at the application level.
+
 public:
-  Web_Server::Metadata_Type *register_callback 
+  Web_Server::Metadata_Type *register_callback
     (const char *pathname,
      Web_Server::Callback_ptr client_callback,
      CORBA::Environment &ACE_TRY_ENV)

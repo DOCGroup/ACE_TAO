@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//     ECE255
+//     AMI_Iterator
 //
 // = FILENAME
 //     Iterator_Factory_i.h
@@ -34,28 +34,33 @@ class Content_Iterator_i;
 class Iterator_Factory_i : virtual public POA_Web_Server::Iterator_Factory
 {
   // = TITLE
-  //   Implement the Web_Server::Iterator_Factory interface.
+  //    Factory that creates a Content_Iterator that retrieves fixed
+  //    size chunks of data from Content server.
+  //
+  // = DESCRIPTION
+  //    This class creates a Content_Iterator that is set up to
+  //    iteratively download a specific file.  This same factory can
+  //    be used to create Content_Iterators for other files.
 public:
 
-  // This factory method returns a <Content_Iterator> that can be used
-  // to read the <contents> associated with <pathname> one ``chunk''
-  // at a time.  The <metadata> reports information about the
-  // <contents>.
   virtual void get_iterator (const char *pathname,
                              Web_Server::Content_Iterator_out contents,
                              Web_Server::Metadata_Type_out metadata,
                              CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Web_Server::Error_Result));
+  // This factory method returns a <Content_Iterator> that can be used
+  // to read the <contents> associated with <pathname> one ``chunk''
+  // at a time.  The <metadata> reports information about the
+  // <contents>.
 
-  // Set the file modification date in the metadata structure.
   int modification_date (struct stat *file_status,
                          Web_Server::Metadata_Type_out metadata);
+  // Set the file modification date in the metadata structure.
 
-  // Set the type of file content in the metadata structure.
   int content_type (const char *filename,
                     Web_Server::Metadata_Type_out metadata);
-
+  // Set the type of file content in the metadata structure.
 };
 
 #endif  /* ITERATOR_FACTORY_I_H */

@@ -6,7 +6,7 @@
 #include "Content_Iterator_i.h"
 #include "Iterator_Factory_i.h"
 
-ACE_RCSID(AMI_Iterator, Iterator_Factory_i, "$Id$")
+ACE_RCSID (AMI_Iterator, Iterator_Factory_i, "$Id$")
 
 void
 Iterator_Factory_i::get_iterator (const char *pathname,
@@ -15,8 +15,6 @@ Iterator_Factory_i::get_iterator (const char *pathname,
                                   CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException, Web_Server::Error_Result))
 {
-  // Based on code available in H&V.
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Received request for file: <%s>\n"),
               pathname));
@@ -26,8 +24,12 @@ Iterator_Factory_i::get_iterator (const char *pathname,
     // HTTP 1.1 "Internal Server Error".
     ACE_THROW (Web_Server::Error_Result (500));
 
-  Content_Iterator_i *iterator_servant =
-    new Content_Iterator_i (pathname, file_status.st_size);
+  Content_Iterator_i *iterator_servant = 0;
+  ACE_NEW_THROW_EX (iterator_servant,
+                    Content_Iterator_i (pathname,
+                                        file_status.st_size),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK;
 
   if (iterator_servant->init () != 0)
     {
@@ -45,7 +47,13 @@ Iterator_Factory_i::get_iterator (const char *pathname,
     iterator_servant->_this (ACE_TRY_ENV);
   ACE_CHECK;
 
-  metadata = new Web_Server::Metadata_Type;
+  Web_Server::Metadata_Type *tmp = 0;
+  ACE_NEW_THROW_EX (tmp,
+                    Web_Server::Metadata_Type,
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK;
+  
+  metadata = tmp;
 
   if (this->modification_date (&file_status,
                                metadata) != 0)
