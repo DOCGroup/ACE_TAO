@@ -131,10 +131,13 @@ TAO_UIOP_Connector::preconnect (const char *preconnects)
   char *preconnections = ACE_OS::strdup (protocol_removed);
 
   int successes = 0;
+
   if (preconnections)
     {
       ACE_UNIX_Addr dest;
       ACE_Unbounded_Stack<ACE_UNIX_Addr> dests;
+
+      size_t num_connections;
 
       char *nextptr = 0;
       char *where = 0;
@@ -163,7 +166,7 @@ TAO_UIOP_Connector::preconnect (const char *preconnects)
 
       // Create an array of addresses from the stack, as well as an
       // array of eventual handlers.
-      size_t num_connections = dests.size ();
+      num_connections = dests.size ();
       ACE_UNIX_Addr *remote_addrs = 0;
       TAO_UIOP_Client_Connection_Handler **handlers = 0;
       char *failures = 0;
@@ -199,11 +202,36 @@ TAO_UIOP_Connector::preconnect (const char *preconnects)
             {
               handlers[index]->idle ();
               ++successes;
+
+              if (TAO_debug_level > 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "TAO (%P|%t) Preconnection <%s> succeeded.\n",
+                              remote_addrs[index].get_path_name ()));
+                }
+            }
+          else
+            {
+              if (TAO_debug_level > 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "TAO (%P|%t) Preconnection <%s> failed.\n",
+                              remote_addrs[index].get_path_name ()));
+                } 
             }
         }
-    }
 
-  ACE_OS::free (preconnections);
+      ACE_OS::free (preconnections);
+
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) UIOP preconnections: %d successes and "
+                      "%d failures.\n",
+                      successes,
+                      num_connections - successes));
+        }
+    }
 
   return successes;
 }
