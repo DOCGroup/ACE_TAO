@@ -1,3 +1,8 @@
+Fri Jul 26 10:27:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMH_Exceptions/server.cpp:
+          Fixed BCB warning
+
 Thu Jul 25 15:19:51 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
@@ -7,28 +12,28 @@ Thu Jul 25 15:19:51 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Jul 25 13:13:34 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/examples/PSS/Makefile (%C.cpp): 
+	* orbsvcs/examples/PSS/Makefile (%C.cpp):
 	  Updated to include the generation of psdl generated stubs.
 
 Thu Jul 25 14:35:36 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* performance-tests\RTCorba\Thread_Pool\server.cpp: 
-	* performance-tests\RTCorba\Thread_Pool\client.cpp: 
+	* performance-tests\RTCorba\Thread_Pool\server.cpp:
+	* performance-tests\RTCorba\Thread_Pool\client.cpp:
 
 	  Removed old reference to
 	  tests/RTCORBA/Linear_Priority/readers.cpp and replaced it with
 	  new file tests/RTCORBA/common_args.cpp.  Thanks to Bala for
-	  pointing this out.	
+	  pointing this out.
 
 Thu Jul 25 11:13:07 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ObjectReferenceTemplateC.cpp (_tao_unmarshal): 
-	* tao/ObjectReferenceTemplateC.h: 
+	* tao/ObjectReferenceTemplateC.cpp (_tao_unmarshal):
+	* tao/ObjectReferenceTemplateC.h:
 	  Re-added the _tao_unmarshal and _tao_marshal methods which are
 	  needed for value type support that are used in ORT.pidl. Someone
 	  seems to have removed these.
 
-	* orbsvcs/examples/ORT/Makefile: 
+	* orbsvcs/examples/ORT/Makefile:
 	  Updated dependencies.
 
 Thu Jul 25 11:37:21 2002  Chad Elliott  <elliott_c@ociweb.com>
@@ -43,12 +48,12 @@ Thu Jul 25 11:37:21 2002  Chad Elliott  <elliott_c@ociweb.com>
 
 Thu Jul 25 09:25:49 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/examples/Makefile: 
+	* orbsvcs/examples/Makefile:
 	  Added ORT and PSS to the list.
 
-	* orbsvcs/Makefile: 
+	* orbsvcs/Makefile:
 	  Added PSS to the list of directories.
-	
+
 Thu Jul 25 08:05:47 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/PSS/PSDL.ll:
@@ -59,23 +64,23 @@ Thu Jul 25 08:05:47 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	* orbsvcs/PSS/PSDL_Interpreter.cpp:
 	* orbsvcs/PSS/PSDL_Interpreter.h:
 
-	  The Lex and the Yacc files and the related classes to build an 
+	  The Lex and the Yacc files and the related classes to build an
 	  abstract syntax tree for the Persistent State Definition
 	  Language. PSDL is a superset of the IDL. This is needed for the
-	  Persistent State Service (PSS). 
+	  Persistent State Service (PSS).
 
 	* orbsvcs/PSS/Makefile:
 	* orbsvcs/PSS/Makefile.parser:
-	  Makefiles to build the libTAO_PSDL, libTAO_PSDL_Datastore 
+	  Makefiles to build the libTAO_PSDL, libTAO_PSDL_Datastore
 	  and the actual PSDL parser, psdl_tao, which is similar to
-	  tao_idl for the IDL.		
+	  tao_idl for the IDL.
 
 	* orbsvcs/PSS/PSDL.dsp:
 	* orbsvcs/PSS/PSDL_Datastore.dsp:
 	* orbsvcs/PSS/PSDL_Parser.dsp:
 	* orbsvcs/PSS/PSDL.dsw:
 	  The workspace and the project files for windows.
-	
+
 	* orbsvcs/PSS/Dump_Visitor.cpp:
 	* orbsvcs/PSS/Dump_Visitor.h:
 	* orbsvcs/PSS/psdl_tao.cpp:
@@ -95,7 +100,7 @@ Thu Jul 25 08:05:47 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	  This library provides support to write and read the persistent
 	  data.
-	
+
 	* orbsvcs/PSS/PSDL_Code_Gen.cpp:
 	* orbsvcs/PSS/PSDL_Code_Gen.h:
 	  This class acts as the interface to the datastore which is used
@@ -104,7 +109,7 @@ Thu Jul 25 08:05:47 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  object reference. When trying to get the object reference
 	  associated with an object, it gets the encoded reference from
 	  the datastore and decodes it before passing it back to the
-	  caller.	  
+	  caller.
 
 	* orbsvcs/PSS/PSDL_Datastore.cpp:
 	* orbsvcs/PSS/PSDL_Datastore.h:
@@ -112,17 +117,17 @@ Thu Jul 25 08:05:47 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  The class intializes the database or the related where the data
 	  is saved, binds, unbinds and finds the server-name and its
 	  octetseq from the hash map which is saved to the datastore.
-	
+
 	* orbsvcs/PSS/PSDL_OctetSeq.cpp:
 	* orbsvcs/PSS/PSDL_OctetSeq.h:
 	* orbsvcs/PSS/PSDL_String.cpp:
 	* orbsvcs/PSS/PSDL_String.h:
 	  These classes provide a wrapper to the CORBA::OctetSeq and
 	  ACE_CString respectively to facilitate saving the encoded object
-	  reference and the object's name persistently. 
+	  reference and the object's name persistently.
 
 	  Thanks to Ossama for helping out with these classes.
-		  
+
 	* orbsvcs/PSS/PSDL_Node.cpp:
 	* orbsvcs/PSS/PSDL_Node.h:
 	  Each node in the abstract syntax tree is represented by an
@@ -130,7 +135,7 @@ Thu Jul 25 08:05:47 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  about the identifier name and its type and has accessibilty to
 	  the get the scope of the node. The scope is needed to get the
 	  parent of the node and its children.
-	
+
 	* orbsvcs/PSS/PSDL_Exception_Scope.cpp
 	* orbsvcs/PSS/PSDL_Exception_Scope.h
 	* orbsvcs/PSS/PSDL_Interface_Scope.cpp
@@ -157,7 +162,7 @@ Thu Jul 25 08:05:47 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  TAO_PSDL_Scope is the base class. This class provides the way to
 	  add new structures, interfaces and all teh different types of
 	  nodes defined in the PSDL to the tree.
-	  
+
 	  Individual types override the needed methods to add types that
 	  are valid in their scope. For example, structures wouldnt have
 	  exceptions in their scope. So, PSDL_Struct_Scope neednot worry
@@ -172,7 +177,7 @@ Thu Jul 25 08:05:47 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  with their scopes. Those kind of identifier types are covered in
 	  TAO_PSDL_Simple_Scope class.
 
-	  TAO_PSDL_Root_Scope provides the root scope to the tree. 
+	  TAO_PSDL_Root_Scope provides the root scope to the tree.
 
 	* orbsvcs/PSS/PSDL_Scope_Visitor.cpp
 	* orbsvcs/PSS/PSDL_Scope_Visitor.h
@@ -180,7 +185,7 @@ Thu Jul 25 08:05:47 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  the stubs. Uses the visitor pattern. Derived classes override
 	  the methods that are useful to them. Derives from
 	  TAO_PSDL_Node_Visitor.
-	
+
 	* orbsvcs/PSS/PSDL_Enum_Type_Visitor.cpp
 	* orbsvcs/PSS/PSDL_Enum_Type_Visitor.h
 	* orbsvcs/PSS/PSDL_Exception_Visitor.cpp
