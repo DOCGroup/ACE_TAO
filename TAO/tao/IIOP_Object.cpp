@@ -360,6 +360,8 @@ IIOP_Object::IIOP_Object (const char *host,
                           char *repository_id)
   : STUB_Object (repository_id),
     profile (host, port, objkey),
+    fwd_profile_ (0),
+    fwd_profile_success_ (0),
     refcount_ (1),
     handler_ (0)
 {
