@@ -1,3 +1,8 @@
+Fri Oct  6 11:56:15 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FT_CORBA.idl: Made some of the policy
+	  interfaces local.
+
 Thu Oct 05 19:49:38 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/DynamicAny/DynArray_i.cpp:
