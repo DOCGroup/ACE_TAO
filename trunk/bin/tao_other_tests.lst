@@ -110,10 +110,9 @@ TAO/orbsvcs/tests/Notify/Structured_Filter/run_test.pl: !ST !NO_MESSAGING !MINIM
 TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl: !ST !NO_MESSAGING !MINIMUM
 TAO/orbsvcs/tests/Notify/Reconnecting/run_test.pl: !ST !NO_MESSAGING !MINIMUM
 TAO/orbsvcs/tests/Notify/XML_Persistence/run_test.pl: !ST !NO_MESSAGING !MINIMUM !STATIC
-# BREAKS !linux 'TAO/orbsvcs/tests/EC_Mcast/run_test.pl
+TAO/orbsvcs/tests/EC_Mcast/run_test.pl: !NO_MCAST
 # FAILS 'TAO/orbsvcs/tests/EC_Multiple/run_test.pl
 # NO REDIRECTION TAO/examples/Simple/echo/run_test.pl < Echo.idl
-# INTERACTIVE 'TAO/examples/Simple/chat/run_test.pl
 TAO/orbsvcs/tests/Property/run_test.pl: !NO_MESSAGING
 #HANGS TAO/orbsvcs/tests/ImplRepo/run_test.pl airplane
 #HANGS'TAO/orbsvcs/tests/ImplRepo/run_test.pl airplane_ir
