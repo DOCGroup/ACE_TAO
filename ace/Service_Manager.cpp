@@ -213,10 +213,14 @@ ACE_Service_Manager::reconfigure_services (void)
 #endif /* 0 */
 
   // Flag the main event loop that a reconfiguration should occur.
-  // The next trip through the ACE_Reactor::run_event_loop()
-  // should pick this up and cause a reconfiguration!
+  // The next trip through the <ACE_Reactor::run_event_loop> should
+  // pick this up and cause a reconfiguration.  Note that we can't
+  // trigger the reconfiguration automatically since that might "pull
+  // the rug" out from underneath the existing services in a
+  // problematic way.
   ACE_Service_Config::reconfig_occurred ((sig_atomic_t) 1);
-  return this->client_stream_.send_n ("done\n", sizeof ("done\n"));
+  return this->client_stream_.send_n ("done\n",
+                                      sizeof ("done\n"));
 }
 
 // Accept new connection from client and carry out the service they
