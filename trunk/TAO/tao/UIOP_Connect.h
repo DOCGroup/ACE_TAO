@@ -178,8 +178,11 @@ protected:
   // Cached tss resources of the ORB that activated this object.
 
   u_long refcount_;
-  // Reference count, to avoid early deletes...
-  
+  // Reference count.  It is used to count nested upcalls on this
+  // svc_handler i.e., the connection can close during nested upcalls,
+  // you should not delete the svc_handler until the stack unwinds
+  // from the nested upcalls.
+
    CORBA::Boolean lite_flag_;
   // Should we use GIOP or GIOPlite
 };
