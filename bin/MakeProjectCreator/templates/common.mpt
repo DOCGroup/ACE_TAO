@@ -1,3 +1,0 @@
-// This file contains assignments that are common to all templates
-
-pch_defines += USING_PCH
