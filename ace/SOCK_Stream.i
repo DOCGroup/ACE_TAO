@@ -49,7 +49,7 @@ ACE_SOCK_Stream::recv_n (void *buf,
                          size_t len,
                          int flags,
                          const ACE_Time_Value *timeout,
-                         int error_on_eof) const
+                         size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_SOCK_Stream::recv_n");
   return ACE::recv_n (this->get_handle (),
@@ -57,35 +57,35 @@ ACE_SOCK_Stream::recv_n (void *buf,
                       len,
                       flags,
                       timeout,
-                      error_on_eof);
+                      bytes_transferred);
 }
 
 ASYS_INLINE ssize_t
 ACE_SOCK_Stream::recv_n (void *buf,
                          size_t len,
                          const ACE_Time_Value *timeout,
-                         int error_on_eof) const
+                         size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_SOCK_Stream::recv_n");
   return ACE::recv_n (this->get_handle (),
                       buf,
                       len,
                       timeout,
-                      error_on_eof);
+                      bytes_transferred);
 }
 
 ASYS_INLINE ssize_t
 ACE_SOCK_Stream::recvv_n (iovec iov[],
                           size_t n,
                           const ACE_Time_Value *timeout,
-                          int error_on_eof) const
+                          size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_SOCK_Stream::recvv_n");
   return ACE::recvv_n (this->get_handle (),
                        iov,
                        n,
                        timeout,
-                       error_on_eof);
+                       bytes_transferred);
 }
 
 ASYS_INLINE ssize_t
@@ -93,7 +93,7 @@ ACE_SOCK_Stream::send_n (const void *buf,
                          size_t len,
                          int flags,
                          const ACE_Time_Value *timeout,
-                         int error_on_eof) const
+                         size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_SOCK_Stream::send_n");
   return ACE::send_n (this->get_handle (),
@@ -101,35 +101,35 @@ ACE_SOCK_Stream::send_n (const void *buf,
                       len,
                       flags,
                       timeout,
-                      error_on_eof);
+                      bytes_transferred);
 }
 
 ASYS_INLINE ssize_t
 ACE_SOCK_Stream::send_n (const void *buf,
                          size_t len,
                          const ACE_Time_Value *timeout,
-                         int error_on_eof) const
+                         size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_SOCK_Stream::send_n");
   return ACE::send_n (this->get_handle (),
                       buf,
                       len,
                       timeout,
-                      error_on_eof);
+                      bytes_transferred);
 }
 
 ASYS_INLINE ssize_t
 ACE_SOCK_Stream::sendv_n (const iovec iov[],
                           size_t n,
                           const ACE_Time_Value *timeout,
-                          int error_on_eof) const
+                          size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_SOCK_Stream::sendv_n");
   return ACE::sendv_n (this->get_handle (),
                        iov,
                        n,
                        timeout,
-                       error_on_eof);
+                       bytes_transferred);
 }
 
 ASYS_INLINE ssize_t

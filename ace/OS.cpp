@@ -906,7 +906,7 @@ ACE_OS::fopen (const ACE_TCHAR *filename,
   return ::_wfopen (filename, mode);
 }
 
-#elif defined (ACE_WIN32) 
+#elif defined (ACE_WIN32)
 FILE *
 ACE_OS::fopen (const ACE_TCHAR *filename,
                const ACE_TCHAR *mode)
@@ -4222,9 +4222,10 @@ ssize_t
 ACE_OS::read_n (ACE_HANDLE handle,
                 void *buf,
                 size_t len,
-                int error_on_eof)
+                size_t *bt)
 {
-  size_t bytes_transferred;
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
 
   for (bytes_transferred = 0;
@@ -4234,18 +4235,9 @@ ACE_OS::read_n (ACE_HANDLE handle,
       n = ACE_OS::read (handle,
                         (char *) buf + bytes_transferred,
                         len - bytes_transferred);
-      if (n == -1)
-        {
-          // Errors.
-          return -1;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            return -1;
-          else
-            break;
-        }
+
+      if (n == -1 || n == 0)
+        return n;
     }
 
   return bytes_transferred;
@@ -4258,9 +4250,10 @@ ssize_t
 ACE_OS::write_n (ACE_HANDLE handle,
                  const void *buf,
                  size_t len,
-                 int error_on_eof)
+                size_t *bt)
 {
-  size_t bytes_transferred;
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
 
   for (bytes_transferred = 0;
@@ -4270,18 +4263,9 @@ ACE_OS::write_n (ACE_HANDLE handle,
       n = ACE_OS::write (handle,
                          (char *) buf + bytes_transferred,
                          len - bytes_transferred);
-      if (n == -1)
-        {
-          // Errors.
-          return -1;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            return -1;
-          else
-            break;
-        }
+
+      if (n == -1 || n == 0)
+        return n;
     }
 
   return bytes_transferred;
@@ -4431,15 +4415,15 @@ ACE_OS::mktemp (ACE_TCHAR *s)
           // condition if multiple threads in a process use the same
           // template).  This appears to match the behavior of the
           // SunOS 5.5 mktemp().
-          ACE_OS::sprintf (xxxxxx, 
-                           ACE_TEXT ("%05d%c"), 
-                           ACE_OS::getpid (), 
+          ACE_OS::sprintf (xxxxxx,
+                           ACE_TEXT ("%05d%c"),
+                           ACE_OS::getpid (),
                            unique_letter);
           while (ACE_OS::stat (s, &sb) >= 0)
             {
               if (++unique_letter <= ACE_TEXT ('z'))
-                ACE_OS::sprintf (xxxxxx, 
-                                 ACE_TEXT ("%05d%c"), 
+                ACE_OS::sprintf (xxxxxx,
+                                 ACE_TEXT ("%05d%c"),
                                  ACE_OS::getpid (),
                                  unique_letter);
               else
@@ -6628,7 +6612,7 @@ ACE_OS_Object_Manager::at_exit (ACE_EXIT_HOOK func)
 }
 
 void
-ACE_OS_Object_Manager::print_error_message (u_int line_number, 
+ACE_OS_Object_Manager::print_error_message (u_int line_number,
                                             const ACE_TCHAR *message)
 {
   // To avoid duplication of these const strings in OS.o.
