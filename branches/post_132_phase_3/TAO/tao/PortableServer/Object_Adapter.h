@@ -829,6 +829,13 @@ public:
 
 private:
 
+  /// Helper method to get collocated servant
+  TAO_ServantBase *get_collocated_servant (TAO_Stub *stub,
+                                           const TAO_MProfile &mp
+                                           ACE_ENV_ARG_DECL);
+
+private:
+
   /// Condition variable for waiting on non-servant upcalls to end.
   TAO_SYNCH_CONDITION non_servant_upcall_condition_;
 
