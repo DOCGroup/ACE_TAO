@@ -118,10 +118,6 @@ SOURCE=.\CDR.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CDR_Interpreter.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Client_Priority_Policy.cpp
 # End Source File
 # Begin Source File
@@ -727,10 +723,6 @@ SOURCE=.\Buffering_Constraint_Policy.h
 # Begin Source File
 
 SOURCE=.\cdr.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CDR_Interpreter.h
 # End Source File
 # Begin Source File
 
