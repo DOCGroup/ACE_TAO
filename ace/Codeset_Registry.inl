@@ -15,7 +15,7 @@
 //=============================================================================
 
 ACE_INLINE
-ACE_CDR::Boolean
+int
 ACE_Codeset_Registry::locale_to_registry(const ACE_CString &locale,
                                          ACE_CDR::ULong &codeset_id,
                                          ACE_CDR::UShort *num_sets,
@@ -28,7 +28,7 @@ ACE_Codeset_Registry::locale_to_registry(const ACE_CString &locale,
                      num_sets,
                      char_sets,
                      &result);
-  return (result == dce_cs_c_ok) ? OK : UNKNOWN;
+  return (result == dce_cs_c_ok) ? 1 : 0;
 #else
   return ACE_Codeset_Registry::locale_to_registry_i (locale,
                                                      codeset_id,
@@ -40,7 +40,7 @@ ACE_Codeset_Registry::locale_to_registry(const ACE_CString &locale,
 // based on a registry value, find the locale string and optional codeset
 // collection.  This wraps the dce_cs_rgy_to_loc function, or emulates it.
 ACE_INLINE
-ACE_CDR::Boolean
+int
 ACE_Codeset_Registry::registry_to_locale(ACE_CDR::ULong codeset_id,
                                          ACE_CString &locale,
                                          ACE_CDR::UShort *num_sets,
@@ -68,7 +68,7 @@ ACE_Codeset_Registry::registry_to_locale(ACE_CDR::ULong codeset_id,
 // tell if two codesets are compatible. This wraps the
 //rpc_cs_char_set_compat_check function.
 ACE_INLINE
-ACE_CDR::Boolean
+int
 ACE_Codeset_Registry::is_compatible (ACE_CDR::ULong codeset_id,
                                      ACE_CDR::ULong other)
 {
