@@ -1,24 +1,21 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    IFR_Service_Utils_T.h
-//
-// = DESCRIPTION
-//      Template methods useful to IFR Service .
-//
-// = AUTHORS
-//    Jeff Parsons <j.parsons@vanderbiltl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    IFR_Service_Utils_T.h
+ *
+ *  $Id$
+ *
+ *  Template methods useful to IFR Service.
+ *
+ *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_IFR_SERVICE_UTILS_T_H
 #define TAO_IFR_SERVICE_UTILS_T_H
+
 #include "ace/pre.h"
 
 #include "ace/Configuration.h"
@@ -105,5 +102,6 @@ public:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif /* TAO_IFR_SERVICE_UTILS_T_H */
+#include "ace/post.h"
 
+#endif /* TAO_IFR_SERVICE_UTILS_T_H */
