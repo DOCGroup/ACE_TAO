@@ -10,6 +10,8 @@ Shawn Atkins <sma1@cs.wustl.edu>
 Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
 Matt Braun <mjb2@cs.wustl.edu>
 Darrell Brunsch <brunsch@uci.edu>
+Dante J. Cannarozzi <djc2@cs.wustl.edu>
+Sharath R. Cholleti  <sharath@cs.wustl.edu>
 Chris Cleeland <cleeland@cs.wustl.edu>
 Angelo Corsaro <corsaro@cs.wustl.edu>
 Mayur Deshpande <mayur@ics.uci.edu>
@@ -20,10 +22,13 @@ Andrew G. Gilpin  <agg1@cs.wustl.edu>
 Aniruddha Gokhale <gokhale@cs.wustl.edu>
 Priyanka Gontla <pgontla@ece.uci.edu>
 Pradeep Gore <pradeep@cs.wustl.edu>
+Matthew P. Hampton <mph2@cs.wustl.edu>
 Shawn Hannan <hannan@cs.wustl.edu>
 Tim Harrison <harrison@cs.wustl.edu>
 John Heitmann <jwh1@cs.wustl.edu>
+Joe Hoffert  <joeh@tango.cs.wustl.edu>
 James Hu <jxh@cs.wustl.edu>
+Frank A. Hunleth <fhunleth@cs.wustl.edu>
 Prashant Jain <pjain@cs.wustl.edu>
 Vishal Kachroo <vishal@cs.wustl.edu>
 Michael Kircher <Michael.Kircher@mchp.siemens.de>
@@ -262,7 +267,6 @@ Shankar Krishnamoorthy <kshankar@lucent.com>
 Reza Roodsari <reza@sprynet.com>
 Jim Crossley <jim@lads.com>
 Johannes Gutleber <Johannes.Gutleber@cern.ch>
-Marina Spivak <marina@cs.wustl.edu>
 Yigong Liu <ygl@emailbox.lucent.com>
 Erik Urdang <erik@bhi.com>
 Mike Schweiger <mikes@bmo.com>
@@ -589,7 +593,6 @@ Eric Eide <eeide@cs.utah.edu>
 Don Busch <busch_d@ociweb.com>
 Thomas Lockhart <Thomas.G.Lockhart@jpl.nasa.gov>
 David Hauck <davidh@netacquire.com>
-Joe Hoffert  <joeh@tango.cs.wustl.edu>
 Keith Rohrer <KRohrer@hnv.com>
 Tim Rose <trose@bridgewatersys.com>
 Sam Rhine <rmsolution20@earchlink.net>
@@ -1108,7 +1111,6 @@ Kent Stewart <kbstew99@hotmail.com>
 Alexander Kogan <jk@kogan.nnov.ru>
 Michael Lindner <mikel@att.net>
 Arnaud Compan <compan@ipanematech.com>
-Frank A. Hunleth <fhunleth@cs.wustl.edu>
 Michael Searles <msearles@base16.com>
 Bogdan Jeram <bjeram@eso.org>
 Sebastian Schubert <sschuber@et.htwk-leipzig.de>
@@ -1121,7 +1123,6 @@ Joe Guan <jguan@mistwireless.com>
 Attilio Dona <dona@sodalia.it>
 McGanahan Skjellifetti <cmeier@concentus-tech.com>
 Matthias Wittig <m.wittig@com-on.de>
-Sharath R. Cholleti  <sharath@cs.wustl.edu>
 David Allen <dallen@storm.com>
 Edwin McKay <mckayea@betalasermike.com>
 Scott Bolin <scott.bolin@pgs.com>
@@ -1142,7 +1143,6 @@ Richard Eperjesi <reperjesi@yahoo.com>
 Ben Strong <bstrong@bluelark.com>
 David Karr <dkarr@bbn.com>
 Sathish Tiptur <Sathish.Tiptur@geind.ge.com>
-Frank Hunleth <fhunleth@cs.wustl.edu>
 Lu Yunhai <luyunhai@huawei.com>
 Christian Ewald <christian.ewald@zuehlke.com>
 Samuel Qi Luo <Samuel.QiLuo@ericsson.com.au>
@@ -1485,8 +1485,6 @@ Allan S Iverson <allaniverson@sprynet.com>
 Jeffrey Shaffer <jeffs@integ.com>
 Oleg Burlachenko <ua_fireball@yahoo.com>
 Jian Chen <jchen@huawei.com>
-Matthew P. Hampton <mph2@cs.wustl.edu>
-Dante J. Cannarozzi <djc2@cs.wustl.edu>
 Jeff Paciga <jmpaciga@uwaterloo.ca>
 Laurent Sabourin <lsabourin@interstarinc.com>
 

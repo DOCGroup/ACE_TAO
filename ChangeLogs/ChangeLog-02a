@@ -1,3 +1,10 @@
+Wed Mar 20 09:51:47 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Acceptor.cpp (handle_input): Updated the comments to point out that
+	  svc_handler->close() is called in accept_svc_handler() and
+ 	  activate_svc_handler() if a failure occurs.  Thanks to Rainer
+ 	  Lucas <rainer.lucas@fun.de> for motivating this.
+
 Wed Mar 20 06:44:02 2002  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
 
 	* ace/Service_Manager.cpp (handle_input): Fixed a bug that prevents
