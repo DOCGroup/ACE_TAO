@@ -1,3 +1,8 @@
+Wed Oct  6 06:40:23 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tests/AMI/ami_test_i.cpp: Fixed the way we throw the 
+	  exception in method  foo ().
+
 Tue Oct  5 18:41:23 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* examples/Simple/bank/README: Updated the explanation of options
