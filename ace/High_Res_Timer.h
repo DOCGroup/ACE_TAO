@@ -134,7 +134,7 @@ public:
   void stop_incr (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
   // Stop incremental timing.
 
-  void elapsed_time_incr (ACE_Time_Value &tv);
+  void elapsed_time_incr (ACE_Time_Value &tv) const;
   // Set <tv> to the number of microseconds elapsed between all
   // calls to start_incr and stop_incr.
 
