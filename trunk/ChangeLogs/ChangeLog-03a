@@ -1,3 +1,10 @@
+Tue Feb 26 22:54:50 2002 UTC  Don Hinton <dhinton@ieee.org>
+	
+	* ace/Synch.i (ACE_Noop_Token::queueing_strategy):
+
+	  Removed ACE_UNUSED_ARG and commented out the parameter 
+	  instead.  Thanks to Ossama and Craig for pointing this out.
+
 Tue Feb 26 16:17:45 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.h (ACE_Thread_Manager): Fixed a typo in
@@ -61,7 +68,7 @@ Mon Feb 25 18:51:37 2002 Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/Token_Strategy_Test.cpp:
           Fixed small compile error that appeared with the BCB compiler
 
-Mon Feb 25 17:17:37 2002 UTC Don Hinton <dhinton@ieee/org>
+Mon Feb 25 17:17:37 2002 UTC Don Hinton <dhinton@ieee.org>
 
 	* ace/Select_Reactor.h:
 	* ace/Select_Reactor_Base.h:

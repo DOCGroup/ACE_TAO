@@ -823,9 +823,8 @@ ACE_Noop_Token::queueing_strategy (void)
 }
 
 ACE_INLINE void
-ACE_Noop_Token::queueing_strategy (int queueing_strategy)
+ACE_Noop_Token::queueing_strategy (int /* queueing_strategy */)
 {
-  ACE_UNUSED_ARG(queueing_strategy);
 }
 
 ACE_INLINE int
