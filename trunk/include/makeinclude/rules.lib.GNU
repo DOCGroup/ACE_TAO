@@ -1,9 +1,9 @@
 #----------------------------------------------------------------------------
-#	$Id$
+#       $Id$
 #
-#	Build libraries (i.e., contain no binary executables)
-#	GNU version
-#	Requires GNU make
+#       Build libraries (i.e., contain no binary executables)
+#       GNU version
+#       Requires GNU make
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
@@ -42,13 +42,14 @@ endif
 # $(DEFS:%=$(INSINC)/%) \
 
 ifdef shared_libs_only
-  INSTALL = $(VSHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT)$(ACE_LDSO_Version_Number))
+  INSTALL += \
+    $(VSHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT)$(ACE_LDSO_Version_Number))
 else
 ifdef static_libs_only
-  INSTALL = $(VLIB:%.a=$(INSLIB)/%.a)
+  INSTALL += $(VLIB:%.a=$(INSLIB)/%.a)
 else
-  INSTALL = $(VLIB:%.a=$(INSLIB)/%.a) \
-	    $(VSHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT)$(ACE_LDSO_Version_Number))
+  INSTALL += $(VLIB:%.a=$(INSLIB)/%.a) \
+    $(VSHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT)$(ACE_LDSO_Version_Number))
 endif # static_libs_only
 endif # shared_libs_only
 
@@ -73,7 +74,7 @@ endif
 #	$(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)*.o
 
 # Uncomment the remaining lines if you want to build both *.a and *.so libraries...
-VLIB	= $(LIB:%.a=%$(VAR).a)
+VLIB    = $(LIB:%.a=%$(VAR).a)
 
 $(VLIB): $(VLOBJS)
 ifdef PRELIB
