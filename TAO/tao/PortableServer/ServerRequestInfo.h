@@ -93,7 +93,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the result of the current request.  If there is no return
-  /// value then an Any with tk_void TypeCode is returned.  This is
+  /// value then an Any with tk_void TypeCode is returned.  This
   /// method is not valid for oneway operations.
   virtual CORBA::Any * result (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
