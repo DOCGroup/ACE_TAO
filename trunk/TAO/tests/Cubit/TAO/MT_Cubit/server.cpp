@@ -141,7 +141,7 @@ Cubit_Task::create_servants ()
 
       CORBA::Object_ptr obj = 0;
 
-      if (oa_ptr_->find (obj_key, obj) == -1)
+      if (this->oa_ptr_->find (obj_key, obj) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to locate object with key '%s', %p\n",
                            key),
