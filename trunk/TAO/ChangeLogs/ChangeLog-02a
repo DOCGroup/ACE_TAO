@@ -1,3 +1,42 @@
+Thu Nov 18 12:31:37 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Connection_Descriptor_Interface.h:
+	* tao/Connection_Descriptor_Interface.cpp:
+	* tao/Connection_Descriptor_Interface.inl:
+	* tao/Base_Connection_Property.h:
+	* tao/Base_Connection_Property.cpp: Added a abstract base class to
+	  the  class TAO_Base_Connection_Property. The abstract base class
+	  would have the endpoint information and provide 3 pure virtual
+	  methods that need to implemented. The reason for the change is
+	  to make the property classes to be extensible, so that we
+	  could lookup connections based on properties in addition to
+	  endpoint information. With the existing setup, if the Connection
+	  Cache had different types connections ie. connections with
+	  endpoint information and connections with QoS properties (got by
+	  deriving from the TAO_Base_Connection_Property), there is a
+	  possibility that the Hash Map could return the base class in
+	  place of the most derived class. This is a very subtle
+	  problem. The above restructuring will help to avoid this subtle
+	  problem. Thanks to Marina for pointing out this problem.
+
+	* tao/Connection_Cache_Manager.h:
+	* tao/Connection_Cache_Manager.cpp:
+	* tao/Connection_Cache_Manager.inl:
+	* tao/Cache_Entries.h:
+	* tao/Cache_Entries.inl:
+	* tao/Cache_Entries.cpp: Made changes to accomodate the above
+	  change. Further, == operator in TAO_Cache_ExtId would call the
+	  is_equivalent () method.
+
+	* tao/IIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connect.cpp:
+	* tao/Strategies/UIOP_Connector.cpp: Added the header file
+	  Base_Conection_Property.h
+
+	* tao/TAO.dsp
+	* tao/TAO_Static.dsp: Added the new file
+
 Sat Nov 18 10:40:32 2000  Ossama Othman  <ossama@uci.edu>
 
 	* docs/releasenotes/index.html:
@@ -6,99 +45,99 @@ Sat Nov 18 10:40:32 2000  Ossama Othman  <ossama@uci.edu>
 
 Sat Nov 18 09:41:28 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* docs/tutorials/Quoter/Simple/Client/index.html: 
-	* docs/tutorials/Quoter/Naming_Service/index.html: 
-	* docs/releasenotes/orbcore.html: 
-	* docs/releasenotes/index.html: 
-	* docs/Options.html: 
+	* docs/tutorials/Quoter/Simple/Client/index.html:
+	* docs/tutorials/Quoter/Naming_Service/index.html:
+	* docs/releasenotes/orbcore.html:
+	* docs/releasenotes/index.html:
+	* docs/Options.html:
 	  Updated to replace iioploc with corbaloc and related
 	  information.
-		
-	* tao/ORB_Core.h : 
-	* tao/ORB_Core.cpp: 
+
+	* tao/ORB_Core.h :
+	* tao/ORB_Core.cpp:
 	  Added a new function set_resource_factory which is called by the
-	  advanced_resource.cpp to set TAO_ORB_Core::resource_factory_name_ 
+	  advanced_resource.cpp to set TAO_ORB_Core::resource_factory_name_
 	  to Advanced_Resource_Factory which is 'Resource_Factory' by default.
-	
-	* tao/Strategies/advanced_resource.cpp : 
-	* tao/Strategies/advanced_resource.h : 
+
+	* tao/Strategies/advanced_resource.cpp :
+	* tao/Strategies/advanced_resource.h :
 	  Added a new class whose constructor calls
 	  TAO_ORB_Core::set_resource_factory passing it the value of the new
 	  advanced resource_factory. This change automates the loading of
 	  the default or advanced resource factory bu simply linking the
 	  TAO_Strategies library and including the header file
 	  'tao/Strategies/advanced_resource.h' in the application.
-	  
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf: 
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile: 
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile: 
 
-	* performance-tests/Latency/server.cpp: 
-	* performance-tests/Latency/client.cpp: 
-	* performance-tests/Latency/client-st-muxed.conf: 
-	* performance-tests/Latency/client-st-exclusive.conf: 
-	* performance-tests/Latency/client-mt-exclusive.conf: 
-	* performance-tests/Latency/st_client.conf: 
-	* performance-tests/Latency/st_server.conf: 
-	* performance-tests/Latency/Makefile: 
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile:
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf: 
-	* performance-tests/Cubit/TAO/IDL_Cubit/client.cpp : 
-	* performance-tests/Cubit/TAO/IDL_Cubit/server.cpp : 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile : 
-	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf : 
+	* performance-tests/Latency/server.cpp:
+	* performance-tests/Latency/client.cpp:
+	* performance-tests/Latency/client-st-muxed.conf:
+	* performance-tests/Latency/client-st-exclusive.conf:
+	* performance-tests/Latency/client-mt-exclusive.conf:
+	* performance-tests/Latency/st_client.conf:
+	* performance-tests/Latency/st_server.conf:
+	* performance-tests/Latency/Makefile:
 
-	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf: 
-	* performance-tests/Cubit/TAO/DII_Cubit/Makefile : 
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf:
+	* performance-tests/Cubit/TAO/IDL_Cubit/client.cpp :
+	* performance-tests/Cubit/TAO/IDL_Cubit/server.cpp :
+	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile :
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf :
 
-	* tests/Param_Test/Makefile: 
+	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
+	* performance-tests/Cubit/TAO/DII_Cubit/Makefile :
 
-	* tests/NestedUpcall/Simple/svc.conf: 
-	* tests/NestedUpcall/Simple/Makefile: 
-	* tests/NestedUpcall/MT_Client_Test/client.conf: 
+	* tests/Param_Test/Makefile:
 
-	* tests/Leader_Followers/Makefile : 
-	* tests/Leader_Followers/client.cpp : 
-	* tests/Leader_Followers/server.cpp : 
+	* tests/NestedUpcall/Simple/svc.conf:
+	* tests/NestedUpcall/Simple/Makefile:
+	* tests/NestedUpcall/MT_Client_Test/client.conf:
 
-	* tests/Endpoint_Per_Priority/server.cpp: 
-	* tests/Endpoint_Per_Priority/client.cpp: 
-	* tests/Endpoint_Per_Priority/Makefile : 
+	* tests/Leader_Followers/Makefile :
+	* tests/Leader_Followers/client.cpp :
+	* tests/Leader_Followers/server.cpp :
 
-	* tests/Leader_Followers/single_threaded_event_loop.conf: 
+	* tests/Endpoint_Per_Priority/server.cpp:
+	* tests/Endpoint_Per_Priority/client.cpp:
+	* tests/Endpoint_Per_Priority/Makefile :
 
-	* tests/RTCORBA/Server_Protocol/svc.conf: 
-	* tests/RTCORBA/Server_Protocol/server_uiop.conf: 
-	* tests/RTCORBA/Server_Protocol/server_shmiop.conf: 
-	* tests/RTCORBA/Server_Protocol/server_reverse_nt.conf: 
-	* tests/RTCORBA/Server_Protocol/server_reverse.conf: 
-	* tests/RTCORBA/Server_Protocol/server_nt.conf: 
-	* tests/RTCORBA/Server_Protocol/server_iiop.conf: 
-	* tests/RTCORBA/Server_Protocol/server.conf: 
-	* tests/RTCORBA/Server_Protocol/client_svc.conf: 
-	* tests/RTCORBA/Server_Protocol/client_nt.conf: 
-	* tests/RTCORBA/Server_Protocol/client.cpp: 
-	* tests/RTCORBA/Server_Protocol/server.cpp: 
-	* tests/RTCORBA/Server_Protocol/Makefile: 
+	* tests/Leader_Followers/single_threaded_event_loop.conf:
 
-	* tests/RTCORBA/Server_Declared/server.conf: 
-	* tests/RTCORBA/Server_Declared/client.cpp: 
-	* tests/RTCORBA/Server_Declared/server.cpp: 
-	* tests/RTCORBA/Server_Declared/Makefile: 
+	* tests/RTCORBA/Server_Protocol/svc.conf:
+	* tests/RTCORBA/Server_Protocol/server_uiop.conf:
+	* tests/RTCORBA/Server_Protocol/server_shmiop.conf:
+	* tests/RTCORBA/Server_Protocol/server_reverse_nt.conf:
+	* tests/RTCORBA/Server_Protocol/server_reverse.conf:
+	* tests/RTCORBA/Server_Protocol/server_nt.conf:
+	* tests/RTCORBA/Server_Protocol/server_iiop.conf:
+	* tests/RTCORBA/Server_Protocol/server.conf:
+	* tests/RTCORBA/Server_Protocol/client_svc.conf:
+	* tests/RTCORBA/Server_Protocol/client_nt.conf:
+	* tests/RTCORBA/Server_Protocol/client.cpp:
+	* tests/RTCORBA/Server_Protocol/server.cpp:
+	* tests/RTCORBA/Server_Protocol/Makefile:
 
-	* tests/RTCORBA/Client_Propagated/svc.conf: 
-	* tests/RTCORBA/Client_Propagated/client.cpp: 
-	* tests/RTCORBA/Client_Propagated/server.cpp: 
-	* tests/RTCORBA/Client_Propagated/Makefile: 
+	* tests/RTCORBA/Server_Declared/server.conf:
+	* tests/RTCORBA/Server_Declared/client.cpp:
+	* tests/RTCORBA/Server_Declared/server.cpp:
+	* tests/RTCORBA/Server_Declared/Makefile:
 
-	* tests/RTCORBA/Client_Protocol/svc_unix.conf: 
-	* tests/RTCORBA/Client_Protocol/svc_nt.conf: 
-	* tests/RTCORBA/Client_Protocol/svc.conf: 
-	* tests/RTCORBA/Client_Protocol/svc_win32.conf: 
-	* tests/RTCORBA/Client_Protocol/client.conf: 
-	* tests/RTCORBA/Client_Protocol/client.cpp: 
-	* tests/RTCORBA/Client_Protocol/server.cpp: 
-	* tests/RTCORBA/Client_Protocol/Makefile: 
+	* tests/RTCORBA/Client_Propagated/svc.conf:
+	* tests/RTCORBA/Client_Propagated/client.cpp:
+	* tests/RTCORBA/Client_Propagated/server.cpp:
+	* tests/RTCORBA/Client_Propagated/Makefile:
+
+	* tests/RTCORBA/Client_Protocol/svc_unix.conf:
+	* tests/RTCORBA/Client_Protocol/svc_nt.conf:
+	* tests/RTCORBA/Client_Protocol/svc.conf:
+	* tests/RTCORBA/Client_Protocol/svc_win32.conf:
+	* tests/RTCORBA/Client_Protocol/client.conf:
+	* tests/RTCORBA/Client_Protocol/client.cpp:
+	* tests/RTCORBA/Client_Protocol/server.cpp:
+	* tests/RTCORBA/Client_Protocol/Makefile:
 
 	  Updated the Makefiles to link TAO_Strategies, include
 	  'tao/Strategies/advanced_resource.h' in client and server
