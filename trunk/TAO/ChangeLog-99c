@@ -1,3 +1,12 @@
+Mon Jan 11 22:56:26 1999  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * tao_idl/include/utl_scope.h:
+        * tao_idl/utl_scope.cpp:
+          Added a patch sent in by Hamish Friedlander. This patch
+          modified his previous patch (which enabled re-opening of
+          modules) to further enable scoped lookups on these
+          re-opened modules.
+
 Mon Jan 11 21:20:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/GIOP.cpp (send_request): Fixed typos.
