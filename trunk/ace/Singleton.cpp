@@ -26,17 +26,17 @@ ACE_Singleton<TYPE, LOCK>::dump (void)
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 }
 
-template <class TYPE, class LOCK> TYPE *&
+template <class TYPE, class LOCK> ACE_Singleton<TYPE, LOCK> *&
 ACE_Singleton<TYPE, LOCK>::instance_i (void)
 {
 #if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   // Pointer to the Singleton instance.  This works around a bug with
   // G++...
-  static TYPE *instance_ = 0;
+  static ACE_Singleton<TYPE, LOCK> *singleton_ = 0;
 
-  return instance_;
+  return singleton_;
 #else
-  return ACE_Singleton<TYPE, LOCK>::instance_;
+  return ACE_Singleton<TYPE, LOCK>::singleton_;
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 }
 
@@ -54,25 +54,12 @@ ACE_Singleton<TYPE, LOCK>::singleton_lock_i (void)
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 }
 
-#if defined (ACE_HAS_SIG_C_FUNC)
-extern "C" void
-ACE_Singleton_cleanup (void *object, void *)
-{
-  ACE_TRACE ("ACE_Singleton_cleanup");
-
-  // This won't call the object's destructor, but it will deallocate
-  // its storage.  That's better than nothing.
-  // (This function is only used if ACE_HAS_SIG_C_FUNC, e.g., on MVS.)
-  delete object;
-}
-#endif /* ACE_HAS_SIG_C_FUNC */
-
 template <class TYPE, class LOCK> TYPE *
 ACE_Singleton<TYPE, LOCK>::instance (void)
 {
   ACE_TRACE ("ACE_Singleton<TYPE, LOCK>::instance");
 
-  TYPE *&singleton = ACE_Singleton<TYPE, LOCK>::instance_i ();
+  ACE_Singleton<TYPE, LOCK> *&singleton = ACE_Singleton<TYPE, LOCK>::instance_i ();
 
   // Perform the Double-Check pattern...
   if (singleton == 0)
@@ -81,18 +68,14 @@ ACE_Singleton<TYPE, LOCK>::instance (void)
 
       if (singleton == 0)
         {
-	  ACE_NEW_RETURN (singleton, TYPE, 0);
+	  ACE_NEW_RETURN (singleton, (ACE_Singleton<TYPE, LOCK>), 0);
 
           // Register for destruction with ACE_Object_Manager.
-#if defined (ACE_HAS_SIG_C_FUNC)
-          ACE_Object_Manager::at_exit (singleton, ACE_Singleton_cleanup, 0);
-#else
-          ACE_Object_Manager::at_exit (singleton, cleanup, 0);
-#endif /* ACE_HAS_SIG_C_FUNC */
+          ACE_Object_Manager::at_exit (singleton);
         }
     }
 
-  return singleton;
+  return singleton->instance_;
 }
 
 template <class TYPE, class LOCK> TYPE *
@@ -102,25 +85,29 @@ ACE_Singleton<TYPE, LOCK>::instance (TYPE *new_instance)
 
   ACE_GUARD_RETURN (LOCK, ace_mon, (ACE_Singleton<TYPE, LOCK>::singleton_lock_i ()), 0);
 
-  TYPE *&singleton = ACE_Singleton<TYPE, LOCK>::instance_i ();
-  TYPE *old_instance = singleton;
-  singleton = new_instance;
+  ACE_Singleton<TYPE, LOCK> *&singleton = ACE_Singleton<TYPE, LOCK>::instance_i ();
+  TYPE *old_instance = singleton->instance_;
+  singleton->instance_ = new_instance;
 
   return old_instance;
 }
 
 template <class TYPE, class LOCK> void
-ACE_Singleton<TYPE, LOCK>::cleanup (void *object, void *)
+ACE_Singleton<TYPE, LOCK>::cleanup (void *)
 {
-  ACE_TRACE ("ACE_Singleton::cleanup");
+  if (this->instance_ != 0)
+    {
+      delete this->instance_;
+      this->instance_ = 0;
 
-  delete (TYPE *) object;
+      delete this;
+    }
 }
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
 // Pointer to the Singleton instance.
-template <class TYPE, class LOCK> TYPE *
-ACE_Singleton<TYPE, LOCK>::instance_ = 0;
+template <class TYPE, class LOCK> ACE_Singleton<TYPE, LOCK> *
+ACE_Singleton<TYPE, LOCK>::singleton_ = 0;
 
 // Lock the creation of the singleton.  
 template <class TYPE, class LOCK> LOCK
@@ -133,7 +120,7 @@ ACE_TSS_Singleton<TYPE, LOCK>::dump (void)
   ACE_TRACE ("ACE_TSS_Singleton<TYPE, LOCK>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  ACE_DEBUG ((LM_DEBUG, "instance_ = %x", instance_));
+  ACE_DEBUG ((LM_DEBUG, "instance_ = %x", singleton_->instance_));
   ace_singleton_lock_.dump();                                                  
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
@@ -147,81 +134,69 @@ ACE_TSS_Singleton<TYPE, LOCK>::instance (void)
 #if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   // Pointer to the Singleton instance.  This works around a bug with
   // G++...
-  static ACE_TSS<TYPE> *instance_ = 0;
+  static ACE_TSS_Singleton<TYPE, LOCK> *singleton_ = 0;
 
   // Lock the creation of the singleton.  This works around a
   // "feature" of G++... ;-)
   static LOCK ace_singleton_lock_;
 
   // Perform the Double-Check pattern...                                        
-  if (instance_ == 0)
+  if (singleton_ == 0)
     {
       ACE_GUARD_RETURN (LOCK, ace_mon, ace_singleton_lock_, 0);
 
-      if (instance_ == 0)
+      if (singleton_ == 0)
 	{
-          ACE_NEW_RETURN (instance_, ACE_TSS<TYPE>, 0);
+          ACE_NEW_RETURN (singleton_, (ACE_TSS_Singleton<TYPE, LOCK>), 0);
 
 #if 0  /* ACE_Object_Manager::at_thread_exit () is not implemented yet. */
           // Register for destruction with ACE_Object_Manager.
-#if defined (ACE_HAS_SIG_C_FUNC)
-          ACE_Object_Manager::at_thread_exit (instance_,
-                                              ACE_Singleton_cleanup,
-                                              0);
-#else
-          ACE_Object_Manager::at_thread_exit (instance_, cleanup, 0);
-#endif /* ACE_HAS_SIG_C_FUNC */
+          ACE_Object_Manager::at_thread_exit (instance_);
 #endif /* 0 */
 	}
     }
 
-  return ACE_TSS_GET (instance_, TYPE);
 #else
 
   // Perform the Double-Check pattern...
-  if (ACE_TSS_Singleton<TYPE, LOCK>::instance_ == 0)
+  if (singleton_ == 0)
     {
       ACE_GUARD_RETURN (LOCK, ace_mon, (ACE_TSS_Singleton<TYPE, LOCK>::ace_singleton_lock_), 0);
 
-      if (ACE_TSS_Singleton<TYPE, LOCK>::instance_ == 0)
+      if (singleton_ == 0)
 	{
-          // "instance_" is not fully qualified in the following
-          // statement to avoid confusion with commas in macros.
-          // It is: ACE_TSS_Singleton<TYPE, LOCK>::instance_
-          //   if ( ACE_TSS_Singleton < TYPE == 0 ) { ( * ( ___errno ( ) ) ) =
-
-          ACE_NEW_RETURN (instance_, ACE_TSS<TYPE>, 0);
+          ACE_NEW_RETURN (singleton_, (ACE_TSS_Singleton<TYPE, LOCK>), 0);
 
 #if 0  /* ACE_Object_Manager::at_thread_exit () is not implemented yet. */
           // Register for destruction with ACE_Object_Manager.
-#if defined (ACE_HAS_SIG_C_FUNC)
-          ACE_Object_Manager::at_thread_exit (instance_,
-                                              ACE_Singleton_cleanup,
-                                              0);
-#else
-          ACE_Object_Manager::at_thread_exit (instance_, cleanup, 0);
-#endif /* ACE_HAS_SIG_C_FUNC */
+          ACE_Object_Manager::at_thread_exit (instance_);
 #endif /* 0 */
 	}
     }
 
-  return ACE_TSS_GET ((ACE_TSS_Singleton<TYPE, LOCK>::instance_), TYPE);
-
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+
+  return ACE_TSS_GET (singleton_->instance_, TYPE);
 }
 
 template <class TYPE, class LOCK> void
-ACE_TSS_Singleton<TYPE, LOCK>::cleanup (void *object, void *)
+ACE_TSS_Singleton<TYPE, LOCK>::cleanup (void *)
 {
   ACE_TRACE ("ACE_TSS_Singleton::cleanup");
 
-  delete (TYPE *) object;
+  if (this->instance_ != 0)
+    {
+      delete this->instance_;
+      this->instance_ = 0;
+
+      delete this;
+    }
 }
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
 // Pointer to the Singleton instance.
-template <class TYPE, class LOCK> ACE_TSS<TYPE> *
-ACE_TSS_Singleton<TYPE, LOCK>::instance_ = 0;
+template <class TYPE, class LOCK> ACE_TSS_Singleton <TYPE, LOCK> *
+ACE_TSS_Singleton<TYPE, LOCK>::singleton_ = 0;
 
 // Lock the creation of the singleton.
 template <class TYPE, class LOCK> LOCK

@@ -22,7 +22,7 @@
 #include "ace/Synch.h"
 
 template <class TYPE, class LOCK>
-class ACE_Singleton
+class ACE_Singleton : public ACE_Cleanup
   // = TITLE
   //     A Singleton Adapter.
   //   
@@ -37,22 +37,28 @@ public:
   static TYPE *instance (TYPE*);
   // Set the Singleton instance.
 
-  static void cleanup (void *object, void *);
-  // Cleanup method, used by ACE_Object_Manager to destroy the singleton.
+  virtual void cleanup (void *param = 0);
+  // Cleanup method, used by ace_cleanup_destroyer to destroy the singleton.
 
   static void dump (void);
   // Dump the state of the object.
 
 protected:
+  ACE_Singleton (void) : instance_ (new TYPE) {}
+  // Default constructor.
+
+  TYPE *instance_;
+  // Contained instance pointer.
+
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  static TYPE *instance_;
-  // Pointer to the Singleton instance.
+  static ACE_Singleton<TYPE, LOCK> *singleton_;
+  // Pointer to the Singleton (ACE_Cleanup) instance.
 
   static LOCK ace_singleton_lock_;
   // Lock the creation of the singleton.  
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
-  static TYPE *&instance_i (void);
+  static ACE_Singleton<TYPE, LOCK> *&instance_i (void);
   // Get pointer to the Singleton instance
 
   static LOCK &singleton_lock_i (void);
@@ -60,7 +66,7 @@ protected:
 };
 
 template <class TYPE, class LOCK>
-class ACE_TSS_Singleton
+class ACE_TSS_Singleton : public ACE_Cleanup
   // = TITLE
   //     A Thread Specific Storage Singleton Adapter.
   //   
@@ -72,16 +78,22 @@ public:
   static TYPE *instance (void);
   // Global access point to the Singleton.
 
-  static void cleanup (void *object, void *);
-  // Cleanup method, used by ACE_Object_Manager to destroy the singleton.
+  virtual void cleanup (void *param = 0);
+  // Cleanup method, used by ace_cleanup_destroyer to destroy the singleton.
 
   static void dump (void);
   // Dump the state of the object.
 
 protected:
+  ACE_TSS_Singleton (void) : instance_ (new ACE_TSS<TYPE>) {}
+  // Default constructor.
+
+  ACE_TSS<TYPE> *instance_;
+  // Contained instance pointer.
+
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  static ACE_TSS<TYPE> *instance_;
-  // Pointer to the Singleton instance.
+  static ACE_TSS_Singleton<TYPE, LOCK> *singleton_;
+  // Pointer to the Singleton (ACE_Cleanup) instance.
 
   static LOCK ace_singleton_lock_;
   // Lock the creation of the singleton.                                        

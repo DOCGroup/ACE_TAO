@@ -25,7 +25,7 @@
 class ACE_Local_Mutex;
 class ACE_Mutex_Token;
 
-class ACE_Export ACE_Token_Manager
+class ACE_Export ACE_Token_Manager : ACE_Cleanup
 // = TITLE
 //   Manages all tokens in a process space.
 //
@@ -44,14 +44,11 @@ class ACE_Export ACE_Token_Manager
 {
 public:
     ACE_Token_Manager (void);
-    ~ACE_Token_Manager (void);
+    virtual ~ACE_Token_Manager (void);
 
     // Set/get a pointer to token manager singleton.
     static ACE_Token_Manager *instance (void);
     void instance (ACE_Token_Manager *);
-
-    static void cleanup (void *instance, void *);
-    // Cleanup method, used by ACE_Object_Manager to destroy the singleton.
 
     void get_token (ACE_Token_Proxy *, const char *token_name);
     // The Token manager uses ACE_Token_Proxy::token_id_ to look for
