@@ -128,11 +128,11 @@ main (int argc, char *argv[])
         root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      test_var test_object =
+      Test_var Test_object =
         servant._this (ACE_TRY_ENV);
 
       CORBA::String_var ior =
-        orb->object_to_string (test_object.in (),
+        orb->object_to_string (Test_object.in (),
                                ACE_TRY_ENV);
 
       // If the ior_output_file exists, output the ior to it
