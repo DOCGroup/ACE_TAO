@@ -577,7 +577,7 @@ public:
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_POLICYLIST_CH_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_POLICYLIST_CH_
 
-  class _TAO_Unbounded_Object_Sequence_CORBA_PolicyList : public TAO_Unbounded_Base_Sequence
+  class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Object_Sequence_CORBA_PolicyList : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
