@@ -13,7 +13,7 @@ if ($^O eq "MSWin32") {
       'TAO/tests/Param_Test , run_test.pl',
       'TAO/tests/Param_Test , run_test.pl -i dii',
       'TAO/performance-tests/Cubit/TAO/IDL_Cubit , run_test.pl',
-      'TAO/performance-tests/Cubit/TAO/MT_Cubit , run_test.pl -n 100'
+      'TAO/performance-tests/Cubit/TAO/MT_Cubit , run_test.pl -n 100',
       'TAO/performance-tests/Latency , run_test.pl',
       'TAO/performance-tests/POA/Object_Creation_And_Registration , run_test.pl',
       'TAO/performance-tests/RTCorba/Oneways/Reliable , run_test.pl',
@@ -76,7 +76,7 @@ if ($^O eq "MSWin32") {
 # NOT MINIMUM 'TAO/tests/Param_Test , run_test.pl',
 # NOT MINIMUM 'TAO/tests/Param_Test , run_test.pl -i dii',
 # NOT MINIMUM 'TAO/performance-tests/Cubit/TAO/IDL_Cubit , run_test.pl',
-      'TAO/performance-tests/Cubit/TAO/MT_Cubit , run_test.pl -n 100'
+      'TAO/performance-tests/Cubit/TAO/MT_Cubit , run_test.pl -n 100',
 # NOT MINIMUM 'TAO/performance-tests/Latency , run_test.pl',
       'TAO/performance-tests/POA/Object_Creation_And_Registration , run_test.pl',
 # NOT MINIMUM 'TAO/performance-tests/RTCorba/Oneways/Reliable , run_test.pl',

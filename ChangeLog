@@ -1,3 +1,7 @@
+Fri Jan  7 10:48:55 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/run_all_list.pm: Added missing commas.
+
 Thu Jan 06 22:26:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/OS.i (fcntl): There was a special fcntl() for Win32.
