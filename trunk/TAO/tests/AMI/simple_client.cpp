@@ -111,15 +111,15 @@ public:
           excep_holder->raise_foo (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-	  ACE_CATCH (A::DidTheRightThing, ex)
-		{
-		  ACE_DEBUG ((LM_DEBUG,
-					  "... exception received successfully\n"));
-		}
+      ACE_CATCH (A::DidTheRightThing, ex)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "... exception received successfully\n"));
+		    }
       ACE_CATCHANY
         {
-		  ACE_DEBUG ((LM_DEBUG,
-					  "... caught the wrong exception -> ERROR\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "... caught the wrong exception -> ERROR\n"));
         }
       ACE_ENDTRY;
     };
