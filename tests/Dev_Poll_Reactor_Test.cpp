@@ -39,6 +39,8 @@ ACE_RCSID (tests,
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
 
+#include "ace/OS_NS_unistd.h"
+
 
 typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> SVC_HANDLER;
 

@@ -1,3 +1,18 @@
+Wed Jul  7 21:26:00 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Dev_Poll_Reactor.h:
+	* ace/Dev_Poll_Reactor.cpp:
+
+	  Integrated updates from Jaroslaw Nozderko
+	  <jaroslaw.nozderko@polkomtel.com.pl> that replace old Linux
+	  /dev/epoll based implementation to latest sys_epoll API.
+
+	  Added missing header inclusions.
+
+	* tests/Dev_Poll_Reactor_Test.cpp:
+
+	  Added missing "ace/OS_NS_unistd.h" include.
+
 Wed Jul  7 06:31:30 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
