@@ -266,8 +266,8 @@ namespace ACE
       ACE_Message_Block *error_buffer_;
       unsigned long request_count_;
     };
-  };
-};
+  }
+}
 
 #if defined (__ACE_INLINE__)
 #include "HTBP_Channel.inl"

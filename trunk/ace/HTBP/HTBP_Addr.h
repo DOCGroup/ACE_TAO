@@ -80,8 +80,8 @@ namespace ACE
       ACE_CString htid_;
     };
 
-  };
-};
+  }
+}
 
 #include /**/ "ace/post.h"
 #endif /* ACE_HTBP_ADDR_H */

@@ -43,8 +43,8 @@ namespace ACE
     private:
       Channel *channel_;
     };
-  };
-};
+  }
+}
 
 #if defined (__ACE_INLINE__)
 #include "HTBP_Notifier.inl"

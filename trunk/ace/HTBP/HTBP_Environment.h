@@ -100,8 +100,8 @@ namespace ACE
       int own_config_;
 
     };
-  };
-};
+  }
+}
 
 #include /**/ "ace/post.h"
 #endif /* ACE_HTBP_ENVIRONMENT_H */
