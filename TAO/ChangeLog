@@ -1,3 +1,35 @@
+Sun Mar 14 10:19:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ULongSeq.pidl:
+	* tao/ULongSeqA.cpp:
+	* tao/ULongSeqC.cpp:
+	* tao/ULongSeqC.h:
+	* tao/ULongSeqC.i:
+	* tao/ULongSeqS.cpp:
+	* tao/ULongSeqS.h:
+	* tao/ULongSeqS.i:
+	* tao/UShortSeq.pidl:
+	* tao/UShortSeqA.cpp:
+	* tao/UShortSeqC.cpp:
+	* tao/UShortSeqC.h:
+	* tao/UShortSeqC.i:
+	* tao/UShortSeqS.cpp:
+	* tao/UShortSeqS.h:
+	* tao/UShortSeqS.i:
+
+	  I am not going to say what these are since these are
+	  self-explanatory. These are required for ARMS and probably in
+	  DnC spec implementation too. We should be having more of this
+	  (for other basic types) once x.4.1 goes off. Till then to
+	  satisfy the shorter term goal, checking the generated code into
+	  the repository.  
+	
+ 	* tao/Makefile.bor:
+	* tao/Makefile.tao:
+	* tao/tao.mpc:
+
+	  Added the new files for compilation
+
 Fri Mar 12 17:24:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Advanced/ch_8_and_10/Advanced_ch_8_and_10.mpc:
