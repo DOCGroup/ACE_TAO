@@ -784,10 +784,7 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
             }
         }
     }
-  // Cleanup the prefix and name
-//   delete[] prefix;
-//   delete[] name;
-  return;
+  ACE_NOTREACHED (return;)
 }
 
 int

@@ -275,7 +275,8 @@ int
 ACEXML_HttpCharStream::read (ACEXML_Char *str,
                              size_t len)
 {
-  str = ACE_const_cast (ACEXML_Char*, this->stream_->recv (len));
+  char* temp = ACE_const_cast (char*, this->stream_->recv (len));
+  str = ACE_TEXT_CHAR_TO_TCHAR (temp);
   if (str == 0)
     return -1;
   return len;
