@@ -32,7 +32,7 @@ main (int argc, char *argv[])
 				 ACE_OS::getpid ());
 
       char buf[BUFSIZ];
-      ::sprintf (buf, "message = %d\n", i + 1);
+      ACE_OS::sprintf (buf, "message = %d\n", i + 1);
       log_record.msg_data (buf);
       size_t len = log_record.length ();
       size_t encoded_len = htonl (len);
