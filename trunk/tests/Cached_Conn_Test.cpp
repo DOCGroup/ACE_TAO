@@ -320,6 +320,8 @@ static CACHED_CONNECT_STRATEGY *connect_strategy = 0;
 // more iterations to get to the handle limit.
 #if defined (ACE_WIN32)
 static int iterations = 2000;
+#elif defined (__Lynx__)
+static int iterations = 134;
 #else
 static int iterations = 200;
 #endif /* ACE_WIN32 */
