@@ -1380,6 +1380,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
                        << "\"";
 
   this->gen_standard_include (this->client_stubs_, "tao/Stub.h");
+  this->gen_standard_include (this->client_stubs_, "tao/Invocation_Base.h");
   this->gen_standard_include (this->client_stubs_, "tao/Invocation.h");
 
   // The following header must always be included.

@@ -1,3 +1,26 @@
+Wed Jul  9 11:10:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_operation/exceptlist_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/operation.h:
+        * TAO_IDL/include/ast_decl.h:
+        * tests/Bench/wire/client.dsp:
+        * tests/Bench/wire/test.idl:
+        * tests/Bench/wire/testC.cpp:
+        * tests/Bench/wire/testC.h:
+        * tests/Bench/wire/testC.i:
+        * tests/Bench/wire/testS.cpp:
+        * tests/Bench/wire/testS.h:
+
+	  Changes to generated code, and the hand-crafted
+	  example, to deal with exceptions, oneways and
+	  AMI flags in the invoke() parameter list.
+
 Tue Jul  8 22:44:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Bench/Bench.dsw:
