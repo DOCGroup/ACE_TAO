@@ -1,3 +1,11 @@
+Tue Nov 20 13:30:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Strategies.h:
+	* ace/Strategies.cpp:
+	* ace/Strategies.i: Re-added files back into the main trunk. Got
+	  accidentally removed from the main when I was doing some work on
+	  a branch.  
+
 Mon Nov 19 20:35:44 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
 
 	* ace/SOCK_Dgram_Mcast.cpp:
