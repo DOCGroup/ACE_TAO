@@ -1,0 +1,15 @@
+<?xml version = "1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE NAMESPACE SYSTEM "file:///usr/local/share/doc/kurt_filters/namespace.dtd">
+<NAMESPACE>
+  <FAMILY name="EC2_GROUP" id="11">
+    <EVENT name="ENTER_PROXY_PUSH_CONSUMER" id="0"/>
+    <EVENT name="ENTER_PROXY_PUSH_SUPPLIER" id="1"/>
+    <EVENT name="DISPATCH_THE_EVENT" id="2"/>
+    <EVENT name="DISPATCH_COMMAND_ENQUEUE_BEGIN" id="3"/>
+    <EVENT name="DISPATCH_COMMAND_ENQUEUE_END" id="4"/>
+    <EVENT name="ENTER_TIMEOUT_GENERATOR" id="5"/>
+  </FAMILY>
+  <FAMILY name="TIMEOUT" id="12">
+    <EVENT name="TIMEOUT_EVENT" id="0"/>
+  </FAMILY>
+</NAMESPACE>
