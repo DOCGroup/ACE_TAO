@@ -1,3 +1,10 @@
+Wed Dec  1 16:30:00 UTC 2004  Simon Massey  <sma@prismtech.com>
+
+        * TAO/TAO_IDL/util/utl_global.cpp
+
+          Fixed bugzilla 1995 - TAO_IDL Compiler - Memory buffer
+	                        overflow & File handle resource leak
+
 Wed Dec  1 15:30:00 UTC 2004  Simon Massey  <sma@prismtech.com>
 
         * TAO/orbsvcs/orbsvcs/IFRService/AliasDef_i.cpp
