@@ -17,6 +17,7 @@ DIRS = \
         IOR_MCast \
         LoadBalancing \
         Miop \
+        Notify \
 	Property \
         Simple_Naming \
         Time \
