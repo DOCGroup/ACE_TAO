@@ -868,8 +868,6 @@ realclean:
  $(ACE_ROOT)/ace/Array_Base.cpp \
  Cleanup_Func_Registry.inl Object_Ref_Table.h Interceptor_List.h \
  Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -1139,8 +1137,6 @@ realclean:
  $(ACE_ROOT)/ace/Array_Base.cpp \
  Cleanup_Func_Registry.inl Object_Ref_Table.h Interceptor_List.h \
  Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -1406,8 +1402,7 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -1646,8 +1641,7 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -1910,8 +1904,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -2231,8 +2223,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -2487,8 +2477,7 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -2775,8 +2764,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -3426,7 +3413,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
  ORB_Core.i \
  ORB_Table.h \
  ORB_Table.inl \
@@ -3788,7 +3774,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
  ORB_Core.i \
  ORB_Table.h \
  ORB_Table.inl \
@@ -4062,8 +4047,7 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl Protocols_Hooks.h Policy_ForwardC.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -4414,7 +4398,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
  ORB_Core.i \
  ORB_Table.h \
  ORB_Table.inl \
@@ -4824,10 +4807,11 @@ realclean:
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl Protocols_Hooks.h Policy_ForwardC.h ORB_Core.i \
- Client_Strategy_Factory.h Base_Transport_Property.h \
+ PICurrent.inl ORB_Core.i Client_Strategy_Factory.h \
+ Base_Transport_Property.h \
  Base_Transport_Property.inl \
- Transport_Cache_Manager.h Invocation.h CDR.h Synch_Reply_Dispatcher.h \
+ Protocols_Hooks.h Policy_ForwardC.h Transport_Cache_Manager.h \
+ Invocation.h CDR.h Synch_Reply_Dispatcher.h \
  Reply_Dispatcher.h \
  Reply_Dispatcher.i \
  operation_details.h Service_Context.h \
@@ -5169,7 +5153,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
  ORB_Core.i \
  ORB_Table.h \
  ORB_Table.inl \
@@ -5198,7 +5181,8 @@ realclean:
  IIOP_Endpoint.i \
  IIOP_Profile.i \
  MProfile.h \
- MProfile.i
+ MProfile.i \
+ Protocols_Hooks.h
 
 .obj/IIOP_Connection_Handler.o .obj/IIOP_Connection_Handler.so .shobj/IIOP_Connection_Handler.o .shobj/IIOP_Connection_Handler.so: IIOP_Connection_Handler.cpp \
  IIOP_Connection_Handler.h \
@@ -5529,7 +5513,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
  ORB_Core.i \
  Server_Strategy_Factory.h \
  IIOP_Endpoint.h \
@@ -6045,8 +6028,7 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -6067,7 +6049,9 @@ realclean:
  Wait_Strategy.inl \
  Wait_On_Reactor.h Wait_On_Leader_Follower.h Exclusive_TMS.h \
  Transport_Mux_Strategy.h \
- Muxed_TMS.h Blocked_Connect_Strategy.h Connect_Strategy.h \
+ Muxed_TMS.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ Blocked_Connect_Strategy.h Connect_Strategy.h \
  Reactive_Connect_Strategy.h LF_Connect_Strategy.h
 
 .obj/default_server.o .obj/default_server.so .shobj/default_server.o .shobj/default_server.so: default_server.cpp \
@@ -6308,8 +6292,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -6564,8 +6546,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -7712,8 +7692,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -7773,6 +7751,8 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
+ Managed_Types.h \
+ Managed_Types.i \
  CORBA_String.inl
 
 .obj/CurrentC.o .obj/CurrentC.so .shobj/CurrentC.o .shobj/CurrentC.so: CurrentC.cpp \
@@ -8139,8 +8119,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -8398,8 +8376,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -8676,8 +8652,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -8933,8 +8907,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -9510,8 +9482,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -9541,6 +9511,7 @@ realclean:
  LocalObject.h StringSeqC.h ORBInitInfo.inl ORBInitializer_Registry.h \
  CodecFactory_ORBInitializer.h TypeCodeFactory_Adapter.h \
  PICurrent_ORBInitializer.h PICurrent.h ValueFactory_Map.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  ValueFactory_Map.i \
  Object_KeyC.h \
  Object_KeyC.i \
@@ -9853,8 +9824,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -10135,8 +10104,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -10399,8 +10366,7 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -10875,8 +10841,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -11172,8 +11136,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -11461,8 +11423,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -12063,8 +12023,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -12521,8 +12479,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -13024,8 +12980,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -13868,8 +13822,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -14184,8 +14136,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -14494,8 +14444,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -15049,8 +14997,6 @@ realclean:
  Interceptor_List.h \
  Interceptor_List.inl \
  PICurrent.h \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -15438,8 +15384,6 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -15693,8 +15637,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -15968,8 +15910,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -16228,8 +16168,7 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ Interceptor_List.h Interceptor_List.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -16471,8 +16410,7 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ Interceptor_List.h Interceptor_List.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -16727,8 +16665,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -16989,8 +16925,7 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -17360,8 +17295,7 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -17462,7 +17396,7 @@ realclean:
  Thread_Lane_Resources.i \
  Thread_Lane_Resources_Manager.h \
  Thread_Lane_Resources_Manager.i \
- Buffering_Constraint_Policy.h \
+ Protocols_Hooks.h Buffering_Constraint_Policy.h \
  Buffering_Constraint_Policy.i \
  LF_Event_Loop_Thread_Helper.h \
  LF_Strategy.h \
@@ -17964,8 +17898,6 @@ realclean:
  $(ACE_ROOT)/ace/Array_Base.cpp \
  Cleanup_Func_Registry.inl Object_Ref_Table.h Interceptor_List.h \
  Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -18224,8 +18156,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -18490,8 +18420,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -18757,8 +18685,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -19023,8 +18949,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -19316,8 +19240,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -19604,8 +19526,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -19908,8 +19828,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -19976,6 +19894,8 @@ realclean:
  corbafwd.i \
  objectid.h \
  CORBA_String.h \
+ Managed_Types.h \
+ Managed_Types.i \
  CORBA_String.inl \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -20286,8 +20206,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -20623,8 +20541,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -20891,8 +20807,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -20921,7 +20835,8 @@ realclean:
  Stub_Factory.h \
  Default_Endpoint_Selector_Factory.h \
  Endpoint_Selector_Factory.h \
- Default_Protocols_Hooks.h Protocols_Hooks.h \
+ Default_Protocols_Hooks.h Protocols_Hooks.h corbafwd.h \
+ Policy_ForwardC.h \
  Default_Protocols_Hooks.i \
  Default_Thread_Lane_Resources_Manager.h \
  Thread_Lane_Resources_Manager.h \
@@ -21168,8 +21083,7 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ Interceptor_List.h Interceptor_List.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -21988,8 +21902,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -22269,8 +22181,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -23207,8 +23117,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -23499,8 +23407,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -23756,8 +23662,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -24040,8 +23944,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -24457,8 +24359,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -24983,8 +24883,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -25868,8 +25766,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -26387,8 +26283,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -27084,8 +26978,7 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -27364,8 +27257,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -27621,8 +27512,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -28037,8 +27926,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -28488,8 +28375,6 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Interceptor_List.h Interceptor_List.inl PICurrent.h PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -29335,8 +29220,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -30654,8 +30537,6 @@ realclean:
  $(ACE_ROOT)/ace/Array_Base.cpp \
  Cleanup_Func_Registry.inl Object_Ref_Table.h Interceptor_List.h \
  Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -30950,8 +30831,6 @@ realclean:
  $(ACE_ROOT)/ace/Array_Base.cpp \
  Cleanup_Func_Registry.inl Object_Ref_Table.h Interceptor_List.h \
  Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -31207,8 +31086,6 @@ realclean:
  $(ACE_ROOT)/ace/Array_Base.cpp \
  Cleanup_Func_Registry.inl Object_Ref_Table.h Interceptor_List.h \
  Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -32262,8 +32139,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -32548,8 +32423,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -32818,8 +32691,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -33091,8 +32962,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -33336,8 +33205,7 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ Interceptor_List.h Interceptor_List.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -33590,8 +33458,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -34044,8 +33910,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -34302,8 +34166,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -34727,8 +34589,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -35142,8 +35002,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -35407,8 +35265,7 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -35714,8 +35571,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -36452,8 +36307,7 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ Interceptor_List.h Interceptor_List.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -36839,8 +36693,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -37396,8 +37248,6 @@ realclean:
  Interceptor_List.inl \
  PICurrent.h \
  PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -37691,8 +37541,7 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \

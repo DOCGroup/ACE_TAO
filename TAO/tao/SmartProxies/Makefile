@@ -50,7 +50,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 
 
 .obj/Smart_Proxies.o .obj/Smart_Proxies.so .shobj/Smart_Proxies.o .shobj/Smart_Proxies.so: Smart_Proxies.cpp Smart_Proxies.h \
- $(ACE_ROOT)/ace/pre.h smartproxies_export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ smartproxies_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -61,7 +62,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -82,6 +82,35 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -93,11 +122,11 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -112,7 +141,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Malloc_Allocator.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc_Allocator.i \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
@@ -136,33 +164,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Unbounded_Set.inl \
  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/CDR_Base.inl \
- $(ACE_ROOT)/ace/CORBA_macros.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/varbase.h \
- $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i \
- $(TAO_ROOT)/tao/Policy_ForwardC.h \
- $(TAO_ROOT)/tao/Sequence.h \
- $(TAO_ROOT)/tao/Managed_Types.h \
- $(TAO_ROOT)/tao/Managed_Types.i \
- $(TAO_ROOT)/tao/Sequence.i \
- $(TAO_ROOT)/tao/Sequence_T.h \
- $(TAO_ROOT)/tao/Sequence_T.i \
- $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
- $(TAO_ROOT)/tao/CDR.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/String_Base_Const.h \
- $(ACE_ROOT)/ace/String_Base.i \
- $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
