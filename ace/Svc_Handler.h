@@ -50,14 +50,10 @@ public:
   // = Initialization and termination methods.
   ACE_Svc_Handler (ACE_Thread_Manager *thr_mgr = 0,
                    ACE_Message_Queue<ACE_SYNCH_USE> *mq = 0,
-                   ACE_Reactor *reactor = ACE_Reactor::instance (),
-                   size_t max_buffer_size = 0,
-                   ACE_Time_Value *timeout = 0);
+                   ACE_Reactor *reactor = ACE_Reactor::instance ());
   // Constructor initializes the <thr_mgr> and <mq> by passing them
   // down to the <ACE_Task> base class.  The <reactor> is passed to
-  // the <ACE_Event_Handler>.  The <max_buffer_size> and <timeout> are
-  // used to determine at what point to flush the <mq>.  By default,
-  // there's no buffering at all.
+  // the <ACE_Event_Handler>.
 
   virtual ~ACE_Svc_Handler (void);
   // Destructor.
@@ -69,18 +65,6 @@ public:
   virtual int close (u_long flags = 0);
   // Object termination hook -- application-specific cleanup code goes
   // here.
-
-  virtual int put (ACE_Message_Block *message_block,
-                   ACE_Time_Value *timeout = 0);
-  // Insert the <ACE_Message_Block> chain rooted at <message_block>
-  // into the <ACE_Message_Queue> with the designated <timeout>.  The
-  // <flush> method will be called if this <put> causes the number of
-  // bytes to exceed the maximum buffer size or if the timeout period
-  // has elapsed.
-
-  virtual int flush (void);
-  // Flush the <ACE_Message_Queue>, which writes all the queued
-  // <ACE_Message_Block>s to the <PEER_STREAM>.
 
   virtual int idle (u_long flags = 0);
   // Call this method if you want to recycling the <Svc_Handler>
@@ -154,8 +138,9 @@ public:
 
 public:
 
-  // Note: The following methods are not suppose to be public.  But
-  // because friendship is *not* inherited in C++, these methods have
+  // = The following methods are not suppose to be public.  
+
+  // Because friendship is *not* inherited in C++, these methods have
   // to be public.
 
   // = Accessors to set/get the connection recycler.
@@ -177,7 +162,7 @@ public:
   // recycling.  Return 0 if the object is ready for recycling, -1 on
   // failures.
 
-private:
+protected:
   ACE_PEER_STREAM peer_;
   // Maintain connection with client.
 
@@ -194,13 +179,71 @@ private:
   const void *recycling_act_;
   // Asynchronous Completion Token (ACT) to be used to when talking to
   // the recycler.
+};
 
+template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
+class ACE_Buffered_Svc_Handler : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_USE>
+{
+  // = TITLE
+  //     Defines the interface for a service that exchanges data with
+  //     its connected peer and supports buffering.
+  //
+  // = DESCRIPTION
+  //      The buffering feature makes it possible to queue up
+  //      <ACE_Message_Blocks> in an <ACE_Message_Queue> until (1) the
+  //      queue is "full" or (2) a period of time elapses, at which
+  //      point the queue is "flushed" via <sendv_n> to the peer.
+public:
+  // = Initialization and termination methods.
+  ACE_Buffered_Svc_Handler (ACE_Thread_Manager *thr_mgr = 0,
+                            ACE_Message_Queue<ACE_SYNCH_USE> *mq = 0,
+                            ACE_Reactor *reactor = ACE_Reactor::instance (),
+                            size_t max_buffer_size = 0,
+                            ACE_Time_Value *relative_timeout = 0);
+  // Constructor initializes the <thr_mgr> and <mq> by passing them
+  // down to the <ACE_Task> base class.  The <reactor> is passed to
+  // the <ACE_Event_Handler>.  The <max_buffer_size> and
+  // <relative_timeout> are used to determine at what point to flush
+  // the <mq>.  By default, there's no buffering at all.  The
+  // <relative_timeout> value is interpreted to be in a unit that's
+  // relative to the current time returned by <ACE_OS::gettimeofday>.
+
+  virtual ~ACE_Buffered_Svc_Handler (void);
+  // Destructor, which calls <flush>.
+
+  virtual int put (ACE_Message_Block *message_block,
+                   ACE_Time_Value *timeout = 0);
+  // Insert the <ACE_Message_Block> chain rooted at <message_block>
+  // into the <ACE_Message_Queue> with the designated <timeout>.  The
+  // <flush> method will be called if this <put> causes the number of
+  // bytes to exceed the maximum buffer size or if the timeout period
+  // has elapsed.
+
+  virtual int flush (void);
+  // Flush the <ACE_Message_Queue>, which writes all the queued
+  // <ACE_Message_Block>s to the <PEER_STREAM>.
+
+  virtual int handle_timeout (const ACE_Time_Value &time,
+                              const void *);
+  // This method is not currently implemented -- this is where the
+  // integration with the <Reactor> would occur.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+protected:
   size_t maximum_buffer_size_;
   // Maximum size the <Message_Queue> can be before we have to flush
   // the buffer.
+
+  size_t current_buffer_size_;
+  // Current size in bytes of the <Message_Queue> contents.
   
-  ACE_Time_Value timeout_;
+  ACE_Time_Value next_timeout_;
   // Timeout value used to control when the buffer is flushed.
+
+  ACE_Time_Value interval_;
+  // Interval of the timeout.
 
   ACE_Time_Value *timeoutp_;
   // Timeout pointer.

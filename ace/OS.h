@@ -2017,19 +2017,31 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 
 #     if defined (ACE_HAS_PTHREADS_DRAFT4)
 #       if defined (PTHREAD_PROCESS_PRIVATE)
+#         if !defined (USYNC_THREAD)
 #         define USYNC_THREAD    PTHREAD_PROCESS_PRIVATE
+#         endif /* ! USYNC_THREAD */
 #       else
+#         if !defined (USYNC_THREAD)
 #         define USYNC_THREAD    MUTEX_NONRECURSIVE_NP
+#         endif /* ! USYNC_THREAD */
 #       endif /* PTHREAD_PROCESS_PRIVATE */
 
 #       if defined (PTHREAD_PROCESS_SHARED)
+#         if !defined (USYNC_PROCESS)
 #         define USYNC_PROCESS   PTHREAD_PROCESS_SHARED
+#         endif /* ! USYNC_PROCESS */
 #       else
+#         if !defined (USYNC_PROCESS)
 #         define USYNC_PROCESS   MUTEX_NONRECURSIVE_NP
+#         endif /* ! USYNC_PROCESS */
 #       endif /* PTHREAD_PROCESS_SHARED */
 #     elif !defined (ACE_HAS_STHREADS)
+#       if !defined (USYNC_THREAD)
 #       define USYNC_THREAD PTHREAD_PROCESS_PRIVATE
+#       endif /* ! USYNC_THREAD */
+#       if !defined (USYNC_PROCESS)
 #       define USYNC_PROCESS PTHREAD_PROCESS_SHARED
+#       endif /* ! USYNC_PROCESS */
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 */
 
 #     define THR_BOUND               0x00000001
@@ -2078,14 +2090,8 @@ protected:
 #       endif /* !ACE_HAS_POSIX_SEM */
 
 #       if defined (ACE_LACKS_PTHREAD_YIELD) && defined (ACE_HAS_THR_YIELD)
-#         if defined (USYNC_THREAD)
-#           undef USYNC_THREAD
-#         endif /* USYNC_THREAD */
-#         if defined (USYNC_PROCESS)
-#           undef USYNC_PROCESS
-#         endif /* USYNC_PROCESS */
-// If we are on Solaris we can just reuse the existing implementations
-// of these synchronization types.
+        // If we are on Solaris we can just reuse the existing
+        // implementations of these synchronization types.
 #         if !defined (ACE_LACKS_RWLOCK_T)
 #           include /**/ <synch.h>
 typedef rwlock_t ACE_rwlock_t;
@@ -2311,11 +2317,11 @@ public:
 #     define THR_CANCEL_ENABLE       0
 #     define THR_CANCEL_DEFERRED     0
 #     define THR_CANCEL_ASYNCHRONOUS 0
-#     define THR_DETACHED    0x02000000 /* ?? ignore in most places */
-#     define THR_BOUND       0          /* ?? ignore in most places */
-#     define THR_NEW_LWP     0          /* ?? ignore in most places */
-#     define THR_DAEMON      0          /* ?? ignore in most places */
-#     define THR_JOINABLE    0          /* ?? ignore in most places */
+#     define THR_DETACHED            0x02000000 /* ignore in most places */
+#     define THR_BOUND               0          /* ignore in most places */
+#     define THR_NEW_LWP             0          /* ignore in most places */
+#     define THR_DAEMON              0          /* ignore in most places */
+#     define THR_JOINABLE            0          /* ignore in most places */
 #     define THR_SUSPENDED   CREATE_SUSPENDED
 #     define THR_USE_AFX             0x01000000
 #     define THR_SCHED_FIFO          0
