@@ -226,3 +226,7 @@ main (int argc, char *argv[])
 
   return 0;
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
