@@ -56,8 +56,6 @@ namespace TAO
     public:
       virtual ~RequestProcessingStrategy (void);
 
-      virtual void strategy_init(TAO_POA *poa) = 0;
-
       virtual PortableServer::ServantManager_ptr get_servant_manager (
         ACE_ENV_SINGLE_ARG_DECL)
           ACE_THROW_SPEC ((CORBA::SystemException,

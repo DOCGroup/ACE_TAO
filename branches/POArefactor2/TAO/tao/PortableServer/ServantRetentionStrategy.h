@@ -48,6 +48,9 @@ namespace TAO
       virtual CORBA::ULong waiting_servant_deactivation (void) const = 0;
 
       virtual void strategy_init (
+        TAO_POA *poa) {};
+
+      virtual void strategy_init (
         TAO_POA *poa,
         RequestProcessingStrategy* request_processing_strategy
         ACE_ENV_ARG_DECL) = 0;

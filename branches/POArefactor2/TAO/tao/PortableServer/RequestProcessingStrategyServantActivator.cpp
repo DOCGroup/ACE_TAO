@@ -124,7 +124,8 @@ namespace TAO
       this->validate_servant_manager (this->servant_activator_.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      PortableServer::Servant servant = this->incarnate_servant (poa_current_impl.object_id () ACE_ENV_ARG_PARAMETER);
+      PortableServer::Servant servant =
+        this->incarnate_servant (poa_current_impl.object_id () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       int error = 0;

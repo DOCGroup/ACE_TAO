@@ -51,14 +51,12 @@ namespace TAO
 
       virtual void strategy_init(TAO_POA *poa);
 
-      PortableServer::ServantManager_ptr
-      get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)
+      PortableServer::ServantManager_ptr get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
 
-      void
-      set_servant_manager (PortableServer::ServantManager_ptr imgr
-                           ACE_ENV_ARG_DECL)
+      void set_servant_manager (PortableServer::ServantManager_ptr imgr
+                                ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
 
@@ -67,31 +65,26 @@ namespace TAO
       locate_servant (const PortableServer::ObjectId &system_id,
                       PortableServer::Servant &servant);
 
-      virtual
-      PortableServer::Servant
-      locate_servant (const char *operation,
-                        const PortableServer::ObjectId &system_id,
-                        TAO::Portable_Server::Servant_Upcall &servant_upcall,
-                        TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-                        int &wait_occurred_restart_call
-                        ACE_ENV_ARG_DECL);
+      virtual PortableServer::Servant locate_servant (
+        const char *operation,
+        const PortableServer::ObjectId &system_id,
+        TAO::Portable_Server::Servant_Upcall &servant_upcall,
+        TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
+        int &wait_occurred_restart_call
+        ACE_ENV_ARG_DECL);
 
-      virtual
-      void
-      cleanup_servant (const PortableServer::ObjectId& object_id,
-                       PortableServer::Servant servant,
-                       CORBA::Boolean cleanup_in_progress
-                       ACE_ENV_ARG_DECL);
+      virtual void cleanup_servant (
+        const PortableServer::ObjectId& object_id,
+        PortableServer::Servant servant,
+        CORBA::Boolean cleanup_in_progress
+        ACE_ENV_ARG_DECL);
 
     private:
-      PortableServer::Servant
-      incarnate_servant (
+      PortableServer::Servant incarnate_servant (
         const PortableServer::ObjectId& object_id
         ACE_ENV_ARG_DECL);
 
-      void
-      etherealize_servant (
-        const PortableServer::ObjectId& object_id,
+      void etherealize_servant (const PortableServer::ObjectId& object_id,
         PortableServer::Servant servant,
         CORBA::Boolean cleanup_in_progress
         ACE_ENV_ARG_DECL);

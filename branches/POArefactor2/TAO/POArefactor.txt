@@ -1,3 +1,18 @@
+Fri Nov 19 09:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ThreadStrategy.{h,cpp}:
+        * tao/PortableServer/Active_Policy_Strategies.cpp:
+        * tao/PortableServer/IdUniquenessStrategy.h:
+        * tao/PortableServer/LifespanStrategy.h:
+        * tao/PortableServer/Policy_Strategy.h:
+        * tao/PortableServer/RequestProcessingStrategy.h:
+        * tao/PortableServer/ServantRetentionStrategy.h:
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.{h,cpp}:
+          Added strategy_init again to the policy_strategy, the strategies are
+          getting independent of each other, making it only needed to pass the
+          POA to this method, so we can declare it again pure virtual in the
+          base.
+
 Wed Nov 17 11:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/IdAssignmentStrategySystem.cpp:

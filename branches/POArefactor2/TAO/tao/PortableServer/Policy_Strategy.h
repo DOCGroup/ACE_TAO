@@ -31,6 +31,8 @@ namespace TAO
       : public virtual ACE_Service_Object
     {
     public:
+      virtual void strategy_init(TAO_POA *poa) = 0;
+
       virtual ~Policy_Strategy (void) {};
     };
   }

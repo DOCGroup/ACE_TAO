@@ -17,7 +17,7 @@ namespace TAO
     }
 
     void
-    ThreadStrategy::strategy_init ()
+    ThreadStrategy::strategy_init (TAO_POA */*poa*/)
     {
       // Noop at this moment
     }

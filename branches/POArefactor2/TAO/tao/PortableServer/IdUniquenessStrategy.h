@@ -34,8 +34,6 @@ namespace TAO
     public:
       virtual ~IdUniquenessStrategy (void);
 
-      virtual void strategy_init (TAO_POA *poa) = 0;
-
       /*
        * Validate if the servant may be activated
        * @retval true This servant may be activated

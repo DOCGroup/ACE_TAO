@@ -40,7 +40,7 @@ namespace TAO
 
       virtual int exit () = 0;
 
-      void strategy_init ();
+      void strategy_init (TAO_POA *poa);
     };
   }
 }

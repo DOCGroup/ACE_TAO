@@ -185,7 +185,7 @@ namespace TAO
         implicit_activation_strategy_->strategy_init (poa);
 
       if (thread_strategy_ != 0)
-        thread_strategy_->strategy_init ();
+        thread_strategy_->strategy_init (poa);
 
       if (servant_retention_strategy_ != 0)
         servant_retention_strategy_->strategy_init (poa, request_processing_strategy_ ACE_ENV_ARG_PARAMETER);
