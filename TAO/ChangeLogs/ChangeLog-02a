@@ -1,3 +1,23 @@
+Sat Oct 14 00:09:48 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/Policies/Manipulation.cpp:
+
+	  Removed TAO::ClientPriorityPolicy from the test since it is
+	  disabled by default.
+
+	* tests/Endpoint_Per_Priority/client.cpp
+	* tests/Endpoint_Per_Priority/server.cpp
+	* performance-tests/RTCORBA/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp
+	* performance-tests/RTCORBA/Multiple_Endpoints/Endpoint_Per_Priority/server.cpp:
+	* tests/RTCORBA/Client_Propagated/client.cpp
+	* tests/RTCORBA/Client_Propagated/server.cpp
+	* tests/RTCORBA/Client_Protocol/client.cpp
+	* tests/RTCORBA/Client_Protocol/server.cpp
+	* tests/RTCORBA/Server_Protocol/client.cpp
+	* tests/RTCORBA/Server_Protocol/server.cpp:
+
+	  Took care of unused arguments warnings (in the second <main>).
+
 Fri Oct 13 21:35:52 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/RTCORBA/RTCORBA_tests.dsw
