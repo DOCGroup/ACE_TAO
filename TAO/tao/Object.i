@@ -18,7 +18,7 @@ CORBA_Object::Release (void)
 }
 
 ACE_INLINE TAO_HRESULT
-CORBA_Object::QueryInterface (REFIID riid,
+CORBA_Object::QueryInterface (TAO_REFIID riid,
                               void **ppv)
 {
   *ppv = 0;

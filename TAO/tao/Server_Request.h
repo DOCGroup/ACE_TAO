@@ -261,7 +261,7 @@ public:
   // = Stuff required for memory management and COM
   ULONG  AddRef (void);
   ULONG  Release (void);
-  TAO_HRESULT  QueryInterface (REFIID riid,
+  TAO_HRESULT  QueryInterface (TAO_REFIID riid,
                                void **ppv);
 
   // To handle System Exceptions at the lowest level,

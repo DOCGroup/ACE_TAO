@@ -367,9 +367,9 @@ CORBA_Object::stubobj (CORBA::Environment &env)
 // XXX this is not the GUID that Microsoft uses.  It can matter.
 
 // {77420089-F276-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_TAO_IUnknown,
+TAO_DEFINE_GUID (IID_TAO_IUnknown,
 0x77420089, 0xf276, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
 // {A201E4C2-F258-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_CORBA_Object,
+TAO_DEFINE_GUID (IID_CORBA_Object,
 0xa201e4c2, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
