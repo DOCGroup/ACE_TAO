@@ -259,7 +259,7 @@ IIOP_ServerRequest::set_result (const CORBA::Any &value,
       // @@ TODO Does this work in all the cases? Shouldn't we use
       // operator= or something similar?
       CORBA::TypeCode_var type = value.type ();
-      this->retval_->replace (type, value.value (), 1, env);
+      this->retval_->replace (type.in (), value.value (), 1, env);
     }
 }
 
