@@ -86,8 +86,9 @@ public:
                       CORBA::Object_ptr obj,
                       CosNaming::BindingType type);
   // Overwrite a binding containing <id> and <kind> (or create a new
-  // one if one doesn't exist) with the specified parameters.  Returns
-  // -1 on failure.
+  // one if one doesn't exist) with the specified parameters.  Return
+  // 0 or 1 on success.  Return -1 or -2 on failure. (-2 is returned
+  // if the new and old bindings differ in type).
 
   virtual int unbind (const char * id,
                       const char * kind);

@@ -114,20 +114,25 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
   ACE_TRY
     {
       if (persistence_location != 0)
+        //
+        // Initialize Persistent Naming Service.
+        //
         {
+          // Allocate and initialize Persistent Context Index.
           ACE_NEW_RETURN (this->context_index_,
                           TAO_Persistent_Context_Index (orb, poa),
                           -1);
 
-          if (this->context_index_->open (persistence_location) == -1)
-            ACE_DEBUG ((LM_DEBUG,
-                        "context_index->open failed"));
+          if (this->context_index_->open (persistence_location) == -1
+              || this->context_index_->init (context_size) == -1)
+            {
+              if (TAO_debug_level >0)
+                ACE_DEBUG ((LM_DEBUG,
+                            "TAO_Naming_Server: context_index initialization failed\n"));
+              return -1;
+            }
 
-          if (this->context_index_->init () == -1)
-            ACE_DEBUG ((LM_DEBUG,
-                        "context_index->init failed"));
-
-          // Set the ior and objref to the root naming context.
+          // Set the root Naming Context reference and ior.
           this->naming_service_ior_= this->context_index_->root_ior ();
 
           CORBA::Object_var obj =
@@ -142,6 +147,9 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         }
       else
         {
+          //
+          // Initialize Transient Naming Service.
+          //
           this->naming_context_ =
             TAO_Transient_Naming_Context::make_new_context (poa,
                                                             TAO_ROOT_NAMING_CONTEXT,
@@ -149,32 +157,39 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                                             ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          // Stringify the objref we'll be implementing, and print it
-          // to stdout.  Someone will take that string and give it to
-          // a client.
+          // Set the root Naming Context ior.
           this->naming_service_ior_=
             orb->object_to_string (this->naming_context_.in (),
                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
 
-      // To make NS locatable through iioploc.  Right now not
-      // checking the return value.
-      orb->_tao_add_to_IOR_table ("NameService",
-                                  this->naming_context_.in ());
-
+      // Make the Naming Service locatable through iioploc.
+      if (orb->_tao_add_to_IOR_table ("NameService",
+                                      this->naming_context_.in ())
+          == -1)
+        {
+          if (TAO_debug_level >0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "TAO_Naming_Server: cannot add to ior table.\n"));
+          return -1;
+        }
 #if defined (ACE_HAS_IP_MULTICAST)
+      //
+      // Install ior multicast handler.
+      //
       // Get reactor instance from TAO.
       ACE_Reactor *reactor =
         TAO_ORB_Core_instance ()->reactor ();
 
       // First, see if the user has given us a multicast port number
-      // for the name service on the command-line;
+      // on the command-line;
       u_short port =
         TAO_ORB_Core_instance ()->orb_params ()->name_service_port ();
 
       if (port == 0)
         {
+          // Check environment var. for multicast port.
           const char *port_number =
             ACE_OS::getenv ("NameServicePort");
 
@@ -182,10 +197,13 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
             port = ACE_OS::atoi (port_number);
         }
 
+      // Port wasn't specified on the command-line or in environment -
+      // use the default.
       if (port == 0)
         port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
 
-      // Instantiate a server which will receive requests for an ior
+      // Instantiate a handler which will handle client requests for
+      // the root Naming Context ior, received on the multicast port.
       ACE_NEW_RETURN (this->ior_multicast_,
                       TAO_IOR_Multicast (this->naming_service_ior_.in (),
                                          port,
@@ -199,20 +217,19 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "cannot register Event handler\n"));
+                        "TAO_Naming_Server: cannot register Event handler\n"));
           return -1;
         }
-      else
-        {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "The multicast server setup is done.\n"));
-        }
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Naming_Server: The multicast server setup is done.\n"));
+
 #endif /* ACE_HAS_IP_MULTICAST */
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Naming Service");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Server");
       return -1;
     }
   ACE_ENDTRY;
@@ -226,8 +243,6 @@ TAO_Naming_Server::naming_service_ior (void)
 {
   return CORBA::string_dup (this->naming_service_ior_.in ());
 }
-
-// Returns a pointer to the NamingContext.
 
 CosNaming::NamingContext_ptr
 TAO_Naming_Server::operator-> (void) const
@@ -248,15 +263,11 @@ TAO_Naming_Server::~TAO_Naming_Server (void)
   delete context_index_;
 }
 
-// Returns a pointer to the NamingContext.
-
 CosNaming::NamingContext_ptr
 TAO_Naming_Client::operator -> (void) const
 {
   return this->naming_context_.ptr ();
 }
-
-// Returns a pointer to the NamingContext.
 
 CosNaming::NamingContext_ptr
 TAO_Naming_Client::get_context (void) const
@@ -272,7 +283,8 @@ TAO_Naming_Client::init (CORBA::ORB_ptr orb,
   ACE_TRY
     {
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService", timeout);
+        orb->resolve_initial_references ("NameService", timeout, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,

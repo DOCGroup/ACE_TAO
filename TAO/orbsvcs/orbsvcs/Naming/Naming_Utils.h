@@ -48,6 +48,17 @@ class TAO_ORBSVCS_Export TAO_Naming_Server
   //    programs that want to play the role of a Naming Service
   //    server.  To simplify programs that want to play the role of
   //    Naming Service clients, use <TAO_Naming_Client>.
+  //
+  //    If a Naming Service is created locally, a TAO_IOR_Multicast
+  //    event handler is created and installed on the ORB's reactor.
+  //    This event handler allows other clients on the network to
+  //    discover and use this Naming Service.
+  //    Event handler listens on a multicast port for messages from
+  //    clients looking for a Naming Service, and sends back the ior
+  //    of the root Naming Context.  For more information on how this
+  //    bootstraping through a multicast process works, check out
+  //    orbsvcs/orbsvcs/TAO_IOR_Multicast.*, implementation of
+  //    <resolve_initial_references>, and orbsvcs/Naming/README.
 public:
   TAO_Naming_Server (void);
   // Default constructor.
@@ -123,37 +134,39 @@ protected:
 class TAO_ORBSVCS_Export TAO_Naming_Client
 {
   // = TITLE
-  //    Defines a wrapper class that simplifies initialization and
-  //    access to a <NamingContext>.
+  //    This class is intended to simplify programs that want to play
+  //    the role of Naming Service clients.
   //
   // = DESCRIPTION
-  //    This class takes an ORB reference and contacts the
-  //    NamingService naming context object under that.  It also
+  //    Wrapper class that locates the root Naming Context.  It also
   //    defines the operator-> so that <NamingContext> functions like
-  //    <resolve>, etc. can be called on a <NameServer> object.  This
-  //    class is intended to simplify programs that want to play the
-  //    role of a Naming Service clients.
+  //    <resolve>, etc. can be directly called on a
+  //    <TAO_Naming_Client> object, and will be forwarded to the root
+  //    Naming Context.
 public:
   // = Initialization and termination methods.
+
   TAO_Naming_Client (void);
   // Default constructor.
 
   int init (CORBA::ORB_ptr orb,
             ACE_Time_Value *timeout = 0);
-  // Initialize the name server.
+  // Look for a Naming Service for a period of <timeout> using
+  // <resolve_initial_references>.  Return 0 if Naming Service is
+  // successfully located, and -1 on failure.
 
   ~TAO_Naming_Client (void);
   // Destructor.
 
   CosNaming::NamingContext_ptr operator-> (void) const;
-  // Returns a <NamingContext_ptr>.
+  // Returns a pointer to the root Naming Context.
 
   CosNaming::NamingContext_ptr get_context (void) const;
-  // Returns the NamingContext
+  // Returns a pointer to the root Naming Context.
 
 protected:
   CosNaming::NamingContext_var naming_context_;
-  // NamingContext ptr.
+  // Reference to the root Naming Context.
 };
 
 #endif /* TAO_NAMING_UTILS_H */

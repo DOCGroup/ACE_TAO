@@ -100,6 +100,7 @@ TAO_Transient_Bindings_Map::shared_bind (const char * id,
 {
   TAO_ExtId new_name (id, kind);
   TAO_IntId new_entry (obj, type);
+  TAO_IntId old_entry;
 
   if (rebind == 0)
     // Do a normal bind.
@@ -107,7 +108,16 @@ TAO_Transient_Bindings_Map::shared_bind (const char * id,
 
   else
     // Rebind.
-    return this->map_.rebind (new_name, new_entry);
+    {
+      // Check that types of old and new entries match.
+      if (this->map_.find (new_name,
+                           old_entry) == 0
+          && type != old_entry.type_)
+        return -2;
+
+      else
+        return this->map_.rebind (new_name, new_entry);
+    }
 }
 
 TAO_Transient_Naming_Context::TAO_Transient_Naming_Context (PortableServer::POA_ptr poa,

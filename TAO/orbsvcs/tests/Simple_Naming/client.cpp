@@ -823,7 +823,7 @@ Exceptions_Test::not_found_test (TAO_Naming_Client &root_context,
     }
   ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
     {
-      if (ex.why == CosNaming::NamingContext::not_object &&
+      if (ex.why == CosNaming::NamingContext::missing_node &&
           ex.rest_of_name.length () == 1
           && ACE_OS::strcmp (ex.rest_of_name[0].id.in (),
                              "bar") == 0)

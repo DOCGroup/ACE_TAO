@@ -8,7 +8,7 @@ To run all tests automatically -
 To run tests manually -
 	start the Naming Service (see
 	TAO/orbsvcs/Naming_Service/README for valid options),
-	then run ./client with one of the options below.       
+	then run ./client with one of the options below.
 
 NOTE: if running tests manually, Naming Service has to be restarted
 before each test (this is due to some tests not 'cleaning up' bindings
@@ -32,21 +32,21 @@ The following options exist:
         output should be redirected to some file, say, "foo".  Then,
         "process-m-output.pl" script can be used to analyze the test
         output and print out a diagnostic message.  Invoke the output
-        processing script like so: 
-        "process-m-output.pl foo number_of_threads", 
-        where <foo> is the name of the file containing test output, 
+        processing script like so:
+        "process-m-output.pl foo number_of_threads",
+        where <foo> is the name of the file containing test output,
         and <number_of_threads> is the argument that was supplied with
         "-m" option  to the client.)
 
         Example (on a Unix system):
-        $ ../../Naming_Service &        
-        $ ./client -m 10 >& foo         
-        $ ./process-m-output.pl foo 10        
+        $ ../../Naming_Service &
+        $ ./client -m 10 >& foo
+        $ ./process-m-output.pl foo 10
 
         where the steps correspond to 1)starting the Naming Service,
         2) running the client and redirecting the output to a file,
         and 3) running the diagnostic script.
-        Don't forget to kill the Naming Service after you are done.        
+        Don't forget to kill the Naming Service after you are done.
 
 Persistent test consists of two parts (below).
 
@@ -59,7 +59,7 @@ Persistent test consists of two parts (below).
         The values for these options must be the same for both runs of
         the Naming Service (i.e., for part 1 and part 2 of persistent test).
 
--c <ior> 
+-c <ior>
         Run the Persistent Naming Service test, part 2.  Requires an
         argument specifying the ior, which was produced in part 1 of
         the test.  Note, in order to test out persistent capabilities
@@ -172,7 +172,7 @@ root->resolve () (with a Name of length 0) - should get InvalidName exception.
 root->bind (foo, obj) - should get AlreadyBound exception.
 root->bind (level1/foo, obj) - should get AlreadyBound exception.
 root->unbind (level1/level2/bar) - should get NotFound exception
-  with why = not_object, rest_of_name = bar.
+  with why = missing_node, rest_of_name = bar.
 root->unbind (level1/level3/foo) - should get NotFound exception
   with why = missing_node, rest_of_name = level3/foo.
 root->unbind (level1/foo/foo) -should get NotFound exception

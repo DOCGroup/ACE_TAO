@@ -127,6 +127,10 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (CORBA::ULong how_many,
       ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
     }
 
+  // Check for illegal parameter values.
+  if (how_many == 0)
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+
   // If there are no more bindings...
   if (hash_iter_->done ())
       return 0;
