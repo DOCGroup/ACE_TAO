@@ -251,18 +251,15 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "ACE_INLINE " << be_nl;
   *os << "const " << nodename << "_slice &" << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index) const" << be_nl;
-  *os << "{" << be_idt_nl;
+  *os << "{" << be_nl;
 
-  // MSVC requires an explicit cast for this. SunCC will 
-  // not accept one, but will do it implicitly with a temporary.
-  // It's only a problem with multidimensional arrays.
-#if defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST)
+  *os << "#if defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST)" << be_idt_nl;
   *os << "return ACE_const_cast (const " << nodename 
       << "_slice &, this->ptr_[index]);" << be_uidt_nl;
-#else
+  *os << "#else" << be_idt_nl;
   *os << "const " << nodename << "_slice &tmp = this->ptr_[index];" << be_nl;
   *os << "return tmp;" << be_uidt_nl;
-#endif /* ACE_HAS_BROKEN_IMPLICIT_CONST_CAST */
+  *os << "#endif /* ACE_HAS_BROKEN_IMPLICIT_CONST_CAST */" << be_nl;
 
   *os << "}\n\n";
 
