@@ -1,3 +1,10 @@
+Fri Dec  3 20:06:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Changed to call ACE_WITH_SSL instead of explicitly setting
+	  BUILD_SLL false.
+
 Fri Dec  3 18:32:19 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
@@ -8,7 +15,7 @@ Sat Dec  4 00:17:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IIOP_Endpoint.cpp:
 	* tao/Strategies/SCIOP_Endpoint.cpp
-	
+
 	  Fixed a logic error while trying to parse the string passed in
 	  for PreferredInterfaces option. The parsing introduced a loop
 	  for endpoints created which were not part of the "destination"
