@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Adapter.h"
+#include "tao/Adapter_Factory.h"
 #include "ace/Service_Config.h"
 
 class TAO_IOR_Table_Impl;
