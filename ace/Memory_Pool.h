@@ -111,13 +111,13 @@ class ACE_Export ACE_Shared_Memory_Pool_Options
   //     compilers.
 public:
   // = Initialization method.
-  ACE_Shared_Memory_Pool_Options (char *base_addr = ACE_DEFAULT_BASE_ADDR,
+  ACE_Shared_Memory_Pool_Options (const char *base_addr = ACE_DEFAULT_BASE_ADDR,
                                   size_t max_segments = ACE_DEFAULT_MAX_SEGMENTS,
                                   size_t file_perms = ACE_DEFAULT_FILE_PERMS,
                                   off_t minimum_bytes = 0,
                                   size_t segment_size = ACE_DEFAULT_SEGMENT_SIZE);
 
-  char *base_addr_;
+  const char *base_addr_;
   // Base address of the memory-mapped backing store.
 
   size_t max_segments_;
@@ -330,7 +330,7 @@ class ACE_Export ACE_MMAP_Memory_Pool_Options
   //     compilers.
 public:
   // = Initialization method.
-  ACE_MMAP_Memory_Pool_Options (void *base_addr = ACE_DEFAULT_BASE_ADDR,
+  ACE_MMAP_Memory_Pool_Options (const void *base_addr = ACE_DEFAULT_BASE_ADDR,
                                 int use_fixed_addr = 1,
                                 int write_each_page = 1,
                                 off_t minimum_bytes = 0,
@@ -338,7 +338,7 @@ public:
                                 int guess_on_fault = 1,
                                 LPSECURITY_ATTRIBUTES sa = 0);
 
-  void *base_addr_;
+  const void *base_addr_;
   // Base address of the memory-mapped backing store.
 
   int use_fixed_addr_;
