@@ -58,11 +58,11 @@
 #endif
 
 // The number of bytes in an int. 
-#	if defined (_WIN32) || defined (linux) || defined (VXWORKS)
-#		define	SIZEOF_INT	4
-#	else	// Win16
-#		define	SIZEOF_INT	2
-#	endif	// Win32/Win16
+#if defined (_WIN32) || defined (linux) || defined (ACE_NETBSD) || defined (FreeBSD_2_1) || defined (VXWORKS)
+#  define	SIZEOF_INT	4
+#else	// Win16
+#  define	SIZEOF_INT	2
+#endif	// Win32/Win16
 
 // The number of bytes in a long.  
 #define SIZEOF_LONG 4
