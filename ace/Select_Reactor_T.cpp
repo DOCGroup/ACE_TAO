@@ -923,16 +923,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::find_handler_i
     this->handler_rep_.find (handle);
 
   if (event_handler)
-    {
-      int requires_reference_counting =
-        event_handler->reference_counting_policy ().value () ==
-        ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
-
-      if (requires_reference_counting)
-        {
-          event_handler->add_reference ();
-        }
-    }
+    event_handler->add_reference ();
 
   return event_handler;
 }
@@ -968,15 +959,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i
   if (eh != 0)
     {
       *eh = event_handler;
-
-      int requires_reference_counting =
-        event_handler->reference_counting_policy ().value () ==
-        ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
-
-      if (requires_reference_counting)
-        {
-          event_handler->add_reference ();
-        }
+      event_handler->add_reference ();
     }
 
   return 0;
