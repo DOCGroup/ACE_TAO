@@ -1,3 +1,13 @@
+Thu Dec 14 09:24:49 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Makefile.av:
+          Update dependencies
+
+        * orbsvcs/tests/LoadBalancing/Makefile:
+          Fixed typo in the realclean rule. It was removing the
+          HashReplica*.* files but the generated file names are
+          Hash_Replica*.* (with an '_').
+
 Wed Dec 13 23:57:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
@@ -7,225 +17,225 @@ Wed Dec 13 23:57:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Wed Dec 13 23:56:58 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
 
-	  Added ClientRequestInfo.inl to the list of "inline" sources.
+          Added ClientRequestInfo.inl to the list of "inline" sources.
 
 Wed Dec 13 19:06:43 2000  Ossama Othman  <ossama@uci.edu>
 
-	The following changes are the first stage of a series of updates
-	to push TAO's existing Portable Interceptor implementation to
-	more closely conform with the Portable Interceptor specification /
-	joint submission.  We're close.  These changes also fix quite a
-	few bugs in the existing implementation with respect to multiple
-	interceptor support in the presence of connection-retries, in
-	addition to improper return value storage semantics.
+        The following changes are the first stage of a series of updates
+        to push TAO's existing Portable Interceptor implementation to
+        more closely conform with the Portable Interceptor specification /
+        joint submission.  We're close.  These changes also fix quite a
+        few bugs in the existing implementation with respect to multiple
+        interceptor support in the presence of connection-retries, in
+        addition to improper return value storage semantics.
 
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
-	  (visit_operation):
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+          (visit_operation):
 
-	  Do an ACE_TRY_CHECK before an ACE_RE_THROW after the
-	  send_exception() interception point in case
-	  send_exception() itself throws an exception.
+          Do an ACE_TRY_CHECK before an ACE_RE_THROW after the
+          send_exception() interception point in case
+          send_exception() itself throws an exception.
 
-	* TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
-	  (visit_operation):
+        * TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
+          (visit_operation):
 
-	  Fixed broken flow logic that would occur when a LOCATION_FORWARD
-	  reply was received from the server, or a connection retry was
-	  performed, i.e. the connection loop was re-executed.  The flow
-	  stack size would increase during each loop iteration.  Thus, a
-	  seg fault would occur when during execution of an ending
-	  interception point since the logical flow stack would attempt to
-	  access an interceptor out of bounds of the interceptor array.
+          Fixed broken flow logic that would occur when a LOCATION_FORWARD
+          reply was received from the server, or a connection retry was
+          performed, i.e. the connection loop was re-executed.  The flow
+          stack size would increase during each loop iteration.  Thus, a
+          seg fault would occur when during execution of an ending
+          interception point since the logical flow stack would attempt to
+          access an interceptor out of bounds of the interceptor array.
 
-	  Explicitly check for TAO_INVOKE_EXCEPTION invocation status
-	  instead of checking for invocation status not equal to
-	  TAO_INVOKE_OK.  This is necessary since the check for the
-	  TAO_INVOKE_RETRY status was moved after the receive_reply()
-	  interception point due to the reasons stated in the above
-	  paragraph.  The "!= TAO_INVOKE_OK" check would evaluate to
-	  "true" since "TAO_INVOKE_RETRY != TAO_INVOKE_OK," for example.
+          Explicitly check for TAO_INVOKE_EXCEPTION invocation status
+          instead of checking for invocation status not equal to
+          TAO_INVOKE_OK.  This is necessary since the check for the
+          TAO_INVOKE_RETRY status was moved after the receive_reply()
+          interception point due to the reasons stated in the above
+          paragraph.  The "!= TAO_INVOKE_OK" check would evaluate to
+          "true" since "TAO_INVOKE_RETRY != TAO_INVOKE_OK," for example.
 
-	  Pass the result of the TAO_GIOP_Invocation::invoke() call to the
-	  ClientRequestInfo object.  This information is used by the
-	  ClientRequestInfo::reply_status() method.
+          Pass the result of the TAO_GIOP_Invocation::invoke() call to the
+          ClientRequestInfo object.  This information is used by the
+          ClientRequestInfo::reply_status() method.
 
-	  In the case of a one-way invocation, invoke the receive_other()
-	  interception point to preserve the general flow rules dictated
-	  by the Portable Interceptor specification.  This is particularly
-	  important now that TAO supports multiple interceptors since each
-	  interceptor pushed on to the logical flow stack must also be
-	  popped off of it.
+          In the case of a one-way invocation, invoke the receive_other()
+          interception point to preserve the general flow rules dictated
+          by the Portable Interceptor specification.  This is particularly
+          important now that TAO supports multiple interceptors since each
+          interceptor pushed on to the logical flow stack must also be
+          popped off of it.
 
-	  Moved instantiation of the ClientRequestInfo object within the
-	  connection-retry loop.  A new ClientRequestInfo must
-	  instantiated for each request, including the retries, to
-	  maintain consistency.  Otherwise, request information left over
-	  from a previously tried request will be available to the
-	  interceptors.
+          Moved instantiation of the ClientRequestInfo object within the
+          connection-retry loop.  A new ClientRequestInfo must
+          instantiated for each request, including the retries, to
+          maintain consistency.  Otherwise, request information left over
+          from a previously tried request will be available to the
+          interceptors.
 
-	  Moved ACE_TRY/CATCH blocks within the connection-retry loop.  If
-	  a PortableInterceptor::ForwardRequest exception is thrown, then
-	  we need to be able to restart the invocation.
+          Moved ACE_TRY/CATCH blocks within the connection-retry loop.  If
+          a PortableInterceptor::ForwardRequest exception is thrown, then
+          we need to be able to restart the invocation.
 
-	  Do an ACE_TRY_CHECK before an ACE_RE_THROW after the
-	  receive_exception() interception point in case
-	  receive_exception() itself throws an exception.
+          Do an ACE_TRY_CHECK before an ACE_RE_THROW after the
+          receive_exception() interception point in case
+          receive_exception() itself throws an exception.
 
-	* tao/ClientRequestInfo.h:
+        * tao/ClientRequestInfo.h:
 
-	  Doxygen-ated this header.
+          Doxygen-ated this header.
 
-	  Removed unused "forward_reference_" class member.
+          Removed unused "forward_reference_" class member.
 
-	* tao/ClientRequestInfo.cpp (effective_target):
+        * tao/ClientRequestInfo.cpp (effective_target):
 
-	  Implemented this method.  Return the actual target for now.
-	  This will change once the LOCATION_FORWARD reply status
-	  interceptor updates are fully implemented.
+          Implemented this method.  Return the actual target for now.
+          This will change once the LOCATION_FORWARD reply status
+          interceptor updates are fully implemented.
 
-	  (tagged_profile):
+          (tagged_profile):
 
-	  Implemented this method.  Obtain the tagged profile structure
-	  from the current profile in use.
+          Implemented this method.  Obtain the tagged profile structure
+          from the current profile in use.
 
-	  (received_exception):
+          (received_exception):
 
-	  In accordance with the C++ mapping, the caller is responsible
-	  for storage of an Any return value so return a heap allocated
-	  Any.
+          In accordance with the C++ mapping, the caller is responsible
+          for storage of an Any return value so return a heap allocated
+          Any.
 
-	  (get_effective_component):
+          (get_effective_component):
 
-	  Implemented this method.  Extract the desired tagged component
-	  from the current profile in use.
+          Implemented this method.  Extract the desired tagged component
+          from the current profile in use.
 
-	  (add_request_service_context):
+          (add_request_service_context):
 
-	  Added support for the missing "replace" functionality.
+          Added support for the missing "replace" functionality.
 
-	  (response_expected, reply_status):
+          (response_expected, reply_status):
 
-	  Implemented these methods.
+          Implemented these methods.
 
-	  (forward_reference):
+          (forward_reference):
 
-	  Partially implemented this method.
+          Partially implemented this method.
 
-	  (get_slot):
+          (get_slot):
 
-	  Throw a CORBA::NO_IMPLEMENT() exception since it hasn't been
-	  implemented yet.
+          Throw a CORBA::NO_IMPLEMENT() exception since it hasn't been
+          implemented yet.
 
-	  (get_request_service_context, get_reply_service_context):
+          (get_request_service_context, get_reply_service_context):
 
-	  In accordance with the C++ mapping, the caller is responsible
-	  for storage of a struct return value so return a heap allocated
-	  IOP::ServiceContext, not a cached one.
+          In accordance with the C++ mapping, the caller is responsible
+          for storage of a struct return value so return a heap allocated
+          IOP::ServiceContext, not a cached one.
 
-	  As dictated by the Portable Interceptor specification, return a
-	  CORBA::BAD_PARAM() if an IOP::ServiceContext with the given
-	  ServiceId doesn't exist.
-	  
-	* tao/ClientRequestInfo.inl:
+          As dictated by the Portable Interceptor specification, return a
+          CORBA::BAD_PARAM() if an IOP::ServiceContext with the given
+          ServiceId doesn't exist.
+          
+        * tao/ClientRequestInfo.inl:
 
-	  New file that contains short non-virtual methods.
+          New file that contains short non-virtual methods.
 
-	  (exception):
+          (exception):
 
-	  Moved this method from the `.cpp' file to this file.
+          Moved this method from the `.cpp' file to this file.
 
-	  Determine the reply status
-	  (PortableInterceptor::SYSTEM_EXCEPTION or
-	  PortableInterceptor::USER_EXCEPTION) by attempting to downcast
-	  the given exception.
+          Determine the reply status
+          (PortableInterceptor::SYSTEM_EXCEPTION or
+          PortableInterceptor::USER_EXCEPTION) by attempting to downcast
+          the given exception.
 
-	  (request_id):
+          (request_id):
 
-	  Moved this method from the `.cpp' file to this file.
+          Moved this method from the `.cpp' file to this file.
 
-	  (response_expected):
+          (response_expected):
 
-	  Set the flag that specifies whether or not a response is
-	  excepted (e.g. no response excpected in a one-way request).
+          Set the flag that specifies whether or not a response is
+          excepted (e.g. no response excpected in a one-way request).
 
-	  (reply_status):
+          (reply_status):
 
-	  Convert the invocation status (i.e. the return value of the
-	   Invocation::invoke() method in the generated stub) into the
-	  appropriate PortableInterceptor reply status.
+          Convert the invocation status (i.e. the return value of the
+           Invocation::invoke() method in the generated stub) into the
+          appropriate PortableInterceptor reply status.
 
-	* tao/PortableInterceptor.h:
-	* tao/PortableInterceptor.i (receive_other):
+        * tao/PortableInterceptor.h:
+        * tao/PortableInterceptor.i (receive_other):
 
-	  New adapter method for the
-	  ClientRequestInterceptor::receive_other() method.  It is used in
-	  one-way and AMI requests.
+          New adapter method for the
+          ClientRequestInterceptor::receive_other() method.  It is used in
+          one-way and AMI requests.
 
-	* tao/PortableServer/ServerRequestInfo.h:
-	* tao/PortableServer/ServerRequestInfo.cpp (sending_exception):
+        * tao/PortableServer/ServerRequestInfo.h:
+        * tao/PortableServer/ServerRequestInfo.cpp (sending_exception):
 
-	  The C++ mapping requires that the caller be responsible for a
-	  returned CORBA::Any.  Removed the cached CORBA::Any attribute
-	  from this class.  The sending_exception() method now correctly
-	  returns a heap allocated CORBA::Any.
+          The C++ mapping requires that the caller be responsible for a
+          returned CORBA::Any.  Removed the cached CORBA::Any attribute
+          from this class.  The sending_exception() method now correctly
+          returns a heap allocated CORBA::Any.
 
-	  (add_reply_service_context):
+          (add_reply_service_context):
 
-	  Added support for the missing "replace" functionality.
+          Added support for the missing "replace" functionality.
 
-	  (get_request_service_context, get_reply_service_context):
+          (get_request_service_context, get_reply_service_context):
 
-	  In accordance with the C++ mapping, the caller is responsible
-	  for storage of a struct return value so return a heap allocated
-	  IOP::ServiceContext, not a cached one.
+          In accordance with the C++ mapping, the caller is responsible
+          for storage of a struct return value so return a heap allocated
+          IOP::ServiceContext, not a cached one.
 
-	  As dictated by the Portable Interceptor specification, return a
-	  CORBA::BAD_PARAM() if an IOP::ServiceContext with the given
-	  ServiceId doesn't exist.
+          As dictated by the Portable Interceptor specification, return a
+          CORBA::BAD_PARAM() if an IOP::ServiceContext with the given
+          ServiceId doesn't exist.
 
-	  (exception):
+          (exception):
 
-	  Determine the reply status
-	  (PortableInterceptor::SYSTEM_EXCEPTION or
-	  PortableInterceptor::USER_EXCEPTION) by attempting to downcast
-	  the given exception.
+          Determine the reply status
+          (PortableInterceptor::SYSTEM_EXCEPTION or
+          PortableInterceptor::USER_EXCEPTION) by attempting to downcast
+          the given exception.
 
-	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp (receive_reply):
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp (receive_reply):
 
-	  Store returned service context in an IOP::ServiceContext_var to
-	  fix a memory leak.  This is necessary since TAO's
-	  ClientRequestInfo class now properly returns a heap allocated
-	  IOP::ServiceContext.
+          Store returned service context in an IOP::ServiceContext_var to
+          fix a memory leak.  This is necessary since TAO's
+          ClientRequestInfo class now properly returns a heap allocated
+          IOP::ServiceContext.
 
 Wed Dec 13 18:12:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/skip.cpp:
-	* tao/append.cpp:
-	  Optimized Any marshaling and demarshaling for sequences and
-	  arrays of basic types.
-	  Thanks to Sathish Tiptur <Sathish.Tiptur@geind.ge.com> for
-	  providing the patches.
+        * tao/skip.cpp:
+        * tao/append.cpp:
+          Optimized Any marshaling and demarshaling for sequences and
+          arrays of basic types.
+          Thanks to Sathish Tiptur <Sathish.Tiptur@geind.ge.com> for
+          providing the patches.
 
-	* tao/ORB_Core.cpp:
-	  Fixed the POA loading directive, thanks to Pedro Ferreira
-	  <pedro.ferreira@inescporto.pt> for providing this patch.
+        * tao/ORB_Core.cpp:
+          Fixed the POA loading directive, thanks to Pedro Ferreira
+          <pedro.ferreira@inescporto.pt> for providing this patch.
 
 Wed Dec 13 17:57:28 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/benchmark/client.cpp: 
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp: 
-	* orbsvcs/orbsvcs/AV/AV_Core.cpp: 
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
+        * orbsvcs/tests/AVStreams/benchmark/client.cpp: 
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp: 
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp: 
 
-	  Fixed compile warnings.
+          Fixed compile warnings.
 
 Wed Dec 13 17:45:09 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.SSLIOP: Updated dependencies.
+        * orbsvcs/orbsvcs/Makefile.SSLIOP: Updated dependencies.
 
 Wed Dec 13 10:52:55 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -251,20 +261,20 @@ Wed Dec 13 08:22:00 2000  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Tue Dec 12 23:33:07 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
-	* orbsvcs/orbsvcs/AV/AV_Core.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp:
         * orbsvcs/orbsvcs/Makefile.av:
 
-	  Fixed compile problems.
+          Fixed compile problems.
 
 Tue Dec 12 15:58:03 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* docs/INS.html:
-	  Updated the document to the correct style of corbaloc URL.
-	  corbaloc:iiop:$TARGETHOSTNAME:$PORT/object_name.
+        * docs/INS.html:
+          Updated the document to the correct style of corbaloc URL.
+          corbaloc:iiop:$TARGETHOSTNAME:$PORT/object_name.
 
-	  Thanks to Russell L. Carter <rcarter@pinyon.org> for
-	  motivating the fix.
+          Thanks to Russell L. Carter <rcarter@pinyon.org> for
+          motivating the fix.
 
 Tue Dec 12  3:23:15 2000  Jeff Parsons   <parsons@cs.wustl.edu>
 
@@ -301,47 +311,47 @@ Tue Dec 12 11:57:59 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Tue Dec 12 13:49:49 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* docs/rtcorba/reactor-per-lane.gif
-	* docs/rtcorba/queue-per-lane.gif:
+        * docs/rtcorba/reactor-per-lane.gif
+        * docs/rtcorba/queue-per-lane.gif:
 
-	  Added pictures for architecture description.
+          Added pictures for architecture description.
 
-	* docs/rtcorba/omg_issues.html:
+        * docs/rtcorba/omg_issues.html:
 
-	  Populated the page with content.
+          Populated the page with content.
 
-	* docs/rtcorba/issues.html:
+        * docs/rtcorba/issues.html:
 
-	  Added one new issue.
+          Added one new issue.
 
-	* docs/rtcorba/index.html:
+        * docs/rtcorba/index.html:
 
-	  Added page title.
+          Added page title.
 
-	* docs/rtcorba/content.html:
+        * docs/rtcorba/content.html:
 
-	  Removed examples section.
+          Removed examples section.
 
-	* docs/rtcorba/faq.html
-	* docs/rtcorba/status.html:
+        * docs/rtcorba/faq.html
+        * docs/rtcorba/status.html:
 
-	  Added last modified date.
+          Added last modified date.
 
 Tue Dec 12  1:28:15 2000  Jeff Parsons   <parsons@cs.wustl.edu>
 
-	* tao/tests/DynAny_Test/test_dynunion.cpp:
+        * tao/tests/DynAny_Test/test_dynunion.cpp:
 
-	  Commented out test of an unimplemented function.
+          Commented out test of an unimplemented function.
 
 Tue Dec 12 11:03:15 2000  Jeff Parsons   <parsons@cs.wustl.edu>
 
-	* tao/Dynamic_Adapter.cpp:
+        * tao/Dynamic_Adapter.cpp:
 
-	  In the CORBA::release methods, replaced the hard-coded
-	  string "Dynamic_Adapter" in the instantiation of the
-	  service object with the call to the string value set
-	  in the ORB core. This was causing a null pointer to
-	  be returned for the service object instance.
+          In the CORBA::release methods, replaced the hard-coded
+          string "Dynamic_Adapter" in the instantiation of the
+          service object with the call to the string value set
+          in the ORB core. This was causing a null pointer to
+          be returned for the service object instance.
 
 Mon Dec 11 15:36:54 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -352,7 +362,7 @@ Mon Dec 11 15:36:54 2000  Carlos O'Ryan  <coryan@uci.edu>
         * tao/IORTable/IOR_Table_Impl.cpp:
         * tao/IORTable/Table_Adapter.h:
         * tao/IORTable/Table_Adapter.cpp:
-	  Changed to conform to the doxygen documentation style.
+          Changed to conform to the doxygen documentation style.
 
 Mon Dec 11 15:30:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -372,30 +382,30 @@ Mon Dec 11 16:26:49 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 Mon Dec 11 04:31:31 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* docs/rtcorba/index.htm
-	* docs/rtcorba/content.htm
-	* docs/rtcorba/status.htm:
+        * docs/rtcorba/index.htm
+        * docs/rtcorba/content.htm
+        * docs/rtcorba/status.htm:
 
-	  These files were added and then removed to be replaced by the
-	  ones below (in order to change .htm to .html).
+          These files were added and then removed to be replaced by the
+          ones below (in order to change .htm to .html).
 
-	* docs/rtcorba/index.html
-	* docs/rtcorba/content.html
-	* docs/rtcorba/status.html
-	* docs/rtcorba/issues.html
-	* docs/rtcorba/faq.html
-	* docs/rtcorba/omg_issues.html
-	* docs/rtcorba/features.html
-	* docs/rtcorba/architecture.html:
+        * docs/rtcorba/index.html
+        * docs/rtcorba/content.html
+        * docs/rtcorba/status.html
+        * docs/rtcorba/issues.html
+        * docs/rtcorba/faq.html
+        * docs/rtcorba/omg_issues.html
+        * docs/rtcorba/features.html
+        * docs/rtcorba/architecture.html:
 
-	  New RTCORBA documentation.
+          New RTCORBA documentation.
 
-	* tests/RTCORBA/README
-	* docs/index.html
-	* docs/releasenotes/index.html
-	* docs/Options.html:
+        * tests/RTCORBA/README
+        * docs/index.html
+        * docs/releasenotes/index.html
+        * docs/Options.html:
 
-	  Updated to reflect new files above.
+          Updated to reflect new files above.
 
 Sun Dec 10 14:05:35 2000  Angelo Corsaro  <angelo@cs.wustl.edu>
 
