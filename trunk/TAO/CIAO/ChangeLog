@@ -1,3 +1,11 @@
+Sat May 17 12:07:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP/descriptors/BasicSP.cad: Fixed a
+	  typo. Thanks to Nanbor for pointing it out.
+
+	* examples/handcrafted/BasicSP/BasicSP.idl: Added ciao/ to the
+	  CM_Container.idl
+
 Sat May 17 11:18:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/handcrafted/BasicSP/*/config: Config files for
