@@ -1,7 +1,17 @@
+Wed Feb 13 17:21:00 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/PortableServer/POA.cpp :
+	* tao/ORB_Core.cpp :
+	  Moved code related to adding the policies to the mprofile
+	  to TAO_ORB_Core::create_stub_object from
+	  TAO_POA::create_stub_object to get the RTCORBA tests running.
+	  The control wasnt coming to the TAO_POA::create_stub_object
+	  and hence the policies were not added correctly.
+
 Wed Feb 13 18:39:01 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/Miop/McastHello/Makefile: Added a check for
-	  compilation. 
+	  compilation.
 	* orbsvcs/orbsvcs/Makefile.PortableGroup: Added CosNaming to list
 	  of libraries against which this needs to be linked.
 
@@ -13,7 +23,7 @@ Wed Feb 13 12:47:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Tue Feb 12 17:53:31 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/PortableServer/POA.cpp (destroy_i): 
+	* tao/PortableServer/POA.cpp (destroy_i):
 	  Got a duplicate before releasing the poa so that it stays around
 	  while we change its status and call the corresponding
 	  interceptor's adapter_state_changed methods.
@@ -48,7 +58,7 @@ Tue Feb 12 06:01:12 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/examples/RtEC/MCast/MCast.cpp: Making this checkin for
 	  Oliver Kellogg. Fixed comments about exception handling in the
-	  code. 
+	  code.
 
 Mon Feb 11 16:32:00 2002  Ossama Othman  <ossama@uci.edu>
 
@@ -110,7 +120,7 @@ Mon Feb 11 16:32:00 2002  Ossama Othman  <ossama@uci.edu>
 	  (pi_current_):
 
 	  Cache a reference to the PICurrent object.
-	
+
 	* tests/Portable_Interceptors/PICurrent/ServerRequestInterceptor.cpp
 	  (send_reply):
 
@@ -130,19 +140,19 @@ Mon Feb 11 16:32:00 2002  Ossama Othman  <ossama@uci.edu>
 
 Mon Feb 11 18:20:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/ORT/ORT_test_IORInterceptor.h: 
+	* tests/ORT/ORT_test_IORInterceptor.h:
 	* orbsvcs/examples/ORT/Server_IORInterceptor.h:
 	* tao/PortableServer/Object_Adapter.h:
 	* tao/PortableServer/ObjectReferenceFactory.h:
-	* tao/PortableServer/ObjectReferenceTemplate.h: More fuzz errors. 
+	* tao/PortableServer/ObjectReferenceTemplate.h: More fuzz errors.
 
 Mon Feb 11 18:02:18 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/PortableServer/POAManager.h: 
+	* tao/PortableServer/POAManager.h:
 	* tests/Oneways_Invoking_Twoways/Receiver_i.h :
 	* tests/Oneways_Invoking_Twoways/Sender_i.h:
 	* orbsvcs/tests/FaultTolerance/IOGR/Client_i.h:
-	* orbsvcs/tests/FaultTolerance/IOGR/Manager.h: More fuzz errors. 
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.h: More fuzz errors.
 
 Mon Feb 11 17:56:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -155,7 +165,7 @@ Mon Feb 11 17:56:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Mon Feb 11 16:04:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Fault_Tolerance_Service.h: 
+	* tao/Fault_Tolerance_Service.h:
 	* tao/Connection_Handler.h:
 	* tao/Fault_Tolerance_Service.h:
 	* tao/GIOP_Message_Generator_Parser.h:
@@ -163,7 +173,7 @@ Mon Feb 11 16:04:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/GIOP_Message_Generator_Parser_11.h:
 	* tao/GIOP_Message_Generator_Parser_12.h: Removed the #pragma
 	  warning (push) from the above files as they are not needed in
-	  the first place. Thanks to Ossama for pointing these out. 
+	  the first place. Thanks to Ossama for pointing these out.
 
 Sun Feb 10 13:16:45 2002  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -246,22 +256,22 @@ Sat Feb  9 15:21:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAO_IDL/be/be_valuetype.cpp: Added the keywords
 	  TAO_NAMESPACE_STORAGE_CLASS to the declarations of add_ref ()
-	  and remove_ref (). This should fix link errors in Win32. 
+	  and remove_ref (). This should fix link errors in Win32.
 
 	* tao/ObjectReferenceTemplateC.h:
 	* tao/ObjectReferenceTemplateC.i: Regenerated code for this
-	  class. Looks like other classes dont need regeneration. 
+	  class. Looks like other classes dont need regeneration.
 
 Sat Feb  9 09:36:08 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/releasenotes/amh.html (href): Removed some wizard generated
-	  stuff. Still a lot more remains. 
-	
+	  stuff. Still a lot more remains.
+
 Sat Feb  9 08:24:08 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/releasenotes/amh.html: Removed references to pages in the
 	  docs section through Dr.Schmidt's home page. This also fixes
-	  fuzz errors. 
+	  fuzz errors.
 
 Sat Feb 09 01:58:00 2002  Ossama Othman  <ossama@uci.edu>
 
@@ -274,7 +284,7 @@ Sat Feb 09 00:30:38 2002  Mayur Deshpande  <mayur@ics.uci.edu@>
 
 	* docs/releasenotes/index.html:
 	* docs/releasenotes/amh.html:
-          
+
           Release Notes for Asynchronous Method Handling (AMH)
 
 Fri Feb 08 22:20:38 2002  Carlos O'Ryan  <coryan@uci.edu>
@@ -297,12 +307,12 @@ Sat Feb  9 04:57:45 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/PortableServer/POA.cpp: Added a template instantiation for
 	  ACE_Array_Base <IOP::ProfileId>. This shold fix link errors in
-	  Sun CC builds. 
+	  Sun CC builds.
 
 Fri Feb  8 21:51:05 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/PortableServer/POA.cpp: Fixed a redefinition error in
-	  Win32. 
+	  Win32.
 
 Fri Feb  8 19:36:33 2002  Ossama Othman  <ossama@uci.edu>
 
@@ -337,10 +347,10 @@ Fri Feb  8 18:27:13 2002  Ossama Othman  <ossama@uci.edu>
 	  generate_manager_id() method to generate an ID in an atomic
 	  way.  Fixes a race condition.
 
-	* tao/PortableServer/POA.i (get_manager_id): 
-	* tao/PortableServer/POA.cpp (set_obj_ref_factory): 
+	* tao/PortableServer/POA.i (get_manager_id):
+	* tao/PortableServer/POA.cpp (set_obj_ref_factory):
 	* tao/PortableServer/POAManager.cpp
-	  (activate_i, discard_requests_i): 
+	  (activate_i, discard_requests_i):
 	* tao/PortableServer/ObjectReferenceTemplate.cpp (adapter_name):
 
 	  Fixed syntax errors related to emulated exceptions.
