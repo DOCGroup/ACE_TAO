@@ -488,8 +488,8 @@ public:
 
   typedef CORBA_UserException  UserException;
 
-  typedef TAO_Unbounded_Object_Sequence<TypeCode> ExceptionList;
-  typedef ExceptionList *ExceptionList_ptr;
+  typedef CORBA_ExceptionList ExceptionList;
+  typedef CORBA_ExceptionList *ExceptionList_ptr;
 
   typedef CORBA_ImplementationDef *ImplementationDef_ptr;
 
