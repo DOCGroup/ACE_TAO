@@ -93,7 +93,7 @@ CORBA::Object_ptr
 
 ##foreach [event name] with [eventtype] in (list of all event sources) generate:
 void
-[ciao module name]::[component name]_Context::push_[event name] ([eventtype]_ptr ev
+[ciao module name]::[component name]_Context::push_[event name] ([eventtype] *ev
                                                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -375,7 +375,7 @@ CORBA::Object_ptr
 
 // Inherit from ::Compopnents::EventBConsumerBase
 void
-[ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant::push_event (EventBase_ptr ev
+[ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant::push_event (EventBase *ev
                                                                                                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::BadEventType))

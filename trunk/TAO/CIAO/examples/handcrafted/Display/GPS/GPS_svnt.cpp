@@ -13,7 +13,7 @@
 #endif /* __ACE_INLINE__ */
 
 void
-CIAO_GLUE_HUDisplay::GPS_Context::push_Ready (HUDisplay::tick_ptr ev
+CIAO_GLUE_HUDisplay::GPS_Context::push_Ready (HUDisplay::tick *ev
                                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

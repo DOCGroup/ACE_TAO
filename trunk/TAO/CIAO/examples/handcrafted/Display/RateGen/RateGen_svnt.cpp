@@ -24,7 +24,7 @@
 //////////////////////////////////////////////////////////////////
 
 void
-CIAO_GLUE_HUDisplay::RateGen_Context::push_Pulse (HUDisplay::tick_ptr ev
+CIAO_GLUE_HUDisplay::RateGen_Context::push_Pulse (HUDisplay::tick *ev
                                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
