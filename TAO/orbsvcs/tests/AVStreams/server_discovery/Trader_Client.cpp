@@ -107,7 +107,7 @@ Trader_Client::query_trader (void)
 
 
       // Set the query-specific policies.
-      TAO_Policy_Manager policies;
+      TAO_Policy_Creator policies;
       policies.exact_type_match (0);
       policies.search_card (16);
       policies.match_card (16);
@@ -132,7 +132,7 @@ Trader_Client::query_trader (void)
                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      
+
       CosTrading::OfferSeq_var mmdevice_offer_seq (mmdevice_offer_seq_ptr);
       CosTrading::OfferIterator_var mmdevice_offer_iterator (mmdevice_offer_iterator_ptr);
       CosTrading::PolicyNameSeq_var mmdevice_limits_applied (mmdevice_limits_applied_ptr);
@@ -145,7 +145,7 @@ Trader_Client::query_trader (void)
             {
               this->create_hash_table_entry (mmdevice_offer_seq[i]);
             }
-        } 
+        }
 
       if (! CORBA::is_nil (mmdevice_offer_iterator_ptr))
         {
@@ -172,7 +172,7 @@ Trader_Client::query_trader (void)
           TAO_CHECK_ENV;
         }
 
-            
+
     }
 
   TAO_CATCHANY {}
@@ -180,7 +180,7 @@ Trader_Client::query_trader (void)
 }
 
 void
-Trader_Client::load_movie (const char* mmdevice_server_name, 
+Trader_Client::load_movie (const char* mmdevice_server_name,
                            TAO_VR::Movie* selected_movie_info)
 {
   // Open a unix socket to the controller process of the AV client,
@@ -203,7 +203,7 @@ Trader_Client::load_movie (const char* mmdevice_server_name,
 
           CORBA::Object_ptr mmdevice_reference = mmdevice_entry->int_id_;
           CORBA::String_var server_ior = this->orb_manager_.orb ()->object_to_string (mmdevice_reference,
-                                                                                      TAO_TRY_ENV); 
+                                                                                      TAO_TRY_ENV);
           cout<<"The audio file name "<<selected_movie_info->audio_filename_<<endl;
           cout<<"The video file name "<<selected_movie_info->video_filename_<<endl;
           ACE_DEBUG ((LM_DEBUG,"mmdevice ior is :%s\n",server_ior.in ()));
@@ -216,11 +216,11 @@ Trader_Client::load_movie (const char* mmdevice_server_name,
           TAO_CHECK_ENV;
 
           CORBA::String_var audio_ior = this->orb_manager_.orb ()->object_to_string (audio_object_ptr,
-                                                                                      TAO_TRY_ENV); 
+                                                                                      TAO_TRY_ENV);
           TAO_CHECK_ENV;
           ACE_DEBUG ((LM_DEBUG,"AUDIO mmdevice ior is :%s\n",audio_ior.in ()));
           CORBA::String_var video_ior = this->orb_manager_.orb ()->object_to_string (video_object_ptr,
-                                                                                      TAO_TRY_ENV); 
+                                                                                      TAO_TRY_ENV);
           TAO_CHECK_ENV;
           ACE_DEBUG ((LM_DEBUG,"VIDEO mmdevice ior is :%s\n",video_ior.in ()));
 
@@ -229,11 +229,11 @@ Trader_Client::load_movie (const char* mmdevice_server_name,
                                           video_object_ptr,
                                           selected_movie_info->video_filename_,
                                           TAO_TRY_ENV);
-         
+
           TAO_CHECK_ENV;
         }
 
-      
+
     }
   TAO_CATCHANY
     {
@@ -378,7 +378,7 @@ Trader_Client::create_hash_table_entry (CosTrading::Offer& offer)
 //   CosTrading::Offer *offer;
 //   ACE_NEW (offer,
 //            CosTrading::Offer (offer_src));
-      
+
   Property_Map* prop_map = 0;
   ACE_NEW (prop_map, Property_Map);
   TAO_TRY
@@ -404,7 +404,7 @@ Trader_Client::create_hash_table_entry (CosTrading::Offer& offer)
             }
             else cout<<"Movie Info not found"<<endl;
           }
-          */  
+          */
         }
 
       Property_Map::ENTRY* entry = 0;
@@ -414,12 +414,12 @@ Trader_Client::create_hash_table_entry (CosTrading::Offer& offer)
         {
           entry->int_id_.value >>= server_name_string;
           this->mmdevice_map_.bind (server_name_string, prop_map);
-          
+
           TAO_String_Hash_Key server_reference_key (server_name_string);
           CORBA::String_var server_ior = this->orb_manager_.orb ()->object_to_string (offer.reference,
                                                                                       TAO_TRY_ENV);
           TAO_CHECK_ENV;
-         
+
           this->mmdevice_reference_map_.bind (server_reference_key,
                                               CORBA::Object::_duplicate (offer.reference));
         }

@@ -14,7 +14,7 @@
 //
 // Client Utils:
 //   TAO_Dynamic_Property
-//   TAO_Policy_Manager
+//   TAO_Policy_Creator
 //   TAO_Property_Evaluator
 //   TAO_Property_Evaluator_By_Name
 //
@@ -481,19 +481,19 @@ private:
 };
 
   // *************************************************************
-  // TAO_Policy_Manager
+  // TAO_Policy_Creator
   // *************************************************************
 
-class TAO_ORBSVCS_Export TAO_Policy_Manager
-// = TITLE
-//
-// This class is a utility for clients using the CosTrading::Lookup
-// interface that helps them build a policy sequence without violating
-// syntax rules and having to mess with typecodes.
+class TAO_ORBSVCS_Export TAO_Policy_Creator
 {
+  // = TITLE
+  //
+  // This class is a utility for clients using the CosTrading::Lookup
+  // interface that helps them build a policy sequence without violating
+  // syntax rules and having to mess with typecodes.
 public:
 
-  TAO_Policy_Manager (int num_policies = 0);
+  TAO_Policy_Creator (int num_policies = 0);
 
   // = Routines to set policies.
 
@@ -547,8 +547,8 @@ public:
 
 private:
 
-  TAO_Policy_Manager (const TAO_Policy_Manager&);
-  TAO_Policy_Manager& operator= (const TAO_Policy_Manager&);
+  TAO_Policy_Creator (const TAO_Policy_Creator&);
+  TAO_Policy_Creator& operator= (const TAO_Policy_Creator&);
 
   CosTrading::Policy& fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type);
   // Method to prepare the next slot in the policies_ sequence for

@@ -1,3 +1,17 @@
+Thu Apr 15 15:58:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.h:
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+	* orbsvcs/tests/AVStreams/server_discovery/Trader_Client.cpp:
+	* orbsvcs/tests/Trading/Offer_Importer.cpp:
+	* orbsvcs/tests/Trading/Offer_Importer.h:
+	  Changed the name of the TAO_Policy_Manager class in Trader_Utils 
+	  to TAO_Policy_Creator, the previous name had conflicts with the
+	  new TAO_Policy_Manager in $TAO_ROOT/tao.
+
+	* docs/releasenotes/TODO.html:
+	  A small update
+
 Thu Apr 15 15:40:53 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * all orbscvs/tests/AVStreams Makefiles: added BIN2, LIB2,
