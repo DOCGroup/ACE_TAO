@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-feature(qt): qt {
-  macros += ACE_HAS_QT
-}

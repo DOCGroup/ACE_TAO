@@ -3031,13 +3031,11 @@ namespace
           return_type_name_emitter_ (c.os ()),
           enclosing_type_name_emitter_ (c.os ()),
           simple_type_name_emitter_ (c.os ()),
-          type_name_emitter_ (c.os ()),
           scope_ (home)
       {
         returns_.node_traverser (return_type_name_emitter_);
         enclosing_manages_.node_traverser (enclosing_type_name_emitter_);
         simple_manages_.node_traverser (simple_type_name_emitter_);
-        manages_.node_traverser (type_name_emitter_);
       }
 
       virtual void
@@ -3120,7 +3118,7 @@ namespace
 
         os << "ACE_CHECK_RETURN (";
 
-        Traversal::Home::manages (scope_, manages_);
+        Traversal::HomeFactory::returns (hf, returns_);
 
         os << "::_nil ());" << endl;
 
@@ -3144,7 +3142,7 @@ namespace
 
         os << "ACE_CHECK_RETURN (";
 
-        Traversal::Home::manages (scope_, manages_);
+        Traversal::HomeFactory::returns (hf, returns_);
 
         os << "::_nil ());" << endl;
 
@@ -3165,11 +3163,9 @@ namespace
       ReturnTypeNameEmitter return_type_name_emitter_;
       EnclosingTypeNameEmitter enclosing_type_name_emitter_;
       SimpleTypeNameEmitter simple_type_name_emitter_;
-      TypeNameEmitter type_name_emitter_;
       Traversal::Returns returns_;
       Traversal::Manages enclosing_manages_;
       Traversal::Manages simple_manages_;
-      Traversal::Manages manages_;
       SemanticGraph::Home& scope_;
     };
 
