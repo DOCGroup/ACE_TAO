@@ -9,19 +9,19 @@
 #endif
 
 #if defined (__DECCXX)
-# define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
-# define ACE_LACKS_LINEBUFFERED_STREAMBUF
-# define ACE_LACKS_SIGNED_CHAR
-# if defined (linux)
-#   define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#   define ACE_HAS_CPLUSPLUS_HEADERS
-# else  /* ! linux */
+# if !defined (linux)
 #   define ACE_HAS_STRING_CLASS
 #   if (__DECCXX_VER >= 60090010)
 #     define ACE_HAS_STDCPP_STL_INCLUDES
 #   endif /* __DECCXX_VER < 60090010 */
 # endif /* ! linux */
+
 # define DEC_CXX
+# define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
+# define ACE_LACKS_LINEBUFFERED_STREAMBUF
+# define ACE_LACKS_SIGNED_CHAR
+# define ACE_HAS_STANDARD_CPP_LIBRARY 1
+# define ACE_HAS_CPLUSPLUS_HEADERS
 # if (__DECCXX_VER >= 60090010)
     // DEC CXX 6.0 supports exceptions, etc., by default.  Exceptions
     // are enabled by platform_osf1_4.0.GNU/wrapper_macros.GNU.
