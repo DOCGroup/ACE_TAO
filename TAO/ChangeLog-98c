@@ -1,3 +1,17 @@
+Fri Jun 19 10:14:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/POA/On_Demand_Activation/Servant_Activator.h: 
+	* tests/POA/On_Demand_Activation/Servant_Activator.cpp: 
+	* tests/POA/On_Demand_Activation/Servant_Locator.h: 
+	* tests/POA/On_Demand_Activation/Servant_Locator.cpp: 
+	* tests/POA/On_Demand_Activation/server.cpp: 
+	  The Locator and Activator objects require an ORB_ptr now (that
+	  in turn is passed to the MyFooServant).
+
+	* tests/POA/On_Demand_Activation/Makefile: 
+	* tests/POA/Forwarding/Makefile: 
+	  Updated dependencies.
+
 Fri Jun 19 09:56:55 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/README:
