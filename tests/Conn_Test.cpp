@@ -180,14 +180,13 @@ Svc_Handler::idle (u_long flags)
 // Template specializations.  Older versions of g++, such as 2.7.2.3,
 // can't deal with them, though.
 
-#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)  &&  \
-  (!defined (__GNUG__) || (__GNUC__ > 2 || __GNUC_MINOR__ >= 90))
+#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)  &&  !defined (ACE_HAS_OLD_GNUG)
 size_t
 ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const
 {
   return addr.get_ip_address () + addr.get_port_number ();
 }
-#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION && egcs, if __GNUG__ */
+#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION && newer g++, if __GNUG__ */
 
 // ****************************************
 
