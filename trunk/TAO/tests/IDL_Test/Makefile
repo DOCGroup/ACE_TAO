@@ -28,6 +28,7 @@ IDL_ALWAYS =	anonymous		\
 		interface		\
 		keywords		\
 		pragma			\
+		repo_id_mod		\
 		sequence		\
 		typedef			\
 		union

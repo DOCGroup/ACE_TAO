@@ -21,6 +21,7 @@
 #include "ace/Log_Msg.h"
 #include "pragmaS.h"
 #include "unionC.h"
+#include "repo_id_modC.h"
 
 class hello_i : public virtual POA_hello
 {
@@ -39,6 +40,38 @@ class ciao_i : public virtual POA_ciao
 };
 
 class aloha_i : public virtual POA_aloha
+{
+};
+
+class schmooze_i : public virtual gleep::schmooze
+{
+};
+
+class schmeer_i : public virtual gleep::schmeer
+{
+};
+
+class schlemiel_i : public virtual gleep::schlemiel
+{
+};
+
+class spilkis_i : public virtual gleep::spilkis
+{
+};
+
+class schmuck_i : public virtual gleep::floop::schmuck
+{
+};
+
+class schmendrick_i : public virtual gleep::floop::schmendrick
+{
+};
+
+class schlemazel_i : public virtual gleep::floop::verklempt::schlemazel
+{
+};
+
+class schmegegging_i : public virtual gleep::schmegegging
 {
 };
 
@@ -63,113 +96,204 @@ main (int argc , char *argv[])
                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Test of pragma prefix handling.
-
-      CORBA::ULong error_count = 0;
+      // Test of #pragma prefix behavior.
 
       CORBA::Object_var obj;
 
       hello_i h;
-
       obj = h._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-
       ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/hello:1.0"))
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "pragma prefix error in object 'hello'\n"));
-
-          error_count++;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "pragma prefix error in object 'hello'\n"),
+                            -1);
         }
 
       goodbye_i g;
-
       obj = g._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-
       ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/goodbye:1.0"))
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "pragma prefix error in object 'goodbye'\n"));
-
-          error_count++;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "pragma prefix error in object 'goodbye'\n"),
+                            -1);
         }
 
       sayonara_i s;
-
       obj = s._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-
       ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:hammer.com/salutation/sayonara:1.0"))
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "pragma prefix error in object 'sayonara'\n"));
-
-          error_count++;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "pragma prefix error in object 'sayonara'\n"),
+                            -1);
         }
 
       ciao_i c;
-
       obj = c._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-
       ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/ciao:1.0"))
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "pragma prefix error in object 'ciao'\n"));
-
-          error_count++;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "pragma prefix error in object 'ciao'\n"),
+                            -1);
         }
 
       aloha_i a;
-
       obj = a._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-
       ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/aloha:1.0"))
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "pragma prefix error in object 'aloha'\n"));
-
-          error_count++;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "pragma prefix error in object 'aloha'\n"),
+                            -1);
         }
 
-      ACE_DEBUG ((LM_DEBUG,
-                 "Pragma prefix test completed with %d errors\n"
-                 "Check compiler output for build warnings\n",
-                 error_count));
+      // Test of typeprefix, typeid, and #pragma version behavior.
 
-      // Test of duplicate case labels.
+      schmooze_i s_schmooze;
+
+      if (ACE_OS::strcmp (s_schmooze._interface_repository_id (),
+                          "IDL:gleep_prefix/gleep/schmooze:1.0"))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "pragma prefix error in object 'schmooze'\n"),
+                            -1);
+        }
+
+      schmeer_i s_schmeer;
+
+      if (ACE_OS::strcmp (s_schmeer._interface_repository_id (),
+                          "IDL:gleep_prefix/gleep/schmeer:1.0"))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "pragma prefix error in object 'schmeer'\n"),
+                            -1);
+        }
+
+      schlemiel_i s_schlemiel;
+
+      if (ACE_OS::strcmp (s_schlemiel._interface_repository_id (),
+                          "IDL:gleep_prefix/gleep/schlemiel:1.0"))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "pragma prefix error in object 'schlemiel'\n"),
+                            -1);
+        }
+
+      spilkis_i s_spilkis;
+
+      if (ACE_OS::strcmp (s_spilkis._interface_repository_id (),
+                          "IDL:gleep_prefix/gleep/spilkis:1.0"))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "pragma prefix error in object 'spilkis'\n"),
+                            -1);
+        }
+
+      schmuck_i s_schmuck;
+
+      if (ACE_OS::strcmp (s_schmuck._interface_repository_id (),
+                          "ABRA:cadabra/hocus/pocus:1.23"))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "pragma prefix error in object 'schmuck'\n"),
+                            -1);
+        }
+
+      schmendrick_i s_schmendrick;
+
+      if (ACE_OS::strcmp (s_schmendrick._interface_repository_id (),
+                          "IDL:floop_prefix/gleep/floop/schmendrick:524.23"))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "pragma prefix error in object 'schmendrick'\n"),
+                            -1);
+        }
+
+      schlemazel_i s_schlemazel;
+
+      if (ACE_OS::strcmp (
+              s_schlemazel._interface_repository_id (),
+              "IDL:verklempt_prefix/gleep/floop/verklempt/schlemazel:1.0"
+            ))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "pragma prefix error in object 'schlemazel'\n"),
+                            -1);
+        }
+
+      schmegegging_i s_schmegegging;
+
+      if (ACE_OS::strcmp (s_schmegegging._interface_repository_id (),
+                          "IDL:gleep_prefix/gleep/schmegegging:1.0"))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "pragma prefix error in object 'schmegegging'\n"),
+                            -1);
+        }
+
+      // Testing (de)marshaling of IDL union values 
+      // under duplicate and default case labels.
 
       Field field;
-      field.value.strValue (CORBA::string_dup ("duplicate case label test string"));
+      field.value.strValue (
+          CORBA::string_dup ("duplicate case label test string")
+        );
       field.value._d (FTYPE_VARCHAR);
       CORBA::Any any1;
       any1 <<= field;
       Field *outfield;
-      any1 >>= outfield;
+
+      if ((any1 >>= outfield) == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "error in extraction of "
+                             "duplicate case label value\n"),
+                            -1);
+        }
+
       const char *str = outfield->value.strValue ();
-      ACE_DEBUG ((LM_DEBUG,
-                  "\n%s\n",
-                  str));
+      
+      if (ACE_OS::strcmp (str, "duplicate case label test string") != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "error - corruption of "
+                             "duplicate case label value\n"),
+                            -1);
+        }
 
       field.value.defstr (CORBA::string_dup ("default case test string"));
       any1 <<= field;
-      any1 >>= outfield;
+
+      if ((any1 >>= outfield) == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "error in extraction of "
+                             "default case label value\n"),
+                            -1);
+        }
+
       str = outfield->value.defstr ();
-      ACE_DEBUG ((LM_DEBUG,
-                  "%s\n",
-                  str));
+      
+      if (ACE_OS::strcmp (str, "default case test string") != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "error - corruption of "
+                             "default case label value\n"),
+                            -1);
+        }
 
       root_poa->destroy (1,
                          1
