@@ -5,6 +5,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Marshal.h"
 #include "tao/Typecode.h"
+#include "tao/CDR.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
