@@ -1,3 +1,23 @@
+Mon Dec 31 15:09:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * apps/drwho/BM_Server.cpp:
+        * apps/drwho/Options.cpp:
+        * apps/drwho/PM_Client.cpp:
+        * apps/drwho/PMC_Ruser.cpp:
+        * apps/drwho/PMC_Ruser.cpp:
+        * apps/gperf/src/Options.cpp:
+        * docs/tutorials/010/message_queue.cpp:
+        * docs/tutorials/011/message_queue.cpp:
+        * docs/tutorials/012/message_queue.cpp:
+        * docs/tutorials/013/message_queue.cpp:
+        * examples/IOStream/server/iostream_server.cpp:
+        * examples/Reactor/WFMO_Reactor/test_multithreading.cpp:
+        * netsvcs/clients/Logger/direct_logging.cpp:
+        * tests/Pipe_Test.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Timeout.i:
+          Changed occurences of atoi with ACE_OS::atoi because the normal
+          atoi gives problems when compiling with ACE_USES_WCHAR defined
+
 Mon Dec 31 14:40:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/Get_Opt.cpp:
