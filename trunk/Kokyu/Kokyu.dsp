@@ -260,67 +260,27 @@ SOURCE=.\Kokyu_dsrt.i
 # Begin Source File
 
 SOURCE=.\DSRT_Direct_Dispatcher_Impl_T.cpp
-
-!IF  "$(CFG)" == "Kokyu_DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "Kokyu_DLL - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\DSRT_Dispatch_Item_T.cpp
-
-!IF  "$(CFG)" == "Kokyu_DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "Kokyu_DLL - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\DSRT_Dispatcher_Impl_T.cpp
-
-!IF  "$(CFG)" == "Kokyu_DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "Kokyu_DLL - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\DSRT_Sched_Queue_T.cpp
-
-!IF  "$(CFG)" == "Kokyu_DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "Kokyu_DLL - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Kokyu_dsrt.cpp
-
-!IF  "$(CFG)" == "Kokyu_DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "Kokyu_DLL - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # End Group
 # End Target
