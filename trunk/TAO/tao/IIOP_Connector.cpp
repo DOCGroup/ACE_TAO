@@ -21,6 +21,8 @@
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Environment.h"
 
+ACE_RCSID(tao, IIOP_Connector, "$Id$")
+
 TAO_IIOP_Connector::TAO_IIOP_Connector (void)
   : TAO_Connector (TAO_IOP_TAG_INTERNET_IOP),
     base_connector_ ()
@@ -107,59 +109,15 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
 int
 TAO_IIOP_Connector::preconnect (const char *preconnects)
 {
-  char *preconnections = ACE_OS::strdup (preconnects);
+  // Check for the proper protocol prefix.  
+  if (this->check_prefix (preconnects) != 0)
+    return 0; // Failure: zero successful preconnections
 
-  // @@ Fred&Ossama: cleanup this code before the merge!
-#if 0
-  if (preconnections)
-    {
-      ACE_INET_Addr dest;
-      TAO_Client_Connection_Handler *handler;
-      ACE_Unbounded_Stack<TAO_Client_Connection_Handler *> handlers;
+  const char *protocol_removed = ACE_OS::strstr (preconnects, "://") + 3;
+  // "+ 3" since strlen of "://" is 3.
 
-      char *nextptr = 0;
-      char *where = 0;
+  char *preconnections = ACE_OS::strdup (protocol_removed);
 
-      for (where = ACE::strsplit_r (preconnections, ",", nextptr);
-           where != 0;
-           where = ACE::strsplit_r (0, ",", nextptr))
-        {
-          char *tport = 0;
-          char *thost = where;
-          char *sep = ACE_OS::strchr (where, ':');
-
-          if (sep)
-            {
-              *sep = '\0';
-              tport = sep + 1;
-
-              dest.set (ACE_OS::atoi (tport),
-                        thost);
-
-              // Try to establish the connection
-              handler = 0;
-              if (this->base_connector_.connect (handler, dest) == 0)
-                // Save it for later so we can mark it as idle
-                handlers.push (handler);
-              else
-                ACE_ERROR ((LM_ERROR,
-                            "(%P|%t) Unable to preconnect to host '%s', port %d.\n",
-                            dest.get_host_name (),
-                            dest.get_port_number ()));
-            }
-          else
-            ACE_ERROR ((LM_ERROR,
-                        "(%P|%t) Yow!  Couldn't find a ':' separator in '%s' spec.\n",
-                        where));
-        }
-
-      // Walk the stack of handlers and mark each one as idle now.
-      handler = 0;
-      while (handlers.pop (handler) == 0)
-        handler->idle ();
-
-    }
-#else
   int successes = 0;
   if (preconnections)
     {
@@ -172,8 +130,20 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
            where != 0;
            where = ACE::strsplit_r (0, ",", nextptr))
         {
+          int version_offset = 0;
+          // Additional offset to remove version from preconnect, if it exists.
+
+          if (isdigit (where[0]) &&
+              where[1] == '.' &&
+              isdigit (where[2]) &&
+              where[3] == '@')
+            version_offset = 4;
+
+          // @@ For now, we just drop the version prefix.  However, at 
+          //    some point in the future the version may become useful.
+
           char *tport = 0;
-          char *thost = where;
+          char *thost = where + version_offset;
           char *sep = ACE_OS::strchr (where, ':');
 
           if (sep)
@@ -186,7 +156,8 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
             }
           else
             ACE_ERROR ((LM_ERROR,
-                        "(%P|%t) Yow!  Couldn't find a ':' separator in '%s' spec.\n",
+                        "(%P|%t) Couldn't find a ':' separator "
+                        "in '%s' spec.\n",
                         where));
         }
 
@@ -231,7 +202,6 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
             }
         }
     }
-#endif /* 0 */
 
   ACE_OS::free (preconnections);
 

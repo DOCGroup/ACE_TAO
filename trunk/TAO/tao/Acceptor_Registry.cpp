@@ -163,7 +163,9 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
         }
 
       ACE_CString prefix = iop.substring (0, indx);
+
       ACE_CString addrs  = iop.substring (indx+3);
+
       if (addrs [addrs.length () - 1] == '/')
         addrs [addrs.length () - 1] = '\0'; // get rid of trailing /
 
@@ -193,6 +195,17 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
                     (*factory)->factory ()->make_acceptor ();
                   if (acceptor != 0)
                     {
+                      // Check if an "N.n@" version prefix was specified.
+                      // @@ For now, we just drop the version prefix.
+                      //    At some point in the future it may become
+                      //    useful.
+                      const char *temp_iop = address.c_str ();
+                      if (isdigit (temp_iop[0]) &&
+                          temp_iop[1] == '.' &&
+                          isdigit (temp_iop[2]) &&
+                          temp_iop[3] == '@')
+                        address = address.substring (4);
+
                       // add acceptor to list.
                       this->acceptors_.insert (acceptor);
 
