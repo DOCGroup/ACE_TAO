@@ -195,11 +195,29 @@ we are creating an IOR for the nestea server, we'd just need to attach
 So what does this mean for the server?
 
 The main issue here is that the server must be changed to support the 
-simplified name. The code to do this is just one line:
+simplified name. This can be done by using the IORTable like this:
 
-<code>this->orb_->_tao_add_to_IOR_table (poa_name, server_obj.in ());</code>
+<CODE>
+      CORBA::Object_var table_object =
+        this->orb_->resolve_initial_references ("IORTable",
+                                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-This line, as taken from the nestea_server example, just uses the same 
+      IORTable::Table_var adapter =
+        IORTable::Table::_narrow (table_object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (CORBA::is_nil (adapter.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
+        }
+      else
+        {
+          adapter->bind (poa_name, server_str.in (), ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+</CODE>
+
+These lines, as taken from the nestea_server example, just uses the same 
 poa_name as registered with the IMR and associates it with the server_obj 
 object in the IOR table.  Because the IMR will be able to handle the 
 simplified name (if it uses the POA name scheme) then this IOR will work.
