@@ -38,7 +38,7 @@ class Options
   //   This class is converted into a Singleton by the 
   //   <ACE_Singleton> template.
 public:
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse the command-line arguments and initialize the options.
 
   int recurse (void) const;

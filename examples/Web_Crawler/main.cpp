@@ -17,9 +17,10 @@
 //
 // ============================================================================
 
+#include "ace/OS_main.h"
+#include "ace/Signal.h"
 #include "Web_Crawler.h"
 #include "Options.h"
-#include "ace/Signal.h"
 
 ACE_RCSID(Web_Crawler, main, "$Id$")
 
@@ -31,7 +32,7 @@ void sig_handler (int)
 }
 
 int 
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Sig_Action sa ((ACE_SignalHandler) sig_handler, SIGFPE);
 

@@ -71,7 +71,8 @@ Mem_Map_Stream::recv (size_t &len)
 
   
   const char *s = this->recv_pos_;
-  this->seek (len, SEEK_CUR);
+  off_t olen = static_cast <off_t> (len);
+  this->seek (olen, SEEK_CUR);
   len = this->get_pos_ - s;
   return s;
 }

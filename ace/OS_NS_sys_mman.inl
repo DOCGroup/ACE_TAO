@@ -120,8 +120,12 @@ ACE_OS::mmap (void *addr,
       if (try_create)
 #  endif /* !ACE_HAS_WINCE && (ACE_HAS_WINNT4 || ACE_HAS_WINNT4 == 0) */
         {
+          SECURITY_ATTRIBUTES sa_buffer;
+          SECURITY_DESCRIPTOR sd_buffer;
           const LPSECURITY_ATTRIBUTES attr =
-            ACE_OS::default_win32_security_attributes (sa);
+            ACE_OS::default_win32_security_attributes_r (sa,
+                                                         &sa_buffer,
+                                                         &sd_buffer);
 
           *file_mapping = ACE_TEXT_CreateFileMapping (file_handle,
                                                       attr,

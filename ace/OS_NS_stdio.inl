@@ -713,14 +713,24 @@ ACE_OS::fgets (ACE_TCHAR *buf, int size, FILE *fp)
 }
 
 #if !defined (ACE_WIN32)
-// Win32 implementation of fopen(const ACE_TCHAR*, const ACE_TCHAR*)
-// is in OS.cpp.
+// Win32 implementation of fopen () is in OS_NS_stdio.cpp.
 ACE_INLINE FILE *
-ACE_OS::fopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode)
+ACE_OS::fopen (const char *filename, const ACE_TCHAR *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
   ACE_OSCALL_RETURN (::fopen (filename, mode), FILE *, 0);
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE FILE *
+ACE_OS::fopen (const wchar_t *filename, const ACE_TCHAR *mode)
+{
+  ACE_OS_TRACE ("ACE_OS::fopen");
+  // Non-Windows doesn't use wchar_t file systems.
+  ACE_OSCALL_RETURN (::fopen (ACE_TEXT_ALWAYS_CHAR(filename), mode), FILE*, 0);
+}
+#endif /* ACE_HAS_WCHAR */
+
 #endif /* ACE_WIN32 */
 
 ACE_INLINE int
@@ -844,8 +854,8 @@ ACE_OS::puts (const ACE_TCHAR *s)
 }
 
 ACE_INLINE int
-ACE_OS::rename (const ACE_TCHAR *old_name,
-                const ACE_TCHAR *new_name,
+ACE_OS::rename (const char *old_name,
+                const char *new_name,
                 int flags)
 {
 # if defined (ACE_LACKS_RENAME)
@@ -865,17 +875,51 @@ ACE_OS::rename (const ACE_TCHAR *old_name,
   // MOVEFILE_COPY_ALLOWED is specified to allow such a rename across drives.
   if (flags == -1)
     flags = MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING;
-  if (ACE_TEXT_MoveFileEx(old_name, new_name, flags) == 0)
+  if (::MoveFileExA (old_name, new_name, flags) == 0)
     ACE_FAIL_RETURN (-1);
   return 0;
-# elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  ACE_UNUSED_ARG (flags);
-  ACE_OSCALL_RETURN (::_wrename (old_name, new_name), int, -1);
 # else /* ACE_LACKS_RENAME */
   ACE_UNUSED_ARG (flags);
   ACE_OSCALL_RETURN (::rename (old_name, new_name), int, -1);
 # endif /* ACE_LACKS_RENAME */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::rename (const wchar_t *old_name,
+                const wchar_t *new_name,
+                int flags)
+{
+# if defined (ACE_LACKS_RENAME)
+  ACE_UNUSED_ARG (old_name);
+  ACE_UNUSED_ARG (new_name);
+  ACE_UNUSED_ARG (flags);
+  ACE_NOTSUP_RETURN (-1);
+# elif defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (flags);
+  if (MoveFile (old_name, new_name) != 0)
+    ACE_FAIL_RETURN (-1);
+  return 0;
+# elif defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 == 1)
+  // NT4 (and up) provides a way to rename/move a file with similar semantics
+  // to what's usually done on UNIX - if there's an existing file with
+  // <new_name> it is removed before the file is renamed/moved. The
+  // MOVEFILE_COPY_ALLOWED is specified to allow such a rename across drives.
+  if (flags == -1)
+    flags = MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING;
+  if (::MoveFileExW (old_name, new_name, flags) == 0)
+    ACE_FAIL_RETURN (-1);
+  return 0;
+# elif defined (ACE_WIN32)
+  ACE_UNUSED_ARG (flags);
+  ACE_OSCALL_RETURN (::_wrename (old_name, new_name), int, -1);
+# else /* ACE_LACKS_RENAME */
+  ACE_Wide_To_Ascii nold_name (old_name);
+  ACE_Wide_To_Ascii nnew_name (new_name);
+  return ACE_OS::rename (nold_name.char_rep (), nnew_name.char_rep (), flags);
+# endif /* ACE_LACKS_RENAME */
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE void
 ACE_OS::rewind (FILE *fp)
@@ -889,8 +933,8 @@ ACE_OS::rewind (FILE *fp)
 #endif /* ACE_HAS_WINCE */
 }
 
-ACE_INLINE ACE_TCHAR *
-ACE_OS::tempnam (const ACE_TCHAR *dir, const ACE_TCHAR *pfx)
+ACE_INLINE char *
+ACE_OS::tempnam (const char *dir, const char *pfx)
 {
   ACE_OS_TRACE ("ACE_OS::tempnam");
 #if defined (ACE_HAS_WINCE) || defined (ACE_LACKS_TEMPNAM)
@@ -901,16 +945,36 @@ ACE_OS::tempnam (const ACE_TCHAR *dir, const ACE_TCHAR *pfx)
   // pSOS only considers the directory prefix
   ACE_UNUSED_ARG (pfx);
   ACE_OSCALL_RETURN (::tmpnam ((char *) dir), char *, 0);
-#elif (defined (ACE_WIN32) && ((defined (__BORLANDC__) && !defined(ACE_USES_WCHAR) && (__BORLANDC__ < 0x600)) || defined (__IBMCPP__)))
+#elif (defined (ACE_WIN32) && ((defined (__BORLANDC__) && (__BORLANDC__ < 0x600))))
   ACE_OSCALL_RETURN (::_tempnam ((char *) dir, (char *) pfx), char *, 0);
-#elif defined(ACE_WIN32) && (defined (__BORLANDC__) && (__BORLANDC__ < 0x600)) && defined (ACE_USES_WCHAR)
-  ACE_OSCALL_RETURN (::_wtempnam ((wchar_t*) dir, (wchar_t*) pfx), wchar_t *, 0);
-#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  ACE_OSCALL_RETURN (::_wtempnam (dir, pfx), wchar_t *, 0);
 #else /* ACE_HAS_WINCE || ACE_LACKS_TEMPNAM */
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::tempnam (dir, pfx), char *, 0);
 #endif /* VXWORKS */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wchar_t *
+ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
+{
+  ACE_OS_TRACE ("ACE_OS::tempnam");
+#if defined (ACE_HAS_WINCE) || defined (ACE_LACKS_TEMPNAM)
+  ACE_UNUSED_ARG (dir);
+  ACE_UNUSED_ARG (pfx);
+  ACE_NOTSUP_RETURN (0);
+#elif defined(ACE_WIN32)
+#  if defined (__BORLANDC__) && (__BORLANDC__ < 0x600)
+  ACE_OSCALL_RETURN (::_wtempnam ((wchar_t*) dir, (wchar_t*) pfx), wchar_t *, 0);
+#  else
+  ACE_OSCALL_RETURN (::_wtempnam (dir, pfx), wchar_t *, 0);
+#  endif /* __BORLANDC__ */
+#else /* ACE_HAS_WINCE || ACE_LACKS_TEMPNAM */
+  // No native wide-char support; convert to narrow and call the char* variant.
+  char *ndir = ACE_Wide_To_Ascii (dir).char_rep ();
+  char *npfx = ACE_Wide_To_Ascii (pfx).char_rep ();
+  return ACE_OS::tempnam (ndir, npfx);
+#endif /* VXWORKS */
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::vsprintf (char *buffer, const char *format, va_list argptr)
@@ -974,6 +1038,31 @@ ACE_OS::default_win32_security_attributes (LPSECURITY_ATTRIBUTES sa)
       default_sa.lpSecurityDescriptor = &sd;
       default_sa.bInheritHandle       = TRUE;
       sa = &default_sa;
+    }
+  return sa;
+#else /* !ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES */
+  return sa;
+#endif /* ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES */
+}
+
+ACE_INLINE LPSECURITY_ATTRIBUTES
+ACE_OS::default_win32_security_attributes_r (LPSECURITY_ATTRIBUTES sa,
+                                             LPSECURITY_ATTRIBUTES sa_buffer,
+                                             SECURITY_DESCRIPTOR* sd_buffer)
+{
+#if defined (ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES)
+  if (sa == 0)
+    {
+      if (sa_buffer != 0 && sd_buffer != 0)
+        {
+          InitializeSecurityDescriptor
+            (sd_buffer, SECURITY_DESCRIPTOR_REVISION);
+          SetSecurityDescriptorDacl (sd_buffer, TRUE, NULL, FALSE);
+          sa_buffer->nLength = sizeof(SECURITY_ATTRIBUTES);
+          sa_buffer->lpSecurityDescriptor = sd_buffer;
+          sa_buffer->bInheritHandle       = TRUE;
+    	  sa = sa_buffer;
+        }
     }
   return sa;
 #else /* !ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES */

@@ -236,12 +236,25 @@ namespace ACE_OS {
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
 #endif /* ACE_WIN32 */
-  FILE *fopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode);
+  FILE *fopen (const char *filename, const ACE_TCHAR *mode);
+
+#if defined (ACE_HAS_WCHAR)
+#if defined (ACE_WIN32)
+  extern ACE_Export
+#else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* ACE_WIN32 */
+  FILE *fopen (const wchar_t *filename, const ACE_TCHAR *mode);
+#endif /* ACE_HAS_WCHAR */
 
 #if defined (ACE_WIN32)
   /// Default Win32 Security Attributes definition.
   ACE_NAMESPACE_INLINE_FUNCTION
   LPSECURITY_ATTRIBUTES default_win32_security_attributes (LPSECURITY_ATTRIBUTES);
+  ACE_NAMESPACE_INLINE_FUNCTION
+  LPSECURITY_ATTRIBUTES default_win32_security_attributes_r (LPSECURITY_ATTRIBUTES, 
+                                             LPSECURITY_ATTRIBUTES,
+                                             SECURITY_DESCRIPTOR*);
 
   // = Win32 OS version determination function.
   /// Return the win32 OSVERSIONINFO structure.
@@ -334,9 +347,16 @@ namespace ACE_OS {
   int puts (const ACE_TCHAR *s);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int rename (const ACE_TCHAR *old_name,
-              const ACE_TCHAR *new_name,
+  int rename (const char *old_name,
+              const char *new_name,
               int flags = -1);
+
+#if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int rename (const wchar_t *old_name,
+              const wchar_t *new_name,
+              int flags = -1);
+#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void rewind (FILE *fp);
@@ -358,8 +378,14 @@ namespace ACE_OS {
 # endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_TCHAR *tempnam (const ACE_TCHAR *dir = 0,
-                      const ACE_TCHAR *pfx = 0);
+  char *tempnam (const char *dir = 0,
+                 const char *pfx = 0);
+
+#if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
+  wchar_t *tempnam (const wchar_t *dir = 0,
+                    const wchar_t *pfx = 0);
+#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int vsprintf (char *buffer, const char *format, va_list argptr);

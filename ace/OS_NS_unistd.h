@@ -299,7 +299,12 @@ namespace ACE_OS {
                 const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int unlink (const ACE_TCHAR *path);
+  int unlink (const char *path);
+
+#if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int unlink (const wchar_t *path);
+#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t write (ACE_HANDLE handle,
