@@ -1,0 +1,35 @@
+##---------------------------------------------------------------------------
+##       $Id$
+##
+##       Makefile for TAO's Life Cycle Service
+##
+##---------------------------------------------------------------------------
+
+##
+##  Process this file with automake to create Makefile.in
+##
+
+## The number in AUTOMAKE_OPTIONS is the minimum required version automake
+## needed to process this file.
+AUTOMAKE_OPTIONS = 1.4
+
+INCLUDES = -I$(top_builddir) -I$(top_srcdir)
+
+bin_PROGRAMS = LifeCycle_Service
+
+LifeCycle_Service_LDADD = \
+	$(top_builddir)/ace/libACE.la $(top_builddir)/TAO/tao/libTAO.la
+
+LifeCycle_Service_SOURCES = \
+        Criteria_Evaluator.cpp \
+        Factory_Trader.cpp \
+        LifeCycle_Service.cpp \
+        LifeCycle_Service_i.cpp
+
+noinst_HEADERS = \
+        Criteria_Evaluator.h \
+        Factory_Trader.h \
+        LifeCycle_Service.h \
+        LifeCycle_Service_i.h
+
+## EXTRA_DIST = README
