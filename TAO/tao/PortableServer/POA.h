@@ -667,7 +667,8 @@ public:
 
   const TAO_Object_Adapter::poa_name &system_name (void) const;
 
-  static void check_for_valid_wait_for_completions (CORBA::Boolean wait_for_completion,
+  static void check_for_valid_wait_for_completions (const TAO_ORB_Core &orb_core,
+                                                    CORBA::Boolean wait_for_completion,
                                                     CORBA::Environment &ACE_TRY_ENV);
 
   TAO_ORB_Core &orb_core (void) const;
