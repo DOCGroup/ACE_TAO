@@ -1,3 +1,7 @@
+Sun May 04 07:22:49 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Timer_Heap_T.cpp: changed some more int declarations to longs.
+
 Sat May  3 17:38:19 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Changed all uses of Reactor::{scheduler_timer,cancel}() and
