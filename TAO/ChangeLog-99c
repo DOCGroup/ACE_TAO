@@ -37,9 +37,6 @@ Thu Jan 28 16:34:14 1999 Fred Kuhns <fredk@cs.wustl.edu>
           modification of several files, deleting others as well as adding
           and removing classes.
 
-        * removed the files IIOP_Object.{h,i,cpp} and object IIOP_Object.
-          All functionality now resided in the old base class STUB_Object.
-
         * Added the following classes and files
           1) Pluggable.h - Contains all the base classes and registries
              used in Pluggable protocols.  New transport implementations
@@ -56,7 +53,7 @@ Thu Jan 28 16:34:14 1999 Fred Kuhns <fredk@cs.wustl.edu>
           2) IIOP_Profile.{h,cpp}
              Class TAO_IIOP_Profile is defined here and it profides IIOP
              specific processing.  Much of the transport specific
-             processing located in the old IIOP_Object has been relocated
+             processing located in the IIOP_Object has been relocated
              to here.
              In particular an IIOP_Profile will contain a reference to the
              currently used transport, that is the connection handler.
@@ -86,12 +83,9 @@ Thu Jan 28 16:34:14 1999 Fred Kuhns <fredk@cs.wustl.edu>
              new IIOP_Transport class.
           3) IIOP_ORB.{h,cpp}
              IIOP_ORB.h -> got rid of the #include "tao/corba.h"
-             IIOP_ORB.cpp changed references from IIOP_Object and
-             Client_Handler to STUB_Object and TAO_Transport.  Also moved
-             much of the IIOP specific marsheling code to IIOP_Profile.
+             moved much of the IIOP specific marsheling code to IIOP_Profile.
           4) Invocation.{h,i,cpp}
-             Changed references from IIOP_Object to STUB_Object.  Also use
-             TAO_Transport and TAO_Profile instead of Client_Handler and
+             use TAO_Transport and TAO_Profile instead of Client_Handler and
              IIOP_Object::IIOP.
              Additionally, the connection is now made by the
              Connector_Registry object.
@@ -103,29 +97,19 @@ Thu Jan 28 16:34:14 1999 Fred Kuhns <fredk@cs.wustl.edu>
              The ORB_Core was changed to allocate memory for the new
              objects: TAO_Connector_Registry, TAO_IIOP_Connector and
              TAO_IIOP_Acceptor. Preconnect () moved also.
-          7) Object.{i,cpp}
+          7) Servant_Base.cpp
              Changed to use STUB_Object refs rather than IIOP_Object.
-          8) Servant_Base.cpp
+          8) Server_Request.cpp
              Changed to use STUB_Object refs rather than IIOP_Object.
-          9) Server_Request.cpp
-             Changed to use STUB_Object refs rather than IIOP_Object.
-         10) Stub.{h,i,cpp}
-             All logic from IIOP_Object (minus transport specific stuff)
-             moved to the STUB_Object.
-         11) decode.cpp
-             Changed IIOP_Object ref to STUB_Object
+          9) decode.cpp
              Moved all IIOP specific processing (parsing IORs) to
              IIOP_Profile.
          12) encode.cpp
-             Changed IIOP_Object ref to STUB_Object
              Moved all IIOP specific processing (parsing IORs) to
              IIOP_Profile.
          13) params.{h,i,cpp}
              Changed use_IIOP_lite_protocol to use_lite_protocol.
-         14) Any.h
-             Changed "friend class IIOP_Object" to "friend class
-             STUB_Object"
-         15) corba.h
+         14) corba.h
              Added #include's for the new Pluggable Protocol header
              files.
 
