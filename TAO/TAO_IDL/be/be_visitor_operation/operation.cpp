@@ -705,12 +705,17 @@ be_visitor_operation::gen_arg_template_param_name (AST_Type *bt,
           return;
         }
     }
+    
+  // We need the unaliased type name to make the code block below
+  // work correctly.  
+  AST_Type *ut = bt->unaliased_type ();
+  nt = ut->node_type ();
 
   // For the four predefined types below, we use the helper struct
   // type, in order to disambiguate the template parameter.
   if (nt == AST_Decl::NT_pre_defined)
     {
-      AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (bt);
+      AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (ut);
 
       switch (pdt->pt ())
         {
@@ -731,5 +736,7 @@ be_visitor_operation::gen_arg_template_param_name (AST_Type *bt,
         }
     }
 
+  // For types other than the 4 above, don't unalias the type name
+  // in case it is a sequence or array.
   *os << bt->name ();
 }

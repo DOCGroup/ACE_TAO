@@ -68,6 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // IDL type constructs.
 
 #include "ast_type.h"
+#include "ast_typedef.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 #include "idl_defines.h"
@@ -230,6 +231,23 @@ AST_Type::nested_type_name (AST_Decl *use_scope,
                             use_scope,
                             suffix,
                             prefix);
+}
+
+AST_Type *
+AST_Type::unaliased_type (void)
+{
+  AST_Type *t = this;
+  AST_Typedef *td = 0;
+  AST_Decl::NodeType nt = this->node_type ();
+  
+  while (nt == AST_Decl::NT_typedef)
+    {
+      td = AST_Typedef::narrow_from_decl (t);
+      t = td->base_type ();
+      nt = t->node_type ();
+    }
+    
+  return t;
 }
 
 // This is the real thing used by the method above.
