@@ -1,3 +1,8 @@
+Sat Jun 19 22:27:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Multiple_Inheritance/run_test.pl:
+	  Made this test safe for nightly builds.
+
 Sat Jun 19 22:22:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.h:
