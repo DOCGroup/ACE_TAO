@@ -121,7 +121,7 @@ TAO_Marshal_Any::append (CORBA::TypeCode_ptr,
       if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
           // append the data
-          retval = dest->append (elem_tc, src, ACE_TRY_ENV);
+          retval = dest->append (elem_tc.in (), src, ACE_TRY_ENV);
           ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
         }
     }

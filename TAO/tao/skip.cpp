@@ -115,7 +115,6 @@ TAO_Marshal_Any::skip (CORBA::TypeCode_ptr,
       retval = stream->skip (elem_tc.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
     }
-  CORBA::release (elem_tc);
   return retval;
 }
 
@@ -491,6 +490,8 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
               return stream->skip (member_tc, ACE_TRY_ENV);
             }
         }
+      if (default_tc != 0)
+        return stream->skip (default_tc, ACE_TRY_ENV);
     }
   return retval;
 }
