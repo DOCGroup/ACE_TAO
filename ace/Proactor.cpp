@@ -210,18 +210,22 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &,
                       -1);
 
   // Create the Asynch_Timer.
-  ACE_Asynch_Result_Impl *asynch_timer = this->proactor_->create_asynch_timer (*handler,
-                                                                               act,
-                                                                               time,
-                                                                               ACE_INVALID_HANDLE,
-                                                                               0,
-                                                                               -1);
+  ACE_Asynch_Result_Impl *asynch_timer =
+    this->proactor_->create_asynch_timer (*handler,
+                                          act,
+                                          time,
+                                          ACE_INVALID_HANDLE,
+                                          0,
+                                          -1);
+
   if (asynch_timer == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("%N:%l:(%P | %t):%p\n"),
                        ACE_LIB_TEXT ("ACE_Proactor_Handle_Timeout_Upcall::timeout:")
                        ACE_LIB_TEXT ("create_asynch_timer failed")),
                       -1);
+
+  auto_ptr<ACE_Asynch_Result_Impl> safe_asynch_timer (asynch_timer);
 
   // Post a completion.
   if (asynch_timer->post_completion (this->proactor_->implementation ()) == -1)
@@ -1194,5 +1198,25 @@ ACE_Proactor::event_loop_done (void)
 {
   return sig_atomic_t (1);
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+template class ACE_Auto_Basic_Ptr<ACE_Asynch_Result_Impl>;
+#  endif  /* ACE_LACKS_AUTO_PTR */
+template class auto_ptr<ACE_Asynch_Result_Impl>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Asynch_Result_Impl>
+#  endif  /* ACE_LACKS_AUTO_PTR */
+#pragma instanstiate auto_ptr<ACE_Asynch_Result_Impl>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS*/
