@@ -1,3 +1,11 @@
+Wed Aug  1 12:43:57 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Svc_Conf_l.cpp:
+
+	  Reintegreated Nanbor's change (Wed Jun 13 10:22:10 2001  Nanbor
+	  Wang  <nanbor@cs.wustl.edu>) that enables proper handling of
+	  UNICODE Service Configurator directives.
+
 Wed Aug  1 07:14:42 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* include/makeinclude/platform_vxworks5.x_g++.GNU: Checked in a new
