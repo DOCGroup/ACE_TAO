@@ -15,20 +15,26 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_union/union_ci.cpp:51
+// be/be_visitor_union/union_ci.cpp:51
 
 // *************************************************************
 // Inline operations for union GIOP::TargetAddress
 // *************************************************************
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_union/discriminant_ci.cpp:164
+// be/be_visitor_union/discriminant_ci.cpp:164
 
 ACE_INLINE
 void 
@@ -54,7 +60,7 @@ GIOP::TargetAddress::_d (void) const
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_union_branch/public_ci.cpp:906
+// be/be_visitor_union_branch/public_ci.cpp:906
 
 // Accessor to set the member.
 ACE_INLINE
@@ -87,7 +93,7 @@ GIOP::TargetAddress::object_key (void)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_union_branch/public_ci.cpp:1215
+// be/be_visitor_union_branch/public_ci.cpp:1215
 
 // Accessor to set the member.
 ACE_INLINE
@@ -120,7 +126,7 @@ GIOP::TargetAddress::profile (void)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_union_branch/public_ci.cpp:1215
+// be/be_visitor_union_branch/public_ci.cpp:1215
 
 // Accessor to set the member.
 ACE_INLINE
@@ -153,7 +159,7 @@ GIOP::TargetAddress::ior (void)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -161,17 +167,9 @@ CORBA::Boolean operator<< (
     const GIOP::Version &_tao_aggregate
   )
 {
-  if (
+  return
     (strm << CORBA::Any::from_octet (_tao_aggregate.major)) &&
-    (strm << CORBA::Any::from_octet (_tao_aggregate.minor))
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm << CORBA::Any::from_octet (_tao_aggregate.minor));
 }
 
 ACE_INLINE
@@ -180,21 +178,13 @@ CORBA::Boolean operator>> (
     GIOP::Version &_tao_aggregate
   )
 {
-  if (
+  return
     (strm >> CORBA::Any::to_octet (_tao_aggregate.major)) &&
-    (strm >> CORBA::Any::to_octet (_tao_aggregate.minor))
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm >> CORBA::Any::to_octet (_tao_aggregate.minor));
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -202,17 +192,9 @@ CORBA::Boolean operator<< (
     const GIOP::IORAddressingInfo &_tao_aggregate
   )
 {
-  if (
+  return
     (strm << _tao_aggregate.selected_profile_index) &&
-    (strm << _tao_aggregate.ior)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm << _tao_aggregate.ior);
 }
 
 ACE_INLINE
@@ -221,21 +203,13 @@ CORBA::Boolean operator>> (
     GIOP::IORAddressingInfo &_tao_aggregate
   )
 {
-  if (
+  return
     (strm >> _tao_aggregate.selected_profile_index) &&
-    (strm >> _tao_aggregate.ior)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm >> _tao_aggregate.ior);
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_union/cdr_op_ci.cpp:69
+// be/be_visitor_union/cdr_op_ci.cpp:69
 
 ACE_INLINE
 CORBA::Boolean operator<< (

@@ -1,3 +1,11 @@
+Sun Apr 27 11:31:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/GIOPC.{h,cpp,i}: Regenerated code
+	* tao/diffs/GIOP.diff: Updated diffs
+
+	* tao/IOP_IORC.cpp: Removed unwanted headers
+	* tao/diffs/IOP_IOR.diff: Updated diffs.
+
 Sun Apr 27 11:01:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/GIOPC.h:
