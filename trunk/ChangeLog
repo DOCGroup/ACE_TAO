@@ -1,3 +1,11 @@
+Fri Jun 18 10:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-openvms.h:
+          Removed all commented out defines
+
+        * ace/IOStream_T.cpp:
+          Added include of ace/OS_Memory.h
+
 Thu Jun 17 21:54:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/configure.ac:
@@ -8,7 +16,7 @@ Thu Jun 17 21:54:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 Thu Jun 17 22:10:18 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Timer_Wheel_T.cpp:
-  
+
           Fixed recalc_earliest() to remember the spoke with the earliest
  	  time not from the current wheel iteration.  If the entire wheel
  	  is searched and no earliest time from the current iteration is
@@ -19,13 +27,13 @@ Thu Jun 17 22:10:18 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 Thu Jun 17 12:48:09 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/configure.ac:
-	  Added small part of change: 
+	  Added small part of change:
 	  Wed Jun 16 16:00:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 	  that was not committed at the time.
-	
+
 	* ace/OS_NS_time.h:
 	  Changed to avoid use of gettimeofday() for timezone info
-	  on *BSD systems.  Changed to always call tzset() for all 
+	  on *BSD systems.  Changed to always call tzset() for all
 	  systems that get timezone info from global variable.
 	  This fixes bugzilla bug 1845.
 
@@ -33,11 +41,11 @@ Thu Jun 17 09:19:45 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
 	* m4/config_h.m4:
-	  Added checks for pthread_suspend(), pthread_suspend_np(), 
+	  Added checks for pthread_suspend(), pthread_suspend_np(),
 	  pthread_continue(), pthread_continue_np(), and pthread_
 	  resume_np() which set ACE_HAS_PTHREAD_SUSPEND, etc...
 
-	* ace/OS_NS_Thread.inl: 
+	* ace/OS_NS_Thread.inl:
 	  Changed to call pthread_suspend_np(), pthead_continue_np(), or
 	  pthread_resume_np() as appropriate, depending on the values of
 	  the above macros.
