@@ -1,3 +1,7 @@
+Thu Dec 30 11:17:27 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * etc/ACE-development-process.html: fixed some typos.
+
 Wed Dec 29 15:42:21 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: added null definition of ACE_ENDLESS_LOOP,
