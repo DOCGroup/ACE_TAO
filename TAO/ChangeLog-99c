@@ -1,3 +1,10 @@
+Tue Jun 22 13:55:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+	  Eliminated unused arg in _reset() and added initialization of
+	  base class constructor in copy constructor. These were
+	  pointed out by Linux warnings in David's build logs.
+
 Tue Jun 22 13:42:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/fe/fe_interface_header.cpp:
