@@ -1,3 +1,16 @@
+Sat Oct 16 19:48:27 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp: 
+	* orbsvcs/orbsvcs/IOR_Multicast.h:
+	* tao/params.h:
+	* tao/params.i:
+	* tao/ORB_Core.cpp:
+	* tao/ORB.cpp:
+	
+	  Made changes towards re-incarnating the
+	  -ORBMulticastDiscoveryEndpoint option to the ORB. The option is
+	  not fully incorporated yet.  
+
 Sat Oct 16 14:30:16 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* docs/releasenotes/index.html: Updated release notes on AMI.
