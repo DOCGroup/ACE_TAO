@@ -6,17 +6,17 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    Driver.h
 //
 // = DESCRIPTION
-//    This code builds an abstraction to factor out common code for 
+//    This code builds an abstraction to factor out common code for
 //    the different implementations of the Timer_Queue.
 //
 // = AUTHORS
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
-// 
+//
 // ============================================================================
 
 #if !defined (_DRIVER_H_)
@@ -27,7 +27,7 @@
 #include "ace/Timer_Queue_Adapters.h"
 
 template <class RECEIVER, class ACTION>
-class Command 
+class Command
   // = TITLE
   //    Defines an abstract class that allows us to invoke commands
   //    without knowing anything about the implementation.  This class
@@ -42,7 +42,7 @@ class Command
 {
 public:
   Command (RECEIVER &recvr, ACTION action);
-  // Sets the <receiver_> of the Command to recvr, and the 
+  // Sets the <receiver_> of the Command to recvr, and the
   // <action_> of the Command to <action>.
 
   virtual int execute (void *arg);
@@ -58,9 +58,9 @@ private:
 
 template <class TQ, class RECEIVER, class ACTION>
 class Timer_Queue_Test_Driver
-  // = TITLE 
-  //    Defines a class that provides a simmple implementation for 
-  //      a test driver for timer queues.  
+  // = TITLE
+  //    Defines a class that provides a simmple implementation for
+  //      a test driver for timer queues.
   //
   // = DESCRIPTION
   //    This is the place where the common code to test the different
@@ -71,6 +71,9 @@ class Timer_Queue_Test_Driver
   //    to that implementation.
 {
 public:
+  virtual ~Timer_Queue_Test_Driver (void);
+  // Default destructor
+
   virtual int parse_commands (const char *buf);
   // Breaks up the input string buffer into pieces and executes
   // the appropriate method to handle that operation.
@@ -79,7 +82,7 @@ public:
   // This is the main entry point to the test driver.  The user
   // of the class should normally invoke this method.
   // Returns 0 when successful, or 0 otherwise.
-  
+
   virtual int get_next_request (void);
   // This internal method gets the next request from the user.
   // Returns -1 when user wants to exit.  Returns 0 otherwise.
@@ -90,13 +93,13 @@ public:
   // Otherwise, a -1 is returned and errno is set to indicate the error.
 
   // = Template Methods.
-    
+
   virtual int display_menu (void)=0;
   // Prints the user interface for the driver to STDOUT.
-  
+
   virtual int init (void)=0;
   // Initializes values and operations for the driver.
-  
+
 protected:
   TQ timer_queue_;
   // timer queue

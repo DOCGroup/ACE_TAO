@@ -6,7 +6,7 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    Reactor_Timer_Queue_Test.h
 //
@@ -17,7 +17,7 @@
 // = AUTHORS
 //    Nanbor Wang <nw1@cs.wustl.edu> and
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
-// 
+//
 // ============================================================================
 
 #if !defined (_REACTOR_TIMER_QUEUE_TEST_H_)
@@ -77,7 +77,7 @@ private:
   ACE_Timer_Queue *tq_;
   // Keep a pointer to the timer queue we are using so we can traverse
   // the queue.
-  
+
   int done_;
   // Flag used to close down program.
 
@@ -89,7 +89,7 @@ private:
 class Reactor_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <ACE_Timer_Heap, Input_Handler, Input_Handler::ACTION>
   // = TITLE
   //   Implements a test driver for a reactive timer queue using
-  //   <ACE_Reactor>.  
+  //   <ACE_Reactor>.
   //
   // = DESCRIPTION
   //   This class implements the logic to test the reactor
@@ -102,7 +102,10 @@ public:
   // input handler can call hook methods from the driver.  Such
   // methods are the common factored out code from other
   // implementations of timer queues.
-  
+
+  virtual ~Reactor_Timer_Queue_Test_Driver (void);
+  // Default destructor
+
   virtual int display_menu (void);
   // Prints the menu of options.
 
@@ -113,7 +116,7 @@ public:
 
   virtual int run_test (void);
   // Main entry point to the test driver implementation.
-  
+
 private:
   Input_Handler thandler_;
   // This is the stdin handler.
@@ -131,7 +134,7 @@ public:
 
   void set_timer_id (long tid);
   // Sets the timer id for this handler <tid_> to <tid>
-  
+
 private:
   long tid_;
   // timer ID.
