@@ -411,6 +411,15 @@ avoid_warning:
 
 <%endif%>
 <%if(custom_types)%>
+## Some OS's have /bin/test others only have /usr/bin/test
+ifeq ($(wildcard /bin/test), /bin/test)
+  TEST_EXE = /bin/test
+else
+ifeq ($(wildcard /usr/bin/test), /usr/bin/test)
+  TEST_EXE = /usr/bin/test
+endif
+endif
+
 <%foreach(custom_types)%>
 <%if(custom_types->libpath)%>
 DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>
@@ -435,11 +444,11 @@ OBJS_DEPEND_ON_GENERATED = 1
 ## the case, then we don't need this special rule.
 ifeq ($(wildcard $(GENERATED_DIRTY)), $(GENERATED_DIRTY))
   ## If we can find /bin/test, then we will continue
-  ifeq ($(wildcard /bin/test), /bin/test)
+  ifneq ($(TEST_EXE),)
     ## If all of the generated files are there, then we need to check
     ## and make sure that the generated files are up-to-date.  If they are not
     ## then we need the special rule.
-    ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> /bin/test <%custom_type->input_file%> -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%> echo 0),)
+    ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) <%custom_type->input_file%> -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%> echo 0),)
       .NOTPARALLEL:
 <%if(custom_type->dependent)%>
     else
@@ -447,7 +456,7 @@ ifeq ($(wildcard $(GENERATED_DIRTY)), $(GENERATED_DIRTY))
       ## with respect to the source file.  Now we need to make sure that
       ## they are up-to-date with respect to the generation tool.  If the tool
       ## is newer than the generated files, then we need the special rule.
-      ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> /bin/test <%custom_type->dependent%> -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%> echo 0),)
+      ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) <%custom_type->dependent%> -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%> echo 0),)
         .NOTPARALLEL:
       endif
 <%endif%>
