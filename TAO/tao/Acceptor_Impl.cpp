@@ -28,6 +28,7 @@
 #include "ORB_Core.h"
 #include "Transport_Cache_Manager.h"
 #include "Thread_Lane_Resources.h"
+#include "debug.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Acceptor_Impl.i"
