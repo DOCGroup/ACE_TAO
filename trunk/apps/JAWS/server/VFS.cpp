@@ -73,9 +73,9 @@ JAWS_VFS_Node::open (int flags)
                       "JAWS_VFS_Node::open"));
 	  break;
 	case ENOENT:
-#if !defined (ACE_WIN32)
+#if defined (ENOLINK)
 	case ENOLINK:
-#endif /* ACE_WIN32 */
+#endif /* ENOLINK */
 	  this->status_ = HTTP_Status_Code::STATUS_NOT_FOUND;
 	  ACE_ERROR ((LM_ERROR,
                       "%p file not found error.\n",
