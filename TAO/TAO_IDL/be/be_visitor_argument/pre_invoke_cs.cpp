@@ -50,12 +50,28 @@ be_visitor_args_pre_invoke_cs::void_return_type (void)
   be_argument *arg = this->ctx_->be_node_as_argument ();
   ACE_ASSERT (arg != 0);
   be_operation *op = be_operation::narrow_from_scope (arg->defined_in ());
-  ACE_ASSERT (arg != 0);
+  ACE_ASSERT (op != 0);
 
   be_type *bt = be_type::narrow_from_decl (op->return_type ());
   if (bt->node_type () == AST_Decl::NT_pre_defined
       && (be_predefined_type::narrow_from_decl (bt)->pt ()
           == AST_PredefinedType::PT_void))
+    return 1;
+  else
+    return 0;
+}
+
+int
+be_visitor_args_pre_invoke_cs::enum_return_type (void)
+{
+  // is the operation return type void?
+  be_argument *arg = this->ctx_->be_node_as_argument ();
+  ACE_ASSERT (arg != 0);
+  be_operation *op = be_operation::narrow_from_scope (arg->defined_in ());
+  ACE_ASSERT (op != 0);
+
+  be_type *bt = be_type::narrow_from_decl (op->return_type ());
+  if (bt->base_node_type () == AST_Decl::NT_enum)
     return 1;
   else
     return 0;
@@ -113,7 +129,16 @@ be_visitor_args_pre_invoke_cs::visit_array (be_array *node)
           if (!this->void_return_type ())
             {
               *os << "ACE_ALLOCATOR_RETURN (" << arg->local_name ()
-                  << ".ptr (), " << bt->name () << "_alloc (), 0);\n";
+                  << ".ptr (), " << bt->name () << "_alloc (), ";
+              
+              if (this->enum_return_type ())
+                {
+                  *os << "_tao_retval);\n";
+                }
+              else
+                {
+                  *os << "0);\n";
+                }
             }
           else
             {
@@ -172,7 +197,17 @@ be_visitor_args_pre_invoke_cs::visit_predefined_type (be_predefined_type *node)
           if (!this->void_return_type ())
             {
               *os << "ACE_NEW_RETURN (" << arg->local_name ()
-                  << ".ptr (), CORBA::Any, 0);\n";
+                  << ".ptr (), CORBA::Any, ";
+              
+              // The one case where we can't just return 0.
+              if (this->enum_return_type ())
+                {
+                  *os << "_tao_retval);\n";
+                }
+              else
+                {
+                  *os << "0);\n";
+                }
             }
           else
             {
@@ -212,7 +247,17 @@ be_visitor_args_pre_invoke_cs::visit_sequence (be_sequence *node)
       if (!this->void_return_type ())
         {
           *os << "ACE_NEW_RETURN (" << arg->local_name ()
-              << ".ptr (), " << bt->name () << ", 0);\n";
+              << ".ptr (), " << bt->name () << ", ";
+              
+          // The one case where we can't just return 0.
+          if (this->enum_return_type ())
+            {
+              *os << "_tao_retval);\n";
+            }
+          else
+            {
+              *os << "0);\n";
+            }
         }
       else
         {
@@ -255,7 +300,17 @@ be_visitor_args_pre_invoke_cs::visit_structure (be_structure *node)
           if (!this->void_return_type ())
             {
               *os << "ACE_NEW_RETURN (" << arg->local_name ()
-                  << ".ptr (), " << bt->name () << ", 0);\n";
+                  << ".ptr (), " << bt->name () << ", ";
+              
+              // The one case where we can't just return 0.
+              if (this->enum_return_type ())
+                {
+                  *os << "_tao_retval);\n";
+                }
+              else
+                {
+                  *os << "0);\n";
+                }
             }
           else
             {
@@ -292,7 +347,17 @@ be_visitor_args_pre_invoke_cs::visit_union (be_union *node)
           if (!this->void_return_type ())
             {
               *os << "ACE_NEW_RETURN (" << arg->local_name ()
-                  << ".ptr (), " << bt->name () << ", 0);\n";
+                  << ".ptr (), " << bt->name () << ", ";
+              
+              // The one case where we can't just return 0.
+              if (this->enum_return_type ())
+                {
+                  *os << "_tao_retval);\n";
+                }
+              else
+                {
+                  *os << "0);\n";
+                }
             }
           else
             {

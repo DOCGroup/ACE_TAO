@@ -44,6 +44,9 @@ public:
   virtual int void_return_type (void);
   // return true if the operation return type is void
 
+  virtual int enum_return_type (void);
+  // return true if the operation return type is an enum
+
   virtual int visit_argument (be_argument *node);
   // visit the argument node
 
