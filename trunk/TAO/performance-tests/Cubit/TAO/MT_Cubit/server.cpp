@@ -81,15 +81,7 @@ Cubit_Task::svc (void)
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Cubit_Task::svc, wait on barrier\n"));
-#if defined (linux)
-      // ACE_Barrier doesn't work on Linux/glibc2 because its
-      // pthread_cond_wait appears broken:  it doesn't always catch
-      // the signal.
-      ACE_OS::thr_yield ();
-      ACE_OS::sleep (2);
-#else  /* ! linux */
       this->barrier_->wait ();
-#endif /* ! linux */
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Cubit_Task::svc, passed barrier\n"));
 
       // Handle requests for this object until we're killed, or one of
@@ -665,7 +657,7 @@ initialize (int argc, char **argv)
 // than kept as a stand-alone function.
 
 static int
-start_servants (void)
+start_servants (ACE_Barrier &start_barrier)
 {
   char *args1;
 
@@ -673,10 +665,6 @@ start_servants (void)
                   char[BUFSIZ],
                   -1);
   int i;
-
-  // Barrier for the multiple clients to synchronize after binding to
-  // the servants.
-  ACE_Barrier barrier_ (num_of_objs + 1);
 
   // Create an array to hold pointers to the Cubit objects.
   CORBA::String *cubits;
@@ -696,7 +684,7 @@ start_servants (void)
                   Cubit_Task (args1,
                               "internet",
                               1,
-                              &barrier_,
+                              &start_barrier,
                               0), //task id 0.
                   -1);
 
@@ -704,7 +692,7 @@ start_servants (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "Creating servant with high priority %d\n",
-	      priority));
+              priority));
 
   // Make the high priority task an active object.
   if (high_priority_task->activate (THR_BOUND | ACE_SCHED_FIFO,
@@ -750,22 +738,22 @@ start_servants (void)
                        hostname);
 
       ACE_NEW_RETURN (low_priority_task [i],
-                      Cubit_Task (args, "internet", 1, &barrier_, i+1),
+                      Cubit_Task (args, "internet", 1, &start_barrier, i+1),
                       -1);
 
       ACE_DEBUG ((LM_DEBUG,
-		  "Creating servant with low priority %d\n",
-		  priority));
+                  "Creating servant with low priority %d\n",
+                  priority));
 
       // Make the low priority task an active object.
       if (low_priority_task [i]->activate (THR_BOUND | ACE_SCHED_FIFO,
-					   1,
-					   0,
-					   priority) == -1)
-	{
-	  ACE_ERROR ((LM_ERROR, "(%P|%t; %p\n",
-		      "low_priority_task[i]->activate"));
-	}
+                                           1,
+                                           0,
+                                           priority) == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "(%P|%t; %p\n",
+                      "low_priority_task[i]->activate"));
+        }
 
       priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                   priority,
@@ -786,26 +774,7 @@ start_servants (void)
   Cubit_Factory_Task * factory_task;
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) start_servants, wait on barrier\n"));
-#if defined (linux)
-  // ACE_Barrier doesn't work on Linux/glibc2 because its
-  // pthread_cond_wait appears broken:  it doesn't always catch
-  // the signal.
-
-  ACE_OS::sleep (2);
-
-  // To compensate for the lack of a barrier.
-  while (high_priority_task->servants_iors_ == 0)
-    ACE_OS::thr_yield ();
-
-  for (i = 0; i < num_of_objs-1; ++i)
-    while (low_priority_task[i]->servants_iors_ == 0)
-      ACE_OS::thr_yield ();
-
-  ACE_OS::sleep (2);
-
-#else  /* ! linux */
-  barrier_.wait ();
-#endif /* ! linux */
+  start_barrier.wait ();
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) start_servants, passed barrier\n"));
 
   cubits[0] = high_priority_task->get_servant_ior (0);
@@ -890,7 +859,12 @@ main (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in Initialization\n"),
                       1);
-  if (start_servants () != 0)
+
+  // Barrier for the multiple clients to synchronize after binding to
+  // the servants.
+  ACE_Barrier start_barrier (num_of_objs + 1);
+
+  if (start_servants (start_barrier) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error creating the servants\n"),
                       1);
