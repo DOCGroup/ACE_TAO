@@ -41,9 +41,7 @@
 #include "Interceptor_List.h"
 #include "PICurrent.h"
 
-#include "Protocols_Hooks.h"
-
-#include "ace/Hash_Map_Manager.h"
+#include "ace/Hash_Map_Manager_T.h"
 #include "ace/Thread_Manager.h"
 
 // Forward declarations
@@ -365,7 +363,7 @@ public:
   /// Returns pointer to the server factory.
   TAO_Server_Strategy_Factory *server_factory (void);
 
-  /// Returns pointer to the Protocol_Hooks.
+  /// Returns pointer to the Protocols_Hooks.
   TAO_Protocols_Hooks *protocols_hooks (void);
 
   /// Returns a pointer to the Thread Lane Resources Manager.
@@ -916,8 +914,10 @@ public:
    */
   TAO_Flushing_Strategy *flushing_strategy (void);
 
-  typedef ACE_Hash_Map_Manager<ACE_CString,ACE_CString,ACE_Null_Mutex> InitRefMap;
-  InitRefMap *init_ref_map ();
+  typedef ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex> InitRefMap;
+
+  /// Return a pointer to the -ORBInitRef map.
+  InitRefMap * init_ref_map (void);
 
 protected:
 
