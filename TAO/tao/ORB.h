@@ -52,7 +52,7 @@ class TAO_Stub;
 
 class TAO_Acceptor_Filter;
 
-#ifdef TAO_HAS_VALUETYPE
+#if defined (TAO_HAS_VALUETYPE)
 class TAO_ValueFactory_Map;
 #endif /* TAO_HAS_VALUETYPE */
 
@@ -146,15 +146,15 @@ public:
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
-#ifdef TAO_HAS_VALUETYPE
+#if defined (TAO_HAS_VALUETYPE)
   // Value factory operations  (CORBA 2.3 ptc/98-10-05 Ch. 4.2 p.4-7)
-  CORBA::ValueFactory_ptr register_value_factory (
+  CORBA::ValueFactory register_value_factory (
          const char *repository_id,
-         CORBA::ValueFactory_ptr factory
+         CORBA::ValueFactory factory
          ACE_ENV_ARG_DECL_WITH_DEFAULTS );
   void unregister_value_factory (const char * repository_id
                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS );
-  CORBA::ValueFactory_ptr lookup_value_factory (
+  CORBA::ValueFactory lookup_value_factory (
          const char *repository_id
          ACE_ENV_ARG_DECL_WITH_DEFAULTS );
 #endif /* TAO_HAS_VALUETYPE */

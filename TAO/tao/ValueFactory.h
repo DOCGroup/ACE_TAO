@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#ifdef TAO_HAS_VALUETYPE
+#if defined (TAO_HAS_VALUETYPE)
 
 #include "ace/Synch_T.h"
 
@@ -43,14 +43,46 @@ public:
   // private: %!
   /// In a derived class T use return type TAO_OBV_CREATE_RETURN_TYPE (T)
   /// (see at definition below)
-  virtual CORBA_ValueBase* create_for_unmarshal (void) = 0;
+  virtual CORBA_ValueBase * create_for_unmarshal (void) = 0;
+
+  // Not pure virtual because this will be overridden only by valuetypes
+  // that support an abstract interface.
+  virtual CORBA_AbstractBase * create_for_unmarshal_abstract (void);
 
 private:
   CORBA::ULong _tao_reference_count_;
   TAO_SYNCH_MUTEX _tao_reference_count_lock_;
 }; // CORBA_ValueFactoryBase
 
+/**
+ * @class CORBA_ValueFactoryBase_var
+ *
+ * @brief _var class for ValueFactoryBase
+ */
+class TAO_Export CORBA_ValueFactoryBase_var
+{
+public:
+  CORBA_ValueFactoryBase_var (void);
+  CORBA_ValueFactoryBase_var (CORBA::ValueFactoryBase *);
+  CORBA_ValueFactoryBase_var (const CORBA_ValueFactoryBase_var &);
+  ~CORBA_ValueFactoryBase_var (void);
 
+  CORBA_ValueFactoryBase_var &operator= (CORBA::ValueFactoryBase *);
+  CORBA_ValueFactoryBase_var &operator= (const CORBA_ValueFactoryBase_var &);
+  CORBA::ValueFactoryBase *operator-> (void) const;
+
+  /// in, inout, out, _retn
+  operator const CORBA::ValueFactoryBase *&() const;
+  operator CORBA::ValueFactoryBase *&();
+  CORBA::ValueFactoryBase *in (void) const;
+  CORBA::ValueFactoryBase *&inout (void);
+  CORBA::ValueFactoryBase *&out (void);
+  CORBA::ValueFactoryBase *_retn (void);
+  CORBA::ValueFactoryBase *ptr (void) const;
+
+private:
+  CORBA::ValueFactoryBase *ptr_;
+};
 
 // Use this macro for writing code that is independend from
 // the compiler support of covariant return types of pointers to
@@ -64,8 +96,6 @@ private:
 #else /*  TAO_HAS_OBV_COVARIANT_RETURN */
 #  define TAO_OBV_CREATE_RETURN_TYPE(TYPE) CORBA::ValueBase *
 #endif /* TAO_HAS_OBV_COVARIANT_RETURN */
-
-
 
 // (The obtaining of the repository id is currently not yet like the OMG way. %!)
 //
@@ -84,7 +114,6 @@ private:
                                    factory); \
     if (prev_factory) prev_factory->_remove_ref (); \
     factory->_remove_ref (); }
-
 
 #if defined (__ACE_INLINE__)
 # include "tao/ValueFactory.i"

@@ -230,6 +230,11 @@ public:
   ObjectReferenceTemplate* &out (void);
   ObjectReferenceTemplate* _retn (void);
   ObjectReferenceTemplate* ptr (void) const;
+  
+  // Hooks used by template sequence and valuetype manager classes
+  // for non-defined forward declared valuetypes.
+  static void tao_add_ref (ObjectReferenceTemplate *);
+  static void tao_remove_ref (ObjectReferenceTemplate *);
 
 private:
   ObjectReferenceTemplate* ptr_;

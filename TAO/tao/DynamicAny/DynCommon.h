@@ -255,7 +255,7 @@ public:
         DynamicAny::DynAny::InvalidValue
       ));
 
-#ifdef TAO_HAS_VALUETYPE
+#if defined (TAO_HAS_VALUETYPE)
   virtual void insert_val (
       CORBA::ValueBase_ptr value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -438,7 +438,7 @@ public:
         DynamicAny::DynAny::InvalidValue
       ));
 
-#ifdef TAO_HAS_VALUETYPE
+#if defined (TAO_HAS_VALUETYPE)
   virtual CORBA::ValueBase_ptr get_val (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 

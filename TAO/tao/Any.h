@@ -241,7 +241,8 @@ public:
   typedef ACE_InputCDR::to_string to_string;
   typedef ACE_InputCDR::to_wstring to_wstring;
 
-  // This one's not in ACE.
+  // These are not in ACE.
+
   struct TAO_Export to_object
   {
     // This signature reflects the change set out in
@@ -250,7 +251,19 @@ public:
     CORBA::Object_ptr &ref_;
   };
 
-  // extraction of the special types
+  struct TAO_Export to_abstract_base
+  {
+    to_abstract_base (CORBA_AbstractBase_ptr &obj);
+    CORBA::AbstractBase_ptr &ref_;
+  };
+
+  struct TAO_Export to_value
+  {
+    to_value (CORBA_ValueBase *&base);
+    CORBA::ValueBase *&ref_;
+  };
+
+  // Extraction of the special types.
 
   /// extract a boolean
   CORBA::Boolean operator>>= (to_boolean) const;
@@ -272,6 +285,12 @@ public:
 
   /// extract an object reference
   CORBA::Boolean operator>>= (to_object) const;
+
+  /// extract an abstract interface
+  CORBA::Boolean operator>>= (to_abstract_base) const;
+
+  /// extract a valuetype
+  CORBA::Boolean operator>>= (to_value) const;
 
   // the following are unsafe operations
   // ORBOS/90-01-11, pg 672: For C++ mapping using the CORBA_Environment

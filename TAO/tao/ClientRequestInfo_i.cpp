@@ -3,6 +3,7 @@
 #include "ClientRequestInfo_i.h"
 #include "Invocation.h"
 #include "Stub.h"
+#include "AbstractBase.h"
 #include "Profile.h"
 #include "Tagged_Components.h"
 #include "debug.h"
@@ -21,6 +22,46 @@ TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *inv,
                                                   CORBA::Object_ptr target)
   : invocation_ (inv),
     target_ (target), // No need to duplicate.
+    abstract_target_ (CORBA::AbstractBase::_nil ()),
+    caught_exception_ (0),
+    response_expected_ (1),
+    reply_status_ (-1),
+    rs_pi_current_ ()
+{
+
+  // Retrieve the thread scope current (no TSS access incurred yet).
+  TAO_PICurrent *pi_current = inv->orb_core ()->pi_current ();
+
+  // If the slot count is zero, then there is nothing to copy.
+  // Prevent any copying (and hence TSS accesses) from occurring.
+  if (pi_current != 0 && pi_current->slot_count () != 0)
+    {
+      // Retrieve the thread scope current.
+      TAO_PICurrent_Impl *tsc = pi_current->tsc ();
+
+      // Copy the TSC to the RSC.
+      this->rs_pi_current_.copy (*tsc, 0);  // Shallow copy
+
+      // PICurrent will potentially have to call back on the request
+      // scope current so that it can deep copy the contents of the
+      // thread scope current if the contents of the thread scope
+      // current are about to be modified.  It is necessary to do this
+      // deep copy once in order to completely isolate the request
+      // scope current from the thread scope current.  This is only
+      // necessary, if the thread scope current is modified after its
+      // contents have been *logically* copied to the request scope
+      // current.
+      tsc->pi_peer (&this->rs_pi_current_);
+    }
+}
+
+TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (
+    TAO_GIOP_Invocation *inv,
+    CORBA::AbstractBase_ptr abstract_target
+  )
+  : invocation_ (inv),
+    target_ (CORBA::Object::_nil ()),
+    abstract_target_ (abstract_target), // No need to duplicate.
     caught_exception_ (0),
     response_expected_ (1),
     reply_status_ (-1),
@@ -61,6 +102,11 @@ CORBA::Object_ptr
 TAO_ClientRequestInfo_i::target (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  if (CORBA::is_nil (this->target_))
+    {
+      return this->abstract_target_->_to_object ();
+    }
+
   return CORBA::Object::_duplicate (this->target_);
 }
 
@@ -74,6 +120,11 @@ TAO_ClientRequestInfo_i::effective_target (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       // the reference before returning it so there is no need to
       // duplicate it here.
       return this->invocation_->forward_reference ();
+    }
+
+  if (CORBA::is_nil (this->target_))
+    {
+      return this->abstract_target_->_to_object ();
     }
 
   return CORBA::Object::_duplicate (this->target_);

@@ -44,9 +44,13 @@ class TAO_Export TAO_ClientRequestInfo_i
 {
 public:
 
-  /// Constructor.
+  /// Constructor from concrete interface.
   TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *invocation,
                            CORBA::Object_ptr target);
+
+  /// Constructor from abstract interface.
+  TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *invocation,
+                           CORBA::AbstractBase_ptr abstract_target);
 
   /// Destructor.
   virtual ~TAO_ClientRequestInfo_i (void);
@@ -234,6 +238,9 @@ protected:
 
   /// Reference to the target object.
   CORBA::Object_ptr target_;
+
+  /// Reference to the abstract interface target.
+  CORBA::AbstractBase_ptr abstract_target_;
 
   /// Pointer to the caught exception.
   CORBA::Exception *caught_exception_;

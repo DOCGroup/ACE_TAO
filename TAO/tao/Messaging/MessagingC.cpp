@@ -5457,31 +5457,44 @@ CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal_v (TAO_InputCDR & strm
   return this->_tao_unmarshal__Messaging_ExceptionHolder (strm);
 }
 
-CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal (TAO_InputCDR &strm, ExceptionHolder *&new_object)
+CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal (
+    TAO_InputCDR &strm, 
+    ExceptionHolder *&new_object
+  )
 {
-  CORBA::Boolean retval = 1;
-  CORBA::ValueBase *base;   // %! should be a _var
-  CORBA::ValueFactory_ptr factory;   // %! should be a _var
-  if (!CORBA::ValueBase::_tao_unmarshal_pre (strm, factory, base,
-          ExceptionHolder::_tao_obv_static_repository_id ()) )
+  CORBA::ValueBase *base;
+  CORBA::ValueFactory_var factory;
+  CORBA::Boolean retval = 
+    CORBA::ValueBase::_tao_unmarshal_pre (
+        strm, 
+        factory.out (), 
+        base,
+        ExceptionHolder::_tao_obv_static_repository_id ()
+      );
+
+  if (retval == 0 || factory.in () == 0)
     {
       return 0;
     }
-  if (factory != 0)
+
+  base = factory->create_for_unmarshal ();
+
+  if (base == 0)
     {
-      base = factory->create_for_unmarshal ();
-      factory->_remove_ref ();
-      if (base == 0)  return 0;  // %! except.?
-      //%! ACE_DEBUG ((LM_DEBUG, "Messaging::ExceptionHolder::_tao_unmarshal %s\n", base->_tao_obv_repository_id () ));
-      retval = base->_tao_unmarshal_v (strm);
-      //%! ACE_DEBUG ((LM_DEBUG, "Messaging::ExceptionHolder::_tao_unmarshal retval unmarshal_v is %d\n", retval));
-      if (!retval) return 0;
+      return 0;  // %! except.?
     }
+
+  retval = base->_tao_unmarshal_v (strm);
+
+  if (!retval) 
+    {
+      return 0;
+    }
+
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = ExceptionHolder::_downcast (base);
-  // %! unmarshal_post
-  return 1;
+  return retval;
 }
 
 Messaging::ExceptionHolder_init::ExceptionHolder_init ()

@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#ifdef TAO_HAS_VALUETYPE
+#if defined (TAO_HAS_VALUETYPE)
 
 #include "ace/OS.h"           /* for ptr_arith_t */
 #include "ace/Synch_T.h"
@@ -36,7 +36,6 @@
  */
 class TAO_Export CORBA_ValueBase
 {
-
 public:
   // reference counting
   /// %! virtual CORBA::ValueBase* _copy_value (void) = 0;
@@ -48,7 +47,7 @@ public:
   static CORBA::ValueBase* _downcast (CORBA::ValueBase*);
 
   /// TAO extension
-  virtual const char* _tao_obv_repository_id () const = 0;
+  virtual const char* _tao_obv_repository_id (void) const = 0;
 
   // TAO internal --------------------------
 
@@ -56,11 +55,11 @@ public:
   /// how it is called)
   static CORBA::Boolean _tao_marshal (TAO_OutputCDR &strm,
                                       CORBA_ValueBase *_this,
-                               ptr_arith_t formal_type_id = 0);
+                                      ptr_arith_t formal_type_id = 0);
 
   /// Unmarshal a valuetype, if formal type is a pointer to ValueBase
   static CORBA::Boolean _tao_unmarshal (TAO_InputCDR &strm,
-                                        CORBA_ValueBase *&_this);
+                                        CORBA_ValueBase *&new_object);
 
   // static CORBA::Boolean
   // T::_tao_unmarshal (TAO_InputCDR &, CORBA_ValueBase *&_this)
@@ -69,11 +68,10 @@ public:
 
   /// Both used internally and are called from T::_tao_unmarshal ()
   static CORBA::Boolean _tao_unmarshal_pre (TAO_InputCDR &strm,
-                                            CORBA_ValueFactory_ptr &,
+                                            CORBA_ValueFactory &,
                                             CORBA_ValueBase *&,
                                             const char * const repo_id);
   CORBA::Boolean _tao_unmarshal_post (TAO_InputCDR &strm);
-
 
 public:  // otherwise these cannot be called from a static function
   virtual void *_tao_obv_narrow (ptr_arith_t) = 0;
@@ -87,10 +85,10 @@ public:  // otherwise these cannot be called from a static function
 protected:
   CORBA_ValueBase (void);
   CORBA_ValueBase (const CORBA_ValueBase&);
-  virtual ~CORBA_ValueBase ();
+  virtual ~CORBA_ValueBase (void);
 
 private:
-  void operator= (const CORBA_ValueBase &);
+  CORBA_ValueBase & operator= (const CORBA_ValueBase &);
 
 #ifdef SUN_CC_HAS_PVFC_BUG
   // Need ugly fix for sun cc "pure virtual function called" bug.
@@ -101,8 +99,57 @@ private:
 
 }; // CORBA_ValueBase
 
+/**
+ * @class CORBA_ValueBase_var
+ *
+ * @brief _var class for ValueBase
+ */
+class TAO_Export CORBA_ValueBase_var
+{
+public:
+  CORBA_ValueBase_var (void);
+  CORBA_ValueBase_var (CORBA::ValueBase *);
+  CORBA_ValueBase_var (const CORBA_ValueBase_var &);
+  ~CORBA_ValueBase_var (void);
 
+  CORBA_ValueBase_var &operator= (CORBA::ValueBase *);
+  CORBA_ValueBase_var &operator= (const CORBA_ValueBase_var &);
+  CORBA::ValueBase *operator-> (void) const;
 
+  /// in, inout, out, _retn
+  operator const CORBA::ValueBase *&() const;
+  operator CORBA::ValueBase *&();
+  CORBA::ValueBase *in (void) const;
+  CORBA::ValueBase *&inout (void);
+  CORBA::ValueBase *&out (void);
+  CORBA::ValueBase *_retn (void);
+  CORBA::ValueBase *ptr (void) const;
+
+private:
+  CORBA::ValueBase *ptr_;
+};
+
+/**
+ * @class CORBA_ValueBase_var
+ *
+ * @brief _out class for ValueBase
+ */
+class TAO_Export CORBA_ValueBase_out
+{
+public:
+  CORBA_ValueBase_out (CORBA::ValueBase *&);
+  CORBA_ValueBase_out (CORBA_ValueBase_var &);
+  CORBA_ValueBase_out (const CORBA_ValueBase_out &);
+  CORBA_ValueBase_out &operator= (const CORBA_ValueBase_out &);
+  CORBA_ValueBase_out &operator= (const CORBA_ValueBase_var &);
+  CORBA_ValueBase_out &operator= (CORBA::ValueBase *);
+  operator CORBA::ValueBase *&();
+  CORBA::ValueBase *&ptr (void);
+  CORBA::ValueBase *operator-> (void);
+
+private:
+  CORBA::ValueBase *&ptr_;
+};
 
 /**
  * @class CORBA_DefaultValueRefCountBase
@@ -168,6 +215,12 @@ public:
   static CORBA::Boolean is_block_size         (CORBA::ULong);
   static CORBA::Boolean is_end_tag            (CORBA::ULong);
 };
+
+TAO_Export CORBA::Boolean
+operator<< (TAO_OutputCDR&, const CORBA_ValueBase *);
+
+TAO_Export CORBA::Boolean
+operator>> (TAO_InputCDR&, CORBA_ValueBase *&);
 
 #if defined (__ACE_INLINE__)
 # include "tao/ValueBase.i"

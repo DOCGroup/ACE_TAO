@@ -461,31 +461,44 @@ PortableInterceptor::ObjectReferenceFactory::_tao_any_destructor (void *_tao_voi
   delete tmp;
 }
 
-CORBA::Boolean PortableInterceptor::ObjectReferenceFactory::_tao_unmarshal (TAO_InputCDR &strm, ObjectReferenceFactory *&new_object)
+CORBA::Boolean PortableInterceptor::ObjectReferenceFactory::_tao_unmarshal (
+    TAO_InputCDR &strm, 
+    ObjectReferenceFactory *&new_object
+  )
 {
-  CORBA::Boolean retval = 1;
-  CORBA::ValueBase *base;   // %! should be a _var
-  CORBA::ValueFactory_ptr factory;   // %! should be a _var
-  if (!CORBA::ValueBase::_tao_unmarshal_pre (strm, factory, base,
-          ObjectReferenceFactory::_tao_obv_static_repository_id ()) )
+  CORBA::ValueBase *base;
+  CORBA::ValueFactory_var factory;
+  CORBA::Boolean retval =
+    CORBA::ValueBase::_tao_unmarshal_pre (
+        strm, 
+        factory.out (), 
+        base,
+        ObjectReferenceFactory::_tao_obv_static_repository_id ()
+      );
+
+  if (retval == 0 || factory == 0)
     {
       return 0;
     }
-  if (factory != 0)
+
+  base = factory->create_for_unmarshal ();
+
+  if (base == 0)
     {
-      base = factory->create_for_unmarshal ();
-      factory->_remove_ref ();
-      if (base == 0)  return 0;  // %! except.?
-      //%! ACE_DEBUG ((LM_DEBUG, "PortableInterceptor::ObjectReferenceFactory::_tao_unmarshal %s\n", base->_tao_obv_repository_id () ));
-      retval = base->_tao_unmarshal_v (strm);
-      //%! ACE_DEBUG ((LM_DEBUG, "PortableInterceptor::ObjectReferenceFactory::_tao_unmarshal retval unmarshal_v is %d\n", retval));
-      if (!retval) return 0;
+      return 0;  // %! except.?
     }
+
+  retval = base->_tao_unmarshal_v (strm);
+
+  if (retval == 0)
+    {
+      return 0;
+    }
+
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = ObjectReferenceFactory::_downcast (base);
-  // %! unmarshal_post
-  return 1;
+  return retval;
 }
 
 static const CORBA::Long _oc_PortableInterceptor_ObjectReferenceTemplate[] =
@@ -632,6 +645,22 @@ PortableInterceptor::ObjectReferenceTemplate_var::_retn (void)
   return tmp;
 }
 
+void
+PortableInterceptor::ObjectReferenceTemplate_var::tao_add_ref (
+    ObjectReferenceTemplate *p
+  )
+{
+  CORBA::add_ref (p);
+}
+
+void
+PortableInterceptor::ObjectReferenceTemplate_var::tao_remove_ref (
+    ObjectReferenceTemplate *p
+  )
+{
+  CORBA::remove_ref (p);
+}
+
 // *************************************************************
 // Operations for class PortableInterceptor::ObjectReferenceTemplate_out
 // *************************************************************
@@ -721,31 +750,44 @@ PortableInterceptor::ObjectReferenceTemplate::_tao_any_destructor (void *_tao_vo
   delete tmp;
 }
 
-CORBA::Boolean PortableInterceptor::ObjectReferenceTemplate::_tao_unmarshal (TAO_InputCDR &strm, ObjectReferenceTemplate *&new_object)
+CORBA::Boolean PortableInterceptor::ObjectReferenceTemplate::_tao_unmarshal (
+    TAO_InputCDR &strm, 
+    ObjectReferenceTemplate *&new_object
+  )
 {
-  CORBA::Boolean retval = 1;
-  CORBA::ValueBase *base;   // %! should be a _var
-  CORBA::ValueFactory_ptr factory;   // %! should be a _var
-  if (!CORBA::ValueBase::_tao_unmarshal_pre (strm, factory, base,
-          ObjectReferenceTemplate::_tao_obv_static_repository_id ()) )
+  CORBA::ValueBase *base;
+  CORBA::ValueFactory_var factory;
+  CORBA::Boolean retval =
+    CORBA::ValueBase::_tao_unmarshal_pre (
+        strm, 
+        factory.out (), 
+        base,
+        ObjectReferenceTemplate::_tao_obv_static_repository_id ()
+      );
+
+  if (retval == 0 || factory.in () == 0)
     {
       return 0;
     }
-  if (factory != 0)
+
+  base = factory->create_for_unmarshal ();
+
+  if (base == 0)
     {
-      base = factory->create_for_unmarshal ();
-      factory->_remove_ref ();
-      if (base == 0)  return 0;  // %! except.?
-      //%! ACE_DEBUG ((LM_DEBUG, "PortableInterceptor::ObjectReferenceTemplate::_tao_unmarshal %s\n", base->_tao_obv_repository_id () ));
-      retval = base->_tao_unmarshal_v (strm);
-      //%! ACE_DEBUG ((LM_DEBUG, "PortableInterceptor::ObjectReferenceTemplate::_tao_unmarshal retval unmarshal_v is %d\n", retval));
-      if (!retval) return 0;
+      return 0;  // %! except.?
     }
+
+  retval = base->_tao_unmarshal_v (strm);
+
+  if (retval == 0)
+    {
+      return 0;
+    }
+
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = ObjectReferenceTemplate::_downcast (base);
-  // %! unmarshal_post
-  return 1;
+  return retval;
 }
 
 

@@ -91,7 +91,7 @@ public:
   /// Is this a local object?
   virtual CORBA::Boolean _is_local (void) const;
 
-  virtual TAO_Abstract_ServantBase*_servant (void) const;
+  virtual TAO_Abstract_ServantBase *_servant (void) const;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
@@ -321,7 +321,8 @@ public:
   static CORBA::Object_ptr tao_duplicate (CORBA::Object_ptr);
   static void tao_release (CORBA::Object_ptr);
   static CORBA::Object_ptr tao_nil (void);
-  static CORBA::Object_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
+  static CORBA::Object_ptr tao_narrow (CORBA::Object * 
+                                       ACE_ENV_ARG_DECL_NOT_USED);
   static CORBA::Object * tao_upcast (void *);
 
 private:

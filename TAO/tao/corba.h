@@ -52,6 +52,7 @@
 #include "tao/BoundsC.h"
 #include "tao/ValueBase.h"
 #include "tao/ValueFactory.h"
+#include "tao/AbstractBase.h"
 #include "tao/PolicyC.h"
 #include "tao/Services.h"
 #include "tao/DomainC.h"
