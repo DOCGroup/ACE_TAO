@@ -102,7 +102,7 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
   if (this->deactivated_)
     {
       ACE_MT (this->token_.release ());
-      return 0;
+      return -1;
     }
 
   // We got the lock, lets handle some events.  Note: this method will

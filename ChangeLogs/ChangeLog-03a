@@ -1,3 +1,20 @@
+Mon Mar 19 16:57:43 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/TP_Reactor.cpp (handle_events): Return value from
+	  handle_events() after the Reactor has been deactivated should be
+	  -1.  We just need to remember that as illustrated in
+	  ACE_Reactor::run_reactor_event_loop(), this is not an error:
+
+	  if (result == -1 && this->implementation_->deactivated ())
+	    return 0;
+	
+	* tests/Thread_Pool_Reactor_Test.cpp (svr_worker): Changed this
+	  function to call ACE_Reactor::run_reactor_event_loop() instead
+	  of ACE_Reactor::handle_events().  In the previous revision, we
+	  were not handling return values from
+	  ACE_Reactor::handle_events() correctly when
+	  ACE_Reactor::deactivated() had been called.
+
 Mon Mar 19 09:14:12 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/platform_chorus4.x_g++.GNU:
