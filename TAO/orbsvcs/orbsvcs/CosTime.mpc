@@ -1,6 +1,6 @@
 project(CosTime) : orbsvcslib, core, naming {
   sharedname   = TAO_CosTime
-  idlflags    += -Wb,pch_include=CosTime_pch.h -Wb,export_macro=TAO_Time_Export -Wb,export_include=Time/time_export.h
+  idlflags    += -Wb,export_macro=TAO_Time_Export -Wb,export_include=Time/time_export.h
   dynamicflags = TAO_TIME_BUILD_DLL
   tagchecks    = Time
   // Add this include path for precompiled headers

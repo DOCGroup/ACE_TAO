@@ -3,8 +3,6 @@ project(CosTrading) : orbsvcslib, core, dynamicany, svc_utils {
   idlflags    += -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h
   dynamicflags = TAO_TRADING_BUILD_DLL
   tagchecks    = Trader
-  pch_header   =
-  pch_source   =
 
   IDL_Files {
     CosTrading.idl

@@ -2,8 +2,6 @@ project(ETCL) : orbsvcslib, core {
   sharedname   = TAO_ETCL
   dynamicflags = TAO_ETCL_BUILD_DLL
   tagchecks    = Notify
-  pch_header   =
-  pch_source   =
 
   IDL_Files {
   }
