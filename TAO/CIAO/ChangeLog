@@ -1,3 +1,11 @@
+Sat May 29 15:25:22 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/RepositoryManager/RepositoryManager_Impl.h:
+        * DnC/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DnC/RepositoryManager/RepositoryManager.mpc:
+
+          First cut implementation of Repository Manager.
+
 Fri May 28 23:17:44 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/NodeManager/NodeDaemon.idl:
