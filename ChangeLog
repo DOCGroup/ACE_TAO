@@ -1,3 +1,25 @@
+Sun Dec 23 12:25:55 2001  Don Hinton  <dhinton@gmx.net>
+
+ 	* ace/Logging_Strategy.cpp
+ 	* ace/Naming_Context.cpp
+ 	* ace/Sercive_Config.cpp
+ 	* ace/Service_Manager.cpp 
+ 	* ace/Get_Opt{h|i|cpp}:
+ 
+ 	Added long option support to ACE_Get_Opt that closely minimics
+ 	getopt_long(3c) functionality as follows:  made all member variables
+ 	private; added accessor functions and macros wrappers to transparently
+ 	provide backward compatibility; added new function, long_option(),
+	that can be used to add long options with/without corresponding
+	short options.	
+  
+ 	* tests/Makefile
+ 	* tests/run_test.lst
+ 	* tests/Get_Opt_Test.cpp:	
+  
+ 	Added a new one-button test for ACE_Get_Opt that tests new long option
+ 	support and demonstrates its use.
+
 Sat Dec 22 23:12:33 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* examples/Misc/Misc.dsw:
