@@ -11,7 +11,7 @@ class Video_Control_i
   : public virtual POA_Video_Control
 {
   Video_Control_i (void);
-  virtual CORBA::Boolean init_video (const Video_Control::INITvideoPara & para,
+  virtual CORBA::Boolean init_video (const Video_Control::INITvideoPara &para,
                                      CORBA::Environment &_tao_environment);
   
   virtual CORBA::Boolean stat_stream (CORBA::Char_out ch,
@@ -22,24 +22,24 @@ class Video_Control_i
   
   virtual CORBA::Boolean stat_sent (CORBA::Environment &_tao_environment);
 
-  virtual CORBA::Boolean fast_forward (const Video_Control::FFpara & para,
+  virtual CORBA::Boolean fast_forward (const Video_Control::FFpara &para,
                                        CORBA::Environment &_tao_environment
                                        );
 
-  virtual CORBA::Boolean fast_backward (const Video_Control::FFpara & para,
+  virtual CORBA::Boolean fast_backward (const Video_Control::FFpara &para,
                                         CORBA::Environment &_tao_environment);
 
-  virtual CORBA::Boolean step (const Video_Control::STEPpara & para,
+  virtual CORBA::Boolean step (const Video_Control::STEPpara &para,
                                CORBA::Environment &_tao_environment);
   
-  virtual CORBA::Boolean play (const Video_Control::PLAYpara & para,
+  virtual CORBA::Boolean play (const Video_Control::PLAYpara &para,
                                CORBA::Long_out vts,
                                CORBA::Environment &_tao_environment);
 
-  virtual CORBA::Boolean position (const Video_Control::POSITIONpara & para,
+  virtual CORBA::Boolean position (const Video_Control::POSITIONpara &para,
                                    CORBA::Environment &_tao_environment);
 
-  virtual CORBA::Boolean speed (const Video_Control::SPEEDpara & para,
+  virtual CORBA::Boolean speed (const Video_Control::SPEEDpara &para,
                                 CORBA::Environment &_tao_environment);
 
   virtual CORBA::Boolean stop (CORBA::Long cmdsn,
