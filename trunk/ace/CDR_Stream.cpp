@@ -1144,6 +1144,9 @@ ACE_InputCDR::exchange_data_blocks (ACE_InputCDR &cdr)
   ACE_Message_Block::Message_Flags df = cdr.start_.self_flags ();
   ACE_Message_Block::Message_Flags sf = this->start_.self_flags ();
 
+  cdr.start_.clr_self_flags (df);
+  this->start_.clr_self_flags (sf);
+
   cdr.start_.set_self_flags (sf);
   this->start_.set_self_flags (df);
 
@@ -1175,6 +1178,76 @@ ACE_InputCDR::exchange_data_blocks (ACE_InputCDR &cdr)
   this->minor_version_ = dminor;
 }
 
+
+ACE_Data_Block *
+ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
+{
+  this->do_byte_swap_ = cdr.do_byte_swap_;
+
+  // Replace our data block by using the incoming CDR stream.
+  ACE_Data_Block *db =
+    this->start_.replace_data_block (cdr.start_.data_block ()->clone_nocopy ());
+
+  // Align the start_ message block.
+  ACE_CDR::mb_align (&this->start_);
+
+  // Clear the DONT_DELETE flag if it has been set
+  this->start_.clr_self_flags (ACE_Message_Block::DONT_DELETE);
+
+  // Get the read & write pointer positions in the incoming CDR
+  // streams
+  char *rd_ptr = cdr.start_.rd_ptr ();
+  char *wr_ptr = cdr.start_.wr_ptr ();
+
+  // Now reset the incoming CDR stream
+  cdr.start_.reset ();
+
+  // As we have reset the stream, try to align the underlying message
+  // block in the incoming stream
+  ACE_CDR::mb_align (&cdr.start_);
+
+  // Get the read & write pointer positions again
+  char *nrd_ptr = cdr.start_.rd_ptr ();
+  char *nwr_ptr = cdr.start_.wr_ptr ();
+
+  // Actual length of the stream is..
+  // @todo: This will look idiotic, but we dont seem to have much of a
+  // choice. How do we calculate the length of the incoming stream?
+  // Calling the method before calling reset () would give us the
+  // wrong length of the stream that needs copying.  So we do the
+  // calulation like this
+  // (1) We get the <rd_ptr> and <wr_ptr> positions of the incoming
+  // stream.
+  // (2) Then we reset the <incoming> stream and then align it.
+  // (3) We get the <rd_ptr> and <wr_ptr> positions again. (Points #1
+  // thru #3 has been done already)
+  // (4) The difference in the <rd_ptr> and <wr_ptr> positions gives
+  // us the following, the actual bytes traversed by the <rd_ptr> and
+  // <wr_ptr>.
+  // (5) The bytes traversed by the <wr_ptr> is the actual length of
+  // the stream.
+
+  // Actual bytes traversed
+  size_t rd_bytes = rd_ptr - nrd_ptr;
+  size_t wr_bytes = wr_ptr - nwr_ptr;
+
+  // Now do the copy
+  (void) ACE_OS::memcpy (this->start_.wr_ptr (),
+                         cdr.start_.rd_ptr (),
+                         wr_bytes);
+
+  // Set the read pointer position to the same point as that was in
+  // <incoming> cdr.
+  this->start_.rd_ptr (rd_bytes);
+  this->start_.wr_ptr (wr_bytes);
+
+  // We have changed the read & write pointers for the incoming
+  // stream. Set them back to the positions that they were before..
+  cdr.start_.rd_ptr (rd_bytes);
+  cdr.start_.wr_ptr (wr_bytes);
+
+  return db;
+}
 
 ACE_Message_Block*
 ACE_InputCDR::steal_contents (void)
