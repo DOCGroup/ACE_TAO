@@ -375,7 +375,7 @@ public:
 
   // = Trait for commands issued from this driver
 
-  typedef ACE_Command_Callback<User_Input_Task, User_Input_Task::ACTION> COMMAND;
+  typedef ACE_Command_Callback<User_Input_Task, User_Input_Task::ACTION> MYCOMMAND;
 
   // = Initialization and termination methods.
 
