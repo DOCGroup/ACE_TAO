@@ -378,6 +378,8 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_Reconfig_Sched_Entry_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 visit (TAO_Reconfig_Scheduler_Entry &rse)
 {
+  int result = 0;
+
   // Call unconditional action method, which performs any necessary
   // modifications that are applied to each node unconditionally.
   if (this->unconditional_action (rse) < 0)
@@ -389,7 +391,16 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
 
   // Call precondition hook method, and only proceed if the
   // precondition returns 0 for success.
-  if (this->precondition (rse) == 0)
+
+  result = this->precondition (rse);
+  if (result < 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TAO_Reconfig_Sched_Entry_Visitor::"
+                         "visit: error from precondition evaluation.\n"), -1)
+    }
+
+  if (result == 0)
     {
       // Call prefix action method, which performs any necessary
       // modifications on the node prior to visiting its successors.
@@ -438,15 +449,19 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
           // Call pre-recursion action method, which performs any necessary
           // modifications to a successor (or the entry) prior to recursing
           // on the successor.
-          if (this->pre_recurse_action (rse, *next_rse,
-                                        (*dependency_set) [i]) < 0)
+          result = this->pre_recurse_action (rse, *next_rse,
+                                             (*dependency_set) [i]);
+          if (result < 0)
             {
               ACE_ERROR_RETURN (("TAO_Reconfig_Sched_Entry_Visitor::"
                                  "visit: error from pre-recursion action.\n"), -1)
             }
 
-           // Visit the successor.
-          this->visit (*next_rse);
+           // If the pre-recursion action returned 0, visit the successor.
+          if (result == 0)
+            {
+              this->visit (*next_rse);
+            }
         }
 
       // Call postfix action method, which performs any necessary
@@ -1063,5 +1078,8 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                                                new_exec_multiplier);
         }
     }
+
+  // Do not recurse on the successor node, just continue to the next successor.
+  return 1;
 }
 

@@ -240,14 +240,6 @@ protected:
 
 CDG - TBD - check throw specs against method definitions
 
-CDG - TBD - add an array of entry pointers and a size for it:
-            init method should free it if it already exists, alloc the size given;
-            (internal ?) create method should double its size whenever it runs out of room.
-            both should add pointers.
-
-CDG - TBD - rework DFS methods to iterate, use functors from the utils classes
-
-
   virtual RtecScheduler::RT_Info * create_i (const char * entry_point,
                                              RtecScheduler::handle_t handle,
                                              CORBA::Environment &_env)
@@ -268,7 +260,8 @@ CDG - TBD - rework DFS methods to iterate, use functors from the utils classes
                       RtecScheduler::Importance_t importance,
                       RtecScheduler::Quantum_t quantum,
                       CORBA::Long threads,
-                      RtecScheduler::Info_Type_t info_type)
+                      RtecScheduler::Info_Type_t info_type
+                      u_long *change_flags = 0)
   // Internal method to set characteristics of the passed RT_Info.
 
   virtual RtecScheduler::handle_t lookup_i (const char * entry_point,
@@ -304,22 +297,6 @@ CDG - TBD - rework DFS methods to iterate, use functors from the utils classes
                      RtecScheduler::UNKNOWN_TASK));
   // Traverses dependency graph, assigning a topological ordering.
   // Resets DFS map entries, do DFS traversal, constructs DFS map.
-  // Fills in: dfs_status_, discovered_, finished_, is_thread_delineator_,
-  // has_unresolved_remote_dependencies_, has_unresolved_local_dependencies_,
-
-  int visit_dfs_fwd (finish Reconfig_Scheduler_Entry &);
-  // Visits a scheduler entry and assigns 
-  // 
-
-  virtual void dfs_recurse_i (RtecScheduler::handle_t current,
-                              RtecScheduler::handle_t previous,
-                              DEPENDENCY_SET_MAP map,
-                              ,
-                              CORBA::Environment &_env)
-    TAO_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK));
-  // Does depth-first recursion over the passed dendency graph,
-  // calling the passed function pointer on each new node.
 
   virtual void detect_cycles_i (CORBA::Environment &_env)
     TAO_THROW_SPEC ((CORBA::SystemException,
@@ -380,6 +357,16 @@ CDG - TBD - rework DFS methods to iterate, use functors from the utils classes
   RtecScheduler::handle_t next_handle_;
   // Next RT_Info descriptor handle to allocate.  The first handle is
   // 0, so this member also holds the number of handles allocated.
+
+  TAO_Reconfig_Scheduler_Entry ** entry_ptr_array_;
+  // Array of pointers to scheduling entries.  This
+  // array is maintained by the methods that create
+  // scheduling entries, and sorted in topological
+  // order and then priority order at various points
+  // during schedule computation.
+
+  u_long entry_ptr_array_size_;
+  // Size of the array of scheduling entry pointers.
 
   u_long stability_flags_;
   // Flags indicating whether a stable schedule has been computed
