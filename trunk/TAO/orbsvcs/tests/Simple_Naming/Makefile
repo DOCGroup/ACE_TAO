@@ -47,7 +47,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs/lib -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(T
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \

@@ -1,26 +1,118 @@
 Thu Dec 04 03:46:04 1997    <irfan@TWOSTEP>
 
-	* ace/OS.h: Removed stdcpp.h. Moved the standard C library
- 	  includes from stdcpp.h to OS.h.  Also added ace/iosfwd.h to give
- 	  forward declaration for the stream classes.
+	* ace/Makefile (Svc_Conf_l.cpp): Changed the sed macros to produce
+ 	  OS.h include instead of stdcpp.h.
 
-	* ace/IOStream_T.cpp: Reorganized include files so that inclusion
- 	  of config.h is not necessary.
+        * ace/Svc_Conf_l.cpp: Updated after code was regenerated using the
+ 	  new sed changes in the Makefiles.  Currently there are two
+ 	  inclusions of OS.h in this file and an extra stdlib.h.  Maybe
+ 	  someone more experienced in sed can take these out by updating
+ 	  the Makefile.
 
 	* ace/IOStream_T.h (stdcpp.h): Removed inclusion of stdcpp.h.  It
  	  is redundant because IOStream.h includes it.
 
-	* ace/IOStream.cpp: Changed inclusion of config.h to OS.h.
+	* ace/streams.h: New file.  This files tries to reduce the
+ 	  differences between the old and new stream libraries for the
+ 	  user.  This is done by automatically selecting the correct
+ 	  includes depending on the ACE_HAS_STANDARD_CPP_LIBRARY variable.
+  	  This file also helps out by making commonly used classes (e.g.,
+ 	  ios, ostream, iostream, cin, cout, etc) available in the global
+ 	  name space when used with the Standard C++ Library. Use this
+ 	  file where you would usually include <iostream.h> or <iostream>.
 
-	* ace/Makefile (Svc_Conf_l.cpp): Changed the sed macros to produce
- 	  OS.h include instead of stdcpp.h.
+	* ace/iosfwd.h: New file. This files deals with forward
+ 	  declaration for the stream classes.  Remember that since the new
+ 	  Standard C++ Library uses templates for the implementation of
+ 	  the streams, simple forward declaration will not work.  Classes
+ 	  forward declared by this class include:
+
+	  ios
+	  streambuf
+	  istream
+	  ostream
+	  iostream
+	  filebuf
+	  ifstream
+	  ofstream
+	  fstream	
+
+	  Use this file where you would usually forward declare the
+ 	  classes listed above.
+
+	* ace/stdcpp.h: Removed this file from the repository.  This file
+ 	  was trying to do too much.  All the inclusion of the C Library
+ 	  headers were unnecessary.  This is because the new C++ standard
+ 	  preserves the old C library include files.  The functions from
+ 	  those files will still be in the global namescape.  The new
+ 	  header files (e.g., cstdio), provides the same prototypes as the
+ 	  old files (e.g., stdio.h), except that all prototypes are in the
+ 	  std namespace.  Since we want the old behavior and global
+ 	  prototypes (for backward compatibility), inclusion of the new
+ 	  header files was incorrect.
+
+	  stdcpp.h was included by OS.h.  This caused almost all files to
+ 	  force the inclusion of the stream header files.  This was
+ 	  changed so that OS.h only includes the ace/iosfwd.h file.  This
+ 	  means that if your code was using stream classes and you were
+ 	  depending on OS.h to provide you the stream header files, you
+ 	  will have to change your code to either include iostream.h or
+ 	  iostream, or more portably ace/streams.h.
+	
+	* ace/OS.h: Removed stdcpp.h. Moved the standard C library
+ 	  includes from stdcpp.h to OS.h.  Also added ace/iosfwd.h to give
+ 	  forward declaration for the stream classes.
 
 	* ACE: Added explicit inclusion of ace/streams.h to the following
  	  files:
 	  
-	  IOStream.cpp
-	  Log_Record.cpp
-	  OS.cpp
+	  ace/IOStream.cpp
+	  ace/Log_Record.cpp
+	  ace/OS.cpp
+	  ace/SString.cpp
+	  ace/Log_Msg.cpp
+	  tests/test_config.h
+	  examples/Log_Msg/test_log_msg.cpp
+	  examples/Reactor/Misc/test_time_value.cpp
+	  examples/Threads/task_three.cpp
+	  netsvcs/lib/Logging_Strategy.cpp	
+	  examples/Logger/Acceptor-server/server_loggerd.cpp
+	  examples/ASX/UPIPE_Event_Server/event_server.cpp
+	  examples/Reactor/Ntalker/ntalker.cpp	  
+	  examples/Shared_Malloc/test_persistence.cpp	
+	  examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp	
+	  examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp
+	  examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp
+	  examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp
+	
+	* Updated makefile dependencies throughout ACE to reflect the
+ 	  removal of stdcpp.h and the addition of streams.h.
+	
+	* examples/Threads/barrier2.cpp: Removed inclusion of stdcpp.h.
+	
+	* ace/IOStream_T.cpp: Reorganized include files so that inclusion
+ 	  of config.h is not necessary.
+
+	* ace/IOStream.cpp: Changed inclusion of config.h to OS.h.
+
+	* ace: Removed config.h from the following files.  It was
+ 	  redundant.
+
+	  Timer_Hash.cpp
+	  Timer_Heap.cpp
+	  Timer_List.cpp
+	  Timer_Queue.cpp
+	  Timer_Wheel.cpp
+
+	* ace: Added code to protect against multiple inclusions of
+ 	  config.h.  Following files were effected:
+	  
+	  Trace.cpp
+	  Log_Msg.cpp
+
+	* ace/config-win32-common.h: Removed redundant definitions of
+ 	  ACE_HAS_TYPENAME_KEYWORD and ACE_HAS_SIG_ATOMIC_T.  Thanks to
+ 	  Matthias Kerkhoff <make@cs.tu-berlin.de> for pointing this out.
 
 Thu Dec  4 00:26:46 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 

@@ -3,6 +3,7 @@
 // Test the persistence capabilities of the ACE shared memory manager.
 
 #include "ace/Malloc.h"
+#include "ace/streams.h"
 
 typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC;
 typedef ACE_Malloc_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC_ITERATOR;

@@ -9,6 +9,7 @@
 #include "Supplier_Router.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
+#include "ace/streams.h"
 
 #if defined (ACE_HAS_THREADS)
 

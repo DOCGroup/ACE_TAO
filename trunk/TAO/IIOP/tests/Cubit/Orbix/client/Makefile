@@ -62,7 +62,7 @@ client: $(addprefix $(VDIR),$(CLT_OBJS))
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/config-sunos5.5-sunc++-4.x.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -74,7 +74,7 @@ client: $(addprefix $(VDIR),$(CLT_OBJS))
 .obj/client.o .shobj/client.so: client.cpp $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/config-sunos5.5-sunc++-4.x.h \
- $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \

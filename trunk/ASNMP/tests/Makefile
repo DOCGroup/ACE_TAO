@@ -51,7 +51,7 @@ Address_Test.o: Address_Test.cpp \
  /home/cs/guest/mrm/ASNMP/asnmp/address.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -68,7 +68,7 @@ Address_Test.o: Address_Test.cpp \
 Counter64_Test.o: Counter64_Test.cpp \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -85,7 +85,7 @@ Counter64_Test.o: Counter64_Test.cpp \
 Counter_Test.o: Counter_Test.cpp \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -103,7 +103,7 @@ Counter_Test.o: Counter_Test.cpp \
 Gauge_Test.o: Gauge_Test.cpp \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -121,7 +121,7 @@ Gauge_Test.o: Gauge_Test.cpp \
 Integer_Test.o: Integer_Test.cpp \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -138,7 +138,7 @@ Integer_Test.o: Integer_Test.cpp \
 Octet_Test.o: Octet_Test.cpp \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -155,7 +155,7 @@ Octet_Test.o: Octet_Test.cpp \
 Oid_Test.o: Oid_Test.cpp \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -172,7 +172,7 @@ Oid_Test.o: Oid_Test.cpp \
 Target_Test.o: Target_Test.cpp \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
@@ -196,7 +196,7 @@ Target_Test.o: Target_Test.cpp \
 Varbind_Test.o: Varbind_Test.cpp \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/config.h \
- /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/stdcpp.h \
+ /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/streams.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/OS.i \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Trace.h \
  /project/adaptive/ACE_wrappers/build/SunOS5.5/ace/Log_Msg.h \
