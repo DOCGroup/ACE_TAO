@@ -1,3 +1,11 @@
+Thu Oct 28 12:01:50 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * Release (CONTROLLED_FILES):
+          Added TAO/interop-tests to the set of directories to be included
+          in a release. This directory is intended to hold tests that may
+          be built with other ORBs to perform specific interoperability
+          testing.
+
 Thu Oct 28 10:29:56 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/be/be_decl.cpp:
@@ -22,7 +30,7 @@ Thu Oct 28 10:29:56 2004  Chad Elliott  <elliott_c@ociweb.com>
           #include "ace/os_include/sys/os_types.h" to ensure that size_t
           typedef is included (which is used by the DEF_NARROW_METHODS0
           macro).
-          
+
         * TAO_IDL/util/utl_global.cpp:
 
           Initialize pre_abspath and post_abspath to avoid uninitialized
