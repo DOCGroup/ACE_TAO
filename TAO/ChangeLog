@@ -20,7 +20,7 @@ Thu Mar 25 13:14:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  We should do something better for non-exception cases. If we
 	  have hooks for these we will be in a much better position. 
 
-	  Thanks to Priya Narasimhan <priya@ece.cmu.edu> and Dr. Schmidt
+	  Thanks to Priya Narasimhan <priya@cs.cmu.edu> and Dr. Schmidt
 	  for motivating much of this.
 
 Thu Mar 25 06:42:49 2004  Chad Elliott  <elliott_c@ociweb.com>
