@@ -34,31 +34,31 @@ class Broadcaster_i : public POA_Broadcaster
 public:
   // = Initialization and termination methods.
   Broadcaster_i (void);
-  // Constructor
+  // Constructor.
 
   ~Broadcaster_i (void);
-  // Destructor
+  // Destructor.
 
   virtual void add (Receiver_ptr receiver,
 		    const char *nickname,
-		    CORBA::Environment &_tao_environment);
+		    CORBA::Environment &TAO_TRY_ENV);
   // Saves receiver references in a list.
 
   virtual void remove (Receiver_ptr receiver,
-		       CORBA::Environment &_tao_environment);
+		       CORBA::Environment &TAO_TRY_ENV);
   // Removes receiver references from the list.
 
   virtual void say (Receiver_ptr receiver,
 		    const char *text,
-		    CORBA::Environment &_tao_environment);
+		    CORBA::Environment &TAO_TRY_ENV);
   // Called by Broadcaster clients to send messages.
 
-private:
+public:
   TAO_ORB_Manager orb_manager_;
   // The ORB manager.
 
   void broadcast (const char* text,
-		  CORBA::Environment &_tao_environment);
+		  CORBA::Environment &TAO_TRY_ENV);
   // Broadcasts the text to all registered clients.
 
   class Receiver_Data
@@ -77,7 +77,7 @@ private:
 
     ACE_CString nickname_;
     // Stores the client nickname.
-  };
+    };
 
   typedef ACE_Unbounded_Set<Receiver_Data>
           RECEIVER_SET;
