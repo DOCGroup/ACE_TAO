@@ -11,31 +11,31 @@ ACE_Shared_Memory_MM::filename (void) const
   return this->shared_memory_.filename ();
 }
 
-ACE_INLINE int 	       
-ACE_Shared_Memory_MM::open (ACE_HANDLE handle, 
-			    int length, 
-			    int prot, 
-			    int share, 
-			    char *addr, 
-			    off_t pos)
+ACE_INLINE int
+ACE_Shared_Memory_MM::open (ACE_HANDLE handle,
+                            int length,
+                            int prot,
+                            int share,
+                            char *addr,
+                            off_t pos)
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::open");
   return shared_memory_.map (handle, length, prot, share, addr, pos);
 }
 
-ACE_INLINE int	   
-ACE_Shared_Memory_MM::open (LPTSTR file_name, 
-			    int len, 
-			    int flags, 
-			    int mode, 
-			    int prot, 
-			    int share, 
-			    char *addr, 
-			    off_t pos)
+ACE_INLINE int
+ACE_Shared_Memory_MM::open (LPCTSTR file_name,
+                            int len,
+                            int flags,
+                            int mode,
+                            int prot,
+                            int share,
+                            char *addr,
+                            off_t pos)
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::open");
-  return shared_memory_.map (file_name, len, flags, mode, 
-			     prot, share, addr, pos);
+  return shared_memory_.map (file_name, len, flags, mode,
+                             prot, share, addr, pos);
 }
 
 // The overall size of the segment.
@@ -81,7 +81,7 @@ ACE_Shared_Memory_MM::get_id (void) const
   return this->shared_memory_.handle ();
 }
 
-ACE_INLINE int  
+ACE_INLINE int
 ACE_Shared_Memory_MM::free (void *p)
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::free");
