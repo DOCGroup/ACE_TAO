@@ -657,12 +657,6 @@ ACE_WFMO_Reactor::resume_handlers (void)
 }
 
 ACE_INLINE int
-ACE_WFMO_Reactor::handle_events (ACE_Time_Value &how_long)
-{
-  return this->event_handling (&how_long, 0);
-}
-
-ACE_INLINE int
 ACE_WFMO_Reactor::uses_event_associations (void)
 {
   // Since the WFMO_Reactor does use event associations, this function
@@ -671,21 +665,27 @@ ACE_WFMO_Reactor::uses_event_associations (void)
 }
 
 ACE_INLINE int
+ACE_WFMO_Reactor::handle_events (ACE_Time_Value &how_long)
+{
+  return this->event_handling (&how_long, FALSE);
+}
+
+ACE_INLINE int
 ACE_WFMO_Reactor::alertable_handle_events (ACE_Time_Value &how_long)
 {
-  return this->event_handling (&how_long, 1);
+  return this->event_handling (&how_long, TRUE);
 }
 
 ACE_INLINE int
 ACE_WFMO_Reactor::handle_events (ACE_Time_Value *how_long)
 {
-  return this->event_handling (how_long, 0);
+  return this->event_handling (how_long, FALSE);
 }
 
 ACE_INLINE int
 ACE_WFMO_Reactor::alertable_handle_events (ACE_Time_Value *how_long)
 {
-  return this->event_handling (how_long, 1);
+  return this->event_handling (how_long, TRUE);
 }
 
 ACE_INLINE int
@@ -746,6 +746,12 @@ ACE_WFMO_Reactor::safe_dispatch (int wait_status)
     }
 
   return result;
+}
+
+ACE_INLINE int
+ACE_WFMO_Reactor::dispatch_window_messages (void)
+{
+  return 0;
 }
 
 ACE_INLINE void
