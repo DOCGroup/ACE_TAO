@@ -211,13 +211,14 @@ namespace CIAO
     ACE_CHECK_RETURN (COMP::_nil ());
 
     Dynamic_Component_Servant_Base *svt =
-      new Dynamic_Component_Servant<COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR> ();
+      new Dynamic_Component_Servant
+       <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, EXEC> (exe);
  
     ::Components::EnterpriseComponent_var _ciao_ec =
       this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
-    this->container_.update_map (oid.in (), home.in (), _ciao_ec.in (), svt);
+    this->container_.update_map (oid.in (), home.in (), svt);
 
     return ho._retn ();
   }

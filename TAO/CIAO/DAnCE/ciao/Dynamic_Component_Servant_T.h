@@ -29,12 +29,20 @@
 
 namespace CIAO
 {
-  template <typename COMP_SERVANT, typename COMP_EXEC, typename COMP_EXEC_VAR>
+  template <typename COMP_SERVANT, typename COMP_EXEC, 
+            typename COMP_EXEC_VAR, typename EXEC>
   class Dynamic_Component_Servant
     : public virtual Dynamic_Component_Servant_Base
   {
   public:
+    Dynamic_Component_Servant (EXEC *exe);
+
+    virtual ~Dynamic_Component_Servant (void);
+
     virtual PortableServer::Servant create (void);
+
+  protected:
+    EXEC_VAR executor_;
   };
 }
 

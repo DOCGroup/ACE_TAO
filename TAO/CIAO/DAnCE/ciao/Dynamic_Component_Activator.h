@@ -78,7 +78,6 @@ namespace CIAO
 
     void update_servant_map (PortableServer::ObjectId &oid,
                              ::Components::CCMHome_ptr home,
-                             ::Components::EnterpriseComponent_ptr ec,
                              Dynamic_Component_Servant_Base* servant
                              ACE_ENV_ARG_DECL);
 
