@@ -9,9 +9,9 @@
 # this file will be lost the next time it is generated.
 #
 #----------------------------------------------------------------------------
-MAKEFILE        = Makefile.prio_server
-DEPENDENCY_FILE = .depend.Makefile.prio_server
-BIN_UNCHECKED   = prio_server
+MAKEFILE        = Makefile.dt_prio_server
+DEPENDENCY_FILE = .depend.Makefile.dt_prio_server
+BIN_UNCHECKED   = dt_prio_server
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -28,7 +28,7 @@ FILES = \
   testC \
   testS \
   test_i \
-  prio_server
+  dt_prio_server
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
