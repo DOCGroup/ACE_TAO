@@ -5,13 +5,20 @@
 
 ACE_RCSID(ORB_init, ORB_init, "$Id$")
 
+// Valid test IOR.
+// Do not attempt to narrow the object represented by this IOR, nor
+// should you modify the IOR unless you replace it with another
+// valid one!
+static const char *IOR =
+"IOR:010000001600000049444c3a43756269745f466163746f72793a312e30000000010000000000000090000000010101001500000062616d627563612e63732e777573746c2e65647500005c0d2d00000014010f004e5550000000130000000001000000006368696c645f706f61000000000001000000666163746f727900000003000000000000000800000001000000004f415401000000140000000100000001000100000000000901010000000000004f41540400000001000000";
+
 int
 main (int argc, char *argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      const char orbid[] = "my_orb";
+      const char orbid[] = "mighty_orb";
 
       CORBA::ORB_ptr my_orb = CORBA::ORB::_nil();
 
@@ -19,11 +26,11 @@ main (int argc, char *argv[])
         CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, orbid, ACE_TRY_ENV);
         ACE_TRY_CHECK;
 
-        my_orb = orb.in();
+        my_orb = orb.in ();
 
         // Once we leave this scope, the ORB is released but it should 
         // be possible to obtain the same ORB with another call to
-        // CORBA::ORB_init by using the same ORBid argument that was
+        // CORBA::ORB_init() by using the same ORBid argument that was
         // assigned to this ORB.
       }
 
@@ -101,11 +108,22 @@ main (int argc, char *argv[])
         }
 
       // -------------------------------------------------------------
+      // Create an object (but don't narrow() it) so that we can test
+      // that some of the TAO_Stub internals are functioning properly
+      // (leaks, etc).
+      // -------------------------------------------------------------
+
+      CORBA::Object_var object =
+        orb->string_to_object (IOR, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // -------------------------------------------------------------
       // Now try to perform an operation using the destroyed ORB
       // pseudo object.  A CORBA::OBJECT_NOT_EXIST() exception should
       // be thrown.  This also tests whether or not exceptions or the
       // ORB itself break when the last ORB is released.
       // -------------------------------------------------------------
+
       orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -120,7 +138,8 @@ main (int argc, char *argv[])
                   "CORBA::OBJECT_NOT_EXIST() exception was not thrown\n"
                   "during attempt to perform an ORB operation using\n"
                   "destroyed ORB <%s>\n"
-                  "The CORBA::OBJECT_NOT_EXIST should have been thrown!\n"
+                  "The CORBA::OBJECT_NOT_EXIST() exception should have\n"
+                  "been thrown!\n" 
                   "\n",
                   orbid));
 

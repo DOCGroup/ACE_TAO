@@ -145,7 +145,8 @@ ORB_CORE_FILES = \
   Linear_Priority_Mapping.cpp \
   Direct_Priority_Mapping.cpp \
   RT_Current.cpp \
-  Pool_Per_Endpoint.cpp
+  Pool_Per_Endpoint.cpp \
+  GIOPC.cpp
 
 DYNAMIC_ANY_FILES = \
   DynAnyC.cpp \
@@ -286,6 +287,8 @@ pkginclude_HEADERS = \
   Forwarding_Servant.h \
   GIOP.h \
   GIOP.i \
+  GIOPC.h \
+  GIOPC.i \
   GIOP_Server_Request.h \
   GIOP_Server_Request.i \
   IIOP_Acceptor.h \
