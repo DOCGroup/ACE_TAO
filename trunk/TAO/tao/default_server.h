@@ -66,6 +66,13 @@ public:
   //    else if ORB_init count > 1 return
   //    ACE_Thread_Mutex.
 
+  virtual ACE_Lock *create_event_loop_lock (void);
+  // Creates and returns a lock for the event loop.
+  // If the ORB is single threaded or some form of ORB-per-thread then
+  // it is more efficient to use a Null_Mutex for the variables
+  // controlling the event loop (termination). Otherwise a
+  // Recursive_Thread_Mutex or Thread_Mutex may be required.
+
   // = Service Configurator hooks.
   virtual int init (int argc, char *argv[]);
   // Initialize the ORB when it's linked dynamically.
@@ -82,6 +89,8 @@ public:
   //   where <{which}> is one of <thread> or <null> (default <thread>)
   // <-ORBpoamgrlock> <{which}>
   //   where <{which}> is one of <thread> or <null> (default <thread>)
+  // <-ORBeventlock> <{which}>
+  //   where <{which}> is one of <thread> or <null> (default <null>)
 
 private:
   void tokenize (char *flag_string);
@@ -106,6 +115,9 @@ private:
 
   Lock_Type poa_mgr_lock_type_;
   // The type of lock to be returned by <create_poa_mgr_lock()>.
+
+  Lock_Type event_loop_lock_type_;
+  // The type of lock to be returned by <create_event_loop_lock()>.
 
   // = Strategies Used.
   TAO_Reactive_Strategy<TAO_Server_Connection_Handler> reactive_strategy_;

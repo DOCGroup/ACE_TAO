@@ -64,6 +64,12 @@ TAO_Server_Strategy_Factory::create_servant_lock (void)
   return 0;
 }
 
+ACE_Lock *
+TAO_Server_Strategy_Factory::create_event_loop_lock (void)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Creation_Strategy<TAO_Server_Connection_Handler>;
 template class ACE_Acceptor<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;

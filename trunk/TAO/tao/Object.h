@@ -144,9 +144,6 @@ private:
   // It's changed to a STUB_Object to make the relationship of the
   // target more explicit and sensible.
 
-  ACE_SYNCH_MUTEX IUnknown_lock_;
-  // Mutex to protect reference counting stuff.
-
   u_int refcount_;
   // Number of outstanding references to this object.
 

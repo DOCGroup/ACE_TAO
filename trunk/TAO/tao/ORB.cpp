@@ -96,6 +96,12 @@ CORBA_ORB::~CORBA_ORB (void)
       // free up all the ORB owned TypeCodes
       TAO_TypeCodes::fini ();
     }
+
+  if (this->shutdown_lock_ != 0)
+    {
+      delete this->shutdown_lock_;
+      this->shutdown_lock_ = 0;
+    }
 }
 
 // Set up listening endpoints.
@@ -131,11 +137,18 @@ CORBA_ORB::open (void)
 }
 
 void
-CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion)
+CORBA_ORB::shutdown (CORBA::Boolean /* wait_for_completion */)
 {
-  ACE_UNUSED_ARG (wait_for_completion);
-
-  this->should_shutdown_ = CORBA::B_TRUE;
+  // NOTE: we play some games with this monitor to release the lock
+  // while blocked on I/O.
+  if (this->shutdown_lock_ != 0)
+    {
+      ACE_GUARD (ACE_Lock, monitor, *this->shutdown_lock_);
+      this->should_shutdown_ = 1;
+    }
+  else
+      this->should_shutdown_ = 1;
+    
   TAO_ORB_Core_instance ()->reactor ()->wakeup_all_threads ();
   return;
 }
@@ -194,6 +207,10 @@ CORBA_ORB::perform_work (ACE_Time_Value *tv)
 int
 CORBA_ORB::run (ACE_Time_Value *tv)
 {
+  if (this->shutdown_lock_ == 0)
+    this->shutdown_lock_ = 
+      TAO_ORB_Core_instance ()->server_factory ()->create_event_loop_lock ();
+
   ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
 
   // Set the owning thread of the Reactor to the one which we're
@@ -210,8 +227,16 @@ CORBA_ORB::run (ACE_Time_Value *tv)
   // Loop "forever" handling client requests.
   const int max_iterations = 100;
   int counter = 0;
+
+  // NOTE: we play some games with this monitor to release the lock
+  // while blocked on I/O.
+  ACE_GUARD_RETURN (ACE_Lock, monitor, *this->shutdown_lock_, -1);
+
   while (this->should_shutdown_ == 0)
     {
+      if (monitor.release () == -1)
+	return -1;
+
       counter++;
       if (counter == max_iterations)
         {
@@ -235,6 +260,9 @@ CORBA_ORB::run (ACE_Time_Value *tv)
           break;
           /* NOTREACHED */
         }
+
+      if (monitor.acquire () == -1)
+	return -1;
     }
   /* NOTREACHED */
   return 0;

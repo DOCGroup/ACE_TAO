@@ -73,6 +73,9 @@ public:
 
   virtual ACE_Lock *create_servant_lock (void);
   // Return a new lock for use in locking the servant.
+
+  virtual ACE_Lock *create_event_loop_lock (void);
+  // Return a new lock for use in the ORB event loop.
 };
 
 #endif /* TAO_SERVER_STRATEGY_FACTORY_H */
