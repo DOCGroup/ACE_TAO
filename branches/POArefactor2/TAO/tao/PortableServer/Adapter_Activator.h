@@ -19,6 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 #include "tao/PortableServer/AdapterActivatorC.h"
 
 namespace PortableServer
@@ -33,7 +35,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-#if (TAO_HAS_MINIMUM_POA == 0)
     class TAO_PortableServer_Export Adapter_Activator
       : public PortableServer::AdapterActivator
     {
@@ -51,10 +52,10 @@ namespace TAO
       /// POA Manager
       PortableServer::POAManager_var poa_manager_;
     };
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
   }
 }
 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ADAPTER_ACTIVATOR_H */

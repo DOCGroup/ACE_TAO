@@ -56,12 +56,12 @@ namespace TAO
       {
         case ::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY :
         {
-          ACE_NEW_RETURN (strategy, AOM_Only_Request_Processing_Strategy, 0);
+          ACE_NEW_RETURN (strategy, RequestProcessingStrategyAOMOnly, 0);
           break;
         }
         case ::PortableServer::USE_DEFAULT_SERVANT :
         {
-          ACE_NEW_RETURN (strategy, Default_Servant_Request_Processing_Strategy, 0);
+          ACE_NEW_RETURN (strategy, RequestProcessingStrategyDefaultServant, 0);
           break;
         }
         case ::PortableServer::USE_SERVANT_MANAGER :
@@ -70,12 +70,12 @@ namespace TAO
           {
             case ::PortableServer::RETAIN :
             {
-              ACE_NEW_RETURN (strategy, Servant_Activator_Request_Processing_Strategy, 0);
+              ACE_NEW_RETURN (strategy, RequestProcessingStrategyServantActivator, 0);
               break;
             }
             case ::PortableServer::NON_RETAIN :
             {
-              ACE_NEW_RETURN (strategy, Servant_Locator_Request_Processing_Strategy, 0);
+              ACE_NEW_RETURN (strategy, RequestProcessingStrategyServantLocator, 0);
               break;
             }
           }

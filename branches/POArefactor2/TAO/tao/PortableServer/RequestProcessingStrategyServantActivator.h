@@ -41,13 +41,13 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Servant_Activator_Request_Processing_Strategy
-      : public virtual Servant_Manager_Request_Processing_Strategy
+    class TAO_PortableServer_Export RequestProcessingStrategyServantActivator
+      : public virtual RequestProcessingStrategyServantManager
     {
     public:
-      Servant_Activator_Request_Processing_Strategy (void);
+      RequestProcessingStrategyServantActivator (void);
 
-      virtual ~Servant_Activator_Request_Processing_Strategy (void);
+      virtual ~RequestProcessingStrategyServantActivator (void);
 
       virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
 

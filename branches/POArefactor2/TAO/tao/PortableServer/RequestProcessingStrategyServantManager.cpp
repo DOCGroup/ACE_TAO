@@ -24,16 +24,16 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    Servant_Manager_Request_Processing_Strategy::Servant_Manager_Request_Processing_Strategy (void)
+    RequestProcessingStrategyServantManager::RequestProcessingStrategyServantManager (void)
     {
     }
 
-    Servant_Manager_Request_Processing_Strategy::~Servant_Manager_Request_Processing_Strategy (void)
+    RequestProcessingStrategyServantManager::~RequestProcessingStrategyServantManager (void)
     {
     }
 
     PortableServer::Servant
-    Servant_Manager_Request_Processing_Strategy::get_servant (
+    RequestProcessingStrategyServantManager::get_servant (
       ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy))
@@ -43,7 +43,7 @@ namespace TAO
     }
 
     void
-    Servant_Manager_Request_Processing_Strategy::set_servant (
+    RequestProcessingStrategyServantManager::set_servant (
       PortableServer::Servant servant
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
@@ -55,7 +55,7 @@ namespace TAO
     }
 
     void
-    Servant_Manager_Request_Processing_Strategy::validate_servant_manager (
+    RequestProcessingStrategyServantManager::validate_servant_manager (
       PortableServer::ServantManager_ptr servant_manager
       ACE_ENV_ARG_DECL)
     {
@@ -69,7 +69,7 @@ namespace TAO
     }
 
     PortableServer::Servant
-    Servant_Manager_Request_Processing_Strategy::system_id_to_servant (
+    RequestProcessingStrategyServantManager::system_id_to_servant (
       PortableServer::ObjectId system_id
       ACE_ENV_ARG_DECL)
     {
@@ -78,7 +78,7 @@ namespace TAO
     }
 
     PortableServer::ObjectId *
-    Servant_Manager_Request_Processing_Strategy::servant_to_id (
+    RequestProcessingStrategyServantManager::servant_to_id (
       PortableServer::Servant servant
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,

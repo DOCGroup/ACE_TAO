@@ -28,16 +28,16 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    Servant_Locator_Request_Processing_Strategy::Servant_Locator_Request_Processing_Strategy (void)
+    RequestProcessingStrategyServantLocator::RequestProcessingStrategyServantLocator (void)
     {
     }
 
-    Servant_Locator_Request_Processing_Strategy::~Servant_Locator_Request_Processing_Strategy (void)
+    RequestProcessingStrategyServantLocator::~RequestProcessingStrategyServantLocator (void)
     {
     }
 
     void
-    Servant_Locator_Request_Processing_Strategy::strategy_cleanup(
+    RequestProcessingStrategyServantLocator::strategy_cleanup(
       ACE_ENV_SINGLE_ARG_DECL)
     {
       {
@@ -51,7 +51,7 @@ namespace TAO
     }
 
     PortableServer::ServantManager_ptr
-    Servant_Locator_Request_Processing_Strategy::get_servant_manager (
+    RequestProcessingStrategyServantLocator::get_servant_manager (
       ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy))
@@ -60,7 +60,7 @@ namespace TAO
     }
 
     void
-    Servant_Locator_Request_Processing_Strategy::set_servant_manager (
+    RequestProcessingStrategyServantLocator::set_servant_manager (
       PortableServer::ServantManager_ptr imgr
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
@@ -86,7 +86,7 @@ namespace TAO
     }
 
     TAO_SERVANT_LOCATION
-    Servant_Locator_Request_Processing_Strategy::locate_servant (
+    RequestProcessingStrategyServantLocator::locate_servant (
       const PortableServer::ObjectId &system_id,
       PortableServer::Servant &servant
       ACE_ENV_ARG_DECL)
@@ -109,7 +109,7 @@ namespace TAO
     }
 
     PortableServer::Servant
-    Servant_Locator_Request_Processing_Strategy::locate_servant (
+    RequestProcessingStrategyServantLocator::locate_servant (
       const char *operation,
       const PortableServer::ObjectId &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
@@ -202,7 +202,7 @@ namespace TAO
     }
 
     void
-    Servant_Locator_Request_Processing_Strategy::cleanup_servant (
+    RequestProcessingStrategyServantLocator::cleanup_servant (
       PortableServer::Servant servant,
       PortableServer::ObjectId user_id
       ACE_ENV_ARG_DECL)
@@ -229,7 +229,7 @@ namespace TAO
     }
 
     void
-    Servant_Locator_Request_Processing_Strategy::etherealize_objects (
+    RequestProcessingStrategyServantLocator::etherealize_objects (
       CORBA::Boolean /*etherealize_objects*/)
     {
     }

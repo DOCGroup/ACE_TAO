@@ -33,13 +33,13 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export AOM_Only_Request_Processing_Strategy
+    class TAO_PortableServer_Export RequestProcessingStrategyAOMOnly
       : public virtual RequestProcessingStrategy
     {
     public:
-      AOM_Only_Request_Processing_Strategy (void);
+      RequestProcessingStrategyAOMOnly (void);
 
-      virtual ~AOM_Only_Request_Processing_Strategy (void);
+      virtual ~RequestProcessingStrategyAOMOnly (void);
 
       PortableServer::ServantManager_ptr
       get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)

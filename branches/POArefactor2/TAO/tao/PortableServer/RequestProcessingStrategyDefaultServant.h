@@ -36,13 +36,13 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Default_Servant_Request_Processing_Strategy
+    class TAO_PortableServer_Export RequestProcessingStrategyDefaultServant
       : public virtual RequestProcessingStrategy
     {
     public:
-      Default_Servant_Request_Processing_Strategy (void);
+      RequestProcessingStrategyDefaultServant (void);
 
-      virtual ~Default_Servant_Request_Processing_Strategy (void);
+      virtual ~RequestProcessingStrategyDefaultServant (void);
 
       virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
 

@@ -28,24 +28,24 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    Default_Servant_Request_Processing_Strategy::Default_Servant_Request_Processing_Strategy (void)
+    RequestProcessingStrategyDefaultServant::RequestProcessingStrategyDefaultServant (void)
       : default_servant_ (0)
     {
     }
 
-    Default_Servant_Request_Processing_Strategy::~Default_Servant_Request_Processing_Strategy (void)
+    RequestProcessingStrategyDefaultServant::~RequestProcessingStrategyDefaultServant (void)
     {
     }
 
     void
-    Default_Servant_Request_Processing_Strategy::strategy_cleanup(
+    RequestProcessingStrategyDefaultServant::strategy_cleanup(
       ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     {
       this->default_servant_ = 0;
     }
 
     PortableServer::ServantManager_ptr
-    Default_Servant_Request_Processing_Strategy::get_servant_manager (
+    RequestProcessingStrategyDefaultServant::get_servant_manager (
       ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy))
@@ -55,7 +55,7 @@ namespace TAO
     }
 
     void
-    Default_Servant_Request_Processing_Strategy::set_servant_manager (
+    RequestProcessingStrategyDefaultServant::set_servant_manager (
       PortableServer::ServantManager_ptr /*imgr*/
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
@@ -65,7 +65,7 @@ namespace TAO
     }
 
     PortableServer::Servant
-    Default_Servant_Request_Processing_Strategy::get_servant (
+    RequestProcessingStrategyDefaultServant::get_servant (
       ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy))
@@ -76,7 +76,7 @@ namespace TAO
     }
 
     void
-    Default_Servant_Request_Processing_Strategy::set_servant (
+    RequestProcessingStrategyDefaultServant::set_servant (
       PortableServer::Servant servant
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
@@ -110,7 +110,7 @@ namespace TAO
     }
 
     TAO_SERVANT_LOCATION
-    Default_Servant_Request_Processing_Strategy::locate_servant (
+    RequestProcessingStrategyDefaultServant::locate_servant (
       const PortableServer::ObjectId & system_id,
       PortableServer::Servant & servant
       ACE_ENV_ARG_DECL)
@@ -133,7 +133,7 @@ namespace TAO
     }
 
     PortableServer::Servant
-    Default_Servant_Request_Processing_Strategy::locate_servant (
+    RequestProcessingStrategyDefaultServant::locate_servant (
       const char * /*operation*/,
       const PortableServer::ObjectId & system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
@@ -174,7 +174,7 @@ namespace TAO
     }
 
     PortableServer::Servant
-    Default_Servant_Request_Processing_Strategy::system_id_to_servant (
+    RequestProcessingStrategyDefaultServant::system_id_to_servant (
       PortableServer::ObjectId system_id
       ACE_ENV_ARG_DECL)
     {
@@ -206,7 +206,7 @@ namespace TAO
     }
 
     void
-    Default_Servant_Request_Processing_Strategy::cleanup_servant (
+    RequestProcessingStrategyDefaultServant::cleanup_servant (
       PortableServer::Servant servant,
       PortableServer::ObjectId user_id
       ACE_ENV_ARG_DECL)
@@ -233,13 +233,13 @@ namespace TAO
     }
 
     void
-    Default_Servant_Request_Processing_Strategy::etherealize_objects (
+    RequestProcessingStrategyDefaultServant::etherealize_objects (
       CORBA::Boolean /*etherealize_objects*/)
     {
     }
 
     PortableServer::ObjectId *
-    Default_Servant_Request_Processing_Strategy::servant_to_id (
+    RequestProcessingStrategyDefaultServant::servant_to_id (
       PortableServer::Servant servant
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,

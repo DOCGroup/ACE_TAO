@@ -1,6 +1,13 @@
 // $Id$
 
 #include "Adapter_Activator.h"
+
+ACE_RCSID (PortableServer,
+           Adapter_Activator,
+           "$Id$")
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 #include "AdapterActivatorC.h"
 #include "POAManagerC.h"
 
@@ -8,17 +15,10 @@
 #include "PortableServerC.h"
 #undef TAO_PORTABLESERVER_SAFE_INCLUDE
 
-ACE_RCSID (PortableServer,
-           Adapter_Activator,
-           "$Id$")
-
 namespace TAO
 {
   namespace Portable_Server
   {
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
     Adapter_Activator::Adapter_Activator (
       PortableServer::POAManager_ptr pm)
       : poa_manager_ (PortableServer::POAManager::_duplicate (pm))
@@ -61,8 +61,7 @@ namespace TAO
       // Finally everything is fine
       return 1;
     }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
   }
 }
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
