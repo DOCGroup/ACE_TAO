@@ -6,6 +6,8 @@
 #include "SSL_SOCK_Acceptor.h"
 #include "SSL_Accept_Handler.h"
 
+#include "ace/Log_Msg.h"
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Acceptor)
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
@@ -97,7 +99,7 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream) const
 {
   if (SSL_is_init_finished (new_stream.ssl ()))
     return 0;
-  
+
   if (!SSL_in_accept_init (new_stream.ssl ()))
     ::SSL_set_accept_state (new_stream.ssl ());
 
@@ -136,7 +138,7 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
 {
   if (SSL_is_init_finished (new_stream.ssl ()))
     return 0;
-  
+
   if (!SSL_in_accept_init (new_stream.ssl ()))
     ::SSL_set_accept_state (new_stream.ssl ());
 
