@@ -779,7 +779,7 @@ nobase_include_HEADERS += \
   Object.i \
   ObjectIdListC.i \
   Object_Argument_T.inl \
-  Object_KeyC.i \
+  Object_KeyC.inl \
   Object_Loader.i \
   Object_SArgument_T.inl \
   Objref_VarOut_T.inl \

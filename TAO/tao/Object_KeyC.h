@@ -26,19 +26,23 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:171
+// be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_OBJECT_KEYC_H_
 #define _TAO_IDL_ORIG_OBJECT_KEYC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/TAO_Export.h"
+#include "tao/ORB.h"
+#include "tao/Environment.h"
 #include "tao/Sequence_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
@@ -56,9 +60,7 @@
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -71,22 +73,22 @@
 
 namespace TAO
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_TAO_OBJECTKEY_CH_)
 #define _TAO_OBJECTKEY_CH_
-
+  
   class ObjectKey;
-
+  
   typedef
     TAO_FixedSeq_Var_T<
         ObjectKey,
         CORBA::Octet
       >
     ObjectKey_var;
-
+  
   typedef
     TAO_Seq_Out_T<
         ObjectKey,
@@ -94,7 +96,7 @@ namespace TAO
         CORBA::Octet
       >
     ObjectKey_out;
-
+  
   class TAO_Export ObjectKey
     : public
         TAO_Unbounded_Sequence<
@@ -107,12 +109,12 @@ namespace TAO
     ObjectKey (
         CORBA::ULong max,
         CORBA::ULong length,
-        CORBA::Octet* buffer,
+        CORBA::Octet* buffer, 
         CORBA::Boolean release = 0
       );
     ObjectKey (const ObjectKey &);
     ~ObjectKey (void);
-
+    
     typedef ObjectKey_var _var_type;
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
@@ -176,13 +178,13 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_TAO_ObjectKey_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:978
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
-#include "Object_KeyC.i"
+#include "Object_KeyC.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
@@ -193,4 +195,5 @@ TAO_Export CORBA::Boolean operator>> (
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
 
