@@ -1,3 +1,8 @@
+Thu Jul  6 01:06:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/DIOP_Connection_Handler.h: Fixed a link error
+	  on Win32 builds.
+
 Fri Jul  6 00:39:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/*/Makefile: Updated dependencies.

@@ -158,8 +158,6 @@ protected:
   /// ensure that server threads eventually exit.
 
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
-  virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
-                              ACE_Time_Value *max_wait_time = 0);
 
   virtual int handle_cleanup ();
 
