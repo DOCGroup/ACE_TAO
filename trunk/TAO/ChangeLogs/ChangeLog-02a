@@ -1,3 +1,9 @@
+Mon Oct 22 23:48:13 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/default_resource.cpp: 
+
+	  Fixed compile errors on Win2K.
+
 Mon Oct 22 18:54:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV.dsp:
