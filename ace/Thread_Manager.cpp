@@ -562,7 +562,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                       ACE_OS_Object_Manager::seh_except_selector(),
                                       ACE_OS_Object_Manager::seh_except_handler()),
                   -1);
-#else
+# else
   ACE_NEW_RETURN (thread_args,
                   ACE_Thread_Adapter (func,
                                       args,
@@ -642,11 +642,9 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                   TRUE,
                                   DUPLICATE_SAME_ACCESS);
 # endif /* ! ACE_HAS_WINCE */
-#elif defined (VXWORKS)
+#else  /* ! ACE_HAS_WTHREADS */
      if (t_handle != 0)
        *t_handle = thr_handle;
-#else  /* ! ACE_HAS_WTHREADS && ! VXWORKS */
-      ACE_UNUSED_ARG (t_handle);
 #endif /* ! ACE_HAS_WTHREADS && ! VXWORKS */
 
       // append_thr also put the <new_thr_desc> into Thread_Manager's

@@ -1,3 +1,11 @@
+Mon Jul  7 23:17:21 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (spawn_i): Change to always return the
+	  thread "handle" if users ask for it.  For some reason, we did
+	  not return this value on some platforms, although it's always
+	  been available.  Thanks to Robin Farine
+	  <robin.farine@acn-group.ch> for reporting this.   [Bug 1546]
+
 Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* The following changes are related to improving memory management
