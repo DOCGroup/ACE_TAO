@@ -686,9 +686,10 @@ TAO_ORB_Core::resource_factory (void)
       // Still don't have one, so let's allocate the default.  This
       // will throw an exception if it fails on exception-throwing
       // platforms.
-      ACE_ERROR ((LM_WARNING,
-                  "(%P|%t) WARNING - No Resource Factory found in Service Repository."
-                  "  Using default instance with GLOBAL resource source specifier.\n"));
+      if (TAO_orbdebug)
+        ACE_ERROR ((LM_WARNING,
+                    "(%P|%t) WARNING - No Resource Factory found in Service Repository."
+                    "  Using default instance with GLOBAL resource source specifier.\n"));
 
       ACE_NEW_RETURN (this->resource_factory_,
                       TAO_Resource_Factory,
@@ -722,9 +723,10 @@ TAO_ORB_Core::client_factory (void)
       // Still don't have one, so let's allocate the default.  This
       // will throw an exception if it fails on exception-throwing
       // platforms.
-      ACE_ERROR ((LM_WARNING,
-                  "(%P|%t) WARNING - No Client Strategy Factory found in Service Repository."
-                  "  Using default instance.\n"));
+      if (TAO_orbdebug)
+        ACE_ERROR ((LM_WARNING,
+                    "(%P|%t) WARNING - No Client Strategy Factory found in Service Repository."
+                    "  Using default instance.\n"));
 
       ACE_NEW_RETURN (this->client_factory_,
                       TAO_Default_Client_Strategy_Factory,
@@ -755,10 +757,11 @@ TAO_ORB_Core::server_factory (void)
   if (this->server_factory_ == 0)
     {
       // Still don't have one, so let's allocate the default.
-      ACE_ERROR ((LM_WARNING,
-                  "(%P|%t) WARNING - No %s found in Service Repository."
-                  "  Using default instance.\n",
-                  "Server Strategy Factory"));
+      if (TAO_orbdebug)
+        ACE_ERROR ((LM_WARNING,
+                    "(%P|%t) WARNING - No %s found in Service Repository."
+                    "  Using default instance.\n",
+                    "Server Strategy Factory"));
 
       ACE_NEW_RETURN (this->server_factory_,
                       TAO_Default_Server_Strategy_Factory,
