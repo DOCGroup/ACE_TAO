@@ -9,24 +9,25 @@
 #include "ace/Token_Invariants.i"
 #endif /* __ACE_INLINE__ */
 
+// Lock the creation of the Singleton.
+ACE_TOKEN_CONST::MUTEX ACE_Token_Invariant_Manager::creation_lock_;
+ACE_Token_Invariant_Manager *ACE_Token_Invariant_Manager::instance_ = 0;
+
 ACE_Token_Invariant_Manager *
 ACE_Token_Invariant_Manager::instance (void)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::instance");
-  static ACE_Token_Invariant_Manager *instance = 0;
-
-  static ACE_TOKEN_CONST::MUTEX lock;
 
   // Perform the Double-Check pattern...
-  if (instance == 0)
+  if (instance_ == 0)
     {
-      ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, lock, 0);
+      ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, creation_lock_, 0);
 
-      if (instance == 0)
-	ACE_NEW_RETURN (instance, ACE_Token_Invariant_Manager, 0);
+      if (instance_ == 0)
+	ACE_NEW_RETURN (instance_, ACE_Token_Invariant_Manager, 0);
     }
 
-  return instance;
+  return instance_;
 }
 
 ACE_Token_Invariant_Manager::ACE_Token_Invariant_Manager (void)
