@@ -1008,9 +1008,8 @@ TAO_ORB_Core::unset_leader_wake_up_follower (void)
     // do it only if a follower is available and no leader is available
     {
       ACE_SYNCH_CONDITION* condition_ptr = this->get_next_follower ();
-      if (this->remove_follower (condition_ptr) == -1)
+      if (condition_ptr == 0 || condition_ptr->signal () == -1)
         return -1;
-      condition_ptr->signal ();
     }
   return 0;
 }

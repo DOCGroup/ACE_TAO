@@ -141,14 +141,24 @@ TAO_Wait_On_Leader_Follower::send_request (TAO_ORB_Core *orb_core,
                                            TAO_OutputCDR &stream,
                                            int two_way)
 {
-  if (!two_way)
-    {
-      return TAO_Wait_Strategy::send_request (orb_core,
-                                              stream,
-                                              two_way);
-    }
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
+                      orb_core->leader_follower_lock (), -1);
 
-  // = Two way call.
+    // The last request may have left this unitialized
+    this->reply_received_ = 0;
+
+    // Set the state so that we know we're looking for a response.
+    this->expecting_response_ = two_way;
+
+    // remember in which thread the client connection handler was running
+    this->calling_thread_ = ACE_Thread::self ();
+
+    //if (TAO_debug_level > 0)
+    //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - sending request for <%x>\n",
+    //this->transport_));
+
+  }
 
   // @@ Should we do here that checking for the difference in the
   //    Reactor used??? (Alex).
@@ -164,31 +174,24 @@ TAO_Wait_On_Leader_Follower::send_request (TAO_ORB_Core *orb_core,
   // fixed...
 
   // Obtain the lock.
-  {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                      orb_core->leader_follower_lock (), -1);
-
-    // The last request may have left this unitialized
-    this->reply_received_ = 0;
-
-    // Set the state so that we know we're looking for a response.
-    this->expecting_response_ = 1;
-
-    // remember in which thread the client connection handler was running
-    this->calling_thread_ = ACE_Thread::self ();
-
-    if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Wait_On_LF::send_request "
-                  "expecting reply for <%x:%d>\n",
-                  this, this->transport_->handle ()));
-    
-  }
-
   // Send the request
-  return TAO_Wait_Strategy::send_request (orb_core,
-                                          stream,
-                                          two_way);
+  int result =
+    TAO_Wait_Strategy::send_request (orb_core,
+                                     stream,
+                                     two_way);
+
+  if (result == -1)
+    {
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
+                        orb_core->leader_follower_lock (), -1);
+
+      this->reply_received_ = 0;
+      this->expecting_response_ = 0;
+      this->calling_thread_ = ACE_OS::NULL_thread;
+
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - failed request for <%x>\n",
+                  this->transport_));
+    }
 }
 
 int
@@ -231,6 +234,9 @@ TAO_Wait_On_Leader_Follower::wait (void)
     {
       // = Wait as a follower.
 
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - wait (follower) on <%x>\n",
+                  this->transport_));
+
       // wait until we have input available or there is no leader, in
       // which case we must become the leader anyway....
       // @@ Alex: I am uncertain about how many condition variables
@@ -239,21 +245,28 @@ TAO_Wait_On_Leader_Follower::wait (void)
       //    should be one per-connection.  I think the first case is
       //    the "Right Thing"[tm]
       ACE_SYNCH_CONDITION* cond =
-        this->cond_response_available ()
-;
+        this->cond_response_available ();
+
       // Add ourselves to the list, do it only once because we can
       // wake up multiple times from the CV loop
       if (orb_core->add_follower (cond) == -1)
         ACE_ERROR ((LM_ERROR,
-                    "TAO:%N:%l:(%P|%t):TAO_Wait_On_Leader_Follower::wait: "
-                    "Failed to add a follower <%x>\n",
-                    cond));
+                    "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
+                    "add_follower failed for <%x>\n", cond));
 
       while (!this->reply_received_ && orb_core->leader_available ())
         {
           if (cond == 0 || cond->wait () == -1)
             return -1;
         }
+
+      if (orb_core->remove_follower (cond) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
+                    "remove_follower failed for <%x>\n", cond));
+
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - done (follower:%d) on <%x>\n",
+                  this->reply_received_, this->transport_));
 
       // Now somebody woke us up to become a leader or to handle
       // our input. We are already removed from the follower queue.
@@ -273,14 +286,12 @@ TAO_Wait_On_Leader_Follower::wait (void)
           this->expecting_response_ = 0;
           this->calling_thread_ = ACE_OS::NULL_thread;
 
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - L-F reply error\n"));
-
           return -1;
         }
       // FALLTHROUGH
       // We only get here if we woke up but the reply is not complete
       // yet, time to assume the leader role....
+
     }
 
   // = Leader Code.
@@ -292,9 +303,6 @@ TAO_Wait_On_Leader_Follower::wait (void)
 
   // This might increase the refcount of the leader.
   orb_core->set_leader_thread ();
-
-  //  ACE_DEBUG ((LM_DEBUG,
-  //              "TAO (%P|%t) - become the leader\n"));
 
   // Release the lock.
   if (ace_mon.release () == -1)
@@ -310,8 +318,14 @@ TAO_Wait_On_Leader_Follower::wait (void)
 
   int result = 0;
 
+  ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - wait (leader) on <%x>\n",
+              this->transport_));
+
   while (result >= 0 && this->reply_received_ == 0)
     result = orb_core->reactor ()->handle_events ();
+
+  ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - done (leader) on <%x>\n",
+              this->transport_));
 
   // Re-acquire the lock.
   if (ace_mon.acquire () == -1)
@@ -326,9 +340,6 @@ TAO_Wait_On_Leader_Follower::wait (void)
   // occupied. But do it before checking the error in <result>, even
   // if there is an error in our input we should continue running the
   // loop in another thread.
-
-  //  ACE_DEBUG ((LM_DEBUG,
-  //              "TAO (%P|%t) - elect a follower\n"));
 
   if (orb_core->unset_leader_wake_up_follower () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -345,8 +356,6 @@ TAO_Wait_On_Leader_Follower::wait (void)
   result = 0;
   if (this->reply_received_ == -1)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - L-F reply error\n"));
       result = -1;
     }
 
@@ -369,6 +378,9 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
                     orb_core->leader_follower_lock (), -1);
 
+  //  ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - reading reply <%x>\n",
+  //              this->transport_));
+
   // A message is received but not data was sent, flag this as an
   // error, but we should do more....
   // @@ Alex: this could be a CloseConnection message or something
@@ -378,8 +390,8 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Wait_On_LF::handle_input, "
-                    "unexpected <%x:%d>\n",
-                    this, this->transport_->handle ()));
+                    "unexpected on <%x>\n",
+                    this->transport_));
       return -1;
     }
 
@@ -401,6 +413,9 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
       this->reply_received_ = 1;
       result = 0;
     }
+
+  //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - waking up <%x>\n",
+  //          this->transport_));
 
   this->wake_up ();
 
@@ -466,9 +481,6 @@ TAO_Wait_On_Leader_Follower::wake_up (void)
   // awake and will get this too.
   ACE_SYNCH_CONDITION* cond =
     this->cond_response_available ();
-
-  // Ignore any errors, may have been removed by another thread...
-  (void) this->transport_->orb_core ()->remove_follower (cond);
 
   if (cond != 0)
     (void) cond->signal ();

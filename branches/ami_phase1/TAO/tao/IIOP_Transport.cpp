@@ -226,11 +226,13 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
   if (cdr == 0)
     return this->check_unexpected_data ();
 
+  TAO_GIOP_Version version;
+
   TAO_GIOP::Message_Type message_type =
     TAO_GIOP::recv_message (this,
                             *cdr,
                             this->orb_core_,
-                            this->version_,
+                            version,
                             block);
   switch (message_type)
     {
@@ -274,6 +276,7 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
     case TAO_GIOP::CancelRequest:
     case TAO_GIOP::LocateRequest:
     case TAO_GIOP::CloseConnection:
+    default:
       // @@ Errors for the time being.
       // @@ this->reply_handler_->error ();
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -306,47 +309,38 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
 
   if (!cdr->read_ulong (request_id))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:(%P | %t):TAO_IIOP_Client_Transport::handle_client_input: "
-                       "Failed to read request_id.\n"),
+                       "TAO (%P|%t) : IIOP_Client_Transport::"
+                       "handle_client_input - error while "
+                       "reading request_id\n"),
                       -1);
 
   if (!cdr->read_ulong (reply_status))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:(%P | %t):TAO_IIOP_Client_Transport::handle_client_input: "
-                       "Failed to read request_status type.\n"),
+                       "TAO (%P|%t) : IIOP_Client_Transport::"
+                       "handle_client_input - error while "
+                       "reading reply status\n"),
                       -1);
 
-  // Find the TAO_Reply_Handler for that request ID!
-  TAO_Reply_Dispatcher* reply_dispatcher =
-    this->rms_->find_dispatcher (request_id);
-  if (reply_dispatcher == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:(%P | %t):TAO_IIOP_Client_Transport::handle_client_input: "
-                       "Failed to find Reply Dispatcher.\n"),
-                      -1);
-
-  // Init the Reply dispatcher with all the reply info.
-  reply_dispatcher->reply_status (reply_status);
-  // @@ reply_dispatcher->version (this->version ());
-  // @@ reply->dispatcher->reply_context (reply_ctx);
-  reply_dispatcher->cdr (cdr);
-
-  // @@ Alex: I think that a better interface is:
-  //  reply_dispatcher->dispatch_reply (reply_status, version,
-  //                                    reply_ctx, cdr);
-  // That way we don't need to keep state in the dispatch_reply
-  // object, careful about the lifetime of the reply_ctx and CDR
-  // objects because they allocate memory....
-
-  // Handle the reply.
-  if (reply_dispatcher->dispatch_reply () == -1)
+  // @@ Alex: for some reason this was causing a crash with the
+  //    leader-follower wait strategy.  Somehow it seems like the rms
+  //    still has a pointer to an object that was already destroyed
+  //    (i.e. the stack was unrolled on the thread waiting for this
+  //     event), since this is only needed for *true* asynchronous
+  //     messaging.
+  ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - dispatching reply <%x>\n", this));
+  if (this->rms_->dispatch_reply (request_id,
+                                  reply_status,
+                                  version,
+                                  reply_ctx,
+                                  cdr) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "TAO (%P|%t) %N:%l handle_client_input: "
-                         "dispatch reply.\n"),
+                         "TAO (%P|%t) : IIOP_Client_Transport::"
+                         "handle_client_input - "
+                         "dispatch reply failed\n"),
                         -1);
-      return -1;
     }
+
   // This is a NOOP for the Exclusive request case, but it actually
   // destroys the stream in the muxed case.
   this->destroy_cdr_stream (cdr);

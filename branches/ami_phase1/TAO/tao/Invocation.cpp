@@ -773,6 +773,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // fully.
   // @@ Check for return value -1 here !!! (Alex).
   int reply_error = 0;
+
   while (!this->transport_->message_received () && reply_error == 0)
     reply_error = this->transport_->wait_for_reply ();
 
@@ -921,7 +922,8 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
       this->close_connection ();
 
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
+      ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE,
+                                             CORBA::COMPLETED_MAYBE),
                         TAO_INVOKE_EXCEPTION);
     }
 
@@ -940,7 +942,8 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       this->transport_->close_connection ();
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "TAO: (%P|%t) bad Response header\n"));
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
+      ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE,
+                                             CORBA::COMPLETED_MAYBE),
                         TAO_INVOKE_EXCEPTION);
     }
 
@@ -950,7 +953,8 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       break;
 
     case TAO_GIOP_UNKNOWN_OBJECT:
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE,
+                                                 CORBA::COMPLETED_YES),
                         TAO_INVOKE_EXCEPTION);
       // NOTREACHED
 

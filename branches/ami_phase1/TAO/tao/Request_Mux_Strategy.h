@@ -19,12 +19,15 @@
 #ifndef TAO_REQUEST_MUX_STRATEGY_H
 #define TAO_REQUEST_MUX_STRATEGY_H
 
-#include "tao/CDR.h"
+#include "tao/GIOP.h"
 
-// Forward declarations.
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_Reply_Dispatcher;
-
+class TAO_GIOP_Version;
+class TAO_InputCDR;
 
 class TAO_Export TAO_Request_Mux_Strategy
 {
@@ -56,8 +59,13 @@ public:
                                TAO_Reply_Dispatcher *rh) = 0;
   // Bind the dispatcher with the request id.
 
-  virtual TAO_Reply_Dispatcher* find_dispatcher (CORBA::ULong request_id) = 0;
-  // Find the Reply Dispatcher.
+  virtual int dispatch_reply (CORBA::ULong request_id,
+                              CORBA::ULong reply_status,
+                              const TAO_GIOP_Version& version,
+                              TAO_GIOP_ServiceContextList& reply_ctx,
+                              TAO_InputCDR* cdr) = 0;
+  // Dispatch the reply for <request_id>, cleanup any resources
+  // allocated for that request.
 
   // = "Factory methods" to obtain the CDR stream, in the Muxed case
   //    the factory simply allocates a new one, in the Exclusive case
@@ -95,28 +103,17 @@ public:
   virtual ~TAO_Muxed_RMS (void);
   // Destructor.
 
+  // = The TAO Request Strategy methods...
   virtual CORBA::ULong request_id (void);
-  // Generate and return an unique request id for the current
-  // invocation.
-
   virtual int bind_dispatcher (CORBA::ULong request_id,
                                TAO_Reply_Dispatcher *rh);
-  // Bind the dispatcher with the request id.
-
-  virtual TAO_Reply_Dispatcher* find_dispatcher (CORBA::ULong request_id);
-  // Find the Reply Dispatcher.
-
-  // virtual TAO_InputCDR *cdr_stream (void);
-  // Create a new CDR stream and return.
-
+  virtual int dispatch_reply (CORBA::ULong request_id,
+                              CORBA::ULong reply_status,
+                              const TAO_GIOP_Version& version,
+                              TAO_GIOP_ServiceContextList& reply_ctx,
+                              TAO_InputCDR* cdr);
   virtual void set_cdr_stream (TAO_InputCDR *cdr);
-  // Set the CDR stream.
-
-  // virtual TAO_InputCDR *cdr_stream (void);
-  // Get the CDR stream.
-
   virtual void destroy_cdr_stream (TAO_InputCDR *);
-  // Delete the cdr stream.
 
 protected:
   // @@ HASH TABLE???
@@ -138,31 +135,22 @@ public:
   virtual ~TAO_Exclusive_RMS (void);
   // Destructor.
 
+  // = The TAO Request Strategy methods...
   virtual CORBA::ULong request_id (void);
-  // Generate and return an unique request id for the current
-  // invocation. We can actually return a predecided ULong, since we
-  // allow only one invocation over this connection at a time.
-
   virtual int bind_dispatcher (CORBA::ULong request_id,
                                TAO_Reply_Dispatcher *rh);
-  // Bind the dispatcher with the request id.
-
-  virtual TAO_Reply_Dispatcher* find_dispatcher (CORBA::ULong request_id);
-  // Find the Reply Dispatcher.
-
-  // virtual TAO_InputCDR *get_cdr_stream (void);
-  // Return the preallocated CDR stream.
-
+  virtual int dispatch_reply (CORBA::ULong request_id,
+                              CORBA::ULong reply_status,
+                              const TAO_GIOP_Version& version,
+                              TAO_GIOP_ServiceContextList& reply_ctx,
+                              TAO_InputCDR* cdr);
   virtual void set_cdr_stream (TAO_InputCDR *cdr);
-  // Set the CDR stream.
-
-  // virtual TAO_InputCDR *cdr_stream (void);
-  // Get the CDR stream.
-
   virtual void destroy_cdr_stream (TAO_InputCDR *);
-  // NO-OP function.
 
 protected:
+  ACE_SYNCH_MUTEX lock_;
+  // Synchronize the internal state
+
   CORBA::ULong request_id_generator_;
   // Used to generate a different request_id on each call to
   // request_id()

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "tao/Request_Mux_Strategy.h"
+#include "tao/Reply_Dispatcher.h"
 
 // @@ Alex: there is another aspect that is controlled by this
 //    strategy: the demuxed version must idle() the transport
@@ -54,12 +55,15 @@ TAO_Muxed_RMS::bind_dispatcher (CORBA::ULong request_id,
   return 0;
 }
 
-// Find the Reply Dispatcher.
-TAO_Reply_Dispatcher*
-TAO_Muxed_RMS::find_dispatcher (CORBA::ULong request_id)
+int
+TAO_Muxed_RMS::dispatch_reply (CORBA::ULong request_id,
+                               CORBA::ULong reply_status,
+                               const TAO_GIOP_Version& version,
+                               TAO_GIOP_ServiceContextList& reply_ctx,
+                               TAO_InputCDR* cdr)
 {
   // @@
-  return 0;
+  return -1;
 }
 
 void
@@ -96,6 +100,7 @@ TAO_Exclusive_RMS::~TAO_Exclusive_RMS (void)
 CORBA::ULong
 TAO_Exclusive_RMS::request_id (void)
 {
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
   return this->request_id_generator_++;
 }
 
@@ -104,29 +109,38 @@ int
 TAO_Exclusive_RMS::bind_dispatcher (CORBA::ULong request_id,
                                     TAO_Reply_Dispatcher *rd)
 {
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
   this->request_id_ = request_id;
   this->rd_ = rd;
   return 0;
 }
 
-// Find the Reply Handler.
-TAO_Reply_Dispatcher *
-TAO_Exclusive_RMS::find_dispatcher (CORBA::ULong request_id)
+int
+TAO_Exclusive_RMS::dispatch_reply (CORBA::ULong request_id,
+                                   CORBA::ULong reply_status,
+                                   const TAO_GIOP_Version& version,
+                                   TAO_GIOP_ServiceContextList& reply_ctx,
+                                   TAO_InputCDR* cdr)
 {
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
   if (this->request_id_ != request_id)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:TAO_Exclusive_RMS::find_handler: "
-                       "Failed to find the handler\n"),
-                      0);
+    return -1;
 
-  return this->rd_;
+  TAO_Reply_Dispatcher *rd = this->rd_;
+  this->request_id_ = 0xdeadbeef; // @@ What is a good value???
+  this->rd_ = 0;
+
+  // @@ Use a single operation for all of this...
+  rd->reply_status (reply_status);
+  rd->cdr (cdr);
+  return rd->dispatch_reply ();
 }
-
 
 // Set the CDR stream.
 void
 TAO_Exclusive_RMS::set_cdr_stream (TAO_InputCDR *cdr)
 {
+  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
   this->cdr_ = cdr;
 }
 
@@ -134,5 +148,6 @@ TAO_Exclusive_RMS::set_cdr_stream (TAO_InputCDR *cdr)
 void
 TAO_Exclusive_RMS::destroy_cdr_stream (TAO_InputCDR *)
 {
+  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
   this->cdr_ = 0;
 }

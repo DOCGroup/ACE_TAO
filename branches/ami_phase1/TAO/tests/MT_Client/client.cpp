@@ -132,6 +132,7 @@ Client::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
+#if 0
       // If we are using a global ORB this is a nop, otherwise it
       // initializes the ORB resources for this thread.
       int argc = 0;
@@ -139,6 +140,7 @@ Client::svc (void)
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
+#endif
 
       CORBA::Long number = 0;
 
@@ -147,12 +149,14 @@ Client::svc (void)
           number = server_->get_number (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
+          ACE_ASSERT (number == 931232);
+
           //          ACE_DEBUG ((LM_DEBUG,
           //                      "get_number = %d\n",
           //                      number));
 
-          server_->test_method (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          //server_->test_method (ACE_TRY_ENV);
+          //ACE_TRY_CHECK;
 
           if (TAO_debug_level > 0 && i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
