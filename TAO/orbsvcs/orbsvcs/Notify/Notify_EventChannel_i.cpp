@@ -8,22 +8,35 @@
 
 // Implementation skeleton constructor
 TAO_Notify_EventChannel_i::TAO_Notify_EventChannel_i (TAO_Notify_EventChannelFactory_i& my_factory)
-:my_factory_ (my_factory)
+  :my_factory_ (my_factory),
+   dispatcher_ (0),
+   default_op_ (CosNotifyChannelAdmin::OR_OP),
+   default_id_ (0),
+   max_queue_length_ (0),
+   max_consumers_ (0),
+   max_suppliers_ (0)  // O implies no limit
 {
 }
 
 // Implementation skeleton destructor
 TAO_Notify_EventChannel_i::~TAO_Notify_EventChannel_i (void)
 {
+  delete dispatcher_;
 }
 
 void
-TAO_Notify_EventChannel_i::init (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_EventChannel_i::init (const CosNotification::QoSProperties& initial_qos,
+                                 const CosNotification::AdminProperties& initial_admin,
+                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  // TODO: init data members
-  // ???? Pradeep: auto_ptr can't be used this way.
-  // dispatcher_ =
-  //  auto_ptr<TAO_Notify_Dispatcher>(TAO_Notify_Dispatcher::create (ACE_TRY_ENV));
+  // try to set initial qos params
+  this->set_qos (initial_qos, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // try to set initial admin params
+  this->set_admin (initial_admin, ACE_TRY_ENV);
+  ACE_CHECK;
+
   dispatcher_ = TAO_Notify_Dispatcher::create (ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -34,6 +47,16 @@ TAO_Notify_EventChannel_i::init (CORBA::Environment &ACE_TRY_ENV)
 
   this->filter_factory_ =
     filter_factory_i->get_ref (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  CosNotifyChannelAdmin::AdminID id_unused;
+
+  this->default_consumeradmin_ =
+    this->new_for_consumers (default_op_, id_unused, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->default_supplieradmin_ =
+    this->new_for_suppliers (default_op_, id_unused, ACE_TRY_ENV);
   ACE_CHECK;
 }
 
@@ -62,21 +85,22 @@ TAO_Notify_EventChannel_i::MyFactory (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
-TAO_Notify_EventChannel_i::default_consumer_admin (CORBA::Environment & /*ACE_TRY_ENV*/)
+TAO_Notify_EventChannel_i::default_consumer_admin (CORBA::Environment& ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException
                    ))
 {
-  //Add your implementation here
-  return 0;
+  return CosNotifyChannelAdmin::ConsumerAdmin::
+    _duplicate (default_consumeradmin_.in ());
 }
 
-CosNotifyChannelAdmin::SupplierAdmin_ptr TAO_Notify_EventChannel_i::default_supplier_admin (CORBA::Environment & /*ACE_TRY_ENV*/ )
+CosNotifyChannelAdmin::SupplierAdmin_ptr
+TAO_Notify_EventChannel_i::default_supplier_admin (CORBA::Environment & /*ACE_TRY_ENV*/ )
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  //Add your implementation here
-  return 0;
+  return CosNotifyChannelAdmin::SupplierAdmin::
+    _duplicate (default_supplieradmin_.in ());
 }
 
 CosNotifyFilter::FilterFactory_ptr
@@ -92,17 +116,29 @@ TAO_Notify_EventChannel_i::default_filter_factory (
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
 TAO_Notify_EventChannel_i::new_for_consumers
-(CosNotifyChannelAdmin::InterFilterGroupOperator /*op*/,
+(CosNotifyChannelAdmin::InterFilterGroupOperator op,
  CosNotifyChannelAdmin::AdminID_out id,
  CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  //Add your implementation here
-
   CosNotifyChannelAdmin::ConsumerAdmin_var consumeradmin_ret;
   TAO_Notify_ConsumerAdmin_i* consumer_admin;
+
+  // Get an id.
+  id = consumer_admin_ids.get ();
+
+  // Add to the map
+  if (consumer_admin_map_.bind (id,
+                                consumer_admin) == -1)
+    {
+      // return the id to the pool.
+      consumer_admin_ids.put (id);
+
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CosNotifyChannelAdmin::ConsumerAdmin::_nil ());
+    }
 
   ACE_NEW_THROW_EX (consumer_admin,
                     TAO_Notify_ConsumerAdmin_i (*this),
@@ -110,7 +146,7 @@ TAO_Notify_EventChannel_i::new_for_consumers
 
   auto_ptr <TAO_Notify_ConsumerAdmin_i> auto_consumeradmin (consumer_admin);
 
-  consumer_admin->init (ACE_TRY_ENV);
+  consumer_admin->init (id, op, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::ConsumerAdmin::_nil ());
 
   dispatcher_->add_dispatcher (consumer_admin->get_dispatcher ());
@@ -119,27 +155,19 @@ TAO_Notify_EventChannel_i::new_for_consumers
   consumeradmin_ret = consumer_admin->get_ref (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::ConsumerAdmin::_nil ());
 
-  // Add to the map
-  id = consumer_admin_ids.get ();
-  if (consumer_admin_map_.bind (id,
-                                consumer_admin) == -1)
-    ACE_THROW_RETURN (CORBA::INTERNAL (),
-                      CosNotifyChannelAdmin::ConsumerAdmin::_nil ());
-
   auto_consumeradmin.release ();
   return consumeradmin_ret._retn ();
 }
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr
 TAO_Notify_EventChannel_i::new_for_suppliers (
-                                              CosNotifyChannelAdmin::InterFilterGroupOperator /*op*/,
-CosNotifyChannelAdmin::AdminID_out id,
-CORBA::Environment &ACE_TRY_ENV)
+                                              CosNotifyChannelAdmin::InterFilterGroupOperator op,
+                                              CosNotifyChannelAdmin::AdminID_out id,
+                                              CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  //Add your implementation here
   CosNotifyChannelAdmin::SupplierAdmin_var supplieradmin_ret;
   TAO_Notify_SupplierAdmin_i* supplier_admin;
 
@@ -149,18 +177,24 @@ CORBA::Environment &ACE_TRY_ENV)
 
   auto_ptr <TAO_Notify_SupplierAdmin_i> auto_supplieradmin (supplier_admin);
 
-  supplier_admin->init (ACE_TRY_ENV);
+  // get a new ID.
+  id = supplier_admin_ids.get ();
+
+  // Add to the map
+  if (supplier_admin_map_.bind (id,
+                                supplier_admin) == -1)
+    {
+      supplier_admin_ids.put (id);
+
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CosNotifyChannelAdmin::SupplierAdmin::_nil ());
+    }
+
+  supplier_admin->init (id, op, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::SupplierAdmin::_nil ());
 
   supplieradmin_ret = supplier_admin->get_ref (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::SupplierAdmin::_nil ());
-
- // Add to the map
-  id = supplier_admin_ids.get ();
-  if (supplier_admin_map_.bind (id,
-                                supplier_admin) == -1)
-    ACE_THROW_RETURN (CORBA::INTERNAL (),
-                      CosNotifyChannelAdmin::SupplierAdmin::_nil ());
 
   auto_supplieradmin.release ();
   return supplieradmin_ret._retn ();
@@ -191,7 +225,6 @@ TAO_Notify_EventChannel_i::get_supplieradmin
                    CosNotifyChannelAdmin::AdminNotFound
                    ))
 {
-  //Add your implementation here
   TAO_Notify_SupplierAdmin_i* admin;
 
   if (supplier_admin_map_.find (id,admin) == -1)
@@ -201,89 +234,210 @@ TAO_Notify_EventChannel_i::get_supplieradmin
   return admin->get_ref (ACE_TRY_ENV);
 }
 
-CosNotifyChannelAdmin::AdminIDSeq * TAO_Notify_EventChannel_i::get_all_consumeradmins (
-                                                                                       CORBA::Environment & //ACE_TRY_ENV
-                                                                                       )
+CosNotifyChannelAdmin::AdminIDSeq*
+TAO_Notify_EventChannel_i::get_all_consumeradmins (CORBA::Environment& ACE_TRY_ENV)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
-
 {
-  //Add your implementation here
-  return 0;
+  CosNotifyChannelAdmin::AdminIDSeq* list;
+
+  // Figure out the length of the list.
+  CORBA::ULong len = consumer_admin_map_.current_size ();
+
+  // Allocate the list of <len> length.
+  ACE_NEW_THROW_EX (list,
+                    CosNotifyChannelAdmin::AdminIDSeq (len),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  list->length (len);
+
+  // Create an iterator
+  CONSUMERADMIN_MAP::ITERATOR iter (consumer_admin_map_);
+
+  // Iterate over and populate the list.
+  CONSUMERADMIN_MAP::ENTRY *hash_entry;
+
+  for (CORBA::ULong i = 0; i < len; i++)
+    {
+      iter.next (hash_entry);
+      iter.advance ();
+
+      (*list)[i] =
+        hash_entry->ext_id_;
+    }
+
+  return list;
 }
 
-CosNotifyChannelAdmin::AdminIDSeq * TAO_Notify_EventChannel_i::get_all_supplieradmins (
-                                                                                       CORBA::Environment & //ACE_TRY_ENV
-                                                                                       )
+CosNotifyChannelAdmin::AdminIDSeq*
+TAO_Notify_EventChannel_i::get_all_supplieradmins (CORBA::Environment& ACE_TRY_ENV)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
-
 {
-  //Add your implementation here
-  return 0;
+  // Figure out the length of the list.
+  CORBA::ULong len = supplier_admin_map_.current_size ();
+
+  CosNotifyChannelAdmin::AdminIDSeq* list;
+
+  // Allocate the list of <len> length.
+  ACE_NEW_THROW_EX (list,
+                    CosNotifyChannelAdmin::AdminIDSeq (len),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  list->length (len);
+
+  // Create an iterator
+  SUPPLIERADMIN_MAP::ITERATOR iter (supplier_admin_map_);
+
+  // Iterate over and populate the list.
+  SUPPLIERADMIN_MAP::ENTRY *hash_entry;
+
+  for (CORBA::ULong i = 0; i < len; i++)
+    {
+      iter.next (hash_entry);
+      iter.advance ();
+
+      (*list)[i] =
+        hash_entry->ext_id_;
+    }
+
+  return list;
 }
 
-CosNotification::AdminProperties * TAO_Notify_EventChannel_i::get_admin (
-                                                                         CORBA::Environment & //ACE_TRY_ENV
-                                                                         )
+CosNotification::AdminProperties*
+TAO_Notify_EventChannel_i::get_admin (CORBA::Environment& ACE_TRY_ENV)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
-
 {
-  //Add your implementation here
-  return 0;
+  CORBA::Long property_count = 3; //The spec has 3 properties, so far.
+
+  CosNotification::AdminProperties *admin;
+
+  ACE_NEW_THROW_EX (admin,
+                    CosNotification::AdminProperties (property_count),
+                    CORBA::NO_MEMORY ());
+  admin->length (property_count);
+
+  (*admin)[0].name =
+  CORBA::string_dup (CosNotification::MaxQueueLength);
+  (*admin)[0].value <<= (CORBA::Long)max_queue_length_;
+
+  (*admin)[1].name =
+  CORBA::string_dup (CosNotification::MaxConsumers);
+  (*admin)[1].value <<= (CORBA::Long)max_consumers_;
+
+  (*admin)[2].name =
+  CORBA::string_dup (CosNotification::MaxSuppliers);
+  (*admin)[2].value <<= (CORBA::Long)max_suppliers_;
+
+  return admin;
 }
 
-void TAO_Notify_EventChannel_i::set_admin (
-                                           const CosNotification::AdminProperties & /*admin*/,
-                                           CORBA::Environment & //ACE_TRY_ENV
-                                           )
+void
+TAO_Notify_EventChannel_i::set_admin (
+                                      const CosNotification::AdminProperties &admin,
+                                      CORBA::Environment &ACE_TRY_ENV
+                                      )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotification::UnsupportedAdmin
                    ))
-
 {
-  //Add your implementation here
+  for (CORBA::ULong i = 0; i < admin.length (); ++i)
+    {
+      if (ACE_OS::strcmp (admin[i].name,
+                          CosNotification::MaxQueueLength) == 0)
+        {
+          admin[i].value >>= max_queue_length_;
+        }
+      else
+        if (ACE_OS::strcmp (admin[i].name,
+                            CosNotification::MaxSuppliers) == 0)
+          {
+            admin[i].value >>= max_suppliers_;
+          }
+        else
+          if (ACE_OS::strcmp (admin[i].name,
+                              CosNotification::MaxConsumers) == 0)
+            {
+              admin[i].value >>= max_consumers_;
+            }
+          else
+            ACE_THROW (CosNotification::UnsupportedAdmin ());
+    }
 }
 
-CosEventChannelAdmin::ConsumerAdmin_ptr TAO_Notify_EventChannel_i::for_consumers (
-                                                                                  CORBA::Environment & //ACE_TRY_ENV
-  )
+CosEventChannelAdmin::ConsumerAdmin_ptr
+TAO_Notify_EventChannel_i::for_consumers (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
-  CORBA::SystemException
-  ))
+                   CORBA::SystemException
+                   ))
+{
+  CosEventChannelAdmin::ConsumerAdmin_var consumeradmin_ret;
+  TAO_Notify_ConsumerAdmin_i* consumer_admin;
 
-  {
-  //Add your implementation here
-    return 0;
-  }
+  ACE_NEW_THROW_EX (consumer_admin,
+                    TAO_Notify_ConsumerAdmin_i (*this),
+                    CORBA::NO_MEMORY ());
 
-  CosEventChannelAdmin::SupplierAdmin_ptr TAO_Notify_EventChannel_i::for_suppliers (
-                                                                                    CORBA::Environment & //ACE_TRY_ENV
-  )
+  auto_ptr <TAO_Notify_ConsumerAdmin_i> auto_consumeradmin (consumer_admin);
+
+  consumer_admin->init (default_id_, default_op_, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosEventChannelAdmin::ConsumerAdmin::_nil ());
+
+  dispatcher_->add_dispatcher (consumer_admin->get_dispatcher ());
+  // @@ check ret error!
+
+  consumeradmin_ret = consumer_admin->get_ref (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosEventChannelAdmin::ConsumerAdmin::_nil ());
+
+  auto_consumeradmin.release ();
+  return consumeradmin_ret._retn ();
+}
+
+CosEventChannelAdmin::SupplierAdmin_ptr
+TAO_Notify_EventChannel_i::for_suppliers (
+                                          CORBA::Environment& ACE_TRY_ENV
+                                          )
   ACE_THROW_SPEC ((
-  CORBA::SystemException
-  ))
+                   CORBA::SystemException
+                   ))
+{
+  CosEventChannelAdmin::SupplierAdmin_var supplieradmin_ret;
+  TAO_Notify_SupplierAdmin_i* supplier_admin;
 
-  {
-  //Add your implementation here
-    return 0;
-  }
+  ACE_NEW_THROW_EX (supplier_admin,
+                    TAO_Notify_SupplierAdmin_i (*this),
+                    CORBA::NO_MEMORY ());
 
-  void TAO_Notify_EventChannel_i::destroy (
-                                           CORBA::Environment & //ACE_TRY_ENV
-  )
+  auto_ptr <TAO_Notify_SupplierAdmin_i> auto_supplieradmin (supplier_admin);
+
+  supplier_admin->init (default_id_, default_op_, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosEventChannelAdmin::SupplierAdmin::_nil ());
+
+  supplieradmin_ret = supplier_admin->get_ref (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosEventChannelAdmin::SupplierAdmin::_nil ());
+
+  auto_supplieradmin.release ();
+  return supplieradmin_ret._retn ();
+}
+
+void TAO_Notify_EventChannel_i::destroy (
+                                         CORBA::Environment & //ACE_TRY_ENV
+                                         )
   ACE_THROW_SPEC ((
-  CORBA::SystemException
-  ))
-
-  {
-  //Add your implementation here
-  }
+                   CORBA::SystemException
+                   ))
+{
+  // TODO:
+  // Think of the EC as the root object of a composite pattern -
+  // "destroy" all its constituents and then deactivate it from the POA.
+}
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -329,5 +483,5 @@ template class ID_Pool<CosNotifyChannelAdmin::AdminID>;
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<CosNotifyChannelAdmin::AdminID, TAO_Notify_SupplierAdmin_i *,ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyChannelAdmin::AdminID, TAO_Notify_SupplierAdmin_i *,ACE_Hash<CosNotifyChannelAdmin::AdminID>, ACE_Equal_To<CosNotifyChannelAdmin::AdminID>,ACE_SYNCH_MUTEX>
 
-#pragma instantiate ID_Pool<CosNotifyChannelAdmin::AdminID> 
+#pragma instantiate ID_Pool<CosNotifyChannelAdmin::AdminID>
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
