@@ -27,14 +27,22 @@
 
 #if defined (ACE_HAS_THREADS)
 
+#if defined (ACE_DEFAULT_THREAD_KEYS)
+// If ACE_DEFAULT_THREAD_KEYS is defined, it is probably set to a small
+// value.  So that the test doesn't run out of keys quickly in the
+// first thread, set the number of ITERATIONS to be small as well.
+static const int ITERATIONS = ((ACE_DEFAULT_THREAD_KEYS/8) < 2 ? 1 : ACE_DEFAULT_THREAD_KEYS/8);
+#else
 static const int ITERATIONS = 100;
+#endif /* ACE_DEFAULT_THREAD_KEYS */
 
 // Static variables.
 ACE_MT (ACE_Thread_Mutex Errno::lock_);
 int Errno::flags_;
 
 // This is our thread-specific error handler...
-static ACE_TSS<Errno> TSS_Error;
+// See comment below about why it's dynamically allocated.
+static ACE_TSS<Errno> *TSS_Error;
 
 #if defined (ACE_HAS_THREADS)
 // Serializes output via cout.
@@ -72,7 +80,11 @@ worker (void *c)
   // we'll have something to cleanup!
 
   if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
-    ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
+    {
+      ACE_ERROR ((LM_ERROR, "(%t) %p (no keys available)\n",
+                  "ACE_OS::thr_keycreate"));
+      return (void *) -1;
+    }
 
   ACE_NEW_RETURN (ip, int, 0);
 
@@ -82,7 +94,11 @@ worker (void *c)
   for (int i = 0; i < count; i++)
     {
       if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
+        {
+	  ACE_ERROR ((LM_ERROR, "(%t) %p (no more keys)\n",
+                      "ACE_OS::thr_keycreate"));
+          break;
+        }
 
       ACE_NEW_RETURN (ip, int, 0);
 
@@ -106,23 +122,27 @@ worker (void *c)
       ACE_OS::read (ACE_INVALID_HANDLE, 0, 0);
 
       // The following two lines set the thread-specific state.
-      TSS_Error->error (errno);
-      TSS_Error->line (__LINE__);
+      (*TSS_Error)->error (errno);
+      (*TSS_Error)->line (__LINE__);
 
       // This sets the static state (note how C++ makes it easy to do
       // both).
-      TSS_Error->flags (count);
+      (*TSS_Error)->flags (count);
 
       {
 	// Use the guard to serialize access
 	ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, cout_lock, 0));
-	ACE_ASSERT (TSS_Error->flags () == ITERATIONS);
+	ACE_ASSERT ((*TSS_Error)->flags () == ITERATIONS);
       }
 
       key = ACE_OS::NULL_key;
 
       if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
+        {
+	  ACE_ERROR ((LM_ERROR, "(%t) %p (no more keys)\n",
+                      "ACE_OS::thr_keycreate"));
+          break;
+        }
 
       ACE_NEW_RETURN (ip, int, 0);
 
@@ -142,6 +162,7 @@ worker (void *c)
       if (ACE_OS::thr_keyfree (key) == -1)
 	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keyfree"));
     }
+
   return 0;
 }
 
@@ -166,6 +187,16 @@ main (int, char *[])
 {
   ACE_START_TEST ("TSS_Test");
 
+  const u_int threads = ACE_MAX_THREADS;
+
+  // Dynamically allocate TSS_Error so that we can control when
+  // it gets deleted.  Specifically, we need to delete it before
+  // the ACE_Object_Manager destroys the ACE_Allocator.  That's
+  // because deletion of TSS_Error causes the internal structures
+  // of ACE_TSS_Cleanup to be modified, and which in turn uses
+  // ACE_Allocator.
+  ACE_NEW_RETURN (TSS_Error, ACE_TSS<Errno>, 1);
+
 #if defined (ACE_HAS_THREADS)
 
   // Register a signal handler.
@@ -173,12 +204,12 @@ main (int, char *[])
   ACE_UNUSED_ARG (sa);
   ACE_hthread_t *thread_handles;
 
-  ACE_NEW_RETURN (thread_handles, ACE_hthread_t[ACE_MAX_THREADS], -1);
+  ACE_NEW_RETURN (thread_handles, ACE_hthread_t[threads], -1);
 
-  if (ACE_Thread_Manager::instance ()->spawn_n 
+  if (ACE_Thread_Manager::instance ()->spawn_n
       ((ACE_thread_t *) 0,
-       ACE_MAX_THREADS,
-       ACE_THR_FUNC (worker), 
+       threads,
+       ACE_THR_FUNC (worker),
        (void *) ITERATIONS,
        THR_BOUND,
        ACE_DEFAULT_THREAD_PRIORITY,
@@ -195,12 +226,12 @@ main (int, char *[])
 #else
       // Wait for all the threads to reach their exit point and then join
       // with all the exiting threads.
-      for (int i = 0;
-	   i < ACE_MAX_THREADS;
+      for (u_int i = 0;
+	   i < threads;
 	   i++)
 	if (ACE_Thread::join (thread_handles[i]) == -1)
 	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "join"), -1);
-#endif /* VXWORKS */     
+#endif /* VXWORKS */
 
   delete [] thread_handles;
 
@@ -208,6 +239,9 @@ main (int, char *[])
   ACE_ERROR ((LM_ERROR,
 	      "threads are not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
+
+  delete TSS_Error;
+
   ACE_END_TEST;
   return 0;
 }
