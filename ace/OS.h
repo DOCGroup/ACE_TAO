@@ -5914,4 +5914,36 @@ ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 #   define ACE_NTOHL(X) X
 # endif /* ACE_LITTLE_ENDIAN */
 
+
+#if defined (ACE_HAS_AIO_CALLS)
+  // = Giving unique ACE scoped names for some important
+  // RTSignal-Related constants. Becuase sometimes, different
+  // platforms use different names for these constants.
+
+  // Number of realtime signals provided in the system.
+  // _POSIX_RTSIG_MAX is the upper limit on the number of real time 
+  // signals supported in a posix-4 compliant system.
+#if defined (_POSIX_RTSIG_MAX)
+#define ACE_RTSIG_MAX _POSIX_RTSIG_MAX
+#else /* not _POSIX_RTSIG_MAX */
+  // POSIX-4 compilant system has to provide atleast 8 RT signals.
+  // @@ Make sure the platform does *not* define this constant with
+  // some other name. If yes, use that instead of 8.(Alex) 
+#define ACE_RTSIG_MAX 8
+#endif /* _POSIX_RTSIG_MAX */
+  
+  // For the Proactor implementation that uses POSIX <aio_> calls, we
+  // are using SIGRTMIN for all the <aio_read> operations and
+  // (SIGRTMIN + 1) for all the <aio_write> operations. These two
+  // signals will be masked 
+  // in the process. These two signals are default signals for the
+  // read and the write operations. User can also specify other signals
+  // that should be used for the <aio_> calls. In that case, those
+  // signals will also be masked in the process.
+  // @@ Whatif SIGRTMIN is not defined by that name in some
+  // platform?(Alex)
+#define ACE_SIG_AIO SIGRTMIN
+
+#endif /* ACE_HAS_AIO_CALLS */
+
 #endif  /* ACE_OS_H */
