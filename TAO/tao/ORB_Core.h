@@ -461,6 +461,12 @@ protected:
   TAO_Object_Adapter *object_adapter_i (void);
   // Get <Object Adapter>, assume the lock is held...
 
+  ACE_Allocator *input_cdr_dblock_allocator_i (TAO_ORB_Core_TSS_Resources*);
+  ACE_Allocator *input_cdr_buffer_allocator_i (TAO_ORB_Core_TSS_Resources*);
+  // Implement the input_cdr_dbblock_allocator() routines using
+  // pre-fetched TSS resources, this minimizes the number of calls to
+  // them.
+
 protected:
   ACE_SYNCH_MUTEX lock_;
   // Synchronize internal state...
@@ -586,6 +592,9 @@ protected:
   int thread_per_connection_use_timeout_;
   ACE_Time_Value thread_per_connection_timeout_;
   // The value of the timeout if the flag above is not zero
+
+  ACE_Lock_Adapter<ACE_SYNCH_MUTEX> data_block_lock_;
+  // The data block reference counts are locked using this mutex
 };
 
 // ****************************************************************

@@ -87,5 +87,5 @@ TAO_GIOP_Locate_Request_Invocation (TAO_Stub *stub,
 ACE_INLINE TAO_InputCDR &
 TAO_GIOP_Locate_Request_Invocation::inp_stream (void)
 {
-  return this->rd_. reply_cdr ();
+  return this->rd_.reply_cdr ();
 }

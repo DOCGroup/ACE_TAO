@@ -79,10 +79,6 @@ TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
                                    IOP::ServiceContextList& reply_ctx,
                                    TAO_GIOP_Message_State* message_state)
 {
-  // There can be only one message state possible. Just do a sanity
-  // check here.
-  ACE_ASSERT (message_state == &(this->message_state_));
-
   // Check the ids.
   if (this->request_id_ != request_id)
     {
@@ -103,36 +99,16 @@ TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
                                    reply_ctx,
                                    message_state);
 
-  // Idle the transport now.
-  // if (this->transport_ != 0)
-  //  this->transport_->idle ();
-  // @@ Carlos : We can do this, in the Muxed Leader Follower
-  //    implementation. In the older implementation, since the state
-  //    variables are in the Transport, and since we are in the
-  //    handle_input right now, we cannot idle the Transport. This
-  //    means that I cannot use  asynchronous requests with Exclusive
-  //    Transport&Old Leader Follower implementation , because I dont
-  //    know when to idle the Transport.
-  //    So I am moving this <idle> call to the destructors of
-  //    synchronous invocations and for asynchronous invocations
-  //    idle'ing is not at all called after the reply is
-  //    received.
-  //    We can enable <idle> out here, once we get rid of the old
-  //    Leader Follower implementation. Then we can get rid of the
-  //    destructors in the Invocation classes and they dont have to
-  //    call <idle>.
-  //    Do I make sense? (Alex).
-
   return result;
 }
 
 TAO_GIOP_Message_State *
 TAO_Exclusive_TMS::get_message_state (void)
 {
-  if (this->rd_ == 0)
-    return 0;
+  if (this->rd_ != 0)
+    return this->rd_->message_state ();
 
-  return &(this->message_state_);
+  return &this->message_state_;
 }
 
 void
