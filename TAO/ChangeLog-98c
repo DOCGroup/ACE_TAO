@@ -1,41 +1,46 @@
+Fri Dec 04 07:38:57 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/ORB.cpp (perform_work): copied const ACE_Time_Value
+          arg to a non-const temporary, to pass to handle_events ().
+
 Thu Dec  3 22:41:35 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
 
-	* performance-tests/Thruput/TAO/README: added info about the perl
-	scripts to the readme file (new_server_test, new_client_test, and new_run_test)
+        * performance-tests/Thruput/TAO/README: added info about the perl
+        scripts to the readme file (new_server_test, new_client_test, and new_run_test)
 
-	* performance-tests/Thruput/TAO/ttcp_decl.h: changed psecs to take
-	in a double instead of a long
+        * performance-tests/Thruput/TAO/ttcp_decl.h: changed psecs to take
+        in a double instead of a long
 
-	* performance-tests/Thruput/TAO/utils.cpp: fixing more minor
-	things like things I was using for testing and never reference
-	anymore (taking them out).
+        * performance-tests/Thruput/TAO/utils.cpp: fixing more minor
+        things like things I was using for testing and never reference
+        anymore (taking them out).
 
 Thu Dec  3 17:58:32 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/ORB.h (CORBA_ORB): Changed perform_work() to take a default
- 	  value of ACE_Time_Value::zero to correspond to the intended
- 	  semantics of the CORBA spec.  Thanks to Steve Vinoski for
- 	  clarifying this and for Loren Rittle <rittle@comm.mot.com> for
- 	  surfacing the issue in the first place.
+        * tao/ORB.h (CORBA_ORB): Changed perform_work() to take a default
+          value of ACE_Time_Value::zero to correspond to the intended
+          semantics of the CORBA spec.  Thanks to Steve Vinoski for
+          clarifying this and for Loren Rittle <rittle@comm.mot.com> for
+          surfacing the issue in the first place.
 
 Thu Dec 03 14:23:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/try_macros.h: Removed macros TAO_TRY_SYS[_EX]
-	  TAO_CHECK_ENV_SYS[_EX] and TAO_CATCH_SYS for they are covered by
- 	  Irfan's TAO_TRY_VAR[_EX].  Thanks to Irfan for reminding this.
+        * tao/try_macros.h: Removed macros TAO_TRY_SYS[_EX]
+          TAO_CHECK_ENV_SYS[_EX] and TAO_CATCH_SYS for they are covered by
+          Irfan's TAO_TRY_VAR[_EX].  Thanks to Irfan for reminding this.
 
-	* docs/exceptions.html: Added guidelines for TAO_TRY_VAR and
-	  TAO_TRY_VAR_EX.
+        * docs/exceptions.html: Added guidelines for TAO_TRY_VAR and
+          TAO_TRY_VAR_EX.
 
-	* tao/IIOP_Object.cpp:
-	* tao/Invocation.cpp:
-	* tao/Typecode.cpp: Replaced the uses to TAO_TRY_SYS and
-	  TAO_TRY_SYS_EX with TAO_TRY_VAR and TAO_TRY_VAR_EX.
+        * tao/IIOP_Object.cpp:
+        * tao/Invocation.cpp:
+        * tao/Typecode.cpp: Replaced the uses to TAO_TRY_SYS and
+          TAO_TRY_SYS_EX with TAO_TRY_VAR and TAO_TRY_VAR_EX.
 
 Thu Dec  3 12:37:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Exception.cpp (make_standard_typecode): Changed the
-	  operation name encoded in typecode to "completed".
+        * tao/Exception.cpp (make_standard_typecode): Changed the
+          operation name encoded in typecode to "completed".
 
 Thu Dec 03 12:33:53 1998  David L. Levine  <levine@cs.wustl.edu>
 
