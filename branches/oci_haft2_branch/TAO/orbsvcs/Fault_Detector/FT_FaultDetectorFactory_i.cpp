@@ -45,17 +45,26 @@
 // FT_FaultDetectorFactory_i  Construction/destruction
 
 TAO::FT_FaultDetectorFactory_i::FT_FaultDetectorFactory_i ()
-  : ior_output_file_ (0)
+  : orb_ (0)
+  , poa_ (0)
+  , objectId_ (0)
+  , ior_ (0)
+  , ior_output_file_ (0)
   , ns_name_ (0)
+  , naming_context_ (0)
+  , this_name_ (1)
   , quit_on_idle_ (0)
-  , empty_slots_ (0)
-  , quit_requested_ (0)
   , domain_ (CORBA::string_dup("default_domain"))
   , location_ (1)
+  , notifier_ (0)
   , rm_register_ (1)
   , replication_manager_ (0)
-  , factory_registry_ (0)
   , registered_ (0)
+  , factory_registry_ (0)
+  , identity_ ("")
+  , empty_slots_ (0)
+  , quit_requested_ (0)
+
 {
   this->location_.length(1);
   this->location_[0].id = CORBA::string_dup("default_location");
@@ -212,7 +221,7 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 
   ACE_CHECK_RETURN (-1);
 
-  if (CORBA::is_nil(this->poa_))
+  if (CORBA::is_nil(this->poa_.in ()))
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" (%P|%t) Unable to narrow the POA.\n")),
@@ -254,7 +263,7 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
       ACE_TRY_CHECK;
       this->replication_manager_ = ::FT::ReplicationManager::_narrow(rm_obj.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      if (!CORBA::is_nil (replication_manager_))
+      if (!CORBA::is_nil (replication_manager_.in ()))
       {
         // capture the default notifier
         this->notifier_ =  this->replication_manager_->get_fault_notifier (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -265,10 +274,10 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
         this->factory_registry_ = this->replication_manager_->get_factory_registry (criteria ACE_ENV_ARG_PARAMETER)
         ACE_TRY_CHECK;
 
-        if (! CORBA::is_nil(factory_registry_))
+        if (! CORBA::is_nil(factory_registry_.in ()))
         {
           PortableGroup::FactoryInfo info;
-          info.the_factory = ::PortableGroup::GenericFactory::_narrow(this_obj);
+          info.the_factory = ::PortableGroup::GenericFactory::_narrow(this_obj.in ());
           info.the_location = this->location_;
           info.the_criteria.length(1);
           info.the_criteria[0].nam.length(1);
@@ -506,6 +515,8 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   ))
 {
   METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::create_object);
+
+  ACE_UNUSED_ARG (type_id); //@@ use it 
   InternalGuard guard (this->internals_);
 
   ::TAO_PG::Properties_Decoder decoder (the_criteria);
@@ -517,9 +528,9 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   FT::FaultNotifier_ptr notifier;
   if (! ::TAO_PG::find (decoder, ::FT::FT_NOTIFIER, notifier) )
   {
-    if (! CORBA::is_nil (this->notifier_))
+    if (! CORBA::is_nil (this->notifier_.in ()))
     {
-      notifier = FT::FaultNotifier::_duplicate (this->notifier_);
+      notifier = FT::FaultNotifier::_duplicate (this->notifier_.in ());
     }
     else
     {

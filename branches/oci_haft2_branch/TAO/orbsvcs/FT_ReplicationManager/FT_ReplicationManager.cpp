@@ -146,7 +146,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 
 
   // initialize the FactoryRegistry
-  this->factory_registry_.init(orb_ ACE_ENV_ARG_PARAMETER);
+  this->factory_registry_.init(this->orb_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(-1);
 
   // Get the RootPOA.
