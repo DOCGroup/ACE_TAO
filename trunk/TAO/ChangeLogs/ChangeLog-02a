@@ -1,3 +1,20 @@
+Sat May 18 08:46:46 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/ORT/ORT.dsw:
+
+	  Added missing workspace file.
+
+	* tests/ORT/client.dsp:
+
+	  Do not link IOR_Table and PortableServer libraries, and removed
+	  IOR_Table and PortableServer directories from the include and
+	  library search paths.  They aren't needed.
+
+	* tests/ORT/server.dsp:
+
+	  Do not link IOR_Table library, and removed IOR_Table directory
+	  from the include and library search paths.  They aren't needed.
+
 Sat May 18 07:59:59 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
