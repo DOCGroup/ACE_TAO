@@ -158,7 +158,7 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events,
 
   for (CORBA::ULong i = 0; i < events.length (); ++i)
     {
-      if (events[i].type_ == ACE_ES_EVENT_SHUTDOWN)
+      if (events[i].header.type == ACE_ES_EVENT_SHUTDOWN)
         {
           ACE_DEBUG ((LM_DEBUG, "Demo Consumer: received shutdown event\n"));
           this->shutdown ();
@@ -169,26 +169,26 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events,
 
           TAO_TRY
             {
-              cout << "ID: " << events[i].data_.any_value.type()->id(TAO_TRY_ENV) << endl;
+              cout << "ID: " << events[i].data.any_value.type()->id(TAO_TRY_ENV) << endl;
               TAO_CHECK_ENV;
-              cout << "Name: " << events[i].data_.any_value.type()->name(TAO_TRY_ENV) << endl;
+              cout << "Name: " << events[i].data.any_value.type()->name(TAO_TRY_ENV) << endl;
               TAO_CHECK_ENV;
-              cout << "member_count: " << events[i].data_.any_value.type()->member_count(TAO_TRY_ENV) << endl;
+              cout << "member_count: " << events[i].data.any_value.type()->member_count(TAO_TRY_ENV) << endl;
               TAO_CHECK_ENV;
-              cout << "TCKind: " << events[i].data_.any_value.type()->kind(TAO_TRY_ENV) << endl;
+              cout << "TCKind: " << events[i].data.any_value.type()->kind(TAO_TRY_ENV) << endl;
               TAO_CHECK_ENV;
 
-              if (_tc_Navigation->equal (events[i].data_.any_value.type(), TAO_TRY_ENV))
+              if (_tc_Navigation->equal (events[i].data.any_value.type(), TAO_TRY_ENV))
                 {
                   TAO_CHECK_ENV;
-                  Navigation *navigation_ = (Navigation*) events[i].data_.any_value.value ();
+                  Navigation *navigation_ = (Navigation*) events[i].data.any_value.value ();
 
                   cout << "Found a Navigation struct in the any: pos_lat = " << navigation_->position_latitude << endl;
                 }
-              else if (_tc_Weapons->equal (events[i].data_.any_value.type(), TAO_TRY_ENV))
+              else if (_tc_Weapons->equal (events[i].data.any_value.type(), TAO_TRY_ENV))
                 {
                   TAO_CHECK_ENV;
-                  Weapons *weapons_ = (Weapons*) events[i].data_.any_value.value ();
+                  Weapons *weapons_ = (Weapons*) events[i].data.any_value.value ();
 
                   cout << "Found a Navigation struct in the any: pos_lat = " << weapons_->number_of_weapons << endl;
                 }

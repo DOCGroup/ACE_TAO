@@ -50,9 +50,9 @@ DOVE_Supplier::notify (CORBA::Any &message)
   TAO_TRY
   {
     RtecEventComm::Event event;
-    event.source_ = SOURCE_ID;
-    event.type_ = ACE_ES_EVENT_NOTIFICATION;
-    event.ttl_ = 1;
+    event.header.source = SOURCE_ID;
+    event.header.type = ACE_ES_EVENT_NOTIFICATION;
+    event.header.ttl = 1;
     event.header.creation_time = ORBSVCS_Time::zero;
     event.header.ec_recv_time = ORBSVCS_Time::zero;
     event.header.ec_send_time = ORBSVCS_Time::zero;
@@ -189,9 +189,9 @@ DOVE_Supplier::connect_Supplier ()
     CORBA::Short x = 0;
     RtecEventChannelAdmin::SupplierQOS qos;
     qos.publications.length (1);
-    qos.publications[0].event.source_ = SOURCE_ID;
-    qos.publications[0].event.type_ = ACE_ES_EVENT_NOTIFICATION;
-    qos.publications[0].event.ttl_ = 1;
+    qos.publications[0].event.header.source = SOURCE_ID;
+    qos.publications[0].event.header.type = ACE_ES_EVENT_NOTIFICATION;
+    qos.publications[0].event.header.ttl = 1;
     qos.publications[0].event.header.creation_time = ORBSVCS_Time::zero;
     qos.publications[0].event.header.ec_recv_time = ORBSVCS_Time::zero;
     qos.publications[0].event.header.ec_send_time = ORBSVCS_Time::zero;
