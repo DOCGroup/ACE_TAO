@@ -29,10 +29,11 @@
 #endif /* _MSC_VER */
 
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Strategy
-// = DESCRIPTION
-//    Base class to define various endpoint strategies
-//    used by the MMDevice to create the Endpoint and Vdev
 {
+  // = DESCRIPTION
+  //    Base class to define various endpoint strategies
+  //    used by the MMDevice to create the Endpoint and Vdev
+
 public:
   TAO_AV_Endpoint_Strategy (void);
   // Constructor
@@ -50,7 +51,7 @@ public:
                         CORBA::Environment &env);
   // Called by the MMDevice, when it needs to create an B type endpoint
 
- protected:
+protected:
   AVStreams::StreamEndPoint_A_ptr stream_endpoint_a_;
   // The "A" stream endpoint
 
@@ -66,11 +67,12 @@ public:
 
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy
   : public TAO_AV_Endpoint_Strategy
-// = DESCRIPTION
-//    Process-based strategy for creating endpoints
-//    Abstract base class.
 {
- public:
+  // = DESCRIPTION
+  //    Process-based strategy for creating endpoints
+  //    Abstract base class.
+
+public:
   TAO_AV_Endpoint_Process_Strategy (ACE_Process_Options *process_options);
   // Constructor. The process_options contain the name and arguments
   // for the process to be created
@@ -82,7 +84,7 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy
   // creates a new child process, and waits on a semaphore
   // until the child process has finished creating the endpoints
 
- protected:
+protected:
   virtual int bind_to_naming_service (CORBA::Environment &env);
   // Bind to the naming service
 
@@ -113,17 +115,18 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy
 
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy_A
   : public TAO_AV_Endpoint_Process_Strategy
-// = DESCRIPTION
-//    Process-based strategy to create "A" type endpoints
 {
- public:
+  // = DESCRIPTION
+  //    Process-based strategy to create "A" type endpoints
+
+public:
   TAO_AV_Endpoint_Process_Strategy_A (ACE_Process_Options *process_options);
   // Constructor
 
   virtual ~TAO_AV_Endpoint_Process_Strategy_A (void);
   // Destructor.
 
- protected:
+protected:
   virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
                         AVStreams::VDev_ptr &vdev,
                         CORBA::Environment &env);
@@ -138,17 +141,17 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy_A
 
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy_B
   : public TAO_AV_Endpoint_Process_Strategy
-// = DESCRIPTION
-//    Process-based strategy to create "B" type endpoints
 {
- public:
+  // = DESCRIPTION
+  //    Process-based strategy to create "B" type endpoints
+public:
   TAO_AV_Endpoint_Process_Strategy_B (ACE_Process_Options *process_options);
   // Constructor
 
   virtual ~TAO_AV_Endpoint_Process_Strategy_B (void);
   // Destructor.
 
- protected:
+protected:
   virtual int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
                         AVStreams::VDev_ptr &vdev,
                         CORBA::Environment &env);
