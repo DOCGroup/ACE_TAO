@@ -1,3 +1,11 @@
+Wed Jul 10 11:24:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/AIO_CLD.dsp:
+        * examples/C++NPv2/examples.dsw: Added AIO_CLD project.
+
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Fix Win32 compile
+          problems.
+
 Wed Jul 10 07:22:24 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/TemplateParser.pm:
