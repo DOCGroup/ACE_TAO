@@ -1,3 +1,17 @@
+Mon Oct 12 14:39:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Makefile: Make sure to add the // $ Id: $ CVS string when
+ 	  recreating Svc_Conf_Tokens.h.
+
+	* ace/Svc_Conf.y: Just to be paranoid, make sure to set the
+ 	  gobbler function to 0.  At least this way we'll get crashes
+ 	  rather than bizarre errors if users don't use the ACE_*FACTORY*
+ 	  macros.
+
+	* ace/Parse_Node.cpp (ACE_Dynamic_Node): Make sure to delete the
+ 	  ACE_Service_Type pointer so that all the memory will be
+ 	  deallocated.  Thanks to Purify for reporting this...
+
 Mon Oct 12 15:59:00 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Message_Block.cpp (size): removed unused local "old_base".
