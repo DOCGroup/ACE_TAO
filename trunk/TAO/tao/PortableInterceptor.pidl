@@ -2,7 +2,8 @@
 
 // This file contains the interface definitions for "Portable"
 // Interceptor support.
-// The following is from 99-12-04 Portable Interceptors spec.
+// The following is from orbos/99-12-02 Portable Interceptors spec,
+// the full IDL is downloadable from orbos/99-12-02
 
 // File: PortableInterceptor.idl
 #ifndef _PORTABLE_INTERCEPTOR_IDL_

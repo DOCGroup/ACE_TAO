@@ -51,4 +51,5 @@ TAO_Requires_IORTable_Initializer = TAO_IORTable_Initializer::init ();
 #include "IORTableC.h"
 #undef TAO_IORTABLE_SAFE_INCLUDE
 
+#include "ace/post.h"
 #endif /* TAO_IORTABLE_H */

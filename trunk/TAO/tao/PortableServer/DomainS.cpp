@@ -538,7 +538,7 @@ CORBA::Policy_ptr POA_CORBA__tao_direct_collocated_DomainManager::get_domain_pol
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 POA_CORBA_DomainManager::TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy::TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy (const char *_tao_operation,
-IOP::ServiceContextList &_tao_service_context_list,CORBA::PolicyType policy_type,
+IOP::ServiceContextList &_tao_service_context_list,CORBA::PolicyType& policy_type,
 CORBA::Environment &)
   : TAO_ServerRequest_Info (_tao_operation, _tao_service_context_list),policy_type_ (policy_type)
 {}
