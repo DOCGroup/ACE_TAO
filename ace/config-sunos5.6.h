@@ -30,10 +30,13 @@
 #endif /* _POSIX_C_SOURCE > 2  ||  __EXTENSIONS__ */
 
 // Support for the SunC++ 5.2 compiler.
+// Do not undefine for compat mode < 5
 #if defined (__SUNPRO_CC) && __SUNPRO_CC > 0x510
+#if defined (__SUNPRO_CC_COMPAT) && (__SUNPRO_CC_COMPAT >= 5)
 #ifdef ACE_LACKS_ACE_IOSTREAM
 #undef ACE_LACKS_ACE_IOSTREAM
 #endif /* ACE_LACKS_ACE_IOSTREAM */
+
 #ifndef ACE_LACKS_UNBUFFERED_STREAMBUF
 #define ACE_LACKS_UNBUFFERED_STREAMBUF 1
 #endif /* ACE_LACKS_UNBUFFERED_STREAMBUF */

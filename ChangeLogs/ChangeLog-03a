@@ -1,3 +1,16 @@
+Thu Jan 31 17:00:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/config-all.h: Need to include <new> with all versions of
+	  SunCC compiler and not just CC 5.0, when the compiler is using
+	  compat mode 4. 
+	* ace/config-sunos5.6.h: Need to define ACE_LACKS_ACE_IOSTREAM
+	  when higher versions of CC are used with compat mode 4 and
+	  such. 
+
+	  Thanks to Tim Rydell <tim.rydell@gd-ais.com> for the fixes.
+
+	* THANKS: Added Tim Rydell to the hall of fame.
+
 Thu Jan 31 17:21:49 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Trace.cpp (constructor and destructor): Do not attempt
