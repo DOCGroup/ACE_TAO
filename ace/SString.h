@@ -87,7 +87,6 @@ public:
   char operator[] (size_t index) const;
   // Return the <index'th> character in the string (doesn't perform
   // bounds checking).
-  // _Don't_ even think about modifying the result if it has length 0!
 
   int operator== (const ACE_CString &s) const;
   // Comparison operator (must match entire string).
@@ -110,9 +109,6 @@ private:
 
   char *rep_;
   // Pointer to data.
-
-  static char null_string_;
-  // Static null string.
 };
 
 class ACE_Export ACE_SString
