@@ -106,6 +106,7 @@ Wed Mar 15 18:22:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/UIOP_Connect.i
 	* tao/UIOP_Acceptor.h
 	* tao/UIOP_Acceptor.cpp
+	* tao/Request.cpp
 	* tao/Pluggable.h
 	* tao/Pluggable.i
 	* tao/Pluggable.cpp: Changed the way GIOP code is handled by these
