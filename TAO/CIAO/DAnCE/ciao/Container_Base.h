@@ -191,6 +191,12 @@ namespace CIAO
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    // Install a servant for component or home.
+    CORBA::Object_ptr install_servant (PortableServer::Servant p,
+                                       Container::OA_Type t
+                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
     // Install a component servant.
     CORBA::Object_ptr install_component (PortableServer::Servant p,
                                          PortableServer::ObjectId_out oid
