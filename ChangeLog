@@ -1,3 +1,13 @@
+Mon Dec 13 12:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Basic_Types.h:
+        * ace/config-win32-common.h:
+          Added ACE_INT64 typedef. Note that there is no emulated ACE_INT64,
+          it is just defined for platforms having such a type natively. In the
+          future we could deliver an emulation, but with this typedef at least
+          people trying to work on multiple platforms with native int64 can use
+          this typedef to get portable code
+
 Mon Dec 13 04:34:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Release:
@@ -12,7 +22,7 @@ Mon Dec 13 04:25:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* Release:
 
 	  Added protocols directory.  Thanks to JT for letting me know
-	  this. 
+	  this.
 
 Mon Dec 13 00:14:01 2004  Olli Savia  <ops@iki.fi>
 
