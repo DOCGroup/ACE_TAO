@@ -1,15 +1,30 @@
+Wed Jun 20 10:29:56 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/PortableServer/POA.cpp:
+	* tao/PortableServer/POA_Cached_Policies.h:
+	* tao/PortableServer/POA_Cached_Policies.i:
+
+	  Fixed bug caused by the unintentional removal of setting
+	  the ImplicitActivationPolicy to IMPLICIT_ACTIVATION on
+	  the RootPOA under minimum builds.  Since the
+	  ImplicitActivationPolicy is not compiled for these builds,
+	  a check was added to the TAO_POA constructor to set it to
+	  IMPLICIT_ACTIVATION in the cached policies if the POA was
+	  the root one.  In non-minimal builds, this policy is
+	  can be set before creating the POA which is the ideal place.
+	  The special case code is not compiled for non-minimal builds.
+
 Wed Jun 20 09:38:40 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tests/RTCORBA/Thread_Pool/client.dsp:
 
           Fixed typo.
-          
 
 Wed Jun 20 09:29:20 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/RTCORBA/RT_ORB_Loader.h:
         * tao/RTCORBA/RT_ORB_Loader.cpp:
-          
+
           Added checks to make sure that all of the RTCORBA hooks have
           been successfully registered before allowing an application
           to resolve the RTORB and RTCurrent.  This should make errors
@@ -28,12 +43,12 @@ Wed Jun 20 09:19:32 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 Wed Jun 20 07:55:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Fixed a warning in Win32
-	  debug builds.  
+	  debug builds.
 
 Wed Jun 20 07:31:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Big_Reply/Big_Reply_i.cpp: Fixed a compile error on
-	  Linux. 
+	  Linux.
 Wed Jun 20 07:48:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/Makefile.bor

@@ -201,6 +201,23 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
                                  ACE_TRY_ENV);
   ACE_CHECK;
 
+#if (TAO_HAS_MINIMUM_POA == 1)
+  // If this is the RootPOA, set the value of the ImplicitActivationPolicy
+  // to IMPLICIT_ACTIVATION since it is impossible to pass the policy
+  // as it is not compiled into the library.
+  //
+  // If the ImplicitActivationPolicy policy is ever compiled in the
+  // minimum POA builds, remove this code and remove the guards
+  // in Object_Adapter.cpp when changing the default policy for the
+  // RootPOA.
+  if (ACE_OS::strcmp (this->name_.c_str (),
+                      TAO_DEFAULT_ROOTPOA_NAME) == 0)
+    {
+      this->cached_policies_.implicit_activation
+        (PortableServer::IMPLICIT_ACTIVATION);
+    }
+#endif /* TAO_HAS_MINIMUM_POA == 1 */
+
   // Set the folded name of this POA.
   this->set_folded_name ();
 

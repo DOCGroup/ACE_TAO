@@ -66,4 +66,8 @@ TAO_POA_Cached_Policies::server_priority (CORBA::Short priority)
   this->server_priority_ = priority;
 }
 
-
+ACE_INLINE void
+TAO_POA_Cached_Policies::implicit_activation (PortableServer::ImplicitActivationPolicyValue value)
+{
+  this->implicit_activation_ = value;
+}
