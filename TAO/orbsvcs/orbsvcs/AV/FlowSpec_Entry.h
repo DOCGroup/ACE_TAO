@@ -89,7 +89,8 @@ public:
                       const char *format_name,
                       const char *flow_protocol,
                       const char *carrier_protocol,
-                      ACE_Addr *address);
+                      ACE_Addr *address,
+                      ACE_Addr *control_address = 0);
 
   TAO_FlowSpec_Entry (const char *flowname,
                       const char *direction,
@@ -119,6 +120,9 @@ public:
 
   /// accessor to address of the carrier protocol.
   ACE_Addr *address (void);
+  ACE_Addr *control_address (void);
+  void address (ACE_Addr *address);
+  void control_address (ACE_Addr *address);
 
   /// Address in string format i. hostname:port.
   const char * address_str (void) const;
@@ -140,18 +144,34 @@ public:
 
   int set_peer_addr (ACE_Addr *peer_addr);
   ACE_Addr *get_peer_addr (void);
-  int set_local_addr (ACE_Addr *peer_addr);
+  int set_peer_control_addr (ACE_Addr *peer_control_addr);
+  ACE_Addr *get_peer_control_addr (void);
+
+  int set_local_addr (ACE_Addr *local_addr);
   ACE_Addr *get_local_addr (void);
   char *get_local_addr_str (void);
+  int set_local_control_addr (ACE_Addr *local_control_addr);
+  ACE_Addr *get_local_control_addr (void);
+  char *get_local_control_addr_str (void);
+
   TAO_AV_Transport *transport (void);
   void transport (TAO_AV_Transport *transport);
+  TAO_AV_Transport *control_transport (void);
+  void control_transport (TAO_AV_Transport *control_transport);
+
   TAO_AV_Flow_Handler* handler (void);
   void handler (TAO_AV_Flow_Handler *handler);
+  TAO_AV_Flow_Handler* control_handler (void);
+  void control_handler (TAO_AV_Flow_Handler *control_handler);
+
   TAO_AV_Protocol_Object* protocol_object (void);
   void protocol_object (TAO_AV_Protocol_Object *object);
+  TAO_AV_Protocol_Object* control_protocol_object (void);
+  void control_protocol_object (TAO_AV_Protocol_Object *object);
 
   /// sets the address for this flow.
-  int parse_address (const char *format_string);
+  int parse_address (const char *format_string,
+                     TAO_AV_Core::Flow_Component flow_component);
 
   /// returns true for a multicast address.
   int is_multicast (void);
@@ -169,6 +189,7 @@ protected:
 
   /// Addr information for the carrier protocol.
   ACE_Addr *address_;
+  ACE_Addr *control_address_;
 
   /// Addr in string format i.e hostname:port.
   ACE_CString address_str_;
@@ -201,12 +222,18 @@ protected:
 
   int is_multicast_;
   ACE_Addr *peer_addr_;
+  ACE_Addr *peer_control_addr_;
   ACE_Addr *local_addr_;
+  ACE_Addr *local_control_addr_;
   TAO_AV_Transport *transport_;
+  TAO_AV_Transport *control_transport_;
   TAO_AV_Flow_Handler *handler_;
+  TAO_AV_Flow_Handler *control_handler_;
   TAO_AV_Protocol_Object *protocol_object_;
+  TAO_AV_Protocol_Object *control_protocol_object_;
   Role role_;
 };
+
 
 /**
  * @class TAO_Forward_FlowSpec_Entry
@@ -231,13 +258,16 @@ public:
                               const char *format_name,
                               const char *flow_protocol,
                               const char *carrier_protocol,
-                              ACE_Addr *address);
+                              ACE_Addr *address,
+                              ACE_Addr *control_address = 0);
 
   TAO_Forward_FlowSpec_Entry (const char *flowname,
                               const char *direction,
                               const char *format_name,
                               const char *flow_protocol,
                               const char *address);
+
+  virtual ~TAO_Forward_FlowSpec_Entry (void);
 
   /// converts the entry to a string.
   virtual const char *entry_to_string (void);
@@ -271,7 +301,8 @@ public:
                               const char *format_name,
                               const char *flow_protocol,
                               const char *carrier_protocol,
-                              ACE_Addr *address);
+                              ACE_Addr *address,
+                              ACE_Addr *control_address = 0);
 
   // Takes the address in protocol=endpoint form.
   TAO_Reverse_FlowSpec_Entry (const char *flowname,
@@ -279,6 +310,8 @@ public:
                               const char *format_name,
                               const char *flow_protocol,
                               const char *address);
+
+  virtual ~TAO_Reverse_FlowSpec_Entry (void);
 
   /// converts the entry to a string.
   virtual const char *entry_to_string (void);

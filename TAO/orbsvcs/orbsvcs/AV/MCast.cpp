@@ -5,7 +5,7 @@
 #include "AVStreams_i.h"
 #include "tao/debug.h"
 
-#if !defined(__ACE_INLINE__)
+#if !defined (__ACE_INLINE__)
 #include "MCast.i"
 #endif /* __ACE_INLINE__ */
 
@@ -31,8 +31,8 @@ TAO_AV_UDP_MCast_Flow_Handler::~TAO_AV_UDP_MCast_Flow_Handler (void)
 int
 TAO_AV_UDP_MCast_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 {
-  this->protocol_object_->handle_input ();
-  return 0;
+  return this->protocol_object_->handle_input ();
+//  return 0;
 }
 
 int
@@ -49,6 +49,11 @@ TAO_AV_UDP_MCast_Flow_Handler::get_handle (void) const
   return this->get_mcast_socket ()->get_handle () ;
 }
 
+void
+TAO_AV_UDP_MCast_Flow_Handler::set_peer_addr (ACE_INET_Addr *peer_addr)
+{
+  this->peer_addr_ = peer_addr;
+}
 
 //------------------------------------------------------------
 // TAO_AV_UDP_MCast_Transport
@@ -161,6 +166,7 @@ TAO_AV_UDP_MCast_Transport::send (const char *buf,
 //   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"to %s\n",addr));
 
   return this->handler_->get_mcast_socket ()->send (buf, len);
+
 }
 
 ssize_t

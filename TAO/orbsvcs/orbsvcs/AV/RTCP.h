@@ -50,41 +50,20 @@
 
 // FUZZ: disable check_for_math_include
 #include "ace/OS.h"
-#include "orbsvcs/AV/source.h"
+#include "ace/Hash_Map_Manager.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/UDP.h"
 #include <math.h>
 #include <stdlib.h>
 #include "orbsvcs/AV/RTP.h"
 
-/**
- * @class TAO_AV_RTP_State
- * @brief Encapsulate the state of an RTP session
- */
-class TAO_AV_Export TAO_AV_RTP_State
-{
-public:
-  TAO_AV_RTP_State (void);
-  int bad_version_;
-  u_int badoptions_;
-  u_int badfmt_;
-  u_int badext_;
-  u_int nrunt_;
-  ACE_UINT32 last_np_;
-  ACE_UINT32 sdes_seq_;
-  double rtcp_inv_bw_;
-  double rtcp_avg_size_;        /* (estimated) average size of rtcp packets */
-  double rint_;         /* current session report rate (in ms) */
-  int confid_;
-  u_char* pktbuf_;
-};
+#include "RTCP_Channel.h"
 
 class TAO_AV_RTCP_Callback;
-class TAO_AV_SourceManager;
 
 /**
  * @class TAO_AV_RTCP
- * @brief Encapsulate the header format for the Real Time Control 
+ * @brief Encapsulate the header format for the Real Time Control
  *        Protocol (RTCP)
  */
 class TAO_AV_Export TAO_AV_RTCP
@@ -101,143 +80,22 @@ public:
   {
     ACE_UINT32 upper;   /* more significant 32 bits */
     ACE_UINT32 lower;   /* less significant 32 bits */
-  }; 
-
-  /*
- * Sender report.
- */
-  struct rtcp_sr {
-    ntp64 sr_ntp;               /* 64-bit ntp timestamp */
-    ACE_UINT32 sr_ts;   /* reference media timestamp */
-    ACE_UINT32 sr_np;   /* no. packets sent */
-    ACE_UINT32 sr_nb;   /* no. bytes sent */
   };
 
-  /*
- * Receiver report.
- * Time stamps are middle 32-bits of ntp timestamp.
- */
-  struct rtcp_rr {
-    ACE_UINT32 rr_srcid;        /* sender being reported */
-    ACE_UINT32 rr_loss; /* loss stats (8:fraction, 24:cumulative)*/
-    ACE_UINT32 rr_ehsr; /* ext. highest seqno received */
-    ACE_UINT32 rr_dv;   /* jitter (delay variance) */
-    ACE_UINT32 rr_lsr;  /* orig. ts from last rr from this src  */
-    ACE_UINT32 rr_dlsr; /* time from recpt of last rr to xmit time */
-  };
-
-  static int handle_input (ACE_Message_Block *data,
-                           const ACE_Addr &peer_address,
-                           rtcphdr &header,
-                           TAO_AV_SourceManager *source_manager,
-                           TAO_AV_RTP_State *state);
-
-  static int build_bye (rtcphdr* rh,
-                        TAO_AV_Source& local);
-
-  static int build_sdes (rtcphdr* rh,
-                         TAO_AV_Source& s,
-                         TAO_AV_RTP_State *state);
-
-  static u_char* build_sdes_item (u_char* p,
-                                  int code,
-                                  TAO_AV_Source&);
-
-  static void parse_sr (rtcphdr* rh,
-                        int flags,
-                        u_char* ep,
-                        TAO_AV_Source* ps,
-                        ACE_UINT32 addr,
-                        TAO_AV_SourceManager *source_manager);
-
-  static void parse_rr (rtcphdr* rh,
-                        int flags,
-                        u_char* ep,
-                        TAO_AV_Source* ps,
-                        ACE_UINT32 addr,
-                        TAO_AV_SourceManager *source_manager);
-
-  static void parse_rr_records (ACE_UINT32 ssrc,
-                                rtcp_rr* r,
-                                int cnt,
-                                const u_char* ep,
-                                ACE_UINT32 addr);
-
-  static int sdesbody (ACE_UINT32* p,
-                       u_char* ep,
-                       TAO_AV_Source* ps,
-                       ACE_UINT32 addr,
-                       ACE_UINT32 ssrc,
-                       TAO_AV_SourceManager *source_manager);
-
-  static void parse_sdes (rtcphdr* rh,
-                          int flags,
-                          u_char* ep,
-                          TAO_AV_Source* ps,
-                          ACE_UINT32 addr,
-                          ACE_UINT32 ssrc,
-                          TAO_AV_SourceManager *source_manager);
-
-  static void parse_bye (rtcphdr* rh,
-                         int flags,
-                         u_char* ep,
-                         TAO_AV_Source* ps,
-                         TAO_AV_SourceManager *source_manager);
-
-  static void send_report (int bye,
-                           TAO_AV_Protocol_Object *object,
-                           TAO_AV_SourceManager *source_manager,
-                           TAO_AV_RTP_State *state,
-                           TAO_AV_RTCP_Callback *callback);
+  static void send_report (ACE_Message_Block *mb);
 
   static ACE_UINT32 alloc_srcid (ACE_UINT32 addr);
 
-  static double fmod (double dividend, double divisor);
+  static double rtcp_interval (int members,
+                               int senders,
+                               double rtcp_bw,
+                               int we_sent,
+                               int packet_size,
+                               int *avg_rtcp_size,
+                               int initial);
 };
 
-class TAO_AV_Callback;
 
-/**
- * @class TAO_AV_RTCP_Object
- * @brief TAO_AV_Protocol_Object for RTCP protocol
- */
-class TAO_AV_Export TAO_AV_RTCP_Object 
-  : public TAO_AV_Protocol_Object
-{
-public:
-  /// constructor.
-  TAO_AV_RTCP_Object (TAO_AV_Callback *callback,
-                      TAO_AV_Transport *transport = 0);
-
-  /// Destructor
-  virtual ~TAO_AV_RTCP_Object (void);
-
-  virtual int handle_input (void);
-  virtual int handle_control_input (ACE_Message_Block *frame,
-                                    const ACE_Addr &peer_address);
-
-  /// set/get policies.
-  virtual int set_policies (const TAO_AV_PolicyList &policy_list);
-
-  /// start/stop the flow.
-  virtual int start (void);
-  virtual int stop (void);
-
-  /// send a data frame.
-  virtual int send_frame (ACE_Message_Block *frame,
-                          TAO_AV_frame_info *frame_info = 0);
-
-  /// send a frame in iovecs.
-  virtual int send_frame (const iovec *iov,
-                          int iovcnt,
-                          TAO_AV_frame_info *frame_info = 0);
-
-  virtual int send_frame (const char*buf,
-                          size_t len);
-
-  /// end the stream.
-  virtual int destroy (void);
-};
 
 /**
  * @class TAO_AV_Flow_Protocol_Factory
@@ -256,6 +114,9 @@ public:
                                                         TAO_AV_Flow_Handler *handler,
                                                         TAO_AV_Transport *transport);
 };
+
+class TAO_AV_Callback;
+
 
 /**
  * @class TAO_AV_RTCP_Callback
@@ -283,6 +144,7 @@ public:
   virtual int receive_frame (ACE_Message_Block *frame,
                              TAO_AV_frame_info *frame_info = 0,
                              const ACE_Addr &peer_address = ACE_Addr::sap_any);
+  int send_frame (ACE_Message_Block *frame);
 
   virtual int receive_control_frame (ACE_Message_Block *frame,
                                      const ACE_Addr &peer_address = ACE_Addr::sap_any);
@@ -296,22 +158,82 @@ public:
   virtual void get_timeout (ACE_Time_Value *&tv,
                             void *&arg);
 
-  int demux (TAO_AV_RTP::rtphdr* rh,
-             ACE_Message_Block *data,
-            const ACE_Addr &peer_address);
-
-  virtual int get_rtp_source (TAO_AV_Source *&source,
-                              ACE_UINT32 srcid,
-                              ACE_UINT32 ssrc,
-                              ACE_UINT32 addr);
+  int send_report(int bye);
   void schedule (int ms);
-  TAO_AV_SourceManager *source_manager (void);
   TAO_AV_RTP_State *state (void);
+  void ts_offset (ACE_UINT32 offset);
+
 protected:
-  TAO_AV_SourceManager *source_manager_;
-  TAO_AV_RTP_State *state_;
+  ACE_Hash_Map_Manager<ACE_UINT32, RTCP_Channel_In*, ACE_Null_Mutex> inputs_;
+  RTCP_Channel_Out output_;
   int timeout_;
+  int timestamp_offset_;
+  int sdes_count_;
+
+  int is_initial_timeout_;
+  int avg_rtcp_size_;
+  int packet_size_;
 };
+
+class RTP_Packet;
+
+
+/**
+ * @class TAO_AV_RTCP_Object
+ * @brief TAO_AV_Protocol_Object for RTCP protocol
+ */
+class TAO_AV_Export TAO_AV_RTCP_Object
+  : public TAO_AV_Protocol_Object
+{
+public:
+  /// constructor.
+  TAO_AV_RTCP_Object (TAO_AV_Callback *client_cb,
+                      TAO_AV_RTCP_Callback *&rtcp_cb,
+                      TAO_AV_Transport *transport = 0);
+
+  /// Destructor
+  virtual ~TAO_AV_RTCP_Object (void);
+
+  virtual int handle_input (void);
+  virtual int handle_control_input (ACE_Message_Block *frame,
+                                    const ACE_Addr &peer_address);
+  virtual int handle_control_output (ACE_Message_Block *frame);
+
+  /// set/get policies.
+  virtual int set_policies (const TAO_AV_PolicyList &policy_list);
+
+  /// start/stop the flow.
+  virtual int start (void);
+  virtual int stop (void);
+
+  /// send a data frame.
+  virtual int send_frame (ACE_Message_Block *frame,
+                          TAO_AV_frame_info *frame_info = 0);
+
+  /// send a frame in iovecs.
+  virtual int send_frame (const iovec *iov,
+                          int iovcnt,
+                          TAO_AV_frame_info *frame_info = 0);
+
+  virtual int send_frame (const char*buf,
+                          size_t len);
+
+  /// end the stream.
+  virtual int destroy (void);
+
+  void ssrc (ACE_UINT32 ssrc) {this->ssrc_ = ssrc; }
+  ACE_UINT32 ssrc (void) { return this->ssrc_; }
+
+  void ts_offset (ACE_UINT32 ts_offset);
+
+
+private:
+  TAO_AV_Callback *client_cb_;
+  TAO_AV_RTCP_Callback rtcp_cb_;
+  ACE_UINT32 ssrc_;
+};
+
+
 
 ACE_STATIC_SVC_DECLARE (TAO_AV_RTCP_Flow_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_RTCP_Flow_Factory)

@@ -23,7 +23,6 @@
 #include "Transport.i"
 #endif /* __ACE_INLINE__ */
 
-
 //------------------------------------------------------------
 // TAO_AV_Transport_Item
 //------------------------------------------------------------
@@ -81,149 +80,81 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Protocol was specified without an endpoint\n"),
                             -1);
-
         }
       else
         {
-          TAO_AV_Flow_ProtocolFactorySetItor flow_factory_end =
-            av_core->flow_protocol_factories ()->end ();
+          TAO_AV_Flow_Protocol_Factory *flow_factory =
+            av_core->get_flow_protocol_factory (flow_protocol);
+          TAO_AV_Transport_Factory *transport_factory =
+            av_core->get_transport_factory (transport_protocol);
 
-          for (TAO_AV_Flow_ProtocolFactorySetItor flow_factory =
-                 av_core->flow_protocol_factories ()->begin ();
-               flow_factory != flow_factory_end;
-               ++flow_factory)
+          if ((flow_factory != 0) && (transport_factory != 0))
             {
-              if ((*flow_factory)->factory ()->match_protocol (flow_protocol))
+              // @@Naga:Instead of making a new connector every time we should try and see if a connector exists
+              // for this transport already and hence we can reuse it.
+
+              TAO_AV_Connector *connector = transport_factory->make_connector ();
+
+              if (connector != 0)
                 {
-                  // @@Naga:Instead of making a new connector every time we should try and see if a connector exists
-                  // for this transport already and hence we can reuse it.
-                  TAO_AV_TransportFactorySetItor transport_factory_end =
-                    av_core->transport_factories ()->end ();
+                  // add connector to list.
+                  this->connectors_.insert (connector);
 
-                  for (TAO_AV_TransportFactorySetItor transport_factory =
-                         av_core->transport_factories ()->begin ();
-                       transport_factory != transport_factory_end;
-                       ++transport_factory)
-                    {
+                  if (connector->open (endpoint,
+                                       av_core,
+                                       flow_factory) == -1)
+                    return -1;
 
-                      if ((*transport_factory)->factory ()->match_protocol (transport_protocol))
-                        {
-                          TAO_AV_Connector *connector =
-                            (*transport_factory)->factory ()->make_connector ();
-                          if (connector != 0)
-                            {
-                              // add connector to list.
-                              this->connectors_.insert (connector);
-
-                              if (connector->open (endpoint,
-                                                   av_core,
-                                                   (*flow_factory)->factory ()) == -1)
-                                return -1;
-
-                              TAO_AV_Transport *transport = 0;
-                              if (connector->connect (entry,
-                                                      transport) == -1)
-                                return -1;
-                              entry->transport (transport);
-                              break;
-                            }
-                          else
-                            ACE_ERROR_RETURN ((LM_ERROR,
-                                               "(%P|%t) Unable to create an "
-                                               "connector for <%s>\n",
-                                               entry->flowname ()),
-                                              -1);
-                        }
-                      else
-                        continue;
-                    }
-                  // Now check if the flow factory has a control flow factory.
-                  const char *control_factory_name
-                    = (*flow_factory)->factory ()->control_flow_factory ();
-
-                  if (control_factory_name != 0)
-                    {
-
-                      TAO_AV_Flow_ProtocolFactorySetItor control_factory_end =
-                        av_core->flow_protocol_factories ()->end ();
-
-                      for (TAO_AV_Flow_ProtocolFactorySetItor control_flow_factory =
-                             av_core->flow_protocol_factories ()->begin ();
-                           control_flow_factory != control_factory_end;
-                           ++control_flow_factory)
-                        {
-                          if ((*control_flow_factory)->factory ()->match_protocol (control_factory_name))
-                            {
-                              char control_flowname [BUFSIZ];
-                              ACE_OS::sprintf (control_flowname,"%s_control",entry->flowname ());
-                              // Address will be one port number above the data port.
-                              // @@ This requires a more generic solution. This is a hack.
-                              TAO_Tokenizer address_str (CORBA::string_dup (entry->address_str ()),':');
-                              int port = ACE_OS::atoi (address_str [1]);
-                              // Increment the port.
-                              port++;
-                              char control_addr [BUFSIZ];
-                              ACE_OS::sprintf (control_addr,"%s=%s:%d",
-                                               entry->carrier_protocol_str (),
-                                               address_str[0],port);
-                              TAO_Forward_FlowSpec_Entry *control_entry = 0;
-                              // We  want to have the control entry as producer
-                              // so timeout events will happen.
-                              ACE_NEW_RETURN (control_entry,
-                                              TAO_Forward_FlowSpec_Entry (control_flowname,
-                                                                          "IN",
-                                                                          entry->format (),
-                                                                          entry->flow_protocol_str (),
-                                                                          control_addr),
-                                              -1);
-                              // Add the control entry to the flow_spec_set that's passed so that the control entry
-                              // will also be called during flow starts and stops. except that if the user specifies
-                              // a flowspec in start then the control entry may not be in that but it has to be started
-                              // if the flowspec has the associated data flow entry. @@ We'll leave this matter for now.
-                              flow_spec_set.insert (control_entry);
-                              for (TAO_AV_TransportFactorySetItor transport_factory =
-                                     av_core->transport_factories ()->begin ();
-                                   transport_factory != transport_factory_end;
-                                   ++transport_factory)
-                                {
-                                  if ((*transport_factory)->factory ()->match_protocol (transport_protocol))
-                                    {
-                                      TAO_AV_Connector *connector =
-                                        (*transport_factory)->factory ()->make_connector ();
-                                      if (connector != 0)
-                                        {
-                                          // add connector to list.
-                                          this->connectors_.insert (connector);
-
-                                          if (connector->open (endpoint,
-                                                               av_core,
-                                                               (*control_flow_factory)->factory ()) == -1)
-                                            return -1;
-                                          TAO_AV_Transport *transport = 0;
-                                          if (connector->connect (control_entry,
-                                                                  transport) == -1)
-                                            return -1;
-                                          control_entry->transport (transport);
-                                          break;
-                                        }
-                                      else
-                                        ACE_ERROR_RETURN ((LM_ERROR,
-                                                           "(%P|%t) Unable to create an "
-                                                           "connector for <%s>\n",
-                                                           control_entry->flowname ()),
-                                                          -1);
-                                    }
-                                  else
-                                    continue;
-                                }
-                              // Now set the control object on the data flow object.
-                              entry->protocol_object ()->control_object (control_entry->protocol_object ());
-                            }
-                        }
-                    }
+                  TAO_AV_Transport *transport = 0;
+                  if (connector->connect (entry,
+                                          transport,
+                                          TAO_AV_Core::TAO_AV_DATA) == -1)
+                    return -1;
+                  entry->transport (transport);
                 }
               else
-                continue;
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "(%P|%t) Unable to create an "
+                                   "connector for <%s>\n",
+                                   entry->flowname ()),
+                                  -1);
+
+              // Now see if the flow factory has a control flow factory.
+              TAO_AV_Flow_Protocol_Factory *control_flow_factory =
+                av_core->get_flow_protocol_factory(flow_factory->control_flow_factory ());
+
+              if (control_flow_factory != 0)
+                {
+                  TAO_AV_Connector *control_connector =
+                    transport_factory->make_connector ();
+
+                  if (control_connector != 0)
+                    {
+                      // add connector to list.
+                      this->connectors_.insert (control_connector);
+
+                      if (control_connector->open (endpoint,
+                                                   av_core,
+                                                   control_flow_factory) == -1)
+                        return -1;
+
+                      TAO_AV_Transport *control_transport = 0;
+                      if (control_connector->connect (entry,
+                                                      control_transport,
+                                                      TAO_AV_Core::TAO_AV_CONTROL) == -1)
+                        return -1;
+                      entry->control_transport (control_transport);
+
+                      // Now set the control object on the data flow object.
+                      entry->protocol_object ()->control_object (entry->control_protocol_object ());
+                    }
+                  else
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                       "(%P|%t) Unable to create an "
+                                       "connector for <%s>\n",
+                                       entry->flowname ()),
+                                      -1);
+                }
             }
         }
     }
@@ -267,6 +198,7 @@ TAO_AV_Acceptor_Registry::TAO_AV_Acceptor_Registry (void)
 
 TAO_AV_Acceptor_Registry::~TAO_AV_Acceptor_Registry (void)
 {
+  this->close_all();
 }
 
 int
@@ -303,145 +235,72 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
       if (address == 0)
         {
           retv = this->open_default (endpoint,
-			      av_core,
-			      entry);
+        		             av_core,
+			             entry);
 	  if(retv < 0)
 		  return retv;
           continue;
         }
       else
         {
-          // Now get the list of avaliable protocol factories.
-          TAO_AV_Flow_ProtocolFactorySetItor flow_factory_end =
-            av_core->flow_protocol_factories ()->end ();
+          TAO_AV_Flow_Protocol_Factory *flow_factory =
+            av_core->get_flow_protocol_factory (flow_protocol);
 
-          for (TAO_AV_Flow_ProtocolFactorySetItor flow_factory =
-                 av_core->flow_protocol_factories ()->begin ();
-               flow_factory != flow_factory_end;
-               ++flow_factory)
+          if (flow_protocol != 0)
             {
-              if ((*flow_factory)->factory ()->match_protocol (flow_protocol))
+              TAO_AV_Transport_Factory *transport_factory =
+                av_core->get_transport_factory (transport_protocol);
+
+              if (transport_protocol != 0)
                 {
-                  TAO_AV_TransportFactorySetItor transport_factory_end =
-                    av_core->transport_factories ()->end ();
-
-		  //int i = 1;
-                  for (TAO_AV_TransportFactorySetItor transport_factory =
-                         av_core->transport_factories ()->begin ();
-                       transport_factory != transport_factory_end;
-                       ++transport_factory)
+                  TAO_AV_Acceptor *acceptor = transport_factory->make_acceptor ();
+                  if (acceptor != 0)
                     {
+                      // add acceptor to list.
+                      this->acceptors_.insert (acceptor);
 
-                      if ((*transport_factory)->factory ()->match_protocol (transport_protocol))
+                      if (acceptor->open (endpoint,
+                                          av_core,
+                                          entry,
+                                          flow_factory,
+                                          TAO_AV_Core::TAO_AV_DATA) == -1)
+                        return -1;
+
+                      TAO_AV_Flow_Protocol_Factory *control_flow_factory =
+                        av_core->get_flow_protocol_factory (flow_factory->control_flow_factory ());
+
+                      if (control_flow_factory != 0)
                         {
-                          TAO_AV_Acceptor *acceptor =
-                            (*transport_factory)->factory ()->make_acceptor ();
+                          TAO_AV_Acceptor *acceptor = transport_factory->make_acceptor ();
                           if (acceptor != 0)
                             {
-                              // add acceptor to list.
-                              this->acceptors_.insert (acceptor);
-
                               if (acceptor->open (endpoint,
                                                   av_core,
                                                   entry,
-                                                  (*flow_factory)->factory ()) == -1)
+                                                  control_flow_factory,
+                                                  TAO_AV_Core::TAO_AV_CONTROL) == -1)
                                 return -1;
-                              break;
-                            }
-                          else
-                            ACE_ERROR_RETURN ((LM_ERROR,
-                                               "(%P|%t) Unable to create an "
-                                               "acceptor for <%s>\n",
-                                               entry->flowname ()),
-                                              -1);
-                        }
-                      else
-                        continue;
-                    }
-                  // Now check if the flow factory has a control flow factory.
-                  const char *control_factory_name
-                    = (*flow_factory)->factory ()->control_flow_factory ();
+                              // add acceptor to list.
+                              this->acceptors_.insert (acceptor);
 
-                  if (control_factory_name != 0)
-                    {
-                      TAO_AV_Flow_ProtocolFactorySetItor control_factory_end =
-                        av_core->flow_protocol_factories ()->end ();
+                              entry->protocol_object ()->control_object (entry->control_protocol_object ());
 
-                      for (TAO_AV_Flow_ProtocolFactorySetItor control_flow_factory =
-                             av_core->flow_protocol_factories ()->begin ();
-                           control_flow_factory != control_factory_end;
-                           ++control_flow_factory)
-                        {
-                          if ((*control_flow_factory)->factory ()->match_protocol (control_factory_name))
-                            {
-                              char control_flowname [BUFSIZ];
-                              ACE_OS::sprintf (control_flowname,"%s_control",entry->flowname ());
-                              // Address will be one port number above the data port.
-                              // @@ This requires a more generic solution. This is a hack.
-                              TAO_Tokenizer address_str (CORBA::string_dup (entry->address_str ()),':');
-                              int port = ACE_OS::atoi (address_str [1]);
-                              // Increment the port.
-                              port++;
-                              char control_addr [BUFSIZ];
-                              ACE_OS::sprintf (control_addr,"%s=%s:%d",
-                                               entry->carrier_protocol_str (),
-                                               address_str[0],port);
-                              TAO_Forward_FlowSpec_Entry *control_entry = 0;
-                              // We  want to have the control entry as producer
-                              // so timeout events will happen.
-                              ACE_NEW_RETURN (control_entry,
-                                              TAO_Forward_FlowSpec_Entry (control_flowname,
-                                                                          "IN",
-                                                                          entry->format (),
-                                                                          entry->flow_protocol_str (),
-                                                                          control_addr),
-                                              -1);
-                              // Add the control entry to the flow_spec_set that's passed so that the control entry
-                              // will also be called during flow starts and stops. except that if the user specifies
-                              // a flowspec in start then the control entry may not be in that but it has to be started
-                              //   if the flowspec has the associated data flow entry. @@ We'll leave this matter for now.
-                              flow_spec_set.insert (control_entry);
-                              TAO_AV_TransportFactorySetItor transport_factory_end =
-                                av_core->transport_factories ()->end ();
-                              for (TAO_AV_TransportFactorySetItor transport_factory =
-                                     av_core->transport_factories ()->begin ();
-                                   transport_factory != transport_factory_end;
-                                   ++transport_factory)
-                                {
-                                  if ((*transport_factory)->factory ()->match_protocol (transport_protocol))
-                                    {
-                                      TAO_AV_Acceptor *acceptor =
-                                        (*transport_factory)->factory ()->make_acceptor ();
-                                      if (acceptor != 0)
-                                        {
-                                          // add acceptor to list.
-                                          this->acceptors_.insert (acceptor);
-
-                                          if (acceptor->open (endpoint,
-                                                              av_core,
-                                                              control_entry,
-                                                              (*control_flow_factory)->factory ()) == -1)
-                                            return -1;
-                                          break;
-                                        }
-                                      else
-                                        ACE_ERROR_RETURN ((LM_ERROR,
-                                                           "(%P|%t) Unable to create an "
-                                                           "acceptor for <%s>\n",
-                                                           entry->flowname ()),
-                                                          -1);
-                                    }
-                                  else
-                                    continue;
-                                }
-                              // Now set the control object on the data flow object.
-                              entry->protocol_object ()->control_object (control_entry->protocol_object ());
-                            }
+                             }
+                           else
+                             ACE_ERROR_RETURN ((LM_ERROR,
+                                                "(%P|%t) Unable to create an "
+                                                "acceptor for <%s>\n",
+                                                entry->flowname ()),
+                                               -1);
                         }
                     }
+                  else
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                       "(%P|%t) Unable to create an "
+                                       "acceptor for <%s>\n",
+                                       entry->flowname ()),
+                                      -1);
                 }
-              else
-                continue;
             }
         }
     }
@@ -460,102 +319,100 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
   // No endpoints were specified, we let each protocol pick its own
   // default...
 
-  TAO_AV_Flow_ProtocolFactorySetItor flow_factory_end =
-    av_core->flow_protocol_factories ()->end ();
-
   const char *flow_protocol = entry->flow_protocol_str ();
   const char *transport_protocol = entry->carrier_protocol_str ();
 
   if (ACE_OS::strcmp (flow_protocol,"") == 0)
     flow_protocol = transport_protocol;
 
-  // loop through loaded protocols looking for protocol_prefix
-  TAO_AV_Flow_ProtocolFactorySetItor flow_factory
-    = av_core->flow_protocol_factories ()->begin ();
+  TAO_AV_Flow_Protocol_Factory *flow_factory =
+    av_core->get_flow_protocol_factory (flow_protocol);
 
-  TAO_AV_TransportFactorySetItor transport_factory
-    = av_core->transport_factories ()->begin ();
+  // No matching flow protocol.
+  if (flow_factory == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "TAO (%P|%t) Unable to match protocol prefix "
+                       "for <%s>\n",
+                       flow_protocol),
+                      -1);
 
-  for (;
-       flow_factory != flow_factory_end;
-       ++flow_factory)
-    {
-      if (!(*flow_factory)->factory ()->match_protocol (flow_protocol))
-        {
-          // If we have no matching protocol then keep searching
-          // for one until the entire list of protocols has been
-          // searched.
+  if (TAO_debug_level > 0)
+    ACE_DEBUG((LM_DEBUG, "(%N,%l) Matched flow_protocol: %s, Looking for transport protocol: %s\n", flow_protocol, transport_protocol));
 
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
+  TAO_AV_Transport_Factory *transport_factory =
+    av_core->get_transport_factory (transport_protocol);
+
+  if (transport_factory == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
                         "TAO (%P|%t) Unable to match protocol prefix "
                         "for <%s>\n",
-                        flow_protocol));
-          continue;
-        }
-      else
-        {
-          if (TAO_debug_level > 0)
-             ACE_DEBUG((LM_DEBUG, "(%N,%l) Matched flow_protocol: %s, Looking for transport protocol: %s\n", flow_protocol, transport_protocol));
-          TAO_AV_TransportFactorySetItor transport_factory_end =
-            av_core->transport_factories ()->end ();
+                        transport_protocol),
+                       -1);
 
-	  int matched_transport = 0;
-          for (;transport_factory != transport_factory_end;
-               ++transport_factory)
-            {
-              if (!(*transport_factory)->factory ()->match_protocol (transport_protocol))
-                {
-                  // If we have no matching protocol then keep searching
-                  // for one until the entire list of protocols has been
-                  // searched.
+  // make an acceptor
+  TAO_AV_Acceptor *acceptor =
+    transport_factory->make_acceptor();
 
-                  if (TAO_debug_level > 0)
-                    ACE_ERROR ((LM_ERROR,
-                                "TAO (%P|%t) Unable to match protocol prefix "
-                                "for <%s>\n",
-                                transport_protocol));
-                  continue;
-                }
+  if (acceptor == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                        "TAO (%P|%t) unable to create "
+                        "an acceptor for <%d>\n",
+                        transport_protocol),
+                       -1);
 
-              matched_transport = 1;  
+  if (acceptor->open_default (endpoint,
+                              av_core,
+                              entry,
+                              flow_factory,
+                              TAO_AV_Core::TAO_AV_DATA) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "TAO (%P|%t) unable to open "
+                       "default acceptor for <%s>%p\n",
+                       flow_protocol),
+                      -1);
 
-              // got it, make an acceptor
-              TAO_AV_Acceptor *acceptor =
-                (*transport_factory)->factory ()->make_acceptor ();
+  this->acceptors_.insert (acceptor);
 
-              if (acceptor == 0)
-                {
-                  if (TAO_debug_level > 0)
-                    ACE_ERROR ((LM_ERROR,
-                                "TAO (%P|%t) unable to create "
-                                "an acceptor for <%d>\n",
-                                transport_protocol));
-                  continue;
-                }
+  const char *control_flow_factory_name = flow_factory->control_flow_factory ();
 
-              if (acceptor->open_default (endpoint,
+  if (control_flow_factory_name != 0)
+    {
+
+      TAO_AV_Flow_Protocol_Factory *control_flow_factory =
+        av_core->get_flow_protocol_factory (control_flow_factory_name);
+
+      if (control_flow_factory == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "TAO (%P|%t) Unable to match control flow "
+                           "for <%s>\n",
+                           control_flow_factory_name),
+                          -1);
+
+      TAO_AV_Acceptor *control_acceptor = transport_factory->make_acceptor ();
+
+      if (control_acceptor == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "TAO (%P|%t) unable to create "
+                           "an acceptor for <%d>\n",
+                           transport_protocol),
+                          -1);
+
+      if (control_acceptor->open_default (endpoint,
                                           av_core,
                                           entry,
-                                          (*flow_factory)->factory ()) == -1)
-                {
-                  if (TAO_debug_level > 0)
-                    ACE_ERROR ((LM_ERROR,
-                                "TAO (%P|%t) unable to open "
-                                "default acceptor for <%s>%p\n",
-                                (*transport_factory)->name ().c_str (), ""));
-                  continue;
-                }
+                                          control_flow_factory,
+                                          TAO_AV_Core::TAO_AV_CONTROL) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "TAO (%P|%t) unable to open "
+                           "default acceptor for <%s>%p\n",
+                           transport_protocol),
+                          -1);
 
-              this->acceptors_.insert (acceptor);
-            }
-	    if( matched_transport == 0 ){
-                ACE_ERROR ((LM_ERROR, "(%P|%t), %N:%l could not match transport protocol: %s\n",
-					transport_protocol));
-		return -1;
-	    }
-        }
+      this->acceptors_.insert (control_acceptor);
+
+      entry->protocol_object ()->control_object (entry->control_protocol_object ());
     }
+
   if (this->acceptors_.size () == 0)
     {
       if (TAO_debug_level > 0)
@@ -620,6 +477,10 @@ TAO_AV_Flow_Handler::TAO_AV_Flow_Handler (void)
 {
 }
 
+TAO_AV_Flow_Handler::~TAO_AV_Flow_Handler(void)
+{
+}
+
 int
 TAO_AV_Flow_Handler::set_remote_address (ACE_Addr * /* address */)
 {
@@ -649,18 +510,35 @@ TAO_AV_Flow_Handler::schedule_timer (void)
 {
   ACE_Event_Handler *event_handler = this->event_handler ();
   ACE_Time_Value *tv = 0;
-  this->callback_->get_timeout (tv,
-                                this->timeout_arg_);
+
+  this->callback_->get_timeout (tv, this->timeout_arg_);
   if (tv == 0)
     return 0;
-  this->timer_id_ =  event_handler->reactor ()->schedule_timer (event_handler,
-                                                                0,
-                                                                *tv);
+
+//  this->timer_id_ =  event_handler->reactor ()->schedule_timer (event_handler,
+  this->timer_id_ =
+      TAO_AV_CORE::instance()->reactor ()->schedule_timer (event_handler,
+                                                           0,
+                                                           *tv);
+
+  delete tv;
+
   if (this->timer_id_ < 0)
     return -1;
 
   return 0;
 }
+
+
+int
+TAO_AV_Flow_Handler::cancel_timer (void)
+{
+  ACE_Event_Handler *event_handler = this->event_handler ();
+  TAO_AV_CORE::instance()->reactor ()->cancel_timer (this->timer_id_);
+
+  return 0;
+}
+
 
 int
 TAO_AV_Flow_Handler::stop (TAO_FlowSpec_Entry::Role role)
@@ -688,13 +566,17 @@ TAO_AV_Flow_Handler::handle_timeout (const ACE_Time_Value & /*tv*/,
   this->callback_->handle_timeout (this->timeout_arg_);
   ACE_Event_Handler *event_handler = this->event_handler ();
   ACE_Time_Value *timeout = 0;
-  this->callback_->get_timeout (timeout,
-                                this->timeout_arg_);
+
+  this->callback_->get_timeout (timeout,  this->timeout_arg_);
   if (timeout == 0)
     return 0;
+
   this->timer_id_ =  event_handler->reactor ()->schedule_timer (event_handler,
                                                                 0,
                                                                 *timeout);
+
+  delete timeout;
+
   return 0;
 }
 

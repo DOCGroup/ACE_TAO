@@ -527,12 +527,16 @@ public:
   virtual void set_flow_handler (const char *flowname,
 				 TAO_AV_Flow_Handler *handler);
 
+  virtual void set_control_flow_handler (const char *flowname,
+                                         TAO_AV_Flow_Handler *handler);
+
   TAO_AV_QoS &qos (void);
 
-  
+
 protected:
   TAO_AV_QoS qos_;
   Flow_Handler_Map flow_handler_map_;
+  Flow_Handler_Map control_flow_handler_map_;
 
 };
 
