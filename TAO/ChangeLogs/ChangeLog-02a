@@ -1,3 +1,8 @@
+Sat Mar  3 13:12:00 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/PortableServer/Object_Adapter.cpp:
+	  Fixed minor typo in the creation of the RootPOA
+
 Sat Mar 03 12:18:12 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Codec/client.cpp (verify_data):
