@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_LOG_MSG_CALLBACK_H
 #define ACE_LOG_MSG_CALLBACK_H
 #include "ace/pre.h"
@@ -45,8 +44,10 @@ class ACE_Log_Record;
  *     synchronization in the <log> method) or have a separate
  *     callback object per Log_Msg object.  Moreover,
  *     <ACE_Log_Msg_Callbacks> are not inherited when a new thread
- *     is spawned, so you'll need to reset these in each new thread.
- *
+ *     is spawned because it might have been allocated off of the
+ *     stack of the original thread, in which case all hell would
+ *     break loose...  Therefore, you'll need to reset these in each
+ *     new thread. 
  */
 class ACE_Export ACE_Log_Msg_Callback
 {

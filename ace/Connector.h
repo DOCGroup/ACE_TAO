@@ -371,9 +371,9 @@ private:
  * Implements a flexible and extensible set of strategies for
  * actively establishing connections with clients.  There are
  * three main strategies: (1) creating a SVC_HANDLER, (2)
- * actively connecting a new connection from a client into the
- * SVC_HANDLER, and (3) activating the SVC_HANDLER with a
- * particular concurrency mechanism.
+ * actively initiating a new connection from the client,
+ * and (3) activating the SVC_HANDLER with a
+ * particular concurrency mechanism after the connection is established.
  */
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
 class ACE_Strategy_Connector : public ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2>

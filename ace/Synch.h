@@ -810,8 +810,8 @@ public:
  *
  * Portable implementation of an Event mechanism, which is
  * native to Win32, but must be emulated on UNIX.  Note that
- * this only provides global naming and <USYNC_PROCESS> support on
- * Win32 machines.  
+ * this only provides global naming and system-scope locking support
+ * on Win32 platforms.
  */
 class ACE_Export ACE_Event
 {
@@ -914,7 +914,7 @@ private:
  *
  * Specialization of Event mechanism which wakes up all waiting
  * threads on <signal>.  Note that this only provides
- * <USYNC_PROCESS> support on Win32 machines.
+ * global naming and system-scope locking support on Win32 platforms.
  */
 class ACE_Export ACE_Manual_Event : public ACE_Event
 {
@@ -950,7 +950,7 @@ public:
  *
  * Specialization of Event mechanism which wakes up one waiting
  * thread on <signal>.  Note that this only provides
- * <USYNC_PROCESS> support on Win32 machines.
+ * global naming and system-scope locking support on Win32 platforms.
  */
 class ACE_Export ACE_Auto_Event : public ACE_Event
 {
