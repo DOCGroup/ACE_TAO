@@ -302,7 +302,7 @@ The correct way to write that guard is:
       // Put your template declarations here...
 
       #if defined (__ACE_INLINE__)
-      #include "Foo_T.i"
+      #include "Foo_T.inl"
       #endif /* __ACE_INLINE__ */
 
       #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
@@ -333,7 +333,7 @@ The correct way to write that guard is:
       #endif /* ACE_LACKS_PRAGMA_ONCE */
 
       #if !defined (__ACE_INLINE__)
-      #include "ace/Foo_T.i"
+      #include "ace/Foo_T.inl"
       #endif /* __ACE_INLINE__ */
 
       ACE_RCSID(lib, Foo_T, "$<!-- -->Id$")
@@ -359,7 +359,7 @@ The correct way to write that guard is:
       // Put your non-template declarations here...
 
       #if defined (__ACE_INLINE__)
-      #include "Foo.i"
+      #include "Foo.inl"
       #endif /* __ACE_INLINE__ */
 
       #include "Foo_T.h"
@@ -468,7 +468,7 @@ The correct way to write that guard is:
 
     <li>Avoid unnecessary parenthesis.  We're not writing Lisp :-)<p>
 
-    <li>Put inline member functions in a <strong><code>.i</code></strong>
+    <li>Put inline member functions in a <strong><code>.inl</code></strong>
         file.  That file is conditionally included by both the
         <strong><code>.h</code></strong> file, for example:<p>
 
@@ -479,7 +479,7 @@ The correct way to write that guard is:
             };
 
             #if defined (__ACE_INLINE__)
-            #include "ace/High_Res_Timer.i"
+            #include "ace/High_Res_Timer.inl"
             #endif /* __ACE_INLINE__ */
             </pre><p>
 
@@ -490,7 +490,7 @@ The correct way to write that guard is:
             #include "ace/High_Res_Timer.h"
 
             #if !defined (__ACE_INLINE__)
-            #include "ace/High_Res_Timer.i"
+            #include "ace/High_Res_Timer.inl"
             #endif /* __ACE_INLINE__ */
 
             ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
@@ -498,7 +498,7 @@ The correct way to write that guard is:
 
         <strong>NOTE:</strong> It is very important to ensure than an
         inline function will not be used before its definition is seen.
-        Therefore, the inline functions in the .i file should be arranged
+        Therefore, the inline functions in the .inl file should be arranged
         properly.  Some compilers, such as <code>g++</code> with the
         <code>-Wall</code> option, will issue warnings for violations.<p>
 
