@@ -7,3 +7,6 @@ Channel. The current tests are:
 
 	+ SupplierID_Test: verify that several suppliers can can the
 	  same supplier ID.
+
+	+ Correlation_Test: verify that a consumer can subscribe to a
+          correlation.

@@ -9,15 +9,9 @@ multicast port.  The test reads the configuration file to find out
 which Federations are globally available defined, but the comand line
 is used to specify the list of federations that are actually running
 on each process.
-	The test requires the Naming Serivice:
 
-$ ../../Naming_Service/Naming_Service
-
-	this is an *extremely* silent service, don't be surprized if
-you see no output.
-
-	Then you ough to run at least two copies of the test, on
-different windows (to make the test interesting):
+	To make the test interesting you should run at least two
+copies of the test, on different windows (to keep the output appart):
 
 $ ./EC_Mcast -p ECM1.pid -c sample.cfg -n 200 -t 500000 -f Set01
 $ ./EC_Mcast -p ECM2.pid -c sample.cfg -n 200 -t 500000 -f Set02

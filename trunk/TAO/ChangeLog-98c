@@ -1,3 +1,57 @@
+Sun Oct 11 23:18:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/Event_Manip.h: 
+	* orbsvcs/orbsvcs/Event/Event_Manip.i: 
+	* orbsvcs/orbsvcs/Event/Event_Manip.cpp: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.i: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	* orbsvcs/orbsvcs/Event/CORBA_Utils_T.h: 
+	* orbsvcs/orbsvcs/Event/CORBA_Utils_T.i: 
+	* orbsvcs/orbsvcs/Event/CORBA_Utils_T.cpp: 
+	* orbsvcs/orbsvcs/Event/Memory_Pools.h: 
+	* orbsvcs/orbsvcs/Event/Memory_Pools.i: 
+	* orbsvcs/orbsvcs/Event/Memory_Pools.cpp: 
+	  Implemented a new class to manage event life time.  There are
+	  two components to the new strategy: a reference counted version
+	  of the EventSet buffer and a smart pointer to a single event in
+	  the buffer.
+	  This new strategy allowed us to go down from 6 memory copies to
+	  1 copies for events received remotely (and 2 for local events).
+	  Since the copies were nested and the Event structure can be
+	  quite complicated this reduced the number of memory allocations
+	  significantly.
+	  The old CORBA_Utils classes are no longer needed.
+
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	  Fixed a problem with correlation, if a consumer was expecting
+	  A&B and a supplier sent A, A, B the consumer received two copies
+	  of A.
+
+	* orbsvcs/tests/EC_Basic/EC_Basic.h: 
+	* orbsvcs/tests/EC_Basic/EC_Basic.i: 
+	* orbsvcs/tests/EC_Basic/EC_Basic.cpp: 
+	  Added a new correlation test.
+
+	* orbsvcs/orbsvcs/Makefile: 
+	* orbsvcs/Event_Service/Makefile: 
+	* orbsvcs/tests/EC_Multiple/Makefile: 
+	* orbsvcs/tests/EC_Basic/Makefile: 
+	* orbsvcs/tests/EC_Mcast/Makefile: 
+	  Updated the dependencies.
+
+	* orbsvcs/tests/EC_Basic/README: 
+	* orbsvcs/tests/EC_Mcast/README: 
+	  The README file was out of date.
+
+	* docs/releasenotes/TODO.html: 
+	  Updated the task corresponding to this change.
+
 1998-10-11  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
 	* orbsvcs/Naming_Service/Naming_Service.{h, cpp}, README: Added a

@@ -34,81 +34,60 @@
 #include "ace/Map_Manager.h"
 
 #include "tao/Timeprobe.h"
-#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
-#include "Local_ESTypes.h"
-#include "CORBA_Utils_T.h"
-#include "Timer_Module.h"
-#include "ReactorTask.h"
-
-//ACE_INLINE void operator += (ACE_CORBA_Sequence<RtecEventComm::Event_var> &dest,
-//                               RtecEventComm::Event *item);
-
-ACE_INLINE int operator == (const RtecEventComm::Event &event1,
-                            const RtecEventComm::Event &event2);
-// This operation could be part of the classes, but in order to stay
-// CORBA compliant, we're adding them as global operators.
+#include "orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/Event/Local_ESTypes.h"
+#include "orbsvcs/Event/Timer_Module.h"
+#include "orbsvcs/Event/ReactorTask.h"
+#include "orbsvcs/Event/Event_Manip.h"
 
 // ************************************************************
 
-class TAO_ORBSVCS_Export ACE_ES_Event_Container : public RtecEventComm_Event
 // = TITLE
-//    Event Container
+//   An array of Events.
 //
 // = DESCRIPTION
-//    Basically an ACE_ES_Event with reference counting and
-//    thread-specific memory allocation.
-{
-public:
-  ACE_ES_Event_Container (void);
-  // Default construction.
+//   The Event Channel keeps several collections of TAO_EC_Event
+//   objects, this is implemented using a simple Event Array.
+typedef ACE_Array<TAO_EC_Event> TAO_EC_Event_Array;
 
-  ~ACE_ES_Event_Container (void);
-  // Destruction.
+// ************************************************************
 
-  ACE_ES_Event_Container (const ACE_ES_Event_Container &);
-  // Copy construction.
+// = TITLE
+//   Append an event to an event Array.
+//
+// = DESCRIPTION
+//   Simplify a common idiom when manipulating arrays of events.
+//
+ACE_INLINE
+void operator += (TAO_EC_Event_Array &dest,
+                  const TAO_EC_Event &item);
 
-  ACE_ES_Event_Container (const RtecEventComm::Event &);
-  // Construction with an event.
+// ************************************************************
 
-  ACE_ES_Event_Container *_duplicate (void);
-  // Increments ref_count_ and returns this.
+// = TITLE
+//   Compare two events
+//
+// = DESCRIPTION
+//   The Event Channel must compare events (actually event headers)
+//   for equality.
+// 
+ACE_INLINE int operator == (const RtecEventComm::Event &event1,
+                            const RtecEventComm::Event &event2);
 
-  void _release (void);
-  // Decrements ref_count_ and deletes if 0.
+// ************************************************************
 
-  int operator== (const ACE_ES_Event_Container &event);
-  // Returns 1 if the two are "equal," 0 otherwise.  Determines
-  // equality using source_ and type_ only.  A 0 source_ is a wildcard
-  // (always equal).  A type_ of ACE_ES_EVENT_ANY is also a wildcard.
-
-#if 0
-  // @@ Memory allocators
-  void *operator new (size_t nbytes);
-  // Allocates memory from a thread-specific memory pool.
-
-  void operator delete (void *);
-  // Returns memory to a thread-specific memory pool.
-#endif
-
-  void dump (void);
-
-private:
-  int ref_count_;
-};
-
-typedef ACE_CORBA_var<ACE_ES_Event_Container> ACE_ES_Event_Container_var;
-
-ACE_INLINE void operator += (ACE_CORBA_Sequence<ACE_ES_Event_Container_var> &dest,
-                             ACE_ES_Event_Container *item);
-
-#if defined(ACE_ES_LACKS_ORB)
-// Utility for debugging sequences.
-ACE_Svc_Export void dump_sequence (const ACE_CORBA_Sequence<RtecEventComm::Event> &seq);
-#endif /* ACE_ES_LACKS_ORB */
-
-// Utility for debugging events.
+// = DESCRIPTION
+//   Utility for debugging events.
 void TAO_ORBSVCS_Export dump_event (const RtecEventComm::Event &event);
+
+// ************************************************************
+
+
+// Helper function that returns the first RT_Info entry point name.
+// Use for debugging purposes only.
+const TAO_ORBSVCS_Export char *
+ACE_ES_Consumer_Name (const RtecEventChannelAdmin::ConsumerQOS &qos,
+                      CORBA::Environment &_env);
 
 // ************************************************************
 
@@ -477,10 +456,8 @@ public:
   // Set the group's reference to the deadline timer.  Returns 0 on
   // success, -1 on failure.
 
-  typedef ACE_CORBA_Sequence<ACE_ES_Event_Container_var> Event_Set;
-
-  virtual void add_events (Event_Set *outbox,
-                           Event_Set *pending_events,
+  virtual void add_events (TAO_EC_Event_Array *outbox,
+                           TAO_EC_Event_Array *pending_events,
                            u_long &pending_flags);
   // Does nothing.  This is the only virtual method in this little
   // heirarchy with the conjunction group.
@@ -489,7 +466,7 @@ public:
   // Set the ACT for this group.
 
 protected:
-  ACE_ES_Event_Container_var act_;
+  TAO_EC_Event act_;
   // To be sent with this group.
 
 private:
@@ -523,10 +500,8 @@ public:
   // Returns 1 if this conjunction group's dependencies have been
   // satisfied.  Returns 0 otherwise.
 
-  typedef ACE_CORBA_Sequence<ACE_ES_Event_Container_var> Event_Set;
-
-  virtual void add_events (Event_Set *outbox,
-                           Event_Set *pending_events,
+  virtual void add_events (TAO_EC_Event_Array *outbox,
+                           TAO_EC_Event_Array *pending_events,
                            u_long &pending_flags);
   // For each bit set in forward_value_, the corresponding events in
   // <pending_events> is added to <outbox>.  Each bit set in
@@ -700,7 +675,7 @@ protected:
   // Store the preemption priority so we can cancel the correct timer.
   // The priority values may change during the life.
 
-  ACE_ES_Event_Container_var timeout_event_;
+  TAO_EC_Event timeout_event_;
 };
 
 // ************************************************************
@@ -842,7 +817,7 @@ public:
   // Shutdown.
 
   ACE_ES_Dispatch_Request *push (ACE_ES_Consumer_Rep *consumer,
-                                 ACE_ES_Event_Container *event);
+                                 const TAO_EC_Event& event);
   // Takes <event> and adds it to the correlation.  Returns the
   // dispatch request that should be forwarded.
 
@@ -856,8 +831,6 @@ public:
   // Pointer back to the main correlation module.  This is public so
   // that ACE_ES_Consumer_Rep_Timeout::execute can access it.
 
-  typedef ACE_CORBA_Sequence<ACE_ES_Event_Container_var> Event_Set;
-
 private:
   virtual void disconnect_push_supplier (CORBA::Environment &);
   // Called when the channel disconnects us.
@@ -867,7 +840,7 @@ private:
   // success, -1 on failure.
 
   ACE_ES_Dispatch_Request * correlate (ACE_ES_Consumer_Rep *cr,
-                                       ACE_ES_Event_Container *event);
+                                       const TAO_EC_Event& event);
   // Helper function for this->push.
 
   // = Registration helper functions.
@@ -900,7 +873,7 @@ private:
   // Supplier QOS specifications.
 
   // Events waiting to be forwarded.
-  Event_Set *pending_events_;
+  TAO_EC_Event_Array *pending_events_;
 
   // Used to synchronize pending_events_ and by the correlation module.
   ACE_ES_MUTEX lock_;
@@ -1035,7 +1008,7 @@ public:
   // Release the consumers filter object.
 
   void push (ACE_ES_Consumer_Rep *consumer,
-             ACE_ES_Event_Container *event,
+             const TAO_EC_Event &event,
              CORBA::Environment &);
   // Take in an event and its subscriber.  Apply consumer-specific
   // filters to each event and forward any dispatch requests to the
@@ -1120,14 +1093,10 @@ public:
                       CORBA::Environment &);
 
   void push (ACE_Push_Supplier_Proxy *source,
-             ACE_ES_Event_Container *event,
+             const TAO_EC_Event &event,
              CORBA::Environment &);
-  // Takes in a set of events and pushes subscriber sets to the
+  // Takes in an event and pushes subscriber sets to the
   // Correlation Module.
-
-  // void push (ACE_Push_Supplier_Proxy *source,
-  // const RtecEventComm::Event event);
-  // This doesn't need one of these since it will never be called.
 
   void shutdown (void);
   // Unsubscribes all consumers from the suppliers.
@@ -1179,18 +1148,18 @@ private:
   // = Push helper methods.
 
   int push_source (ACE_Push_Supplier_Proxy *source,
-		   ACE_ES_Event_Container *event,
+		   const TAO_EC_Event &event,
 		   CORBA::Environment &_env);
   // Push <event> to all consumers subscribed to all events from
   // <source>.  Returns 0 on success, -1 on failure.
 
   int push_source_type (ACE_Push_Supplier_Proxy *source,
-                         ACE_ES_Event_Container *event,
+                        const TAO_EC_Event &event,
 			CORBA::Environment &_env);
   // Push <event> to all consumers subscribed to <event>.type_ from
   // <source>.  Returns 0 on success, -1 on failure.
 
-  void push_all (ACE_ES_Event_Container *event,
+  void push_all (const TAO_EC_Event &event,
                  CORBA::Environment &);
   // Push <event> to all_suppliers_.
 
@@ -1236,7 +1205,7 @@ public:
   // Factory method for push supplier proxies.
 
   virtual void push (ACE_Push_Supplier_Proxy *proxy,
-		     const RtecEventComm::EventSet &event,
+                     RtecEventComm::EventSet &event,
 		     CORBA::Environment &);
   // The supplier module acts on behalf of the supplier proxy to
   // forward events through the channel.
@@ -1344,6 +1313,9 @@ public:
   // The QoS for this supplier
 
 private:
+  void time_stamp (RtecEventComm::EventSet &event);
+
+private:
   RtecEventChannelAdmin::SupplierQOS qos_;
   // Reference to the supplier's qos params.
 
@@ -1430,21 +1402,6 @@ private:
   // TODO: Maybe this should be a _var or _duplicate/_release should
   // be used
 };
-
-// ************************************************************
-
-// Helper function that returns the first RT_Info entry point name.
-// Use for debugging purposes only.
-const TAO_ORBSVCS_Export char *
-ACE_ES_Consumer_Name (const RtecEventChannelAdmin::ConsumerQOS &qos,
-                      CORBA::Environment &_env);
-
-// ************************************************************
-
-typedef ACE_ES_Simple_Array <ACE_ES_Consumer_Rep *,
-  ACE_ES_MAX_CONSUMERS_PER_SUPPLIER> ACE_ES_CRSet;
-
-typedef ACE_ES_Array_Iterator <ACE_ES_Consumer_Rep *> ACE_ES_CRSet_Iterator;
 
 #if defined (__ACE_INLINE__)
 #include "Event_Channel.i"

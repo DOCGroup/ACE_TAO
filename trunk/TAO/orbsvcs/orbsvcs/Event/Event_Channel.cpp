@@ -5,11 +5,12 @@
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Event_Utilities.h"
 
-#include "Dispatching_Modules.h"
-#include "Memory_Pools.h"
-#include "EC_Gateway.h"
-#include "Module_Factory.h"
-#include "Event_Channel.h"
+#include "orbsvcs/Event/Dispatching_Modules.h"
+#include "orbsvcs/Event/Memory_Pools.h"
+#include "orbsvcs/Event/EC_Gateway.h"
+#include "orbsvcs/Event/Module_Factory.h"
+#include "orbsvcs/Event/Event_Manip.h"
+#include "orbsvcs/Event/Event_Channel.h"
 
 // These are to save space.
 #define WRITE_GUARD ACE_ES_WRITE_GUARD
@@ -265,66 +266,6 @@ public:
 
 // ************************************************************
 
-ACE_ES_Event_Container::ACE_ES_Event_Container (void)
-  : //  ACE_ES_Event (),
-    ref_count_ (1)
-{
-}
-
-ACE_ES_Event_Container::~ACE_ES_Event_Container (void)
-{
-}
-
-ACE_ES_Event_Container::ACE_ES_Event_Container (const ACE_ES_Event_Container &ec)
- : RtecEventComm_Event (ec),
-   ref_count_ (1)
-{
-}
-
-ACE_ES_Event_Container::ACE_ES_Event_Container (const RtecEventComm_Event &e)
-  : RtecEventComm_Event (e),
-    ref_count_ (1)
-{
-}
-
-ACE_ES_Event_Container *
-ACE_ES_Event_Container::_duplicate (void)
-{
-  ref_count_++;
-  return this;
-}
-
-void
-ACE_ES_Event_Container::_release (void)
-{
-  if (--ref_count_ == 0)
-    delete this;
-}
-
-int
-ACE_ES_Event_Container::operator== (const ACE_ES_Event_Container &event)
-{
-  RtecEventComm::Event &event1 = (RtecEventComm::Event &) *this;
-  RtecEventComm::Event &event2 = (RtecEventComm::Event &) event;
-  return event1 == event2;
-}
-
-#if 0
-// @@ Memory allocators
-void *
-ACE_ES_Event_Container::operator new (size_t nbytes)
-{
-  ACE_ASSERT (nbytes <= sizeof (ACE_ES_Event_Container));
-  return ACE_ES_Memory_Pools::new_Event_Container ();
-}
-
-void
-ACE_ES_Event_Container::operator delete (void *mem)
-{
-  ACE_ES_Memory_Pools::delete_Event_Container (mem);
-}
-#endif
-
 void
 dump_event (const RtecEventComm::Event &event)
 {
@@ -335,12 +276,6 @@ dump_event (const RtecEventComm::Event &event)
               event.header.type,
               // The divide-by-1 is for ACE_U_LongLong support.
               ORBSVCS_Time::to_hrtime (event.header.creation_time) / 1));
-}
-
-void
-ACE_ES_Event_Container::dump (void)
-{
-  ::dump_event ((RtecEventComm::Event &) *this);
 }
 
 // ************************************************************
@@ -384,14 +319,37 @@ ACE_Push_Supplier_Proxy::push (const RtecEventComm::EventSet &event,
 {
   ACE_TIMEPROBE (TAO_EVENT_CHANNEL_ENTER_PUSH_SUPPLIER_PROXY_PUSH);
 
+  // NOTE: Detecting that the supplier is collocated is a TAOism.
+  if (!this->push_supplier_->_is_collocated ())
+    {
+      // NOTE: This is *extremely* non-portable, we know that the ORB
+      // core allocates this buffer from the global heap, hence it is
+      // safe to steal it (further the EC will release the buffer, but
+      // in another thread!). Other ORBs may do different things and
+      // this may not work!
+      RtecEventComm::EventSet& copy = 
+        ACE_const_cast (RtecEventComm::EventSet&, event);
+      
+      this->time_stamp (copy);
+      this->supplier_module_->push (this, copy, _env);
+    }
+  else
+    {
+      RtecEventComm::EventSet copy = event;
+      this->time_stamp (copy);
+      this->supplier_module_->push (this, copy, _env);
+    }
+}
+
+void
+ACE_Push_Supplier_Proxy::time_stamp (RtecEventComm::EventSet& event)
+{
   ACE_hrtime_t ec_recv = ACE_OS::gethrtime ();
   for (CORBA::ULong i = 0; i < event.length (); ++i)
     {
-      RtecEventComm::Event& ev =
-        ACE_const_cast(RtecEventComm::Event&,event[i]);
-      ORBSVCS_Time::hrtime_to_TimeT (ev.header.ec_recv_time, ec_recv);
+      ORBSVCS_Time::hrtime_to_TimeT (event[i].header.ec_recv_time,
+                                     ec_recv);
     }
-  supplier_module_->push (this, event, _env);
 }
 
 void
@@ -1314,15 +1272,14 @@ ACE_ES_Consumer_Module::push (const ACE_ES_Dispatch_Request *request,
   ACE_FUNCTION_TIMEPROBE (TAO_EVENT_CHANNEL_ENTER_ES_CONSUMER_MODULE_PUSH);
   // We'll create a temporary event set with the size of the incoming
   // request.
-  RtecEventComm::EventSet event_set (request->number_of_events ());
+  RtecEventComm::EventSet event_set;
   request->make_copy (event_set);
 
   // Forward the event set.
   ACE_hrtime_t ec_send = ACE_OS::gethrtime ();
   for (CORBA::ULong i = 0; i < event_set.length (); ++i)
     {
-      RtecEventComm::Event& ev =
-        ACE_const_cast(RtecEventComm::Event&,event_set[i]);
+      RtecEventComm::Event& ev = event_set[i];
       ORBSVCS_Time::hrtime_to_TimeT (ev.header.ec_send_time, ec_send);
     }
   request->consumer ()->push (event_set, _env);
@@ -1487,7 +1444,7 @@ ACE_ES_Correlation_Module::unsubscribe (ACE_ES_Consumer_Rep *cr)
 
 void
 ACE_ES_Correlation_Module::push (ACE_ES_Consumer_Rep *consumer,
-                                 ACE_ES_Event_Container *event,
+                                 const TAO_EC_Event& event,
                                  CORBA::Environment &_env)
 {
   // ACE_DEBUG ((LM_DEBUG, "EC (%t) Correlation_Module::push\n"));
@@ -1711,11 +1668,10 @@ ACE_ES_Consumer_Correlation::allocate_correlation_resources (ACE_ES_Dependency_I
     }
 
   // This allocates more than is needed.
-  pending_events_ = new Event_Set[n_consumer_reps_ + n_timer_reps_];
-  if (pending_events_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
-                       "ACE_ES_Consumer_Correlation::"
-                       "allocate_correlation_resources"), -1);
+  // @@ throw an exception.
+  ACE_NEW_RETURN (this->pending_events_,
+                  TAO_EC_Event_Array[n_consumer_reps_ + n_timer_reps_],
+                  -1);
 
   return 0;
 }
@@ -2026,7 +1982,7 @@ ACE_ES_Consumer_Correlation::disconnecting (void)
 
 ACE_ES_Dispatch_Request *
 ACE_ES_Consumer_Correlation::push (ACE_ES_Consumer_Rep *cr,
-                                   ACE_ES_Event_Container *event)
+                                   const TAO_EC_Event& event)
 {
   // ACE_DEBUG ((LM_DEBUG, "EC (%t) Consumer_Correlation_Module::push\n"));
 
@@ -2060,14 +2016,15 @@ ACE_ES_Consumer_Correlation::push (ACE_ES_Consumer_Rep *cr,
     case ACE_ES_Consumer_Rep::DEADLINE_TIMEOUT:
       {
         ACE_ES_Dispatch_Request *request =
-          new ACE_ES_Dispatch_Request (consumer_, cr->dependency ()->rt_info);
+          new ACE_ES_Dispatch_Request (consumer_,
+                                       cr->dependency ()->rt_info);
 
         if (request == 0)
           ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
                              "ACE_ES_Consumer_Correlation::push"), 0);
 
         // Add the deadline timeout to the outbox.
-        request->event_set () += event;
+        request->append_event (event);
 
         // Add any pending events to the outbox.
         cr->top_group ()->add_events (&(request->event_set ()),
@@ -2086,7 +2043,7 @@ ACE_ES_Consumer_Correlation::push (ACE_ES_Consumer_Rep *cr,
 // be kept!  I'll add this optimization later.
 ACE_ES_Dispatch_Request *
 ACE_ES_Consumer_Correlation::correlate (ACE_ES_Consumer_Rep *cr,
-                                        ACE_ES_Event_Container *event)
+                                        const TAO_EC_Event &event)
 {
    // If the consumer has specified correlation criteria, then we must
    // first acquire the mutex.
@@ -2095,15 +2052,18 @@ ACE_ES_Consumer_Correlation::correlate (ACE_ES_Consumer_Rep *cr,
      ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
                         "ACE_ES_Consumer_Correlation::push"), 0);
 
-   // Add the new event to the pending events.
-   pending_events_[cr->type_id ()] += event;
-
-   // Set the bit corresponding to the arrived event.
-   // This should be pending_flags_->event_arrived (index);
-   ACE_SET_BITS (pending_flags_, ACE_INT2BIT[cr->type_id ()]);
+   int bit = ACE_INT2BIT[cr->type_id ()];
+   if (ACE_BIT_DISABLED (this->pending_flags_, bit))
+     {
+       // Add the new event to the pending events.
+       pending_events_[cr->type_id ()] += event;
+       // Set the bit corresponding to the arrived event.
+       // This should be pending_flags_->event_arrived (index);
+       ACE_SET_BITS (pending_flags_, bit);
+     }
 
    ACE_ES_Dispatch_Request *request = 0;
-   Event_Set *outbox = 0;
+   TAO_EC_Event_Array *outbox = 0;
    // Since add_events changes pending_flags_, we need to keep this
    // for all iterations through the conjunction groups.
    u_long freeze_pending_flags = pending_flags_;
@@ -2163,10 +2123,9 @@ ACE_ES_Consumer_Rep_Timeout::execute (void)
     {
       CORBA::Environment __env;
       ACE_Time_Value tv = ACE_OS::gettimeofday ();
-      ORBSVCS_Time::Time_Value_to_TimeT
-        (timeout_event_->header.creation_time, tv);
+      ORBSVCS_Time::Time_Value_to_TimeT (this->timeout_event_.header ().creation_time, tv);
       correlation_->correlation_module_->push (this,
-                                               timeout_event_,
+                                               this->timeout_event_,
                                                __env);
       if (__env.exception () != 0)
         ACE_ERROR ((LM_ERROR, "ACE_ES_Consumer_Rep_Timeout::execute: unexpected exception.\n"));
@@ -2400,7 +2359,7 @@ ACE_ES_Subscription_Module::subscribe_all (ACE_ES_Consumer_Rep *)
 // Forward <events> to all consumers subscribed to <source> only.
 int
 ACE_ES_Subscription_Module::push_source (ACE_Push_Supplier_Proxy *source,
-                                         ACE_ES_Event_Container *event,
+                                         const TAO_EC_Event &event,
                                          CORBA::Environment &_env)
 {
   // ACE_DEBUG ((LM_DEBUG, "EC (%t) Subscription_Module::push_source\n"));
@@ -2415,7 +2374,7 @@ ACE_ES_Subscription_Module::push_source (ACE_Push_Supplier_Proxy *source,
     source->subscription_info ().source_subscribers_;
 
   // List of consumers that need to be disconnected.
-  ACE_ES_CRSet disconnect_list;
+  ACE_ES_Subscription_Info::Subscriber_Set disconnect_list;
 
   {
     // Acquire a read lock.
@@ -2456,21 +2415,21 @@ ACE_ES_Subscription_Module::push_source (ACE_Push_Supplier_Proxy *source,
         ACE_ERROR_RETURN ((LM_ERROR,
                            "ACE_ES_Subscription_Module::push_source.\n"), -1);
 
-      ACE_ES_CRSet_Iterator iter (disconnect_list.data (),
-                                  disconnect_list.size ());
-
       // Iterate through the disconnecting consumers.
-      for (ACE_ES_Consumer_Rep **consumer = 0;
-           iter.next (consumer) != 0;
-           iter.advance ())
+      for (ACE_ES_Subscription_Info::Subscriber_Set_Iterator iter =
+             disconnect_list.begin (),
+             end = disconnect_list.end ();
+           iter != end;
+           iter++)
         {
+          ACE_ES_Consumer_Rep *consumer = (*iter);
           // Remove the consumer from subscriber list.
-          if (set.remove (*consumer) == -1)
+          if (set.remove (consumer) == -1)
             ACE_ERROR ((LM_ERROR, "%p remove failed.\n",
                         "ACE_ES_Subscription_Module::push_source.\n"));
           else
             // Decrement the consumer rep's reference count.
-            (*consumer)->_release ();
+            consumer->_release ();
         }
     }
 
@@ -2483,7 +2442,7 @@ ACE_ES_Subscription_Module::push_source (ACE_Push_Supplier_Proxy *source,
 
 int
 ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
-                                              ACE_ES_Event_Container *event,
+                                              const TAO_EC_Event &event,
                                               CORBA::Environment& _env)
 {
   // ACE_DEBUG ((LM_DEBUG,
@@ -2496,7 +2455,7 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
   ACE_ES_Subscription_Info::Subscriber_Map &supplier_map =
     source->subscription_info ().type_subscribers_;
 
-  ACE_ES_CRSet disconnect_list;
+  Subscriber_Set disconnect_list;
 
   ACE_ES_Subscription_Info::Subscriber_Set *set;
 
@@ -2520,12 +2479,12 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
         return 0;
       }
 
-    if (supplier_map.find (event->header.type, subscribers) == -1)
+    if (supplier_map.find (event.header ().type, subscribers) == -1)
       {
         ACE_DEBUG ((LM_ERROR,
                     "EC (%t) ACE_ES_Subscription_Module::push_source_type"
                     " Warning: event type %d not registered.\n",
-                    event->header.type));
+                    event.header ().type));
         ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE);
         return 0; // continue anyway
       }
@@ -2555,7 +2514,9 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
             if (_env.exception () != 0) return -1;
           }
         if ((*consumer)->disconnected ())
-          disconnect_list.insert (*consumer);
+          {
+            disconnect_list.insert (*consumer);
+          }
       }
   }
 
@@ -2571,18 +2532,17 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
                            "ACE_ES_Subscription_Module::"
                            "push_source.\n"), -1);
 
-      ACE_ES_CRSet_Iterator iter (disconnect_list.data (),
-                                  disconnect_list.size ());
-
-      for (ACE_ES_Consumer_Rep **consumer = 0;
-           iter.next (consumer) != 0;
-           iter.advance ())
+      for (Subscriber_Set_Iterator iter = disconnect_list.begin (),
+             disconnect_list_end = disconnect_list.end ();
+           iter != disconnect_list_end;
+           iter++)
         {
-          if (set->remove (*consumer) == -1)
+          ACE_ES_Consumer_Rep *consumer = (*iter);
+          if (set->remove (consumer) == -1)
             ACE_ERROR ((LM_ERROR, "%p remove failed.\n",
                         "ACE_ES_Subscription_Module::push_source.\n"));
           else
-            (*consumer)->_release ();
+            consumer->_release ();
           // ACE_DEBUG ((LM_DEBUG, "EC (%t) Subscription_Module::"
           //            "push_source_type - consumer %x removed\n",
           //            *Consumer));
@@ -3001,7 +2961,7 @@ ACE_ES_Subscription_Module::unsubscribe_source_type (ACE_ES_Consumer_Rep *consum
 
 void
 ACE_ES_Subscription_Module::push (ACE_Push_Supplier_Proxy *source,
-                                  ACE_ES_Event_Container *event,
+                                  const TAO_EC_Event &event,
                                   CORBA::Environment &_env)
 {
   // ACE_DEBUG ((LM_DEBUG, "EC (%t) Subscription_Module::push\n"));
@@ -3179,27 +3139,28 @@ ACE_ES_Supplier_Module::obtain_push_consumer (CORBA::Environment &_env)
 
 void
 ACE_ES_Supplier_Module::push (ACE_Push_Supplier_Proxy *proxy,
-                              const RtecEventComm::EventSet &event,
+                              RtecEventComm::EventSet &event_set,
                               CORBA::Environment &_env)
 {
+  // Steal the events from the EventSet and put them into a reference
+  // counted event set.
+  TAO_EC_Event_Set* event = 
+    TAO_EC_Event_Set::_create (event_set);
+
+  if (event == 0)
+    TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+
   // ACE_DEBUG ((LM_DEBUG, "EC (%t) Supplier_Module::push\n"));
-  for (CORBA::ULong i = 0; i < event.length(); ++i)
+  for (CORBA::ULong i = 0; i < event->length (); ++i)
     {
-      ACE_ES_Event_Container *temp =
-        new ACE_ES_Event_Container (event[i]);
-      //RtecEventComm::Event *temp = new RtecEventComm::Event (event);
-
-      if (temp == 0)
-        TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-
       // This will guarantee that release gets called when we exit
       // the scope.
-      ACE_ES_Event_Container_var event_copy (temp);
-      temp->_release ();
+      TAO_EC_Event event_copy (event, i);
       ACE_TIMEPROBE (TAO_EVENT_CHANNEL_DELIVER_TO_SUPPLIER_MODULE_THRU_SUPPLIER_PROXY);
       up_->push (proxy, event_copy, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
     }
+  TAO_EC_Event_Set::_release (event);
 }
 
 void
@@ -3367,19 +3328,13 @@ template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Req
 template class ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk> >;
 template class ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk> >;
 
-template class ACE_ES_Array_Iterator<ACE_ES_Consumer_Rep *>;
-template class ACE_ES_Simple_Array<ACE_ES_Consumer_Rep *, 100>;
-
-template class ACE_CORBA_var<ACE_ES_Event_Container>;
-
-template class ACE_Node<TAO_EC_Gateway*>;
-template class ACE_Unbounded_Set<TAO_EC_Gateway*>;
-template class ACE_Unbounded_Set_Iterator<TAO_EC_Gateway*>;
-
 template class ACE_Auto_Basic_Ptr<ACE_Push_Supplier_Proxy>;
 template class ACE_Auto_Basic_Ptr<ACE_Push_Consumer_Proxy>;
 template class auto_ptr<ACE_Push_Supplier_Proxy>;
 template class auto_ptr<ACE_Push_Consumer_Proxy>;
+
+template class ACE_Array<TAO_EC_Event>;
+template class ACE_Array_Iterator<TAO_EC_Event>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -3418,17 +3373,13 @@ template class auto_ptr<ACE_Push_Consumer_Proxy>;
 #pragma instantiate ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk>, ACE_Null_Mutex>
 #pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk> >
 #pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk> >
-#pragma instantiate ACE_ES_Array_Iterator<ACE_ES_Consumer_Rep *>
-#pragma instantiate ACE_ES_Simple_Array<ACE_ES_Consumer_Rep *, 100>
-#pragma instantiate ACE_CORBA_var<ACE_ES_Event_Container>
-
-#pragma instantiate ACE_Node<TAO_EC_Gateway*>
-#pragma instantiate ACE_Unbounded_Set<TAO_EC_Gateway*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_EC_Gateway*>
 
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Push_Supplier_Proxy>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Push_Consumer_Proxy>
 #pragma instantiate auto_ptr<ACE_Push_Supplier_Proxy>
 #pragma instantiate auto_ptr<ACE_Push_Consumer_Proxy>
+
+#pragma instantiate ACE_Array<TAO_EC_Event>
+#pragma instantiate ACE_Array_Iterator<TAO_EC_Event>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -2,14 +2,13 @@
 // $Id$
 
 ACE_INLINE
-ACE_ES_Dispatch_Request::ACE_ES_Dispatch_Request (void) :
-  priority_ (0),
-  rt_info_ (0),
-  dispatching_module_ (0),
-  use_single_event_ (0),
-  consumer_ (0),
-  single_event_ (),
-  event_set_ ()
+ACE_ES_Dispatch_Request::ACE_ES_Dispatch_Request (void)
+  : priority_ (0),
+    rt_info_ (0),
+    dispatching_module_ (0),
+    use_single_event_ (0),
+    consumer_ (0),
+    event_set_ (1)
 {
 }
 
@@ -19,32 +18,34 @@ ACE_ES_Dispatch_Request::~ACE_ES_Dispatch_Request (void)
 }
 
 ACE_INLINE
-ACE_ES_Dispatch_Request::ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consumer, 
-						  RtecScheduler::handle_t rt_info) :
-  priority_ (0),
-  rt_info_ (rt_info),
-  dispatching_module_ (0),
-  use_single_event_ (0),
-  consumer_ (consumer),
-  single_event_ (),
-  event_set_ ()
+ACE_ES_Dispatch_Request::
+ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consumer, 
+                         RtecScheduler::handle_t rt_info)
+  : priority_ (0),
+    rt_info_ (rt_info),
+    dispatching_module_ (0),
+    use_single_event_ (0),
+    consumer_ (consumer),
+    event_set_ (1)
 {
 }
 
 ACE_INLINE
-ACE_ES_Dispatch_Request::ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consumer,
-						  const Event_Set &event_set,
-						  RtecScheduler::handle_t rt_info) :
-  priority_ (0),
-  rt_info_ (rt_info),
-  dispatching_module_ (0),
-  use_single_event_ (0),
-  consumer_ (consumer),
-  single_event_ (),
-  event_set_ (event_set)
+ACE_ES_Dispatch_Request::
+ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consumer,
+                         const TAO_EC_Event_Array &event_set,
+                         RtecScheduler::handle_t rt_info)
+  : priority_ (0),
+    rt_info_ (rt_info),
+    dispatching_module_ (0),
+    use_single_event_ (0),
+    consumer_ (consumer),
+    single_event_ (),
+    event_set_ (event_set)
 {
 }
 
+#if 0
 ACE_INLINE
 ACE_ES_Dispatch_Request::ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consumer,
 						  ACE_ES_Event_Container *event,
@@ -59,21 +60,29 @@ ACE_ES_Dispatch_Request::ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consu
 {
   event_set_ += event;
 }
+#endif
 
 ACE_INLINE
-ACE_ES_Dispatch_Request::ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consumer,
-						  const RtecEventComm::Time &time,
-						  RtecScheduler::handle_t rt_info) :
-  priority_ (0),
-  rt_info_ (rt_info),
-  dispatching_module_ (0),
-  use_single_event_ (1),
-  consumer_ (consumer),
-  single_event_ (),
-  event_set_ ()
+ACE_ES_Dispatch_Request::
+ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consumer,
+                         const RtecEventComm::Time &time,
+                         RtecScheduler::handle_t rt_info)
+  : priority_ (0),
+    rt_info_ (rt_info),
+    dispatching_module_ (0),
+    use_single_event_ (1),
+    consumer_ (consumer),
+    event_set_ (1)
 {
-  single_event_.header.creation_time = time;
-  single_event_.header.type = ACE_ES_EVENT_TIMEOUT;
+  // @@ TODO this could be more efficient
+  RtecEventComm::Event tmp;
+  tmp.header.creation_time = time;
+  tmp.header.type = ACE_ES_EVENT_TIMEOUT;
+  TAO_EC_Event_Set* set = 
+    TAO_EC_Event_Set::_create (tmp);
+  this->single_event_ = TAO_EC_Event (set, set->length ());
+
+  TAO_EC_Event_Set::_release (set);
 }
 
 ACE_INLINE void
@@ -92,13 +101,13 @@ ACE_ES_Dispatch_Request::consumer (void) const
   return consumer_;
 }
 
-ACE_INLINE const ACE_ES_Dispatch_Request::Event_Set &
+ACE_INLINE const TAO_EC_Event_Array&
 ACE_ES_Dispatch_Request::event_set (void) const
 {
   return event_set_;
 }
 
-ACE_INLINE ACE_ES_Dispatch_Request::Event_Set &
+ACE_INLINE TAO_EC_Event_Array&
 ACE_ES_Dispatch_Request::event_set (void)
 {
   return event_set_;
@@ -107,10 +116,10 @@ ACE_ES_Dispatch_Request::event_set (void)
 ACE_INLINE CORBA::ULong
 ACE_ES_Dispatch_Request::number_of_events (void) const
 {
-  if (use_single_event_)
+  if (this->use_single_event_)
     return 1;
   else
-    return event_set_.length ();
+    return this->event_set_.size ();
 }
 
 ACE_INLINE RtecScheduler::OS_Priority

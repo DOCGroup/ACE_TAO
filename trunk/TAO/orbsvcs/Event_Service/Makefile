@@ -327,9 +327,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/CORBA_Utils_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/CORBA_Utils_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/CORBA_Utils_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.i \
@@ -353,6 +350,8 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
  $(ACE_ROOT)/ace/Timer_List_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

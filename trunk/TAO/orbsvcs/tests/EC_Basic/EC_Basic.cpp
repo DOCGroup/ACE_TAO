@@ -21,6 +21,17 @@
 
 ACE_RCSID(EC_Basic, EC_Basic, "$Id$")
 
+// ****************************************************************
+
+int
+main (int argc, char *argv [])
+{
+  ECB_Driver driver;
+  return driver.run (argc, argv);
+}
+
+// ****************************************************************
+
 ECB_Driver::ECB_Driver (void)
   : pid_filename_ (0)
 {
@@ -128,6 +139,21 @@ ECB_Driver::run (int argc, char* argv[])
                           -1);
       ACE_DEBUG ((LM_DEBUG, "EC_Basic: end supplier_id_test\n"));
 
+      ACE_DEBUG ((LM_DEBUG, "EC_Basic: start correlation_test\n"));
+
+      ECB_Correlation_Test correlation_test;
+      correlation_test.run (this->orb_,
+                            local_ec,
+                            scheduler,
+                            TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (correlation_test.dump_results () != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "EC_Basic: correlation test failed\n"),
+                          -1);
+      ACE_DEBUG ((LM_DEBUG, "EC_Basic: end correlation_test\n"));
+
       ACE_DEBUG ((LM_DEBUG, "EC_Basic: shutdown the EC\n"));
       ec_impl.shutdown ();
     }
@@ -177,11 +203,210 @@ ECB_Driver::parse_args (int argc, char *argv [])
 
 // ****************************************************************
 
+ECB_Test::~ECB_Test (void)
+{
+}
+
+// ****************************************************************
+
+ECB_Consumer::ECB_Consumer (ECB_Test *test,
+                            int consumer_id)
+  :  test_ (test),
+     consumer_id_ (consumer_id)
+{
+}
+
+void
+ECB_Consumer::open (const char* name,
+                    RtecEventChannelAdmin::EventChannel_ptr ec,
+                    RtecScheduler::Scheduler_ptr scheduler,
+                    CORBA::Environment& _env)
+{
+  this->rt_info_ =
+    scheduler->create (name, _env);
+  TAO_CHECK_ENV_RETURN_VOID(_env);
+
+  // The worst case execution time is far less than 2
+  // milliseconds, but that is a safe estimate....
+  ACE_Time_Value tv (0, 2000);
+  TimeBase::TimeT time;
+  ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
+  scheduler->set (this->rt_info_,
+                  RtecScheduler::VERY_HIGH_CRITICALITY,
+                  time, time, time,
+                  0,
+                  RtecScheduler::VERY_LOW_IMPORTANCE,
+                  time,
+                  0,
+                  RtecScheduler::OPERATION,
+                  _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  // = Connect as a consumer.
+  this->consumer_admin_ = ec->for_consumers (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+}
+
+void
+ECB_Consumer::connect (const RtecEventChannelAdmin::ConsumerQOS& qos,
+                       CORBA::Environment& _env)
+{
+  if (CORBA::is_nil (this->consumer_admin_.in ()))
+    return;
+
+  RtecEventComm::PushConsumer_var objref = this->_this (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  this->supplier_proxy_ =
+    this->consumer_admin_->obtain_push_supplier (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  this->supplier_proxy_->connect_push_consumer (objref.in (),
+                                                qos,
+                                                _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+}
+
+void
+ECB_Consumer::disconnect (CORBA::Environment& _env)
+{
+  if (CORBA::is_nil (this->supplier_proxy_.in ())
+      || CORBA::is_nil (this->consumer_admin_.in ()))
+    return;
+
+  this->supplier_proxy_->disconnect_push_supplier (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier_proxy_ =
+    RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
+}
+
+void
+ECB_Consumer::close (CORBA::Environment &_env)
+{
+  this->disconnect (_env);
+  this->consumer_admin_ =
+    RtecEventChannelAdmin::ConsumerAdmin::_nil ();
+}
+
+void
+ECB_Consumer::push (const RtecEventComm::EventSet& events,
+                    CORBA::Environment &_env)
+{
+  this->test_->push (this->consumer_id_,
+                     events,
+                     _env);
+}
+
+void
+ECB_Consumer::disconnect_push_consumer (CORBA::Environment &)
+{
+}
+
+// ****************************************************************
+
+ECB_Supplier::ECB_Supplier (ECB_Test *test,
+                            int supplier_id)
+  :  test_ (test),
+     supplier_id_ (supplier_id)
+{
+}
+
+void
+ECB_Supplier::open (const char* name,
+                    RtecEventChannelAdmin::EventChannel_ptr ec,
+                    RtecScheduler::Scheduler_ptr scheduler,
+                    CORBA::Environment &_env)
+{
+  this->rt_info_ =
+    scheduler->create (name, _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  // The execution times are set to reasonable values, but
+  // actually they are changed on the real execution, i.e. we
+  // lie to the scheduler to obtain right priorities; but we
+  // don't care if the set is schedulable.
+  ACE_Time_Value tv (0, 2000);
+  TimeBase::TimeT time;
+  ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
+
+  scheduler->set (this->rt_info_,
+                  RtecScheduler::VERY_HIGH_CRITICALITY,
+                  time, time, time,
+                  0,
+                  RtecScheduler::VERY_LOW_IMPORTANCE,
+                  time,
+                  1,
+                  RtecScheduler::OPERATION,
+                  _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  // = Connect as a consumer.
+  this->supplier_admin_ = ec->for_suppliers (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+}
+
+void
+ECB_Supplier::connect (const RtecEventChannelAdmin::SupplierQOS& qos,
+                       CORBA::Environment& _env)
+{
+  if (CORBA::is_nil (this->supplier_admin_.in ()))
+    return;
+
+  this->consumer_proxy_ =
+    this->supplier_admin_->obtain_push_consumer (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  RtecEventComm::PushSupplier_var objref = this->_this (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  this->consumer_proxy_->connect_push_supplier (objref.in (),
+                                                qos,
+                                                _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+}
+
+void
+ECB_Supplier::disconnect (CORBA::Environment& _env)
+{
+  if (CORBA::is_nil (this->consumer_proxy_.in ())
+      || CORBA::is_nil (this->supplier_admin_.in ()))
+    return;
+
+  this->consumer_proxy_->disconnect_push_consumer (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->consumer_proxy_ =
+    RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
+}
+
+void
+ECB_Supplier::close (CORBA::Environment &_env)
+{
+  this->disconnect (_env);
+  this->supplier_admin_ =
+    RtecEventChannelAdmin::SupplierAdmin::_nil ();
+}
+
+void
+ECB_Supplier::send_event (RtecEventComm::EventSet& events,
+                          CORBA::Environment& _env)
+{
+  // RtecEventComm::EventSet copy = events;
+  this->consumer_proxy_->push (events, _env);
+}
+
+void
+ECB_Supplier::disconnect_push_supplier (CORBA::Environment& _env)
+{
+  // this->supplier_proxy_->disconnect_push_supplier (_env);
+}
+
+// ****************************************************************
+
 ECB_SupplierID_Test::ECB_SupplierID_Test (void)
   :  consumer0_ (this, 0),
      consumer1_ (this, 1),
-     supplier0_ (this, ACE_ES_EVENT_UNDEFINED + 1),
-     supplier1_ (this, ACE_ES_EVENT_UNDEFINED + 2)
+     supplier0_ (this, 0),
+     supplier1_ (this, 1)
 {
 }
 
@@ -213,25 +438,77 @@ ECB_SupplierID_Test::run (CORBA::ORB_ptr orb,
                          ec, scheduler, _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
+  //
+  // Precompute the QoS for the consumers and suppliers.
+  //
+  ACE_ConsumerQOS_Factory consumer0_qos;
+  consumer0_qos.start_disjunction_group ();
+  consumer0_qos.insert_source (ECB_SupplierID_Test::SUPPLIER_ID,
+                               this->consumer0_.rt_info ());
+
+  ACE_ConsumerQOS_Factory consumer1_qos;
+  consumer1_qos.start_disjunction_group ();
+  consumer1_qos.insert_source (ECB_SupplierID_Test::SUPPLIER_ID,
+                               this->consumer1_.rt_info ());
+
+  ACE_SupplierQOS_Factory supplier0_qos;
+  supplier0_qos.insert (ECB_SupplierID_Test::SUPPLIER_ID,
+                        ACE_ES_EVENT_UNDEFINED + 1,
+                        this->supplier0_.rt_info (),
+                        1);
+
+  ACE_SupplierQOS_Factory supplier1_qos;
+  supplier1_qos.insert (ECB_SupplierID_Test::SUPPLIER_ID,
+                        ACE_ES_EVENT_UNDEFINED + 1,
+                        this->supplier1_.rt_info (),
+                        1);
+
+  //
+  // Precompute the event set
+  //
+  RtecEventComm::EventSet events (1);
+  events.length (1);
+
+  RtecEventComm::Event& e = events[0];
+  e.header.source = ECB_SupplierID_Test::SUPPLIER_ID;
+  e.header.ttl = 1;
+  e.header.type = ACE_ES_EVENT_UNDEFINED + 1;
+
+  ACE_hrtime_t t = ACE_OS::gethrtime ();
+  ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
+  e.header.ec_recv_time = ORBSVCS_Time::zero;
+  e.header.ec_send_time = ORBSVCS_Time::zero;
+
+  e.data.x = 0;
+  e.data.y = 0;
+
+  //
+  // Start the real test
+  //
+
   // PHASE 0, test filtering by supplier ID in the presence of
   // multiple suppliers with the same ID...
   this->phase_ = ECB_SupplierID_Test::PHASE_0;
 
-  this->consumer0_.connect (_env);
+  this->consumer0_.connect (consumer0_qos.get_ConsumerQOS (),
+                            _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
-  this->consumer1_.connect (_env);
+  this->consumer1_.connect (consumer1_qos.get_ConsumerQOS (),
+                            _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
-  this->supplier0_.connect (_env);
+  this->supplier0_.connect (supplier0_qos.get_SupplierQOS (),
+                            _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
-  this->supplier1_.connect (_env);
+  this->supplier1_.connect (supplier1_qos.get_SupplierQOS (),
+                            _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   for (i = 0; i < ECB_SupplierID_Test::EVENTS_SENT; ++i)
     {
-      this->supplier0_.send_event (_env);
+      this->supplier0_.send_event (events, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
-      this->supplier1_.send_event (_env);
+      this->supplier1_.send_event (events, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
     }
 
@@ -242,20 +519,21 @@ ECB_SupplierID_Test::run (CORBA::ORB_ptr orb,
 
   for (i = 0; i < ECB_SupplierID_Test::EVENTS_SENT; ++i)
     {
-      this->supplier0_.send_event (_env);
+      this->supplier0_.send_event (events, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
     }
 
   // PHASE 2, test reconnection of the supplier.
   this->phase_ = ECB_SupplierID_Test::PHASE_2;
-  this->supplier1_.connect (_env);
+  this->supplier1_.connect (supplier1_qos.get_SupplierQOS (),
+                            _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   for (i = 0; i < ECB_SupplierID_Test::EVENTS_SENT; ++i)
     {
-      this->supplier0_.send_event (_env);
+      this->supplier0_.send_event (events, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
-      this->supplier1_.send_event (_env);
+      this->supplier1_.send_event (events, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
     }
 
@@ -266,22 +544,23 @@ ECB_SupplierID_Test::run (CORBA::ORB_ptr orb,
 
   for (i = 0; i < ECB_SupplierID_Test::EVENTS_SENT; ++i)
     {
-      this->supplier0_.send_event (_env);
+      this->supplier0_.send_event (events, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
-      this->supplier1_.send_event (_env);
+      this->supplier1_.send_event (events, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
     }
 
   // PHASE 4, test reconnection of one consumer
   this->phase_ = ECB_SupplierID_Test::PHASE_4;
-  this->consumer1_.connect (_env);
+  this->consumer1_.connect (consumer1_qos.get_ConsumerQOS (),
+                            _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   for (i = 0; i < ECB_SupplierID_Test::EVENTS_SENT; ++i)
     {
-      this->supplier0_.send_event (_env);
+      this->supplier0_.send_event (events, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
-      this->supplier1_.send_event (_env);
+      this->supplier1_.send_event (events, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
     }
 
@@ -294,24 +573,26 @@ ECB_SupplierID_Test::run (CORBA::ORB_ptr orb,
 
   for (i = 0; i < ECB_SupplierID_Test::EVENTS_SENT; ++i)
     {
-      this->supplier0_.send_event (_env);
+      this->supplier0_.send_event (events, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
-      this->supplier1_.send_event (_env);
+      this->supplier1_.send_event (events, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
     }
 
   // PHASE 6, test reconnection of two consumers.
   this->phase_ = ECB_SupplierID_Test::PHASE_6;
-  this->consumer0_.connect (_env);
+  this->consumer0_.connect (consumer0_qos.get_ConsumerQOS (),
+                            _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
-  this->consumer1_.connect (_env);
+  this->consumer1_.connect (consumer1_qos.get_ConsumerQOS (),
+                            _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   for (i = 0; i < ECB_SupplierID_Test::EVENTS_SENT; ++i)
     {
-      this->supplier0_.send_event (_env);
+      this->supplier0_.send_event (events, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
-      this->supplier1_.send_event (_env);
+      this->supplier1_.send_event (events, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
     }
 
@@ -321,16 +602,18 @@ ECB_SupplierID_Test::run (CORBA::ORB_ptr orb,
   TAO_CHECK_ENV_RETURN_VOID (_env);
   this->supplier1_.disconnect (_env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
-  this->supplier0_.connect (_env);
+  this->supplier0_.connect (supplier0_qos.get_SupplierQOS (),
+                            _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
-  this->supplier1_.connect (_env);
+  this->supplier1_.connect (supplier1_qos.get_SupplierQOS (),
+                            _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   for (i = 0; i < ECB_SupplierID_Test::EVENTS_SENT; ++i)
     {
-      this->supplier0_.send_event (_env);
+      this->supplier0_.send_event (events, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
-      this->supplier1_.send_event (_env);
+      this->supplier1_.send_event (events, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
     }
 
@@ -450,228 +733,424 @@ ECB_SupplierID_Test::push (int consumer_id,
 
 // ****************************************************************
 
-ECB_SupplierID_Test::Consumer::Consumer (ECB_SupplierID_Test *test,
-                                         int consumer_id)
-  :  test_ (test),
-     consumer_id_ (consumer_id)
+ECB_Correlation_Test::ECB_Correlation_Test (void)
+  :  consumer_ (this, 0),
+     supplier0_ (this, 0),
+     supplier1_ (this, 1)
 {
 }
 
 void
-ECB_SupplierID_Test::Consumer::open (const char* name,
-                                     RtecEventChannelAdmin::EventChannel_ptr ec,
-                                     RtecScheduler::Scheduler_ptr scheduler,
-                                     CORBA::Environment& _env)
+ECB_Correlation_Test::run (CORBA::ORB_ptr orb,
+                           RtecEventChannelAdmin::EventChannel_ptr ec,
+                           RtecScheduler::Scheduler_ptr scheduler,
+                           CORBA::Environment& _env)
 {
-  this->rt_info_ =
-    scheduler->create (name, _env);
-  TAO_CHECK_ENV_RETURN_VOID(_env);
+  int i;
 
-  // The worst case execution time is far less than 2
-  // milliseconds, but that is a safe estimate....
-  ACE_Time_Value tv (0, 2000);
-  TimeBase::TimeT time;
-  ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-  scheduler->set (this->rt_info_,
-                  RtecScheduler::VERY_HIGH_CRITICALITY,
-                  time, time, time,
-                  0,
-                  RtecScheduler::VERY_LOW_IMPORTANCE,
-                  time,
-                  0,
-                  RtecScheduler::OPERATION,
-                  _env);
+  for (i = 0; i < ECB_Correlation_Test::PHASE_END; ++i)
+    {
+      this->event_count_[i] = 0;
+      this->error_count_[i] = 0;
+    }
+
+  // Startup
+  this->consumer_.open ("Correlation/consumer",
+                        ec, scheduler, _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier0_.open ("Correlation/supplier0",
+                         ec, scheduler, _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier1_.open ("Correlation/supplier1",
+                         ec, scheduler, _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
-  // = Connect as a consumer.
-  this->consumer_admin_ = ec->for_consumers (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
-}
+  //
+  // Precompute the QoS for the consumers and suppliers.
+  //
+  ACE_ConsumerQOS_Factory consumer_qos;
+  consumer_qos.start_conjunction_group ();
+  consumer_qos.insert_type (ECB_Correlation_Test::EVENT_A,
+                            this->consumer_.rt_info ());
+  consumer_qos.insert_type (ECB_Correlation_Test::EVENT_B,
+                            this->consumer_.rt_info ());
 
-void
-ECB_SupplierID_Test::Consumer::connect (CORBA::Environment& _env)
-{
-  if (CORBA::is_nil (this->consumer_admin_.in ()))
-    return;
+  ACE_SupplierQOS_Factory supplier0_qos;
+  supplier0_qos.insert (ECB_Correlation_Test::SUPPLIER_ID_0,
+                        ECB_Correlation_Test::EVENT_A,
+                        this->supplier0_.rt_info (),
+                        1);
+  supplier0_qos.insert (ECB_Correlation_Test::SUPPLIER_ID_0,
+                        ECB_Correlation_Test::EVENT_B,
+                        this->supplier0_.rt_info (),
+                        1);
 
-  this->supplier_proxy_ =
-    this->consumer_admin_->obtain_push_supplier (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  ACE_SupplierQOS_Factory supplier1_qos;
+  supplier1_qos.insert (ECB_Correlation_Test::SUPPLIER_ID_1,
+                        ECB_Correlation_Test::EVENT_A,
+                        this->supplier1_.rt_info (),
+                        1);
+  supplier1_qos.insert (ECB_Correlation_Test::SUPPLIER_ID_1,
+                        ECB_Correlation_Test::EVENT_B,
+                        this->supplier1_.rt_info (),
+                        1);
 
-  ACE_ConsumerQOS_Factory qos;
-  qos.start_disjunction_group ();
-  qos.insert_source (ECB_SupplierID_Test::SUPPLIER_ID,
-                     this->rt_info_);
+  //
+  // Precompute the events
+  //
+  RtecEventComm::EventSet event_a (1);
+  event_a.length (1);
+  {
+    RtecEventComm::Event& e = event_a[0];
+    e.header.source = ECB_Correlation_Test::SUPPLIER_ID_0;
+    e.header.ttl = 1;
+    e.header.type = ECB_Correlation_Test::EVENT_A;
 
-  RtecEventComm::PushConsumer_var objref = this->_this (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+    ACE_hrtime_t t = ACE_OS::gethrtime ();
+    ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
+    e.header.ec_recv_time = ORBSVCS_Time::zero;
+    e.header.ec_send_time = ORBSVCS_Time::zero;
 
-  this->supplier_proxy_->connect_push_consumer (objref.in (),
-                                                qos.get_ConsumerQOS (),
-                                                _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
-}
+    e.data.x = 0;
+    e.data.y = 0;
+  }
 
-void
-ECB_SupplierID_Test::Consumer::disconnect (CORBA::Environment& _env)
-{
-  if (CORBA::is_nil (this->supplier_proxy_.in ())
-      || CORBA::is_nil (this->consumer_admin_.in ()))
-    return;
+  RtecEventComm::EventSet event_b (1);
+  event_b.length (1);
+  {
+    RtecEventComm::Event& e = event_b[0];
+    e.header.source = ECB_Correlation_Test::SUPPLIER_ID_0;
+    e.header.ttl = 1;
+    e.header.type = ECB_Correlation_Test::EVENT_B;
 
-  this->supplier_proxy_->disconnect_push_supplier (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
-  this->supplier_proxy_ =
-    RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
-}
+    ACE_hrtime_t t = ACE_OS::gethrtime ();
+    ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
+    e.header.ec_recv_time = ORBSVCS_Time::zero;
+    e.header.ec_send_time = ORBSVCS_Time::zero;
+    
+    e.data.x = 0;
+    e.data.y = 0;
+  }
 
-void
-ECB_SupplierID_Test::Consumer::close (CORBA::Environment &_env)
-{
-  this->disconnect (_env);
-  this->consumer_admin_ =
-    RtecEventChannelAdmin::ConsumerAdmin::_nil ();
-}
+  RtecEventComm::EventSet event_ab (2);
+  event_ab.length (2);
+  {
+    RtecEventComm::Event& e = event_ab[0];
+    e.header.source = ECB_Correlation_Test::SUPPLIER_ID_0;
+    e.header.ttl = 1;
+    e.header.type = ECB_Correlation_Test::EVENT_A;
 
-void
-ECB_SupplierID_Test::Consumer::push (const RtecEventComm::EventSet& events,
-                                     CORBA::Environment &_env)
-{
-  this->test_->push (this->consumer_id_,
-                     events,
-                     _env);
-}
+    ACE_hrtime_t t = ACE_OS::gethrtime ();
+    ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
+    e.header.ec_recv_time = ORBSVCS_Time::zero;
+    e.header.ec_send_time = ORBSVCS_Time::zero;
 
-void
-ECB_SupplierID_Test::Consumer::disconnect_push_consumer (CORBA::Environment &)
-{
-}
+    e.data.x = 0;
+    e.data.y = 0;
+  }
+  {
+    RtecEventComm::Event& e = event_ab[1];
+    e.header.source = ECB_Correlation_Test::SUPPLIER_ID_0;
+    e.header.ttl = 1;
+    e.header.type = ECB_Correlation_Test::EVENT_B;
 
-// ****************************************************************
+    ACE_hrtime_t t = ACE_OS::gethrtime ();
+    ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
+    e.header.ec_recv_time = ORBSVCS_Time::zero;
+    e.header.ec_send_time = ORBSVCS_Time::zero;
+    
+    e.data.x = 0;
+    e.data.y = 0;
+  }
 
-ECB_SupplierID_Test::Supplier::Supplier (ECB_SupplierID_Test *test,
-                                         int supplier_id)
-  :  test_ (test),
-     supplier_id_ (supplier_id)
-{
-}
+  //
+  // Start the real test
+  //
 
-void
-ECB_SupplierID_Test::Supplier::open (const char* name,
-                                     RtecEventChannelAdmin::EventChannel_ptr ec,
-                                     RtecScheduler::Scheduler_ptr scheduler,
-                                     CORBA::Environment &_env)
-{
-  RtecScheduler::handle_t rt_info =
-    scheduler->create (name, _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  // PHASE 0
+  this->phase_ = ECB_Correlation_Test::PHASE_0;
 
-  // The execution times are set to reasonable values, but
-  // actually they are changed on the real execution, i.e. we
-  // lie to the scheduler to obtain right priorities; but we
-  // don't care if the set is schedulable.
-  ACE_Time_Value tv (0, 2000);
-  TimeBase::TimeT time;
-  ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-
-  scheduler->set (rt_info,
-                  RtecScheduler::VERY_HIGH_CRITICALITY,
-                  time, time, time,
-                  0,
-                  RtecScheduler::VERY_LOW_IMPORTANCE,
-                  time,
-                  1,
-                  RtecScheduler::OPERATION,
-                  _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
-
-  // = Connect as a consumer.
-  this->supplier_admin_ = ec->for_suppliers (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
-}
-
-void
-ECB_SupplierID_Test::Supplier::connect (CORBA::Environment& _env)
-{
-  if (CORBA::is_nil (this->supplier_admin_.in ()))
-    return;
-
-  this->consumer_proxy_ =
-    this->supplier_admin_->obtain_push_consumer (_env);
+  this->consumer_.connect (consumer_qos.get_ConsumerQOS (),
+                           _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
-  ACE_SupplierQOS_Factory qos;
-  qos.insert (ECB_SupplierID_Test::SUPPLIER_ID,
-              this->supplier_id_,
-              this->rt_info_,
-              1);
-
-  RtecEventComm::PushSupplier_var objref = this->_this (_env);
+  this->supplier0_.connect (supplier0_qos.get_SupplierQOS (),
+                            _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier1_.connect (supplier1_qos.get_SupplierQOS (),
+                            _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
-  this->consumer_proxy_->connect_push_supplier (objref.in (),
-                                                qos.get_SupplierQOS (),
-                                                _env);
+  for (i = 0; i < ECB_Correlation_Test::EVENTS_SENT; ++i)
+    {
+      this->supplier0_.send_event (event_a, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+      this->supplier1_.send_event (event_b, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+    }
+
+  // PHASE 1, test disconnection of a single supplier.
+  this->phase_ = ECB_Correlation_Test::PHASE_1;
+  this->consumer_.disconnect (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier0_.disconnect (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier1_.disconnect (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->consumer_.connect (consumer_qos.get_ConsumerQOS (),
+                           _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  this->supplier0_.connect (supplier0_qos.get_SupplierQOS (),
+                            _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier1_.connect (supplier1_qos.get_SupplierQOS (),
+                            _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  for (i = 0; i < ECB_Correlation_Test::EVENTS_SENT; ++i)
+    {
+      this->supplier0_.send_event (event_ab, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+      this->supplier1_.send_event (event_ab, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+    }
+
+  // PHASE 2, test reconnection of the supplier.
+  this->phase_ = ECB_Correlation_Test::PHASE_2;
+  this->consumer_.disconnect (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier0_.disconnect (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier1_.disconnect (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->consumer_.connect (consumer_qos.get_ConsumerQOS (),
+                           _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  this->supplier0_.connect (supplier0_qos.get_SupplierQOS (),
+                            _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier1_.connect (supplier1_qos.get_SupplierQOS (),
+                            _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  for (i = 0; i < ECB_Correlation_Test::EVENTS_SENT; ++i)
+    {
+      this->supplier0_.send_event (event_a, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+      this->supplier1_.send_event (event_b, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+      this->supplier0_.send_event (event_b, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+      this->supplier1_.send_event (event_a, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+    }
+
+  // PHASE 3
+  this->phase_ = ECB_Correlation_Test::PHASE_3;
+  this->consumer_.disconnect (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier0_.disconnect (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier1_.disconnect (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->consumer_.connect (consumer_qos.get_ConsumerQOS (),
+                           _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  this->supplier0_.connect (supplier0_qos.get_SupplierQOS (),
+                            _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier1_.connect (supplier1_qos.get_SupplierQOS (),
+                            _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  for (i = 0; i < ECB_Correlation_Test::EVENTS_SENT; ++i)
+    {
+      this->supplier0_.send_event (event_a, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+      this->supplier1_.send_event (event_ab, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+    }
+
+  // PHASE 4
+  this->phase_ = ECB_Correlation_Test::PHASE_4;
+  this->consumer_.disconnect (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier0_.disconnect (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier1_.disconnect (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->consumer_.connect (consumer_qos.get_ConsumerQOS (),
+                           _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  this->supplier0_.connect (supplier0_qos.get_SupplierQOS (),
+                            _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier1_.connect (supplier1_qos.get_SupplierQOS (),
+                            _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  for (i = 0; i < ECB_Correlation_Test::EVENTS_SENT; ++i)
+    {
+      this->supplier0_.send_event (event_a, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+      this->supplier1_.send_event (event_a, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+      this->supplier1_.send_event (event_b, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+    }
+
+  // PHASE 5
+  this->phase_ = ECB_Correlation_Test::PHASE_5;
+  this->consumer_.disconnect (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier0_.disconnect (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier1_.disconnect (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->consumer_.connect (consumer_qos.get_ConsumerQOS (),
+                           _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  this->supplier0_.connect (supplier0_qos.get_SupplierQOS (),
+                            _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier1_.connect (supplier1_qos.get_SupplierQOS (),
+                            _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  for (i = 0; i < ECB_Correlation_Test::EVENTS_SENT; ++i)
+    {
+      this->supplier0_.send_event (event_a, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+      this->supplier1_.send_event (event_a, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+    }
+
+  // PHASE END, any events received after this are errors.
+  this->phase_ = ECB_Correlation_Test::PHASE_END;
+
+  // Finish
+  this->supplier1_.close (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->supplier0_.close (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->consumer_.close (_env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 }
-
-void
-ECB_SupplierID_Test::Supplier::disconnect (CORBA::Environment& _env)
-{
-  if (CORBA::is_nil (this->consumer_proxy_.in ())
-      || CORBA::is_nil (this->supplier_admin_.in ()))
-    return;
-
-  this->consumer_proxy_->disconnect_push_consumer (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
-  this->consumer_proxy_ =
-    RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
-}
-
-void
-ECB_SupplierID_Test::Supplier::close (CORBA::Environment &_env)
-{
-  this->disconnect (_env);
-  this->supplier_admin_ =
-    RtecEventChannelAdmin::SupplierAdmin::_nil ();
-}
-
-void
-ECB_SupplierID_Test::Supplier::send_event (CORBA::Environment& _env)
-{
-  RtecEventComm::EventSet events (1);
-  events.length (1);
-
-  RtecEventComm::Event& e = events[0];
-  e.header.source = ECB_SupplierID_Test::SUPPLIER_ID;
-  e.header.ttl = 1;
-  e.header.type = this->supplier_id_;
-
-  ACE_hrtime_t t = ACE_OS::gethrtime ();
-  ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
-  e.header.ec_recv_time = ORBSVCS_Time::zero;
-  e.header.ec_send_time = ORBSVCS_Time::zero;
-
-  e.data.x = 0;
-  e.data.y = 0;
-
-  this->consumer_proxy_->push (events, _env);
-}
-
-void
-ECB_SupplierID_Test::Supplier::disconnect_push_supplier (CORBA::Environment& _env)
-{
-  // this->supplier_proxy_->disconnect_push_supplier (_env);
-}
-
-// ****************************************************************
 
 int
-main (int argc, char *argv [])
+ECB_Correlation_Test::dump_results (void)
 {
-  ECB_Driver driver;
-  return driver.run (argc, argv);
+  static int expected_count[PHASE_END]={
+    1 * ECB_Correlation_Test::EVENTS_SENT,
+    2 * ECB_Correlation_Test::EVENTS_SENT,
+    2 * ECB_Correlation_Test::EVENTS_SENT,
+    1 * ECB_Correlation_Test::EVENTS_SENT,
+    1 * ECB_Correlation_Test::EVENTS_SENT,
+    0
+  };
+
+  int result = 0;
+  for (int i = 0; i < ECB_Correlation_Test::PHASE_END; ++i)
+    {
+      if (this->error_count_[i] != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Correlation_Test: Error count for phase %d "
+                      "is not zero\n", i));
+          result = -1;
+        }
+      if (this->event_count_[i] != expected_count[i])
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Correlation_Test: Mismatched event count in phase %d, "
+                      "expected %d, count is %d\n",
+                      i,
+                      expected_count[i],
+                      this->event_count_[i]));
+          result = -1;
+        }
+    }
+  if (this->error_count_[ECB_Correlation_Test::PHASE_END] != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Correlation_Test: Events received after final phase\n"));
+      result = -1;
+    }
+  if (result == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Correlation_Test: All phases successful\n"));
+    }
+
+  return result;
 }
+
+void
+ECB_Correlation_Test::push (int consumer_id,
+                            const RtecEventComm::EventSet& events,
+                            CORBA::Environment &_env)
+{
+  if (events.length () != 2)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Correlation_Test::push - "
+                  "event length (%d) in phase %d\n",
+                  events.length (), this->phase_));
+      this->error_count_[this->phase_]++;
+      return;
+    }
+
+  // If the types do not match we have an error.
+  if (! ((events[0].header.type == ECB_Correlation_Test::EVENT_A
+          && events[1].header.type == ECB_Correlation_Test::EVENT_B)
+         || (events[0].header.type == ECB_Correlation_Test::EVENT_B
+          && events[1].header.type == ECB_Correlation_Test::EVENT_A)))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Correlation_Test::push - event type\n"));
+      this->error_count_[this->phase_]++;
+      return;
+    }
+
+  switch (this->phase_)
+    {
+    case ECB_Correlation_Test::PHASE_END:
+    default:
+      this->error_count_[ECB_Correlation_Test::PHASE_END]++;
+      break;
+
+    case ECB_Correlation_Test::PHASE_0:
+      this->event_count_[ECB_Correlation_Test::PHASE_0]++;
+      break;
+
+    case ECB_Correlation_Test::PHASE_1:
+      this->event_count_[ECB_Correlation_Test::PHASE_1]++;
+      break;
+
+    case ECB_Correlation_Test::PHASE_2:
+      this->event_count_[ECB_Correlation_Test::PHASE_2]++;
+      break;
+
+    case ECB_Correlation_Test::PHASE_3:
+      this->event_count_[ECB_Correlation_Test::PHASE_3]++;
+      break;
+
+    case ECB_Correlation_Test::PHASE_4:
+      this->event_count_[ECB_Correlation_Test::PHASE_4]++;
+      break;
+
+    case ECB_Correlation_Test::PHASE_5:
+      this->error_count_[ECB_Correlation_Test::PHASE_5]++;
+      break;
+    }
+}
+
+// ****************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)

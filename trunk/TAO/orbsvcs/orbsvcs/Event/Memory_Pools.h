@@ -51,24 +51,6 @@ public:
 
 // ************************************************************
 
-typedef char ACE_ES_Event_Container_Chunk[sizeof (ACE_ES_Event_Container)];
-
-typedef ACE_Cached_Allocator<ACE_ES_Event_Container_Chunk, ACE_SYNCH_MUTEX> _ACE_Event_Container_Allocator;
-
-class TAO_ORBSVCS_Export ACE_ES_Event_Container_Allocator : public _ACE_Event_Container_Allocator
-// = TITLE
-//     Event Container Allocator
-//
-// = DESCRIPTION
-//     This just sets the size of the Event Container memory pool.
-{
-public:
-  ACE_ES_Event_Container_Allocator (void) :
-    _ACE_Event_Container_Allocator (ACE_ES_EVENT_CONTAINER_MEMORY_POOL) {}
-};
-
-// ************************************************************
-
 typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX> ACE_ES_Event_Allocator;
 
 class TAO_ORBSVCS_Export ACE_ES_Memory_Pools
@@ -85,13 +67,10 @@ public:
   // pools to preallocate the thread specific allocators.  It is not
   // mandatory.
 
-  static void *new_Event_Container (void);
-  static void delete_Event_Container (void *);
   static void *new_Dispatch_Request (void);
   static void delete_Dispatch_Request (void *);
 
   typedef ACE_Singleton<ACE_ES_Dispatch_Request_Allocator,ACE_SYNCH_MUTEX> Dispatch_Request_;
-  typedef ACE_Singleton<ACE_ES_Event_Container_Allocator,ACE_SYNCH_MUTEX> Event_Container_;
 };
 
 #if defined (__ACE_INLINE__)
