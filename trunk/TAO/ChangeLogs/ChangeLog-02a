@@ -1,3 +1,15 @@
+Fri May 25 20:51:33 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * examples/PluggableUDP/Makefile.bor:
+        * examples/PluggableUDP/DIOP/Makefile.bor:
+        * examples/PluggableUDP/tests/Makefile.bor:
+        * examples/PluggableUDP/tests/*/*.bor:
+          Added remaining Borland makefiles for the PluggableUDP example.
+
+        * orbsvcs/tests/Makefile.bor:
+        * orbsvcs/tests/Trading/*.bor:
+          Added Borland makefiles for the trading service test.
+
 Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/PortableServer/Active_Object_Map.i

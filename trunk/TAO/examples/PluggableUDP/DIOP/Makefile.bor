@@ -5,6 +5,7 @@
 NAME = TAO_DIOP
 
 OBJFILES = \
+        $(OBJDIR)\DIOP.obj \
         $(OBJDIR)\DIOP_Factory.obj \
         $(OBJDIR)\DIOP_Profile.obj \
         $(OBJDIR)\DIOP_Transport.obj \
