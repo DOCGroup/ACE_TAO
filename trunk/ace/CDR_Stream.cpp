@@ -775,16 +775,27 @@ ACE_InputCDR::read_wchar (ACE_CDR::WChar& x)
 {
   if (ACE_static_cast (ACE_CDR::Short, major_version_) == 1
           && ACE_static_cast (ACE_CDR::Short, minor_version_) == 2)
-  {
-    ACE_CDR::Octet len;
-    if (this->read_1 (&len))
-      return this->read_octet_array(ACE_reinterpret_cast (ACE_CDR::Octet*, &x),
-                                    ACE_static_cast (ACE_CDR::ULong, len));
-  }
-  else
-    if (this->wchar_translator_ == 0)
-      return this->read_2 (ACE_reinterpret_cast (ACE_CDR::UShort*,&x));
-  return this->wchar_translator_->read_wchar (*this, x);
+    {
+      ACE_CDR::Octet len;
+
+      if (this->read_1 (&len))
+        {
+          return this->read_octet_array (
+                           ACE_reinterpret_cast (ACE_CDR::Octet*,
+                                                 &x),
+                           ACE_static_cast (ACE_CDR::ULong, 
+                                            len)
+                         );
+        }
+    }
+  else if (this->wchar_translator_ == 0)
+    {
+      return this->read_2 (ACE_reinterpret_cast (ACE_CDR::UShort*, 
+                                                 &x));
+    }
+
+  return this->wchar_translator_->read_wchar (*this, 
+                                              x);
 }
 
 ACE_CDR::Boolean
@@ -794,7 +805,10 @@ ACE_InputCDR::read_string (char *&x)
   // i.e. normally the translator will be 0, but OTOH the code is
   // smaller and should be better for the cache ;-) ;-)
   if (this->char_translator_ != 0)
-    return this->char_translator_->read_string (*this, x);
+    {
+      return this->char_translator_->read_string (*this, 
+                                                  x);
+    }
 
   ACE_CDR::ULong len;
 
@@ -808,7 +822,10 @@ ACE_InputCDR::read_string (char *&x)
                       ACE_CDR::Char[len],
                       0);
       if (this->read_char_array (x, len))
-        return 1;
+        {
+          return 1;
+        }
+
       delete [] x;
     }
   else if (len == 0)
@@ -818,7 +835,7 @@ ACE_InputCDR::read_string (char *&x)
       ACE_NEW_RETURN (x,
                       ACE_CDR::Char[1],
                       0);
-      ACE_OS::strcpy(x, "");
+      ACE_OS::strcpy (ACE_const_cast (char *&, x), "");
       return 1;
     }
 

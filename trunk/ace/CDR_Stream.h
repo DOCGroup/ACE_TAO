@@ -152,6 +152,9 @@ public:
     from_string (ACE_CDR::Char* s,
                  ACE_CDR::ULong b,
                  ACE_CDR::Boolean nocopy = 0);
+    from_string (const ACE_CDR::Char* s,
+                 ACE_CDR::ULong b,
+                 ACE_CDR::Boolean nocopy = 0);
     ACE_CDR::Char *val_;
     ACE_CDR::ULong bound_;
     ACE_CDR::Boolean nocopy_;
@@ -160,6 +163,9 @@ public:
   struct ACE_Export from_wstring
   {
     from_wstring (ACE_CDR::WChar* ws,
+                  ACE_CDR::ULong b,
+                  ACE_CDR::Boolean nocopy = 0);
+    from_wstring (const ACE_CDR::WChar* ws,
                   ACE_CDR::ULong b,
                   ACE_CDR::Boolean nocopy = 0);
     ACE_CDR::WChar *val_;
@@ -577,17 +583,27 @@ public:
 
   struct ACE_Export to_string
   {
+    /// The constructor taking a non-const string is
+    /// now deprecated (C++ mapping 00-01-02), but we
+    /// keep it around for backward compatibility.
     to_string (ACE_CDR::Char *&s,
                ACE_CDR::ULong b);
-    ACE_CDR::Char *&val_;
+    to_string (const ACE_CDR::Char *&s,
+               ACE_CDR::ULong b);
+    const ACE_CDR::Char *&val_;
     ACE_CDR::ULong bound_;
   };
 
   struct ACE_Export to_wstring
   {
+    /// The constructor taking a non-const wstring is
+    /// now deprecated (C++ mapping 00-01-02), but we
+    /// keep it around for backward compatibility.
     to_wstring (ACE_CDR::WChar *&ws,
                 ACE_CDR::ULong b);
-    ACE_CDR::WChar *&val_;
+    to_wstring (const ACE_CDR::WChar *&ws,
+                ACE_CDR::ULong b);
+    const ACE_CDR::WChar *&val_;
     ACE_CDR::ULong bound_;
   };
   //@}
@@ -860,7 +876,7 @@ public:
   /// Read an array of characters from the stream, converting the
   /// characters from the stream codeset to the native codeset.
   virtual ACE_CDR::Boolean read_char_array (ACE_InputCDR&,
-                                            ACE_CDR::Char*,
+                                            const ACE_CDR::Char*,
                                             ACE_CDR::ULong) = 0;
 
   /// Write a single character to the stream, converting from the
@@ -944,7 +960,7 @@ public:
   virtual ACE_CDR::Boolean read_wstring (ACE_InputCDR&,
                                          ACE_CDR::WChar *&) = 0;
   virtual ACE_CDR::Boolean read_wchar_array (ACE_InputCDR&,
-                                             ACE_CDR::WChar*,
+                                             const ACE_CDR::WChar*,
                                              ACE_CDR::ULong) = 0;
   virtual ACE_CDR::Boolean write_wchar (ACE_OutputCDR&,
                                         ACE_CDR::WChar) = 0;
