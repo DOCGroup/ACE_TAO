@@ -1,5 +1,5 @@
---- orig/RTCORBAC.h	Sun Mar  4 10:31:28 2001
-+++ RTCORBAC.h	Sun Mar  4 10:50:47 2001
+--- orig/RTCORBAC.h	Wed Mar 28 20:41:05 2001
++++ RTCORBAC.h	Wed Mar 28 20:42:07 2001
 @@ -23,16 +23,22 @@
  #define _TAO_IDL_ORIG_RTCORBAC_H_
  

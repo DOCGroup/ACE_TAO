@@ -17,7 +17,10 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      if (notifier.init (argc, argv, ACE_TRY_ENV) == -1)
+      int rc = notifier.init (argc, argv, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (rc == -1)
         return 1;
       else
         {

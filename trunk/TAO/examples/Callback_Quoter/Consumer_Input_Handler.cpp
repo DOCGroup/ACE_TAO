@@ -106,7 +106,7 @@ Consumer_Input_Handler::register_consumer ()
 
   ACE_TRY
     {
-     
+
       // Register with the server.
       this->consumer_handler_->server_->register_callback (this->consumer_handler_->stock_name_,
                                                            this->consumer_handler_->threshold_value_,
@@ -170,37 +170,47 @@ Consumer_Input_Handler::quit_consumer_process ()
   ACE_TRY
     {
       if (consumer_handler_->unregistered_ != 1 && consumer_handler_->registered_ == 1)
-	{
+        {
           // If the notifier has exited and the consumer tries to call
           // the unregister_callback method tehn an execption will be
           // raised. Hence check for this case using ACE_TRY_ENV.
-	  this->consumer_handler_->server_->unregister_callback (this->consumer_handler_->consumer_var_.in (),
+          this->consumer_handler_->server_->unregister_callback (this->consumer_handler_->consumer_var_.in (),
                                                                  ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
+          ACE_TRY_CHECK;
 
-	  ACE_DEBUG ((LM_DEBUG,
-		      " Consumer Unregistered \n "));
-	  consumer_handler_->unregistered_ = 0;
+          ACE_DEBUG ((LM_DEBUG,
+                      " Consumer Unregistered \n "));
+          consumer_handler_->unregistered_ = 0;
           consumer_handler_->registered_ = 0;
-	}
+        }
       this->consumer_handler_->consumer_servant_->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
-      this->consumer_handler_->consumer_servant_->shutdown (ACE_TRY_ENV);
-
       // There would be an exception only if there is a communication
       // failure between the notifier and consumer. On catching the
       // exception proclaim the problem and do a graceful exit.
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Communication failed!\n");
+
+      ACE_TRY_EX (block1)
+        {
+          this->consumer_handler_->consumer_servant_->shutdown (ACE_TRY_ENV);
+          ACE_TRY_CHECK_EX (block1);
+        }
+      ACE_CATCHANY
+        {
+        }
+      ACE_ENDTRY;
+      ACE_CHECK_RETURN (-1);
+
       return -1;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-return 0;
+  return 0;
 }
 
 Consumer_Input_Handler::~Consumer_Input_Handler (void)

@@ -91,7 +91,12 @@ main (int argc, char *argv[])
       // Run the ORB event loop.
       while (request_count > 0)
         {
-          if (orb->work_pending (ACE_TRY_ENV))
+          CORBA::Boolean more_work;
+
+          more_work = orb->work_pending (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          if (more_work)
             {
               orb->perform_work (ACE_TRY_ENV);
               ACE_TRY_CHECK;
@@ -99,7 +104,6 @@ main (int argc, char *argv[])
           else
             ACE_OS::sleep (tv);
         }
-      ACE_TRY_CHECK;
 
       orb->shutdown (0, ACE_TRY_ENV);
       ACE_TRY_CHECK;

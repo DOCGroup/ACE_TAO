@@ -21,9 +21,17 @@
 
 #include "RTCORBAC.h"
 
+#include "tao/Stub.h"
+#include "tao/Invocation.h"
+
 #if (TAO_HAS_RT_CORBA == 1)
 
+#include "tao/TAOS.h"
 #include "tao/Typecode.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
+#include "tao/RequestInfo_Util.h"
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus
@@ -36,29 +44,73 @@
 static const CORBA::Long _oc_RTCORBA_NativePriority[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  39, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x5254434f), ACE_NTOHL (0x5242412f), ACE_NTOHL (0x4e617469), ACE_NTOHL (0x76655072), ACE_NTOHL (0x696f7269), ACE_NTOHL (0x74793a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/NativePriority:1.0
-  15, ACE_NTOHL (0x4e617469), ACE_NTOHL (0x76655072), ACE_NTOHL (0x696f7269), ACE_NTOHL (0x74790000),  // name = NativePriority
+  39,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x4e617469),
+  ACE_NTOHL (0x76655072),
+  ACE_NTOHL (0x696f7269),
+  ACE_NTOHL (0x74793a31),
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/NativePriority:1.0
+  15,
+  ACE_NTOHL (0x4e617469),
+  ACE_NTOHL (0x76655072),
+  ACE_NTOHL (0x696f7269),
+  ACE_NTOHL (0x74790000),  // name = NativePriority
   CORBA::tk_short,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_RTCORBA_NativePriority (CORBA::tk_alias, sizeof (_oc_RTCORBA_NativePriority), (char *) &_oc_RTCORBA_NativePriority, 0, sizeof (RTCORBA::NativePriority));
+
+static CORBA::TypeCode _tc_TAO_tc_RTCORBA_NativePriority (
+    CORBA::tk_alias,
+    sizeof (_oc_RTCORBA_NativePriority),
+    (char *) &_oc_RTCORBA_NativePriority,
+    0,
+    sizeof (RTCORBA::NativePriority)
+  );
+
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (RTCORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_NativePriority, &_tc_TAO_tc_RTCORBA_NativePriority)
 TAO_NAMESPACE_END
+
 static const CORBA::Long _oc_RTCORBA_Priority[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  33, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x5254434f), ACE_NTOHL (0x5242412f), ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
-  9, ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x0),  // name = Priority
+  33,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
+  9,
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x0),  // name = Priority
   CORBA::tk_short,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_RTCORBA_Priority (CORBA::tk_alias, sizeof (_oc_RTCORBA_Priority), (char *) &_oc_RTCORBA_Priority, 0, sizeof (RTCORBA::Priority));
+
+static CORBA::TypeCode _tc_TAO_tc_RTCORBA_Priority (
+    CORBA::tk_alias,
+    sizeof (_oc_RTCORBA_Priority),
+    (char *) &_oc_RTCORBA_Priority,
+    0,
+    sizeof (RTCORBA::Priority)
+  );
+
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (RTCORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Priority, &_tc_TAO_tc_RTCORBA_Priority)
 TAO_NAMESPACE_END
+
 TAO_NAMESPACE_TYPE (const CORBA::Short)
 TAO_NAMESPACE_BEGIN (RTCORBA)
 TAO_NAMESPACE_DEFINE (const CORBA::Short, minPriority, 0)
@@ -70,43 +122,113 @@ TAO_NAMESPACE_END
 static const CORBA::Long _oc_RTCORBA_ThreadpoolId[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  37, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x5254434f), ACE_NTOHL (0x5242412f), ACE_NTOHL (0x54687265), ACE_NTOHL (0x6164706f), ACE_NTOHL (0x6f6c4964), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/ThreadpoolId:1.0
-  13, ACE_NTOHL (0x54687265), ACE_NTOHL (0x6164706f), ACE_NTOHL (0x6f6c4964), ACE_NTOHL (0x0),  // name = ThreadpoolId
+  37,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x54687265),
+  ACE_NTOHL (0x6164706f),
+  ACE_NTOHL (0x6f6c4964),
+  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/ThreadpoolId:1.0
+  13,
+  ACE_NTOHL (0x54687265),
+  ACE_NTOHL (0x6164706f),
+  ACE_NTOHL (0x6f6c4964),
+  ACE_NTOHL (0x0),  // name = ThreadpoolId
   CORBA::tk_ulong,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_RTCORBA_ThreadpoolId (CORBA::tk_alias, sizeof (_oc_RTCORBA_ThreadpoolId), (char *) &_oc_RTCORBA_ThreadpoolId, 0, sizeof (RTCORBA::ThreadpoolId));
+
+static CORBA::TypeCode _tc_TAO_tc_RTCORBA_ThreadpoolId (
+    CORBA::tk_alias,
+    sizeof (_oc_RTCORBA_ThreadpoolId),
+    (char *) &_oc_RTCORBA_ThreadpoolId,
+    0,
+    sizeof (RTCORBA::ThreadpoolId)
+  );
+
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (RTCORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ThreadpoolId, &_tc_TAO_tc_RTCORBA_ThreadpoolId)
 TAO_NAMESPACE_END
+
 static const CORBA::Long _oc_RTCORBA_ThreadpoolLane[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  39, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x5254434f), ACE_NTOHL (0x5242412f), ACE_NTOHL (0x54687265), ACE_NTOHL (0x6164706f), ACE_NTOHL (0x6f6c4c61), ACE_NTOHL (0x6e653a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/ThreadpoolLane:1.0
-  15, ACE_NTOHL (0x54687265), ACE_NTOHL (0x6164706f), ACE_NTOHL (0x6f6c4c61), ACE_NTOHL (0x6e650000),  // name = ThreadpoolLane
+  39,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x54687265),
+  ACE_NTOHL (0x6164706f),
+  ACE_NTOHL (0x6f6c4c61),
+  ACE_NTOHL (0x6e653a31),
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/ThreadpoolLane:1.0
+  15,
+  ACE_NTOHL (0x54687265),
+  ACE_NTOHL (0x6164706f),
+  ACE_NTOHL (0x6f6c4c61),
+  ACE_NTOHL (0x6e650000),  // name = ThreadpoolLane
   3, // member count
-  14, ACE_NTOHL (0x6c616e65), ACE_NTOHL (0x5f707269), ACE_NTOHL (0x6f726974), ACE_NTOHL (0x79000000),  // name = lane_priority
+  14,
+  ACE_NTOHL (0x6c616e65),
+  ACE_NTOHL (0x5f707269),
+  ACE_NTOHL (0x6f726974),
+  ACE_NTOHL (0x79000000),  // name = lane_priority
   CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    33, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x5254434f), ACE_NTOHL (0x5242412f), ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
-    9, ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x0),  // name = Priority
+    33,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x5254434f),
+    ACE_NTOHL (0x5242412f),
+    ACE_NTOHL (0x5072696f),
+    ACE_NTOHL (0x72697479),
+    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
+    9,
+    ACE_NTOHL (0x5072696f),
+    ACE_NTOHL (0x72697479),
+    ACE_NTOHL (0x0),  // name = Priority
     CORBA::tk_short,
 
 
-  15, ACE_NTOHL (0x73746174), ACE_NTOHL (0x69635f74), ACE_NTOHL (0x68726561), ACE_NTOHL (0x64730000),  // name = static_threads
+  15,
+  ACE_NTOHL (0x73746174),
+  ACE_NTOHL (0x69635f74),
+  ACE_NTOHL (0x68726561),
+  ACE_NTOHL (0x64730000),  // name = static_threads
   CORBA::tk_ulong,
 
-  16, ACE_NTOHL (0x64796e61), ACE_NTOHL (0x6d69635f), ACE_NTOHL (0x74687265), ACE_NTOHL (0x61647300),  // name = dynamic_threads
+  16,
+  ACE_NTOHL (0x64796e61),
+  ACE_NTOHL (0x6d69635f),
+  ACE_NTOHL (0x74687265),
+  ACE_NTOHL (0x61647300),  // name = dynamic_threads
   CORBA::tk_ulong,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_RTCORBA_ThreadpoolLane (CORBA::tk_struct, sizeof (_oc_RTCORBA_ThreadpoolLane), (char *) &_oc_RTCORBA_ThreadpoolLane, 0, sizeof (RTCORBA::ThreadpoolLane));
+
+static CORBA::TypeCode _tc_TAO_tc_RTCORBA_ThreadpoolLane (
+    CORBA::tk_struct,
+    sizeof (_oc_RTCORBA_ThreadpoolLane),
+    (char *) &_oc_RTCORBA_ThreadpoolLane,
+    0,
+    sizeof (RTCORBA::ThreadpoolLane)
+  );
+
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (RTCORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ThreadpoolLane, &_tc_TAO_tc_RTCORBA_ThreadpoolLane)
 TAO_NAMESPACE_END
+
 void RTCORBA::ThreadpoolLane::_tao_any_destructor (void *x)
 {
   ThreadpoolLane *tmp = ACE_static_cast (ThreadpoolLane*,x);
@@ -212,41 +334,102 @@ void RTCORBA::ThreadpoolLanes::_tao_any_destructor (void *x)
 static const CORBA::Long _oc_RTCORBA_ThreadpoolLanes[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  40, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x5254434f), ACE_NTOHL (0x5242412f), ACE_NTOHL (0x54687265), ACE_NTOHL (0x6164706f), ACE_NTOHL (0x6f6c4c61), ACE_NTOHL (0x6e65733a), ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/RTCORBA/ThreadpoolLanes:1.0
-  16, ACE_NTOHL (0x54687265), ACE_NTOHL (0x6164706f), ACE_NTOHL (0x6f6c4c61), ACE_NTOHL (0x6e657300),  // name = ThreadpoolLanes
+  40,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x54687265),
+  ACE_NTOHL (0x6164706f),
+  ACE_NTOHL (0x6f6c4c61),
+  ACE_NTOHL (0x6e65733a),
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/RTCORBA/ThreadpoolLanes:1.0
+  16,
+  ACE_NTOHL (0x54687265),
+  ACE_NTOHL (0x6164706f),
+  ACE_NTOHL (0x6f6c4c61),
+  ACE_NTOHL (0x6e657300),  // name = ThreadpoolLanes
   CORBA::tk_sequence, // typecode kind
   228, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_struct, // typecode kind
     212, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      39, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x5254434f), ACE_NTOHL (0x5242412f), ACE_NTOHL (0x54687265), ACE_NTOHL (0x6164706f), ACE_NTOHL (0x6f6c4c61), ACE_NTOHL (0x6e653a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/ThreadpoolLane:1.0
-      15, ACE_NTOHL (0x54687265), ACE_NTOHL (0x6164706f), ACE_NTOHL (0x6f6c4c61), ACE_NTOHL (0x6e650000),  // name = ThreadpoolLane
+      39,
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x5254434f),
+      ACE_NTOHL (0x5242412f),
+      ACE_NTOHL (0x54687265),
+      ACE_NTOHL (0x6164706f),
+      ACE_NTOHL (0x6f6c4c61),
+      ACE_NTOHL (0x6e653a31),
+      ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/ThreadpoolLane:1.0
+      15,
+      ACE_NTOHL (0x54687265),
+      ACE_NTOHL (0x6164706f),
+      ACE_NTOHL (0x6f6c4c61),
+      ACE_NTOHL (0x6e650000),  // name = ThreadpoolLane
       3, // member count
-      14, ACE_NTOHL (0x6c616e65), ACE_NTOHL (0x5f707269), ACE_NTOHL (0x6f726974), ACE_NTOHL (0x79000000),  // name = lane_priority
+      14,
+      ACE_NTOHL (0x6c616e65),
+      ACE_NTOHL (0x5f707269),
+      ACE_NTOHL (0x6f726974),
+      ACE_NTOHL (0x79000000),  // name = lane_priority
       CORBA::tk_alias, // typecode kind for typedefs
       64, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
-        33, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x5254434f), ACE_NTOHL (0x5242412f), ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
-        9, ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x0),  // name = Priority
+        33,
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x5254434f),
+        ACE_NTOHL (0x5242412f),
+        ACE_NTOHL (0x5072696f),
+        ACE_NTOHL (0x72697479),
+        ACE_NTOHL (0x3a312e30),
+        ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
+        9,
+        ACE_NTOHL (0x5072696f),
+        ACE_NTOHL (0x72697479),
+        ACE_NTOHL (0x0),  // name = Priority
         CORBA::tk_short,
 
 
-      15, ACE_NTOHL (0x73746174), ACE_NTOHL (0x69635f74), ACE_NTOHL (0x68726561), ACE_NTOHL (0x64730000),  // name = static_threads
+      15,
+      ACE_NTOHL (0x73746174),
+      ACE_NTOHL (0x69635f74),
+      ACE_NTOHL (0x68726561),
+      ACE_NTOHL (0x64730000),  // name = static_threads
       CORBA::tk_ulong,
 
-      16, ACE_NTOHL (0x64796e61), ACE_NTOHL (0x6d69635f), ACE_NTOHL (0x74687265), ACE_NTOHL (0x61647300),  // name = dynamic_threads
+      16,
+      ACE_NTOHL (0x64796e61),
+      ACE_NTOHL (0x6d69635f),
+      ACE_NTOHL (0x74687265),
+      ACE_NTOHL (0x61647300),  // name = dynamic_threads
       CORBA::tk_ulong,
 
 
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_RTCORBA_ThreadpoolLanes (CORBA::tk_alias, sizeof (_oc_RTCORBA_ThreadpoolLanes), (char *) &_oc_RTCORBA_ThreadpoolLanes, 0, sizeof (RTCORBA::ThreadpoolLanes));
+
+static CORBA::TypeCode _tc_TAO_tc_RTCORBA_ThreadpoolLanes (
+    CORBA::tk_alias,
+    sizeof (_oc_RTCORBA_ThreadpoolLanes),
+    (char *) &_oc_RTCORBA_ThreadpoolLanes,
+    0,
+    sizeof (RTCORBA::ThreadpoolLanes)
+  );
+
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (RTCORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ThreadpoolLanes, &_tc_TAO_tc_RTCORBA_ThreadpoolLanes)
 TAO_NAMESPACE_END
+
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (RTCORBA)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, PRIORITY_MODEL_POLICY_TYPE, 40U)
@@ -254,17 +437,49 @@ TAO_NAMESPACE_END
 static const CORBA::Long _oc_RTCORBA_PriorityModel[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  38, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x5254434f), ACE_NTOHL (0x5242412f), ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x4d6f6465), ACE_NTOHL (0x6c3a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/RTCORBA/PriorityModel:1.0
-  14, ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x4d6f6465), ACE_NTOHL (0x6c000000),  // name = PriorityModel
+  38,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x4d6f6465),
+  ACE_NTOHL (0x6c3a312e),
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/RTCORBA/PriorityModel:1.0
+  14,
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x4d6f6465),
+  ACE_NTOHL (0x6c000000),  // name = PriorityModel
   2, // member count
-  18, ACE_NTOHL (0x434c4945), ACE_NTOHL (0x4e545f50), ACE_NTOHL (0x524f5041), ACE_NTOHL (0x47415445), ACE_NTOHL (0x44000000),  // name = CLIENT_PROPAGATED
-  16, ACE_NTOHL (0x53455256), ACE_NTOHL (0x45525f44), ACE_NTOHL (0x45434c41), ACE_NTOHL (0x52454400),  // name = SERVER_DECLARED
+  18,
+  ACE_NTOHL (0x434c4945),
+  ACE_NTOHL (0x4e545f50),
+  ACE_NTOHL (0x524f5041),
+  ACE_NTOHL (0x47415445),
+  ACE_NTOHL (0x44000000),  // name = CLIENT_PROPAGATED
+  16,
+  ACE_NTOHL (0x53455256),
+  ACE_NTOHL (0x45525f44),
+  ACE_NTOHL (0x45434c41),
+  ACE_NTOHL (0x52454400),  // name = SERVER_DECLARED
 };
-static CORBA::TypeCode _tc_TAO_tc_RTCORBA_PriorityModel (CORBA::tk_enum, sizeof (_oc_RTCORBA_PriorityModel), (char *) &_oc_RTCORBA_PriorityModel, 0, sizeof (RTCORBA::PriorityModel));
+
+static CORBA::TypeCode _tc_TAO_tc_RTCORBA_PriorityModel (
+    CORBA::tk_enum,
+    sizeof (_oc_RTCORBA_PriorityModel),
+    (char *) &_oc_RTCORBA_PriorityModel,
+    0,
+    sizeof (RTCORBA::PriorityModel)
+  );
+
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (RTCORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PriorityModel, &_tc_TAO_tc_RTCORBA_PriorityModel)
 TAO_NAMESPACE_END
+
 
 // default constructor
 RTCORBA::PriorityModelPolicy::PriorityModelPolicy ()
@@ -1192,33 +1407,83 @@ const char* RTCORBA::SharedMemoryProtocolProperties::_interface_repository_id (v
 static const CORBA::Long _oc_RTCORBA_PriorityBand[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  37, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x5254434f), ACE_NTOHL (0x5242412f), ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x42616e64), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/PriorityBand:1.0
-  13, ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x42616e64), ACE_NTOHL (0x0),  // name = PriorityBand
+  37,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x42616e64),
+  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/PriorityBand:1.0
+  13,
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x42616e64),
+  ACE_NTOHL (0x0),  // name = PriorityBand
   2, // member count
-  4, ACE_NTOHL (0x6c6f7700),  // name = low
+  4,
+  ACE_NTOHL (0x6c6f7700),  // name = low
   CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    33, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x5254434f), ACE_NTOHL (0x5242412f), ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
-    9, ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x0),  // name = Priority
+    33,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x5254434f),
+    ACE_NTOHL (0x5242412f),
+    ACE_NTOHL (0x5072696f),
+    ACE_NTOHL (0x72697479),
+    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
+    9,
+    ACE_NTOHL (0x5072696f),
+    ACE_NTOHL (0x72697479),
+    ACE_NTOHL (0x0),  // name = Priority
     CORBA::tk_short,
 
 
-  5, ACE_NTOHL (0x68696768), ACE_NTOHL (0x0),  // name = high
+  5,
+  ACE_NTOHL (0x68696768),
+  ACE_NTOHL (0x0),  // name = high
   CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    33, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x5254434f), ACE_NTOHL (0x5242412f), ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
-    9, ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x0),  // name = Priority
+    33,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x5254434f),
+    ACE_NTOHL (0x5242412f),
+    ACE_NTOHL (0x5072696f),
+    ACE_NTOHL (0x72697479),
+    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
+    9,
+    ACE_NTOHL (0x5072696f),
+    ACE_NTOHL (0x72697479),
+    ACE_NTOHL (0x0),  // name = Priority
     CORBA::tk_short,
 
 
 };
-static CORBA::TypeCode _tc_TAO_tc_RTCORBA_PriorityBand (CORBA::tk_struct, sizeof (_oc_RTCORBA_PriorityBand), (char *) &_oc_RTCORBA_PriorityBand, 0, sizeof (RTCORBA::PriorityBand));
+
+static CORBA::TypeCode _tc_TAO_tc_RTCORBA_PriorityBand (
+    CORBA::tk_struct,
+    sizeof (_oc_RTCORBA_PriorityBand),
+    (char *) &_oc_RTCORBA_PriorityBand,
+    0,
+    sizeof (RTCORBA::PriorityBand)
+  );
+
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (RTCORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PriorityBand, &_tc_TAO_tc_RTCORBA_PriorityBand)
 TAO_NAMESPACE_END
+
 void RTCORBA::PriorityBand::_tao_any_destructor (void *x)
 {
   PriorityBand *tmp = ACE_static_cast (PriorityBand*,x);
@@ -1324,32 +1589,87 @@ void RTCORBA::PriorityBands::_tao_any_destructor (void *x)
 static const CORBA::Long _oc_RTCORBA_PriorityBands[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  38, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x5254434f), ACE_NTOHL (0x5242412f), ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x42616e64), ACE_NTOHL (0x733a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/RTCORBA/PriorityBands:1.0
-  14, ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x42616e64), ACE_NTOHL (0x73000000),  // name = PriorityBands
+  38,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x42616e64),
+  ACE_NTOHL (0x733a312e),
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/RTCORBA/PriorityBands:1.0
+  14,
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x42616e64),
+  ACE_NTOHL (0x73000000),  // name = PriorityBands
   CORBA::tk_sequence, // typecode kind
   252, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_struct, // typecode kind
     236, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      37, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x5254434f), ACE_NTOHL (0x5242412f), ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x42616e64), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/PriorityBand:1.0
-      13, ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x42616e64), ACE_NTOHL (0x0),  // name = PriorityBand
+      37,
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x5254434f),
+      ACE_NTOHL (0x5242412f),
+      ACE_NTOHL (0x5072696f),
+      ACE_NTOHL (0x72697479),
+      ACE_NTOHL (0x42616e64),
+      ACE_NTOHL (0x3a312e30),
+      ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/PriorityBand:1.0
+      13,
+      ACE_NTOHL (0x5072696f),
+      ACE_NTOHL (0x72697479),
+      ACE_NTOHL (0x42616e64),
+      ACE_NTOHL (0x0),  // name = PriorityBand
       2, // member count
-      4, ACE_NTOHL (0x6c6f7700),  // name = low
+      4,
+      ACE_NTOHL (0x6c6f7700),  // name = low
       CORBA::tk_alias, // typecode kind for typedefs
       64, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
-        33, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x5254434f), ACE_NTOHL (0x5242412f), ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
-        9, ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x0),  // name = Priority
+        33,
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x5254434f),
+        ACE_NTOHL (0x5242412f),
+        ACE_NTOHL (0x5072696f),
+        ACE_NTOHL (0x72697479),
+        ACE_NTOHL (0x3a312e30),
+        ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
+        9,
+        ACE_NTOHL (0x5072696f),
+        ACE_NTOHL (0x72697479),
+        ACE_NTOHL (0x0),  // name = Priority
         CORBA::tk_short,
 
 
-      5, ACE_NTOHL (0x68696768), ACE_NTOHL (0x0),  // name = high
+      5,
+      ACE_NTOHL (0x68696768),
+      ACE_NTOHL (0x0),  // name = high
       CORBA::tk_alias, // typecode kind for typedefs
       64, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
-        33, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x5254434f), ACE_NTOHL (0x5242412f), ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
-        9, ACE_NTOHL (0x5072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x0),  // name = Priority
+        33,
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x5254434f),
+        ACE_NTOHL (0x5242412f),
+        ACE_NTOHL (0x5072696f),
+        ACE_NTOHL (0x72697479),
+        ACE_NTOHL (0x3a312e30),
+        ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
+        9,
+        ACE_NTOHL (0x5072696f),
+        ACE_NTOHL (0x72697479),
+        ACE_NTOHL (0x0),  // name = Priority
         CORBA::tk_short,
 
 
@@ -1357,11 +1677,20 @@ static const CORBA::Long _oc_RTCORBA_PriorityBands[] =
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_RTCORBA_PriorityBands (CORBA::tk_alias, sizeof (_oc_RTCORBA_PriorityBands), (char *) &_oc_RTCORBA_PriorityBands, 0, sizeof (RTCORBA::PriorityBands));
+
+static CORBA::TypeCode _tc_TAO_tc_RTCORBA_PriorityBands (
+    CORBA::tk_alias,
+    sizeof (_oc_RTCORBA_PriorityBands),
+    (char *) &_oc_RTCORBA_PriorityBands,
+    0,
+    sizeof (RTCORBA::PriorityBands)
+  );
+
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (RTCORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PriorityBands, &_tc_TAO_tc_RTCORBA_PriorityBands)
 TAO_NAMESPACE_END
+
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (RTCORBA)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, PRIORITY_BANDED_CONNECTION_POLICY_TYPE, 45U)
@@ -1838,11 +2167,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const RTCORBA::Threadpoo
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (RTCORBA::_tc_ThreadpoolLane, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
+
+    CORBA::Boolean result = type->equivalent (RTCORBA::_tc_ThreadpoolLane, ACE_TRY_ENV);
     ACE_TRY_CHECK;
+
+    if (!result)
+      return 0; // not equivalent
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -1927,11 +2258,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const RTCORBA::Threadpoo
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (RTCORBA::_tc_ThreadpoolLanes, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
+
+    CORBA::Boolean result = type->equivalent (RTCORBA::_tc_ThreadpoolLanes, ACE_TRY_ENV);
     ACE_TRY_CHECK;
+
+    if (!result)
+      return 0; // not equivalent
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -1988,11 +2321,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, RTCORBA::PriorityModel &
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (RTCORBA::_tc_PriorityModel, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
+
+    CORBA::Boolean result = type->equivalent (RTCORBA::_tc_PriorityModel, ACE_TRY_ENV);
     ACE_TRY_CHECK;
+
+    if (!result)
+      return 0; // not equivalent
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -2116,11 +2451,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const RTCORBA::PriorityB
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (RTCORBA::_tc_PriorityBand, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
+
+    CORBA::Boolean result = type->equivalent (RTCORBA::_tc_PriorityBand, ACE_TRY_ENV);
     ACE_TRY_CHECK;
+
+    if (!result)
+      return 0; // not equivalent
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -2205,11 +2542,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const RTCORBA::PriorityB
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (RTCORBA::_tc_PriorityBands, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
+
+    CORBA::Boolean result = type->equivalent (RTCORBA::_tc_PriorityBands, ACE_TRY_ENV);
     ACE_TRY_CHECK;
+
+    if (!result)
+      return 0; // not equivalent
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(

@@ -1,3 +1,26 @@
+Wed Mar 28 21:44:45 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Consumer_Input_Handler.cpp:
+	* examples/Callback_Quoter/notifier.cpp:
+	* examples/Content_Server/AMI_Iterator/client.cpp:
+	* examples/Content_Server/AMI_Observer/client.cpp:
+	* examples/Content_Server/SMI_Iterator/client.cpp:
+	* examples/Event_Comm/Notifier_Server.cpp:
+	* tests/Exposed_Policies/Counter_i.cpp:
+	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
+	* tests/RTCORBA/RTMutex/server.cpp:
+	  Fixed ACE_TRY_CATCH errors detected by the fuzz script.
+
+	* tao/RTCORBAC.{cpp,h,i}:
+	* tao/RTCORBAS.{cpp,h,i}:
+	* tao/RTCORBAS_T.{cpp,h,i}:
+	* tao/diffs/RTCORBAC.cpp.diff:
+	* tao/diffs/RTCORBAC.h.diff:
+	* tao/diffs/RTCORBAS.cpp.diff:
+	* tao/diffs/RTCORBAS.h.diff:
+	  Regenerated RTCORBA.pidl files to fix ACE_TRY_CATCH
+	  macro warnings detected by the fuzz script.
+
 Wed Mar 28 21:40:36 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/PortableServer/POA.cpp (ServerObject_i): Added ACE_CHECK;
@@ -20,13 +43,13 @@ Wed Mar 28 17:24:57 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 Wed Mar 28 17:12:06 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
 	* orbsvcs/examples/Log/test/Makefile : Added libTAO_DynamicAny and
-	  libTAO_IORTable to LinkList to make QNX happy. Thanks to Thomas 
+	  libTAO_IORTable to LinkList to make QNX happy. Thanks to Thomas
           Groth <groth.th@nord-com.net> for the suggestion.
 
 Wed Mar 28 16:54:47 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
 	* orbsvcs/examples/Log/Client/Makefile: Added libTAO_DynamicAny to
-	  LinkList to make QNX happy. Thanks to Thomas Groth 
+	  LinkList to make QNX happy. Thanks to Thomas Groth
           <groth.th@nord-com.net> for the suggestion.
 
 Wed Mar 28 16:51:01 2001  Carlos O'Ryan  <coryan@uci.edu>
