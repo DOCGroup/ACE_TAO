@@ -28,7 +28,6 @@
       href="#MO">Miscellaneous Options </A></LI></UL>
     <LI><A href="#SVC">Service Configuration File </A>
     <UL>
-<!-- Bala2, Doug - I had to modify here too - Andy -->
       <LI><A href="#TRF">Simple and Advanced Resource Factories </A>
       <UL>
 	<LI><A
@@ -135,19 +134,6 @@ configuration information.
 
 Note that the command-line options and the service configurator
 options cannot be used interchangeably.
-<!-- Andy, Bala, can you please add a sentence or two explaining why -->
-<!-- this is the case?!  It's always been mysterious to me *why* this -->
-<!-- is the case! -->
-<!-- Doug - see below after these bunch of comments - Andy -->
-<!-- Tao, Is this needed? -->
-<!--Tao added, i think sentences below is a source of confusion-->
-<!--webbot bot="PurpleText" PREVIEW="right. this line seems to be a
-      repition to me. Let us zap it - Andy" -->
-<!-- Andy, Bala, I think we need something along these lines to -->
-<!-- explain why it's the case we distinguish command-line options and -->
-<!-- the svc.conf options!  Perhaps we just need to reword this stuff -->
-<!-- better? -->
-<!-- Doug - here is the reworded senetence - Andy -->
 
 In summary, the command line configuration options are provided in TAO
 in order to leverage preexisting configuration settings that are
@@ -408,7 +394,6 @@ http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/ORBEndpoint.html">endpoin
 The following options manage connections and control protocol
 selection within a CORBA application.<P>
 
-<!--- TAO, please add the options in italics -->
 <BLOCKQUOTE>
   <P>
   <TABLE cellSpacing=2 cellPadding=0 border=2>
@@ -546,7 +531,6 @@ specific application requirements.
       <TD><CODE>-ORBServerId</CODE> <EM>server_id</EM></TD>
       <TD><A name=-ORBId></A>This option allows setting a name/id to a
   server
-  <!-- Tao, could you please provide the actual link? -->
 	to uniquely identify a server to TAO's <A HREF="implrepo">Implementation Repository</A>. </TD></TR>
     <TR>
       <TD><CODE>-ORBDaemon</CODE></TD>
@@ -609,10 +593,6 @@ directives in the file; if not found, the default value for the
 default components will be used.</P>
 
 <hr align=left width=25%>
-<!-- Bala, is there a specific name for this, i.e., can you use the -->
-<!-- "real" name here rather than the "conceptual" name?! -->
-<!-- The conceptual name is ok here. See the sub bullets below - Andy-->
-<!-- I am using the name the Default here to be in sync with other things-->
 <h4><A name=TRF>1. Default and Advanced Resource Factories</A></h4>
 
 Many resources required by TAO's ORB core are fixed, though there is
@@ -623,7 +603,6 @@ different IOR parsers.  The resource factories supported by TAO
 comprise <CODE>Resource_Factory</CODE> and
 <CODE>Advanced_Resource_Factory</CODE>. TAO provides defaults of these
 factories as well as specialized resource factories described below:
-<!-- Doug, Bala2 - I inserted the above sentence - Andy -->
 
 <BLOCKQUOTE>
   <P>
@@ -895,7 +874,6 @@ default.</TD></TR></TBODY></TABLE></TD></TR>
       The Advanced Resource Factory will emit an error if you attempt its use.
       </TD></TR></TBODY></TABLE></P></BLOCKQUOTE>
 
-<!-- Doug, Bala2 - I gave generic name here - Andy -->
 <h4><A name=TSSF>3. Server_Strategy_Factory</A></h4>
 
 Certain elements of the ORB relate only to server side behavior. In
@@ -909,7 +887,6 @@ concurrency related behaviors. The demuliplexing strategies are used
 to locate servants inside the POA that are responsible for handling
 requests.  TAO provides a default server strategy factory called
 <CODE>Server_Strategy_Factory</CODE> <p>
-<!-- Doug, Bala2 - I added the above line - Andy -->
 
 Typically, the following options are set via the service
 configurator (svc.conf) file. The following line in the svc.conf file
