@@ -159,3 +159,23 @@ on a single target:
 
 The gethrtime.o component should only be included in LDLIBS if
 building with GreenHills for Pentium target.
+
+
+
+*****************************************
+Using JAVA to access the IDL Cubit test:
+
+install JDK1.2
+install Java to IDL compiler
+
+copy the following files:
+cp $TAO_ROOT/orbsvcs/orbsvcs/CosNaming.idl .
+cp $TAO_ROOT/orbsvcs/tests/Simulator/DOVEBrowser/NS_Resolve.java .
+
+Compile:
+javatoidl cubit.idl
+javatoidl CosNaming.idl
+javac *.java
+
+Run:
+java IDL_Cubit_Client

@@ -1,3 +1,12 @@
+Mon Jul 20 21:10:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * tests/Cubit/TAO/IDL_Cubit/IDL_Cubit_Client.java:
+	  A class to access the IDL_Cubit server via the JavaIDL
+	  ORB.
+
+	* tests/Cubit/TAO/IDL_Cubit/README: Documented how to 
+	  use the aforementioned Java class. 
+
 Mon Jul 20 19:06:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Invocation.cpp (invoke): wrapped final return statement
