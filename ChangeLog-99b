@@ -1,3 +1,9 @@
+Tue Jul 13 06:45:53 1999  Steve Huston  <shuston@riverace.com>
+
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp: Moved
+          definition of Dummy_Data to test_position_independent_malloc.h, a
+          new file, to satisfy AIX IBM C++ template instantiation.
+
 Mon Jul 12 18:24:34 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/Cached_Accept_Conn_Test.cpp:
