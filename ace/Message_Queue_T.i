@@ -154,10 +154,14 @@ ACE_Message_Queue<ACE_SYNCH_USE>::deactivated (void)
   return this->deactivated_;
 }
 
-template <ACE_SYNCH_DECL> ACE_INLINE ACE_SYNCH_MUTEX_T &
-ACE_Message_Queue<ACE_SYNCH_USE>::lock (void)
-{
-  return this->lock_;
-}
+//
+// The Sun Forte 6 (CC 5.1) compiler is only happy if this is in the
+// header file      (j.russell.noseworthy@objectsciences.com)
+//
+//template <ACE_SYNCH_DECL> ACE_INLINE ACE_SYNCH_MUTEX_T &
+//ACE_Message_Queue<ACE_SYNCH_USE>::lock (void)
+//{
+//  return this->lock_;
+//}
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue_Reverse_Iterator)
