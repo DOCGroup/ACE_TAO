@@ -17,6 +17,10 @@ ifndef TAO_IDL
   TAO_IDL = $(TAO_ROOT)/TAO_IDL/tao_idl
 endif
 
+ifndef BIN_TRUE
+  BIN_TRUE = /bin/true
+endif
+
 ifndef COMSPEC
   ifdef ComSpec
     #### ACE+TAO use COMSPEC, but ComSpec is defined.
@@ -160,13 +164,13 @@ IDL_EXT2=Cli.h $(IDL_EXT2_MINUS)
 
 ifneq ($(use_flick),1)
 $(foreach ext, $(IDL_EXT_MINUS), %$(ext)): %C.h
-	@/bin/true $@
+	@$(BIN_TRUE) $@
 
 %C.h: %.idl $(TAO_IDL)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<
 
 $(foreach ext, $(IDL_EXT2_MINUS), %$(ext)): %Cli.h
-	@/bin/true $@
+	@$(BIN_TRUE) $@
 
 %Cli.h: %.idl $(TAO_IDL)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<

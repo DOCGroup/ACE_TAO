@@ -41,17 +41,6 @@ PSRC    = $(addsuffix .cpp,$(BIN))
 ACE_SHLIBS = -lTAO_CosTrading -lTAO_CosNaming -lTAO -lACE
 LDLIBS  = -lTAO_CosTrading -lTAO_CosNaming -lTAO
 
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Trader,$(findstring Trader,$(TAO_ORBSVCS)))
-  ifeq ($(minimum_corba),0)
-    BIN = $(BIN2)
-    LIB = $(LIB2)
-    SHLIB = $(SHLIB2)
-  endif # minimum_corba
-endif # Trader
-
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -70,6 +59,18 @@ else # ! ACE_HAS_GNUG_PRE_2_8
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Trader,$(findstring Trader,$(TAO_ORBSVCS)))
+  ifeq ($(minimum_corba),0)
+    BIN = $(BIN2)
+    LIB = $(LIB2)
+    SHLIB = $(SHLIB2)
+  endif # minimum_corba
+endif # Trader
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU

@@ -16,6 +16,14 @@ SRC = Trading_Server.cpp Trading_Service.cpp
 
 BIN2 = Trading_Service
 
+#--------------------------------------------------------------------------
+#       Include macros and targets
+#--------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
+
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
@@ -25,13 +33,6 @@ ifeq (Trader,$(findstring Trader,$(TAO_ORBSVCS)))
   endif # minimum_corba
 endif # Trader
 
-#--------------------------------------------------------------------------
-#       Include macros and targets
-#--------------------------------------------------------------------------
-
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU

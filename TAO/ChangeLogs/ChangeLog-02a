@@ -1,8 +1,18 @@
+Thu May  4 14:45:40 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* rules.tao.GNU: Parameterized /bin/true.  Not all OSes put true
+	  in /bin directory.
+
+	* orbsvcs/Trading_Service/Makefile:
+	* orbsvcs/tests/Trading/Makefile: Moved the settings of actually
+	  targets down after rules.tao.GNU.  Otherwise, these tests
+	  wouldn't get compiled even if minimum_corba is not used.
+
 Thu May  4 10:40:17 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/AV/AVStreams_i.h:
 
-          Added in the warning(push)/(pop) stuff for MSVC. 
+          Added in the warning(push)/(pop) stuff for MSVC.
 
         * orbsvcs/orbsvcs/AV/AVStreams_i.h:
         * orbsvcs/orbsvcs/AV/AV_Core.h:
@@ -13,7 +23,7 @@ Thu May  4 10:40:17 2000  Darrell Brunsch <brunsch@uci.edu>
           definition of the TAO_AV_CORE template which was busted on
           NT.  The problem was that two singletons existed, one in the
           DLL and one in the program itself.  I changed the template
-          delcaration to use the special macros we have for this 
+          delcaration to use the special macros we have for this
           situation.  This means that the benchmarking test should now
           work.
 
