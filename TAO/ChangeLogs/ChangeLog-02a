@@ -1,89 +1,96 @@
+Tue Apr 10 16:19:39 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Reliable_Oneways/Reliable_Oneways.dsw:
+        * tests/Reliable_Oneways/client.dsp:
+        * tests/Reliable_Oneways/server.dsp:
+          Add MSVC project files
+
 Tue Apr 10 17:25:18 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* tao/Resource_Factory.cpp:
-	* tao/Resource_Factory.h:
-	* tao/default_resource.cpp:
-	* tao/default_resource.h:
-	* tao/Strategies/advanced_resource.cpp:
-	* tao/Strategies/advanced_resource.h:
-	  Added an accessor method "input_cdr_allocator_type_locked
-	  (void);" to return the type of allocator used for CDR input steams.
-	  Once the type is known, we can safely turn on lock free
-	  allocators as the default.
+        * tao/Resource_Factory.cpp:
+        * tao/Resource_Factory.h:
+        * tao/default_resource.cpp:
+        * tao/default_resource.h:
+        * tao/Strategies/advanced_resource.cpp:
+        * tao/Strategies/advanced_resource.h:
+          Added an accessor method "input_cdr_allocator_type_locked
+          (void);" to return the type of allocator used for CDR input steams.
+          Once the type is known, we can safely turn on lock free
+          allocators as the default.
 
-	* tao/OctetSeqC.cpp:
-	  Modified the >> operator to perform zero copy octet
-	  optimization, only if the input CDR uses a locked allocator.
+        * tao/OctetSeqC.cpp:
+          Modified the >> operator to perform zero copy octet
+          optimization, only if the input CDR uses a locked allocator.
 
-	* tests/OctetSeq/run_test1.pl:
-	* tests/OctetSeq/run_test2.pl:
-	  Added 2 configurations to test the change to OctetSeqC
-	* tests/OctetSeq/svc1.conf:
-	* tests/OctetSeq/svc2.conf:
-	  svc1.conf uses global resources and a null InputCDRAllocator.
-	  svc2.conf uses tss resources and a null InputCDRAllocator.
-	  note that the default is global, locked InputCDRAllocator.
+        * tests/OctetSeq/run_test1.pl:
+        * tests/OctetSeq/run_test2.pl:
+          Added 2 configurations to test the change to OctetSeqC
+        * tests/OctetSeq/svc1.conf:
+        * tests/OctetSeq/svc2.conf:
+          svc1.conf uses global resources and a null InputCDRAllocator.
+          svc2.conf uses tss resources and a null InputCDRAllocator.
+          note that the default is global, locked InputCDRAllocator.
 
 Tue Apr 10 16:35:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
 
           Removed old, unnecessary explicit template instantiations.
 
 Tue Apr 10 14:27:57 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Invocation.h (generate_request_id):
-	* tao/Invocation.cpp (generate_request_id, start):
-	* tao/Asynch_Invocation.h (generate_request_id):
-	* tao/Asynch_Invocation.h (generate_request_id:
+        * tao/Invocation.h (generate_request_id):
+        * tao/Invocation.cpp (generate_request_id, start):
+        * tao/Asynch_Invocation.h (generate_request_id):
+        * tao/Asynch_Invocation.h (generate_request_id:
 
-	  Backed out the zero-lock request ID optimization.  It causes
-	  improper behavior in the presence of timeouts.
+          Backed out the zero-lock request ID optimization.  It causes
+          improper behavior in the presence of timeouts.
 
-	* tao/ClientRequestInfo.cpp (request_id):
+        * tao/ClientRequestInfo.cpp (request_id):
 
-	  Moved the request ID optimization from above into this method
-	  since it also provides a more unique request ID in the case of
-	  interceptors.  Note that the request ID in the case of
-	  interceptors need not be the same as the GIOP request ID [Bug 826].
+          Moved the request ID optimization from above into this method
+          since it also provides a more unique request ID in the case of
+          interceptors.  Note that the request ID in the case of
+          interceptors need not be the same as the GIOP request ID [Bug 826].
 
 Tue Apr 10 13:49:16 2001  Ossama Othman  <ossama@uci.edu>
 
-	* examples/PluggableUDP/tests/Makefile:
+        * examples/PluggableUDP/tests/Makefile:
 
-	  Fixed source list so that it actually contains valid filenames.
+          Fixed source list so that it actually contains valid filenames.
 
-	* examples/PluggableUDP/tests/Performance/UDP_i.h:
+        * examples/PluggableUDP/tests/Performance/UDP_i.h:
 
-	  Fixed NT-ism where backslash was used in include directive
-	  instead of a forward slash.  Fixes compile problems on
-	  non-Windows platforms.
+          Fixed NT-ism where backslash was used in include directive
+          instead of a forward slash.  Fixes compile problems on
+          non-Windows platforms.
 
-	* examples/PluggableUDP/tests/*/Makefile:
+        * examples/PluggableUDP/tests/*/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Tue Apr 10 12:37:38 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Profile.cpp (verify_orb_configuration):
+        * tao/Profile.cpp (verify_orb_configuration):
 
-	  If the ORB is configured to use URL style IORs then throw an
-	  exception since tagged components cannot be embedded in a URL
-	  style IOR.
+          If the ORB is configured to use URL style IORs then throw an
+          exception since tagged components cannot be embedded in a URL
+          style IOR.
 
 Tue Apr 10 12:14:44 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Exception.cpp (_tao_get_omg_exception_description):
+        * tao/Exception.cpp (_tao_get_omg_exception_description):
 
-	  Added missing comma in BAD_PARAM minor code description table.
-	  This fixes a problem where the wrong description was returned.
+          Added missing comma in BAD_PARAM minor code description table.
+          This fixes a problem where the wrong description was returned.
 
-	* tao/IIOP_Profile.cpp (to_string):
-	* tao/Strategies/SHMIOP_Profile.cpp (to_string):
-	* tao/Strategies/UIOP_Profile.cpp (to_string):
+        * tao/IIOP_Profile.cpp (to_string):
+        * tao/Strategies/SHMIOP_Profile.cpp (to_string):
+        * tao/Strategies/UIOP_Profile.cpp (to_string):
 
-	  Fixed code that was inadvertently committed.  URL style
-	  (corbaloc) IORs are once again properly generated.
+          Fixed code that was inadvertently committed.  URL style
+          (corbaloc) IORs are once again properly generated.
 
 Tue Apr 10 13:55:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -97,10 +104,10 @@ Tue Apr 10 13:55:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue Apr 10 11:25:14 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PortableInterceptor.cpp:
+        * tao/PortableInterceptor.cpp:
 
-	  Removed vestigial ACE_INLINE macros.  This fixes link errors on
-	  builds with inlining enabled.
+          Removed vestigial ACE_INLINE macros.  This fixes link errors on
+          builds with inlining enabled.
 
 Tue Apr 10 11:08:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
