@@ -1,3 +1,12 @@
+Thu Dec  9 14:24:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Active_Object_Map.{cpp,h,i}:
+        * tao/PortableServer/Active_Object_Map_Entry.{cpp,h}:
+          Moved Active_Object_Map_Entry to its own file
+
+        * tao/PortableServer/Servant_Upcall.cpp:
+          Include Active_Object_Map_Entry, more is not needed.
+
 Wed Dec  8 13:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ThreadStrategy*.{h,cpp}:
