@@ -63,6 +63,18 @@ ACE_MEM_Acceptor::mmap_prefix (const ACE_TCHAR *prefix)
   this->mmap_prefix_ = ACE::strnew (prefix);
 }
 
+ASYS_INLINE ACE_MEM_IO::Signal_Strategy
+ACE_MEM_Acceptor::preferred_strategy (void) const
+{
+  return this->preferred_strategy_;
+}
+
+ASYS_INLINE void
+ACE_MEM_Acceptor::preferred_strategy (ACE_MEM_IO::Signal_Strategy strategy)
+{
+  this->preferred_strategy_ = strategy;
+}
+
 ASYS_INLINE ACE_MEM_SAP::MALLOC_OPTIONS &
 ACE_MEM_Acceptor::malloc_options (void)
 {

@@ -23,7 +23,8 @@ ACE_MEM_Acceptor::dump (void) const
 
 ACE_MEM_Acceptor::ACE_MEM_Acceptor (void)
   : mmap_prefix_ (0),
-    malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0)
+    malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0),
+    preferred_strategy_ (ACE_MEM_IO::Reactive)
 {
   ACE_TRACE ("ACE_MEM_Acceptor::ACE_MEM_Acceptor");
 }
@@ -41,7 +42,8 @@ ACE_MEM_Acceptor::ACE_MEM_Acceptor (const ACE_MEM_Addr &remote_sap,
                                     int backlog,
                                     int protocol)
   : mmap_prefix_ (0),
-    malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0)
+    malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0),
+    preferred_strategy_ (ACE_MEM_IO::Reactive)
 {
   ACE_TRACE ("ACE_MEM_Acceptor::ACE_MEM_Acceptor");
   if (this->open (remote_sap,
@@ -80,7 +82,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   int *len_ptr = 0;
   sockaddr *addr = 0;
 
-  int in_blocking_mode = 0;
+  int in_blocking_mode = 1;
   if (this->shared_accept_start (timeout,
                                  restart,
                                  in_blocking_mode) == -1)
@@ -149,13 +151,35 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   // Make sure we have a fresh start.
   ACE_OS::unlink (buf);
 
+  new_stream.disable (ACE_NONBLOCK);
+  ACE_HANDLE new_handle = new_stream.get_handle ();
+
+  // Protocol negociation:
+  //   Tell the client side what level of signaling strategy
+  //   we support.
+  ACE_INT16 client_signaling = this->preferred_strategy_;
+  if (ACE::send (new_handle, &client_signaling,
+                 sizeof (ACE_INT16)) == -1)
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_LIB_TEXT ("ACE_MEM_Acceptor::accept error sending strategy\n")),
+                      -1);
+
+  //   Now we get the signaling strategy the client support.
+  if (ACE::recv (new_handle, &client_signaling,
+                 sizeof (ACE_INT16)) == -1)
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_LIB_TEXT ("ACE_MEM_Acceptor::%p error receiving strategy\n"), "accept"),
+                      -1);
+
+  // Client will decide what signaling strategy to use.
+
   // Now set up the shared memory malloc pool.
-  if (new_stream.create_shm_malloc (buf, &this->malloc_options_) == -1)
+  if (new_stream.init (buf, ACE_static_cast (ACE_MEM_IO::Signal_Strategy, client_signaling),
+                       &this->malloc_options_) == -1)
     return -1;
 
   // @@ Need to handle timeout here.
   ACE_UINT16 buf_len = (ACE_OS::strlen (buf) + 1) * sizeof (ACE_TCHAR);
-  ACE_HANDLE new_handle = new_stream.get_handle ();
 
   // No need to worry about byte-order because both parties should always
   // be on the same machine.

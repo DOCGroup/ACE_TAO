@@ -26,7 +26,8 @@ ACE_MEM_SAP::dump (void) const
 }
 
 ACE_MEM_SAP::ACE_MEM_SAP (void)
-  : shm_malloc_ (0)
+  : handle_ (ACE_INVALID_HANDLE),
+    shm_malloc_ (0)
 {
   // ACE_TRACE ("ACE_MEM_SAP::ACE_MEM_SAP");
 }
@@ -52,32 +53,26 @@ ACE_MEM_SAP::create_shm_malloc (const ACE_TCHAR *name,
 int
 ACE_MEM_SAP::close_shm_malloc (const int remove)
 {
+  ACE_TRACE ("ACE_MEM_SAP::close_shm_malloc");
+
   if (this->shm_malloc_ != 0 && remove != 0)
-    {
-      this->shm_malloc_->remove ();
-      return 0;
-    }
+      return this->shm_malloc_->remove ();
+
   return -1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Write_Guard<ACE_Process_Mutex>;
 template class ACE_Read_Guard<ACE_Process_Mutex>;
-#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block>;
-#else
-template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>;
-template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_Control_Block>;
-#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
+template class ACE_Based_Pointer<ACE_MEM_SAP_Node>;
+template class ACE_Based_Pointer_Basic<ACE_MEM_SAP_Node>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Write_Guard<ACE_Process_Mutex>
 #pragma instantiate ACE_Read_Guard<ACE_Process_Mutex>
-#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #pragma instantiate ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block>
-#else
-#pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>
-#pragma instantiate ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_Control_Block>
-#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
+#pragma instantiate ACE_Based_Pointer<ACE_MEM_SAP_Node>
+#pragma instantiate ACE_Based_Pointer_Basic<ACE_MEM_SAP_Node>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
