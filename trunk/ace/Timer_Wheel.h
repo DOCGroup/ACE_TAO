@@ -9,7 +9,7 @@
 //    Timer_Wheel.h
 //
 // = AUTHOR
-//    Darrell Brunsch
+//    Darrell Brunsch (brunsch@cs.wustl.edu)
 // 
 // ============================================================================
 
