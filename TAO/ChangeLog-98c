@@ -1,3 +1,12 @@
+Fri Oct 31 22:20:06 1997    <irfan@TWOSTEP>
+
+	* tao/encode.cpp (encode): Changed cast of data from
+ 	  *(CORBA::Object_ptr *) to (CORBA::Object_ptr). 
+
+	* tao/default_server.cpp (parse_args): Manipulation of curarg was
+ 	  all messed up.  Fixed it such that it was not incremented
+ 	  unnecessarily.
+
 Fri Oct 31 13:46:04 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* docs/Options.html: Updated to specify new TAO_Resource_Factory
@@ -129,6 +138,12 @@ Fri Oct 31 03:00:09 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
  	access.  The default implementation does nothing.
 
 Fri Oct 31 01:03:05 1997    <irfan@TWOSTEP>
+
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp (main): obj was not declared.
+  	  Commented out use of obj in dmsg1.
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp (Cubit_Factory_i):
+ 	  numobjs_ was used before it was assigned.
 
 	* TAO/TAO_IDL/TAO_IDL.{mak,mdp}: Added VC++4.2 make files.
 

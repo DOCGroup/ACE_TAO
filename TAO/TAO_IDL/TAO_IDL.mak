@@ -43,10 +43,10 @@ CPP=cl.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
+# PROP Output_Dir ""
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
-OUTDIR=.\Release
+OUTDIR=.
 INTDIR=.\Release
 
 ALL : "$(OUTDIR)\TAO_IDL.exe"
@@ -147,8 +147,8 @@ CLEAN :
 	-@erase "$(INTDIR)\y.tab.obj"
 	-@erase "$(OUTDIR)\TAO_IDL.exe"
 
-"$(OUTDIR)" :
-    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "include" /I "be_include" /I "..\.." /D "NDEBUG" /D "_CONSOLE" /D "WIN32" /D IDL_CFE_VERSION=\"1.3.0\" /D CPP_LOCATION=\"cl\" /YX /c
@@ -281,10 +281,10 @@ LINK32_OBJS= \
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "Debug"
+# PROP Output_Dir ""
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir ""
-OUTDIR=.\Debug
+OUTDIR=.
 INTDIR=.\Debug
 
 ALL : "$(OUTDIR)\TAO_IDL.exe"
@@ -389,8 +389,8 @@ CLEAN :
 	-@erase "$(OUTDIR)\TAO_IDL.ilk"
 	-@erase "$(OUTDIR)\TAO_IDL.pdb"
 
-"$(OUTDIR)" :
-    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "include" /I "be_include" /I "..\.." /D "_DEBUG" /D "_CONSOLE" /D "WIN32" /D IDL_CFE_VERSION=\"1.3.0\" /D CPP_LOCATION=\"cl\" /YX /c
