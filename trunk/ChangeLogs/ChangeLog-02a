@@ -1,3 +1,17 @@
+Thu Jul 26 22:09:19 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.cpp (log): Extend behavior so that all printf
+          formatting conversion specifiers can be used with all legal
+          ACE_Log_Msg format characters. This allows the caller to line
+          up columns on any field, like line number or program name, or
+          thread ID. Thanks to Paul Caffrey <pcaffrey@iel.ie> for
+          motivating this extension.
+
+        * tests/Log_Msg_Test.cpp: Added a new function, test_format_specs,
+          that verifies the formatting. Right now it does not detect the
+          correctness of the strings produced - they have to be examined
+          in the log file to check. This needs to be fixed still.
+
 Thu Jul 26 11:48:16 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/count_lines:
