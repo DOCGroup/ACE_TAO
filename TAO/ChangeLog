@@ -1,3 +1,15 @@
+Fri Mar 28 13:31:41 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Transport.h (TAO_Transport): 
+	* tao/Codeset_Manager.cpp:
+	* tao/Codeset_Manager.h:
+	* tao/Codeset_Translator_Factory.h:
+	* tao/Codeset_Translator_Factory_T.h:
+	* tao/Invocation.cpp:
+	* tao/ORB_Core.cpp: Left //@@Phil comments for Phil Mesnier. The
+	  objective is to discuss and provide feedback on the translator
+	  stuff. 
+	
 Fri Mar 28 12:16:01 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * docs/tutorials/Quoter/AMI/client.dsp:
