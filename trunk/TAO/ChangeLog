@@ -1,3 +1,13 @@
+Thu Jan 13 11:55:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+
+	  Include "ace/OS_NS_unistd.h" to pull in ACE_OS::getpid()
+	  declaration.
+
+	  Replaced ACE_static_cast macro usage with standard C++
+	  static_cast<>.
+
 Thu Jan 13 11:52:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Concurrency/CC_command.cpp (execute):
