@@ -40,17 +40,19 @@ JAWS_Server::init (int argc, char *argv[])
 {
   this->parse_args (argc, argv);
 
-  JAWS_Thread_Pool_Singleton::instance ()->open (this->flags_,
-                                                 this->nthreads_,
-                                                 this->maxthreads_);
-
-  JAWS_Thread_Per_Singleton::instance ()->open (this->flags_,
-                                                this->maxthreads_);
-
   if (this->concurrency_ == 1)
-    this->policy_.concurrency (JAWS_Thread_Per_Singleton::instance ());
+    {
+      JAWS_Thread_Per_Singleton::instance ()->open (this->flags_,
+                                                    this->maxthreads_);
+      this->policy_.concurrency (JAWS_Thread_Per_Singleton::instance ());
+    }
   else
-    this->policy_.concurrency (JAWS_Thread_Pool_Singleton::instance ());
+    {
+      JAWS_Thread_Pool_Singleton::instance ()->open (this->flags_,
+                                                     this->nthreads_,
+                                                     this->maxthreads_);
+      this->policy_.concurrency (JAWS_Thread_Pool_Singleton::instance ());
+    }
 
 #if !defined (ACE_WIN32)
   this->dispatch_ = 0;
