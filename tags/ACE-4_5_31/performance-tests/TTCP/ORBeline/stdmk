@@ -1,0 +1,34 @@
+CC = CC 
+DEBUG = 
+
+ORBELINEDIR = $(ORBELINE_ROOT)
+
+ORBCC = $(ORBELINEDIR)/bin/orbeline -v _c -m _s
+
+CCINCLUDES = -I. -I$(ORBELINEDIR)/include
+
+CCFLAGS = $(CCINCLUDES) $(DEBUG)
+
+LIBPATH = -L$(ORBELINEDIR)/lib
+
+STDCC_LIBS = -lsocket -lnsl -ldl
+
+LIBIR = -lir
+LIBORB = -lorb -lorbinit
+LIBDII = -ldii -lir
+
+.SUFFIXES: .C .o .h .hh .cc
+
+.C.o:
+	$(CC) $(CCFLAGS) -c -o $@ $<
+ 
+.cc.o:
+	$(CC) $(CCFLAGS) -c -o $@ $<
+ 
+.C.cpp:
+	$(CC) -E $(CCFLAGS) $< > $@
+ 
+.cc.cpp:
+	$(CC) -E $(CCFLAGS) $< > $@
+
+
