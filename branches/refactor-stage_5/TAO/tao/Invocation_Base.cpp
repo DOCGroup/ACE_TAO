@@ -58,6 +58,13 @@ namespace TAO
     return this->details_.reply_service_context ();
   }
 #if TAO_HAS_INTERCEPTORS == 1
+
+  char *
+  Invocation_Base::operation_name (void)
+  {
+    return ACE_const_cast (char *, this->details_.opname ());
+  }
+
   Dynamic::ParameterList *
   Invocation_Base::arguments (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
