@@ -25,6 +25,13 @@
 
 #include "test_config.h"
 
+// IBM C Set++ just can't grok the templates in here for auto template
+// instantiation. It ends up overwriting a tempinc/*.C file and mashes
+// its contents.
+#if !defined (__xlC__) || (__xlC__ > 0x0301)
+
+#include "Cached_Conn_Test.h"
+
 #if defined(__GNUC__) && __GNUC__ == 2 && __GNUC_MINOR__ < 8
 #define ACE_HAS_BROKEN_EXTENDED_TEMPLATES
 #endif /* __GNUC__ */
@@ -53,15 +60,6 @@ USELIB("..\ace\aced.lib");
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 static int debug = 0;
-
-class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-{
-public:
-
-  Svc_Handler (ACE_Thread_Manager *t = 0);
-  int open (void *v = 0);
-  int close (u_long flags = 0);
-};
 
 Svc_Handler::Svc_Handler (ACE_Thread_Manager *t)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (t)
@@ -449,6 +447,22 @@ main (int argc,
     }
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
+
+#else   /* Do this for C Set++ 3.1 */
+
+int
+main (int argc,
+      ASYS_TCHAR *argv[])
+{
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+
+  ACE_START_TEST (ASYS_TEXT ("Cached_Conn_Test"));
+  ACE_ERROR ((LM_INFO,
+              ASYS_TEXT ("C Set++ won't build this test correctly\n")));
+
+#endif /* !__xlC__ || __xlC > 0x0301 */
+
   ACE_END_TEST;
   return 0;
 }
