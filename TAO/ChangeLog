@@ -1,3 +1,9 @@
+Thu May  1 10:27:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Param_Test/tmplinst.cpp:
+
+          Updated parameter list in several of the explicit instantiations.
+
 Thu May  1 09:51:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
