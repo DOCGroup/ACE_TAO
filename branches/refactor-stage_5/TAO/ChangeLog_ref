@@ -1,3 +1,16 @@
+Mon Aug  4 22:27:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ObjectKey_Table.h:
+	* tao/Sequence.h:
+	* tao/BiDir_GIOP/BiDirPolicyC.h:
+	* tao/DynamicAny/DynamicAnyC.cpp:
+	* tao/DynamicAny/DynamicAnyC.h:
+	* tao/DynamicInterface/Context.h:
+	* tao/DynamicInterface/ExceptionList.h:
+	* tao/IORManipulation/IORC.h:
+	* tao/IORTable/IORTableC.h:
+	* tao/RTCORBA/RTCORBAC.h: Fixe compile errors.
+
 Mon Aug  4 10:55:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/corba.h:

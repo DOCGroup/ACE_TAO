@@ -323,15 +323,13 @@ TAO_NAMESPACE  TAO_IOP
 
   typedef
     TAO_Objref_Var_T<
-        TAO_IOR_Property,
-        tao_TAO_IOR_Property_life
+        TAO_IOR_Property
       >
     TAO_IOR_Property_var;
 
   typedef
     TAO_Objref_Out_T<
-        TAO_IOR_Property,
-        tao_TAO_IOR_Property_life
+        TAO_IOR_Property
       >
     TAO_IOR_Property_out;
 
@@ -476,15 +474,13 @@ TAO_NAMESPACE  TAO_IOP
 
   typedef
     TAO_Objref_Var_T<
-        TAO_IOR_Manipulation,
-        tao_TAO_IOR_Manipulation_life
+        TAO_IOR_Manipulation
       >
     TAO_IOR_Manipulation_var;
 
   typedef
     TAO_Objref_Out_T<
-        TAO_IOR_Manipulation,
-        tao_TAO_IOR_Manipulation_life
+        TAO_IOR_Manipulation
       >
     TAO_IOR_Manipulation_out;
 

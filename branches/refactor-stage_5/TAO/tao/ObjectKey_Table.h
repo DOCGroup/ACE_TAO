@@ -22,6 +22,7 @@
 
 #include "tao/TAO_Export.h"
 #include "ace/Functor.h"
+#include "ace/Null_Mutex.h"
 
 
 // Forward declarations

@@ -64,31 +64,29 @@
 
 TAO_NAMESPACE  IORTable
 {
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
 #if !defined (_IORTABLE_LOCATOR__ODDS_N_ENDS_CH_)
 #define _IORTABLE_LOCATOR__ODDS_N_ENDS_CH_
-  
+
   class Locator;
   typedef Locator *Locator_ptr;
   struct tao_Locator_life;
-  
+
   typedef
     TAO_Objref_Var_T<
-        Locator,
-        tao_Locator_life
+        Locator
       >
     Locator_var;
-  
+
   typedef
     TAO_Objref_Out_T<
-        Locator,
-        tao_Locator_life
+        Locator
       >
     Locator_out;
-  
+
   struct TAO_IORTable_Export tao_Locator_life
   {
     static Locator_ptr tao_duplicate (Locator_ptr);
@@ -99,7 +97,7 @@ TAO_NAMESPACE  IORTable
         TAO_OutputCDR &
       );
   };
-  
+
   struct TAO_IORTable_Export tao_Locator_cast
   {
     static Locator_ptr tao_narrow (
@@ -110,23 +108,23 @@ TAO_NAMESPACE  IORTable
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_IORTABLE_ALREADYBOUND_CH_)
 #define _IORTABLE_ALREADYBOUND_CH_
-  
+
   class TAO_IORTable_Export AlreadyBound : public CORBA::UserException
   {
   public:
-    
+
     AlreadyBound (void);
     AlreadyBound (const AlreadyBound &);
     ~AlreadyBound (void);
 
     AlreadyBound &operator= (const AlreadyBound &);
-    
+
     static AlreadyBound *_downcast (CORBA::Exception *);
     static CORBA::Exception *_alloc (void);
 
@@ -138,34 +136,34 @@ TAO_NAMESPACE  IORTable
         TAO_OutputCDR &
         ACE_ENV_ARG_DECL_NOT_USED
       ) const;
-    
+
     virtual void _tao_decode (
         TAO_InputCDR &
         ACE_ENV_ARG_DECL_NOT_USED
       );
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:125
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_IORTABLE_NOTFOUND_CH_)
 #define _IORTABLE_NOTFOUND_CH_
-  
+
   class TAO_IORTable_Export NotFound : public CORBA::UserException
   {
   public:
-    
+
     NotFound (void);
     NotFound (const NotFound &);
     ~NotFound (void);
 
     NotFound &operator= (const NotFound &);
-    
+
     static NotFound *_downcast (CORBA::Exception *);
     static CORBA::Exception *_alloc (void);
 
@@ -177,42 +175,40 @@ TAO_NAMESPACE  IORTable
         TAO_OutputCDR &
         ACE_ENV_ARG_DECL_NOT_USED
       ) const;
-    
+
     virtual void _tao_decode (
         TAO_InputCDR &
         ACE_ENV_ARG_DECL_NOT_USED
       );
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:125
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
 #if !defined (_IORTABLE_TABLE__ODDS_N_ENDS_CH_)
 #define _IORTABLE_TABLE__ODDS_N_ENDS_CH_
-  
+
   class Table;
   typedef Table *Table_ptr;
   struct tao_Table_life;
-  
+
   typedef
     TAO_Objref_Var_T<
-        Table,
-        tao_Table_life
+        Table
       >
     Table_var;
-  
+
   typedef
     TAO_Objref_Out_T<
-        Table,
-        tao_Table_life
+        Table
       >
     Table_out;
-  
+
   struct TAO_IORTable_Export tao_Table_life
   {
     static Table_ptr tao_duplicate (Table_ptr);
@@ -223,7 +219,7 @@ TAO_NAMESPACE  IORTable
         TAO_OutputCDR &
       );
   };
-  
+
   struct TAO_IORTable_Export tao_Table_cast
   {
     static Table_ptr tao_narrow (
@@ -234,13 +230,13 @@ TAO_NAMESPACE  IORTable
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_IORTABLE_TABLE_CH_)
 #define _IORTABLE_TABLE_CH_
-  
+
   class TAO_IORTable_Export Table
     : public virtual CORBA::Object
   {
@@ -248,30 +244,30 @@ TAO_NAMESPACE  IORTable
     typedef Table_ptr _ptr_type;
     typedef Table_var _var_type;
     static int _tao_class_id;
-    
+
     // The static operations.
     static Table_ptr _duplicate (Table_ptr obj);
-    
+
     static Table_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static Table_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static Table_ptr _nil (void)
       {
         return (Table_ptr)0;
       }
-    
-    
-    
+
+
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void bind (
         const char * object_key,
         const char * IOR
@@ -281,10 +277,10 @@ TAO_NAMESPACE  IORTable
         CORBA::SystemException
         , IORTable::AlreadyBound
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void rebind (
         const char * object_key,
         const char * IOR
@@ -293,10 +289,10 @@ TAO_NAMESPACE  IORTable
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void unbind (
         const char * object_key
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -305,10 +301,10 @@ TAO_NAMESPACE  IORTable
         CORBA::SystemException
         , IORTable::NotFound
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void set_locator (
         IORTable::Locator_ptr the_locator
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -316,32 +312,32 @@ TAO_NAMESPACE  IORTable
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
-    
+
     virtual void *_tao_QueryInterface (ptrdiff_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     Table (void);
     virtual ~Table (void);
-  
+
   private:
     Table (const Table &);
     void operator= (const Table &);
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_IORTABLE_LOCATOR_CH_)
 #define _IORTABLE_LOCATOR_CH_
-  
+
   class TAO_IORTable_Export Locator
     : public virtual CORBA::Object
   {
@@ -349,30 +345,30 @@ TAO_NAMESPACE  IORTable
     typedef Locator_ptr _ptr_type;
     typedef Locator_var _var_type;
     static int _tao_class_id;
-    
+
     // The static operations.
     static Locator_ptr _duplicate (Locator_ptr obj);
-    
+
     static Locator_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static Locator_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static Locator_ptr _nil (void)
       {
         return (Locator_ptr)0;
       }
-    
-    
-    
+
+
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual char * locate (
         const char * object_key
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -381,19 +377,19 @@ TAO_NAMESPACE  IORTable
         CORBA::SystemException
         , IORTable::NotFound
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
-    
+
     virtual void *_tao_QueryInterface (ptrdiff_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     Locator (void);
     virtual ~Locator (void);
-  
+
   private:
     Locator (const Locator &);
     void operator= (const Locator &);
@@ -446,4 +442,3 @@ TAO_IORTable_Export CORBA::Boolean operator>> (TAO_InputCDR &, IORTable::NotFoun
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */
-

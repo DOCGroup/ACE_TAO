@@ -66,57 +66,55 @@
 
 TAO_NAMESPACE  BiDirPolicy
 {
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
-  
+
   typedef CORBA::UShort BidirectionalPolicyValue;
   typedef CORBA::UShort_out BidirectionalPolicyValue_out;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_BidirectionalPolicyValue;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const BiDirPolicy::BidirectionalPolicyValue NORMAL = 0U;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const BiDirPolicy::BidirectionalPolicyValue BOTH = 1U;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const CORBA::PolicyType BIDIRECTIONAL_POLICY_TYPE = 37U;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
 #if !defined (_BIDIRPOLICY_BIDIRECTIONALPOLICY__ODDS_N_ENDS_CH_)
 #define _BIDIRPOLICY_BIDIRECTIONALPOLICY__ODDS_N_ENDS_CH_
-  
+
   class BidirectionalPolicy;
   typedef BidirectionalPolicy *BidirectionalPolicy_ptr;
   struct tao_BidirectionalPolicy_life;
-  
+
   typedef
     TAO_Objref_Var_T<
-        BidirectionalPolicy,
-        tao_BidirectionalPolicy_life
+        BidirectionalPolicy
       >
     BidirectionalPolicy_var;
-  
+
   typedef
     TAO_Objref_Out_T<
-        BidirectionalPolicy,
-        tao_BidirectionalPolicy_life
+        BidirectionalPolicy
       >
     BidirectionalPolicy_out;
-  
+
   struct TAO_BiDirGIOP_Export tao_BidirectionalPolicy_life
   {
     static BidirectionalPolicy_ptr tao_duplicate (BidirectionalPolicy_ptr);
@@ -127,7 +125,7 @@ TAO_NAMESPACE  BiDirPolicy
         TAO_OutputCDR &
       );
   };
-  
+
   struct TAO_BiDirGIOP_Export tao_BidirectionalPolicy_cast
   {
     static BidirectionalPolicy_ptr tao_narrow (
@@ -138,13 +136,13 @@ TAO_NAMESPACE  BiDirPolicy
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_BIDIRPOLICY_BIDIRECTIONALPOLICY_CH_)
 #define _BIDIRPOLICY_BIDIRECTIONALPOLICY_CH_
-  
+
   class TAO_BiDirGIOP_Export BidirectionalPolicy
     : public virtual CORBA::Policy
   {
@@ -152,59 +150,59 @@ TAO_NAMESPACE  BiDirPolicy
     typedef BidirectionalPolicy_ptr _ptr_type;
     typedef BidirectionalPolicy_var _var_type;
     static int _tao_class_id;
-    
+
     // The static operations.
     static BidirectionalPolicy_ptr _duplicate (BidirectionalPolicy_ptr obj);
-    
+
     static BidirectionalPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static BidirectionalPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static BidirectionalPolicy_ptr _nil (void)
       {
         return (BidirectionalPolicy_ptr)0;
       }
-    
-    
-    
+
+
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual BiDirPolicy::BidirectionalPolicyValue value (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
-    
+
     virtual void *_tao_QueryInterface (ptrdiff_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     BidirectionalPolicy (void);
     virtual ~BidirectionalPolicy (void);
-  
+
   private:
     BidirectionalPolicy (const BidirectionalPolicy &);
     void operator= (const BidirectionalPolicy &);
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_BidirectionalPolicy;
 
 // TAO_IDL - Generated from
@@ -240,4 +238,3 @@ TAO_NAMESPACE_CLOSE // module BiDirPolicy
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */
-

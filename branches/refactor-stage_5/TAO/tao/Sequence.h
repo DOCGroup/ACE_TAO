@@ -25,6 +25,7 @@
 #include "tao/Managed_Types.h"
 #include "ace/CORBA_macros.h"
 #include "ace/Log_Msg.h"        /* For "ACE_ASSERT" */
+#include "ace/OS.h"        /* For "ACE_ASSERT" */
 #include "ace/Message_Block.h"
 
 
