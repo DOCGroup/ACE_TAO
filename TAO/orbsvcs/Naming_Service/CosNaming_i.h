@@ -11,6 +11,7 @@
 //   CosNaming_i.h
 //
 // = AUTHOR
+//    Marina Spivak <marina@cs.wustl.edu> &
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
 // 
 // ============================================================================
