@@ -1,3 +1,10 @@
+Wed Jul 21 05:04:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB.cpp (shutdown): Instead of wapup_all_thread, we need to
+	  use end_reactor_event_loop () to notify the reactor it has been
+	  deactivated.  This will ensure all ORB threads stop handling
+	  events immediately.
+
 Wed Jul 21 02:36:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/Naming_Service/Naming_Service.dsp:
