@@ -13,6 +13,10 @@ OBJFILES = \
 	$(OBJDIR)\Default_ORTC.obj \
 	$(OBJDIR)\Default_Servant_Dispatcher.obj \
 	$(OBJDIR)\Direct_Object_Proxy_Impl.obj \
+	$(OBJDIR)\ImR_LocatorC.obj \
+	$(OBJDIR)\ImR_LocatorS.obj \
+	$(OBJDIR)\ImR_ActivatorC.obj \
+	$(OBJDIR)\ImR_ActivatorS.obj \
 	$(OBJDIR)\ImplRepoC.obj \
 	$(OBJDIR)\ImplRepoS.obj \
         $(OBJDIR)\IORInfo.obj \

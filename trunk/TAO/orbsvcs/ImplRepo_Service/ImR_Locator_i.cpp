@@ -1082,24 +1082,24 @@ ImR_Locator_i::choose_activator_using_location (const char *location
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Manager<location, object_ref, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<location, object_ref, ACE_Hash<location>, ACE_Equal_To<location>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<location, object_ref, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<location, object_ref, ACE_Hash<location>, ACE_Equal_To<location>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<location, object_ref>;
-template class ACE_Hash_Map_Reverse_Iterator<location, object_ref, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<location, object_ref, ACE_Hash<location>, ACE_Equal_To<location>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<location, object_ref, ACE_Hash<location>, ACE_Equal_To<location>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_CString, CORBA::Object_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, CORBA::Object_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString, CORBA::Object_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, CORBA::Object_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ACE_CString, CORBA::Object_ptr>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, CORBA::Object_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, CORBA::Object_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, CORBA::Object_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Hash_Map_Manager<location,object_ref,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<location, object_ref, ACE_Hash<location>, ACE_Equal_To<location>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<location,object_ref,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<location, object_ref, ACE_Hash<location>, ACE_Equal_To<location>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<location, object_ref>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<location, object_ref, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<location, object_ref, ACE_Hash<location>, ACE_Equal_To<location>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<location, object_ref, ACE_Hash<location>, ACE_Equal_To<location>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,CORBA::Object_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, CORBA::Object_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,CORBA::Object_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, CORBA::Object_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, CORBA::Object_ptr>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, CORBA::Object_ptr, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, CORBA::Object_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, CORBA::Object_ptr, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
