@@ -582,7 +582,7 @@ TAO_IIOP_Transport::get_listen_point (
 
       if (iiop_acceptor->hostname (this->orb_core_,
                                    ACE_const_cast (ACE_INET_Addr,
-                                                   tmp_addr[index]),
+                                                   *(tmp_addr + index),
                                    acceptor_interface) == -1)
           continue;
 
