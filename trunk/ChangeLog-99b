@@ -1,3 +1,12 @@
+Sat May 08 19:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/RB_Tree.{cpp, h, i}
+          tests/RB_Tree_Test.cpp: finished implementing all methods for the 
+ 	  ACE_Hash_Map_Manager_Ex compliant interface, fixed a bug in the
+	  internal tree search method (thanks to David Levine for pointing 
+	  this out), and added a new section to the test that exercises the
+	  new bind and unbind methods.
+
 Sat May 08 17:09:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * apps/Gateway/Gateway/Event_Channel.cpp (bind_proxy,subscribe):

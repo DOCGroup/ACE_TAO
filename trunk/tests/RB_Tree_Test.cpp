@@ -62,141 +62,334 @@ main (int, ASYS_TCHAR *[])
   // Local variables used to index arrays.
   int i, k;
 
-  // Construct four RB_Trees.  Specialization of the ACE_Less_Than template
+  // Construct eight RB_Trees.  Specialization of the ACE_Less_Than template
   // for character strings performs strcmp style string comparisons rather
   // than < operator comparison of the pointers themselves.
-  ACE_RB_Tree<int, int, ACE_Less_Than<int>, ACE_Null_Mutex> int_int_tree;
-  ACE_RB_Tree<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex> int_str_tree;
-  ACE_RB_Tree<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex> str_int_tree;
-  ACE_RB_Tree<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex> str_str_tree;
+  ACE_RB_Tree<int, int, ACE_Less_Than<int>, ACE_Null_Mutex> int_int_tree1, int_int_tree2;
+  ACE_RB_Tree<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex> int_str_tree1, int_str_tree2;
+  ACE_RB_Tree<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex> str_int_tree1, str_int_tree2;
+  ACE_RB_Tree<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex> str_str_tree1, str_str_tree2;
 
+  // First, test the new ACE_Hash_Map_Manager_Ex compliant interface.
+  // Fill in each tree with the key and item from the appropriate arrays,
+  // using the shuffle indexes to create different insertion orders.
+  for (i = 0; i < RB_TREE_TEST_ENTRIES; ++i)
+    {
+      char *str_item;
+      int int_item;
+
+      k = int_int_index [i];
+      ACE_ASSERT ((k >= 0) && (k < RB_TREE_TEST_ENTRIES));
+      int_item = -1;
+      int_int_tree1.insert (number_integers [k], number_integers [k]);
+      ACE_ASSERT ((int_int_tree1.find (number_integers [k], int_item) == 0) &&
+                  (int_item == number_integers [k]));
+
+      k = int_str_index [i];
+      ACE_ASSERT ((k >= 0) && (k < RB_TREE_TEST_ENTRIES));
+      str_item = 0;
+      int_str_tree1.insert (number_integers [k], number_strings [k]);
+      ACE_ASSERT ((int_str_tree1.find (number_integers [k], str_item) == 0) &&
+                  (str_item == number_strings [k]));
+
+      k = str_int_index [i];
+      ACE_ASSERT ((k >= 0) && (k < RB_TREE_TEST_ENTRIES));
+      int_item = -1;
+      str_int_tree1.insert (number_strings [k], number_integers [k]);
+      ACE_ASSERT ((str_int_tree1.find (number_strings [k], int_item) == 0) &&
+                  (int_item == number_integers [k]));
+
+      k = str_str_index [i];
+      ACE_ASSERT ((k >= 0) && (k < RB_TREE_TEST_ENTRIES));
+      str_item = 0;
+      str_str_tree1.insert (number_strings [k], number_strings [k]);
+      ACE_ASSERT ((str_str_tree1.find (number_strings [k], str_item) == 0) &&
+                  (str_item == number_strings [k]));
+    }
+
+
+  // Second, test the deprecated interface.  This portion of the test will
+  // go away when the deprecated interface is removed
   // Fill in each tree with the key and item from the appropriate arrays,
   // using the shuffle indexes to create different insertion orders.
   for (i = 0; i < RB_TREE_TEST_ENTRIES; ++i)
     {
       k = int_int_index [i];
       ACE_ASSERT ((k >= 0) && (k < RB_TREE_TEST_ENTRIES));
-      int_int_tree.insert (number_integers [k], number_integers [k]);
-      ACE_ASSERT ((int_int_tree.find (number_integers [k]) != 0) &&
-                  (*int_int_tree.find (number_integers [k]) ==
+      int_int_tree2.insert (number_integers [k], number_integers [k]);
+      ACE_ASSERT ((int_int_tree2.find (number_integers [k]) != 0) &&
+                  (*int_int_tree2.find (number_integers [k]) ==
                    number_integers [k]));
 
       k = int_str_index [i];
       ACE_ASSERT ((k >= 0) && (k < RB_TREE_TEST_ENTRIES));
-      int_str_tree.insert (number_integers [k], number_strings [k]);
-      ACE_ASSERT ((int_str_tree.find (number_integers [k]) != 0) &&
-                  (*int_str_tree.find (number_integers [k]) ==
+      int_str_tree2.insert (number_integers [k], number_strings [k]);
+      ACE_ASSERT ((int_str_tree2.find (number_integers [k]) != 0) &&
+                  (*int_str_tree2.find (number_integers [k]) ==
                    number_strings [k]));
 
       k = str_int_index [i];
       ACE_ASSERT ((k >= 0) && (k < RB_TREE_TEST_ENTRIES));
-      str_int_tree.insert (number_strings [k], number_integers [k]);
-      ACE_ASSERT ((str_int_tree.find (number_strings [k]) != 0) &&
-                  (*str_int_tree.find (number_strings [k]) ==
+      str_int_tree2.insert (number_strings [k], number_integers [k]);
+      ACE_ASSERT ((str_int_tree2.find (number_strings [k]) != 0) &&
+                  (*str_int_tree2.find (number_strings [k]) ==
                    number_integers [k]));
 
       k = str_str_index [i];
       ACE_ASSERT ((k >= 0) && (k < RB_TREE_TEST_ENTRIES));
-      str_str_tree.insert (number_strings [k], number_strings [k]);
-      ACE_ASSERT ((str_str_tree.find (number_strings [k]) != 0) &&
-                  (*str_str_tree.find (number_strings [k]) ==
+      str_str_tree2.insert (number_strings [k], number_strings [k]);
+      ACE_ASSERT ((str_str_tree2.find (number_strings [k]) != 0) &&
+                  (*str_str_tree2.find (number_strings [k]) ==
                    number_strings [k]));
     }
 
-  // Construct an iterator for each of the trees.
-  ACE_RB_Tree_Iterator<int, int, ACE_Less_Than<int>, ACE_Null_Mutex> int_int_iter (int_int_tree);
-  ACE_RB_Tree_Iterator<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex> int_str_iter (int_str_tree);
-  ACE_RB_Tree_Iterator<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex> str_int_iter (str_int_tree);
-  ACE_RB_Tree_Iterator<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex> str_str_iter (str_str_tree);
+
+  // Construct a forward and reverse iterator for each of the trees.
+
+  ACE_RB_Tree_Iterator<int, int, ACE_Less_Than<int>, ACE_Null_Mutex> int_int_iter1 (int_int_tree1);
+  ACE_RB_Tree_Iterator<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex> int_str_iter1 (int_str_tree1);
+  ACE_RB_Tree_Iterator<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex> str_int_iter1 (str_int_tree1);
+  ACE_RB_Tree_Iterator<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex> str_str_iter1 (str_str_tree1);
+
+  ACE_RB_Tree_Reverse_Iterator<int, int, ACE_Less_Than<int>, ACE_Null_Mutex> int_int_rev_iter1 (int_int_tree1);
+  ACE_RB_Tree_Reverse_Iterator<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex> int_str_rev_iter1 (int_str_tree1);
+  ACE_RB_Tree_Reverse_Iterator<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex> str_int_rev_iter1 (str_int_tree1);
+  ACE_RB_Tree_Reverse_Iterator<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex> str_str_rev_iter1 (str_str_tree1);
+
+  ACE_RB_Tree_Iterator<int, int, ACE_Less_Than<int>, ACE_Null_Mutex> int_int_iter2 (int_int_tree2);
+  ACE_RB_Tree_Iterator<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex> int_str_iter2 (int_str_tree2);
+  ACE_RB_Tree_Iterator<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex> str_int_iter2 (str_int_tree2);
+  ACE_RB_Tree_Iterator<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex> str_str_iter2 (str_str_tree2);
+
+  ACE_RB_Tree_Reverse_Iterator<int, int, ACE_Less_Than<int>, ACE_Null_Mutex> int_int_rev_iter2 (int_int_tree2);
+  ACE_RB_Tree_Reverse_Iterator<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex> int_str_rev_iter2 (int_str_tree2);
+  ACE_RB_Tree_Reverse_Iterator<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex> str_int_rev_iter2 (str_int_tree2);
+  ACE_RB_Tree_Reverse_Iterator<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex> str_str_rev_iter2 (str_str_tree2);
 
   // Iterate over each of the trees, making sure their entries
   // are in the same relative order (i.e., the integers and strings
   // represent the same values at each respective position in the tree).
   for (i = 0; i < RB_TREE_TEST_ENTRIES; ++i)
     {
-      char **str_item;
-      int *int_item;
+      char *str_item;
+      int int_item;
 
-      int_item = int_int_iter.item ();
-      ACE_ASSERT (int_item != 0);
-      ACE_ASSERT (*int_item == number_integers [i]);
+      int_item = (*int_int_iter1).item ();
+      ACE_ASSERT (int_item == number_integers [i]);
 
-      int_item = str_int_iter.item ();
-      ACE_ASSERT (int_item != 0);
-      ACE_ASSERT (*int_item == number_integers [i]);
+      int_item = (*int_int_rev_iter1).item ();
+      ACE_ASSERT (int_item == number_integers [RB_TREE_TEST_ENTRIES - i - 1]);
 
-      str_item = int_str_iter.item ();
-      ACE_ASSERT (str_item != 0);
-      ACE_ASSERT (*str_item == number_strings [i]);
+      int_item = (*str_int_iter1).item ();
+      ACE_ASSERT (int_item == number_integers [i]);
 
-      str_item = str_str_iter.item ();
-      ACE_ASSERT (str_item != 0);
-      ACE_ASSERT (*str_item == number_strings [i]);
+      int_item = (*str_int_rev_iter1).item ();
+      ACE_ASSERT (int_item == number_integers [RB_TREE_TEST_ENTRIES - i - 1]);
+
+      str_item = (*int_str_iter1).item ();
+      ACE_ASSERT (str_item == number_strings [i]);
+
+      str_item = (*int_str_rev_iter1).item ();
+      ACE_ASSERT (str_item == number_strings [RB_TREE_TEST_ENTRIES - i - 1]);
+
+      str_item = (*str_str_iter1).item ();
+      ACE_ASSERT (str_item == number_strings [i]);
+
+      str_item = (*str_str_rev_iter1).item ();
+      ACE_ASSERT (str_item == number_strings [RB_TREE_TEST_ENTRIES - i - 1]);
+
+      int_item = (*int_int_iter2).item ();
+      ACE_ASSERT (int_item == number_integers [i]);
+
+      int_item = (*int_int_rev_iter2).item ();
+      ACE_ASSERT (int_item == number_integers [RB_TREE_TEST_ENTRIES - i - 1]);
+
+      int_item = (*str_int_iter2).item ();
+      ACE_ASSERT (int_item == number_integers [i]);
+
+      int_item = (*str_int_rev_iter2).item ();
+      ACE_ASSERT (int_item == number_integers [RB_TREE_TEST_ENTRIES - i - 1]);
+
+      str_item = (*int_str_iter2).item ();
+      ACE_ASSERT (str_item == number_strings [i]);
+
+      str_item = (*int_str_rev_iter2).item ();
+      ACE_ASSERT (str_item == number_strings [RB_TREE_TEST_ENTRIES - i - 1]);
+
+      str_item = (*str_str_iter2).item ();
+      ACE_ASSERT (str_item == number_strings [i]);
+
+      str_item = (*str_str_rev_iter2).item ();
+      ACE_ASSERT (str_item == number_strings [RB_TREE_TEST_ENTRIES - i - 1]);
+
 
       // Advance each iterator.
-      int_int_iter.next ();
-      int_str_iter.next ();
-      str_int_iter.next ();
-      str_str_iter.next ();
+      ++int_int_iter1;
+      ++int_str_iter1;
+      ++str_int_iter1;
+      ++str_str_iter1;
+      ++int_int_rev_iter1;
+      ++int_str_rev_iter1;
+      ++str_int_rev_iter1;
+      ++str_str_rev_iter1;
+      ++int_int_iter2;
+      ++int_str_iter2;
+      ++str_int_iter2;
+      ++str_str_iter2;
+      ++int_int_rev_iter2;
+      ++int_str_rev_iter2;
+      ++str_int_rev_iter2;
+      ++str_str_rev_iter2;
     }
 
   // Make sure each item in each tree has been visited
-  ACE_ASSERT (int_int_iter.is_done () == 1);
-  ACE_ASSERT (int_str_iter.is_done () == 1);
-  ACE_ASSERT (str_int_iter.is_done () == 1);
-  ACE_ASSERT (str_str_iter.is_done () == 1);
+  ACE_ASSERT (int_int_iter1.done () == 1);
+  ACE_ASSERT (int_str_iter1.done () == 1);
+  ACE_ASSERT (str_int_iter1.done () == 1);
+  ACE_ASSERT (str_str_iter1.done () == 1);
+  ACE_ASSERT (int_int_rev_iter1.done () == 1);
+  ACE_ASSERT (int_str_rev_iter1.done () == 1);
+  ACE_ASSERT (str_int_rev_iter1.done () == 1);
+  ACE_ASSERT (str_str_rev_iter1.done () == 1);
+  ACE_ASSERT (int_int_iter2.done () == 1);
+  ACE_ASSERT (int_str_iter2.done () == 1);
+  ACE_ASSERT (str_int_iter2.done () == 1);
+  ACE_ASSERT (str_str_iter2.done () == 1);
+  ACE_ASSERT (int_int_rev_iter2.done () == 1);
+  ACE_ASSERT (int_str_rev_iter2.done () == 1);
+  ACE_ASSERT (str_int_rev_iter2.done () == 1);
+  ACE_ASSERT (str_str_rev_iter2.done () == 1);
 
-  // Remove the even numbered entries from each of the trees.
+  // Remove the even numbered entries from each of the trees.  New interface.
   for (i = 0; i < RB_TREE_TEST_ENTRIES; i += 2)
     {
-      ACE_ASSERT (int_int_tree.remove (number_integers [i]) == 1);
-      ACE_ASSERT (int_str_tree.remove (number_integers [i]) == 1);
-      ACE_ASSERT (str_int_tree.remove (number_strings [i]) == 1);
-      ACE_ASSERT (str_str_tree.remove (number_strings [i]) == 1);
+      ACE_ASSERT (int_int_tree1.unbind (number_integers [i]) == 0);
+      ACE_ASSERT (int_str_tree1.unbind (number_integers [i]) == 0);
+      ACE_ASSERT (str_int_tree1.unbind (number_strings [i]) == 0);
+      ACE_ASSERT (str_str_tree1.unbind (number_strings [i]) == 0);
+    }
+
+  // Remove the even numbered entries from each of the trees.  Deprecated interface.
+  for (i = 0; i < RB_TREE_TEST_ENTRIES; i += 2)
+    {
+      ACE_ASSERT (int_int_tree2.remove (number_integers [i]) == 1);
+      ACE_ASSERT (int_str_tree2.remove (number_integers [i]) == 1);
+      ACE_ASSERT (str_int_tree2.remove (number_strings [i]) == 1);
+      ACE_ASSERT (str_str_tree2.remove (number_strings [i]) == 1);
     }
 
   // Reset iterators
-  int_int_iter.first ();
-  int_str_iter.first ();
-  str_int_iter.first ();
-  str_str_iter.first ();
+
+  int_int_iter1 = int_int_tree1.begin ();
+  int_str_iter1 = int_str_tree1.begin ();
+  str_int_iter1 = str_int_tree1.begin ();
+  str_str_iter1 = str_str_tree1.begin ();
+  int_int_rev_iter1 = int_int_tree1.rbegin ();
+  int_str_rev_iter1 = int_str_tree1.rbegin ();
+  str_int_rev_iter1 = str_int_tree1.rbegin ();
+  str_str_rev_iter1 = str_str_tree1.rbegin ();
+  int_int_iter2 = int_int_tree2.begin ();
+  int_str_iter2 = int_str_tree2.begin ();
+  str_int_iter2 = str_int_tree2.begin ();
+  str_str_iter2 = str_str_tree2.begin ();
+  int_int_rev_iter2 = int_int_tree2.rbegin ();
+  int_str_rev_iter2 = int_str_tree2.rbegin ();
+  str_int_rev_iter2 = str_int_tree2.rbegin ();
+  str_str_rev_iter2 = str_str_tree2.rbegin ();
+
 
   // Iterate over each of the trees, making sure their entries are
   // still in the same relative order (i.e., the integers and strings
   // represent the same values at each respective position in the tree).
   for (i = 1; i < RB_TREE_TEST_ENTRIES; i += 2)
     {
-      char **str_item;
-      int *int_item;
+      char *str_item;
+      int int_item;
 
-      int_item = int_int_iter.item ();
-      ACE_ASSERT (int_item != 0);
-      ACE_ASSERT (*int_item == number_integers [i]);
+      int_item = (*int_int_iter1).item ();
+      ACE_ASSERT (int_item == number_integers [i]);
 
-      int_item = str_int_iter.item ();
-      ACE_ASSERT (int_item != 0);
-      ACE_ASSERT (*int_item == number_integers [i]);
+      int_item = (*int_int_rev_iter1).item ();
+      ACE_ASSERT (int_item == number_integers [RB_TREE_TEST_ENTRIES - i]);
 
-      str_item = int_str_iter.item ();
-      ACE_ASSERT (str_item != 0);
-      ACE_ASSERT (*str_item == number_strings [i]);
+      int_item = (*str_int_iter1).item ();
+      ACE_ASSERT (int_item == number_integers [i]);
 
-      str_item = str_str_iter.item ();
-      ACE_ASSERT (str_item != 0);
-      ACE_ASSERT (*str_item == number_strings [i]);
+      int_item = (*str_int_rev_iter1).item ();
+      ACE_ASSERT (int_item == number_integers [RB_TREE_TEST_ENTRIES - i]);
 
-      // Advance each iterator.
-      int_int_iter.next ();
-      int_str_iter.next ();
-      str_int_iter.next ();
-      str_str_iter.next ();
+      str_item = (*int_str_iter1).item ();
+      ACE_ASSERT (str_item == number_strings [i]);
+
+      str_item = (*int_str_rev_iter1).item ();
+      ACE_ASSERT (str_item == number_strings [RB_TREE_TEST_ENTRIES - i]);
+
+      str_item = (*str_str_iter1).item ();
+      ACE_ASSERT (str_item == number_strings [i]);
+
+      str_item = (*str_str_rev_iter1).item ();
+      ACE_ASSERT (str_item == number_strings [RB_TREE_TEST_ENTRIES - i]);
+
+      int_item = (*int_int_iter2).item ();
+      ACE_ASSERT (int_item == number_integers [i]);
+
+      int_item = (*int_int_rev_iter2).item ();
+      ACE_ASSERT (int_item == number_integers [RB_TREE_TEST_ENTRIES - i]);
+
+      int_item = (*str_int_iter2).item ();
+      ACE_ASSERT (int_item == number_integers [i]);
+
+      int_item = (*str_int_rev_iter2).item ();
+      ACE_ASSERT (int_item == number_integers [RB_TREE_TEST_ENTRIES - i]);
+
+      str_item = (*int_str_iter2).item ();
+      ACE_ASSERT (str_item == number_strings [i]);
+
+      str_item = (*int_str_rev_iter2).item ();
+      ACE_ASSERT (str_item == number_strings [RB_TREE_TEST_ENTRIES - i]);
+
+      str_item = (*str_str_iter2).item ();
+      ACE_ASSERT (str_item == number_strings [i]);
+
+      str_item = (*str_str_rev_iter2).item ();
+      ACE_ASSERT (str_item == number_strings [RB_TREE_TEST_ENTRIES - i]);
+
+      // Advance each iterator via postfix increment.
+      int_int_iter1++;
+      int_str_iter1++;
+      str_int_iter1++;
+      str_str_iter1++;
+      int_int_rev_iter1++;
+      int_str_rev_iter1++;
+      str_int_rev_iter1++;
+      str_str_rev_iter1++;
+      int_int_iter2++;
+      int_str_iter2++;
+      str_int_iter2++;
+      str_str_iter2++;
+      int_int_rev_iter2++;
+      int_str_rev_iter2++;
+      str_int_rev_iter2++;
+      str_str_rev_iter2++;
     }
 
   // Make sure each item in each tree has been visited a second time.
-  ACE_ASSERT (int_int_iter.is_done () == 1);
-  ACE_ASSERT (int_str_iter.is_done () == 1);
-  ACE_ASSERT (str_int_iter.is_done () == 1);
-  ACE_ASSERT (str_str_iter.is_done () == 1);
+  ACE_ASSERT (int_int_rev_iter1.done () == 1);
+  ACE_ASSERT (int_str_rev_iter1.done () == 1);
+  ACE_ASSERT (str_int_rev_iter1.done () == 1);
+  ACE_ASSERT (str_str_rev_iter1.done () == 1);
+  ACE_ASSERT (int_int_rev_iter2.done () == 1);
+  ACE_ASSERT (int_str_rev_iter2.done () == 1);
+  ACE_ASSERT (str_int_rev_iter2.done () == 1);
+  ACE_ASSERT (str_str_rev_iter2.done () == 1);
+  ACE_ASSERT (int_int_iter1.done () == 1);
+  ACE_ASSERT (int_str_iter1.done () == 1);
+  ACE_ASSERT (str_int_iter1.done () == 1);
+  ACE_ASSERT (str_str_iter1.done () == 1);
+  ACE_ASSERT (int_int_iter2.done () == 1);
+  ACE_ASSERT (int_str_iter2.done () == 1);
+  ACE_ASSERT (str_int_iter2.done () == 1);
+  ACE_ASSERT (str_str_iter2.done () == 1);
 
   ACE_END_TEST;
   return 0;
