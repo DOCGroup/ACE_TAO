@@ -116,11 +116,11 @@ Client_i::parse_args (void)
                           -1);
       }
   if (setx_ == 0 )
-    setx_ = Grid::DEFAULT_LOC; 
+    setx_ = Grid::DEFAULT_LOCATION; 
   if (sety_ == 0 )
-    sety_ = Grid::DEFAULT_LOC; 
+    sety_ = Grid::DEFAULT_LOCATION; 
   if (setvalue_ == 0 )
-    setvalue_ = Grid::DEFAULT_VAL; 
+    setvalue_ = Grid::DEFAULT_VALUE; 
    
   // Indicates successful parsing of command line.
   return 0;
