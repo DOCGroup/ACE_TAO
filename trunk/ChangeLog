@@ -2,8 +2,7 @@ Wed Oct 15 13:40:02 2003  Huang-Ming Huang <hh1@cse.wustl.edu>
 
         * bin/MakeProjectCreator/config/ftrtevent.mpb
         * bin/MakeProjectCreator/config/ftrteventclient.mpb
-        Added for fault tolerant event service.
-
+          Added for fault tolerant event service.
 
 Wed Oct 15 18:28:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
