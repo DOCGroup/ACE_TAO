@@ -28,6 +28,9 @@
 #include "tao/Any.h"
 #include "tao/Object.h"
 #include "tao/ClientRequestInfo.h"
+#include "tao/Remote_Object_Proxy_Impl.h"
+#include "tao/Managed_Types.h"
+#include "tao/Sequence.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
