@@ -1054,4 +1054,147 @@ TAO_Bounded_String_Sequence<MAX>::_shrink_buffer (CORBA::ULong nl,
     }
 }
 
+// *************************************************************
+// Operations for class TAO_Bounded_WString_Sequence
+// *************************************************************
+
+template<size_t MAX>
+TAO_Bounded_WString_Sequence<MAX>::
+TAO_Bounded_WString_Sequence (void)
+  :  TAO_Bounded_Base_Sequence (MAX,
+                                TAO_Bounded_String_WSequence<MAX>::allocbuf(MAX))
+{
+}
+
+template<size_t MAX>
+TAO_Bounded_WString_Sequence<MAX>::
+TAO_Bounded_WString_Sequence (const TAO_Bounded_WString_Sequence<MAX> &rhs)
+  : TAO_Bounded_Base_Sequence (rhs)
+{
+  CORBA::WChar **tmp1 =
+    TAO_Bounded_WString_Sequence<MAX>::allocbuf (this->maximum_);
+  CORBA::WChar ** const tmp2 = 
+    ACE_reinterpret_cast (CORBA::WChar ** ACE_CAST_CONST,
+                          rhs.buffer_);
+
+  for (CORBA::ULong i=0; i < rhs.length_; i++)
+    tmp1[i] = CORBA::wstring_dup (tmp2[i]);
+
+  this->buffer_ = tmp1;
+}
+
+template<size_t MAX> TAO_Bounded_WString_Sequence<MAX>&
+TAO_Bounded_WString_Sequence<MAX>::operator=
+(const TAO_Bounded_WString_Sequence<MAX> &rhs)
+{
+  if (this == &rhs)
+    return *this;
+
+  if (this->release_)
+    {
+      CORBA::WChar **tmp = ACE_reinterpret_cast (CORBA::WChar **, 
+                                                 this->buffer_);
+
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        {
+          CORBA::wstring_free (tmp[i]);
+          tmp[i] = 0;
+        }
+      // No need to reallocate because the buffer is supposed to be of
+      // <MAX> size.
+    }
+  else
+    this->buffer_ =
+      TAO_Bounded_WString_Sequence<MAX>::allocbuf (rhs.maximum_);
+
+  TAO_Bounded_Base_Sequence::operator= (rhs);
+
+  CORBA::WChar **tmp1 = ACE_reinterpret_cast (CORBA::WChar **, 
+                                              this->buffer_);
+  CORBA::WChar ** const tmp2 = 
+    ACE_reinterpret_cast (CORBA::WChar ** ACE_CAST_CONST,
+                          rhs.buffer_);
+
+  for (CORBA::ULong i = 0; i < rhs.length_; i++)
+    tmp1[i] = CORBA::wstring_dup (tmp2[i]);
+  return *this;
+}
+
+template<size_t MAX> TAO_SeqElem_WString_Manager
+TAO_Bounded_WString_Sequence<MAX>::operator[] (CORBA::ULong slot) const
+{
+  ACE_ASSERT (slot < this->maximum_);
+  CORBA::WChar **const tmp = 
+    ACE_reinterpret_cast (CORBA::WChar **ACE_CAST_CONST,
+                          this->buffer_);
+  return TAO_SeqElem_WString_Manager (tmp + slot,
+                                      this->release_);
+}
+
+template<size_t MAX> CORBA::WChar **
+TAO_Bounded_WString_Sequence<MAX>::allocbuf (CORBA::ULong)
+{
+  CORBA::WChar **buf = 0;
+
+  ACE_NEW_RETURN (buf, char *[MAX], 0);
+
+  for (CORBA::ULong i = 0; i < MAX; i++)
+    buf[i] = 0;
+
+  return buf;
+}
+
+template<size_t MAX> void
+TAO_Bounded_WString_Sequence<MAX>::freebuf (CORBA::WChar* *buffer)
+{
+  // How much do we deallocate? Easy! <allocbuf> always creates MAX
+  // elements and initialize them to 0 (they say NULL, yuck!).  So we
+  // can be complaint and call CORBA::wstring_free() on each one.
+
+  for (CORBA::ULong i = 0; i < MAX; ++i)
+    {
+      if (buffer[i] != 0)
+        {
+          CORBA::wstring_free (buffer[i]);
+          buffer[i] = 0;
+        }
+    }
+
+  delete [] buffer;
+}
+
+template<size_t MAX> void
+TAO_Bounded_WString_Sequence<MAX>::_allocate_buffer (CORBA::ULong /* length */)
+{
+  // For this class memory is never reallocated so the implementation
+  // is *really* simple.
+  this->buffer_ =
+    TAO_Bounded_WString_Sequence<MAX>::allocbuf (MAX);
+}
+
+template<size_t MAX> void
+TAO_Bounded_WString_Sequence<MAX>::_deallocate_buffer (void)
+{
+  if (this->release_ == 0)
+    return;
+  CORBA::WChar **tmp = ACE_reinterpret_cast (CORBA::WChar **, 
+                                             this->buffer_);
+  TAO_Bounded_WString_Sequence<MAX>::freebuf (tmp);
+  this->buffer_ = 0;
+}
+
+template<size_t MAX> void
+TAO_Bounded_WString_Sequence<MAX>::_shrink_buffer (CORBA::ULong nl,
+                                                   CORBA::ULong ol)
+{
+  CORBA::WChar **tmp = ACE_reinterpret_cast (CORBA::WChar **,
+                                             this->buffer_);
+
+  for (CORBA::ULong i = nl; i < ol; ++i)
+    {
+      CORBA::wstring_free (tmp[i]);
+      tmp[i] = 0;
+    }
+}
+
 #endif /* TAO_SEQUENCE_T_C */
