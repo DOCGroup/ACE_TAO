@@ -445,12 +445,39 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
 
                         case CORBA::tk_objref:
                           {
-                            TAO_Object_Field* field =
-                              ACE_reinterpret_cast (TAO_Object_Field *,
-                                ACE_const_cast (void *, data));
-                            CORBA_Object_ptr ptr =
-                              field->_upcast ();
-                            retval = stream->encode (param, &ptr, 0, env);
+			    // The representation of a base
+			    // CORBA::Object is a little different.
+			    // @@ TODO maybe equivalent() is the right
+			    // method here.
+			    CORBA::Boolean is_corba_object = 
+			      param->equal (CORBA::_tc_Object, env);
+			    if (env.exception () == 0)
+			      {
+				CORBA_Object_ptr ptr = 0;
+				if (is_corba_object == 0)
+				  {
+				    TAO_Object_Field* field =
+				      ACE_reinterpret_cast (TAO_Object_Field *,
+							    ACE_const_cast (void *, data));
+				    ptr = field->_upcast ();
+				    // The size of this field is different...
+				    size =
+				      sizeof(TAO_Object_Field_T<CORBA_Object>);
+				  }
+				else
+				  {
+				    CORBA_Object_ptr* tmp =
+				      ACE_reinterpret_cast(CORBA::Object_ptr*,
+							   ACE_const_cast(void*,
+									  data));
+				    ptr = *tmp;
+				  }
+				retval = stream->encode (param, &ptr, 0, env);
+			      }
+			    else
+			      {
+				retval = CORBA::TypeCode::TRAVERSE_STOP;
+			      }
                           }
                           break;
 
