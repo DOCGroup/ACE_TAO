@@ -241,34 +241,32 @@ sub parse_exclude {
   my($errorString) = 'ERROR: Unable to process exclude';
 
   if ($typestr eq 'default') {
-    $errorString = 'ERROR: You must specify a project type ' .
-                   'for exclusions';
+    $typestr = $self->{'wctype'};
   }
-  else {
-    my(@types)   = split(/\s*,\s*/, $typestr);
-    my(@exclude) = ();
 
-    while(<$fh>) {
-      my($line) = $self->strip_line($_);
+  my(@types)   = split(/\s*,\s*/, $typestr);
+  my(@exclude) = ();
 
-      if ($line eq '') {
-      }
-      elsif ($line =~ /^}/) {
-        $status = 1;
-        $errorString = '';
-        last;
-      }
-      else {
-        push(@exclude, $line);
-      }
+  while(<$fh>) {
+    my($line) = $self->strip_line($_);
+
+    if ($line eq '') {
     }
-
-    foreach my $type (@types) {
-      if (!defined $self->{'exclude'}->{$type}) {
-        $self->{'exclude'}->{$type} = [];
-      }
-      push(@{$self->{'exclude'}->{$type}}, @exclude);
+    elsif ($line =~ /^}/) {
+      $status = 1;
+      $errorString = '';
+      last;
     }
+    else {
+      push(@exclude, $line);
+    }
+  }
+
+  foreach my $type (@types) {
+    if (!defined $self->{'exclude'}->{$type}) {
+      $self->{'exclude'}->{$type} = [];
+    }
+    push(@{$self->{'exclude'}->{$type}}, @exclude);
   }
 
   return $status, $errorString;

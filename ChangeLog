@@ -1,3 +1,10 @@
+Wed Apr 30 09:38:19 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          If no type is specified for the exclude keyword, then exclude the
+          listing for all project types.
+
 Wed Apr 30 08:37:29 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Parser.pm:
