@@ -124,6 +124,25 @@ ACE_Sched_Params::next_priority (const Policy policy, const int priority)
   ACE_UNUSED_ARG (policy);
   return priority > priority_max (policy)  ?  priority - 1
                                            :  priority_max (policy);
+#elif defined (ACE_HAS_WTHREADS)
+  ACE_UNUSED_ARG (policy);
+  switch (priority)
+    {
+      case THREAD_PRIORITY_IDLE:
+        return THREAD_PRIORITY_LOWEST;
+      case THREAD_PRIORITY_LOWEST:
+        return THREAD_PRIORITY_BELOW_NORMAL;
+      case THREAD_PRIORITY_BELOW_NORMAL:
+        return THREAD_PRIORITY_NORMAL;
+      case THREAD_PRIORITY_NORMAL:
+        return THREAD_PRIORITY_ABOVE_NORMAL;
+      case THREAD_PRIORITY_ABOVE_NORMAL:
+        return THREAD_PRIORITY_HIGHEST;
+      case THREAD_PRIORITY_HIGHEST:
+        return THREAD_PRIORITY_TIME_CRITICAL;
+      case THREAD_PRIORITY_TIME_CRITICAL:
+        return THREAD_PRIORITY_TIME_CRITICAL;
+    }
 #elif defined (ACE_HAS_THREADS)
   const int max = priority_max (policy);
   return priority < max  ?  priority + 1  :  max;
@@ -140,6 +159,25 @@ ACE_Sched_Params::previous_priority (const Policy policy,
   ACE_UNUSED_ARG (policy);
   return priority < priority_min (policy)  ?  priority + 1
                                            :  priority_min (policy);
+#elif defined (ACE_HAS_WTHREADS)
+  ACE_UNUSED_ARG (policy);
+  switch (priority)
+    {
+      case THREAD_PRIORITY_IDLE:
+        return THREAD_PRIORITY_IDLE;
+      case THREAD_PRIORITY_IDLE:
+        return THREAD_PRIORITY_BELOW_NORMAL;
+      case THREAD_PRIORITY_BELOW_NORMAL:
+        return THREAD_PRIORITY_LOWEST;
+      case THREAD_PRIORITY_NORMAL:
+        return THREAD_PRIORITY_BELOW_NORMAL;
+      case THREAD_PRIORITY_ABOVE_NORMAL:
+        return THREAD_PRIORITY_NORMAL;
+      case THREAD_PRIORITY_HIGHEST:
+        return THREAD_PRIORITY_ABOVE_NORMAL;
+      case THREAD_PRIORITY_TIME_CRITICAL:
+        return THREAD_PRIORITY_HIGHEST;
+    }
 #elif defined (ACE_HAS_THREADS)
   const int min = priority_min (policy);
   return priority > min  ?  priority - 1  :  min;
