@@ -13,7 +13,6 @@ ACE_RCSID(RT_Notify, TAO_NS_Reactive_Task, "$Id$")
 TAO_NS_Reactive_Task::TAO_NS_Reactive_Task (void)
   :timer_ (0)
 {
-  this->destroy_callback (this); // The <release> method is called to release memory.
 }
 
 TAO_NS_Reactive_Task::~TAO_NS_Reactive_Task ()

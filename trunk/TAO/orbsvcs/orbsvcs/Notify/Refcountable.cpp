@@ -1,8 +1,6 @@
 // $Id$
 
 #include "Refcountable.h"
-#include "Destroy_Callback.h"
-
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
@@ -47,14 +45,7 @@ TAO_NS_Refcountable::_decr_refcnt (void)
       return this->refcount_;
   }
 
-  if (this->destroy_callback_ != 0)
-    this->destroy_callback_->release ();
+  this->release ();
 
   return 0;
-}
-
-void
-TAO_NS_Refcountable::destroy_callback (TAO_NS_Destroy_Callback* destroy_callback)
-{
-  destroy_callback_ = destroy_callback;
 }

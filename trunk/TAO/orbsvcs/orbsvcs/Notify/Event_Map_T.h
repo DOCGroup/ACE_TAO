@@ -20,7 +20,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Hash_Map_Manager.h"
-#include "Types.h"
+#include "ace/CORBA_macros.h"
+
 #include "EventType.h"
 #include "Event_Map_Entry_T.h"
 #include "EventTypeSeq.h"

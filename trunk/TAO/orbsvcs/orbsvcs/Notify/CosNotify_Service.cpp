@@ -1,36 +1,32 @@
 // $Id$
 
-#include "Notify_Service.h"
-#include "Builder.h"
+#include "CosNotify_Service.h"
 #include "Properties.h"
-#include "Factory.h"
-
+#include "Default_Factory.h"
+#include "Builder.h"
 #include "ace/Sched_Params.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/ORB_Core.h"
+#include "orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"
 
-ACE_RCSID(RT_Notify, TAO_NS_Notify_Service, "$Id$")
+ACE_RCSID(RT_Notify, TAO_CosNotify_Service, "$Id$")
 
-TAO_NS_Notify_Service::TAO_NS_Notify_Service (void)
-:factory_ (0), builder_ (0)
+TAO_CosNotify_Service::TAO_CosNotify_Service (void)
+  : factory_ (0)
+  , builder_ (0)
 {
 }
 
-TAO_NS_Notify_Service::~TAO_NS_Notify_Service ()
+TAO_CosNotify_Service::~TAO_CosNotify_Service ()
 {
-  delete factory_;
-  delete builder_;
-}
-
-void
-TAO_NS_Notify_Service::_decr_refcnt (void)
-{
+  delete this->factory_;
+  delete this->builder_;
 }
 
 int
-TAO_NS_Notify_Service::init (int argc, char *argv[])
+TAO_CosNotify_Service::init (int argc, char *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -44,6 +40,8 @@ TAO_NS_Notify_Service::init (int argc, char *argv[])
   int lookup_threads = 0;
 
   int task_per_proxy = 0;
+
+  TAO_NS_Properties *properties = TAO_NS_PROPERTIES::instance();
 
   while (arg_shifter.is_anything_left ())
     {
@@ -91,7 +89,7 @@ TAO_NS_Notify_Service::init (int argc, char *argv[])
         {
           arg_shifter.consume_arg ();
 
-          TAO_NS_PROPERTIES::instance()->asynch_updates (1);
+          properties->asynch_updates (1);
         }
        else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-AllocateTaskperProxy")) == 0)
         {
@@ -100,100 +98,68 @@ TAO_NS_Notify_Service::init (int argc, char *argv[])
         }
     }
 
-  this->set_event_channel_threads (ec_threads);
+  // Init the EC QoS
+  {
+    CosNotification::QoSProperties qos;
+    this->set_threads (qos, ec_threads);
+    properties->default_event_channel_qos_properties (qos);
+  }
 
   if (task_per_proxy == 0)
     {
-      this->set_consumer_admin_threads (dispatching_threads + listener_threads);
-      this->set_supplier_admin_threads (lookup_threads + source_threads);
+      // Set the per ConsumerAdmin QoS
+      {
+        CosNotification::QoSProperties qos;
+        this->set_threads (qos, dispatching_threads + listener_threads);
+        properties->default_consumer_admin_qos_properties (qos);
+      }
+
+      // Set the per SupplierAdmin QoS
+      {
+        CosNotification::QoSProperties qos;
+        this->set_threads (qos, lookup_threads + source_threads);
+        properties->default_supplier_admin_qos_properties (qos);
+      }
     }
   else
     {
-      this->set_proxy_supplier_threads (dispatching_threads + listener_threads);
-      this->set_proxy_consumer_threads (source_threads); // lookup thread per proxy doesn't make sense.
+      // Set the per ProxyConsumer QoS
+      {
+        CosNotification::QoSProperties qos;
+        this->set_threads (qos, dispatching_threads + listener_threads);
+        properties->default_proxy_consumer_qos_properties (qos);
+      }
+
+      // Set the per ProxySupplier QoS
+      {
+        CosNotification::QoSProperties qos;
+        this->set_threads (qos, source_threads); // lookup thread per proxy doesn't make sense.
+        properties->default_proxy_supplier_qos_properties (qos);
+      }
     }
 
   return 0;
 }
 
 void
-TAO_NS_Notify_Service::set_event_channel_threads (int threads)
+TAO_CosNotify_Service::set_threads (CosNotification::QoSProperties &qos, int threads)
 {
   NotifyExt::ThreadPoolParams tp_params =
     {0, (unsigned)threads, 0, 0, 0, 0, 0 };
-  CosNotification::QoSProperties qos;
 
   qos.length (1);
   qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
   qos[0].value <<= tp_params;
-
-  TAO_NS_PROPERTIES::instance()->default_event_channel_qos_properties (qos);
-}
-
-void
-TAO_NS_Notify_Service::set_consumer_admin_threads (int threads)
-{
-  NotifyExt::ThreadPoolParams tp_params =
-    {0, (unsigned)threads, 0, 0, 0, 0, 0 };
-  CosNotification::QoSProperties qos;
-
-  qos.length (1);
-  qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
-  qos[0].value <<= tp_params;
-
-  TAO_NS_PROPERTIES::instance()->default_consumer_admin_qos_properties (qos);
-}
-
-void
-TAO_NS_Notify_Service::set_supplier_admin_threads (int threads)
-{
-  NotifyExt::ThreadPoolParams tp_params =
-    {0, (unsigned)threads, 0, 0, 0, 0, 0 };
-  CosNotification::QoSProperties qos;
-
-  qos.length (1);
-  qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
-  qos[0].value <<= tp_params;
-
-  TAO_NS_PROPERTIES::instance()->default_supplier_admin_qos_properties (qos);
-}
-
-void
-TAO_NS_Notify_Service::set_proxy_consumer_threads (int threads)
-{
-  NotifyExt::ThreadPoolParams tp_params =
-    {0, (unsigned)threads, 0, 0, 0, 0, 0 };
-  CosNotification::QoSProperties qos;
-
-  qos.length (1);
-  qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
-  qos[0].value <<= tp_params;
-
-  TAO_NS_PROPERTIES::instance()->default_proxy_consumer_qos_properties (qos);
-}
-
-void
-TAO_NS_Notify_Service::set_proxy_supplier_threads (int threads)
-{
-  NotifyExt::ThreadPoolParams tp_params =
-    {0, (unsigned)threads, 0, 0, 0, 0, 0 };
-  CosNotification::QoSProperties qos;
-
-  qos.length (1);
-  qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
-  qos[0].value <<= tp_params;
-
-  TAO_NS_PROPERTIES::instance()->default_proxy_supplier_qos_properties (qos);
 }
 
 int
-TAO_NS_Notify_Service::fini (void)
+TAO_CosNotify_Service::fini (void)
 {
   return 0;
 }
 
 void
-TAO_NS_Notify_Service::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+TAO_CosNotify_Service::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG, "Loading the Cos Notification Service...\n"));
 
@@ -202,7 +168,7 @@ TAO_NS_Notify_Service::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 }
 
 void
-TAO_NS_Notify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   /// first, init the main thread.
   //this->init_main_thread (orb ACE_ENV_ARG_PARAMETER);
@@ -228,8 +194,7 @@ TAO_NS_Notify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   properties->sched_policy (orb->orb_core ()->orb_params ()->sched_policy ());
   properties->scope_policy (orb->orb_core ()->orb_params ()->scope_policy ());
 
-  // Init the factory and builder
-
+  // Init the factory
   this->init_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -238,7 +203,7 @@ TAO_NS_Notify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 }
 
 void
-TAO_NS_Notify_Service::init_main_thread (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL_NOT_USED)
+TAO_CosNotify_Service::init_main_thread (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_Sched_Params::Policy sched_policy;
   long thr_sched_policy = orb->orb_core ()->orb_params ()->sched_policy ();
@@ -302,18 +267,21 @@ TAO_NS_Notify_Service::init_main_thread (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL_NOT
 }
 
 void
-TAO_NS_Notify_Service::init_factory (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CosNotify_Service::init_factory (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_NEW_THROW_EX (this->factory_,
-                    TAO_NS_Factory (),
-                    CORBA::NO_MEMORY ());
+  this->factory_ = ACE_Dynamic_Service<TAO_NS_Factory>::instance ("TAO_NS_Factory");
+
+  if (this->factory_ == 0)
+    ACE_NEW_THROW_EX (this->factory_,
+                      TAO_NS_Default_Factory (),
+                      CORBA::NO_MEMORY ());
   ACE_CHECK;
 
   TAO_NS_PROPERTIES::instance()->factory (this->factory_);
 }
 
 void
-TAO_NS_Notify_Service::init_builder (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CosNotify_Service::init_builder (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_NEW_THROW_EX (this->builder_,
                     TAO_NS_Builder (),
@@ -324,13 +292,13 @@ TAO_NS_Notify_Service::init_builder (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
-TAO_NS_Notify_Service::create (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
+TAO_CosNotify_Service::create (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
 {
   return this->builder_->build_event_channel_factory (poa ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_NS_Notify_Service::remove (TAO_NS_EventChannelFactory* /*ecf*/ ACE_ENV_ARG_DECL_NOT_USED)
+TAO_CosNotify_Service::remove (TAO_NS_EventChannelFactory* /*ecf*/ ACE_ENV_ARG_DECL_NOT_USED)
 {
   // NOP.
 }
@@ -340,18 +308,30 @@ TAO_NS_Notify_Service::remove (TAO_NS_EventChannelFactory* /*ecf*/ ACE_ENV_ARG_D
 ACE_STATIC_SVC_DEFINE (TAO_Notify_Default_EMO_Factory_OLD,
                        ACE_TEXT (TAO_NOTIFY_DEF_EMO_FACTORY_NAME),
                        ACE_SVC_OBJ_T,
-                       &ACE_SVC_NAME (TAO_NS_Notify_Service),
+                       &ACE_SVC_NAME (TAO_CosNotify_Service),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 
 /*********************************************************************************************************************/
 
-ACE_STATIC_SVC_DEFINE (TAO_NS_Notify_Service,
+ACE_STATIC_SVC_DEFINE (TAO_CosNotify_Service,
                        ACE_TEXT (TAO_NS_COS_NOTIFICATION_SERVICE_NAME),
                        ACE_SVC_OBJ_T,
-                       &ACE_SVC_NAME (TAO_NS_Notify_Service),
+                       &ACE_SVC_NAME (TAO_CosNotify_Service),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
-ACE_FACTORY_DEFINE (TAO_Notify, TAO_NS_Notify_Service)
+
+
+ACE_FACTORY_DEFINE (TAO_Notify, TAO_CosNotify_Service)
 
 /*********************************************************************************************************************/
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Dynamic_Service<TAO_NS_Factory>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Dynamic_Service<TAO_NS_Factory>
+
+#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -42,8 +42,11 @@ public:
   /// Return 0 on success, 1 if unsupported properties were detected and -1 on error.
   int init (const CosNotification::PropertySeq& prop_seq, CosNotification::PropertyErrorSeq& err_seq);
 
-  /// Populate <qos_properties> with properties that can be transfered.
-  void transfer (TAO_NS_QoSProperties& qos_properties);
+  /// Populate <qos_properties> with all properties from this object. Returns -1 on error.
+  int copy (TAO_NS_QoSProperties& qos_properties);
+
+  /// Populate <qos_properties> with properties that can be transfered.Returns -1 on error.
+  int transfer (TAO_NS_QoSProperties& qos_properties);
 
   ///= Accessors
   /// ThreadPool

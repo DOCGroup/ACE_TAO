@@ -12,7 +12,7 @@ TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA AC
 {
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory;
 
-  TAO_NS_Service* notify_service = ACE_Dynamic_Service<TAO_NS_Service>::instance (TAO_NS_COS_NOTIFICATION_SERVICE_NAME);
+  TAO_Notify_Service* notify_service = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NS_COS_NOTIFICATION_SERVICE_NAME);
 
   if (notify_service == 0)
   {
@@ -38,10 +38,10 @@ TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA AC
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Dynamic_Service<TAO_NS_Service>;
+template class ACE_Dynamic_Service<TAO_Notify_Service>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Dynamic_Service<TAO_NS_Service>
+#pragma instantiate ACE_Dynamic_Service<TAO_Notify_Service>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -39,7 +39,6 @@ TAO_NS_POA_Helper::init (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL)
   this->init (parent_poa, child_poa_name ACE_ENV_ARG_PARAMETER);
 }
 
-
 void
 TAO_NS_POA_Helper::set_policy (PortableServer::POA_ptr parent_poa, CORBA::PolicyList &policy_list ACE_ENV_ARG_DECL)
 {
