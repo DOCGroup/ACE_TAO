@@ -1,3 +1,25 @@
+Fri Jan 16 17:25:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/INET_Addr_Test.cpp:
+	* tests/Max_Default_Port_Test.cpp:
+	* tests/Multicast_Test.cpp:
+	* tests/Multihomed_INET_Addr_Test.cpp:
+	* tests/Proactor_Test.cpp:
+	* tests/SOCK_Send_Recv_Test.cpp:
+	* tests/SOCK_Test.cpp:
+
+	  Thanks to Brian Bruesker <bbuesker@qualcomm.com>, we now have
+	  tests for IPV6 features in the above tests
+
+	* tests/SOCK_Dgram_Test.cpp:
+
+	  A simple test based on SOCK_Test for Datagrams. Thanks once
+	  again to Brian Bruesker.
+
+	* tests/Makefile.tests:
+
+	  Added the new test.
+
 Fri Jan 16 15:04:17 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/SOCK_Dgram_Bcast.cpp (close): Set the this->if_list_

@@ -109,6 +109,7 @@ BIN =   \
 	Reverse_Lock_Test \
 	SOCK_Connector_Test \
 	SOCK_Send_Recv_Test \
+	SOCK_Dgram_Test \
 	SOCK_Test \
 	SPIPE_Test \
 	SString_Test \

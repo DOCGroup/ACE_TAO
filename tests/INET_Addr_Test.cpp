@@ -6,15 +6,16 @@
 //    tests
 //
 // = FILENAME
-//    INET_Addr_Test.cpp
+//    INET_Addr_Test_IPv6.cpp
 //
 // = DESCRIPTION
-//     Performs several tests on the ACE_INET_Addr class.  It creates several
-//     IPv4 and IPv6 addresses and checks that the address formed by the
-//     class is valid.
+//     Additional tests on the ACE_INET_Addr class above and beyond
+//     those found in INET_Addr_Test. These primarily focus on additional
+//     functionality and bug fixes to ACE_INET_Addr.
 //
 // = AUTHOR
 //    John Aughey (jha@aughey.com)
+//    Brian Buesker (bbuesker@qualcomm.com) - added a few more IPv6 tests
 //
 // ============================================================================
 
@@ -23,6 +24,9 @@
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_arpa_inet.h"
+
+#define LINK_LOCAL_ADDR ACE_TEXT ("fe80::")
+#define INTERFACE ("eth0")
 
 // Make sure that ACE_Addr::addr_type_ is the same
 // as the family of the inet_addr_.
@@ -61,161 +65,107 @@ int run_main (int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
-  ACE_START_TEST (ACE_TEXT ("INET_Addr_Test"));
+  ACE_START_TEST (ACE_TEXT ("INET_Addr_Test_IPv6"));
 
   int status = 0;     // Innocent until proven guilty
 
-  const char *ipv4_addresses[] =
-  {
-    "127.0.0.1", "138.38.180.251", "64.219.54.121", "192.0.0.1", "10.0.0.1", 0
-  };
-
-  ACE_INET_Addr addr;
-  status |= check_type_consistency (addr);
-  char hostaddr[1024];
-
-  for (int i=0; ipv4_addresses[i] != 0; i++)
+#if defined (ACE_HAS_IPV6)
+  if (ACE_Sock_Connect::ipv6_enabled ())
     {
-      struct in_addr addrv4;
-      ACE_UINT32 addr32;
+      ACE_INET_Addr addr ("::");
 
-      ACE_OS::inet_pton (AF_INET, ipv4_addresses[i], &addrv4);
+      // this should switch it back to an IPv4 address
+      addr.set (80);
 
-      ACE_OS::memcpy (&addr32, &addrv4, sizeof (addr32));
-
-      addr.set (80, ipv4_addresses[i]);
-      status |= check_type_consistency (addr);
-
-      /*
-      ** Now check to make sure get_ip_address matches and get_host_addr
-      ** matches.
-      */
-      if (addr.get_ip_address () != ACE_HTONL (addr32))
+      if (AF_INET != addr.get_type())
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Error: %s failed get_ip_address() check\n")
-                      ACE_TEXT ("0x%x != 0x%x\n"),
-                      ipv4_addresses[i],
-                      addr.get_ip_address (),
-                      addr32));
+          ACE_ERROR ((LM_ERROR, 
+                      ACE_TEXT ("set failed: Address type %d != AF_INET\n"),
+                      addr.get_type()));
           status = 1;
         }
 
-      if (0 != ACE_OS::strcmp (addr.get_host_addr(), ipv4_addresses[i]))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%s failed get_host_addr() check\n")
-                      ACE_TEXT ("%s != %s\n"),
-                      ipv4_addresses[i],
-                      addr.get_host_addr (),
-                      ipv4_addresses[i]));
-          status = 1;
-        }
+      // this should get mapped to an IPv6 address
+      addr.set (80, INADDR_ANY, 1, 1);
 
-      // Now we check the operation of get_host_addr(char*,int)
-      const char* haddr = addr.get_host_addr (&hostaddr[0], sizeof(hostaddr));
-      if (0 != ACE_OS::strcmp (&hostaddr[0], haddr))
+      if (AF_INET6 != addr.get_type())
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%s failed get_host_addr(char* buf,int) check\n")
-                      ACE_TEXT ("buf ['%s'] != return value ['%s']\n"),
-                      ipv4_addresses[i],
-                      &hostaddr[0],
-                      haddr));
-          status = 1;
-        }
-      if (0 != ACE_OS::strcmp (&hostaddr[0], ipv4_addresses[i]))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%s failed get_host_addr(char*,int) check\n")
-                      ACE_TEXT ("buf ['%s'] != expected value ['%s']\n"),
-                      ipv4_addresses[i],
-                      &hostaddr[0],
-                      ipv4_addresses[i]));
-          status = 1;
-        }
-
-      // Clear out the address by setting it to 1 and check
-      addr.set (0, ACE_UINT32 (1), 1);
-      status |= check_type_consistency (addr);
-      if (addr.get_ip_address () != 1)
-        {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Failed to set address to 1\n")));
-          status = 1;
-        }
-
-      // Now set the address using a 32 bit number and check that we get
-      // the right string out of get_host_addr().
-      addr.set (80, addr32, 0); // addr32 is already in network byte order
-      status |= check_type_consistency(addr);
-
-      if (0 != ACE_OS::strcmp (addr.get_host_addr (), ipv4_addresses[i]))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%s failed second get_host_addr() check\n")
-                      ACE_TEXT ("return value ['%s'] != expected value ['%s']\n"),
-                      ipv4_addresses[i],
-                      addr.get_host_addr (),
-                      ipv4_addresses[i]));
+          ACE_ERROR ((LM_ERROR, 
+                      ACE_TEXT ("set failed: Address type %d != AF_INET6\n"),
+                      addr.get_type()));
           status = 1;
         }
 
       // Test for ACE_INET_Addr::set_addr().
+      struct in_addr addrv4;
+
+      ACE_OS::inet_pton (AF_INET, "127.0.0.1", &addrv4);
+
       struct sockaddr_in sa4;
       sa4.sin_family = AF_INET;
       sa4.sin_addr = addrv4;
       sa4.sin_port = ACE_HTONS (8080);
 
       addr.set (0, ACE_UINT32 (1), 1);
-      addr.set_addr (&sa4, sizeof(sa4));
-      status |= check_type_consistency (addr);
 
-      if (addr.get_port_number () != 8080)
+      // test to make sure this doesn't get mapped to an IPv6 address
+      addr.set_addr (&sa4, sizeof(sa4), 0);
+
+      if (addr.get_type() != AF_INET)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("ACE_INET_Addr::set_addr() ")
-                      ACE_TEXT ("failed to update port number.\n")));
+                      ACE_TEXT 
+                      ("set_addr failed: Address type %d != AF_INET\n"),
+                      addr.get_type()));
           status = 1;
         }
 
-      if (addr.get_ip_address () != ACE_HTONL (addr32))
+      // now test to make sure it does get mapped to an IPv6 address
+      addr.set_addr (&sa4, sizeof(sa4), 1);
+
+      if (addr.get_type() != AF_INET6)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("ACE_INET_Addr::set_addr() ")
-                      ACE_TEXT ("failed to update address.\n")));
+                      ACE_TEXT 
+                      ("set_addr failed: Address type %d != AF_INET6\n"),
+                      addr.get_type()));
           status = 1;
         }
 
-    }
+     // test to make sure that the type gets set correctly when set is 
+     // called with another ACE_INET_Addr
+     addr.set (0, ACE_UINT32 (1), 1);
 
-#if defined (ACE_HAS_IPV6)
-  if (ACE_Sock_Connect::ipv6_enabled ())
-    {
-      const char *ipv6_addresses[] = {
-        "1080::8:800:200c:417a", // unicast address
-        "ff01::101",             // multicast address
-        "::1",                   // loopback address
-        "::",                    // unspecified addresses
-        0
-      };
+     ACE_INET_Addr addrIPv6 ((u_short) 0, ACE_IPV6_LOCALHOST);
 
-      for (int i=0; ipv6_addresses[i] != 0; i++)
+     addr.set (addrIPv6);
+
+     status |= check_type_consistency (addr);
+
+#if defined (__linux__)
+      // test a link local address to make sure the set_interface method works
+      ACE_INET_Addr link_local_addr (80, LINK_LOCAL_ADDR);
+      if (0 != ACE_OS::strcmp (link_local_addr.get_host_addr (), 
+                               LINK_LOCAL_ADDR))
         {
-          ACE_INET_Addr addr (80, ipv6_addresses[i]);
-	  status |= check_type_consistency (addr);
-
-          if (0 != ACE_OS::strcmp (addr.get_host_addr (), ipv6_addresses[i]))
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("IPv6 get_host_addr failed: %s != %s\n"),
-                          addr.get_host_addr (),
-                          ipv6_addresses[i]));
-              status = 1;
-            }
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("IPv6 get_host_addr failed: %s != %s\n"),
+                      link_local_addr.get_host_addr (),
+                      LINK_LOCAL_ADDR));
+          status = 1;
         }
+ 
+      if (-1 == link_local_addr.set_interface (INTERFACE))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("IPv6 set_interface failed\n")));
+          status = 1;
+        }
+#endif /* __linux__ */
     }
 
-#endif
+#endif /* ACE_HAS_IPV6 */
 
   ACE_END_TEST;
 
