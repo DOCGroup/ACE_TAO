@@ -1,3 +1,10 @@
+Mon Nov  4 12:24:51 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h: Added a
+	  missing exception specification from the definition to the
+	  declaration of create_member (). This should fix  compile errors
+	  on Linux builds.
+
 Mon Nov 04 11:10:14 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
