@@ -235,7 +235,7 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
   this->orb_core_->root_poa ()->dispatch_servant (request.object_key (),
                                                   request,
                                                   0,
-                                                  this->orb_core_,                                                  
+                                                  this->orb_core_,
                                                   env);
 
   // Need to check for any errors present in <env> and set the return
@@ -287,7 +287,7 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
   the_poa->dispatch_servant (serverRequest.object_key (),
                              serverRequest,
                              0,
-                             this->orb_core_,                                                  
+                             this->orb_core_,
                              env);
 
 
@@ -484,7 +484,7 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) closing conn %d after fault %p\n",
                       this->peer().get_handle (),
-                      "TAO_Server_ConnectionHandler::send_error"));
+                      "TAO_Server_Connection_Handler::send_error"));
           this->handle_close ();
           return;
         }
@@ -622,7 +622,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) closing conn %d after fault %p\n",
                   this->peer().get_handle (),
-                  "TAO_Server_ConnectionHandler::handle_input"));
+                  "TAO_Server_Connection_Handler::handle_input"));
       //      this->handle_close ();
       return -1;
     }
@@ -640,7 +640,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
             ACE_ERROR ((LM_ERROR,
                         "(%P|%t) %s: closing conn, no exception, "
                         "but expecting response\n",
-                        "TAO_Server_ConnectionHandler::handle_input"));
+                        "TAO_Server_Connection_Handler::handle_input"));
           //          this->handle_close ();
           return -1;
         }
@@ -653,7 +653,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) %s: closing conn, no exception, "
                     "but expecting response\n",
-                    "TAO_Server_ConnectionHandler::handle_input"));
+                    "TAO_Server_Connection_Handler::handle_input"));
       //      this->handle_close ();
       return -1;
     }
@@ -782,7 +782,7 @@ TAO_Client_Connection_Handler::check_unexpected_data (void)
                   "Client_Connection_Handler::handle_input: closing connection on fd %d\n",
                   this->peer().get_handle ()));
       break;
-      
+
     case 1:
       //
       // @@ Fix me!!
@@ -794,7 +794,7 @@ TAO_Client_Connection_Handler::check_unexpected_data (void)
                   "input while not expecting a response; closing connection on fd %d\n",
                   this->peer().get_handle ()));
       break;
-      
+
     case 0:
       // This is an EOF, so we will return -1 and let handle_close()
       // take over.  As long as handle_close() calls the
@@ -802,7 +802,7 @@ TAO_Client_Connection_Handler::check_unexpected_data (void)
       // properly.
       break;
     }
-  
+
   // We're not expecting input at this time, so we'll always
   // return -1 for now.
   return -1;
@@ -827,7 +827,7 @@ TAO_ST_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
   // be dynamically linked in (wouldn't that be cool/freaky?)
 
   // Send the request
-  int success  = (int) TAO_GIOP::send_request (this, 
+  int success  = (int) TAO_GIOP::send_request (this,
                                                stream,
                                                orb_core);
   if (!success)
@@ -903,7 +903,7 @@ TAO_MT_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
   if (!is_twoway)
     {
       // Send the request
-      int success  = (int) TAO_GIOP::send_request (this, 
+      int success  = (int) TAO_GIOP::send_request (this,
                                                    stream,
                                                    orb_core);
 
@@ -924,7 +924,7 @@ TAO_MT_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
       this->calling_thread_ = ACE_Thread::self ();
 
       // Send the request
-      int success = (int) TAO_GIOP::send_request (this, 
+      int success = (int) TAO_GIOP::send_request (this,
                                                   stream,
                                                   orb_core);
 
@@ -935,12 +935,12 @@ TAO_MT_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
         }
 
       // check if there is a leader, but the leader is not us
-      if (orb_core->leader_available () && 
+      if (orb_core->leader_available () &&
           !orb_core->I_am_the_leader_thread ())
         {
           // wait as long as no input is available and/or
           // no leader is available
-          while (!this->input_available_ && 
+          while (!this->input_available_ &&
                  orb_core->leader_available ())
             {
               if (orb_core->add_follower (this->cond_response_available_) == -1)
