@@ -18,6 +18,32 @@ Wed May 21 01:17:40 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  0, i.e., it should return the result of release_i().  Thanks to
  	  Amos Shapira <amos@dsi.co.il> for reporting this.
 
+Wed May 21 01:17:40 1997 Per Andersson <Per.Andersson@hfera.ericsson.se>
+
+	* Moved most code from netsvcs/lib/Server_Logging_Handler.* to
+	  Server_Logging_Handler_T.*.  Made template out of
+	  ACE_Server_Logging_Handler and ACE_Server_Logging_Acceptor. 
+	  Factorised out as much as possible to reduce code
+	  duplication. The log record processing was moved from
+	  ACE_Server_Logging_Handler it should now be handled by the
+	  Log_Message_Receiver class. It is now possible to change 
+	  how log records processed without changing code in
+	  Server_Logging_Handler* and it is possible to have several
+	  Server_Logging_Handlers that processes log records
+	  in different ways without duplicating all the server code.
+	  All that is needed is to write a new/change
+	  Log_Message_Receiver and instantiate a couple of templates.
+
+	* netsvcs/lib/Server_Logging_Handler.h added lots of typedefs
+	  for making template instantiations easier.
+
+	* netsvcs/lib/Server_Logging_Handler.h addad lots template
+	  instatiations, there are now 58 all together.
+
+	* Added netsvc/lib/Log_Message_Receiver.{h,cpp}, implementstwo
+	  simple log message receivers that prints the log record to
+	  stderr. 
+
 Tue May 20 13:50:17 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/config-hpux-9.x.h: Added a #define for ACE_HAS_BROKEN_ENUM,
