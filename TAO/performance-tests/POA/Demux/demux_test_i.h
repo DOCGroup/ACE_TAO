@@ -13,34 +13,32 @@ public:
 
   Demux_Test_i (void);
   //ctor.
-  
+
   Demux_Test_i (PortableServer::POA_ptr poa)
     : poa_ (PortableServer::POA::_duplicate (poa))
     {
     };
-  // ctor 
-  
+  // ctor
+
   ~Demux_Test_i (void);
-  // dtor 
-  
+  // dtor
+
   // Return the Default POA of this Servant
   PortableServer::POA_ptr _default_POA (CORBA::Environment &/*env*/)
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     };
-  
-  void M302 (CORBA::Environment &env = 
-             CORBA::Environment::default_environment ());
-  
-  void shutdown (CORBA::Environment &env = 
-                 CORBA::Environment::default_environment ());
-  
-private: 
+
+  virtual void M302 (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual void shutdown (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
   PortableServer::POA_var poa_;
   // Implement a different _default_POA()
-  
+
 };
 
 #endif /* TAO_DEMUX_TEST_I_H */
-
-

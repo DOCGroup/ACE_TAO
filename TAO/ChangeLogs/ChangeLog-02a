@@ -1,3 +1,16 @@
+Thu Apr 20 09:31:41 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/MProfile_Forwarding/test_i.h:
+	* tests/MProfile_Forwarding/test_i.cpp:
+	  Add missing throw specs.
+
+	* performance-tests/POA/Demux/demux_test_i.h:
+	* performance-tests/POA/Demux/demux_test_i.cpp:
+	  Add missing throw specs.
+
+	* tests/Explicit_Event_Loop/server.cpp:
+	  Remove unreachable statement.
+
 Wed Apr 19 20:16:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Smart_Proxies/On_Demand/Makefile:

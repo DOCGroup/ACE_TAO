@@ -17,6 +17,7 @@ Simple_Server_i::Simple_Server_i (void)
 
 void
 Simple_Server_i::remote_call (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Print out from process id (%P) hosting the servant \n"));
@@ -29,7 +30,3 @@ Simple_Server_i::shutdown (CORBA::Environment&)
 {
   this->orb_->shutdown (0);
 }
-
-
-  
-
