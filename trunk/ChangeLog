@@ -1,3 +1,17 @@
+Tue Jan  4 13:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CLASSIX/*:
+        * tests/CLASSIX/*:
+          Removed all these files, they are old and not maintained for
+          a long time
+
+        * psosim/*:
+        * java/*:
+          Removed the contents of these directories. These files where not
+          shipped as part of the release and are not used anymore.
+
+          This fixes bugzilla bug [2015].
+
 Tue Jan  4 08:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Multicast_Test.cpp:
