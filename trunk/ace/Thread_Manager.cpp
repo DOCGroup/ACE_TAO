@@ -445,18 +445,18 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   ACE_Thread_Descriptor *new_thr_desc = 0;
 
   ACE_NEW_RETURN (new_thr_desc,
-		  ACE_Thread_Descriptor,
-		  -1);
+                  ACE_Thread_Descriptor,
+                  -1);
 
 #if !defined (ACE_NO_THREAD_ADAPTER)
   // @@ Defining ACE_NO_THREAD_ADAPTER here really doesn't make any sense.
   //    If we don't have thread adapter, thread manager won't work then.
   ACE_Thread_Adapter *thread_args =
     new ACE_Thread_Adapter (func,
-			    args,
-			    (ACE_THR_C_FUNC) ace_thread_manager_adapter,
-			    this,
-			    new_thr_desc);
+                            args,
+                            (ACE_THR_C_FUNC) ace_thread_manager_adapter,
+                            this,
+                            new_thr_desc);
   if (thread_args == 0)
     {
       delete new_thr_desc;
@@ -512,7 +512,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                grp_id,
                                task,
                                flags,
-			       new_thr_desc);
+                               new_thr_desc);
     }
 }
 
@@ -629,8 +629,8 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
                                 ACE_Thread_State thr_state,
                                 int grp_id,
                                 ACE_Task_Base *task,
-				long flags,
-				ACE_Thread_Descriptor *td)
+                                long flags,
+                                ACE_Thread_Descriptor *td)
 {
   ACE_TRACE ("ACE_Thread_Manager::append_thr");
   ACE_Thread_Descriptor *thr_desc;
@@ -1079,14 +1079,14 @@ ACE_Thread_Manager::wait_grp (int grp_id)
     ACE_NEW_RETURN (copy_table, ACE_Thread_Descriptor [this->thr_list_.size ()], -1);
 
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
-	 !iter.done ();
-	 iter.advance ())
+         !iter.done ();
+         iter.advance ())
       // If threads are created as THR_DETACHED or THR_DAEMON, we
       // can't help much.
       if (iter.next ()->grp_id_ == grp_id &&
-	  (ACE_BIT_DISABLED (iter.next ()->flags_, (THR_DETACHED | THR_DAEMON))
-	   || ACE_BIT_ENABLED (iter.next ()->flags_, THR_JOINABLE)))
-	copy_table[copy_count++] = *iter.next ();
+          (ACE_BIT_DISABLED (iter.next ()->flags_, (THR_DETACHED | THR_DAEMON))
+           || ACE_BIT_ENABLED (iter.next ()->flags_, THR_JOINABLE)))
+        copy_table[copy_count++] = *iter.next ();
   }
 
   // Now to do the actual work
@@ -1120,7 +1120,7 @@ ACE_Thread_Manager::acquire_release (void)
 {
   // Just try to acquire the lock then release it.
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
-			    this->lock_, -1));
+                            this->lock_, -1));
   return 0;
 }
 
@@ -1138,7 +1138,12 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
   // copying the exit hook.
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
-    ACE_Thread_Descriptor *td = this->thread_desc_self ();
+
+    // Find the thread id, but don't use the cache.  It might have been
+    // deleted already.
+    ACE_thread_t id = ACE_OS::thr_self ();
+    ACE_Thread_Descriptor *td = this->find_thread (id);
+
     // Locate thread id.
     if (td != 0)
       {
@@ -1158,7 +1163,7 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
         // just to be safe, let's put it here.
 
         if (ACE_BIT_DISABLED (td->flags_, (THR_DETACHED | THR_DAEMON))
-	    || (ACE_BIT_ENABLED (td->flags_, THR_JOINABLE)))
+            || (ACE_BIT_ENABLED (td->flags_, THR_JOINABLE)))
           {
             // Mark thread as terminated.
             td->thr_state_ = ACE_THR_TERMINATED;
