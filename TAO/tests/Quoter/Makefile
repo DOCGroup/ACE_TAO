@@ -203,14 +203,14 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Service_Repository.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -251,6 +251,8 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
@@ -268,12 +270,16 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -443,14 +449,14 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Service_Repository.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -491,6 +497,8 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
@@ -508,12 +516,16 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -681,14 +693,14 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Service_Repository.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -729,6 +741,8 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
@@ -746,12 +760,16 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -909,14 +927,14 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Service_Repository.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -957,6 +975,8 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
@@ -974,12 +994,16 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -1155,14 +1179,14 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Service_Repository.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1203,6 +1227,8 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
@@ -1220,12 +1246,16 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -1393,14 +1423,14 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Service_Repository.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1441,6 +1471,8 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
@@ -1458,12 +1490,16 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -1633,14 +1669,14 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Service_Repository.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1681,6 +1717,8 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
@@ -1698,12 +1736,16 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -1871,14 +1913,14 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Service_Repository.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1919,6 +1961,8 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
@@ -1936,12 +1980,16 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -2113,14 +2161,14 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Service_Repository.h \
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -2161,6 +2209,8 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Align.h \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
@@ -2178,12 +2228,16 @@ Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \

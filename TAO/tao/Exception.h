@@ -248,53 +248,6 @@ private:
   CORBA_Any* exception_;
 };
 
-class TAO_Export CORBA_Environment
-{
-  // = TITLE
-  //   CORBA_Environment
-  //
-  // = DESCRIPTION
-  // A CORBA_Environment is a way to automagically ensure that
-  // exception data is freed -- the "var" class for Exceptions.  It
-  // adds just a bit of convenience function support, helping classify
-  // exceptions as well as reducing memory leakage.
-public:
-  // = Initialization and termination methods.
-  CORBA_Environment (void);
-  // ctor
-
-  ~CORBA_Environment (void);
-  // dtor
-
-  CORBA::Exception_ptr exception (void) const;
-  // Return the exception.  Caller must call _incr_refcnf() in order
-  // to keep the ptr.
-
-  void exception (CORBA::Exception *ex);
-  // Set the exception to <ex>, taking a reference on it.
-
-  CORBA::ExceptionType exception_type (void) const;
-  // Return if the exception is a user exception or a system
-  // exception.
-
-  TAO_CONST CORBA::String exception_id (void) const;
-  // return the repository ID for the exception
-
-  void clear (void);
-  // Clear the exception.
-
-  void print_exception (const char *info,
-                        FILE *f=stdout) const;
-  // print the exception to output determined by f
-
-private:
-  CORBA::Exception_ptr exception_;
-  // Pointer to the exception object contained in the environment.
-
-  // = These are not provided.
-  CORBA_Environment (const CORBA_Environment &src);
-  CORBA_Environment &operator = (const CORBA_Environment &src);
-};
 
 class TAO_Export TAO_Exceptions
 {
@@ -306,17 +259,17 @@ public:
                                       const char *name,
                                       char *buffer,
                                       size_t buflen,
-                                      CORBA::Environment &env);
+                                      CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Make the TypeCode for a standard exception.  When used
   // correctly, initializing system exceptions is only an exercise
   // in CPU time; it allocates no new memory.
 
   static void make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
-					  CORBA::Environment &env);
+					  CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Make the TypeCode for the CORBA::UnknownUserException standard
   // exception.
 
-  static void init (CORBA::Environment &env);
+  static void init (CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Runtime initialization of all standard exception typecodes.
   // Called from <CORBA::ORB_init>.
 
@@ -324,7 +277,7 @@ public:
   // Runtime finalization of all standard exception typecodes.
 
   static CORBA_Exception *create_system_exception (const char* id,
-						   CORBA::Environment& env);
+						   CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Create a CORBA::SystemException given the interface repository
   // ID.
 
@@ -366,10 +319,10 @@ public:
   void add_consume (CORBA::TypeCode_ptr tc);
   // add and consume a TypeCode to the list
 
-  CORBA::TypeCode_ptr item (CORBA::ULong index, CORBA::Environment &env);
+  CORBA::TypeCode_ptr item (CORBA::ULong index, CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // return the typecode at index i. Raises the "Bounds" exception
 
-  void remove (CORBA::ULong index, CORBA::Environment &env);
+  void remove (CORBA::ULong index, CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // remove the typecode at index i. Raises the "Bounds" exception
 
 private:

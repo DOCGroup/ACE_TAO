@@ -109,7 +109,9 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
       << "const char* logical_type_id," << be_nl
-      << "CORBA::Environment &_tao_environment" << be_uidt_nl
+      << "CORBA::Environment &_tao_environment = " << be_idt_nl
+      << "CORBA::Environment::default_environment ()"
+      << be_uidt << be_uidt_nl
       << ");" << be_uidt_nl;
 
   *os << "virtual void* _downcast (" << be_idt << be_idt_nl
@@ -127,13 +129,25 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
     }
   // add a skeleton for our _is_a method
   os->indent ();
-  *os << "static void _is_a_skel (CORBA::ServerRequest &req, " <<
-    "void *obj, void *context, CORBA::Environment &_tao_enviroment);\n\n";
+  *os << "static void _is_a_skel (" << be_idt << be_idt_nl
+      << "CORBA::ServerRequest &req," << be_nl
+      << "void *obj," << be_nl
+      << "void *context," << be_nl
+      << "CORBA::Environment &_tao_enviroment = " << be_idt_nl
+      << "CORBA::Environment::default_environment ()"
+      << be_uidt << be_uidt_nl
+      << ");" << be_uidt << "\n\n";
 
   // add a skeleton for our _non_existent method
   os->indent ();
-  *os << "static void _non_existent_skel (CORBA::ServerRequest &req, " <<
-    "void *obj, void *context, CORBA::Environment &_tao_enviroment);\n\n";
+  *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
+      << "CORBA::ServerRequest &req," << be_nl
+      << "void *obj," << be_nl
+      << "void *context," << be_nl
+      << "CORBA::Environment &_tao_enviroment = " << be_idt_nl
+      << "CORBA::Environment::default_environment ()"
+      << be_uidt << be_uidt_nl
+      << ");" << be_uidt << "\n\n";
 
   // add a method that says whether we are involved in a multiple inheritance
   // or not
@@ -153,17 +167,25 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   // add the dispatch method
   os->indent ();
-  *os << "virtual void _dispatch (CORBA::ServerRequest &_tao_req, "
-      << "void *_tao_context, CORBA::Environment &_tao_env);\n\n";
+  *os << "virtual void _dispatch (" << be_idt << be_idt_nl
+      << "CORBA::ServerRequest &_tao_req," << be_nl
+      << "void *_tao_context," << be_nl
+      << "CORBA::Environment &_tao_env = " << be_idt_nl
+      << "CORBA::Environment::default_environment ()"
+      << be_uidt << be_uidt_nl
+      << ");" << be_uidt << "\n\n";
 
   // Print out the _this() method.
   os->indent ();
-  *os << node->name () << " *_this (CORBA::Environment &_tao_environment);\n";
+  *os << node->name () << " *_this (" << be_idt << be_idt_nl
+      << "CORBA::Environment &_tao_environment = " << be_idt_nl
+      << "CORBA::Environment::default_environment ()"
+      << be_uidt << be_uidt_nl
+      << ");" << be_uidt << "\n";
+
   // the _interface_repository_id method
   os->indent ();
-  *os << "virtual const char* _interface_repository_id"
-      << " (void) const;\n";
-
+  *os << "virtual const char* _interface_repository_id (void) const;\n";
   os->decr_indent ();
 
   *os << "};\n\n";
