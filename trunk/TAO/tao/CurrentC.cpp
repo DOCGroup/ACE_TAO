@@ -8,6 +8,7 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "tao/CurrentC.h"
+#include "tao/Sequence.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/CurrentC.i"
@@ -70,7 +71,7 @@ void *CORBA_Current::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
