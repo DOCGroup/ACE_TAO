@@ -11,7 +11,7 @@ Test_impl::Test_impl (CORBA::ORB_ptr orb)
 }
 
 
-void 
+void
 reflect_node (BaseNode_ptr bn)
 {
   if(bn == 0) return;
@@ -29,9 +29,9 @@ reflect_node (BaseNode_ptr bn)
   bn->left (old_right);
 }
 
-TreeController * 
+TreeController *
 Test_impl::reflect (TreeController * tc
-                    TAO_ENV_ARG_NOT_USED)
+                    TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (tc != 0)
