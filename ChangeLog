@@ -1,3 +1,11 @@
+Mon Apr 22 15:43:15 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/DLL/Today.h:
+	* examples/DLL/Today.cpp:
+	* examples/DLL/Newsweek.h:
+	* examples/DLL/Newsweek.cpp: Added overloaded new/delete opertors
+	  and updated magazine messages.
+
 Mon Apr 22 15:20:02 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/DLL_Test.h:
