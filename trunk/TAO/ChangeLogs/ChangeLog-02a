@@ -1,3 +1,18 @@
+Fri Jan  4 16:30:04 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/DynamicAny/DynCommon.cpp (insert_reference):
+
+          Since the argument is passed in as a CORBA::Object_ptr,
+          and ultimately inserted into the member Any with the
+          non-virtual operator <<=, then
+          dyn_any->to_any()->type ()->id() would always yield
+          "IDL:CORBA/Object:1.0", no matter what 
+          dyn_any->type()->id() yields. So the insertion into
+          the memeber Any has been changed to use _tao_replace(),
+          and passing in the dyn_any's type code, which is 
+          always of the derived type. Thanks to Mahesh Vedantam 
+          <mahesh@ociweb.com> for reporting the problem.
+
 Fri Jan  4 15:21:33 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/ifr_visitor.cpp (visit_factory):
