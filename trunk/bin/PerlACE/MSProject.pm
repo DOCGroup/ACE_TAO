@@ -351,7 +351,7 @@ sub Load ()
             delete %{$self->{CONFIGS}}->{"Unknown"};
         }
         
-        if (m/tao\_idl/ && m/\$\(InputName\)\.idl/) {
+        if (m/tao\_idl/ && m/\$\(InputName\)\.idl/ || m/tao\_idl/ && m/\$\(InputPath\)/) {
             $self->{TAOIDL} = 1;
         }
     }
