@@ -16,6 +16,10 @@ Thu Feb 12 10:21:47 1998  David L. Levine  <levine@cs.wustl.edu>
         * TAO_IDL/be/be_array.cpp (tao_name): changed type of loop index
           "i" to unsigned int to avoid signed/unsigned comparison.
 
+        * TAO_IDL/be/be_state_exception (get_code): added default case to
+          switch statement, which sets "os" to 0, to avoid compiler warning
+          about possible unitialized use.
+
 Wed Feb 11 11:20:34 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/iiopobj.h,stub.h (operator =): added return type to avoid
