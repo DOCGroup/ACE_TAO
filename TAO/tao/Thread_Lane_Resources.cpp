@@ -27,8 +27,6 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (TAO_ORB_Core &orb_core)
 
 TAO_Thread_Lane_Resources::~TAO_Thread_Lane_Resources (void)
 {
-  delete this->transport_cache_;
-  delete this->leader_follower_;
 }
 
 TAO_Transport_Cache_Manager &
@@ -139,4 +137,7 @@ TAO_Thread_Lane_Resources::finalize (void)
                                ACE_Event_Handler::ALL_EVENTS_MASK);
         }
     }
+
+  delete this->transport_cache_;
+  delete this->leader_follower_;
 }
