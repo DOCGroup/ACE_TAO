@@ -1,3 +1,8 @@
+Sun Oct 19 21:25:59 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* performance-tests/SCTP/hist.cpp: Fixed fuzz errors. Include
+	  "ace/os_include/os_math.h" instead of math.h.
+
 Sun Oct 19 21:16:44 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* apps/JAWS3/http/HTTP_Service_Handler.h: 
