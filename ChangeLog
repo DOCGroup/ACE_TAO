@@ -14,6 +14,12 @@ Sun May 21 12:29:11 2000  Carlos O'Ryan  <coryan@uci.edu>
           Removed the Connection_Purging test from the single threaded
           builds, the test cannot work in that configuration.
 
+Sun May 21 11:39:11 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tests/Signal_Test.cpp (worker_parent): My earlier fix on May 18th, 2000
+	  was incorrect.  The right fix is to make the format specifier be
+          %ld, rather than cast the pid_t to (int).
+
 Sat May 20 18:34:05 2000  Ossama Othman  <ossama@uci.edu>
 
 	* configure.in (ACE_HAS_BROKEN_T_ERROR):
