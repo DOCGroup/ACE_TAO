@@ -11816,7 +11816,7 @@ Mon Jul 21 01:56:44 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
           Added method getmacaddress () to get the mac address of the host
           for generating UUIDs
 
-          Added to_string () method to ACE_Thread_ID class to create a
+          Added to_string() method to ACE_Thread_ID class to create a
           string representation of ACE_Thread_ID.
 
         * ace/config-win32-common.h:

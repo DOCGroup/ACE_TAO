@@ -121,9 +121,8 @@ ACE_Thread_ID::handle (ACE_hthread_t thread_handle)
 }
 
 void
-ACE_Thread_ID::to_string (char* thr_id)
+ACE_Thread_ID::to_string (char *thr_string)
 {
-
   char format[128]; // Converted format string
   char *fp;         // Current format pointer
   fp = format;
@@ -131,10 +130,10 @@ ACE_Thread_ID::to_string (char* thr_id)
 
 #if defined (ACE_WIN32)
   ACE_OS::strcpy (fp, "u");
-  ACE_OS::sprintf (thr_id,
+  ACE_OS::sprintf (thr_string,
                    format,
-                   ACE_static_cast(unsigned,
-                                   ACE_OS::thr_self ()));
+                   ACE_static_cast (unsigned,
+                                    thread_id_));
 #elif defined (ACE_AIX_VERS) && (ACE_AIX_VERS <= 402)
                   // AIX's pthread_t (ACE_hthread_t) is a pointer, and it's
                   // a little ugly to send that through a %u format.  So,
@@ -147,40 +146,41 @@ ACE_Thread_ID::to_string (char* thr_id)
                   //   this would have on that.
                   // -Steve Huston, 19-Aug-97
                   ACE_OS::strcpy (fp, "u");
-                  ACE_OS::sprintf (thr_id, format, thread_self());
+                  ACE_OS::sprintf (thr_string, format, thread_id_);
 #elif defined (DIGITAL_UNIX)
                   ACE_OS::strcpy (fp, "u");
-                  ACE_OS::sprintf (thr_id, format,
+                  ACE_OS::sprintf (thr_string, format,
 #  if defined (ACE_HAS_THREADS)
-                                   pthread_getselfseq_np ()
+                                   thread_id_
 #  else
-                                   ACE_Thread::self ()
+                                   thread_id_
 #  endif /* ACE_HAS_THREADS */
                                           );
 #else
-                  ACE_hthread_t t_id;
-                  ACE_OS::thr_self (t_id);
 
 #  if defined (ACE_HAS_PTHREADS_DRAFT4) && defined (HPUX_10)
                   ACE_OS::strcpy (fp, "u");
                   // HP-UX 10.x DCE's thread ID is a pointer.  Grab the
                   // more meaningful, readable, thread ID.  This will match
                   // the one seen in the debugger as well.
-                  ACE_OS::sprintf (thr_id, format,
-                                   pthread_getunique_np(&t_id));
+                  ACE_OS::sprintf (thr_string, format,
+                                   pthread_getunique_np(&thread_handle_));
 #  elif defined (ACE_MVS) || defined (ACE_TANDEM_T1248_PTHREADS)
                   // MVS's pthread_t is a struct... yuck. So use the ACE 5.0
                   // code for it.
                   ACE_OS::strcpy (fp, "u");
-                  ACE_OS::sprintf (thr_id, format, t_id);
+                  ACE_OS::sprintf (thr_string, format, thread_handle_);
 #  else
-                  // Yes, this is an ugly C-style cast, but the correct
-                  // C++ cast is different depending on whether the t_id
-                  // is an integral type or a pointer type. FreeBSD uses
-                  // a pointer type, but doesn't have a _np function to
-                  // get an integral type, like the OSes above.
+                  // Yes, this is an ugly C-style cast, but the
+                  // correct C++ cast is different depending on
+                  // whether the t_id is an integral type or a pointer
+                  // type. FreeBSD uses a pointer type, but doesn't
+                  // have a _np function to get an integral type, like
+                  // the OSes above.
                   ACE_OS::strcpy (fp, "lu");
-                  ACE_OS::sprintf (thr_id, format, (unsigned long)t_id);
+                  ACE_OS::sprintf (thr_string,
+                                   format,
+                                   (unsigned long) thread_handle_);
 #  endif /* ACE_HAS_PTHREADS_DRAFT4 && HPUX_10 */
 
 #endif /* ACE_WIN32 */
