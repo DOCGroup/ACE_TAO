@@ -1,3 +1,9 @@
+Tue Aug 31 12:18:01 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/config-netbsd.h:
+
+	  Moved ACE_HAS_PENTIUM into "defined(__i386__)" conditional.
+
 Tue Aug 31 14:38:19 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS_NS_errno.h:
