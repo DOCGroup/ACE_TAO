@@ -223,8 +223,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_union (be_union *node)
     *os << bt->name () << " *_tao_retval = 0;\n";
   else
     {
-      *os << bt->name () << " _tao_retval;" << be_nl;
-      *os << "ACE_OS::memset (&_tao_retval, 0, sizeof (" << bt->name () << "));\n";
+      *os << bt->name () << " _tao_retval;\n";
     }
   return 0;
 }
