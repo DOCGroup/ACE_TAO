@@ -30,7 +30,7 @@ ACE_Token::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nthread = %d"), ACE_Thread::self ()));
   // @@ Is there a portable way to do this?
-  // ACE_DEBUG ((LM_DEBUG, "\nowner_ = %l", (long) this->owner_));
+  // ACE_DEBUG ((LM_DEBUG, "\nowner_ = %d", (long) this->owner_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nowner_ addr = %x"), &this->owner_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nwaiters_ = %d"), this->waiters_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nin_use_ = %d"), this->in_use_));

@@ -343,8 +343,7 @@ ACE_RWLock_Invariants::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_RWLock_Invariants::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("writers_ = %d\n"),
-              "readers_ = %d\n",
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("writers_ = %d readers_ = %d\n"),
               writers_, readers_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
