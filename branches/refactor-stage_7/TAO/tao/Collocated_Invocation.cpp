@@ -25,11 +25,11 @@ namespace TAO
                                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::Exception))
   {
+    Invocation_Status s = TAO_INVOKE_FAILURE;
 
     /// Start the interception point
 #if TAO_HAS_INTERCEPTORS == 1
-
-    Invocation_Status s =
+    s =
       this->send_request_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
@@ -49,10 +49,16 @@ namespace TAO
                        ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
+        // Invocation completed succesfully
+        s = TAO_INVOKE_SUCCESS;
+
 #if TAO_HAS_INTERCEPTORS == 1
         if (this->forwarded_to_.in () ||
             this->response_expected_ == false)
           {
+            if (this->forwarded_to_.in ())
+              this->reply_received (TAO_INVOKE_RESTART);
+
             s =
               this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
@@ -60,10 +66,14 @@ namespace TAO
         // NOTE: Any other condition that needs handling?
         else if (this->response_expected ())
           {
+            this->reply_received (TAO_INVOKE_SUCCESS);
+
             s =
               this->receive_reply_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
           }
+        if (s != TAO_INVOKE_SUCCESS)
+          return s;
 #endif /*TAO_HAS_INTERCEPTORS */
       }
     ACE_CATCHANY
@@ -81,8 +91,7 @@ namespace TAO
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
           s = TAO_INVOKE_RESTART;
-        else if (status == PortableInterceptor::SYSTEM_EXCEPTION
-            || status == PortableInterceptor::USER_EXCEPTION)
+        else
 #endif /*TAO_HAS_INTERCEPTORS*/
           ACE_RE_THROW;
       }
@@ -110,9 +119,9 @@ namespace TAO
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
     if (this->forwarded_to_.in () != 0)
-      return TAO_INVOKE_RESTART;
+      s =  TAO_INVOKE_RESTART;
 
-    return TAO_INVOKE_SUCCESS;
+    return s;
   }
 
 }

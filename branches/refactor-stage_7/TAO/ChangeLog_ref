@@ -1,9 +1,14 @@
+Mon Oct 13 21:22:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Collocated_Invocation.cpp: Fixed simple bugs with
+	  interceptor invocations  when the invocations are collocated.
+
 Mon Oct 13 21:19:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Portable_Interceptors/Collocated/Makefile:
 	* tests/Portable_Interceptors/Collocated/Dynamic/Client_Task.cpp:
 	* tests/Portable_Interceptors/Collocated/Dynamic/Collocated_Test.cpp:
-	* tests/Portable_Interceptors/Collocated/Dynamic/Echo_Collocated_ORBInitializer.h
+	* tests/Portable_Interceptors/Collocated/Dynamic/Echo_Collocated_ORBInitializer.h:
 	* tests/Portable_Interceptors/Collocated/Dynamic/Makefile:
 	* tests/Portable_Interceptors/Collocated/Dynamic/Server_Task.cpp:
 	* tests/Portable_Interceptors/Collocated/Dynamic/interceptors.cpp:

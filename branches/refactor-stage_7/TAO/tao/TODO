@@ -51,3 +51,5 @@
 . test non-gperf generated code
 
 . AMI -- exceptions interceptor test needs modifications.
+
+. Add CollocatedPI tests to the daily build
