@@ -70,6 +70,7 @@ You can  unregister by typing 'u' and quit by typing 'q'.
 ./supplier -ifilename
 
 The -i option simply tells the daemon where to pick information from.
+TIP:: the contents of the input file per line should be: stockname and its price. 
 
 The other option includes setting the period for the stock feed.
 
