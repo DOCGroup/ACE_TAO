@@ -1,3 +1,25 @@
+Tue Jul  6 22:23:01 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/benchmark/run_test.pl: 
+	* orbsvcs/tests/CosEC_Multiple/run_test2.pl: 
+	* orbsvcs/tests/EC_Multiple/run_test.pl: 
+	* orbsvcs/tests/Event_Latency/run_test.pl: 
+	* orbsvcs/tests/Simple_Naming/run_test.pl: 
+	* orbsvcs/tests/Property/run_test.pl,
+	* orbsvcs/tests/EC_Custom_Marshal/run_test.pl,
+	* orbsvcs/tests/EC_Throughput/run_test.pl: 
+	  Updated these scripts to use Naming_Server rather than Naming_Service
+	  to match the change described in the next bullet.
+
+	* orbsvcs/Naming_Service: Renamed the executable for the Naming Service
+	  to "Naming_Server", which is more descriptive.
+
+	* orbsvcs/Naming_Service: Created a new file called Naming_Server.cpp
+	  that contains the main() function.  This makes it easy for folks
+ 	  to reuse the TAO Naming Service in other ways, such as
+ 	  integrating it with the Windows NT Service Config Manager.
+  	  Thanks to Gul Onural <Gul_Onural@Mitel.COM> for suggesting this.
+
 Tue Jul 06 22:22:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/Scheduling_Service/Scheduling_Service.cpp: added explicit
@@ -5,8 +27,8 @@ Tue Jul 06 22:22:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 Tue Jul  6 16:54:32 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.cpp:
-	  Fixed several 'unreachable statements' warnings in <run> method.
+	* orbsvcs/Naming_Service/Naming_Service.cpp: Fixed several
+	  'unreachable statements' warnings in <run> method.
 
 Tue Jul  6 16:35:19 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
