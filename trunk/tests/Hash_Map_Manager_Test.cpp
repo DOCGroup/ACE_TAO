@@ -30,7 +30,7 @@
 #define HASH_STRING_ENTRY ACE_Hash_Map_Entry<char *, char *>
 #define HASH_STRING_MAP ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex>
 
-#define HASH_MAP_STRING_TYPE char *
+#define MAP_STRING char *
 #define ENTRY entry
 
 HASH_STRING_ENTRY::ACE_Hash_Map_Entry (char *const &ext_id,
@@ -69,12 +69,94 @@ HASH_STRING_MAP::equal (char *const &id1, char *const &id2)
 
 // Do this if we don't have template specialization
 
-#define HASH_STRING_ENTRY ACE_Hash_Map_Entry<ACE_CString, ACE_CString>
-#define HASH_STRING_MAP \
-        ACE_Hash_Map_Manager<ACE_CString, ACE_CString, ACE_Null_Mutex>
+class Dumb_String
+  // = DESCRIPTION
+  //     Desperate times call for desparate measures.  Bug your compiler
+  //     vendor to support template specialization.
+{
+public:
+  Dumb_String (char *s = 0);
+  Dumb_String (const Dumb_String &ds);
 
-#define HASH_MAP_STRING_TYPE ACE_CString
-#define ENTRY (entry.rep ())
+  ~Dumb_String (void);
+
+  u_long hash (void) const;
+
+  int operator== (char const * s) const;
+  int operator== (const Dumb_String &ds) const;
+
+  char * operator= (const Dumb_String &ds);
+
+  operator char * (void) const;
+
+private:
+  char * s_;
+  int &copy_;
+  int junk_;
+};
+
+#define HASH_STRING_ENTRY ACE_Hash_Map_Entry<Dumb_String, Dumb_String>
+#define HASH_STRING_MAP \
+        ACE_Hash_Map_Manager<Dumb_String, Dumb_String, ACE_Null_Mutex>
+
+#define MAP_STRING Dumb_String
+#define ENTRY ((char *)entry)
+
+Dumb_String::Dumb_String (char *s)
+  : s_ (s ? ACE_OS::strdup (s) : s),
+    copy_ (s ? *(new int (1)) : junk_),
+    junk_ (1)
+{
+}
+
+Dumb_String::Dumb_String (const Dumb_String &ds)
+  : s_ (ds.s_),
+    copy_ (ds.copy_),
+    junk_ (1)
+{
+  copy_++;
+}
+
+Dumb_String::~Dumb_String (void)
+{
+  if (--copy_ == 0)
+    {
+      ACE_OS::free (s_);
+      if (&copy_ != &junk_)
+        delete &copy_;
+    }
+}
+
+u_long
+Dumb_String::hash (void) const
+{
+  return ACE::hash_pjw (s_);
+}
+
+int
+Dumb_String::operator== (char const * s) const
+{
+  return ACE_OS::strcmp (s_, s) == 0;
+}
+
+int
+Dumb_String::operator== (const Dumb_String &ds) const
+{
+  return ACE_OS::strcmp (s_, ds.s_) == 0;
+}
+
+char *
+Dumb_String::operator= (const Dumb_String &ds)
+{
+  this->Dumb_String::~Dumb_String ();
+  new (this) Dumb_String (ds);
+  return s_;
+}
+
+Dumb_String::operator char * (void) const
+{
+  return s_;
+}
 
 // Note that in this version, you will not get the Creating and Freeing
 // diagnostic messages.
@@ -96,7 +178,7 @@ main(void)
     hash.bind ("goodbye", "auf wiedersehen");
     hash.bind ("funny", "lustig");
 
-    HASH_MAP_STRING_TYPE entry;
+    MAP_STRING entry;
 
     if (hash.find ("hello", entry) == 0)
       ACE_DEBUG ((LM_DEBUG, "`%s' found `%s'\n", "hello", ENTRY));
@@ -121,7 +203,7 @@ main(void)
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Hash_Map_Entry<HASH_MAP_STRING_TYPE, HASH_MAP_STRING_TYPE>;
-template class ACE_Hash_Map_Manager<HASH_MAP_STRING_TYPE, HASH_MAP_STRING_TYPE, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<HASH_MAP_STRING_TYPE, HASH_MAP_STRING_TYPE, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<MAP_STRING, MAP_STRING>;
+template class ACE_Hash_Map_Manager<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
