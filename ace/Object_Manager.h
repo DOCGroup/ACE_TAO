@@ -237,6 +237,27 @@ class ACE_Export ACE_Object_Manager : public ACE_Object_Manager_Base
   //        cleaned up by the Object_Manager, they'll get cleaned up too
   //        late.  The ACE tests do not violate this requirement.
   //        However, applications may have trouble with it.
+  //
+  //     NOTE on the use of ::exit ():  ::exit () does not destroy
+  //     static objects.  Therefore, if
+  //     ACE_HAS_NONSTATIC_OBJECT_MANAGER is enabled, the
+  //     ACE_Object_Manager instance will *not* be destroyed if ::exit
+  //     () is called!  However, ACE_OS::exit () will properly destroy
+  //     the ACE_Object_Manager.  It is highly recommended that
+  //     ACE_OS::exit () be used instead of ::exit ().
+  //
+  //     However, ::exit () and ACE_OS::exit () are tricky to use
+  //     properly, especially in multithread programs.  It is much
+  //     safer to throw an exception (or simulate that effect) that
+  //     will be caught by main () instead of calling exit.  Then,
+  //     main () can perform any necessary application-specific
+  //     cleanup and return the status value.  In addition, it's
+  //     usually best to avoid calling ::exit () and ACE_OS::exit ()
+  //     from threads other than the main thread.  Thanks to Jeff
+  //     Greif <jmg@trivida.com> for pointing out that ::exit ()
+  //     doesn't destroy automatic objects, and for developing the
+  //     recommendations in this paragraph.
+
 public:
   static int init (void);
   // Explicity initialize (construct the singleton instance of) the
