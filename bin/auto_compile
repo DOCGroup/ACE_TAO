@@ -546,44 +546,16 @@ if ($post_realclean) {
 
 print LOG "#################### Config\n";
 
-chdir($CHECKOUT . "/" . $MODULE)
-  || mydie "Cannot chdir to $CHECKOUT/$MODULE";
+chdir($CHECKOUT . "/" . $MODULE . "/build/" . $BUILD)
+  || mydie "Cannot chdir to $CHECKOUT/$MODULE/build/$BUILD";
 
-open (CHLOG, "ChangeLog")
-  ||  mydie "cannot open Changelog";
-$_ = <CHLOG>;
-chop;
-print LOG "ACE ChangeLogTag:", $_, "\n";
-close (CHLOG);
-
-if ($dont_build_tao == 0) {
-  open (CHLOG, "TAO/ChangeLog")
-    ||  mydie "cannot open TAO/Changelog";
-  $_ = <CHLOG>;
-  chop;
-  print LOG "TAO ChangeLogTag:", $_, "\n";
-  close (CHLOG);
-}
-
-print LOG "================ ace/config.h ================\n";
-open (CONFIG, "build/$BUILD/ace/config.h")
-  || mydie "cannot open ace/config.h";
+open (CONFIG, "perl bin/nightlybuilds/print_config.pl $CHECKOUT/$MODULE/build/$BUILD 2>&1 |")
+  || mydie "Cannot run print_config.pl script";
 while (<CONFIG>) {
-  chop;
-  print LOG $_, "\n";
+  print LOG $_;
 }
-close (CONFIG);
-print LOG "================ ace/config.h ================\n";
-
-print LOG "================ include/makeinclude/platform_macros.GNU ================\n";
-open (CONFIG, "build/$BUILD/include/makeinclude/platform_macros.GNU")
-  || mydie "cannot open include/makeinclude/platform_macros.GNU" if ($makefile_suffix eq "");
-while (<CONFIG>) {
-  chop;
-  print LOG $_, "\n";
-}
-close (CONFIG);
-print LOG "================ include/makeinclude/platform_macros.GNU ================\n";
+close (CONFIG)
+  || mydie "Error while running print_config.pl script";
 
 report_errors @failures;
 
