@@ -1,5 +1,15 @@
 Wed Nov 24 07:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+        * tao/IORInterceptor/IORInterceptorC.cpp:
+          Added includes of the factory impl, so that in a static build these
+          factories are linked within the executable, so that service
+          configurator registry is correctly filled. This is also a problem in
+          the main branch, after review of Bala, maybe this goes into the
+          main, or I have to change the solution here.
+
+Wed Nov 24 07:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * tao/ORB_Core.cpp:
           Moved the error about the missing IORInterceptor Adapter Factory
           to the add_interceptor method, on the ior_interceptor_adapter() the

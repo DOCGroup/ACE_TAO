@@ -30,8 +30,8 @@
 
 
 #include "IORInterceptorC.h"
+#include "IORInterceptor_Adapter_Factory_Impl.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -92,7 +92,7 @@ TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*PortableInterceptor__TAO_IORInterceptor_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -103,7 +103,7 @@ PortableInterceptor::IORInterceptor::IORInterceptor (void)
 PortableInterceptor::IORInterceptor::~IORInterceptor (void)
 {}
 
-void 
+void
 PortableInterceptor::IORInterceptor::_tao_any_destructor (void *_tao_void_pointer)
 {
   IORInterceptor *_tao_tmp_pointer =
@@ -121,10 +121,10 @@ PortableInterceptor::IORInterceptor::_narrow (
     {
       return IORInterceptor::_nil ();
     }
-  
+
   IORInterceptor_ptr proxy =
     dynamic_cast<IORInterceptor_ptr> (_tao_objref);
-  
+
   return IORInterceptor::_duplicate (proxy);
 }
 
@@ -138,10 +138,10 @@ PortableInterceptor::IORInterceptor::_unchecked_narrow (
     {
       return IORInterceptor::_nil ();
     }
-  
+
   IORInterceptor_ptr proxy =
     dynamic_cast<IORInterceptor_ptr> (_tao_objref);
-  
+
   return IORInterceptor::_duplicate (proxy);
 }
 
@@ -152,7 +152,7 @@ PortableInterceptor::IORInterceptor::_duplicate (IORInterceptor_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -214,7 +214,7 @@ PortableInterceptor::IORInterceptor::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         PortableInterceptor::IORInterceptor
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         PortableInterceptor::IORInterceptor
@@ -231,10 +231,10 @@ PortableInterceptor::IORInterceptor::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T< \
         PortableInterceptor::IORInterceptor
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableInterceptor::IORInterceptor
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
