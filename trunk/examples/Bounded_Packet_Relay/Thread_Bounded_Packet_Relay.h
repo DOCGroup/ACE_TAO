@@ -206,11 +206,14 @@ public:
   int shutdown (void *);
   // Shuts down the task.
 
+  int clear_all_timers (void);
+  // Helper method: clears all timers.
+
 private:
   const int usecs_;
   // How many microseconds are in a second.
 
-  Bounded_Packet_Relay<ACE_Thread_Mutex> *relay_;
+  Bounded_Packet_Relay<ACE_MT_SYNCH> *relay_;
   // The bounded packet relay.
 
   Thread_Timer_Queue *queue_;
@@ -236,6 +239,39 @@ private:
 
 };
 
+class BPR_Handler_Base : public ACE_Event_Handler
+{
+  // = TITLE
+  //     Base event handler class for bounded packet relay example.
+  //
+  // = DESCRIPTION
+  //     The <handle_timeout> hook method calls the relay's send
+  //     method and decrements its count of messages to send.  
+  //     If there are still messages to send, it re-registers itself
+  //     with the timer queue.  Otherwise it calls the relay's end
+  //     transmission method, clears the timer queue, and then deletes "this".
+public:
+  BPR_Handler_Base (Bounded_Packet_Relay<ACE_MT_SYNCH> &relay,
+                Thread_Timer_Queue &queue);
+  // Constructor.
+
+  ~BPR_Handler_Base (void);
+  // Destructor.
+
+  virtual int clear_all_timers (void);
+  // Helper method: clears all timers.
+
+protected:
+
+  Bounded_Packet_Relay<ACE_MT_SYNCH> &relay_;
+  // Stores a reference to the relay object on which to invoke
+  // the appropritate calls when the timer expires.
+
+  Thread_Timer_Queue &queue_;
+  // Store a reference to the timer queue, in which to re-register
+  // the send timer and handler if there are still sends to perform.
+};
+
 class Send_Handler : public BPR_Handler_Base
 {
   // = TITLE
@@ -250,7 +286,7 @@ class Send_Handler : public BPR_Handler_Base
 public:
   Send_Handler (u_long send_count, 
                 const ACE_Time_Value &duration,
-                Bounded_Packet_Relay<ACE_Thread_Mutex> &relay,
+                Bounded_Packet_Relay<ACE_MT_SYNCH> &relay,
                 Thread_Timer_Queue &queue);
   // Constructor.
 
@@ -284,7 +320,7 @@ class Termination_Handler : public BPR_Handler_Base
   //     The <handle_timeout> hook method calls the relay's end
   //     transmission method, and then deletes "this".
 public:
-  Termination_Handler (Bounded_Packet_Relay<ACE_Thread_Mutex> &relay,
+  Termination_Handler (Bounded_Packet_Relay<ACE_MT_SYNCH> &relay,
                        Thread_Timer_Queue &queue);
   // Constructor.
 
@@ -315,7 +351,7 @@ public:
 
   // = Trait for commands issued from this driver
 
-  typedef Command<Input_Task, Input_Task::ACTION> COMMAND;
+  typedef Command<User_Input_Task, User_Input_Task::ACTION> COMMAND;
 
   // = Initialization and termination methods.
 

@@ -360,15 +360,15 @@ User_Input_Task::end_transmission (void *argument)
 
   if (relay_)
     {
-      Bounded_Packet_Relay::Transmission_Status *status;
+      Bounded_Packet_Relay_Base::Transmission_Status *status;
 
       status = 
-        ACE_static_cast (Bounded_Packet_Relay::Transmission_Status *,
+        ACE_static_cast (Bounded_Packet_Relay_Base::Transmission_Status *,
                          argument);
 
       if (status)
         {
-          switch (relay_->end_transmission (*status)
+          switch (relay_->end_transmission (*status))
             {
               case 1:
                 ACE_DEBUG ((LM_DEBUG, 
@@ -458,15 +458,61 @@ User_Input_Task::shutdown (void *argument)
 }
 
 
+// Helper method: clears all timers.
+
+int
+User_Input_Task::clear_all_timers (void)
+{
+  // loop through the timers in the queue, cancelling each one
+  for (ACE_Timer_Node_T <ACE_Event_Handler *> *node;
+       (node = queue_->timer_queue ().get_first ()) != 0;
+      )
+    queue_->cancel (node->get_timer_id (), 0);
+
+  return 0;
+}
+
+
+// Constructor.
+
+BPR_Handler_Base::BPR_Handler_Base (
+  Bounded_Packet_Relay<ACE_MT_SYNCH> &relay,
+  Thread_Timer_Queue &queue)
+  : relay_ (relay),
+    queue_ (queue)
+{
+}
+
+// Destructor.
+
+BPR_Handler_Base::~BPR_Handler_Base (void)
+{
+}
+
+// Helper method: clears all timers.
+
+int
+BPR_Handler_Base::clear_all_timers (void)
+{
+  // loop through the timers in the queue, cancelling each one
+  for (ACE_Timer_Node_T <ACE_Event_Handler *> *node;
+       (node = queue_.timer_queue ().get_first ()) != 0;
+      )
+    queue_.cancel (node->get_timer_id (), 0);
+
+  return 0;
+}
+
+
 // Constructor.
 
 Send_Handler::Send_Handler (u_long send_count, 
                             const ACE_Time_Value &duration,
-                            Bounded_Packet_Relay<ACE_Thread_Mutex> &relay,
+                            Bounded_Packet_Relay<ACE_MT_SYNCH> &relay,
                             Thread_Timer_Queue &queue)
   : BPR_Handler_Base (relay, queue),
     send_count_ (send_count),
-    duration_ (duration),
+    duration_ (duration)
 {
 }
 
@@ -482,7 +528,7 @@ int
 Send_Handler::handle_timeout (const ACE_Time_Value &current_time,
 			      const void *arg)
 {
-  switch (relay_->send_input ())
+  switch (relay_.send_input ())
     {
       case 0:
         // Decrement count of packets to relay.
@@ -492,8 +538,8 @@ Send_Handler::handle_timeout (const ACE_Time_Value &current_time,
         if (send_count_ > 0)
           {
             // Re-register the handler for a new timeout.
-            if (queue_->schedule (this, 0, 
-                                  duration_ + ACE_OS::gettimeofday ()) < 0)
+            if (queue_.schedule (this, 0, 
+                                 duration_ + ACE_OS::gettimeofday ()) < 0)
               ACE_ERROR_RETURN ((LM_ERROR, 
                                  "Send_Handler::handle_timeout: "
                                  "failed to reschedule send handler"), 
@@ -505,7 +551,7 @@ Send_Handler::handle_timeout (const ACE_Time_Value &current_time,
             // All packets are sent, time to cancel any other
             // timers, end the transmission, and go away.
             this->clear_all_timers ();
-            relay_->end_transmission (Bounded_Packet_Relay::COMPLETED);
+            relay_.end_transmission (Bounded_Packet_Relay_Base::COMPLETED);
             delete this;
             return 0;
           }
@@ -527,7 +573,7 @@ Send_Handler::cancelled (void)
 
 // Constructor.
 
-Termination_Handler::Termination_Handler (Bounded_Packet_Relay<ACE_Thread_Mutex> &relay,
+Termination_Handler::Termination_Handler (Bounded_Packet_Relay<ACE_MT_SYNCH> &relay,
                                           Thread_Timer_Queue &queue)
   : BPR_Handler_Base (relay, queue)
 {
@@ -548,7 +594,7 @@ Termination_Handler::handle_timeout (const ACE_Time_Value &current_time,
   // Transmission timed out, so cancel any other
   // timers, end the transmission, and go away.
   this->clear_all_timers ();
-  relay_->end_transmission (Bounded_Packet_Relay::TIMED_OUT);
+  relay_.end_transmission (Bounded_Packet_Relay_Base::TIMED_OUT);
   delete this;
   return 0;
 }
@@ -607,7 +653,7 @@ Thread_Bounded_Packet_Relay_Driver::display_menu (void)
 // Initialize the driver.
 
 int 
-Thread_Bounded_Packet_Relay_Driver::init (void);
+Thread_Bounded_Packet_Relay_Driver::init (void)
 {
   // Initialize the <Command> objects with their corresponding
   // methods from <User_Input_Task>.
@@ -673,16 +719,12 @@ Thread_Bounded_Packet_Relay_Driver::run (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Thread_Timer_Queue_Adapter<Timer_Heap>;
-template class Bounded_Packet_Relay_Driver<Thread_Timer_Queue,
-                                       Input_Task,
-                                       Input_Task::ACTION>;
-template class Command<Input_Task, Input_Task::ACTION>;
+template class Bounded_Packet_Relay_Driver<Thread_Timer_Queue>;
+template class Command<User_Input_Task, User_Input_Task::ACTION>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Thread_Timer_Queue_Adapter<Timer_Heap>
-#pragma instantiate Bounded_Packet_Relay_Driver<Thread_Timer_Queue, \
-                                           Input_Task, \
-                                           Input_Task::ACTION>
-#pragma instantiate Command<Input_Task, Input_Task::ACTION>
+#pragma instantiate Bounded_Packet_Relay_Driver<Thread_Timer_Queue>
+#pragma instantiate Command<User_Input_Task, User_Input_Task::ACTION>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
