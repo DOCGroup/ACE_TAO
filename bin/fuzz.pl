@@ -1193,6 +1193,32 @@ sub check_for_non_bool_operators ()
     }
 }
 
+# This test verifies that all filenames are short enough 
+
+sub check_for_long_file_names ()
+{
+    my $max_filename = 50;
+    my $max_mpc_filename = $max_filename - 20;
+    print "Running file names check\n";
+
+    foreach $file (@files_cpp, @files_inl, @files_h, @files_html, 
+                   @files_dsp, @files_dsw, @files_gnu, @files_idl, 
+                   @files_pl, @files_changelog, @files_makefile, 
+                   @files_bor ) {
+        if ( length( basename($file) ) >= $max_filename ) 
+        {
+            print_error ("File name $file exceeds $max_filename chars.");
+        }
+    }
+    foreach $file (@files_mpc) {
+        if ( length( basename($file) ) >= $max_mpc_filename ) 
+        {
+            print_warning ("File name $file exceeds $max_mpc_filename chars.");
+        }
+  
+    }
+}
+
 ##############################################################################
 
 use vars qw/$opt_c $opt_d $opt_h $opt_l $opt_t $opt_m $opt_v/;
@@ -1234,7 +1260,8 @@ if (!getopts ('cdhl:t:mv') || $opt_h) {
            check_for_changelog_errors
            check_for_ptr_arith_t
            check_for_include
-           check_for_non_bool_operators\n";
+           check_for_non_bool_operators
+           check_for_long_file_names\n";
     exit (1);
 }
 
@@ -1290,6 +1317,7 @@ check_for_changelog_errors () if ($opt_l >= 4);
 check_for_ptr_arith_t () if ($opt_l >= 4);
 check_for_include () if ($opt_l >= 5);
 check_for_non_bool_operators () if ($opt_l > 2);
+check_for_long_file_names () if ($opt_l > 1 );
 
 print "\nFuzz.pl - $errors error(s), $warnings warning(s)\n";
 
