@@ -1,3 +1,0 @@
-@echo Filtering Data...
-@echo off
-j9 -jcl:core -jit -bp:%IVEHOME%\lib\jclCore\classes.zip -cp:%IVEHOME%\lib\jclCore\ive.jar;../ Fir.FirTester -SampleFile sound.txt -CoeffFile coeff.txt -SampleNum 30000 -CoeffNum 21 -Cycle 3
