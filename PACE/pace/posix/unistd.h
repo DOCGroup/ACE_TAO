@@ -24,7 +24,9 @@ extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #define PACE_F_OK F_OK
-#define PACE_NULL NULL
+#ifndef PACE_NULL
+# define PACE_NULL NULL
+#endif /* PACE_NULL */
 #define PACE_R_OK R_OK
 #define PACE_SEEK_CUR SEEK_CUR
 #define PACE_SEEK_END SEEK_END

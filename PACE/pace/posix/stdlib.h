@@ -25,7 +25,9 @@ extern "C" {
 #define PACE_EXIT_FAILURE EXIT_FAILURE
 #define PACE_EXIT_SUCCESS EXIT_SUCCESS
 #define PACE_MB_CUR_MAX MB_CUR_MAX
-#define PACE_NULL NULL
+#ifndef PACE_NULL
+# define PACE_NULL NULL
+#endif /* PACE_NULL */
 #define PACE_RAND_MAX RAND_MAX
 
 #ifndef PACE_DIV_T

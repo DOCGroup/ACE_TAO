@@ -106,7 +106,7 @@ extern "C" {
      C std 7.14.1.1
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE void (*pace_signal(int sig, void (*func)(int)))(int);
+  PACE_INLINE pace_sig_pf pace_signal(int sig, pace_sig_pf func);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
