@@ -8,7 +8,6 @@ MAKEFILE = Makefile
 LIB      = libACE.a
 SHLIB    = libACE.$(SOEXT)
 
-
 FILES    = Log_Msg \
            ACE \
            Activation_Queue \
