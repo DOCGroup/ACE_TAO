@@ -91,8 +91,8 @@ namespace TAO
     /// Destructor
     /**
      * Protected destructor to enforce proper memory management via
-   * reference counting.
-   */
+     * reference counting.
+     */
     ~ObjectReferenceTemplate (void);
 
   private:
