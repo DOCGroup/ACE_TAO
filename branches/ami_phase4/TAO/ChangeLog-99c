@@ -1,3 +1,16 @@
+Wed Jul 21 12:26:21 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* performance-test/Latency/Makefile
+	* performance-test/Latency/README
+	* performance-test/Latency/client-st-exclusive.conf
+	* performance-test/Latency/client-st-muxed.conf
+	* performance-test/Latency/client.cpp
+	* performance-test/Latency/server.conf
+	* performance-test/Latency/server.cpp
+	* performance-test/Latency/st-client.cpp : Test suite for AMI.
+  
+	* performance-test/Latency/ami-throughput-client.cpp : Added this test.
+
 Sun Jul 18 20:33:55 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
   
 	* performance-test/Latency/client.exclusive.conf : Removed this
