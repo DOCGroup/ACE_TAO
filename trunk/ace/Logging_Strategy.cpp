@@ -340,8 +340,12 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
               ACE_OS::unlink (this->filename_);
 
               // Open a new log file with the same name.
+#if defined (ACE_LACKS_IOSTREAM_TOTALLY)
+              output_file = ACE_OS::fopen (this->filename_, "wt");
+#else
               output_file->open (ACE_TEXT_ALWAYS_CHAR (this->filename_),
                                  ios::out);
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
               // Release the lock previously acquired.
               ACE_LOG_MSG->release ();
@@ -423,7 +427,12 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
                     ACE_LIB_TEXT ("Backup file name too long; backup logfile not saved.\n")));
 
       // Open a new log file by the same name
-      output_file->open (ACE_TEXT_ALWAYS_CHAR(this->filename_), ios::out);
+#if defined (ACE_LACKS_IOSTREAM_TOTALLY)
+      output_file = ACE_OS::fopen (this->filename_, "wt");
+#else
+      output_file->open (ACE_TEXT_ALWAYS_CHAR (this->filename_),
+                         ios::out);
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
       // Release the lock previously acquired.
       ACE_LOG_MSG->release ();
