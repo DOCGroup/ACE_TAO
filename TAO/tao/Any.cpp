@@ -402,15 +402,16 @@ TAO::Any_Impl::_remove_ref (void)
 }
 
 void
-TAO::Any_Impl::_tao_decode (TAO_InputCDR &
-                            ACE_ENV_ARG_DECL_NOT_USED)
+TAO::Any_Impl::assign_translator (CORBA::TCKind,
+                                  TAO_InputCDR *)
 {
 }
 
 void
-TAO::Any_Impl::assign_translator (CORBA::TCKind,
-                                  TAO_InputCDR *)
+TAO::Any_Impl::_tao_decode (TAO_InputCDR &
+                            ACE_ENV_ARG_DECL)
 {
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 // =======================================================================

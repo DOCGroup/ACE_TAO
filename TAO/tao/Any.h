@@ -299,7 +299,8 @@ namespace TAO
     static void _tao_any_wstring_destructor (void *);
 
     virtual void _tao_decode (TAO_InputCDR &
-                              ACE_ENV_ARG_DECL_NOT_USED) = 0;
+                              ACE_ENV_ARG_DECL);
+
     virtual void assign_translator (CORBA::TCKind,
                                     TAO_InputCDR *cdr);
 
