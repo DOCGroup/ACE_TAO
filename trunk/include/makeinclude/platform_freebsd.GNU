@@ -39,7 +39,6 @@ ifneq ($(VERSION),3)
 endif
 DLD             = $(CXX)
 LD              = $(CXX)
-LIBS            += -lstdc++
 OCFLAGS         += -O2
 PIC             = -fpic
 AR              = ar
