@@ -159,8 +159,8 @@ main (int argc, char *argv[])
                   "error info: %s\n"
                   "status: %s\n",
                   ex.error_code,
-                  ex.error_message,
-                  ex.status_message));
+                  ex.error_message.in (),
+                  ex.status_message.in ()));
 
       return 0;
     }
