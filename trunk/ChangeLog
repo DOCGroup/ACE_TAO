@@ -1,3 +1,8 @@
+Fri May 23 11:41:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sock_Connect.cpp:
+          Corrected debug statements that where wrong or incomplete.
+
 Fri May 23 11:26:32 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
