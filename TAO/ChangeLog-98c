@@ -1,3 +1,8 @@
+Mon Oct 27 11:59:51 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/orbconf.h: Made it so _FAR is defined all the time.  Thanks
+ 	to Manojkumar Acharya <cvsf325.gpt.co.uk> for reporting this.
+
 Sun Oct 26 22:18:01 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.17, released Sun Oct 26 22:18:01 1997.
