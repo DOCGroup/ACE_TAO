@@ -3396,7 +3396,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/ORBInitInfo.h \
  $(TAO_ROOT)/tao/StringSeqC.h \
  $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/CodecFactory.h \
  $(TAO_ROOT)/tao/ORBInitInfo.inl \
  RT_ORB_Loader.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
