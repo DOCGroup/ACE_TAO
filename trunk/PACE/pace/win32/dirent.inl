@@ -31,7 +31,6 @@ pace_win32_emulate_closedir (PACE_DIR * dirp)
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
 #if (PACE_HAS_POSIX_FS_UOF)
-#endif /* PACE_HAS_POSIX_FS_UOF */
 PACE_DIR *
 pace_win32_emulate_opendir (const char * dirname)
 {
