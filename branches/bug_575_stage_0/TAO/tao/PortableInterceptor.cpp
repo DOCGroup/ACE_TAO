@@ -3,12 +3,14 @@
 #include "PortableInterceptor.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
+#include "ClientInterceptorAdapter.h"
 
 #if !defined (__ACE_INLINE__)
 #include "PortableInterceptor.i"
 #endif /* defined INLINE */
 
 #include "ClientRequestInfo.h"
+
 
 TAO_ClientRequestInterceptor_Adapter::
 ~TAO_ClientRequestInterceptor_Adapter (void)

@@ -863,19 +863,14 @@ TAO_Transport::process_parsed_messages (ACE_Message_Block &message_block,
     this->messaging_object ()->is_message_complete (message_block);
 
   // If we have a complete message, just resume the handler
-  if (retval)
-    {
-      // Resume the handler
-      this->orb_core_->reactor ()->resume_handler (h);
-    }
-  else
-    {
-      // We dont have a full message yet.
-      // @@Bala: We need to copy the message to make it safe for the
-      // next thread to come and read the rest of the stuff.
-      return 1;
-    }
+  // Resume the handler.
+  // @@Bala: Try to solve this issue of reactor resumptions..
+  this->orb_core_->reactor ()->resume_handler (h);
 
+  // If we dont have a complete message then just return 1 to the
+  // reactor so that we can be called back for further reading
+  if (!retval)
+    return 1;
 
   // Get the <message_type> that we have received
   TAO_Pluggable_Message_Type t =

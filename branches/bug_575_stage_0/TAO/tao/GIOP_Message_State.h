@@ -63,6 +63,11 @@ public:
   /// Parse the message header.
   int parse_message_header (ACE_Message_Block &incoming);
 
+  /// Return the message size
+  CORBA::ULong message_size (void) const;
+
+  /// Return the byte order information
+  CORBA::Octet byte_order (void) const;
 
 private:
 
@@ -118,6 +123,9 @@ private:
 
   /// (Requests and Replys)
   CORBA::Octet more_fragments_;
+
+  /// Missing data
+  CORBA::ULong missing_data_;
 
   /// @@Bala: Documentation??
   TAO_GIOP_Message_Status  message_status_;

@@ -22,6 +22,7 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
   : message_state_ (orb_core,
                     this),
     output_ (0),
+    message_queue_ (orb_core),
     generator_parser_ (0)
 {
 #if defined(ACE_HAS_PURIFY)
@@ -314,6 +315,14 @@ TAO_GIOP_Message_Base::message_type (void)
 int
 TAO_GIOP_Message_Base::parse_incoming_messages (ACE_Message_Block &incoming)
 {
+  // If we have a queue and if the last message is not complete a
+  // complete one, then this read will get us the remaining data. So
+  // do not try to parse the header if we have an incomplete message
+  // in the queue.
+  if (this->message_queue_.queue_length () > 0 &&
+      this->message_queue_.complete_message () == 0)
+    return 0;
+
   if (this->message_state_.parse_message_header (incoming) == -1)
     {
       return -1;
@@ -328,6 +337,20 @@ TAO_GIOP_Message_Base::parse_incoming_messages (ACE_Message_Block &incoming)
 int
 TAO_GIOP_Message_Base::is_message_complete (ACE_Message_Block &incoming)
 {
+  // If we have atleast one message in the message queue we just add
+  // the message to the queue
+  if (this->message_queue_.queue_length ())
+    {
+      // Add the new message to the Queue
+      this->message_queue_.add_message (incoming,
+                                        this->message_state_);
+
+      // We could have gotten the rest of the message of a previous
+      // incomplete read. We query to figure whether we have a
+      // complete message...
+      return this->message_queue_.complete_message ();
+    }
+
   size_t len = incoming.length ();
 
   len -= TAO_GIOP_MESSAGE_HEADER_LEN;
@@ -341,7 +364,18 @@ TAO_GIOP_Message_Base::is_message_complete (ACE_Message_Block &incoming)
 
   if (len == this->message_state_.message_size_)
     return 1;
-  //  else
+  else
+    {
+      // If we have a bigger or smaller message we  add the message to
+      // the queue.
+      this->message_queue_.add_message (incoming,
+                                        this->message_state_);
+
+      // We could have gotten the rest of the message of a previous
+      // incomplete read. We query to figure whether we have a
+      // complete message...
+      return this->message_queue_.complete_message ();
+    }
 
   // @@Bala: Implement other cases
   return 0;
@@ -360,23 +394,50 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // @@@@Is it necessary  here?
   this->output_->reset ();
 
-  // Get the read and write positions before we steal data.
-  // @@ Bala:Need to change this
-  size_t rd_pos = incoming.rd_ptr () - incoming.base ();
-  size_t wr_pos = incoming.wr_ptr () - incoming.base ();
+  CORBA::Octet byte_order = 0;
+  size_t rd_pos = 0;
+  size_t wr_pos = 0;
+  ACE_Data_Block *data = 0;
 
-  rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
+  // At this point we have data in the queue or in the <incoming>
+  // message block. If we have data in the queue we process that
+  // first. At this point we are just assuming that (and it is a
+  // pretty good assumption) that the data in <incoming>  has already
+  // been copied.
+  if (this->message_queue_.queue_length ())
+    {
+      // As we have a message in the queue let us process that. We do
+      // that by taking the data block off the queue and sticking it
+      // in the <incoming> message block..
+      data =
+        this->message_queue_.get_current_message (byte_order);
 
+      // Set the read and write pointer positions
+      // @@ What do we if we get Fragmented messages?
+      rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
+      wr_pos = data->size ();
+    }
+  else
+    {
+      // Get the read and write positions before we steal data.
+      // @@ Bala:Need to change this
+      rd_pos = incoming.rd_ptr () - incoming.base ();
+      wr_pos = incoming.wr_ptr () - incoming.base ();
+      rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
+      byte_order = this->message_state_.byte_order_;
 
-
-  // Duplicate the data block
-  ACE_Data_Block *data =
-    incoming.data_block ()->duplicate ();
+      data = incoming.data_block ()->duplicate ();
+      // Duplicate the data block
+      // @@Do we need to ??
+      //      ACE_Data_Block *data =
+      //incoming.data_block ()->duplicate ();
+    }
 
   char *ptr = incoming.rd_ptr ();
-    this->dump_msg ("recv",
-                    ACE_reinterpret_cast (u_char *, ptr),
-                    incoming.length ());
+  this->dump_msg ("recv",
+                  ACE_reinterpret_cast (u_char *, ptr),
+                  incoming.length ());
+
   // Create a input CDR stream.
   // NOTE: We use the same data block in which we read the message and
   // we pass it on to the higher layers of the ORB. So we dont to any
@@ -582,7 +643,6 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
       // Do this before the reply is sent.
       orb_core->adapter_registry ()->dispatch (request.object_key (),
                                                request,
-                                               0,
                                                forward_to,
                                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -794,7 +854,6 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
 
       orb_core->adapter_registry ()->dispatch (server_request.object_key (),
                                                server_request,
-                                               0,
                                                forward_to,
                                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
