@@ -343,7 +343,9 @@ the ORB.
   <TR>
     <TD><CODE>-ORBDottedDecimalAddresses</CODE> <EM>boolean (0|1)</EM></TD>
     <TD><A name="-ORBDottedDecimalAddresses"></a> Use the dotted decimal
-        notation for addresses. By default domain names are used in IORs.</TD>
+        notation for addresses. This option helps to work around
+        broken DNS implementations and may also reduce the time spent
+        resolving IP addresses.  By default domain names are used in IORs.</TD>
   </TR>
   <TR>
     <TD><CODE>-ORBInitRef</CODE> <EM>ObjectId=IOR</EM></TD>
