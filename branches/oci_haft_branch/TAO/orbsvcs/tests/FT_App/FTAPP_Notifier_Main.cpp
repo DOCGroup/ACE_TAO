@@ -13,13 +13,13 @@
  */
 //=============================================================================
 
-#include <tao/Utils/ServantMain.h>
+#include <tao/Utils/Server_Main.h>
 #include "StubFaultNotifier.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  TAO::Utils::ServantMain<StubFaultNotifier> servantMain("FaultNotifier");
-  return servantMain.Main(argc, argv);
+  TAO::Utils::Server_Main<StubFaultNotifier> server_main("FaultNotifier");
+  return server_main.run(argc, argv);
 }
 
 ///////////////////////////////////

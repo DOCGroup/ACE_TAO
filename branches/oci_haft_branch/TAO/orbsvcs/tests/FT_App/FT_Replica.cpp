@@ -12,11 +12,11 @@
  */
 //=============================================================================
 
-#include <tao/Utils/ServantMain.h>
+#include <tao/Utils/Server_Main.h>
 #include "FT_ReplicaFactory_i.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  TAO::Utils::ServantMain<FT_ReplicaFactory_i> servantMain("TestReplicaFactory");
-  return servantMain.Main(argc, argv);
+  TAO::Utils::Server_Main<FT_ReplicaFactory_i> server_main("TestReplicaFactory");
+  return server_main.run(argc, argv);
 }

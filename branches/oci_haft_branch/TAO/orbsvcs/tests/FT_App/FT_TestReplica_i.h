@@ -23,7 +23,6 @@
 ////////////////////
 // Forward Reference
 class FT_ReplicaFactory_i;
-class TAO_ORB_Manager;
 
 /**
  * Implement the TestReplica IDL interface.
@@ -34,7 +33,7 @@ class TAO_ORB_Manager;
 class FT_TestReplica_i : public virtual POA_FT_TEST::TestReplica
 {
 public:
-  FT_TestReplica_i (FT_ReplicaFactory_i * factory, long factoryId);
+  FT_TestReplica_i (FT_ReplicaFactory_i * factory, long factory_id);
   virtual ~FT_TestReplica_i ();
 
   /**
@@ -59,7 +58,7 @@ public:
    * @param orbManager our ORB -- we keep var to it.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int init (TAO_ORB_Manager & orbManager ACE_ENV_ARG_DECL);
+  int init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL);
 
   /**
    * Prepare to exit.
@@ -74,17 +73,20 @@ public:
    */
   int idle(int &result);
 
-  void requestQuit();
+  void request_quit();
 
+
+  long factory_id()const;
+
+  ::FT_TEST::TestReplica_ptr object_reference();
+
+  PortableServer::ObjectId object_id()const;
+
+  //////////////////////////////////////////
+  // Override CORBA servant virtual methods
   virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
 
-  long factoryId()const;
-
-  ::FT_TEST::TestReplica_ptr objectReference();
-  PortableServer::ObjectId objectId()const;
-//  char * IOR();
-
-
+  virtual void FT_TestReplica_i::_remove_ref (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
   ///////////////////////////
@@ -167,7 +169,7 @@ private:
   /**
    * The ID number assigned by the factory
    */
-  long factoryId_;
+  long factory_id_;
 
   /**
    * the factory that created thsi replica
@@ -175,9 +177,9 @@ private:
   FT_ReplicaFactory_i * factory_;
 
   /**
-   * The orb used to activate this object
+   * The orb 
    */
-  TAO_ORB_Manager * orbManager_;
+  CORBA::ORB_var orb_;
 
   /**
    * The POA used to activate this object.
@@ -187,7 +189,7 @@ private:
   /**
    * The CORBA object id assigned to this object.
    */
-  PortableServer::ObjectId_var objectId_;
+  PortableServer::ObjectId_var object_id_;
 
 };
 

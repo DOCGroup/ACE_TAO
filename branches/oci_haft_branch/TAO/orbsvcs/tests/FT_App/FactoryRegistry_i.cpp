@@ -34,10 +34,10 @@
     return /* value goes here */
 
 FactoryRegistry_i::FactoryRegistry_i ()
-  : iorOutputFile(0)
-  , nsName_(0)
-  , quitOnIdle_(0)
-  , quitRequested_(0)
+  : ior_output_file_(0)
+  , ns_name_(0)
+  , quit_on_idle_(0)
+  , quit_requested_(0)
 
 {
 }
@@ -51,7 +51,7 @@ FactoryRegistry_i::~FactoryRegistry_i (void)
 
 int FactoryRegistry_i::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:t:r:q");
+  ACE_Get_Opt get_opts (argc, argv, "o:q");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -60,12 +60,12 @@ int FactoryRegistry_i::parse_args (int argc, char * argv[])
     {
       case 'o':
       {
-        iorOutputFile = get_opts.opt_arg ();
+        this->ior_output_file_ = get_opts.opt_arg ();
         break;
       }
       case 'q':
       {
-        quitOnIdle_ = 1;
+        this->quit_on_idle_ = 1;
         break;
       }
 
@@ -75,7 +75,6 @@ int FactoryRegistry_i::parse_args (int argc, char * argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " -o <factory ior file>"
-                           " -t <test replica ior file>"
                            " -q{uit on idle}"
                            "\n",
                            argv [0]),
@@ -89,66 +88,108 @@ int FactoryRegistry_i::parse_args (int argc, char * argv[])
 
 const char * FactoryRegistry_i::identity () const
 {
-  return identity_.c_str();
+  return this->identity_.c_str();
 }
 
 int FactoryRegistry_i::idle (int & result)
 {
   result = 0;
-  int quit = quitRequested_;
+  int quit = this->quit_requested_;
   return quit;
 }
 
 
 int FactoryRegistry_i::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
-  if (iorOutputFile != 0)
+  if (this->ior_output_file_ != 0)
   {
-    ACE_OS::unlink (iorOutputFile);
-    iorOutputFile = 0;
+    ACE_OS::unlink (this->ior_output_file_);
+    this->ior_output_file_ = 0;
   }
-  if (nsName_ != 0)
+  if (this->ns_name_ != 0)
   {
-    naming_context_->unbind (this_name_
+    this->naming_context_->unbind (this_name_
                             ACE_ENV_ARG_PARAMETER);
-    nsName_ = 0;
+    this->ns_name_ = 0;
   }
   return 0;
 }
 
-int FactoryRegistry_i::init (TAO_ORB_Manager & orbManager
-  ACE_ENV_ARG_DECL)
+int FactoryRegistry_i::init (CORBA::ORB_var & orb  ACE_ENV_ARG_DECL)
 {
   int result = 0;
 
-  orbManager_ = & orbManager;
-  orb_ = orbManager.orb();
+  this->orb_ = orb;
 
-  // Register with the ORB.
-  ior_ = orbManager.activate (this
-      ACE_ENV_ARG_PARAMETER);
+  // Use the ROOT POA for now
+  CORBA::Object_var poa_object =
+    this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  if (iorOutputFile != 0)
+  if (CORBA::is_nil (poa_object.in ()))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                      -1);
+
+  // Get the POA object.
+  this->poa_ =
+    PortableServer::POA::_narrow (poa_object.in ()
+                                  ACE_ENV_ARG_PARAMETER);
+
+  ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil(this->poa_))
   {
-    identity_ = "file:";
-    identity_ += iorOutputFile;
-    result = writeIOR (iorOutputFile, ior_);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT (" (%P|%t) Unable to narrow the POA.\n")),
+                      -1);
+  }
+
+  PortableServer::POAManager_var poa_manager =
+    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  // Register with the POA.
+
+  this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  // find my IOR
+
+  CORBA::Object_var obj =
+    this->poa_->id_to_reference (object_id_.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  this->ior_ = this->orb_->object_to_string (obj.in ()
+                                  ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+
+  if (this->ior_output_file_ != 0)
+  {
+    this->identity_ = "file:";
+    this->identity_ += this->ior_output_file_;
+    result = writeIOR (this->ior_output_file_, this->ior_);
   }
   else
   {
     // if no IOR file specified,
     // then always try to register with name service
-    nsName_ = "FactoryRegistry";
+    this->ns_name_ = "FactoryRegistry";
   }
 
-  if (nsName_ != 0)
+  if (this->ns_name_ != 0)
   {
-    identity_ = "name:";
-    identity_ += nsName_;
+    this->identity_ = "name:";
+    this->identity_ += this->ns_name_;
 
     CORBA::Object_var naming_obj =
-      orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+      this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (CORBA::is_nil(naming_obj.in ())){
@@ -157,14 +198,14 @@ int FactoryRegistry_i::init (TAO_ORB_Manager & orbManager
                         1);
     }
 
-    naming_context_ =
+    this->naming_context_ =
       CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    this_name_.length (1);
-    this_name_[0].id = CORBA::string_dup (nsName_);
+    this->this_name_.length (1);
+    this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
 
-    naming_context_->rebind (this_name_, _this()
+    this->naming_context_->rebind (this->this_name_, _this()
                             ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
   }
@@ -197,7 +238,7 @@ void FactoryRegistry_i::register_factory (
   METHOD_ENTRY(FactoryRegistry_i::register_factory);
 
   PortableGroup::FactoryInfos * infos;
-  if (registry_.find(type_id, infos) )
+  if (this->registry_.find(type_id, infos) == 0)
   {
     ACE_DEBUG(( LM_DEBUG,
       "register_factory found infos for %s", type_id
@@ -206,7 +247,7 @@ void FactoryRegistry_i::register_factory (
   else
   {
     ACE_DEBUG(( LM_DEBUG,
-      "register_factory: no infos for %s", type_id
+      "register_factory: no infos for %s\n", type_id
       ));
     // Note the 5.  It's a guess about the number of factories
     // that might exist for any particular type of object.
@@ -219,7 +260,7 @@ void FactoryRegistry_i::register_factory (
       ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
         CORBA::COMPLETED_NO));
     }
-    registry_.bind(type_id, infos);
+    this->registry_.bind(type_id, infos);
   }
   // at this point infos points to the infos structure
   // for this type..
@@ -251,7 +292,7 @@ void FactoryRegistry_i::unregister_factory (
   METHOD_ENTRY(FactoryRegistry_i::unregister_factory);
 
   PortableGroup::FactoryInfos * infos;
-  if (registry_.find(type_id, infos) )
+  if (this->registry_.find(type_id, infos) == 0)
   {
     ACE_DEBUG(( LM_DEBUG,
       "register_factory found infos for %s", type_id
@@ -279,7 +320,7 @@ void FactoryRegistry_i::unregister_factory (
         else
         {
           assert ( length == 1 );
-          registry_.unbind (type_id);
+          this->registry_.unbind (type_id);
           delete infos;
         }
       }
@@ -292,7 +333,7 @@ void FactoryRegistry_i::unregister_factory (
       ));
     ACE_THROW ( PortableGroup::MemberNotFound() );
     infos->length(0);
-    registry_.bind(type_id, infos);
+    this->registry_.bind(type_id, infos);
   }
 
   METHOD_RETURN(FactoryRegistry_i::unregister_factory);
@@ -306,7 +347,7 @@ void FactoryRegistry_i::unregister_factory_by_type (
 {
   METHOD_ENTRY(FactoryRegistry_i::unregister_factory_by_type);
   PortableGroup::FactoryInfos * infos;
-  if (registry_.unbind(type_id, infos) )
+  if (this->registry_.unbind(type_id, infos) )
   {
     ACE_DEBUG(( LM_DEBUG,
       "unregister_factory_by_type found infos for %s", type_id
@@ -334,8 +375,8 @@ void FactoryRegistry_i::unregister_factory_by_location (
   ACE_Vector<ACE_CString> hitList;
 
   // iterate through the registery
-  for (RegistryType_Iterator it = registry_.begin();
-       it != registry_.end();
+  for (RegistryType_Iterator it = this->registry_.begin();
+       it != this->registry_.end();
        ++it)
   {
     RegistryType_Entry & entry = *it;
@@ -373,7 +414,7 @@ void FactoryRegistry_i::unregister_factory_by_location (
   for (size_t nHit = 0; nHit < hitList.size(); ++nHit)
   {
     PortableGroup::FactoryInfos * infos;
-    if (registry_.unbind(hitList[nHit], infos) )
+    if (this->registry_.unbind(hitList[nHit], infos) )
     {
       delete infos;
     }
@@ -406,7 +447,7 @@ void FactoryRegistry_i::unregister_factory_by_location (
   }
 
   PortableGroup::FactoryInfos * typeInfos;
-  if (registry_.unbind(type_id, typeInfos) )
+  if (this->registry_.unbind(type_id, typeInfos) )
   {
     ACE_DEBUG(( LM_DEBUG,
       "unregister_factory_by_type found infos for %s", type_id
@@ -424,7 +465,7 @@ void FactoryRegistry_i::unregister_factory_by_location (
 {
   METHOD_ENTRY(FactoryRegistry_i::list_factories_by_location);
   ::PortableGroup::FactoryInfos_var infos;
-  ACE_NEW_NORETURN(infos, ::PortableGroup::FactoryInfos(registry_.current_size()) );
+  ACE_NEW_NORETURN(infos, ::PortableGroup::FactoryInfos(this->registry_.current_size()) );
   if (infos.ptr() == 0)
   {
     ACE_ERROR(( LM_ERROR,
@@ -436,8 +477,8 @@ void FactoryRegistry_i::unregister_factory_by_location (
   size_t count = 0;
 
   // iterate through the registery
-  for (RegistryType_Iterator it = registry_.begin();
-       it != registry_.end();
+  for (RegistryType_Iterator it = this->registry_.begin();
+       it != this->registry_.end();
        ++it)
   {
     RegistryType_Entry & entry = *it;

@@ -26,6 +26,10 @@ project(*Client): taoclient, fault_tolerance, iormanip, ftorb, orbsvcsexe {
   Source_Files {
     FT_Client.cpp
   }
+  Documentation_Files {
+    // pretend the pl file is documentation for now
+    run_test_basic.pl
+  }
 }
 
 project(*Notifier): taoserver, fault_tolerance, orbsvcsexe {
@@ -67,16 +71,6 @@ project(*Analyzer): taoclient, fault_tolerance, orbsvcsexe {
     StubBatchConsumer.cpp
   }
 
-//  // Custom folder: script to run this test
-//  Define_Custom(Script){
-//    inputext = .pl, .py, .rb
-//    generic_outputext = .txt
-//  }
-//
-//  Script_Files {
-//    run_test_detector.pl
-//  }
-
   // explicitly omit IDL files
   IDL_Files {
   }
@@ -95,16 +89,6 @@ project(*FaultConsumer): taoserver, fault_tolerance, orbsvcsexe {
     ../../FT_ReplicationManager/FT_FaultConsumer.cpp
   }
 
-//  // Custom folder: script to run this test
-//  Define_Custom(Script){
-//    inputext = .pl, .py, .rb
-//    generic_outputext = .txt
-//  }
-//
-//  Script_Files {
-//    run_test_detector.pl
-//  }
-
   // explicitly omit IDL files
   IDL_Files {
   }
@@ -121,16 +105,6 @@ project(*FactoryRegistry): taoclient, fault_tolerance, orbsvcsexe {
     FTAPP_FactoryRegistry_Main.cpp
     FactoryRegistry_i.cpp
   }
-
-//  // Custom folder: script to run this test
-//  Define_Custom(Script){
-//    inputext = .pl, .py, .rb
-//    generic_outputext = .txt
-//  }
-//
-//  Script_Files {
-//    run_test_detector.pl
-//  }
 
   // explicitly omit IDL files
   IDL_Files {

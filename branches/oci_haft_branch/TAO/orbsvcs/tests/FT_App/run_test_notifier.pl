@@ -133,8 +133,8 @@ unlink $client_data;
 
 my($status) = 0;
 
-my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -t $replica1_ior -r 1 -q");
-my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -r 2 -q");
+my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -t $replica1_ior -l loc1 -i type1 -q");
+my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -l loc2 -i type1 -q");
 my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "-o $detector_ior -q");
 my($NOT) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier$build_directory/Fault_Notifier", "-o $notifier_ior -v -q");
 my($ANA) = new PerlACE::Process (".$build_directory/ft_analyzer", "-o $ready_file -n $notifier_ior -q -d $detector_ior -r $replica1_ior,$replica2_ior");
@@ -216,35 +216,35 @@ if ($client != 0) {
 }
 
 print "\nTEST: wait for replica 1.\n" if ($verbose);
-$replica1 = $REP1->WaitKill (60);
+$replica1 = $REP1->WaitKill (5);
 if ($replica1 != 0) {
     print STDERR "ERROR: replica returned $replica1\n";
     $status = 1;
 }
 
 print "\nTEST: wait for replica 2.\n" if ($verbose);
-$replica2 = $REP2->WaitKill (60);
+$replica2 = $REP2->WaitKill (5);
 if ($replica2 != 0) {
     print STDERR "ERROR: replica returned $replica2\n";
     $status = 1;
 }
 
 print "\nTEST: wait for detector factory to leave.\n" if ($verbose);
-$detector = $DET->WaitKill (60);
+$detector = $DET->WaitKill (20);
 if ($detector != 0) {
     print STDERR "ERROR: detector returned $detector\n";
     $status = 1;
 }
 
 print "\nTEST: wait for notifier to leave.\n" if ($verbose);
-$notifier = $NOT->WaitKill (60);
+$notifier = $NOT->WaitKill (20);
 if ($notifier != 0) {
     print STDERR "ERROR: notifier returned $notifier\n";
     $status = 1;
 }
 
 print "\nTEST: wait for analyzer to leave.\n" if ($verbose);
-$analyzer = $ANA->WaitKill (60);
+$analyzer = $ANA->WaitKill (20);
 if ($analyzer != 0) {
     print STDERR "ERROR: analyzer returned $analyzer\n";
     $status = 1;

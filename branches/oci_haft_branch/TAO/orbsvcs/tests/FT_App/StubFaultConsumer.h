@@ -12,7 +12,6 @@
 
 //////////////////////
 // Forward references
-class TAO_ORB_Manager;
 
 /////////////////////
 // Class declarations
@@ -34,6 +33,10 @@ public:
    */
   virtual ~StubFaultConsumer ();
 
+
+  ::PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  ::PortableServer::ObjectId objectId()const;
+
   /**
    * Parse command line arguments.
    */
@@ -42,9 +45,7 @@ public:
   /**
    * Publish this objects IOR.
    */
-  int init (
-    TAO_ORB_Manager & orbManager,
-    ::FT::FaultNotifier_var & notifier
+  int init (CORBA::ORB_var & orb, ::FT::FaultNotifier_var & notifier
     ACE_ENV_ARG_DECL);
 
   /**
@@ -101,14 +102,20 @@ private:
   // Data Members
 private:
   /**
-   * The orb
+   * The orb 
    */
   CORBA::ORB_var orb_;
 
   /**
-   * IOR of this object as assigned by orb.
+   * The POA used to activate this object.
    */
-  CORBA::String_var ior_;
+  PortableServer::POA_var poa_;
+
+  /**
+   * The CORBA object id assigned to this object.
+   */
+  PortableServer::ObjectId_var objectId_;
+
 
   /**
    * A human-readable string to distinguish this from other FaultConsumers.

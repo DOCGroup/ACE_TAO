@@ -36,10 +36,10 @@ namespace
   template<typename BUFFER>
   void storeLong(BUFFER & state, size_t offset, long value)
   {
-    state[offset    ] = static_cast<unsigned char>(value >> 24);
-    state[offset + 1] = static_cast<unsigned char>(value >> 16);
-    state[offset + 2] = static_cast<unsigned char>(value >>  8);
-    state[offset + 3] = static_cast<unsigned char>(value      );
+    state[offset    ] = ACE_static_cast (unsigned char, value >> 24);
+    state[offset + 1] = ACE_static_cast (unsigned char, value >> 16);
+    state[offset + 2] = ACE_static_cast (unsigned char, value >>  8);
+    state[offset + 3] = ACE_static_cast (unsigned char, value      );
   }
 
   /**
@@ -66,16 +66,16 @@ namespace
 
 // Macros to simplify suicide.
 #define KEVORKIAN(value, method)                                   \
-  if (death_pending_ == (FT_TEST::TestReplica::value)){            \
+  if (this->death_pending_ == (FT_TEST::TestReplica::value)){            \
     suicide (#value " in method " #method);                        \
     CORBA::OBJECT_NOT_EXIST ex;                                    \
     ACE_THROW(ex);                                                 \
     } else ;
 
 #define KEVORKIAN_DURING(method)                                   \
-  if (death_pending_ == FT_TEST::TestReplica::BEFORE_STATE_CHANGE  \
-    || death_pending_ == FT_TEST::TestReplica::BEFORE_REPLICATION  \
-    || death_pending_ == FT_TEST::TestReplica::BEFORE_REPLY ){     \
+  if (this->death_pending_ == FT_TEST::TestReplica::BEFORE_STATE_CHANGE  \
+    || this->death_pending_ == FT_TEST::TestReplica::BEFORE_REPLICATION  \
+    || this->death_pending_ == FT_TEST::TestReplica::BEFORE_REPLY ){     \
     suicide ("read-only method " #method);                         \
     CORBA::OBJECT_NOT_EXIST ex;                                    \
     ACE_THROW(ex);                                                 \
@@ -85,9 +85,9 @@ namespace
 //////////////////////////////////////////////////
 // class FT_TestReplica_i construction/destruction
 
-FT_TestReplica_i::FT_TestReplica_i (FT_ReplicaFactory_i * factory, long factoryId)
+FT_TestReplica_i::FT_TestReplica_i (FT_ReplicaFactory_i * factory, long factory_id)
   : factory_(factory)
-  , factoryId_(factoryId)
+  , factory_id_(factory_id)
   , death_pending_(FT_TEST::TestReplica::NOT_YET)
   , verbose_(1)
 {
@@ -100,12 +100,11 @@ FT_TestReplica_i::~FT_TestReplica_i ()
 
 void FT_TestReplica_i::suicide(const char * note)
 {
-  std::cout << factory_->identity() << '#' << factoryId_ << " Simulate fault: " << note << std::endl;
-  ////////////////////////////////////////
-  // WARNING: The following call deletes this object and
-  // deactivates the servant!  With luck it'll zap the replica
-  // not the entire process.
-  factory_->removeReplica(factoryId_, this);
+  std::cout << this->factory_->identity() << '#' << this->factory_id_ << " Simulate fault: " << note << std::endl;
+
+  // Tell the poa we aren't accepting future calls
+  this->poa_->deactivate_object (this->object_id_.in ()
+                 ACE_ENV_ARG_PARAMETER);
 }
 
 /////////////////////////////////////////////////////
@@ -123,19 +122,19 @@ FT_TestReplica_i::usage_options()
   return "";
 }
 
-long FT_TestReplica_i::factoryId()const
+long FT_TestReplica_i::factory_id()const
 {
-  return factoryId_;
+  return this->factory_id_;
 }
 
 ::PortableServer::POA_ptr FT_TestReplica_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
-  return ::PortableServer::POA::_duplicate(poa_ ACE_ENV_ARG_PARAMETER);
+  return ::PortableServer::POA::_duplicate(this->poa_ ACE_ENV_ARG_PARAMETER);
 }
 
-PortableServer::ObjectId FT_TestReplica_i::objectId()const
+PortableServer::ObjectId FT_TestReplica_i::object_id()const
 {
-  return objectId_.in();
+  return this->object_id_.in();
 }
 
 
@@ -144,19 +143,60 @@ PortableServer::ObjectId FT_TestReplica_i::objectId()const
  * @param orbManager our ORB -- we keep var to it.
  * @return zero for success; nonzero is process return code for failure.
  */
-int FT_TestReplica_i::init (TAO_ORB_Manager & orbManager ACE_ENV_ARG_DECL)
+int FT_TestReplica_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 {
-  orbManager_ = & orbManager;
-  poa_ = orbManager_->root_poa();
-  objectId_ = poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
+  this->orb_ = orb;
+
+  // Use the ROOT POA for now
+  CORBA::Object_var poa_object =
+    this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (poa_object.in ()))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                      -1);
+
+  // Get the POA object.
+  this->poa_ =
+    PortableServer::POA::_narrow (poa_object.in ()
+                                  ACE_ENV_ARG_PARAMETER);
+
+  ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil(this->poa_))
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT (" (%P|%t) Unable to narrow the POA.\n")),
+                      -1);
+  }
+
+  PortableServer::POAManager_var poa_manager =
+    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+
+  // Register with the POA.
+
+  this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
   return 0;
+}
+
+void FT_TestReplica_i::_remove_ref (ACE_ENV_SINGLE_ARG_DECL)
+{
+  //////////////////////////////////////////////////
+  // WARNING: The following call invokes fini then deletes this object
+  this->factory_->remove_replica(this->factory_id_, this);
 }
 
 int FT_TestReplica_i::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
-  poa_->deactivate_object (objectId_.in ()
-                 ACE_ENV_ARG_PARAMETER);
   return 0;
 }
 
@@ -170,12 +210,12 @@ CORBA::Boolean FT_TestReplica_i::is_alive ()
   KEVORKIAN(DURING_IS_ALIVE, is_alive)
   ACE_ERROR ((LM_ERROR,
     "%s#%d: is_alive: %d\n",
-    factory_->identity(),
-    factoryId_,
-    (death_pending_ != FT_TEST::TestReplica::DENY_IS_ALIVE)
+    this->factory_->identity(),
+    this->factory_id_,
+    (this->death_pending_ != FT_TEST::TestReplica::DENY_IS_ALIVE)
     ));
 
-  return death_pending_ != FT_TEST::TestReplica::DENY_IS_ALIVE;
+  return this->death_pending_ != FT_TEST::TestReplica::DENY_IS_ALIVE;
 }
 
 /////////////////////////////////////////////////////
@@ -288,17 +328,17 @@ void FT_TestReplica_i::die (FT_TEST::TestReplica::Bane  when
       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  std::cout << factory_->identity() << '#' << factoryId_ << " Received death threat: " << when << std::endl;
+  std::cout << this->factory_->identity() << '#' << this->factory_id_ << " Received death threat: " << when << std::endl;
 
-  death_pending_ = when;
+  this->death_pending_ = when;
   KEVORKIAN(RIGHT_NOW, die)
 }
 
 void FT_TestReplica_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  factory_->removeReplica(factoryId_, this);
-  death_pending_ = FT_TEST::TestReplica::CLEAN_EXIT;
+  std::cout << this->factory_->identity() << '#' << this->factory_id_ << " Shut down requested" << std::endl;
+  this->death_pending_ = FT_TEST::TestReplica::CLEAN_EXIT;
 }
 
 //////////////////////////////////////////////
@@ -306,27 +346,31 @@ void FT_TestReplica_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 int FT_TestReplica_i::idle (int & result)
 {
   int quit = 0;
-  if (death_pending_ == FT_TEST::TestReplica::WHILE_IDLE)
+  if (this->death_pending_ == FT_TEST::TestReplica::WHILE_IDLE)
   {
     ACE_ERROR ((LM_ERROR,
       "%s#%d: Simulated fault WHILE_IDLE",
-      factory_->identity(),
-      ACE_static_cast(int, factoryId_ )
+      this->factory_->identity(),
+      ACE_static_cast(int, this->factory_id_ )
       ));
+    this->poa_->deactivate_object (this->object_id_.in ()
+                 ACE_ENV_ARG_PARAMETER);
     result = 0;
     quit = 1;
   }
-  else if (death_pending_ == FT_TEST::TestReplica::CLEAN_EXIT)
+  else if (this->death_pending_ == FT_TEST::TestReplica::CLEAN_EXIT)
   {
+    this->poa_->deactivate_object (this->object_id_.in ()
+                 ACE_ENV_ARG_PARAMETER);
     result = 0;
     quit = 1;
   }
   return quit;
 }
 
-void FT_TestReplica_i::requestQuit()
+void FT_TestReplica_i::request_quit()
 {
-  death_pending_ = FT_TEST::TestReplica::WHILE_IDLE;
+  this->death_pending_ = FT_TEST::TestReplica::WHILE_IDLE;
 }
 
 
@@ -339,9 +383,9 @@ void FT_TestReplica_i::store(long counter)
     storeLong(buffer, 0, counter);
     ACE_OS::fwrite(buffer, 1, sizeof(long), f);
     ACE_OS::fclose(f);
-    if (verbose_)
+    if (this->verbose_)
     {
-      std::cout << factory_->identity() << '#' << factoryId_ << ": " << counter << std::endl;
+      std::cout << this->factory_->identity() << '#' << this->factory_id_ << ": " << counter << std::endl;
     }
   }
 }
