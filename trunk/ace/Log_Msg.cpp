@@ -492,6 +492,7 @@ ACE_Log_Msg::ACE_Log_Msg (void)
     trace_depth_ (0),
     trace_active_ (0),
     tracing_enabled_ (1), // On by default?
+    delete_ostream_(0),
     thr_desc_ (0),
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
     seh_except_selector_ (ACE_SEH_Default_Exception_Selector),
