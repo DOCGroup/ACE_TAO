@@ -1541,8 +1541,6 @@ TAO_NAMESPACE CORBA
   typedef CORBA_ParDescriptionSeq_out ParDescriptionSeq_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ParDescriptionSeq;
 
-  typedef Identifier ContextIdentifier;
-
   typedef CORBA_ContextIdSeq ContextIdSeq;
   typedef CORBA_ContextIdSeq_var ContextIdSeq_var;
   typedef CORBA_ContextIdSeq_out ContextIdSeq_out;
