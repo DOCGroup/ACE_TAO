@@ -27,7 +27,8 @@ public:
   Visual_i (CORBA::ORB_ptr orb);
   // ctor
 
-  void normal (CORBA::Long arg
+  void normal (CORBA::Long arg,
+               CORBA::String_out msg
                ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
