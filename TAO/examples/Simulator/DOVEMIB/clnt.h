@@ -42,11 +42,19 @@ public:
   // Initialize the client communication endpoint with server.
 
 private:
+
+  CORBA::ORB_var orb_;
+  // Remember our orb: this needs to be declared before any member that
+  // depends on it so it is constructed before and destroyed after them.
+
   Navigation navigation_;
+  // Navigation data structure.
+
   Weapons weapons_;
+  // Weapons data structure.
 
   Any_Test_ptr any_test_ptr_;
- //  Reverse_ptr reverse_ptr_;
+  //  Reverse_ptr reverse_ptr_;
 
   int argc_;
   // # of arguments on the command line.
@@ -54,14 +62,7 @@ private:
   char **argv_;
   // arguments from command line.
 
-
   CORBA::Environment env_;
   // Environment variable
 
-  CORBA::ORB_var orb_;
-  // Remember our orb
 };
-
-
-
-

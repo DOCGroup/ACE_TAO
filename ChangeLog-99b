@@ -1,3 +1,10 @@
+Wed Jun  9 21:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* ace/config-psos-diab-ppc.h: added ACE_HAS_NONCONST_SELECT_TIMEVAL
+
+        * tests/RB_Tree_Test.cpp: fixed constness issues revealed by SunC++
+          5.0, added return value assertions for insert calls, added typedefs.
+
 Wed Jun  9 20:40:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/CDR_Stream.h:
