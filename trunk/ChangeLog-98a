@@ -1,15 +1,25 @@
+Wed Apr 08 10:02:16 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release: added this script that creates ACE and/or
+          TAO releases.
+
+        * Makefile: added support for make_release.  See comments at
+          the top of the Makefile.  The old release mechanism has
+          been retained; to use it:  make release-old or
+          make releaseall-old.
+
 Wed Apr 08 00:37:33 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/ACE.cpp (bind_port): This call was not flexible enough as it
- 	  always assumed that the user wanted INADDR_ANY.  Added an extra
- 	  parameter to this function where the user can pass in the addr
- 	  that she is interested in.  This extra parameter defaults to
- 	  INADDR_ANY, so no existing should break.
+        * ace/ACE.cpp (bind_port): This call was not flexible enough as it
+          always assumed that the user wanted INADDR_ANY.  Added an extra
+          parameter to this function where the user can pass in the addr
+          that she is interested in.  This extra parameter defaults to
+          INADDR_ANY, so no existing should break.
 
-	* ace/SOCK_Acceptor.cpp (open): Not enough information was being
- 	  passed to the new ACE::bind_port() call.  Changed open() so that
- 	  the sin_addr part of the address is passed along to
- 	  ACE::bind_port().
+        * ace/SOCK_Acceptor.cpp (open): Not enough information was being
+          passed to the new ACE::bind_port() call.  Changed open() so that
+          the sin_addr part of the address is passed along to
+          ACE::bind_port().
 
 Tue Apr 07 15:25:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -19,29 +29,29 @@ Tue Apr 07 15:25:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Apr 06 01:29:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ace_ce_dll.dsp: Update project files.  Rearrange dll filenames a
-	  bit so that it's eaier to have various ACE libraries for various
-	  CE supported CPUs.  Files for every supported CPU are generated
-	  under CPU specific directory as follow:
+        * ace/ace_ce_dll.dsp: Update project files.  Rearrange dll filenames a
+          bit so that it's eaier to have various ACE libraries for various
+          CE supported CPUs.  Files for every supported CPU are generated
+          under CPU specific directory as follow:
 
-	  CPU             Directory       Name
-	  Sh3 series      ace/WCE/SH	  aced.{lib,dll} ace.{lib,dll}
-	  MIPS series     ace/WCE/MIPS    aced.{lib,dll} ace.{lib,dll}
-	  x86 emulation   ace/WCE/x86em   aced.{lib,dll} ace.{lib,dll}
+          CPU             Directory       Name
+          Sh3 series      ace/WCE/SH      aced.{lib,dll} ace.{lib,dll}
+          MIPS series     ace/WCE/MIPS    aced.{lib,dll} ace.{lib,dll}
+          x86 emulation   ace/WCE/x86em   aced.{lib,dll} ace.{lib,dll}
 
-	* ace/config-win32-common.h: Prevent CE from using wsock32.lib.
+        * ace/config-win32-common.h: Prevent CE from using wsock32.lib.
 
 Sun Apr 05 16:44:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
-	  
-	* ace/OS.h (ASYS_ONLY_MULTIBYTE_STRING): New macro.  Used to
-	  activate wchar string to char string conversion only under CE,
-	  under other cases, the argument to this macro is treated as
-	  a regular char string. 
-	
-	* ace/INET_Addr.cpp (set): Changed to use
-	  ASYS_ONLY_MULTIBYTE_STRING.  This has gotten out of control
-	  now.  I need to think of a better name for these macros.
-	
+
+        * ace/OS.h (ASYS_ONLY_MULTIBYTE_STRING): New macro.  Used to
+          activate wchar string to char string conversion only under CE,
+          under other cases, the argument to this macro is treated as
+          a regular char string.
+
+        * ace/INET_Addr.cpp (set): Changed to use
+          ASYS_ONLY_MULTIBYTE_STRING.  This has gotten out of control
+          now.  I need to think of a better name for these macros.
+
 Tue Apr 07 09:30:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_lynxos.GNU: set up PATH when

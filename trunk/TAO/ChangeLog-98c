@@ -1,3 +1,12 @@
+Wed Apr 08 10:02:16 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release: added this script that creates ACE and/or
+          TAO releases.
+
+        * Makefile: added support for make_release.  See comments at
+          the top of the Makefile.  The old release mechanism has
+          been retained; to use it:  make release-old.
+
 Wed Apr 08 07:41:53 1998  Brian Mendel  <brian.r.mendel@boeing.com>
 
         * tao/{default.bld, tao.bld}: Updated VxWorks GHS Build files.
@@ -10,40 +19,40 @@ Wed Apr 08 07:41:53 1998  Brian Mendel  <brian.r.mendel@boeing.com>
           orbsvcs/Dump_Schedule/Dump_Schedule.bld:
               Updated VxWorks GHS Build files.
 
-        * tests/Cubit/TAO/IDL_Cubit/{default.bld,IDL_Cubit.bld}: 
+        * tests/Cubit/TAO/IDL_Cubit/{default.bld,IDL_Cubit.bld}:
               Updated VxWorks GHS Build files.
 
 Wed Apr 08 00:31:08 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (init): If the host is not supplied by the
- 	  user, we will go ahead and call ACE_OS::hostname immediately.
-  	  This will help later down the road, since ACE_OS::hostname will
- 	  not have to be called each time an IIOP_Profile is created.
+        * tao/ORB_Core.cpp (init): If the host is not supplied by the
+          user, we will go ahead and call ACE_OS::hostname immediately.
+          This will help later down the road, since ACE_OS::hostname will
+          not have to be called each time an IIOP_Profile is created.
 
-	* tao/IIOP_Object.cpp (set): Changed the calls to get_host_addr()
- 	  to get_host_name().  The name is more readable than the IP
- 	  address.
+        * tao/IIOP_Object.cpp (set): Changed the calls to get_host_addr()
+          to get_host_name().  The name is more readable than the IP
+          address.
 
-	* tao/ORB_Core.cpp (init): If the user explicitly specifies
- 	  -ORBport 0, we choose a port and start listening.  This will
- 	  make sure that all IORs produced will be correct.  If -ORBport 0
- 	  is not specified, lazy listening is done as usual (on
- 	  orb->run()).
+        * tao/ORB_Core.cpp (init): If the user explicitly specifies
+          -ORBport 0, we choose a port and start listening.  This will
+          make sure that all IORs produced will be correct.  If -ORBport 0
+          is not specified, lazy listening is done as usual (on
+          orb->run()).
 
 Tue Apr  7 18:25:09 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tests/Quoter/quoter.idl: Extended the interface by a Factory
- 	  Finder.
-		  
-	* tests/Quoter/QuoterFactoryFinder.{cpp,h}: Server and
- 	  Implementation of the Factory Finder.
-		 
+        * tests/Quoter/quoter.idl: Extended the interface by a Factory
+          Finder.
+
+        * tests/Quoter/QuoterFactoryFinder.{cpp,h}: Server and
+          Implementation of the Factory Finder.
+
 Tue Apr  7 16:22:09 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_global.cpp: 
-	  Changed a buffer size from MAXNAMELEN to MAXPATHLEN, the former
-	  is very small in some systems, plus the fact is that a fullpath
-	  can be use in that buffer, so MAXPATHLEN is the right constant.
+        * TAO_IDL/util/utl_global.cpp:
+          Changed a buffer size from MAXNAMELEN to MAXPATHLEN, the former
+          is very small in some systems, plus the fact is that a fullpath
+          can be use in that buffer, so MAXPATHLEN is the right constant.
 
 Tue Apr 07 10:55:53 1998  David L. Levine  <levine@cs.wustl.edu>
 
