@@ -256,8 +256,8 @@ DOVE_Supplier::notify (CORBA::Any &message)
     event.header.ttl = 1;
     ACE_hrtime_t creation_time = ACE_OS::gethrtime ();
     ORBSVCS_Time::hrtime_to_TimeT (event.header.creation_time, creation_time);
-    event.header.ec_recv_time = ORBSVCS_Time::zero;
-    event.header.ec_send_time = ORBSVCS_Time::zero;
+    event.header.ec_recv_time = ORBSVCS_Time::zero ();
+    event.header.ec_send_time = ORBSVCS_Time::zero ();
     event.data.any_value = message;
 
     RtecEventComm::EventSet events;
@@ -436,9 +436,9 @@ DOVE_Supplier::connect_Supplier ()
     qos.publications[0].event.header.source = SOURCE_ID;
     qos.publications[0].event.header.type = ACE_ES_EVENT_NOTIFICATION;
     qos.publications[0].event.header.ttl = 1;
-    qos.publications[0].event.header.creation_time = ORBSVCS_Time::zero;
-    qos.publications[0].event.header.ec_recv_time = ORBSVCS_Time::zero;
-    qos.publications[0].event.header.ec_send_time = ORBSVCS_Time::zero;
+    qos.publications[0].event.header.creation_time = ORBSVCS_Time::zero ();
+    qos.publications[0].event.header.ec_recv_time = ORBSVCS_Time::zero ();
+    qos.publications[0].event.header.ec_send_time = ORBSVCS_Time::zero ();
     qos.publications[0].event.data.any_value.replace (CORBA::_tc_short,
 						      &x,
 						      0,
@@ -499,15 +499,15 @@ DOVE_Supplier::pod_rt_info_instance ()
       DOVE_Supplier::pod_rt_info_instance_->criticality = 
         RtecScheduler::VERY_LOW_CRITICALITY;
       DOVE_Supplier::pod_rt_info_instance_->worst_case_execution_time = 
-        ORBSVCS_Time::zero;
+        ORBSVCS_Time::zero ();
       DOVE_Supplier::pod_rt_info_instance_->typical_execution_time = 
-        ORBSVCS_Time::zero;
+        ORBSVCS_Time::zero ();
       DOVE_Supplier::pod_rt_info_instance_->cached_execution_time = 
-        ORBSVCS_Time::zero;
+        ORBSVCS_Time::zero ();
       DOVE_Supplier::pod_rt_info_instance_->period = 10000000;
       DOVE_Supplier::pod_rt_info_instance_->importance = 
         RtecScheduler::VERY_LOW_IMPORTANCE;
-      DOVE_Supplier::pod_rt_info_instance_->quantum = ORBSVCS_Time::zero;
+      DOVE_Supplier::pod_rt_info_instance_->quantum = ORBSVCS_Time::zero ();
       DOVE_Supplier::pod_rt_info_instance_->threads = 1;
       DOVE_Supplier::pod_rt_info_instance_->info_type = 
         RtecScheduler::OPERATION;
