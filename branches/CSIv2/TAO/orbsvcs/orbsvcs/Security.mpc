@@ -1,0 +1,28 @@
+project(Security) : orbsvcslib, corba_messaging, core, portableserver {
+  requires    += interceptors
+  sharedname   = TAO_Security
+  idlflags    += -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security/security_export.h
+  dynamicflags = TAO_SECURITY_BUILD_DLL
+  tagchecks    = Security
+
+  IDL_Files {
+    Security.idl
+    SecurityLevel1.idl
+    SecurityLevel2.idl
+    SecurityReplaceable.idl
+  }
+
+  Source_Files(ORBSVCS_COMPONENTS) {
+    Security {
+      SecurityC.cpp
+      SecurityS.cpp
+      SecurityLevel1C.cpp
+      SecurityLevel1S.cpp
+      SecurityLevel2C.cpp
+      SecurityLevel2S.cpp
+      SecurityReplaceableC.cpp
+      SecurityReplaceableS.cpp
+      Security
+    }
+  }
+}

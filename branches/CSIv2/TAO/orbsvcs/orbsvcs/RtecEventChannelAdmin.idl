@@ -1,0 +1,393 @@
+/**
+ * @file RtecEventChannelAdmin.idl
+ *
+ * @brief Define the RtecEventChannelAdmin module
+ *
+ * $Id$
+ *
+ * TAO's Real-time Event Service is described in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/
+ *
+ * @author Carlos O'Ryan <coryan@uci.edu>
+ * @author Tim Harrison <harrison@cs.wustl.edu>
+ */
+
+#ifndef TAO_RTEC_EVENTCHANNELADMIN_IDL
+#define TAO_RTEC_EVENTCHANNELADMIN_IDL
+
+#include "RtecEventComm.idl"
+#include "RtecBase.idl"
+
+/**
+ * @namespace RtecEventChannelAdmin
+ *
+ * @brief Interfaces and data structures provided by TAO's Real-time
+ *   Event Service implementation
+ */
+module RtecEventChannelAdmin
+{
+  /**
+   * @exception AlreadyConnected
+   *
+   * @brief Exception raised if a consumer or supplier tries to
+   *        reconnect even though it is connected already.
+   *
+   * In some configurations the Event Channel implementation allows
+   * reconnections, and treats them as changes in the QoS properties
+   * of the client.  This exception is not used in those cases.
+   */
+  exception AlreadyConnected {};
+
+  /**
+   * @struct Dependency
+   *
+   * @brief Encapsulate the parameters of a consumer QoS property
+   *
+   * This structure is used to represent both filtering information
+   * and the QoS requirements that the consumer has for events that
+   * pass the filter.
+   *
+   * @todo It has become painfully obvious that we don't need a
+   * complete RtecEventComm::Event to declare the dependency, simply
+   * the EventHeader would do.
+   */
+  struct Dependency
+  {
+    /// The filtering information, usually takes the form of an event
+    /// type and/or source that the consumer is interested in.
+    RtecEventComm::Event event;
+
+    /// The handle to the RT_Info structure that describes the
+    /// behavior of the consumer upon receiving such an event
+    /**
+     * This handle is ignored for Event Channels configured without an
+     * scheduling service.
+     */
+    RtecBase::handle_t rt_info;
+  };
+
+  /// Define a list of consumer QoS properties
+  typedef sequence<Dependency> DependencySet;
+
+  /**
+   * @struct ConsumerQOS
+   *
+   * @brief Define the complete QoS properties of a consumer
+   *
+   * Consumers declared their QoS properties using a DependencySet and
+   * a special flag to indicate if they are a gateway consumer.
+   * Gateway consumers are ignored in the computation of changes to
+   * the subscription list.
+   */
+  struct ConsumerQOS
+  {
+    /// List of QoS, filtering, correlation and timeouts for this
+    /// consumer.
+    DependencySet dependencies;
+
+    /// If TRUE the consumer is a gateway, i.e., it forwards events
+    /// from a remote peer.
+    boolean is_gateway;
+  };
+
+  /**
+   * @struct Publication
+   *
+   * @brief Encapsulate one supplier publication and the QoS
+   * properties for that publication.
+   *
+   * Suppliers can publish multiple event types, each one with
+   * different QoS properties.
+   *
+   * @todo It has become painfully obvious that we don't need a
+   * complete RtecEventComm::Event to declare the publication, simply
+   * the EventHeader would do.
+   */
+  struct Publication
+  {
+    /// The event publication, normally only the event source and type
+    /// (from the header) is considered.
+    RtecEventComm::Event event;
+
+    /// The dependency information, this includes the RT_Info handle,
+    /// the type of request and other details.
+    /**
+     * This field is ignored by event channels configured without an
+     * scheduling service.
+     */
+    RtecBase::Dependency_Info dependency_info;
+  };
+
+  /// A list of Publication structures
+  typedef sequence<Publication> PublicationSet;
+
+  /**
+   * @struct SupplierQOS
+   *
+   * @brief Describe the complete QoS and filtering properties for a
+   * supplier
+   *
+   * Consumers declared their QoS properties and publications using a
+   * PublicationSet and a special flag to indicate if they are a
+   * gateway supplier.
+   * Gateway suppliers are ignored in the computation of changes to
+   * the publication list.
+   */
+  struct SupplierQOS
+  {
+    /// The publications
+    PublicationSet publications;
+
+    /// Set to TRUE if the supplier is a gateway.
+    boolean is_gateway;
+  };
+
+  /**
+   * @exception TypeError
+   *
+   * @brief Obsolete exception
+   */
+  exception TypeError {};
+
+  /**
+   * @interface ProxyPushSupplier
+   *
+   * @brief Interface used to implement the Abstract Session pattern
+   *   for the consumers
+   *
+   * Each consumer converse with the Event Channel via a different
+   * object that implements the ProxyPushSupplier interface.  This is
+   * a common idiom in CORBA, as it allows the identification of the
+   * remove consumer efficiently.
+   */
+  interface ProxyPushSupplier : RtecEventComm::PushSupplier
+  {
+    /// Connect a consumer with the Event Channel
+    /**
+     * The ConsumerQOS argument is used to setup the filtering and
+     * QoS properties of the consumer.
+     *
+     * @param push_consumer The consumer that will receive the events.
+     * @param qos The QoS properties for this consumer
+     * @throws CORBA::BAD_PARAM if push_consumer is nil
+     * @throws AlreadyConnected if this operation is invoked multiple
+     *   times
+     * @todo The TypeError exception is not used and should be
+     * removed.
+     */
+    void connect_push_consumer(in RtecEventComm::PushConsumer push_consumer,
+                               in ConsumerQOS qos)
+      raises(AlreadyConnected, TypeError);
+
+    /// Temporarly suspend reception of events from the Event
+    /// Channel.
+    /**
+     * Calling this method is more efficient than dropping the
+     * events when received by the consumer, and less expensive than
+     * disconnecting  and connecting again (but it is not free!!)
+     */
+    void suspend_connection ();
+
+    /// Resume the reception of events.
+    void resume_connection ();
+
+#if 0
+      //@{
+      void checkpoint (in RtecEventComm::SequenceNumber last_received)
+        raises (Invalid_Checkpoint);
+      void resend_by_sequence (in RtecEventComm::SequenceNumber last_received)
+        raises (Invalid_Resend_Request);
+      void resend_by_date (in RtecEventComm::Time last_timestamp)
+        raises (Invalid_Resend_Request);
+      //@}
+#endif /* 0 */
+    };
+
+  /**
+   * @interface ProxyPushConsumer
+   *
+   * @brief Interface used to implement the Abstract Session pattern
+   *   for the suppliers.
+   *
+   * Each supplier converse with the Event Channel via a different
+   * object that implements the ProxyPushConsumer interface.  This is
+   * a common idiom in CORBA, as it allows identification of the
+   * remote supplier efficiently.
+   */
+  interface ProxyPushConsumer : RtecEventComm::PushConsumer
+  {
+    /// Connect a supplier with the Event Channel
+    /**
+     * @param push_supplier A callback interface, the
+     *   disconnect_push_supplier operation is called when the Event
+     *   Channel is destroyed.
+     * @param qos This argument is used to pre-compute filtering and
+     *   QoS properties for the supplier.
+     *
+     * @throws CORBA::BAD_PARAM if the push_supplier argument is nil
+     * @throws AlreadyConnected if this operation is invoked multiple
+     *   times.
+     */
+    void connect_push_supplier (in RtecEventComm::PushSupplier push_supplier,
+                                in SupplierQOS qos)
+      raises (AlreadyConnected);
+  };
+
+  /**
+   * @interface ConsumerAdmin
+   *
+   * @brief Implement an Abstract Factory to create ProxyPushSupplier
+   *   objects.
+   */
+  interface ConsumerAdmin
+  {
+    /// Create a new ProxyPushSupplier object
+    /**
+     * There is an inherent risk of leaking a ProxyPushSupplier
+     * here, i.e. if the application does not call
+     * connect_push_consumer() at all.  The Event Service may choose
+     * to reclaim ProxyPushSupplier objects that have been idle for
+     * too long.
+     */
+    ProxyPushSupplier obtain_push_supplier ();
+  };
+
+  /**
+   * @class SupplierAdmin
+   *
+   * @brief Implement an Abstract Factory to create ProxyPushConsumer
+   * objects.
+   */
+  interface SupplierAdmin
+  {
+    /// Create a new ProxyPushConsumer object
+    /**
+     * There is an inherent risk of leaking a ProxyPushConsumer
+     * here, i.e. if the application does not call
+     * connect_push_supplier() at all.  The Event Service may choose
+     * to reclaim ProxyPushConsumer objects that have been idle for
+     * too long.
+     */
+    ProxyPushConsumer obtain_push_consumer ();
+  };
+
+  /**
+   * @class Observer
+   *
+   * @brief Monitor changes in the consumer subscriptions and/or
+   * supplier publciations.
+   *
+   * The event channel reports changes in its internal subscription
+   * and/or publication list via this interface.
+   */
+  interface Observer
+  {
+    /// A change in the list of consumers has ocurred.
+    /**
+     * The disjunction of the subscriptions is sent to the
+     * observer.
+     */
+    void update_consumer (in ConsumerQOS sub);
+
+    /// A change in the list of suppliers has ocurred.
+    /**
+     * The list of all the event publications is passed to the
+     * observer.
+     */
+    void update_supplier (in SupplierQOS pub);
+  };
+
+  /// Opaque identifier for a connected Observer.
+  typedef unsigned long Observer_Handle;
+
+  /**
+   * @class EventChannel
+   *
+   * @brief The main interface for the event service
+   *
+   * This class provides the main entry point for the Event Service.
+   * The class follows a protocol similar to the COS Events Service as
+   * described in the CORBAservices spec.
+   */
+  interface EventChannel
+  {
+    /**
+     * @exception SYNCHRONIZATION_ERROR
+     *
+     * @brief Exception raised if the Event Channel cannot acquire its
+     *   internal locks.
+     */
+    exception SYNCHRONIZATION_ERROR {};
+
+    /**
+     * @exception CANT_APPEND_OBSERVER
+     *
+     * @brief Exception raised if the Event Channel is unable to add
+     *   an observer due to some internal limitation.
+     */
+    exception CANT_APPEND_OBSERVER {};
+
+    /**
+     * @exception CANT_REMOVE_OBSERVER
+     *
+     * @brief Exception raised if the Event Channel is unable to remove
+     *   an observer due to some internal limitation or because the
+     *   observer cannot be found.
+     */
+    exception CANT_REMOVE_OBSERVER {};
+
+    //@{
+    /**
+     * @name Unused exceptions
+     *
+     * @todo The following exceptions are not declared in any raises()
+     *   clause, therefore they cannot be raised!  They should be
+     *   removed or added to the right places.
+     */
+
+    /// Exception raised if the QOS properties required are invalid or
+    /// cannot be satisfied
+    exception QOS_ERROR {};
+
+    /// Exception raised if the subscriptions are invalid
+    exception SUBSCRIPTION_ERROR {};
+
+    /// Exception raised if the requested correlation (a form of
+    /// filtering) is invalid
+    exception CORRELATION_ERROR {};
+
+    /// Exception raised if the event cannot be dispatched
+    exception DISPATCH_ERROR {};
+    //@}
+
+    /// Consumers call this method to gain access to the
+    /// ProxyPushSupplier factory.
+    ConsumerAdmin for_consumers ();
+
+    /// Suppliers call this method to gain access to the
+    /// ProxyPushConsumer factory.
+    SupplierAdmin for_suppliers ();
+
+    /// Shuts down the Event Channel.
+    /**
+     * Calling this methods destroys the event service, all its
+     * resource and results in a call to disconnect_push_XXX() on all
+     * connected clients.
+     */
+    void destroy ();
+
+    /// Add an observer to the event channel.
+    /**
+     * Return the handle used in the remove_observer() call.
+     */
+    Observer_Handle append_observer (in Observer gw)
+      raises (SYNCHRONIZATION_ERROR,CANT_APPEND_OBSERVER);
+
+    /// Remove the observer.
+    void remove_observer (in Observer_Handle gw)
+      raises (SYNCHRONIZATION_ERROR,CANT_REMOVE_OBSERVER);
+  };
+};
+
+#endif /* TAO_RTEC_EVENTCHANNELADMIN_IDL */

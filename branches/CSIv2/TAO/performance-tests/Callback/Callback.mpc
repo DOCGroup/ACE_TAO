@@ -1,0 +1,19 @@
+project(*server): messaging, server, strategies {
+  requires += corba_messaging
+
+  Source_Files {
+    Server_i.cpp
+    server.cpp
+  }
+}
+
+
+project(*client): messaging, server, strategies {
+  exename  = client
+  requires += corba_messaging
+
+  Source_Files {
+    Callback_i.cpp
+    client.cpp
+  }
+}

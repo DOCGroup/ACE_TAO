@@ -1,0 +1,6 @@
+project : acelib {
+  after      += SSL 
+  libs       += ACE_SSL
+  requires   += ssl
+  ssl         = 1
+}

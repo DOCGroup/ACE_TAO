@@ -1,0 +1,24 @@
+project(CosEvent) : orbsvcslib, messaging, core, naming {
+  sharedname   = TAO_CosEvent
+  idlflags    += -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h
+  // Set both DLL flags because of the shared idl files
+  dynamicflags = TAO_EVENT_BUILD_DLL TAO_NOTIFY_BUILD_DLL
+  tagchecks    = CosEvent
+  // Add this include path for precompiled headers
+  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
+
+  IDL_Files {
+    CosEventComm.idl
+    CosEventChannelAdmin.idl
+  }
+
+  Source_Files(ORBSVCS_COMPONENTS) {
+    CosEvent {
+      CosEventCommC.cpp
+      CosEventCommS.cpp
+      CosEventChannelAdminC.cpp
+      CosEventChannelAdminS.cpp
+      CosEvent
+    }
+  }
+}

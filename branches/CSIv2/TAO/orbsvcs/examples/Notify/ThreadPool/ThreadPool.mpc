@@ -1,0 +1,19 @@
+project(Supplier): notify {
+  exename = Supplier
+  libs       += TAO_RT_Notification TAO_Svc_Utils TAO_ETCL TAO_DynamicAny TAO_PortableServer TAO TAO_RTCORBA
+
+  Source_Files {
+    Supplier.cpp
+    Supplier_Client.cpp
+  }
+}
+
+project(Consumer): notifytest {
+  exename = Consumer
+  libs       += TAO_RT_Notification TAO_Svc_Utils TAO_ETCL TAO_DynamicAny TAO_RT_PortableServer TAO TAO_RTCORBA
+
+  Source_Files {
+    Consumer.cpp
+    Consumer_Client.cpp
+  }
+}

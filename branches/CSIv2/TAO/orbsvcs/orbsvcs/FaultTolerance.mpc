@@ -1,0 +1,17 @@
+project(FaultTolerance) : orbsvcslib, core, notification, ftorb {
+  sharedname   = TAO_FaultTolerance
+  idlflags    += -Wb,export_macro=TAO_FT_Export -Wb,export_include=FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h
+  dynamicflags = TAO_FT_BUILD_DLL
+  tagchecks    = FaultTolerance
+
+  IDL_Files {
+    FT_CORBA.idl
+  }
+
+  Source_Files(ORBSVCS_COMPONENTS) {
+    FaultTolerance {
+      FT_CORBAC.cpp
+      FT_CORBAS.cpp
+    }
+  }
+}

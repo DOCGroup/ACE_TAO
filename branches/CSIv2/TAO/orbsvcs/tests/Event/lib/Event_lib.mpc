@@ -1,0 +1,7 @@
+project(Event Test Lib): orbsvcslib, rtevent, naming, svc_utils, iortable, portableserver {
+  sharedname   = ECTests
+  dynamicflags = EC_TEST_BUILD_DLL
+  Header_Files {
+    ectest_export.h
+  }
+}

@@ -1,0 +1,367 @@
+<!-- DTD for Component Assembly Descriptor. The root element
+     is <componentassembly>. Elements are listed
+     alphabetically.
+  -->
+
+<!-- Simple xml link attributes based on W3C WD-xlink-19980303.
+     May change slightly when XLL is finalized.
+  -->
+<!ENTITY % simple-link-attributes "
+         xml:link CDATA #FIXED 'SIMPLE'
+         href CDATA #REQUIRED
+" >
+
+<!-- If file not available locally, then download via codebase link -->
+<!ELEMENT codebase EMPTY >
+<!ATTLIST codebase
+    filename CDATA #IMPLIED
+    %simple-link-attributes; >
+
+<!ELEMENT componentassembly
+    ( description?
+    , componentfiles
+    , partitioning
+    , connections?
+    , extension*
+    ) >
+<!ATTLIST componentassembly
+    id          ID #REQUIRED
+    derivedfrom CDATA #IMPLIED >
+
+<!ELEMENT componentfile
+    ( fileinarchive
+    | codebase
+    | link
+    ) >
+<!ATTLIST componentfile
+    id      ID      #REQUIRED
+    type    CDATA   #IMPLIED >
+
+<!ELEMENT componentfileref EMPTY >
+<!ATTLIST componentfileref
+    idref CDATA #REQUIRED >
+
+<!ELEMENT componentfiles
+    ( componentfile+
+    ) >
+
+<!ELEMENT componentimplref EMPTY >
+<!ATTLIST componentimplref
+    idref CDATA #REQUIRED >
+
+<!ELEMENT componentinstantiation
+    ( usagename?
+    , componentproperties?
+    , registercomponent*
+    , extension*
+    ) >
+<!ATTLIST componentinstantiation
+    id ID #REQUIRED >
+
+<!ELEMENT componentinstantiationref EMPTY >
+<!ATTLIST componentinstantiationref
+    idref CDATA #REQUIRED >
+
+<!ELEMENT componentproperties
+    ( fileinarchive
+    | codebase
+    ) >
+
+<!ELEMENT componentsupportedinterface
+    ( componentinstantiationref
+    | findby
+    )>
+
+<!ELEMENT connectevent
+    ( ( consumesport
+      | existinginterface
+      )
+    , ( emitsport
+      | publishesport
+      )
+    ) >
+<!ATTLIST connectevent
+    id ID #IMPLIED >
+
+<!ELEMENT connecthomes
+    ( proxyhome
+    , destinationhome
+    ) >
+<!ATTLIST connecthomes
+    id ID #IMPLIED >
+
+<!ELEMENT connectinterface
+    ( usesport
+    , ( providesport
+      | componentsupportedinterface
+      | existinginterface
+      | homeinterface
+      )
+    ) >
+<!ATTLIST connectinterface
+    id ID #IMPLIED >
+
+<!ELEMENT connections
+    ( connectinterface
+    | connectevent
+    | connecthomes
+    | extension
+    )* >
+
+<!ELEMENT consumesidentifier ( #PCDATA ) >
+
+<!ELEMENT consumesport
+    ( consumesidentifier
+    , ( componentinstantiationref
+      | findby
+      )
+    )>
+
+<!ELEMENT description ( #PCDATA ) >
+
+<!ELEMENT destination ( #PCDATA ) >
+
+<!ELEMENT destinationhome
+    ( homeplacementref
+    | findby
+    ) >
+
+<!ELEMENT emitsidentifier ( #PCDATA ) >
+
+<!ELEMENT emitsport
+    ( emitsidentifier
+    , ( componentinstantiationref
+      | findby
+      )
+    )>
+
+<!ELEMENT executableplacement
+    ( usagename?
+    , componentfileref
+    , componentimplref?
+    , invocation?
+    , destination?
+    , extension*
+    ) >
+<!ATTLIST executableplacement
+    id          ID #REQUIRED
+    cardinality CDATA "1" >
+
+<!ELEMENT existinginterface
+    ( findby )>
+
+<!-- The "extension" element is used for vendor-specific extensions -->
+<!ELEMENT extension (#PCDATA) >
+<!ATTLIST extension
+    class       CDATA   #REQUIRED
+    origin      CDATA   #REQUIRED
+    id          ID      #IMPLIED
+    extra       CDATA   #IMPLIED
+    html-form   CDATA   #IMPLIED >
+
+<!-- The "fileinarchive" element is used to specify a file in the archive.
+     If the file is independent of an archive then link is used to point to
+     the archive in which the file may be found.
+  -->
+<!ELEMENT fileinarchive
+    ( link? ) >
+<!ATTLIST fileinarchive
+    name CDATA #REQUIRED >
+
+<!ELEMENT findby
+    ( namingservice
+    | stringifiedobjectref
+    | traderquery
+    | homefinder
+    | extension
+    ) >
+
+<!ELEMENT homefinder EMPTY >
+<!ATTLIST homefinder
+    name CDATA #REQUIRED >
+
+<!ELEMENT homeinterface
+    ( homeplacementref
+    | findby
+    )>
+
+<!ELEMENT homeplacement
+    ( usagename?
+    , componentfileref
+    , componentimplref?
+    , homeproperties?
+    , componentproperties?
+    , registerwithhomefinder*
+    , registerwithnaming*
+    , registerwithtrader*
+    , componentinstantiation*
+    , destination?
+    , extension*
+    ) >
+<!ATTLIST homeplacement
+    id          ID #REQUIRED
+    cardinality CDATA "1" >
+
+<!ELEMENT homeplacementref EMPTY >
+<!ATTLIST homeplacementref
+    idref CDATA #REQUIRED >
+
+<!ELEMENT homeproperties
+    ( fileinarchive
+    | codebase
+    ) >
+
+<!ELEMENT hostcollocation
+    ( usagename?
+    , impltype?
+    , ( homeplacement
+      | executableplacement
+      | processcollocation
+      | extension
+      )+
+    , destination?
+    ) >
+<!ATTLIST hostcollocation
+    id          ID #IMPLIED
+    cardinality CDATA "1" >
+
+<!ELEMENT impltype EMPTY >
+<!ATTLIST impltype
+    language    CDATA #REQUIRED
+    version     CDATA #IMPLIED >
+
+<!ELEMENT invocation EMPTY >
+<!ATTLIST invocation
+    args CDATA #REQUIRED >
+
+<!ELEMENT link ( #PCDATA ) >
+<!ATTLIST link
+    %simple-link-attributes; >
+
+<!ELEMENT namingservice EMPTY >
+<!ATTLIST namingservice
+    name CDATA #REQUIRED >
+
+<!ELEMENT partitioning
+    ( homeplacement
+    | executableplacement
+    | processcollocation
+    | hostcollocation
+    | extension
+    )* >
+
+<!ELEMENT processcollocation
+    ( usagename?
+    , impltype?
+    , ( homeplacement
+      | extension
+      )+
+    , destination?
+    ) >
+<!ATTLIST processcollocation
+    id          ID #IMPLIED
+    cardinality CDATA "1" >
+
+<!ELEMENT providesidentifier ( #PCDATA ) >
+
+<!ELEMENT providesport
+    ( providesidentifier
+    , ( componentinstantiationref
+      | findby
+      )
+    ) >
+
+<!ELEMENT proxyhome
+    ( homeplacementref
+    | findby
+    ) >
+
+<!ELEMENT publishesidentifier ( #PCDATA ) >
+
+<!ELEMENT publishesport
+    ( publishesidentifier
+    , ( componentinstantiationref
+      | findby
+      )
+    ) >
+
+<!ELEMENT registercomponent
+    ( ( providesidentifier
+      | consumesidentifier
+      )?
+    , ( registerwithnaming
+      | registerwithtrader
+      )+
+    ) >
+
+<!ELEMENT registerwithhomefinder EMPTY >
+<!ATTLIST registerwithhomefinder
+    name CDATA #REQUIRED >
+
+<!ELEMENT registerwithnaming EMPTY >
+<!ATTLIST registerwithnaming
+    name CDATA #IMPLIED >
+
+<!ELEMENT registerwithtrader
+    ( traderexport ) >
+<!ATTLIST registerwithtrader
+    tradername CDATA #IMPLIED >
+
+<!-- DEVNOTE: is tradername necessary? -->
+<!-- DEVNOTE: Should trader properties be specified in component file?
+     And in assembly file? -->
+
+<!ELEMENT stringifiedobjectref ( #PCDATA ) >
+
+<!ELEMENT traderconstraint ( #PCDATA ) >
+
+<!ELEMENT traderexport
+    ( traderservicetypename
+    , traderproperties
+    ) >
+
+<!ELEMENT traderpolicy
+    ( traderpolicyname
+    , traderpolicyvalue
+    ) >
+
+<!ELEMENT traderpolicyname ( #PCDATA ) >
+
+<!ELEMENT traderpolicyvalue ( #PCDATA ) >
+
+<!ELEMENT traderpreference ( #PCDATA ) >
+
+<!ELEMENT traderproperties
+    ( traderproperty+ ) >
+
+<!ELEMENT traderproperty
+    ( traderpropertyname
+    , traderpropertyvalue
+    ) >
+
+<!ELEMENT traderpropertyname ( #PCDATA ) >
+
+<!ELEMENT traderpropertyvalue ( #PCDATA ) >
+
+<!ELEMENT traderquery
+    ( traderservicetypename
+    , traderconstraint
+    , traderpreference?
+    , traderpolicy*
+    , traderspecifiedprop*
+    ) >
+
+<!ELEMENT traderservicetypename ( #PCDATA ) >
+
+<!ELEMENT traderspecifiedprop ( #PCDATA ) >
+
+<!ELEMENT usagename ( #PCDATA ) >
+
+<!ELEMENT usesidentifier ( #PCDATA ) >
+
+<!ELEMENT usesport
+    ( usesidentifier
+    , ( componentinstantiationref
+      | findby
+      )
+    ) >

@@ -1,0 +1,13 @@
+project : ciao_component {
+  after += CIAO_Server
+  libs    += CIAO_Server
+
+  Define_Custom(CIDL) {
+    automatic = 0
+    command = $(CIAO_ROOT)/bin/cidlc --lem-file-suffix "E.idl" --
+    inputext    = cidl
+    source_outputext = _svnt.cpp
+    generic_outputext = E.idl
+  }
+
+}

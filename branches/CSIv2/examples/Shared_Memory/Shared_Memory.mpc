@@ -1,0 +1,12 @@
+project(*MM) : aceexe {
+  exename = testmm
+  Source_Files {
+    test_MM.cpp
+  }
+}
+project(*SV) : aceexe {
+  exename = testsv
+  Source_Files {
+    test_SV.cpp
+  }
+}

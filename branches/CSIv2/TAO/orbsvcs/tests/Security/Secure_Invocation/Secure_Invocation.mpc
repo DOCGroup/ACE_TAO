@@ -1,0 +1,15 @@
+project(*security server): taoserver, orbsvcsexe, security, ssl {
+  ssl       = 1
+  Source_Files {
+    Foo_i.cpp
+    server.cpp
+  }
+}
+
+project(*security client): taoclient, orbsvcsexe, security, ssl {
+  Source_Files {
+    FooC.cpp
+    client.cpp
+  }
+}
+

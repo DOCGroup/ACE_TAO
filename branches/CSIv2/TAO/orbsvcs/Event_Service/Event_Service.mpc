@@ -1,0 +1,3 @@
+project : orbsvcsexe, core, event, rtevent, rtoldevent, rtschedevent {
+  exename  = Event_Service
+}

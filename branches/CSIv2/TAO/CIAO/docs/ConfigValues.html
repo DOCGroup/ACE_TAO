@@ -1,0 +1,210 @@
+<!-- $Id$ -->
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>ConfigValues Index</title>
+</head>
+
+<body>
+
+<h1>Index of ConfigValues</h1>
+
+<font size="+1" color="red">This page is currently a placeholder for
+all the configuration values we will support when creating various CCM
+deployment mechanisms, such as ComponentServers and Containers.  The
+ConfigValues listed here are currently only partially supported in
+CIAO. </font>
+
+<h2>ComponentServer</h2>
+The <code>ConfigValues</code> for a <code>ComponentServer</code> are
+passed in via <code>ServerActivator::create_component_server</code>
+operation.  CIAO accepts the following feature names:<p>
+
+<table border="3" spacing="2" cellpadding="3">
+  <tr>
+    <th>FeatureName</th>
+    <th>type</th>
+    <th>Requirement</th>
+    <th>Remarks</th>
+  </tr>
+  <tr>
+    <td>CIAO-RTORB</td>
+    <td>boolean</td>
+    <td>
+        Optional
+    </td>
+    <td>
+        Designate whether the component server requires a RT-ORB or
+        not.  By default, a component server uses a non-RT ORB.
+    </td>
+  </tr>
+  <tr>
+    <td>CIAO-svcconf-id</td>
+    <td>string</td>
+    <td>
+        Optional
+    </td>
+    <td>
+        Specify the canonical svc.conf id.  This id should only serve
+        as a hint for the deployment framework in determining the
+        actual svc.conf file used to start up the component server.
+        Currently, CIAO's ServerActivator maintains a set of svc.conf
+        files and use this id value to map to the exact svc.conf file
+        name.
+    </td>
+  </tr>
+  <tr>
+    <td>CIAO-ORB[option]</td>
+    <td>string</td>
+    <td>
+        Optional
+    </td>
+    <td>
+        Specify an ORB option that you want to pass to the
+        ComponentServer ORB.
+    </td>
+  </tr>
+</table>
+
+<h2>Container</h2>
+The <code>ConfigValues</code> for a <code>Container</code> are
+passed in via <code>ComponentServer::create_container</code>
+operation.  CIAO accepts the following feature names:<p>
+
+<table border="3" spacing="2" cellpadding="3">
+  <tr>
+    <th>FeatureName</th>
+    <th>type</th>
+    <th>Requirement</th>
+    <th>Remarks</th>
+  </tr>
+  <tr>
+    <td>
+        CIAO-Container-Type
+    </td>
+    <td>
+        <code>string</code>
+    </td>
+    <td>
+        Required
+    </td>
+    <td>
+        Possible value: <code>session</code>, <code>rt-session</code>,
+        <code>unclassified</code>, <code>rt-unclassified</code>.
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+        CIAO-POAPolicies
+    </td>
+    <td>
+        <code>CORBA::PolicyList</code>
+    </td>
+    <td>
+        Optional
+    </td>
+    <td>
+        Must not conflict with CIAO-Container-Type setting.
+        (Certain containers assume several POA policies.)
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+        CIAO-RTPOAPolicies
+    </td>
+    <td>
+        <code>CORBA::PolicyList</code>
+    </td>
+    <td>
+        Optional
+    </td>
+    <td>
+        Must not conflict with both container and regular POA
+        policies.
+    </td>
+  </tr>
+</table>
+
+
+<h2>CCMHome</h2>
+The <code>ConfigValues</code> for a <code>CCMHome</code> are
+passed in via <code>Container::install_home</code>
+operation.  CIAO accepts the following feature names:<p>
+
+<table border="3" spacing="2" cellpadding="3">
+  <tr>
+    <th>FeatureName</th>
+    <th>type</th>
+    <th>Requirement</th>
+    <th>Remarks</th>
+  </tr>
+  <tr>
+    <td>CIAO-executor-path</td>
+    <td><code>string</code></td>
+    <td>
+        REQUIRED
+    </td>
+    <td>
+        This string value specifies the location of the executor DLL.
+        In the future, we should use UUIDs to identify the component
+        executors and query the ComponentInstallation interface for
+        the actual location of the DLL.
+    </td>
+  </tr>
+  <tr>
+    <td>CIAO-executor-entrypt</td>
+    <td><code>string</code></td>
+    <td>
+        REQUIRED
+    </td>
+    <td>
+        This string value specifies the entry point of the executor
+        DLL.  It points to a factory function for the component executor.
+    </td>
+  </tr>
+  <tr>
+    <td>CIAO-servant-path</td>
+    <td><code>string</code></td>
+    <td>
+        REQUIRED
+    </td>
+    <td>
+        This string value specifies the location of the servant DLL.
+        In the future, we should use UUIDs to identify the component
+        servants and query the ComponentInstallation interface for
+        the actual location of the DLL. <p>
+
+        Servant are part of the Container framework and we can use
+        type checking to ensure servant and container match with each
+        other.
+    </td>
+  </tr>
+  <tr>
+    <td>CIAO-executor-entrypt</td>
+    <td><code>string</code></td>
+    <td>
+        REQUIRED
+    </td>
+    <td>
+        This string value specifies the entry point of the servant
+        DLL.  It points to a factory function for the compnent servant.
+    </td>
+  </tr>
+</table>
+
+<!--
+  <tr>
+    <td>
+        a
+    </td>
+    <td>
+        b
+    </td>
+    <td>
+        c
+    </td>
+  </tr>
+-->
+<!--#include virtual="/~nanbor/signature.html" -->
+</body> </html>
