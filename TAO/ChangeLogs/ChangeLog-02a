@@ -1,6 +1,6 @@
 Thu May  2 16:53:43 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* utils/catior/catior.cpp (main): An file with an IOR and a "\n"
+	* utils/catior/catior.cpp (main): A file with an IOR and a "\n"
 	  confused the "catior" into thinking that there is one more IOR
 	  in this file. Fix to rectify this. Thanks to Gautam Thaker
 	  <gthaker@atl.lmco.com> for the fix.
