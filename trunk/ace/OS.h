@@ -3155,18 +3155,6 @@ extern "C"
 #define MAP_FIXED 0
 #endif /* ACE_LACKS_MMAP */
 
-#if !defined (ACE_MAP_PRIVATE)
-# define ACE_MAP_PRIVATE MAP_PRIVATE
-#endif /* ! ACE_MAP_PRIVATE */
-
-#if !defined (ACE_MAP_SHARED)
-# define ACE_MAP_SHARED MAP_SHARED
-#endif /* ! ACE_MAP_SHARED */
-
-#if !defined (ACE_MAP_FIXED)
-# define ACE_MAP_FIXED MAP_FIXED
-#endif /* ! ACE_MAP_FIXED */
-
 // Fixes a problem with HP/UX.
 #if defined (ACE_HAS_BROKEN_MMAP_H)
 extern "C"
@@ -3218,6 +3206,18 @@ typedef short ACE_pri_t;
 #endif /* ACE_HAS_HI_RES_TIMER */
 
 #endif /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
+
+#if !defined (ACE_MAP_PRIVATE)
+# define ACE_MAP_PRIVATE MAP_PRIVATE
+#endif /* ! ACE_MAP_PRIVATE */
+
+#if !defined (ACE_MAP_SHARED)
+# define ACE_MAP_SHARED MAP_SHARED
+#endif /* ! ACE_MAP_SHARED */
+
+#if !defined (ACE_MAP_FIXED)
+# define ACE_MAP_FIXED MAP_FIXED
+#endif /* ! ACE_MAP_FIXED */
 
 #if defined (ACE_LACKS_UTSNAME_T)
 #define _SYS_NMLN 257
