@@ -8,12 +8,12 @@ CFG=ACE - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "ace-vc50.mak".
+!MESSAGE NMAKE /f "ace.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "ace-vc50.mak" CFG="ace - Win32 Release"
+!MESSAGE NMAKE /f "ace.mak" CFG="ACE - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -81,7 +81,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
-# ADD LINK32 wsock32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"ace.dll"
+# ADD LINK32 wsock32.lib /nologo /subsystem:windows /dll /debug /machine:I386
 
 !ELSEIF  "$(CFG)" == "ACE - Win32 Unicode Debug"
 
@@ -147,6 +147,10 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
+SOURCE=.\Acceptor.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ACE.cpp
 # End Source File
 # Begin Source File
@@ -163,6 +167,14 @@ SOURCE=.\ARGV.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Array.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Asynch_Acceptor.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_IO.cpp
 # End Source File
 # Begin Source File
@@ -173,6 +185,10 @@ SOURCE=.\Auto_Ptr.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Connector.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Containers.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -180,6 +196,10 @@ SOURCE=.\Containers.cpp
 # Begin Source File
 
 SOURCE=.\CORBA_Handler.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CORBA_Ref.cpp
 # End Source File
 # Begin Source File
 
@@ -217,7 +237,15 @@ SOURCE=.\Dynamic.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Dynamic_Service.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event_Handler.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event_Handler_T.cpp
 # End Source File
 # Begin Source File
 
@@ -257,9 +285,17 @@ SOURCE=.\FILE_IO.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Filecache.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Free_List.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Future.cpp
 # End Source File
 # Begin Source File
 
@@ -631,6 +667,10 @@ SOURCE=.\Svc_Conf_y.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Svc_Handler.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Synch.cpp
 # End Source File
 # Begin Source File
@@ -671,15 +711,27 @@ SOURCE=.\Time_Request_Reply.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Timer_Hash.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Timer_Hash_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
+SOURCE=.\Timer_Heap.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Timer_Heap_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Timer_List.cpp
 # End Source File
 # Begin Source File
 
@@ -696,6 +748,10 @@ SOURCE=.\Timer_Queue.cpp
 SOURCE=.\Timer_Queue_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Timer_Wheel.cpp
 # End Source File
 # Begin Source File
 
@@ -749,6 +805,14 @@ SOURCE=.\TTY_IO.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Typed_SV_Message.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Typed_SV_Message_Queue.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\UNIX_Addr.cpp
 # End Source File
 # Begin Source File
@@ -762,6 +826,10 @@ SOURCE=.\UPIPE_Connector.cpp
 # Begin Source File
 
 SOURCE=.\UPIPE_Stream.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\XtReactor.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -874,6 +942,10 @@ SOURCE=.\FILE_Connector.h
 # Begin Source File
 
 SOURCE=.\FILE_IO.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Filecache.h
 # End Source File
 # Begin Source File
 
