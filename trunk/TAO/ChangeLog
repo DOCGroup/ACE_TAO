@@ -1,3 +1,23 @@
+Sun Feb  8 09:10:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/Invocation_Adapter.h:
+	* tao/Invocation_Adapter.inl:
+
+	  Added a virtual destructor. 
+	
+	* tao/Messaging/Asynch_Invocation.cpp:
+	* tao/Messaging/Asynch_Invocation.h:
+	* tao/Messaging/Asynch_Invocation_Adapter.cpp:
+	* tao/Messaging/Asynch_Invocation_Adapter.h:
+
+	  Overhauled the memory management of the reply dispatcher. Used a
+	  Auto_Functor to manage memory through the life-time of the
+	  objects. This should prevent the leaks that Andrew
+	  Reid<andrew.reid@eservglobal.com> reported.
+	
+	* tao/Makefile*: Updated dependencies using the new dependency
+	  generator. 
+
 Sun Feb  8 08:14:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/tutorials/Quoter/On_Demand_Activation/Quoter_On_Demand_Activation.mpc: 
