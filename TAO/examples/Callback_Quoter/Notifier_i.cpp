@@ -65,8 +65,9 @@ Notifier_i::register_callback (const char *stock_name,
   if (this->consumer_map_.find (stock_name, consumers) == 0)
     {
      if ( consumers->insert (consumer_data) == -1)
-       ACE_TRY_ENV.exception (new Callback_Quoter::Invalid_Stock
-                              ("Insertion failed! Invalid Stock!\n"));
+       ACE_THROW ( Callback_Quoter::Invalid_Stock ("Insertion failed! Invalid Stock!\n"));
+     //       ACE_TRY_ENV.exception (new Callback_Quoter::Invalid_Stock
+     //                       ("Insertion failed! Invalid Stock!\n"));
      else
       ACE_DEBUG ((LM_DEBUG,
 		  "Inserted map entry: stockname %s threshold %d",
@@ -84,8 +85,9 @@ Notifier_i::register_callback (const char *stock_name,
       // When a new entry is tried to be inserted into the unbounded set and it
       // fails an exception is raised.
       if (consumers->insert (consumer_data) == -1)
-        ACE_TRY_ENV.exception (new Callback_Quoter::Invalid_Stock
-                       ("Insertion failed! Invalid Stock!\n"));
+        ACE_THROW ( Callback_Quoter::Invalid_Stock ("Insertion failed! Invalid Stock!\n"));
+        //ACE_TRY_ENV.exception (new Callback_Quoter::Invalid_Stock
+        //             ("Insertion failed! Invalid Stock!\n"));
 
       // The bond between the stockname <hash_key> and the consumers <hash_value>
       // is fused.
@@ -97,7 +99,6 @@ Notifier_i::register_callback (const char *stock_name,
                     "new map entry: stockname %s threshold %d\n",
                     stock_name,
                     threshold_value));
-
     }
 }
 
@@ -145,8 +146,9 @@ Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer,
        // removed an exception is raised.
 
        if ((*iter).int_id_->remove (consumer_to_remove) == -1)
-	 ACE_TRY_ENV.exception (new Callback_Quoter::Invalid_Handle
-                                ("Unregistration failed! Invalid Consumer Handle!\n"));
+         ACE_THROW (Callback_Quoter::Invalid_Handle ( "Unregistration failed! Invalid Consumer Handle!\n"));
+         //	 ACE_TRY_ENV.exception (new Callback_Quoter::Invalid_Handle
+         //                     ("Unregistration failed! Invalid Consumer Handle!\n"));
 
        else
         ACE_DEBUG ((LM_DEBUG,

@@ -52,45 +52,36 @@ Notifier_Input_Handler::~Notifier_Input_Handler (void)
 int
 Notifier_Input_Handler::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_TRY
-    {
-      CORBA::ORB_var orb = this->orb_manager_.orb ();
+  CORBA::ORB_var orb = this->orb_manager_.orb ();
 
-      PortableServer::POA_var child_poa
-	= this->orb_manager_.child_poa ();
+  PortableServer::POA_var child_poa
+    = this->orb_manager_.child_poa ();
+  
+  int return_val =
+    this->naming_server_.init (orb.in (),
+                               child_poa.in ());
+  if (return_val == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Failed to initialize TAO_Naming_Server\n"),
+                      -1);
+  
+  // Register the object implementation with the POA.
+  Notifier_var notifier_obj = this->notifier_i_._this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
-      int return_val =
-	this->naming_server_.init (orb.in (),
-				   child_poa.in ());
-      if (return_val == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "Failed to initialize TAO_Naming_Server\n"),
-			  -1);
+  // Name the object.
+  CosNaming::Name notifier_obj_name (1);
+  notifier_obj_name.length (1);
+  notifier_obj_name[0].id = CORBA::string_dup ("Notifier");
 
-      // Register the object implementation with the POA.
-      Notifier_var notifier_obj = this->notifier_i_._this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
-      // Name the object.
-      CosNaming::Name notifier_obj_name (1);
-      notifier_obj_name.length (1);
-      notifier_obj_name[0].id = CORBA::string_dup ("Notifier");
-
-      ACE_TRY_CHECK;
-
-      // Now, attach the object name to the context.
-      this->naming_server_->bind (notifier_obj_name,
-				  notifier_obj.in (),
-				  ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_TRY_ENV.print_exception ("Notifier_Input_Handler::init_naming_service\n");
-      return -1;
-    }
-  ACE_ENDTRY;
-
+  // Now, attach the object name to the context.
+  this->naming_server_->bind (notifier_obj_name,
+                              notifier_obj.in (),
+                              ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+    
   return 0;
 }
 
@@ -188,6 +179,8 @@ Notifier_Input_Handler::init (int argc,
     this->orb_manager_.activate_under_child_poa ("Notifier",
 						 &this->notifier_i_,
 						 ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
               str.in ()));
@@ -201,8 +194,10 @@ Notifier_Input_Handler::init (int argc,
     }
 
   if (this->using_naming_service_)
-    return this->init_naming_service (ACE_TRY_ENV);
-
+    {
+      this->init_naming_service (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+    }
   return 0;
 }
 
@@ -219,6 +214,8 @@ Notifier_Input_Handler::run (CORBA::Environment &ACE_TRY_ENV)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Notifier_Input_Handler::run"),
                       -1);
+  ACE_CHECK_RETURN (-1);
+
   return 0;
 }
 
@@ -227,7 +224,9 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
 
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
     {
       // The string could read contains \n\0 hence using ACE_OS::read
       // which returns the no of bytes read and hence i can manipulate
@@ -257,6 +256,7 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
       return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
