@@ -212,7 +212,7 @@ Cubit_Client::parse_args (void)
   ACE_Get_Opt get_opts (argc_, argv_, "b:t:z:ovdn:f:k:xsq");
   int c = 0;
   int result = 0;
-  unsigned int test_mask = 0;
+  u_int test_mask = 0;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -311,7 +311,7 @@ Cubit_Client::parse_args (void)
   return 0;
 }
 
-unsigned int
+u_int
 Cubit_Client::opt_to_mask (const char *test_type)
 {
   if (ACE_OS::strcasecmp (test_type, "void") == 0)
@@ -357,24 +357,24 @@ Cubit_Client::opt_to_mask (const char *test_type)
                      "  large_octet_seq, large_long_seq, large_struct_seq\n"
                      "  mixin, rti_data, one_way, any, any_struct\n",
                      test_type),
-                    0);  // Zero since unsigned int return type
+                    0);  // Zero since u_int return type
 }
 
 void
-Cubit_Client::enable_test (unsigned int mask)
+Cubit_Client::enable_test (u_int mask)
 {
   ACE_SET_BITS (this->test_enable_bitset_, mask);
 }
 
 void
-Cubit_Client::disable_test (unsigned int mask)
+Cubit_Client::disable_test (u_int mask)
 {
   ACE_SET_BITS (this->test_disable_bitset_, mask);
 }
 
 
 int
-Cubit_Client::check_enabled (unsigned int mask) const
+Cubit_Client::check_enabled (u_int mask) const
 {
   return ACE_BIT_ENABLED (this->test_enable_bitset_, mask);
 }

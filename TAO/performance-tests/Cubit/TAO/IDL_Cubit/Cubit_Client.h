@@ -66,16 +66,16 @@ private:
   int parse_args (void);
   // Parses the arguments passed on the command line.
 
-  unsigned int opt_to_mask (const char *opt);
+  u_int opt_to_mask (const char *opt);
   // Obtain the bit mask representation of the specified test
 
-  void enable_test (unsigned int mask);
+  void enable_test (u_int mask);
   // Enable the specified test.
 
-  void disable_test (unsigned int mask);
+  void disable_test (u_int mask);
   // Disable the specified test.
 
-  int check_enabled (unsigned int mask) const;
+  int check_enabled (u_int mask) const;
   // Check if the specified test has been enabled.
 
   void print_stats (const char *call_name,
@@ -177,13 +177,13 @@ private:
   ACE_HANDLE f_handle_;
   // File handle to read the IOR.
 
-  unsigned int bytes_in_octet_sequence_;
+  u_int bytes_in_octet_sequence_;
   // The number of bytes to send in the octet sequence test.
 
-  unsigned int test_enable_bitset_;
+  u_int test_enable_bitset_;
   // Bitset that determines which tests get run.
 
-  unsigned int test_disable_bitset_;
+  u_int test_disable_bitset_;
   // Bitset that determines which tests do not get run.
 };
 
