@@ -440,7 +440,7 @@ public:
   // get the server header template stream
 
   TAO_OutStream *server_skeletons (void);
-  // get the server skeletons stream
+  // Get the server skeletons stream.
 
   TAO_OutStream *server_template_skeletons (void);
   // get the server template skeletons stream
@@ -451,11 +451,20 @@ public:
   TAO_OutStream *server_template_inline (void);
   // get the server template inline stream
 
-  void gperf_input (TAO_OutStream *gperf_input);
+  void gperf_input_stream (TAO_OutStream *gperf_input);
   // Set the gperf input file stream.
 
-  TAO_OutStream *gperf_input (void);
+  TAO_OutStream *gperf_input_stream (void);
   // Retrieve the gperf input stream being used.
+
+  void gperf_input_filename (char *filename);
+  // Set the gperf input file name.
+
+  char *gperf_input_filename (void);
+  // Retrieve the gperf input file name being used.
+  // Name of the temp file used to collect the input for gperf
+  // program. This is needed coz I do ACE_OS::open on this when I need
+  // ACE_HANDLE for the file instead FILE*.
 
   void outstream (TAO_OutStream *os);
   // set current out stream
@@ -478,7 +487,7 @@ public:
   void lookup_strategy (LOOKUP_STRATEGY s);
   // Set the lookup strategy.
 
-  LOOKUP_STRATEGY lookup_strategy (void) const;
+  TAO_CodeGen::LOOKUP_STRATEGY lookup_strategy (void) const;
   // Return the enumerated value for the lookup strategy. Default is
   // Dynamic Hashing.
 
@@ -499,7 +508,7 @@ private:
   // server header template stream
 
   TAO_OutStream *server_skeletons_;
-  // server skeleton stream
+  // server skeleton stream.
 
   TAO_OutStream *server_template_skeletons_;
   // server skeleton template stream
@@ -510,8 +519,13 @@ private:
   TAO_OutStream *server_template_inline_;
   // server side template inline file.
 
-  TAO_OutStream *gperf_input_;
+  TAO_OutStream *gperf_input_stream_;
   // TAO_OutStream to collect the input for gperf program.
+
+  char *gperf_input_filename_;
+  // Name of the temp file used to collect the input for gperf
+  // program. This is needed coz I do ACE_OS::open on this when I need
+  // ACE_HANDLE for the file instead FILE*.
 
   TAO_OutStream *curr_os_;
   // currently used out stream

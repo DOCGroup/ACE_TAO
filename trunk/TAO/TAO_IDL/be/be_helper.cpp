@@ -77,7 +77,7 @@ TAO_OutStream::open (const char *fname,
   if (fname)
     {
       // file name exists, open an I/O file handle
-      fp_ = ACE_OS::fopen (fname, "w+");
+      fp_ = ACE_OS::fopen (fname, "w");
       if (fp_)
         {
           this->st_ = st;
