@@ -209,6 +209,8 @@ AST_Exception::fe_add_field (AST_Field *t)
                            I_FALSE, 
                            t->local_name ());
 
+  this->fields_.enqueue_tail (t);
+
   return t;
 }
 

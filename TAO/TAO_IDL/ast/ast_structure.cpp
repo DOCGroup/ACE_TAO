@@ -177,34 +177,6 @@ AST_Structure::in_recursion (AST_Type *node)
   return 0;
 }
 
-// Compute total number of members.
-int
-AST_Structure::compute_member_count (void)
-{
-  this->member_count_ = 0;
-
-  // If there are elements in this scope.
-  if (this->nmembers () > 0)
-    {
-      // Instantiate a scope iterator.
-      UTL_ScopeActiveIterator *si = 0;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this,
-                                               UTL_Scope::IK_decls),
-                      -1);
-
-      while (!si->is_done ())
-        {
-          this->member_count_++;
-          si->next ();
-        }
-
-      delete si;
-    }
-
-  return 0;
-}
-
 // Return the member count.
 int
 AST_Structure::member_count (void)
@@ -215,6 +187,20 @@ AST_Structure::member_count (void)
     }
 
   return this->member_count_;
+}
+
+size_t
+AST_Structure::nfields (void) const
+{
+  return this->fields_.size ();
+}
+
+int
+AST_Structure::field (AST_Field **&result,
+                      size_t slot) const
+{
+  return this->fields_.get (result,
+                            slot);
 }
 
 idl_bool
@@ -302,6 +288,8 @@ AST_Structure::fe_add_field (AST_Field *t)
   this->add_to_referenced (t, 
                            I_FALSE, 
                            t->local_name ());
+
+  this->fields_.enqueue_tail (t);
 
   return t;
 }
@@ -493,6 +481,34 @@ AST_Structure::fe_add_enum_val (AST_EnumVal *t)
   return t;
 }
 
+// Compute total number of members.
+int
+AST_Structure::compute_member_count (void)
+{
+  this->member_count_ = 0;
+
+  // If there are elements in this scope.
+  if (this->nmembers () > 0)
+    {
+      // Instantiate a scope iterator.
+      UTL_ScopeActiveIterator *si = 0;
+      ACE_NEW_RETURN (si,
+                      UTL_ScopeActiveIterator (this,
+                                               UTL_Scope::IK_decls),
+                      -1);
+
+      while (!si->is_done ())
+        {
+          this->member_count_++;
+          si->next ();
+        }
+
+      delete si;
+    }
+
+  return 0;
+}
+
 // Dump this AST_Structure node to the ostream o.
 void
 AST_Structure::dump (ostream &o)
@@ -510,7 +526,7 @@ AST_Structure::dump (ostream &o)
   AST_Decl::dump (o);
   o << " {\n";
   UTL_Scope::dump (o);
-  idl_global->indent ()->skip_to( o);
+  idl_global->indent ()->skip_to (o);
   o << "}";
 }
 
@@ -529,3 +545,17 @@ AST_Structure::destroy (void)
 IMPL_NARROW_METHODS2(AST_Structure, AST_ConcreteType, UTL_Scope)
 IMPL_NARROW_FROM_DECL(AST_Structure)
 IMPL_NARROW_FROM_SCOPE(AST_Structure)
+
+// ACE_node<AST_Decl *> is already in AST_Module.cpp.
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Node<AST_Field *>;
+template class ACE_Unbounded_Queue<AST_Field *>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Node<AST_Decl *>
+#pragma instantiate ACE_Unbounded_Queue<AST_Decl *>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
