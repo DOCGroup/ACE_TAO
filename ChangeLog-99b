@@ -1,3 +1,9 @@
+Fri Jun 04 09:59:58 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* docs/tutorials/tutorials.dsw: Fixed "_" to "-". Thanks to Tom
+	  Bradley <thomas.bradley@maisel-gw.enst-bretagne.fr> for pointing
+	  out this problem.
+
 Fri Jun  4 09:02:35 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* ace/POSIX_Asynch_IO.cpp: Fixed a syntax error. There were two
@@ -6,7 +12,7 @@ Fri Jun  4 09:02:35 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-lab
 
 Fri Jun  4 00:28:07 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/POSIX_Asynch_IO.cpp: Fixed the Linux egcs warning. 
+	* ace/POSIX_Asynch_IO.cpp: Fixed the Linux egcs warning.
 
 Thu Jun  3 17:05:36 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
