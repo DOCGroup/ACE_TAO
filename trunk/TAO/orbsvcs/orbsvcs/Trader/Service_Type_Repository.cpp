@@ -32,8 +32,7 @@ TAO_Service_Type_Repository (ACE_Lock* lock)
 }
 
 
-TAO_Service_Type_Repository::
-~TAO_Service_Type_Repository (void)
+TAO_Service_Type_Repository::~TAO_Service_Type_Repository (void)
 {
   {
     ACE_WRITE_GUARD (ACE_Lock, ace_mon, *this->lock_);
@@ -46,7 +45,7 @@ TAO_Service_Type_Repository::
         delete type_info;
       }
   }
-  
+
   delete this->lock_;
 }
 
@@ -241,12 +240,20 @@ describe_type (const char * name,
 		      (CosTradingRepos::ServiceTypeRepository::TypeStruct*) 0);
   
   // return appropriate information about the type.
-  CosTradingRepos::ServiceTypeRepository::TypeStruct* descr =
-    new CosTradingRepos::ServiceTypeRepository::TypeStruct;
+  CosTradingRepos::ServiceTypeRepository::TypeStruct* descr = 0;
+  ACE_NEW_RETURN (descr, CosTradingRepos::ServiceTypeRepository::TypeStruct, 0);
   CosTradingRepos::ServiceTypeRepository::TypeStruct & s =
     type_entry->int_id_->type_struct_;
-  
-  (*descr) = s;
+
+  descr->if_name = s.if_name;
+  descr->masked = s.masked;
+  descr->incarnation = s.incarnation;
+  descr->super_types = s.super_types;
+
+  CORBA::ULong length = s.props.length ();
+  CosTradingRepos::ServiceTypeRepository::PropStruct* pstructs =
+    s.props.get_buffer (CORBA::B_FALSE);
+  descr->props.replace (length, length, pstructs, CORBA::B_FALSE);
   
   return descr;
 }
@@ -383,32 +390,38 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct&
     }
 
   num_props += type_struct.props.length ();
-  props.length (num_props);
+  CosTradingRepos::ServiceTypeRepository::PropStruct* pstructs =
+    CosTradingRepos::ServiceTypeRepository::PropStructSeq::allocbuf (num_props);
   super_types.length (num_types);
-  
-  // Copy in all properties.
-  int i = 0;
-  CORBA::ULong prop_index = 0;
-  CORBA::ULong type_index = 0;  
-  for (i = type_struct.props.length () - 1; i >= 0; i--)
-    props[prop_index++] = type_struct.props[i];
 
-  iterator.first ();
-  for (; ! iterator.done (); iterator.advance ())
+  if (pstructs != 0)
     {
-      const char** next_type_name = 0;
-      Service_Type_Map::ENTRY* type_entry = 0;
+      // Copy in all properties.
+      int i = 0;
+      CORBA::ULong prop_index = 0,
+        type_index = 0;  
+      for (i = type_struct.props.length () - 1; i >= 0; i--)
+        pstructs[prop_index++] = type_struct.props[i];
+      
+      iterator.first ();
+      for (; ! iterator.done (); iterator.advance ())
+        {
+          const char** next_type_name = 0;
+          Service_Type_Map::ENTRY* type_entry = 0;
 
-      iterator.next (next_type_name);
-      TAO_String_Hash_Key hash_key (*next_type_name);
-      this->type_map_.find (*next_type_name, type_entry);
+          iterator.next (next_type_name);
+          TAO_String_Hash_Key hash_key (*next_type_name);
+          this->type_map_.find (*next_type_name, type_entry);
+          
+          CosTradingRepos::ServiceTypeRepository::TypeStruct& tstruct =
+            type_entry->int_id_->type_struct_;
+          for (i = tstruct.props.length () - 1; i >= 0; i--)
+            pstructs[prop_index++] = tstruct.props[i];
+          
+          super_types[type_index++] = *next_type_name;
+        }
 
-      CosTradingRepos::ServiceTypeRepository::TypeStruct& tstruct =
-        type_entry->int_id_->type_struct_;
-      for (i = tstruct.props.length () - 1; i >= 0; i--)
-        props[prop_index++] = tstruct.props[i];
-
-      super_types[type_index++] = CORBA::string_dup (*next_type_name);
+      props.replace (num_props, num_props, pstructs, CORBA::B_TRUE);
     }
 }
 
@@ -560,11 +573,23 @@ update_type_map (const char* name,
   // all parameters are valid, create an entry for this service type
   // in the this->type_map_. 
   type->type_struct_.if_name = if_name;
-  type->type_struct_.props = props;
-  type->type_struct_.super_types = super_types;
   type->type_struct_.masked = CORBA::B_FALSE;
   type->type_struct_.incarnation = this->incarnation_;
   type->has_subtypes_ = CORBA::B_FALSE;
+  type->type_struct_.super_types = super_types;
+  
+  // Move the prop struct sequences and super type names from the in
+  // params to the internal storage.  
+  CORBA::ULong pslength = props.length ();
+  CosTradingRepos::ServiceTypeRepository::PropStructSeq* pstructs = 
+    ACE_const_cast (CosTradingRepos::ServiceTypeRepository::PropStructSeq*,
+                    &props);
+  CosTradingRepos::ServiceTypeRepository::PropStruct* psbuf =
+    pstructs->get_buffer (CORBA::B_TRUE);
+  type->type_struct_.props.replace (pslength,
+                                    pslength,
+                                    psbuf,
+                                    CORBA::B_TRUE);;
   
   this->type_map_.bind (type_name, type);
 }

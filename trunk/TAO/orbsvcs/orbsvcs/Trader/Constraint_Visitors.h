@@ -217,13 +217,13 @@ private:
   void do_the_op (int operation);
   int visit_bin_op (TAO_Binary_Constraint* op, int operation);
   
-  CORBA::Boolean sequence_does_contain(CORBA::Any* sequence,
-				       TAO_Literal_Constraint& element);
+  CORBA::Boolean sequence_does_contain (CORBA::Any* sequence,
+                                        TAO_Literal_Constraint& element);
   // Determine if sequence contains <element>, a literal of the same
   // simple type as <sequence_type>. Return 1 in this eventuality.
 
-  TAO_Literal_Constraint& left_operand(void);
-  TAO_Literal_Constraint& right_operand(void);
+  TAO_Literal_Constraint& left_operand (void);
+  TAO_Literal_Constraint& right_operand (void);
 
   TAO_Constraint_Evaluator (const TAO_Constraint_Evaluator&);
   TAO_Constraint_Evaluator& operator= (const TAO_Constraint_Evaluator&);

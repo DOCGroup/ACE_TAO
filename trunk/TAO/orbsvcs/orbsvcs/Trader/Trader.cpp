@@ -29,6 +29,10 @@ TAO_Trader_Base::TAO_Trader_Base (void)
 {
 }
 
+TAO_Trader_Base::~TAO_Trader_Base (void)
+{
+}
+
 TAO_Import_Attributes_Impl &
 TAO_Trader_Base::import_attributes (void)
 {

@@ -14,7 +14,7 @@ template <class LOCK_TYPE>
 TAO_Offer_Database<LOCK_TYPE>::~TAO_Offer_Database (void)
 {
   ACE_WRITE_GUARD (LOCK_TYPE, ace_mon, this->db_lock_);
-  
+
   for (Offer_Database::iterator type_iter (this->offer_db_);
        ! type_iter.done ();
        type_iter++)
@@ -39,7 +39,7 @@ TAO_Offer_Database<LOCK_TYPE>::~TAO_Offer_Database (void)
       }
 
       delete offer_map_entry;
-    }        
+    }
 }
 
 template <class LOCK_TYPE> CosTrading::OfferId

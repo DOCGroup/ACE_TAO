@@ -69,7 +69,7 @@ query (const char *type,
   // If a federated query returns to us, ignore it to prevent
   // redundant results and infinite loops.
   CosTrading::Admin::OctetSeq_ptr request_id = policies.request_id (env);
-  TAO_CHECK_ENV_RETURN_VOID (env);
+  TAO_CHECK_ENV_RETURN_VOID (env);  
 
   {
     ACE_GUARD (TRADER_LOCK_TYPE, trader_mon, this->lock_);
@@ -199,16 +199,23 @@ query (const char *type,
       if (should_follow && links->length () != 0)
         {
           // Perform the sequence of federated queries.
+          CosTrading::Admin::OctetSeq_var rid;
           if (request_id == 0)
             {
               CosTrading::Admin_ptr admin_if =
                 this->trader_.trading_components ().admin_if ();
               request_id = admin_if->request_id_stem (env);
               TAO_CHECK_ENV_RETURN_VOID (env);
-              
-              ACE_GUARD (TRADER_LOCK_TYPE, trader_mon, this->lock_);
-              this->request_ids_.insert (*request_id);
-              TAO_CHECK_ENV_RETURN_VOID (env);
+
+              if (request_id != 0)
+                {
+                  rid = request_id;                  
+                  ACE_GUARD (TRADER_LOCK_TYPE, trader_mon, this->lock_);
+                  this->request_ids_.insert (*request_id);
+                  TAO_CHECK_ENV_RETURN_VOID (env);
+                }
+              else
+                return;
             }
           
           this->federated_query (links.in (),
@@ -852,7 +859,7 @@ TAO_Register<TRADER>::export (CORBA::Object_ptr reference,
   
   // Yank our friend, the type struct, and confirm that the given
   // properties match the type definition.
-  CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct =
+  CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct =
     rep->fully_describe_type (type, _env);
   TAO_CHECK_ENV_RETURN (_env, 0);
   
@@ -869,12 +876,18 @@ TAO_Register<TRADER>::export (CORBA::Object_ptr reference,
   
   // Validate that the properties defined for this offer are correct
   // to their types and strength.
-  this->validate_properties (type, type_struct, properties, _env);
+  this->validate_properties (type, type_struct.ptr (), properties, _env);
   TAO_CHECK_ENV_RETURN (_env, 0);
 
+  CORBA::ULong plength = properties.length ();
   ACE_NEW_RETURN (offer, CosTrading::Offer, 0);
+
+  // No copying, no memory leaks.
+  CosTrading::PropertySeq* hack_seq =
+    ACE_const_cast (CosTrading::PropertySeq*, &properties);
+  CosTrading::Property* pbuf = hack_seq->get_buffer (CORBA::B_TRUE);
+  offer->properties.replace (plength, plength, pbuf, CORBA::B_TRUE);
   offer->reference = reference->_duplicate (reference);
-  offer->properties = properties;
   
   // Insert the offer into the underlying type map.
   CosTrading::OfferId id = offer_database.insert_offer (type, offer);
@@ -917,7 +930,11 @@ TAO_Register<TRADER>::describe (const char *id,
 
   offer_info->reference = offer->reference->_duplicate (offer->reference);
   offer_info->type = CORBA::string_dup (type);
-  offer_info->properties = offer->properties;
+
+  // Let the offer_info prop_seq "borrow" the sequence of properties.
+  CORBA::ULong length = offer->properties.length ();
+  CosTrading::Property* prop_buf = offer->properties.get_buffer ();
+  offer_info->properties.replace (length, length, prop_buf, CORBA::B_FALSE);
 
   return offer_info;
 }
@@ -1440,25 +1457,21 @@ list_offers (CORBA::ULong how_many,
     TAO_THROW (CosTrading::NotImplemented());
 
   TRADER::Offer_Database& type_map = this->trader_.offer_database ();
-
-  CosTrading::OfferIdIterator_ptr oi =
-    type_map.retrieve_all_offer_ids ()->_this (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  TAO_Offer_Id_Iterator* offer_id_iter = type_map.retrieve_all_offer_ids ();
       
   id_itr = CosTrading::OfferIdIterator::_nil ();
   if (how_many > 0)
     {      
-      if (oi->next_n (how_many, ids, _env) == CORBA::B_FALSE)
-	{
-	  // No more items left in the iterator.
-	  oi->destroy (_env);
-	  oi = CosTrading::OfferIdIterator::_nil ();
-	}
+      if (offer_id_iter->next_n (how_many, ids, _env) == CORBA::B_TRUE)
+        {
+          id_itr = offer_id_iter->_this (_env);
+          TAO_CHECK_ENV_RETURN_VOID (_env);
+        }
       else
-	id_itr = oi;
+        delete offer_id_iter;
     }
   else
-    ids = new CosTrading::OfferIdSeq(0);
+    ids = new CosTrading::OfferIdSeq (0);
 }
 
 template <class TRADER, class TRADER_LOCK_TYPE> void 
