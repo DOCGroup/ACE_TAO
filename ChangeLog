@@ -1,3 +1,17 @@
+Tue Jan  4 09:56:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/TMCast/TMCast.mpc:
+	* bin/MakeProjectCreator/config/tmcast.mpb:
+
+	  Changed to inherit from exceptions.mpb and threads.mpb
+
+	* bin/MakeProjectCreator/exceptions.mpb:
+	* bin/MakeProjectCreator/threads.mpb:
+
+	  New files, MPC base projects that require exceptions and threads
+	  respecitively.  Projects can inherit from these instead of using
+	  an explicit requires +=, which can result in duplicate entries.
+
 Tue Jan  4 13:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/create-jace-release:
