@@ -1,3 +1,9 @@
+Wed Sep 15 12:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Removed check for ACE_HAS_CYGWIN32_SOCKET_H, this is not needed
+          anymore
+
 Tue Sep 14 22:44:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Inet_Addr.cpp:
@@ -6,10 +12,10 @@ Tue Sep 14 22:44:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  ACE_INET_Addr::string_to_addr cannot accept an address string
 	  produced by ACE_INET_Addr::addr_to_string method. The output of
 	  addr_to_string method is of the form "[ipv4]:port" while the
-	  string_to_addr accepts "ipv4:port" i.e. cannot handle "[]". 
+	  string_to_addr accepts "ipv4:port" i.e. cannot handle "[]".
 
 	  The fix for this is not to include "[]" in
-	  string_to_addr. Thanks to Charlie Duke <cduke at fvc dot com>. 
+	  string_to_addr. Thanks to Charlie Duke <cduke at fvc dot com>.
 
 	* THANKS: Updated Charlie's email address.
 
