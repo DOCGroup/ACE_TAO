@@ -13,10 +13,10 @@
 #ifndef _ACEXML_CHARSTREAM_H_
 #define _ACEXML_CHARSTREAM_H_
 
-#include "common/XML_Types.h"
+#include "ACEXML/common/XML_Types.h"
 
 /**
- * @class ACEXML_CharStream CharStream.h "common/CharStream.h"
+ * @class ACEXML_CharStream CharStream.h "ACEXML/common/CharStream.h"
  *
  * ACEXML_CharStream is an abstract class (interface) which defines
  * the basic opertions a parser could use to retrieve XML charater

@@ -1,6 +1,6 @@
 // -*- C++ -*- $Id$
 
-#include "common/Transcode.h"
+#include "ACEXML/common/Transcode.h"
 #include "ace/Log_Msg.h"
 
 void dump_utf16 (const ACEXML_UTF16 *data,

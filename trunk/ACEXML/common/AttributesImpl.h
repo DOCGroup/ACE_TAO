@@ -14,7 +14,7 @@
 #ifndef ACEXML_ATTRIBUTESIMPL_H
 #define ACEXML_ATTRIBUTESIMPL_H
 
-#include "common/Attributes.h"
+#include "ACEXML/common/Attributes.h"
 #include "ace/Containers_T.h"
 
 #if !defined ACEXML_AttributesImpl_Default_Size
@@ -24,7 +24,7 @@
 class ACEXML_AttributesImpl;
 
 /**
- * @class ACEXML_Attribute AttributesImpl.h "common/AttributesImpl.h"
+ * @class ACEXML_Attribute AttributesImpl.h "ACEXML/common/AttributesImpl.h"
  *
  * @brief ACEXML_Attribute defines the data structure of an attribute
  *
@@ -111,7 +111,7 @@ private:
 typedef ACE_Array<ACEXML_Attribute> ACEXML_Attribute_Array;
 
 /**
- * @class ACEXML_AttributesImpl AttributesImpl.h "common/AttributesImpl.h"
+ * @class ACEXML_AttributesImpl AttributesImpl.h "ACEXML/common/AttributesImpl.h"
  *
  * @brief ACEXML_AttributesImpl provides the default implementation
  * of interface ACEXML_Attributes.
@@ -288,6 +288,6 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "common/AttributesImpl.i"
+# include "ACEXML/common/AttributesImpl.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* ACEXML_ATTRIBUTESIMPL_H */

@@ -12,11 +12,11 @@
 #ifndef _ACEXML_ENTITYHANDLER_H_
 #define _ACEXML_ENTITYHANDLER_H_
 
-#include "common/Env.h"
-#include "common/InputSource.h"
+#include "ACEXML/common/Env.h"
+#include "ACEXML/common/InputSource.h"
 
 /**
- * @class ACEXML_EntityResolver EntityResolver.h "common/EntityResolver.h"
+ * @class ACEXML_EntityResolver EntityResolver.h "ACEXML/common/EntityResolver.h"
  *
  * @brief ACEXML_EntityResolver
  *

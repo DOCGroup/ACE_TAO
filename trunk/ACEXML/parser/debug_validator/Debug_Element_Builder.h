@@ -12,9 +12,9 @@
 #ifndef _ACEXML_DEBUG_ELEMENT_BUILDER_H_
 #define _ACEXML_DEBUG_ELEMENT_BUILDER_H_
 
-#include "common/Element_Def_Builder.h"
-#include "parser/debug_validator/Debug_DTD_Manager_Export.h"
-#include "parser/debug_validator/Element_Tree.h"
+#include "ACEXML/common/Element_Def_Builder.h"
+#include "ACEXML/parser/debug_validator/Debug_DTD_Manager_Export.h"
+#include "ACEXML/parser/debug_validator/Element_Tree.h"
 
 /**
  * @ class ACEXML_Debug_Element_Builder Debug_Element_Builder.h "parser/debug_validator/Debug_Element_Builder.h"

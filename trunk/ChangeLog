@@ -1,3 +1,74 @@
+Thu Feb 14 00:20:39 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* Makefile:
+	* Makefile.bor:
+	* ACEXML/common/Attributes.h:
+	* ACEXML/common/AttributesImpl.cpp:
+	* ACEXML/common/AttributesImpl.h:
+	* ACEXML/common/Attributes_Def_Builder.cpp:
+	* ACEXML/common/Attributes_Def_Builder.h:
+	* ACEXML/common/CharStream.cpp:
+	* ACEXML/common/CharStream.h:
+	* ACEXML/common/ContentHandler.h:
+	* ACEXML/common/DTDHandler.h:
+	* ACEXML/common/DTD_Manager.cpp:
+	* ACEXML/common/DTD_Manager.h:
+	* ACEXML/common/DefaultHandler.cpp:
+	* ACEXML/common/DefaultHandler.h:
+	* ACEXML/common/Element_Def_Builder.cpp:
+	* ACEXML/common/Element_Def_Builder.h:
+	* ACEXML/common/EntityResolver.h:
+	* ACEXML/common/Env.cpp:
+	* ACEXML/common/Env.h:
+	* ACEXML/common/ErrorHandler.h:
+	* ACEXML/common/Exception.cpp:
+	* ACEXML/common/Exception.h:
+	* ACEXML/common/FileCharStream.cpp:
+	* ACEXML/common/FileCharStream.h:
+	* ACEXML/common/InputSource.cpp:
+	* ACEXML/common/InputSource.h:
+	* ACEXML/common/Locator.h:
+	* ACEXML/common/LocatorImpl.cpp:
+	* ACEXML/common/LocatorImpl.h:
+	* ACEXML/common/Makefile:
+	* ACEXML/common/NamespaceSupport.cpp:
+	* ACEXML/common/NamespaceSupport.h:
+	* ACEXML/common/SAXExceptions.cpp:
+	* ACEXML/common/SAXExceptions.h:
+	* ACEXML/common/Transcode.cpp:
+	* ACEXML/common/Transcode.h:
+	* ACEXML/common/Validator.cpp:
+	* ACEXML/common/Validator.h:
+	* ACEXML/common/XMLFilter.h:
+	* ACEXML/common/XMLFilterImpl.cpp:
+	* ACEXML/common/XMLFilterImpl.h:
+	* ACEXML/common/XMLReader.h:
+	* ACEXML/common/XML_Types.h:
+	* ACEXML/examples/SAXPrint/Makefile:
+	* ACEXML/examples/SAXPrint/Print_Handler.h:
+	* ACEXML/examples/SAXPrint/SAXPrint_Handler.h:
+	* ACEXML/examples/SAXPrint/main.cpp:
+	* ACEXML/parser/debug_validator/Debug_Attributes_Builder.cpp:
+	* ACEXML/parser/debug_validator/Debug_Attributes_Builder.h:
+	* ACEXML/parser/debug_validator/Debug_DTD_Manager.cpp:
+	* ACEXML/parser/debug_validator/Debug_DTD_Manager.h:
+	* ACEXML/parser/debug_validator/Debug_Element_Builder.cpp:
+	* ACEXML/parser/debug_validator/Debug_Element_Builder.h:
+	* ACEXML/parser/debug_validator/Element_Tree.cpp:
+	* ACEXML/parser/debug_validator/Element_Tree.h:
+	* ACEXML/parser/parser/Entity_Manager.cpp:
+	* ACEXML/parser/parser/Entity_Manager.h:
+	* ACEXML/parser/parser/Makefile:
+	* ACEXML/parser/parser/Parser.cpp:
+	* ACEXML/parser/parser/Parser.h:
+	* ACEXML/tests/Makefile:
+	* ACEXML/tests/NamespaceSupport_Test.cpp:
+	* ACEXML/tests/Transcoder_Test.cpp:
+	* etc/acexml.doxygen: Renamed directory XML to ACEXML and moved the
+	  base directory to include XML related files to $(ACE_ROOT).
+	  Thanks to Johnny Tucker <jtucker@magisnetworks.com> for the
+	  suggestion.
+
 Wed Feb 13 20:13:54 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Strategies_T.cpp (make_svc_handler): Make sure that the
@@ -12,10 +83,10 @@ Wed Feb 13 17:42:32 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Wed Feb 13 12:45:06 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Configuration.cpp: 
+	* ace/Configuration.cpp:
 	* tests/Config_Test.cpp (iniCompare): Fixed memory leaks. Thanks
-	  to Johnny willemson for providing the patches. 
-	
+	  to Johnny willemson for providing the patches.
+
 Wed Feb 13 11:46:54 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* XML/parser/parser/Makefile: Added a library (-lACEXML) to link

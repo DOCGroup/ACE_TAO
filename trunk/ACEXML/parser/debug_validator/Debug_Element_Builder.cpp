@@ -1,7 +1,7 @@
 // $Id$
 
-#include "common/SAXExceptions.h"
-#include "parser/debug_validator/Debug_Element_Builder.h"
+#include "ACEXML/common/SAXExceptions.h"
+#include "ACEXML/parser/debug_validator/Debug_Element_Builder.h"
 
 ACEXML_Debug_Element_Builder::ACEXML_Debug_Element_Builder ()
   : type_ (UNDEFINED),

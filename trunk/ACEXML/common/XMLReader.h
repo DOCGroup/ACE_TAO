@@ -12,13 +12,13 @@
 #ifndef _ACEXML_XMLREADER_H_
 #define _ACEXML_XMLREADER_H_
 
-#include "common/ContentHandler.h"
-#include "common/DTDHandler.h"
-#include "common/EntityResolver.h"
-#include "common/ErrorHandler.h"
+#include "ACEXML/common/ContentHandler.h"
+#include "ACEXML/common/DTDHandler.h"
+#include "ACEXML/common/EntityResolver.h"
+#include "ACEXML/common/ErrorHandler.h"
 
 /**
- * @class ACEXML_XMLReader XMLReader.h "common/XMLReader.h"
+ * @class ACEXML_XMLReader XMLReader.h "ACEXML/common/XMLReader.h"
  *
  * @brief ACEXML_XMLReader
  *

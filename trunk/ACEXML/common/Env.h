@@ -12,10 +12,10 @@
 
 #ifndef _ACEXML_ENV_H_
 #define _ACEXML_ENV_H_
-#include "common/Exception.h"
+#include "ACEXML/common/Exception.h"
 
 /**
- * @class ACEXML_Env Env.h "common/Env.h"
+ * @class ACEXML_Env Env.h "ACEXML/common/Env.h"
  *
  * @brief ACEXML_Env
  *
@@ -62,6 +62,6 @@ private:
 #define ACEXML_CHECK_RETURN(VAL) if (xmlenv.exception ()) return VAL;
 
 #if defined (__ACEXML_INLINE__)
-# include "common/Env.i"
+# include "ACEXML/common/Env.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* _ACEXML_ENV_H_ */

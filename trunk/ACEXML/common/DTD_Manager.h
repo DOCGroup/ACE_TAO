@@ -12,9 +12,9 @@
 #ifndef _ACEXML_DTD_Manager_H_
 #define _ACEXML_DTD_Manager_H_
 
-#include "common/Attributes_Def_Builder.h"
-#include "common/Element_Def_Builder.h"
-#include "common/Validator.h"
+#include "ACEXML/common/Attributes_Def_Builder.h"
+#include "ACEXML/common/Element_Def_Builder.h"
+#include "ACEXML/common/Validator.h"
 
 /**
  * @ class ACEXML_DTD_Manager DTD_Manager.h "common/DTD_Manager.h"

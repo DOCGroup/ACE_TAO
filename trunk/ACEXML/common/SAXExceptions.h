@@ -13,10 +13,10 @@
 #ifndef _ACEXML_SAXEXCEPTIONS_H_
 #define _ACEXML_SAXEXCEPTIONS_H_
 
-#include "common/Exception.h"
+#include "ACEXML/common/Exception.h"
 
 /**
- * @class ACEXML_SAXException SAXExceptions.h "common/SAXExceptions.h"
+ * @class ACEXML_SAXException SAXExceptions.h "ACEXML/common/SAXExceptions.h"
  *
  * @brief ACEXML_SAXException
  *
@@ -58,7 +58,7 @@ protected:
 };
 
 /**
- * @class ACEXML_SAXNotSupportedException SAXExceptions.h "common/SAXExceptions.h"
+ * @class ACEXML_SAXNotSupportedException SAXExceptions.h "ACEXML/common/SAXExceptions.h"
  *
  * @brief ACEXML_SAXNotSupportedException
  */
@@ -90,7 +90,7 @@ protected:
 };
 
 /**
- * @class ACEXML_SAXNotRecognizedException SAXExceptions.h "common/SAXExceptions.h"
+ * @class ACEXML_SAXNotRecognizedException SAXExceptions.h "ACEXML/common/SAXExceptions.h"
  *
  * @brief ACEXML_SAXNotRecognizedException
  */
@@ -125,7 +125,7 @@ protected:
 };
 
 /**
- * @class ACEXML_SAXParseException SAXExceptions.h "common/SAXExceptions.h"
+ * @class ACEXML_SAXParseException SAXExceptions.h "ACEXML/common/SAXExceptions.h"
  *
  * @brief ACEXML_SAXParseException
  *
@@ -163,6 +163,6 @@ protected:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "common/SAXExceptions.i"
+# include "ACEXML/common/SAXExceptions.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* _ACEXML_SAXEXCEPTIONS_H_ */

@@ -12,11 +12,11 @@
 #ifndef _ACEXML_ERRORHANDLER_H_
 #define _ACEXML_ERRORHANDLER_H_
 
-#include "common/Env.h"
-#include "common/SAXExceptions.h"
+#include "ACEXML/common/Env.h"
+#include "ACEXML/common/SAXExceptions.h"
 
 /**
- * @class ACEXML_ErrorHandler ErrorHandler.h "common/ErrorHandler.h"
+ * @class ACEXML_ErrorHandler ErrorHandler.h "ACEXML/common/ErrorHandler.h"
  *
  * @brief ACEXML_ErrorHandler
  *

@@ -1,6 +1,6 @@
 // -*- C++ -*-  $Id$
 
-#include "common/CharStream.h"
+#include "ACEXML/common/CharStream.h"
 
 ACEXML_CharStream::~ACEXML_CharStream (void)
 {
