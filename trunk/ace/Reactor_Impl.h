@@ -76,8 +76,13 @@ public:
 
   /// Handle one of the notify call on the <handle>. This could be
   /// because of a thread trying to unblock the <Reactor_Impl>
-  virtual int dispatch_notify (ACE_HANDLE handle) = 0;
+  virtual int dispatch_notify (ACE_Notification_Buffer &buffer) = 0;
 
+  /// Read one of the notify call on the <handle> into the
+  /// <buffer>. This could be because of a thread trying to unblock
+  /// the <Reactor_Impl>
+  virtual int read_notify_pipe (ACE_HANDLE handle,
+                                ACE_Notification_Buffer &buffer) = 0;
   /**
    * Set the maximum number of times that the <handle_input> method
    * will iterate and dispatch the <ACE_Event_Handlers> that are
