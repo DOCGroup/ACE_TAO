@@ -232,10 +232,12 @@ sub relative {
       if ($cwd =~ /[a-z]:[\/\\]/) {
         substr($cwd, 0, 1) = uc(substr($cwd, 0, 1));
       }
+
       while(substr($value, $start) =~ /(\$\(([^)]+)\))/) {
         my($whole)  = $1;
         my($name)   = $2;
         my($val)    = $$rel{$name};
+
         if (defined $val) {
           if ($^O eq 'cygwin' && !$fixed &&
               $cwd !~ /[A-Za-z]:/ && $val =~ /[A-Za-z]:/) {
@@ -255,14 +257,15 @@ sub relative {
           }
 
           if (index($cwd, $val) == 0) {
-            my($count) = 0;
-            substr($cwd, 0, length($val)) = '';
-            while($cwd =~ /^\\/) {
-              $cwd =~ s/^\///;
+            my($count)   = 0;
+            my($current) = $cwd;
+            substr($current, 0, length($val)) = '';
+            while($current =~ /^\\/) {
+              $current =~ s/^\///;
             }
-            my($length) = length($cwd);
+            my($length) = length($current);
             for(my $i = 0; $i < $length; ++$i) {
-              if (substr($cwd, $i, 1) eq '/') {
+              if (substr($current, $i, 1) eq '/') {
                 ++$count;
               }
             }
@@ -272,6 +275,7 @@ sub relative {
               $val = $self->slash_to_backslash($val);
             }
             substr($value, $start) =~ s/\$\([^)]+\)/$val/;
+            $whole = $val;
           }
         }
         $start += length($whole);

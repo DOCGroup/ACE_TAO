@@ -1,30 +1,38 @@
+Mon Mar 10 07:36:59 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          Fixed a bug where multiple uses of a $() variable would not be
+          handled correctly with the -relative option.  Thanks to Nanbor
+          Wang for reporting this.
+
 Mon Mar 10 13:47:08 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
-	* include/makeinclude/platform_g++_common.GNU:
-	  Cannot use CXX to determine compiler version because CXX might be
-	  set to "insure" and insure does not pass the -dumpversion option
-	  to the compiler.
+        * include/makeinclude/platform_g++_common.GNU:
+          Cannot use CXX to determine compiler version because CXX might be
+          set to "insure" and insure does not pass the -dumpversion option
+          to the compiler.
 
 Sun Mar  9 10:17:16 2003  Edan Ayal <edanayal@yahoo.com>
 
-	* tests/Future_Set_Test.cpp:
-	* tests/Future_Test.cpp: Added the following fixes:
+        * tests/Future_Set_Test.cpp:
+        * tests/Future_Test.cpp: Added the following fixes:
           1. In Future_Test.cpp, the printing order should be 'a,b,c,d,e' and currently it is 'a,b,c,e,d'.
-	  2. First sleep() replaced with ACE_Thread_Manager::instance ()->wait ()
-	  3. The final sleep() is redundant, as the spawned threads are already dead
-	  4. Prime_Scheduler::close is called twice - once by the user
-	     (asking to close the task) and once by the framework, when
-	     the thread exists.  This causes the task_count counter to be negative.
-	     renamed the method to 'shutdown'. The required modifications are as follows:
-	     4.1 Change method declaration and definition (remove 'virtual' and all the arguments)
-	     4.2 Change the call in Method_Request_end::call to ->shutdown instead of ->close
+          2. First sleep() replaced with ACE_Thread_Manager::instance ()->wait ()
+          3. The final sleep() is redundant, as the spawned threads are already dead
+          4. Prime_Scheduler::close is called twice - once by the user
+             (asking to close the task) and once by the framework, when
+             the thread exists.  This causes the task_count counter to be negative.
+             renamed the method to 'shutdown'. The required modifications are as follows:
+             4.1 Change method declaration and definition (remove 'virtual' and all the arguments)
+             4.2 Change the call in Method_Request_end::call to ->shutdown instead of ->close
           5. In the future set test, place different name commands in the
-	     name set, just to show that it can be done.  
+             name set, just to show that it can be done.
 
 Sat Mar  8 12:54:18 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/Get_Opt.h: Clarified the role of the long_only argument for
-	  the ACE_Get_Opt constructor.
+        * ace/Get_Opt.h: Clarified the role of the long_only argument for
+          the ACE_Get_Opt constructor.
 
 Fri Mar  7 09:58:06 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
