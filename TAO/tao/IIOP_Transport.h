@@ -90,6 +90,11 @@ protected:
 
   virtual int register_handler_i (void);
 
+  virtual int send_message_shared (TAO_Stub *stub,
+					               int message_semantics,
+							       const ACE_Message_Block *message_block,
+								   ACE_Time_Value *max_wait_time);
+
 
 public:
   /// @@TODO: These methods IMHO should have more meaningful
