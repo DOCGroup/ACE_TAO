@@ -852,7 +852,7 @@ ACE::ldopen (const ASYS_TCHAR *filename,
 }
 
 ACE_HANDLE
-ACE::open_temp_file (char* name, int mode, int perm)
+ACE::open_temp_file (const char *name, int mode, int perm)
 {
 #if defined (ACE_WIN32)
   return ACE_OS::open (name,
@@ -860,15 +860,17 @@ ACE::open_temp_file (char* name, int mode, int perm)
 #else
   // Open it. 
   ACE_HANDLE handle = ACE_OS::open (name, mode, perm);
-  if (handle == -1)
-    return -1;
 
-  // Unlink it. 
+  if (handle == ACE_INVALID_HANDLE)
+    return ACE_INVALID_HANDLE;
+
+  // Unlink it so that the file will be removed automatically when the
+  // process goes away.
   if (ACE_OS::unlink (name) == -1)
     return -1;
-  
-  // Return the handle. 
-  return handle;
+  else
+    // Return the handle. 
+    return handle;
 #endif /* ACE_WIN32 */
 }
 
