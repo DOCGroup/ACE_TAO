@@ -166,7 +166,6 @@ STUB_Object::next_profile (void)
                             *this->profile_lock_ptr_,
                             0));
 
-  TAO_Profile *pfile_in_use = profile_in_use_;
   TAO_Profile *pfile_next = 0;
   if (forward_profiles_)
     {
