@@ -12,7 +12,7 @@
 //      This is a simple test that illustrates the timer mechanism of
 //      the reactor.  Scheduling timers, resetting timer intervals,
 //      handling expired timers and cancelling scheduled timers are
-//      all exercised in this test. 
+//      all exercised in this test.
 //
 // = AUTHOR
 //    Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt
@@ -61,7 +61,7 @@ Time_Handler::Time_Handler ()
   // Nothing
 }
 
-int 
+int
 Time_Handler::handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask)
 {
@@ -74,7 +74,7 @@ Time_Handler::handle_close (ACE_HANDLE handle,
   return 0;
 }
 
-int 
+int
 Time_Handler::handle_timeout (const ACE_Time_Value &tv,
                               const void *arg)
 {
@@ -131,8 +131,8 @@ test_registering_all_handlers (ACE_Reactor *reactor)
     {
       rt[i].reactor (reactor);
       t_id[i] =
-        reactor->schedule_timer (&rt[i], 
-                                 (const void *) i, 
+        reactor->schedule_timer (&rt[i],
+                                 (const void *) i,
                                  ACE_Time_Value (2 * i + 1));
       ACE_ASSERT (t_id[i] != -1);
       rt[i].timer_id (t_id[i]);
@@ -140,6 +140,11 @@ test_registering_all_handlers (ACE_Reactor *reactor)
 
   while (!done)
     reactor->handle_events ();
+
+  for (size_t k = 0; k < ACE_MAX_TIMERS; ++k)
+    {
+      reactor->cancel_timer (&rt[k], 1);
+    }
 }
 
 static void
@@ -164,6 +169,8 @@ test_registering_one_handler (ACE_Reactor *reactor)
 
   while (!done)
     reactor->handle_events ();
+
+  reactor->cancel_timer (&rt[0], 1);
 }
 
 static void
@@ -191,13 +198,18 @@ test_canceling_odd_timers (ACE_Reactor *reactor)
     // Cancel handlers with odd numbered timer ids.
     if (ACE_ODD (rt[j].timer_id ()))
       {
-        int result = 
+        int result =
           reactor->cancel_timer (rt[j].timer_id ());
         ACE_ASSERT (result != -1);
       }
 
   while (!done)
     reactor->handle_events ();
+
+  for (size_t k = 0; k < ACE_MAX_TIMERS; ++k)
+    {
+      reactor->cancel_timer (&rt[k], 1);
+    }
 }
 
 static void
@@ -213,7 +225,7 @@ test_resetting_timer_intervals (ACE_Reactor *reactor)
 
   rt.reactor (reactor);
   t_id =
-    reactor->schedule_timer (&rt, 
+    reactor->schedule_timer (&rt,
                              (const void *) -1,
                              ACE_Time_Value (1),
                              // Start off by making this an interval timer.
@@ -224,6 +236,11 @@ test_resetting_timer_intervals (ACE_Reactor *reactor)
 
   while (!done)
     reactor->handle_events ();
+
+  for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
+    {
+      reactor->cancel_timer (&rt, 1);
+    }
 }
 
 int

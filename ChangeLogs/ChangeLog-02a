@@ -1,3 +1,8 @@
+Mon Mar 27 09:25:39 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/Reactor_Timer_Test.cpp:
+	  The timers where not cancelled properly.
+
 Mon Mar 27 09:11:11 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tests/Reactor_Timer_Test.cpp:
