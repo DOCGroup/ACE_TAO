@@ -15,6 +15,12 @@ Tue Jun 22 22:11:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Updated the Makefiles and scripts on the AV tests, there is some 
 	  hope of adding them to the nightly builds.
 
+	* orbsvcs/tests/Event/Basic/BCast.cpp:
+	  Fixed a warning.
+
+	* tests/POA/Destruction/Makefile:
+	  Updated dependencies
+
 Tue Jun 22 21:49:38 1999  Fred Kuhns  <fredk@cs.wustl.edu>
 
         * IORManipulation.cpp:

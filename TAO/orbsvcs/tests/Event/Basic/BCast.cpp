@@ -192,7 +192,7 @@ Simple_Address_Server (const ACE_INET_Addr& address)
 void
 Simple_Address_Server::get_addr (const RtecEventComm::EventHeader&,
                                  RtecUDPAdmin::UDP_Addr& address,
-                                 CORBA::Environment &ACE_TRY_ENV)
+                                 CORBA::Environment &)
     ACE_THROW_SPEC (())
 {
   address = this->address_;
