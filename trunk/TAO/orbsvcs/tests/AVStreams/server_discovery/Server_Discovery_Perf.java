@@ -14,7 +14,7 @@ public class Server_Discovery_Perf
   private static final int MAX_HEIGHT = 5;
   private static final int GRAPH_DIMENSION = 175;
 
-  private boolean continue_ = true;
+  public boolean continue_ = true;
   private JPanel[] graph_panels_ = new JPanel[MAX_HEIGHT];
   private Hashtable props_ = new Hashtable ();
   private String server_name_ = null;
@@ -41,7 +41,7 @@ public class Server_Discovery_Perf
       this.server_name_ = server_name;
       
       // Create each of the five graph rows.
-      this.setLayout (new GridLayout (5, 1, HSPACE, 0));
+      this.getContentPane().setLayout (new GridLayout (5, 1, HSPACE, 0));
       FlowLayout panel_layout = new FlowLayout (FlowLayout.CENTER, 0, VSPACE);
       for (int i = 0; i < MAX_HEIGHT; i++)
         {
@@ -55,7 +55,9 @@ public class Server_Discovery_Perf
                                      {
                                        public void internalFrameClosing (InternalFrameEvent event)
                                          {
+                                          
                                            cease_updates ();
+                                          
                                          }
                                      }
                                       );
@@ -86,20 +88,27 @@ public class Server_Discovery_Perf
     {
       // Periodically awaken and poll the dynamic properties, updating 
       // the graphs with the new values.
-
+      //float new_point = 0;
       for (;;)
+      //for (;;)
         {
+          //System.out.println("Within loop");
           synchronized (this)
             {
               // An atomic operation.
+             
               if (! this.continue_)
-                break;
+                {
+             
+                  break;
+                }
             }
 
           // Update each dynamic property's graph.
           Enumeration dprops = this.props_.elements ();
           while (dprops.hasMoreElements ())
             {
+             
               Prop_Struct ps = (Prop_Struct) dprops.nextElement ();
 
               // Pull the new value of the dynamic property and insert 
@@ -108,7 +117,9 @@ public class Server_Discovery_Perf
                 {
                   float new_point =
                     Server_Discovery_Util.evaluate_performance_property (this.server_name_, ps.dp_);
+                  
                   ps.graph_.update (new_point);
+                  
                 }
               catch (Exception excp) {}
             }
@@ -127,6 +138,7 @@ public class Server_Discovery_Perf
       synchronized (this)
         {
           // An atomic operation.
+          //System.out.println("Just after cease updates");
           this.continue_ = false;
         }
     }

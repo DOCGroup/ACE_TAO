@@ -17,7 +17,7 @@ public class Server_Discovery_Selection
   Server_Discovery sd_;
   JScrollPane table_scroller_ = new JScrollPane ();
   DefaultMutableTreeNode root_ = new DefaultMutableTreeNode ("Movies");
-  String selected_movie_ = null, selected_server_ = null;
+  String selected_movie_ = null, selected_server_ = null, selected_url_ = null;
   Hashtable movie_map_ = new Hashtable ();
   JTable movie_table;
   TAO_VR.Movie selected_movie_info_; 
@@ -33,6 +33,9 @@ public class Server_Discovery_Selection
         new JSplitPane (JSplitPane.HORIZONTAL_SPLIT, false,
                         tree_scroller, this.table_scroller_);
 
+     
+       
+      
       TreeSelectionListener tsl = new TreeSelectionListener ()
         {
           public void valueChanged (TreeSelectionEvent e)
@@ -41,14 +44,15 @@ public class Server_Discovery_Selection
               DefaultMutableTreeNode tree_node =
                 (DefaultMutableTreeNode) (e.getPath().getLastPathComponent ());
              
-              if(tree_node.getChildCount()==1)
+              //if(tree_node.getChildCount()==1)
+              if(tree_node.isLeaf())
                 {  
-                  String movie_name = (String) tree_node.getUserObject ();
+                  String movie_name = ((DefaultMutableTreeNode)tree_node.getParent()).toString();//getUserObject ();
                   System.out.println("The moviename is" + movie_name);
                   
-                    DefaultMutableTreeNode child_node =
-                      (DefaultMutableTreeNode) tree_node.getChildAt (0);
-                    String host_name = (String) child_node.getUserObject();
+                  //   DefaultMutableTreeNode child_node =
+                  //  (DefaultMutableTreeNode) tree_node.getChildAt (0);
+                    String host_name = (String) tree_node.getUserObject();
                     System.out.println("The hostname is" + host_name);
                     
                     String key = host_name + movie_name;
@@ -57,6 +61,9 @@ public class Server_Discovery_Selection
                     
                     generate_table (host_name, movie);
                     movie_table.updateUI();
+                    System.out.println("Seleceted URL"+selected_url_);
+                    ListSelectionModel rowSM = movie_table.getSelectionModel();
+                    rowSM.addListSelectionListener(new Row_Selected(selected_movie_,selected_server_, selected_url_)); 
                     selected_server_=host_name;
                     selected_movie_=movie_name;
                     selected_movie_info_=movie;
@@ -102,19 +109,47 @@ public class Server_Discovery_Selection
       // @ TODO: Order the movies alphabetically by name.
       //      DefaultMutableTreeNode category =
       //new DefaultMutableTreeNode (movie.category_);
-      DefaultMutableTreeNode movie_name =
+
+
+
+      MutableTreeNode movie_name =
         new DefaultMutableTreeNode (movie.name_);
       DefaultMutableTreeNode server_name =
         new DefaultMutableTreeNode (host_name);
 
-      root_.add(movie_name);
-      movie_name.add(server_name);
-      //Object[] path = { movie_name, server_name };
-      //TreePath tree_path = new TreePath (path);
-
+      Enumeration children = root_.children();
+      int index=0;
+      if(children.hasMoreElements())
+        {
+          while(children.hasMoreElements())
+            {
+              Object child = children.nextElement();
+              if(!(((DefaultMutableTreeNode)child).toString().equals(movie.name_)))
+                {
+                   index++;
+                }
+              else
+                {
+                  ((DefaultMutableTreeNode) root_.getChildAt(index)).add(server_name);
+                  break;
+                }
+            }
+          
+          if(index==root_.getChildCount())
+            {
+              root_.add(movie_name);
+              ((DefaultMutableTreeNode)movie_name).add(server_name);
+            }  
+          
+        }
+      else
+        {
+          root_.add(movie_name);
+          ((DefaultMutableTreeNode)movie_name).add(server_name);
+        }
       String key = host_name + movie.name_;
       this.movie_map_.put (key, movie);
-      //this.tree_.addSelectionPath (tree_path);      
+      
     }
 
   public void flush ()
@@ -161,14 +196,14 @@ public class Server_Discovery_Selection
       url_label.setFont (label_font);
       url_label.setForeground (Color.blue);
       url_label.addMouseListener (new Clicked_URL (movie.description_));      
-      table_model.setValueAt (url_label, 3, 1);
+      table_model.setValueAt (movie.description_, 3, 1);
 
       ImageIcon graph_icon = new ImageIcon ("graph", "graph02.gif");
       JLabel graph_label = new JLabel ("Display server performance", graph_icon, JLabel.RIGHT); 
       graph_label.setFont (label_font);
       graph_label.setForeground (Color.blue);
       graph_label.addMouseListener (new Clicked_Graph (movie.name_, host_name));
-      table_model.setValueAt (graph_label, 9, 1);
+      table_model.setValueAt ("Performance Graph", 9, 1);
 
       movie_table = new JTable (table_model);
       DefaultMutableTreeNode table_node = new DefaultMutableTreeNode (movie_table, false);
@@ -179,6 +214,7 @@ public class Server_Discovery_Selection
       this.table_scroller_.setViewport (viewport);
       this.selected_movie_ = movie.name_;
       this.selected_server_ = host_name;
+      this.selected_url_ = movie.description_;
     }
 
   class Clicked_URL extends MouseAdapter
@@ -196,6 +232,7 @@ public class Server_Discovery_Selection
       }    
   }
 
+
   class Clicked_Graph extends MouseAdapter
   {
     private String movie_, host_;
@@ -211,5 +248,44 @@ public class Server_Discovery_Selection
         sd_.display_performance (this.movie_, this.host_);
       }
   }
-}
+    
   
+    class Row_Selected implements ListSelectionListener
+    {
+      String movie_;
+      String server_;
+      String url_;
+      
+      public Row_Selected(String movie_, String server_,String url_)
+        {
+          this.movie_ = movie_;
+          this.server_=server_;
+          this.url_ = url_;
+          System.out.println(this.url_);
+        }
+      
+      public void valueChanged(ListSelectionEvent e) 
+        {
+          ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+          if (lsm.isSelectionEmpty()) 
+            {
+              //no rows are selected
+            } 
+          else 
+            {
+              int selectedRow = lsm.getMinSelectionIndex();
+              if(selectedRow == 9)
+                sd_.display_performance (this.movie_, this.server_);
+              else if(selectedRow == 3)
+                {
+                  //JTable table = (JTable)e.getSource();
+                  //String url = (String)table.getValueAt(3, 1);
+                  System.out.println(this.url_);
+                  sd_.load_page (this.url_);    
+                }
+              //selectedRow is selected
+            } 
+          
+        }
+    }
+    }

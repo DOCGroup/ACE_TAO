@@ -19,6 +19,7 @@ import Server_Discovery_Selection;
 
 public class Server_Discovery extends JFrame
 {
+  Thread thread;
   private static final Integer DOCLAYER = new Integer(5);
   private static final Integer TOOLLAYER = new Integer(6);
   private static final Integer HELPLAYER = new Integer(7);
@@ -26,6 +27,7 @@ public class Server_Discovery extends JFrame
   private JMenuBar menu_bar_;
   private JDesktopPane desktop_;
   private Server_Discovery_Selection movies_selector_=  new Server_Discovery_Selection (this);
+  // private User_Interface user_interface = new User_Interface();
   
   public Server_Discovery ()
     {
@@ -39,16 +41,24 @@ public class Server_Discovery extends JFrame
       // their uses.
       WindowAdapter window_adapter = new WindowAdapter ()
         {
+          
           public void windowClosing (WindowEvent e)
             {
+              Server_Discovery_Perf doc = (Server_Discovery_Perf)e.getSource();
+              Server_Discovery sd = (Server_Discovery)doc.getParent();
+              //sd.thread.stop();
+              doc.continue_ = false;
+              System.out.println("Within Window Close");
               System.exit (0);
             }
         };
-       
+
+      System.out.println("It reachead here");
       this.addWindowListener (window_adapter);
       this.desktop_ = new JDesktopPane ();
       this.getContentPane ().add (this.desktop_);
 
+      //this.desktop_.add (this.user_interface  , DOCLAYER);
       this.desktop_.add (this.movies_selector_, DOCLAYER);
       try
         {
@@ -80,6 +90,8 @@ public class Server_Discovery extends JFrame
       try
         { 
           doc.setSelected (true); 
+          thread = new Thread(doc);
+          thread.start();
         }
       catch (java.beans.PropertyVetoException e2) {}
     }

@@ -181,6 +181,8 @@ it. Once this problem is solved, all that remains is to ensure the GUI
 looks and works as I've envisioned, and to code the interaction between
 the Server Discovery and A/V client.
 
+The wrong stated above has been set right and he deemo actually works....Hoorah!!!!
+
 That, my friend, is the demo in an anxiously written nutshell. Enjoy!
 Don't forget to set the JAVA_ROOT enivronment variable to the location 
 of the lastest JDK version (when I was here, that was

@@ -1,5 +1,6 @@
-// ========================================================================
+
 // $Id$
+// ========================================================================
 //
 // = FILENAME
 //    Trader_Client.cpp
@@ -304,6 +305,7 @@ Trader_Client::get_movie_info (const char* server_name)
 
 	      if (movie_prop == 0)
 		ACE_ERROR_RETURN ((LM_ERROR,"Movie_property is null\n"),0);
+	      //ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
               // Create the movie iterator.
               if (((*movie_prop) >>= movie_info) == 1)
 		{

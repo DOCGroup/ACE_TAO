@@ -248,20 +248,27 @@ TAO_Property_Exporter::export (const CORBA::Object_ptr object_ref,
       this->prop_set_->define_properties (this->pprops_, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      /***************** UTTER HACK: REMOVE WHEN EXCEPTIONS WORK! ****/
-      CosTrading::TypeRepository_ptr obj = this->lookup_->type_repos (TAO_IN_ENV);
+
+      
+      /***************** UTTER HACK: REMOVE WHEN EXCEPTIONS WORK! ****
+      CosTrading::TypeRepository_ptr obj = this->lookup_->type_repos (_env);
+
       ACE_DEBUG ((LM_DEBUG, "Attempting add_type.\n"));
       CosTradingRepos::ServiceTypeRepository_var str =
-	CosTradingRepos::ServiceTypeRepository::_narrow (obj, TAO_IN_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
 
-      str->add_type (type,
+	CosTradingRepos::ServiceTypeRepository::_narrow (obj, _env);
+      TAO_CHECK_ENV_RETURN (_env, 0);
+      
+       str->add_type (type,
+
 		     object_ref->_interface_repository_id (),
 		     props,
 		     stypes,
-		     TAO_IN_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);      
-      /***************** UTTER HACK: REMOVE WHEN EXCEPTIONS WORK! ****/
+
+		     _env);
+      TAO_CHECK_ENV_RETURN (_env, 0);      
+      ***************** UTTER HACK: REMOVE WHEN EXCEPTIONS WORK! ****/
+
       
       // Attempt to export the offer.
       ACE_DEBUG ((LM_DEBUG, "Attempting export.\n"));
@@ -271,8 +278,11 @@ TAO_Property_Exporter::export (const CORBA::Object_ptr object_ref,
     }
   TAO_CATCH (CosTrading::UnknownServiceType, excp)    
     {      
-      CosTrading::TypeRepository_ptr obj = this->lookup_->type_repos (TAO_IN_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
+
+
+      cout<<"Within the UnknownServiceType exception"<<endl;
+      CosTrading::TypeRepository_ptr obj = this->lookup_->type_repos (_env);
+      TAO_CHECK_ENV_RETURN (_env, 0);
 
       ACE_DEBUG ((LM_DEBUG, "Export failed. Attempting add_type.\n"));
       CosTradingRepos::ServiceTypeRepository_var str =
@@ -290,14 +300,20 @@ TAO_Property_Exporter::export (const CORBA::Object_ptr object_ref,
 
       // Now we'll try again to register the offer.
       ACE_DEBUG ((LM_DEBUG, "Attempting export again.\n"));
-      offer_id = reg->export (object_ref, type, this->tprops_, TAO_IN_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
+
+      this->tprops_.length (this->tcount_);
+      offer_id = reg->export (object_ref, type, this->tprops_, _env);
+      TAO_CHECK_ENV_RETURN (_env, 0);
+      cout<<"It reached here"<<endl;
+
     }
+  /*
   TAO_CATCHANY
     {
       // Sigh, all our efforts were for naight.
       TAO_RETHROW_RETURN (0);
     }  
+  */
   TAO_ENDTRY;
 
   return offer_id;
