@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// $Id: Proactor.h,v
+// $Id$
 
 // ============================================================================
 //
@@ -11,7 +11,7 @@
 //
 // = AUTHOR
 //    Irfan Pyarali (irfan@cs.wustl.edu),
-//    Tim Harrison (harrison@cs.wustl.edu), and
+//    Tim Harrison (harrison@cs.wustl.edu) and
 //    Alexander Babu Arulanthu <alex@cs.wustl.edu>
 //
 // ============================================================================
@@ -37,6 +37,7 @@
 
 // Forward declarations.
 class ACE_Asynch_Result;
+class ACE_Asynch_Operation;
 class ACE_Proactor_Timer_Handler;
 class ACE_Proactor;
 
@@ -262,19 +263,15 @@ public:
   virtual ACE_HANDLE get_handle (void) const;
   // Get the event handle.
 
+protected:
 #if defined (ACE_HAS_AIO_CALLS)
-  int insert_to_aiocb_list (aiocb *aiocb_ptr);
-  // @@ Alex, is it possible to "hide" this better, i.e., so it's not
-  // in the public interface?  Perhaps we could use a "friend"
-  // instead, or better yet, abstract away from this via some other
-  // technique that wouldn't be so "POSIX"-specific.
+  friend int ACE_Asynch_Operation::register_aio_with_proactor (aiocb *aiocb_ptr);
   // This call is for POSIX <aio_> calls.  This method is used by
   // <ACE_Asynch_Operation> to store some information with the
-  // Proactor.  Inserting this <aiocb_ptr> to the array so that
-  // <aio_return> and <aio_error> can make use of that.
+  // Proactor after an <aio_> call is issued, so that the Proactor can
+  // retrive this information to do <aio_return> and <aio_error>.
 #endif /* ACE_HAS_AIO_CALLS */
 
-protected:
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   // Called when object is signaled by OS (either via UNIX signals or
   // when a Win32 object becomes signaled).
@@ -325,14 +322,14 @@ protected:
 
 #if defined (ACE_HAS_AIO_CALLS)
   // Let us have an array to keep track of the all the aio's issued
-  // currently. My intuition is to limit the array size to Maximum
-  // Aios that can be issued thru' a lio_list call.  @@ AIO_LISTIO_MAX
-  // is something else in LynxOS!!!
-#if defined (AIO_LISTIO_MAX)
-  aiocb *aiocb_list_ [AIO_LISTIO_MAX];
-#else /* AIO_LISTIO_MAX */
-  // Minimum is 2.
-  struct aiocb *aiocb_list_ [2];
+  // currently. My intuition is to limit the array size to Maximum RT
+  // signals that can be queued in a process. That should be the upper
+  // limit how many aio can be pending at a time.
+#if defined (_POSIX_RTSIG_MAX)
+  aiocb *aiocb_list_ [_POSIX_RTSIG_MAX];
+#else /* _POSIX_RTSIG_MAX */
+  // Minimum is 8.
+  struct aiocb *aiocb_list_ [8];
 #endif /* AIO_LIST_AIO_MAX */
 
   size_t aiocb_list_max_size_;
