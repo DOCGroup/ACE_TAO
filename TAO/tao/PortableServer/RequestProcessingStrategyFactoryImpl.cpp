@@ -69,7 +69,7 @@ namespace TAO
       else
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n"),
-                    ACE_TEXT ("Unable to get ")
+                    ACE_TEXT ("ERROR, Unable to get ")
                     ACE_TEXT ("RequestProcessingStrategyFactory")));
 
       return strategy;

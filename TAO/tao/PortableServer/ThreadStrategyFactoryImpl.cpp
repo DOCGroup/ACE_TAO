@@ -30,7 +30,7 @@ namespace TAO
           else
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) %p\n"),
-                        ACE_TEXT ("Unable to get ")
+                        ACE_TEXT ("ERROR, Unable to get ")
                         ACE_TEXT ("ThreadStrategySingleFactory")));
 
           break;
@@ -43,7 +43,7 @@ namespace TAO
           if (strategy == 0)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) %p\n"),
-                        ACE_TEXT ("Unable to get ")
+                        ACE_TEXT ("ERROR, Unable to get ")
                         ACE_TEXT ("ThreadStrategyORBControl")));
 
           break;

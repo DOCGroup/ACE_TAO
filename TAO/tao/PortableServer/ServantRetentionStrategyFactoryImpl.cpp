@@ -38,7 +38,7 @@ namespace TAO
 
       if (strategy_factory == 0)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Unable to get %s\n"),
+                    ACE_TEXT ("(%P|%t) ERROR, Unable to get %s\n"),
                     strategy_factory_name));
 
       return strategy_factory->create (value);
