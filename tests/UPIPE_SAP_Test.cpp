@@ -46,7 +46,7 @@ connector (void *)
 
   ACE_Message_Block *mb;
 
-  ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof "hello thanks"), 0);
+  ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof "hello thanks" * sizeof char), 0);
 
   mb->copy ("hello");
 

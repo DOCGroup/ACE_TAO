@@ -121,34 +121,37 @@ main (int argc, char *argv[])
   TCHAR temp_file [BUFSIZ];
   ACE_START_TEST ("Naming_Test");
 
-  ACE_Naming_Context ns_context;
+  ACE_Naming_Context *ns_context = 0;
+  ACE_NEW_RETURN (ns_context, ACE_Naming_Context, -1);
 
-  ACE_Name_Options *name_options = ns_context.name_options ();
+  ACE_Name_Options *name_options = ns_context->name_options ();
 
   name_options->parse_args (argc, argv);
 
-#if (defined (ACE_WIN32) && defined (UNICODE))  
-
-  name_options->namespace_dir (__TEXT ("Software\\ACE\\Name Service"));
-  name_options->database (__TEXT ("Version 1"));  
-  name_options->use_registry (1);
-
+#if (defined (ACE_WIN32) && defined (UNICODE))
+  if (name_options->use_registry () == 1)
 #else
-
-  ACE_OS::strcpy (temp_file, ACE::basename (name_options->process_name (),
-					    ACE_DIRECTORY_SEPARATOR_CHAR));
-  ACE_OS::strcat (temp_file, __TEXT ("XXXXXX"));
-  
-  // Set the database name using mktemp to generate a unique file name
-  name_options->database (ACE_OS::mktemp (temp_file));
-
+  if (0)  
 #endif /* ACE_WIN32 && UNICODE */
-
-  ACE_ASSERT (ns_context.open (ACE_Naming_Context::PROC_LOCAL, 1) != -1);
+    {
+      name_options->namespace_dir (__TEXT ("Software\\ACE\\Name Service"));
+      name_options->database (__TEXT ("Version 1"));  
+    }
+  else
+    {
+      ACE_OS::strcpy (temp_file, ACE::basename (name_options->process_name (),
+						ACE_DIRECTORY_SEPARATOR_CHAR));
+      ACE_OS::strcat (temp_file, __TEXT ("XXXXXX"));
+      
+      // Set the database name using mktemp to generate a unique file name
+      name_options->database (ACE_OS::mktemp (temp_file));
+      
+      ACE_ASSERT (ns_context->open (ACE_Naming_Context::PROC_LOCAL, 1) != -1);
+    }
 
   // Add some bindings to the database
   bind (ns_context);
-
+  
   // Should find the entries
   find (ns_context, 1, 0);
 
@@ -164,6 +167,8 @@ main (int argc, char *argv[])
   // Should not find the entries
   find (ns_context,  1, -1);
   find (ns_context, -1, -1);
+
+  delete ns_context;
 
   ACE_OS::sprintf (temp_file, __TEXT ("%s%s%s"),
 		   name_options->namespace_dir (),
