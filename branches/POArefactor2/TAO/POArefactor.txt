@@ -1,3 +1,10 @@
+Tue Dec 14 12:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ServantRetention*.{h,cpp}:
+          Added factories for retain and non retain so that each poa gets its
+          own copy of this strategy. Also make sure that we cleanup things
+          again at closure
+
 Fri Dec 10 15:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Profile.cpp:
