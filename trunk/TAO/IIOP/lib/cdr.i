@@ -579,14 +579,13 @@ CDR::encode (CORBA_TypeCode_ptr tc,
 	     const void *data2,
 	     CORBA_Environment &env)
 {
-  this->mobj_ = this->factory_->make_marshal_object(tc);
+  this->mobj_ = this->factory_->make_marshal_object(tc, env);
   if (this->mobj_)
     {
       return this->mobj_->encode(tc, data, data2, this, env);
     }
   else
     {
-      env.exception(new CORBA_BAD_TYPECODE(COMPLETED_NO));
       return CORBA_TypeCode::TRAVERSE_STOP;
     }
 }
@@ -598,14 +597,13 @@ CDR::decode (CORBA_TypeCode_ptr tc,
 	     const void *data2,
 	     CORBA_Environment &env)
 {
-  this->mobj_ = this->factory_->make_marshal_object(tc);
+  this->mobj_ = this->factory_->make_marshal_object(tc, env);
   if (this->mobj_)
     {
       return this->mobj_->decode(tc, data, data2, this, env);
     }
   else
     {
-      env.exception(new CORBA_BAD_TYPECODE(COMPLETED_NO));
       return CORBA_TypeCode::TRAVERSE_STOP;
     }
 }

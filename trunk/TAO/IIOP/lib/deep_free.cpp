@@ -552,7 +552,7 @@ TAO_Marshal_Sequence::deep_free(
 		    case tk_wchar:
 		    case tk_enum:
 		      delete src->buffer;
-		      CORBA_release(tc2);
+		      //		      CORBA_release(tc2);
 		      return CORBA_TypeCode::TRAVERSE_CONTINUE;
 
 		      // handle all aggregate types here
@@ -645,7 +645,7 @@ TAO_Marshal_Sequence::deep_free(
 		      retval = CORBA_TypeCode::TRAVERSE_STOP;
 		      break;
 		    } // end of switch
-		  CORBA_release(tc2);
+		  //		  CORBA_release(tc2);
 		  if (retval == CORBA_TypeCode::TRAVERSE_CONTINUE)
 		    {
 		      return CORBA_TypeCode::TRAVERSE_CONTINUE;
@@ -660,7 +660,7 @@ TAO_Marshal_Sequence::deep_free(
 	    } 
 	  else // exception computing size
 	    {
-	      CORBA_release(tc2);
+	      //	      CORBA_release(tc2);
 	      dmsg ("marshaling TAO_Marshal_Sequence::deep_free detected error");
 	      retval = CORBA_TypeCode::TRAVERSE_STOP;
 	    }
@@ -729,7 +729,7 @@ TAO_Marshal_Array::deep_free(
 		    case tk_longdouble:
 		    case tk_wchar:
 		    case tk_enum:
-		      CORBA_release(tc2);
+		      //		      CORBA_release(tc2);
 		      return CORBA_TypeCode::TRAVERSE_CONTINUE;
 
 		      // handle all aggregate types here
@@ -821,7 +821,7 @@ TAO_Marshal_Array::deep_free(
 		      retval = CORBA_TypeCode::TRAVERSE_STOP;
 		      break;
 		    } // end of switch
-		  CORBA_release(tc2);
+		  //		  CORBA_release(tc2);
  		  if (retval == CORBA_TypeCode::TRAVERSE_CONTINUE)
 		    {
 		      return CORBA_TypeCode::TRAVERSE_CONTINUE;
@@ -836,7 +836,7 @@ TAO_Marshal_Array::deep_free(
 		} // no exception computing size
 	      else
 		{
-		  CORBA_release(tc2);
+		  //		  CORBA_release(tc2);
 		  return CORBA_TypeCode::TRAVERSE_STOP;
 		}
 	    } 
@@ -898,7 +898,7 @@ TAO_Marshal_Alias::deep_free(
 	    case tk_octet:
 	    case tk_longdouble:
 	    case tk_wchar:
-	      CORBA_release(tc2);
+	      //	      CORBA_release(tc2);
 	      return CORBA_TypeCode::TRAVERSE_CONTINUE;
 	    case tk_any:
 	      retval = TAO_Marshal_Any::deep_free(tc2, source, dest, env);
@@ -940,7 +940,7 @@ TAO_Marshal_Alias::deep_free(
 	      // anything else is an error
 	      retval = CORBA_TypeCode::TRAVERSE_STOP;
 	    }
-	  CORBA_release(tc2);
+	  //	  CORBA_release(tc2);
 	  if (retval == CORBA_TypeCode::TRAVERSE_CONTINUE) 
 	    {
 	      return CORBA_TypeCode::TRAVERSE_CONTINUE;

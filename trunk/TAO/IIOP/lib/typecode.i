@@ -17,23 +17,10 @@ ACE_INLINE CORBA_TypeCode::CORBA_TypeCode (CORBA_TCKind kind)
     _kind (kind),
     _parent (0),
     _refcount (1),
-    _orb_owns (CORBA_B_FALSE),
-    _prv_state (new TC_PRV_State)
+    _orb_owns (CORBA_B_TRUE),
+    _prv_state (new TC_PRV_State),
+    _delete_flag (CORBA_B_FALSE)
 {
-}
-
-// Destructor.  For "indirected" typecodes, the typecode reuses the
-// buffer owned by its parent, and so rather than deleting the buffer
-// it just drops the parent's refcount.
-
-ACE_INLINE CORBA_TypeCode::~CORBA_TypeCode (void)
-{
-  delete _prv_state;
-
-  if (_parent)
-    _parent->Release ();
-  else if (_orb_owns)
-    delete _buffer;
 }
 
 // Returns true if the two typecodes are identical
@@ -128,7 +115,7 @@ CORBA_TypeCode::member_type (CORBA_ULong index, CORBA_Environment &env) const
     {
       if (index >= 0 && index < _prv_state->tc_member_count_)
 	{
-	  return CORBA_TypeCode::_duplicate(_prv_state->tc_member_type_list_[index]);
+	  return _prv_state->tc_member_type_list_[index];
 	}
       else
 	{
@@ -152,7 +139,6 @@ CORBA_TypeCode::member_label (CORBA_ULong index, CORBA_Environment &env) const
     {
       if (index >= 0 && index < _prv_state->tc_member_count_)
 	{
-	  (void)_prv_state->tc_member_label_list_[index]->AddRef();
 	  return _prv_state->tc_member_label_list_[index];
 	}
       else
@@ -175,7 +161,7 @@ CORBA_TypeCode::discriminator_type (CORBA_Environment &env) const
     {
       if (_prv_state->tc_discriminator_type_known_)
 	{
-	  return CORBA_TypeCode::_duplicate(_prv_state->tc_discriminator_type_);
+	  return _prv_state->tc_discriminator_type_;
 	}
       else
 	{
@@ -215,12 +201,10 @@ CORBA_TypeCode::default_index (CORBA_Environment &env) const
 ACE_INLINE CORBA_ULong
 CORBA_TypeCode::length (CORBA_Environment &env) const
 {
-  switch (_kind)
+  // a switch stmt, unfortunately, doesn't get inlined
+  if (_kind == tk_sequence || _kind == tk_array || _kind == tk_string || _kind
+      == tk_wstring)
     {
-    case tk_sequence:
-    case tk_array:
-    case tk_string:
-    case tk_wstring:
       if (_prv_state->tc_length_known_)
 	{
 	  return _prv_state->tc_length_;
@@ -229,7 +213,9 @@ CORBA_TypeCode::length (CORBA_Environment &env) const
 	{
 	  return prv_length(env);
 	}
-    default:
+    }
+  else
+    {
       env.exception( new CORBA_BadKind());
       return 0;
     }
@@ -239,20 +225,19 @@ CORBA_TypeCode::length (CORBA_Environment &env) const
 ACE_INLINE CORBA_TypeCode_ptr
 CORBA_TypeCode::content_type (CORBA_Environment &env) const
 {
-  switch (_kind)
+  if (_kind == tk_sequence || _kind == tk_array || _kind == tk_alias)
     {
-    case tk_sequence:
-    case tk_array:
-    case tk_alias:
       if (_prv_state->tc_content_type_known_)
 	{
-	  return CORBA_TypeCode::_duplicate(_prv_state->tc_content_type_);
+	  return _prv_state->tc_content_type_;
 	}
       else
 	{
 	  return prv_content_type(env);
 	}
-    default:
+    }
+  else
+    {
       env.exception( new CORBA_BadKind());
       return 0;
     }
@@ -307,3 +292,4 @@ CORBA_TypeCode::TAO_discrim_pad_size (CORBA_Environment &env)
       return 0;
     }
 }
+
