@@ -163,7 +163,7 @@ ACE_DLL::save_last_error (void)
   if (this->open_called_)
     {
       ACE::strdelete (this->last_error_);
-      this->last_error_ = ACE_OS::dlerror ();
+      this->last_error_ = ACE::strnew (ACE_OS::dlerror ());
     }
 }
 
