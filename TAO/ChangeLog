@@ -1,3 +1,15 @@
+Thu May 20 17:14:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        
+          Added leading '::' before generating scoped names
+          of inherited interfaces (for component, supported
+          interfaces) to avoid ambiguity when a module name
+          is repeated at a different level of nesting. Thanks
+          to Jessica Pistole <Jessica.Pistole@jhuapl.edu> for
+          pointing out the bug.
+
 Wed May 19 18:28:21 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\RTCORBA\Diffserv: 
