@@ -1,3 +1,9 @@
+Tue Jan 15 15:55:54 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.Security (IDL_FILES):
+
+	  Added the `SecurityReplaceable.idl' file to the IDL file list.
+
 Tue Jan 15 15:46:20 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SecurityReplaceable.idl:
