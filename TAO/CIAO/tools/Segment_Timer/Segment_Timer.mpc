@@ -5,13 +5,13 @@ project(Segment_Timer): acelib {
   sharedname    = Segment_Timer
   dynamicflags += SEGMENT_TIMER_BUILD_DLL
 
-  // This is necessary for MPC to pull in rules.ciao.GNU
-  includes += $(CIAO_ROOT)
+  // This is necessary for MPC to pull in rules.ciao.GNU and rules.tao.GNU
+  includes += $(CIAO_ROOT) $(TAO_ROOT)
 
   Source_Files {
     Segment_Timer.cpp
   }
-  
+
   Header_Files {
     Segment_Timer_Export.h
   }
