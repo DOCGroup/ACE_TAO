@@ -1,3 +1,20 @@
+Fri Nov 13 12:41:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp: 
+	  Fixed problems in CDR extraction operator for Octet sequences
+	  (compiled marshaling).
+
+	* performance-tests/Thruput/TAO/run_client: 
+	* performance-tests/Thruput/TAO/run_test: 
+	  Fixed some problems in the debugging messages.
+
+	* performance-tests/Thruput/TAO/server.cpp: 
+	  The IOR file was created only if debugging was also enabled!
+
+	* performance-tests/Thruput/TAO/utils.cpp: 
+	* performance-tests/Thruput/TAO/client.cpp: 
+	  Fixed minor formating problems in the output.
+
 1998-11-13  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* examples/Simple/chat/README: added explaination

@@ -3,7 +3,8 @@
 // ============================================================================
 //
 // = TAO tests
-//    Throughput measurement using the TTCP benchmark adapted to work using TAO
+//    Throughput measurement using the TTCP benchmark adapted to work
+//    using TAO 
 //
 // = FILENAME
 //   client.cpp
@@ -29,7 +30,7 @@ char Usage[] =
      "Usage: client [-options] \n"
      "Common options:\n"
      "-i <ior> Object reference string that the server outputs when started\n"
-     " -f ior_file"
+     "-f ior_file\n"
      "-l ##    length of bufs read from or written to network (default 8192)\n"
      "-v       verbose: print more statistics\n"
      "-d ##    debug level\n"
@@ -294,12 +295,12 @@ read_ior (char *filename)
 {
   ACE_HANDLE f_handle;
   // Open the file for reading.
-  f_handle = ACE_OS::open (filename,0);
+  f_handle = ACE_OS::open (filename, O_RDONLY);
 
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open %s for reading: %p\n",
-                       filename),
+                       filename?filename:"(null filename)"),
                       0);
   ACE_Read_Buffer ior_buffer (f_handle);
   char *data = ior_buffer.read ();

@@ -256,7 +256,8 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
                 << be_nl
                 << "oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + "
                 << "_tao_seq_len);" << be_nl
-                << "strm.skip_bytes (_tao_seq_len);" << be_uidt_nl
+                << "strm.skip_bytes (_tao_seq_len);" << be_nl
+                << "return 1;" << be_uidt_nl
                 << "}" << be_nl
                 << "else" << be_idt_nl
                 << "return strm.read_octet_array ("
