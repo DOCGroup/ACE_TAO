@@ -1149,7 +1149,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case 's':
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
                   type = SKIP_SPRINTF;
-                  ACE_OS::sprintf (bp, ACE_WIDE_TEXT ("%ls"), va_arg (argp, wchar_t *));
+                  ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%ls"), va_arg (argp, wchar_t *));
 #else /* ACE_WIN32 && ACE_USES_WCHAR */
                   type = 1 + wpc;
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
@@ -1172,7 +1172,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 # endif /* ACE_USES_WCHAR */
 #elif defined (ACE_HAS_WCHAR)
                   type = SKIP_SPRINTF;
-                  ACE_OS::sprintf (bp, ACE_WIDE_TEXT ("%ls"), va_arg (argp, wchar_t *));
+                  ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%ls"), va_arg (argp, wchar_t *));
 #endif /* ACE_WIN32 / ACE_HAS_WCHAR */
                   break;
                 case 'w':
@@ -1183,9 +1183,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 # else /* ACE_USES_WCHAR */
                   fp[1] = 'C';
 # endif /* ACE_USES_WCHAR */
-#elif defined (ACE_HAS_WCHAR)
+#elif defined (ACE_USES_WCHAR)
                   type = SKIP_SPRINTF;
-                  ACE_OS::sprintf (bp, ACE_WIDE_TEXT ("%lc"), va_arg (argp, wchar_t));
+                  ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%lc"), va_arg (argp, wint_t));
+#else /* ACE_WIN32 */
+                  fp[1] = 'u';  // Since this isn't really supported well                 
 #endif /* ACE_WIN32 */
                   break;
                 case 'c':
