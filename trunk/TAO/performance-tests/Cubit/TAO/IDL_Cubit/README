@@ -125,10 +125,9 @@ run_test [-h] [-n num] [-mcast] [-sleeptime t] [-debug] [-release]
 -n num              -- client uses <num> iterations
 -mcast              -- uses the multicast version of the nameservice
 -sleeptime t        -- run_test should sleep for <t> seconds between running
-                       the server and client
+                       the server and client (default is 3 seconds)
 -debug              -- sets the debug flag for both client and server
 -release            -- runs the Release version of the test (for NT use)
-                       (default is 3 seconds)
 
 
 Sample Run, Using files to communicate IOR:
