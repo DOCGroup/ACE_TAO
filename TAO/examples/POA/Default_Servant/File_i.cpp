@@ -50,7 +50,7 @@ FileImpl::System::open (const char *file_name,
   // Do an ACE_OS::open
   ACE_HANDLE file_descriptor = ACE_OS::open (file_name,
                                              flags,
-                                             0644);
+                                             ACE_DEFAULT_FILE_PERMS);
 
   if (file_descriptor == ACE_INVALID_HANDLE)
     {
