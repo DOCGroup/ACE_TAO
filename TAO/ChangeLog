@@ -1,3 +1,9 @@
+Sat Oct 18 12:36:22 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp: 
+	  Changed constructor definition to match prototype. This was
+	  causing undefined symbol errors in SunCC.
+	
 Sat Oct 18 10:16:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	Added Stream Control Transmission Protocol (SCTP) to the AVStreams
