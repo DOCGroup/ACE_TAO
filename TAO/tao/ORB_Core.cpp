@@ -677,12 +677,16 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           arg_shifter.consume_arg ();
           skip_service_config_open = 1;
         }
-      else
+      else if (ACE_OS::strncasecmp (current_arg, "-ORB", 4) == 0)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
                         "warning: arg %s unknown, consuming arg\n"));
           arg_shifter.consume_arg ();
+        }
+      else
+        {
+          arg_shifter.ignore_arg ();
         }
     }
 
