@@ -161,11 +161,11 @@ typedef void (*TAO_Skeleton)(CORBA_ServerRequest &,
 typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
 extern CORBA::TypeCode_ptr TC_opaque;
 
-extern TAO_Export TAO_OutputCDR&
-operator<<(TAO_OutputCDR&, const TAO_opaque&);
+extern TAO_Export CORBA_Boolean
+operator<< (TAO_OutputCDR&, const TAO_opaque&);
 
-extern TAO_Export TAO_InputCDR&
-operator>>(TAO_InputCDR&, TAO_opaque&);
+extern TAO_Export CORBA_Boolean
+operator>> (TAO_InputCDR&, TAO_opaque&);
 
 #include "tao/Exception.h"
 #include "tao/Any.h"

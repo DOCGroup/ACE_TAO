@@ -829,8 +829,8 @@ CORBA::ORB_init (int &argc,
 // Inline operators for TAO_opaque encoding and decoding
 // *************************************************************
 
-TAO_OutputCDR&
-operator<<(TAO_OutputCDR& cdr, const TAO_opaque& x)
+CORBA_Boolean
+operator<< (TAO_OutputCDR& cdr, const TAO_opaque& x)
 {
   CORBA::ULong length = x.length ();
   cdr.write_ulong (length);
@@ -842,10 +842,10 @@ operator<<(TAO_OutputCDR& cdr, const TAO_opaque& x)
   else
     cdr.write_octet_array_mb (x.mb ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
-  return cdr;
+  return cdr.good_bit ();
 }
 
-TAO_InputCDR&
+CORBA_Boolean
 operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
 {
   CORBA::ULong length;
@@ -857,7 +857,7 @@ operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
   x.replace (length, cdr.start ());
   cdr.skip_bytes (length);
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
-  return cdr;
+  return cdr.good_bit ();
 }
 
 // ****************************************************************
