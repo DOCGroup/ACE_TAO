@@ -1987,7 +1987,6 @@ AST_Expression::coerce (AST_Expression::ExprType t)
   switch (this->pd_ev->et)
   {
     case EV_longdouble:
-    case EV_wstring:
     case EV_void:
     case EV_none:
     case EV_any:
@@ -2038,6 +2037,9 @@ AST_Expression::coerce (AST_Expression::ExprType t)
       break;
     case EV_string:
       copy->u.strval = this->pd_ev->u.strval;
+      break;
+    case EV_wstring:
+      copy->u.wstrval = this->pd_ev->u.wstrval;
       break;
   }
 

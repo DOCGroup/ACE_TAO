@@ -83,7 +83,7 @@ be_constant::exprtype_to_string (void)
     case AST_Expression::EV_wchar:
       return "CORBA::WChar";
     case AST_Expression::EV_wstring:
-      return "CORBA::WString";
+      return "CORBA::WChar *const";
     case AST_Expression::EV_longdouble:
       return NULL;
     }
