@@ -2386,9 +2386,11 @@ protected:
 typedef rwlock_t ACE_rwlock_t;
 #   endif /* ACE_LACKS_RWLOCK_T */
 
-// #define ACE_THR_PRI_FIFO_DEF on all threaded platforms, if not defined
-// above or in the individual platform config file.  It should be used by
-// applications for a default real-time thread priority.
+// Define some default thread priorities on all threaded platforms, if
+// not defined above or in the individual platform config file.
+// ACE_THR_PRI_FIFO_DEF should be used by applications for default
+// real-time thread priority.  ACE_THR_PRI_OTHER_DEF should be used
+// for non-real-time priority.
 #   if !defined(ACE_THR_PRI_FIFO_DEF)
 #     if defined (ACE_WTHREADS)
       // It would be more in spirit to use THREAD_PRIORITY_NORMAL.  But,
@@ -2400,6 +2402,18 @@ typedef rwlock_t ACE_rwlock_t;
 #       define ACE_THR_PRI_FIFO_DEF 0
 #     endif /* ! ACE_WTHREADS */
 #   endif /* ! ACE_THR_PRI_FIFO_DEF */
+
+#   if !defined(ACE_THR_PRI_OTHER_DEF)
+#     if defined (ACE_WTHREADS)
+      // It would be more in spirit to use THREAD_PRIORITY_NORMAL.  But,
+      // using THREAD_PRIORITY_ABOVE_NORMAL should give preference to the
+      // threads in this process, even if the process is not in the
+      // REALTIME_PRIORITY_CLASS.
+#       define ACE_THR_PRI_OTHER_DEF THREAD_PRIORITY_NORMAL
+#     else  /* ! ACE_WTHREADS */
+#       define ACE_THR_PRI_OTHER_DEF 0
+#     endif /* ! ACE_WTHREADS */
+#   endif /* ! ACE_THR_PRI_OTHER_DEF */
 
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
 typedef ACE_thread_mutex_t ACE_recursive_thread_mutex_t;
