@@ -4,6 +4,7 @@ Mon Nov  2 22:54:08 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
         * ace/config-win32-common.h:
           Only define ACE_LACKS_RECVMSG/SENDMSG for non-WinSock2 systems.
           Before, it was being defined for all non-NT configurations.
+          Thanks to Irfan for suggesting this change.
 
 Mon Nov  2 18:18:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -54,9 +55,9 @@ Sun Nov 01 21:18:24 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Sun Nov  1 17:32:50 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Hash_Map_Manager_Test.cpp (run_test): Oops, we need to
- 	  account for compilers that lack template specialization!  Thanks
- 	  to David Levine for reporting this.
+        * tests/Hash_Map_Manager_Test.cpp (run_test): Oops, we need to
+          account for compilers that lack template specialization!  Thanks
+          to David Levine for reporting this.
 
 Sun Nov 01 17:24:56 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -1142,9 +1143,10 @@ Thu Oct 15 18:02:51 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/config-win32.h: For non-winnt systems, define
           ACE_LACKS_RECVMSG and ACE_LACKS_SENDMSG.  Thanks to Bill Hall
-          <hts@gte.net> for pointing this out.  BTW, Bill was the 400th
-          individual to contribute an ACE/TAO bug report, thanks to
-          everyone for all their help over the years!
+          <hts@gte.net> for pointing this out.  
+                    
+          [BTW, Bill was the 400th individual to contribute an ACE/TAO 
+          bug report, thanks to everyone for all their help over the years!]
 
 Thu Oct 15 16:50:09 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
