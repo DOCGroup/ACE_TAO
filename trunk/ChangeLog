@@ -1,3 +1,9 @@
+Mon Aug 11 08:39:06 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/Koyu_dsrt.h: Removed Kokyu_Export qualification for
+	  template class MUF_Comparator. This was giving compile errors in
+	  Win2K_VC71_NET_DLL build.
+
 Mon Aug 11 06:35:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Kokyu/Makefile:
