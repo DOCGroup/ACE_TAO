@@ -80,4 +80,3 @@ LD       = $(CXX)
 LDFLAGS  = --no_auto_instantiation
 OCFLAGS  += -OL -OM
 PIC      =
-RANLIB   = @true
