@@ -51,7 +51,7 @@ be_visitor_typecode_decl::visit_type (be_type *node)
       // declared extern.
       if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
         {
-          *os << "TAO_NAMESPACE_STORAGE_CLASS ";
+          *os << "extern " << be_global->stub_export_macro () << " ";
         }
       else
         {
