@@ -382,31 +382,6 @@ be_visitor_traits::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // This is used by the _var and _out classes, so it should always be
-  // generated in the main file.
-  if (!node->imported () && !node->anonymous ())
-    {
-      *os << be_nl << be_nl
-          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
-          << "struct " << be_global->stub_export_macro () << " Array_Traits<"
-          << be_idt << be_idt_nl
-          << node->name () << "," << be_nl
-          << node->name () << "_slice" << be_uidt_nl
-          << ">" << be_uidt_nl
-          << "{" << be_idt_nl
-          << "static " << node->name () << "_slice * tao_alloc (void);" 
-          << be_nl
-          << "static void tao_free (" << node->name () 
-          << "_slice *);" << be_nl
-          << "static " << node->name () << "_slice * tao_dup (const "
-          << node->name () << "_slice *);" << be_nl
-          << "static void tao_copy (" << be_idt << be_idt_nl
-          << node->name () << "_slice * tao_to," << be_nl
-          << "const " << node->name () << "_slice * tao_from" << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl
-          << "};";
-    }
-
   // This should be generated even for imported nodes. The ifdef guard prevents
   // multiple declarations.
   if (node->seen_in_operation ())

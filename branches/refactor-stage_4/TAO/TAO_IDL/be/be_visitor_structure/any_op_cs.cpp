@@ -115,17 +115,6 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
-  *os << be_nl << be_nl
-      << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \\"
-      << be_idt_nl
-      << "  defined (ACE_HAS_GNU_REPO)" << be_nl
-      << "template class TAO::Any_Dual_Impl_T<" << node->name () << ">;" 
-      << be_uidt_nl
-      << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
-      << "# pragma instantiate TAO::Any_Dual_Impl_T<" << node->name () 
-      << ">" << be_nl
-      << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
-
   // all we have to do is to visit the scope and generate code
   if (this->visit_scope (node) == -1)
     {

@@ -243,17 +243,10 @@ public:
 
 // *************************************************************
 
-template<typename T,
-         typename T_var,
-         typename T_life,
-         typename T_cast>
+template<typename T, typename T_var>
   class TAO_Unbounded_Object_Sequence;
 template<class T,class T_var> class TAO_Unbounded_Pseudo_Sequence;
-template<typename T,
-         typename T_var,
-         typename T_life,
-         typename T_cast,
-         size_t MAX>
+template<typename T, typename T_var, size_t MAX>
   class TAO_Bounded_Object_Sequence;
 template<size_t MAX> class TAO_Bounded_String_Sequence;
 
@@ -281,7 +274,7 @@ template<size_t MAX> class TAO_Bounded_String_Sequence;
    * says that T_ptr *could* map to a type different to T* in the
    * particular case of TAO it does map to <T*>.
    */
-template<typename T, typename T_var, typename T_life>
+template<typename T, typename T_var>
 class TAO_Object_Manager
 {
 public:
@@ -297,7 +290,7 @@ public:
    *   release value on the <rhs>.
    *   + In any case a new reference to the same object is created.
    */
-  TAO_Object_Manager (const TAO_Object_Manager<T,T_var,T_life> & rhs);
+  TAO_Object_Manager (const TAO_Object_Manager<T,T_var> & rhs);
 
   /**
    * Constructor from address of an element, it should be private and
@@ -315,15 +308,15 @@ public:
    * @@ TODO what happens if rhs.release_ is true an this->relase_ is
    * false?
    */
-  TAO_Object_Manager<T,T_var,T_life> & operator= (
-      const TAO_Object_Manager<T,T_var,T_life> & rhs
+  TAO_Object_Manager<T,T_var> & operator= (
+      const TAO_Object_Manager<T,T_var> & rhs
     );
 
   /// Assignment from T *.
-  TAO_Object_Manager<T,T_var,T_life> & operator= (T *);
+  TAO_Object_Manager<T,T_var> & operator= (T *);
 
   /// Assignment from T_life.
-  TAO_Object_Manager<T,T_var,T_life> & operator= (const T_var &);
+  TAO_Object_Manager<T,T_var> & operator= (const T_var &);
 
   /// Return pointer.
   T * operator-> (void) const;
@@ -453,10 +446,7 @@ private:
  * class, in charge of handling the object lifetime, examples are
  * pseudo objects, object references, valuetypes, and strings.
  */
-template<typename T,
-         typename T_var,
-         typename T_life,
-         typename T_cast>
+template<typename T, typename T_var>
 class TAO_Unbounded_Object_Sequence : public TAO_Unbounded_Base_Sequence
 {
 
@@ -522,7 +512,7 @@ public:
    * flag to TRUE.
    */
   TAO_Unbounded_Object_Sequence (
-      const TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast> &
+      const TAO_Unbounded_Object_Sequence<T,T_var> &
     );
 
   /// The destructor releases all object reference memebrs and frees
@@ -547,12 +537,12 @@ public:
    * the reallocation is performed. After reallocation, the release
    * flag is always set to TRUE.
    */
-  TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast> &operator= (
-      const TAO_Unbounded_Object_Sequence <T,T_var,T_life,T_cast> &
+  TAO_Unbounded_Object_Sequence<T,T_var> &operator= (
+      const TAO_Unbounded_Object_Sequence <T,T_var> &
     );
 
   /// read-write accessor
-  TAO_Object_Manager<T,T_var,T_life> operator[] (
+  TAO_Object_Manager<T,T_var> operator[] (
       CORBA::ULong slot
     ) const;
 
@@ -596,11 +586,7 @@ public:
  *
  * Please see the documentation for the unbounded case.
  */
-template<typename T,
-         typename T_var,
-         typename T_life,
-         typename T_cast,
-         size_t MAX>
+template<typename T, typename T_var, size_t MAX>
 class TAO_Bounded_Object_Sequence : public TAO_Bounded_Base_Sequence
 {
 public:
@@ -622,19 +608,19 @@ public:
 
   /// Copy constructor.
   TAO_Bounded_Object_Sequence (
-      const TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX> &
+      const TAO_Bounded_Object_Sequence<T,T_var,MAX> &
     );
 
   /// destructor
   ~TAO_Bounded_Object_Sequence (void);
 
   /// Assignment from another Bounded sequence.
-  TAO_Bounded_Object_Sequence &operator= (
-      const TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX> &
+  TAO_Bounded_Object_Sequence<T,T_var,MAX> &operator= (
+      const TAO_Bounded_Object_Sequence<T,T_var,MAX> &
     );
 
   /// Read-write accessor.
-  TAO_Object_Manager<T,T_var,T_life> operator[] (
+  TAO_Object_Manager<T,T_var> operator[] (
       CORBA::ULong slot
     ) const;
 

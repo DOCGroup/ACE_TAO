@@ -7,6 +7,14 @@ In_Var_Array_Argument_T (const S x)
   : x_ ((S_slice *) x)
 {}
 
+template<typename S, typename S_slice, typename S_forany>
+ACE_INLINE
+const S &
+TAO::In_Var_Array_Argument_T<S,S_slice,S_forany>::arg (void) const
+{
+  return this->x_.in ();
+}
+
 // ==========================================================================
 
 template<typename S, typename S_forany>
@@ -16,6 +24,14 @@ TAO::Inout_Var_Array_Argument_T<S,S_forany>::Inout_Var_Array_Argument_T (
   )
   : x_ (x)
 {}
+
+template<typename S, typename S_forany>
+ACE_INLINE
+S &
+TAO::Inout_Var_Array_Argument_T<S,S_forany>::arg (void)
+{
+  return this->x_.inout ();
+}
 
 // ==========================================================================
 
@@ -31,6 +47,18 @@ Out_Var_Array_Argument_T (S_out x)
 {
 }
 
+template<typename S, 
+         typename S_slice, 
+         typename S_var, 
+         typename S_out, 
+         typename S_forany>
+ACE_INLINE
+S_slice *&
+TAO::Out_Var_Array_Argument_T<S,S_slice,S_var,S_out,S_forany>::arg (void)
+{
+  return this->x_;
+}
+
 // ==========================================================================
 
 template<typename S, typename S_slice, typename S_var, typename S_forany>
@@ -38,6 +66,14 @@ ACE_INLINE
 TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany>::
 Ret_Var_Array_Argument_T (void)
 {}
+
+template<typename S, typename S_slice, typename S_var, typename S_forany>
+ACE_INLINE
+S_slice *&
+TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany>::arg (void)
+{
+  return this->x_.out ();
+}
 
 template<typename S, typename S_slice, typename S_var, typename S_forany>
 ACE_INLINE

@@ -63,9 +63,6 @@ public:
   void gen_common_varout (TAO_OutStream *os);
   // Generate _var and _out typedefs for structs and unions.
 
-  void gen_common_tmplinst (TAO_OutStream *os);
-  // Generate explicit template instantiations for the above.
-
   idl_bool seq_elem_tmplinst (void) const;
   virtual void seq_elem_tmplinst (idl_bool val);
   // Accessors for the member.

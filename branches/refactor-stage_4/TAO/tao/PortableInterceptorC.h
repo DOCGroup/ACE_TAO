@@ -80,42 +80,19 @@ TAO_NAMESPACE  PortableInterceptor
   
   class Interceptor;
   typedef Interceptor *Interceptor_ptr;
-  struct tao_Interceptor_life;
   
   typedef
     TAO_Objref_Var_T<
-        Interceptor,
-        tao_Interceptor_life
+        Interceptor
       >
     Interceptor_var;
   
   typedef
     TAO_Objref_Out_T<
-        Interceptor,
-        tao_Interceptor_life
+        Interceptor
       >
     Interceptor_out;
   
-  struct TAO_Export tao_Interceptor_life
-  {
-    static Interceptor_ptr tao_duplicate (Interceptor_ptr);
-    static void tao_release (Interceptor_ptr);
-    static Interceptor_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        Interceptor_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct TAO_Export tao_Interceptor_cast
-  {
-    static Interceptor_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
-
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
@@ -367,42 +344,19 @@ TAO_NAMESPACE  PortableInterceptor
   
   class Current;
   typedef Current *Current_ptr;
-  struct tao_Current_life;
   
   typedef
     TAO_Objref_Var_T<
-        Current,
-        tao_Current_life
+        Current
       >
     Current_var;
   
   typedef
     TAO_Objref_Out_T<
-        Current,
-        tao_Current_life
+        Current
       >
     Current_out;
   
-  struct TAO_Export tao_Current_life
-  {
-    static Current_ptr tao_duplicate (Current_ptr);
-    static void tao_release (Current_ptr);
-    static Current_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        Current_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct TAO_Export tao_Current_cast
-  {
-    static Current_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
-
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
@@ -496,42 +450,19 @@ TAO_NAMESPACE  PortableInterceptor
   
   class RequestInfo;
   typedef RequestInfo *RequestInfo_ptr;
-  struct tao_RequestInfo_life;
   
   typedef
     TAO_Objref_Var_T<
-        RequestInfo,
-        tao_RequestInfo_life
+        RequestInfo
       >
     RequestInfo_var;
   
   typedef
     TAO_Objref_Out_T<
-        RequestInfo,
-        tao_RequestInfo_life
+        RequestInfo
       >
     RequestInfo_out;
   
-  struct TAO_Export tao_RequestInfo_life
-  {
-    static RequestInfo_ptr tao_duplicate (RequestInfo_ptr);
-    static void tao_release (RequestInfo_ptr);
-    static RequestInfo_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        RequestInfo_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct TAO_Export tao_RequestInfo_cast
-  {
-    static RequestInfo_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
-
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
@@ -744,42 +675,19 @@ TAO_NAMESPACE  PortableInterceptor
   
   class ClientRequestInfo;
   typedef ClientRequestInfo *ClientRequestInfo_ptr;
-  struct tao_ClientRequestInfo_life;
   
   typedef
     TAO_Objref_Var_T<
-        ClientRequestInfo,
-        tao_ClientRequestInfo_life
+        ClientRequestInfo
       >
     ClientRequestInfo_var;
   
   typedef
     TAO_Objref_Out_T<
-        ClientRequestInfo,
-        tao_ClientRequestInfo_life
+        ClientRequestInfo
       >
     ClientRequestInfo_out;
   
-  struct TAO_Export tao_ClientRequestInfo_life
-  {
-    static ClientRequestInfo_ptr tao_duplicate (ClientRequestInfo_ptr);
-    static void tao_release (ClientRequestInfo_ptr);
-    static ClientRequestInfo_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ClientRequestInfo_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct TAO_Export tao_ClientRequestInfo_cast
-  {
-    static ClientRequestInfo_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
-
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
@@ -943,42 +851,19 @@ TAO_NAMESPACE  PortableInterceptor
   
   class ServerRequestInfo;
   typedef ServerRequestInfo *ServerRequestInfo_ptr;
-  struct tao_ServerRequestInfo_life;
   
   typedef
     TAO_Objref_Var_T<
-        ServerRequestInfo,
-        tao_ServerRequestInfo_life
+        ServerRequestInfo
       >
     ServerRequestInfo_var;
   
   typedef
     TAO_Objref_Out_T<
-        ServerRequestInfo,
-        tao_ServerRequestInfo_life
+        ServerRequestInfo
       >
     ServerRequestInfo_out;
   
-  struct TAO_Export tao_ServerRequestInfo_life
-  {
-    static ServerRequestInfo_ptr tao_duplicate (ServerRequestInfo_ptr);
-    static void tao_release (ServerRequestInfo_ptr);
-    static ServerRequestInfo_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ServerRequestInfo_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct TAO_Export tao_ServerRequestInfo_cast
-  {
-    static ServerRequestInfo_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
-
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
@@ -1164,42 +1049,19 @@ TAO_NAMESPACE  PortableInterceptor
   
   class ClientRequestInterceptor;
   typedef ClientRequestInterceptor *ClientRequestInterceptor_ptr;
-  struct tao_ClientRequestInterceptor_life;
   
   typedef
     TAO_Objref_Var_T<
-        ClientRequestInterceptor,
-        tao_ClientRequestInterceptor_life
+        ClientRequestInterceptor
       >
     ClientRequestInterceptor_var;
   
   typedef
     TAO_Objref_Out_T<
-        ClientRequestInterceptor,
-        tao_ClientRequestInterceptor_life
+        ClientRequestInterceptor
       >
     ClientRequestInterceptor_out;
   
-  struct TAO_Export tao_ClientRequestInterceptor_life
-  {
-    static ClientRequestInterceptor_ptr tao_duplicate (ClientRequestInterceptor_ptr);
-    static void tao_release (ClientRequestInterceptor_ptr);
-    static ClientRequestInterceptor_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ClientRequestInterceptor_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct TAO_Export tao_ClientRequestInterceptor_cast
-  {
-    static ClientRequestInterceptor_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
-
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
@@ -1326,42 +1188,19 @@ TAO_NAMESPACE  PortableInterceptor
   
   class ServerRequestInterceptor;
   typedef ServerRequestInterceptor *ServerRequestInterceptor_ptr;
-  struct tao_ServerRequestInterceptor_life;
   
   typedef
     TAO_Objref_Var_T<
-        ServerRequestInterceptor,
-        tao_ServerRequestInterceptor_life
+        ServerRequestInterceptor
       >
     ServerRequestInterceptor_var;
   
   typedef
     TAO_Objref_Out_T<
-        ServerRequestInterceptor,
-        tao_ServerRequestInterceptor_life
+        ServerRequestInterceptor
       >
     ServerRequestInterceptor_out;
   
-  struct TAO_Export tao_ServerRequestInterceptor_life
-  {
-    static ServerRequestInterceptor_ptr tao_duplicate (ServerRequestInterceptor_ptr);
-    static void tao_release (ServerRequestInterceptor_ptr);
-    static ServerRequestInterceptor_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ServerRequestInterceptor_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct TAO_Export tao_ServerRequestInterceptor_cast
-  {
-    static ServerRequestInterceptor_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
-
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
@@ -1489,42 +1328,19 @@ TAO_NAMESPACE  PortableInterceptor
   
   class PolicyFactory;
   typedef PolicyFactory *PolicyFactory_ptr;
-  struct tao_PolicyFactory_life;
   
   typedef
     TAO_Objref_Var_T<
-        PolicyFactory,
-        tao_PolicyFactory_life
+        PolicyFactory
       >
     PolicyFactory_var;
   
   typedef
     TAO_Objref_Out_T<
-        PolicyFactory,
-        tao_PolicyFactory_life
+        PolicyFactory
       >
     PolicyFactory_out;
   
-  struct TAO_Export tao_PolicyFactory_life
-  {
-    static PolicyFactory_ptr tao_duplicate (PolicyFactory_ptr);
-    static void tao_release (PolicyFactory_ptr);
-    static PolicyFactory_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        PolicyFactory_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct TAO_Export tao_PolicyFactory_cast
-  {
-    static PolicyFactory_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
-
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
@@ -1623,42 +1439,19 @@ TAO_NAMESPACE  PortableInterceptor
   
   class ORBInitInfo;
   typedef ORBInitInfo *ORBInitInfo_ptr;
-  struct tao_ORBInitInfo_life;
   
   typedef
     TAO_Objref_Var_T<
-        ORBInitInfo,
-        tao_ORBInitInfo_life
+        ORBInitInfo
       >
     ORBInitInfo_var;
   
   typedef
     TAO_Objref_Out_T<
-        ORBInitInfo,
-        tao_ORBInitInfo_life
+        ORBInitInfo
       >
     ORBInitInfo_out;
   
-  struct TAO_Export tao_ORBInitInfo_life
-  {
-    static ORBInitInfo_ptr tao_duplicate (ORBInitInfo_ptr);
-    static void tao_release (ORBInitInfo_ptr);
-    static ORBInitInfo_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ORBInitInfo_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct TAO_Export tao_ORBInitInfo_cast
-  {
-    static ORBInitInfo_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
-
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
@@ -1956,42 +1749,19 @@ TAO_NAMESPACE  PortableInterceptor
   
   class ORBInitializer;
   typedef ORBInitializer *ORBInitializer_ptr;
-  struct tao_ORBInitializer_life;
   
   typedef
     TAO_Objref_Var_T<
-        ORBInitializer,
-        tao_ORBInitializer_life
+        ORBInitializer
       >
     ORBInitializer_var;
   
   typedef
     TAO_Objref_Out_T<
-        ORBInitializer,
-        tao_ORBInitializer_life
+        ORBInitializer
       >
     ORBInitializer_out;
   
-  struct TAO_Export tao_ORBInitializer_life
-  {
-    static ORBInitializer_ptr tao_duplicate (ORBInitializer_ptr);
-    static void tao_release (ORBInitializer_ptr);
-    static ORBInitializer_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ORBInitializer_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct TAO_Export tao_ORBInitializer_cast
-  {
-    static ORBInitializer_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
-
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from

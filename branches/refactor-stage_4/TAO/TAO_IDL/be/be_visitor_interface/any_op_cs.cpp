@@ -93,19 +93,6 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
-  *os << be_nl << be_nl
-      << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \\"
-      << be_idt_nl
-      << "  defined (ACE_HAS_GNU_REPO)" << be_nl;
-
-  *os << "template class TAO::Any_Impl_T<" << node->name () << ">;"
-      << be_uidt_nl
-      << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl;
-
-  *os << "# pragma instantiate TAO::Any_Impl_T<" << node->name () << ">"
-      << be_uidt_nl
-      << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
-
   // All we have to do is to visit the scope and generate code.
   if (!node->is_local ())
     {

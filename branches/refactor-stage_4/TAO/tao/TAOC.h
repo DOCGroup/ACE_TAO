@@ -144,30 +144,9 @@ TAO_NAMESPACE  TAO
   
   class BufferingConstraintPolicy;
   typedef BufferingConstraintPolicy *BufferingConstraintPolicy_ptr;
-  struct tao_BufferingConstraintPolicy_life;
-  typedef TAO_Objref_Var_T<BufferingConstraintPolicy, tao_BufferingConstraintPolicy_life> BufferingConstraintPolicy_var;
-  typedef TAO_Objref_Out_T<BufferingConstraintPolicy, tao_BufferingConstraintPolicy_life> BufferingConstraintPolicy_out;
+  typedef TAO_Objref_Var_T<BufferingConstraintPolicy> BufferingConstraintPolicy_var;
+  typedef TAO_Objref_Out_T<BufferingConstraintPolicy> BufferingConstraintPolicy_out;
   
-  struct TAO_Export tao_BufferingConstraintPolicy_life
-  {
-    static BufferingConstraintPolicy_ptr tao_duplicate (BufferingConstraintPolicy_ptr);
-    static void tao_release (BufferingConstraintPolicy_ptr);
-    static BufferingConstraintPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        BufferingConstraintPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct TAO_Export tao_BufferingConstraintPolicy_cast
-  {
-    static BufferingConstraintPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
-
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from

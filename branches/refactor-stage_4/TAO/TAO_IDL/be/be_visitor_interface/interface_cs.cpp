@@ -58,133 +58,55 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
-/*
-  *os << be_nl << be_nl
-      << "// Traits specializations for " << node->name () << ".";
 
-  *os << be_nl << be_nl
-      << node->name () << "_ptr" << be_nl
-      << "TAO::Objref_Traits<" << node->name () << ">::tao_duplicate ("
-      << be_idt << be_idt_nl
-      << node->name () << "_ptr p" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "return " << node->name () << "::_duplicate (p);" << be_uidt_nl
-      << "}";
+  if (node->is_defined ())
+    {
+      *os << be_nl << be_nl
+          << "// Traits specializations for " << node->name () << ".";
 
-  *os << be_nl << be_nl
-      << "void" << be_nl
-      << "TAO::Objref_Traits<" << node->name () << ">::tao_release ("
-      << be_idt << be_idt_nl
-      << node->name () << "_ptr p" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "CORBA::release (p);" << be_uidt_nl
-      << "}";
+      *os << be_nl << be_nl
+          << node->name () << "_ptr" << be_nl
+          << "TAO::Objref_Traits<" << node->name () << ">::tao_duplicate ("
+          << be_idt << be_idt_nl
+          << node->name () << "_ptr p" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "return " << node->name () << "::_duplicate (p);" << be_uidt_nl
+          << "}";
 
-  *os << be_nl << be_nl
-      << node->name () << "_ptr" << be_nl
-      << "TAO::Objref_Traits<" << node->name () << ">::tao_nil (void)"
-      << be_nl
-      << "{" << be_idt_nl
-      << "return " << node->name () << "::_nil ();" << be_uidt_nl
-      << "}";
+      *os << be_nl << be_nl
+          << "void" << be_nl
+          << "TAO::Objref_Traits<" << node->name () << ">::tao_release ("
+          << be_idt << be_idt_nl
+          << node->name () << "_ptr p" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "CORBA::release (p);" << be_uidt_nl
+          << "}";
 
-  *os << be_nl << be_nl
-      << "CORBA::Boolean" << be_nl
-      << "TAO::Objref_Traits<" << node->name () << ">::tao_marshal ("
-      << be_idt << be_idt_nl
-      << node->name () << "_ptr p," << be_nl
-      << "TAO_OutputCDR & cdr" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "return p->marshal (cdr);" << be_uidt_nl
-      << "}";
-*/
+      *os << be_nl << be_nl
+          << node->name () << "_ptr" << be_nl
+          << "TAO::Objref_Traits<" << node->name () << ">::tao_nil (void)"
+          << be_nl
+          << "{" << be_idt_nl
+          << "return " << node->name () << "::_nil ();" << be_uidt_nl
+          << "}";
+
+      *os << be_nl << be_nl
+          << "CORBA::Boolean" << be_nl
+          << "TAO::Objref_Traits<" << node->name () << ">::tao_marshal ("
+          << be_idt << be_idt_nl
+          << node->name () << "_ptr p," << be_nl
+          << "TAO_OutputCDR & cdr" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "return p->marshal (cdr);" << be_uidt_nl
+          << "}";
+    }
+
   // Initialize the static narrrowing helper variable.
   *os << be_nl << be_nl
       << "int " << node->full_name () << "::_tao_class_id = 0;";
-
-  const char *fhname = node->fwd_helper_name ();
-
-  // Helper functions generated in case this interface was
-  // forward declared in some other IDL file and not defined there.
-  *os << be_nl << be_nl
-      << node->full_name () << "_ptr" << be_nl
-      << fhname << "_life::"
-      << "tao_duplicate (" << be_idt << be_idt_nl
-      << node->nested_type_name (this->ctx_->scope ())
-      << "_ptr p" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "return " << node->nested_type_name (this->ctx_->scope ())
-      << "::_duplicate (p);" << be_uidt_nl
-      << "}";
-
-  *os << be_nl << be_nl
-      << "void" << be_nl
-      << fhname << "_life::"
-      << "tao_release (" << be_idt << be_idt_nl
-      << node->nested_type_name (this->ctx_->scope ())
-      << "_ptr p" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "CORBA::release (p);" << be_uidt_nl
-      << "}";
-
-  *os << be_nl << be_nl
-      << node->full_name () <<  "_ptr" << be_nl
-      << fhname << "_life::"
-      << "tao_nil (" << be_idt << be_idt_nl
-      << "void" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "return " << node->nested_type_name (this->ctx_->scope ())
-      << "::_nil ();" << be_uidt_nl
-      << "}";
-
-  *os << be_nl << be_nl
-      << "CORBA::Boolean" << be_nl
-      << fhname << "_life::"
-      << "tao_marshal (" << be_idt << be_idt_nl
-      << node->nested_type_name (this->ctx_->scope ())
-      << "_ptr p," << be_nl
-      << "TAO_OutputCDR &cdr" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "return p->marshal (cdr);" << be_uidt_nl
-      << "}";
-
-  if (! node->is_abstract ())
-    {
-      *os << be_nl << be_nl
-          << node->full_name () << "_ptr" << be_nl
-          << fhname << "_cast::"
-          << "tao_narrow (" << be_idt << be_idt_nl
-          << "CORBA::Object *p" << be_nl
-          << "ACE_ENV_ARG_DECL" << be_uidt_nl
-          << ")" << be_uidt_nl
-          << "{" << be_idt_nl
-          << "return " << node->nested_type_name (this->ctx_->scope ())
-          << "::_narrow (p ACE_ENV_ARG_PARAMETER);"
-          << be_uidt_nl
-          << "}";
-
-      *os << be_nl << be_nl
-          << "CORBA::Object *" << be_nl
-          << fhname << "_cast::"
-          << "tao_upcast (" << be_idt << be_idt_nl
-          << "void *src" << be_uidt_nl
-          << ")" << be_uidt_nl
-          << "{" << be_idt_nl
-          << node->nested_type_name (this->ctx_->scope ())
-          << " **tmp =" << be_idt_nl
-          << "ACE_static_cast ("
-          << node->nested_type_name (this->ctx_->scope ())
-          << " **, src);" << be_uidt_nl
-          << "return *tmp;" << be_uidt_nl
-          << "}";
-    }
 
   if (node->has_mixed_parentage ())
     {

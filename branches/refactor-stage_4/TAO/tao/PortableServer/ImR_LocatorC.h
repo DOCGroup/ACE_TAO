@@ -79,41 +79,18 @@ TAO_NAMESPACE  ImplementationRepository
 
   class Locator;
   typedef Locator *Locator_ptr;
-  struct tao_Locator_life;
 
   typedef
     TAO_Objref_Var_T<
-        Locator,
-        tao_Locator_life
+        Locator
       >
     Locator_var;
 
   typedef
     TAO_Objref_Out_T<
-        Locator,
-        tao_Locator_life
+        Locator
       >
     Locator_out;
-
-  struct TAO_PortableServer_Export tao_Locator_life
-  {
-    static Locator_ptr tao_duplicate (Locator_ptr);
-    static void tao_release (Locator_ptr);
-    static Locator_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        Locator_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_PortableServer_Export tao_Locator_cast
-  {
-    static Locator_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
 

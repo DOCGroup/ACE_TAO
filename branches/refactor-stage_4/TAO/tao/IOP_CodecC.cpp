@@ -54,58 +54,6 @@
 
 int IOP::Codec::_tao_class_id = 0;
 
-IOP::Codec_ptr
-IOP::tao_Codec_life::tao_duplicate (
-    Codec_ptr p
-  )
-{
-  return Codec::_duplicate (p);
-}
-
-void
-IOP::tao_Codec_life::tao_release (
-    Codec_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-IOP::Codec_ptr
-IOP::tao_Codec_life::tao_nil (
-    void
-  )
-{
-  return Codec::_nil ();
-}
-
-CORBA::Boolean
-IOP::tao_Codec_life::tao_marshal (
-    Codec_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-IOP::Codec_ptr
-IOP::tao_Codec_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Codec::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-IOP::tao_Codec_cast::tao_upcast (
-    void *src
-  )
-{
-  Codec **tmp =
-    ACE_static_cast (Codec **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -825,58 +773,6 @@ template class TAO_Var_Base_T<
 // be/be_visitor_interface/interface_cs.cpp:57
 
 int IOP::CodecFactory::_tao_class_id = 0;
-
-IOP::CodecFactory_ptr
-IOP::tao_CodecFactory_life::tao_duplicate (
-    CodecFactory_ptr p
-  )
-{
-  return CodecFactory::_duplicate (p);
-}
-
-void
-IOP::tao_CodecFactory_life::tao_release (
-    CodecFactory_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-IOP::CodecFactory_ptr
-IOP::tao_CodecFactory_life::tao_nil (
-    void
-  )
-{
-  return CodecFactory::_nil ();
-}
-
-CORBA::Boolean
-IOP::tao_CodecFactory_life::tao_marshal (
-    CodecFactory_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-IOP::CodecFactory_ptr
-IOP::tao_CodecFactory_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return CodecFactory::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-IOP::tao_CodecFactory_cast::tao_upcast (
-    void *src
-  )
-{
-  CodecFactory **tmp =
-    ACE_static_cast (CodecFactory **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class

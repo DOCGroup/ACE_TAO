@@ -48,40 +48,40 @@ TAO::Objref_Traits<T>::tao_marshal (T * p,
 }
 
 // =================================================================
-template <typename T, typename T_life>
-TAO_Objref_Var_T<T, T_life>::TAO_Objref_Var_T (void)
+template <typename T>
+TAO_Objref_Var_T<T>::TAO_Objref_Var_T (void)
   : ptr_ (TAO::Objref_Traits<T>::tao_nil ())
 {
 }
 
-template <typename T, typename T_life>
-TAO_Objref_Var_T<T, T_life>::TAO_Objref_Var_T (
-    const TAO_Objref_Var_T<T, T_life> & p
+template <typename T>
+TAO_Objref_Var_T<T>::TAO_Objref_Var_T (
+    const TAO_Objref_Var_T<T> & p
   )
   : TAO_Base_var (),
     ptr_ (TAO::Objref_Traits<T>::tao_duplicate (p.ptr ()))
 {
 }
 
-template <typename T, typename T_life>
-TAO_Objref_Var_T<T, T_life>::~TAO_Objref_Var_T (void)
+template <typename T>
+TAO_Objref_Var_T<T>::~TAO_Objref_Var_T (void)
 {
   TAO::Objref_Traits<T>::tao_release (this->ptr_);
 }
 
-template <typename T, typename T_life>
-TAO_Objref_Var_T<T, T_life> &
-TAO_Objref_Var_T<T, T_life>::operator= (T * p)
+template <typename T>
+TAO_Objref_Var_T<T> &
+TAO_Objref_Var_T<T>::operator= (T * p)
 {
   TAO::Objref_Traits<T>::tao_release (this->ptr_);
   this->ptr_ = p;
   return *this;
 }
 
-template <typename T, typename T_life>
-TAO_Objref_Var_T<T, T_life> &
-TAO_Objref_Var_T<T, T_life>::operator= (
-    const TAO_Objref_Var_T<T, T_life> & p
+template <typename T>
+TAO_Objref_Var_T<T> &
+TAO_Objref_Var_T<T>::operator= (
+    const TAO_Objref_Var_T<T> & p
   )
 {
   if (this != &p)
@@ -93,74 +93,74 @@ TAO_Objref_Var_T<T, T_life>::operator= (
   return *this;
 }
 
-template <typename T, typename T_life>
+template <typename T>
 T *
-TAO_Objref_Var_T<T, T_life>::operator-> (void) const
+TAO_Objref_Var_T<T>::operator-> (void) const
 {
   return this->ptr_;
 }
 
-template <typename T, typename T_life>
-TAO_Objref_Var_T<T, T_life>::operator T * const & () const
+template <typename T>
+TAO_Objref_Var_T<T>::operator T * const & () const
 {
   return this->ptr_;
 }
 
-template <typename T, typename T_life>
-TAO_Objref_Var_T<T, T_life>::operator T *& ()
+template <typename T>
+TAO_Objref_Var_T<T>::operator T *& ()
 {
   return this->ptr_;
 }
 
-template <typename T, typename T_life>
+template <typename T>
 T *
-TAO_Objref_Var_T<T, T_life>::in (void) const
+TAO_Objref_Var_T<T>::in (void) const
 {
   return this->ptr_;
 }
 
-template <typename T, typename T_life>
+template <typename T>
 T *&
-TAO_Objref_Var_T<T, T_life>::inout (void)
+TAO_Objref_Var_T<T>::inout (void)
 {
   return this->ptr_;
 }
 
-template <typename T, typename T_life>
+template <typename T>
 T *&
-TAO_Objref_Var_T<T, T_life>::out (void)
+TAO_Objref_Var_T<T>::out (void)
 {
   TAO::Objref_Traits<T>::tao_release (this->ptr_);
   this->ptr_ = TAO::Objref_Traits<T>::tao_nil ();
   return this->ptr_;
 }
 
-template <typename T, typename T_life>
+template <typename T>
 T *
-TAO_Objref_Var_T<T, T_life>::_retn (void)
+TAO_Objref_Var_T<T>::_retn (void)
 {
   T * val = this->ptr_;
   this->ptr_ = TAO::Objref_Traits<T>::tao_nil ();
   return val;
 }
 
-template <typename T, typename T_life>
+template <typename T>
 T *
-TAO_Objref_Var_T<T, T_life>::ptr (void) const
+TAO_Objref_Var_T<T>::ptr (void) const
 {
   return this->ptr_;
 }
 
-template <typename T, typename T_life>
+template <typename T>
 void
-TAO_Objref_Var_T<T, T_life>::free (void)
+TAO_Objref_Var_T<T>::free (void)
 {
   TAO::Objref_Traits<T>::tao_release (this->ptr_);
 }
 
-template <typename T, typename T_life>
+template <typename T>
 void
-TAO_Objref_Var_T<T, T_life>::reset (T * p)
+TAO_Objref_Var_T<T>::reset (T * p)
 {
   TAO::Objref_Traits<T>::tao_release (this->ptr_);
   this->ptr_ = p;
@@ -168,16 +168,16 @@ TAO_Objref_Var_T<T, T_life>::reset (T * p)
 
 // ******************************************************
 
-template <typename T, typename T_life>
-TAO_Objref_Out_T<T, T_life>::TAO_Objref_Out_T (T *& p)
+template <typename T>
+TAO_Objref_Out_T<T>::TAO_Objref_Out_T (T *& p)
   : ptr_ (p)
 {
-  this->ptr_ = T_life::tao_nil ();
+  this->ptr_ = TAO::Objref_Traits<T>::tao_nil ();
 }
 
-template <typename T, typename T_life>
-TAO_Objref_Out_T<T, T_life>::TAO_Objref_Out_T (
-    TAO_Objref_Var_T<T, T_life> & p
+template <typename T>
+TAO_Objref_Out_T<T>::TAO_Objref_Out_T (
+    TAO_Objref_Var_T<T> & p
   )
   : ptr_ (p.out ())
 {
@@ -185,58 +185,58 @@ TAO_Objref_Out_T<T, T_life>::TAO_Objref_Out_T (
   this->ptr_ = TAO::Objref_Traits<T>::tao_nil ();
 }
 
-template <typename T, typename T_life>
-TAO_Objref_Out_T<T, T_life>::TAO_Objref_Out_T (
-    const TAO_Objref_Out_T<T, T_life> & p
+template <typename T>
+TAO_Objref_Out_T<T>::TAO_Objref_Out_T (
+    const TAO_Objref_Out_T<T> & p
   )
   : ptr_ (p.ptr_)
 {
 }
 
-template <typename T, typename T_life>
-TAO_Objref_Out_T<T, T_life> &
-TAO_Objref_Out_T<T, T_life>::operator= (
-    const TAO_Objref_Out_T<T, T_life> & p
+template <typename T>
+TAO_Objref_Out_T<T> &
+TAO_Objref_Out_T<T>::operator= (
+    const TAO_Objref_Out_T<T> & p
   )
 {
   this->ptr_ = p.ptr_;
   return *this;
 }
 
-template <typename T, typename T_life>
-TAO_Objref_Out_T<T, T_life> &
-TAO_Objref_Out_T<T, T_life>::operator= (
-    const TAO_Objref_Var_T<T, T_life> & p
+template <typename T>
+TAO_Objref_Out_T<T> &
+TAO_Objref_Out_T<T>::operator= (
+    const TAO_Objref_Var_T<T> & p
   )
 {
   this->ptr_ = TAO::Objref_Traits<T>::tao_duplicate (p.ptr ());
   return *this;
 }
 
-template <typename T, typename T_life>
-TAO_Objref_Out_T<T, T_life> &
-TAO_Objref_Out_T<T, T_life>::operator= (T * p)
+template <typename T>
+TAO_Objref_Out_T<T> &
+TAO_Objref_Out_T<T>::operator= (T * p)
 {
   this->ptr_ = p;
   return *this;
 }
 
-template <typename T, typename T_life>
-TAO_Objref_Out_T<T, T_life>::operator T *& ()
+template <typename T>
+TAO_Objref_Out_T<T>::operator T *& ()
 {
   return this->ptr_;
 }
 
-template <typename T, typename T_life>
+template <typename T>
 T *&
-TAO_Objref_Out_T<T, T_life>::ptr (void)
+TAO_Objref_Out_T<T>::ptr (void)
 {
   return this->ptr_;
 }
 
-template <typename T, typename T_life>
+template <typename T>
 T *
-TAO_Objref_Out_T<T, T_life>::operator-> (void)
+TAO_Objref_Out_T<T>::operator-> (void)
 {
   return this->ptr_;
 }

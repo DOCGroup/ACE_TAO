@@ -44,58 +44,6 @@
 
 int PortableInterceptor::IORInfo::_tao_class_id = 0;
 
-PortableInterceptor::IORInfo_ptr
-PortableInterceptor::tao_IORInfo_life::tao_duplicate (
-    IORInfo_ptr p
-  )
-{
-  return IORInfo::_duplicate (p);
-}
-
-void
-PortableInterceptor::tao_IORInfo_life::tao_release (
-    IORInfo_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableInterceptor::IORInfo_ptr
-PortableInterceptor::tao_IORInfo_life::tao_nil (
-    void
-  )
-{
-  return IORInfo::_nil ();
-}
-
-CORBA::Boolean
-PortableInterceptor::tao_IORInfo_life::tao_marshal (
-    IORInfo_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableInterceptor::IORInfo_ptr
-PortableInterceptor::tao_IORInfo_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return IORInfo::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableInterceptor::tao_IORInfo_cast::tao_upcast (
-    void *src
-  )
-{
-  IORInfo **tmp =
-    ACE_static_cast (IORInfo **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -218,58 +166,6 @@ PortableInterceptor::IORInfo::marshal (TAO_OutputCDR &)
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:63
 
 int PortableInterceptor::IORInterceptor::_tao_class_id = 0;
-
-PortableInterceptor::IORInterceptor_ptr
-PortableInterceptor::tao_IORInterceptor_life::tao_duplicate (
-    IORInterceptor_ptr p
-  )
-{
-  return IORInterceptor::_duplicate (p);
-}
-
-void
-PortableInterceptor::tao_IORInterceptor_life::tao_release (
-    IORInterceptor_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableInterceptor::IORInterceptor_ptr
-PortableInterceptor::tao_IORInterceptor_life::tao_nil (
-    void
-  )
-{
-  return IORInterceptor::_nil ();
-}
-
-CORBA::Boolean
-PortableInterceptor::tao_IORInterceptor_life::tao_marshal (
-    IORInterceptor_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableInterceptor::IORInterceptor_ptr
-PortableInterceptor::tao_IORInterceptor_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return IORInterceptor::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableInterceptor::tao_IORInterceptor_cast::tao_upcast (
-    void *src
-  )
-{
-  IORInterceptor **tmp =
-    ACE_static_cast (IORInterceptor **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class

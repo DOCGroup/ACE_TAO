@@ -82,15 +82,13 @@ TAO_NAMESPACE  Messaging
   
   typedef
     TAO_Value_Var_T<
-        ExceptionHolder,
-        tao_ExceptionHolder_life
+        ExceptionHolder
       >
     ExceptionHolder_var;
   
   typedef
     TAO_Value_Out_T<
-        ExceptionHolder,
-        tao_ExceptionHolder_life
+        ExceptionHolder
       >
     ExceptionHolder_out;
   

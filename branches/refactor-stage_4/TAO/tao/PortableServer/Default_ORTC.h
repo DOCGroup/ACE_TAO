@@ -80,23 +80,15 @@ TAO_NAMESPACE  TAO_Default_ORT
 
   typedef
     TAO_Value_Var_T<
-        ObjectReferenceTemplate,
-        tao_ObjectReferenceTemplate_life
+        ObjectReferenceTemplate
       >
     ObjectReferenceTemplate_var;
 
   typedef
     TAO_Value_Out_T<
-        ObjectReferenceTemplate,
-        tao_ObjectReferenceTemplate_life
+        ObjectReferenceTemplate
       >
     ObjectReferenceTemplate_out;
-
-  struct TAO_PortableServer_Export tao_ObjectReferenceTemplate_life
-  {
-    static void tao_add_ref (ObjectReferenceTemplate *);
-    static void tao_remove_ref (ObjectReferenceTemplate *);
-  };
 
 #endif /* end #if !defined */
 

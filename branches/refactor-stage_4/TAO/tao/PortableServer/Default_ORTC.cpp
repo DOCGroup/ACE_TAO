@@ -93,22 +93,6 @@ TAO_NAMESPACE_END
 // TAO_IDL - Generated from
 // be/be_visitor_valuetype/valuetype_cs.cpp:94
 
-void
-TAO_Default_ORT::tao_ObjectReferenceTemplate_life::tao_add_ref (
-    TAO_Default_ORT::ObjectReferenceTemplate * p
-  )
-{
-  CORBA::add_ref (p);
-}
-
-void
-TAO_Default_ORT::tao_ObjectReferenceTemplate_life::tao_remove_ref (
-    TAO_Default_ORT::ObjectReferenceTemplate * p
-  )
-{
-  CORBA::remove_ref (p);
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Value_Var_T<

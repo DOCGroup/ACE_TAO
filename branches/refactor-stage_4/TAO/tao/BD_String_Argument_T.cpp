@@ -233,12 +233,13 @@ interceptor_replace (CORBA::Any & any)
 // ==============================================================
 
 template<typename S, 
-         typename S_var, 
+         typename S_var,
+         typename S_out,
          typename to_S, 
          typename from_S, 
          size_t BOUND>
 CORBA::Boolean
-TAO::Out_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::marshal (
+TAO::Out_BD_String_SArgument_T<S,S_var,S_out,to_S,from_S,BOUND>::marshal (
     TAO_OutputCDR &cdr
   )
 {
