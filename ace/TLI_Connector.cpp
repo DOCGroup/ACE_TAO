@@ -14,6 +14,7 @@ ACE_RCSID(ace, TLI_Connector, "$Id$")
 #include "ace/Handle_Set.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Time_Value.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Connector)
 
