@@ -52,6 +52,22 @@ enum ACE_Recyclable_State
   // Unknown state.
 };
 
+#if !defined (ACE_DEFAULT_PAGEFILE_POOL_BASE)
+#define ACE_DEFAULT_PAGEFILE_POOL_BASE (void *) 0 
+#endif /* ACE_DEFAULT_PAGEFILE_POOL_BASE */
+
+#if !defined (ACE_DEFAULT_PAGEFILE_POOL_SIZE)
+#define ACE_DEFAULT_PAGEFILE_POOL_SIZE (size_t) 0x01000000
+#endif /* ACE_DEFAULT_PAGEFILE_POOL_SIZE */
+
+#if !defined (ACE_DEFAULT_PAGEFILE_POOL_CHUNK)
+#define ACE_DEFAULT_PAGEFILE_POOL_CHUNK (size_t) 0x00010000
+#endif /* ACE_DEFAULT_PAGEFILE_POOL_CHUNK */
+
+#if !defined (ACE_DEFAULT_PAGEFILE_POOL_NAME)
+#define ACE_DEFAULT_PAGEFILE_POOL_NAME ACE_TEXT ("Default_ACE_Pagefile_Memory_Pool")
+#endif /* ACE_DEFAULT_PAGEFILE_POOL_NAME */
+
 #if !defined (ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY)
 #define ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY 0
 #endif /* ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY */
@@ -1641,6 +1657,7 @@ private:  ACE_Time_Value *max_wait_time_;
 #   define ACE_SBRK_MEMORY_POOL ACE_Sbrk_Memory_Pool
 #   define ACE_SHARED_MEMORY_POOL ACE_Shared_Memory_Pool
 #   define ACE_LOCAL_MEMORY_POOL ACE_Local_Memory_Pool
+#   define ACE_PAGEFILE_MEMORY_POOL ACE_Pagefile_Memory_Pool
 
 # else /* TEMPLATES are broken in some form or another (i.e., most C++ compilers) */
 
@@ -1716,7 +1733,7 @@ private:  ACE_Time_Value *max_wait_time_;
 #   define ACE_SBRK_MEMORY_POOL ACE_Sbrk_Memory_Pool, ACE_Sbrk_Memory_Pool_Options
 #   define ACE_SHARED_MEMORY_POOL ACE_Shared_Memory_Pool, ACE_Shared_Memory_Pool_Options
 #   define ACE_LOCAL_MEMORY_POOL ACE_Local_Memory_Pool, ACE_Local_Memory_Pool_Options
-
+#   define ACE_PAGEFILE_MEMORY_POOL ACE_Pagefile_Memory_Pool, ACE_Pagefile_Memory_Pool_Options
 # endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
 // These two are only for backward compatibility. You should avoid

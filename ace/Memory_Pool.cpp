@@ -925,6 +925,313 @@ ACE_Shared_Memory_Pool::release (void)
 }
 #endif /* !ACE_LACKS_SYSV_SHMEM */
 
+#if defined (ACE_WIN32)
+#if !defined (ACE_HAS_WINCE)
+#define ACE_MAP_FILE(_hnd, _access, _offHigh, _offLow, _nBytes, _baseAdd)\
+  MapViewOfFileEx (_hnd, _access, _offHigh, _offLow, _nBytes, _baseAdd)
+#else //if !defined (ACE_HAS_WINCE)
+#define ACE_MAP_FILE(_hnd, _access, _offHigh, _offLow, _nBytes, _baseAdd)\
+  MapViewOfFile (_hnd, _access, _offHigh, _offLow, _nBytes)
+#endif /* !defined (ACE_HAS_WINCE) */
+
+ACE_Pagefile_Memory_Pool_Options::ACE_Pagefile_Memory_Pool_Options (void *base_addr,
+                                                                    size_t max_size)
+  : base_addr_ (base_addr),
+    max_size_ (max_size)
+{
+}
+
+int 
+ACE_Pagefile_Memory_Pool::release (void)
+{
+  return this->unmap ();
+}
+
+ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (LPCTSTR backing_store_name,
+                                                    const OPTIONS *options)
+  : shared_cb_ (0),
+    page_size_ (ACE_Pagefile_Memory_Pool::round_to_page_size (1)),
+    object_handle_ (0)
+{
+  // Initialize local copy of pool statistics.
+  if (options != 0) 
+    {
+      this->local_cb_.req_base_ = options->base_addr_;
+      this->local_cb_.mapped_base_ = 0;
+      this->local_cb_.sh_.max_size_ =
+        options->max_size_;
+      this->local_cb_.sh_.mapped_size_ = 0;
+      this->local_cb_.sh_.free_offset_ =
+        this->local_cb_.sh_.mapped_size_;
+      this->local_cb_.sh_.free_size_ = 0;
+    }
+
+  if (backing_store_name == 0)
+    // Only create a new unique filename for the backing store file if
+    // the user didn't supply one...
+    backing_store_name = ACE_DEFAULT_PAGEFILE_POOL_NAME;
+
+  ACE_OS::strncpy (this->backing_store_name_, 
+		   backing_store_name, 
+		   (sizeof this->backing_store_name_ / sizeof (TCHAR)));
+}
+
+void *
+ACE_Pagefile_Memory_Pool::acquire (size_t nbytes, 
+                                   size_t &rounded_bytes)
+{
+  rounded_bytes = round_to_page_size (nbytes); 
+  void *result = 0;
+  int first_time = 0;
+
+  // Check local_cb_ for consistency.  Remap, if extra space is too
+  // small and/or we didn't map the whole shared memory section
+  if (this->shared_cb_->sh_.mapped_size_
+      > this->local_cb_.sh_.mapped_size_
+      || this->shared_cb_->sh_.free_size_ 
+      < (int) rounded_bytes)
+    {
+      int append =
+        rounded_bytes - this->shared_cb_->sh_.free_size_;
+      if (append < 0)
+        append = 0;
+
+      if (this->map (first_time, append) < 0)
+        return result;
+    }
+
+  // Get the block from extra space and update shared and local
+  // control block
+  if (this->shared_cb_->sh_.free_size_ 
+      < (int) rounded_bytes)
+    return result;
+
+  result = (void *)((char *) this->local_cb_.mapped_base_ 
+                    + this->shared_cb_->sh_.free_offset_);
+  this->shared_cb_->sh_.free_offset_ += rounded_bytes;
+  this->shared_cb_->sh_.free_size_ -= rounded_bytes;
+  this->local_cb_.sh_ = this->shared_cb_->sh_;
+
+  return result;
+}
+
+void *
+ACE_Pagefile_Memory_Pool::init_acquire (size_t nbytes,
+                                        size_t &rounded_bytes, 
+                                        int &first_time)
+{
+  // Map the shared memory and get information, if we created the
+  // shared memory.
+  if (this->map (first_time) < 0)
+    return 0;
+
+  if (first_time != 0)
+    // We created the shared memory. So we have to allocate the
+    // requested memory.
+    return this->acquire (nbytes, rounded_bytes);
+  else
+    // We just mapped the memory and return the base address
+    return (void *)((char *) this->local_cb_.mapped_base_ 
+                    + ACE_Pagefile_Memory_Pool::round_to_page_size 
+                    ((int) sizeof (Control_Block)));
+}
+
+int 
+ACE_Pagefile_Memory_Pool::remap (void *addr)
+{
+  // If the shared memory is not mapped or the address, that caused
+  // the memory fault is outside of the commited range of chunks, we
+  // return.
+  if (this->shared_cb_ == 0
+      || addr < this->local_cb_.mapped_base_
+      || addr >= (void *)((char *) this->local_cb_.mapped_base_ 
+                          + this->shared_cb_->sh_.mapped_size_))
+    return -1;
+
+  // We can solve the problem by committing additional chunks.
+  int first_time = 0;
+  return this->map (first_time);
+}
+
+int 
+ACE_Pagefile_Memory_Pool::unmap (void)
+{
+  ACE_BASED_POINTER_REPOSITORY::instance ()->unbind 
+    (this->local_cb_.mapped_base_,
+     this->local_cb_.sh_.mapped_size_);
+  // Cleanup cached pool pointer.
+  this->shared_cb_ = 0;
+
+  if (this->local_cb_.sh_.mapped_size_ > 0) 
+    ::UnmapViewOfFile (this->local_cb_.mapped_base_);
+
+  // Reset local pool statistics.
+  this->local_cb_.req_base_ =
+    ACE_DEFAULT_PAGEFILE_POOL_BASE;
+  this->local_cb_.mapped_base_ = 0;
+  this->local_cb_.sh_.max_size_ =
+    ACE_DEFAULT_PAGEFILE_POOL_SIZE;
+  this->local_cb_.sh_.mapped_size_ = 0;
+  this->local_cb_.sh_.free_offset_ =
+    this->local_cb_.sh_.mapped_size_;
+  this->local_cb_.sh_.free_size_ = 0;
+
+  // Release the pool
+  if (this->object_handle_ == 0) 
+    {
+      ::CloseHandle (this->object_handle_);
+      this->object_handle_ = 0;
+    }
+  return 0;
+}
+
+int 
+ACE_Pagefile_Memory_Pool::map (int &first_time,
+                               int append_bytes)
+{
+  int mem_offset = 0;
+  int map_size;
+  void *map_addr;
+
+  // Create file mapping, if not yet done
+  if (object_handle_ == 0) 
+    {
+      // Allow access by all users.
+      SECURITY_ATTRIBUTES sa;
+      SECURITY_DESCRIPTOR sd;
+      ::InitializeSecurityDescriptor (&sd,
+                                      SECURITY_DESCRIPTOR_REVISION);
+      ::SetSecurityDescriptorDacl (&sd,
+                                   TRUE,
+                                   NULL,
+                                   FALSE);
+      sa.nLength = sizeof (SECURITY_ATTRIBUTES);
+      sa.lpSecurityDescriptor = &sd;
+      sa.bInheritHandle = FALSE;
+
+      // Get an object handle to the named reserved memory object.
+      object_handle_ =
+        ::CreateFileMapping ((HANDLE) 0xffffffff,
+                             &sa,
+                             PAGE_READWRITE | SEC_RESERVE,
+                             0,
+                             this->local_cb_.sh_.max_size_,
+                             this->backing_store_name_);
+      if (object_handle_ == 0)
+        return -1;
+      first_time =
+        ::GetLastError () == ERROR_ALREADY_EXISTS 
+        ? 0 
+        : 1;
+    }
+
+  // Do the initial mapping.
+  if (this->shared_cb_ == 0) 
+    {
+      // Map a view to the shared memory.  Note: <MapViewOfFile[Ex]>
+      // does *not* commit the pages!
+      this->shared_cb_ = (ACE_Pagefile_Memory_Pool::Control_Block *)
+        ACE_MAP_FILE (this->object_handle_,
+                      FILE_MAP_WRITE,
+                      0,
+                      0,
+                      this->local_cb_.sh_.max_size_,
+                      this->local_cb_.req_base_);
+      if (this->shared_cb_ == 0)
+        return -1;
+  
+      // There was no previous mapping, so we map the first chunk and
+      // initialize the shared pool statistics.
+      if (first_time) 
+        {
+          // 1st block is used to keep shared memory statistics.
+          map_size =
+            ACE_Pagefile_Memory_Pool::round_to_chunk_size 
+            (ACE_Pagefile_Memory_Pool::round_to_page_size 
+             ((int) sizeof(Control_Block))   
+             + append_bytes);
+
+          if (::VirtualAlloc ((void *) this->shared_cb_,
+                              map_size, 
+                              MEM_COMMIT,
+                              PAGE_READWRITE) == 0)
+            return -1;
+
+          this->shared_cb_->req_base_ = 0;
+          this->shared_cb_->mapped_base_ = 0;
+          this->local_cb_.mapped_base_ = this->shared_cb_;
+          this->local_cb_.sh_.mapped_size_ = map_size;
+          this->local_cb_.sh_.free_offset_ =
+            round_to_page_size ((int) sizeof (Control_Block));
+          this->local_cb_.sh_.free_size_ =
+            this->local_cb_.sh_.mapped_size_ -
+            this->local_cb_.sh_.free_offset_;
+          this->shared_cb_->sh_ = this->local_cb_.sh_;
+        }
+
+      // The shared memory exists, so we map the first chunk to the
+      // base address of the pool to get the shared pool statistics.
+      else 
+        {
+          // 1st block is used to keep shared memory statistics.
+          map_size =
+            ACE_Pagefile_Memory_Pool::round_to_chunk_size 
+            ((int) sizeof (Control_Block)); 
+
+          if (::VirtualAlloc ((void *) this->shared_cb_,
+                              map_size,
+                              MEM_COMMIT,
+                              PAGE_READWRITE) == 0)
+            return -1;
+          this->local_cb_.mapped_base_ = this->shared_cb_;
+          this->local_cb_.sh_.mapped_size_ = map_size;
+        }
+    }
+
+  // If the shared memory is larger than the part we've already
+  // committed, we have to remap it.
+  if (this->shared_cb_->sh_.mapped_size_ >
+      this->local_cb_.sh_.mapped_size_
+      || append_bytes > 0)
+    {
+      map_size =
+        (this->shared_cb_->sh_.mapped_size_ -
+         this->local_cb_.sh_.mapped_size_) 
+        + ACE_Pagefile_Memory_Pool::round_to_chunk_size 
+        (append_bytes);
+
+      mem_offset =
+        this->local_cb_.sh_.mapped_size_;
+      map_addr = (void *)((char *) this->shared_cb_ +
+                          this->local_cb_.sh_.mapped_size_);
+
+      if (::VirtualAlloc (map_addr,
+                          map_size,
+                          MEM_COMMIT,
+                          PAGE_READWRITE) == 0)
+        return -1;
+      else if (append_bytes > 0) 
+        {
+          this->shared_cb_->sh_.mapped_size_ += 
+            round_to_chunk_size (append_bytes);
+          this->shared_cb_->sh_.free_size_ =
+            this->shared_cb_->sh_.mapped_size_ -
+            this->shared_cb_->sh_.free_offset_;
+        }
+    }
+
+  // Update local copy of the shared memory statistics.
+  this->local_cb_.sh_ =
+    this->shared_cb_->sh_;
+  ACE_BASED_POINTER_REPOSITORY::instance ()->bind 
+    (this->local_cb_.mapped_base_,
+     this->local_cb_.sh_.mapped_size_);
+
+  return 0;
+}
+
+#endif /* ACE_WIN32 */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Auto_Basic_Array_Ptr<char>;
 template class ACE_Unbounded_Set<char *>;
