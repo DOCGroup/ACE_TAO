@@ -10,9 +10,9 @@ BIN2 = Event_Service
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Event,$(findstring Event,$(TAO_ORBSVCS)))
+ifeq (Event2,$(findstring Event2,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
-endif # Event
+endif # Event2
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
