@@ -618,8 +618,8 @@ ACE_OS::sendmsg (ACE_HANDLE handle,
     return (ssize_t) bytes_sent;
 # elif defined (ACE_HAS_NONCONST_SENDMSG)
   ACE_SOCKCALL_RETURN (::sendmsg (handle,
-				  const_cast<struct msghdr *>(msg),
-				  flags), int, -1);
+                                  const_cast<struct msghdr *>(msg),
+                                  flags), int, -1);
 # else
   ACE_SOCKCALL_RETURN (::sendmsg (handle, msg, flags), int, -1);
 # endif
