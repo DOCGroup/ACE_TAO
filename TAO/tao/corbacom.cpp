@@ -4,10 +4,7 @@
 //
 // ORB:		support for primitive data types
 
-#include	<assert.h>
-#include	<limits.h>
-#include	<string.h>
-#include	<orb.h>
+#include	"orb.h"
 
 #if	defined (HAVE_WIDEC_H)
 #	include <widec.h>
@@ -145,7 +142,7 @@ wscpy (CORBA_WChar *dest,
 	continue;
     return retval;
 }
-#endif	// HAVE_WIDEC_H
+#endif	/* HAVE_WIDEC_H */
 
 // Wide Character string utility support; this can need to be
 // integrated with the ORB's own memory allocation subsystem.

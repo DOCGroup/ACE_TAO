@@ -16,24 +16,16 @@
 // only mutual exclusion relates to reference counting and
 // construction.
 
-#include <assert.h>
-#include <limits.h>
-#include <string.h>
-
-#if !defined (VXWORKS)
-#include <memory.h>
-#endif
-#include <sys/types.h>
-
 #include "orb.h"
 #include "cdr.h"
 #include <initguid.h>
 
-size_t calc_key_union_attributes(CDR *stream,
-				     size_t &alignment,
-				     size_t &size_with_pad,
-				     CORBA_Environment	&env);
-
+// @@ This is a botch...
+size_t 
+calc_key_union_attributes (CDR *stream,
+			   size_t &alignment,
+			   size_t &size_with_pad,
+			   CORBA_Environment	&env);
 
 // constructor for the private state
 TC_PRV_State::TC_PRV_State()

@@ -17,8 +17,8 @@
 // 
 // ============================================================================
 
-#ifndef	_xdr_hh
-#define	_xdr_hh
+#if !defined (TAO_XDR_H)
+#define	TAO_XDR_H
 
 #include	<sys/types.h>
 #include	<netinet/in.h>
@@ -285,4 +285,4 @@ XDR_stream::put32 (CORBA_Long word) THROWS_NOTHING
     return CORBA_B_FALSE;
 }
 
-#endif	// _xdr_hh
+#endif	/* TAO_XDR_H */
