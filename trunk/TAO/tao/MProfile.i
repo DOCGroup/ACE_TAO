@@ -30,6 +30,7 @@ TAO_MProfile::operator= (const TAO_MProfile& rhs)
     return *this;
 
   this->set (rhs);
+  return *this;
 }
 
 ACE_INLINE
