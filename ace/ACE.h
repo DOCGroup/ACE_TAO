@@ -397,6 +397,16 @@ public:
   // potentially dangerous to use since the process being terminated
   // may not have a chance to cleanup before it shuts down.
 
+  static void unique_name (const void *object,
+			   LPTSTR name, 
+			   size_t length);
+  // This method uses process id and object pointer to come up with a
+  // machine wide unique name.  The process ID will provide uniqueness
+  // between processes on the same machine. The "this" pointer of the
+  // <object> will provide uniqueness between other "live" objects in
+  // the same process. The uniqueness of this name is therefore only
+  // valid for the life of <object>.
+
 private:
   ACE (void);
   // Ensure we can't define an instance of this class...
