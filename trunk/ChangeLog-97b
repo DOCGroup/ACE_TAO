@@ -1,3 +1,9 @@
+Mon Nov  3 14:16:37 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/SV_Semaphore_Complex.cpp (close): Changed to return 0
+	  only when this->key_ == -1 instead of <= -1.  This was causing
+	  semaphore leaks on Solaris.
+
 Mon Nov 03 08:15:21 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/{platform_linux*.GNU,wrapper_macros.GNU},
