@@ -11,13 +11,13 @@ TAO_UTO::TAO_UTO (TimeBase::TimeT time,
                   TimeBase::InaccuracyT inaccuracy,
                   TimeBase::TdfT tdf)
 {
-  
+
   this->attr_utc_time_.time = time;
 
   // Extract the lower 32 bits in the inacclo.
   this->attr_utc_time_.inacclo = (CORBA::ULong) ACE_U64_TO_U32 (inaccuracy);
 
-  // Extract the lower 16 bits of the remaining bits. 'And'ing with 0xFFFF 
+  // Extract the lower 16 bits of the remaining bits. 'And'ing with 0xFFFF
   // is only a sanity check.
 
 #if defined (ACE_LACKS_U_LONGLONG_T)
@@ -28,7 +28,7 @@ TAO_UTO::TAO_UTO (TimeBase::TimeT time,
 #endif /* ACE_LACKS_U_LONGLONG_T */
 
   this->attr_utc_time_.tdf = tdf;
-  
+
 }
 
 // Destructor.
@@ -50,7 +50,7 @@ TAO_UTO::time (CORBA::Environment &)
 TimeBase::InaccuracyT
 TAO_UTO::inaccuracy (CORBA::Environment &)
 {
-  // Construct the Inaccuracy from the 
+  // Construct the Inaccuracy from the
   // inacchi and inacclo.
 
   TimeBase::InaccuracyT inaccuracy = attr_utc_time_.inacchi;
@@ -161,6 +161,8 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto,
 {
   TAO_TIO *tio = 0;
 
+  // @@ Vishal:  This code doesn't make any sense to me also.
+
   TAO_TRY
     {
       if (this->time (TAO_TRY_ENV) > uto->time (TAO_TRY_ENV))
@@ -206,6 +208,8 @@ TAO_UTO::interval (CORBA::Environment &TAO_IN_ENV)
         this->time (TAO_TRY_ENV) + this->inaccuracy (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      // @@ Vishal:  So is this code.  You can't throw_return from a try
+      // block.
       ACE_NEW_THROW_RETURN (tio,
                             TAO_TIO (lower,
                                      upper),

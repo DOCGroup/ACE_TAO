@@ -246,6 +246,11 @@ TAO_TIO::time (CORBA::Environment &TAO_IN_ENV)
 
   TAO_TRY
     {
+      // @@ Vishal: I can't convert ACE_NEW_THROW_RETURN for you
+      // because the code doesn't make any sense at all wrt exception
+      // handling.  You can't return from a try block directly.  Please
+      // ask me or Bala if you have any questions.
+
       ACE_NEW_THROW_RETURN (uto,
 			    TAO_UTO ((this->time_interval (TAO_TRY_ENV).upper_bound -
 				      this->time_interval (TAO_TRY_ENV).lower_bound) / 2,
@@ -264,8 +269,3 @@ TAO_TIO::time (CORBA::Environment &TAO_IN_ENV)
   TAO_ENDTRY;
   return uto->_this ();
 }
-
-
-
-
-

@@ -51,7 +51,7 @@ Notifier_i::register_callback (const char *stock_name,
   // after the method invocation is done.
   consumer_data.consumer_ =
     Callback_Quoter::Consumer::_duplicate (consumer_handler);
- 
+
   consumer_data.desired_value_= threshold_value;
 
   CONSUMERS *consumers = 0;
@@ -75,19 +75,16 @@ Notifier_i::register_callback (const char *stock_name,
     }
   else
     {
-      ///*done*/ @@ Make sure to use the ACE_NEW_THROW macro, which works with
-      // CORBA exceptions...
-      
-      
       // the unbounded set entry is created.
-      // NOTE:: its pathetic, but to make this macro call its necessary to name 
+      // NOTE:: its pathetic, but to make this macro call its necessary to name
       // your environment variable ACE_TRY_ENV
-      ACE_NEW_THROW (consumers, CONSUMERS, CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+      ACE_NEW_THROW_EX (consumers, CONSUMERS, CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+      ACE_CHECK;
 
-      // When a new entry is tried to be inserted into the unbounded set and it 
+      // When a new entry is tried to be inserted into the unbounded set and it
       // fails an exception is raised.
       if (consumers->insert (consumer_data) == -1)
-        ACE_TRY_ENV.exception (new Callback_Quoter::Invalid_Stock 
+        ACE_TRY_ENV.exception (new Callback_Quoter::Invalid_Stock
                        ("Insertion failed! Invalid Stock!\n"));
 
       // The bond between the stockname <hash_key> and the consumers <hash_value>
@@ -100,7 +97,7 @@ Notifier_i::register_callback (const char *stock_name,
                     "new map entry: stockname %s threshold %d\n",
                     stock_name,
                     threshold_value));
-      
+
     }
 }
 
@@ -144,13 +141,13 @@ Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer,
        // int_id is a member of the ACE_Hash_Map_Entry.  The remove
        // method will do a find internally using operator == which
        // will check only the consumer pointers.  If match found it
-       // will be removed from the set. If the consumer cannot be 
+       // will be removed from the set. If the consumer cannot be
        // removed an exception is raised.
 
        if ((*iter).int_id_->remove (consumer_to_remove) == -1)
-	 ACE_TRY_ENV.exception (new Callback_Quoter::Invalid_Handle 
+	 ACE_TRY_ENV.exception (new Callback_Quoter::Invalid_Handle
                                 ("Unregistration failed! Invalid Consumer Handle!\n"));
-                                
+
        else
         ACE_DEBUG ((LM_DEBUG,
 		    "unregister_callback:consumer removed\n"));
@@ -209,7 +206,7 @@ Notifier_i::market_status (const char *stock_name,
 
     // /*done*/@@ Please add a user defined exception called something like
     // NOT_FOUND.
-  
+
       // Exception is raised when the stock doesnt exist in the Hash_map.
     //  env.exception (new Callback_Quoter::Invalid_Stock (" Nonexistent Stock"));
   //  stock_name,
