@@ -2716,6 +2716,7 @@ public:
 
   // = A set of wrappers for operations on time.
   static time_t time (time_t *tloc);
+  static double difftime (time_t t1, time_t t0);
   static time_t mktime (struct tm *timeptr);
   static struct tm *localtime (const time_t *clock);
   static struct tm *localtime_r (const time_t *clock, struct tm *res);
@@ -2823,6 +2824,7 @@ public:
   static char *getcwd (char *, size_t);
   static mode_t umask (mode_t cmask);
   static int unlink (const char *path);
+  static char *tempnam (const char *dir, const char *pfx);
 
   // = A set of wrappers for random number operations.
   static int rand (void);
