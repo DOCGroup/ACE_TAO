@@ -38,6 +38,10 @@
 //#define ACE_LACKS_RECVMSG
 
 #define ACE_HAS_POSIX_TIME
+
+// Platform defines struct timespec but not timespec_t
+#define ACE_LACKS_TIMESPEC_T
+
 #define ACE_LACKS_STRRECVFD
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
