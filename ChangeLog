@@ -1,3 +1,12 @@
+Tue Jul 13 10:43:57 2004 Will Otte <wotte@dre.vanderbilt.edu>
+
+	* ace/OS_NS_regex.h:
+	* ace/OS_NS_regex.cpp:
+	* ace/os_include/os_regex.h:
+
+	  Updated to include support for POSIX regex, using POSIX if available,
+	  PCRE if not.	
+
 Sun Jul 11 20:26:17 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html

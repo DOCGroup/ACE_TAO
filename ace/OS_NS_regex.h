@@ -32,6 +32,17 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
+#include "ace/os_include/os_regex.h"
+
+// @@ Don - Not sure if this is proper.
+#ifdef ACE_HAS_POSIX_REGEX
+typedef ::regex_t ACE_regex_t;
+typedef ::regmatch_t ACE_regmatch_t;
+#else
+struct ACE_regex_t {};
+struct ACE_regmatch_t {};
+#endif
+
 namespace ACE_OS {
 
   // non=standard..
@@ -45,6 +56,29 @@ namespace ACE_OS {
   int step (const char *str,
             char *expbuf);
   //@}
+
+
+  // POSIX regex functions  
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int regcomp (ACE_regex_t *preg,
+               const char *pattern,
+               int cflags);
+  
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int regexec (const ACE_regex_t *preg,
+               const char *string,
+               size_t nmatch,
+               ACE_regmatch_t *pmatch,
+               int eflags);
+  
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int regerror (int errcode,
+                const ACE_regex_t *preg,
+                char *errbuf,
+                size_t errbuf_size);
+  
+  ACE_NAMESPACE_INLINE_FUNCTION
+  void regfree (ACE_regex_t *preg);
 
 } /* namespace ACE_OS */
 
