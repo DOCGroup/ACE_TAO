@@ -68,9 +68,19 @@ sub new {
   $self->{'project_info'}   = {};
   $self->{'reading_parent'} = [];
   $self->{'project_files'}  = [];
+  $self->{'scoped_assign'}  = {};
   $self->{'cacheok'}        = 1;
 
   return $self;
+}
+
+
+sub modify_assignment_value {
+  my($self)  = shift;
+  my($value) = shift;
+
+  ## Workspace assignments do not need modification.
+  return $value;
 }
 
 
@@ -128,8 +138,9 @@ sub parse_line {
             if (defined $file) {
               my($rp) = $self->{'reading_parent'};
               push(@$rp, 1);
-              $self->parse_file($file);
+              $status = $self->parse_file($file);
               pop(@$rp);
+
               if (!$status) {
                 $errorString = "ERROR: Invalid parent: $parent";
               }
@@ -167,7 +178,7 @@ sub parse_line {
         $errorString = "ERROR: Invalid addition name: $values[1]";
         $status = 0;
       }
-    }  
+    }
     elsif ($values[0] eq 'assign_sub') {
       if (defined $validNames{$values[1]}) {
         $self->process_assignment_sub($values[1], $values[2]);
@@ -176,7 +187,10 @@ sub parse_line {
         $errorString = "ERROR: Invalid subtraction name: $values[1]";
         $status = 0;
       }
-    }  
+    }
+    elsif ($values[0] eq 'component') {
+      ($status, $errorString) = $self->parse_scope($ih, $values[1]);
+    }
     else {
       $errorString = "ERROR: Unrecognized line: $line";
       $status = 0;
@@ -187,6 +201,71 @@ sub parse_line {
     $status = 1;
   }
 
+  return $status, $errorString;
+}
+
+
+sub parse_scope {
+  my($self)        = shift;
+  my($fh)          = shift;
+  my($name)        = shift;
+  my($status)      = 0;
+  my($errorString) = "ERROR: Unable to process $name";
+  my(%flags)       = ();
+
+  while(<$fh>) {
+    my($line) = $self->strip_line($_);
+
+    if ($line eq '') {
+    }
+    elsif ($line =~ /^}/) {
+      $status = 1;
+      $errorString = '';
+      last;
+    }
+    else {
+      my(@values) = ();
+      if ($self->parse_assignment($line, \@values)) {
+        if (defined $validNames{$values[1]}) {
+          if ($values[0] eq 'assignment') {
+            $self->process_assignment($values[1], $values[2], \%flags);
+          }
+          elsif ($values[0] eq 'assign_add') {
+            $self->process_assignment_add($values[1], $values[2], \%flags);
+          }
+          elsif ($values[0] eq 'assign_sub') {
+            $self->process_assignment_sub($values[1], $values[2], \%flags);
+          }
+        }
+        else {
+          $status = 0;
+          $errorString = "ERROR: Invalid assignment name: $values[1]";
+          last;
+        }
+      }
+      else {
+        if (-e $line) {
+          if (-d $line) {
+            ## This would be too hard to track which files
+            ## got the scoped assignments, so we ignore these.
+            print "WARNING: Scoped directory " .
+                  "assignments will be ignored: $line\n";
+          }
+          else {
+            ## Assignment store
+            $self->{'scoped_assign'}->{$line} = \%flags;
+          }
+        }
+        else {
+          ## We couldn't determine if it was an mpc file or
+          ## a directory, so we ignore these.
+          print "WARNING: Scoped file does not " .
+                "exist, so assignments will be ignored: $line\n";
+        }
+        push(@{$self->{'project_files'}}, $line);
+      }
+    }
+  }
   return $status, $errorString;
 }
 
@@ -389,13 +468,41 @@ sub generate_project_files {
   my($impl)      = $self->get_assignment('implicit');
   my($postkey)   = $generator->get_dynamic() .
                    $generator->get_static() . "-$self";
+  my($previmpl)  = $impl;
+  my($prevcache) = $self->{'cacheok'};
+  my(%gstate)    = $generator->save_state();
 
   ## Remove the address portion of the $self string
   $postkey =~ s/=.*//;
 
   foreach my $ofile (@{$self->{'project_files'}}) {
-    my($file) = $ofile;
-    my($dir)  = dirname($file);
+    my($file)    = $ofile;
+    my($dir)     = dirname($file);
+    my($restore) = 0;
+
+    if (defined $self->{'scoped_assign'}->{$ofile}) {
+      ## Handle the implicit assignment
+      my($oi) = $self->{'scoped_assign'}->{$ofile}->{'implicit'};
+      if (defined $oi) {
+        $previmpl = $impl;
+        $impl     = $oi;
+      }
+
+      ## Handle the cmdline assignment
+      my($cmdline) = $self->{'scoped_assign'}->{$ofile}->{'cmdline'};
+      if (defined $cmdline && $cmdline ne '') {
+        ## Save the cacheok value
+        $prevcache = $self->{'cacheok'};
+
+        ## Get the current parameters and process the command line
+        my(%parameters) = $self->current_parameters();
+        $self->process_cmdline($cmdline, \%parameters);
+
+        ## Set the parameters on the generator
+        $generator->restore_state(\%parameters);
+        $restore = 1;
+      }
+    }
 
     ## If we are generating implicit projects and the file is a
     ## directory, then we set the dir to the file and empty the file
@@ -423,6 +530,8 @@ sub generate_project_files {
         ## If any one project file fails, then stop
         ## processing altogether.
         if (!$status) {
+          ## We don't restore the state before we leave,
+          ## but that's ok since we will be exiting soon.
           return $status, $generator;
         }
 
@@ -460,8 +569,20 @@ sub generate_project_files {
       $self->save_project_info($gen, $gpi, $dir, \@projects, \%pi);
     }
     else {
-      ## Unable to change to the directory
+      ## Unable to change to the directory.
+      ## We don't restore the state before we leave,
+      ## but that's ok since we will be exiting soon.
       return 0, $generator;
+    }
+
+    ## Return things to the way they were
+    if (defined $self->{'scoped_assign'}->{$ofile}) {
+      $impl = $previmpl;
+
+      if ($restore) {
+        $self->{'cacheok'} = $prevcache;
+        $generator->restore_state(\%gstate);
+      }
     }
   }
 
@@ -539,16 +660,16 @@ sub optionError {
   my($str)  = shift;
   print 'WARNING: ' . $self->get_current_input() . ": $str\n";
 }
- 
+
 
 sub process_cmdline {
   my($self)       = shift;
+  my($cmdline)    = shift;
   my($parameters) = shift;
 
   ## It's ok to use the cache
   $self->{'cacheok'} = 1;
 
-  my($cmdline) = $self->get_assignment('cmdline');
   if (defined $cmdline && $cmdline ne '') {
     my($args) = $self->create_array($cmdline);
 
@@ -610,6 +731,17 @@ sub process_cmdline {
   }
 }
 
+
+sub current_parameters {
+  my($self) = shift;
+  my(%parameters) = $self->save_state();
+
+  ## We always want the project creator to generate a toplevel
+  $parameters{'toplevel'} = 1;
+  return %parameters;
+}
+
+
 sub project_creator {
   my($self) = shift;
   my($str)  = "$self";
@@ -625,21 +757,9 @@ sub project_creator {
   ## Set up values for each project creator
   ## If we have command line arguments in the workspace, then
   ## we process them before creating the project creator
-  my(%parameters) = ('global'    => $self->get_global_cfg(),
-                     'include'   => $self->get_include_path(),
-                     'template'  => $self->get_template_override(),
-                     'ti'        => $self->get_ti_override(),
-                     'dynamic'   => $self->get_dynamic(),
-                     'static'    => $self->get_static(),
-                     'relative'  => $self->get_relative(),
-                     'addtemp'   => $self->get_addtemp(),
-                     'addproj'   => $self->get_addproj(),
-                     'progress'  => $self->get_progress_callback(),
-                     'toplevel'  => 1,
-                     'baseprojs' => $self->get_baseprojs(),
-                    );
-
-  $self->process_cmdline(\%parameters);
+  my($cmdline)    = $self->get_assignment('cmdline');
+  my(%parameters) = $self->current_parameters();
+  $self->process_cmdline($cmdline, \%parameters);
 
   ## Create the new project creator with the updated parameters
   return $str->new($parameters{'global'},
@@ -672,7 +792,7 @@ sub get_modified_workspace_name {
     $self->{'previous_workspace_name'} = $self->get_workspace_name();
   }
   elsif ($self->{'previous_workspace_name'} ne $self->get_workspace_name()) {
-    $self->{'previous_workspace_name'} = $self->get_workspace_name();        
+    $self->{'previous_workspace_name'} = $self->get_workspace_name();
     $self->{'current_workspace_name'} =
                           "$name.$self->{'previous_workspace_name'}$ext";
   }
