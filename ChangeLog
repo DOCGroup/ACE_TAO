@@ -1,3 +1,14 @@
+Fri Oct  8 23:13:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/OS_NS_stdlib.cpp (mkstemp_emulation):
+
+	  We only care about UTF-8 / ASCII characters in generated
+	  filenames.  A UTF-16 or UTF-32 character could potentially cause
+	  a very large space to be searched in the do/while() loop that
+	  generated alphanumeric characters, greatly slowing down this
+	  mkstemp() implementation.  It is more practical to limit the
+	  search space to UTF-8 / ASCII characters (i.e. 127 characters).
+
 Fri Oct  8 18:40:19 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/SSL/ssl.mpc: Removed the automake-specific part. The MPC-supplied
