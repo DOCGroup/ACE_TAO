@@ -1,10 +1,17 @@
+Fri Sep  5 06:56:37 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Fixed a bug with generated idl targets (for those that have
+          special options or output directories).
+
 Thu Sep  4 14:21:33 2003  Gautam H. Thaker  <gthaker@atl.lmco.com>
 
-        * performance-tests/SCTP/README.SCTP: 
-        * performance-tests/SCTP/README.LKSCTP: 
-        * performance-tests/SCTP/README.OpenSS7: 
+        * performance-tests/SCTP/README.SCTP:
+        * performance-tests/SCTP/README.LKSCTP:
+        * performance-tests/SCTP/README.OpenSS7:
 
-        Slight update to README files. Made more clear how SCTP 
+        Slight update to README files. Made more clear how SCTP
         capable kernel and ACE/TAO are built. Due to recent
         changes in LKSCTP API additional changes will be committed
         in near future as new Linux kernel with the changes is released.
