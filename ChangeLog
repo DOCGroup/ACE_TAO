@@ -1,3 +1,11 @@
+Sat Dec 13 23:29:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/tao_orb_tests.lst:
+	* bin/tao_other_tests.lst:
+
+	  Many of the tests were being run in the single threaded
+	  configuration, though they shouldn't have been.
+
 Fri Dec 12 19:31:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/tao_orb_tests.lst: 
