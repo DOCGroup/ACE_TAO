@@ -2214,6 +2214,10 @@ protected:
 # include /**/ <stdlib.h>
 # include /**/ <float.h>
 
+#if defined (ACE_NEEDS_SCHED_H)
+# include /**/ <sched.h>
+#endif /* ACE_NEEDS_SCHED_H */
+
 #if defined (ghs) && defined (__Chorus)
 # include /**/ <stdfileio.h>
 #endif /* ghs && __Chorus */
