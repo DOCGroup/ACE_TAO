@@ -5,11 +5,6 @@
   <li>ACEXML currently do not validate an XML files.  The validator
       hooks have not fully integrated into the parser yet.
 
-  <li>Exception handling is not implemented.  Currently, we use a
-      reference of ACEXML::Env, similar to CORBA::Environment, to return
-      the status of the execution. ACEXML will reuse the ACE CORBA macros
-      to support native exceptions on platforms that support them.
-
   <li>Need to verify predefined entities are working correctly.  Check
       out the SAXPrint example.
 
