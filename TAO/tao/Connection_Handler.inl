@@ -42,8 +42,16 @@ TAO_Connection_Handler::decr_ref_count (void)
   this->ref_count_ --;
 
   if (this->ref_count_ == 0)
-    delete this;
+    {
+      // So the handler is gone
+      delete this;
+
+      // Now mark the Ext_Id for us as closed
+      this->cache_map_entry_->ext_id_.recycle_state
+        (ACE_RECYCLABLE_CLOSED);
+    }
 }
+
 
 ACE_INLINE CORBA::Boolean
 TAO_Connection_Handler::is_registered (void)

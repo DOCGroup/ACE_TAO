@@ -81,9 +81,9 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
                                           CORBA::ULong opname_len,
                                           TAO_ORB_Core *orb_core)
   : stub_ (stub),
-    op_details_ (operation, 
+    op_details_ (operation,
                  opname_len),
-    out_stream_ (buffer, 
+    out_stream_ (buffer,
                  sizeof buffer, /* ACE_CDR::DEFAULT_BUFSIZE */
                  TAO_ENCAP_BYTE_ORDER,
                  orb_core->output_cdr_buffer_allocator (),
@@ -200,7 +200,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
         {
           // If loaded services have nothing to say on
           // profile/endpoint selection, let the strategy do the work.
-          this->endpoint_selector_->select_endpoint (this, 
+          this->endpoint_selector_->select_endpoint (this,
                                                      ACE_TRY_ENV);
           ACE_CHECK;
         }
@@ -288,7 +288,7 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
       this->target_spec_.target_specifier (
             this->profile_->object_key ());
     }
-  else if (this->stub_->addressing_mode () 
+  else if (this->stub_->addressing_mode ()
              == TAO_Target_Specification::Profile_Addr)
     {
       this->target_spec_.target_specifier (
@@ -314,7 +314,7 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
   // Send the request for the header
   if (this->transport_->send_request_header (this->op_details_,
                                              this->target_spec_,
-                                             this->out_stream_) 
+                                             this->out_stream_)
         == 0)
     {
       ACE_THROW (CORBA::MARSHAL ());
@@ -409,7 +409,7 @@ TAO_GIOP_Invocation::close_connection (void)
   // false error reports to applications.
 
   this->transport_->close_connection ();
-  this->transport_->idle ();
+  // this->transport_->idle ();
   this->transport_ = 0;
 
   this->endpoint_->reset_hint ();
@@ -547,8 +547,8 @@ TAO_GIOP_Invocation::add_rt_service_context (CORBA_Environment &ACE_TRY_ENV)
                i != 0;
                i = i->cont ())
             {
-              ACE_OS::memcpy (buf, 
-                              i->rd_ptr (), 
+              ACE_OS::memcpy (buf,
+                              i->rd_ptr (),
                               i->length ());
               buf += i->length ();
             }
@@ -606,7 +606,7 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request,
     }
 
   // Just send the request, without trying to wait for the reply.
-  retval = TAO_GIOP_Invocation::invoke (1, 
+  retval = TAO_GIOP_Invocation::invoke (1,
                                         ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
 
@@ -660,7 +660,7 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request,
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) Timeout after recv is <%u> status <%d>\n"),
-                  msecs, 
+                  msecs,
                   reply_error));
     }
 
@@ -703,7 +703,7 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request,
   if (is_locate_request)
     {
       // A locate request checks a different set of enum return values,
-      // so we return to the TAO_GIOP_Locate_Request_Invocation caller 
+      // so we return to the TAO_GIOP_Locate_Request_Invocation caller
       // to do that.
       return reply_status;
     }
@@ -774,7 +774,7 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request,
     case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
       // Handle the forwarding and return so the stub restarts the
       // request!
-      return this->location_forward (this->inp_stream (), 
+      return this->location_forward (this->inp_stream (),
                                      ACE_TRY_ENV);
     case TAO_PLUGGABLE_MESSAGE_NEEDS_ADDRESSING_MODE:
       {
@@ -912,9 +912,9 @@ TAO_GIOP_Oneway_Invocation::TAO_GIOP_Oneway_Invocation (
     CORBA::ULong opname_len,
     TAO_ORB_Core *orb_core
   )
-  : TAO_GIOP_Synch_Invocation (stub, 
-                               operation, 
-                               opname_len, 
+  : TAO_GIOP_Synch_Invocation (stub,
+                               operation,
+                               opname_len,
                                orb_core),
     sync_scope_ (TAO::SYNC_WITH_TRANSPORT)
 {
@@ -923,7 +923,7 @@ TAO_GIOP_Oneway_Invocation::TAO_GIOP_Oneway_Invocation (
   this->orb_core_->call_sync_scope_hook (this->stub_,
                                          has_synchronization,
                                          scope);
-  
+
   this->sync_scope_ = scope;
 }
 
@@ -1074,4 +1074,3 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
   return TAO_INVOKE_OK;
 }
-

@@ -1,3 +1,18 @@
+Mon Nov 13 20:44:25 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Invocation.cpp: Commented the line make_idle () call on the
+	  transport after the connection is closed. 
+
+	* tao/Connection_Handler.inl:
+	* tao/Connection_Cache_Manager.cpp:
+	* tao/Connection_Cache_Manager.h:
+	* tao/Connection_Cache_Manager.inl: Fixed a bug in the Faults
+	  test. This needed marking the Hash_Map entry as "closed" for the
+	  handler whose ref_count goes to zero. During shutdown of the
+	  Connection_Cache, we can just purge those entries first, before
+	  we iterate over the map to determine the handlers that are
+	  registered with the reactor.  
+
 Mon Nov 13 18:14:35 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
         * tests/RTCORBA/Server_Declared/server.conf:
