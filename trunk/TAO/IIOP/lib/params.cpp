@@ -61,9 +61,7 @@ ROA_Factory::concurrency_strategy()
       concurrency_strategy_ = &threaded_strategy_;
     }
   else
-    {
-      concurrency_strategy_ = 0;
-    }
+    concurrency_strategy_ = 0;
 }
 
 

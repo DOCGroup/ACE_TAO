@@ -1,3 +1,8 @@
+Mon Apr 21 23:44:34 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* IIOP/lib/roa.cpp (ROA): Changed spelling of clientAcceptor_ to
+ 	client_acceptor_ to be consistent with ACE style conventions.
+
 Mon Apr 21 10:52:42 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* IIOP/test/clnt.cpp: Moved call to CORBA_ORB_init() prior to the
