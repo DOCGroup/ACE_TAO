@@ -171,20 +171,6 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc (const char *pool_name,
   this->open ();
 }
 
-template <ACE_MEM_POOL_1, class LOCK>
-ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc (const ACE_MEM_POOL_OPTIONS &options,
-					  const char *pool_name,
-					  const char *lock_name)
-  : memory_pool_ (options, pool_name),
-    lock_ (lock_name)
-{
-  ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc");
-  this->open ();
-}
-
-template <ACE_MEM_POOL_1, class LOCK>
-ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc (const ACE_MEM_POOL_OPTIONS &options,
-					      const char *pool_name)
   : memory_pool_ (options, pool_name),
     lock_ (pool_name == 0 ? 0 : ACE::basename (pool_name, 
 					       ACE_DIRECTORY_SEPARATOR_CHAR))
