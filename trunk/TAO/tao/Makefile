@@ -1,6 +1,6 @@
 
 #----------------------------------------------------------------------------
-
+#
 #      $Id$
 #
 #       Makefile for TAO
@@ -84,6 +84,8 @@ PUB_HDRS = \
 PLUGGABLE_PROTOCOLS_FILES = \
   Pluggable \
   Transport \
+  Incoming_Message_Queue \
+  Resume_Handle \
   Profile \
   Endpoint \
   Connector_Registry \
@@ -106,8 +108,6 @@ PLUGGABLE_MESSAGING_FILES = \
   Pluggable_Messaging \
   Pluggable_Messaging_Utils \
   GIOP_Message_Base \
-  GIOP_Message_Lite \
-  GIOP_Message_Reactive_Handler \
   GIOP_Message_Generator_Parser \
   GIOP_Message_Generator_Parser_10 \
   GIOP_Message_Generator_Parser_11 \

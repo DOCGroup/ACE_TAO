@@ -62,6 +62,10 @@ public:
   /// Default destructor.
   ~TAO_DIOP_Transport (void);
 
+  /// Look for the documentation in Transport.h.
+  virtual int handle_input_i (TAO_Resume_Handle &rh,
+                              ACE_Time_Value *max_wait_time = 0,
+                              int block = 0);
 protected:
   /** @name Overridden Template Methods
    *
@@ -83,11 +87,6 @@ protected:
                           size_t len,
                           const ACE_Time_Value *s = 0);
 
-  /// Read and process the message from the connection. The processing
-  /// of the message is done by delegating the work to the underlying
-  /// messaging object
-  virtual int read_process_message (ACE_Time_Value *max_time_value = 0,
-                                    int block =0);
 
   virtual int register_handler_i (void);
 
@@ -114,9 +113,6 @@ public:
                               CORBA::Octet minor);
 
 private:
-  /// Process the message that we have read
-  int process_message (void);
-
   // @@ Frank : Not needed
   /*
   /// Set the Bidirectional context info in the service context list

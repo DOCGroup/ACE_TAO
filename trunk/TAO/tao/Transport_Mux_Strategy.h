@@ -68,16 +68,6 @@ public:
   /// allocated for that request.
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params) = 0;
 
-  // = "Factory methods" to obtain the CDR stream, in the Muxed case
-  //    the factory simply allocates a new one, in the Exclusive case
-  //    the factory returns a pointer to the pre-allocated CDR.
-
-  // virtual TAO_GIOP_Message_State *get_message_state (void) = 0;
-  // Get a CDR stream.
-
-  // virtual void destroy_message_state (TAO_GIOP_Message_State *) = 0;
-  // Destroy a CDR stream.
-
   /// Request has been just sent, but the reply is not received. Idle
   /// the transport now.
   virtual int idle_after_send (void) = 0;

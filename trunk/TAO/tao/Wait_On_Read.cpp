@@ -2,6 +2,7 @@
 
 #include "tao/Wait_On_Read.h"
 #include "Transport.h"
+#include "Resume_Handle.h"
 
 ACE_RCSID(tao, Wait_On_Read, "$Id$")
 
@@ -26,10 +27,13 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
   // Do the same sort of looping that is done in other wait
   // strategies.
   int retval = 0;
+  TAO_Resume_Handle rh;
   while (1)
     {
       retval =
-        this->transport_->read_process_message (max_wait_time, 1);
+        this->transport_->handle_input_i (rh,
+                                          max_wait_time,
+                                          1);
 
       // If we got our reply, no need to run the loop any
       // further.

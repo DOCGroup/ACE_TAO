@@ -8,10 +8,9 @@
 
 ACE_RCSID (Strategies, GIOP_Message_NonReactive_Base, "$Id$")
 
-TAO_GIOP_Message_NonReactive_Base::TAO_GIOP_Message_NonReactive_Base (TAO_ORB_Core *orb_core,
-                                                                      size_t buf_size)
-  : TAO_GIOP_Message_Base (orb_core, buf_size),
-    message_handler_ (orb_core, this, buf_size)
+TAO_GIOP_Message_NonReactive_Base::TAO_GIOP_Message_NonReactive_Base (TAO_ORB_Core *orb_core)
+
+  : TAO_GIOP_Message_Base (orb_core)
 {
 
 }
@@ -19,14 +18,18 @@ TAO_GIOP_Message_NonReactive_Base::TAO_GIOP_Message_NonReactive_Base (TAO_ORB_Co
 
 int
 TAO_GIOP_Message_NonReactive_Base::read_message (TAO_Transport *transport,
+                                                 ACE_Message_Block &block,
                                                  int /*block*/,
                                                  ACE_Time_Value *max_wait_time)
 {
   // Call the handler to read and do a simple parse of the header of
   // the message.
   int retval =
-    this->message_handler_.read_parse_message (transport,
-                                               max_wait_time);
+    this->read_data (transport,
+                     max_wait_time);
+
+  // Before we do this let us reset the
+  char *buf = this->input_cdr_.rd_ptr ();
 
 
   // Error in the message that was received
@@ -60,6 +63,19 @@ TAO_GIOP_Message_NonReactive_Base::read_message (TAO_Transport *transport,
   // limp :(
   return 2;
 }
+
+
+size_t
+TAO_GIOP_Message_NonReactive_Base::read_data (TAO_Transport *transport,
+                                              ACE_Time_Value *time)
+{
+
+  transport->recv (buf,
+                   n,
+                   max_wait_time);
+
+}
+
 
 TAO_Pluggable_Message_Type
 TAO_GIOP_Message_NonReactive_Base::message_type (void)

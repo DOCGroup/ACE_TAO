@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "Invocation.h"
 #include "Principal.h"
 #include "Stub.h"
@@ -29,7 +30,9 @@
 # include "Invocation.i"
 #endif /* ! __ACE_INLINE__ */
 
+
 ACE_RCSID(tao, Invocation, "$Id$")
+
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
