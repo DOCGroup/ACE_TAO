@@ -96,7 +96,10 @@ private:
 
   int use_naming_service_;
   // Flag to tell client not to use Namingservice to find the cubit
-  // Factory.
+  // Factory.  
+  int useLifeCycleService_;
+  // Flag to tell if the a Generic Factory is going to be used
+  // or the LifeCycle Service (0 means Generic Factory, 1 means LCS)
 };
 
 class Quoter_Task : public ACE_Task<ACE_SYNCH>
@@ -115,6 +118,7 @@ private:
   Quoter_Client quoter_client;
   int argc_;
   char **argv_;
+
 };
 
 #endif /* QUOTER_CLIENT_H */
