@@ -1,3 +1,19 @@
+Mon Apr 21 14:20:00 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\RTCORBA\Profile_And_Endpoint_Selection\client.cpp:   
+
+	  Removed extra ACE_CHECK_RETURN.
+
+	* tests\RTCORBA\check_supported_priorities.cpp: 
+
+	  Initialized <name> in sched_policy_name().
+	
+	* tests\POA\Nested_Non_Servant_Upcalls\Nested_Non_Servant_Upcalls.cpp: 
+
+	  - Removed unused <servant_activation_succeeded>.
+
+	  - Changed a couple of ACE_CHECKs to ACE_CHECK_RETURNs.
+
 Sun Apr 20 07:55:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1020_Basic_Regression/Bug_1020_Basic_Regression.dsw:
