@@ -1,3 +1,13 @@
+Thu Jun 24 22:13:42 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/CurrentC.cpp:
+	* tao/CurrentS.cpp:
+	* tao/PolicyS.cpp:
+
+	  Changed "IDL:CORBA" to "IDL:omg.org/CORBA".  However, the
+	  typecodes in Typecode_Constants.cpp still need to be fixed by
+	  regenerating them through the IDL compiler.
+
 Thu Jun 24 22:22:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/Trading/run_test.pl:
