@@ -26,7 +26,6 @@ CFG=Synch_Tests - Win32 Release
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
-# PROP WCE_Configuration "H/PC Ver. 2.00"
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -122,11 +121,11 @@ SOURCE=.\mutex_test.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Options.cpp
+SOURCE=.\Performance_Test.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Performance_Test.cpp
+SOURCE=.\performance_test_options.cpp
 # End Source File
 # Begin Source File
 

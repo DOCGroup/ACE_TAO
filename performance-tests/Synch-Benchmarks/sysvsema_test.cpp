@@ -2,7 +2,7 @@
 
 #define  ACE_BUILD_SVC_DLL
 #include "ace/SV_Semaphore_Simple.h"
-#include "Options.h"
+#include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
 
 ACE_RCSID(Synch_Benchmarks, sysvsema_test, "$Id$")
