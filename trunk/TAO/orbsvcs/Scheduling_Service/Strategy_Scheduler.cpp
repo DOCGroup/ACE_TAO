@@ -141,15 +141,15 @@ ACE_Strategy_Scheduler::assign_priorities (Dispatch_Entry **dispatches,
     }
 
     // set OS priority of the current dispatch entry
-    dispatches[0]->OS_priority (current_OS_priority);
+    dispatches[i]->OS_priority (current_OS_priority);
 
     // set scheduler priority of the current dispatch entry
-    dispatches[0]->priority (current_scheduler_priority);
+    dispatches[i]->priority (current_scheduler_priority);
   }
   
   return status;  
 }
-  // = assigns priorities and sub-priorities to the sorted schedule, 
+  // = assigns priorities and sub-priorities to the sorted schedule,   
   //   according to the strategy's priority comparison operator.
 
 ACE_Scheduler::status_t

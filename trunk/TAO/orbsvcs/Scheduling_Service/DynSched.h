@@ -168,7 +168,7 @@ public:
   status_t schedule (void);
   // This sets up the data structures, invokes the internal scheduling method.
 
-  status_t output_timeline (const char *filename);
+  status_t output_timeline (const char *filename, const char *heading);
   // this prints the entire set of timeline outputs to the specified file
 
   // = Access a thread priority.
@@ -342,9 +342,11 @@ private:
   // Create a timeline.
 
   status_t output_dispatch_timeline (const char *filename);
+  status_t output_dispatch_timeline (FILE *file);
   // this prints the entire set of timeline outputs to the specified file
 
   status_t output_preemption_timeline (const char *filename);
+  status_t output_preemption_timeline (FILE *file);
   // this prints the entire set of timeline outputs to the specified file
 
   // = Set up the task entry data structures
@@ -394,11 +396,11 @@ private:
   // private data members //
   //////////////////////////
 
-  ACE_Unbounded_Set <RT_Info *> rt_info_entries_;
-  // Collection of known tasks.
-
   LOCK lock_;
   // This protects access to the scheduler during configuration runs.
+
+  ACE_Unbounded_Set <RT_Info *> rt_info_entries_;
+  // Collection of known tasks.
 
   u_int handles_;
   // The number of task handles dispensed so far.
