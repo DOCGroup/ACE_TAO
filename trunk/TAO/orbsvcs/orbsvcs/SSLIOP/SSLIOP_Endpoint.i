@@ -30,10 +30,23 @@ TAO_SSLIOP_Endpoint::object_addr (void) const
     ACE_const_cast (ACE_INET_Addr &,
                     this->object_addr_);
 
-  // Dont hold the address lookup lock here. If you do then you will
-  // have a deadlock  as we hold the lock in IIOP_Endpoint.
-  ssl_addr = this->iiop_endpoint_->object_addr ();
-  ssl_addr.set_port_number (this->ssl_component_.port);
+  TAO_SSLIOP_Endpoint *ssl_endpoint =
+    ACE_const_cast (TAO_SSLIOP_Endpoint *, this);
+
+  // Double checked locking optimization.
+  if (this->object_addr_.get_type () != AF_INET)
+    {
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                        guard,
+                        ssl_endpoint->addr_lookup_lock_,
+                        this->object_addr_);
+
+      if (this->object_addr_.get_type () != AF_INET)
+        {
+          ssl_addr = this->iiop_endpoint_->object_addr ();
+          ssl_addr.set_port_number (this->ssl_component_.port);
+        }
+    }
 
   return this->object_addr_;
 }
