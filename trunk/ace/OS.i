@@ -6548,7 +6548,11 @@ ACE_OS::t_error (const char *errmsg)
 {
   ACE_TRACE ("ACE_OS::t_error");
 #if defined (ACE_HAS_TLI)
+#if defined (ACE_HAS_BROKEN_T_ERROR)
+  ::t_error ((char *) errmsg);
+#else
   ::t_error (errmsg);
+#endif /* ACE_HAS_BROKEN_T_ERROR */
 #else
   ACE_UNUSED_ARG (errmsg);
 #endif /* ACE_HAS_TLI */

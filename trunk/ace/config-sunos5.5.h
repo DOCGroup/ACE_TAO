@@ -285,6 +285,9 @@
 // Platform provides ACE_TLI function prototypes.
 #define ACE_HAS_TLI_PROTOTYPES
 
+// Platform has broken t_error() prototype.
+#define ACE_HAS_BROKEN_T_ERROR
+
 // Platform supports ACE_TLI.
 #define ACE_HAS_TLI
 
