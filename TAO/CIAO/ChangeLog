@@ -1,3 +1,9 @@
+Fri Jun  4 11:40:18 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+	* DnC/Config_Handlers/DnC_Dump.cpp: 
+
+	Clean-up of the unused, commented out code sections.
+
 Fri Jun  4 11:31:09 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/DnC_Dump.cpp:
