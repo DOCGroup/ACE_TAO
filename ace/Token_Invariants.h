@@ -122,6 +122,9 @@ public:
   static ACE_Token_Invariant_Manager *instance (void);
   // Singleton access point.
 
+  static void cleanup (void *instance, void *);
+  // Cleanup method, used by ACE_Object_Manager to destroy the singleton.
+
   // = Polymorphic methods.  Just pass in the proxy and the method
   // figures out the type of the token.
 
