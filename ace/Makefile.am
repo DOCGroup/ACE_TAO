@@ -225,6 +225,7 @@ libACE_Sockets_la_SOURCES = \
   SOCK_Dgram.cpp \
   SOCK_Dgram_Bcast.cpp \
   SOCK_Dgram_Mcast.cpp \
+  SOCK_Dgram_Mcast_QoS.cpp \
   SOCK_IO.cpp \
   SOCK_Stream.cpp
 
@@ -613,6 +614,7 @@ HEADER_FILES = \
   SOCK_Dgram.h \
   SOCK_Dgram_Bcast.h \
   SOCK_Dgram_Mcast.h \
+  SOCK_Dgram_Mcast_QoS.h \
   SOCK_IO.h \
   SOCK_Stream.h \
   SPIPE.h \
@@ -836,6 +838,7 @@ INLINE_FILES = \
   SOCK_Dgram.i \
   SOCK_Dgram_Bcast.i \
   SOCK_Dgram_Mcast.i \
+  SOCK_Dgram_Mcast_QoS.i \
   SOCK_IO.i \
   SOCK_Stream.i \
   SPIPE.i \
