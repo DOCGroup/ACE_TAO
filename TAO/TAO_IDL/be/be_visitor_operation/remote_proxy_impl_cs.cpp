@@ -451,7 +451,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
                         -1);
     }
 
-  *os << "ACE_TRY" << be_idt_nl
+  *os << be_nl << "ACE_TRY" << be_idt_nl
       << "{\n"
       << "#endif /* TAO_HAS_INTERCEPTORS */" << be_nl;
 
