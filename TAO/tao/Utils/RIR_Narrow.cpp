@@ -3,9 +3,7 @@
 
 #include "RIR_Narrow.h"
 #include "tao/SystemException.h"
-#if defined (ACE_HAS_EXCEPTIONS)
-  #include <stdexcept>
-#endif
+#include <stdexcept>
 
 ACE_RCSID (Utils,
            RIR_Narror,
@@ -49,8 +47,7 @@ TAO::Utils::RIR_Narrow<T>::narrow_object (CORBA::Object_ptr object
 
   if (CORBA::is_nil (narrowed_object.in ()))
   {
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (),
-                      T::_nil ());
+    ACE_THROW (CORBA::INV_OBJREF ());
   }
   return narrowed_object._retn ();
 }

@@ -39,9 +39,8 @@
 class TAO_Export UTF16_BOM_Translator : public ACE_WChar_Codeset_Translator
 {
 public:
-  /// constructor
-  /// @param forceBE: true forces all wchar, warray, and wstrings to big-endian byte order
-  UTF16_BOM_Translator (bool forceBE);
+  /// A do nothing constructor.
+  UTF16_BOM_Translator (void);
 
   /// Virtual destruction
   virtual ~UTF16_BOM_Translator (void);
@@ -75,18 +74,10 @@ private:
                                         const ACE_CDR::WChar *,
                                         ACE_CDR::ULong);
 
-  ACE_CDR::Boolean write_swapped_wchar_array_i (ACE_OutputCDR & cdr,
-                                            const ACE_CDR::WChar *x,
-                                            ACE_CDR::ULong length);
-
-
   ACE_CDR::Boolean write_wchar_i (ACE_OutputCDR &,
                                   ACE_CDR::WChar ,
-                                  bool allow_BOM);
+                                  int use_BOM = 0);
 
-private:
-  /// if this flag is true, force wchar's to big endian order
-  bool forceBE_;
 
 };
 

@@ -1,5 +1,0 @@
-// $Id$
-project: namingexe, core, rteventlogadmin {
-  exename   = RTEvent_Logging_Service
-  includes += $(TAO_ROOT)/orbsvcs
-}

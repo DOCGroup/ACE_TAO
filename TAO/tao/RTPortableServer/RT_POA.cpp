@@ -17,8 +17,6 @@
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Acceptor_Registry.h"
-#include "tao/Thread_Lane_Resources.h"
-#include "tao/Thread_Lane_Resources_Manager.h"
 
 #include "tao/RTCORBA/RT_Policy_i.h"
 
@@ -104,9 +102,7 @@ TAO_RT_POA::parse_rt_policies (TAO_POA_Policy_Set &policies
 {
   {
     CORBA::Policy_var policy =
-      policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL
-                                  ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+      policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
 
     RTCORBA::PriorityModelPolicy_var priority_model =
       RTCORBA::PriorityModelPolicy::_narrow (policy.in ()
@@ -177,10 +173,7 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority
     {
       // Check if we have bands.
       CORBA::Policy_var bands =
-        this->policies ().get_cached_policy (
-          TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION
-          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        this->policies ().get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
 
       RTCORBA::PriorityBandedConnectionPolicy_var priority_bands
         = RTCORBA::PriorityBandedConnectionPolicy::_narrow (bands.in ()
@@ -256,9 +249,7 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
 
   // Server protocol policy.
   CORBA::Policy_var protocol =
-    this->policies ().get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->policies ().get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
 
   RTCORBA::ServerProtocolPolicy_var server_protocol_policy =
     RTCORBA::ServerProtocolPolicy::_narrow (protocol.in ()
@@ -278,30 +269,9 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
   if (this->thread_pool_ == 0 ||
       !this->thread_pool_->with_lanes ())
     {
-      TAO_Acceptor_Registry *acceptor_registry = 0;
-
-      if (this->thread_pool_ == 0)
-        {
-          TAO_Thread_Lane_Resources_Manager &thread_lane_resources_manager =
-            this->orb_core_.thread_lane_resources_manager ();
-
-          TAO_Thread_Lane_Resources &resources =
-            thread_lane_resources_manager.default_lane_resources ();
-
-          acceptor_registry =
-            &resources.acceptor_registry ();
-        }
-      else
-        {
-          TAO_Thread_Lane **lanes =
-            this->thread_pool_->lanes ();
-
-          TAO_Thread_Lane_Resources &resources =
-            lanes[0]->resources ();
-
-          acceptor_registry =
-            &resources.acceptor_registry ();
-        }
+      TAO_Acceptor_Registry *acceptor_registry =
+        TAO_POA_RT_Policy_Validator::extract_acceptor_registry (this->orb_core_,
+                                                                this->thread_pool_);
 
       return
         this->TAO_POA::create_stub_object (object_key,
@@ -341,10 +311,7 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
   // the acceptors in the thread lanes that matches the bands in this
   // POA.  If there are no bands, all the thread lanes are used.
   CORBA::Policy_var bands =
-    this->policies ().get_cached_policy (
-      TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION
-      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->policies ().get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
 
   RTCORBA::PriorityBandedConnectionPolicy_var priority_bands
     = RTCORBA::PriorityBandedConnectionPolicy::_narrow (bands.in ()
@@ -954,6 +921,25 @@ TAO_RT_POA::id (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->TAO_POA::id (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+CORBA::Policy *
+TAO_RT_POA::server_protocol (void)
+{
+  CORBA::Policy *result =
+    this->policies ().get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
+
+  if (result == 0)
+    {
+      TAO_Policy_Manager *policy_manager =
+        this->orb_core_.policy_manager ();
+
+      if (policy_manager != 0)
+        result =
+          policy_manager->get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
+    }
+
+  return result;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -213,9 +213,7 @@ TAO_IOR_Manipulation_impl::remove_profiles (
 
   CORBA::Object_var new_obj = temp_obj;
 
-  // Exception safety is no longer an issue by this point so release
-  // the TAO_Stub from the TAO_Stub_Auto_Ptr.
-  stub = safe_stub.release ();
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Clean up in case of errors.
   if (CORBA::is_nil (new_obj.in ()))
@@ -223,6 +221,10 @@ TAO_IOR_Manipulation_impl::remove_profiles (
       ACE_THROW_RETURN (TAO_IOP::Invalid_IOR (),
                         CORBA::Object::_nil ());
     }
+
+  // Exception safety is no longer an issue by this point so release
+  // the TAO_Stub from the TAO_Stub_Auto_Ptr.
+  stub = safe_stub.release ();
 
   return new_obj._retn ();
 }

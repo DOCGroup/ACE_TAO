@@ -16,16 +16,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "iorinterceptor_export.h"
+#include "IORInterceptorC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-#include "ace/Service_Config.h"
+
+#include "iorinterceptor_export.h"
 #include "tao/IORInterceptor_Adapter_Factory.h"
-
-
-class TAO_IORInterceptor_Adapter;
+#include "tao/IORInterceptor/IORInterceptor_Adapter_Impl.h"
+#include "ace/Service_Config.h"
+#include "IORInterceptor_List.h"
 
 /**
  * @class TAO_IORInterceptor_Adapter_Factory_Impl
@@ -68,10 +69,6 @@ TAO_Requires_IORInterceptor_Initializer =
   TAO_IORInterceptor_Adapter_Factory_Impl::Initializer ();
 
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
-
-#define TAO_IORINTERCEPTOR_SAFE_INCLUDE
-#include "tao/IORInterceptor/IORInterceptorC.h"
-#undef TAO_IORINTERCEPTOR_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"
 

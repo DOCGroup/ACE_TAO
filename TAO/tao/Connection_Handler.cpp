@@ -211,9 +211,14 @@ int
 TAO_Connection_Handler::handle_input_eh (
   ACE_HANDLE h, ACE_Event_Handler *eh)
 {
-  // If we can't process upcalls just return
-  if (!this->transport ()->wait_strategy ()->can_process_upcalls ())
+  if (this->transport ()->acts_as_server () && 
+      this->orb_core_->get_tss_resources ()->upcalls_temporarily_suspended_on_this_thread_)
     {
+#if 0 // DON'T IMPLEMENT YET, BUT RECORD THE IDEA FOR POSTERITY
+      // ACE_Time_Value this->spin_prevention_backoff_delay_;
+      ACE_OS::usleep (this->spin_prevention_backoff_delay_);
+      this->spin_prevention_backoff_delay_ = 2 * this->spin_prevention_backoff_delay_ + 1;
+#endif
       if (TAO_debug_level > 6)
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) Connection_Handler[%d] - not going to handle_input "
@@ -224,8 +229,12 @@ TAO_Connection_Handler::handle_input_eh (
       return 0;
     }
 
-  int result = this->handle_input_internal (h, eh);
+#if 0
+  this->spin_prevention_backoff_delay_ = 0;
+#endif
 
+  int result = this->handle_input_internal (h, eh);
+  
   if (result == -1)
     {
       this->close_connection ();

@@ -1,3 +1,5 @@
+## $Id$
+##
 ##  Process this file with automake to create Makefile.in
 
 includedir = @includedir@/tao
@@ -6,9 +8,6 @@ ACE_ROOT = $(top_srcdir)/..
 ACE_BUILDDIR = $(top_builddir)/..
 TAO_ROOT = $(top_srcdir)
 TAO_BUILDDIR = $(top_builddir)
-
-nobase_include_HEADERS =
-lib_LTLIBRARIES =
 
 ## Makefile.TAO.am 
 
@@ -298,7 +297,7 @@ Interpretive_Marshaling = \
 IDL_Compiler = \
   Managed_Types.cpp
 
-lib_LTLIBRARIES += libTAO.la
+lib_LTLIBRARIES = libTAO.la
 
 libTAO_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -321,7 +320,7 @@ libTAO_la_LDFLAGS = \
 libTAO_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_include_HEADERS += \
+nobase_include_HEADERS = \
   Abstract_Servant_Base.h \
   Acceptor_Filter.h \
   Acceptor_Impl.h \
@@ -1014,6 +1013,8 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/Default_Acceptor_Filter.cpp \
   PortableServer/Default_Policy_Validator.cpp \
   PortableServer/Default_Servant_Dispatcher.cpp \
+  PortableServer/ImR_LocatorC.cpp \
+  PortableServer/ImR_LocatorS.cpp \
   PortableServer/ImplRepoC.cpp \
   PortableServer/ImplRepoS.cpp \
   PortableServer/ImplRepo_i.cpp \
@@ -1054,6 +1055,8 @@ nobase_include_HEADERS += \
   PortableServer/Default_Acceptor_Filter.h \
   PortableServer/Default_Policy_Validator.h \
   PortableServer/Default_Servant_Dispatcher.h \
+  PortableServer/ImR_LocatorC.h \
+  PortableServer/ImR_LocatorS.h \
   PortableServer/ImplRepoC.h \
   PortableServer/ImplRepoS.h \
   PortableServer/ImplRepo_i.h \
@@ -1085,8 +1088,10 @@ nobase_include_HEADERS += \
   PortableServer/poa_macros.h \
   PortableServer/portableserver_export.h \
   PortableServer/Active_Object_Map.i \
-  PortableServer/ImplRepoC.i \
-  PortableServer/ImplRepoS.i \
+  PortableServer/ImR_LocatorC.inl \
+  PortableServer/ImR_LocatorS.inl \
+  PortableServer/ImplRepoC.inl \
+  PortableServer/ImplRepoS.inl \
   PortableServer/Key_Adapters.i \
   PortableServer/Object_Adapter.i \
   PortableServer/POA.i \
@@ -1101,6 +1106,7 @@ nobase_include_HEADERS += \
   PortableServer/ServerInterceptorAdapter.inl \
   PortableServer/ServerRequestInfo.inl \
   PortableServer/PolicyS_T.cpp \
+  PortableServer/ImR_Locator.pidl \
   PortableServer/ImplRepo.pidl \
   PortableServer/PortableServer.pidl
 
@@ -1463,8 +1469,9 @@ nobase_include_HEADERS += \
   ObjRefTemplate/ObjectReferenceTemplateC.h \
   ObjRefTemplate/ObjectReferenceTemplate_i.h \
   ObjRefTemplate/ort_export.h \
-  ObjRefTemplate/Default_ORTC.inl \
+  ObjRefTemplate/Default_ORTC.i \
   ObjRefTemplate/ObjectReferenceTemplateC.inl \
+  ObjRefTemplate/ObjectReferenceTemplate_i.inl \
   ObjRefTemplate/Default_ORT.pidl \
   ObjRefTemplate/ObjectReferenceTemplate.pidl
 

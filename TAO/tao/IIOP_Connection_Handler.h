@@ -46,6 +46,30 @@ class TAO_Pluggable_Messaging;
 // ****************************************************************
 
 /**
+ * @class TAO_IIOP_Properties
+ *
+ * @brief TCP protocol properties specification for a set of
+ *  connections.
+ *
+ */
+
+#define IPDSFIELD_DSCP_DEFAULT  0x00
+
+class TAO_Export TAO_IIOP_Properties
+{
+
+public:
+  int send_buffer_size;
+  int recv_buffer_size;
+  int no_delay;
+  int enable_network_priority;
+};
+
+
+
+// ****************************************************************
+
+/**
  * @class TAO_IIOP_Connection_Handler
  *
  * @brief  Handles requests on a single connection.
@@ -63,9 +87,12 @@ public:
 
   TAO_IIOP_Connection_Handler (ACE_Thread_Manager * = 0);
 
-  /// Constructor.
+  /// Constructor. @a arg parameter is used by the Acceptor to pass the
+  /// protocol configuration properties for this connection.
   TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                               CORBA::Boolean flag);
+                               CORBA::Boolean flag,
+                               void *arg);
+
 
   /// Destructor.
   ~TAO_IIOP_Connection_Handler (void);
@@ -99,9 +126,18 @@ public:
   /// Check if network priority needs to be enabled
   int enable_network_priority (void);
 
-  /// Set Diff-Serv codepoint on outgoing packets.
-  int set_dscp_codepoint (CORBA::Boolean set_network_priority);
+  /// Set the Diff-Serv codepoint if the Policy dictates the setting of
+  /// Network Priority
+  int set_dscp_codepoint (void);
 
+  int set_dscp_codepoint (int tos);
+
+  /// Update the tcp properties of the hanlder to the most recent
+  /// properties set after the last invocation
+  virtual void update_protocol_properties (int send_buffer_size,
+                                           int recv_buffer_size,
+                                           int no_delay,
+                                           int enable_network_priority);
   virtual int open_handler (void *);
 
 protected:
@@ -114,7 +150,8 @@ protected:
    * constructor just initializes its base class and sets all of its
    * contents to the default value, if any
    */
-  TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core);
+  TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core,
+                               void *arg);
 
   //@{
   /**
@@ -124,6 +161,8 @@ protected:
   //@}
 
 private:
+  /// TCP configuration for this connection.
+  TAO_IIOP_Properties tcp_properties_;
 
   /// Stores the type of service value.
   int dscp_codepoint_;

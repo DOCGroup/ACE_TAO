@@ -52,8 +52,7 @@ TAO_Connector_Registry::get_connector (CORBA::ULong tag)
 int
 TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
 {
-  TAO_ProtocolFactorySet *pfs =
-    orb_core->protocol_factories ();
+  TAO_ProtocolFactorySet *pfs = orb_core->protocol_factories ();
 
   // The array containing the TAO_Connectors will never contain more
   // than the number of loaded protocols in the ORB core.
@@ -69,25 +68,21 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
        factory != end;
        ++factory)
     {
-      auto_ptr <TAO_Connector> connector (
-        (*factory)->factory ()->make_connector ());
+      TAO_Connector * connector =
+        (*factory)->factory ()->make_connector ();
 
-      if (connector.get ())
+      if (connector && connector->open (orb_core) != 0)
         {
-         if (connector->open (orb_core) != 0)
-           {
-             ACE_ERROR_RETURN ((LM_ERROR,
-                                ACE_LIB_TEXT ("TAO (%P|%t) unable to open connector for ")
-                                ACE_LIB_TEXT ("<%s>.\n"),
-                                ACE_TEXT_CHAR_TO_TCHAR((*factory)->protocol_name ().c_str ())),
-                               -1);
-           }
+          delete connector;
 
-         this->connectors_[this->size_++] =
-           connector.release ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("TAO (%P|%t) unable to open connector for ")
+                             ACE_TEXT ("<%s>.\n"),
+                             ACE_TEXT_CHAR_TO_TCHAR((*factory)->protocol_name ().c_str ())),
+                            -1);
         }
       else
-        return -1;
+        this->connectors_[this->size_++] = connector;
     }
 
   return 0;
@@ -188,25 +183,10 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
                       tag));
         }
 
-      TAO_ORB_Core *orb_core = cdr.orb_core ();
-      if (orb_core == 0)
-        {
-          orb_core = TAO_ORB_Core_instance ();
-          if (TAO_debug_level > 0)
-            {
-              ACE_DEBUG ((LM_WARNING,
-                          ACE_LIB_TEXT ("TAO (%P|%t) - TAO_Connector_Registry"
-                                        "::create_profile: ")
-                          ACE_LIB_TEXT ("WARNING: extracting object from ")
-                          ACE_LIB_TEXT ("default ORB_Core\n")));
-            }
-        }
-
-
       TAO_Profile *pfile = 0;
       ACE_NEW_RETURN (pfile,
                       TAO_Unknown_Profile (tag,
-                                           orb_core),
+                                           cdr.orb_core ()),
                       0);
       if (pfile->decode (cdr) == -1)
         {
