@@ -1,3 +1,11 @@
+Fri Mar 19 14:27:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/examples/POA/DSI/Database_i.cpp:
+	  Changed DatabaseImpl::Entry::_is_a() to use >>= before
+	  comparing arg values. This slows down the test code, but
+	  TAO defers populating the void* field of the Any until 
+	  necessary (most of the time ;-)), which speeds up everything else.
+
 Fri Mar 19 14:20:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Server_Request.cpp:
