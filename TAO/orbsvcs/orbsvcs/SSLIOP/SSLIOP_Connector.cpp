@@ -459,6 +459,11 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
   if (profile == 0)
     return -1;
 
+  if (profile->ssl_port () == 0)
+    return this->TAO_IIOP_Connector::connect (pfile,
+					      transport,
+					      max_wait_time);
+
   ACE_INET_Addr oa =
     profile->object_addr ();
   oa.set_port_number (profile->ssl_port ());
