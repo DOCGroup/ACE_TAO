@@ -19,6 +19,8 @@
 #ifndef ACE_CE_fostream_h
 #define ACE_CE_fostream_h
 
+#include "ace/config-all.h"
+
 #ifdef ACE_HAS_WINCE
 
 #include "ace/OS.h"

@@ -1,3 +1,12 @@
+Tue Dec 31 17:26:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/tests.mpc (DLL Test Lib): Add dllflags = ACE_BUILD_SVC_DLL to
+          add the correct /D option. The source uses ACE_Svc_Export to flag
+          dll import/export correctly.
+
+        * tests/CE_fostream.h: #include "ace/config-all.h" before checking for
+          #if defined (ACE_HAS_WINCE).
+
 Tue Dec 31 15:05:42 2002  Steve Huston  <shuston@riverace.com>
 
         * ACEXML/apps/svcconf/Svcconf.cpp: Changed the condition for when
