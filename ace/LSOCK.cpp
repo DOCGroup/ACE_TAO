@@ -122,7 +122,9 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, int *len) const
         return 0;
     }
 #else
-  ssize_t nbytes = ACE_OS::recvmsg (this->get_handle (), &recv_msg, MSG_PEEK);
+  ssize_t nbytes = ACE_OS::recvmsg (this->get_handle (),
+                                    &recv_msg,
+                                    MSG_PEEK);
 
   if (nbytes != ACE_INVALID_HANDLE)
     {
@@ -131,6 +133,8 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, int *len) const
           && ((unsigned char *) iov.iov_base)[1] == 0xcd)
         {
 #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+          // Close down the socket that was returned by the MSG_PEEK.
+          ACE_OS::closesocket (*(ACE_HANDLE *) CMSG_DATA ((cmsghdr *) cmsgbuf)); 
           recv_msg.msg_control = cmsgbuf;
           recv_msg.msg_controllen = sizeof cmsgbuf;
 #else

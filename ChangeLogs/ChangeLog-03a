@@ -1,5 +1,11 @@
 Fri Mar 24 10:30:44 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/LSOCK.cpp (recv_handle): For some reason, Linux allocates an extra
+	  handle when doing a recvmsg() with the MSG_PEEK flag set.
+  	  Therefore, we need to close this.  Thanks to Rick Ohnemus
+ 	  <rjohnemus@systemware-inc.com> for reporting this.  Fixed [BUGID
+ 	  511].
+
 	* examples/IPC_SAP/FILE_SAP/client.cpp. Fixed the formatting
 	  to conform to ACE guidelines.  Thanks to Steve Luoma
  	  <stevel@dvc400.com> for motivating this.
