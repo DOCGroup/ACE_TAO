@@ -119,7 +119,6 @@ ECT_Throughput: $(addprefix $(VDIR),$(ECT_Throughput_OBJS))
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
@@ -213,6 +212,7 @@ ECT_Throughput: $(addprefix $(VDIR),$(ECT_Throughput_OBJS))
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
  $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
@@ -308,6 +308,9 @@ ECT_Throughput: $(addprefix $(VDIR),$(ECT_Throughput_OBJS))
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
+ $(ACE_ROOT)/ace/Atomic_Op.h \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Atomic_Op.cpp \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
@@ -333,11 +336,12 @@ ECT_Throughput: $(addprefix $(VDIR),$(ECT_Throughput_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.cpp \
- ECT_Driver.h $(ACE_ROOT)/ace/Stats.h \
+ ECT_Driver.h \
+ $(ACE_ROOT)/ace/Stats.h \
  $(ACE_ROOT)/ace/Basic_Stats.h \
  $(ACE_ROOT)/ace/Basic_Stats.inl \
- $(ACE_ROOT)/ace/Stats.i ECT_Driver.i \
- ECT_Supplier.h \
+ $(ACE_ROOT)/ace/Stats.i \
+ ECT_Driver.i ECT_Supplier.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
@@ -362,7 +366,8 @@ ECT_Throughput: $(addprefix $(VDIR),$(ECT_Throughput_OBJS))
  $(ACE_ROOT)/ace/Sched_Params.i
 
 .obj/ECT_Consumer_Driver.o .obj/ECT_Consumer_Driver.so .shobj/ECT_Consumer_Driver.o .shobj/ECT_Consumer_Driver.so: ECT_Consumer_Driver.cpp ECT_Consumer_Driver.h \
- ECT_Driver.h $(TAO_ROOT)/tao/corba.h \
+ ECT_Driver.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -421,7 +426,6 @@ ECT_Throughput: $(addprefix $(VDIR),$(ECT_Throughput_OBJS))
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Malloc_Allocator.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -463,6 +467,7 @@ ECT_Throughput: $(addprefix $(VDIR),$(ECT_Throughput_OBJS))
  $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
  $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
@@ -556,8 +561,8 @@ ECT_Throughput: $(addprefix $(VDIR),$(ECT_Throughput_OBJS))
  $(ACE_ROOT)/ace/Stats.h \
  $(ACE_ROOT)/ace/Basic_Stats.h \
  $(ACE_ROOT)/ace/Basic_Stats.inl \
- $(ACE_ROOT)/ace/Stats.i ECT_Driver.i \
- ECT_Consumer.h \
+ $(ACE_ROOT)/ace/Stats.i \
+ ECT_Driver.i ECT_Consumer.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
@@ -575,6 +580,9 @@ ECT_Throughput: $(addprefix $(VDIR),$(ECT_Throughput_OBJS))
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
+ $(ACE_ROOT)/ace/Atomic_Op.h \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Atomic_Op.cpp \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \

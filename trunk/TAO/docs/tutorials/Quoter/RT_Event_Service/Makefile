@@ -67,11 +67,6 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Stock_Consumer.h
-
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Stock_Factory_i.h QuoterS.h QuoterC.h QuoterC.i \
- QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
-
 .obj/Stock_Consumer.o .obj/Stock_Consumer.so .shobj/Stock_Consumer.o .shobj/Stock_Consumer.so: Stock_Consumer.cpp Stock_Consumer.h QuoterC.h \
  QuoterC.i
 
