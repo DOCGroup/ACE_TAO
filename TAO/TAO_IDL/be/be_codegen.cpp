@@ -310,8 +310,10 @@ TAO_CodeGen::start_client_header (const char *fname)
                             << "#if (_MSC_VER >= 1200)\n"
                             << "#pragma warning(push)\n"
                             << "#endif /* _MSC_VER >= 1200 */\n"
-                            << "#pragma warning(disable:4250)\n"
-                            << "#endif /* _MSC_VER */\n\n";
+                            << "#pragma warning(disable:4250)\n";
+      if (idl_global->use_raw_throw ())
+        *this->client_header_ << "#pragma warning(disable:4290)\n";
+      *this->client_header_ << "#endif /* _MSC_VER */\n\n";
 
       return 0;
     }
@@ -522,8 +524,10 @@ TAO_CodeGen::start_server_header (const char *fname)
                             << "#if (_MSC_VER >= 1200)\n"
                             << "#pragma warning(push)\n"
                             << "#endif /* _MSC_VER >= 1200 */\n"
-                            << "#pragma warning(disable:4250)\n"
-                            << "#endif /* _MSC_VER */\n\n";
+                            << "#pragma warning(disable:4250)\n";
+      if (idl_global->use_raw_throw ())
+        *this->server_header_ << "#pragma warning(disable:4290)\n";
+      *this->server_header_ << "#endif /* _MSC_VER */\n\n";
 
       if (idl_global->skel_export_include () != 0)
         {
@@ -620,8 +624,10 @@ TAO_CodeGen::start_server_template_header (const char *fname)
                                      << "#if (_MSC_VER >= 1200)\n"
                                      << "#pragma warning(push)\n"
                                      << "#endif /* _MSC_VER >= 1200 */\n"
-                                     << "#pragma warning(disable:4250)\n"
-                                     << "#endif /* _MSC_VER */\n\n";
+                                     << "#pragma warning(disable:4250)\n";
+      if (idl_global->use_raw_throw ())
+        *this->server_template_header_ << "#pragma warning(disable:4290)\n";
+      *this->server_template_header_ << "#endif /* _MSC_VER */\n\n";
 
       return 0;
     }

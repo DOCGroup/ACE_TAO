@@ -227,15 +227,21 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << node->full_skel_name () << " *) _tao_object_reference;" << be_nl;
   *os << "CORBA::Boolean _tao_retval = 0;" << be_nl;
   *os << "CORBA::String_var value;" << be_nl;
-  *os << "if (!((_tao_in >> value.out ())))" << be_idt_nl;
-  *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
+  *os << "if (!(_tao_in >> value.out ()))" << be_idt_nl;
+  if (idl_global->use_raw_throw ())
+    *os << "throw (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
+  else
+    *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
   *os << "_tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);" << be_nl;
   *os << "ACE_CHECK;" << be_nl << be_nl;
   *os << "_tao_server_request.init_reply (ACE_TRY_ENV);" << be_nl;
   *os << "ACE_CHECK;" << be_nl;
   *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
-  *os << "if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))" << be_idt_nl;
-  *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
+  *os << "if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))" << be_idt_nl;
+  if (idl_global->use_raw_throw ())
+    *os << "throw (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
+  else
+    *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
 
@@ -255,8 +261,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "_tao_server_request.init_reply (ACE_TRY_ENV);" << be_nl;
   *os << "ACE_CHECK;" << be_nl;
   *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
-  *os << "if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))" << be_idt_nl;
-  *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
+  *os << "if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))" << be_idt_nl;
+  if (idl_global->use_raw_throw ())
+    *os << "throw (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
+  else
+    *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
   *os << "}\n\n";
 
   os->indent ();
@@ -321,8 +330,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "if (this->_find (opname, skel, req.operation_length ()) == -1)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "ACE_ERROR ((LM_ERROR, \"Bad operation <%s>\\n\", opname));" << be_nl;
-  *os << "ACE_THROW (CORBA_BAD_OPERATION ());"
-      << be_uidt_nl;
+  if (idl_global->use_raw_throw ())
+    *os << "throw (CORBA_BAD_OPERATION ());";
+  else
+    *os << "ACE_THROW (CORBA_BAD_OPERATION ());";
+  *os << be_uidt_nl;
   *os << "}" << be_nl;
   *os << "else" << be_idt_nl;
   *os << "skel (req, this, context, ACE_TRY_ENV);" << be_uidt << be_uidt_nl;

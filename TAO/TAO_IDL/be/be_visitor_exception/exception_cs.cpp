@@ -170,18 +170,24 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
               << be_uidt << be_uidt_nl
               << "{" << be_idt_nl
               << "if (cdr << *this)" << be_nl
-              << "  return;" << be_nl
-              << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl
-              << "}\n\n";
+              << "  return;" << be_nl;
+          if (idl_global->use_raw_throw ())
+            *os << "throw (CORBA::MARSHAL ());" << be_uidt_nl;
+          else
+            *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl;
+          *os << "}\n\n";
         }
       else
         {
           *os << "TAO_OutputCDR &," << be_nl
               << "CORBA::Environment &ACE_TRY_ENV) const"
               << be_uidt << be_uidt_nl
-              << "{" << be_idt_nl
-              << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl
-              << "}\n\n";
+              << "{" << be_idt_nl;
+          if (idl_global->use_raw_throw ())
+            *os << "throw (CORBA::MARSHAL ());" << be_uidt_nl;
+          else
+            *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl;
+          *os << "}\n\n";
         }
 
 
@@ -195,18 +201,24 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
               << be_uidt << be_uidt_nl
               << "{" << be_idt_nl
               << "if (cdr >> *this)" << be_nl
-              << "  return;" << be_nl
-              << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl
-              << "}\n\n";
+              << "  return;" << be_nl;
+          if (idl_global->use_raw_throw ())
+            *os << "throw (CORBA::MARSHAL ());" << be_uidt_nl;
+          else
+            *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl;
+          *os << "}\n\n";
         }
       else
         {
           *os << "TAO_InputCDR &," << be_nl
               << "CORBA::Environment &ACE_TRY_ENV)"
               << be_uidt << be_uidt_nl
-              << "{" << be_idt_nl
-              << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl
-              << "}\n\n";
+              << "{" << be_idt_nl;
+          if (idl_global->use_raw_throw ())
+            *os << "throw (CORBA::MARSHAL ());" << be_uidt_nl;
+          else
+            *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl;
+          *os << "}\n\n";
         }
 
       // generate the _alloc method
