@@ -53,7 +53,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 	  ACE_DEBUG ((LM_DEBUG,
 		      "The Guid is %d %d\n",
 		      id,
-		      guid_counter));
+		      guid_counter.value_i ()));
       
 	  // Create new DT.
 	  RTScheduling::DistributableThread_var dt = TAO_DistributableThread_Factory::create_DT ();
@@ -61,7 +61,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
  
 
 	  // Add new DT to map.
-	  int result = prev_current->dt_hash ()->bind (guid, dt);
+	  prev_current->dt_hash ()->bind (guid, dt.in ());
       
 	  // Create new temporary current. Note that
 	  // the new <sched_param> is the current
@@ -104,7 +104,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 }
 
 void 
-Client_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr ri
+Client_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr
 			       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -216,7 +216,7 @@ Server_Interceptor::Server_Interceptor (TAO_RTScheduler_Current_ptr current)
 } 
 
 void 
-Server_Interceptor::receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri
+Server_Interceptor::receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr
 						      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException, 
 		   PortableInterceptor::ForwardRequest))
@@ -270,14 +270,14 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
       ACE_DEBUG ((LM_DEBUG,
 		  "The Guid is %d %d\n",
 		  id,
-		  server_guid_counter));
+		  server_guid_counter.value_i ()));
       //***************************************
       
       // Create new DT.
       RTScheduling::DistributableThread_var dt = TAO_DistributableThread_Factory::create_DT ();
       
       // Add new DT to map.
-      int result = new_current->dt_hash ()->bind (guid, dt.in ());
+      new_current->dt_hash ()->bind (guid, dt.in ());
   
       // Create new temporary current. Note that
       // the new <sched_param> is the current
