@@ -1,5 +1,16 @@
 Sat Feb  2 07:45:51 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* tests/run_test.lst:
+	* tests/Makefile.bor:
+	* tests/Makefile: Added the TP_Reactor_Test.
+
+	* tests/TP_Reactor_Test.cpp: Added another test of the ACE_TP_Reactor.
+	  Thanks to Alex Libman for contributing this.
+
+	* ace/config-irix6.x-common.h: IRIX 6.5 supports AIO, so we'll
+	  enable these features.  Thanks to Alex Libman for validating
+ 	  this.
+
 	* ace/Select_Reactor_T.cpp: Fixed work_pending() so that it takes
 	  into account pending timers that need to be expired.  Thanks to
  	  Russ Noseworthy for reporting this.
