@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_sequence, 
-           sequence_ch, 
+ACE_RCSID (be_visitor_sequence,
+           sequence_ch,
            "$Id$")
 
 // Root visitor for client header.
@@ -46,7 +46,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ch::"
                          "visit_sequence - "
-                         "failed creating name\n"), 
+                         "failed creating name\n"),
                         -1);
     }
 
@@ -67,7 +67,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ch::"
                          "visit_sequence - "
-                         "Bad element type\n"), 
+                         "Bad element type\n"),
                         -1);
     }
 
@@ -80,7 +80,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_sequence_ch::"
                              "visit_sequence - "
-                             "codegen for anonymous base type failed\n"), 
+                             "codegen for anonymous base type failed\n"),
                             -1);
         }
     }
@@ -112,7 +112,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ch::"
                          "visit_sequence - "
-                         "Base class name generation failed\n"), 
+                         "Base class name generation failed\n"),
                         -1);
     }
 
@@ -131,7 +131,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           << node->local_name () << " (CORBA::ULong max);";
     }
 
-  *os << be_nl 
+  *os << be_nl
       << node->local_name () << " (" << be_idt << be_idt;
 
   if (node->unbounded ())
@@ -182,19 +182,19 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   if (bt->base_node_type () == AST_Type::NT_pre_defined)
     {
       be_typedef* alias =
-	    be_typedef::narrow_from_decl (bt);
+            be_typedef::narrow_from_decl (bt);
 
       if (alias == 0)
-	      {
-	        predef = be_predefined_type::narrow_from_decl (bt);
-	      }
+              {
+                predef = be_predefined_type::narrow_from_decl (bt);
+              }
       else
-	      {
-	        predef =
+              {
+                predef =
             be_predefined_type::narrow_from_decl (
                 alias->primitive_base_type ()
               );
-	      }
+              }
     }
 
   // Now generate the extension...
@@ -202,13 +202,13 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       && node->unbounded ())
     {
       *os << "\n\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl
-	        << node->local_name () << " (" << be_idt << be_idt_nl
-	        << "CORBA::ULong length," << be_nl
-	        << "const ACE_Message_Block* mb" << be_uidt_nl
-	        << ")" << be_uidt_nl
-	        << "  : " << node->instance_name ()
-	        << " (length, mb) {}" << "\n"
-	        << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */";
+                << node->local_name () << " (" << be_idt << be_idt_nl
+                << "CORBA::ULong length," << be_nl
+                << "const ACE_Message_Block* mb" << be_uidt_nl
+                << ")" << be_uidt_nl
+                << "  : " << node->instance_name ()
+                << " (length, mb) {}" << "\n"
+                << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */";
     }
 
   *os << be_uidt_nl
@@ -220,8 +220,8 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   return 0;
 }
 
-void 
-be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node, 
+void
+be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
                                              be_type *elem)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -240,7 +240,7 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
       *os << elem->nested_type_name (scope, "_var") << "," << be_nl
           << elem->fwd_helper_name () << "_life" << be_uidt_nl
           << ">" << be_uidt << be_uidt_nl
-          << ">" << be_uidt_nl 
+          << ">" << be_uidt_nl
           << node->local_name () << "_var;" << be_uidt;
 
       *os << be_nl << be_nl
@@ -266,7 +266,7 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
       *os << elem->nested_type_name (scope, "_var") << "," << be_nl
           << elem->fwd_helper_name () << "_life" << be_uidt_nl
           << ">" << be_uidt << be_uidt_nl
-          << ">" << be_uidt_nl 
+          << ">" << be_uidt_nl
           << node->local_name () << "_var;" << be_uidt;
 
       *os << be_nl << be_nl
@@ -291,7 +291,7 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << elem->nested_type_name (scope) << "," << be_nl;
       *os << elem->nested_type_name (scope, "_var") << be_uidt_nl
           << ">" << be_uidt << be_uidt_nl
-          << ">" << be_uidt_nl 
+          << ">" << be_uidt_nl
           << node->local_name () << "_var;" << be_uidt;
 
       *os << be_nl << be_nl
@@ -316,7 +316,7 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
       *os << elem->nested_type_name (scope, "_var") << "," << be_nl
           << elem->fwd_helper_name () << "_life" << be_uidt_nl
           << ">" << be_uidt << be_uidt_nl
-          << ">" << be_uidt_nl 
+          << ">" << be_uidt_nl
           << node->local_name () << "_var;" << be_uidt;
 
       *os << be_nl << be_nl
@@ -381,16 +381,16 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           }
 
         *os << "typedef" << be_idt_nl
-            << (st == AST_Type::FIXED ? "TAO_FixedSeq_Var_T<" 
+            << (st == AST_Type::FIXED ? "TAO_FixedSeq_Var_T<"
                                       : "TAO_VarSeq_Var_T<")
             << be_idt << be_idt_nl
             << node->local_name () << "," << be_nl
             << elem->nested_type_name (scope);
 
-        if (nt == AST_Decl::NT_array)
+        /*if (nt == AST_Decl::NT_array)
           {
             *os << "_slice *";
-          }
+            }*/
 
         *os << be_uidt_nl
             << ">" << be_uidt_nl
@@ -403,10 +403,10 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
             << node->local_name () << "_var," << be_nl
             << elem->nested_type_name (scope);
 
-        if (nt == AST_Decl::NT_array)
+        /*if (nt == AST_Decl::NT_array)
           {
             *os << "_slice *";
-          }
+            }*/
 
         *os << be_uidt_nl
             << ">" << be_uidt_nl
@@ -416,4 +416,3 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
       break;
     }
 }
-

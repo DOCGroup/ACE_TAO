@@ -33,17 +33,17 @@ public:
   TAO_Seq_Var_Base_T (void);
   TAO_Seq_Var_Base_T (T *);
   TAO_Seq_Var_Base_T (const TAO_Seq_Var_Base_T<T,T_elem> &);
-  
+
   ~TAO_Seq_Var_Base_T (void);
-  
+
   T *operator-> (void);
   const T *operator-> (void) const;
-  
+
   operator const T &() const;
   operator T &();
   operator T &() const;
 
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const T & in (void) const;
   T & inout (void);
   T *& out (void);
@@ -70,15 +70,15 @@ public:
   TAO_FixedSeq_Var_T (void);
   TAO_FixedSeq_Var_T (T *);
   TAO_FixedSeq_Var_T (const TAO_FixedSeq_Var_T<T,T_elem> &);
-  
+
   // Fixed-size base types only.
   TAO_FixedSeq_Var_T (const T &);
-  
+
   TAO_FixedSeq_Var_T & operator= (T *);
   TAO_FixedSeq_Var_T & operator= (const TAO_FixedSeq_Var_T<T,T_elem> &);
-  
+
   T_elem & operator[] (CORBA::ULong index);
-  
+
   // Fixed-size base types only.
   TAO_FixedSeq_Var_T & operator= (const T &);
 };
@@ -97,13 +97,12 @@ public:
   TAO_VarSeq_Var_T (void);
   TAO_VarSeq_Var_T (T *);
   TAO_VarSeq_Var_T (const TAO_VarSeq_Var_T<T,T_elem> &);
-  
+
   TAO_VarSeq_Var_T & operator= (T *);
   TAO_VarSeq_Var_T & operator= (const TAO_VarSeq_Var_T<T,T_elem> &);
-  
+
   T_elem & operator[] (CORBA::ULong index);
-  const T_elem & operator[] (CORBA::ULong index) const;
-  
+
   // Variable-size base types only.
   operator T *& ();
 };
@@ -123,10 +122,10 @@ public:
   TAO_MngSeq_Var_T (void);
   TAO_MngSeq_Var_T (T *);
   TAO_MngSeq_Var_T (const TAO_MngSeq_Var_T<T,T_elem> &);
-  
+
   TAO_MngSeq_Var_T & operator= (T *);
   TAO_MngSeq_Var_T & operator= (const TAO_MngSeq_Var_T<T,T_elem> &);
-  
+
   // Variable-size base types only.
   operator T *& ();
 
@@ -155,7 +154,7 @@ public:
   T *& ptr (void);
   T * operator-> (void);
 
-  T_elem operator[] (CORBA::ULong index);
+  T_elem & operator[] (CORBA::ULong index);
 
 private:
   typedef TAO_Seq_Out_T<T,T_var,T_elem> THIS_OUT_TYPE;
