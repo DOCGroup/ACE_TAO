@@ -1,4 +1,3 @@
-
 // $Id$
 
 #include "Logging_Handler.h"

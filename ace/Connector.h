@@ -253,6 +253,10 @@ private:
 
   ACE_Reactor *reactor_;
   // Event demultiplex associated with this object.
+
+  char closing_;
+  // Keeps track of whether we are in the process of closing (required
+  // to avoid circular calls to <handle_close>).
 };
 
 #include "ace/Connector.i"
