@@ -19,7 +19,7 @@ if (!getopts ('i:')) {
     exit 1;
 }
 
-my $iterations = 100;
+my $iterations = 40;
 if (defined $opt_i) {
     $iterations = $opt_i;
 }
@@ -39,7 +39,7 @@ for ($i = 0; $i != $iterations; $i++) {
   # First spawn all the processes
   my @CL = ();
 
-  my $concurrent_clients = 20;
+  my $concurrent_clients = 30;
 
   for ($j = 0; $j != $concurrent_clients; $j++) {
     $CL[$j] = new PerlACE::Process ("client", " -k file://$iorfile");
@@ -49,7 +49,7 @@ for ($i = 0; $i != $iterations; $i++) {
   }
   # Now wait for each one
   for ($j = 0; $j != $concurrent_clients; $j++) {
-    $client = $CL[$j]->WaitKill (2);
+    $client = $CL[$j]->WaitKill (5);
 
     if ($client != 0) {
       print STDERR "ERROR: client $j returned $client in iteration $i\n";

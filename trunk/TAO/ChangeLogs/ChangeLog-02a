@@ -1,13 +1,23 @@
+Fri Mar 16 10:48:36 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Server_Leaks/run_test.pl:
+          The timeout period for the client was too short, extended it to
+          5 seconds.  Also reduced the total number of iterations in the
+          test and run more clients in parallel, for faster execution. The
+          test takes less than 1 minute on my machine (with nice -20).
+          Any machine that cannot run this in the timeout allowed for
+          nightly builds is too slow anyway.
+
 Fri Mar 16 12:43:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp: Fixed a unused
-	  variable warning.
+        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp: Fixed a unused
+          variable warning.
 
 Fri Mar 16 07:22:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/run_test.pl: Removed the usage of
-	  ec_mt.conf from the run_test.pl script. The builds complain
-	  about an invalid service confiurator argument.
+        * orbsvcs/tests/EC_Throughput/run_test.pl: Removed the usage of
+          ec_mt.conf from the run_test.pl script. The builds complain
+          about an invalid service confiurator argument.
 
 Thu Mar 15 17:56:58 2001  Carlos O'Ryan  <coryan@uci.edu>
 
