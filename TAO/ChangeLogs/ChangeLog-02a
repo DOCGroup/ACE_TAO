@@ -1,3 +1,19 @@
+Mon Mar  4 11:47:17 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.h:
+
+          Changed a label at the middle of the class declaration from
+          'public' to 'private'. This got rid of link errors caused
+          by a copy constructor and assignment operator declared below
+          which were not defined, and doesn't seem to cause any other errors
+          in the Trading Service build.
+
+        * orbsvcs/orbsvcs/CosEvent.dsp:
+        * TAOACE.dsw:
+
+          Added link to the new Messaging library, and added the dependency
+          to the workspace.
+
 Mon Mar  4 12:11:05 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/RTEvent/lib/SyncScope_Setup.cpp:
