@@ -51,8 +51,8 @@ public:
   // visit argument to generate ParamData entries
 
   // = template methods
-  virtual int gen_pre_stub_info (be_operation *node, 
-                                 be_type *bt);
+  int gen_pre_stub_info (be_operation *node, 
+                         be_type *bt);
   // generate any info before the actual code for the stub is generated
 
   virtual int gen_marshal_and_invoke (be_operation *node, 

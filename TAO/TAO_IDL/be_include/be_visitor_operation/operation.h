@@ -82,14 +82,14 @@ public:
   // an interceptor try block.
 
   virtual int gen_stub_operation_body (be_operation *node,
-                                      be_type *return_type);
+                                       be_type *return_type);
   // Generates the code from opening brace to closing brace for
   // stub operations. Also called (for now)
   // from be_visitor_operation_cs, to generate operation stub
   // bodies for abstract interfaces (unless and until abstract
   // interfaces are made to interoperate with collocatino).
 
-  virtual int gen_pre_stub_info (be_operation *node);
+  int gen_pre_stub_info (be_operation *node);
   // generate any info before the actual code for the stub is generated
 
   virtual int gen_marshal_and_invoke (be_operation *node,

@@ -55,7 +55,7 @@ public:
   ~be_valuetype (void);
   // Destructor.
 
-  virtual void redefine (AST_ValueType *from);
+  virtual void redefine (AST_Interface *from);
 
   idl_bool opt_accessor (void);
   // Should generate optimized form?

@@ -328,7 +328,6 @@ be_visitor_context::be_node_as_enum_val (void)
     {
       return 0;
     }
-    return (be_enum_val *)0;
 }
 
 be_exception *
@@ -550,7 +549,6 @@ be_visitor_context::be_scope_as_interface (void)
     {
       return 0;
     }
-    return (be_interface *)0;
 }
 
 be_module *
