@@ -65,6 +65,7 @@ public:
                                              size_t msg_count,
                                              size_t total_bytes,
                                              int &must_flush,
+                                             const ACE_Time_Value &current_deadline,
                                              int &set_timer,
                                              ACE_Time_Value &interval) = 0;
 };
@@ -78,6 +79,7 @@ public:
                                              size_t msg_count,
                                              size_t total_bytes,
                                              int &must_flush,
+                                             const ACE_Time_Value &current_deadline,
                                              int &set_timer,
                                              ACE_Time_Value &interval);
 };
@@ -93,8 +95,9 @@ public:
                                              size_t msg_count,
                                              size_t total_bytes,
                                              int &must_flush,
+                                             const ACE_Time_Value &current_deadline,
                                              int &set_timer,
-                                             ACE_Time_Value &interval);
+                                             ACE_Time_Value &new_deadline);
 
 private:
   /// Check if the buffering constraint includes any timeouts and
@@ -104,10 +107,17 @@ private:
    *        application
    * @param set_timer Return 1 if the timer should be set
    * @param interval Return the timer interval value
+   *
+   * @return Returns 1 if the deadline has already expired and
+   *         flushing must commence immediately.  If the function
+   *         returns 0 then flushing may need to be delayed, use @c
+   *         set_timer and 
+   *         
    */
-  void timer_check (const TAO::BufferingConstraint &buffering_constraint,
-                    int &set_timer,
-                    ACE_Time_Value &interval);
+  int timer_check (const TAO::BufferingConstraint &buffering_constraint,
+                   const ACE_Time_Value &current_deadline,
+                   int &set_timer,
+                   ACE_Time_Value &new_deadline);
 
   /// Convert from standard CORBA time units to seconds/microseconds.
   ACE_Time_Value time_conversion (const TimeBase::TimeT &time);

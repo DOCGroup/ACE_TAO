@@ -1,3 +1,29 @@
+Tue Apr 17 09:59:38 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Sync_Strategies.h:
+        * tao/Sync_Strategies.cpp:
+          Add an argument in buffering_constraints_reached(), this new
+          argument represents the current deadline for the transport.
+          The current deadline is used to determine if the timer needs to
+          be reset or if the timer has already expired.
+          Unless the flushing strategy is turned on we need to check the
+          timers on all exit paths.
+
+          Change TAO_Transport_Sync_Strategy to *always* flush and always
+          schedule output on every request.
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Use the new interface in the sync strategies to activate the
+          output as soon as the timer expires.  Keep track of the current
+          deadline for scheduling output.
+          Fixed boundary condition in drain_queue_i(), there is a while()
+          loop to fill iovecs with the contents of the queue, it is
+          possible to exit the loop without anything in the iovec.  In
+          this case we don't want to attempt a send() call.
+          Remove unused argument from the send_synchronous_message_i()
+          method.
+
 Sat Apr 14 17:04:21 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.cpp (send_synchronous_message_i):

@@ -64,6 +64,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , bidirectional_flag_ (-1)
   , head_ (0)
   , tail_ (0)
+  , current_deadline_ (ACE_Time_Value::zero)
   , id_ ((long) this)
 {
   TAO_Client_Strategy_Factory *cf =
@@ -302,8 +303,7 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
 
   if (is_synchronous)
     {
-      return this->send_synchronous_message_i (stub,
-                                               message_block,
+      return this->send_synchronous_message_i (message_block,
                                                max_wait_time);
     }
 
@@ -422,13 +422,12 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
 }
 
 int
-TAO_Transport::send_synchronous_message_i (TAO_Stub *stub,
-                                           const ACE_Message_Block *message_block,
+TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
                                            ACE_Time_Value *max_wait_time)
 {
   // We are going to block, so there is no need to clone
   // the message block.
-  TAO_Synch_Queued_Message synch_message (message_block);
+  TAO_Synch_Queued_Message synch_message (mb);
 
   synch_message.push_back (this->head_, this->tail_);
 
@@ -944,30 +943,34 @@ TAO_Transport::drain_queue_i (void)
       i = i->next ();
     }
 
-  size_t byte_count = 0;
-  ssize_t retval =
-    this->send (iov, iovcnt, byte_count);
 
-  if (TAO_debug_level == 2)
+  if (iovcnt != 0)
     {
-      dump_iov (iov, iovcnt, this->id (),
-                byte_count, "drain_queue_i");
-    }
+      size_t byte_count = 0;
+      ssize_t retval =
+        this->send (iov, iovcnt, byte_count);
 
-  this->cleanup_queue (byte_count);
-  iovcnt = 0;
+      if (TAO_debug_level == 2)
+        {
+          dump_iov (iov, iovcnt, this->id (),
+                    byte_count, "drain_queue_i");
+        }
 
-  if (retval == 0)
-    {
-      return -1;
+      this->cleanup_queue (byte_count);
+      iovcnt = 0;
+
+      if (retval == 0)
+        {
+          return -1;
+        }
+      else if (retval == -1)
+        {
+          if (errno == EWOULDBLOCK || errno == ETIME)
+            return 0;
+          return -1;
+        }
+      ACE_ASSERT (byte_count != 0);
     }
-  else if (retval == -1)
-    {
-      if (errno == EWOULDBLOCK || errno == ETIME)
-        return 0;
-      return -1;
-    }
-  ACE_ASSERT (byte_count != 0);
 
   if (this->head_ == 0)
     return 1;
@@ -1009,26 +1012,26 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub,
     }
 
   int set_timer;
-  ACE_Time_Value interval;
+  ACE_Time_Value new_deadline;
 
   int constraints_reached =
     stub->sync_strategy ().buffering_constraints_reached (stub,
                                                           msg_count,
                                                           total_bytes,
                                                           must_flush,
+                                                          this->current_deadline_,
                                                           set_timer,
-                                                          interval);
-  if (constraints_reached != 0)
-    return constraints_reached;
+                                                          new_deadline);
 
   // ... it is not time to flush yet, but maybe we need to set a
   // timer ...
   if (set_timer)
     {
+      this->current_deadline_ = new_deadline;
       // @@ We need to schedule the timer. We should also be
       // careful not to schedule one if there is one scheduled
       // already.
     }
 
-  return 0;
+  return constraints_reached;
 }
