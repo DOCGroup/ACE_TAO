@@ -3,13 +3,6 @@
 // Exception macros
 #include "tao/poa_macros.h"
 
-ACE_INLINE u_long 
-TAO_ObjectId_Hash::operator () (const PortableServer::ObjectId &id) const
-{
-  return ACE::hash_pjw ((const char *) id.get_buffer (),
-                        id.length ());
-}
-
 ACE_INLINE PortableServer::ThreadPolicyValue
 TAO_POA_Policies::thread (void) const
 {

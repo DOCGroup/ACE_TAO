@@ -68,6 +68,13 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_POA_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
+u_long 
+TAO_ObjectId_Hash::operator () (const PortableServer::ObjectId &id) const
+{
+  return ACE::hash_pjw ((const char *) id.get_buffer (),
+                        id.length ());
+}
+
 TAO_Thread_Policy::TAO_Thread_Policy (PortableServer::ThreadPolicyValue value,
                                       PortableServer::POA_ptr poa)
   : value_ (value),
