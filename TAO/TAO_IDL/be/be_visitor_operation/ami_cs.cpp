@@ -340,26 +340,9 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
     }
 
   // Do we have any arguments in the operation that needs marshalling
-  UTL_ScopeActiveIterator si (node,
-                              UTL_Scope::IK_decls);
-  AST_Decl *d = 0;
-  AST_Argument *arg = 0;
-  int flag = 0;
-
-  while (!si.is_done ())
-  {
-    d = si.item ();
-    arg = AST_Argument::narrow_from_decl (d);
-
-    if (arg->direction () == AST_Argument::dir_IN ||
-        arg->direction () == AST_Argument::dir_INOUT)
-      {
-        // There is something that needs marshalling
-        flag = 1;
-        break;
-      }
-    si.next ();
-  }
+  int flag =
+    node->count_arguments_with_direction (AST_Argument::dir_IN
+                                          | AST_Argument::dir_INOUT) != 0;
 
   *os << node->local_name ()
       << "\"," << be_nl
@@ -369,11 +352,11 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
       << ","<< be_nl
       << "istub->orb_core ()," << be_nl;
 
-
   // Next argument is the reply handler skeleton for this method.
 
   // Get the interface.
-  be_decl *interface = be_interface::narrow_from_scope (node->defined_in ())->decl ();
+  be_decl *interface =
+    be_interface::narrow_from_scope (node->defined_in ())->decl ();
 
   {
     char *full_name = 0;

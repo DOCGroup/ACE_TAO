@@ -58,34 +58,18 @@ int
 be_visitor_operation::has_param_type (be_operation *node,
                                       AST_Argument::Direction dir)
 {
-  // proceed if the number of members in our scope is greater than 0
-  if (node->nmembers () > 0)
-    {
-      // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      0);
-      // continue until each element is visited
-      while (!si->is_done ())
-        {
-          be_argument *bd = be_argument::narrow_from_decl (si->item ());
-          if (bd && (bd->direction () == dir))
-            return 1;
-
-          si->next ();
-        } // end of while loop
-      delete si;
-    } // end of if
-
-  // not of the type we are looking for
-  return 0;
+  return node->count_arguments_with_direction (dir);
 }
 
 size_t
 be_visitor_operation::count_non_out_parameters (be_operation *node)
 {
+  // @@ Once the valuetype issue discussed below is fixed we can
+  //    replace this routine with:
+  //
+  // return node->count_arguments_with_direction (AST_Argument::dir_IN
+  //                                              | AST_Argument::dir_INOUT);
+  //
   size_t count = 0;
 
   // proceed if the number of members in our scope is greater than 0

@@ -1,3 +1,40 @@
+Wed Jan 23 14:16:35 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/include/ast_argument.h:
+	  Changed values of the AST_Argument::Direction enum.  The new
+	  values allow me to specify sets of directions as bit masks.
+
+	* TAO_IDL/include/ast_operation.h:
+	* TAO_IDL/ast/ast_operation.cpp:
+	  Add new method to count the arguments in a given set of
+	  directions, for example, all (dir_IN|dir_OUT) arguments.
+
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	  The AMH_<Interface> class was deriving from the non-AMH
+	  classes.
+	  Remove stale comments.
+	  Use UTL_ScopeActiveIterator on the stack, there is no sense in
+	  declaring objects with a well-defined scope on the heap!  Fixed
+	  a memory leak in the process.
+
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	  After we generate the ResponseHandler argument in AMH-operations
+	  we need to insert a comma, but only if there are IN or INOUT
+	  arguments.  The code used to check for any kind of argument.
+
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	  Generate the code for the _tao_in variable (the TAO_InputCDR) in
+	  the skeleton.
+	  Fix indentation in the skeleton.
+	  Insert the arguments for the upcall.  Unfortunately we are
+	  generating *all* the arguments, not only the IN and INOUT ones.
+	
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	  Eliminate duplicate code using the
+	  count_arguments_with_direction routine.
+
+
 Wed Jan 23 13:09:40 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/AMH_Response_Handler.h:

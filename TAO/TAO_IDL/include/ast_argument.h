@@ -81,9 +81,9 @@ public:
   // Define enum with values denoting argument passing directions.
   enum Direction
     {
-      dir_IN,
-      dir_OUT,
-      dir_INOUT
+      dir_IN    = 0x01,
+      dir_OUT   = 0x02,
+      dir_INOUT = 0x04
     };
 
   // Operations.

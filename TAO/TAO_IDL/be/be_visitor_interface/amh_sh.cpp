@@ -77,13 +77,22 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
     {
       for (int i = 0; i < n_parents; ++i)
         {
-          *os << "public virtual " << "POA_"
-              << node->inherits ()[i]->name ();
+          ACE_CString amh_name ("POA_");
 
-          if (i < n_parents - 1)
-            {
-              *os << "," << be_nl;
-            }
+          // @@ The following code is *NOT* exception-safe.
+          char *buf = 0;
+          be_interface *base =
+            be_interface::narrow_from_decl (node->inherits ()[i]);
+          base->compute_full_name ("AMH_", "", buf);
+          amh_name += buf;
+          delete[] buf;
+
+          if (i != 0)
+            *os << ", ";
+
+          *os << "public virtual "
+              << amh_name.c_str ()
+              << be_nl;
         }
     }
   else
@@ -280,32 +289,18 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
                                               0);
   operation->set_name (op_name);
 
-  /* Add the response_handler as the first argument
-     be_argument *rh_arg = new be_argument (Direction.dir_IN,
-     thid->response_handler, original_arg->field_type (),
-     original_arg->name (),
-     0);
-     operation->add_argument_to_scope (rh_arg);
-  */
-
   // Iterate over the arguments and put all the in and inout
   // into the new method.
   if (node->nmembers () > 0)
     {
       // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      0);
-
-      // continue until each element is visited
-      while (!si->is_done ())
+      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
-          AST_Decl *d = si->item ();
+          AST_Decl *d = si.item ();
           if (!d)
             {
-              delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_amh_pre_proc::"
                                  "create_response_handler_operation - "
@@ -314,7 +309,8 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
 
             }
 
-          AST_Argument *original_arg = AST_Argument::narrow_from_decl (d);
+          AST_Argument *original_arg =
+            AST_Argument::narrow_from_decl (d);
 
           if (original_arg->direction () == AST_Argument::dir_INOUT ||
               original_arg->direction () == AST_Argument::dir_IN)
@@ -326,9 +322,7 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
 
               operation->add_argument_to_scope (arg);
             }
-          si->next ();
         }
-      delete si;
     }
 
   operation->set_defined_in (amh_node);

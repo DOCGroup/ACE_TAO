@@ -94,30 +94,45 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
       << "ACE_static_cast (" << be_idt << be_idt_nl
       << amh_skel_name.c_str () << " *," << be_nl
       << "_tao_object_reference" << be_uidt << be_uidt_nl
-      << ");" << be_uidt_nl;
+      << ");\n" << be_uidt;
 
-  // Declare variables for arguments.
-  be_visitor_context ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_DECL_SS);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  {
+    // Declare variables for arguments.
+    be_visitor_context ctx = *this->ctx_;
+    ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_DECL_SS);
+    be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
-  if (!visitor || (node->accept (visitor) == -1))
+    if (!visitor || (node->accept (visitor) == -1))
+      {
+        delete visitor;
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_amh_operation_ss::"
+                           "visit_operation - "
+                           "codegen for return var decl failed\n"),
+                          -1);
+      }
+    delete visitor;
+  }
+
+  int argument_count =
+    node->count_arguments_with_direction (AST_Argument::dir_IN
+                                          | AST_Argument::dir_INOUT);
+
+  if (argument_count != 0)
     {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ss::"
-                         "visit_operation - "
-                         "codegen for return var decl failed\n"),
-                        -1);
+      // Avoid warnings in generated code due to unused arguments.
+      *os << be_nl
+          << "TAO_InputCDR &_tao_in ="
+          << " _tao_server_request.incoming ();\n\n";
     }
 
   // Demarshal parameters.
   if (this->demarshal_params (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ss::"
+                         "(%N:%l) be_visitor_amh_operation_ss::"
                          "visit_operation - "
-                         "gen_demarshal_params failed\n"),
+                         "demarshal_params failed\n"),
                         -1);
     }
 
@@ -134,18 +149,33 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
   *os << be_nl << response_handler_name.c_str ()
       << "_var _tao_rh =" << be_idt_nl
       << "new " << response_handler_implementation_name.c_str ()
-      << " (_tao_server_request);" << be_uidt_nl;
+      << " (_tao_server_request);\n" << be_uidt;
 
   // Make the upcall.
   *os << be_nl << "_tao_impl->"
       << node->local_name () << " (_tao_rh.in ()"
       << be_idt << be_idt_nl;
 
-  // @@ Insert the IN and INOUT arguments here..
+  if (argument_count != 0)
+    *os << ",";
 
-  *os << "TAO_ENV_ARG_PARAMETER" << be_uidt_nl << ");\n" << be_uidt_nl;
+  {
+    be_visitor_context ctx (*this->ctx_);
+    ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS);
+    be_visitor_operation_argument visitor (&ctx);
+    if (node->accept (&visitor) == -1)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_amh_operation_ss::"
+                           "visit_operation - "
+                           "codegen for upcall args failed\n"),
+                          -1);
+      }
+  }
 
-  *os << be_uidt << "}\n\n";
+  *os << be_uidt_nl << ");"
+      << be_uidt << be_uidt_nl
+      << "}\n\n";
 
   return 0;
 
@@ -185,7 +215,7 @@ be_visitor_amh_operation_ss::demarshal_params (be_operation *node)
                             -1);
         }
 
-      *os << be_uidt_nl << "))\n" << be_idt;
+      *os << be_uidt_nl << "))" << be_idt_nl;
 
       // If marshaling fails, raise exception.
       if (this->gen_raise_exception (0,

@@ -124,7 +124,10 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
   *os << buf << " _tao_rh";
   delete[] buf;
 
-  if (node->argument_count () > 0)
+  int argument_count =
+    node->count_arguments_with_direction (AST_Argument::dir_IN
+                                          | AST_Argument::dir_INOUT);
+  if (argument_count != 0)
     {
       *os << "," << be_nl;
     }
