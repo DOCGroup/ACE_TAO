@@ -1,3 +1,19 @@
+Sun Apr  2 20:19:36 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/QoS_Manager.{h,cpp}: Added these two files. They define
+	  a QoS Manager that manages the QoS for a socket. This was being 
+	  done earlier by the ACE_SOCK classes.
+
+	  Changed the following files to accomodate the new classes added
+	  above.  
+	* ace/SOCK.{h,cpp}:  Removed the heavy container from ACE_SOCK.
+	* ace/SOCK_Dgram_Mcast.{h,cpp}: Changed the QoS management from
+	  ACE_SOCK to ACE_QoS_Manager.
+	
+	* ace/QoS_Session_Impl.{h,cpp}: 
+	* ace/QoS_Session.h: Changed the interface to use the
+	  ACE_QoS_Manager class
+
 Sun Apr  2 05:36:04 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Containers_T.cpp: There were a number of incorrect uses
