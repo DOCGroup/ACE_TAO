@@ -2113,11 +2113,11 @@ class TAO_Export ORBInitializer : public virtual CORBA_Object
 
 #endif /* end #if !defined */
 
+ /// Register an ORBInitializer with the global ORBInitializer
+ /// table.
  TAO_NAMESPACE_STORAGE_CLASS void register_orb_initializer (
    ORBInitializer_ptr init,
    CORBA::Environment & = TAO_default_environment ());
- ///< Register an ORBInitializer with the global ORBInitializer
- ///< table.
 
 }
 TAO_NAMESPACE_CLOSE // module PortableInterceptor
