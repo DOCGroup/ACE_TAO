@@ -1,3 +1,11 @@
+Tue Dec 30 17:47:49 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* ciao/CCM_Base.idl:
+
+	  Temporarily commented import declaration even though it is
+	  conditionally commented out. Current CIDLC's preprocessor
+	  does not handle conditional compilation.
+
 Tue Dec 30 17:03:27 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/CompilerElements/Diagnostic.hpp:
