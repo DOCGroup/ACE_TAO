@@ -1,3 +1,7 @@
+Fri Mar 30 16:07:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/Simple_Naming/client.cpp: Fixed fuzz warnings. 
+
 Fri Mar 30 16:01:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp: Fixed fuzz warnings that were
