@@ -16,6 +16,7 @@ project(TAO_IFR_BE) : taolib, core {
   libs      += TAO_IDL_FE TAO_IFR_Client TAO
   dllflags   = TAO_IFR_BE_BUILD_DLL
   includes  += $(TAO_ROOT)/TAO_IDL/include $(TAO_ROOT)/TAO_IDL/fe
+  libpaths  += $(TAO_ROOT)/TAO_IDL
 
   Source_Files {
     be_global.cpp
@@ -37,6 +38,7 @@ project(TAO_IFR_EXE) : taoexe, core {
   idlpreprocessor = 1
   libs           += TAO_IFR_BE TAO_IFR_Client TAO TAO_IDL_FE
   includes       += $(TAO_ROOT)/TAO_IDL/include $(TAO_ROOT)/TAO_IDL/fe
+  libpaths       += $(TAO_ROOT)/TAO_IDL
 
   Source_Files {
     tao_ifr.cpp

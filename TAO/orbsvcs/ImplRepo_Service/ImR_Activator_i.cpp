@@ -47,7 +47,7 @@ ImR_Activator_i::find_ior (const ACE_CString &object_name
   int pos = object_name.find ('/');
 
   if (pos == object_name.npos)
-    pos = object_name.length ();
+    pos = ACE_static_cast (int, object_name.length ());
 
   poa_name.set (object_name.fast_rep (), pos, 1);
 
@@ -306,7 +306,7 @@ ImR_Activator_i::start_server_i (const char *server
       // hold the listen socket open, we force the child to inherit no
       // handles. This includes stdin, stdout, logs, etc.
 
-      for (size_t i = 0; i < environment.length(); ++i)
+      for (CORBA::ULong i = 0; i < environment.length(); ++i)
         proc_opts.setenv (environment[i].name.in (), environment[i].value.in ());
 
       // Spawn the proces.
@@ -553,7 +553,7 @@ ImR_Activator_i::register_server (
                   options.working_directory.in (),
                   OPTIONS::instance ()->convert_str (options.activation)));
 
-      for (size_t i = 0; i < options.environment.length (); ++i)
+      for (CORBA::ULong i = 0; i < options.environment.length (); ++i)
          ACE_DEBUG ((LM_DEBUG, "Environment variable %s=%s\n",
                      options.environment[i].name.in (),
                      options.environment[i].value.in ()));
@@ -591,7 +591,7 @@ ImR_Activator_i::register_server (
                                 options.command_line.in (),
                                 options.working_directory.in (),
                                 OPTIONS::instance ()->convert_str (options.activation)));
-          for (size_t i = 0; i < options.environment.length(); ++i)
+          for (CORBA::ULong i = 0; i < options.environment.length(); ++i)
             ACE_DEBUG ((LM_DEBUG, "Environment variable %s=%s\n",
                         options.environment[i].name.in (),
                         options.environment[i].value.in ()));
@@ -647,7 +647,7 @@ ImR_Activator_i::reregister_server (const char *server,
                             options.command_line.in (),
                             options.working_directory.in (),
                             OPTIONS::instance ()->convert_str (options.activation)));
-      for (size_t i = 0; i < options.environment.length (); ++i)
+      for (CORBA::ULong i = 0; i < options.environment.length (); ++i)
           ACE_DEBUG ((LM_DEBUG, "Environment variable %s=%s\n",
                       options.environment[i].name.in (),
                       options.environment[i].value.in ()));
@@ -741,7 +741,7 @@ ImR_Activator_i::server_is_running (const char *server,
   // fewer profiles than endpoints.
   size_t pfile_count =
     registry.endpoint_count ();
-  mp.set (pfile_count);
+  mp.set (ACE_static_cast (CORBA::ULong, pfile_count));
 
   // Leave it to the filter to decide which acceptors/in which order
   // go into the mprofile.
@@ -1209,7 +1209,8 @@ ImR_Activator_i::list (CORBA::ULong how_many,
   if (this->repository_.get_repository_size () > how_many)
     n = how_many;
   else
-    n = this->repository_.get_repository_size ();
+    n = ACE_static_cast (CORBA::ULong,
+                         this->repository_.get_repository_size ());
 
   // Now copy over to the server list.
 
