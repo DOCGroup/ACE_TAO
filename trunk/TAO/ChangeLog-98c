@@ -1,3 +1,8 @@
+Sat Jun 06 21:17:13 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/{server,client}.dsp: Both projects now
+ 	  require to link against orbsvcs.lib.
+
 Sat Jun  6 20:32:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/OctetSeq/OctetSeq.cpp: Changed Test::_tc_CharSeq_seq and
