@@ -1,3 +1,8 @@
+Wed Sep  3 18:08:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Typecode.h: Removed include of tckind .h since it is not
+	  needed. 
+
 Wed Sep  3 17:35:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_codegen.cpp (gen_stub_hdr_includes): #included
