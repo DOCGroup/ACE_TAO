@@ -1,3 +1,7 @@
+Tue Apr 22 16:28:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Seq_Out_T.h: Fixed fuzz errors.
+
 Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	Merging code from the branch refactor_stage_1. The highlight of
