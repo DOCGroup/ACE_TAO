@@ -58,6 +58,12 @@ TAO_UIOP_Transport::event_handler_i (void)
   return this->connection_handler_;
 }
 
+TAO_Pluggable_Messaging *
+TAO_UIOP_Transport::messaging_object (void)
+{
+  return this->messaging_object_;
+}
+
 ssize_t
 TAO_UIOP_Transport::send_i (iovec *iov, int iovcnt,
                             size_t &bytes_transferred,
