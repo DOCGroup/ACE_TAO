@@ -120,7 +120,7 @@ Service_Config_Test: !STATIC
 Sigset_Ops_Test
 Simple_Message_Block_Test: !chorus
 Svc_Handler_Test
-TP_Reactor_Test: ALL
+TP_Reactor_Test
 TSS_Test
 TSS_Static_Test
 Task_Test
@@ -130,14 +130,14 @@ Thread_Mutex_Test: !chorus
 Thread_Pool_Reactor_Resume_Test: !ST
 Thread_Pool_Reactor_Test
 Thread_Pool_Test: !LynxOS !VxWorks
-Time_Service_Test: ALL !STATIC !DISABLED !missing_netsvcs TOKEN !chorus !Unicos
+Time_Service_Test: !STATIC !DISABLED !missing_netsvcs TOKEN !chorus !Unicos
 Time_Value_Test
 Timeprobe_Test
 Timer_Cancellation_Test
 Timer_Queue_Reference_Counting_Test
 Timer_Queue_Test
 Token_Strategy_Test: !ST
-Tokens_Test: ALL MSVC !DISABLED TOKEN !chorus !Unicos
+Tokens_Test: MSVC !DISABLED TOKEN !chorus !Unicos
 UPIPE_SAP_Test: !VxWorks
 Unbounded_Set_Test_Ex
 Upgradable_RW_Test: !chorus
