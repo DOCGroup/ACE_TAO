@@ -518,7 +518,7 @@ ctime_r_test (void)
       {
         result = -1;
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%p|%t) Buffer length limit error\n")));
+                    ACE_TEXT ("(%P|%t) Buffer length limit error\n")));
       }
     }
 
