@@ -3860,8 +3860,8 @@ Messaging::ReplyHandler::ReplyHandler (
   )
     : CORBA_Object (objref, _tao_collocated, servant)
   {
-    
-      this->setup_collocation (_tao_collocated);
+
+      this->_tao_setup_collocation (_tao_collocated);
     }
 
 #if !defined (_MESSAGING_REPLYHANDLER___VAR_CI_)
