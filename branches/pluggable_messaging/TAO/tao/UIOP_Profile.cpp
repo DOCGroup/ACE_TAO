@@ -5,7 +5,6 @@
 
 #if defined (TAO_HAS_UIOP)
 
-#include "tao/GIOP.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"

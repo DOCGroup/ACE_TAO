@@ -5,7 +5,6 @@
 
 #include "tao/IIOP_Profile.h"
 #include "tao/IIOP_Connect.h"
-#include "tao/GIOP.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"

@@ -4,7 +4,6 @@
 #include "tao/Acceptor_Registry.h"
 #include "tao/Stub.h"
 #include "tao/Environment.h"
-#include "tao/GIOP.h"
 #include "tao/ORB_Core.h"
 #include "tao/params.h"
 #include "tao/MProfile.h"

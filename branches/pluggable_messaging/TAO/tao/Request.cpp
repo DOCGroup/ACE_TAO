@@ -1,12 +1,12 @@
 // $Id$
 
 #include "tao/Request.h"
+#include "tao/GIOP_Utils.h"
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #include "tao/Object.h"
 #include "tao/Stub.h"
-#include "tao/GIOP.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Request.i"

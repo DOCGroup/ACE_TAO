@@ -13,7 +13,6 @@
 #include "tao/Stub.h"
 #include "tao/Sequence.h"
 #include "tao/Object.h"
-#include "tao/GIOP.h"
 #include "tao/NVList.h"
 #include "tao/Invocation.h"
 #include "tao/Asynch_Invocation.h"
