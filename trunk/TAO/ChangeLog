@@ -1,3 +1,23 @@
+Tue May  4 00:12:26 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+
+	  Include "tao/DynamicInterface/DII_CORBA_methods.h" first to
+	  force CORBA::release(CORBA::Request...) prototype to be parsed
+	  before TAO_Pseudo_{Var,Out}_T templates.  All required
+	  non-dependent names must be parsed prior to the template in
+	  question when using compilers like g++ 3.4.x.\
+
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_T.cpp:
+
+	  Include "ace/INET_Addr.h" to pull in ACE_INET_Addr class
+	  declaration.
+
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.cpp:
+
+	  Fixed "TAO_HAS_SCIOP" is not defined warning exhibited by g++
+	  3.4.
+
 Mon May  3 13:15:51 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/mfc/server.mpc:
