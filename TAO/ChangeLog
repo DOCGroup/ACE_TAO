@@ -1,3 +1,9 @@
+Mon Dec 15 09:24:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+        
+        * examples/POA/Forwarding/POA_Forwarding.mpc:
+          The server doesn't need the Generic_Servant library. This fixes the
+          linker warnings in the SunOS Forte8 build we see.
+
 Sun Dec 14 10:09:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
