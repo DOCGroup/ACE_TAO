@@ -4,6 +4,7 @@
 
 #include "ORBInitializer_Registry.h"
 #include "ORB.h"
+#include "TAO_Singleton_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ORBInitializer_Registry.inl"
