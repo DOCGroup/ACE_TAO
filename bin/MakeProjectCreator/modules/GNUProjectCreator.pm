@@ -159,6 +159,12 @@ sub fill_value {
       }
     }
   }
+  elsif ($name eq 'tao') {
+    if ($self->get_assignment('includes') =~ /tao/i ||
+        $self->get_assignment('libpaths') =~ /tao/i) {
+      $value = 1;
+    }
+  }
 
   return $value;
 }

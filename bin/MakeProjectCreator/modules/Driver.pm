@@ -14,10 +14,10 @@ use strict;
 use File::Basename;
 
 use Options;
-use StringProcessor;
+use Parser;
 
 use vars qw(@ISA);
-@ISA = qw(StringProcessor Options);
+@ISA = qw(Parser Options);
 
 # ************************************************************
 # Data Section
@@ -40,12 +40,48 @@ sub new {
 
   $self->{'path'}     = $path;
   $self->{'name'}     = $name;
-  $self->{'version'}  = 1.6;
+  $self->{'version'}  = 1.7;
   $self->{'types'}    = {};
   $self->{'creators'} = \@creators;
   $self->{'default'}  = $creators[0];
+  $self->{'reldefs'}  = {};
+  $self->{'relorder'} = [];
 
   return $self;
+}
+
+
+sub convert_slashes {
+  #my($self) = shift;
+  return 0;
+}
+
+
+sub parse_line {
+  my($self)        = shift;
+  my($ih)          = shift;
+  my($line)        = shift;
+  my($status)      = 1;
+  my($errorString) = '';
+
+  if ($line eq '') {
+  }
+  elsif ($line =~ /^(\w+)(\s*,\s*(.*))?$/) {
+    my($name)  = $1;
+    my($value) = $3;
+    if (defined $value) {
+      $value =~ s/^\s+//;
+      $value =~ s/\s+$//;
+    }
+    $self->{'reldefs'}->{$name} = $value;
+    push(@{$self->{'relorder'}}, $name);
+  }
+  else {
+    $status = 0;
+    $errorString = "ERROR: Unrecognized line: $line";
+  }
+
+  return $status, $errorString;
 }
 
 
@@ -196,33 +232,43 @@ sub run {
     push(@{$options->{'input'}}, '');
   }
   if (!defined $options->{'global'}) {
-    $options->{'global'} = $self->{'path'} . '/config/global.mpb';
+    my($global) = $self->{'path'} . '/config/global.mpb';
+    if (-r $global) {
+      $options->{'global'} = $global;
+    }
   }
   ## Always add the default include paths
   unshift(@{$options->{'include'}}, $self->{'path'} . '/templates');
   unshift(@{$options->{'include'}}, $self->{'path'} . '/config');
 
   if ($options->{'reldefs'}) {
-    if (defined $ENV{ACE_ROOT} &&
-        !defined $options->{'relative'}->{'ACE_ROOT'}) {
-      $options->{'relative'}->{'ACE_ROOT'} = $ENV{ACE_ROOT};
-    }
-    if (!defined $options->{'relative'}->{'TAO_ROOT'}) {
-      if (defined $ENV{TAO_ROOT}) {
-        $options->{'relative'}->{'TAO_ROOT'} = $ENV{TAO_ROOT};
-      }
-      else {
-        $options->{'relative'}->{'TAO_ROOT'} =
-                  $options->{'relative'}->{'ACE_ROOT'} . '/TAO';
+    ## Only try to read the file if it exists
+    my($rel) = $self->{'path'} . '/config/default.rel';
+    if (-r $rel) {
+      my($srel, $errorString) = $self->read_file($rel);
+      if (!$srel) {
+        print STDERR "$errorString\nin $rel\n";
+        return $status;
       }
     }
-    if (!defined $options->{'relative'}->{'CIAO_ROOT'}) {
-      if (defined $ENV{CIAO_ROOT}) {
-        $options->{'relative'}->{'CIAO_ROOT'} = $ENV{CIAO_ROOT};
+
+    foreach my $key (@{$self->{'relorder'}}) {
+      if (defined $ENV{$key} &&
+          !defined $options->{'relative'}->{$key}) {
+        $options->{'relative'}->{$key} = $ENV{$key};
       }
-      else {
-        $options->{'relative'}->{'CIAO_ROOT'} =
-                  $options->{'relative'}->{ACE_ROOT} . '/TAO/CIAO';
+      if (defined $self->{'reldefs'}->{$key} &&
+          !defined $options->{'relative'}->{$key}) {
+        my($value) = $self->{'reldefs'}->{$key};
+        if ($value =~ /\$(\w+)(.*)?/) {
+          my($var)   = $1;
+          my($extra) = $2;
+          $options->{'relative'}->{$key} = 
+                     $options->{'relative'}->{$var} . $extra;
+        }
+        else {
+          $options->{'relative'}->{$key} = $value;
+        }
       }
     }
   }
@@ -232,7 +278,7 @@ sub run {
 
   ## Save the original directory outside of the loop
   ## to avoid calling it multiple times.
-  my($orig_dir) = Cwd::getcwd();
+  my($orig_dir) = $self->getcwd();
 
   ## Generate the files
   foreach my $cfile (@{$options->{'input'}}) {

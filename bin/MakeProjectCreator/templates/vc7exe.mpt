@@ -1,7 +1,6 @@
 configurations     = Release Debug "Static Release" "Static Debug"
 type_is_binary     = 1
 common_defines     = WIN32 _CONSOLE
-pch_defines        = ACE_USING_PCH
 configuration_type = 1
 subsystem          = 1
 ssl_libs           = libeay32 ssleay32
@@ -46,7 +45,7 @@ Static Debug {
 
 MFC Release {
   common_defines   = WIN32 _WINDOWS
-  defines          = NDEBUG _AFXDLL ACE_HAS_MFC
+  defines          = NDEBUG _AFXDLL
   output_dir       = MFC_Release
   intermediate_dir = MFC_Release
   lib_modifier     = mfc
@@ -58,7 +57,7 @@ MFC Debug {
   optimization     = 0
   debug            = 1
   common_defines   = WIN32 _WINDOWS
-  defines          = _DEBUG _AFXDLL ACE_HAS_MFC
+  defines          = _DEBUG _AFXDLL
   output_dir       = MFC_Debug
   intermediate_dir = MFC_Debug
   lib_modifier     = mfcd
@@ -67,7 +66,7 @@ MFC Debug {
 }
 
 Static MFC Release {
-  defines          = NDEBUG _AFXDLL ACE_HAS_MFC
+  defines          = NDEBUG _AFXDLL
   output_dir       = Static_MFC_Release
   intermediate_dir = Static_MFC_Release
   lib_modifier     = mfcs
@@ -79,7 +78,7 @@ Static MFC Release {
 Static MFC Debug {
   optimization     = 0
   debug            = 1
-  defines          = _DEBUG _AFXDLL ACE_HAS_MFC
+  defines          = _DEBUG _AFXDLL
   output_dir       = Static_MFC_Debug
   intermediate_dir = Static_MFC_Debug
   lib_modifier     = mfcsd
@@ -88,3 +87,4 @@ Static MFC Debug {
   use_mfc          = 2
 }
 
+conditional_include "vcfullmacros"

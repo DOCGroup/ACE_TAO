@@ -5,7 +5,6 @@ default_configuration = "Static Debug"
 type_is_binary        = 1
 common_defines        = WIN32 _CONSOLE
 subsystem             = console
-pch_defines           = ACE_USING_PCH
 ssl_libs              = libeay32 ssleay32
 need_libflags         = 1
 pdb                   = 1
@@ -35,7 +34,7 @@ MFC Release {
   use_debug_libraries   = 0
   compile_flags         = /W3 /GX /O2 /MD /GR
   common_defines        = WIN32 _WINDOWS
-  defines               = NDEBUG _AFXDLL ACE_HAS_MFC
+  defines               = NDEBUG _AFXDLL
   compile_flags_removed = /YX
   lib_modifier          = mfcs
   output_dir            = MFC_Release
@@ -48,10 +47,12 @@ MFC Debug {
   use_debug_libraries   = 1
   compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
   common_defines        = WIN32 _WINDOWS
-  defines               = _DEBUG _AFX_DLL ACE_HAS_MFC
+  defines               = _DEBUG _AFX_DLL
   compile_flags_removed = /YX
   lib_modifier          = mfcsd
   output_dir            = MFC_Debug
   intermediate_dir      = MFC_Debug
   use_mfc               = 1
 }
+
+conditional_include "vcpartialmacros"

@@ -47,7 +47,6 @@ my(%validNames) = ('exename'         => 1,
                    'pch_header'      => 1,
                    'pch_source'      => 1,
                    'ssl'             => 1,
-                   'tao'             => 1,
                    'dllout'          => 1,
                    'libout'          => 1,
                    'dllflags'        => 1,
@@ -610,7 +609,7 @@ sub read_template_input {
   if (defined $file) {
     my($file) = $self->search_include_path("$file.$TemplateInputExtension");
     if (defined $file) {
-      $self->{$tag} = new TemplateInputReader();
+      $self->{$tag} = new TemplateInputReader($self->get_include_path());
       ($status, $errorString) = $self->{$tag}->read_file($file);
     }
     else {
@@ -921,7 +920,6 @@ sub generate_default_components {
           $self->sift_files($files, $exts, $pchh, $pchc, $tag, $array);
           if ($tag eq 'idl_files' && defined $$array[0]) {
             $self->{'idl_defaulted'} = 1;
-            $self->process_assignment('tao', 1);
           }
           elsif ($tag eq 'source_files') {
             ## If we are auto-generating the source_files, then
