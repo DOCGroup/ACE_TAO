@@ -13,11 +13,12 @@ const char *ior = "file://test.ior";
 int nthreads = 5;
 int niterations = 5;
 int period = -1;
+int do_shutdown = 1;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:n:i:p:");
+  ACE_Get_Opt get_opts (argc, argv, "k:n:i:p:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -35,6 +36,9 @@ parse_args (int argc, char *argv[])
       case 'p':
         period = ACE_OS::atoi (get_opts.optarg);
         break;
+      case 'x':
+        do_shutdown = 0;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -42,6 +46,8 @@ parse_args (int argc, char *argv[])
                            "-k <ior> "
                            "-n <nthreads> "
                            "-i <niterations> "
+                           "-p <period> "
+                           "-x (disable shutdown) "
                            "\n",
                            argv [0]),
                           -1);
@@ -165,8 +171,11 @@ main (int argc, char *argv[])
         }
       throughput.dump_results ("Aggregated", gsf);
 
-      server->shutdown (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      if (do_shutdown)
+        {
+          server->shutdown (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
     }
   ACE_CATCHANY
     {

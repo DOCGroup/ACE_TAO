@@ -1,3 +1,23 @@
+Tue Aug 24 22:40:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* performance-tests/Latency/Makefile:
+	  Fixed the rules to compile the java version
+
+	* performance-tests/Latency/scalability.pl:
+	  Added a new driver program to run a scalability test
+
+	* performance-tests/Latency/client.cpp:
+	* performance-tests/Latency/st_client.cpp:
+	  Added options to disable the shutdown message when the client
+	  dies.
+	  
+	* performance-tests/Latency/java_server.java:
+	  Visibroker3.4 does not have the ORB.run() method (added in CORBA 
+	  2.3)
+
+	* performance-tests/Latency/run_test.pl:
+	  Minor cosmetic fixes.
+
 Tue Aug 24 21:08:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_enum/enum_ch.cpp:

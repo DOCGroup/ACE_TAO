@@ -9,7 +9,7 @@ unshift @INC, '../../../bin';
 require ACEutils;
 
 $client_conf="client.conf";
-$server_conf="client.conf";
+$server_conf="server.conf";
 $threads='4';
 
 $iorfile = "test.ior";
