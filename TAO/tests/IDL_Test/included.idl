@@ -20,8 +20,14 @@
 // ============================================================================
 
 // Included in IDL file 'including.idl'.
-module A 
+module Aok 
 {
   typedef sequence<double> Seq1Type;
 };
 
+enum Agog
+{
+  Agog1, 
+  Agog2, 
+  Agog3
+};
