@@ -1,3 +1,10 @@
+Sat Dec 15 09:53:59 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Transport.cpp:
+	  Add missing #include of "ace/Reactor.h", only a problem on
+	  Tru64/DU/CXX, probably because other platforms use
+	  ACE_TEMPLATES_REQUIRE_SOURCE
+
 Fri Dec 14 22:54:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Objref_Sequence_Test/server.cpp: Fixed a compile error. 
