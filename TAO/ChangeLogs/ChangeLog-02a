@@ -1,3 +1,9 @@
+Thu Mar  7 21:39:17 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/MProfile.cpp (add_profile, grow):
+
+	  Removed vestigial ACE_INLINE declarations.
+
 Thu Mar  7 21:27:58 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.h:

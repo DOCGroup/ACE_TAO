@@ -115,7 +115,7 @@ TAO_MProfile::set (const TAO_MProfile &mprofile)
 }
 
 // Not thread safe!
-ACE_INLINE int
+int
 TAO_MProfile::grow (CORBA::ULong sz)
 {
   if (sz <= this->size_)
@@ -143,7 +143,7 @@ TAO_MProfile::grow (CORBA::ULong sz)
   return 0;
 }
 
-ACE_INLINE int
+int
 TAO_MProfile::add_profile (TAO_Profile *pfile)
 {
   // skip by the used slots
