@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "testS.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
+#include "../check_supported_priorities.cpp"
 
 class test_i :
   public POA_test,
@@ -752,9 +753,11 @@ server::test_lanes_bands_server_declared_poa (CORBA::Environment &ACE_TRY_ENV)
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  // Make sure we can support multiple priorities that are required
+  // for this test.
+  check_supported_priorities ();
 
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,

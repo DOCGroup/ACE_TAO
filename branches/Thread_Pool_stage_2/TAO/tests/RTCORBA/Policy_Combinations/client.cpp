@@ -59,9 +59,7 @@ main (int argc, char **argv)
   // for this test.
   check_supported_priorities ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
