@@ -653,7 +653,7 @@ public:
   static int  activate (int num);
   static void stop (void);
 
-  int open (const ACE_TCHAR *host, u_short port);
+  int open_sender (const ACE_TCHAR *host, u_short port);
 
 protected:
 
@@ -730,7 +730,7 @@ Sender::activate (int num)
                       Sender (i),
                       rc);
 
-      if (sender->open (host, port) == 0)
+      if (sender->open_sender (host, port) == 0)
         rc++;
       else
         delete sender;
@@ -807,7 +807,7 @@ Sender::check_destroy (void)
   return 0;
 }
 
-int Sender::open (const ACE_TCHAR *host, u_short port)
+int Sender::open_sender (const ACE_TCHAR *host, u_short port)
 {
   // Initialize stuff
   // Connect to remote host
@@ -1257,6 +1257,12 @@ disable_signal (int sigmin, int sigmax)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Error: (%P|%t):%p\n"),
                 ACE_TEXT ("pthread_sigmask failed")));
+
+#else
+
+  ACE_UNUSED_ARG (sigmin);
+  ACE_UNUSED_ARG (sigmax);
+
 #endif /* ACE_WIN32 */
 
   return 1;
