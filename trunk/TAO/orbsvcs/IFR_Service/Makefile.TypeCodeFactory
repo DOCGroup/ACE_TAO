@@ -13,6 +13,7 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 LDLIBS = -lTAO_IFR_Client -lTAO -lACE
+ACE_SHLIBS += -lTAO_IFR_Client -lTAO -lACE
 
 LIBNAME = libTypeCodeFactory_DLL
 LIB = $(LIBNAME).a
