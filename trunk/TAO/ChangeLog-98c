@@ -1,3 +1,39 @@
+Wed Jan 06 02:58:28 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * TAO_Examples.dsw
+	* POA/Explicit_Activation/Makefile
+	* POA/Generic_Servant/Makefile
+	* POA/Generic_Servant/server.dsp
+        * POA/Loader/Loader.dsw
+        * POA/Loader/Makefile
+        * POA/Loader/server.dsp
+        * POA/On_Demand_Activation/On_Demand_Activation.dsw
+        * POA/On_Demand_Activation/server.dsp
+	* POA/On_Demand_Activation/Makefile
+        * POA/On_Demand_Loading/Makefile
+        * POA/On_Demand_Loading/On_Demand_Loading.dsw
+        * POA/On_Demand_Loading/server.dsp
+
+	  - Changed the name of the Generic Servant dynamic library from
+ 	    MyFoo back to Generic_Servant.  This was causing too many
+ 	    things to break on NT since the original settings were based
+ 	    on the Generic_Servant name.
+
+	  - Removed excess include directories in the make setting.
+
+	  - Fixed NT make files (including release settings) and made them
+ 	    conform with the existing makefiles.
+
+        * POA/On_Demand_Loading/Servant_Activator.cpp
+        * POA/On_Demand_Loading/Servant_Locator.cpp
+        * POA/Loader/Servant_Activator.cpp
+        * POA/Loader/Servant_Locator.cpp
+	* POA/Loader/Server_Manager.cpp
+
+	  - Removed access includes files.
+
+        * POA/On_Demand_Loading/Servant_Manager.cpp: Fixed use of ACE_CString.	  	  
+	
 Tue Jan  5 22:36:54 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/default_server.{h,cpp}:

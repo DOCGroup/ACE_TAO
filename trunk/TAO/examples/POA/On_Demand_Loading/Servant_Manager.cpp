@@ -106,19 +106,18 @@ ServantManager_i::parse_string (const char *s)
 
   size_t index = str.find (':');
   // On error, npos is returned.
-  if (index == str.length () + 1)
+  if (index == ACE_CString::npos)
     ACE_ERROR ((LM_ERROR,
                 "Required character absent!\n"));
   
   // The index gives us the location which is equivalent to the size
   // of the dllname_ string.
-  this->dllname_.set (str.c_str (),
-                      index);
+  this->dllname_ = str.substr (0, index);
   
   // Obtain the substring from the offset which is one greater than
   // the location of ':'.
-  this->create_symbol_ = str.substring (index + 1,
-                                        str.length ());
+  this->create_symbol_ = str.substr (index + 1);
+
   ACE_DEBUG ((LM_DEBUG,
               "the servant dll:%s\n the factory_function:%s\n ",
               this->dllname_.c_str (),
