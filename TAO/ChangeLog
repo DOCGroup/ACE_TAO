@@ -1,7 +1,17 @@
+Thu Feb 24 06:57:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tests/OBV/Supports/Supports_Test.mpc:
+
+	  Change "dummy_lable" to "dummy_label".
+
+	* orbsvcs/PSS/PSDL.mpc:
+
+	  Change "dummy" to "dummy_label".
+
 Thu Feb 24 08:10:35 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface (gen_skel_helper):
-        
+
           Cleaned up generated code for calls to base class *_skel()
           methods, by changing C-style casts to static_cast<> and
           by eliminating redundant casts. Thanks to Johnny Willemsen
