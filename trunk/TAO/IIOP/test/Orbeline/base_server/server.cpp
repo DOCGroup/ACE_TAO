@@ -6,32 +6,41 @@
 // Server mainline
 //
 //****************************************************************************
-#define IT_EX_MACROS
-
 #include "cubit_impl.h"		// server header file
 
 int 
-main (int , char**)
+main (int argc, char** argv)
 {
 
+  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+  CORBA::BOA_var boa = orb->BOA_init(argc, argv);
+
 #ifdef Cubit_USE_BOA
-  Cubit_var cb = new Cubit_Impl;
+  Cubit_Impl cb("Cubit");
   cout << "Using BOA approach" << endl;
 #else
-  Cubit_var cb = new TIE_Cubit (Cubit_Impl) (new Cubit_Impl);
+  Cubit_Impl tied("Cubit");
+  _tie_Cubit<Cubit_Impl> cb(tied, "Cubit");
+
   cout << "Using TIE approach" << endl;
 #endif /* Cubit_USE_BOA */
   
   //
   // Go get some work to do....
   //
-  IT_TRY {
-      CORBA::Orbix.impl_is_ready("Cubit", IT_X);
+  try {
+
+    boa->obj_is_ready(&cb);
+
+    boa->impl_is_ready();
+
+  } catch (const CORBA::Exception &excep) {
+    cerr << "Server error: " << excep << endl;
+    return -1;
+  } catch (...) {
+    cerr << "Unknown exception" << endl;
+    return -1;
   }
-  IT_CATCHANY {
-     cout << IT_X << endl;
-  }
-  IT_ENDTRY;
 
   cout << "Cubit server is exiting." << endl;
 

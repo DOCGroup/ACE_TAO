@@ -1,89 +1,19 @@
-#----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	10/18/96
-#
-#	Makefile for the ACE_MT_CORBA_Handler tests
-#----------------------------------------------------------------------------
+include stdmk
 
-#----------------------------------------------------------------------------
-#	Local macros
-#----------------------------------------------------------------------------
+EXE = client 	
 
-SRC = cubitC.cpp client.cpp
+all: $(EXE)
 
-CLT_OBJS = cubitC.o client.o
+clean:
+	-rm -f core *.o cubitC.* cubitS.* $(EXE) 
+	-rm -rf Templates.DB
 
-LDLIBS	 = 
+cubitS.cpp: cubit.idl
+	$(ORBCC) cubit.idl
 
-VLDLIBS	 = $(LDLIBS:%=%$(VAR))
+cubitC.cpp: cubit.idl
+	$(ORBCC) cubit.idl
 
-#----------------------------------------------------------------------------
-#	Include macros and targets
-#----------------------------------------------------------------------------
-
-include		$(WRAPPER_ROOT)/include/makeinclude/wrapper_macros.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/macros.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.common.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.nonested.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.lib.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.bin.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
-
-#----------------------------------------------------------------------------
-#	Orbix related macros and target settings.
-#----------------------------------------------------------------------------
-
-
-ORBIX_BINDIR    = $(ORBIX_ROOT)/bin
-ORBIX_LIBDIR    = $(ORBIX_ROOT)/corba2/lib
-ORBIX_INCDIR    = $(ORBIX_ROOT)/corba2/include
-
-CPPFLAGS += -DEXCEPTIONS -I$(ORBIX_INCDIR) -DWANT_ORBIX_FDS
-LDFLAGS  += -L$(ORBIX_LIBDIR) -R $(ORBIX_LIBDIR) -L$(ACE)/ace
-
-IDLFLAGS = -s S.cpp -c C.cpp -B
-
-#----------------------------------------------------------------------------
-#	Local targets
-#----------------------------------------------------------------------------
-
-all: client 
-
-client: $(addprefix $(VDIR),$(CLT_OBJS))
-	$(LINK.cc) -o client $(addprefix $(VDIR),$(CLT_OBJS)) $(LDFLAGS) $(ITIIOP) $(ITCLT) $(VLDLIBS)
-
-
-#----------------------------------------------------------------------------
-#	Dependencies
-#----------------------------------------------------------------------------
-# DO NOT DELETE THIS LINE -- g++dep uses it.
-# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
-
-.obj/cubitC.o .shobj/cubitC.so: cubitC.cpp cubit.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/config-sunos5.5-sunc++-4.x.h \
- $(WRAPPER_ROOT)/ace/stdcpp.h \
- $(WRAPPER_ROOT)/ace/OS.i \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i
-.obj/client.o .shobj/client.so: client.cpp $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/config-sunos5.5-sunc++-4.x.h \
- $(WRAPPER_ROOT)/ace/stdcpp.h \
- $(WRAPPER_ROOT)/ace/OS.i \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/Get_Opt.h \
- $(WRAPPER_ROOT)/ace/Get_Opt.i cubit.h
-
-# IF YOU PUT ANYTHING HERE IT WILL GO AWAY
+client: cubitC.o Profile_Timer.o client.o
+	$(CC) -o client cubitC.o Profile_Timer.o client.o \
+	$(LIBPATH) $(LIBORB) $(STDCC_LIBS)

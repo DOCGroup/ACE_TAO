@@ -1,18 +1,18 @@
 #include "cubit_impl.h"
 
-CORBA::Octet Cubit_Impl:: cube_octet (CORBA::Octet o, CORBA::Environment &IT_env) throw (CORBA::SystemException) {
+CORBA::Octet Cubit_Impl:: cube_octet (CORBA::Octet o) {
   return (CORBA::Octet) (o * o * o); 
 }
 
-CORBA::Short Cubit_Impl:: cube_short (CORBA::Short s, CORBA::Environment &IT_env) throw (CORBA::SystemException) {
+CORBA::Short Cubit_Impl:: cube_short (CORBA::Short s) {
   return (CORBA::Short) (s * s * s);
 }
 
-CORBA::Long Cubit_Impl:: cube_long (CORBA::Long l, CORBA::Environment &IT_env) throw (CORBA::SystemException) {
+CORBA::Long Cubit_Impl:: cube_long (CORBA::Long l) {
    return (CORBA::Long) (l * l * l);
 }
 
-Cubit::Many Cubit_Impl:: cube_struct (const Cubit::Many& values, CORBA::Environment &IT_env) throw (CORBA::SystemException) {
+Cubit::Many Cubit_Impl:: cube_struct (const Cubit::Many& values) {
   Cubit::Many out_values;
   out_values.o = values.o * values.o * values.o;
   out_values.s = values.s * values.s * values.s;
@@ -20,7 +20,7 @@ Cubit::Many Cubit_Impl:: cube_struct (const Cubit::Many& values, CORBA::Environm
   return out_values; 
 }
 
-Cubit::oneof Cubit_Impl:: cube_union (const Cubit::oneof& values, CORBA::Environment &IT_env) throw (CORBA::SystemException) {
+Cubit::oneof Cubit_Impl:: cube_union (const Cubit::oneof& values) {
   Cubit::oneof out_values;
    switch (values._d ()) {
    case Cubit::e_0th:
@@ -42,5 +42,5 @@ Cubit::oneof Cubit_Impl:: cube_union (const Cubit::oneof& values, CORBA::Environ
    return out_values;  
 }
 
-void Cubit_Impl:: please_exit (CORBA::Environment &IT_env) throw (CORBA::SystemException) {
-}
+void Cubit_Impl:: please_exit () 
+  {}
