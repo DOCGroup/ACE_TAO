@@ -201,7 +201,4 @@
 #define ACE_HAS_STL_MAP_CONFLICT
 #define ACE_HAS_STL_QUEUE_CONFLICT
 
-// The OS bind() call will select the port if it's 0.
-#define ACE_HAS_WILDCARD_BIND
-
 #endif /* ACE_CONFIG_H */

@@ -1,3 +1,14 @@
+Mon Apr 13 16:56:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace: Removed all uses of ACE_HAS_WILDCARD_BIND.  This is now the
+ 	  default behavior.  If there's some weird platform that DOESN'T
+ 	  have this behavior, we'll deal with that by setting the
+ 	  ACE_LACKS_WILDCARD_BIND flag.
+
+	* ace/OS.cpp (invoke): Removed the (void *) cast on delete this.
+  	  It wasn't necessary.  Thanks to Steve Huston and David Levine
+ 	  for reporting this.
+
 Mon Apr 13 10:18:59 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/High_Res_Timer.i (hrtime_to_tv): in tv.usec calculation,

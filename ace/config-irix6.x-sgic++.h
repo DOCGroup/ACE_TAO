@@ -49,7 +49,4 @@
   #define ACE_MT_SAFE 1
 #endif /* ACE_MT_SAFE */
 
-// The OS bind() call will select the port if it's 0.
-#define ACE_HAS_WILDCARD_BIND
-
 #endif /* ACE_CONFIG_IRIX6X_H */

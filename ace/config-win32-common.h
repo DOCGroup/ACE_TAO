@@ -32,9 +32,6 @@
 #define ACE_LACKS_UNISTD_H
 #define ACE_LACKS_RLIMIT
 
-// The OS bind() call will select the port if it's 0.
-#define ACE_HAS_WILDCARD_BIND
-
 #define ACE_SIZEOF_LONG_LONG 8
 typedef unsigned __int64 ACE_UINT64;
 

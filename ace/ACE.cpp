@@ -1551,9 +1551,6 @@ ACE::bind_port (ACE_HANDLE handle,
   ACE_TRACE ("ACE::bind_port");
 
   sockaddr_in sin;
-  static u_short upper_limit = ACE_MAX_DEFAULT_PORT;
-  int lower_limit = IPPORT_RESERVED;
-  int round_trip = upper_limit;
 
   ACE_OS::memset ((void *) &sin, 0, sizeof sin);
   sin.sin_family = AF_INET;
@@ -1562,11 +1559,15 @@ ACE::bind_port (ACE_HANDLE handle,
 #endif /* ACE_HAS_SIN_LEN */
   sin.sin_addr.s_addr = ip_addr;
 
-#if defined (ACE_HAS_WILDCARD_BIND)
+#if !defined (ACE_LACKS_WILDCARD_BIND)
   // The OS kernel should select a free port for us.
   sin.sin_port = 0;
   return ACE_OS::bind (handle, (sockaddr *) &sin, sizeof sin);
 #else
+  static u_short upper_limit = ACE_MAX_DEFAULT_PORT;
+  int round_trip = upper_limit;
+  int lower_limit = IPPORT_RESERVED;
+
   // We have to select the port explicitly.
 
   for (;;)
