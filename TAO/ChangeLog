@@ -1,3 +1,8 @@
+Tue May 10 08:39:56 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/releasenotes/index.html:
+          Added missing html tag
+
 Tue May 10 08:31:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Asynch_Reply_Dispatcher_Base.{h,cpp}:
