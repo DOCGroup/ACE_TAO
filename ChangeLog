@@ -4,6 +4,8 @@ Thu Mar 30 15:54:23 2000  Steve Huston  <shuston@riverace.com>
           4.3.x. 4.2.x doesn't have it. Thanks to Johnny Chen
           <jchen@informatica.com> for reporting this.
 
+        * THANKS: Added Johnny Chen to the Hall of Fame.
+
 Wed Mar 29 00:01:39 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* netsvcs/lib/Client_Logging_Handler.cpp (handle_input): 
