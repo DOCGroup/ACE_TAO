@@ -203,7 +203,7 @@ Param_Test_Client<T>::run_dii_test (void)
             CORBA::NamedValue::_duplicate (retval->item (0, ACE_TRY_ENV));
           ACE_TRY_CHECK;
           
-          this->param_test_->_create_request (CORBA_Context::_nil (),
+          this->param_test_->_create_request (//CORBA_Context::_nil (),
                                               opname,
                                               nvlist,
                                               result,
