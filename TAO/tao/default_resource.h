@@ -61,7 +61,6 @@ public:
   // = Member Accessors
   enum
   {
-    TAO_ALLOCATOR_NULL_LOCK,
     TAO_ALLOCATOR_THREAD_LOCK
   };
 
@@ -69,12 +68,6 @@ public:
   enum
   {
     TAO_REACTOR_SELECT_MT, // Use ACE_Token
-    TAO_REACTOR_SELECT_ST, // Use ACE_Noop_Token
-    TAO_REACTOR_FL,
-    TAO_REACTOR_TK,
-    TAO_REACTOR_WFMO,
-    TAO_REACTOR_MSGWFMO,
-    TAO_REACTOR_TP
   };
 
   // = Reactor mappings strategy
@@ -82,13 +75,6 @@ public:
   {
     TAO_SINGLE_REACTOR,
     TAO_REACTOR_PER_PRIORITY
-  };
-
-  // = Priority mapping types
-  enum
-  {
-    TAO_PRIORITY_MAPPING_LINEAR,
-    TAO_PRIORITY_MAPPING_DIRECT
   };
 
   int cdr_allocator_source (void);
@@ -107,8 +93,9 @@ public:
   virtual ACE_Allocator* output_cdr_dblock_allocator (void);
   virtual ACE_Allocator* output_cdr_buffer_allocator (void);
   virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
+  
   virtual int init_protocol_factories (void);
-
+  
   virtual TAO_Resource_Factory::Caching_Strategy connection_caching_strategy_type (void) const;
   virtual double purge_percentage (void) const;
   virtual TAO_Priority_Mapping *get_priority_mapping (void);
@@ -128,15 +115,6 @@ protected:
 
   int use_locked_data_blocks_;
   // The type of data blocks that the ORB should use
-
-  int reactor_registry_type_;
-  // The type of reactor registry.
-
-  int reactor_type_;
-  // Flag indicating which kind of reactor we should use.
-
-  int cdr_allocator_type_;
-  // The type of CDR allocators.
 
   int parser_names_count_;
   // The number of the different types of Parsers.
@@ -178,6 +156,8 @@ protected:
   // situation can occur when a resource factory derived from the
   // default one overrides the get_reactor() method but does not
   // override the reclaim_reactor() method.
+
+  virtual int load_default_protocols (void);
 
 private:
   enum Lock_Type

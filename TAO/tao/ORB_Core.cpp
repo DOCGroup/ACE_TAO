@@ -1325,6 +1325,7 @@ TAO_ORB_Core::resource_factory (void)
       // Service_Repository in order to get it cleaned up properly.
       // But, for now we let it leak.
     }
+
   return this->resource_factory_;
 }
 

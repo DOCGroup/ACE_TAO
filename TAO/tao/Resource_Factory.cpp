@@ -162,6 +162,12 @@ TAO_Resource_Factory::create_cached_connection_lock (void)
   return 0;
 }
 
+int
+TAO_Resource_Factory:: load_default_protocols (void)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Dynamic_Service<TAO_Resource_Factory>;

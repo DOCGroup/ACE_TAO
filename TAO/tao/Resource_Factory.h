@@ -179,6 +179,12 @@ public:
 
   virtual ACE_Lock *create_cached_connection_lock (void);
   // Creates the lock for the lock needed in the Cache Map
+
+protected:
+  virtual int load_default_protocols (void);
+  // Loads the default protocols. This method is used so that the
+  // advanced_resource.cpp can call the one in default_resource.cpp
+  // without calling unnecessary functions.
 };
 
 #include "ace/post.h"
