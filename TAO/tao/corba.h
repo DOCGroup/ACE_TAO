@@ -55,8 +55,21 @@
 
 #include "tao/ObjectIdListC.h"
 
-#include "tao/StringSeqC.h"
+#include "tao/AnySeqC.h"
+#include "tao/BooleanSeqC.h"
+#include "tao/CharSeqC.h"
+#include "tao/DoubleSeqC.h"
+#include "tao/FloatSeqC.h"
+#include "tao/LongDoubleSeqC.h"
+#include "tao/LongLongSeqC.h"
+#include "tao/LongSeqC.h"
 #include "tao/OctetSeqC.h"
+#include "tao/ShortSeqC.h"
+#include "tao/StringSeqC.h"
+#include "tao/ULongSeqC.h"
+#include "tao/UShortSeqC.h"
+#include "tao/WCharSeqC.h"
+#include "tao/WStringSeqC.h"
 
 // TAO specific files, avoid them as much as possible.
 
