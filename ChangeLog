@@ -1,16 +1,273 @@
+Mon Jun 14 13:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.cpp:
+        * ace/ACE.h:
+        * ace/ACE.i:
+        * ace/Asynch_Acceptor.cpp:
+        * ace/Condition_Recursive_Thread_Mutex.cpp:
+        * ace/Condition_Recursive_Thread_Mutex.h:
+        * ace/Configuration.cpp:
+        * ace/DEV.cpp:
+        * ace/DEV.h:
+        * ace/DEV.i:
+        * ace/DEV_Connector.cpp:
+        * ace/DEV_Connector.h:
+        * ace/DEV_Connector.i:
+        * ace/DEV_IO.cpp:
+        * ace/DEV_IO.h:
+        * ace/DEV_IO.i:
+        * ace/Date_Time.cpp:
+        * ace/Date_Time.h:
+        * ace/Date_Time.i:
+        * ace/Dirent_Selector.inl:
+        * ace/Event_Handler.i:
+        * ace/FIFO.cpp:
+        * ace/FIFO_Recv.cpp:
+        * ace/FIFO_Recv.h:
+        * ace/FIFO_Recv.i:
+        * ace/FIFO_Recv_Msg.cpp:
+        * ace/FIFO_Recv_Msg.h:
+        * ace/FIFO_Recv_Msg.i:
+        * ace/FIFO_Send.cpp:
+        * ace/FIFO_Send.h:
+        * ace/FIFO_Send.i:
+        * ace/FIFO_Send_Msg.cpp:
+        * ace/FIFO_Send_Msg.h:
+        * ace/FIFO_Send_Msg.i:
+        * ace/FILE.cpp:
+        * ace/FILE.h:
+        * ace/FILE.i:
+        * ace/FILE_Connector.cpp:
+        * ace/FILE_Connector.h:
+        * ace/FILE_Connector.i:
+        * ace/FILE_IO.cpp:
+        * ace/FILE_IO.h:
+        * ace/FILE_IO.i:
+        * ace/Filecache.cpp:
+        * ace/FlReactor.h:
+        * ace/Flag_Manip.cpp:
+        * ace/Flag_Manip.h:
+        * ace/Flag_Manip.i:
+        * ace/Framework_Component_T.cpp:
+        * ace/Framework_Component_T.h:
+        * ace/Handle_Ops.cpp:
+        * ace/Handle_Ops.h:
+        * ace/IO_SAP.cpp:
+        * ace/IO_SAP.h:
+        * ace/IO_SAP.i:
+        * ace/IPC_SAP.cpp:
+        * ace/IPC_SAP.h:
+        * ace/IPC_SAP.i:
+        * ace/Init_ACE.cpp:
+        * ace/Init_ACE.h:
+        * ace/LSOCK.cpp:
+        * ace/LSOCK.h:
+        * ace/LSOCK.i:
+        * ace/LSOCK_Acceptor.cpp:
+        * ace/LSOCK_CODgram.cpp:
+        * ace/LSOCK_CODgram.h:
+        * ace/LSOCK_CODgram.i:
+        * ace/LSOCK_Connector.cpp:
+        * ace/LSOCK_Connector.h:
+        * ace/LSOCK_Connector.i:
+        * ace/LSOCK_Dgram.cpp:
+        * ace/LSOCK_Dgram.h:
+        * ace/LSOCK_Dgram.i:
+        * ace/LSOCK_Stream.cpp:
+        * ace/LSOCK_Stream.h:
+        * ace/LSOCK_Stream.i:
+        * ace/Lib_Find.h:
+        * ace/Log_Msg.cpp:
+        * ace/Log_Msg_NT_Event_Log.cpp:
+        * ace/Log_Msg_UNIX_Syslog.cpp:
+        * ace/Log_Record.cpp:
+        * ace/Log_Record.h:
+        * ace/Log_Record.i:
+        * ace/Logging_Strategy.cpp:
+        * ace/MEM_Acceptor.cpp:
+        * ace/MEM_Acceptor.h:
+        * ace/MEM_Acceptor.i:
+        * ace/MEM_Connector.cpp:
+        * ace/MEM_Connector.h:
+        * ace/MEM_Connector.i:
+        * ace/MEM_IO.cpp:
+        * ace/MEM_IO.h:
+        * ace/MEM_IO.i:
+        * ace/MEM_SAP.cpp:
+        * ace/MEM_SAP.h:
+        * ace/MEM_SAP.i:
+        * ace/MEM_Stream.cpp:
+        * ace/MEM_Stream.h:
+        * ace/MEM_Stream.i:
+        * ace/Memory_Pool.cpp:
+        * ace/Metrics_Cache.cpp:
+        * ace/Metrics_Cache.h:
+        * ace/Multihomed_INET_Addr.i:
+        * ace/Naming_Context.cpp:
+        * ace/OS_Dirent.cpp:
+        * ace/OS_Dirent.h:
+        * ace/OS_Log_Msg_Attributes.inl:
+        * ace/OS_Thread_Adapter.cpp:
+        * ace/OS_Thread_Adapter.h:
+        * ace/Obchunk.i:
+        * ace/Object_Manager_Base.cpp:
+        * ace/Object_Manager_Base.h:
+        * ace/POSIX_Asynch_IO.cpp:
+        * ace/POSIX_Asynch_IO.h:
+        * ace/Parse_Node.i:
+        * ace/Pipe.cpp:
+        * ace/Pipe.h:
+        * ace/Pipe.i:
+        * ace/Process.cpp:
+        * ace/Process_Manager.cpp:
+        * ace/Process_Mutex.h:
+        * ace/Process_Semaphore.cpp:
+        * ace/RW_Process_Mutex.cpp:
+        * ace/Reactor_Notification_Strategy.inl:
+        * ace/Reactor_Timer_Interface.h:
+        * ace/Registry.cpp:
+        * ace/SOCK.h:
+        * ace/SOCK_Acceptor.cpp:
+        * ace/SOCK_Acceptor.h:
+        * ace/SOCK_Acceptor.i:
+        * ace/SOCK_CODgram.cpp:
+        * ace/SOCK_Connector.cpp:
+        * ace/SOCK_Connector.h:
+        * ace/SOCK_Dgram.cpp:
+        * ace/SOCK_Dgram_Bcast.cpp:
+        * ace/SOCK_Dgram_Bcast.h:
+        * ace/SOCK_Dgram_Bcast.i:
+        * ace/SOCK_Dgram_Mcast.cpp:
+        * ace/SOCK_Dgram_Mcast.h:
+        * ace/SOCK_Dgram_Mcast.i:
+        * ace/SOCK_IO.cpp:
+        * ace/SOCK_IO.i:
+        * ace/SOCK_SEQPACK_Acceptor.cpp:
+        * ace/SOCK_SEQPACK_Acceptor.h:
+        * ace/SOCK_SEQPACK_Acceptor.i:
+        * ace/SOCK_SEQPACK_Association.cpp:
+        * ace/SOCK_SEQPACK_Association.h:
+        * ace/SOCK_SEQPACK_Association.i:
+        * ace/SOCK_SEQPACK_Connector.cpp:
+        * ace/SOCK_SEQPACK_Connector.h:
+        * ace/SOCK_SEQPACK_Connector.i:
+        * ace/SOCK_Stream.cpp:
+        * ace/SOCK_Stream.h:
+        * ace/SOCK_Stream.i:
+        * ace/SPIPE.cpp:
+        * ace/SPIPE.h:
+        * ace/SPIPE.i:
+        * ace/SPIPE_Connector.cpp:
+        * ace/SPIPE_Connector.h:
+        * ace/SPIPE_Connector.i:
+        * ace/SPIPE_Stream.cpp:
+        * ace/SPIPE_Stream.h:
+        * ace/SPIPE_Stream.i:
+        * ace/SV_Message_Queue.cpp:
+        * ace/SV_Message_Queue.h:
+        * ace/SV_Message_Queue.i:
+        * ace/SV_Semaphore_Complex.cpp:
+        * ace/SV_Semaphore_Complex.h:
+        * ace/SV_Semaphore_Complex.i:
+        * ace/SV_Semaphore_Simple.cpp:
+        * ace/SV_Semaphore_Simple.h:
+        * ace/SV_Semaphore_Simple.i:
+        * ace/Service_Config.h:
+        * ace/Service_Manager.i:
+        * ace/Shared_Object.i:
+        * ace/Strategies_T.cpp:
+        * ace/Strategies_T.h:
+        * ace/Strategies_T.i:
+        * ace/Svc_Conf_l.cpp:
+        * ace/Synch.cpp:
+        * ace/Synch.h:
+        * ace/Synch_Options.i:
+        * ace/Synch_T.cpp:
+        * ace/Synch_T.h:
+        * ace/System_Time.cpp:
+        * ace/Test_and_Set.h:
+        * ace/Thread_Adapter.i:nl
+        * ace/Timeprobe.i:
+        * ace/Token_Request_Reply.h:
+        * ace/UPIPE_Acceptor.cpp:
+        * ace/UPIPE_Acceptor.h:
+        * ace/UPIPE_Acceptor.i:
+        * ace/UPIPE_Connector.cpp:
+        * ace/UPIPE_Connector.h:
+        * ace/UPIPE_Connector.i:
+        * ace/UPIPE_Stream.i:
+        * ace/WIN32_Asynch_IO.cpp:
+        * ace/WIN32_Proactor.cpp:
+          Changed checks for ACE_LACKS_INLINE_FUNCTIONS with __ACE_INLINE__ in
+          the h/cpp files. In the .i files changed ASYS_INLINE with ACE_INLINE.
+          We now just use one method of including inline files. As a side effect
+          we now have to add some extra includes for non inlined builds because
+          they don't get the includes of the .i files anymore for free.
+
+        * ace/config-openvms.h:
+          Removed not needed lines
+
+        * ace/SSL/SSL_Context.cpp:
+        * ace/Based_Pointer_Repository.cpp:
+        * ace/Dynamic.cpp:
+        * ace/UUID.cpp:
+          To make things easier to maintenance use the new
+          ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION macro to check
+          whether we need to explicit instantiate static template members.
+          This macro is set for the GNU compiler for AIX, HPUX and VxWorks.
+
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Dev_Poll_Reactor.h:
+        * ace/Reactor.h:
+        * ace/Reactor.i:
+        * ace/Reactor_Impl.h:
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Select_Reactor_T.cpp:
+        * ace/Select_Reactor_T.h:
+        * ace/WFMO_Reactor.cpp:
+        * ace/WFMO_Reactor.h:
+          Removed deprecated set_timer_queue method
+
+        * ace/ATM_Acceptor.h:
+        * ace/Stream.h:
+        * ace/TLI_Acceptor.h:
+          No need to include ace/Time_Value.h, just forward declare
+          ACE_Time_Value.
+
+        * ace/Condition_Recursive_Thread_Mutex.inl:
+        * ace/Dynamic_Service_Base.i:
+        * ace/FlReactor.i:
+        * ace/Framework_Component_T.inl:
+        * ace/Handle_Ops.i:
+        * ace/Init_ACE.i:
+        * ace/OS_Thread_Adapter.inl:
+        * ace/Metrics_Cache.i:
+        * ace/Lib_Find.i:
+        * ace/OS_Dirent.inl:
+        * ace/Object_Manager_Base.inl:
+        * ace/POSIX_Asynch_IO.i:
+        * ace/Synch_T.i:
+        * ace/Synch.i:
+        * ace/Test_and_Set.i:
+          Removed these files, they are empty. If we need to have an inline file
+          we will add it when needed.
+
+        * ace/Makefile.am:
+          Removed the files I zapped from the repo
+
 Mon Jun 14 08:28:24 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* docs/ACE-development-process.html: The link to
-  
+
 	  http://ace.cs.wustl.edu/bugs/index.cgi
-  
+
           should point to
-  
+
           http://deuce.doc.wustl.edu/bugzilla/index.cgi
-  
+
           Thanks to Patrick Bennett <Patrick.Bennett@inin.com> for
  	  reporting this.
-	
+
 Mon Jun 14 11:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp
