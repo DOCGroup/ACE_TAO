@@ -617,9 +617,20 @@ sub restore_state {
   my($self)  = shift;
   my($state) = shift;
 
-  ## Overwrite each state value
+  ## Make a deep copy of each state value.  That way our array
+  ## references and hash references do not get accidentally modified.
   foreach my $skey (@statekeys) {
-    $self->{$skey} = $$state{$skey};
+    if (UNIVERSAL::isa($state->{$skey}, 'ARRAY')) {
+      my(@arr) = @{$state->{$skey}};
+      $self->{$skey} = \@arr;
+    }
+    elsif (UNIVERSAL::isa($state->{$skey}, 'HASH')) {
+      my(%hash) = %{$state->{$skey}};
+      $self->{$skey} = \%hash;
+    }
+    else {
+      $self->{$skey} = $state->{$skey};
+    }
   }
 }
 

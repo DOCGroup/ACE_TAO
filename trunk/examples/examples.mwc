@@ -6,6 +6,6 @@ workspace {
   // The nice thing about splitting up into separate directories is
   // that it completely eliminates mpc maintenance.
 
-  implicit = 1
-  cmdline += -include $PWD -base example_base
+  implicit = example_base
+  cmdline += -include $PWD
 }
