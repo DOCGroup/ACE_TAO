@@ -785,14 +785,14 @@ Wed Aug 22 08:16:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
         * orbsvcs/orbsvcs/AV/AVStreams_i.h:
         * orbsvcs/orbsvcs/AV/AVStreams_i.i:
         * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-            Remove TAO_String_Hash_Key class, replace all uses
-            with ACE_CString.  Only reason for keeping the
-            TAO_String_Hash_Key class was to have a string class
-            with a hash function so it could be put in an
-            ACE_Hash_Map_Manager container.  ACE_CString already has this.
+          Remove TAO_String_Hash_Key class, replace all uses with
+	  ACE_CString.  Only reason for keeping the TAO_String_Hash_Key
+	  class was to have a string class with a hash function so it
+	  could be put in an ACE_Hash_Map_Manager container.  ACE_CString
+	  already has this. 
 
         * orbsvcs/orbsvcs/AV/Fill_ACE_QoS.h:
-            Change include.
+          Change include.
 
 Tue Aug 21 22:58:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
