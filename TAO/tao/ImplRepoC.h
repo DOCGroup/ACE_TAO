@@ -11,7 +11,14 @@
 #define _TAO_IDL_IMPLREPOC_H_
 #include "ace/pre.h"
 
-#include "tao/corba.h"
+#include "tao/Object.h"
+#include "tao/Managed_Types.h"
+#include "tao/Sequence.h"
+#include "tao/Exception.h"
+#include "tao/Environment.h"
+#include "tao/CDR.h"
+#include "tao/Any.h"
+#include "tao/Typecode.h"
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 #include "ace/streams.h"
