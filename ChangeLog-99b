@@ -1,3 +1,8 @@
+Thu Sep 23 14:12:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/auto_compile:
+	  It was reporting success even when things failed.
+
 Thu Sep 23 11:13:38 1999  Wei Chiang <wei.chiang@nokia.com>
 
         * ace/OS.*,Synch.cpp: Chorus compiler (g++) seems to be
