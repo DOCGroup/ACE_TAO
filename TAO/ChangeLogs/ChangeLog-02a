@@ -1,3 +1,16 @@
+Mon Sep  4 22:18:16 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Stub.cpp:
+
+	  Changed the use of <MProfile::get_next> to
+	  <MProfile::get_profile> in the TAO_Stub constructor.  <get_next>
+	  method has side effects, and was corrupting the state of the
+	  stub's <base_profiles_> member.  This fixes the following bug in
+	  the orb: if the invocation using the first profile in the IOR
+	  does not succeed for whatever reason, e.g., protocol not
+	  supported, the invocation will fail without going through other
+	  profiles.
+
 Sun Sep 03 19:40:43 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/TAO_IDL_BE_DLL.dsp:
@@ -12,7 +25,7 @@ Sun Sep  3 15:35:11 2000  Carlos O'Ryan  <coryan@uci.edu>
         * orbsvcs/orbsvcs/Makefile.Svc_Utils:
           DU/CXX is more strict about inter-library dependencies than
           other compiles, add the libraries reported missing in the last
-          build. 
+          build.
 
 Sun Sep  3 12:16:00 2000  Carlos O'Ryan  <coryan@uci.edu>
 
