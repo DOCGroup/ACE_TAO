@@ -1,3 +1,11 @@
+Tue Jan  6 11:35:27 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantHeaderGenerator.hpp:
+        * CIDLC/ServantSourceGenerator.hpp:
+        
+          Added virtual destructors to classes ServantHeaderEmitter and
+          ServantSourceEmitter to eliminate warnings on g++ 3.3.
+
 Tue Jan  6 11:23:29 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/OEP/BasicSP/EC/client.cpp:
