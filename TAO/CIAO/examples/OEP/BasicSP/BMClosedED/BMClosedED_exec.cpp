@@ -77,7 +77,7 @@ char *
 MyImpl::BMClosedED_exec_i::get_data (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->str_.inout ();
+  return CORBA::string_dup (this->str_.inout ());
 }
 
 // Operations from Components::SessionComponent
