@@ -224,3 +224,8 @@ WEB  = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?herb_HPUX_ACC
 TYPE = TIMEONLY
 LIST = http://prince.ociweb.com/buildlogs/auto_compile_logs/tripoli_AIX_VAC/
 WEB  = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?tripoli_AIX_VAC
+
+[Solaris8_FORTE_UP_1]
+TYPE = TIMEONLY
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/chipper_SOLARIS8_FORTE_UPDATE1/
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?chipper_SOLARIS8_FORTE_UPDATE1

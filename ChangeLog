@@ -1,3 +1,8 @@
+Fri Jun 22 18:06:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/nightlybuilds/builds.lst: Added a solaris 8 build to the
+	  scoreboard.  
+
 Fri Jun 22 18:00:51 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * examples/Log_Msg/test_ostream.cpp (main):
