@@ -466,9 +466,15 @@ typedef unsigned long long ACE_UINT64;
 # define ACE_HAS_IP_MULTICAST
 #endif /* ACE_HAS_WINSOCK2 */
 
-#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && !defined (ACE_USES_WINCE_SEMA_SIMULATION)
-# define ACE_HAS_INTERLOCKED_EXCHANGEADD
+#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || \
+    defined (ACE_HAS_WINCE)            /* WinCE 3 has these */
+#  if !defined (ACE_HAS_WINCE) || defined (PPC)   /* CE only on some CPUs */
+#    define ACE_HAS_INTERLOCKED_EXCHANGEADD
+#  endif
 # define ACE_HAS_WIN32_TRYLOCK
+#endif
+
+#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && !defined (ACE_USES_WINCE_SEMA_SIMULATION)
 # define ACE_HAS_SIGNAL_OBJECT_AND_WAIT
 
 // If CancelIO is undefined get the updated sp2-sdk from MS

@@ -63,7 +63,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "NDEBUG" /d "$(CePlatform)" /d "MIPS" /d "_MIPS_" /r
 CPP=clmips.exe
 # ADD BASE CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "MIPS" /D "_MIPS_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /YX /Oxs /M$(CECrtMT) /c
-# ADD CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "MIPS" /D "_MIPS_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /YX /Oxs /M$(CECrtMT) /c
+# ADD CPP /nologo /W3 /I ".." /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "MIPS" /D "_MIPS_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /YX /Oxs /M$(CECrtMT) /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
@@ -96,7 +96,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "MIPS" /d "_MIPS_" /r
 CPP=clmips.exe
 # ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D "MIPS" /D "_MIPS_" /D UNDER_CE=$(CEVersion) /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "UNICODE" /D "_UNICODE" /YX /M$(CECrtMTDebug) /c
-# ADD CPP /nologo /W3 /Zi /Od /I "../" /D "_DEBUG" /D "DEBUG" /D "MIPS" /D "_MIPS_" /D UNDER_CE=$(CEVersion) /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "UNICODE" /D "_UNICODE" /D "_CONSOLE" /M$(CECrtMTDebug) /c
+# ADD CPP /nologo /W3 /Zi /Od /I "../" /I ".." /D "_DEBUG" /D "DEBUG" /D "MIPS" /D "_MIPS_" /D UNDER_CE=$(CEVersion) /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "UNICODE" /D "_UNICODE" /D "_CONSOLE" /M$(CECrtMTDebug) /c
 # SUBTRACT CPP /YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
@@ -130,7 +130,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "NDEBUG" /d "UNICODE" /d "_UNICODE" /d "$(CePlatform)" /d "SHx" /d "SH4" /d "_SH4_" /r
 CPP=shcl.exe
 # ADD BASE CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "SHx" /D "SH4" /D "_SH4_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /YX /Qsh4 /Oxs /M$(CECrtMT) /c
-# ADD CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "SHx" /D "SH4" /D "_SH4_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /YX /Qsh4 /Oxs /M$(CECrtMT) /c
+# ADD CPP /nologo /W3 /I ".." /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "SHx" /D "SH4" /D "_SH4_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /YX /Qsh4 /Oxs /M$(CECrtMT) /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
@@ -163,7 +163,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "DEBUG" /d "UNICODE" /d "_UNICODE" /d "$(CePlatform)" /d "SHx" /d "SH4" /d "_SH4_" /r
 CPP=shcl.exe
 # ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D "SHx" /D "SH4" /D "_SH4_" /D UNDER_CE=$(CEVersion) /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "UNICODE" /D "_UNICODE" /YX /Qsh4 /M$(CECrtMTDebug) /c
-# ADD CPP /nologo /W3 /Zi /Od /D "DEBUG" /D "SHx" /D "SH4" /D "_SH4_" /D UNDER_CE=$(CEVersion) /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "UNICODE" /D "_UNICODE" /YX /Qsh4 /M$(CECrtMTDebug) /c
+# ADD CPP /nologo /W3 /Zi /Od /I ".." /D "DEBUG" /D "SHx" /D "SH4" /D "_SH4_" /D UNDER_CE=$(CEVersion) /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "UNICODE" /D "_UNICODE" /YX /Qsh4 /M$(CECrtMTDebug) /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
@@ -196,7 +196,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "NDEBUG" /d "$(CePlatform)" /d "SHx" /d "SH3" /d "_SH3_" /r
 CPP=shcl.exe
 # ADD BASE CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "SHx" /D "SH3" /D "_SH3_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /YX /Oxs /M$(CECrtMT) /c
-# ADD CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "SHx" /D "SH3" /D "_SH3_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /YX /Oxs /M$(CECrtMT) /c
+# ADD CPP /nologo /W3 /I ".." /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "SHx" /D "SH3" /D "_SH3_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /YX /Oxs /M$(CECrtMT) /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
@@ -229,7 +229,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "SHx" /d "SH3" /d "_SH3_" /r
 CPP=shcl.exe
 # ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D UNDER_CE=$(CEVersion) /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "UNICODE" /D "_UNICODE" /YX /M$(CECrtMTDebug) /c
-# ADD CPP /nologo /W3 /Zi /Od /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D UNDER_CE=$(CEVersion) /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "UNICODE" /D "_UNICODE" /YX /M$(CECrtMTDebug) /c
+# ADD CPP /nologo /W3 /Zi /Od /I ".." /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D UNDER_CE=$(CEVersion) /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "UNICODE" /D "_UNICODE" /YX /M$(CECrtMTDebug) /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
@@ -262,7 +262,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "NDEBUG" /d "$(CePlatform)" /d "ARM" /d "_ARM_" /r
 CPP=clarm.exe
 # ADD BASE CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "ARM" /D "_ARM_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /YX /Oxs /M$(CECrtMT) /c
-# ADD CPP /nologo /W3 /I "$(ACE_ROOT)" /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "ARM" /D "_ARM_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /YX /Oxs /M$(CECrtMT) /c
+# ADD CPP /nologo /W3 /I ".." /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "ARM" /D "_ARM_" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "NDEBUG" /YX /Oxs /M$(CECrtMT) /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
@@ -295,7 +295,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "ARM" /d "_ARM_" /r
 CPP=clarm.exe
 # ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D "ARM" /D "_ARM_" /D UNDER_CE=$(CEVersion) /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "UNICODE" /D "_UNICODE" /YX /M$(CECrtMTDebug) /c
-# ADD CPP /nologo /W3 /Zi /Od /I "$(ACE_ROOT)" /D "DEBUG" /D "ARM" /D "_ARM_" /D UNDER_CE=$(CEVersion) /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "UNICODE" /D "_UNICODE" /YX /M$(CECrtMTDebug) /c
+# ADD CPP /nologo /W3 /Zi /Od /I ".." /D "DEBUG" /D "ARM" /D "_ARM_" /D UNDER_CE=$(CEVersion) /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "UNICODE" /D "_UNICODE" /YX /M$(CECrtMTDebug) /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
@@ -304,7 +304,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /align:"4096" /MACHINE:ARM
-# ADD LINK32 aygshell.lib commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /libpath:"../LIB/Debug/ARM" /subsystem:$(CESubsystem) /align:"4096" /MACHINE:ARM
+# ADD LINK32 aygshell.lib aced.lib commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /libpath:"../LIB/Debug/ARM" /subsystem:$(CESubsystem) /align:"4096" /MACHINE:ARM
 
 !ELSEIF  "$(CFG)" == "Timeprobe_Test_WinCE - Win32 (WCE x86em) Release"
 
@@ -328,7 +328,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "NDEBUG" /d "$(CePlatform)" /d "_X86_" /d "x86" /d "i486" /r
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /D _WIN32_WCE=$(CEVersion) /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "$(CePlatform)" /D "i486" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /D "NDEBUG" /YX /Gz /Oxs /c
-# ADD CPP /nologo /W3 /I "$(ACE_ROOT)" /D _WIN32_WCE=$(CEVersion) /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "$(CePlatform)" /D "i486" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /D "NDEBUG" /YX /Gz /Oxs /c
+# ADD CPP /nologo /W3 /I ".." /D _WIN32_WCE=$(CEVersion) /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "$(CePlatform)" /D "i486" /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /D "NDEBUG" /YX /Gz /Oxs /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
@@ -361,7 +361,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "_X86_" /d "x86" /d "i486" /r
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D "i486" /D UNDER_CE=$(CEVersion) /D _WIN32_WCE=$(CEVersion) /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "$(CePlatform)" /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /YX /Gz /c
-# ADD CPP /nologo /W3 /Zi /Od /I "$(ACE_ROOT)" /D "DEBUG" /D "i486" /D "STRICT" /D UNDER_CE=$(CEVersion) /D _WIN32_WCE=$(CEVersion) /D "WIN32" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "$(CePlatform)" /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /FR /Gz /c
+# ADD CPP /nologo /W3 /Zi /Od /I ".." /D "DEBUG" /D "i486" /D "STRICT" /D UNDER_CE=$(CEVersion) /D _WIN32_WCE=$(CEVersion) /D "WIN32" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "$(CePlatform)" /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /FR /Gz /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
@@ -395,7 +395,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "DEBUG" /d "$(CePlatform)" /d "_X86_" /d "x86" /d "_i386_" /r
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /Zi /Od /D "DEBUG" /D "_i386_" /D UNDER_CE=$(CEVersion) /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "i_386_" /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /YX /Gs8192 /GF /c
-# ADD CPP /nologo /W3 /Zi /Od /I "$(ACE_ROOT)" /D "DEBUG" /D "_i386_" /D UNDER_CE=$(CEVersion) /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "i_386_" /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /YX /Gs8192 /GF /c
+# ADD CPP /nologo /W3 /Zi /Od /I ".." /D "DEBUG" /D "_i386_" /D UNDER_CE=$(CEVersion) /D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D "i_386_" /D "UNICODE" /D "_UNICODE" /D "_X86_" /D "x86" /YX /Gs8192 /GF /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
@@ -430,9 +430,130 @@ SOURCE=.\Timeprobe_Test.cpp
 
 !IF  "$(CFG)" == "Timeprobe_Test_WinCE - Win32 (WCE MIPS) Release"
 
-NODEP_CPP_TIMEP=\
-	".\ace\Timeprobe.h"\
-	".\tests\test_config.h"\
+DEP_CPP_TIMEP=\
+	"..\ace\ACE.h"\
+	"..\ace\ACE.i"\
+	"..\ace\ACE_export.h"\
+	"..\ace\ace_wchar.h"\
+	"..\ace\ace_wchar.inl"\
+	"..\ace\Argv_Type_Converter.h"\
+	"..\ace\Argv_Type_Converter.inl"\
+	"..\ace\Base_Thread_Adapter.h"\
+	"..\ace\Base_Thread_Adapter.inl"\
+	"..\ace\Basic_Types.h"\
+	"..\ace\Basic_Types.i"\
+	"..\ace\config-all.h"\
+	"..\ace\config-borland-common.h"\
+	"..\ace\config-cygwin32-common.h"\
+	"..\ace\config-cygwin32.h"\
+	"..\ace\config-g++-common.h"\
+	"..\ace\config-ghs-common.h"\
+	"..\ace\config-win32-borland.h"\
+	"..\ace\config-win32-common.h"\
+	"..\ace\config-win32-ghs.h"\
+	"..\ace\config-win32-mingw.h"\
+	"..\ace\config-win32-msvc-5.h"\
+	"..\ace\config-win32-msvc-6.h"\
+	"..\ace\config-win32-msvc-7.h"\
+	"..\ace\config-win32-msvc.h"\
+	"..\ace\config-win32-visualage.h"\
+	"..\ace\config-win32.h"\
+	"..\ace\config-WinCE.h"\
+	"..\ace\config.h"\
+	"..\ace\Default_Constants.h"\
+	"..\ace\Event_Handler.h"\
+	"..\ace\Event_Handler.i"\
+	"..\ace\File_Lock.h"\
+	"..\ace\File_Lock.inl"\
+	"..\ace\Flag_Manip.h"\
+	"..\ace\Flag_Manip.i"\
+	"..\ace\Framework_Component.h"\
+	"..\ace\Framework_Component.inl"\
+	"..\ace\Framework_Component_T.cpp"\
+	"..\ace\Framework_Component_T.h"\
+	"..\ace\Framework_Component_T.inl"\
+	"..\ace\Global_Macros.h"\
+	"..\ace\Handle_Ops.h"\
+	"..\ace\Handle_Ops.i"\
+	"..\ace\High_Res_Timer.h"\
+	"..\ace\High_Res_Timer.i"\
+	"..\ace\Init_ACE.h"\
+	"..\ace\Init_ACE.i"\
+	"..\ace\iosfwd.h"\
+	"..\ace\Lib_Find.h"\
+	"..\ace\Lib_Find.i"\
+	"..\ace\Log_Msg.h"\
+	"..\ace\Log_Msg_Callback.h"\
+	"..\ace\Log_Priority.h"\
+	"..\ace\Malloc_Base.h"\
+	"..\ace\Managed_Object.cpp"\
+	"..\ace\Managed_Object.h"\
+	"..\ace\Managed_Object.i"\
+	"..\ace\Min_Max.h"\
+	"..\ace\Node.cpp"\
+	"..\ace\Node.h"\
+	"..\ace\Object_Manager.h"\
+	"..\ace\Object_Manager.i"\
+	"..\ace\OS.h"\
+	"..\ace\OS.i"\
+	"..\ace\OS_Dirent.h"\
+	"..\ace\OS_Dirent.inl"\
+	"..\ace\OS_Errno.h"\
+	"..\ace\OS_Errno.inl"\
+	"..\ace\OS_Export.h"\
+	"..\ace\OS_Log_Msg_Attributes.h"\
+	"..\ace\OS_Log_Msg_Attributes.inl"\
+	"..\ace\OS_Memory.h"\
+	"..\ace\OS_Memory.inl"\
+	"..\ace\OS_String.h"\
+	"..\ace\OS_String.inl"\
+	"..\ace\OS_TLI.h"\
+	"..\ace\OS_TLI.inl"\
+	"..\ace\post.h"\
+	"..\ace\pre.h"\
+	"..\ace\Process_Mutex.h"\
+	"..\ace\Process_Mutex.inl"\
+	"..\ace\Process_Semaphore.h"\
+	"..\ace\Process_Semaphore.inl"\
+	"..\ace\RW_Process_Mutex.h"\
+	"..\ace\RW_Process_Mutex.inl"\
+	"..\ace\Singleton.cpp"\
+	"..\ace\Singleton.h"\
+	"..\ace\Singleton.i"\
+	"..\ace\Sock_Connect.h"\
+	"..\ace\Sock_Connect.i"\
+	"..\ace\streams.h"\
+	"..\ace\SV_Semaphore_Complex.h"\
+	"..\ace\SV_Semaphore_Complex.i"\
+	"..\ace\SV_Semaphore_Simple.h"\
+	"..\ace\SV_Semaphore_Simple.i"\
+	"..\ace\Synch.h"\
+	"..\ace\Synch.i"\
+	"..\ace\Synch_T.cpp"\
+	"..\ace\Synch_T.h"\
+	"..\ace\Synch_T.i"\
+	"..\ace\Test_and_Set.cpp"\
+	"..\ace\Test_and_Set.h"\
+	"..\ace\Test_and_Set.i"\
+	"..\ace\Thread.h"\
+	"..\ace\Thread.i"\
+	"..\ace\Thread_Adapter.h"\
+	"..\ace\Thread_Adapter.inl"\
+	"..\ace\Thread_Control.h"\
+	"..\ace\Thread_Control.inl"\
+	"..\ace\Thread_Exit.h"\
+	"..\ace\Thread_Hook.h"\
+	"..\ace\Time_Value.h"\
+	"..\ace\Time_Value.inl"\
+	"..\ace\Timeprobe.h"\
+	"..\ace\Timeprobe.i"\
+	"..\ace\Timeprobe_T.cpp"\
+	"..\ace\Timeprobe_T.h"\
+	"..\ace\Trace.h"\
+	"..\ace\Unbounded_Set.cpp"\
+	"..\ace\Unbounded_Set.h"\
+	"..\ace\Unbounded_Set.inl"\
+	".\test_config.h"\
 	
 
 !ELSEIF  "$(CFG)" == "Timeprobe_Test_WinCE - Win32 (WCE MIPS) Debug"
@@ -557,30 +678,514 @@ NODEP_CPP_TIMEP=\
 
 !ELSEIF  "$(CFG)" == "Timeprobe_Test_WinCE - Win32 (WCE SH4) Release"
 
-NODEP_CPP_TIMEP=\
-	".\ace\Timeprobe.h"\
-	".\tests\test_config.h"\
+DEP_CPP_TIMEP=\
+	"..\ace\ACE.h"\
+	"..\ace\ACE.i"\
+	"..\ace\ACE_export.h"\
+	"..\ace\ace_wchar.h"\
+	"..\ace\ace_wchar.inl"\
+	"..\ace\Argv_Type_Converter.h"\
+	"..\ace\Argv_Type_Converter.inl"\
+	"..\ace\Base_Thread_Adapter.h"\
+	"..\ace\Base_Thread_Adapter.inl"\
+	"..\ace\Basic_Types.h"\
+	"..\ace\Basic_Types.i"\
+	"..\ace\config-all.h"\
+	"..\ace\config-borland-common.h"\
+	"..\ace\config-cygwin32-common.h"\
+	"..\ace\config-cygwin32.h"\
+	"..\ace\config-g++-common.h"\
+	"..\ace\config-ghs-common.h"\
+	"..\ace\config-win32-borland.h"\
+	"..\ace\config-win32-common.h"\
+	"..\ace\config-win32-ghs.h"\
+	"..\ace\config-win32-mingw.h"\
+	"..\ace\config-win32-msvc-5.h"\
+	"..\ace\config-win32-msvc-6.h"\
+	"..\ace\config-win32-msvc-7.h"\
+	"..\ace\config-win32-msvc.h"\
+	"..\ace\config-win32-visualage.h"\
+	"..\ace\config-win32.h"\
+	"..\ace\config-WinCE.h"\
+	"..\ace\config.h"\
+	"..\ace\Default_Constants.h"\
+	"..\ace\Event_Handler.h"\
+	"..\ace\Event_Handler.i"\
+	"..\ace\File_Lock.h"\
+	"..\ace\File_Lock.inl"\
+	"..\ace\Flag_Manip.h"\
+	"..\ace\Flag_Manip.i"\
+	"..\ace\Framework_Component.h"\
+	"..\ace\Framework_Component.inl"\
+	"..\ace\Framework_Component_T.cpp"\
+	"..\ace\Framework_Component_T.h"\
+	"..\ace\Framework_Component_T.inl"\
+	"..\ace\Global_Macros.h"\
+	"..\ace\Handle_Ops.h"\
+	"..\ace\Handle_Ops.i"\
+	"..\ace\High_Res_Timer.h"\
+	"..\ace\High_Res_Timer.i"\
+	"..\ace\Init_ACE.h"\
+	"..\ace\Init_ACE.i"\
+	"..\ace\iosfwd.h"\
+	"..\ace\Lib_Find.h"\
+	"..\ace\Lib_Find.i"\
+	"..\ace\Log_Msg.h"\
+	"..\ace\Log_Msg_Callback.h"\
+	"..\ace\Log_Priority.h"\
+	"..\ace\Malloc_Base.h"\
+	"..\ace\Managed_Object.cpp"\
+	"..\ace\Managed_Object.h"\
+	"..\ace\Managed_Object.i"\
+	"..\ace\Min_Max.h"\
+	"..\ace\Node.cpp"\
+	"..\ace\Node.h"\
+	"..\ace\Object_Manager.h"\
+	"..\ace\Object_Manager.i"\
+	"..\ace\OS.h"\
+	"..\ace\OS.i"\
+	"..\ace\OS_Dirent.h"\
+	"..\ace\OS_Dirent.inl"\
+	"..\ace\OS_Errno.h"\
+	"..\ace\OS_Errno.inl"\
+	"..\ace\OS_Export.h"\
+	"..\ace\OS_Log_Msg_Attributes.h"\
+	"..\ace\OS_Log_Msg_Attributes.inl"\
+	"..\ace\OS_Memory.h"\
+	"..\ace\OS_Memory.inl"\
+	"..\ace\OS_String.h"\
+	"..\ace\OS_String.inl"\
+	"..\ace\OS_TLI.h"\
+	"..\ace\OS_TLI.inl"\
+	"..\ace\post.h"\
+	"..\ace\pre.h"\
+	"..\ace\Process_Mutex.h"\
+	"..\ace\Process_Mutex.inl"\
+	"..\ace\Process_Semaphore.h"\
+	"..\ace\Process_Semaphore.inl"\
+	"..\ace\RW_Process_Mutex.h"\
+	"..\ace\RW_Process_Mutex.inl"\
+	"..\ace\Singleton.cpp"\
+	"..\ace\Singleton.h"\
+	"..\ace\Singleton.i"\
+	"..\ace\Sock_Connect.h"\
+	"..\ace\Sock_Connect.i"\
+	"..\ace\streams.h"\
+	"..\ace\SV_Semaphore_Complex.h"\
+	"..\ace\SV_Semaphore_Complex.i"\
+	"..\ace\SV_Semaphore_Simple.h"\
+	"..\ace\SV_Semaphore_Simple.i"\
+	"..\ace\Synch.h"\
+	"..\ace\Synch.i"\
+	"..\ace\Synch_T.cpp"\
+	"..\ace\Synch_T.h"\
+	"..\ace\Synch_T.i"\
+	"..\ace\Test_and_Set.cpp"\
+	"..\ace\Test_and_Set.h"\
+	"..\ace\Test_and_Set.i"\
+	"..\ace\Thread.h"\
+	"..\ace\Thread.i"\
+	"..\ace\Thread_Adapter.h"\
+	"..\ace\Thread_Adapter.inl"\
+	"..\ace\Thread_Control.h"\
+	"..\ace\Thread_Control.inl"\
+	"..\ace\Thread_Exit.h"\
+	"..\ace\Thread_Hook.h"\
+	"..\ace\Time_Value.h"\
+	"..\ace\Time_Value.inl"\
+	"..\ace\Timeprobe.h"\
+	"..\ace\Timeprobe.i"\
+	"..\ace\Timeprobe_T.cpp"\
+	"..\ace\Timeprobe_T.h"\
+	"..\ace\Trace.h"\
+	"..\ace\Unbounded_Set.cpp"\
+	"..\ace\Unbounded_Set.h"\
+	"..\ace\Unbounded_Set.inl"\
+	".\test_config.h"\
 	
 
 !ELSEIF  "$(CFG)" == "Timeprobe_Test_WinCE - Win32 (WCE SH4) Debug"
 
-NODEP_CPP_TIMEP=\
-	".\ace\Timeprobe.h"\
-	".\tests\test_config.h"\
+DEP_CPP_TIMEP=\
+	"..\ace\ACE.h"\
+	"..\ace\ACE.i"\
+	"..\ace\ACE_export.h"\
+	"..\ace\ace_wchar.h"\
+	"..\ace\ace_wchar.inl"\
+	"..\ace\Argv_Type_Converter.h"\
+	"..\ace\Argv_Type_Converter.inl"\
+	"..\ace\Base_Thread_Adapter.h"\
+	"..\ace\Base_Thread_Adapter.inl"\
+	"..\ace\Basic_Types.h"\
+	"..\ace\Basic_Types.i"\
+	"..\ace\config-all.h"\
+	"..\ace\config-borland-common.h"\
+	"..\ace\config-cygwin32-common.h"\
+	"..\ace\config-cygwin32.h"\
+	"..\ace\config-g++-common.h"\
+	"..\ace\config-ghs-common.h"\
+	"..\ace\config-win32-borland.h"\
+	"..\ace\config-win32-common.h"\
+	"..\ace\config-win32-ghs.h"\
+	"..\ace\config-win32-mingw.h"\
+	"..\ace\config-win32-msvc-5.h"\
+	"..\ace\config-win32-msvc-6.h"\
+	"..\ace\config-win32-msvc-7.h"\
+	"..\ace\config-win32-msvc.h"\
+	"..\ace\config-win32-visualage.h"\
+	"..\ace\config-win32.h"\
+	"..\ace\config-WinCE.h"\
+	"..\ace\config.h"\
+	"..\ace\Default_Constants.h"\
+	"..\ace\Event_Handler.h"\
+	"..\ace\Event_Handler.i"\
+	"..\ace\File_Lock.h"\
+	"..\ace\File_Lock.inl"\
+	"..\ace\Flag_Manip.h"\
+	"..\ace\Flag_Manip.i"\
+	"..\ace\Framework_Component.h"\
+	"..\ace\Framework_Component.inl"\
+	"..\ace\Framework_Component_T.cpp"\
+	"..\ace\Framework_Component_T.h"\
+	"..\ace\Framework_Component_T.inl"\
+	"..\ace\Global_Macros.h"\
+	"..\ace\Handle_Ops.h"\
+	"..\ace\Handle_Ops.i"\
+	"..\ace\High_Res_Timer.h"\
+	"..\ace\High_Res_Timer.i"\
+	"..\ace\Init_ACE.h"\
+	"..\ace\Init_ACE.i"\
+	"..\ace\iosfwd.h"\
+	"..\ace\Lib_Find.h"\
+	"..\ace\Lib_Find.i"\
+	"..\ace\Log_Msg.h"\
+	"..\ace\Log_Msg_Callback.h"\
+	"..\ace\Log_Priority.h"\
+	"..\ace\Malloc_Base.h"\
+	"..\ace\Managed_Object.cpp"\
+	"..\ace\Managed_Object.h"\
+	"..\ace\Managed_Object.i"\
+	"..\ace\Min_Max.h"\
+	"..\ace\Node.cpp"\
+	"..\ace\Node.h"\
+	"..\ace\Object_Manager.h"\
+	"..\ace\Object_Manager.i"\
+	"..\ace\OS.h"\
+	"..\ace\OS.i"\
+	"..\ace\OS_Dirent.h"\
+	"..\ace\OS_Dirent.inl"\
+	"..\ace\OS_Errno.h"\
+	"..\ace\OS_Errno.inl"\
+	"..\ace\OS_Export.h"\
+	"..\ace\OS_Log_Msg_Attributes.h"\
+	"..\ace\OS_Log_Msg_Attributes.inl"\
+	"..\ace\OS_Memory.h"\
+	"..\ace\OS_Memory.inl"\
+	"..\ace\OS_String.h"\
+	"..\ace\OS_String.inl"\
+	"..\ace\OS_TLI.h"\
+	"..\ace\OS_TLI.inl"\
+	"..\ace\post.h"\
+	"..\ace\pre.h"\
+	"..\ace\Process_Mutex.h"\
+	"..\ace\Process_Mutex.inl"\
+	"..\ace\Process_Semaphore.h"\
+	"..\ace\Process_Semaphore.inl"\
+	"..\ace\RW_Process_Mutex.h"\
+	"..\ace\RW_Process_Mutex.inl"\
+	"..\ace\Singleton.cpp"\
+	"..\ace\Singleton.h"\
+	"..\ace\Singleton.i"\
+	"..\ace\Sock_Connect.h"\
+	"..\ace\Sock_Connect.i"\
+	"..\ace\streams.h"\
+	"..\ace\SV_Semaphore_Complex.h"\
+	"..\ace\SV_Semaphore_Complex.i"\
+	"..\ace\SV_Semaphore_Simple.h"\
+	"..\ace\SV_Semaphore_Simple.i"\
+	"..\ace\Synch.h"\
+	"..\ace\Synch.i"\
+	"..\ace\Synch_T.cpp"\
+	"..\ace\Synch_T.h"\
+	"..\ace\Synch_T.i"\
+	"..\ace\Test_and_Set.cpp"\
+	"..\ace\Test_and_Set.h"\
+	"..\ace\Test_and_Set.i"\
+	"..\ace\Thread.h"\
+	"..\ace\Thread.i"\
+	"..\ace\Thread_Adapter.h"\
+	"..\ace\Thread_Adapter.inl"\
+	"..\ace\Thread_Control.h"\
+	"..\ace\Thread_Control.inl"\
+	"..\ace\Thread_Exit.h"\
+	"..\ace\Thread_Hook.h"\
+	"..\ace\Time_Value.h"\
+	"..\ace\Time_Value.inl"\
+	"..\ace\Timeprobe.h"\
+	"..\ace\Timeprobe.i"\
+	"..\ace\Timeprobe_T.cpp"\
+	"..\ace\Timeprobe_T.h"\
+	"..\ace\Trace.h"\
+	"..\ace\Unbounded_Set.cpp"\
+	"..\ace\Unbounded_Set.h"\
+	"..\ace\Unbounded_Set.inl"\
+	".\test_config.h"\
 	
 
 !ELSEIF  "$(CFG)" == "Timeprobe_Test_WinCE - Win32 (WCE SH3) Release"
 
-NODEP_CPP_TIMEP=\
-	".\ace\Timeprobe.h"\
-	".\tests\test_config.h"\
+DEP_CPP_TIMEP=\
+	"..\ace\ACE.h"\
+	"..\ace\ACE.i"\
+	"..\ace\ACE_export.h"\
+	"..\ace\ace_wchar.h"\
+	"..\ace\ace_wchar.inl"\
+	"..\ace\Argv_Type_Converter.h"\
+	"..\ace\Argv_Type_Converter.inl"\
+	"..\ace\Base_Thread_Adapter.h"\
+	"..\ace\Base_Thread_Adapter.inl"\
+	"..\ace\Basic_Types.h"\
+	"..\ace\Basic_Types.i"\
+	"..\ace\config-all.h"\
+	"..\ace\config-borland-common.h"\
+	"..\ace\config-cygwin32-common.h"\
+	"..\ace\config-cygwin32.h"\
+	"..\ace\config-g++-common.h"\
+	"..\ace\config-ghs-common.h"\
+	"..\ace\config-win32-borland.h"\
+	"..\ace\config-win32-common.h"\
+	"..\ace\config-win32-ghs.h"\
+	"..\ace\config-win32-mingw.h"\
+	"..\ace\config-win32-msvc-5.h"\
+	"..\ace\config-win32-msvc-6.h"\
+	"..\ace\config-win32-msvc-7.h"\
+	"..\ace\config-win32-msvc.h"\
+	"..\ace\config-win32-visualage.h"\
+	"..\ace\config-win32.h"\
+	"..\ace\config-WinCE.h"\
+	"..\ace\config.h"\
+	"..\ace\Default_Constants.h"\
+	"..\ace\Event_Handler.h"\
+	"..\ace\Event_Handler.i"\
+	"..\ace\File_Lock.h"\
+	"..\ace\File_Lock.inl"\
+	"..\ace\Flag_Manip.h"\
+	"..\ace\Flag_Manip.i"\
+	"..\ace\Framework_Component.h"\
+	"..\ace\Framework_Component.inl"\
+	"..\ace\Framework_Component_T.cpp"\
+	"..\ace\Framework_Component_T.h"\
+	"..\ace\Framework_Component_T.inl"\
+	"..\ace\Global_Macros.h"\
+	"..\ace\Handle_Ops.h"\
+	"..\ace\Handle_Ops.i"\
+	"..\ace\High_Res_Timer.h"\
+	"..\ace\High_Res_Timer.i"\
+	"..\ace\Init_ACE.h"\
+	"..\ace\Init_ACE.i"\
+	"..\ace\iosfwd.h"\
+	"..\ace\Lib_Find.h"\
+	"..\ace\Lib_Find.i"\
+	"..\ace\Log_Msg.h"\
+	"..\ace\Log_Msg_Callback.h"\
+	"..\ace\Log_Priority.h"\
+	"..\ace\Malloc_Base.h"\
+	"..\ace\Managed_Object.cpp"\
+	"..\ace\Managed_Object.h"\
+	"..\ace\Managed_Object.i"\
+	"..\ace\Min_Max.h"\
+	"..\ace\Node.cpp"\
+	"..\ace\Node.h"\
+	"..\ace\Object_Manager.h"\
+	"..\ace\Object_Manager.i"\
+	"..\ace\OS.h"\
+	"..\ace\OS.i"\
+	"..\ace\OS_Dirent.h"\
+	"..\ace\OS_Dirent.inl"\
+	"..\ace\OS_Errno.h"\
+	"..\ace\OS_Errno.inl"\
+	"..\ace\OS_Export.h"\
+	"..\ace\OS_Log_Msg_Attributes.h"\
+	"..\ace\OS_Log_Msg_Attributes.inl"\
+	"..\ace\OS_Memory.h"\
+	"..\ace\OS_Memory.inl"\
+	"..\ace\OS_String.h"\
+	"..\ace\OS_String.inl"\
+	"..\ace\OS_TLI.h"\
+	"..\ace\OS_TLI.inl"\
+	"..\ace\post.h"\
+	"..\ace\pre.h"\
+	"..\ace\Process_Mutex.h"\
+	"..\ace\Process_Mutex.inl"\
+	"..\ace\Process_Semaphore.h"\
+	"..\ace\Process_Semaphore.inl"\
+	"..\ace\RW_Process_Mutex.h"\
+	"..\ace\RW_Process_Mutex.inl"\
+	"..\ace\Singleton.cpp"\
+	"..\ace\Singleton.h"\
+	"..\ace\Singleton.i"\
+	"..\ace\Sock_Connect.h"\
+	"..\ace\Sock_Connect.i"\
+	"..\ace\streams.h"\
+	"..\ace\SV_Semaphore_Complex.h"\
+	"..\ace\SV_Semaphore_Complex.i"\
+	"..\ace\SV_Semaphore_Simple.h"\
+	"..\ace\SV_Semaphore_Simple.i"\
+	"..\ace\Synch.h"\
+	"..\ace\Synch.i"\
+	"..\ace\Synch_T.cpp"\
+	"..\ace\Synch_T.h"\
+	"..\ace\Synch_T.i"\
+	"..\ace\Test_and_Set.cpp"\
+	"..\ace\Test_and_Set.h"\
+	"..\ace\Test_and_Set.i"\
+	"..\ace\Thread.h"\
+	"..\ace\Thread.i"\
+	"..\ace\Thread_Adapter.h"\
+	"..\ace\Thread_Adapter.inl"\
+	"..\ace\Thread_Control.h"\
+	"..\ace\Thread_Control.inl"\
+	"..\ace\Thread_Exit.h"\
+	"..\ace\Thread_Hook.h"\
+	"..\ace\Time_Value.h"\
+	"..\ace\Time_Value.inl"\
+	"..\ace\Timeprobe.h"\
+	"..\ace\Timeprobe.i"\
+	"..\ace\Timeprobe_T.cpp"\
+	"..\ace\Timeprobe_T.h"\
+	"..\ace\Trace.h"\
+	"..\ace\Unbounded_Set.cpp"\
+	"..\ace\Unbounded_Set.h"\
+	"..\ace\Unbounded_Set.inl"\
+	".\test_config.h"\
 	
 
 !ELSEIF  "$(CFG)" == "Timeprobe_Test_WinCE - Win32 (WCE SH3) Debug"
 
-NODEP_CPP_TIMEP=\
-	".\ace\Timeprobe.h"\
-	".\tests\test_config.h"\
+DEP_CPP_TIMEP=\
+	"..\ace\ACE.h"\
+	"..\ace\ACE.i"\
+	"..\ace\ACE_export.h"\
+	"..\ace\ace_wchar.h"\
+	"..\ace\ace_wchar.inl"\
+	"..\ace\Argv_Type_Converter.h"\
+	"..\ace\Argv_Type_Converter.inl"\
+	"..\ace\Base_Thread_Adapter.h"\
+	"..\ace\Base_Thread_Adapter.inl"\
+	"..\ace\Basic_Types.h"\
+	"..\ace\Basic_Types.i"\
+	"..\ace\config-all.h"\
+	"..\ace\config-borland-common.h"\
+	"..\ace\config-cygwin32-common.h"\
+	"..\ace\config-cygwin32.h"\
+	"..\ace\config-g++-common.h"\
+	"..\ace\config-ghs-common.h"\
+	"..\ace\config-win32-borland.h"\
+	"..\ace\config-win32-common.h"\
+	"..\ace\config-win32-ghs.h"\
+	"..\ace\config-win32-mingw.h"\
+	"..\ace\config-win32-msvc-5.h"\
+	"..\ace\config-win32-msvc-6.h"\
+	"..\ace\config-win32-msvc-7.h"\
+	"..\ace\config-win32-msvc.h"\
+	"..\ace\config-win32-visualage.h"\
+	"..\ace\config-win32.h"\
+	"..\ace\config-WinCE.h"\
+	"..\ace\config.h"\
+	"..\ace\Default_Constants.h"\
+	"..\ace\Event_Handler.h"\
+	"..\ace\Event_Handler.i"\
+	"..\ace\File_Lock.h"\
+	"..\ace\File_Lock.inl"\
+	"..\ace\Flag_Manip.h"\
+	"..\ace\Flag_Manip.i"\
+	"..\ace\Framework_Component.h"\
+	"..\ace\Framework_Component.inl"\
+	"..\ace\Framework_Component_T.cpp"\
+	"..\ace\Framework_Component_T.h"\
+	"..\ace\Framework_Component_T.inl"\
+	"..\ace\Global_Macros.h"\
+	"..\ace\Handle_Ops.h"\
+	"..\ace\Handle_Ops.i"\
+	"..\ace\High_Res_Timer.h"\
+	"..\ace\High_Res_Timer.i"\
+	"..\ace\Init_ACE.h"\
+	"..\ace\Init_ACE.i"\
+	"..\ace\iosfwd.h"\
+	"..\ace\Lib_Find.h"\
+	"..\ace\Lib_Find.i"\
+	"..\ace\Log_Msg.h"\
+	"..\ace\Log_Msg_Callback.h"\
+	"..\ace\Log_Priority.h"\
+	"..\ace\Malloc_Base.h"\
+	"..\ace\Managed_Object.cpp"\
+	"..\ace\Managed_Object.h"\
+	"..\ace\Managed_Object.i"\
+	"..\ace\Min_Max.h"\
+	"..\ace\Node.cpp"\
+	"..\ace\Node.h"\
+	"..\ace\Object_Manager.h"\
+	"..\ace\Object_Manager.i"\
+	"..\ace\OS.h"\
+	"..\ace\OS.i"\
+	"..\ace\OS_Dirent.h"\
+	"..\ace\OS_Dirent.inl"\
+	"..\ace\OS_Errno.h"\
+	"..\ace\OS_Errno.inl"\
+	"..\ace\OS_Export.h"\
+	"..\ace\OS_Log_Msg_Attributes.h"\
+	"..\ace\OS_Log_Msg_Attributes.inl"\
+	"..\ace\OS_Memory.h"\
+	"..\ace\OS_Memory.inl"\
+	"..\ace\OS_String.h"\
+	"..\ace\OS_String.inl"\
+	"..\ace\OS_TLI.h"\
+	"..\ace\OS_TLI.inl"\
+	"..\ace\post.h"\
+	"..\ace\pre.h"\
+	"..\ace\Process_Mutex.h"\
+	"..\ace\Process_Mutex.inl"\
+	"..\ace\Process_Semaphore.h"\
+	"..\ace\Process_Semaphore.inl"\
+	"..\ace\RW_Process_Mutex.h"\
+	"..\ace\RW_Process_Mutex.inl"\
+	"..\ace\Singleton.cpp"\
+	"..\ace\Singleton.h"\
+	"..\ace\Singleton.i"\
+	"..\ace\Sock_Connect.h"\
+	"..\ace\Sock_Connect.i"\
+	"..\ace\streams.h"\
+	"..\ace\SV_Semaphore_Complex.h"\
+	"..\ace\SV_Semaphore_Complex.i"\
+	"..\ace\SV_Semaphore_Simple.h"\
+	"..\ace\SV_Semaphore_Simple.i"\
+	"..\ace\Synch.h"\
+	"..\ace\Synch.i"\
+	"..\ace\Synch_T.cpp"\
+	"..\ace\Synch_T.h"\
+	"..\ace\Synch_T.i"\
+	"..\ace\Test_and_Set.cpp"\
+	"..\ace\Test_and_Set.h"\
+	"..\ace\Test_and_Set.i"\
+	"..\ace\Thread.h"\
+	"..\ace\Thread.i"\
+	"..\ace\Thread_Adapter.h"\
+	"..\ace\Thread_Adapter.inl"\
+	"..\ace\Thread_Control.h"\
+	"..\ace\Thread_Control.inl"\
+	"..\ace\Thread_Exit.h"\
+	"..\ace\Thread_Hook.h"\
+	"..\ace\Time_Value.h"\
+	"..\ace\Time_Value.inl"\
+	"..\ace\Timeprobe.h"\
+	"..\ace\Timeprobe.i"\
+	"..\ace\Timeprobe_T.cpp"\
+	"..\ace\Timeprobe_T.h"\
+	"..\ace\Trace.h"\
+	"..\ace\Unbounded_Set.cpp"\
+	"..\ace\Unbounded_Set.h"\
+	"..\ace\Unbounded_Set.inl"\
+	".\test_config.h"\
 	
 
 !ELSEIF  "$(CFG)" == "Timeprobe_Test_WinCE - Win32 (WCE ARM) Release"

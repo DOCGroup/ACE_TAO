@@ -11,6 +11,8 @@ ACE_RCSID(ace, OS_Errno, "$Id$")
 
 #if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
 
+#include "ace/OS_Memory.h"
+
 ACE_CE_Errno *ACE_CE_Errno::instance_ = 0;
 DWORD ACE_CE_Errno::errno_key_ = 0xffffffff;
 

@@ -2635,9 +2635,11 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
   // to match the conditions before the wait occurred so that this thread
   // does all of its acquires and releases correctly.
   state.lock_count_ = m->LockCount;
-  state.recursion_count_ = m->RecursionCount;
   m->LockCount = 0;
+#      if !defined (_WIN32_WCE) || (_WIN32_WCE >= 400) /* Windows and CE.NET */
+  state.recursion_count_ = m->RecursionCount;
   m->RecursionCount = 1;
+#      endif /* _WIN32_WCE >= 400 */
 #    endif /* ACE_WIN32 */
   return 0;
 #  else /* ACE_HAS_RECURSIVE_MUTEXES */
@@ -2710,7 +2712,9 @@ ACE_OS::recursive_mutex_cond_relock (ACE_recursive_thread_mutex_t *m,
   // restore the counts to what they were before waiting on the condition.
 #    if defined (ACE_WIN32)
   m->LockCount = state.lock_count_;
+#      if !defined (_WIN32_WCE) || (_WIN32_WCE >= 400) /* Windows and CE.NET */
   m->RecursionCount = state.recursion_count_;
+#      endif /* _WIN32_WCE >= 400 */
   return;
 #    endif /* ACE_WIN32 */
 #  else

@@ -1269,6 +1269,8 @@ struct cancel_state
 # if defined (ACE_HAS_WINCE)
 #   include /**/ <types.h>
 
+typedef unsigned long  ptrdiff_t;    // evc3, PocketPC don't defined ptrdiff_t
+
 //typedef DWORD  nlink_t;
 
 // CE's add-on for c-style fstat/stat functionalities.  This struct is
@@ -6731,17 +6733,19 @@ ace_main_i
 /**
  * @class ACE_CE_ARGV
  *
- * @brief This class is to hash input parameters, argc and argv, for WinCE platform.
+ * @brief This class is to hash input parameters, argc and argv, for
+ * WinCE platform.
  *
- * Since WinCE only supports wchar_t as an input from OS, some implementation detail,
- * especially for CORBA spec, will not support ACE_TCHAR (wchar_t) type parameter.
- * Moreover, WinCE's input parameter type is totally different than any other OS;
- * all command line parameters will be stored in a single wide-character string with
- * each unit parameter divided by blank space, and it does not provide the name of
- * executable (generally known as argv[0]).
- * This class is to convert CE's command line parameters and simulate as in the same
- * manner as other general platforms, adding 'root' as a first argc, which is for the
- * name of executable in other OS.
+ * Since WinCE only supports wchar_t as an input from OS, some
+ * implementation detail, especially for CORBA spec, will not support
+ * ACE_TCHAR (wchar_t) type parameter. Moreover, WinCE's input parameter
+ * type is totally different than any other OS; all command line
+ * parameters will be stored in a single wide-character string with
+ * each unit parameter divided by blank space, and it does not provide
+ * the name of executable (generally known as argv[0]).
+ * This class is to convert CE's command line parameters and simulate as
+ * in the same manner as other general platforms, adding 'root' as a
+ * first argc, which is for the name of executable in other OS.
  */
 class ACE_OS_Export ACE_CE_ARGV
 {
@@ -6762,7 +6766,7 @@ public:
     int argc(void);
 
     /**
-     * Returns the 'char**' that contains the converted command line parameters.
+     * Returns the char** that contains the converted command line parameters.
      */
     ACE_TCHAR** const argv(void);
 

@@ -34,8 +34,8 @@
 #   define ACE_HAS_BUILTIN_ATOMIC_OP
 #  else /* ACE_HAS_INTERLOCKED_EXCHANGEADD */
     // Inline assembly emulation of InterlockedExchangeAdd
-    // is currently only implemented for MSVC and Borland.
-#   if defined (_MSC_VER) || defined (__BORLANDC__)
+    // is currently only implemented for MSVC (x86 only) and Borland.
+#   if (defined (_MSC_VER) && defined (_M_IX86)) || defined (__BORLANDC__)
 #    define ACE_HAS_BUILTIN_ATOMIC_OP
 #   endif /* _MSC_VER || __BORLANDC__ */
 #  endif /* ACE_HAS_INTERLOCKED_EXCHANGEADD */
