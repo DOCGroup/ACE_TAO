@@ -819,21 +819,6 @@ AST_Module::add_CORBA_members (void)
                           );
 
   this->fe_add_predefined_type (pdt);
-
-  ACE_NEW (id,
-           Identifier ("TCKind"));
-
-  ACE_NEW (sn,
-           UTL_ScopedName (id,
-                           0));
-
-  pdt =
-    idl_global->gen ()->create_predefined_type (
-                            AST_PredefinedType::PT_pseudo,
-                            sn
-                          );
-
-  this->fe_add_predefined_type (pdt);
 }
 
 void
