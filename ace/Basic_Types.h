@@ -216,7 +216,7 @@
 #   error Have to add to the ACE_UINT16 type setting
 # endif
 
-typedef ACE_UINT16 ACE_USHORT16;
+typedef ACE_UINT16 ACE_USHORT16;  // @@ Backward compatibility.
 
 // Define a generic byte for use in codecs
 typedef unsigned char ACE_Byte;
@@ -224,12 +224,12 @@ typedef unsigned char ACE_Byte;
 // Define a pseudo wide character type when wchar is not supported so we
 // can support basic wide character string operations.
 
-# if defined (ACE_HAS_WCHAR)
+# if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
 #   define ACE_WINT_T wint_t
 #   define ACE_WCHAR_T wchar_t
 # else
-#   define ACE_WINT_T ACE_USHORT16
-#   define ACE_WCHAR_T ACE_USHORT16
+#   define ACE_WINT_T ACE_UINT16
+#   define ACE_WCHAR_T ACE_UINT16
 # endif /* ACE_HAS_WCHAR */
 
 # if ACE_SIZEOF_INT == 4

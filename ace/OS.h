@@ -5763,24 +5763,8 @@ public:
   //@}
 
   //@{ @name Wide-character strings
-  // @@ UNICODE: (brunsch) Can this be handled better?
-  // The following WChar typedef and functions are used by TAO.  TAO
-  // does not use wchar_t because the size of wchar_t is
-  // platform-dependent. These are to be used for all
-  // manipulate\ions of CORBA::WString.
-  // @@ (othman) IMHO, it is the lesser of two evils to use the
-  //    correct type for the platform rather than (forcibly) assume
-  //    that all wide characters are 16 bits.
-  /**
-   * @todo Move this typedef to a separate file so as not to have the
-   *       same typedefs duplicated in multiple headers
-   *       (e.g. CDR_Base.h).
-   */
-#if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
-  typedef wchar_t WChar;
-#else
-  typedef ACE_UINT16 WChar;
-#endif
+  typedef ACE_WCHAR_T WChar;
+
   static u_int wslen (const WChar *);
   static WChar *wscpy (WChar *,
                        const WChar *);
