@@ -6,10 +6,10 @@ Sat Feb  2 21:33:43 2002  Ossama Othman  <ossama@uci.edu>
 	  New version of this method that uses CORBA-style parameter
 	  passing rules.  The returned service context is returned as an
 	  "out" parameter.  This is part of an optimization in the
-	  PortableInterceptor::{Client,Server}RequestInfo.  In particular,
-	  a new service context instance is only instantiated if the
-	  service context with the given ServiceId exists in the service
-	  context list.
+	  PortableInterceptor::{Client,Server}RequestInfo implementation.
+	  In particular, a new service context instance is only
+	  instantiated if the service context with the given ServiceId
+	  exists in the service context list.
 
 	* tao/ClientRequestInfo_i.cpp (get_service_context_i): 
 	* tao/PortableServer/ServerRequestInfo.cpp
