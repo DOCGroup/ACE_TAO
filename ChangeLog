@@ -1,3 +1,25 @@
+Wed Aug 22 17:33:29 2001  Steve Huston  <shuston@riverace.com>
+
+        Applied fixes submitted by Jerry D. Odenwelder, to fix
+        Bugzilla #953:
+
+        * ace/Configuration.cpp (import_config, export_config): Changed
+          from using a ACE_Ini_ImpExp object to an ACE_Registry_ImpExp
+          to preserve type information in the import/export files, and
+          retain the ability to read an ACE 5.1-format file (with the
+          changes next...)
+
+        * ace/Configuration_Import_Export.(h cpp): Added a new
+          ACE_Registry_ImpExp::process_previous_line_format() method that
+          knows how to read an ACE 5.1-format config line. If
+          ACE_Registry_ImpExp::import_config finds a line that does not
+          begin with one of <"[#;> it calls process_previous_line_format
+          to try to convert it using ACE 5.1-format rules.
+          Note that the auto conversion works on import. If the
+          object is subsequently exported, the new registry format
+          will be used to write the file, effectively updating it
+          from old to new format.
+
 Wed Aug 22 12:04:04 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/WFMO_Reactor.h (ACE_WFMO_Reactor): Clarified that the
