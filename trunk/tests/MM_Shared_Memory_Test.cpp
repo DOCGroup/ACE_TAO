@@ -43,6 +43,8 @@ client (void *)
   ACE_Shared_Memory_MM shm_client (shm_key);
   char *shm = (char *) shm_client.malloc ();
 
+  ACE_ASSERT (shm != 0);
+
   for (char *s = shm; *s != '\0'; s++)
     {
       ACE_ASSERT (*t == s[0]);
@@ -128,4 +130,3 @@ main (int, ASYS_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
-
