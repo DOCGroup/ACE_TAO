@@ -19,22 +19,11 @@ ifeq ("$(OS)", "Windows_NT")
 vxworks_ntbuild = 1
 endif
 
-ifndef debug
-  debug = 1
-endif # ! debug
-ifndef optimize
-  optimize = 1
-endif # ! optimize
-ifndef rtti
-  rtti = 1
-endif # ! rtti
-ifndef threads
-  threads = 1
-endif
-
-ifndef exceptions
-  exceptions = 0
-endif
+debug ?= 1
+optimize ?= 1
+rtti ?= 1
+threads ?= 1
+exceptions ?= 0
 
 shared_libs =
 static_libs = 1
@@ -77,9 +66,7 @@ endif
 override TOOL_FAMILY := $(TOOL)
 
 ifeq ("$(TOOL)","gnu")
-ifndef templates
-  templates = automatic
-endif # ! templates
+  templates ?= automatic
 endif
 
 PRJ_TYPE = vxApp
