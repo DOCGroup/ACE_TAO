@@ -1,3 +1,21 @@
+Thu Aug 26 18:58:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_is.cpp:
+        
+          Fixed code generation in implementation files for local
+          interfaces. Changes include:
+          
+          - inheritance from TAO_Local_RefCounted_Object instead
+            of PortableServer::ServantBase.
+            
+          - no copy constructor generated.
+          
+          - tao/LocalObject.h included if local interface is seen.
+          
+        This fix closes [BUGID:1871].
+
 Thu Aug 26 18:11:09 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
