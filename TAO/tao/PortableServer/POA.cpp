@@ -2441,9 +2441,9 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id
 
   if (this->active_object_map ().find_servant_and_system_id_using_user_id (
         id,
-	servant,
-	system_id.out (),
-	priority) == 0)
+        servant,
+        system_id.out (),
+        priority) == 0)
     {
       // Create object key.
       TAO::ObjectKey_var key = this->create_object_key (system_id.in ());
