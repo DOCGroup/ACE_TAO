@@ -63,7 +63,7 @@ Benchmark::fini (void)
 void *
 Benchmark::svc_run (Benchmark *bp)
 {
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   return (void *) (bp->svc () == -1 ? -1 : 0);
 }
 

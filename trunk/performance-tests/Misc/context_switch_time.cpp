@@ -119,7 +119,7 @@ private:
 
 inline
 Low_Priority_Null_Task::Low_Priority_Null_Task() :
-  ACE_Task<ACE_MT_SYNCH> (ACE_Service_Config::thr_mgr ()),
+  ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ()),
   initialized_ (0),  // initialize to locked, then unlock when ready
   blocked_semaphore_ (0)
 {
@@ -145,7 +145,7 @@ Low_Priority_Null_Task::svc ()
   ACE_DEBUG ((LM_DEBUG, "Low_Priority_Null_Task::svc (), entering"));
 #endif /* DEBUG */
 
-  ACE_Service_Config::thr_mgr ()->thr_self (thread_id_);
+  ACE_Thread_Manager::instance ()->thr_self (thread_id_);
   initialized_.release ();
 
 #if DEBUG > 0
@@ -222,7 +222,7 @@ Suspend_Resume_Test::svc ()
 {
 #if DEBUG > 0
   ACE_hthread_t thread_id;
-  ACE_Service_Config::thr_mgr ()->thr_self (thread_id);
+  ACE_Thread_Manager::instance ()->thr_self (thread_id);
 
   ACE_DEBUG ((LM_DEBUG, "Suspend_Resume_Test::svc (), thread ID is %d\n",
               thread_id));
@@ -299,7 +299,7 @@ private:
 
 inline
 High_Priority_Simple_Task::High_Priority_Simple_Task() :
-  ACE_Task<ACE_MT_SYNCH> (ACE_Service_Config::thr_mgr ()),
+  ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ()),
   initialized_ (0),  // initialize to locked, then unlock when ready
   terminate_ (0),
   iterations_ (0)
@@ -326,7 +326,7 @@ High_Priority_Simple_Task::svc ()
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task::svc (), entering"));
 #endif /* DEBUG */
 
-  ACE_Service_Config::thr_mgr ()->thr_self (thread_id_);
+  ACE_Thread_Manager::instance ()->thr_self (thread_id_);
   initialized_.release ();
 
 #if DEBUG > 0
@@ -421,7 +421,7 @@ Ping_Suspend_Resume_Test::svc ()
   ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test::svc (), entering"));
 
   ACE_hthread_t thread_id;
-  ACE_Service_Config::thr_mgr ()->thr_self (thread_id);
+  ACE_Thread_Manager::instance ()->thr_self (thread_id);
 
   ACE_DEBUG ((LM_DEBUG, "; thread ID is %u\n", thread_id));
 #endif /* DEBUG */
@@ -545,7 +545,7 @@ Yield_Test::svc ()
   ACE_DEBUG ((LM_DEBUG, "Yield_Test::svc (), entering"));
 
   ACE_hthread_t thread_id;
-  ACE_Service_Config::thr_mgr ()->thr_self (thread_id);
+  ACE_Thread_Manager::instance ()->thr_self (thread_id);
 
   int priority;
   ACE_OS::thr_getprio (thread_id, priority);
@@ -688,12 +688,12 @@ main (int argc, char *argv [])
       // run suspend/resume test first . . .
       Suspend_Resume_Test suspend_resume_test (num_iterations);
       // Wait for all tasks to exit.
-      ACE_Service_Config::thr_mgr ()->wait ();
+      ACE_Thread_Manager::instance ()->wait ();
 
       // then Ping Suspend/Resume test
       Ping_Suspend_Resume_Test ping_suspend_resume_test (num_iterations);
       // Wait for all tasks to exit.
-      ACE_Service_Config::thr_mgr ()->wait ();
+      ACE_Thread_Manager::instance ()->wait ();
 
       // NOTE:  the divisions by 1ul below allow transparent support of
       // ACE_U_LongLongs.
@@ -724,7 +724,7 @@ main (int argc, char *argv [])
       // then Yield test
       Yield_Test yield_test (num_iterations);
       // Wait for all tasks to exit.
-      ACE_Service_Config::thr_mgr ()->wait ();
+      ACE_Thread_Manager::instance ()->wait ();
 
       ACE_DEBUG ((LM_INFO, "context switch time from yield test is %.3f "
                            "microseconds\n",

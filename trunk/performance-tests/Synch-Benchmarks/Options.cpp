@@ -395,7 +395,7 @@ Options::print_results (void)
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-#if defined (ACE_MT_SAFE)
+#if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 template class ACE_Atomic_Op<ACE_Thread_Mutex, size_t>;
 #endif /* ACE_MT_SAFE */
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
