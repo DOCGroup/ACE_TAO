@@ -333,8 +333,6 @@
 //ACE_HAS_STRICT                Use the STRICT compilation mode on Win32.
 //? ACE_HAS_STRUCT_NETDB_DATA           Compiler/platform has strange
 // hostent API for socket *_r() calls
-//? ACE_HAS_STRUCT_PROTOENT_DATA        Compiler/platform has strange
-//protoent API for socket *_r() calls
 //ACE_HAS_SUNOS4_GETTIMEOFDAY           SunOS 4 style prototype.
 //? ACE_HAS_SYSCALL_GETRUSAGE           HP/UX has an undefined syscall for
 //GETRUSAGE...
