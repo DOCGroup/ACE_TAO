@@ -515,6 +515,10 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr
 
   ACE_CDR::mb_align (this->cdr_);
   ptrdiff_t offset = ptrdiff_t (begin) % ACE_CDR::MAX_ALIGNMENT;
+
+  if (offset < 0)
+    offset += ACE_CDR::MAX_ALIGNMENT;
+
   this->cdr_->rd_ptr (offset);
   this->cdr_->wr_ptr (offset + size);
 
