@@ -41,10 +41,10 @@ class EC_Test_Export EC_Consumer : public POA_RtecEventComm::PushConsumer
   //   and it is up to the driver program to use the right one.
   //
 public:
-  EC_Consumer (EC_Driver* driver, void* cookie);
-  // Constructor
+  EC_Consumer (EC_Driver* driver,
+               void* cookie);
 
-  virtual void connect (
+  void connect (
       RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
       const RtecEventChannelAdmin::ConsumerQOS& qos,
       int shutdown_event_type,
@@ -52,16 +52,13 @@ public:
   // The driver program can build the QoS attributes and obtain the
   // ConsumerAdmin, we do the rest.
 
-  virtual void connect (
+  void connect (
       const RtecEventChannelAdmin::ConsumerQOS& qos,
       int shutdown_event_type,
       CORBA::Environment &ACE_TRY_ENV);
   // The driver program can build the QoS attributes and we use
   // whatevet supplier_proxy we already have (useful for reconnection
   // tests).
-
-  virtual int connected (void) const;
-  // returns 0 if it is not connected
 
   void disconnect (CORBA::Environment& ACE_TRY_ENV);
   // The application can invoke this method to disconnect from the EC
@@ -71,7 +68,7 @@ public:
                    EC_Driver::Latency_Stats& latency) const;
   // Accumulate our statistics to the totals.
 
-  virtual void dump_results (const char* name);
+  void dump_results (const char* name);
   // Printout the statistics
 
   // = The RtecEventComm::PushConsumer methods

@@ -1,7 +1,7 @@
 // $Id$
 
 #include "tao/Request.h"
-
+#include "tao/Sequence_T.h"
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #include "tao/Object.h"
@@ -66,7 +66,7 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
     refcount_ (1)
 {
   target_ = CORBA::Object::_duplicate (obj);
-  opname_ = CORBA::string_dup (op);
+  opname_ = CORBA::string_copy (op);
 }
 
 CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
@@ -79,7 +79,7 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
     refcount_ (1)
 {
   target_ = CORBA::Object::_duplicate (obj);
-  opname_ = CORBA::string_dup (op);
+  opname_ = CORBA::string_copy (op);
 
   ACE_NEW (args_, CORBA::NVList);
   ACE_NEW (result_, CORBA::NamedValue);

@@ -175,6 +175,22 @@ else  # ! CROSS-COMPILE
 
   ifeq ($(findstring g++,$(CXX)),g++)
     CCFLAGS += -Wno-switch
+  else
+  ifeq ($(findstring cxx,$(CXX)),cxx)
+    # Digital Unix cxx
+    # 111: statement is unreachable
+    # 177: variable was declared but not referenced
+    # 550: variable set but never used
+    ifneq ($(CXX_VER),CXX_5)
+      WARNING_FLAGS += -msg_disable 111,177,550
+    endif # CXX_5
+  else
+  ifeq ($(findstring gcx,$(CXX)),gcx)
+    # GreenHills gcx, to suppress many warnings about TAO_YY_BREAK
+    # statements being unreachable.
+    CCFLAGS += -w
+  endif # gcx
+  endif # cxx
   endif # g++
 
   CPPFLAGS += -Iinclude -Ibe_include -Ife \
@@ -213,7 +229,6 @@ lex.yy.cpp.target:
 		    -e "/#include </d" \
 		    -e "s@ECHO@TAO_YY_ECHO@" \
 		    -e 's/\$$Hea''der.*\$$/$$I''d$$/' > fe/lex.yy.cpp
-		(cd fe ; patch < lex.yy.cpp.diff)
 
 fe/y.tab.cpp:	fe/idl.yy
 	@echo "WARNING: Potentially outdated fe/y.tab.cpp"

@@ -69,24 +69,22 @@ public:
   void send_shutdown (CORBA::Environment& ACE_TRY_ENV);
   // Send a shutdown event.
 
-  virtual void connect (
-        RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-        const RtecEventChannelAdmin::SupplierQOS& qos,
-        int shutdown_event_type,
-        CORBA::Environment& ACE_TRY_ENV);
+  void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
+                const RtecEventChannelAdmin::SupplierQOS& qos,
+                int shutdown_event_type,
+                CORBA::Environment& ACE_TRY_ENV);
   // Connect using a <supplier_admin> and publications (<qos>)
   // computed by the user
 
-  virtual void connect (
-        const RtecEventChannelAdmin::SupplierQOS& qos,
-        int shutdown_event_type,
-        CORBA::Environment& ACE_TRY_ENV);
+  void connect (const RtecEventChannelAdmin::SupplierQOS& qos,
+                int shutdown_event_type,
+                CORBA::Environment& ACE_TRY_ENV);
   // Connect using the current consumer_proxy (useful for reconnect test)
 
   void disconnect (CORBA::Environment &ACE_TRY_ENV);
   // Disconnect from the EC, also deactivates the object
 
-  virtual void dump_results (const char* name);
+  void dump_results (const char* name);
   // Dump the results...
 
   void accumulate (EC_Driver::Throughput_Stats& stats) const;

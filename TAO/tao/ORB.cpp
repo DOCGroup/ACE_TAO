@@ -79,7 +79,27 @@ int CORBA_ORB::orb_init_count_ = 0;
 // Pointer to the "default ORB."
 CORBA::ORB_ptr CORBA::instance_ = 0;
 
-// ****************************************************************
+CORBA_String_var::CORBA_String_var (char *p)
+  : ptr_ (p)
+{
+  // NOTE: According to the CORBA spec this string must *not* be
+  // copied, but it is non-compliant to use it/release it in the
+  // calling code.  argument is consumed. p should never be NULL
+}
+
+CORBA_String_var::CORBA_String_var (const CORBA_String_var& r)
+{
+  this->ptr_ = CORBA::string_dup (r.ptr_);
+}
+
+CORBA_String_var::~CORBA_String_var (void)
+{
+  if (this->ptr_ != 0)
+    {
+      CORBA::string_free (this->ptr_);
+      this->ptr_ = 0;
+    }
+}
 
 CORBA_ORB::InvalidName::InvalidName (void)
 {
@@ -108,7 +128,7 @@ CORBA_ORB::InvalidName::_is_a (const char* interface_id) const
           || CORBA_UserException::_is_a (interface_id));
 }
 
-CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
+CORBA_ORB::CORBA_ORB (TAO_ORB_Core* orb_core)
   : refcount_ (1),
     open_called_ (0),
     shutdown_lock_ (0),
@@ -512,8 +532,13 @@ CORBA_ORB::resolve_root_poa (CORBA::Environment &ACE_TRY_ENV,
 CORBA_Object_ptr
 CORBA_ORB::resolve_poa_current (CORBA::Environment &ACE_TRY_ENV)
 {
-  // Return the pointer to the POA Current.
-  return this->orb_core_->poa_current ()._this (ACE_TRY_ENV);
+  // Return the pointer to this thread's POACurrent.
+
+  TAO_POA_Current *poa_current = this->orb_core_->poa_current ();
+  if (poa_current == 0)
+    return CORBA_Object::_nil ();
+
+  return poa_current->_this (ACE_TRY_ENV);
 }
 
 CORBA_Object_ptr
@@ -959,7 +984,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
   CORBA::String id = 0;
 
   if (type_id)
-    id = CORBA::string_dup (type_id);
+    id = CORBA::string_copy (type_id);
 
   TAO_Stub *stub = 0;
 
@@ -1090,37 +1115,22 @@ CORBA_ORB::create_dyn_enum      (CORBA_TypeCode_ptr tc,
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-// ****************************************************************
-
 // String utility support; this needs to be integrated with the ORB's
 // own memory allocation subsystem.
 
-CORBA::Char*
+CORBA::String
 CORBA::string_copy (const CORBA::Char *str)
 {
-  return CORBA::string_dup (str);
-}
+  if (!str)
+    return 0;
 
-CORBA_String_var::CORBA_String_var (char *p)
-  : ptr_ (p)
-{
-  // NOTE: According to the CORBA spec this string must *not* be
-  // copied, but it is non-compliant to use it/release it in the
-  // calling code.  argument is consumed. p should never be NULL
-}
+  size_t len = ACE_OS::strlen (str);
 
-CORBA_String_var::CORBA_String_var (const CORBA_String_var& r)
-{
-  this->ptr_ = CORBA::string_dup (r.ptr_);
-}
+  // This allocates an extra byte for the '\0';
+  CORBA::String copy = CORBA::string_alloc (len);
 
-CORBA_String_var::~CORBA_String_var (void)
-{
-  if (this->ptr_ != 0)
-    {
-      CORBA::string_free (this->ptr_);
-      this->ptr_ = 0;
-    }
+  ACE_OS::memcpy (copy, str, len + 1);
+  return copy;
 }
 
 CORBA_String_var &
@@ -1157,65 +1167,30 @@ CORBA_String_var::operator= (const CORBA_String_var& r)
   return *this;
 }
 
-// ****************************************************************
+// Wide Character string utility support; this can need to be
+// integrated with the ORB's own memory allocation subsystem.
 
-CORBA_WString_var::CORBA_WString_var (CORBA::WChar *p)
-  : ptr_ (p)
+CORBA::WString
+CORBA::wstring_alloc (CORBA::ULong len)
 {
-  // NOTE: According to the CORBA spec this string must *not* be
-  // copied, but it is non-compliant to use it/release it in the
-  // calling code.  argument is consumed. p should never be NULL
+  return new CORBA::WChar [(size_t) (len + 1)];
 }
 
-CORBA_WString_var::CORBA_WString_var (const CORBA_WString_var& r)
+CORBA::WString
+CORBA::wstring_copy (const CORBA::WChar *const str)
 {
-  this->ptr_ = CORBA::wstring_dup (r.ptr_);
+  if (!str)
+    return 0;
+
+  CORBA::WString retval = CORBA::wstring_alloc (ACE_OS::wslen (str));
+  return ACE_OS::wscpy (retval, str);
 }
 
-CORBA_WString_var::~CORBA_WString_var (void)
+void
+CORBA::wstring_free (CORBA::WChar *const str)
 {
-  if (this->ptr_ != 0)
-    {
-      CORBA::wstring_free (this->ptr_);
-      this->ptr_ = 0;
-    }
+  delete [] str;
 }
-
-CORBA_WString_var &
-CORBA_WString_var::operator= (CORBA::WChar *p)
-{
-  if (this->ptr_ != p)
-    {
-      if (this->ptr_ != 0)
-        CORBA::wstring_free (this->ptr_);
-      this->ptr_ = p;
-    }
-  return *this;
-}
-
-CORBA_WString_var &
-CORBA_WString_var::operator= (const CORBA::WChar *p)
-{
-  if (this->ptr_ != 0)
-    CORBA::wstring_free (this->ptr_);
-
-  this->ptr_ = CORBA::wstring_dup (p);
-  return *this;
-}
-
-CORBA_WString_var &
-CORBA_WString_var::operator= (const CORBA_WString_var& r)
-{
-  if (this != &r)
-    {
-      if (this->ptr_ != 0)
-        CORBA::wstring_free (this->ptr_);
-      this->ptr_ = CORBA::wstring_dup (r.ptr_);
-    }
-  return *this;
-}
-
-// ****************************************************************
 
 void
 CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)

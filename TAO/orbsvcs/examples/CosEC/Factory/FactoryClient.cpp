@@ -30,7 +30,7 @@ public:
   // Try to resolve the factory from the Naming service.
 
   CosEventChannelFactory::ChannelFactory_ptr
-  create_factory (CORBA::Environment &ACE_TRY_ENV);
+      create_factory (CORBA::Environment &ACE_TRY_ENV);
   // Create a local Factory and also set the <factory_>.
 
   virtual void run_test (CORBA::Environment &ACE_TRY_ENV);
@@ -131,10 +131,6 @@ FactoryClient::resolve_naming_service (CORBA::Environment &ACE_TRY_ENV)
                                             ACE_TRY_ENV);
   ACE_CHECK;
 
-  // Need to check return value for errors.
-  if (CORBA::is_nil (naming_obj.in ()))
-    ACE_THROW (CORBA::UNKNOWN ());
-
   this->naming_context_ =
     CosNaming::NamingContext::_narrow (naming_obj.in (), ACE_TRY_ENV);
   ACE_CHECK;
@@ -166,8 +162,6 @@ CosEventChannelFactory::ChannelFactory_ptr
 FactoryClient::create_factory (CORBA::Environment &ACE_TRY_ENV)
 {
   // TBD:
-  ACE_THROW_RETURN (CORBA::UNKNOWN (),
-                    CosEventChannelFactory::ChannelFactory::_nil ());
   return 0;
 }
 
@@ -176,9 +170,6 @@ FactoryClient::create_channel (const char *channel_id,
                             CosEventChannelFactory::ChannelFactory_ptr factory,
                               CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "Trying to create channel %s\n", channel_id));
-
   CosEventChannelAdmin::EventChannel_var ec =
     CosEventChannelAdmin::EventChannel::_nil ();
 
@@ -409,9 +400,6 @@ main (int argc, char *argv [])
         {
           ft.resolve_naming_service (ACE_TRY_ENV);
           ACE_TRY_CHECK_EX (naming);
-
-          ft.resolve_factory (ACE_TRY_ENV);
-          ACE_TRY_CHECK_EX (naming);
         }
       ACE_CATCHANY
         {
@@ -420,10 +408,12 @@ main (int argc, char *argv [])
           ACE_DEBUG ((LM_DEBUG,
                       "Creating a local Factory\n"));
           // TBD:
-          ft.create_factory (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          // ft.createFactory ();
         }
       ACE_ENDTRY;
+
+      ft.resolve_factory (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ft.run_test (ACE_TRY_ENV);
       ACE_TRY_CHECK;
