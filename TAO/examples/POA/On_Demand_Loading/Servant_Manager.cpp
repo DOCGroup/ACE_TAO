@@ -9,8 +9,8 @@
 //     Servant_Locator.cpp
 //
 // = DESCRIPTION
-//     Implementation of the helper class for the ServantActivator and 
-//     the ServantLocator.
+//     Implementation of the helper class for the ServantActivator_i
+//     and the ServantLocator_i.
 //
 // = AUTHOR
 //     Kirthika Parameswaran <kirthika@cs.wustl.edu>
@@ -32,9 +32,9 @@ ServantManager_i::~ServantManager_i (void)
 {
 }
 
-// This method loads the dynamically linked dll which is the servant
+// This method loads the dynamically linked DLL which is the servant
 // and returns the servant object which is then used for other
-// operations in the dll.
+// operations in the DLL.
 
 PortableServer::Servant
 ServantManager_i::obtain_servant (const char *str,
@@ -45,7 +45,7 @@ ServantManager_i::obtain_servant (const char *str,
   // parsed.
   this->parse_string (str); 
 
-  // Create the dll object.
+  // Create the DLL object.
   ACE_DLL *dll;
  
   ACE_NEW_RETURN (dll,
@@ -59,7 +59,7 @@ ServantManager_i::obtain_servant (const char *str,
 
    ACE_DEBUG ((LM_DEBUG,
                "before bind\n"));
-  // Make an HASH_MAP entry by binding the object_id and the dll
+  // Make an HASH_MAP entry by binding the object_id and the DLL
   // object associated with it together.
    if (this->servant_map_.bind (oid.in (), 
                                 dll) == -1)
@@ -67,25 +67,27 @@ ServantManager_i::obtain_servant (const char *str,
                        "%p\n", 
                        "Bind failed"),
                       0);
-    ACE_DEBUG ((LM_DEBUG,
+   ACE_DEBUG ((LM_DEBUG,
                "bind succeded\n"));
-  // Now that the dll name is available we open the dll.
+  // Now that the DLL name is available we open the DLL.
   if (dll->open (dllname_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p", dll->error ()),
+                       "%p",
+                       dll->error ()),
                       0);
 
   // The next step is to obtain the symbol for the function that will
   // create the servant object and return it.
-  SERVANT_FACTORY servant_creator = ACE_reinterpret_cast
-    (SERVANT_FACTORY, dll->symbol (create_symbol_.in ()));
+  SERVANT_FACTORY servant_creator =
+    ACE_reinterpret_cast (SERVANT_FACTORY,
+                          dll->symbol (create_symbol_.in ()));
 
   // Checking whether it is possible to create the servant.
   if (servant_creator == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p", dll->error ()),
+                       "%p",
+                       dll->error ()),
                       0);
-
   // Now create and return the servant using the <servant_creator>
   // factory function.
   return (*servant_creator) (this->orb_.in (),
@@ -93,27 +95,32 @@ ServantManager_i::obtain_servant (const char *str,
                              value);
 }
 
-// The objectID is in a format of dll:factory_function which has to be
-// parsed and separated into tokens to be used.
+// The objectID is in a format of dllname:factory_function which has
+// to be parsed and separated into tokens to be used.
 
 void 
 ServantManager_i::parse_string (const char *s)
 {
-  // The format of the objectid is <dll:factory_function>.  This string is
-  // parsed to obtain the dll name and the function name which will
-  // create trhe servant and return it to us.
+  // The format of the objectid is <dllname:factory_function>.  This
+  // string is parsed to obtain the DLL name and the function name
+  // which will create trhe servant and return it to us.
 
+  // @@ Kirthika, please make sure to always check for failed strnew()
+  // calls by using the ACE_ALLOCATOR macro here...
   char *str = ACE::strnew (s);
-  
   char *func = ACE_OS::strchr (str, ':');
 
   if (func != 0)
     *func = '\0';
 
   // Assign the value until '\0' to dllname_.
+  // @@ Kirthika, please make sure to always check for failed string_dup()
+  // calls by using the ACE_ALLOCATOR macro here...
   this->dllname_ = CORBA::string_dup (str);
    
   // Assign the value after ':' to create_symbol_.
+  // @@ Kirthika, please make sure to always check for failed string_dup()
+  // calls by using the ACE_ALLOCATOR macro here...
   this->create_symbol_ = CORBA::string_dup (func + 1);
   
   ACE_DEBUG ((LM_DEBUG,
@@ -123,8 +130,8 @@ ServantManager_i::parse_string (const char *s)
   delete [] str;
 }
 
-// This method returns an ObjectId when given an dll name and the
-// factory function to be invoked in the dll.The format of the
+// This method returns an ObjectId when given a DLL name and the
+// factory function to be invoked in the DLL.  The format of the
 // ObjectId is libname:factory_function.
 
 PortableServer::ObjectId_var
@@ -143,9 +150,12 @@ ServantManager_i::create_dll_object_id (const char *libname,
                        1], // For the trailing 0.
                   0);
 
-  char *end = ACE::strecpy (format_string, libname);
-  end = ACE::strecpy (end - 1, ":");
-  ACE::strecpy (end - 1, factory_function);
+  char *end = ACE::strecpy (format_string,
+                            libname);
+  end = ACE::strecpy (end - 1,
+                      ":");
+  ACE::strecpy (end - 1,
+                factory_function);
 
   ACE_DEBUG ((LM_DEBUG,
               "format-string is %s\n",
@@ -154,13 +164,11 @@ ServantManager_i::create_dll_object_id (const char *libname,
   // The object ID is created.
   PortableServer::ObjectId_var oid =
     PortableServer::string_to_ObjectId (format_string);
-
   delete [] format_string;
-
   return oid;
 }
 
-// This method destroys the servant and its caretaking dll object.
+// This method destroys the servant and its caretaking DLL object.
  
 void
 ServantManager_i::destroy_servant (PortableServer::Servant servant,
@@ -169,12 +177,12 @@ ServantManager_i::destroy_servant (PortableServer::Servant servant,
   // The servant is destroyed.
   delete servant;
   
-  // Since the servant is no more the dll object associated with it
+  // Since the servant is no more the DLL object associated with it
   // has to be destroyed too.
 
   ACE_DLL *dll = 0;
   
-  // Since the servant is no more the dll object associated with it
+  // Since the servant is no more the DLL object associated with it
   // has to be destroyed too.
 
   if (this->servant_map_.unbind (oid,
