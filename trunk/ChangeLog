@@ -1,3 +1,10 @@
+Thu Aug 24 09:01:23 2000  JLopez <jlopez@uida.es>
+
+        * ace/config-tru64.h: #define ACE_LACKS_SYSTIME_H with
+          DIGITAL_UNIX >= 0x40E, not 0x40F, because that's needed
+          on Tru64 UNIX 4.0E.  Thanks to jlopez@uida.es for
+          reporting this.
+
 Mon Aug 21 10:07:39 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/RMCast/RMCast_IO_UDP.cpp:
