@@ -1,7 +1,7 @@
 # $Id$
 
 # This platform macros file is intended to work with
-# Digital UNIX 4.0 (OSF/1 4.0), using the cxx compiler..
+# Digital UNIX 4.x (OSF/1 4.x), using the cxx compiler..
 
 # Note that TAO has not been tested with debug=0 on this platform. So
 # you should be careful when turning off debug.
@@ -53,12 +53,10 @@ ifneq ($(CXX_VER),CXX_5)
     #### It's not necessary on DU 5.0.
     WARNING_FLAGS += -msg_disable 1016
   endif # optimize
-
-  ifndef ACE_DU_VERSION
-    # In case this file wasn't included by platform_osf1_cxx.GNU:
+  ifeq (4.,$(findstring 4.,$(shell uname -r)))
     # 9: nested comment not allowed.  But there's one in /usr/include/pdsc.h!
     WARNING_FLAGS += -msg_disable 9
-  endif # ACE_DU_VERSION
+  endif
 endif # 6.0 or later
 
 CCFLAGS         += $(CFLAGS) $(WARNING_FLAGS)

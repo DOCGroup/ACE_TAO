@@ -1,10 +1,27 @@
 # $Id$
 
-# This platform macros file is intended to work with Digital UNIX 4.0
-# (OSF/1 4.0) and KAI C++ 3.3f.
+# This platform macros file is intended to work with Digital UNIX 4.x
+# (OSF/1 4.x) and KAI C++ 3.3f.
 
-debug = 1
-optimize = 1
+ifeq (,$(debug))
+  debug = 1
+endif
+
+ifeq (,$(exceptions))
+  exceptions = 1
+endif
+
+ifeq (,$(rtti))
+   rtti = 1
+endif
+
+ifeq (,$(threads))
+  threads = 1
+endif
+
+ifeq (,$(optimize))
+  optimize = 1
+endif
 
 # WARNING_FLAGS +=
 #   9: nested comment not allowed.  But there's one in /usr/include/pdsc.h!
