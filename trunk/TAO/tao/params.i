@@ -99,3 +99,15 @@ TAO_ORB_Parameters::name_service_ior (void)
   return this->name_service_ior_;
 }
 
+ACE_INLINE void
+TAO_ORB_Parameters::name_service_port (CORBA::UShort port)
+{
+  this->name_service_port_ = port;
+}
+
+ACE_INLINE CORBA::UShort
+TAO_ORB_Parameters::name_service_port (void)
+{
+  return this->name_service_port_;
+}
+

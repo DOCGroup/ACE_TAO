@@ -47,7 +47,7 @@ public:
   static CORBA::ORB_ptr _duplicate (CORBA::ORB_ptr orb);
   static CORBA::ORB_ptr _nil (void);
 
-  virtual CORBA::Object_ptr string_to_object (CORBA::String str,
+  virtual CORBA::Object_ptr string_to_object (const CORBA::String str,
 					      CORBA::Environment &env) = 0;
   virtual CORBA::String object_to_string (CORBA::Object_ptr obj,
 					  CORBA::Environment &env) = 0;
