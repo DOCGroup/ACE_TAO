@@ -166,6 +166,15 @@ public:
   // Simply returns t
 };
 
+class ACE_Export ACE_Hash<unsigned long long>
+{
+  // = TITLE
+  //     Function object for hashing an unsigned long 
+public:
+  u_long operator () (unsigned long long t) const;  
+  // Simply returns t
+};
+
 class ACE_Export ACE_Hash<const char *>
 {
   // = TITLE
