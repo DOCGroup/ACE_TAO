@@ -27,7 +27,8 @@ FILES   =  Attributes_Def_Builder		\
 	   XML_Codecs 		 		\
 	   Mem_Map_Stream 	 		\
 	   URL_Addr				\
-	   HttpCharStream
+	   HttpCharStream			\
+	   StreamFactory
 
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC    = $(addsuffix .cpp,$(FILES))

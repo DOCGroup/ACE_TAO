@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/ACE.h"
+#include "ace/ace_wchar.h"
 #include "ace/Auto_Ptr.h"
 #include "ACEXML/common/HttpCharStream.h"
 
@@ -43,7 +44,7 @@ ACEXML_HttpCharStream::open (const ACEXML_Char *url)
   ACE_NEW_RETURN (this->url_addr_, ACEXML_URL_Addr, -1);
   ACE_NEW_RETURN (this->stream_, ACEXML_Mem_Map_Stream, -1);
 
-  if (this->url_addr_->string_to_addr (this->url_) == -1)
+  if (this->url_addr_->string_to_addr (ACE_TEXT_ALWAYS_CHAR(this->url_)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "cannot convert URL"), -1);
 
   ACE_NEW_RETURN (this->connector_,
