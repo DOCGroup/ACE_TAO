@@ -1386,7 +1386,7 @@ options (CL::Description& d)
   d.add_option (CL::OptionDescription (
                   "lem-file-suffix",
                   "suffix",
-                  "Use provided suffix instead of default \'_exec\' "
+                  "Use provided suffix instead of default \'E\' "
                   "when constructing name of local executor mapping file.",
                   true));
 
@@ -1419,7 +1419,7 @@ generate (CommandLine const& cl,
   {
     string file_name (file_path.leaf ());
 
-    string suffix (cl.get_value ("lem-file-suffix", "_exec.idl"));
+    string suffix (cl.get_value ("lem-file-suffix", "E.idl"));
 
     string expr (cl.get_value (
                    "lem-file-regex", "/(\\.(idl|cidl))?$/" + suffix + "/"));
