@@ -1,3 +1,18 @@
+Fri Sep 04 11:56:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* Makefile (CONTROLLED_FILES): Removed some documents from the
+	  list because they are in docs/ now.
+
+	* tests/run_tests.bat: Removed trailing '.cpp' from
+	  Message_Queue_Notifications_Test.  Thanks to Erickson, Jack
+	  <JErickson@exchange.ml.com> for reporting this.
+	
+	* ace/OS.i (signal): Added check for ACE_WIN32 to defeat the
+	  effect of !defined (ACE_LACKS_UNIX_SIGNALS).  Although Win32
+	  does has ACE_LACKS_UNIX_SIGNALS defined, it also has limited
+	  support for signals.  Thanks to XuYifeng <wj@public.hz.zj.cn>
+	  for reporting this.
+
 Fri Sep 04 07:26:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/rules.bin.GNU,wrapper_macros.GNU:
