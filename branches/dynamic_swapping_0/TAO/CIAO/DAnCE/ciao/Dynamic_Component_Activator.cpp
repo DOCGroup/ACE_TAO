@@ -31,6 +31,8 @@ namespace CIAO
     {
       return servant->create ();
     }
+
+    return 0;
   }
 
   void
@@ -45,9 +47,10 @@ namespace CIAO
   {
   }
 
-  void update_servant_map (PortableServer::ObjectId &oid,
-                           Dynamic_Component_Servant_Base* servant
-                           ACE_ENV_ARG_DECL)
+  void Dynamic_Component_Activator::update_servant_map 
+    (PortableServer::ObjectId &oid,
+     Dynamic_Component_Servant_Base* servant
+     ACE_ENV_ARG_DECL)
   {
     this->servant_map_.bind (oid, servant);
   }
