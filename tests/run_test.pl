@@ -15,9 +15,16 @@ if ($^O ne "MSWin32") {
   #### it knows about the various test peculiarities.
 
   (my $scriptname = $0) =~ s/run_test.pl/run_tests.sh/;
-
   warn "$0: $scriptname does not exist!\n" unless -f "$scriptname";
+
   exec "$scriptname";
+
+  if (! -x "$scriptname") {
+    warn "$0: $scriptname is not executable!\n";
+    print `ls -lL run_tests.sh`;
+  }
+  print "PATH: $ENV{'PATH'}\n";
+  print `ls -lL /bin/sh`;
 }
 
 use Cwd;
