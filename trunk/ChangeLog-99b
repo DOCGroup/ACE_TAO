@@ -4,6 +4,15 @@ Wed Jul 14 13:38:12 1999  Steve Huston  <shuston@riverace.com>
           and Server_Svc_Handler classes to new file, Cached_Accept_Conn_Test.h
           to make AIX xlC happy.
 
+        * tests/Cached_Conn_Test.cpp: Moved definition of Svc_Handler class
+          new file, Cached_Conn_Test.h to make AIX xlC happy.
+
+        * tests/Cached_Accept_Conn_Test.cpp, Cached_Conn_Test.cpp: Don't
+          even try to build these on AIX C Set++ 3.1. It can't hack the
+          auto template instantiation - overwrites a template generator
+          file and tosses its cookies. ACE is still the best C++ compiler
+          test on the planet.
+
 Wed Jul 14 12:05:13 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/rules.local.GNU (LN_S): on WIN32
