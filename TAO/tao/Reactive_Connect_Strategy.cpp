@@ -57,11 +57,24 @@ TAO_Reactive_Connect_Strategy::wait (TAO_Connection_Handler *ch,
     {
       TAO_ORB_Core *orb_core = transport->orb_core ();
 
-      while (!ch->is_connect_complete () &&
-             result >= 0)
+      while (ch->keep_waiting ())
         {
           result = orb_core->run (max_wait_time, 1 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+
+          // Did we timeout? If so, stop running the loop.
+          if (result == 0 &&
+              max_wait_time != 0 &&
+              *max_wait_time == ACE_Time_Value::zero)
+            {
+              errno = ETIME;
+              result = -1;
+              break;
+            }
+
+          // Other errors? If so, stop running the loop.
+          if (result == -1)
+            break;
         }
     }
   ACE_CATCHANY
@@ -71,7 +84,7 @@ TAO_Reactive_Connect_Strategy::wait (TAO_Connection_Handler *ch,
   ACE_ENDTRY;
 
   // Set the result.
-  if (ch->is_connect_successful () == 0 && result != -1)
+  if (ch->error_detected () && result != -1)
     result = -1;
 
   return result;
