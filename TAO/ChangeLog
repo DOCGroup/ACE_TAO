@@ -1,3 +1,23 @@
+Thu Oct 31 16:46:11 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+
+          Added link path to ETCL library.
+
+        * orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp:
+
+          Added setting for release version, and fixed export settings for debug
+          and release versions.
+
+        * orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
+
+          Cosmetic changes.
+
+        * orbsvcs/orbsvcs/Notify/Service.h:
+
+          Added missing 'virtual' to a pure virtual function declaration.
+
 Thu Oct 31 15:42:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
