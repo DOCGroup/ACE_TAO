@@ -1,3 +1,9 @@
+Mon Feb 12 18:18:05 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
+
+        * tests/Thread_Mutex_Test.cpp:
+          Modified test to use process mutexes for Win32 platforms
+          so that timed mutexes could be tested.
+
 Sun Feb 11 15:33:39 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/QoS/ACE_QoS_Export.h:

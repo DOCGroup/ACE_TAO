@@ -20,10 +20,20 @@
 
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Process_Mutex.h"
 
 ACE_RCSID(tests, Thread_Mutex_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
+
+// For all platforms except for Windows use the ACE_Thread_Mutex.
+// Since Windows only supports timed process mutexes and not
+// timed thread mutexes, use ACE_Process_Mutex.
+#if defined (ACE_HAS_WTHREADS)
+#define ACE_TEST_MUTEX  ACE_Process_Mutex
+#else
+#define ACE_TEST_MUTEX  ACE_Thread_Mutex
+#endif
 
 #if !defined (ACE_HAS_MUTEX_TIMEOUTS)
 
@@ -35,7 +45,7 @@ static int reported_notsup = 0;
 static void *
 test (void *args)
 {
-  ACE_Thread_Mutex *mutex = (ACE_Thread_Mutex *) args;
+  ACE_TEST_MUTEX *mutex = (ACE_TEST_MUTEX *) args;
   ACE_UNUSED_ARG (mutex); // Suppress ghs warning about unused local "mutex".
   ACE_OS::srand (ACE_OS::time (0));
 
@@ -57,7 +67,7 @@ test (void *args)
 
       if (mutex->acquire (timeout) != 0)
         {
-          if (errno == ETIMEDOUT)
+          if (errno == ETIMEDOUT || errno == EBUSY)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) = mutex acquisition ")
@@ -124,7 +134,7 @@ static void
 spawn (void)
 {
 #if defined (ACE_HAS_THREADS)
-  ACE_Thread_Mutex mutex;
+  ACE_TEST_MUTEX mutex;
 
   const u_int n_threads =
 #if defined (__Lynx__)
