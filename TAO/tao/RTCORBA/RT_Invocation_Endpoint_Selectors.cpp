@@ -1,5 +1,7 @@
 #include "RT_Invocation_Endpoint_Selectors.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #if !defined (__ACE_INLINE__)
 #include "RT_Invocation_Endpoint_Selectors.i"
 #endif /* __ACE_INLINE__ */
@@ -335,3 +337,5 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
 
   return 0;
 }
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

@@ -1,6 +1,9 @@
 // $Id$
 
 #include "RT_Object_Adapter_Factory.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/ORB_Core.h"
 #include "RT_Servant_Dispatcher.h"
@@ -58,3 +61,5 @@ ACE_STATIC_SVC_DEFINE (TAO_RT_Object_Adapter_Factory,
                        &ACE_SVC_NAME (TAO_RT_Object_Adapter_Factory),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

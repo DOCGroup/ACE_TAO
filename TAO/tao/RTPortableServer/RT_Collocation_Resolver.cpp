@@ -2,6 +2,8 @@
 
 #include "tao/RTPortableServer/RT_Collocation_Resolver.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 ACE_RCSID(RTCORBA, RT_Collocation_Resolver, "$Id$")
 
 #include "tao/ORB_Core.h"
@@ -129,3 +131,5 @@ ACE_STATIC_SVC_DEFINE (TAO_RT_Collocation_Resolver,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_RTPortableServer, TAO_RT_Collocation_Resolver)
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

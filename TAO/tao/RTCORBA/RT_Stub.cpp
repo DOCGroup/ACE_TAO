@@ -1,5 +1,8 @@
 // $Id$
 #include "RT_Stub.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "RT_Policy_i.h"
 
 ACE_RCSID(tao, TAO_RT_Stub, "$Id$")
@@ -395,3 +398,4 @@ TAO_RT_Stub::effective_client_protocol (ACE_ENV_SINGLE_ARG_DECL)
                     0);
 }
 
+#endif /* TAO_HAS_CORBA_MESSAGING  && TAO_HAS_CORBA_MESSAGING != 0 */

@@ -2,6 +2,8 @@
 
 #include "RT_Policy_i.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
@@ -1402,3 +1404,5 @@ TAO_Protocol_Properties_Factory::create_orb_protocol_property (IOP::ProfileId id
                     0);
    return property;
 }
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

@@ -1,6 +1,9 @@
 // $Id$
 
 #include "Continuous_Priority_Mapping.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "ace/Sched_Params.h"
 
 #if !defined (__ACE_INLINE__)
@@ -128,3 +131,5 @@ TAO_Continuous_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priori
 #endif /* ACE_WIN32 */
 
 }
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

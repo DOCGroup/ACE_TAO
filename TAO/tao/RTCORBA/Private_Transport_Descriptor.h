@@ -18,6 +18,8 @@
 #include "tao/orbconf.h"
 #include "rtcorba_export.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -77,6 +79,8 @@ private:
 #if defined (__ACE_INLINE__)
 # include "Private_Transport_Descriptor.inl"
 #endif /* __ACE_INLINE__ */
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include "ace/post.h"
 #endif  /* TAO_PRIVATE_CONNECTION_DESCRIPTOR_H */

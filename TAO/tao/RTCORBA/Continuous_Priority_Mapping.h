@@ -18,6 +18,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "rtcorba_export.h"
 #include "Priority_Mapping.h"
 
@@ -69,6 +71,8 @@ private:
 #if defined (__ACE_INLINE__)
 # include "Continuous_Priority_Mapping.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include "ace/post.h"
 

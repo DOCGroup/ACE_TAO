@@ -1,6 +1,9 @@
 // $Id$
 
 #include "RT_ORB.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "RT_Policy_i.h"
 #include "RT_Mutex.h"
 #include "Priority_Mapping_Manager.h"
@@ -469,3 +472,5 @@ template class ACE_Hash_Map_Entry<ACE_CString, RTCORBA::Mutex_var>;
 #endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

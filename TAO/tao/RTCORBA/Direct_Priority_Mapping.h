@@ -29,6 +29,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 /**
  * @class TAO_Direct_Priority_Mapping
  *
@@ -58,6 +60,8 @@ private:
 #if defined (__ACE_INLINE__)
 # include "Direct_Priority_Mapping.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include "ace/post.h"
 #endif /* TAO_DIRECT_PRIORITY_MAPPING_H */

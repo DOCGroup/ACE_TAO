@@ -17,6 +17,9 @@
 
 #include "ace/pre.h"
 #include "tao/corbafwd.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "tao/Stub.h"
 #include "rtcorba_export.h"
 
@@ -149,6 +152,8 @@ private:
   friend class everyone_needs_a_friend;
 #endif /* __GNUG__ */
 };
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include "ace/post.h"
 #endif /* TAO_RT_STUB_FACTORY_H_ */

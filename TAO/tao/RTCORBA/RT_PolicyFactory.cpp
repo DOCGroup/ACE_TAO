@@ -1,5 +1,6 @@
 #include "RT_PolicyFactory.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 ACE_RCSID (RTCORBA,
            RT_PolicyFactory,
@@ -100,3 +101,5 @@ TAO_RT_PolicyFactory::_create_policy (
   ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                     CORBA::Policy::_nil ());
 }
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
