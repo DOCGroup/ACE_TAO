@@ -1,4 +1,12 @@
-Tue May 12 17:13:23 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+Wed May 13 00:05:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB.i (orb_free_resources): This should return
+ 	  !CORBA_ORB::orb_init_count_ instead of simply
+ 	  CORBA_ORB::orb_init_count_.  Thanks to Pavel Motuzenko
+ 	  (p_motuzenko@hotmail.com) for pointing these two problems out.
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (TAO_Naming_Server):
+ 	  Fixed the initialization of naming_context_name_.
 
 	* tests/POA/Forwarding/: Added new test that shows the forwarding
  	  features in TAO.
