@@ -1,3 +1,22 @@
+Wed Jun 21 01:12:59 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/ACE.cpp: Changed all the timed versions of the "_n_i()"
+	  methods so that they are more optimistic.  Previously, these
+	  methods would check with select() before issuing the data
+	  transfer call.  There was really no need to do this since the
+	  socket is already in non-blocking mode and will therefore not
+	  block in transferring the data.  This change should make these
+	  methods faster in the case when there is no blocking since
+	  select() will not be called.
+
+	  As a side effect of this change, checking for EWOULDBLOCK now
+	  happens after the call to send()/recv().  This automatically
+	  fixed bug 594 though I am still not sure why send()/recv() would
+	  EWOULDBLOCK right after select() indicated that the socket was
+	  ready.  Either way, thanks to Viatcheslav A. Batenine
+	  <slavikb@iname.com> for reporting the bug and providing an
+	  example illustrating the bug.
+
 Tue Jun 20 19:37:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/CORBA_macros.h:

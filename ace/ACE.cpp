@@ -1204,6 +1204,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
        bytes_transferred < len;
        bytes_transferred += n)
     {
+      // Try to transfer as much of the remaining data as possible.
       n = ACE_OS::recv (handle,
                         (char *) buf + bytes_transferred,
                         len - bytes_transferred,
@@ -1215,22 +1216,23 @@ ACE::recv_n_i (ACE_HANDLE handle,
       // Check for other errors.
       if (n == -1)
         {
-          // If blocked, try again.
+          // Check for possible blocking.
           if (errno == EWOULDBLOCK)
             {
-              // Make sure we can make progress before continuing,
-              // otherwise we'll just keep spinning.
-              int result = ACE::handle_read_ready (handle, 0);
-              if (result == -1)
-                return -1;
+              // Wait for the blocking to subside.
+              int result = ACE::handle_read_ready (handle,
+                                                   0);
 
-              n = 0;
-              continue;
+              // Did select() succeed?
+              if (result != -1)
+                {
+                  // Blocking subsided.  Continue data transfer.
+                  n = 0;
+                  continue;
+                }
             }
 
-          // No timeouts in this version.
-
-          // Other errors.
+          // Other data transfer or select() failures.
           return -1;
         }
     }
@@ -1259,25 +1261,38 @@ ACE::recv_n_i (ACE_HANDLE handle,
        bytes_transferred < len;
        bytes_transferred += n)
     {
-      int rtn = ACE::handle_read_ready (handle,
-                                        timeout);
-
-      if (rtn == -1)
-        {
-          error = 1;
-          result = -1;
-          break;
-        }
-
+      // Try to transfer as much of the remaining data as possible.
+      // Since the socket is in non-blocking mode, this call will not
+      // block.
       n = ACE_OS::recv (handle,
                         (char *) buf + bytes_transferred,
                         len - bytes_transferred,
                         flags);
 
-      // Errors (note that errno cannot be EWOULDBLOCK since select()
-      // just told us that data is available to read).
-      if (n == -1 || n == 0)
+      // Check for errors.
+      if (n == 0 ||
+          n == -1)
         {
+          // Check for possible blocking.
+          if (n == -1 &&
+              errno == EWOULDBLOCK)
+            {
+              // Wait upto <timeout> for the blocking to subside.
+              int rtn = ACE::handle_read_ready (handle,
+                                                timeout);
+
+              // Did select() succeed?
+              if (rtn != -1)
+                {
+                  // Blocking subsided in <timeout> period.  Continue
+                  // data transfer.
+                  n = 0;
+                  continue;
+                }
+            }
+
+          // Wait in select() timed out or other data transfer or
+          // select() failures.
           error = 1;
           result = n;
           break;
@@ -1309,6 +1324,7 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
        bytes_transferred < len;
        bytes_transferred += n)
     {
+      // Try to transfer as much of the remaining data as possible.
       n = ACE_OS::t_rcv (handle,
                          (char *) buf + bytes_transferred,
                          len - bytes_transferred,
@@ -1320,22 +1336,23 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
       // Check for other errors.
       if (n == -1)
         {
-          // If blocked, try again.
+          // Check for possible blocking.
           if (errno == EWOULDBLOCK)
             {
-              // Make sure we can make progress before continuing,
-              // otherwise we'll just keep spinning.
-              int result = ACE::handle_read_ready (handle, 0);
-              if (result == -1)
-                return -1;
+              // Wait for the blocking to subside.
+              int result = ACE::handle_read_ready (handle,
+                                                   0);
 
-              n = 0;
-              continue;
+              // Did select() succeed?
+              if (result != -1)
+                {
+                  // Blocking subsided.  Continue data transfer.
+                  n = 0;
+                  continue;
+                }
             }
 
-          // No timeouts in this version.
-
-          // Other errors.
+          // Other data transfer or select() failures.
           return -1;
         }
     }
@@ -1364,25 +1381,38 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
        bytes_transferred < len;
        bytes_transferred += n)
     {
-      int rtn = ACE::handle_read_ready (handle,
-                                        timeout);
-
-      if (rtn == -1)
-        {
-          error = 1;
-          result = -1;
-          break;
-        }
-
+      // Try to transfer as much of the remaining data as possible.
+      // Since the socket is in non-blocking mode, this call will not
+      // block.
       n = ACE_OS::t_rcv (handle,
                          (char *) buf + bytes_transferred,
                          len - bytes_transferred,
                          flags);
 
-      // Errors (note that errno cannot be EWOULDBLOCK since select()
-      // just told us that data is available to read).
-      if (n == -1 || n == 0)
+      // Check for errors.
+      if (n == 0 ||
+          n == -1)
         {
+          // Check for possible blocking.
+          if (n == -1 &&
+              errno == EWOULDBLOCK)
+            {
+              // Wait upto <timeout> for the blocking to subside.
+              int rtn = ACE::handle_read_ready (handle,
+                                                timeout);
+
+              // Did select() succeed?
+              if (rtn != -1)
+                {
+                  // Blocking subsided in <timeout> period.  Continue
+                  // data transfer.
+                  n = 0;
+                  continue;
+                }
+            }
+
+          // Wait in select() timed out or other data transfer or
+          // select() failures.
           error = 1;
           result = n;
           break;
@@ -1413,6 +1443,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
        bytes_transferred < len;
        bytes_transferred += n)
     {
+      // Try to transfer as much of the remaining data as possible.
       n = ACE::recv_i (handle,
                        (char *) buf + bytes_transferred,
                        len - bytes_transferred);
@@ -1423,22 +1454,23 @@ ACE::recv_n_i (ACE_HANDLE handle,
       // Check for other errors.
       if (n == -1)
         {
-          // If blocked, try again.
+          // Check for possible blocking.
           if (errno == EWOULDBLOCK)
             {
-              // Make sure we can make progress before continuing,
-              // otherwise we'll just keep spinning.
-              int result = ACE::handle_read_ready (handle, 0);
-              if (result == -1)
-                return -1;
+              // Wait for the blocking to subside.
+              int result = ACE::handle_read_ready (handle,
+                                                   0);
 
-              n = 0;
-              continue;
+              // Did select() succeed?
+              if (result != -1)
+                {
+                  // Blocking subsided.  Continue data transfer.
+                  n = 0;
+                  continue;
+                }
             }
 
-          // No timeouts in this version.
-
-          // Other errors.
+          // Other data transfer or select() failures.
           return -1;
         }
     }
@@ -1466,24 +1498,37 @@ ACE::recv_n_i (ACE_HANDLE handle,
        bytes_transferred < len;
        bytes_transferred += n)
     {
-      int rtn = ACE::handle_read_ready (handle,
-                                           timeout);
-
-      if (rtn == -1)
-        {
-          error = 1;
-          result = -1;
-          break;
-        }
-
+      // Try to transfer as much of the remaining data as possible.
+      // Since the socket is in non-blocking mode, this call will not
+      // block.
       n = ACE::recv_i (handle,
                        (char *) buf + bytes_transferred,
                        len - bytes_transferred);
 
-      // Errors (note that errno cannot be EWOULDBLOCK since select()
-      // just told us that data is available to read).
-      if (n == -1 || n == 0)
+      // Check for errors.
+      if (n == 0 ||
+          n == -1)
         {
+          // Check for possible blocking.
+          if (n == -1 &&
+              errno == EWOULDBLOCK)
+            {
+              // Wait upto <timeout> for the blocking to subside.
+              int rtn = ACE::handle_read_ready (handle,
+                                                timeout);
+
+              // Did select() succeed?
+              if (rtn != -1)
+                {
+                  // Blocking subsided in <timeout> period.  Continue
+                  // data transfer.
+                  n = 0;
+                  continue;
+                }
+            }
+
+          // Wait in select() timed out or other data transfer or
+          // select() failures.
           error = 1;
           result = n;
           break;
@@ -1577,6 +1622,7 @@ ACE::recvv_n_i (ACE_HANDLE handle,
        s < iovcnt;
        )
     {
+      // Try to transfer as much of the remaining data as possible.
       ssize_t n = ACE_OS::recvv (handle,
                                  iov + s,
                                  iovcnt - s);
@@ -1587,22 +1633,23 @@ ACE::recvv_n_i (ACE_HANDLE handle,
       // Check for other errors.
       if (n == -1)
         {
-          // If blocked, try again.
+          // Check for possible blocking.
           if (errno == EWOULDBLOCK)
             {
-              // Make sure we can make progress before continuing,
-              // otherwise we'll just keep spinning.
-              int result = ACE::handle_read_ready (handle, 0);
-              if (result == -1)
-                return -1;
+              // Wait for the blocking to subside.
+              int result = ACE::handle_read_ready (handle,
+                                                   0);
 
-              n = 0;
-              continue;
+              // Did select() succeed?
+              if (result != -1)
+                {
+                  // Blocking subsided.  Continue data transfer.
+                  n = 0;
+                  continue;
+                }
             }
 
-          // No timeouts in this version.
-
-          // Other errors.
+          // Other data transfer or select() failures.
           return -1;
         }
 
@@ -1645,24 +1692,37 @@ ACE::recvv_n_i (ACE_HANDLE handle,
        s < iovcnt;
        )
     {
-      int rtn = ACE::handle_read_ready (handle,
-                                        timeout);
-
-      if (rtn == -1)
-        {
-          error = 1;
-          result = -1;
-          break;
-        }
-
+      // Try to transfer as much of the remaining data as possible.
+      // Since the socket is in non-blocking mode, this call will not
+      // block.
       ssize_t n = ACE_OS::recvv (handle,
                                  iov + s,
                                  iovcnt - s);
 
-      // Errors (note that errno cannot be EWOULDBLOCK since select()
-      // just told us that data is available to read).
-      if (n == -1 || n == 0)
+      // Check for errors.
+      if (n == 0 ||
+          n == -1)
         {
+          // Check for possible blocking.
+          if (n == -1 &&
+              errno == EWOULDBLOCK)
+            {
+              // Wait upto <timeout> for the blocking to subside.
+              int rtn = ACE::handle_read_ready (handle,
+                                                timeout);
+
+              // Did select() succeed?
+              if (rtn != -1)
+                {
+                  // Blocking subsided in <timeout> period.  Continue
+                  // data transfer.
+                  n = 0;
+                  continue;
+                }
+            }
+
+          // Wait in select() timed out or other data transfer or
+          // select() failures.
           error = 1;
           result = n;
           break;
@@ -1945,6 +2005,7 @@ ACE::send_n_i (ACE_HANDLE handle,
        bytes_transferred < len;
        bytes_transferred += n)
     {
+      // Try to transfer as much of the remaining data as possible.
       n = ACE_OS::send (handle,
                         (char *) buf + bytes_transferred,
                         len - bytes_transferred,
@@ -1956,22 +2017,23 @@ ACE::send_n_i (ACE_HANDLE handle,
       // Check for other errors.
       if (n == -1)
         {
-          // If blocked, try again.
+          // Check for possible blocking.
           if (errno == EWOULDBLOCK)
             {
-              // Make sure we can make progress before continuing,
-              // otherwise we'll just keep spinning.
-              int result = ACE::handle_write_ready (handle, 0);
-              if (result == -1)
-                return -1;
+              // Wait for the blocking to subside.
+              int result = ACE::handle_write_ready (handle,
+                                                    0);
 
-              n = 0;
-              continue;
+              // Did select() succeed?
+              if (result != -1)
+                {
+                  // Blocking subsided.  Continue data transfer.
+                  n = 0;
+                  continue;
+                }
             }
 
-          // No timeouts in this version.
-
-          // Other errors.
+          // Other data transfer or select() failures.
           return -1;
         }
     }
@@ -2000,25 +2062,38 @@ ACE::send_n_i (ACE_HANDLE handle,
        bytes_transferred < len;
        bytes_transferred += n)
     {
-      int rtn = ACE::handle_write_ready (handle,
-                                         timeout);
-
-      if (rtn == -1)
-        {
-          error = 1;
-          result = -1;
-          break;
-        }
-
+      // Try to transfer as much of the remaining data as possible.
+      // Since the socket is in non-blocking mode, this call will not
+      // block.
       n = ACE_OS::send (handle,
                         (char *) buf + bytes_transferred,
                         len - bytes_transferred,
                         flags);
 
-      // Errors (note that errno cannot be EWOULDBLOCK since select()
-      // just told us that data can be written).
-      if (n == -1 || n == 0)
+      // Check for errors.
+      if (n == 0 ||
+          n == -1)
         {
+          // Check for possible blocking.
+          if (n == -1 &&
+              errno == EWOULDBLOCK)
+            {
+              // Wait upto <timeout> for the blocking to subside.
+              int rtn = ACE::handle_write_ready (handle,
+                                                 timeout);
+
+              // Did select() succeed?
+              if (rtn != -1)
+                {
+                  // Blocking subsided in <timeout> period.  Continue
+                  // data transfer.
+                  n = 0;
+                  continue;
+                }
+            }
+
+          // Wait in select() timed out or other data transfer or
+          // select() failures.
           error = 1;
           result = n;
           break;
@@ -2050,6 +2125,7 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
        bytes_transferred < len;
        bytes_transferred += n)
     {
+      // Try to transfer as much of the remaining data as possible.
       n = ACE_OS::t_snd (handle,
                          (char *) buf + bytes_transferred,
                          len - bytes_transferred,
@@ -2061,22 +2137,23 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
       // Check for other errors.
       if (n == -1)
         {
-          // If blocked, try again.
+          // Check for possible blocking.
           if (errno == EWOULDBLOCK)
             {
-              // Make sure we can make progress before continuing,
-              // otherwise we'll just keep spinning.
-              int result = ACE::handle_write_ready (handle, 0);
-              if (result == -1)
-                return -1;
+              // Wait for the blocking to subside.
+              int result = ACE::handle_write_ready (handle,
+                                                    0);
 
-              n = 0;
-              continue;
+              // Did select() succeed?
+              if (result != -1)
+                {
+                  // Blocking subsided.  Continue data transfer.
+                  n = 0;
+                  continue;
+                }
             }
 
-          // No timeouts in this version.
-
-          // Other errors.
+          // Other data transfer or select() failures.
           return -1;
         }
     }
@@ -2105,25 +2182,38 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
        bytes_transferred < len;
        bytes_transferred += n)
     {
-      int rtn = ACE::handle_write_ready (handle,
-                                            timeout);
-
-      if (rtn == -1)
-        {
-          error = 1;
-          result = -1;
-          break;
-        }
-
+      // Try to transfer as much of the remaining data as possible.
+      // Since the socket is in non-blocking mode, this call will not
+      // block.
       n = ACE_OS::t_snd (handle,
                          (char *) buf + bytes_transferred,
                          len - bytes_transferred,
                          flags);
 
-      // Errors (note that errno cannot be EWOULDBLOCK since select()
-      // just told us that data can be written).
-      if (n == -1 || n == 0)
+      // Check for errors.
+      if (n == 0 ||
+          n == -1)
         {
+          // Check for possible blocking.
+          if (n == -1 &&
+              errno == EWOULDBLOCK)
+            {
+              // Wait upto <timeout> for the blocking to subside.
+              int rtn = ACE::handle_write_ready (handle,
+                                                 timeout);
+
+              // Did select() succeed?
+              if (rtn != -1)
+                {
+                  // Blocking subsided in <timeout> period.  Continue
+                  // data transfer.
+                  n = 0;
+                  continue;
+                }
+            }
+
+          // Wait in select() timed out or other data transfer or
+          // select() failures.
           error = 1;
           result = n;
           break;
@@ -2154,6 +2244,7 @@ ACE::send_n_i (ACE_HANDLE handle,
        bytes_transferred < len;
        bytes_transferred += n)
     {
+      // Try to transfer as much of the remaining data as possible.
       n = ACE::send_i (handle,
                        (char *) buf + bytes_transferred,
                        len - bytes_transferred);
@@ -2164,22 +2255,23 @@ ACE::send_n_i (ACE_HANDLE handle,
       // Check for other errors.
       if (n == -1)
         {
-          // If blocked, try again.
+          // Check for possible blocking.
           if (errno == EWOULDBLOCK)
             {
-              // Make sure we can make progress before continuing,
-              // otherwise we'll just keep spinning.
-              int result = ACE::handle_write_ready (handle, 0);
-              if (result == -1)
-                return -1;
+              // Wait for the blocking to subside.
+              int result = ACE::handle_write_ready (handle,
+                                                    0);
 
-              n = 0;
-              continue;
+              // Did select() succeed?
+              if (result != -1)
+                {
+                  // Blocking subsided.  Continue data transfer.
+                  n = 0;
+                  continue;
+                }
             }
 
-          // No timeouts in this version.
-
-          // Other errors.
+          // Other data transfer or select() failures.
           return -1;
         }
     }
@@ -2207,24 +2299,37 @@ ACE::send_n_i (ACE_HANDLE handle,
        bytes_transferred < len;
        bytes_transferred += n)
     {
-      int rtn = ACE::handle_write_ready (handle,
-                                         timeout);
-
-      if (rtn == -1)
-        {
-          error = 1;
-          result = -1;
-          break;
-        }
-
+      // Try to transfer as much of the remaining data as possible.
+      // Since the socket is in non-blocking mode, this call will not
+      // block.
       n = ACE::send_i (handle,
                        (char *) buf + bytes_transferred,
                        len - bytes_transferred);
 
-      // Errors (note that errno cannot be EWOULDBLOCK since select()
-      // just told us that data can be written).
-      if (n == -1 || n == 0)
+      // Check for errors.
+      if (n == 0 ||
+          n == -1)
         {
+          // Check for possible blocking.
+          if (n == -1 &&
+              errno == EWOULDBLOCK)
+            {
+              // Wait upto <timeout> for the blocking to subside.
+              int rtn = ACE::handle_write_ready (handle,
+                                                 timeout);
+
+              // Did select() succeed?
+              if (rtn != -1)
+                {
+                  // Blocking subsided in <timeout> period.  Continue
+                  // data transfer.
+                  n = 0;
+                  continue;
+                }
+            }
+
+          // Wait in select() timed out or other data transfer or
+          // select() failures.
           error = 1;
           result = n;
           break;
@@ -2319,6 +2424,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
        s < iovcnt;
        )
     {
+      // Try to transfer as much of the remaining data as possible.
       ssize_t n = ACE_OS::sendv (handle,
                                  iov + s,
                                  iovcnt - s);
@@ -2329,22 +2435,23 @@ ACE::sendv_n_i (ACE_HANDLE handle,
       // Check for other errors.
       if (n == -1)
         {
-          // If blocked, try again.
+          // Check for possible blocking.
           if (errno == EWOULDBLOCK)
             {
-              // Make sure we can make progress before continuing,
-              // otherwise we'll just keep spinning.
-              int result = ACE::handle_write_ready (handle, 0);
-              if (result == -1)
-                return -1;
+              // Wait for the blocking to subside.
+              int result = ACE::handle_write_ready (handle,
+                                                    0);
 
-              n = 0;
-              continue;
+              // Did select() succeed?
+              if (result != -1)
+                {
+                  // Blocking subsided.  Continue data transfer.
+                  n = 0;
+                  continue;
+                }
             }
 
-          // No timeouts in this version.
-
-          // Other errors.
+          // Other data transfer or select() failures.
           return -1;
         }
 
@@ -2389,24 +2496,37 @@ ACE::sendv_n_i (ACE_HANDLE handle,
        s < iovcnt;
        )
     {
-      int rtn = ACE::handle_write_ready (handle,
-                                         timeout);
-
-      if (rtn == -1)
-        {
-          error = 1;
-          result = -1;
-          break;
-        }
-
+      // Try to transfer as much of the remaining data as possible.
+      // Since the socket is in non-blocking mode, this call will not
+      // block.
       ssize_t n = ACE_OS::sendv (handle,
                                  iov + s,
                                  iovcnt - s);
 
-      // Errors (note that errno cannot be EWOULDBLOCK since select()
-      // just told us that data can be written).
-      if (n == -1 || n == 0)
+      // Check for errors.
+      if (n == 0 ||
+          n == -1)
         {
+          // Check for possible blocking.
+          if (n == -1 &&
+              errno == EWOULDBLOCK)
+            {
+              // Wait upto <timeout> for the blocking to subside.
+              int rtn = ACE::handle_write_ready (handle,
+                                                 timeout);
+
+              // Did select() succeed?
+              if (rtn != -1)
+                {
+                  // Blocking subsided in <timeout> period.  Continue
+                  // data transfer.
+                  n = 0;
+                  continue;
+                }
+            }
+
+          // Wait in select() timed out or other data transfer or
+          // select() failures.
           error = 1;
           result = n;
           break;
@@ -4349,8 +4469,8 @@ ACE::strndup (const wchar_t *str, size_t n)
 
   wchar_t *s;
   ACE_ALLOCATOR_RETURN (s,
-                        ACE_static_cast (wchar_t *, 
-                                         ACE_OS::malloc ((len + 1) 
+                        ACE_static_cast (wchar_t *,
+                                         ACE_OS::malloc ((len + 1)
                                                          * sizeof (wchar_t))),
                         0);
   s[len] = L'\0';
