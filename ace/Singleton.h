@@ -104,6 +104,45 @@ protected:
 };
 
 template <class TYPE, class ACE_LOCK>
+class ACE_Unmanaged_Singleton : public ACE_Singleton <TYPE, ACE_LOCK>
+{
+  // = TITLE
+  //     Same as <ACE_Singleton>, except does _not_ register with
+  //     <ACE_Object_Manager> for destruction.
+  //
+  // = DESCRIPTION
+  //     This version of <ACE_Singleton> can be used if, for example,
+  //     its DLL will be unloaded before the <ACE_Object_Manager>
+  //     destroys the instance.  Unlike with <ACE_Singleton>, the
+  //     application is responsible for explicitly destroying the
+  //     instance after it is no longer needed (if it wants to avoid
+  //     memory leaks, at least).  The close () static member function
+  //     must be used to explicitly destroy the Singleton.
+  //
+public:
+  static TYPE *instance (void);
+  // Global access point to the Singleton.
+
+  static void close (void);
+  // Explicitly delete the Singleton instance.
+
+  static void dump (void);
+  // Dump the state of the object.
+
+protected:
+  ACE_Unmanaged_Singleton (void);
+  // Default constructor.
+
+#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
+  static ACE_Unmanaged_Singleton<TYPE, ACE_LOCK> *singleton_;
+  // Pointer to the Singleton (ACE_Cleanup) instance.
+#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+
+  static ACE_Unmanaged_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
+  // Get pointer to the Singleton instance.
+};
+
+template <class TYPE, class ACE_LOCK>
 class ACE_TSS_Singleton : public ACE_Cleanup
 {
   // = TITLE
@@ -147,6 +186,46 @@ protected:
 
   static ACE_TSS_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
   // Get pointer to the TSS Singleton instance.
+};
+
+template <class TYPE, class ACE_LOCK>
+class ACE_Unmanaged_TSS_Singleton : public ACE_TSS_Singleton <TYPE, ACE_LOCK>
+{
+  // = TITLE
+  //     Same as <ACE_TSS_Singleton>, except does _not_ register with
+  //     <ACE_Object_Manager> for destruction.
+  //
+  // = DESCRIPTION
+  //     This version of <ACE_TSS_Singleton> can be used if, for
+  //     example, its DLL will be unloaded before the
+  //     <ACE_Object_Manager> destroys the instance.  Unlike with
+  //     <ACE_Singleton>, the application is responsible for
+  //     explicitly destroying the instance after it is no longer
+  //     needed (if it wants to avoid memory leaks, at least).  The
+  //     close () static member function must be used to explicitly
+  //     destroy the Singleton.
+  //
+public:
+  static TYPE *instance (void);
+  // Global access point to the Singleton.
+
+  static void close (void);
+  // Explicitly delete the Singleton instance.
+
+  static void dump (void);
+  // Dump the state of the object.
+
+protected:
+  ACE_Unmanaged_TSS_Singleton (void);
+  // Default constructor.
+
+#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
+  static ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK> *singleton_;
+  // Pointer to the Singleton (ACE_Cleanup) instance.
+#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+
+  static ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
+  // Get pointer to the Singleton instance.
 };
 
 #if defined (__ACE_INLINE__)
