@@ -120,6 +120,8 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name,
 	}
       this->write_each_page_ = options->write_each_page_;
       this->minimum_bytes_ = options->minimum_bytes_;
+      if (options->flags_ != 0)
+	this->flags_ = options->flags_;
     }
 
   if (backing_store_name == 0)
@@ -287,11 +289,13 @@ ACE_MMAP_Memory_Pool::remap (void *addr)
 ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (void *base_addr,
 							    int use_fixed_addr,
 							    int write_each_page,
-							    int minimum_bytes)
+							    int minimum_bytes,
+							    u_int flags)
   : base_addr_ (base_addr),
     use_fixed_addr_ (use_fixed_addr),
     write_each_page_ (write_each_page),
-    minimum_bytes_ (minimum_bytes)
+    minimum_bytes_ (minimum_bytes),
+    flags_ (flags)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options");
 }

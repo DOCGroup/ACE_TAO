@@ -298,7 +298,8 @@ public:
   ACE_MMAP_Memory_Pool_Options (void *base_addr = ACE_DEFAULT_BASE_ADDR,
 				int use_fixed_addr = 1,
 				int write_each_page = 1,
-				int minimum_bytes = 0);
+				int minimum_bytes = 0,
+				u_int flags = 0);
 
   void *base_addr_;
   // Base address of the memory-mapped backing store.
@@ -312,6 +313,9 @@ public:
 
   int minimum_bytes_;
   // What the minimim bytes of the initial segment should be.
+
+  u_int flags_;
+  // Any special flags that need to be used for <mmap>.
 };
 
 class ACE_Export ACE_MMAP_Memory_Pool : public ACE_Event_Handler

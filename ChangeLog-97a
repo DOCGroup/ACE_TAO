@@ -1,3 +1,18 @@
+Mon Feb 10 15:27:02 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Memory_Pool: Added support that allows flags to be passed in
+ 	  to the MMAP_Memory_Pool.  This can be used to set the
+ 	  appropriate type of backing store semantics (e.g., MAP_PRIVATE
+ 	  and MAP_SHARED).  Thanks to Fred LaBar
+ 	  <flabar@fallschurch.esys.com> for providing this.
+
+Sun Feb  9 11:56:37 1997  Douglas C. Schmidt  <schmidt@polka.cs.wustl.edu>
+
+	* ace/Map_Manager.cpp (bind_i): A recent change to Map_Manager
+ 	  broke the Connector since errno was getting set to ENOENT rather
+ 	  than EWOULDBLOCK.  Thanks to Mark Rabotnikov
+ 	  <mark@usp.elscintcorp.co.il> for finding this.
+
 Sun Feb 09 21:44:34 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/{OS.cpp,Thread_Priority.cpp}: added comment about thread
