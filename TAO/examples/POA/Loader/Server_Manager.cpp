@@ -239,7 +239,7 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
       // the servant on demand.
       ACE_NEW_RETURN (servant_activator_impl_,
                       ServantActivator_i (orb_.in (),
-                                          "MyFoo",
+                                          "Generic_Servant",
                                           "supply_servant",
                                           "destroy_servant"),
                       0);
@@ -287,7 +287,7 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
       // the servant on demand.
       ACE_NEW_RETURN (servant_locator_impl_,
                       ServantLocator_i (orb_.in (),
-                                        "MyFoo",
+                                        "Generic_Servant",
                                         "supply_servant",
                                         "destroy_servant"),
                       0);

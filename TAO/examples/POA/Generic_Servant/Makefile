@@ -19,7 +19,7 @@ override TAO_IDLFLAGS += -Wb,export_macro=GENERIC_SERVANT_Export \
 
 LDLIBS = -lTAO
 
-SHLIB = libMyFoo.$(SOEXT)
+SHLIB = libGeneric_Servant.$(SOEXT)
 
 IDL_SRC = FooC FooS
 
