@@ -1,3 +1,117 @@
+Mon Jun 12 20:45:18 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/Process_Win32.pm:
+
+          Changed the $newwindow check to check to see if the variable
+          was defined before comparing it to "yes".  This removes a 
+          perl warning.
+
+        * bin/msvc_auto_compile.pl:
+
+          The TAOACE[_static].dsw files were changed, so I altered the
+          CORE option to use the TAOACE.dsw file with -DLL, and added 
+          some missing dsp files for the -LIB build.  
+          
+        * bin/create_vt_dsps.pl:
+
+          Changed the runtime library type used in the static versions 
+          and added ACE_OS_HAS_DLL=0.
+
+        * ace/ace_lib.dsp:
+        * apps/gperf/src/gperf.dsp:
+        * apps/gperf/src/gperf_lib.dsp:
+        * examples/IPC_SAP/ATM_SAP/CPP_client.dsp:
+        * examples/IPC_SAP/ATM_SAP/CPP_server.dsp:
+
+          Miscellaneous fixes to get the static versions working again.
+          Mainly just adding ACE_OS_HAS_DLL=0.
+
+        * tests/version_tests/CDR_Array_Test.dsp: (added)
+        * tests/version_tests/Atomic_Op_Test.dsp:
+        * tests/version_tests/Auto_IncDec_Test.dsp:
+        * tests/version_tests/Barrier_Test.dsp:
+        * tests/version_tests/Basic_Types_Test.dsp:
+        * tests/version_tests/Buffer_Stream_Test.dsp:
+        * tests/version_tests/CDR_File_Test.dsp:
+        * tests/version_tests/CDR_Test.dsp:
+        * tests/version_tests/Cache_Map_Manager_Test.dsp:
+        * tests/version_tests/Cached_Accept_Conn_Test.dsp:
+        * tests/version_tests/Cached_Conn_Test.dsp:
+        * tests/version_tests/Capabilities_Test.dsp:
+        * tests/version_tests/Collection_Test.dsp:
+        * tests/version_tests/Conn_Test.dsp:
+        * tests/version_tests/DLL_Test.dsp:
+        * tests/version_tests/DLList_Test.dsp:
+        * tests/version_tests/Dynamic_Priority_Test.dsp:
+        * tests/version_tests/Enum_Interfaces_Test.dsp:
+        * tests/version_tests/Env_Value_Test.dsp:
+        * tests/version_tests/Future_Set_Test.dsp:
+        * tests/version_tests/Future_Test.dsp:
+        * tests/version_tests/Handle_Set_Test.dsp:
+        * tests/version_tests/Hash_Map_Bucket_Iterator_Test.dsp:
+        * tests/version_tests/Hash_Map_Manager_Test.dsp:
+        * tests/version_tests/High_Res_Timer_Test.dsp:
+        * tests/version_tests/IOStream_Test.dsp:
+        * tests/version_tests/Lazy_Map_Manager_Test.dsp:
+        * tests/version_tests/MM_Shared_Memory_Test.dsp:
+        * tests/version_tests/MT_Reactor_Timer_Test.dsp:
+        * tests/version_tests/MT_SOCK_Test.dsp:
+        * tests/version_tests/Malloc_Test.dsp:
+        * tests/version_tests/Map_Manager_Test.dsp:
+        * tests/version_tests/Map_Test.dsp:
+        * tests/version_tests/Mem_Map_Test.dsp:
+        * tests/version_tests/Message_Block_Test.dsp:
+        * tests/version_tests/Message_Queue_Notifications_Test.dsp:
+        * tests/version_tests/Message_Queue_Test.dsp:
+        * tests/version_tests/Naming_Test.dsp:
+        * tests/version_tests/New_Fail_Test.dsp:
+        * tests/version_tests/Notify_Performance_Test.dsp:
+        * tests/version_tests/Object_Manager_Test.dsp:
+        * tests/version_tests/OrdMultiSet_Test.dsp:
+        * tests/version_tests/Pipe_Test.dsp:
+        * tests/version_tests/Priority_Buffer_Test.dsp:
+        * tests/version_tests/Priority_Reactor_Test.dsp:
+        * tests/version_tests/Priority_Task_Test.dsp:
+        * tests/version_tests/Process_Manager_Test.dsp:
+        * tests/version_tests/Process_Mutex_Test.dsp:
+        * tests/version_tests/Process_Strategy_Test.dsp:
+        * tests/version_tests/RB_Tree_Test.dsp:
+        * tests/version_tests/Reactor_Exceptions_Test.dsp:
+        * tests/version_tests/Reactor_Notify_Test.dsp:
+        * tests/version_tests/Reactor_Performance_Test.dsp:
+        * tests/version_tests/Reactor_Timer_Test.dsp:
+        * tests/version_tests/Reactors_Test.dsp:
+        * tests/version_tests/Reader_Writer_Test.dsp:
+        * tests/version_tests/Recursive_Mutex_Test.dsp:
+        * tests/version_tests/Reverse_Lock_Test.dsp:
+        * tests/version_tests/SOCK_Connector_Test.dsp:
+        * tests/version_tests/SOCK_Send_Recv_Test.dsp:
+        * tests/version_tests/SOCK_Test.dsp:
+        * tests/version_tests/SPIPE_Test.dsp:
+        * tests/version_tests/SString_Test.dsp:
+        * tests/version_tests/SV_Shared_Memory_Test.dsp:
+        * tests/version_tests/Semaphore_Test.dsp:
+        * tests/version_tests/Service_Config_Test.dsp:
+        * tests/version_tests/Sigset_Ops_Test.dsp:
+        * tests/version_tests/Simple_Message_Block_Test.dsp:
+        * tests/version_tests/Svc_Handler_Test.dsp:
+        * tests/version_tests/TSS_Test.dsp:
+        * tests/version_tests/Task_Test.dsp:
+        * tests/version_tests/Thread_Manager_Test.dsp:
+        * tests/version_tests/Thread_Mutex_Test.dsp:
+        * tests/version_tests/Thread_Pool_Reactor_Test.dsp:
+        * tests/version_tests/Thread_Pool_Test.dsp:
+        * tests/version_tests/Time_Service_Test.dsp:
+        * tests/version_tests/Time_Value_Test.dsp:
+        * tests/version_tests/Timeprobe_Test.dsp:
+        * tests/version_tests/Timer_Queue_Test.dsp:
+        * tests/version_tests/Tokens_Test.dsp:
+        * tests/version_tests/UPIPE_SAP_Test.dsp:
+        * tests/version_tests/Upgradable_RW_Test.dsp:
+        * tests/version_tests/version_tests.dsw:
+
+          Regenerated.
+
 Mon Jun 12 18:17:42 2000  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * bin/auto_run_tests.lst: (added)

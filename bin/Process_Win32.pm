@@ -11,7 +11,7 @@ sub Create
 
   my $console = 0;
 
-  if ($newwindow eq "yes")
+  if ($newwindow && $newwindow eq "yes")
   {
     $console = CREATE_NEW_CONSOLE;
   }
