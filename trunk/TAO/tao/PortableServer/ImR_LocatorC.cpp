@@ -31,6 +31,7 @@
 
 #include "ImR_LocatorC.h"
 #include "tao/Stub.h"
+#include "tao/ORB_Core.h"
 #include "tao/Invocation.h"
 #include "tao/PortableInterceptor.h"
 
@@ -150,10 +151,10 @@ public:
 
     virtual Dynamic::ParameterList * arguments (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
     virtual Dynamic::ExceptionList * exceptions (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
     virtual CORBA::Any * result (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -163,16 +164,16 @@ public:
     const char * server_;
     const char * location_;
   };
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_operation/interceptors_cs.cpp:376
-  
+
   TAO_ClientRequestInfo_ImplementationRepository_Locator_activate_server_in_location::TAO_ClientRequestInfo_ImplementationRepository_Locator_activate_server_in_location (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
       const char * server,
       const char * location
-      ACE_ENV_ARG_DECL_NOT_USED      
+      ACE_ENV_ARG_DECL_NOT_USED
     )
       : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
       server_ (server),
@@ -187,19 +188,19 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_activate_server_in_locati
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-  
+
   parameter_list->length (2);
   CORBA::ULong len = 0;
   (*parameter_list)[len].argument <<= server_;
   (*parameter_list)[len].mode = CORBA::PARAM_IN;
   len++;
-  
+
   (*parameter_list)[len].argument <<= location_;
   (*parameter_list)[len].mode = CORBA::PARAM_IN;
   len++;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -211,15 +212,15 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_activate_server_in_locati
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
-    
-  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Locator_activate_server_in_location_exceptiondata[] = 
+
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Locator_activate_server_in_location_exceptiondata[] =
   {
     ImplementationRepository::_tc_NotFound,
     ImplementationRepository::_tc_CannotActivate
   };
-  
+
   exception_list->length (2);
   for (CORBA::ULong i = 0; i < 2; ++i)
     {
@@ -231,7 +232,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_activate_server_in_locati
   return safe_exception_list._retn ();
 }
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_ImplementationRepository_Locator_activate_server_in_location::result (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -240,7 +241,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_activate_server_in_locati
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -261,10 +262,10 @@ public:
 
     virtual Dynamic::ParameterList * arguments (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
     virtual Dynamic::ExceptionList * exceptions (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
     virtual CORBA::Any * result (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -274,16 +275,16 @@ public:
     const char * server_;
     const char * location_;
   };
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_operation/interceptors_cs.cpp:376
-  
+
   TAO_ClientRequestInfo_ImplementationRepository_Locator_remove_server_in_location::TAO_ClientRequestInfo_ImplementationRepository_Locator_remove_server_in_location (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
       const char * server,
       const char * location
-      ACE_ENV_ARG_DECL_NOT_USED      
+      ACE_ENV_ARG_DECL_NOT_USED
     )
       : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
       server_ (server),
@@ -298,19 +299,19 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_remove_server_in_location
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-  
+
   parameter_list->length (2);
   CORBA::ULong len = 0;
   (*parameter_list)[len].argument <<= server_;
   (*parameter_list)[len].mode = CORBA::PARAM_IN;
   len++;
-  
+
   (*parameter_list)[len].argument <<= location_;
   (*parameter_list)[len].mode = CORBA::PARAM_IN;
   len++;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -322,14 +323,14 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_remove_server_in_location
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
-    
-  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Locator_remove_server_in_location_exceptiondata[] = 
+
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Locator_remove_server_in_location_exceptiondata[] =
   {
     ImplementationRepository::_tc_NotFound
   };
-  
+
   exception_list->length (1);
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
@@ -341,7 +342,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_remove_server_in_location
   return safe_exception_list._retn ();
 }
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_ImplementationRepository_Locator_remove_server_in_location::result (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -350,7 +351,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_remove_server_in_location
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -371,10 +372,10 @@ public:
 
     virtual Dynamic::ParameterList * arguments (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
     virtual Dynamic::ExceptionList * exceptions (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
     virtual CORBA::Any * result (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -384,16 +385,16 @@ public:
     const char * server_;
     const char * location_;
   };
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_operation/interceptors_cs.cpp:376
-  
+
   TAO_ClientRequestInfo_ImplementationRepository_Locator_shutdown_server_in_location::TAO_ClientRequestInfo_ImplementationRepository_Locator_shutdown_server_in_location (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
       const char * server,
       const char * location
-      ACE_ENV_ARG_DECL_NOT_USED      
+      ACE_ENV_ARG_DECL_NOT_USED
     )
       : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
       server_ (server),
@@ -408,19 +409,19 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_shutdown_server_in_locati
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-  
+
   parameter_list->length (2);
   CORBA::ULong len = 0;
   (*parameter_list)[len].argument <<= server_;
   (*parameter_list)[len].mode = CORBA::PARAM_IN;
   len++;
-  
+
   (*parameter_list)[len].argument <<= location_;
   (*parameter_list)[len].mode = CORBA::PARAM_IN;
   len++;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -432,14 +433,14 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_shutdown_server_in_locati
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
-    
-  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Locator_shutdown_server_in_location_exceptiondata[] = 
+
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Locator_shutdown_server_in_location_exceptiondata[] =
   {
     ImplementationRepository::_tc_NotFound
   };
-  
+
   exception_list->length (1);
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
@@ -451,7 +452,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_shutdown_server_in_locati
   return safe_exception_list._retn ();
 }
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_ImplementationRepository_Locator_shutdown_server_in_location::result (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -460,7 +461,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_shutdown_server_in_locati
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -481,10 +482,10 @@ public:
 
     virtual Dynamic::ParameterList * arguments (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
     virtual Dynamic::ExceptionList * exceptions (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
     virtual CORBA::Any * result (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -494,16 +495,16 @@ public:
     const char * server_;
     const char * location_;
   };
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_operation/interceptors_cs.cpp:376
-  
+
   TAO_ClientRequestInfo_ImplementationRepository_Locator_server_is_shutting_down_in_location::TAO_ClientRequestInfo_ImplementationRepository_Locator_server_is_shutting_down_in_location (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
       const char * server,
       const char * location
-      ACE_ENV_ARG_DECL_NOT_USED      
+      ACE_ENV_ARG_DECL_NOT_USED
     )
       : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
       server_ (server),
@@ -518,19 +519,19 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_server_is_shutting_down_i
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-  
+
   parameter_list->length (2);
   CORBA::ULong len = 0;
   (*parameter_list)[len].argument <<= server_;
   (*parameter_list)[len].mode = CORBA::PARAM_IN;
   len++;
-  
+
   (*parameter_list)[len].argument <<= location_;
   (*parameter_list)[len].mode = CORBA::PARAM_IN;
   len++;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -542,14 +543,14 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_server_is_shutting_down_i
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
-    
-  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Locator_server_is_shutting_down_in_location_exceptiondata[] = 
+
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Locator_server_is_shutting_down_in_location_exceptiondata[] =
   {
     ImplementationRepository::_tc_NotFound
   };
-  
+
   exception_list->length (1);
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
@@ -561,7 +562,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_server_is_shutting_down_i
   return safe_exception_list._retn ();
 }
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_ImplementationRepository_Locator_server_is_shutting_down_in_location::result (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -570,7 +571,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_server_is_shutting_down_i
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -591,33 +592,33 @@ public:
 
     virtual Dynamic::ParameterList * arguments (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
     virtual Dynamic::ExceptionList * exceptions (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
     virtual CORBA::Any * result (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     void result (::CORBA::ULong result);
-    
+
   private:
     TAO_ClientRequestInfo_ImplementationRepository_Locator_register_activator (const TAO_ClientRequestInfo_ImplementationRepository_Locator_register_activator &);
     void operator= (const TAO_ClientRequestInfo_ImplementationRepository_Locator_register_activator &);
     const char * location_;
     CORBA::Object_ptr object_ref_;
-    
+
     ::CORBA::ULong _result;
   };
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_operation/interceptors_cs.cpp:376
-  
+
   TAO_ClientRequestInfo_ImplementationRepository_Locator_register_activator::TAO_ClientRequestInfo_ImplementationRepository_Locator_register_activator (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
       const char * location,
       CORBA::Object_ptr object_ref
-      ACE_ENV_ARG_DECL_NOT_USED      
+      ACE_ENV_ARG_DECL_NOT_USED
     )
       : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
       location_ (location),
@@ -632,19 +633,19 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_register_activator::argum
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-  
+
   parameter_list->length (2);
   CORBA::ULong len = 0;
   (*parameter_list)[len].argument <<= location_;
   (*parameter_list)[len].mode = CORBA::PARAM_IN;
   len++;
-  
+
   (*parameter_list)[len].argument <<= object_ref_;
   (*parameter_list)[len].mode = CORBA::PARAM_IN;
   len++;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -656,14 +657,14 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_register_activator::excep
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
-    
-  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Locator_register_activator_exceptiondata[] = 
+
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Locator_register_activator_exceptiondata[] =
   {
     ImplementationRepository::_tc_AlreadyRegistered
   };
-  
+
   exception_list->length (1);
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
@@ -675,7 +676,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_register_activator::excep
   return safe_exception_list._retn ();
 }
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_ImplementationRepository_Locator_register_activator::result (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -684,17 +685,17 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_register_activator::resul
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_ImplementationRepository_Locator_register_activator::result (CORBA::ULong result)
 {
-  // Update the result. 
+  // Update the result.
   this->_result = result;
 }
 
@@ -713,33 +714,33 @@ public:
 
     virtual Dynamic::ParameterList * arguments (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
     virtual Dynamic::ExceptionList * exceptions (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
     virtual CORBA::Any * result (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     void result (::CORBA::ULong result);
-    
+
   private:
     TAO_ClientRequestInfo_ImplementationRepository_Locator_unregister_activator (const TAO_ClientRequestInfo_ImplementationRepository_Locator_unregister_activator &);
     void operator= (const TAO_ClientRequestInfo_ImplementationRepository_Locator_unregister_activator &);
     const char * location_;
     CORBA::Object_ptr object_ref_;
-    
+
     ::CORBA::ULong _result;
   };
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_operation/interceptors_cs.cpp:376
-  
+
   TAO_ClientRequestInfo_ImplementationRepository_Locator_unregister_activator::TAO_ClientRequestInfo_ImplementationRepository_Locator_unregister_activator (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
       const char * location,
       CORBA::Object_ptr object_ref
-      ACE_ENV_ARG_DECL_NOT_USED      
+      ACE_ENV_ARG_DECL_NOT_USED
     )
       : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
       location_ (location),
@@ -754,19 +755,19 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_unregister_activator::arg
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-  
+
   parameter_list->length (2);
   CORBA::ULong len = 0;
   (*parameter_list)[len].argument <<= location_;
   (*parameter_list)[len].mode = CORBA::PARAM_IN;
   len++;
-  
+
   (*parameter_list)[len].argument <<= object_ref_;
   (*parameter_list)[len].mode = CORBA::PARAM_IN;
   len++;
-  
+
   return safe_parameter_list._retn ();
 }
 
@@ -778,14 +779,14 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_unregister_activator::exc
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
-    
-  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Locator_unregister_activator_exceptiondata[] = 
+
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Locator_unregister_activator_exceptiondata[] =
   {
     ImplementationRepository::_tc_NotFound
   };
-  
+
   exception_list->length (1);
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
@@ -797,7 +798,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_unregister_activator::exc
   return safe_exception_list._retn ();
 }
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_ImplementationRepository_Locator_unregister_activator::result (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -806,17 +807,17 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_unregister_activator::res
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_ImplementationRepository_Locator_unregister_activator::result (CORBA::ULong result)
 {
-  // Update the result. 
+  // Update the result.
   this->_result = result;
 }
 
@@ -826,7 +827,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Locator_unregister_activator::res
 // be/be_visitor_interface/remote_proxy_impl_cs.cpp:31
 
 ///////////////////////////////////////////////////////////////////////
-//                Base & Remote Proxy  Implementation. 
+//                Base & Remote Proxy  Implementation.
 //
 
 ImplementationRepository::_TAO_Locator_Proxy_Impl::_TAO_Locator_Proxy_Impl (void)
@@ -852,7 +853,7 @@ void ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::activate_server_i
     , ImplementationRepository::CannotActivate
   ))
 {
-    static TAO_Exception_Data _tao_ImplementationRepository_Locator_activate_server_in_location_exceptiondata [] = 
+    static TAO_Exception_Data _tao_ImplementationRepository_Locator_activate_server_in_location_exceptiondata [] =
   {
     {
       "IDL:ImplementationRepository/NotFound:1.0",
@@ -865,12 +866,12 @@ void ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::activate_server_i
   };
 
 TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
-  
+
   if (istub == 0)
     {
       ACE_THROW (CORBA::INTERNAL ());
     }
-    
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "activate_server_in_location",
@@ -878,22 +879,22 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
       2,
       istub->orb_core ()
     );
-  
+
   int _invoke_status;
-  
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
       istub->orb_core ()->client_request_interceptors (),
       &_tao_call,
       _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
       _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_ImplementationRepository_Locator_activate_server_in_location _tao_ri (
           &_tao_call,
@@ -903,14 +904,14 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
           ACE_ENV_ARG_PARAMETER
         );
       ACE_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
       TAO_INTERCEPTOR (_tao_ri.response_expected (1));
-      
+
 #if TAO_HAS_INTERCEPTORS == 1
-      
+
       ACE_TRY
         {
           _tao_vfr.send_request (
@@ -918,16 +919,16 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
               ACE_ENV_ARG_PARAMETER
             );
           ACE_TRY_CHECK;
-          
+
           if (_invoke_status == TAO_INVOKE_RESTART)
             {
               _tao_call.restart_flag (1);
             }
           else
             {
-              
+
 #endif /* TAO_HAS_INTERCEPTORS */
-              
+
               _tao_call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
               TAO_INTERCEPTOR_CHECK;
 
@@ -938,17 +939,17 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
               TAO_INTERCEPTOR_CHECK;
 
               TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
-              
+
               if (!(
                   (_tao_out << server) &&
                   (_tao_out << location)
                   ))
                 {
-                  TAO_OutputCDR::throw_stub_exception (errno ACE_ENV_ARG_PARAMETER); 
+                  TAO_OutputCDR::throw_stub_exception (errno ACE_ENV_ARG_PARAMETER);
                   TAO_INTERCEPTOR_CHECK;
 
                 }
-              
+
               _invoke_status =
                 _tao_call.invoke (_tao_ImplementationRepository_Locator_activate_server_in_location_exceptiondata, 2 ACE_ENV_ARG_PARAMETER);
               TAO_INTERCEPTOR_CHECK;
@@ -976,17 +977,17 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
               else
                 {
 #if TAO_HAS_INTERCEPTORS == 1
-                  
+
                   _tao_ri.reply_status (_invoke_status);
                   _tao_vfr.receive_reply (
                       &_tao_ri
                       ACE_ENV_ARG_PARAMETER
                     );
                   ACE_TRY_CHECK;
-                
+
 #endif  /* TAO_HAS_INTERCEPTORS */
                 }
-            
+
 #if TAO_HAS_INTERCEPTORS == 1
             }
         }
@@ -998,52 +999,52 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
               ACE_ENV_ARG_PARAMETER
             );
           ACE_TRY_CHECK;
-          
+
           const PortableInterceptor::ReplyStatus _tao_status =
             _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          
+
           if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
               || _tao_status == PortableInterceptor::USER_EXCEPTION)
             {
               ACE_RE_THROW;
             }
         }
-      
+
 # if defined (ACE_HAS_EXCEPTIONS) \
      && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
       ACE_CATCHALL
         {
           CORBA::UNKNOWN ex;
-          
+
           _tao_ri.exception (&ex);
           _tao_vfr.receive_exception (
               &_tao_ri
               ACE_ENV_ARG_PARAMETER
             );
           ACE_TRY_CHECK;
-          
+
           const PortableInterceptor::ReplyStatus _tao_status =
             _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          
+
           if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION)
             ACE_TRY_THROW (ex);
         }
 # endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
-      
+
       ACE_ENDTRY;
       ACE_CHECK;
-      
+
       const PortableInterceptor::ReplyStatus _tao_status =
         _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      
+
       if (_tao_status != PortableInterceptor::LOCATION_FORWARD
           && _tao_status != PortableInterceptor::TRANSPORT_RETRY)
-        
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-        
+
         if (_invoke_status != TAO_INVOKE_RESTART)
           break;
     }
@@ -1063,7 +1064,7 @@ void ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::remove_server_in_
     , ImplementationRepository::NotFound
   ))
 {
-    static TAO_Exception_Data _tao_ImplementationRepository_Locator_remove_server_in_location_exceptiondata [] = 
+    static TAO_Exception_Data _tao_ImplementationRepository_Locator_remove_server_in_location_exceptiondata [] =
   {
     {
       "IDL:ImplementationRepository/NotFound:1.0",
@@ -1072,12 +1073,12 @@ void ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::remove_server_in_
   };
 
 TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
-  
+
   if (istub == 0)
     {
       ACE_THROW (CORBA::INTERNAL ());
     }
-    
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "remove_server_in_location",
@@ -1085,22 +1086,22 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
       2,
       istub->orb_core ()
     );
-  
+
   int _invoke_status;
-  
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
       istub->orb_core ()->client_request_interceptors (),
       &_tao_call,
       _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
       _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_ImplementationRepository_Locator_remove_server_in_location _tao_ri (
           &_tao_call,
@@ -1110,14 +1111,14 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
           ACE_ENV_ARG_PARAMETER
         );
       ACE_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
       TAO_INTERCEPTOR (_tao_ri.response_expected (1));
-      
+
 #if TAO_HAS_INTERCEPTORS == 1
-      
+
       ACE_TRY
         {
           _tao_vfr.send_request (
@@ -1125,16 +1126,16 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
               ACE_ENV_ARG_PARAMETER
             );
           ACE_TRY_CHECK;
-          
+
           if (_invoke_status == TAO_INVOKE_RESTART)
             {
               _tao_call.restart_flag (1);
             }
           else
             {
-              
+
 #endif /* TAO_HAS_INTERCEPTORS */
-              
+
               _tao_call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
               TAO_INTERCEPTOR_CHECK;
 
@@ -1145,17 +1146,17 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
               TAO_INTERCEPTOR_CHECK;
 
               TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
-              
+
               if (!(
                   (_tao_out << server) &&
                   (_tao_out << location)
                   ))
                 {
-                  TAO_OutputCDR::throw_stub_exception (errno ACE_ENV_ARG_PARAMETER); 
+                  TAO_OutputCDR::throw_stub_exception (errno ACE_ENV_ARG_PARAMETER);
                   TAO_INTERCEPTOR_CHECK;
 
                 }
-              
+
               _invoke_status =
                 _tao_call.invoke (_tao_ImplementationRepository_Locator_remove_server_in_location_exceptiondata, 1 ACE_ENV_ARG_PARAMETER);
               TAO_INTERCEPTOR_CHECK;
@@ -1183,17 +1184,17 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
               else
                 {
 #if TAO_HAS_INTERCEPTORS == 1
-                  
+
                   _tao_ri.reply_status (_invoke_status);
                   _tao_vfr.receive_reply (
                       &_tao_ri
                       ACE_ENV_ARG_PARAMETER
                     );
                   ACE_TRY_CHECK;
-                
+
 #endif  /* TAO_HAS_INTERCEPTORS */
                 }
-            
+
 #if TAO_HAS_INTERCEPTORS == 1
             }
         }
@@ -1205,52 +1206,52 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
               ACE_ENV_ARG_PARAMETER
             );
           ACE_TRY_CHECK;
-          
+
           const PortableInterceptor::ReplyStatus _tao_status =
             _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          
+
           if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
               || _tao_status == PortableInterceptor::USER_EXCEPTION)
             {
               ACE_RE_THROW;
             }
         }
-      
+
 # if defined (ACE_HAS_EXCEPTIONS) \
      && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
       ACE_CATCHALL
         {
           CORBA::UNKNOWN ex;
-          
+
           _tao_ri.exception (&ex);
           _tao_vfr.receive_exception (
               &_tao_ri
               ACE_ENV_ARG_PARAMETER
             );
           ACE_TRY_CHECK;
-          
+
           const PortableInterceptor::ReplyStatus _tao_status =
             _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          
+
           if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION)
             ACE_TRY_THROW (ex);
         }
 # endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
-      
+
       ACE_ENDTRY;
       ACE_CHECK;
-      
+
       const PortableInterceptor::ReplyStatus _tao_status =
         _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      
+
       if (_tao_status != PortableInterceptor::LOCATION_FORWARD
           && _tao_status != PortableInterceptor::TRANSPORT_RETRY)
-        
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-        
+
         if (_invoke_status != TAO_INVOKE_RESTART)
           break;
     }
@@ -1270,7 +1271,7 @@ void ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::shutdown_server_i
     , ImplementationRepository::NotFound
   ))
 {
-    static TAO_Exception_Data _tao_ImplementationRepository_Locator_shutdown_server_in_location_exceptiondata [] = 
+    static TAO_Exception_Data _tao_ImplementationRepository_Locator_shutdown_server_in_location_exceptiondata [] =
   {
     {
       "IDL:ImplementationRepository/NotFound:1.0",
@@ -1279,12 +1280,12 @@ void ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::shutdown_server_i
   };
 
 TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
-  
+
   if (istub == 0)
     {
       ACE_THROW (CORBA::INTERNAL ());
     }
-    
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "shutdown_server_in_location",
@@ -1292,22 +1293,22 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
       2,
       istub->orb_core ()
     );
-  
+
   int _invoke_status;
-  
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
       istub->orb_core ()->client_request_interceptors (),
       &_tao_call,
       _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
       _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_ImplementationRepository_Locator_shutdown_server_in_location _tao_ri (
           &_tao_call,
@@ -1317,14 +1318,14 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
           ACE_ENV_ARG_PARAMETER
         );
       ACE_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
       TAO_INTERCEPTOR (_tao_ri.response_expected (1));
-      
+
 #if TAO_HAS_INTERCEPTORS == 1
-      
+
       ACE_TRY
         {
           _tao_vfr.send_request (
@@ -1332,16 +1333,16 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
               ACE_ENV_ARG_PARAMETER
             );
           ACE_TRY_CHECK;
-          
+
           if (_invoke_status == TAO_INVOKE_RESTART)
             {
               _tao_call.restart_flag (1);
             }
           else
             {
-              
+
 #endif /* TAO_HAS_INTERCEPTORS */
-              
+
               _tao_call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
               TAO_INTERCEPTOR_CHECK;
 
@@ -1352,17 +1353,17 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
               TAO_INTERCEPTOR_CHECK;
 
               TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
-              
+
               if (!(
                   (_tao_out << server) &&
                   (_tao_out << location)
                   ))
                 {
-                  TAO_OutputCDR::throw_stub_exception (errno ACE_ENV_ARG_PARAMETER); 
+                  TAO_OutputCDR::throw_stub_exception (errno ACE_ENV_ARG_PARAMETER);
                   TAO_INTERCEPTOR_CHECK;
 
                 }
-              
+
               _invoke_status =
                 _tao_call.invoke (_tao_ImplementationRepository_Locator_shutdown_server_in_location_exceptiondata, 1 ACE_ENV_ARG_PARAMETER);
               TAO_INTERCEPTOR_CHECK;
@@ -1390,17 +1391,17 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
               else
                 {
 #if TAO_HAS_INTERCEPTORS == 1
-                  
+
                   _tao_ri.reply_status (_invoke_status);
                   _tao_vfr.receive_reply (
                       &_tao_ri
                       ACE_ENV_ARG_PARAMETER
                     );
                   ACE_TRY_CHECK;
-                
+
 #endif  /* TAO_HAS_INTERCEPTORS */
                 }
-            
+
 #if TAO_HAS_INTERCEPTORS == 1
             }
         }
@@ -1412,52 +1413,52 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
               ACE_ENV_ARG_PARAMETER
             );
           ACE_TRY_CHECK;
-          
+
           const PortableInterceptor::ReplyStatus _tao_status =
             _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          
+
           if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
               || _tao_status == PortableInterceptor::USER_EXCEPTION)
             {
               ACE_RE_THROW;
             }
         }
-      
+
 # if defined (ACE_HAS_EXCEPTIONS) \
      && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
       ACE_CATCHALL
         {
           CORBA::UNKNOWN ex;
-          
+
           _tao_ri.exception (&ex);
           _tao_vfr.receive_exception (
               &_tao_ri
               ACE_ENV_ARG_PARAMETER
             );
           ACE_TRY_CHECK;
-          
+
           const PortableInterceptor::ReplyStatus _tao_status =
             _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          
+
           if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION)
             ACE_TRY_THROW (ex);
         }
 # endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
-      
+
       ACE_ENDTRY;
       ACE_CHECK;
-      
+
       const PortableInterceptor::ReplyStatus _tao_status =
         _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      
+
       if (_tao_status != PortableInterceptor::LOCATION_FORWARD
           && _tao_status != PortableInterceptor::TRANSPORT_RETRY)
-        
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-        
+
         if (_invoke_status != TAO_INVOKE_RESTART)
           break;
     }
@@ -1477,7 +1478,7 @@ void ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::server_is_shuttin
     , ImplementationRepository::NotFound
   ))
 {
-    static TAO_Exception_Data _tao_ImplementationRepository_Locator_server_is_shutting_down_in_location_exceptiondata [] = 
+    static TAO_Exception_Data _tao_ImplementationRepository_Locator_server_is_shutting_down_in_location_exceptiondata [] =
   {
     {
       "IDL:ImplementationRepository/NotFound:1.0",
@@ -1486,12 +1487,12 @@ void ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::server_is_shuttin
   };
 
 TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
-  
+
   if (istub == 0)
     {
       ACE_THROW (CORBA::INTERNAL ());
     }
-    
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "server_is_shutting_down_in_location",
@@ -1499,22 +1500,22 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
       2,
       istub->orb_core ()
     );
-  
+
   int _invoke_status;
-  
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
       istub->orb_core ()->client_request_interceptors (),
       &_tao_call,
       _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
       _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_ImplementationRepository_Locator_server_is_shutting_down_in_location _tao_ri (
           &_tao_call,
@@ -1524,14 +1525,14 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
           ACE_ENV_ARG_PARAMETER
         );
       ACE_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
       TAO_INTERCEPTOR (_tao_ri.response_expected (1));
-      
+
 #if TAO_HAS_INTERCEPTORS == 1
-      
+
       ACE_TRY
         {
           _tao_vfr.send_request (
@@ -1539,16 +1540,16 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
               ACE_ENV_ARG_PARAMETER
             );
           ACE_TRY_CHECK;
-          
+
           if (_invoke_status == TAO_INVOKE_RESTART)
             {
               _tao_call.restart_flag (1);
             }
           else
             {
-              
+
 #endif /* TAO_HAS_INTERCEPTORS */
-              
+
               _tao_call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
               TAO_INTERCEPTOR_CHECK;
 
@@ -1559,17 +1560,17 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
               TAO_INTERCEPTOR_CHECK;
 
               TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
-              
+
               if (!(
                   (_tao_out << server) &&
                   (_tao_out << location)
                   ))
                 {
-                  TAO_OutputCDR::throw_stub_exception (errno ACE_ENV_ARG_PARAMETER); 
+                  TAO_OutputCDR::throw_stub_exception (errno ACE_ENV_ARG_PARAMETER);
                   TAO_INTERCEPTOR_CHECK;
 
                 }
-              
+
               _invoke_status =
                 _tao_call.invoke (_tao_ImplementationRepository_Locator_server_is_shutting_down_in_location_exceptiondata, 1 ACE_ENV_ARG_PARAMETER);
               TAO_INTERCEPTOR_CHECK;
@@ -1597,17 +1598,17 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
               else
                 {
 #if TAO_HAS_INTERCEPTORS == 1
-                  
+
                   _tao_ri.reply_status (_invoke_status);
                   _tao_vfr.receive_reply (
                       &_tao_ri
                       ACE_ENV_ARG_PARAMETER
                     );
                   ACE_TRY_CHECK;
-                
+
 #endif  /* TAO_HAS_INTERCEPTORS */
                 }
-            
+
 #if TAO_HAS_INTERCEPTORS == 1
             }
         }
@@ -1619,52 +1620,52 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
               ACE_ENV_ARG_PARAMETER
             );
           ACE_TRY_CHECK;
-          
+
           const PortableInterceptor::ReplyStatus _tao_status =
             _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          
+
           if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
               || _tao_status == PortableInterceptor::USER_EXCEPTION)
             {
               ACE_RE_THROW;
             }
         }
-      
+
 # if defined (ACE_HAS_EXCEPTIONS) \
      && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
       ACE_CATCHALL
         {
           CORBA::UNKNOWN ex;
-          
+
           _tao_ri.exception (&ex);
           _tao_vfr.receive_exception (
               &_tao_ri
               ACE_ENV_ARG_PARAMETER
             );
           ACE_TRY_CHECK;
-          
+
           const PortableInterceptor::ReplyStatus _tao_status =
             _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          
+
           if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION)
             ACE_TRY_THROW (ex);
         }
 # endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
-      
+
       ACE_ENDTRY;
       ACE_CHECK;
-      
+
       const PortableInterceptor::ReplyStatus _tao_status =
         _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      
+
       if (_tao_status != PortableInterceptor::LOCATION_FORWARD
           && _tao_status != PortableInterceptor::TRANSPORT_RETRY)
-        
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-        
+
         if (_invoke_status != TAO_INVOKE_RESTART)
           break;
     }
@@ -1684,7 +1685,7 @@ CORBA::ULong ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::register_
     , ImplementationRepository::AlreadyRegistered
   ))
 {
-    static TAO_Exception_Data _tao_ImplementationRepository_Locator_register_activator_exceptiondata [] = 
+    static TAO_Exception_Data _tao_ImplementationRepository_Locator_register_activator_exceptiondata [] =
   {
     {
       "IDL:ImplementationRepository/AlreadyRegistered:1.0",
@@ -1694,12 +1695,12 @@ CORBA::ULong ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::register_
 
 CORBA::ULong _tao_retval = 0;
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
-  
+
   if (istub == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),_tao_retval);
     }
-    
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "register_activator",
@@ -1707,22 +1708,22 @@ CORBA::ULong _tao_retval = 0;
       2,
       istub->orb_core ()
     );
-  
+
   int _invoke_status;
-  
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
       istub->orb_core ()->client_request_interceptors (),
       &_tao_call,
       _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
       _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_ImplementationRepository_Locator_register_activator _tao_ri (
           &_tao_call,
@@ -1732,14 +1733,14 @@ CORBA::ULong _tao_retval = 0;
           ACE_ENV_ARG_PARAMETER
         );
       ACE_CHECK_RETURN (_tao_retval);
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
       TAO_INTERCEPTOR (_tao_ri.response_expected (1));
-      
+
 #if TAO_HAS_INTERCEPTORS == 1
-      
+
       ACE_TRY
         {
           _tao_vfr.send_request (
@@ -1747,16 +1748,16 @@ CORBA::ULong _tao_retval = 0;
               ACE_ENV_ARG_PARAMETER
             );
           ACE_TRY_CHECK;
-          
+
           if (_invoke_status == TAO_INVOKE_RESTART)
             {
               _tao_call.restart_flag (1);
             }
           else
             {
-              
+
 #endif /* TAO_HAS_INTERCEPTORS */
-              
+
               _tao_call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
               TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval);
 
@@ -1767,17 +1768,17 @@ CORBA::ULong _tao_retval = 0;
               TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval);
 
               TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
-              
+
               if (!(
                   (_tao_out << location) &&
                   (_tao_out << object_ref)
                   ))
                 {
-                  TAO_OutputCDR::throw_stub_exception (errno ACE_ENV_ARG_PARAMETER); 
+                  TAO_OutputCDR::throw_stub_exception (errno ACE_ENV_ARG_PARAMETER);
                   TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval);
 
                 }
-              
+
               _invoke_status =
                 _tao_call.invoke (_tao_ImplementationRepository_Locator_register_activator_exceptiondata, 1 ACE_ENV_ARG_PARAMETER);
               TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval);
@@ -1805,35 +1806,35 @@ CORBA::ULong _tao_retval = 0;
                 }
               else
                 {
-                  
+
                   TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
                   _tao_call.transport()->assign_translators (&_tao_in,0);
-                  
+
                   if (!(
                       (_tao_in >> _tao_retval)
                       ))
                     {
-                      TAO_InputCDR::throw_stub_exception (errno ACE_ENV_ARG_PARAMETER); 
+                      TAO_InputCDR::throw_stub_exception (errno ACE_ENV_ARG_PARAMETER);
                       TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval);
 
-                      
+
                     }
-                  
+
 #if TAO_HAS_INTERCEPTORS == 1
                   CORBA::ULong _tao_retval_info =
                     _tao_retval;
                   _tao_ri.result (_tao_retval_info);
-                  
+
                   _tao_ri.reply_status (_invoke_status);
                   _tao_vfr.receive_reply (
                       &_tao_ri
                       ACE_ENV_ARG_PARAMETER
                     );
                   ACE_TRY_CHECK;
-                
+
 #endif  /* TAO_HAS_INTERCEPTORS */
                 }
-            
+
 #if TAO_HAS_INTERCEPTORS == 1
             }
         }
@@ -1845,52 +1846,52 @@ CORBA::ULong _tao_retval = 0;
               ACE_ENV_ARG_PARAMETER
             );
           ACE_TRY_CHECK;
-          
+
           const PortableInterceptor::ReplyStatus _tao_status =
             _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          
+
           if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
               || _tao_status == PortableInterceptor::USER_EXCEPTION)
             {
               ACE_RE_THROW;
             }
         }
-      
+
 # if defined (ACE_HAS_EXCEPTIONS) \
      && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
       ACE_CATCHALL
         {
           CORBA::UNKNOWN ex;
-          
+
           _tao_ri.exception (&ex);
           _tao_vfr.receive_exception (
               &_tao_ri
               ACE_ENV_ARG_PARAMETER
             );
           ACE_TRY_CHECK;
-          
+
           const PortableInterceptor::ReplyStatus _tao_status =
             _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          
+
           if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION)
             ACE_TRY_THROW (ex);
         }
 # endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
-      
+
       ACE_ENDTRY;
       ACE_CHECK_RETURN (_tao_retval);
-      
+
       const PortableInterceptor::ReplyStatus _tao_status =
         _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (_tao_retval);
-      
+
       if (_tao_status != PortableInterceptor::LOCATION_FORWARD
           && _tao_status != PortableInterceptor::TRANSPORT_RETRY)
-        
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-        
+
         if (_invoke_status != TAO_INVOKE_RESTART)
           break;
     }
@@ -1912,7 +1913,7 @@ CORBA::ULong ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::unregiste
     , ImplementationRepository::NotFound
   ))
 {
-    static TAO_Exception_Data _tao_ImplementationRepository_Locator_unregister_activator_exceptiondata [] = 
+    static TAO_Exception_Data _tao_ImplementationRepository_Locator_unregister_activator_exceptiondata [] =
   {
     {
       "IDL:ImplementationRepository/NotFound:1.0",
@@ -1922,12 +1923,12 @@ CORBA::ULong ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::unregiste
 
 CORBA::ULong _tao_retval = 0;
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
-  
+
   if (istub == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),_tao_retval);
     }
-    
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "unregister_activator",
@@ -1935,22 +1936,22 @@ CORBA::ULong _tao_retval = 0;
       2,
       istub->orb_core ()
     );
-  
+
   int _invoke_status;
-  
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
       istub->orb_core ()->client_request_interceptors (),
       &_tao_call,
       _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
       _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_ImplementationRepository_Locator_unregister_activator _tao_ri (
           &_tao_call,
@@ -1960,14 +1961,14 @@ CORBA::ULong _tao_retval = 0;
           ACE_ENV_ARG_PARAMETER
         );
       ACE_CHECK_RETURN (_tao_retval);
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
       TAO_INTERCEPTOR (_tao_ri.response_expected (1));
-      
+
 #if TAO_HAS_INTERCEPTORS == 1
-      
+
       ACE_TRY
         {
           _tao_vfr.send_request (
@@ -1975,16 +1976,16 @@ CORBA::ULong _tao_retval = 0;
               ACE_ENV_ARG_PARAMETER
             );
           ACE_TRY_CHECK;
-          
+
           if (_invoke_status == TAO_INVOKE_RESTART)
             {
               _tao_call.restart_flag (1);
             }
           else
             {
-              
+
 #endif /* TAO_HAS_INTERCEPTORS */
-              
+
               _tao_call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
               TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval);
 
@@ -1995,17 +1996,17 @@ CORBA::ULong _tao_retval = 0;
               TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval);
 
               TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
-              
+
               if (!(
                   (_tao_out << location) &&
                   (_tao_out << object_ref)
                   ))
                 {
-                  TAO_OutputCDR::throw_stub_exception (errno ACE_ENV_ARG_PARAMETER); 
+                  TAO_OutputCDR::throw_stub_exception (errno ACE_ENV_ARG_PARAMETER);
                   TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval);
 
                 }
-              
+
               _invoke_status =
                 _tao_call.invoke (_tao_ImplementationRepository_Locator_unregister_activator_exceptiondata, 1 ACE_ENV_ARG_PARAMETER);
               TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval);
@@ -2033,35 +2034,35 @@ CORBA::ULong _tao_retval = 0;
                 }
               else
                 {
-                  
+
                   TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
                   _tao_call.transport()->assign_translators (&_tao_in,0);
-                  
+
                   if (!(
                       (_tao_in >> _tao_retval)
                       ))
                     {
-                      TAO_InputCDR::throw_stub_exception (errno ACE_ENV_ARG_PARAMETER); 
+                      TAO_InputCDR::throw_stub_exception (errno ACE_ENV_ARG_PARAMETER);
                       TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval);
 
-                      
+
                     }
-                  
+
 #if TAO_HAS_INTERCEPTORS == 1
                   CORBA::ULong _tao_retval_info =
                     _tao_retval;
                   _tao_ri.result (_tao_retval_info);
-                  
+
                   _tao_ri.reply_status (_invoke_status);
                   _tao_vfr.receive_reply (
                       &_tao_ri
                       ACE_ENV_ARG_PARAMETER
                     );
                   ACE_TRY_CHECK;
-                
+
 #endif  /* TAO_HAS_INTERCEPTORS */
                 }
-            
+
 #if TAO_HAS_INTERCEPTORS == 1
             }
         }
@@ -2073,52 +2074,52 @@ CORBA::ULong _tao_retval = 0;
               ACE_ENV_ARG_PARAMETER
             );
           ACE_TRY_CHECK;
-          
+
           const PortableInterceptor::ReplyStatus _tao_status =
             _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          
+
           if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
               || _tao_status == PortableInterceptor::USER_EXCEPTION)
             {
               ACE_RE_THROW;
             }
         }
-      
+
 # if defined (ACE_HAS_EXCEPTIONS) \
      && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
       ACE_CATCHALL
         {
           CORBA::UNKNOWN ex;
-          
+
           _tao_ri.exception (&ex);
           _tao_vfr.receive_exception (
               &_tao_ri
               ACE_ENV_ARG_PARAMETER
             );
           ACE_TRY_CHECK;
-          
+
           const PortableInterceptor::ReplyStatus _tao_status =
             _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          
+
           if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION)
             ACE_TRY_THROW (ex);
         }
 # endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
-      
+
       ACE_ENDTRY;
       ACE_CHECK_RETURN (_tao_retval);
-      
+
       const PortableInterceptor::ReplyStatus _tao_status =
         _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (_tao_retval);
-      
+
       if (_tao_status != PortableInterceptor::LOCATION_FORWARD
           && _tao_status != PortableInterceptor::TRANSPORT_RETRY)
-        
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-        
+
         if (_invoke_status != TAO_INVOKE_RESTART)
           break;
     }
@@ -2127,7 +2128,7 @@ return _tao_retval;
 }
 
 //
-//            End  Base & Remote  Proxy Implemeentation. 
+//            End  Base & Remote  Proxy Implemeentation.
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
@@ -2178,7 +2179,7 @@ ImplementationRepository::_TAO_Locator_Remote_Proxy_Broker::select_proxy (
 //           End Remote & Base Proxy Broker Implementation
 ///////////////////////////////////////////////////////////////////////
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:239
 
 ImplementationRepository::Locator::Locator (int collocated)
@@ -2195,14 +2196,14 @@ ImplementationRepository::Locator::ImplementationRepository_Locator_setup_colloc
   else
     this->the_TAO_Locator_Proxy_Broker_ =
       ::ImplementationRepository::_TAO_Locator_Remote_Proxy_Broker::the_TAO_Locator_Remote_Proxy_Broker ();
-  
+
   this->ImplementationRepository_Administration_setup_collocation (collocated);
 }
 
 ImplementationRepository::Locator::~Locator (void)
 {}
 
-void 
+void
 ImplementationRepository::Locator::_tao_any_destructor (void *_tao_void_pointer)
 {
   Locator *tmp = ACE_static_cast (Locator *, _tao_void_pointer);
@@ -2219,7 +2220,7 @@ ImplementationRepository::Locator::_narrow (
     {
       return Locator::_nil ();
     }
-  
+
   if (! obj->_is_local ())
     {
       CORBA::Boolean is_a =
@@ -2228,17 +2229,17 @@ ImplementationRepository::Locator::_narrow (
             ACE_ENV_ARG_PARAMETER
           );
       ACE_CHECK_RETURN (Locator::_nil ());
-      
+
       if (is_a == 0)
         {
           return Locator::_nil ();
         }
     }
-  
+
   return Locator::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-ImplementationRepository::Locator_ptr 
+ImplementationRepository::Locator_ptr
 ImplementationRepository::Locator::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -2248,9 +2249,9 @@ ImplementationRepository::Locator::_unchecked_narrow (
     {
       return Locator::_nil ();
     }
-  
+
   Locator_ptr default_proxy = Locator::_nil ();
-  
+
   // Code for lazily evaluated IOR's
   if (!obj->is_evaluated ())
     {
@@ -2262,19 +2263,19 @@ ImplementationRepository::Locator::_unchecked_narrow (
             ),
           Locator::_nil ()
         );
-      
+
       return default_proxy;
     }
-  
+
   if (! obj->_is_local ())
     {
       TAO_Stub* stub = obj->_stubobj ();
-      
+
       if (stub != 0)
         {
           stub->_incr_refcnt ();
         }
-      
+
       if (
           !CORBA::is_nil (stub->servant_orb_var ().ptr ()) &&
           stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects () &&
@@ -2292,7 +2293,7 @@ ImplementationRepository::Locator::_unchecked_narrow (
               Locator::_nil ()
             );
         }
-      
+
       if (CORBA::is_nil (default_proxy))
         {
           ACE_NEW_RETURN (
@@ -2305,10 +2306,10 @@ ImplementationRepository::Locator::_unchecked_narrow (
               Locator::_nil ()
             );
         }
-      
+
       return default_proxy;
     }
-  else 
+  else
     return
       ACE_reinterpret_cast (
           Locator_ptr,
@@ -2328,7 +2329,7 @@ ImplementationRepository::Locator::_duplicate (Locator_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -2367,7 +2368,7 @@ ImplementationRepository::Locator::_is_a (
 void *ImplementationRepository::Locator::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptrdiff_t,
               &ACE_NESTED_CLASS (::ImplementationRepository, Locator)::_tao_class_id)
@@ -2400,12 +2401,12 @@ void *ImplementationRepository::Locator::_tao_QueryInterface (ptrdiff_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
@@ -2441,11 +2442,11 @@ void ImplementationRepository::Locator::activate_server_in_location (
           this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
         );
     }
-  
-  _TAO_Locator_Proxy_Impl &proxy = 
+
+  _TAO_Locator_Proxy_Impl &proxy =
     this->the_TAO_Locator_Proxy_Broker_->select_proxy (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  
+
   proxy.activate_server_in_location (
       this,
       server,
@@ -2474,11 +2475,11 @@ void ImplementationRepository::Locator::remove_server_in_location (
           this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
         );
     }
-  
-  _TAO_Locator_Proxy_Impl &proxy = 
+
+  _TAO_Locator_Proxy_Impl &proxy =
     this->the_TAO_Locator_Proxy_Broker_->select_proxy (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  
+
   proxy.remove_server_in_location (
       this,
       server,
@@ -2507,11 +2508,11 @@ void ImplementationRepository::Locator::shutdown_server_in_location (
           this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
         );
     }
-  
-  _TAO_Locator_Proxy_Impl &proxy = 
+
+  _TAO_Locator_Proxy_Impl &proxy =
     this->the_TAO_Locator_Proxy_Broker_->select_proxy (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  
+
   proxy.shutdown_server_in_location (
       this,
       server,
@@ -2540,11 +2541,11 @@ void ImplementationRepository::Locator::server_is_shutting_down_in_location (
           this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
         );
     }
-  
-  _TAO_Locator_Proxy_Impl &proxy = 
+
+  _TAO_Locator_Proxy_Impl &proxy =
     this->the_TAO_Locator_Proxy_Broker_->select_proxy (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  
+
   proxy.server_is_shutting_down_in_location (
       this,
       server,
@@ -2573,11 +2574,11 @@ CORBA::ULong ImplementationRepository::Locator::register_activator (
           this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
         );
     }
-  
-  _TAO_Locator_Proxy_Impl &proxy = 
+
+  _TAO_Locator_Proxy_Impl &proxy =
     this->the_TAO_Locator_Proxy_Broker_->select_proxy (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.register_activator (
       this,
       location,
@@ -2606,11 +2607,11 @@ CORBA::ULong ImplementationRepository::Locator::unregister_activator (
           this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
         );
     }
-  
-  _TAO_Locator_Proxy_Impl &proxy = 
+
+  _TAO_Locator_Proxy_Impl &proxy =
     this->the_TAO_Locator_Proxy_Broker_->select_proxy (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.unregister_activator (
       this,
       location,
@@ -2626,19 +2627,19 @@ static const CORBA::Long _oc_ImplementationRepository_Locator[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   41,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x496d706c), 
-  ACE_NTOHL (0x656d656e), 
-  ACE_NTOHL (0x74617469), 
-  ACE_NTOHL (0x6f6e5265), 
-  ACE_NTOHL (0x706f7369), 
-  ACE_NTOHL (0x746f7279), 
-  ACE_NTOHL (0x2f4c6f63), 
-  ACE_NTOHL (0x61746f72), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x496d706c),
+  ACE_NTOHL (0x656d656e),
+  ACE_NTOHL (0x74617469),
+  ACE_NTOHL (0x6f6e5265),
+  ACE_NTOHL (0x706f7369),
+  ACE_NTOHL (0x746f7279),
+  ACE_NTOHL (0x2f4c6f63),
+  ACE_NTOHL (0x61746f72),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:ImplementationRepository/Locator:1.0
     8,
-  ACE_NTOHL (0x4c6f6361), 
+  ACE_NTOHL (0x4c6f6361),
   ACE_NTOHL (0x746f7200),  // name = Locator
   };
 
@@ -2731,12 +2732,12 @@ CORBA::Boolean operator>> (
   ACE_TRY_NEW_ENV
   {
     CORBA::Object_var obj;
-    
+
     if ((strm >> obj.inout ()) == 0)
       {
         return 0;
       }
-    
+
     // Narrow to the right type.
     _tao_objref =
       ImplementationRepository::Locator::_unchecked_narrow (
@@ -2753,4 +2754,3 @@ CORBA::Boolean operator>> (
   ACE_ENDTRY;
   return 0;
 }
-

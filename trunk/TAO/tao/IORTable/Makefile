@@ -701,87 +701,6 @@ endif
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i \
-  $(TAO_ROOT)/tao/ORB_Core.h \
-  $(TAO_ROOT)/tao/Resource_Factory.h \
-  $(ACE_ROOT)/ace/Service_Object.h \
-  $(ACE_ROOT)/ace/Shared_Object.h \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.i \
-  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op.i \
-  $(ACE_ROOT)/ace/Event_Handler.i \
-  $(ACE_ROOT)/ace/DLL.h \
-  $(ACE_ROOT)/ace/Service_Object.i \
-  $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Unbounded_Set.inl \
-  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
-  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
-  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
-  $(ACE_ROOT)/ace/SString.h \
-  $(ACE_ROOT)/ace/String_Base.h \
-  $(ACE_ROOT)/ace/String_Base_Const.h \
-  $(ACE_ROOT)/ace/String_Base.i \
-  $(ACE_ROOT)/ace/String_Base.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  $(TAO_ROOT)/tao/params.h \
-  $(TAO_ROOT)/tao/params.i \
-  $(TAO_ROOT)/tao/Adapter.h \
-  $(TAO_ROOT)/tao/Adapter.i \
-  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
-  $(ACE_ROOT)/ace/Map_Manager.h \
-  $(ACE_ROOT)/ace/Map_Manager.i \
-  $(ACE_ROOT)/ace/Map_Manager.cpp \
-  $(TAO_ROOT)/tao/Parser_Registry.h \
-  $(TAO_ROOT)/tao/Parser_Registry.i \
-  $(TAO_ROOT)/tao/Service_Callbacks.h \
-  $(TAO_ROOT)/tao/Service_Callbacks.i \
-  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
-  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
-  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
-  $(ACE_ROOT)/ace/Array_Base.h \
-  $(ACE_ROOT)/ace/Array_Base.inl \
-  $(ACE_ROOT)/ace/Array_Base.cpp \
-  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
-  $(TAO_ROOT)/tao/Object_Ref_Table.h \
-  $(TAO_ROOT)/tao/ObjectKey_Table.h \
-  $(ACE_ROOT)/ace/RB_Tree.h \
-  $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp \
-  $(TAO_ROOT)/tao/Interceptor_List.h \
-  $(TAO_ROOT)/tao/Interceptor_List.inl \
-  $(TAO_ROOT)/tao/PICurrent.h \
-  $(TAO_ROOT)/tao/PICurrent.inl \
-  $(ACE_ROOT)/ace/Thread_Manager.h \
-  $(ACE_ROOT)/ace/Thread_Exit.h \
-  $(ACE_ROOT)/ace/Thread_Control.h \
-  $(ACE_ROOT)/ace/Thread_Control.inl \
-  $(ACE_ROOT)/ace/Containers.h \
-  $(ACE_ROOT)/ace/Containers.i \
-  $(ACE_ROOT)/ace/Containers_T.h \
-  $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(ACE_ROOT)/ace/Free_List.h \
-  $(ACE_ROOT)/ace/Free_List.i \
-  $(ACE_ROOT)/ace/Free_List.cpp \
-  $(ACE_ROOT)/ace/Singleton.h \
-  $(ACE_ROOT)/ace/Singleton.i \
-  $(ACE_ROOT)/ace/Singleton.cpp \
-  $(ACE_ROOT)/ace/Object_Manager.h \
-  $(ACE_ROOT)/ace/Object_Manager.i \
-  $(ACE_ROOT)/ace/Managed_Object.h \
-  $(ACE_ROOT)/ace/Managed_Object.i \
-  $(ACE_ROOT)/ace/Managed_Object.cpp \
-  $(ACE_ROOT)/ace/Framework_Component.h \
-  $(ACE_ROOT)/ace/Framework_Component.inl \
-  $(ACE_ROOT)/ace/Framework_Component_T.h \
-  $(ACE_ROOT)/ace/Framework_Component_T.inl \
-  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
-  $(ACE_ROOT)/ace/Thread_Manager.i \
-  $(TAO_ROOT)/tao/ORB_Core.i \
   $(TAO_ROOT)/tao/ORB_Core_Auto_Ptr.h \
   $(TAO_ROOT)/tao/ORB_Core_Auto_Ptr.inl \
   $(TAO_ROOT)/tao/Stub.i \
@@ -811,6 +730,13 @@ endif
   $(TAO_ROOT)/tao/Cache_Entries.inl \
   $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
   $(TAO_ROOT)/tao/Transport_Timer.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.i \
+  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
+  $(ACE_ROOT)/ace/Event_Handler.i \
   $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
   $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
   $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
@@ -820,8 +746,15 @@ endif
   $(TAO_ROOT)/tao/PortableInterceptor.h \
   $(TAO_ROOT)/tao/RequestInfo_Util.h \
   $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+  $(TAO_ROOT)/tao/PICurrent.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  $(TAO_ROOT)/tao/PICurrent.inl \
   $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
+  $(TAO_ROOT)/tao/Interceptor_List.h \
+  $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/Table_Adapter.o .obj/Table_Adapter.so .shobj/Table_Adapter.o .shobj/Table_Adapter.so: Table_Adapter.cpp Table_Adapter.h \

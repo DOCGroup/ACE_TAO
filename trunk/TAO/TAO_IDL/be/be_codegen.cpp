@@ -223,7 +223,7 @@ TAO_CodeGen::start_client_header (const char *fname)
           this->gen_standard_include (this->client_header_,
                                       "tao/Valuetype/Valuetype_Adapter_Impl.h");
 
-          // @@@@ (JP) These can be logically separated later 
+          // @@@@ (JP) These can be logically separated later
           // with additional checks.
           this->gen_standard_include (this->client_header_,
                                       "tao/Valuetype/ValueFactory.h");
@@ -369,6 +369,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
                        << "\"";
 
   this->gen_standard_include (this->client_stubs_, "tao/Stub.h");
+  this->gen_standard_include (this->client_stubs_, "tao/ORB_Core.h");
   this->gen_standard_include (this->client_stubs_, "tao/Invocation.h");
 
   // The following header must always be included.

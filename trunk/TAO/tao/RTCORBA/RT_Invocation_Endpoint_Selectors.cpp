@@ -1,20 +1,21 @@
 #include "RT_Invocation_Endpoint_Selectors.h"
 
-#if !defined (__ACE_INLINE__)
-#include "RT_Invocation_Endpoint_Selectors.i"
-#endif /* __ACE_INLINE__ */
-
-#include "tao/Invocation.h"
 #include "RT_Policy_i.h"
-#include "tao/Stub.h"
-#include "tao/Profile.h"
-#include "tao/Endpoint.h"
 #include "RT_Stub.h"
 #include "RT_Transport_Descriptor.h"
 #include "RT_Transport_Descriptor_Property.h"
 #include "RT_Endpoint_Utils.h"
 #include "RT_Protocols_Hooks.h"
+#include "tao/Stub.h"
+#include "tao/ORB_Core.h"
+#include "tao/Invocation.h"
+#include "tao/Profile.h"
+#include "tao/Endpoint.h"
 #include "tao/debug.h"
+
+#if !defined (__ACE_INLINE__)
+#include "RT_Invocation_Endpoint_Selectors.i"
+#endif /* __ACE_INLINE__ */
 
 
 ACE_RCSID (RTCORBA,
