@@ -1,3 +1,8 @@
+Wed Oct  7 10:53:45 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Supplier_i.cpp: 
+	  Added missing template instantiations.
+
 Wed Oct  7 09:19:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/try_macros.h (TAO_RETHROW): Added a return to
