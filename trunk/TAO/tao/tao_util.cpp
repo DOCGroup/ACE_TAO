@@ -40,7 +40,7 @@ TAO_ORB_Manager::init (int argc,
                                     argv,
                                     0,
                                     env);
-      TAO_CHECK_ENV_RETURN (env, 1);
+      TAO_CHECK_ENV_RETURN (env, -1);
     }
 
   if (CORBA::is_nil (this->root_poa_.in ()))
@@ -52,13 +52,13 @@ TAO_ORB_Manager::init (int argc,
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+                          -1);
       
       // Get the POA object.
       this->root_poa_ =
         PortableServer::POA::_narrow (poa_object.in (), env);
       
-      TAO_CHECK_ENV_RETURN (env, 1);
+      TAO_CHECK_ENV_RETURN (env, -1);
     }
 
   if (CORBA::is_nil (this->poa_manager_.in ()))
@@ -68,14 +68,13 @@ TAO_ORB_Manager::init (int argc,
       this->poa_manager_ =
         this->root_poa_->the_POAManager (env);
       
-      TAO_CHECK_ENV_RETURN (env, 1);
+      TAO_CHECK_ENV_RETURN (env, -1);
     }
       
   return 0;
 }
 
 // Activate servant in the POA.
-
 CORBA::String
 TAO_ORB_Manager::activate (PortableServer::Servant servant,
                            CORBA_Environment &env)
@@ -106,15 +105,15 @@ TAO_ORB_Manager::run (CORBA_Environment &env,
 {
   this->poa_manager_->activate (env);
 
-  TAO_CHECK_ENV_RETURN (env, 1);
+  TAO_CHECK_ENV_RETURN (env, -1);
 
   if (this->orb_->run (tv) == -1)
     ACE_ERROR_RETURN ( (LM_ERROR,
                        "%p\n",
                        "run"),
-                       1);
+                       -1);
 
-  TAO_CHECK_ENV_RETURN (env, 1);
+  TAO_CHECK_ENV_RETURN (env, -1);
   return 0;
 }
 
