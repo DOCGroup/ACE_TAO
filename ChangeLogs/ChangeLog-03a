@@ -1,3 +1,12 @@
+Fri Nov 24 11:42:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ACE_INSTALL.html:
+
+          Updated sections about Windows CE and MSVC.  CE stuff
+          is documented in CE-status.txt, and removed references to old
+          MSVC 4.2 projects.  Thanks to Johhny Willemsen 
+          <johnny.willemsen@meco.nl> for pointing this out.
+
 Thu Nov 23 21:17:16 2000  David L. Levine <levine@cs.wustl.edu>
 
         * tests/Reactor_Notify_Test.cpp (main): added
