@@ -1,3 +1,16 @@
+Tue Aug 07 11:25:36 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-freebsd-pthread.h: Made the following definition
+	  valid only for pre-4.2-RELEASE.
+
+	  #define ACE_LACKS_GETPGID
+	  #define ACE_LACKS_SETPGID
+	  #define ACE_LACKS_SETREGID
+	  #define ACE_LACKS_SETREUID
+
+	  Thanks to Robert Burke <rburke2002@yahoo.com> for reporting
+	  this.
+
 Tue Aug 07 16:40:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/Hash_Map_Manager_T.*:
