@@ -13,6 +13,11 @@
 #    whenever it has to generate one of these functions (because it wasn't
 #    defined by the user).  This isn't really a problem.
 #    This warning appears to be fixed by Sun C++ 4.2 jumbo patch 104631-02.
+#
+# -pta instantiates all template members, which makes libraries bigger.
+# But, it's supposed to put each member into it's own .o, so executable
+# size should not be penalized.  We don't use it because it's not
+# necessary with automatic template instantiation.
 
 debug = 1
 threads = 1
@@ -24,24 +29,29 @@ endif # threads
 
 CC              = cc
 CXX             = CC
-#### -pta instantiates all template members, which makes libraries bigger.
-#### But, it's supposed to put each member into it's own .o, so executable
-#### size should not be penalized.
-#### We've commented -pta out for the moment to see if it works.
-CCFLAGS         += $(CFLAGS) -features=castop # -pta
+
+ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(shell CC -V 2>&1)))
+  #### CC 4.2, only, supports -features=castop
+  CCFLAGS         += $(CFLAGS) -features=castop
+
+  #### RTTI can coexist with ACE, but it doesn't use it.  To enable,
+  #### add rtti=1 to your make invocation.  Sun C++ 4.2, only, supports
+  #### this option.
+  ifdef rtti
+    CCFLAGS += -features=rtti
+  else  # ! rtti
+    #### ACE_LACKS_RTTI is necessary with -features=castop, but
+    #### without -features=rtti, to convert dynamic_cast to static_cast.
+    CCFLAGS += -DACE_LACKS_RTTI
+  endif # ! rtti
+else  # CC 5.0 or later
+  #### Support RTTI by default.
+  CCFLAGS         += $(CFLAGS)
+endif # CC 5.0 or later
+
 DCFLAGS         += -g
 DLD             = $(CXX)
 
-#### RTTI can coexist with ACE, but it doesn't use it.  To enable,
-#### add rtti=1 to your make invocation.  Sun C++ 4.2 (and later?)
-#### only support this option.
-ifdef rtti
-  CCFLAGS += -features=rtti
-else
-  #### ACE_LACKS_RTTI is necessary with -features=castop, but
-  #### without -features=rtti, to convert dynamic_cast to static_cast.
-  CCFLAGS += -DACE_LACKS_RTTI
-endif # rtti
 
 #### Exception handling breaks on MP machines prior to Sun C++ 4.2
 #### with jumbo patch 104631-02, see ace/config-sunos5.5.h.
