@@ -1,5 +1,5 @@
 --- orig/Default_ORTC.h	Thu Feb  7 15:05:40 2002
-+++ Default_ORTC.h	Thu Feb  7 15:06:51 2002
++++ Default_ORTC.h	Fri Feb  8 11:25:49 2002
 @@ -23,14 +23,14 @@
  #define _TAO_IDL_ORIG_DEFAULT_ORTC_H_
  
@@ -17,3 +17,14 @@
  
  #if defined (TAO_EXPORT_MACRO)
  #undef TAO_EXPORT_MACRO
+--- orig/Default_ORTC.cpp	Thu Feb  7 15:05:40 2002
++++ Default_ORTC.cpp	Fri Feb  8 11:26:35 2002
+@@ -31,6 +31,8 @@
+ #include "tao/ClientInterceptorAdapter.h"
+ #endif  /* TAO_HAS_INTERCEPTORS == 1 */
+ 
++#include "tao/ValueFactory.h"
++
+ #if defined (__BORLANDC__)
+ #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
+ #endif /* __BORLANDC__ */

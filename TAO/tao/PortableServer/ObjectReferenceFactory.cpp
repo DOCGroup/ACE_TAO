@@ -24,10 +24,13 @@ TAO_ObjectReferenceFactory::TAO_ObjectReferenceFactory (TAO_POA *poa)
 }
 
 CORBA::Object *
-TAO_ObjectReferenceFactory::make_object (const char *intf,
-                                         const PortableInterceptor::ObjectId & id
-                                         ACE_ENV_ARG_DECL)
-
+TAO_ObjectReferenceFactory::make_object (
+    const char *intf,
+    const PortableInterceptor::ObjectId & id
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   CORBA::OctetSeq object_id = id;
 

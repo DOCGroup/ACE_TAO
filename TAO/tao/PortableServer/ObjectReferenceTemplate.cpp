@@ -60,11 +60,12 @@ TAO_ObjectReferenceTemplate::adapter_name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 // @@ Priyanka, technically this should be CORBA::Object_ptr!
 CORBA::Object *
 TAO_ObjectReferenceTemplate::make_object (
-  const char * intf,
-  const PortableInterceptor::ObjectId & id
+    const char * intf,
+    const PortableInterceptor::ObjectId & id
   ACE_ENV_ARG_DECL)
-  // @@ Priyanka, is this method supposed to have an exception
-  //    specification?
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   CORBA::OctetSeq object_id = id;
 

@@ -1,5 +1,5 @@
---- orig/ObjectReferenceTemplateC.h	Wed Feb  6 19:29:56 2002
-+++ ObjectReferenceTemplateC.h	Wed Feb  6 10:00:19 2002
+--- orig/ObjectReferenceTemplateC.h	Thu Feb  7 15:04:56 2002
++++ ObjectReferenceTemplateC.h	Fri Feb  8 11:23:31 2002
 @@ -23,7 +23,7 @@
  #define _TAO_IDL_ORIG_OBJECTREFERENCETEMPLATEC_H_
  
@@ -9,16 +9,17 @@
  
  #if !defined (ACE_LACKS_PRAGMA_ONCE)
  # pragma once
-@@ -32,6 +32,7 @@
+@@ -32,6 +32,8 @@
  #include "TAO_Export.h"
  #include "OctetSeqC.h"
  #include "StringSeqC.h"
 +#include "ValueBase.h"
++#include "Exception.h"
  
  #if defined (TAO_EXPORT_MACRO)
  #undef TAO_EXPORT_MACRO
---- orig/ObjectReferenceTemplateC.cpp	Wed Feb  6 19:29:56 2002
-+++ ObjectReferenceTemplateC.cpp	Wed Feb  6 18:45:41 2002
+--- orig/ObjectReferenceTemplateC.cpp	Thu Feb  7 15:04:56 2002
++++ ObjectReferenceTemplateC.cpp	Fri Feb  8 11:23:01 2002
 @@ -24,6 +24,7 @@
  #include "tao/Stub.h"
  #include "tao/Invocation.h"
