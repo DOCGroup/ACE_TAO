@@ -24,9 +24,9 @@
 
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 
-ACE_Hash_Map_Entry<char * , char *>::
-ACE_Hash_Map_Entry (char * const &ext_id, char * const &int_id,
-                    ACE_Hash_Map_Entry<char *, char *> *ptr)
+ACE_Hash_Map_Entry<char * , char *>::ACE_Hash_Map_Entry (char * const &ext_id,
+							 char * const &int_id,
+							 ACE_Hash_Map_Entry<char *, char *> *ptr)
   : ext_id_ (ext_id),
     int_id_ (ACE_OS::strdup (int_id)),
     next_ (ptr)
@@ -43,21 +43,19 @@ ACE_Hash_Map_Entry<char *, char *>::~ACE_Hash_Map_Entry (void)
 // char*, which doesn't have a hash() method defined on it.
 
 long unsigned int
-ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex>::
-hash (char * const & ext_id)
+ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex>::hash (char * const & ext_id)
 {
   return ACE::hash_pjw (ext_id);
 }
 
 int
-ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex>::
-equal (char * const & id1, char * const & id2)
+ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex>::equal (char * const & id1,
+							     char * const & id2)
 {
   return (ACE_OS::strcmp (id1, id2) == 0);
 }
 
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
-
 
 // If code below breaks, it's probably because template specialization
 // is not supported.
