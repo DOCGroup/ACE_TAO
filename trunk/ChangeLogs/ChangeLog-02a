@@ -1,3 +1,9 @@
+Mon Sep 25 11:45:53 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-win32-common.h: If NDEBUG is set, then also set
+          ACE_NDEBUG. Thanks to Edan Ayal <edana@bandwiz.com> for noting
+          that ACE_NDEBUG didn't always get set for Release builds.
+
 Sat Sep 23 16:55:26 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/RMCast/Makefile:
