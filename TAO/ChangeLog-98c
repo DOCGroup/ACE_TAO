@@ -1,5 +1,8 @@
 Tue Sep 22 02:40:33 1998  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 
+	* examples/Simple/grid: Printout the process id and thread id
+	  for the client and server.
+
 	* examples/Simple/Makefile (DIRS): Enabled all the "Simple" test
  	  examples in the Makefile so we can see if they compile on other
  	  platforms.
