@@ -38,14 +38,14 @@ class Element
 
 public:
   Element (ACE_CString* item = 0, Element* p = 0, Element* n = 0)
-    : item_(item), prev_(p), next_(n)
-  { 
-  }
+    : prev_ (p), next_(n), item_(item)
+    { 
+    }
 
   ACE_CString* value (void)
-  {
-    return this->item_;
-  }
+    {
+      return this->item_;
+    }
 
 private:
   Element* next_;
@@ -64,11 +64,11 @@ class Time_Calculation
 public:
   Time_Calculation ()
     : reported_times_ (0)
-  {
-    times_.real_time = 0;
-    times_.user_time = 0;
-    times_.system_time = 0;
-  }
+    {
+      times_.real_time = 0;
+      times_.user_time = 0;
+      times_.system_time = 0;
+    }
     
   void report_time (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
   // take the time of the thread and add it to 
@@ -95,9 +95,9 @@ public:
   Reader_Task (Time_Calculation &time_Calculation,
                ACE_Barrier &barrier) 
     : time_Calculation_ (time_Calculation),
-      barrier_(barrier)
-  {
-  };
+    barrier_(barrier)
+    {
+    };
 
   virtual int svc (void);
 
@@ -119,9 +119,9 @@ public:
   Writer_Task (Time_Calculation &time_Calculation,
                ACE_Barrier &barrier) 
     : time_Calculation_ (time_Calculation),
-      barrier_(barrier)
-  {
-  };
+    barrier_(barrier)
+    {
+    };
 
   virtual int svc (void);
 
