@@ -18,6 +18,9 @@
 #if !defined (TAO_BE_CODEGEN_H)
 #define TAO_BE_CODEGEN_H
 
+#define NAMEBUFSIZE  128
+// maximum length of static buffers used to store names
+
 class TAO_CodeGen
 {
   // = TITLE
@@ -27,9 +30,6 @@ class TAO_CodeGen
   //   Holds global parameters for the Back End and generates the C++ mapping
   //
 public:
-
-  const long MAXNAMELEN;
-  // maximum length of static buffers used
 
   // define all the code generation states. The first letter C/S of the suffix stands
   // for client/server-side and the second letter H/I/S stands for
