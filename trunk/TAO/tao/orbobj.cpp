@@ -53,7 +53,7 @@ int
 CORBA_ORB::open (void)
 {
   if (this->open_called_ != CORBA::B_FALSE)
-    return -1;
+    return 1;
 
   this->open_called_ = CORBA::B_TRUE;
 
@@ -68,7 +68,7 @@ CORBA_ORB::open (void)
                               f->accept_strategy (),
                               f->concurrency_strategy (),
                               f->scheduling_strategy ()) == -1)
-    // @@ CJC Need to return an error somehow!!  Maybe set do_exit?
+    // Need to return an error somehow!!  Maybe set do_exit?
     return -1;
 
   if (ocp->acceptor ()->acceptor ().get_local_addr (ocp->addr ()) == -1)
@@ -186,60 +186,6 @@ CORBA_ORB::create_list (CORBA::Long count,
         }
     }
 }
-
-// This is a server-side internal routine; it's not available to any
-// portable code except method code, which moreover may not access the
-// state variable directly since its implemention may differ between
-// ORBs.
-//
-// XXX it's server-side so should be OA-specific and not in this module
-
-#if 0
-CORBA::POA_ptr
-CORBA_ORB::POA_init (int &argc,
-		     char **argv,
-		     const char *poa_identifier)
-{
-  // Parse the arguments looking for options starting with -OA. After
-  // processing these options, move all these to the end of the argv
-  // list and decrement argc appropriately.
-
-  TAO_ORB_Core *oc = TAO_ORB_Core_instance ();
-  CORBA::POA_ptr rp;
-  CORBA::String_var id = poa_identifier;
-  CORBA::Environment env;
-
-  for (int i = 0; i < argc; )
-    {
-      // @@ Can you please add comments describing each of these options? --doug
-      // @@ Andy, could you review these since you wrote the code --cjc
-
-      if (ACE_OS::strcmp (argv[i], "-OAid") == 0)
-        {
-          // Specify the name of the OA
-          i++;
-	  if (i < argc)
-            id = CORBA::string_dup (argv[i++]);
-        }
-      else
-	i++;
-    }
-
-  if (oc->root_poa ())
-    {
-      env.exception (new CORBA::INITIALIZE (CORBA::COMPLETED_NO));
-      return 0;
-    }
-
-#if defined (POA_NEEDS_REQ_KEY)
-  (void) ACE_Thread::keycreate (&req_key_);
-#endif /* POA_NEEDS_REQ_KEY */
-
-  ACE_NEW_RETURN (rp, CORBA::POA (this, env), 0);
-
-  return rp;
-}
-#endif /* 0 */
 
 int
 CORBA_ORB::perform_work (ACE_Time_Value *tv)
