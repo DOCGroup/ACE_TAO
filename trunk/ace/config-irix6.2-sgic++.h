@@ -58,8 +58,20 @@
 // even though it supports pthreads! (like Irix 6.2)
 #define ACE_LACKS_CONDATTR_PSHARED
 
-// IRIX 6.2 supports some variant of POSIX Pthreads, is it stock DCE?
+// Platform lacks pthread_thr_sigsetmask (e.g., MVS, HP/UX, OSF/1 3.2,
+// Irix 6.2)
+#define ACE_LACKS_PTHREAD_THR_SIGSETMASK
+
+// IRIX 6.2 supports a variant of POSIX Pthreads, supposedly POSIX 1c
 #define ACE_HAS_PTHREADS
+
+// Platform has pthread_equal().
+#define ACE_HAS_PTHREAD_EQUAL
+
+// Platform has pthread_t defined.
+#define ACE_HAS_PTHREAD_T
+
+// Platform lacks readers/writer locks.
 #define ACE_LACKS_RWLOCK_T
 
 // Platform/compiler has the sigwait(2) prototype
@@ -76,6 +88,16 @@
 
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
+
+// Platform provides <sysent.h> header
+#define ACE_HAS_SYSENT_H
+
+// Platform supports system configuration information
+#define ACE_HAS_SYSINFO
+
+// Compiler implements templates that support typedefs inside of
+// classes used as formal arguments to a template class.
+// #define ACE_HAS_TEMPLATE_TYPEDEFS
 
 // Compiler/platform supports alloca()
 #define ACE_HAS_ALLOCA 
@@ -143,14 +165,14 @@
 // Prototypes for both signal() and struct sigaction are consistent.
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
-// Compiler/platform supports sys_siglist array.
-#define ACE_HAS_SYS_SIGLIST 
-
 // Platform provides <sys/filio.h> header.
 #define ACE_HAS_SYS_FILIO_H 
 
 // Compiler/platform defines a union semun for SysV shared memory.
 #define ACE_HAS_SEMUN 
+
+// Compiler/platform defines the F_SETOWN macro
+#define ACE_HAS_SETOWN 
 
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST

@@ -1,5 +1,44 @@
 Sun Apr  6 14:16:18 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/OS.cpp: Deleted a useless return.  Thanks to Gonzalo
+ 	  A. Diethelm <gonzo@ing.puc.cl> for reporting this.
+
+	* ace/config-irix6.2-sgic++.h: Added the following definitions:
+
+	  + ACE_LACKS_PTHREAD_THR_SIGSETMASK
+	  + ACE_HAS_PTHREAD_EQUAL
+	  + ACE_HAS_PTHREAD_T
+	  + ACE_HAS_SYSENT_H
+	  + ACE_HAS_SYSINFO
+	  + ACE_HAS_TEMPLATE_TYPEDEFS
+
+	  Deleted the following definitions:
+
+	  + #define ACE_HAS_SYS_SIGLIST (Irix's compiler only has a
+	    _sys_siglist array when compiling their own internal
+	    functions).
+
+	  Thanks to Gonzalo A. Diethelm <gonzo@ing.puc.cl> for this.
+
+	* ace/Process: Added new support for setting the environment
+ 	  variable and the current working directory.  Thanks to Gonzalo
+ 	  A. Diethelm <gonzo@ing.puc.cl> for this enhancement.
+
+	* ace/OS.h: "sys/stat.h" was being included more than once, so I
+ 	  fixed this.  Thanks to Gonzalo A. Diethelm <gonzo@ing.puc.cl>
+ 	  for reporting this.
+
+	* ace/XtReactor.cpp: Added the register_handler_i() method, which
+ 	  just delegates to the one defined in the Reactor.  This is
+ 	  necessary to adjust to the C++ type system rules.  Thanks to
+ 	  Gonzalo A. Diethelm <gonzo@ing.puc.cl> for reporting this.
+
+	* ace/Service_Config.cpp: Added the Double-Checked Locking
+ 	  Optimization pattern to all the ACE_Service_Config Singletons
+	  (e.g., thr_mgr(), reactor(), etc.) so that they behave correctly
+ 	  in multi-threaded programs.  Thanks to Matthias Kerkhoff
+ 	  <make@cs.tu-berlin.de> for insisting on this.
+
 	* ace/OS.i (nanosleep): If the nanosleep() system call isn't
  	  supported by the OS platform we'll just use ACE_OS::sleep(const
  	  ACE_Time_Value &) instead.
@@ -323,6 +362,50 @@ Tue Apr 01 09:55:07 1997  David L. Levine  <levine@cs.wustl.edu>
 	  MSVC 4.1 about narrowing from unsigned __int64.
 	  Thanks to Matthias Kerkhoff <make@cs.tu-berlin.de> for
 	  reporting this.
+
+Mon Mar 31 18:18:35 1997  Carlos O'Ryan  <coryan@charlie>
+
+	* ace/config-hpux-10.x-g++.h: 
+	It was tuned to HP-UX 10.10 (and further) using g++ 2.7.2 without
+	DCE/Threads.
+
+	* ace/Task_T.cpp: 
+	Another iteration on the Module.h file, this time it is not
+	included *only* under HPUX and when using HP/aCC. Still IMHO
+	problems will arise as template sintax checking becomes more
+	popular.
+
+	* ace/Local_Name_Space_T.h: 
+	* ace/Local_Name_Space_T.cpp: 
+	Replaced MAXNAMELEN with MAXPATHLEN since some platforms
+	(e.g., HP/UX) have a very low value (e.g., 14 bytes) for
+	MAXNAMELEN.
+
+	* ace/config-hpux-10.x-aCC.h: 
+	The comment did not make clear what was compiler/platform
+	target. It also included some remarks that only applied to
+	HP/C++.
+
+	* tests/Future_Test.cpp: 
+	* tests/Message_Block_Test.cpp: 
+	* tests/Thread_Pool_Test.cpp: 
+	Will not compile if ACE_HAS_THREADS was not defined and
+	ACE_TEMPLATES_REQUIRE_SPECIALIZATION was: they tried to
+	instantiate templates that were only defined when ACE_HAS_THREADS.
+
+	* ace/config-hpux-10.x-aCC.h: 
+	More fine tuning: ACE_HAS_EXCEPTIONS,
+	ACE_LACKS_LINEBUFFERED_STREAMBUF,
+	ACE_HAS_STREAM_PIPES.
+
+	* ace/TLI_Stream.h: 
+	* ace/TLI_Acceptor.h: 
+	No "Meta-type info" was defined (the PEER_ADDR and PEER_STREAM
+	typedefs).
+
+	* ace/Signal.h: 
+	* ace/Signal.cpp: 
+	With HP/aCC we can enable ACE_Sig_Handlers.
 
 Mon Mar 31 22:36:55 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 

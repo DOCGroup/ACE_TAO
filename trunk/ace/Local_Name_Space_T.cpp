@@ -111,7 +111,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::shared_bind (const ACE_WString &name
     {
       return this->shared_bind_i (name, value, type, rebind);
     }
-  ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
+  ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ()))
     {
     }
 }
@@ -368,9 +368,10 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager_i (void)
 
   // Use process name as the file name.
   size_t len = ACE_OS::strlen (dir);
+  len += ACE_OS::strlen (ACE_DIRECTORY_SEPARATOR_STR);
   len += ACE_OS::strlen (database) + 1;
 
-  if (len >= MAXNAMELEN)
+  if (len >= MAXNAMELEN + MAXPATHLEN)
     {
       errno = ENAMETOOLONG;
       return -1;
@@ -382,8 +383,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager_i (void)
 
   ACE_MEM_POOL_OPTIONS options (this->name_options_->base_address ());
 
-  TCHAR lock_name_for_local_name_space [MAXNAMELEN];
-  TCHAR lock_name_for_backing_store [MAXNAMELEN];
+  TCHAR lock_name_for_local_name_space [MAXNAMELEN + MAXPATHLEN];
+  TCHAR lock_name_for_backing_store [MAXPATHLEN + MAXNAMELEN];
   LPCTSTR postfix = database;
 
   size_t length = 0;

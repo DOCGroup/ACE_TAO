@@ -72,6 +72,9 @@ public:
   ssize_t recv_n (void *buf, size_t n) const;
   // Recv n bytes, keep trying until n are received (uses read (2)).
 
+  // = Meta-type info
+  typedef ACE_INET_Addr PEER_ADDR;
+
   void dump (void) const;
   // Dump the state of an object.
 

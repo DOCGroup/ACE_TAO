@@ -82,10 +82,8 @@
 #define ACE_HAS_GETRUSAGE
 
 #define ACE_HAS_SIGINFO_T
-#define ACE_LACKS_UCONTEXT_T
-#define ACE_LACKS_UCONTEXT_H
+#define ACE_HAS_UCONTEXT_T
 #define _CLOCKID_T
-#define ACE_SELECT_USES_INT
 #define ACE_LACKS_SI_ADDR
 
 // Platform has the XLI version of ACE_TLI.

@@ -3,7 +3,7 @@
 
 // The following configuration file is designed to work for HP
 // platforms running HP/UX 10.x.  For using HP C++ compiler with
-// templates you should have patch PHSS_6246.
+// platforms running HP/UX 10.x and using the HP/aCC compiler.
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
@@ -13,6 +13,10 @@
 #define HPUX
 #endif /* HPUX */
 
+#if __cplusplus < 199707L
+#define ACE_HAS_BROKEN_HPUX_TEMPLATES
+#endif /* __cplusplus < 199707L */
+
 #define _HPUX_SOURCE
 #include /**/ <sys/stdsyms.h>
 #include /**/ <sched.h>                              /*  pthread.h doesn't include this */
@@ -21,6 +25,8 @@
 
 // They forgot a const in the prototype of const_timewait...
 #define ACE_LACKS_CONST_TIMESPEC_PTR
+
+#define ACE_HAS_EXCEPTIONS
 
 #define ACE_HAS_TYPENAME_KEYWORD
 #define ACE_HAS_TEMPLATE_TYPEDEFS
@@ -83,9 +89,13 @@
 // iostream header lacks ipfx (), isfx (), etc., declarations
 #define ACE_LACKS_IOSTREAM_FX
 
+// streambuf class lacks linebuffered() method.
+#define ACE_LACKS_LINEBUFFERED_STREAMBUF
+
 // Compiler/platform supports struct strbuf.
 #define ACE_HAS_STRBUF_T
-#include /**/ <stropts.h> /* for struct strbuf */
+#define ACE_HAS_STREAM_PIPES
+#define ACE_HAS_STREAMS
 
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T

@@ -242,6 +242,13 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
   return 0;
 }
 
+int
+ACE_XtReactor::register_handler_i (const ACE_Handle_Set &handles, 
+				   ACE_Event_Handler *handler, 
+				   ACE_Reactor_Mask mask)
+{
+  return ACE_Reactor::register_handler_i (handles, handler, mask);
+}
 
 int
 ACE_XtReactor::remove_handler_i (ACE_HANDLE handle, 

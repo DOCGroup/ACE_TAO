@@ -63,101 +63,102 @@ static ACE_thread_key_t key_;
 
 typedef ACE_Unbounded_Set<ACE_Log_Msg *> ACE_Log_Msg_Set;
 
-// Synchronize output operations.
 class ACE_Log_Msg_Manager
+  // = TITLE
+  //      Synchronize output operations.
 {
 public:
-	static ACE_Thread_Mutex *get_lock(void);
+  static ACE_Thread_Mutex *get_lock (void);
 
 #if defined (VXWORKS)
-	static void atexit (WIND_TCB *);
+  static void atexit (WIND_TCB *);
 #else
-	static void atexit (void);
+  static void atexit (void);
 
-	static void	insert (ACE_Log_Msg*);
-	static int	remove (ACE_Log_Msg*);
-	// remove returns true when the last ACE_Log_Msg instance has
-	// been deleted
+  static void insert (ACE_Log_Msg*);
+  static int remove (ACE_Log_Msg*);
+  // Remove returns true when the last ACE_Log_Msg instance has been
+  // deleted.
 #endif /* VXWORKS */
 
 private:
-	static ACE_Thread_Mutex *lock_;
+  static ACE_Thread_Mutex *lock_;
 
-	// Holds a list of all logmsg instances.
-	// instances_ requires global construction/destruction.  If
-	// that's a problem, could change it to a pointer and allocate
-	// it dynamically when lock_ is allocated.
-#if ! defined (VXWORKS)
-	static ACE_Log_Msg_Set instances_;
+  // Holds a list of all logmsg instances.  instances_ requires global
+  // construction/destruction.  If that's a problem, could change it
+  // to a pointer and allocate it dynamically when lock_ is allocated.
+#if !defined (VXWORKS)
+  static ACE_Log_Msg_Set instances_;
 #endif /* VXWORKS */
 };
 
 ACE_Thread_Mutex *ACE_Log_Msg_Manager::lock_ = 0;
 
 ACE_Thread_Mutex *
-ACE_Log_Msg_Manager::get_lock(void)
+ACE_Log_Msg_Manager::get_lock (void)
 {
-	if (ACE_Log_Msg_Manager::lock_ == 0)
-	{
-		ACE_NO_HEAP_CHECK;
+  if (ACE_Log_Msg_Manager::lock_ == 0)
+    {
+      ACE_NO_HEAP_CHECK;
 
-		ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::lock_, ACE_Thread_Mutex, 0);
-	}
+      ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::lock_, ACE_Thread_Mutex, 0);
+    }
 
-	return ACE_Log_Msg_Manager::lock_;
+  return ACE_Log_Msg_Manager::lock_;
 }
 
 #if defined (VXWORKS)
 void
 ACE_Log_Msg_Manager::atexit (WIND_TCB *tcb)
 {
-	// The task is exiting, so its ACE_Log_Msg instance.
-	delete tcb->spare1;
+  // The task is exiting, so its ACE_Log_Msg instance.
+  delete tcb->spare1;
 
-	// ugly, ugly, but don't know a better way
-	delete ACE_Log_Msg_Manager::lock_;
-	ACE_Log_Msg_Manager::lock_ = 0;
+  // Ugly, ugly, but don't know a better way.
+  delete ACE_Log_Msg_Manager::lock_;
+  ACE_Log_Msg_Manager::lock_ = 0;
 }
 #else
 ACE_Log_Msg_Set ACE_Log_Msg_Manager::instances_;
 
 void
-ACE_Log_Msg_Manager::insert(ACE_Log_Msg* log_msg)
+ACE_Log_Msg_Manager::insert (ACE_Log_Msg *log_msg)
 {
-	ACE_Log_Msg_Manager::instances_.insert(log_msg);
+  ACE_Log_Msg_Manager::instances_.insert (log_msg);
 }
 
 int
-ACE_Log_Msg_Manager::remove(ACE_Log_Msg* log_msg)
+ACE_Log_Msg_Manager::remove (ACE_Log_Msg *log_msg)
 {
-	ACE_Log_Msg_Manager::instances_.remove(log_msg);
+  ACE_Log_Msg_Manager::instances_.remove (log_msg);
 
-	return ! ACE_Log_Msg_Manager::instances_.size();
+  return !ACE_Log_Msg_Manager::instances_.size ();
 }
 
 void
-ACE_Log_Msg_Manager::atexit ()
+ACE_Log_Msg_Manager::atexit (void)
 {
-	// The program is exiting, so delete all ACE_Log_Msg instances.
-	ACE_Unbounded_Set_Iterator <ACE_Log_Msg *> i (instances_);
-        ACE_Log_Msg **log_msg;
+  // The program is exiting, so delete all ACE_Log_Msg instances.
+  ACE_Unbounded_Set_Iterator <ACE_Log_Msg *> i (instances_);
 
-	while (i.next (log_msg) != 0)
-	{
-		// Advance the iterator first because it needs to read
-		// the next field of the ACE_Set_Node that will be deleted
-		// as a result of the following call to remove the node.
-		i.advance ();
+  for (ACE_Log_Msg **log_msg;
+       i.next (log_msg) != 0;
+       )
+    {
+      // Advance the iterator first because it needs to read the next
+      // field of the ACE_Set_Node that will be deleted as a result of
+      // the following call to remove the node.
+      i.advance ();
 
-		// Causes a call to ACE_Log_Msg_Manager::remove.
-		delete *log_msg;
-	}
+      // Causes a call to ACE_Log_Msg_Manager::remove.
+      delete *log_msg;
+    }
 
-	ACE_OS::thr_keyfree(key_);
+  ACE_OS::thr_keyfree (key_);
 
-	// ugly, ugly, but don't know a better way
-	delete ACE_Log_Msg_Manager::lock_;
-	ACE_Log_Msg_Manager::lock_ = 0;
+  // Ugly, ugly, but don't know a better way.
+  delete ACE_Log_Msg_Manager::lock_;
+  ACE_Log_Msg_Manager::lock_ = 0;
 }
 #endif /* ! VXWORKS */
 
@@ -168,13 +169,13 @@ extern "C"
 void
 ACE_TSS_cleanup (void *ptr)
 {
-  delete (ACE_Log_Msg *)ptr;
+  delete (ACE_Log_Msg *) ptr;
 }
 #endif /* ACE_MT_SAFE */
 
 /* static */
 int 
-ACE_Log_Msg::exists(void)
+ACE_Log_Msg::exists (void)
 {
 #if defined (ACE_MT_SAFE)
 #if defined (VXWORKS)
@@ -222,8 +223,9 @@ ACE_Log_Msg::instance (void)
   // initialized to 0, which holds true for VxWorks 5.2-5.3.
   if (*(int **) tss_log_msg == 0)
     {
-      // Allocate the Singleton lock.  Note that this isn't thread-safe.
-      ACE_Log_Msg_Manager::get_lock();
+      // Allocate the Singleton lock.  Note that this isn't
+      // thread-safe.
+      ACE_Log_Msg_Manager::get_lock ();
 
       // Register cleanup handler.
       ::taskDeleteHookAdd ((FUNCPTR) ACE_Log_Msg_Manager::atexit);
@@ -252,7 +254,7 @@ ACE_Log_Msg::instance (void)
       if (key_created_ == 0)
 	{
 	  // Allocate the Singleton lock.
-	  ACE_Log_Msg_Manager::get_lock();
+	  ACE_Log_Msg_Manager::get_lock ();
 
 	  {
 	    ACE_NO_HEAP_CHECK;
@@ -283,24 +285,23 @@ ACE_Log_Msg::instance (void)
       // Allocate memory off the heap and store it in a pointer in
       // thread-specific storage (on the stack...).
 
-	  // Must protect access to lock managers list
-	  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock(), 0));
+      // Must protect access to lock managers list
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock (), 0));
 
-	  // Stop heap checking, the memory will always
-	  // be freed in atexit. This prevents from getting
-	  // these blocks reported as memory leaks
-	  {
-		  ACE_NO_HEAP_CHECK;
+      // Stop heap checking, the memory will always be freed in
+      // atexit. This prevents from getting these blocks reported as
+      // memory leaks
+      {
+	ACE_NO_HEAP_CHECK;
 
-		  ACE_NEW_RETURN_I (tss_log_msg, ACE_Log_Msg, 0);
-		  ACE_Log_Msg_Manager::insert(tss_log_msg);
+	ACE_NEW_RETURN_I (tss_log_msg, ACE_Log_Msg, 0);
+	ACE_Log_Msg_Manager::insert(tss_log_msg);
 
-		  // Store the dynamically allocated pointer in thread-specific
-		  // storage.
-		  if (ACE_OS::thr_setspecific (key_, 
-					       (void *) tss_log_msg) != 0)
-		    return 0; // Major problems, this should *never* happen!
- 	  }
+	// Store the dynamically allocated pointer in thread-specific
+	// storage.
+	if (ACE_OS::thr_setspecific (key_, (void *) tss_log_msg) != 0)
+	  return 0; // Major problems, this should *never* happen!
+      }
     }
 
   return tss_log_msg;
@@ -366,7 +367,7 @@ ACE_Log_Msg::flags (void)
 {
   ACE_TRACE ("ACE_Log_Msg::flags");
   u_long result;
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock(), 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock (), 0));
 
   result = ACE_Log_Msg::flags_;
   return result;
@@ -376,7 +377,7 @@ void
 ACE_Log_Msg::set_flags (u_long flgs)
 {
   ACE_TRACE ("ACE_Log_Msg::set_flags");
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock()));
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock ()));
 
   ACE_SET_BITS (ACE_Log_Msg::flags_, flgs);
 }
@@ -385,7 +386,7 @@ void
 ACE_Log_Msg::clr_flags (u_long flgs)
 {
   ACE_TRACE ("ACE_Log_Msg::clr_flags");
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock()));
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock ()));
 
   ACE_CLR_BITS (ACE_Log_Msg::flags_, flgs);
 }
@@ -395,7 +396,7 @@ ACE_Log_Msg::acquire (void)
 {
   ACE_TRACE ("ACE_Log_Msg::acquire");
 #if defined (ACE_MT_SAFE)
-  return ACE_Log_Msg_Manager::get_lock()->acquire ();
+  return ACE_Log_Msg_Manager::get_lock ()->acquire ();
 #else
   return 0;
 #endif /* ACE_MT_SAFE */
@@ -421,7 +422,7 @@ ACE_Log_Msg::release (void)
   ACE_TRACE ("ACE_Log_Msg::release");
 
 #if defined (ACE_MT_SAFE)
-  return ACE_Log_Msg_Manager::get_lock()->release ();
+  return ACE_Log_Msg_Manager::get_lock ()->release ();
 #else
   return 0;
 #endif /* ACE_MT_SAFE */
@@ -460,7 +461,7 @@ ACE_Log_Msg::~ACE_Log_Msg()
   // because this destructor can't tell when the last thread in the program
   // exits.
 #if ! defined (VXWORKS)
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock()));
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock ()));
   
   // Last instance ?
   if ( ACE_Log_Msg_Manager::remove(this) )
@@ -488,7 +489,7 @@ ACE_Log_Msg::open (const char *prog_name,
 		   LPCTSTR logger_key)
 {
   ACE_TRACE ("ACE_Log_Msg::open");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock(), -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock (), -1));
 
 #if defined (VXWORKS)
   // To avoid memory leak, don't copy the input string.  It had better
@@ -895,7 +896,7 @@ ACE_Log_Msg::log (const char *format_str,
 #endif /* ACE_WIN32 */
 
       // Make sure that the lock is held during all this.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock(), -1));
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock (), -1));
 
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR) 
 	  && abort_prog == 0) // We'll get this further down.
@@ -1017,7 +1018,7 @@ ACE_Log_Msg::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "\nmsg_off_ = %d\n", this->msg_off_));
   message_queue_.dump ();
 #if defined (ACE_MT_SAFE)  
-  ACE_Log_Msg_Manager::get_lock()->dump ();
+  ACE_Log_Msg_Manager::get_lock ()->dump ();
   // Synchronize output operations.  
 #endif /* ACE_MT_SAFE */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));

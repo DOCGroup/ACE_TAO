@@ -54,6 +54,11 @@ public:
 				  ACE_Event_Handler *handler,
 				  ACE_Reactor_Mask mask);
 
+  virtual int register_handler_i (const ACE_Handle_Set &handles, 
+				  ACE_Event_Handler *handler, 
+				  ACE_Reactor_Mask mask);
+  // Register a set of <handles>.
+
   virtual int remove_handler_i (ACE_HANDLE handle, ACE_Reactor_Mask mask);
 
   virtual int schedule_timer (ACE_Event_Handler *handler, 
