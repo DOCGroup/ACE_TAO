@@ -33,8 +33,8 @@
 // ============================================================================
 
 #ifndef _CC_LOCKSET_H
-#include "ace/pre.h"
 #define _CC_LOCKSET_H
+#include "ace/pre.h"
 
 #include "ace/Synch.h"
 

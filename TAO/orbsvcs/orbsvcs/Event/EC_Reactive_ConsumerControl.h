@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_REACTIVE_CONSUMERCONTROL_H
-#include "ace/pre.h"
 #define TAO_EC_REACTIVE_CONSUMERCONTROL_H
+#include "ace/pre.h"
 
 #include "EC_ConsumerControl.h"
 #include "EC_Worker.h"

@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef TAO_AV_PROTOCOL_FACTORY_T_H
-#include "ace/pre.h"
 #define TAO_AV_PROTOCOL_FACTORY_T_H
+#include "ace/pre.h"
 
 #include "ace/Service_Object.h"
 #include "Policy.h"

@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef TLS_BASICLOGFACTORY_I_H
-#include "ace/pre.h"
 #define TLS_BASICLOGFACTORY_I_H
+#include "ace/pre.h"
 
 #include "orbsvcs/DsLogAdminS.h"
 #include "orbsvcs/Log/LogMgr_i.h"

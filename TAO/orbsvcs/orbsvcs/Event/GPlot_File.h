@@ -11,8 +11,8 @@
 // ============================================================================
 
 #ifndef ACE_GPlot_File_H
-#include "ace/pre.h"
 #define ACE_GPlot_File_H
+#include "ace/pre.h"
 
 #include "ace/Map_Manager.h"
 #include "orbsvcs/Event/event_export.h"

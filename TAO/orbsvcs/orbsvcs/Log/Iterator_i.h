@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TLS_ITERATOR_H
-#include "ace/pre.h"
 #define TLS_ITERATOR_H
+#include "ace/pre.h"
 
 #include "orbsvcs/DsLogAdminS.h"
 #include "orbsvcs/Log/LogRecordStore.h"

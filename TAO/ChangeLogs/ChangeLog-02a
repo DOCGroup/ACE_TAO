@@ -1,3 +1,12 @@
+Thu Mar 23 14:48:12 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * tao/*.h:
+        * orbsvcs/orbsvcs/*.h: Moved the inclusion of <pre.h> down after
+	  the definition of header guard macro.  The original order
+	  violated the ACE programming guideline.  Thanks to Carlos for
+	  catching this.
+
 Thu Mar 23 11:06:24 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Makefile:

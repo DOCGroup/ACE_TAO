@@ -19,8 +19,8 @@
 // ============================================================================
 
 #ifndef TAO_IIOP_PROFILE_H
-#include "ace/pre.h"
 #define TAO_IIOP_PROFILE_H
+#include "ace/pre.h"
 
 #include "tao/Profile.h"
 #include "tao/GIOP_Message_State.h"

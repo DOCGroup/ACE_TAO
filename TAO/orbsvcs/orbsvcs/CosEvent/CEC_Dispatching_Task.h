@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_CEC_DISPATCHING_TASK_H
-#include "ace/pre.h"
 #define TAO_CEC_DISPATCHING_TASK_H
+#include "ace/pre.h"
 
 #include "ace/Task.h"
 #include "ace/Message_Block.h"

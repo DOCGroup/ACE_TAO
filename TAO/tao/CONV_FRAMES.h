@@ -17,8 +17,8 @@
 // ================================================================
 
 #ifndef TAO_CONV_FRAMES_H
-#include "ace/pre.h"
 #define TAO_CONV_FRAMES_H
+#include "ace/pre.h"
 
 #include "tao/CONV_FRAMEC.h"
 

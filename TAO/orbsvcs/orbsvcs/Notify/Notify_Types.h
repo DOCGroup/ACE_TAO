@@ -16,8 +16,8 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_TYPES_H
-#include "ace/pre.h"
 #define TAO_NOTIFY_TYPES_H
+#include "ace/pre.h"
 
 #include "orbsvcs/CosNotifyFilterC.h"
 #include "orbsvcs/CosNotifyCommC.h"

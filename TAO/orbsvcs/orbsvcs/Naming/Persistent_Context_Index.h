@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_PERSISTENT_CONTEXT_INDEX_H
-#include "ace/pre.h"
 #define TAO_PERSISTENT_CONTEXT_INDEX_H
+#include "ace/pre.h"
 
 #include "Persistent_Entries.h"
 #include "naming_export.h"

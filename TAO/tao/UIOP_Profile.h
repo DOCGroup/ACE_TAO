@@ -19,8 +19,8 @@
 // ============================================================================
 
 #ifndef TAO_UIOP_PROFILE_H
-#include "ace/pre.h"
 #define TAO_UIOP_PROFILE_H
+#include "ace/pre.h"
 
 #include "tao/Profile.h"
 

@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_PROXY_COLLECTION_H
-#include "ace/pre.h"
 #define TAO_EC_PROXY_COLLECTION_H
+#include "ace/pre.h"
 
 #include "EC_Busy_Lock.h"
 

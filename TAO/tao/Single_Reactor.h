@@ -14,8 +14,8 @@
 // ============================================================================
 
 #ifndef TAO_SINGLE_REACTOR_H
-#include "ace/pre.h"
 #define TAO_SINGLE_REACTOR_H
+#include "ace/pre.h"
 
 #include "tao/Reactor_Registry.h"
 

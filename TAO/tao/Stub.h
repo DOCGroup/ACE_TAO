@@ -29,8 +29,8 @@
 // ============================================================================
 
 #ifndef TAO_STUB_H
-#include "ace/pre.h"
 #define TAO_STUB_H
+#include "ace/pre.h"
 
 #include "tao/Pluggable.h"
 

@@ -1,8 +1,8 @@
 // $Id$
 
 #ifndef DEBUG_MACROS_H
-#include "ace/pre.h"
 #define DEBUG_MACROS_H
+#include "ace/pre.h"
 
 #if defined (ACE_ES_NOLOGGING)
 #define ACE_ES_DEBUG(X)

@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef TAO_SERVICES_H
-#include "ace/pre.h"
 #define TAO_SERVICES_H
+#include "ace/pre.h"
 
 #include "tao/Sequence.h"
 

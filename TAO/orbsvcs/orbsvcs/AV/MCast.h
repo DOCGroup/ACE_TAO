@@ -17,8 +17,8 @@
 // ============================================================================
 
 #ifndef TAO_AV_MCAST_H
-#include "ace/pre.h"
 #define TAO_AV_MCAST_H
+#include "ace/pre.h"
 
 #include "FlowSpec_Entry.h"
 #include "Protocol_Factory.h"

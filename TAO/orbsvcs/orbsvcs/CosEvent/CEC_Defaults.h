@@ -19,8 +19,8 @@
 // ============================================================================
 
 #ifndef TAO_CEC_DEFAULTS_H
-#include "ace/pre.h"
 #define TAO_CEC_DEFAULTS_H
+#include "ace/pre.h"
 
 #ifndef TAO_CEC_ENABLE_DEBUG_MESSAGES
 #define TAO_CEC_ENABLE_DEBUG_MESSAGES 0

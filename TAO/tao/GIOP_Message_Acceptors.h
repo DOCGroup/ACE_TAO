@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_GIOP_MESSAGE_ACCEPTORS
-#include "ace/pre.h"
 #define TAO_GIOP_MESSAGE_ACCEPTORS
+#include "ace/pre.h"
 
 #include "tao/GIOP_Message_Base.h"
 #include "tao/GIOP_Message_Accept_State.h"

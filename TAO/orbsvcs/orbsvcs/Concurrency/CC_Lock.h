@@ -19,8 +19,8 @@
 // ============================================================================
 
 #ifndef _CC_LOCK_H
-#include "ace/pre.h"
 #define _CC_LOCK_H
+#include "ace/pre.h"
 
 #include "ace/Synch.h"
 

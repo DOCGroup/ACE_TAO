@@ -5,8 +5,8 @@
 // ${TAO_ROOT}/TAO_IDL/GenExportH.BAT
 // ------------------------------
 #ifndef TAO_ORBSVCS_EXPORT_H
-#include "ace/pre.h"
 #define TAO_ORBSVCS_EXPORT_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 

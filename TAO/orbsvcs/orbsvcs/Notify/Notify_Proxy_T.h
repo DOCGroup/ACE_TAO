@@ -15,8 +15,8 @@
 //
 // ==========================================================================
 #ifndef TAO_NOTIFY_PROXY_T_H
-#include "ace/pre.h"
 #define TAO_NOTIFY_PROXY_T_H
+#include "ace/pre.h"
 
 #include "Notify_QoSAdmin_i.h"
 #include "Notify_FilterAdmin_i.h"

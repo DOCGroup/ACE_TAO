@@ -14,8 +14,8 @@
 // ============================================================================
 
 #ifndef TAO_REACTOR_REGISTRY_H
-#include "ace/pre.h"
 #define TAO_REACTOR_REGISTRY_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 

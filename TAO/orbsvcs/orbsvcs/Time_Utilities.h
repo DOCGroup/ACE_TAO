@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ORBSVCS_TIME_UTILITIES_H
-#include "ace/pre.h"
 #define ORBSVCS_TIME_UTILITIES_H
+#include "ace/pre.h"
 
 #include "orbsvcs/TimeBaseC.h"
 #include "orbsvcs/svc_utils_export.h"

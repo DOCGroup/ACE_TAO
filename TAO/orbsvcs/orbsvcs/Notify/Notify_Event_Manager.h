@@ -16,8 +16,8 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_EVENT_MANAGER
-#include "ace/pre.h"
 #define TAO_NOTIFY_EVENT_MANAGER
+#include "ace/pre.h"
 
 #include "Notify_Listeners.h"
 #include "Notify_Types.h"

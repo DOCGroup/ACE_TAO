@@ -23,8 +23,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_SCHED_FILTER_H
-#include "ace/pre.h"
 #define TAO_EC_SCHED_FILTER_H
+#include "ace/pre.h"
 
 #include "orbsvcs/RtecSchedulerC.h"
 #include "EC_Filter.h"

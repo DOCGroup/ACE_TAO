@@ -1,8 +1,8 @@
 // $Id$
 
 #ifndef TAO_INTERPRETER_UTILS_T_H
-#include "ace/pre.h"
 #define TAO_INTERPRETER_UTILS_T_H
+#include "ace/pre.h"
 
 #include "tao/corba.h"
 

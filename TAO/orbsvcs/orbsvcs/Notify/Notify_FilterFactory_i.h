@@ -17,8 +17,8 @@
 // ==========================================================================
 
 #ifndef NOTIFY_FILTER_FACTORY_I_H
-#include "ace/pre.h"
 #define NOTIFY_FILTER_FACTORY_I_H
+#include "ace/pre.h"
 
 #include "orbsvcs/orbsvcs/CosNotifyFilterS.h"
 #include "notify_export.h"

@@ -17,8 +17,8 @@
 // ============================================================================
 
 #ifndef TAO_AV_NIL_H
-#include "ace/pre.h"
 #define TAO_AV_NIL_H
+#include "ace/pre.h"
 
 #include "Policy.h"
 

@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_TIME_SERVICE_CLERK_H
-#include "ace/pre.h"
 #define TAO_TIME_SERVICE_CLERK_H
+#include "ace/pre.h"
 
 #include "ace/Reactor.h"
 #include "orbsvcs/Naming/Naming_Utils.h"

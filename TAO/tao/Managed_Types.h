@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef TAO_MANAGED_TYPES_H
-#include "ace/pre.h"
 #define TAO_MANAGED_TYPES_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 

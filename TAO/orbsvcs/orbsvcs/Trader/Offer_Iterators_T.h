@@ -16,8 +16,8 @@
 // ========================================================================
 
 #ifndef TAO_REGISTER_OFFER_ITERATOR_H
-#include "ace/pre.h"
 #define TAO_REGISTER_OFFER_ITERATOR_H
+#include "ace/pre.h"
 
 #include "Offer_Iterators.h"
 #include "Offer_Database.h"

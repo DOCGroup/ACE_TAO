@@ -23,8 +23,8 @@
 // ============================================================================
 
 #ifndef TAO_IDL_CORBA_DYNANYC_H_
-#include "ace/pre.h"
 #define TAO_IDL_CORBA_DYNANYC_H_
+#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 

@@ -14,8 +14,8 @@
 //    integrated in to TAO by Balachandran Natarajan <bala@cs.wustl.edu>
 // ============================================================================
 #ifndef _TAO_QTRESOURCE_H
-#include "ace/pre.h"
 #define _TAO_QTRESOURCE_H
+#include "ace/pre.h"
 
 #include "tao/default_resource.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -1,8 +1,8 @@
 // $Id$
 
 #ifndef TAO_TIMEPROBE_H
-#include "ace/pre.h"
 #define TAO_TIMEPROBE_H
+#include "ace/pre.h"
 
 #include "ace/inc_user_config.h"
 

@@ -17,8 +17,8 @@
 // ============================================================================
 
 #ifndef TAO_FORWARDING_SERVANT_H
-#include "ace/pre.h"
 #define TAO_FORWARDING_SERVANT_H
+#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 

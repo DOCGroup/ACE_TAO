@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_CEC_MT_DISPATCHING_H
-#include "ace/pre.h"
 #define TAO_CEC_MT_DISPATCHING_H
+#include "ace/pre.h"
 
 #include "CEC_Dispatching.h"
 

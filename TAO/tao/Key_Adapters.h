@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_KEY_ADAPTERS_H
-#include "ace/pre.h"
 #define TAO_KEY_ADAPTERS_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 #include "ace/Map.h"

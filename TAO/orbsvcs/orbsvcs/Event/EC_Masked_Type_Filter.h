@@ -23,8 +23,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_MASKED_TYPE_FILTER_H
-#include "ace/pre.h"
 #define TAO_EC_MASKED_TYPE_FILTER_H
+#include "ace/pre.h"
 
 #include "EC_Filter.h"
 

@@ -22,8 +22,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_CONSUMERADMIN_H
-#include "ace/pre.h"
 #define TAO_EC_CONSUMERADMIN_H
+#include "ace/pre.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "event_export.h"

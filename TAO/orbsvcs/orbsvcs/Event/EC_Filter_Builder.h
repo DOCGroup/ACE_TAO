@@ -23,8 +23,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_FILTER_BUILDER_H
-#include "ace/pre.h"
 #define TAO_EC_FILTER_BUILDER_H
+#include "ace/pre.h"
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "event_export.h"

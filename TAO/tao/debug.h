@@ -19,8 +19,8 @@
 // ============================================================================
 
 #ifndef TAO_DEBUG_H
-#include "ace/pre.h"
 #define TAO_DEBUG_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 

@@ -14,8 +14,8 @@
 // ============================================================================
 
 #ifndef TAO_REACTOR_PER_PRIORITY_H
-#include "ace/pre.h"
 #define TAO_REACTOR_PER_PRIORITY_H
+#include "ace/pre.h"
 
 #include "tao/Reactor_Registry.h"
 

@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_UIOP_FACTORY_H
-#include "ace/pre.h"
 #define TAO_UIOP_FACTORY_H
+#include "ace/pre.h"
 
 #include "tao/Protocol_Factory.h"
 

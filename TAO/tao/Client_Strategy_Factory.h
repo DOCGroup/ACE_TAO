@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_CLIENT_STRATEGY_FACTORY_H
-#include "ace/pre.h"
 #define TAO_CLIENT_STRATEGY_FACTORY_H
+#include "ace/pre.h"
 
 #include "ace/Service_Object.h"
 

@@ -24,8 +24,8 @@
 // ============================================================================
 
 #ifndef TAO_IDL_CURRENTC_H
-#include "ace/pre.h"
 #define TAO_IDL_CURRENTC_H
+#include "ace/pre.h"
 
 #ifndef TAO_EXPORT_MACRO
 #define TAO_EXPORT_MACRO

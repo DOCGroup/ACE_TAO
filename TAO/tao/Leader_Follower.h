@@ -14,8 +14,8 @@
 // ============================================================================
 
 #ifndef TAO_LEADER_FOLLOWER_H
-#include "ace/pre.h"
 #define TAO_LEADER_FOLLOWER_H
+#include "ace/pre.h"
 
 #include "tao/ORB_Core.h"
 

@@ -14,8 +14,8 @@
 // ========================================================================
 
 #ifndef TAO_TRADER_CONSTRAINT_VISITOR_H
-#include "ace/pre.h"
 #define TAO_TRADER_CONSTRAINT_VISITOR_H
+#include "ace/pre.h"
 
 #include "Constraint_Visitors.h"
 #include "Trader.h"

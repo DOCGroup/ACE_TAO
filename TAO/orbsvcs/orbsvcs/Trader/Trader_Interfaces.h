@@ -17,8 +17,8 @@
 // ========================================================================
 
 #ifndef TAO_TRADER_INTERFACES_H
-#include "ace/pre.h"
 #define TAO_TRADER_INTERFACES_H
+#include "ace/pre.h"
 
 #include "Trader_Utils.h"
 #include "Constraint_Interpreter.h"

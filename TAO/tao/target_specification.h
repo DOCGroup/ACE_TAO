@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_TARGET_SPECIFICATION_H
-#include "ace/pre.h"
 #define TAO_TARGET_SPECIFICATION_H
+#include "ace/pre.h"
 
 #include "tao/Object_KeyC.h"
 #include "tao/IOPC.h"

@@ -35,8 +35,8 @@
  * @(#) $Header$
  */
 #ifndef TAO_AV_NTP_TIME_H
-#include "ace/pre.h"
 #define TAO_AV_NTP_TIME_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 #include "RTCP.h"

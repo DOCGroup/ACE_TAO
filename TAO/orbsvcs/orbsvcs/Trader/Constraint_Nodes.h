@@ -15,8 +15,8 @@
 // =====================================================================
 
 #ifndef TAO_CONSTRAINT_NODES_H
-#include "ace/pre.h"
 #define TAO_CONSTRAINT_NODES_H
+#include "ace/pre.h"
 
 #include "Constraint_Tokens.h"
 #include "tao/corba.h"

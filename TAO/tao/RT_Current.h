@@ -14,8 +14,8 @@
 // ============================================================================
 
 #ifndef TAO_RT_CURRENT_H
-#include "ace/pre.h"
 #define TAO_RT_CURRENT_H
+#include "ace/pre.h"
 
 #include "tao/rtcorbafwd.h"
 

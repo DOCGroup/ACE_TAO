@@ -32,8 +32,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_UDP_ADMIN_H
-#include "ace/pre.h"
 #define TAO_EC_UDP_ADMIN_H
+#include "ace/pre.h"
 
 #include "orbsvcs/RtecUDPAdminS.h"
 #include "orbsvcs/Event/event_export.h"

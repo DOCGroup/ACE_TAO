@@ -51,8 +51,8 @@
 // ============================================================================
 
 #ifndef TAO_AV_RTP_H
-#include "ace/pre.h"
 #define TAO_AV_RTP_H
+#include "ace/pre.h"
 
 #include "Protocol_Factory.h"
 

@@ -17,8 +17,8 @@
 // ================================================================
 
 #ifndef TAO_IOPS_H
-#include "ace/pre.h"
 #define TAO_IOPS_H
+#include "ace/pre.h"
 
 #include "tao/IOPC.h"
 

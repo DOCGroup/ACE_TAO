@@ -19,8 +19,8 @@
 // ============================================================================
 
 #ifndef CONSUMERADMIN_I_H
-#include "ace/pre.h"
 #define CONSUMERADMIN_I_H
+#include "ace/pre.h"
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/CosEventChannelAdminS.h"

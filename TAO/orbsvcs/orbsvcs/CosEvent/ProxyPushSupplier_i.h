@@ -19,8 +19,8 @@
 // ================================================================
 
 #ifndef _PROXYPUSHSUPPLIER_H
-#include "ace/pre.h"
 #define _PROXYPUSHSUPPLIER_H
+#include "ace/pre.h"
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/CosEventChannelAdminC.h"

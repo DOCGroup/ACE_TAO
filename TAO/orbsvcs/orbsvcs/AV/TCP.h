@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef TAO_AV_TCP_H
-#include "ace/pre.h"
 #define TAO_AV_TCP_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 #include "Protocol_Factory.h"

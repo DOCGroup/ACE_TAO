@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef TAO_PARAMS_H
-#include "ace/pre.h"
 #define TAO_PARAMS_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 #include "tao/IOR_LookupTable.h"

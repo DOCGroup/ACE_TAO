@@ -19,8 +19,8 @@
 // ============================================================================
 
 #ifndef TAO_IOR_MULTICAST_H
-#include "ace/pre.h"
 #define TAO_IOR_MULTICAST_H
+#include "ace/pre.h"
 
 #include "tao/corba.h"
 #include "orbsvcs/svc_utils_export.h"

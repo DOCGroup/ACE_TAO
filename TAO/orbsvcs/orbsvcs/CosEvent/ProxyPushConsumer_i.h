@@ -19,8 +19,8 @@
 // ================================================================
 
 #ifndef _PROXYPUSHCONSUMER_I_H
-#include "ace/pre.h"
 #define _PROXYPUSHCONSUMER_I_H
+#include "ace/pre.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/CosEventChannelAdminS.h"

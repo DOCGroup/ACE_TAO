@@ -19,8 +19,8 @@
 // ============================================================================
 
 #ifndef _CC_LOCKSETFACTORY_H
-#include "ace/pre.h"
 #define _CC_LOCKSETFACTORY_H
+#include "ace/pre.h"
 
 // #include "tao/corba.h"
 #include "orbsvcs/CosConcurrencyControlS.h"

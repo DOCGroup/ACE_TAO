@@ -11,8 +11,8 @@
 //
 
 #ifndef OBJECTIDLIST_H_
-#include "ace/pre.h"
 #define OBJECTIDLIST_H_
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 #include "tao/Sequence.h"

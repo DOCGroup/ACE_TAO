@@ -23,8 +23,8 @@
 // ============================================================================
 
 #ifndef TAO_MASTER_CORBA_H
-#include "ace/pre.h"
 #define TAO_MASTER_CORBA_H
+#include "ace/pre.h"
 
 // ACE specific includes
 #include "ace/OS.h"

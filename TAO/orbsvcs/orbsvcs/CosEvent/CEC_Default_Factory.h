@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_CEC_DEFAULT_FACTORY_H
-#include "ace/pre.h"
 #define TAO_CEC_DEFAULT_FACTORY_H
+#include "ace/pre.h"
 
 #include "CEC_Factory.h"
 

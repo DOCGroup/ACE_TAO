@@ -18,8 +18,8 @@
 //     
 // ============================================================================
 #ifndef TAO_GIOP_UTILS_H
-#include "ace/pre.h"
 #define TAO_GIOP_UTILS_H
+#include "ace/pre.h"
 #include "tao/Pluggable_Messaging.h"
 #include "tao/Object.h"
 

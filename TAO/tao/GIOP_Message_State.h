@@ -19,8 +19,8 @@
 // ============================================================================
 
 #ifndef TAO_GIOP_MESSAGE_STATE_H
-#include "ace/pre.h"
 #define TAO_GIOP_MESSAGE_STATE_H
+#include "ace/pre.h"
 
 #include "tao/Pluggable_Messaging.h"
 

@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef TAO_SEQUENCE_H
-#include "ace/pre.h"
 #define TAO_SEQUENCE_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 

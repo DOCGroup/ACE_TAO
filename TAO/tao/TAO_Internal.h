@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_INTERNAL_H
-#include "ace/pre.h"
 #define TAO_INTERNAL_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 

@@ -20,8 +20,8 @@
 // ============================================================================
 
 #ifndef TAO_REQUEST_H
-#include "ace/pre.h"
 #define TAO_REQUEST_H
+#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 
