@@ -297,7 +297,8 @@ IdAssignment::run_test(CORBA::Environment &ACE_TRY_ENV)
 
   //*************** ************ ************ ************ ************
 
-  for (int i = 0; i < this->iter_; ++i)
+  int i;
+  for (i = 0; i < this->iter_; ++i)
     {
       int ec_count;
       for (ec_count = 0; ec_count < this->ec_count_; ++ec_count)
