@@ -18,7 +18,7 @@
 #if !defined (TAO_BE_CODEGEN_H)
 #define TAO_BE_CODEGEN_H
 
-#define NAMEBUFSIZE  128
+#define NAMEBUFSIZE  1024
 // maximum length of static buffers used to store names
 
 class TAO_CodeGen

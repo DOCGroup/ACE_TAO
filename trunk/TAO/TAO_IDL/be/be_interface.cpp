@@ -205,7 +205,7 @@ int be_interface::gen_client_header (void)
       // generate a TAO-specific _bind method similar to what Orbix and VisiBroker
       // have
       *ch << "static " << this->local_name () << "_ptr _bind (const char *host, "
-          << "CORBA::ULong port, const char *key, CORBA::Environment &env);\n\n";
+          << "CORBA::UShort port, const char *key, CORBA::Environment &env);\n\n";
 
       // generate code for the interface definition by traversing thru the
       // elements of its scope. We depend on the front-end to have made sure
@@ -367,7 +367,7 @@ int be_interface::gen_client_stubs (void)
 
   // the _bind method
   *cs << this->name () << "_ptr " << this->name () << "::_bind (" <<
-    "const char *host, CORBA::ULong port, const char *key, " <<
+    "const char *host, CORBA::UShort port, const char *key, " <<
     "CORBA::Environment &env)" << nl;
   *cs << "{\n";
   cs->incr_indent ();
