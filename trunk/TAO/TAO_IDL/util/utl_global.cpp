@@ -111,7 +111,8 @@ IDL_GlobalData::IDL_GlobalData (void)
       obv_support_ (I_FALSE),
       case_diff_error_ (I_TRUE),
       idl_flags_ (""),
-      last_seen_index_ (1)
+      last_seen_index_ (1),
+      repeat_include_ (0)
  {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
@@ -474,16 +475,9 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
   // Check if we need to store it at all or whether we've seen it already
   if (seen)
     {
-      if (seen != this->last_seen_index_
-          && idl_global->pragma_prefixes ().size () > 1)
+      if (this->last_seen_index_ == 0)
         {
-          // If it's not the same as the current filename, and there is more
-          // than one prefix in the stack, then we have
-          // just finished with an included IDL file, and its
-          // (possibly empty) prefix must be popped.
-          char *trash = 0;
-          idl_global->pragma_prefixes ().pop (trash);
-          delete [] trash;
+          this->repeat_include_ = 1;
         }
 
       this->last_seen_index_ = seen;
@@ -992,3 +986,16 @@ IDL_GlobalData::last_seen_index (long val)
 {
   this->last_seen_index_ = val;
 }
+
+idl_bool
+IDL_GlobalData::repeat_include (void) const
+{
+  return this->repeat_include_;
+}
+
+void
+IDL_GlobalData::repeat_include (idl_bool val)
+{
+  this->repeat_include_ = val;
+}
+
