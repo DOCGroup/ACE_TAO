@@ -17,7 +17,6 @@
 
 #include "UpgradeableContextC.h"
 #include "Context_Impl_T.h"
-#include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,10 +33,8 @@ namespace CIAO
             typename SVNT, 
             typename COMP, 
             typename COMP_VAR>
-  class Upgradeable_Context_Impl : public virtual BASE_CTX,
-                                   public virtual Context_Impl<
-                                   BASE_CTX, SVNT, COMP, COMP_VAR>,
-                                   public virtual TAO_Local_RefCounted_Object
+  class Upgradeable_Context_Impl : public virtual Context_Impl<
+                                   BASE_CTX, SVNT, COMP, COMP_VAR>
   {
   public:
     Upgradeable_Context_Impl (Components::CCMHome_ptr home,

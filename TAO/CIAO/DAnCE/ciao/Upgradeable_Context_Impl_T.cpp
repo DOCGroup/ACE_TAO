@@ -16,7 +16,7 @@ namespace CIAO
               Components::CCMHome_ptr home,
               Session_Container *c,
               SVNT *sv)
-    : Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR> (home, c, sv),
+    : session_context (home, c, sv),
       servant_ (sv)
   {
   }
