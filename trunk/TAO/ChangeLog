@@ -1,3 +1,8 @@
+Mon Nov 22 18:46:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h:
+          Added explicit to all constructors of TAO_ETCL_Literal_Constraint.
+
 Mon Nov 22 11:57:49 2004  Ciju John  <john_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.cpp:
