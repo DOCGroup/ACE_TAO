@@ -1,3 +1,9 @@
+Wed May 12 06:52:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object.h:
+          Removed usage of ACE_INLINE_FOR_GNUC, this was for a bug in GCC 2.7.3
+          which we don't support anymore
+
 Tue May 11 22:28:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
@@ -8,7 +14,7 @@ Tue May 11 22:28:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/idl_global.h:
         * TAO_IDL/include/utl_scope.h:
         * TAO_IDL/util/utl_global.cpp:
-        
+
           The creation and addition to the AST of the uses-multiple-related
           implied IDL nodes (a struct containing connection info
           and a sequence of these structs) has been moved from the
@@ -22,11 +28,11 @@ Tue May 11 22:28:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue May 11 11:49:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_interface.cpp:
-        
+
           Cosmetic changes.
-          
+
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
-        
+
           Fixed assignment of scoped names to implied IDL constructs
           related to 'uses multiple' that are added to the AST before
           code generation.
