@@ -386,6 +386,9 @@ int const ACE_FD_SETSIZE = FD_SETSIZE;
 // ACE.
 #include "ace/Global_Macros.h"
 
+// include the ACE min()/max() functions.
+# include "ace/Min_Max.h"
+
 
 // These hooks enable ACE to have all dynamic memory management
 // automatically handled on a per-object basis.
