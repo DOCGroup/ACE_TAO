@@ -4,7 +4,7 @@ template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
 TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany>::
 In_Fixed_Array_Argument_T (const S x)
-  : x_ ((S_slice *) x)
+  : x_ (ACE_const_cast (S_slice *, x))
 {}
 
 template<typename S, typename S_slice, typename S_forany>
