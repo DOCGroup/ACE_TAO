@@ -66,20 +66,6 @@ ACE_INLINE
 CORBA_Policy::~CORBA_Policy (void) // destructor
 {}
 
-ACE_INLINE CORBA_Policy_ptr
-CORBA_Policy::_duplicate (CORBA_Policy_ptr obj)
-{
-  if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
-  return obj;
-}
-
-ACE_INLINE CORBA_Policy_ptr
-CORBA_Policy::_nil (void)
-{
-  return (CORBA_Policy_ptr)0;
-}
-
 ACE_INLINE
 CORBA_Policy_var::CORBA_Policy_var (void) // default constructor
   : ptr_ (CORBA_Policy::_nil ())
