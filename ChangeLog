@@ -1,9 +1,20 @@
+Wed Sep 15 11:41:53 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/ACE.cpp (set_handle_limit): Removed the 
+  
+	  ACE_NOTREACHED (return 0);
+	  
+	  and replaced it with
+	  
+	  return 0;
+	  
+	  Thanks to Martin Corino <mcorino@remedy.nl> for reporting this.
+
 Wed Sep 15 10:46:07 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * ace/Log_Msg.cpp:
-          Uninitialized static int was assumed to be zero.
-          It usually was.
-
+          Uninitialized static int was assumed to be zero.  It usually
+ 	  was.
 
 Wed Sep 15 12:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
