@@ -2,12 +2,32 @@
 #include "ObjectKey_Table.h"
 #include "ORB_Core.h"
 #include "Refcounted_ObjectKey.h"
+#include "Object_KeyC.h"
 
 ACE_RCSID(tao,
           ObjectKey_Table,
           "$Id$")
 
 
+int
+TAO::Less_Than_ObjectKey::operator () (const TAO::ObjectKey &lhs,
+                                       const TAO::ObjectKey &rhs) const
+{
+  if (lhs.length () < rhs.length ())
+    return 1;
+  else if (lhs.length () > rhs.length ())
+    return 0;
+
+  for (CORBA::ULong i = 0; i < rhs.length (); ++i)
+    {
+      if (lhs[i] < rhs[i])
+        return 1;
+    }
+
+  return 0;
+}
+
+/********************************************************/
 TAO::ObjectKey_Table::ObjectKey_Table (void)
   : lock_ (0)
   , table_ ()
@@ -38,16 +58,6 @@ TAO::ObjectKey_Table::bind (const TAO::ObjectKey &key,
 {
   key_new = 0;
 
-  // NOTE:Place for optimization. This is real expensive..
-  CORBA::String_var str;
-  TAO::ObjectKey::encode_sequence_to_string (str.inout (),
-                                             key);
-
-  // Hash values can be tricky, but even then thy are useful at
-  // times.
-  u_long hash_val =
-    ACE::hash_pjw (str.in ());
-
   int retval = 0;
   {
     ACE_GUARD_RETURN (ACE_Lock,
@@ -60,26 +70,16 @@ TAO::ObjectKey_Table::bind (const TAO::ObjectKey &key,
     // efficient. BUT we may have to do allocation upfront and delete if
     // bind () returns with an entry. We take one of the routes that
     // avoids allocation.
-    retval = this->table_.find (hash_val,
+    retval = this->table_.find (key,
                                 key_new);
 
     if (retval == -1)
-      return this->bind_i (hash_val,
-                           key,
+      return this->bind_i (key,
                            key_new);
-
 
     // Do a sanity comparison check and increment the refcount.
     // Place for optimization by removing the comparison.
-    if (key_new->object_key () == key)
-      {
-        (void) key_new->incr_refcount ();
-      }
-    else
-      {
-        // Do we bind it again. And if so, how?
-        // Need to thinkk....
-      }
+    (void) key_new->incr_refcount ();
   }
 
   return 0;
@@ -127,15 +127,14 @@ TAO::ObjectKey_Table::destroy (void)
 }
 
 int
-TAO::ObjectKey_Table::bind_i (u_long hash_val,
-                              const TAO::ObjectKey &key,
+TAO::ObjectKey_Table::bind_i (const TAO::ObjectKey &key,
                               TAO::Refcounted_ObjectKey *&key_new)
 {
   ACE_NEW_RETURN (key_new,
                   TAO::Refcounted_ObjectKey (key),
                   -1);
 
-  int retval =  this->table_.bind (hash_val,
+  int retval =  this->table_.bind (key,
                                    key_new);
 
   if (retval != -1)
@@ -149,15 +148,7 @@ TAO::ObjectKey_Table::bind_i (u_long hash_val,
 int
 TAO::ObjectKey_Table::unbind_i (TAO::Refcounted_ObjectKey *&key_new)
 {
-  // NOTE:Place for optimization. This is real expensive..
-  CORBA::String_var str;
-  TAO::ObjectKey::encode_sequence_to_string (str.inout (),
-                                             key_new->object_key ());
-
-  u_long hash_val =
-    ACE::hash_pjw (str.in ());
-
-  (void) this->table_.unbind (hash_val,
+  (void) this->table_.unbind (key_new->object_key (),
                               key_new);
 
   // Remove our refcount on the ObjectKey
@@ -166,20 +157,18 @@ TAO::ObjectKey_Table::unbind_i (TAO::Refcounted_ObjectKey *&key_new)
   return 0;
 }
 
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   // Instantiations for the Hash Map
-template class ACE_Less_Than<long>;
-template class ACE_RB_Tree <long,
+template class ACE_RB_Tree <TAO::ObjectKey,
                             TAO::Refcounted_ObjectKey,
-                            ACE_Less_Than<long>,
+                            TAO::Less_Than_ObjectKey,
                             ACE_Null_Mutex>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Less_Than<long>;
-#pragma instantiate ACE_RB_Tree <long,
+#pragma instantiate ACE_RB_Tree <TAO::ObjectKey,
                                  TAO::Refcounted_ObjectKey,
-                                 ACE_Less_Than<long>,
-                                 ACE_Null_Mutex>;
+                                 TAO::Less_Than_ObjectKey,
+                                 ACE_Null_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

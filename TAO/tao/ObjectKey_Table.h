@@ -1,3 +1,4 @@
+
 // -*- C++ -*-
 
 //=============================================================================
@@ -19,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TAO_Export.h"
+#include "ace/Functor.h"
 
 
 // Forward declarations
@@ -32,6 +34,23 @@ namespace TAO
 
   class ObjectKey;
   class Refcounted_ObjectKey;
+
+  /**
+   * @class ObjectKey_Table
+   *
+   * @brief: Compares the length and then the contents of ObjectKeys.
+   *
+   * Should have been a specialization of the functor
+   * ACE_Less_Than<sequence<CORBA::Octet>>. But that will not work
+   * so easily across bunch of stuff. Hence let us put up with this
+   * for the time being.
+   */
+  class TAO_Export Less_Than_ObjectKey
+  {
+  public:
+    int operator () (const TAO::ObjectKey &lhs,
+                     const TAO::ObjectKey &rhs) const;
+  };
 
   /**
    * @class ObjectKey_Table
@@ -96,8 +115,7 @@ namespace TAO
 
   protected:
     /// Implementation for bind ().
-    int bind_i (u_long hash_val,
-                const ObjectKey &key,
+    int bind_i (const ObjectKey &key,
                 Refcounted_ObjectKey *&key_new);
 
     /// Implementation for unbind ().
@@ -106,11 +124,9 @@ namespace TAO
   private:
 
     // Some useful typedefs.
-    typedef unsigned long ExtId;
-
-    typedef ACE_RB_Tree<ExtId,
+    typedef ACE_RB_Tree<TAO::ObjectKey,
                         TAO::Refcounted_ObjectKey *,
-                        ACE_Less_Than <ExtId>,
+                        TAO::Less_Than_ObjectKey,
                         ACE_Null_Mutex> TABLE;
 
     /// Lock for the table.
@@ -120,6 +136,7 @@ namespace TAO
     TABLE table_;
   };
 }
+
 
 #include "ace/post.h"
 #endif /*TAO_OBJECT_KEY_TABLE_H*/
