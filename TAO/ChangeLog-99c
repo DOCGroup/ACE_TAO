@@ -1,3 +1,13 @@
+Thu Jul 15 20:26:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+	  Uncommented an arg in generated code that was actually
+	  used by the generated function.
+
+	* TAO_IDL/be/be_sunsoft.cpp:
+	  Added 'u' to the end of integer literals, if they
+	  are unsigned.
+
 Thu Jul 15 19:40:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/DynAny_Test/da_test.idl:
