@@ -6,7 +6,7 @@
 //    TAO/tests/Quoter
 //
 // = FILENAME
-//    quoter_impl.cpp
+//    Quoter_Impl.cpp
 //
 // = AUTHOR
 //    Darrell Brunsch
