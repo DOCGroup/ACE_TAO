@@ -119,7 +119,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 				    int argc,
 				    char **argv)
 {
-  // Initialize our <NS_NamingContext> instance.
+  // Initialize our <TAO_NamingContext> instance.
   if (this->naming_context_impl_.init () == -1)
     return -1;
 
@@ -312,7 +312,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 
 // Returns the "NameService" NamingContext implementation object.
 
-NS_NamingContext &
+TAO_NamingContext &
 TAO_Naming_Server::get_naming_context (void)
 {
   return naming_context_impl_ ;

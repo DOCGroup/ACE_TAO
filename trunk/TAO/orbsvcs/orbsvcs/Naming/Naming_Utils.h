@@ -77,7 +77,7 @@ public:
   ~TAO_Naming_Server (void);
   // Destructor.
 
-  NS_NamingContext &get_naming_context (void);
+  TAO_NamingContext &get_naming_context (void);
   // Returns the "NameService" NamingContext implementation object
   // reference.
 
@@ -92,7 +92,7 @@ private:
   // rather than be allocated in the class.  This will make sure that
   // we follow a consistent policy for managing the memory of our
   // NamingContexts...
-  NS_NamingContext naming_context_impl_;
+  TAO_NamingContext naming_context_impl_;
   // Naming context implementation for "NameService".
 
   CosNaming::NamingContext_var naming_context_;

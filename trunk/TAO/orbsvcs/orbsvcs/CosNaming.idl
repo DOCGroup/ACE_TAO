@@ -57,10 +57,11 @@ module CosNaming
   struct Binding
   {
     Name binding_name;
-    // @@ Please comment me ;-)
+    // Simple name, under which an object is bound in a given context.
 
     BindingType	binding_type;
-    // @@ Please comment me ;-)
+    // Indicates whether the binding_name identifies a context, and, therefore, can
+    // participate in name resolution.
   };
 
   typedef sequence <Binding> BindingList;
@@ -94,7 +95,9 @@ module CosNaming
       exception CannotProceed
 	{
           // = TITLE
-          //  @@ Please comment me.
+          // Implementation may throw this exception if some reason it cannot
+	  // complete the operation.  This is currently not used in TAO.
+
 	  NamingContext cxt;
 	  Name rest_of_name;
 	};
@@ -193,11 +196,8 @@ module CosNaming
 	raises (NotEmpty);
       // Delete the naming context.  NOTE: the user should <unbind>
       // any bindings in which the given context is bound to some
-      // names before invoking <destroy> operation on it.  Ignoring
-      // this rule may cause unexpected behaviour.  <destroy> deletes
-      // the context object if it is not bound to any names in the
-      // given address space.  <destroys> decrements the reference
-      // count of the context if bindings to it exist.
+      // names before invoking <destroy> operation on it. 
+      
 
       // = Listing the naming context.
 
