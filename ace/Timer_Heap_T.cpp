@@ -275,7 +275,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
-ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::copy (int index, ACE_Timer_Node_T<TYPE> *moved_node)
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::copy (int slot, ACE_Timer_Node_T<TYPE> *moved_node)
 {
   // Insert <moved_node> into its new location in the heap.
   this->heap_[slot] = moved_node;
