@@ -107,6 +107,9 @@ private:
   Cubit_ptr cubit_;
   // Cubit obj ref
 
+  CORBA::ORB_ptr orb_ptr_;
+  // Remember our orb
+
   u_int call_count_;
   // # of calls made to functions
 

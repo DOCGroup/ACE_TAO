@@ -331,6 +331,9 @@ public:
   virtual ~ACE_Strategy_Connector (void);
   // Shutdown a connector and release resources.
 
+  virtual int close (void);
+  // Close down the Connector
+
 protected:
   // = The following three methods define the <Connector>'s strategies
   // for creating, connecting, and activating <SVC_HANDLER>'s,
@@ -372,6 +375,7 @@ protected:
   typedef ACE_Creation_Strategy<SVC_HANDLER> CREATION_STRATEGY;
   typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> CONNECT_STRATEGY;
   typedef ACE_Concurrency_Strategy<SVC_HANDLER> CONCURRENCY_STRATEGY;
+  typedef ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2> SUPER;
 
   // = Strategy objects.
 

@@ -109,5 +109,9 @@ main (int argc, char *argv[])
   if (orb_ptr->run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
 
+  // Free resources
+  CORBA::release (oa_ptr);
+  CORBA::release (orb_ptr);
+
   return 0;
 }

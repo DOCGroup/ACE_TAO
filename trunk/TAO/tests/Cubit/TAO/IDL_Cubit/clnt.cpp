@@ -31,6 +31,7 @@ Cubit_Client::Cubit_Client (void)
     exit_later_ (0),
     factory_ (Cubit_Factory::_nil ()),
     objref_ (CORBA::Object::_nil ()),
+    orb_ptr_ (0),
     cubit_ (Cubit::_nil ()),
     call_count_ (0),
     error_count_ (0)
@@ -582,8 +583,10 @@ Cubit_Client::run (void)
 
 Cubit_Client::~Cubit_Client (void)
 {
+  // Free resources
   CORBA::release (this->cubit_);
   CORBA::release (this->factory_);
+  CORBA::release (this->orb_ptr_);
 }
 
 int
@@ -599,10 +602,10 @@ Cubit_Client::init (int argc, char **argv)
     }
 
   // retrieve the ORB
-  CORBA::ORB_init (this->argc_,
-                   this->argv_,
-                   "internet",
-                   this->env_);
+  this->orb_ptr_ = CORBA::ORB_init (this->argc_,
+                                    this->argv_,
+                                    "internet",
+                                    this->env_);
 
   if (this->env_.exception () != 0)
     {

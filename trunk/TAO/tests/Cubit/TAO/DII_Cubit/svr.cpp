@@ -143,5 +143,9 @@ main (int argc, char *argv[])
   // methods asks us to exit.
   if (orb_ptr->run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
+
+  // Free resources
+  CORBA::release (orb_ptr);
+
   return 0;
 }

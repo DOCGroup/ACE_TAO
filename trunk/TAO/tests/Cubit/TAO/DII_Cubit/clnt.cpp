@@ -543,7 +543,9 @@ main (int argc, char *argv[])
       dexc (env, "server, please exit");
     }
     
+  // Free resources
   CORBA::release (objref);
-    
+  CORBA::release (orb_ptr);
+
   return error_count == 0 ? 0 : 1;
 }
