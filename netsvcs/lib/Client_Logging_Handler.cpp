@@ -168,6 +168,9 @@ ACE_Client_Logging_Handler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG, "shutting down!!!\n"));
 
+  if (this->logging_output_ != ACE_STDOUT)
+    ACE_OS::closesocket (this->logging_outout_);
+
   this->destroy ();
   return 0;
 }
@@ -266,6 +269,8 @@ private:
 int
 ACE_Client_Logging_Acceptor::fini (void)
 {
+  this->acceptor ().close ();
+
   if (this->handler_ != 0)
     this->handler_->close (0);
   return 0;
