@@ -30,17 +30,12 @@ class AST_Type;
 class UTL_StrList;
 class be_visitor;
 
-/*
- * BE_Attribute
- */
 class be_attribute : public virtual AST_Attribute,
                      public virtual be_decl
 {
 public:
-  // =Operations
-
   be_attribute (void);
-  // default constructor
+  // Default constructor.
 
   be_attribute (idl_bool ro,
                 AST_Type *ft,
@@ -48,25 +43,29 @@ public:
                 UTL_StrList *p,
                 idl_bool local,
                 idl_bool abstract);
-  // constructor
+  // Constructor.
 
-  // Visiting
+  // Visiting.
   virtual int accept (be_visitor *visitor);
 
-  be_operation_strategy *set_get_strategy (be_operation_strategy *new_strategy);
+  be_operation_strategy *set_get_strategy (
+      be_operation_strategy *new_strategy
+    );
   // Set the get operation strategy.
   // Note, that it is not actually used, the operation
   // made out of the attribute is going to copy it.
 
-  be_operation_strategy *set_set_strategy (be_operation_strategy *new_strategy);
+  be_operation_strategy *set_set_strategy (
+      be_operation_strategy *new_strategy
+    );
   // Set the set operation strategy.
   // Note, that it is not actually used, the operation
   // made out of the attribute is going to copy it.
 
-  be_operation_strategy *get_get_strategy ();
+  be_operation_strategy *get_get_strategy (void);
   // Retrieve the underlying get_operation strategy.
 
-  be_operation_strategy *get_set_strategy ();
+  be_operation_strategy *get_set_strategy (void);
   // Retrieve the underlying set operation strategy.
 
   // Narrowing

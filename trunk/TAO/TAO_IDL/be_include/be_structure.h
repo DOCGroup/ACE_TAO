@@ -30,56 +30,51 @@
 class UTL_StrList;
 class be_visitor;
 
-/*
- * BE_Structure
- */
 class be_structure : public virtual AST_Structure,
                      public virtual be_scope,
                      public virtual be_type
 {
 public:
-  // =Operations
-
   be_structure (void);
-  // default constructor
+  // Default constructor.
 
   be_structure (UTL_ScopedName *n,
                 UTL_StrList *p,
                 idl_bool local,
                 idl_bool abstract);
-  // constructor
+  // Constructor.
 
   virtual int gen_var_defn (char *local_name = 0);
-  // generate the _var class definition
+  // Generate the _var class definition.
 
   virtual int gen_var_impl (char *local_name = 0,
                             char *full_name = 0);
-  // generate the implementation for the _var class
+  // Generate the implementation for the _var class.
 
   virtual int gen_out_defn (char *local_name = 0);
-  // generate the _out class definition
+  // Generate the _out class definition.
 
   virtual int gen_out_impl (char *local_name = 0,
                             char *full_name = 0);
-  // generate the _out implementation
+  // Generate the _out implementation.
 
   virtual idl_bool in_recursion (be_type *node = 0);
-  // are we or the node represented by node involved in recursion
+  // Are we or the node represented by node involved in recursion.
 
   virtual void destroy (void);
   // Cleanup method.
 
   virtual int accept (be_visitor *visitor);
-  // Visiting
+  // Visiting.
 
- // Narrowing
+ // Narrowing.
   DEF_NARROW_METHODS3 (be_structure, AST_Structure, be_scope, be_type);
   DEF_NARROW_FROM_DECL (be_structure);
   DEF_NARROW_FROM_SCOPE (be_structure);
 
 protected:
   virtual int compute_size_type (void);
-  // compute the size type if it is unknown
+  // Compute the size type if it is unknown.
 };
 
 #endif

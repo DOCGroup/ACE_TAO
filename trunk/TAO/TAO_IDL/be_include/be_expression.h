@@ -26,28 +26,37 @@
 
 class be_visitor;
 
-/*
- * BE_Expression
- */
 class be_expression : public virtual AST_Expression
 {
 public:
-  // Operations
+  // Constructors.
   be_expression (UTL_ScopedName *n);
-  be_expression (AST_Expression *b, AST_Expression::ExprType t);
+
+  be_expression (AST_Expression *b, 
+                 AST_Expression::ExprType t);
+
   be_expression (AST_Expression::ExprComb c,
                  AST_Expression *v1,
                  AST_Expression *v2);
+
   be_expression (long l);
-  be_expression (long l, AST_Expression::ExprType t);
+
+  be_expression (long l, 
+                 AST_Expression::ExprType t);
+
   be_expression (unsigned long l);
+
   be_expression (UTL_String *s);
-  be_expression(char *s);
+
+  be_expression (char *s);
+
   be_expression (char c);
+
   be_expression (ACE_OutputCDR::from_wchar wc);
+
   be_expression (double d);
 
-  // Visiting
+  // Visiting.
   virtual int accept (be_visitor *visitor);
 };
 
