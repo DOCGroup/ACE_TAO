@@ -57,7 +57,7 @@ namespace CORBA
 
   class ImplementationDef;
   typedef ImplementationDef *ImplementationDef_ptr;
-
+  
   class Context;
   typedef Context *Context_ptr;
 

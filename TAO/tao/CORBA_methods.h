@@ -53,6 +53,9 @@ namespace CORBA
   class TypeCode;
   typedef TypeCode *TypeCode_ptr;
 
+  class OperationDef;
+  typedef OperationDef *OperationDef_ptr;
+
   /**
    * @name ORB Initialization
    *

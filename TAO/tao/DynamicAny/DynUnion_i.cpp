@@ -129,6 +129,14 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
       DynamicAny::DynAnyFactory::InconsistentTypeCode
     ))
 {
+  // discriminator_type () does not work with aliased type codes,
+  // only on unions, so strip the alias out of the type code
+  //
+  CORBA::TypeCode_var tc =
+   TAO_DynAnyFactory::strip_alias (any.type ()
+                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
   // Get the CDR stream of the argument.
   ACE_Message_Block* mb = any._tao_get_cdr ();
 
@@ -144,9 +152,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
   TAO_InputCDR cdr (mb,
                     any._tao_byte_order ());
 
-  CORBA::TypeCode_var tc = any.type ();
-
-  CORBA::TypeCode_var disc_tc =
+  CORBA::TypeCode_var disc_tc = 
     tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -779,37 +785,37 @@ TAO_DynUnion_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  // Add the member to the CDR stream.
-
-  CORBA::TypeCode_var member_tc = 
-    this->member_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  CORBA::Any_var member_any = 
-    this->member_->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  ACE_Message_Block *member_mb = member_any->_tao_get_cdr ();
-
-  if (member_mb == 0)
-    {
-      ACE_NEW_RETURN (member_mb,
-                      ACE_Message_Block,
-                      0);
-      TAO_OutputCDR out;
-      member_any->impl ()->marshal_value (out);
-      ACE_CDR::consolidate (member_mb, out.begin ());
-    }
-
-  TAO_InputCDR member_cdr (member_mb,
-                           member_any->_tao_byte_order ());
-
-  (void) TAO_Marshal_Object::perform_append (member_tc.in (),
-                                             &member_cdr,
-                                             &out_cdr
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
+  // Add the member to the CDR stream unless it has no active member.
+  if (this->has_no_active_member () == 0)
+  {
+     CORBA::TypeCode_var member_tc = this->member_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
+     ACE_CHECK_RETURN (0);
+   
+     CORBA::Any_var member_any = this->member_->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+     ACE_CHECK_RETURN (0);
+   
+     ACE_Message_Block *member_mb = member_any->_tao_get_cdr ();
+   
+     if (member_mb == 0)
+       {
+         ACE_NEW_RETURN (member_mb,
+                         ACE_Message_Block,
+                         0);
+         TAO_OutputCDR out;
+         member_any->impl ()->marshal_value (out);
+         ACE_CDR::consolidate (member_mb, out.begin ());
+       }
+   
+     TAO_InputCDR member_cdr (member_mb,
+                              member_any->_tao_byte_order ());
+   
+     (void) TAO_Marshal_Object::perform_append (member_tc.in (),
+                                                &member_cdr,
+                                                &out_cdr
+                                                ACE_ENV_ARG_PARAMETER);
+     ACE_CHECK_RETURN (0);
+  }
+  
   // Make the Any.
   TAO_InputCDR in_cdr (out_cdr);
 

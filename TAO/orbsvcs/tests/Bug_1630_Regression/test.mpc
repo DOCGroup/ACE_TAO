@@ -1,0 +1,11 @@
+project(Bug_1630_testclient ) : client {
+   exename = testclient
+   libs += TAO_IFR_Client
+   libpaths += $(TAO_ROOT)/tao/IFR_Client $(TAO_ROOT)/tao $(ACE_ROOT)/ace
+
+   IDL_Files {
+   }
+   Source_Files {
+      testclient.cpp
+   }
+}

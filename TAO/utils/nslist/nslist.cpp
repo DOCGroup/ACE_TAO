@@ -26,6 +26,7 @@
 CORBA::ORB_var orb;
 int showIOR = 0;
 int showNSonly = 0;
+int showCtxIOR = 0;
 
 static void list_context (CosNaming::NamingContext_ptr nc,
                           int level
@@ -129,9 +130,22 @@ show_chunk (CosNaming::NamingContext_ptr nc,
       // level...
       if (bl[i].binding_type == CosNaming::ncontext)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      ": naming context\n"));
+          if (showCtxIOR)
+            {
+              CORBA::String_var str =
+                orb->object_to_string (obj.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK;
+              ACE_DEBUG ((LM_DEBUG,
+                          ": naming context : <%s>\n",
+                          str.in ()));
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                            ": naming context\n"));
 
+            }
           CosNaming::NamingContext_var xc =
             CosNaming::NamingContext::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
@@ -232,9 +246,13 @@ main (int argc, char *argv[])
                 }
               showNSonly = 1;
             }
+          else if (ACE_OS::strcmp (*argv, "--ctxior") == 0)
+            {
+              showCtxIOR = 1;
+            }          
           else if (ACE_OS::strncmp (*argv, "--", 2) == 0)
             {
-              ACE_DEBUG ((LM_DEBUG, "Usage: %s [ --ior | --nsior ]\n", pname));
+              ACE_DEBUG ((LM_DEBUG, "Usage: %s [[ --ior ][ --ctxior ] | --nsior ]\n", pname));
               return 1;
             }
           argc--;

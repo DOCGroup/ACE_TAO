@@ -216,7 +216,7 @@ CORBA::Boolean
 CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
                                       CORBA::ValueFactory &factory,
                                       CORBA::ValueBase *&valuetype,
-                                      const char * const /* repo_id */)
+                                      const char * const repo_id)
 { // %! dont leak on error case !
   // %! postconditions
   CORBA::Boolean retval = 1;
@@ -264,14 +264,6 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
   //    from the <value-tag>, then use the repository id parameter
   //    (it _must_ be right).
 
-  CORBA::String_var repo_id_stream;
-
-  // It would be more efficient not to copy the string %!)
-  if (strm.read_string (repo_id_stream.inout ()) == 0)
-    {
-      return 0;
-    }
-
   TAO_ORB_Core *orb_core = strm.orb_core ();
 
   if (orb_core == 0)
@@ -286,7 +278,22 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
         }
     }
 
-  factory = orb_core->orb ()->lookup_value_factory (repo_id_stream.in ());
+  if (TAO_OBV_GIOP_Flags::has_no_type_info (value_tag))
+  {
+     factory = orb_core->orb ()->lookup_value_factory (repo_id);
+  }
+  else
+  {
+     CORBA::String_var repo_id_stream;
+
+     // It would be more efficient not to copy the string %!)
+     if (strm.read_string (repo_id_stream.inout ()) == 0)
+     {
+        return 0;
+     }
+
+     factory = orb_core->orb ()->lookup_value_factory (repo_id_stream.in ());
+  }
 
   if (factory == 0) // %! except.!
     {
