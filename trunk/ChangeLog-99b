@@ -1,3 +1,18 @@
+Sun Nov 28 02:41:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Reactor_Notify_Test.cpp (run_test): Only print out the
+	  error message when the notification pipe is not disable.
+	  Otherwise, when the notification pipe gets disabled, the event
+	  loop depends purely on the OS scheduling policy to determine how
+	  many times to gets to run.  Since the Supplier_Task removes
+	  itself from the reactor, there could be no active event handler
+	  available in the reactor when the <handle_events> gets called if
+	  the <perform_notifications> task finishes before the event loop
+	  has a chance to finish its iterations.  Another way to solve
+	  this is to add a thr_yield after every notification but that
+	  seems to defeat the intension of the test.  Thanks to Ivan
+	  Murphy for reporting the false error output.
+
 Sat Nov 27 22:06:26 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.cpp: Defined ACE_ENDTHREADEX and ACE_BEGINTHREADEX to use
