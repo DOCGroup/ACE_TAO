@@ -57,6 +57,8 @@ namespace TAO
 
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
+    virtual void _tao_decode (TAO_InputCDR &
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     virtual const void *value (void) const;
     virtual void free_value (void);
@@ -92,6 +94,8 @@ namespace TAO
 
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
+    virtual void _tao_decode (TAO_InputCDR &
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     virtual const void *value (void) const;
     virtual void free_value (void);
@@ -124,6 +128,8 @@ namespace TAO
 
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
+    virtual void _tao_decode (TAO_InputCDR &
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     virtual const void *value (void) const;
     static Any_Basic_Impl_T<T> *create_empty (CORBA::TypeCode_ptr);
@@ -144,22 +150,24 @@ namespace TAO
     Any_Special_Impl_T (_tao_destructor destructor,
                         CORBA::TypeCode_ptr,
                         T * const,
-                        CORBA::ULong);
+                        CORBA::ULong bound);
     virtual ~Any_Special_Impl_T (void);
 
     static void insert (CORBA::Any &,
                         _tao_destructor destructor,
-                        CORBA::TCKind,
+                        CORBA::TypeCode_ptr,
                         T * const,
-                        CORBA::ULong);
+                        CORBA::ULong bound);
     static CORBA::Boolean extract (const CORBA::Any &,
                                    _tao_destructor,
-                                   CORBA::TCKind,
-                                   CORBA::ULong,
-                                   const T *&);
+                                   CORBA::TypeCode_ptr,
+                                   const T *&,
+                                   CORBA::ULong bound);
 
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
+    virtual void _tao_decode (TAO_InputCDR &
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     virtual const void *value (void) const;
     virtual void free_value (void);
@@ -194,6 +202,8 @@ namespace TAO
 
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
+    virtual void _tao_decode (TAO_InputCDR &
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     virtual const void *value (void) const;
 
@@ -238,6 +248,8 @@ namespace TAO
 
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
+    virtual void _tao_decode (TAO_InputCDR &
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     virtual const void *value (void) const;
     virtual void free_value (void);

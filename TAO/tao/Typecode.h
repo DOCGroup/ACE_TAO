@@ -254,6 +254,9 @@ namespace CORBA
                              TypeCode *&child
                              ACE_ENV_ARG_DECL);
 
+    /// Strip away all typedefs, if any.
+    TypeCode_ptr unalias (ACE_ENV_SINGLE_ARG_DECL);
+
     // private:
     //
     // = The guts of the typecode implementation class
