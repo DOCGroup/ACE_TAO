@@ -16,14 +16,15 @@
 ACE_RCSID(Event, EC_Event_Channel, "$Id$")
 
 TAO_EC_Event_Channel::
-TAO_EC_Event_Channel (PortableServer::POA_ptr supplier_poa,
-                      PortableServer::POA_ptr consumer_poa,
+TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attr,
                       TAO_EC_Factory* factory,
                       int own_factory)
-  : supplier_poa_ (PortableServer::POA::_duplicate (supplier_poa)),
-    consumer_poa_ (PortableServer::POA::_duplicate (consumer_poa)),
+  : supplier_poa_ (PortableServer::POA::_duplicate (attr.supplier_poa)),
+    consumer_poa_ (PortableServer::POA::_duplicate (attr.consumer_poa)),
     factory_ (factory),
-    own_factory_ (own_factory)
+    own_factory_ (own_factory),
+    consumer_reconnect_ (attr.consumer_reconnect),
+    supplier_reconnect_ (attr.supplier_reconnect)
 {
   if (this->factory_ == 0)
     {
