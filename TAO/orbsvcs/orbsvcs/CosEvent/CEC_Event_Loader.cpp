@@ -63,6 +63,7 @@ CORBA::Object_ptr
 TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
                                      int argc, char *argv[],
                                      CORBA::Environment &ACE_TRY_ENV)
+   ACE_THROW_SPEC (())
 {
   ACE_TRY
     {

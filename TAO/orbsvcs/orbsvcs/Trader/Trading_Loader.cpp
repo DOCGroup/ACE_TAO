@@ -80,7 +80,7 @@ TAO_Trading_Loader::init (int argc, char *argv[])
   ACE_CATCHANY
     {
       //    @@ Should we log this???
-      return -1;
+      //      return -1;
     }
   ACE_ENDTRY;
   return 0;
@@ -173,13 +173,14 @@ CORBA::Object_ptr
 TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
                                    int argc, char *argv[],
                                    CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC (())
 {
   // Duplicate the ORB
   CORBA::ORB_var orb = CORBA::ORB::_duplicate (orb_ptr);
 
   // Activating the poa manager
   this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Create a Trader Object and set its Service Type Repository.
   auto_ptr<TAO_Trader_Factory::TAO_TRADER> auto_trader (TAO_Trader_Factory::create_trader (argc, argv));
@@ -194,7 +195,7 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
     this->trader_->trading_components ();
 
   sup_attr.type_repos (this->type_repos_._this (ACE_TRY_ENV));
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // The Spec says: return a reference to the Lookup interface from
   // the resolve_initial_references method.
@@ -204,11 +205,11 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
   this->ior_ =
     orb->object_to_string (lookup,
                            ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Parse the args
   if (this->parse_args (argc, argv) == -1)
-    return 0;
+    return CORBA::Object::_nil ();
 
   // Dump the ior to a file.
   if (this->ior_output_file_ != 0)

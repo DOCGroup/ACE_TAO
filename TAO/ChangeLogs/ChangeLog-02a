@@ -1,3 +1,20 @@
+Thu Aug 17 11:46:49 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/Naming_Service/Naming_Service.cpp (parse_args): 
+	  Initialized the local variable <time> when declaring as it was 
+	  causing a problem on some compilers.
+
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.h   : 
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp : 
+
+	* orbsvcs/orbsvcs/Naming/Naming_Loader.h   : 
+	* orbsvcs/orbsvcs/Naming/Naming_Loader.cpp : 
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h   : 
+	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp : 
+	  Added the missed exception specification ACE_THROW_SPEC (()) 
+	  to the create_object () method.
+		
 Thu Aug 17 00:04:47 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_QosAdmin_i.h:

@@ -51,7 +51,8 @@ public:
 
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                    int argc, char *argv[],
-                                   CORBA::Environment &ACE_TRY_ENV);
+                                   CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC (());
   // This function call initializes the Trading Service given a reference to the
   // ORB and the command line parameters.
 
@@ -99,6 +100,6 @@ public:
   // Flag indication whether to dump the ior to standard output
 };
 
-ACE_SVC_FACTORY_DECLARE (TAO_Trading_Loader);
+ACE_SVC_FACTORY_DECLARE (TAO_Trading_Loader)
 
 #endif /* TAO_TRADING_LOADER_H */
