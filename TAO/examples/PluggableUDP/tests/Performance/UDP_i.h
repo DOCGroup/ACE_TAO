@@ -21,7 +21,7 @@
 #define UDP_I_H
 
 #include "UDPS.h"
-#include "ace\Hash_Map_Manager_T.h"
+#include "ace/Hash_Map_Manager_T.h"
 
 class UDP_i: public POA_UDP
 {
@@ -37,7 +37,7 @@ public:
 
   ~UDP_i (void);
   // Destructor
-  
+
   virtual void setResponseHandler (UDP_ptr udpHandler,
                                    CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -54,7 +54,7 @@ public:
 
   virtual void shutdown (CORBA::Environment &env)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   // Shutdown the server.
 
   void orb (CORBA::ORB_ptr o);
@@ -73,7 +73,7 @@ private:
 
   ACE_Hash_Map_Manager_Ex < CORBA::String_var,
                             CORBA::Long,
-                            ACE_Hash < const char * >, 
+                            ACE_Hash < const char * >,
                             ACE_Equal_To < const char * >,
                             ACE_Thread_Mutex > request_id_table_;
 
@@ -85,5 +85,3 @@ private:
 };
 
 #endif /* UDP_I_H */
-
-

@@ -1,3 +1,19 @@
+Tue Apr 10 13:49:16 2001  Ossama Othman  <ossama@uci.edu>
+
+	* examples/PluggableUDP/tests/Makefile:
+
+	  Fixed source list so that it actually contains valid filenames.
+
+	* examples/PluggableUDP/tests/Performance/UDP_i.h:
+
+	  Fixed NT-ism where backslash was used in include directive
+	  instead of a forward slash.  Fixes compile problems on platforms
+	  non-Windows platforms.
+
+	* examples/PluggableUDP/tests/*/Makefile:
+
+	  Updated dependencies.
+
 Tue Apr 10 12:37:38 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Profile.cpp (verify_orb_configuration):
