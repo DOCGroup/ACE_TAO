@@ -235,14 +235,13 @@ idl3_to_idl2_visitor::visit_valuetype (AST_ValueType *node)
       *os << "custom ";
     }
     
-  AST_Decl::NodeType nt = node->node_type ();
-    
-  *os << (nt == AST_Decl::NT_valuetype ? "valuetype " : "eventtype ")
-      << node->local_name ();
+  *os << "valuetype " << node->local_name ();
   
+  AST_Decl::NodeType nt = node->node_type ();    
   AST_Interface **parents = node->inherits ();
+  long ninherits = node->n_inherits ();
   
-  for (long i = 0; i < node->n_inherits (); ++i)
+  for (long i = 0; i < ninherits; ++i)
     {
       if (i == 0)
         {
@@ -254,6 +253,12 @@ idl3_to_idl2_visitor::visit_valuetype (AST_ValueType *node)
         }
         
       *os << parents[i]->name ();
+    }
+    
+  if (nt == AST_Decl::NT_eventtype)
+    {
+      *os << (ninherits == 0 ? " : " : ", ")
+          << "Components::EventBase";
     }
     
   AST_Interface **supports = node->supports ();
@@ -309,8 +314,7 @@ idl3_to_idl2_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
     
   AST_Decl::NodeType nt = node->node_type ();
     
-  *os << (nt == AST_Decl::NT_valuetype ? "valuetype " : "eventtype ")
-      << node->local_name () << ";";
+  *os << "valuetype " << node->local_name () << ";";
 
   return 0;
 }

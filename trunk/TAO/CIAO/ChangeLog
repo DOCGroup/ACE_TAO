@@ -1,3 +1,16 @@
+Mon Aug 16 16:36:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        
+          Changed conversion for eventtypes to generate, instead of the
+          original eventtype, a valuetype with Components::EventBase added
+          to its inheritance list. This is completely equivalent to the
+          original eventtype and has the advantage that it eliminates the
+          need to use the -Sm option (disabling CCM equivalent IDL 
+          preprocessing) when running the IDL compiler on a converted
+          file. Thanks to Bala Natarajan <bala@dre.vanderbilt.edu> for
+          the suggestion.
+
 Mon Aug 16 14:14:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/IDL3/ImpliedIDL/Components/Receptacles/ICReceptacles.idl:
