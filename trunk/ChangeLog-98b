@@ -1,3 +1,9 @@
+Thu Sep 17 01:20:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.i (open): No need to find the file size since
+ 	  SetFilePointer supports FILE_END.  Also fixed the UNICODE
+ 	  version of ACE_OS::open().
+
 Wed Sep 16 22:52:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/Reactor/Multicast/server.cpp: 
