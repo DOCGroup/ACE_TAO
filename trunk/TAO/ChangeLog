@@ -1,3 +1,8 @@
+Wed Oct 13 07:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTPortableServer/RT_Acceptor_Filters.h:
+          Removed msvc specific pragma push/pop, not needed in this file
+
 Tue Oct 12 20:10:06 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
@@ -8,7 +13,7 @@ Tue Oct 12 08:19:57 2004  Olli Savia  <ops@iki.fi>
 
         * tests/Typedef_String_Array/server.cpp:
           Added #include "ace/OS_NS_stdio.h" to pick ACE_OS::fopen() etc.
-        
+
 Mon Oct 11 18:31:10 2004  Irfan Pyarali  <irfan@oomworks.com>
 
         * examples/PluggableUDP/DIOP/README:
