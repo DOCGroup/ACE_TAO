@@ -198,7 +198,7 @@ ACE_Filecache::instance (void)
       ACE_SYNCH_RW_MUTEX &lock =
         *ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>::get_preallocated_object
           (ACE_Object_Manager::ACE_FILECACHE_LOCK);
-      ACE_Guard<ACE_SYNCH_RW_MUTEX> m (lock);
+      ACE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, ace_mon, lock, 0);
 
       // @@ James, please check each of the ACE_NEW_RETURN calls to
       // make sure that it is safe to return if allocation fails.
@@ -305,7 +305,10 @@ ACE_Filecache::fetch (const char *filename, int mapit)
 
   if (this->hash_.find (filename, handle) == -1)
     {
-      ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (hashlock);
+      ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX,
+                              ace_mon,
+                              hashlock,
+                              0);
 
       // Second check in the method call
       handle = this->insert_i (filename, filelock, mapit);
@@ -319,7 +322,10 @@ ACE_Filecache::fetch (const char *filename, int mapit)
         {
           {
             // Double check locking pattern
-            ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (hashlock);
+            ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX,
+                                    ace_mon,
+                                    hashlock,
+                                    0);
 
             // Second check in the method call
             handle = this->update_i (filename, filelock, mapit);
@@ -364,7 +370,10 @@ ACE_Filecache::finish (ACE_Filecache_Object *&file)
       {
       case ACE_Filecache_Object::ACE_WRITING:
         {
-          ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (hashlock);
+          ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX,
+                                  ace_mon,
+                                  hashlock,
+                                  0);
 
           file->release ();
 
