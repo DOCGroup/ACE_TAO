@@ -1,3 +1,26 @@
+Tue Dec 21 17:29:02 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* TAO_Internal.cpp:
+	* UIOP_Acceptor.cpp:
+	* UIOP_Acceptor.h:
+	* UIOP_Connect.cpp:
+	* UIOP_Connect.h:
+	* UIOP_Connect.i:
+	* UIOP_Connector.cpp:
+	* UIOP_Connector.h:
+	* UIOP_Factory.cpp:
+	* UIOP_Factory.h:
+	* UIOP_Profile.cpp:
+	* UIOP_Profile.h:
+	* UIOP_Profile.i:
+	* UIOP_Transport.cpp:
+	* UIOP_Transport.h:
+	* default_resource.cpp:
+	* orbconf.h:
+
+	  Made it possible to explicitly disable UIOP support.  Previously
+	  it wasn't possible to do so.  Thanks to Irfan for his help.
+
 Tue Dec 21 14:25:17 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/orbsvcs_static.dsp: Brought up to date.
