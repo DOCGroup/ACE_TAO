@@ -1,5 +1,11 @@
 Tue Jun  1 09:57:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/TTY_IO.cpp (control),
+	* ace/config-freebsd.h,
+	  ace/config-freebsd-pthread.h: Attached is a patch that will
+	  allow the ACE_TTY_IO class to work with FreeBSD tty devices.
+	  Thanks to John Aughey <jha@FreeBSD.ORG> for contributing these.
+
 	* ACE-INSTALL.html: Updated the list of platforms that ACE is
  	  supported on.
 
