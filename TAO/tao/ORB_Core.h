@@ -358,7 +358,7 @@ public:
   // = Service Configurator hooks.
   virtual int init (int argc, char *argv[]);
 
-  int parse_args (int argc, char *argv[]);
+  virtual int parse_args (int argc, char *argv[]);
   // Arguments are in the form of -ORBxxx.  Valid arguments are:
   // <-ORBresources> <{which}> where <{which}> is one of <global> or
   // <tss>.
@@ -371,14 +371,14 @@ public:
   };
 
   // = Range of values for <{resource source specifier}>.
-  void resource_source (int which_source);
+  virtual void resource_source (int which_source);
   // Set the resource source specifier.
-  int resource_source (void);
+  virtual int resource_source (void);
   // Get the resource source specifier.
 
-  void poa_source (int which_source);
+  virtual void poa_source (int which_source);
   // Set the POA source specifier.
-  int poa_source (void);
+  virtual int poa_source (void);
   // Get the POA source specifier.
 
   // = Resource Retrieval
@@ -391,67 +391,67 @@ public:
   // either global or thread-specific; choosing on a per-resource
   // basis is not supported.
 
-  ACE_Reactor *get_reactor (void);
+  virtual ACE_Reactor *get_reactor (void);
   // Return an <ACE_Reactor> to be utilized.
 
-  ACE_Thread_Manager *get_thr_mgr (void);
+  virtual ACE_Thread_Manager *get_thr_mgr (void);
   // Return an <ACE_Thread_Manager> to be utilized.
 
-  TAO_CONNECTOR *get_connector (void);
+  virtual TAO_CONNECTOR *get_connector (void);
   // Return an Connector to be utilized.
 
-  TAO_CACHED_CONNECT_STRATEGY *get_cached_connect_strategy (void);
+  virtual TAO_CACHED_CONNECT_STRATEGY *get_cached_connect_strategy (void);
   // Return an Cached Connect Strategy to be utilized.
 
-  TAO_NULL_CREATION_STRATEGY *get_null_creation_strategy (void);
+  virtual TAO_NULL_CREATION_STRATEGY *get_null_creation_strategy (void);
   // This no-op creation strategy is necessary for using the
   // <Strategy_Connector> with the <Cached_Connect_Strategy>.
 
-  TAO_NULL_ACTIVATION_STRATEGY *get_null_activation_strategy (void);
+  virtual TAO_NULL_ACTIVATION_STRATEGY *get_null_activation_strategy (void);
   // This no-op activation strategy prevents the cached connector from
   // calling the service handler's <open> method multiple times.
 
-  TAO_ACCEPTOR *get_acceptor (void);
+  virtual TAO_ACCEPTOR *get_acceptor (void);
   // Return an Acceptor to be utilized.
 
-  TAO_ORB_Parameters *get_orb_params (void);
+  virtual TAO_ORB_Parameters *get_orb_params (void);
   // Return ORB parameters to be utilized.
 
-  TAO_OA_Parameters *get_oa_params (void);
+  virtual TAO_OA_Parameters *get_oa_params (void);
   // Return ORB parameters to be utilized.
 
-  ACE_INET_Addr *get_addr (void);
+  virtual ACE_INET_Addr *get_addr (void);
   // Return an address to be used for the endpoint for connections and
   // requests.
 
-  CORBA::ORB_ptr get_orb (void);
+  virtual CORBA::ORB_ptr get_orb (void);
   // Return an ORB ptr to be utilized.
 
-  TAO_POA *get_root_poa (void);
+  virtual TAO_POA *get_root_poa (void);
   // Return a root poa to be utilized.
 
-  ACE_Allocator *get_allocator (void);
+  virtual ACE_Allocator *get_allocator (void);
   // Return a pointer to an ACE_Allocator used for allocating memory
   // within the ORB.
 
-  TAO_GLOBAL_Collocation_Table *get_global_collocation_table (void);
+  virtual TAO_GLOBAL_Collocation_Table *get_global_collocation_table (void);
   // Get the global collocation table.  Return the pointer to the
   // global collocation table if we are using one, otherwise, return
   // 0.
 
   // = Modifiers
 
-  void set_allocator (ACE_Allocator *alloc);
+  virtual void set_allocator (ACE_Allocator *alloc);
   // Set the allocator pointer which will be returned by
   // <get_allocator()>.
 
-  void set_orb (CORBA::ORB_ptr op);
+  virtual void set_orb (CORBA::ORB_ptr op);
   // Set the ORB pointer which will be returned by <get_orb()>.  This
   // is necessary because the ORB is created in application space by
   // <CORBA::ORB_init()>, but needs to be available to stubs and
   // generated code.
 
-  void set_root_poa (TAO_POA *pp);
+  virtual void set_root_poa (TAO_POA *pp);
   // Set the Root POA pointer which will be returned by
   // <get_root_poa()>.  This is necessary because the Root POA is
   // created in application space by <CORBA::ORB_init()>, but needs to
@@ -530,7 +530,7 @@ public:
     // Pointer to application-created ACE_Allocator.
   };
 
-private:
+protected:
 
   int resource_source_;
   // Flag indicating whether resources should be global or

@@ -11,6 +11,8 @@ My_Resource_Factory::My_Reactors::My_Reactors (void)
 ACE_Reactor *
 My_Resource_Factory::get_reactor (void)
 {
+  ACE_DEBUG ((LM_DEBUG, "Using alternate reactor\n"));
+
   switch (this->resource_source_)
     {
     case TAO_GLOBAL:

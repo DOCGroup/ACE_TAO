@@ -1,3 +1,10 @@
+Tue Aug 18 23:58:05 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB_Core.h (TAO_Resource_Factory): Changed this class so
+ 	  that most of the methods are virtual and the private section is
+ 	  protected.  This makes it easier for users to inherit and extend
+ 	  this class.
+
 Tue Aug 18 19:14:27 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* tests/Cubit/TAO/DII_Cubit/clinet.cpp:
