@@ -1,4 +1,7 @@
-Sat Feb 06 00:46:27 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Sat Feb 06 02:41:07 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Map_Test.cpp: The hell of explicit template instantiation.
+	  Someone please save me from these stupid compilers.
 
 	* ace/Map: Damm stupid broken g++ (2.7) has deformed my beautiful
 	  code based on typedefs and forced me to use their basic form.  I
