@@ -1,3 +1,13 @@
+Tue May 13 07:35:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs//examples/CosEC/Factory/Makefile:
+	* orbsvcs//examples/CosEC/RtEC_Based/bin/Makefile:
+	* orbsvcs//examples/CosEC/RtEC_Based/tests/Basic/Makefile:
+	* orbsvcs//examples/CosEC/RtEC_Based/tests/Multiple/Makefile:
+	* orbsvcs//examples/CosEC/Simple/Makefile:
+	* tests/Smart_Proxies/Makefile: Next set of fixes to get it going
+	  in the static builds.
+
 Tue May 13 12:58:18 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * examples/Content_Server/SMI_Iterator/client.bor:
