@@ -1,3 +1,9 @@
+Wed Nov 22 09:23:08 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/Benchmark/test.idl:
+
+	  Added missing "raises" clause to the authenticate() method.
+
 Tue Nov 21 21:13:18 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Object_Ref_Table.h (TAO_Object_Ref_Table):
