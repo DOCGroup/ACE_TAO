@@ -175,6 +175,10 @@ ld < Cached_Conn_Test
 write 2, "Cached_Conn_Test ", 17
 ace_main; unld "Cached_Conn_Test"
 
+ld < Cached_Accept_Conn_Test
+write 2, "Cached_Accept_Conn_Test ", 24
+ace_main; unld "Cached_Accept_Conn_Test"
+
 ld < Barrier_Test
 write 2, "Barrier_Test ", 13
 ace_main; unld "Barrier_Test"
