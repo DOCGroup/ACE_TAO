@@ -1,3 +1,19 @@
+Mon Feb 24 11:52:08 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* examples/Connection/non_blocking/CPP-acceptor.cpp (init): Added
+ 	  a #ifdef for ACE_WIN32 so that we don't register the signal
+ 	  handler for SIGPIPE since it's not supported on Win32.  Thanks
+ 	  to Ivan Murphy <Ivan.Murphy@med.siemens.de> for reporting this
+ 	  problem.
+
+	* examples/Connection/non_blocking: The SPIPE examples in
+	  (test_spipe_{acceptor,connector}.cpp) aren't ported to Win32
+ 	  yet.  They currently don't work because ACE_SPIPE*'s can't be
+ 	  registered with the ACE_Reactor (which only works with sockets).
+  	  I've #ifdef'd these examples so that they don't get compiled on
+ 	  Win32.  Thanks to Ivan Murphy <Ivan.Murphy@med.siemens.de> for
+ 	  reporting this problem.
+
 Sat Feb 22 23:03:45 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.i: restored version 4.89 and 4.90 changes that
