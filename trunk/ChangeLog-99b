@@ -1,3 +1,9 @@
+Fri Feb 12 12:31:29 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Makefile: Removed blank line that was added when troubleshooting
+	  the cvs log problem.  The extra line cause Digital Unix's make to
+	  complain about a missing separator.
+
 Fri Feb 12 09:19:21 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5.h: added ACE_HAS_STANDARD_CPP_LIBRARY and
