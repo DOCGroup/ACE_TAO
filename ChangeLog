@@ -1,3 +1,8 @@
+Tue Aug 27 16:50:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Proactor_Test.cpp: Fixed mismatched printf formats for
+          size_t arguments.
+
 Tue Aug 27 16:32:18 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Proactor_Impl.h: Fixed some u_long->size_t changes missed
