@@ -1,3 +1,12 @@
+Thu May 24 15:12:16 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* ace/config-tru64.h:
+
+	Added ACE_HAS_NONSTATIC_OBJECT_MANAGER to the default builds to
+	work around hangs in some of the tests which load a dynamic
+	library. This fixes some more of the problems reported in Bug Id
+	912.
+
 Thu May 24 13:42:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/nightlybuilds/builds.lst: We dont have Red Hat 7.0
