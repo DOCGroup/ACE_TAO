@@ -1,3 +1,21 @@
+Fri Dec 05 00:00:53 1997    <irfan@TWOSTEP>
+
+	* ace/OS.h: If the user wants minimum IOStream inclusion, i.e.,
+ 	  they have defined ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION, we will
+ 	  just include the forward declarations, i.e., ace/iosfwd.h.  Else
+ 	  they will get all the stream header files, i.e., ace/streams.h.
+  	  The positive thing about this change is that if your code was
+ 	  using stream classes and you were depending on OS.h to provide
+ 	  you the stream header files, you will not have to change your
+ 	  code, unless you have defined
+ 	  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION.  Thanks to Dr. Schmidt for
+ 	  suggesting this.
+
+	* ace/config-vxworks5.x-g++.h: Restored
+ 	  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION.
+
+	* ace/Asynch_IO.cpp (open): Fixed typo.
+
 Thu Dec 04 21:20:47 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.2, released Thu Dec 04 21:20:47 1997.

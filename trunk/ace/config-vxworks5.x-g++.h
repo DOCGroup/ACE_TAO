@@ -90,6 +90,10 @@
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
+// Overhead of inclusion of IOStreams headers may be excessive where
+// IOStreams is strictly not necessary
+#define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
+
 #if !defined (ACE_NTRACE)
 # define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
