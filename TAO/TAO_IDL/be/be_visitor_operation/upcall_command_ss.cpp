@@ -135,7 +135,7 @@ be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
   // Prevent copying/assignment and generation of default copy
   // constructor and assignment operator.
   os << "private:" << be_idt_nl << be_nl
-     << "Upcall_Comand ("
+     << "Upcall_Command ("
      << "Upcall_Command const &);" << be_nl
      << "void operator= (Upcall_Command const &);"
      << be_uidt_nl << be_nl;
