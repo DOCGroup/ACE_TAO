@@ -52,6 +52,9 @@ class TAO_Notify_Export TAO_Notify_EventType_List : public ACE_Unbounded_Set <TA
   typedef ACE_Unbounded_Set <TAO_Notify_EventType> inherited;
 
 public:
+  /// Preprocess lists for subscriptions
+  static void preprocess (TAO_Notify_EventType_List& current, TAO_Notify_EventType_List& seq_added, TAO_Notify_EventType_List& seq_removed);
+
   /// Populate <event_type_seq> with the contents of this object.
   void populate (CosNotification::EventTypeSeq& event_type_seq);
 
@@ -60,6 +63,12 @@ public:
 
   /// remove the contents of <event_type_seq> from this object.
   void remove_seq (const CosNotification::EventTypeSeq& event_type_seq);
+
+  /// insert the contents of <event_type_seq> into this object.
+  void insert_seq (const TAO_Notify_EventType_List& event_type_seq);
+
+  /// remove the contents of <event_type_seq> from this object.
+  void remove_seq (const TAO_Notify_EventType_List& event_type_seq);
 };
 
 // ****************************************************************

@@ -211,15 +211,11 @@ Subscribe::send_events (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Setup the CA to receive event_type : "domain_A", "Type_a"
   CosNotification::EventTypeSeq added(1);
-  CosNotification::EventTypeSeq removed (1);
+  CosNotification::EventTypeSeq removed (0);
   added.length (1);
-  removed.length (1);
 
   added[0].domain_name =  CORBA::string_dup (DOMAIN_A);
   added[0].type_name = CORBA::string_dup (TYPE_A);
-
-  removed[0].domain_name =  CORBA::string_dup ("*");
-  removed[0].type_name = CORBA::string_dup ("*");
 
   this->consumer_admin_->subscription_change (added, removed ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

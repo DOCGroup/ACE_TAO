@@ -59,6 +59,21 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::init (CosNotifyChannelAdmin::ProxyID pro
                                       &(this->qos_admin_));
   this->filter_eval_task_->init_task (admin_properties,
                                       &(this->qos_admin_));
+
+  {
+      TAO_Notify_EventType& special_type =
+        TAO_Notify_EventType::special_event_type ();
+
+      CosNotification::EventTypeSeq added (1), removed (0);
+
+      added.length (1);
+      removed.length (0);
+
+      added[0] = special_type.get_native ();
+      
+      this->subscription_change (added, removed ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+  }
 }
 
 // Implementation skeleton destructor
@@ -180,22 +195,59 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::subscription_change (const CosNotificati
                    CosNotifyComm::InvalidEventType
                    ))
 {
-  if (this->is_connected_ == 1)
-    {
-      this->event_manager_->subscribe_for_events (this,
-                                                  added, removed ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
-
+  TAO_Notify_EventType_List seq_added, seq_removed;
+  
+  seq_added.insert_seq (added);
+  seq_removed.insert_seq (removed);
+ 
   {
     ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
                         CORBA::INTERNAL ());
     ACE_CHECK;
 
-    // simply update our subscription list.
-    this->subscription_list_.insert_seq (added);
-    this->subscription_list_.remove_seq (removed);
+    TAO_Notify_EventType_List::preprocess (this->subscription_list_, seq_added, seq_removed);
   }
+
+  if (this->is_connected_ == 1)
+    {
+      CosNotification::EventTypeSeq p_added, p_removed;
+
+      seq_added.populate (p_added);
+      seq_removed.populate (p_removed);
+      
+      this->event_manager_->subscribe_for_events (this,
+						  p_added, p_removed ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      
+      if (TAO_debug_level > 0)
+	{
+	    ACE_DEBUG ((LM_DEBUG,"ProxySupplier %d: added following types: ",proxy_id_ ));
+	    
+	    for (CORBA::ULong i = 0; i < p_added.length (); ++i)
+	      {
+		ACE_DEBUG ((LM_DEBUG, "(%s, %s)\t", p_added[i].domain_name.in(), p_added[i].type_name.in()));
+	      }
+	    
+	    ACE_DEBUG ((LM_DEBUG,"\n ProxySupplier %d: removed following types: ",proxy_id_ ));
+	    
+	    for (CORBA::ULong i = 0; i < p_removed.length (); ++i)
+	      {
+		ACE_DEBUG ((LM_DEBUG, "(%s, %s)\t", p_removed[i].domain_name.in(), p_removed[i].type_name.in()));
+	      }
+
+	    CosNotification::EventTypeSeq  current;
+	    this->subscription_list_.populate (current);
+
+	    ACE_DEBUG ((LM_DEBUG,"\n ProxySupplier %d:current subscriptions: ",proxy_id_ ));
+	    
+	    for (CORBA::ULong i = 0; i < current.length (); ++i)
+	      {
+		ACE_DEBUG ((LM_DEBUG, "(%s, %s)\n", current[i].domain_name.in(), current[i].type_name.in()));
+	      }
+
+	  }
+    }
 }
 
 template <class SERVANT_TYPE> void

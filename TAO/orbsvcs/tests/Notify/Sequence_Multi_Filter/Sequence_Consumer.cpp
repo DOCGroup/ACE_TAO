@@ -112,18 +112,6 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
 
   ACE_CHECK_RETURN (0);
 
-  // Setup the CA to receive all type of events
-  CosNotification::EventTypeSeq added(1);
-  CosNotification::EventTypeSeq removed (0);
-  added.length (1);
-  removed.length (0);
-
-  added[0].domain_name =  CORBA::string_dup ("*");
-  added[0].type_name = CORBA::string_dup ("*");
-
-  admin->subscription_change (added, removed ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
   return CosNotifyChannelAdmin::ConsumerAdmin::_duplicate (admin.in ());
 }
 
@@ -219,19 +207,6 @@ int main (int argc, char* argv[])
 
               admin->add_filter(filter.in());
             }
-
-          CosNotification::EventTypeSeq added (1);
-
-          CosNotification::EventTypeSeq removed (0);
-
-          added.length(1);
-          removed.length(0);
-
-          added[0].domain_name = CORBA::string_dup("*");
-          added[0].type_name = CORBA::string_dup ("*");
-
-          admin->subscription_change (added, removed ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
 
           if (!CORBA::is_nil (admin.in ()))
             {

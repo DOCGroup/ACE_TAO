@@ -29,19 +29,31 @@ TAO_Notify_EventType::TAO_Notify_EventType (void)
   // No-Op.
 }
 
+void
+TAO_Notify_EventType::init_i (const char* domain_name,
+			      const char* type_name)
+{
+  this->event_type_.domain_name = domain_name;
+  this->event_type_.type_name = type_name;
+
+  if (this->is_special () == 1)
+    {
+      this->event_type_.domain_name = "*";
+      this->event_type_.type_name = "%ALL"; 
+    }
+
+  this->recompute_hash ();
+}
+
 TAO_Notify_EventType::TAO_Notify_EventType (const char* domain_name,
                                             const char* type_name)
 {
-  this->event_type_.type_name = type_name;
-  this->event_type_.domain_name = domain_name;
-  this->recompute_hash ();
+  this->init_i (domain_name, type_name);
 }
 
 TAO_Notify_EventType::TAO_Notify_EventType (const CosNotification::EventType& event_type)
 {
-  this->event_type_.type_name = event_type.type_name.in ();
-  this->event_type_.domain_name = event_type.domain_name.in ();
-  this->recompute_hash ();
+  this->init_i (event_type.domain_name.in (),event_type.type_name.in ());
 }
 
 TAO_Notify_EventType::~TAO_Notify_EventType ()
@@ -80,9 +92,13 @@ TAO_Notify_EventType::recompute_hash (void)
 void
 TAO_Notify_EventType::operator=(const CosNotification::EventType& rhs)
 {
-  this->event_type_.type_name = rhs.type_name;
-  this->event_type_.domain_name = rhs.domain_name;
-  this->recompute_hash ();
+  this->init_i (rhs.domain_name.in (),rhs.type_name.in ());
+}
+
+void
+TAO_Notify_EventType::operator=(CosNotification::EventType& rhs)
+{
+  this->init_i (rhs.domain_name.in (),rhs.type_name.in ());
 }
 
 int
@@ -103,7 +119,7 @@ TAO_Notify_EventType::is_special (void) const
              ACE_OS::strcmp (this->event_type_.domain_name, "") == 0 ||
              ACE_OS::strcmp (this->event_type_.domain_name, "*") == 0) &&
       (this->event_type_.type_name == 0 ||
-             ACE_OS::strcmp (this->event_type_.domain_name, "") == 0 ||
+             ACE_OS::strcmp (this->event_type_.type_name, "") == 0 ||
              ACE_OS::strcmp (this->event_type_.type_name, "*") == 0 ||
              ACE_OS::strcmp (this->event_type_.type_name, "%ALL") == 0))
     return 1;

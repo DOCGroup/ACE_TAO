@@ -59,6 +59,9 @@ public:
 
   /// Assignment from CosNotification::EventType
   void operator=(const CosNotification::EventType& event_type);
+  
+  /// Assignment from CosNotification::EventType
+  void operator=(CosNotification::EventType& event_type);
 
   /// == operator
   int operator==(const TAO_Notify_EventType& notify_event_type) const;
@@ -73,6 +76,9 @@ public:
   const CosNotification::EventType& get_native (void) const;
 
 protected:
+  /// Init this object.
+  void init_i (const char* domain_name, const char* type_name);
+  
   /// Recompute the hash value.
   void recompute_hash (void);
 

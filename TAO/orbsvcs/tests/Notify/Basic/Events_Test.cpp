@@ -119,20 +119,6 @@ Events_Test::init (int argc,
                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  // Setup the CA to receive all type of events
-  CosNotification::EventTypeSeq added(1);
-  CosNotification::EventTypeSeq removed (0);
-  added.length (1);
-  removed.length (0);
-
-  added[0].domain_name =  CORBA::string_dup ("*");
-  added[0].type_name = CORBA::string_dup ("*");
-
-  this->consumer_admin_->subscription_change (added,
-                                              removed
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
   return 0;
 }
 
