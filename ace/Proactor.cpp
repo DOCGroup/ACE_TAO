@@ -34,6 +34,9 @@ int ACE_Proactor::delete_proactor_ = 0;
 // Terminate the eventloop.
 sig_atomic_t ACE_Proactor::end_event_loop_ = 0;
 
+// Number of threads in the event loop.
+sig_atomic_t ACE_Proactor::event_loop_thread_count_ = 0;
+
 class ACE_Export ACE_Proactor_Timer_Handler : public ACE_Task <ACE_NULL_SYNCH>
 {
   // = TITLE
@@ -339,20 +342,60 @@ ACE_Proactor::close_singleton (void)
 int
 ACE_Proactor::run_event_loop (void)
 {
-  ACE_TRACE ("ACE_Proactor::run_event_loop");
+  int result = 0;
 
-  while (ACE_Proactor::end_event_loop_ == 0)
+  // Declaring the lock variable.
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  ACE_Thread_Mutex *lock =
+    ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+    (ACE_Object_Manager::ACE_PROACTOR_EVENT_LOOP_LOCK);
+#endif /* ACE_MT_SAFE */
+
+  // Early check. It is ok to do this without lock, since we care just
+  // whether it is zero or non-zero.
+  if (ACE_Proactor::end_event_loop_ != 0)
+    return 0;
+   
+  // First time you are in. Increment the thread count.
+  {
+    // Obtain the lock in the MT environments.
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
+#endif /* ACE_MT_SAFE */
+
+    // Increment the thread count.
+    ACE_Proactor::event_loop_thread_count_ ++;
+  }
+    
+  // Run the event loop.
+  while (1)
     {
-      int result = ACE_Proactor::instance ()->handle_events ();
+      // Check the end loop flag. It is ok to do this without lock,
+      // since we care just whether it is zero or non-zero. 
+      if (ACE_Proactor::end_event_loop_ != 0)
+          break;
+      
+      // <end_event_loop> is not set. Ready to do <handle_events>.
+      result = ACE_Proactor::instance ()->handle_events ();
 
       if (ACE_Service_Config::reconfig_occurred ())
 	ACE_Service_Config::reconfigure ();
-
+      
       else if (result == -1)
-	return -1;
+	break;
     }
+  
+  // Leaving the event loop. Decrement the thread count.
 
-  return 0;
+  // Obtain the lock in the MT environments.
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
+#endif /* ACE_MT_SAFE */
+  
+  // Decrement the thread count.
+  ACE_Proactor::event_loop_thread_count_ --;
+
+  return result;
 }
 
 // Handle events for -tv- time.  handle_events updates -tv- to reflect
@@ -362,29 +405,93 @@ ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
 {
   ACE_TRACE ("ACE_Proactor::run_event_loop");
 
-  while (ACE_Proactor::end_event_loop_ == 0
-         && tv != ACE_Time_Value::zero)
+  int result = 0;
+
+  // Declaring the lock variable.
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  ACE_Thread_Mutex *lock =
+    ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+    (ACE_Object_Manager::ACE_PROACTOR_EVENT_LOOP_LOCK);
+#endif /* ACE_MT_SAFE */
+
+  // Early check. It is ok to do this without lock, since we care just 
+  // whether it is zero or non-zero.
+  if (ACE_Proactor::end_event_loop_ != 0 ||
+      tv == ACE_Time_Value::zero)
+    return 0;
+  
+  // First time you are in. Increment the thread count.
+  {
+    // Obtain the lock in the MT environments.
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
+#endif /* ACE_MT_SAFE */
+    
+    // Increment the thread count.
+    ACE_Proactor::event_loop_thread_count_ ++;
+  }
+
+  // Run the event loop.
+  while (1)
     {
-      int result = ACE_Proactor::instance ()->handle_events (tv);
+      // Check for end of loop. It is ok to do this without lock,
+      // since we care just whether it is zero or non-zero.
+      if (ACE_Proactor::end_event_loop_ != 0 ||
+          tv == ACE_Time_Value::zero)
+        break;
+
+      // <end_event_loop> is not set. Ready to do <handle_events>.
+      result = ACE_Proactor::instance ()->handle_events (tv);
 
       if (ACE_Service_Config::reconfig_occurred ())
 	ACE_Service_Config::reconfigure ();
-
+      
       // An error has occurred.
       else if (result == -1)
-	return result;
+	break;
     }
 
-  return 0;
+  // Leaving the event loop. Decrement the thread count.
+
+  // Obtain the lock in the MT environments.
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
+#endif /* ACE_MT_SAFE */
+  
+  // Decrement the thread count.
+  ACE_Proactor::event_loop_thread_count_ --;
+
+  return result;
 }
 
 int
 ACE_Proactor::end_event_loop (void)
 {
   ACE_TRACE ("ACE_Proactor::end_event_loop");
+  
+  // Obtain the lock, set the end flag and post the wakeup
+  // completions. 
+  
+  // Obtain the lock in the MT environments.
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  ACE_Thread_Mutex *lock =
+    ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+    (ACE_Object_Manager::ACE_PROACTOR_EVENT_LOOP_LOCK);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
+#endif /* ACE_MT_SAFE */
+  
+  // Set the end flag.
   ACE_Proactor::end_event_loop_ = 1;
-  //  ACE_Proactor::instance()->notify ();
-  return 0;
+    
+  // Number of completions to post.
+  int how_many = ACE_Proactor::event_loop_thread_count_;
+  
+  // Reset the thread count.
+  ACE_Proactor::event_loop_thread_count_ = 0;
+
+  // Post completions to all the threads so that they will all wake
+  // up. 
+  return ACE_Proactor::post_wakeup_completions (how_many);
 }
 
 int
@@ -800,6 +907,12 @@ ACE_Proactor::create_asynch_timer (ACE_Handler &handler,
                                                        event,
                                                        priority,
                                                        signal_number);
+}
+
+int
+ACE_Proactor::post_wakeup_completions (int how_many)
+{
+  return ACE_Proactor::instance ()->implementation ()->post_wakeup_completions (how_many);
 }
 
 void

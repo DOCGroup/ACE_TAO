@@ -78,6 +78,7 @@ ACE_POSIX_Asynch_Result::signal_number (void) const
 {
   return this->aio_sigevent.sigev_signo;
 }
+
 int
 ACE_POSIX_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor_impl)
 {
@@ -2105,8 +2106,6 @@ ACE_POSIX_AIOCB_Asynch_Accept::~ACE_POSIX_AIOCB_Asynch_Accept (void)
 void*
 ACE_POSIX_AIOCB_Asynch_Accept::thread_function (void* arg_reactor)
 {
-  ACE_DEBUG ((LM_DEBUG, "ACE_Asynch_Accept::thread_function called\n"));
-
   // Retrieve the reactor pointer from the argument.
   ACE_Reactor* reactor = ACE_reinterpret_cast (ACE_Reactor *,
                                                arg_reactor);
@@ -2126,13 +2125,7 @@ ACE_POSIX_AIOCB_Asynch_Accept::thread_function (void* arg_reactor)
   while (result != -1)
     {
       result = reactor->handle_events ();
-      ACE_DEBUG ((LM_DEBUG,
-                  "ACE_Asynch_Accept::Thread_Function : handle_events : result = [%d]\n",
-                  result));
     }
-
-  ACE_DEBUG ((LM_DEBUG, "Exiting ACE_Asynch_Accept::thread_function \n"));
-
   return 0;
 }
 
