@@ -29,7 +29,8 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   : use_tss_resources_ (0),
     use_locked_data_blocks_ (1),
     reactor_type_ (TAO_REACTOR_SELECT_MT),
-    cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK)
+    cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK),
+    protocol_factories_ ()
 {
 }
 
@@ -177,7 +178,7 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
         curarg++;
         if (curarg < argc)
           {
-            TAO_Protocol_Item *item;
+            TAO_Protocol_Item *item = 0;
             ACE_NEW_RETURN (item,
                             TAO_Protocol_Item (argv[curarg]),
                             -1);
@@ -197,9 +198,6 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
   TAO_ProtocolFactorySetItor end = protocol_factories_.end ();
   TAO_ProtocolFactorySetItor factory = protocol_factories_.begin ();
 
-  // @@ Ossama, if you want to be very paranoid, you could get memory
-  // leak if insert operations failed.
-
   if (factory == end)
     {
       TAO_Protocol_Factory *protocol_factory = 0;
@@ -212,9 +210,8 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
         {
           if (TAO_orbdebug)
             ACE_ERROR ((LM_WARNING,
-                        "(%P|%t) WARNING - No %s found in Service Repository."
-                        "  Using default instance.\n",
-                        "IIOP Protocol Factory"));
+                        "TAO (%P|%t) No %s found in Service Repository.  "
+                        "Using default instance IIOP Protocol Factory.\n"));
 
           ACE_NEW_RETURN (protocol_factory,
                           TAO_IIOP_Protocol_Factory,
@@ -224,7 +221,18 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
       ACE_NEW_RETURN (item, TAO_Protocol_Item ("IIOP_Factory"), -1);
       item->factory (protocol_factory);
 
-      this->protocol_factories_.insert (item);
+      if (this->protocol_factories_.insert (item) == -1)
+        {
+          delete item;
+          delete protocol_factory;
+
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "TAO (%P|%t) Unable to add "
+                             "<%s> to protocol factory set.\n",
+                             item->protocol_name ().c_str ()),
+                            -1);
+        }
+
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -251,7 +259,18 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
       ACE_NEW_RETURN (item, TAO_Protocol_Item ("UIOP_Factory"), -1);
       item->factory (protocol_factory);
 
-      this->protocol_factories_.insert (item);
+      if (this->protocol_factories_.insert (item) == -1)
+        {
+          delete item;
+          delete protocol_factory;
+
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "TAO (%P|%t) Unable to add "
+                             "<%s> to protocol factory set.\n",
+                             item->protocol_name ().c_str ()),
+                            -1);
+        }
+
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -369,7 +388,7 @@ TAO_Default_Resource_Factory::get_reactor (void)
 {
   ACE_LOG_MSG->errnum (0);
 
-  ACE_Reactor *reactor;
+  ACE_Reactor *reactor = 0;
   ACE_NEW_RETURN (reactor,
                   ACE_Reactor (this->allocate_reactor_impl (), 1),
                   0);
@@ -438,7 +457,7 @@ TAO_Default_Resource_Factory::input_cdr_buffer_allocator (void)
 ACE_Allocator*
 TAO_Default_Resource_Factory::output_cdr_dblock_allocator (void)
 {
-  ACE_Allocator *allocator;
+  ACE_Allocator *allocator = 0;
   ACE_NEW_RETURN (allocator, NULL_LOCK_ALLOCATOR, 0);
   return allocator;
 }
@@ -446,7 +465,7 @@ TAO_Default_Resource_Factory::output_cdr_dblock_allocator (void)
 ACE_Allocator *
 TAO_Default_Resource_Factory::output_cdr_buffer_allocator (void)
 {
-  ACE_Allocator *allocator;
+  ACE_Allocator *allocator = 0;
   ACE_NEW_RETURN (allocator, NULL_LOCK_ALLOCATOR, 0);
   return allocator;
 }
