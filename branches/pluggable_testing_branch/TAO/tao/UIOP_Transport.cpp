@@ -43,7 +43,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Transport_Timeprobe_Description,
 
 
 TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Handler_Base* handler)
-  : TAO_Transport (TAO_IOP_TAG_INTERNET_IOP),  // @@ FIXME -- IIOP specific?
+  : TAO_Transport (TAO_IOP_TAG_UNIX_IOP),
     handler_ (handler)
 {
 }

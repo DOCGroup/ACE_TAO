@@ -22,7 +22,7 @@ static const char *prefix_ = "uiop:";
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
                                     const char *object_key)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP), // @@ FIXME --- for IIOP?
+  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
     rendezvous_point_ (0),
     body_ (),
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
@@ -44,7 +44,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
                                     const TAO_ObjectKey& object_key)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP), // @@ FIXME --- for IIOP?
+  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
     rendezvous_point_ (0),
     body_ (),
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
@@ -61,7 +61,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
 TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
                                     const TAO_IOP_Version& version,
                                     const char *object_key)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),  // @@ FIXME --- for IIOP?
+  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
     rendezvous_point_ (0),
     body_ (),
     version_ (version),
@@ -84,7 +84,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
 TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
                                     const TAO_IOP_Version& version,
                                     const TAO_ObjectKey& object_key)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),  // @@ FIXME --- for IIOP?
+  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
     rendezvous_point_ (0),
     body_ (),
     version_ (version),
@@ -100,7 +100,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
                                     const TAO_ObjectKey& object_key)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),  // @@ FIXME --- for IIOP?
+  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
     rendezvous_point_ (0),
     body_ (),
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
@@ -124,7 +124,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
 TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
                                     const TAO_ObjectKey& object_key,
                                     const ACE_UNIX_Addr& addr)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),  // @@ FIXME --- for IIOP?
+  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
     rendezvous_point_ (0),
     body_ (),
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
@@ -148,7 +148,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
 TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
                                     const TAO_IOP_Version& version,
                                     const TAO_ObjectKey& object_key)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),  // @@ FIXME --- for IIOP?
+  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
     rendezvous_point_ (0),
     body_ (),
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
@@ -206,7 +206,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_UIOP_Profile &pfile)
 }
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_IOP_Version &version)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),  // @@ FIXME --- for IIOP?
+  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
     rendezvous_point_ (0),
     body_ (),
     version_ (version),
@@ -220,7 +220,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_IOP_Version &version)
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
                                     CORBA::Environment &env)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),  // @@ FIXME --- for IIOP?
+  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
     rendezvous_point_ (0),
     body_ (),
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
@@ -234,7 +234,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
 }
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (void)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),  // @@ FIXME --- for IIOP?
+  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
     rendezvous_point_ (0),
     body_ (),
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
@@ -453,7 +453,7 @@ TAO_UIOP_Profile::is_equivalent (TAO_Profile *other_profile,
 {
   env.clear ();
 
-  if (other_profile->tag () != TAO_IOP_TAG_INTERNET_IOP)
+  if (other_profile->tag () != TAO_IOP_TAG_UNIX_IOP)
     return 0;
 
   TAO_UIOP_Profile *op =
@@ -633,7 +633,7 @@ TAO_UIOP_Profile::encode (TAO_OutputCDR &stream) const
   // @@ it seems like this is not a good separation of concerns, why
   // do we write the TAG here? That's generic code and should be
   // handled by the object reference writer (IMHO).
-  stream.write_ulong (TAO_IOP_TAG_INTERNET_IOP);
+  stream.write_ulong (TAO_IOP_TAG_UNIX_IOP);
 
   // UNSIGNED LONG, number of succeeding bytes in the
   // encapsulation.  We don't actually need to make the
