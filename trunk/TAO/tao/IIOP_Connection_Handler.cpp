@@ -19,7 +19,9 @@
 # include "tao/IIOP_Connection_Handler.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, IIOP_Connection_Handler, "$Id$")
+ACE_RCSID (tao,
+           IIOP_Connection_Handler,
+           "$Id$")
 
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_SVC_HANDLER (t, 0 , 0),
@@ -262,12 +264,12 @@ TAO_IIOP_Connection_Handler::resume_handler (void)
 }
 
 int
-TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
+TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE)
 {
   // Instantiate the resume handle here.. This will automatically
   // resume the handle once data is written..
   TAO_Resume_Handle resume_handle (this->orb_core (),
-                                   handle);
+                                   this->get_handle ());
   return this->transport ()->handle_output ();
 }
 
@@ -338,13 +340,13 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
 
 
 int
-TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE handle)
+TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE)
 {
   // Increase the reference count on the upcall that have passed us.
   long upcalls = this->incr_pending_upcalls ();
 
   TAO_Resume_Handle resume_handle (this->orb_core (),
-                                   handle);
+                                   this->get_handle ());
 
   int retval = this->transport ()->handle_input_i (resume_handle);
 

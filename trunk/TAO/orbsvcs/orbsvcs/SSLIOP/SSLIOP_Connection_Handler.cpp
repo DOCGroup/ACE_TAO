@@ -45,7 +45,7 @@ TAO_SSLIOP_Connection_Handler::TAO_SSLIOP_Connection_Handler (
 
 TAO_SSLIOP_Connection_Handler::TAO_SSLIOP_Connection_Handler (
     TAO_ORB_Core *orb_core,
-    CORBA::Boolean /* flag */, // SSLIOP does *not* suport GIOPlite
+    CORBA::Boolean /* flag */, // SSLIOP does *not* support GIOPlite
     void *arg)
   : TAO_SSL_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
@@ -116,9 +116,9 @@ TAO_SSLIOP_Connection_Handler::open (void *)
           char local_as_string[MAXHOSTNAMELEN + 16];
 
           (void) remote_addr.addr_to_string (remote_as_string,
-                                             sizeof(remote_as_string));
+                                             sizeof (remote_as_string));
           (void) local_addr.addr_to_string (local_as_string,
-                                            sizeof(local_as_string));
+                                            sizeof (local_as_string));
           ACE_ERROR ((LM_ERROR,
                       "TAO(%P|%t) - TAO_SSLIOP_Connection_Handler::open, "
                       "Holy Cow! The remote addr and "
@@ -272,10 +272,10 @@ TAO_SSLIOP_Connection_Handler::resume_handler (void)
 }
 
 int
-TAO_SSLIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
+TAO_SSLIOP_Connection_Handler::handle_output (ACE_HANDLE)
 {
   TAO_Resume_Handle resume_handle (this->orb_core (),
-                                   handle);
+                                   this->get_handle ());
 
   int result = this->transport ()->handle_output ();
 
@@ -398,13 +398,13 @@ TAO_SSLIOP_Connection_Handler::process_listen_point_list (
 
 
 int
-TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE handle)
+TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE)
 {
     // Increase the reference count on the upcall that have passed us.
   this->incr_pending_upcalls ();
 
   TAO_Resume_Handle resume_handle (this->orb_core (),
-                                   handle);
+                                   this->get_handle ());
 
   int retval = this->transport ()->handle_input_i (resume_handle);
 
@@ -416,7 +416,7 @@ TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE handle)
   // Try to clean up things if the upcall count has reached 0
   if (upcalls == 0)
     {
-      this->handle_close_i (handle);
+      this->handle_close_i (this->get_handle ());
 
       // As we have already performed the handle closing we don't want
       // to return a -1. Doing so would make the reactor call
