@@ -9178,9 +9178,4 @@ ACE_Cleanup::~ACE_Cleanup (void)
 {
 }
 
-ACE_INLINE void
-ACE_Cleanup::cleanup (void *)
-{
-  delete this;
-}
 
