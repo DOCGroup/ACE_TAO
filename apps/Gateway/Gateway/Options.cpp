@@ -26,10 +26,10 @@ Options::Options (void)
     socket_queue_size_ (0),
     threading_strategy_ (REACTIVE),
     options_ (0),
-    consumer_acceptor_port_ (DEFAULT_PEER_CONSUMER_PORT),
     supplier_acceptor_port_ (DEFAULT_PEER_SUPPLIER_PORT),
-    consumer_connector_port_ (DEFAULT_GATEWAY_CONSUMER_PORT),
-    supplier_connector_port_ (DEFAULT_GATEWAY_SUPPLIER_PORT)
+    consumer_acceptor_port_ (DEFAULT_PEER_CONSUMER_PORT),
+    supplier_connector_port_ (DEFAULT_GATEWAY_SUPPLIER_PORT),
+    consumer_connector_port_ (DEFAULT_GATEWAY_CONSUMER_PORT)
 {
   ACE_OS::strcpy (this->proxy_config_file_, "proxy_config");
   ACE_OS::strcpy (this->consumer_config_file_, "consumer_config");
@@ -58,25 +58,25 @@ Options::locking_strategy (ACE_Lock_Adapter<ACE_SYNCH_MUTEX> *ls)
   this->locking_strategy_ = ls;
 }
 
-int 
+int
 Options::performance_window (void) const
 {
   return this->performance_window_;
 }
 
-int 
+int
 Options::blocking_semantics (void) const
 {
   return this->blocking_semantics_;
 }
 
-int 
+int
 Options::socket_queue_size (void) const
 {
   return this->socket_queue_size_;
 }
 
-u_long 
+u_long
 Options::threading_strategy (void) const
 {
   return this->threading_strategy_;
@@ -129,7 +129,7 @@ Options::parse_args (int argc, char *argv[])
   for (int c; (c = get_opt ()) != EOF; )
     {
       switch (c)
-	{
+        {
         case 'a':
           {
             // Become an Acceptor.
@@ -154,14 +154,14 @@ Options::parse_args (int argc, char *argv[])
           }
           break;
           /* NOTREACHED */
-	case 'b': // Use blocking connection establishment.
-	  this->blocking_semantics_ = 1;
-	  break;
-	case 'C': // Use a different proxy config filename.
-	  ACE_OS::strncpy (this->consumer_config_file_,
-			   get_opt.optarg,
-			   sizeof this->consumer_config_file_);
-	  break;
+        case 'b': // Use blocking connection establishment.
+          this->blocking_semantics_ = 1;
+          break;
+        case 'C': // Use a different proxy config filename.
+          ACE_OS::strncpy (this->consumer_config_file_,
+                           get_opt.optarg,
+                           sizeof this->consumer_config_file_);
+          break;
         case 'c':
           {
             // Become a Connector.
@@ -186,44 +186,44 @@ Options::parse_args (int argc, char *argv[])
           }
           break;
           /* NOTREACHED */
-	case 'd': // We are debugging.
+        case 'd': // We are debugging.
           ACE_SET_BITS (this->options_,
                         Options::DEBUG);
-	  break;
-	case 'P': // Use a different consumer config filename.
-	  ACE_OS::strncpy (this->proxy_config_file_,
-			   get_opt.optarg,
-			   sizeof this->proxy_config_file_);
-	  break;
-	case 'q': // Use a different socket queue size.
-	  this->socket_queue_size_ = ACE_OS::atoi (get_opt.optarg);
-	  break;
-	case 't': // Use a different threading strategy.
-	  {
-	    for (char *flag = ACE_OS::strtok (get_opt.optarg, "|");
-		 flag != 0;
-		 flag = ACE_OS::strtok (0, "|"))
+          break;
+        case 'P': // Use a different consumer config filename.
+          ACE_OS::strncpy (this->proxy_config_file_,
+                           get_opt.optarg,
+                           sizeof this->proxy_config_file_);
+          break;
+        case 'q': // Use a different socket queue size.
+          this->socket_queue_size_ = ACE_OS::atoi (get_opt.optarg);
+          break;
+        case 't': // Use a different threading strategy.
+          {
+            for (char *flag = ACE_OS::strtok (get_opt.optarg, "|");
+                 flag != 0;
+                 flag = ACE_OS::strtok (0, "|"))
               if (ACE_OS::strcmp (flag, "OUTPUT_MT") == 0)
                 ACE_SET_BITS (this->threading_strategy_,
                               Options::OUTPUT_MT);
               else if (ACE_OS::strcmp (flag, "INPUT_MT") == 0)
                 ACE_SET_BITS (this->threading_strategy_,
                               Options::INPUT_MT);
-	    break;
-	  }
-	case 'v': // Verbose mode.
+            break;
+          }
+        case 'v': // Verbose mode.
           ACE_SET_BITS (this->options_,
                         Options::VERBOSE);
-	  break;
-	case 'w': // Time performance for a designated amount of time.
-	  this->performance_window_ = ACE_OS::atoi (get_opt.optarg);
-	  // Use blocking connection semantics so that we get accurate
-	  // timings (since all connections start at once).
-	  this->blocking_semantics_ = 0;
-	  break;
-	default:
-	  break;
-	}
+          break;
+        case 'w': // Time performance for a designated amount of time.
+          this->performance_window_ = ACE_OS::atoi (get_opt.optarg);
+          // Use blocking connection semantics so that we get accurate
+          // timings (since all connections start at once).
+          this->blocking_semantics_ = 0;
+          break;
+        default:
+          break;
+        }
     }
 
   return 0;
