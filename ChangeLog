@@ -1,3 +1,14 @@
+Wed Oct  1 10:59:35 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * apps/gperf/src/gperf.mpc:
+
+          Inherit from the crosscompile base project.
+
+        * bin/MakeProjectCreator/config/crosscompile.mpb:
+
+          Added a project to disable building (with the gnuace type) for
+          things that shouldn't be built when crosscompiling.
+
 Wed Oct  1 09:19:28 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/vc7.mpd:
