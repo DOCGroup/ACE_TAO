@@ -10,6 +10,7 @@
 
 DIRS = \
   Big_Request \
+  Callback \
   Secure_Invocation \
   SecurityLevel1
 
