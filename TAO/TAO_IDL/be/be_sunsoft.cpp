@@ -102,7 +102,7 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
           // This handles hex and octal escape sequences
           // that would print out either as weird characters
           // or as an unsigned number too large for a char.
-          else if (ev->u.cval < 0)
+          else if ((unsigned char) ev->u.cval > ACE_CHAR_MAX)
             this->TAO_OutStream::print ("%hd", ev->u.cval);
           else if (isprint (ev->u.cval))
 	          this->TAO_OutStream::print ("'%c'", ev->u.cval);
