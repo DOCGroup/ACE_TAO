@@ -91,7 +91,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
  : AST_Decl (AST_Decl::NT_union, 
              n, 
              p),
-   UTL_Scope(AST_Decl::NT_union),
+   UTL_Scope (AST_Decl::NT_union),
    COMMON_Base (local, 
                 abstract)
 {
@@ -301,7 +301,7 @@ AST_Union::lookup_label (AST_UnionBranch *b)
   AST_Decl *d = 0;
   AST_UnionBranch	*fb = 0;
 
-  lv->set_ev(lv->coerce (this->pd_udisc_type));
+  lv->set_ev (lv->coerce (this->pd_udisc_type));
 
   if (lv->ev () == 0) 
     {
@@ -524,6 +524,8 @@ AST_Union::fe_add_union_branch (AST_UnionBranch *t)
   this->add_to_referenced (t, 
                            I_FALSE, 
                            t->local_name ());
+
+  this->fields_.enqueue_tail (t);
 
   return t;
 }

@@ -108,6 +108,13 @@ public:
   virtual int member_count (void);
   // Return the count of members.
 
+  virtual size_t nfields (void) const;
+  // Return the count of actual fields.
+
+  virtual int field (AST_Field **&result,
+                     size_t slot) const;
+  // Get an individual field node.
+
   virtual idl_bool is_local (void);
   // Overwrite the is_local method.
 
@@ -122,6 +129,12 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+
+protected:
+  ACE_Unbounded_Queue<AST_Field *> fields_;
+  // Container for this struct's field nodes. Excludes nodes included
+  // in member_count, i.e., enum values of an enum declared inside
+  // the struct.
 
 private:
   friend int tao_yyparse (void);
