@@ -330,10 +330,10 @@ template class ACE_RB_Tree_Reverse_Iterator<const char *, RtecScheduler::RT_Info
 template class TAO_Reconfig_Scheduler<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
 template class TAO_RSE_Dependency_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
 template class TAO_RSE_DFS_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Priority_Visitor<TAO_MUF_Reconfig_Sched_Strategy>;
-template class TAO_RSE_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_Priority_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_Criticality_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_Forward_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
 template class TAO_RSE_SCC_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Utilization_Visitor<TAO_MUF_Reconfig_Sched_Strategy>;
 #  endif /* __GNUC__ */
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
@@ -367,9 +367,9 @@ template class TAO_RSE_Utilization_Visitor<TAO_MUF_Reconfig_Sched_Strategy>;
 #pragma instantiate TAO_Reconfig_Scheduler<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
 #pragma instantiate TAO_RSE_Dependency_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
 #pragma instantiate TAO_RSE_DFS_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Priority_Visitor<TAO_MUF_Reconfig_Sched_Strategy>
-#pragma instantiate TAO_RSE_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Priority_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Criticality_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Forward_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
 #pragma instantiate TAO_RSE_SCC_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Utilization_Visitor<TAO_MUF_Reconfig_Sched_Strategy>
 #  endif /* __GNUC__ */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

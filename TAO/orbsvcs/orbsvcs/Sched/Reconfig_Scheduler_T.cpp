@@ -300,7 +300,7 @@ init (int config_count,
              rt_info [num_rt_infos].quantum,
              rt_info [num_rt_infos].threads,
              RtecScheduler::Info_Type_t (rt_info [num_rt_infos].info_type)
-             ACE_ENV_ARG_DECL);
+             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       // Fill in the scheduler managed portions.
@@ -1056,7 +1056,7 @@ add_dependency (RtecScheduler::handle_t handle /* RT_Info that has the dependenc
 
   // Delegate to the internal method.
   add_dependency_i (handle, dependency, number_of_calls, dependency_type,
-                    RtecBase::DEPENDENCY_ENABLED ACE_ENV_ARG_DECL);
+                    RtecBase::DEPENDENCY_ENABLED ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Since the call graph topology has changed, set *all*
@@ -1619,7 +1619,7 @@ dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 RtecScheduler::Preemption_Priority_t
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-last_scheduled_priority (ACE_ENV_ARG_DECL)
+last_scheduled_priority (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
                      RtecScheduler::NOT_SCHEDULED))
