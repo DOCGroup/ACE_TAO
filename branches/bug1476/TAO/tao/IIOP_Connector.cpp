@@ -162,8 +162,6 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   this->active_connect_strategy_->synch_options (timeout,
                                                  synch_options);
 
-
-
   // If we don't need to block for a transport just set the timeout to
   // be zero.
   ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
@@ -202,14 +200,6 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 
   if (result == -1 && errno == EWOULDBLOCK)
     {
-      // @@ Johnny, I removed the extra condition here since the
-      // timeout is already set to zero. Please see above..
-      // Poll for connection completion. When the connection is complete
-      // in the connection handler the connected will be set.
-      result =
-        this->active_connect_strategy_->wait (svc_handler,
-                                              timeout);
-
       if (TAO_debug_level > 2)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -219,6 +209,11 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                       svc_handler->get_handle ()));
         }
 
+      // Poll for connection completion. When the connection is complete
+      // in the connection handler the connected will be set.
+      result =
+        this->active_connect_strategy_->wait (svc_handler,
+                                              timeout);
 
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
@@ -226,7 +221,13 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                     "wait done for handle[%d], result = %d\n",
                     svc_handler->get_handle (), result));
 
-      /// @@ Johnny, where is timeout from wait () handled?
+// @TODO, Check this with Bala
+      if (result == -1 && !r->blocked () && errno == ETIME)
+        {
+          // If we did a non blocking connect, just ignore
+          // any timeout errors
+          result = 0;
+        }
 
       // There are three possibilities when wait() returns: (a)
       // connection succeeded; (b) connection failed; (c) wait()
@@ -315,7 +316,8 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
             {
               ACE_ERROR ((LM_ERROR,
                           "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                          "could not register the new connection in the reactor\n"));
+                          "could not register the new connection "
+                          "in the reactor\n"));
             }
 
           return 0;

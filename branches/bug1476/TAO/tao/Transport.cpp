@@ -146,23 +146,11 @@ TAO_Transport::~TAO_Transport (void)
 
   delete this->handler_lock_;
 
-  // @@Johnny, could you please move this code in a seperate method
-  // and have the destructor and
-  // send_connection_closed_notifications_i () call that?
   if (!this->is_connected_)
     {
       // When we have a not connected transport we could have buffered
       // messages on this transport which we have to cleanup now.
-      while (this->head_ != 0)
-        {
-          TAO_Queued_Message *i = this->head_;
-
-          i->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
-
-         i->remove_from_list (this->head_, this->tail_);
-
-         i->destroy ();
-       }
+      this->cleanup_queue_i();
     }
 
   // By the time the destructor is reached here all the connection stuff
@@ -874,6 +862,30 @@ TAO_Transport::drain_queue_i (void)
 }
 
 void
+TAO_Transport::cleanup_queue_i ()
+{
+  if (TAO_debug_level > 4)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport[%d]::cleanup_queue_i, "
+                  "cleaning up complete queue\n",
+                  this->id ()));
+    }
+
+  // Cleanup all messages
+  while (this->head_ != 0)
+    {
+      TAO_Queued_Message *i = this->head_;
+
+      i->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+
+      i->remove_from_list (this->head_, this->tail_);
+
+      i->destroy ();
+   }
+}
+
+void
 TAO_Transport::cleanup_queue (size_t byte_count)
 {
   while (this->head_ != 0 && byte_count > 0)
@@ -986,18 +998,7 @@ TAO_Transport::send_connection_closed_notifications (void)
 void
 TAO_Transport::send_connection_closed_notifications_i (void)
 {
-  while (this->head_ != 0)
-    {
-      TAO_Queued_Message *i = this->head_;
-
-      // @@ This is a good point to insert a flag to indicate that a
-      //    CloseConnection message was successfully received.
-      i->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
-
-      i->remove_from_list (this->head_, this->tail_);
-
-      i->destroy ();
-    }
+  this->cleanup_queue_i ();
 
   this->messaging_object ()->reset ();
 }

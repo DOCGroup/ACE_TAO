@@ -1,6 +1,22 @@
+Mon Jul 26 13:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.{h,cpp}:
+          Moved cleaning up the queue out of destruction and
+          send_connection_closed_notifications_i annd into the new method
+          cleanup_queue_i which is called from these places
+
+        * tao/IIOP_Connection_Handler.cpp:
+          Marked the transport as connected after we changed the state to
+          success
+
+        * tao/IIOP_Connector.cpp:
+          We have to handle the timeout of wait, made an implementation, but
+          with a remark to Bala to check this, not sure if this is the correct
+          way todo.
+
 Mon Jul 26 11:38:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Transport.cpp (TAO_Transport): 
+	* tao/Transport.cpp (TAO_Transport):
 
 	  Left a comment for Johnny.
 

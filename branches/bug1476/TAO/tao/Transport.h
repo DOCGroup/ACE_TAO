@@ -773,8 +773,8 @@ private:
    */
   void cleanup_queue (size_t byte_count);
 
-  /// Copy the contents of a message block into a Queued_Message
-  /// TAO_Queued_Message *copy_message_block (const ACE_Message_Block *mb);
+  /// Cleanup the complete queue
+  void cleanup_queue_i ();
 
   /// Check if the buffering constraints have been reached
   int check_buffering_constraints_i (TAO_Stub *stub, int &must_flush);
