@@ -172,8 +172,7 @@ TAO_Transport::~TAO_Transport (void)
 void
 TAO_Transport::provide_handler (TAO::Connection_Handler_Set &handlers)
 {
-  ACE_Event_Handler::Reference_Count cnt =
-    this->add_reference ();
+  (void) this->add_reference ();
 
   handlers.insert (this->connection_handler_i ());
 }
@@ -185,8 +184,7 @@ TAO_Transport::provide_blockable_handler (TAO::Connection_Handler_Set &h)
       this->opening_connection_role_ == TAO::TAO_SERVER_ROLE)
     return;
 
-  ACE_Event_Handler::Reference_Count cnt =
-    this->add_reference ();
+  (void) this->add_reference ();
 
   h.insert (this->connection_handler_i ());
 }
