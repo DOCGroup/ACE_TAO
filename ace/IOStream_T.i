@@ -27,7 +27,7 @@ ACE_Streambuf_T<STREAM>::recv (char *buf,
 template <class STREAM> ssize_t
 ACE_Streambuf_T<STREAM>::recv_n (char *buf, 
 				 ssize_t len,
-				 int flags = 0,
+				 int flags,
 				 ACE_Time_Value *tv)
 {
   ssize_t rval =  peer_->recv_n (buf, len, flags, tv);
@@ -109,7 +109,7 @@ ACE_SOCK_Dgram_SC<STREAM>::recv (char *buf,
 template <class STREAM> ACE_INLINE ssize_t 
 ACE_SOCK_Dgram_SC<STREAM>::recv_n (char *buf,
 				   ssize_t len,
-				   int flags = 0,
+				   int flags,
 				   ACE_Time_Value *tv)
 {
   int rval = this->recv (buf, len, flags, tv);
