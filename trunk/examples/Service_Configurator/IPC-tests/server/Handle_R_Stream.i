@@ -78,14 +78,14 @@ Handle_R_Stream::fini (void)
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
-ACE_INLINE int 
+ACE_INLINE ACE_HANDLE
 Handle_R_Stream::get_handle (void) const
 { 
   return ACE_SOCK_Acceptor::get_handle (); 
 }
 
 ACE_INLINE int 
-Handle_R_Stream::handle_input (int)
+Handle_R_Stream::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
   int  bytes;
@@ -141,7 +141,7 @@ Handle_R_Stream::handle_input (int)
 }
 
 ACE_INLINE int
-Handle_R_Stream::handle_close (int, ACE_Reactor_Mask)
+Handle_R_Stream::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   return this->ACE_SOCK_Acceptor::close ();
 }

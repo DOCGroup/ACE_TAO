@@ -73,20 +73,20 @@ Handle_Broadcast::fini (void)
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
-ACE_INLINE int 
+ACE_INLINE ACE_HANDLE
 Handle_Broadcast::get_handle (void) const
 {
   return this->ACE_SOCK_Dgram::get_handle (); 
 }
 
 ACE_INLINE int 
-Handle_Broadcast::handle_input (int)
+Handle_Broadcast::handle_input (ACE_HANDLE)
 {
   ACE_INET_Addr sa;
-  char		buf[0x2000]; /* 8 k buffer */
-  int		n;
+  char buf[8 * 1024]; /* 8 k buffer */
+  ssize_t n = this->recv (buf, sizeof buf, sa);
 
-  if ((n = this->recv (buf, sizeof buf, sa)) == -1)
+  if (n== -1)
     return -1;
   else
     ACE_DEBUG ((LM_INFO, "received broadcast datagram from host %s\n", sa.get_host_name ()));
@@ -103,7 +103,7 @@ Handle_Broadcast::handle_input (int)
 }
 
 ACE_INLINE int
-Handle_Broadcast::handle_close (int, ACE_Reactor_Mask)
+Handle_Broadcast::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   return this->ACE_SOCK_Dgram::close ();
 }

@@ -24,7 +24,7 @@ public:
   virtual int fini (void);
 
 private:
-  virtual int get_handle (void) const;
+  virtual ACE_HANDLE get_handle (void) const;
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
 
   int count;
