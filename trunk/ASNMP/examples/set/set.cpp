@@ -95,19 +95,23 @@ set::set(int argc, char *argv[]): valid_(0)
       return;
    }
 
-   ACE_Get_Opt get_opt (argc, argv, "o:c:r:t:I:U:C:G:T:O:S:P:");
+   ACE_Argv_Type_Converter to_tchar (argc, argv);
+   ACE_Get_Opt get_opt (argc,
+                        to_tchar.get_TCHAR_argv (),
+                        ACE_TEXT ("o:c:r:t:I:U:C:G:T:O:S:P:"));
    for (int c; (c = get_opt ()) != -1; )
      switch (c)
        {
        case 'o':
-         req = get_opt.opt_arg();
+         req = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
          if (req.valid() == 0)
-         cout << "ERROR: oid value: " <<get_opt.opt_arg()  \
+         cout << "ERROR: oid value: "
+              << ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg())
               << "is not valid. using default.\n";
          break;
 
        case 'c':
-         community_ = get_opt.opt_arg();
+         community_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
          target_.set_write_community(community_);
          break;
 
@@ -161,14 +165,14 @@ set::set(int argc, char *argv[]): valid_(0)
 
        case 'O': // Oid as a variable identifier
         {
-         oid_ = get_opt.opt_arg();
+         oid_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
          vb.set_oid(oid_); // when value is set, pdu updated
          }
          break;
 
        case 'S': // Octet String
          {
-         OctetStr o(get_opt.opt_arg());
+         OctetStr o(ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg()));
          vb.set_value(o);                    // set the Oid portion of the Vb
          pdu_ += vb;
          }
@@ -176,7 +180,7 @@ set::set(int argc, char *argv[]): valid_(0)
 
        case 'P': // Oid String as a value
          {
-         Oid o(get_opt.opt_arg());
+         Oid o(ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg()));
          vb.set_value(o);                    // set the Oid portion of the Vb
          pdu_ += vb;
          }

@@ -1,3 +1,24 @@
+Wed Sep 29 15:33:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* asnmp/sagent.cpp:
+	* agent/snmp_agent.cpp:
+	* examples/get/get.cpp:
+	* examples/get/get_async.cpp:
+	* examples/next/next.cpp:
+	* examples/set/set.cpp:
+	* examples/trap/trap.cpp:
+	* examples/walk/walk.cpp:
+	* tests/test_config.h:
+	* tests/Address_Test.cpp:
+	* tests/Counter64_Test.cpp:
+	* tests/Counter_Test.cpp:
+	* tests/Gauge_Test.cpp:
+	* tests/Integer_Test.cpp:
+	* tests/Octet_Test.cpp:
+	* tests/Oid_Test.cpp:
+	* tests/Target_Test.cpp:
+	* tests/Varbind_Test.cpp: Adjustments to build with wide-char.
+
 Fri Aug  6 08:14:12 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* asnmp/transaction.{h,cpp}: Added a get_handle() call to
