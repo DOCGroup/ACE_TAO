@@ -1,3 +1,15 @@
+Tue May  9 08:31:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
+	  Filled in empty methods create_string_tc,
+	  create_wstring_tc, create_array_tc and
+	  create_sequence_tc.
+
+
+	* orbsvcs/IFR_Service/TypeCodeFactory_i.h:
+	* orbsvcs/IFR_Service/TCF_Loader.cpp:
+	  Cosmetic changes.
+
 Tue May  9 08:23:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Interface.pidl:
