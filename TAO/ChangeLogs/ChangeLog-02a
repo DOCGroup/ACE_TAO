@@ -1,3 +1,8 @@
+Sat Jun 10 17:44:25 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAO_IDL/be/be_predefined_type.cpp:
+          Fixed warnings under Linux/KCC
+
 Sat Jun 10 15:48:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/MProfile/client.dsp:
