@@ -39,6 +39,7 @@ endif # PACE_SYSNAME == Linux
 # IRIX (64 bit)     IRIX64
 # IRIX (32 bit)     IRIX (unconfirmed)
 # HPUX              HP-UX
+# AIX               AIX
 
 ifeq ($(PACE_SYSNAME),SunOS)
   # Hard code special cases for SunOS 5.6 and 5.7 since we
@@ -80,6 +81,11 @@ ifeq ($(PACE_SYSNAME),Linux)
   VPATH :=.:posix:$(VPATH)
   emulation=1
   CFLAGS += -DPACE_LINUX=$(PACE_SYSVER)
+endif
+
+ifeq ($(PACE_SYSNAME),AIX)
+  VPATH := .:posix:$(VPATH)
+  CFLAGS += -DPACE_HAS_POSIX -D_REENTRANT
 endif
 
 ifeq ($(debug),)
