@@ -502,13 +502,13 @@ namespace ACE_RMCast
   //
   //
   //
-  struct NAK;
+  class NAK;
 
   typedef
   ACE_Refcounted_Auto_Ptr<NAK, ACE_Null_Mutex>
   NAK_ptr;
 
-  struct NAK : Profile
+  class NAK : Profile
   {
     static u16 const id;
 
@@ -594,7 +594,7 @@ namespace ACE_RMCast
     virtual void
     serialize_body (ostream& os) const
     {
-      NAK& this_ (const_cast<NAK&> (*this)); // Don't put in ROM.
+      NAK& this_ = const_cast<NAK&> (*this); // Don't put in ROM.
 
       // Stone age iteration.
       //

@@ -1,3 +1,17 @@
+Wed Feb 16 18:31:28 2005  Steve Huston  <shuston@riverace.com>
+
+	* protocols/ace/RMCast/Acknowledge.cpp:
+	* protocols/ace/RMCast/Link.cpp:
+	* protocols/ace/RMCast/Socket.cpp:
+	  Fixed some constructs to make MSVC6 happy. Primarily, MSVC6 won't
+	  allow type& var (ref). Must be type& var = ref.
+
+	* protocols/ace/RMCast/Protocol.h: Changed struct NAK to class NAK to
+	  make MSVC6 happy.
+
+	  MSVC6 is still not completely happy, but someone with more insight as
+	  to the intentions here will need to take a look.
+
 Wed Feb 16 16:18:45 2005  Dale Wilson  <wilson_d@ociweb.com>
 
         * ace/OS_NS_Thread.cpp:
